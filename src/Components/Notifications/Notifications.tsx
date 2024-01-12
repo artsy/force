@@ -49,12 +49,14 @@ export const Notifications: React.FC<NotificationsProps> = ({
     <NofiticationsTabs {...rest}>
       <Tab name="All">
         <NotificationsListQueryRenderer
+          mode={rest.mode}
           type="all"
           paginationType={paginationType}
         />
       </Tab>
       <Tab name="Alerts">
         <NotificationsListQueryRenderer
+          mode={rest.mode}
           type="alerts"
           paginationType={paginationType}
         />

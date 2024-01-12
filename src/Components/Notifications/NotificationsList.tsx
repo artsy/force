@@ -20,18 +20,22 @@ import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
 import { shouldDisplayNotification } from "./util"
 import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
 import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
+import { NotificationListMode } from "Components/Notifications/NotificationsTabs"
 
 interface NotificationsListQueryRendererProps {
+  mode: NotificationListMode
   type: NotificationType
   paginationType?: NotificationPaginationType
 }
 
 interface NotificationsListProps extends NotificationsListQueryRendererProps {
+  mode: NotificationListMode
   viewer: NotificationsList_viewer$data
   relay: RelayPaginationProp
 }
 
 const NotificationsList: React.FC<NotificationsListProps> = ({
+  mode,
   viewer,
   relay,
   type,
@@ -51,9 +55,15 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
   useEffect(() => {
     const firstNotificationId = nodes[0]?.internalID
 
-    if (!state.currentNotificationId && firstNotificationId) {
-      setCurrentNotificationId(firstNotificationId)
+    if (
+      mode !== "page" ||
+      state.currentNotificationId ||
+      !firstNotificationId
+    ) {
+      return
     }
+
+    setCurrentNotificationId(firstNotificationId)
   })
 
   const handleLoadNext = () => {
@@ -182,6 +192,7 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
 )
 
 export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRendererProps> = ({
+  mode,
   type,
   paginationType,
 }) => {
@@ -218,6 +229,7 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
 
         return (
           <NotificationsListFragmentContainer
+            mode={mode}
             viewer={props.viewer}
             paginationType={paginationType}
             type={type}
