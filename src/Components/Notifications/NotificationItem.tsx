@@ -69,15 +69,6 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
     })
   }
 
-  // Temporary until new activity panel is ready
-  const message = () => {
-    if (item.notificationType === "PARTNER_OFFER_CREATED") {
-      return "Offer"
-    }
-
-    return item.message
-  }
-
   const itemUrl = enableNewActivityPanel
     ? getNotificationUrl(item)
     : item.targetHref
@@ -92,7 +83,9 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
         </Text>
 
         <Flex flexDirection="row" gap={0.5}>
-          <Text variant="sm-display">{message()}</Text>
+          {item.notificationType !== "PARTNER_OFFER_CREATED" && (
+            <Text variant="sm-display">{item.message}</Text>
+          )}
           {shouldDisplayExpiresInTimer(item) && (
             <ExpiresInTimer expiresAt={item?.item?.expiresAt ?? ""} />
           )}

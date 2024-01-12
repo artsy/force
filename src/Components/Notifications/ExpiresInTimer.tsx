@@ -49,7 +49,13 @@ export const ExpiresInTimer: React.FC<{ expiresAt: string }> = ({
 
   return (
     <Flex flexDirection="row" alignItems="center">
-      <StopwatchIcon fill={textColor} height={15} width={15} mr="2px" />
+      <StopwatchIcon
+        fill={textColor}
+        height={15}
+        width={15}
+        mr="2px"
+        ml="-2px"
+      />
 
       <Text variant="xs" color={textColor}>
         Expires in {timerCopy}
