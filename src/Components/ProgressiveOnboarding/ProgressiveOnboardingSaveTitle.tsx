@@ -36,7 +36,7 @@ export const __ProgressiveOnboardingSaveTitle__: FC<ProgressiveOnboardingSaveTit
       onClose={handleClose}
       popover={
         <Text variant="xs">
-          {t("collectorSaves.artworkListsHeader.curateYourList")}
+          {t("collectorSaves.artworkListsHeader.popover")}
         </Text>
       }
     >
