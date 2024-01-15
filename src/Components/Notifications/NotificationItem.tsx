@@ -10,11 +10,13 @@ import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/useSystemContext"
 import createLogger from "Utils/logger"
 import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
-import {
-  isArtworksBasedNotification,
-  shouldDisplayNotificationTypeLabel,
-} from "./util"
+import { isArtworksBasedNotification } from "./util"
 import { NotificationTypeLabel } from "./NotificationTypeLabel"
+import { FC } from "react"
+import {
+  ExpiresInTimer,
+  shouldDisplayExpiresInTimer,
+} from "Components/Notifications/ExpiresInTimer"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
 
@@ -26,7 +28,7 @@ interface NotificationItemProps {
 
 const UNREAD_INDICATOR_SIZE = 8
 
-const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
+const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
   const enableNewActivityPanel = useFeatureFlag("onyx_new_notification_page")
   const { trackEvent } = useTracking()
   const { relayEnvironment } = useSystemContext()
@@ -74,18 +76,20 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   return (
     <NotificationItemLink to={itemUrl} onClick={handlePress}>
       <Flex flex={1} flexDirection="column">
-        <Text variant="xs" color="black60">
-          {shouldDisplayNotificationTypeLabel(item.notificationType) && (
-            <NotificationTypeLabel notificationType={item.notificationType} />
-          )}
-          {item.publishedAt}
-        </Text>
+        <NotificationTypeLabel item={item} />
 
         <Text variant="sm-display" fontWeight="bold">
           {item.title}
         </Text>
 
-        <Text variant="sm-display">{item.message}</Text>
+        <Flex flexDirection="row" gap={0.5}>
+          {item.notificationType !== "PARTNER_OFFER_CREATED" && (
+            <Text variant="sm-display">{item.message}</Text>
+          )}
+          {shouldDisplayExpiresInTimer(item) && (
+            <ExpiresInTimer expiresAt={item?.item?.expiresAt ?? ""} />
+          )}
+        </Flex>
 
         <Spacer y={1} />
 
@@ -149,6 +153,13 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         isUnread
         notificationType
         objectsCount
+
+        item {
+          ... on PartnerOfferCreatedNotificationItem {
+            expiresAt
+          }
+        }
+
         artworksConnection(first: 4) {
           edges {
             node {
