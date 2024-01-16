@@ -52,6 +52,7 @@ import { notificationsRoutes } from "./Apps/Notifications/notificationsRoutes"
 import { preferencesRoutes } from "./Apps/Preferences/preferencesRoutes"
 import { pressRoutes } from "./Apps/Press/pressRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
+import { saleRoutes } from "./Apps/Sale/saleRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 import { myCollectionInsightsCollectorProfileRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsCollectorProfileRoutes"
@@ -114,6 +115,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: preferencesRoutes },
     { routes: pressRoutes },
     { routes: priceDatabaseRoutes },
+    { routes: saleRoutes },
     { routes: searchRoutes },
     { routes: settingsRoutes },
     { routes: showRoutes },
