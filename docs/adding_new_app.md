@@ -1,6 +1,6 @@
 ## Adding a new App to Force
 
-> Revised 3/30/2021
+> Revised 1/16/2024
 
 To add a new app to force we can leverage our React-based SSR router.
 
@@ -99,3 +99,11 @@ const routes = [
   }
 ]
 ```
+
+### Testing Gotchas 
+
+When testing the top level route of your new app with React Testing Library make sure to `jest.mock("v2/Components/MetaTags")` or wrap your component tree in `<MockBoot>`, otherwise things wont render in jest. On first glance RTL seems to break when it encounters `react-head` (how we handle meta tags and the like). Mocking will replace the component in the tree; using `<MockBoot>` will wrap things in the required React context.
+
+### Learn More 
+
+See the [best practices docs](/docs/best_practices.md) or [Example App](/src/Apps/Example) for more info. 
