@@ -27,6 +27,8 @@ export interface AddressAutocompleteInputProps
   /* The address [including at least a country] to use for autocomplete suggestions */
   address: Partial<Address> & { country: Address["country"] }
 
+  trackingValues: AddressAutocompleteTrackingValues
+
   disableAutocomplete?: boolean
   onSelect: NonNullable<
     AutocompleteInputProps<AddressAutocompleteSuggestion>["onSelect"]
@@ -71,6 +73,7 @@ interface ServiceAvailability {
  */
 export const AddressAutocompleteInput = ({
   address,
+  trackingValues,
   onReceiveAutocompleteResult,
   disableAutocomplete = false,
   tabIndex,
@@ -90,6 +93,19 @@ export const AddressAutocompleteInput = ({
     ProviderSuggestion[]
   >([])
   const [fetching, setFetching] = useState(false)
+  const [hasAutocompletedAddress, setHasAutocompletedAddress] = useState(false)
+
+  const autocompleteTracking = useAddressAutocompleteTracking(trackingValues)
+
+  const trackAutoCompleteEdits = (fieldName: string, handleChange) => (
+    ...args
+  ) => {
+    if (hasAutocompletedAddress) {
+      autocompleteTracking.editedAutocompletedAddress(fieldName)
+      setHasAutocompletedAddress(false)
+    }
+    handleChange(...args)
+  }
 
   // NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
   // This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON={ "key": "xxxxxxxxxxxxxxxxxx" }
@@ -105,6 +121,7 @@ export const AddressAutocompleteInput = ({
     fetching: false,
   })
 
+  console.log("***", { apiKey: !!apiKey, isFeatureFlagEnabled, isUSAddress })
   useEffect(() => {
     const isAPIKeyPresent = !!apiKey
     const enabled = isAPIKeyPresent && isFeatureFlagEnabled && isUSAddress
@@ -260,6 +277,7 @@ export const AddressAutocompleteInput = ({
   if (definitelyDisabled) {
     return (
       <Input
+        required={!!autocompleteProps.required}
         tabIndex={tabIndex}
         id={id}
         name={name}
@@ -301,14 +319,14 @@ export const AddressAutocompleteInput = ({
   )
 }
 
-interface TrackingValues {
+interface AddressAutocompleteTrackingValues {
   contextPageOwnerId: string
   contextOwnerType: PageOwnerType
   contextModule: ContextModule
 }
 
 export const useAddressAutocompleteTracking = (
-  trackingValues: TrackingValues
+  trackingValues: AddressAutocompleteTrackingValues
 ) => {
   const { trackEvent } = useTracking()
 
