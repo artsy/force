@@ -367,7 +367,8 @@ const FulfillmentDetailsFormLayout = (
                   }
                   data-testid="AddressForm_addressLine1"
                   onClear={function (): void {
-                    throw new Error("Function not implemented.")
+                    setFieldValue("attributes.addressLine1", "")
+                    setHasAutocompletedAddress(false)
                   }}
                 />
               </Column>

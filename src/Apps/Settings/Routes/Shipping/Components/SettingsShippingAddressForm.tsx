@@ -12,13 +12,18 @@ import {
   VisuallyHidden,
 } from "@artsy/palette"
 import { Formik, Form } from "formik"
-import { FC } from "react"
+import { FC, useState } from "react"
 import { CountrySelect } from "Components/CountrySelect"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
 import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
 import { validatePhoneNumber } from "Components/PhoneNumberInput"
 import { countries } from "Utils/countries"
+import {
+  AddressAutocompleteInput,
+  useAddressAutocompleteTracking,
+} from "Components/Address/AddressAutocompleteInput"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 export const INITIAL_ADDRESS = {
   name: "",
@@ -83,6 +88,23 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
   const { submitMutation: submitEditAddress } = useEditAddress()
   const { submitMutation: submitSetDefaultAddress } = useSetDefaultAddress()
   const { sendToast } = useToasts()
+  const { contextPageOwnerType, contextPageOwnerId } = useAnalyticsContext()
+  const autocompleteTracking = useAddressAutocompleteTracking({
+    contextModule: "" as any, // ?,
+    contextOwnerType: contextPageOwnerType,
+    contextPageOwnerId: contextPageOwnerId || "",
+  })
+  const [hasAutocompletedAddress, setHasAutocompletedAddress] = useState(false)
+
+  const trackAutoCompleteEdits = (fieldName: string, handleChange) => (
+    ...args
+  ) => {
+    if (hasAutocompletedAddress) {
+      autocompleteTracking.editedAutocompletedAddress(fieldName)
+      setHasAutocompletedAddress(false)
+    }
+    handleChange(...args)
+  }
 
   // If an address is passed in, we are editing an existing address
   const isEditing = !!address
@@ -114,14 +136,14 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
           if (isEditing) {
             await submitEditAddress({
               variables: {
-                input: { userAddressID: address!.internalID, attributes },
+                input: { userAddressID: address?.internalID, attributes },
               },
             })
 
             if (isDefault) {
               await submitSetDefaultAddress({
                 variables: {
-                  input: { userAddressID: address!.internalID },
+                  input: { userAddressID: address?.internalID },
                 },
               })
             }
@@ -172,6 +194,7 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
         isValid,
         isSubmitting,
         submitForm,
+        setValues,
       }) => {
         return (
           <ModalDialog
@@ -230,7 +253,10 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                     placeholder="Add postal code"
                     autoComplete="postal-code"
                     value={values.attributes.postalCode}
-                    onChange={handleChange}
+                    onChange={trackAutoCompleteEdits(
+                      "postalCode",
+                      handleChange
+                    )}
                     onBlur={handleBlur}
                     error={
                       touched.attributes?.postalCode &&
@@ -241,19 +267,57 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                 </Column>
 
                 <Column span={6}>
-                  <Input
+                  <AddressAutocompleteInput
+                    address={{
+                      country: values.attributes.country,
+                    }}
+                    flip={false}
+                    required
+                    disableAutocomplete={values.attributes.region === "AK"}
                     name="attributes.addressLine1"
-                    title="Address Line 1"
                     placeholder="Add address"
-                    autoComplete="address-line1"
+                    title="Address Line 1"
                     value={values.attributes.addressLine1}
-                    onChange={handleChange}
+                    onChange={trackAutoCompleteEdits(
+                      "addressLine1",
+                      handleChange
+                    )}
                     onBlur={handleBlur}
+                    onSelect={option => {
+                      const selectedAddress = option.address
+                      setValues({
+                        ...values,
+                        attributes: {
+                          ...values.attributes,
+                          addressLine1: selectedAddress.addressLine1,
+                          addressLine2: selectedAddress.addressLine2,
+                          city: selectedAddress.city,
+                          region: selectedAddress.region,
+                          postalCode: selectedAddress.postalCode,
+                          country: selectedAddress.country,
+                        },
+                      })
+                      setHasAutocompletedAddress(true)
+
+                      autocompleteTracking.selectedAutocompletedAddress(
+                        option,
+                        values.attributes.addressLine1
+                      )
+                    }}
+                    onReceiveAutocompleteResult={(input, count) => {
+                      autocompleteTracking.receivedAutocompleteResult(
+                        input,
+                        count
+                      )
+                    }}
                     error={
                       touched.attributes?.addressLine1 &&
                       errors.attributes?.addressLine1
                     }
-                    required
+                    onClear={() => {
+                      setFieldValue("attributes.addressLine1", "")
+                      setHasAutocompletedAddress(false)
+                    }}
                   />
                 </Column>
 
@@ -264,7 +328,10 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                     placeholder="Add address line 2"
                     autoComplete="address-line2"
                     value={values.attributes.addressLine2}
-                    onChange={handleChange}
+                    onChange={trackAutoCompleteEdits(
+                      "addressLine2",
+                      handleChange
+                    )}
                     onBlur={handleBlur}
                     error={
                       touched.attributes?.addressLine2 &&
@@ -280,7 +347,7 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                     placeholder="Enter city"
                     autoComplete="address-level2"
                     value={values.attributes.city}
-                    onChange={handleChange}
+                    onChange={trackAutoCompleteEdits("city", handleChange)}
                     onBlur={handleBlur}
                     error={touched.attributes?.city && errors.attributes?.city}
                     required
@@ -294,7 +361,7 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                     placeholder="Add state, province, or region"
                     autoComplete="address-level1"
                     value={values.attributes.region}
-                    onChange={handleChange}
+                    onChange={trackAutoCompleteEdits("region", handleChange)}
                     onBlur={handleBlur}
                     error={
                       touched.attributes?.region && errors.attributes?.region
