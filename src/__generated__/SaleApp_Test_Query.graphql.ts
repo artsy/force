@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ae2ae3bc4fa3109868e359ca30e095a>>
+ * @generated SignedSource<<6fec1fd96ac0f5901e3e0457cd81519e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -141,6 +141,20 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "eligibleSaleArtworksCount",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -150,7 +164,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "268f7c8eff0c03675bdaa9178132e3d8",
+    "cacheID": "239280a632949620a1299e8ffd1ed649",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -168,14 +182,21 @@ return {
         },
         "sale.coverImage.url": (v1/*: any*/),
         "sale.description": (v1/*: any*/),
+        "sale.eligibleSaleArtworksCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
         "sale.id": (v2/*: any*/),
+        "sale.internalID": (v2/*: any*/),
         "sale.name": (v1/*: any*/),
         "sale.slug": (v2/*: any*/)
       }
     },
     "name": "SaleApp_Test_Query",
     "operationKind": "query",
-    "text": "query SaleApp_Test_Query {\n  sale(id: \"xxx\") {\n    ...SaleApp_sale\n    id\n  }\n}\n\nfragment SaleApp_sale on Sale {\n  ...SaleMeta_sale\n  name\n}\n\nfragment SaleMeta_sale on Sale {\n  name\n  description(format: HTML)\n  slug\n  coverImage {\n    url(version: [\"wide\", \"source\", \"large_rectangle\"])\n  }\n}\n"
+    "text": "query SaleApp_Test_Query {\n  sale(id: \"xxx\") {\n    ...SaleApp_sale\n    id\n  }\n}\n\nfragment SaleApp_sale on Sale {\n  ...SaleMeta_sale\n  coverImage {\n    url(version: [\"wide\", \"source\", \"large_rectangle\"])\n  }\n  description(format: HTML)\n  eligibleSaleArtworksCount\n  internalID\n  name\n}\n\nfragment SaleMeta_sale on Sale {\n  name\n  description(format: HTML)\n  slug\n  coverImage {\n    url(version: [\"wide\", \"source\", \"large_rectangle\"])\n  }\n}\n"
   }
 };
 })();

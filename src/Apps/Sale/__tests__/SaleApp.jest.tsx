@@ -4,9 +4,21 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
+
 jest.mock("Components/MetaTags", () => ({
   MetaTags: () => null,
 }))
+
+jest.mock("Apps/Sale/Components/SaleArtworks", () => ({
+  SaleArtworkFilterRefetchContainer: () => null,
+}))
+
+jest.mock(
+  "Apps/Auction/Components/AuctionDetails/AuctionDetailsStartTime",
+  () => ({
+    AuctionDetailsStartTimeQueryRenderer: () => null,
+  })
+)
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: SaleAppFragmentContainer,
@@ -27,6 +39,6 @@ describe("SaleApp", () => {
       }),
     })
 
-    expect(screen.getByText("Sale name: Timed Sale Test")).toBeInTheDocument()
+    expect(screen.getByText("Timed Sale Test")).toBeInTheDocument()
   })
 })
