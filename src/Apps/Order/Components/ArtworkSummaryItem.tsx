@@ -12,6 +12,7 @@ import {
   Image,
   Text,
   StackableBorderBox,
+  Link,
 } from "@artsy/palette"
 
 export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
@@ -52,12 +53,16 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   const isPrivateSale = source === "private_sale"
   const isPartnerOffer = source === "partner_offer"
 
-  const priceLabel = ((mode === "OFFER") || isPartnerOffer) ? "List price" : "Price"
+  const priceLabel = mode === "OFFER" || isPartnerOffer ? "List price" : "Price"
 
   return (
     <StackableBorderBox flexDirection="row" {...others}>
       <Box height="auto">
-        {imageURL && <Image src={imageURL} alt={title!} width="55px" mr={1} />}
+        {imageURL && (
+          <Link href={`/artwork/${artwork?.slug}`} target="_blank">
+            <Image src={imageURL} alt={title!} width="55px" mr={1} />
+          </Link>
+        )}
       </Box>
       <Flex flexDirection="column" overflow="hidden">
         <Text variant="sm">{artistNames}</Text>
@@ -91,9 +96,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
           </Text>
         )}
         {!artworkPrice?.price && (
-          <Text variant="sm">
-            {`${priceLabel}`}: Not publicly listed
-          </Text>
+          <Text variant="sm">{`${priceLabel}`}: Not publicly listed</Text>
         )}
       </Flex>
     </StackableBorderBox>
@@ -126,6 +129,7 @@ export const ArtworkSummaryItemFragmentContainer = createFragmentContainer(
                 }
               }
               artwork {
+                slug
                 shippingOrigin
               }
               artworkVersion {
