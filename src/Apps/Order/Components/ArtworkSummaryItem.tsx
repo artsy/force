@@ -67,15 +67,21 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
       <Flex flexDirection="column" overflow="hidden">
         <Text variant="sm">{artistNames}</Text>
         <Box style={{ lineHeight: "1", ...truncateTextStyle }}>
-          <Text
-            fontStyle="italic"
-            variant="sm"
-            color="black60"
-            display="inline"
+          <Link
+            href={`/artwork/${artwork?.slug}`}
+            target="_blank"
+            textDecoration={"none"}
           >
-            {title}
-            {date && `, ${date}`}
-          </Text>
+            <Text
+              fontStyle="italic"
+              variant="sm"
+              color="black60"
+              display="inline"
+            >
+              {title}
+              {date && `, ${date}`}
+            </Text>
+          </Link>
         </Box>
         {!isPrivateSale && (
           <>
