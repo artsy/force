@@ -4,19 +4,19 @@ import {
   MockPayloadGenerator,
   createMockEnvironment,
 } from "relay-test-utils"
-import { FormikHelpers } from "formik"
-import { useUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useUserAddressUpdates"
+import {
+  UserAddressAction,
+  useUserAddressUpdates,
+} from "Apps/Order/Routes/Shipping2/Hooks/useUserAddressUpdates"
 import {
   FulfillmentType,
   FulfillmentValues,
-  ShipValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 let mockRelayEnv: MockEnvironment
-let helpers: FormikHelpers<FulfillmentValues>
-let values: ShipValues
+let values: FulfillmentValues
 let mockShippingContext: ShippingContextProps
 
 jest.unmock("react-relay")
@@ -34,12 +34,6 @@ const setupHook = () => {
 
 beforeEach(() => {
   mockRelayEnv = createMockEnvironment()
-
-  helpers = ({
-    setFieldValue: jest.fn(),
-    setFieldError: jest.fn(),
-    setStatus: jest.fn(),
-  } as unknown) as FormikHelpers<FulfillmentValues>
 
   values = {
     fulfillmentType: FulfillmentType.SHIP,
@@ -90,6 +84,8 @@ const resolveMostRecentOperation = async (resolvers: any) => {
   return { operation, operationName, operationVariables }
 }
 
+let userAddressAction: UserAddressAction
+
 describe("useUserAddressUpdates", () => {
   describe("handleNewUserAddressUpdates", () => {
     it("returns a function", () => {
@@ -105,12 +101,9 @@ describe("useUserAddressUpdates", () => {
 
       values.fulfillmentType = FulfillmentType.PICKUP
 
-      const response = await handleNewUserAddressUpdates(values, helpers)
+      const response = await handleNewUserAddressUpdates(values)
 
-      expect(response).toEqual({
-        data: null,
-        errors: null,
-      })
+      expect(response).toBeNull()
       expect(mockRelayEnv.mock.getAllOperations().length).toBe(0)
     })
 
@@ -222,16 +215,24 @@ describe("useUserAddressUpdates", () => {
           values.meta.mode = "saved_addresses"
         })
 
-        it.skip("calls the create mutation and returns the result if the user address action is create", async () => {
-          mockShippingContext.state.addressModalAction = {
+        it("calls the create mutation and returns the result if the user address action is create", async () => {
+          userAddressAction = {
             type: "create",
+            address: {
+              name: "Erik Example",
+              phoneNumber: "1234567890",
+              addressLine1: "401 Broadway",
+              addressLine2: "",
+              city: "New York",
+              region: "NY",
+              country: "US",
+              postalCode: "10013",
+            },
           }
           const { result } = setupHook()
           const { executeUserAddressAction } = result.current
 
-          const request = executeUserAddressAction({
-            address: {},
-          })
+          const request = executeUserAddressAction(userAddressAction)
 
           await flushPromiseQueue()
 
@@ -251,15 +252,25 @@ describe("useUserAddressUpdates", () => {
           expect(response.data?.internalID).toEqual("1234")
         })
 
-        it.skip("calls the create mutation and returns the result if the user address action is edit", async () => {
-          mockShippingContext.state.addressModalAction = {
+        it("calls the create mutation and returns the result if the user address action is edit", async () => {
+          userAddressAction = {
             type: "edit",
-            addressID: "1234",
+            address: {
+              internalID: "1234",
+              name: "Erik Example",
+              phoneNumber: "1234567890",
+              addressLine1: "401 Broadway",
+              addressLine2: "",
+              city: "New York",
+              region: "NY",
+              country: "US",
+              postalCode: "10013",
+            },
           }
           const { result } = setupHook()
-          const { handleUserAddressUpdates } = result.current
+          const { executeUserAddressAction } = result.current
 
-          const request = handleUserAddressUpdates(values, helpers)
+          const request = executeUserAddressAction(userAddressAction)
 
           await flushPromiseQueue()
 
@@ -279,15 +290,25 @@ describe("useUserAddressUpdates", () => {
           expect(response.data?.internalID).toEqual("1234")
         })
 
-        it.skip("calls the set as default mutation if a create/update mutation is successful and setAsDefault is true", async () => {
-          mockShippingContext.state.addressModalAction = {
+        it("calls the set as default mutation if a create/update mutation is successful and setAsDefault is true", async () => {
+          userAddressAction = {
             type: "create",
+            address: {
+              name: "Erik Example",
+              phoneNumber: "1234567890",
+              addressLine1: "401 Broadway",
+              addressLine2: "",
+              city: "New York",
+              region: "NY",
+              country: "US",
+              postalCode: "10013",
+            },
+            setAsDefault: true,
           }
-          values.meta.setAddressAsDefault = true
           const { result } = setupHook()
-          const { handleUserAddressUpdates } = result.current
+          const { executeUserAddressAction } = result.current
 
-          const request = handleUserAddressUpdates(values, helpers)
+          const request = executeUserAddressAction(userAddressAction)
 
           await flushPromiseQueue()
 
@@ -319,18 +340,28 @@ describe("useUserAddressUpdates", () => {
         })
       })
 
-      describe.skip("Error handling", () => {
+      describe("Error handling", () => {
         beforeEach(() => {
-          mockShippingContext.state.addressModalAction = {
+          userAddressAction = {
             type: "create",
+            address: {
+              name: "Erik Example",
+              phoneNumber: "1234567890",
+              addressLine1: "401 Broadway",
+              addressLine2: "",
+              city: "New York",
+              region: "NY",
+              country: "US",
+              postalCode: "10013",
+            },
           }
-          values.meta.mode = "saved_addresses"
         })
+
         it("returns a list with a single error object if the mutation fails", async () => {
           const { result } = setupHook()
-          const { handleUserAddressUpdates } = result.current
+          const { executeUserAddressAction } = result.current
 
-          const request = handleUserAddressUpdates(values, helpers)
+          const request = executeUserAddressAction(userAddressAction)
 
           const graphqlError = new Error("mutation failed")
           mockRelayEnv.mock.rejectMostRecentOperation(graphqlError)
@@ -340,15 +371,10 @@ describe("useUserAddressUpdates", () => {
         })
 
         it("returns a list of errors if gravity returns an error type and sets correct field errors", async () => {
-          mockShippingContext.state.addressModalAction = {
-            type: "create",
-          }
-
           const { result } = setupHook()
-          const { handleUserAddressUpdates } = result.current
+          const { executeUserAddressAction } = result.current
 
-          let request = handleUserAddressUpdates(values, helpers)
-
+          const request = executeUserAddressAction(userAddressAction)
           const error = {
             message: "Validation failed for phone: not a valid phone number",
           }
@@ -369,51 +395,6 @@ describe("useUserAddressUpdates", () => {
               message: "Validation failed for phone: not a valid phone number",
             },
           ])
-
-          request = handleUserAddressUpdates(values, helpers)
-
-          expect(helpers.setStatus).not.toHaveBeenCalled()
-          expect(helpers.setFieldError).toHaveBeenCalledWith(
-            "attributes.phoneNumber",
-            "Please enter a valid phone number"
-          )
-          ;(helpers.setFieldError as jest.Mock).mockClear()
-
-          error.message = "Validation failed: Phone not a valid phone number"
-          await resolveMostRecentOperation({
-            CreateUserAddressPayload: () => ({
-              userAddressOrErrors: {
-                __typename: "Errors",
-                errors: [error],
-              },
-            }),
-          })
-
-          await request
-
-          expect(helpers.setFieldError).toHaveBeenCalledWith(
-            "attributes.phoneNumber",
-            "Please enter a valid phone number"
-          )
-          ;(helpers.setFieldError as jest.Mock).mockClear()
-
-          error.message = "Validation failed: Something is wrong"
-          request = handleUserAddressUpdates(values, helpers)
-
-          await resolveMostRecentOperation({
-            CreateUserAddressPayload: () => ({
-              userAddressOrErrors: {
-                __typename: "Errors",
-                errors: [error],
-              },
-            }),
-          })
-
-          expect(helpers.setFieldError).not.toHaveBeenCalled()
-          expect(helpers.setStatus).toHaveBeenCalledWith({
-            gravityAddressError:
-              "Sorry, there has been an issue saving your address. Please try again.",
-          })
         })
       })
     })

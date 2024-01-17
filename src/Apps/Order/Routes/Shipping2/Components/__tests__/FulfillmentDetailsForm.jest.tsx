@@ -49,7 +49,7 @@ jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => ({
 
 // Mock relay-connected component
 jest.mock("Apps/Order/Routes/Shipping2/Components/SavedAddresses2", () => ({
-  SavedAddressesFragmentContainer: () => <div />,
+  SavedAddresses2: () => <div />,
 }))
 
 const renderTree = testProps => {

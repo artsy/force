@@ -27,6 +27,9 @@ import {
 import { MockBoot } from "DevTools/MockBoot"
 import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { MockPayloadGenerator } from "relay-test-utils"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
+import { SavedAddresses2TestQuery } from "__generated__/SavedAddresses2TestQuery.graphql"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -36,7 +39,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 
 jest.setTimeout(10000)
 
-let testProps: SavedAddressesProps
+let testProps: Omit<SavedAddressesProps, "me">
 let mockShippingContext: ShippingContextProps
 const mockFormikSubmit = jest.fn()
 let mockRelayEnv: RelayMockEnvironment
@@ -75,14 +78,22 @@ const TestWrapper = ({ children }) => (
   </MockBoot>
 )
 
-const renderTree = () => {
-  const wrapper = render(
-    <TestWrapper>
-      <SavedAddresses2 {...testProps} />
-    </TestWrapper>
-  )
-  return { wrapper }
-}
+const { renderWithRelay } = setupTestWrapperTL<SavedAddresses2TestQuery>({
+  Component: props => {
+    return (
+      <TestWrapper>
+        <SavedAddresses2 {...testProps} me={props.me!} />
+      </TestWrapper>
+    )
+  },
+  query: graphql`
+    query SavedAddresses2TestQuery {
+      me {
+        ...SavedAddresses2_me
+      }
+    }
+  `,
+})
 
 describe("Saved Addresses", () => {
   const trackEvent = jest.fn()
@@ -99,8 +110,8 @@ describe("Saved Addresses", () => {
         availableShippingCountries: ["US"],
         savedFulfillmentDetails: { selectedSavedAddressID: "2" },
       },
-      meData: {
-        addressList: basicAddressList,
+      state: {
+        isPerformingOperation: false,
       },
       actions: {
         setIsPerformingOperation: jest.fn(),
@@ -112,7 +123,15 @@ describe("Saved Addresses", () => {
   })
 
   it("renders the addresses on the page", async () => {
-    renderTree()
+    renderWithRelay(
+      {
+        Me: () => ({
+          addressConnection: basicAddressList,
+        }),
+      },
+      {},
+      mockRelayEnv
+    )
     const savedAddresses = screen.getAllByTestId("savedAddress")
     expect(savedAddresses).toHaveLength(2)
     expect(savedAddresses.map(address => address.textContent)).toEqual([
@@ -122,14 +141,21 @@ describe("Saved Addresses", () => {
   })
 
   it("calls the onSelect prop when the user clicks an address", async () => {
-    renderTree()
+    renderWithRelay(
+      {
+        Me: () => ({
+          addressConnection: basicAddressList,
+        }),
+      },
+      {},
+      mockRelayEnv
+    )
     const savedAddresses = screen.getAllByTestId("savedAddress")
     savedAddresses[0].click()
     expect(testProps.onSelect).toHaveBeenCalledTimes(1)
     expect(testProps.onSelect).toHaveBeenCalledWith({
       addressLine1: "1 Main St",
       addressLine2: "",
-      addressLine3: "",
       city: "Madrid",
       country: "Spain",
       internalID: "1",
@@ -144,7 +170,15 @@ describe("Saved Addresses", () => {
   it("renders with an address pre-selected, but doesn't automatically save anything", async () => {
     mockShippingContext.orderData.savedFulfillmentDetails!.selectedSavedAddressID =
       "2"
-    renderTree()
+    renderWithRelay(
+      {
+        Me: () => ({
+          addressConnection: basicAddressList,
+        }),
+      },
+      {},
+      mockRelayEnv
+    )
 
     const savedAddresses = screen.getAllByTestId("savedAddress")
 
@@ -157,7 +191,15 @@ describe("Saved Addresses", () => {
 
   describe("Creating a new address", () => {
     it("loads the address modal in new address mode", async () => {
-      renderTree()
+      renderWithRelay(
+        {
+          Me: () => ({
+            addressConnection: basicAddressList,
+          }),
+        },
+        {},
+        mockRelayEnv
+      )
 
       expect(screen.queryByText("Add address")).not.toBeInTheDocument()
 
@@ -175,7 +217,15 @@ describe("Saved Addresses", () => {
       expect(streetInput).toHaveDisplayValue("")
     })
     it("tracks an analytics event when the user clicks the add address button", async () => {
-      renderTree()
+      renderWithRelay(
+        {
+          Me: () => ({
+            addressConnection: basicAddressList,
+          }),
+        },
+        {},
+        mockRelayEnv
+      )
       const addAddressButton = screen.getByText("Add a new address")
       await userEvent.click(addAddressButton)
 
@@ -188,7 +238,15 @@ describe("Saved Addresses", () => {
     })
 
     it("calls the parent formik context onSubmit when the user saves a new address", async () => {
-      renderTree()
+      const { env } = renderWithRelay(
+        {
+          Me: () => ({
+            addressConnection: basicAddressList,
+          }),
+        },
+        {},
+        mockRelayEnv
+      )
       const validAddress = {
         name: "Test Name",
         addressLine1: "1 Main St",
@@ -211,10 +269,9 @@ describe("Saved Addresses", () => {
       await userEvent.click(screen.getByText("Save"))
 
       await flushPromiseQueue()
-      await flushPromiseQueue()
 
       await act(() => {
-        mockRelayEnv.mock.resolveMostRecentOperation(operation => {
+        env.mock.resolveMostRecentOperation(operation => {
           return MockPayloadGenerator.generate(operation, {
             CreateUserAddressPayload: () => ({
               userAddressOrErrors: {
@@ -239,7 +296,15 @@ describe("Saved Addresses", () => {
 
   describe("Editing an address", () => {
     it("loads the address modal in edit mode", async () => {
-      renderTree()
+      renderWithRelay(
+        {
+          Me: () => ({
+            addressConnection: basicAddressList,
+          }),
+        },
+        {},
+        mockRelayEnv
+      )
 
       expect(screen.queryByText("Edit address")).not.toBeInTheDocument()
 
@@ -258,31 +323,37 @@ describe("Saved Addresses", () => {
   })
 })
 
-const basicAddressList = [
-  {
-    internalID: "1",
-    addressLine1: "1 Main St",
-    addressLine2: "",
-    addressLine3: "",
-    city: "Madrid",
-    country: "Spain",
-    isDefault: false,
-    name: "Test Name",
-    phoneNumber: "555-555-5555",
-    postalCode: "28001",
-    region: "",
-  },
-  {
-    internalID: "2",
-    addressLine1: "401 Broadway",
-    addressLine2: "Floor 25",
-    addressLine3: "",
-    city: "New York",
-    country: "US",
-    isDefault: true,
-    name: "Test Name",
-    phoneNumber: "422-424-4242",
-    postalCode: "10013",
-    region: "NY",
-  },
-]
+const basicAddressList = {
+  edges: [
+    {
+      node: {
+        internalID: "1",
+        addressLine1: "1 Main St",
+        addressLine2: "",
+        addressLine3: "",
+        city: "Madrid",
+        country: "Spain",
+        isDefault: false,
+        name: "Test Name",
+        phoneNumber: "555-555-5555",
+        postalCode: "28001",
+        region: "",
+      },
+    },
+    {
+      node: {
+        internalID: "2",
+        addressLine1: "401 Broadway",
+        addressLine2: "Floor 25",
+        addressLine3: "",
+        city: "New York",
+        country: "US",
+        isDefault: true,
+        name: "Test Name",
+        phoneNumber: "422-424-4242",
+        postalCode: "10013",
+        region: "NY",
+      },
+    },
+  ],
+}

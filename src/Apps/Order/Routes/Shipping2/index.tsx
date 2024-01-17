@@ -55,7 +55,6 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
 }) => {
   const shippingContext = useShippingContext()
 
-  // useLogPropChanges(shippingContext, "*** shippingContext")
   const isOffer = order.mode === "OFFER"
 
   // Automatically selects first shipping quote when they change

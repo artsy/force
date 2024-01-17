@@ -159,8 +159,10 @@ const FulfillmentDetailsFormLayout = (
 
   const handleSelectSavedAddress = useCallback(
     async (address: SavedAddressType) => {
+      // console.log("*** handleSelectSavedAddress")
       await formikContext.setValues({
         ...formikContext.values,
+        fulfillmentType: FulfillmentType.SHIP,
         attributes: addressWithFallbackValues(address),
         meta: {
           ...formikContext.values.meta,
@@ -209,6 +211,12 @@ const FulfillmentDetailsFormLayout = (
           attributes: {
             name: "",
             phoneNumber: "",
+            addressLine1: "",
+            addressLine2: "",
+            city: "",
+            region: "",
+            postalCode: "",
+            country: "",
           },
           meta: {
             mode: "pickup",
@@ -237,6 +245,7 @@ const FulfillmentDetailsFormLayout = (
   // inputs should not be tabbable
   const tabbableIf = (activeForm: AddressFormMode): 0 | -1 =>
     addressFormMode === activeForm ? 0 : -1
+  // console.log("***HERE")
 
   return (
     <Form data-testid="FulfillmentDetails_form">
@@ -302,6 +311,7 @@ const FulfillmentDetailsFormLayout = (
             open={addressFormMode === "saved_addresses"}
           >
             <SavedAddresses2
+              me={props.me ?? null}
               active={addressFormMode === "saved_addresses"}
               onSelect={handleSelectSavedAddress}
             />
@@ -549,7 +559,7 @@ const FulfillmentDetailsFormLayout = (
               onSelect={selected => {
                 setFieldValue("meta.saveAddress", selected)
               }}
-              selected={values.meta.saveAddress}
+              selected={values.meta?.saveAddress}
             >
               Save shipping address for later use
             </Checkbox>

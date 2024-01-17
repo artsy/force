@@ -199,6 +199,7 @@ export const useUserAddressUpdates = () => {
           setDefaultResponse.updateUserDefaultAddress
         )
         if (setDefaultResult.errors) {
+          // Todo: Handle an error in setting the default address
           logger.error(setDefaultResult.errors.map(e => e.message).join(", "))
         }
       }
@@ -234,7 +235,7 @@ const getUserAddressActionForAddressFormValues = (
       savedFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
       !matchAddressFields(
         formAddressAttributes,
-        savedFulfillmentDetails.fulfillmentDetails
+        savedFulfillmentDetails.attributes
       )
     ) {
       const newSavedAddress = getAddressByID(

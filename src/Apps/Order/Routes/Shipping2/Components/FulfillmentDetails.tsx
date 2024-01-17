@@ -158,13 +158,17 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
     values: FulfillmentValues,
     helpers: FormikHelpers<FulfillmentValues>
   ) => {
+    // console.log("*** handleSubmit")
     // Trigger address verification and return early if appropriate
     if (shouldVerifyAddressOnSubmit(values)) {
       setVerifyAddressNow(true)
+      // console.log("*** setVerifyAddressNow(true)")
       return
     }
 
     try {
+      // console.log("*** setVerifyAddressNow(true)")
+
       shippingContext.actions.setIsPerformingOperation(true)
 
       if (values.fulfillmentType === FulfillmentType.SHIP) {
@@ -176,7 +180,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           if (userAddressUpdateResult.errors) {
             logger.error("Aborting: User address updates failed")
             shippingContext.actions.setIsPerformingOperation(false)
-
+            // TODO: handle errors array by setting field values, showing dialog, etc
             return
           } else {
             if (userAddressUpdateResult.actionType === "create") {
@@ -330,6 +334,7 @@ const ME_FRAGMENT = graphql`
       after: { type: "String" }
       before: { type: "String" }
     ) {
+    ...SavedAddresses2_me
     name
     email
     id

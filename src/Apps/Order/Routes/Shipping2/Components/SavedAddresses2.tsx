@@ -25,10 +25,48 @@ import {
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useFormikContext } from "formik"
+import { extractNodes } from "Utils/extractNodes"
+import { cloneDeep, compact, isEqual, isObject } from "lodash"
+import { useRef } from "react"
+import { graphql, useFragment } from "react-relay"
+// import { SavedAddresses2_addressConnection$key } from "__generated__/SavedAddresses2_addressConnection.graphql"
+import { SavedAddresses2_me$key } from "__generated__/SavedAddresses2_me.graphql"
 
 export interface SavedAddressesProps {
   active: boolean
+  me: SavedAddresses2_me$key | null
   onSelect: (address: SavedAddressType) => void
+}
+
+function useLogChanges<T>(props: T, logName: string) {
+  const prevProps = useRef<T>(props)
+  const deepDiff = (object1, object2, path = "") => {
+    if (isEqual(object1, object2)) {
+      return []
+    }
+
+    // todo: does this handle arrays?
+    if (!isObject(object1) || !isObject(object2)) {
+      return [{ path, value1: object1, value2: object2 }]
+    }
+
+    const diffs = [] as any
+    const allKeys = new Set([...Object.keys(object1), ...Object.keys(object2)])
+    allKeys.forEach(key => {
+      const newPath = path ? `${path}.${key}` : key
+      diffs.push(...deepDiff(object1[key], object2[key], newPath))
+    })
+
+    return diffs
+  }
+
+  useEffect(() => {
+    const diffs = deepDiff(prevProps.current, props)
+    if (diffs.length > 0) {
+      prevProps.current = cloneDeep(props)
+      console.log(`*** ${logName} changed ***`, diffs)
+    }
+  })
 }
 
 export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
@@ -43,7 +81,44 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
     setAddressModalAction,
   ] = useState<AddressModalAction | null>(null)
 
-  const addressList = shippingContext.meData.addressList
+  const data = useFragment(
+    graphql`
+      fragment SavedAddresses2_me on Me
+        @argumentDefinitions(
+          first: { type: "Int", defaultValue: 30 }
+          last: { type: "Int" }
+          after: { type: "String" }
+          before: { type: "String" }
+        ) {
+        addressConnection(
+          first: $first
+          last: $last
+          before: $before
+          after: $after
+        ) {
+          edges {
+            node {
+              internalID
+              name
+              addressLine1
+              addressLine2
+              city
+              region
+              postalCode
+              country
+              phoneNumber
+              isDefault
+            }
+          }
+        }
+      }
+    `,
+    props.me
+  )
+
+  const addressList = compact<SavedAddressType>(
+    extractNodes(data?.addressConnection) ?? []
+  )
 
   const savedToOrderAddress = shippingContext.orderData.savedFulfillmentDetails
     ?.selectedSavedAddressID
@@ -62,7 +137,7 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
     setLocallySelectedAddress,
   ] = useState<SavedAddressType | null>(savedToOrderAddress)
 
-  // Automatically update selected address when it changes in order (without saving)
+  // Automatically update selected address to match what is on order order (without saving)
   const savedToOrderAddressID = savedToOrderAddress?.internalID
   useEffect(() => {
     if (
@@ -88,31 +163,41 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
   // Automatically select (save) best available address ID if it isn't present
   // TODO: account for errors on save? maybe using formik status or modal dialog
   // Note: Does not account for whether the address is valid for the selected country
+
   useEffect(() => {
-    if (formikContext.isSubmitting) {
+    if (
+      shippingContext.state.isPerformingOperation ||
+      formikContext.isSubmitting ||
+      !props.active ||
+      locallySelectedAddress ||
+      addressList.length === 0
+    ) {
       return
     }
-    if (props.active && !locallySelectedAddress && addressList.length > 0) {
-      const bestAddress = getBestAvailableAddress(
-        addressList,
-        savedToOrderAddressID,
-        shippingContext.orderData.availableShippingCountries
-      )
-      if (!bestAddress) {
-        logger.error("No best address found")
-        return
-      }
-      props.onSelect(bestAddress)
+    const bestAddress = getBestAvailableAddress(
+      addressList,
+      savedToOrderAddressID,
+      shippingContext.orderData.availableShippingCountries
+    )
+    if (!bestAddress) {
+      // console.log("*** No best address found ***")
+      logger.error("No best address found")
+      return
     }
+    // console.log("*** Selecting best address automatically ***")
+    setLocallySelectedAddress(bestAddress)
+    props.onSelect(bestAddress)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     addressList,
     savedToOrderAddressID,
     shippingContext.orderData.availableShippingCountries,
     props.active,
     locallySelectedAddress,
-    props,
+    props.onSelect,
     formikContext.isSubmitting,
     logger,
+    shippingContext.state.isPerformingOperation,
   ])
 
   /* Select an address radio button and pass the address to the parent.

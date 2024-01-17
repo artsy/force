@@ -14,8 +14,14 @@ export interface PickupValues {
   attributes: {
     name: string
     phoneNumber: string
+    addressLine1: ""
+    addressLine2: ""
+    city: ""
+    region: ""
+    country: ""
+    postalCode: ""
   }
-  meta: Pick<FormMetaValues, "mode">
+  meta: FormMetaValues
 }
 
 export interface ShipValues {
@@ -44,7 +50,7 @@ export interface ShippingAddressFormValues {
   name: string
   phoneNumber: string
   addressLine1: string
-  addressLine2?: string
+  addressLine2: string
   city: string
   region: string
   country: string
