@@ -55,19 +55,23 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
         </Column>
       </GridColumns>
 
-      {(code >= 500 || typeof code === "string") && (detail || message) && (
-        <>
-          <Spacer y={4} />
+      {((typeof code === "number" && code >= 500) ||
+        typeof code === "string") &&
+        (detail || message) && (
+          <>
+            <Spacer y={4} />
 
-          {message && (
-            <Message color={detail ? "black100" : "black60"}>{message}</Message>
-          )}
+            {message && (
+              <Message color={detail ? "black100" : "black60"}>
+                {message}
+              </Message>
+            )}
 
-          {detail && (
-            <Detail {...(message ? { mt: "-1px" } : {})}>{detail}</Detail>
-          )}
-        </>
-      )}
+            {detail && (
+              <Detail {...(message ? { mt: "-1px" } : {})}>{detail}</Detail>
+            )}
+          </>
+        )}
     </Box>
   )
 }
