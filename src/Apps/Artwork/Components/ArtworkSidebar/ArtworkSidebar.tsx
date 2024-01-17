@@ -132,6 +132,13 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         <ArtworkSidebarCommercialButtonsFragmentContainer artwork={artwork} />
       )}
 
+      {!isInAuction && !hasEnded && sale && !sale.isAuction && (
+        <>
+          <ArtworkSidebarAuctionTimerFragmentContainer artwork={artwork} />
+          <Spacer y={2} />
+        </>
+      )}
+
       {!isSold && artworkEcommerceAvailable && (
         <>
           <SidebarExpandable
@@ -207,6 +214,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         sale {
           startAt
           isClosed
+          isAuction
         }
         saleArtwork {
           lotID
