@@ -58,20 +58,19 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   return (
     <StackableBorderBox flexDirection="row" {...others}>
       <Box height="auto">
-        {imageURL && (
-          <Link href={`/artwork/${artwork?.slug}`} target="_blank">
+        {imageURL &&
+          (isPrivateSale ? (
             <Image src={imageURL} alt={title!} width="55px" mr={1} />
-          </Link>
-        )}
+          ) : (
+            <Link href={`/artwork/${artwork?.slug}`} target="_blank">
+              <Image src={imageURL} alt={title!} width="55px" mr={1} />
+            </Link>
+          ))}
       </Box>
       <Flex flexDirection="column" overflow="hidden">
         <Text variant="sm">{artistNames}</Text>
         <Box style={{ lineHeight: "1", ...truncateTextStyle }}>
-          <Link
-            href={`/artwork/${artwork?.slug}`}
-            target="_blank"
-            textDecoration={"none"}
-          >
+          {isPrivateSale ? (
             <Text
               fontStyle="italic"
               variant="sm"
@@ -81,7 +80,23 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
               {title}
               {date && `, ${date}`}
             </Text>
-          </Link>
+          ) : (
+            <Link
+              href={`/artwork/${artwork?.slug}`}
+              target="_blank"
+              textDecoration={"none"}
+            >
+              <Text
+                fontStyle="italic"
+                variant="sm"
+                color="black60"
+                display="inline"
+              >
+                {title}
+                {date && `, ${date}`}
+              </Text>
+            </Link>
+          )}
         </Box>
         {!isPrivateSale && (
           <>
