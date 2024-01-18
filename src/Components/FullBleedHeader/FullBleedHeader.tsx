@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { FullBleedHeaderPicture } from "./FullBleedHeaderPicture"
+import { themeGet } from "@styled-system/theme-get"
 
 export type FullBleedHeaderProps = BoxProps &
   Pick<HTMLAttributes<HTMLDivElement>, "style"> & {
@@ -78,7 +79,7 @@ export const FullBleedHeader: FC<FullBleedHeaderProps> = ({
       )}
 
       {caption && (
-        <FullBleedHeaderOverlay display={["none", "flex"]}>
+        <FullBleedHeaderOverlay display={["none", "flex"]} zIndex={1}>
           <HTML html={caption} color="white100" variant="xs" px={2} py={1} />
         </FullBleedHeaderOverlay>
       )}
@@ -103,12 +104,8 @@ export const FullBleedHeaderOverlay = styled(Flex)`
   height: 100%;
   top: 0;
   left: 0;
-  text-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.25)
-  );
+  text-shadow: ${themeGet("effects.textShadow")};
+  background: ${themeGet("effects.overlayGradient")};
 
   /**
    * Promotes element to composite layer to prevent disappearing content on

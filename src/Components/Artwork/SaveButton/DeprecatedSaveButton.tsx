@@ -82,7 +82,8 @@ const Inner = styled(Flex)<{ isSaved: boolean }>`
   justify-content: center;
   align-items: center;
 
-  ${({ isSaved }) => {
+  ${({ isSaved, theme }) => {
+    const rgb = theme.name === "light" ? "0, 0, 0" : "255, 255, 255"
     return isSaved
       ? css`
           background-color: ${themeGet("colors.brand")};
@@ -91,7 +92,7 @@ const Inner = styled(Flex)<{ isSaved: boolean }>`
           }
         `
       : css`
-          background-color: rgba(0, 0, 0, 0.4);
+          background-color: rgba(${rgb}, 0.4);
           &:hover {
             background-color: ${themeGet("colors.black100")};
           }

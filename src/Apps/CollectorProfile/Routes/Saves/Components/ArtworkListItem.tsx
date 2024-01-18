@@ -1,4 +1,4 @@
-import { Box, DROP_SHADOW, Flex, Text } from "@artsy/palette"
+import { Box, Flex, Text } from "@artsy/palette"
 import { FourUpImageLayout } from "./Images/FourUpImageLayout"
 import { StackedImageLayout } from "./Images/StackedImageLayout"
 import { FC } from "react"
@@ -8,8 +8,9 @@ import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtworkListItem_item$data } from "__generated__/ArtworkListItem_item.graphql"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
+import { themeGet } from "@styled-system/theme-get"
 
 interface ArtworkListItemProps {
   isSelected?: boolean
@@ -96,12 +97,15 @@ interface ArtworkListItemLinkProps extends RouterLinkProps {
 }
 
 const ArtworkListItemLink = styled<ArtworkListItemLinkProps>(RouterLink)`
-  /* always */
   border-radius: 10px;
-  margin-top: 2px; // otherwise top borders get cut off
-  display: block; // otherwise the child element collapses without a visible focus outline
-
-  /* when this list is currently being viewed (isSelected) */
-  border: solid 1px ${props => (!!props.isSelected ? "black" : "transparent")};
-  box-shadow: ${props => (!!props.isSelected ? DROP_SHADOW : "none")};
+  display: block;
+  border: 1px solid transparent;
+  ${({ isSelected }) => {
+    if (isSelected) {
+      return css`
+        box-shadow: ${themeGet("effects.dropShadow")};
+        border-color: ${themeGet("colors.black100")};
+      `
+    }
+  }}
 `

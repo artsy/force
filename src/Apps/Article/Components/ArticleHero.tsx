@@ -15,6 +15,7 @@ import {
   ResponsiveBox,
   Spacer,
   Text,
+  useTheme,
 } from "@artsy/palette"
 import { ArticleHero_article$data } from "__generated__/ArticleHero_article.graphql"
 import styled from "styled-components"
@@ -28,6 +29,9 @@ interface ArticleHeroProps {
 const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
   const height = useFullBleedHeaderHeight()
 
+  const { theme } = useTheme()
+  const rgb = theme.name === "light" ? "255, 255, 255" : "0, 0, 0"
+
   if (!article.hero) return null
 
   switch (article.hero.layout) {
@@ -37,7 +41,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
           fixed={fixed}
           {...(article.hero.media
             ? { src: article.hero.media, mode: "VIDEO" }
-            : { src: article.hero.image?.url!, mode: "IMAGE" })}
+            : { src: article.hero.image?.url ?? "", mode: "IMAGE" })}
         >
           <FullBleedHeaderOverlay
             alignItems="flex-start"
@@ -53,10 +57,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
               {article.title}
             </Text>
 
-            <Text
-              variant={["md", "lg-display"]}
-              color="rgba(255, 255, 255, 0.8)"
-            >
+            <Text variant={["md", "lg-display"]} color={`rgba(${rgb}, 0.8)`}>
               {article.byline}
             </Text>
           </FullBleedHeaderOverlay>

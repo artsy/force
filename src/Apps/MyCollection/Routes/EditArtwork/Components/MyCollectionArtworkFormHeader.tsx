@@ -1,4 +1,4 @@
-import { DROP_SHADOW, Flex, FullBleed, Separator } from "@artsy/palette"
+import { Flex, FullBleed, Separator, useTheme } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { BackLink } from "Components/Links/BackLink"
@@ -15,6 +15,7 @@ export const MyCollectionArtworkFormHeader: React.FC<MyCollectionArtworkFormHead
   NextButton,
   onBackClick,
 }) => {
+  const { theme } = useTheme()
   return (
     <>
       <RouterLink
@@ -31,7 +32,9 @@ export const MyCollectionArtworkFormHeader: React.FC<MyCollectionArtworkFormHead
             return (
               <FullBleed
                 backgroundColor="white100"
-                style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+                style={
+                  stuck ? { boxShadow: theme.effects.dropShadow } : undefined
+                }
               >
                 <AppContainer>
                   <HorizontalPadding>

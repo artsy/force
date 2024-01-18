@@ -1,6 +1,12 @@
-import { Flex, ClickableProps, Clickable, FlexProps } from "@artsy/palette"
+import {
+  Flex,
+  ClickableProps,
+  Clickable,
+  FlexProps,
+  useTheme,
+} from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import * as React from "react";
+import * as React from "react"
 import styled, { css } from "styled-components"
 
 interface DeepZoomSliderProps extends FlexProps {
@@ -22,31 +28,37 @@ export const DeepZoomSlider: React.FC<DeepZoomSliderProps> = ({
   onZoomInClicked,
   onZoomOutClicked,
   ...rest
-}) => (
-  <Flex
-    width={240}
-    height={50}
-    borderRadius={2}
-    bg="rgba(0, 0, 0, 0.6)"
-    justifyContent="center"
-    alignItems="center"
-    {...rest}
-  >
-    <ZoomOutButton onClick={onZoomOutClicked} />
+}) => {
+  const { theme } = useTheme()
 
-    <Track>
-      <SliderInput
-        min={min.toString()}
-        max={max.toString()}
-        step={step.toString()}
-        onChange={onChange}
-        value={value}
-      />
-    </Track>
+  const rgb = theme.name === "light" ? "0, 0, 0" : "255, 255, 255"
 
-    <ZoomInButton onClick={onZoomInClicked} />
-  </Flex>
-)
+  return (
+    <Flex
+      width={240}
+      height={50}
+      borderRadius={2}
+      bg={`rgba(${rgb}, 0.6)`}
+      justifyContent="center"
+      alignItems="center"
+      {...rest}
+    >
+      <ZoomOutButton onClick={onZoomOutClicked} />
+
+      <Track>
+        <SliderInput
+          min={min.toString()}
+          max={max.toString()}
+          step={step.toString()}
+          onChange={onChange}
+          value={value}
+        />
+      </Track>
+
+      <ZoomInButton onClick={onZoomInClicked} />
+    </Flex>
+  )
+}
 
 const railStyles = css`
   width: 100%;

@@ -1,4 +1,12 @@
-import { Box, Clickable, Flex, ModalBase, Spinner, Text } from "@artsy/palette"
+import {
+  Box,
+  Clickable,
+  Flex,
+  ModalBase,
+  Spinner,
+  Text,
+  useTheme,
+} from "@artsy/palette"
 import { FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -199,8 +207,9 @@ export const ArticleZoomGalleryFragmentContainer = createFragmentContainer(
 )
 
 const ArticleZoomGalleryPlaceholder: FC = () => {
+  const { theme } = useTheme()
   return (
-    <ModalBase bg="rgba(255, 255, 255, 0.8)">
+    <ModalBase bg={theme.effects.backdrop}>
       <Spinner />
     </ModalBase>
   )

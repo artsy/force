@@ -98,7 +98,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
               order breakdown and then email proof of payment to{" "}
               {isPrivateSaleOrder ? (
                 <RouterLink
-                  color="#1023D7"
+                  color="blue100"
                   textDecoration="none"
                   to="privatesales@artsy.net"
                 >
@@ -106,7 +106,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
                 </RouterLink>
               ) : (
                 <RouterLink
-                  color="#1023D7"
+                  color="blue100"
                   textDecoration="none"
                   to="orders@artsy.net"
                 >
@@ -435,7 +435,7 @@ export const wireTransferArtsyBankDetails = order => {
           <Text>30 Fenchurch Street</Text>
           <Text>London, United Kingdom, EC3M 3BD</Text>
           <Spacer y={2} />
-          <Text color="#1023D7">
+          <Text color="blue100">
             Add order number #{order.code} to the notes section in your wire
             transfer. If your bank account is not in GBP, please reference
             Artsy's intermediary bank ING Brussels (Intermediary Bank BIC/SWIFT:
@@ -473,7 +473,7 @@ export const wireTransferArtsyBankDetails = order => {
           <Text>30 Fenchurch Street</Text>
           <Text>London, United Kingdom, EC3M 3BD</Text>
           <Spacer y={2} />
-          <Text color="#1023D7">
+          <Text color="blue100">
             Add order number #{order.code} to the notes section in your wire
             transfer. If your bank account is not in EUR, please reference
             Artsy's intermediary bank ING Brussels (Intermediary Bank BIC/SWIFT:
@@ -510,7 +510,7 @@ export const wireTransferArtsyBankDetails = order => {
           <Text>420 Montgomery Street</Text>
           <Text>San Francisco, CA 94104</Text>
           <Spacer y={2} />
-          <Text color="#1023D7">
+          <Text color="blue100">
             Add order number #{order.code} to the notes section in your wire
             transfer. If your bank account is not in USD, please reference
             Artsy's intermediary bank ING Brussels (Intermediary Bank BIC/SWIFT:

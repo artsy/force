@@ -1,4 +1,4 @@
-import { DROP_SHADOW, FullBleed } from "@artsy/palette"
+import { FullBleed, useTheme } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
@@ -23,6 +23,8 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
     notRepresentedArtists,
     viewingRooms,
   } = partner
+
+  const { theme } = useTheme()
 
   const route = (path?: string) => `/partner/${slug}${path ? path : ""}`
 
@@ -100,7 +102,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
           <FullBleed
             py={2}
             backgroundColor="white100"
-            style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+            style={stuck ? { boxShadow: theme.effects.dropShadow } : undefined}
           >
             <HorizontalPadding>
               <RouteTabs fill>{tabs}</RouteTabs>

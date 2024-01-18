@@ -140,10 +140,10 @@ export const RichContent: ComponentStory<typeof ContextualMenu> = () => {
           backgroundSize="cover"
           padding={2}
         >
-          <Text color="white" fontWeight="bold">
+          <Text color="white100" fontWeight="bold">
             Illustrated
           </Text>
-          <Text color="white">Consectetur adipisicing</Text>
+          <Text color="white100">Consectetur adipisicing</Text>
         </Box>
       </ContextualMenuItem>
 

@@ -1,5 +1,5 @@
 import { ActionType, ContextModule } from "@artsy/cohesion"
-import { Button, Image, Text } from "@artsy/palette"
+import { Box, Button, Image, Text } from "@artsy/palette"
 import { TextAndImageLayout } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/TextAndImageLayout"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { RouterLink } from "System/Router/RouterLink"
@@ -55,15 +55,16 @@ export const SpeakToTheTeam: React.FC = () => {
         </Button>
       }
       image={
-        <Image
-          width="100%"
-          height="100%"
-          src={image.src}
-          srcSet={image.srcSet}
-          lazyLoad
-          style={{ backgroundColor: "black" }}
-          alt="Collage of five artworks on a black background"
-        />
+        <Box width="100%" height="100%" bg="black100">
+          <Image
+            width="100%"
+            height="100%"
+            src={image.src}
+            srcSet={image.srcSet}
+            lazyLoad
+            alt="Collage of five artworks on a black background"
+          />
+        </Box>
       }
       references="Janet Fish, Daffodils, 1995. Malik Roberts, Untitled | Blue, 2022. Robert Colescott, Les Demoiselles d’Alabama: Vestidas, 1985. Hunt Slonem, Peacock St Mary’s, 2010-2020. Vik Muniz, Metachrome (Interior with Egyptian Curtain, after Matisse), 2016."
     />
