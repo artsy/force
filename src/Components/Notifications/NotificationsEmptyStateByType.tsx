@@ -22,6 +22,10 @@ const emptyStateByType: Record<
     message:
       "Create alerts on an artist or artwork page and get notifications here when there’s a match.",
   },
+  following: {
+    title: "",
+    message: "",
+  },
 }
 
 export const NotificationsEmptyStateByType: React.FC<NotificationsEmptyStateByTypeProps> = ({
