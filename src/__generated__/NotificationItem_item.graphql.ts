@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e7f4e4303032c91f95d1c25f5f017dce>>
+ * @generated SignedSource<<b10b8b34db157c4bd4946d7cb20aa95d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,7 @@ export type NotificationItem_item$data = {
   readonly internalID: string;
   readonly isUnread: boolean;
   readonly item: {
+    readonly available?: boolean | null | undefined;
     readonly expiresAt?: string | null | undefined;
   } | null | undefined;
   readonly message: string;
@@ -138,6 +139,13 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
+              "name": "available",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "expiresAt",
               "storageKey": null
             }
@@ -242,6 +250,6 @@ return {
 };
 })();
 
-(node as any).hash = "2ecd404896641813e08997f220192988";
+(node as any).hash = "0f0cf8445e15f503e004091786373eda";
 
 export default node;
