@@ -16,6 +16,7 @@ import { Join, Spacer } from "@artsy/palette"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
 import { ArtistSeriesFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistSeriesFilter"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 
 interface ArtistArtworkFiltersProps {}
 
@@ -28,6 +29,7 @@ export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props =
   return (
     <Join separator={<Spacer y={4} />}>
       <KeywordFilter />
+      <AvailabilityFilter />
       <ArtistsFilter user={user} expanded />
       <ProgressiveOnboardingAlertSelectFilter>
         <AttributionClassFilter expanded />
