@@ -87,7 +87,7 @@
     "@artsy/icons": "3.14.0",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
-    "@artsy/palette": "37.3.4",
+    "@artsy/palette": "37.3.5-canary.1358.30031.0",
     "@artsy/palette-charts": "36.3.4",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/to-title-case": "^1.1.0",
