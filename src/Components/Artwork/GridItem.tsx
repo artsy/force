@@ -149,6 +149,8 @@ const ArtworkGridItemImage: React.FC<
       })
     : { src: "", srcSet: "" }
 
+  const blurhash = artwork.image?.blurhash ?? undefined
+
   if (localImage) {
     return (
       <ResponsiveBox
@@ -173,6 +175,7 @@ const ArtworkGridItemImage: React.FC<
     return (
       <MagnifyImage
         alt={artwork.imageTitle ?? ""}
+        blurhash={blurhash}
         src={src}
         srcSet={srcSet}
         lazyLoad={lazyLoad}
