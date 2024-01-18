@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce5ccb38b346d46a661338e6e34ec03e>>
+ * @generated SignedSource<<defa1dd82f70ff840bf0b343ab8e8d40>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type ArtworkSummaryItem_order$data = {
       readonly node: {
         readonly artwork: {
           readonly shippingOrigin: string | null | undefined;
+          readonly slug: string;
         } | null | undefined;
         readonly artworkOrEditionSet: {
           readonly __typename: "Artwork";
@@ -184,6 +185,13 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
+                      "name": "slug",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
                       "name": "shippingOrigin",
                       "storageKey": null
                     }
@@ -272,6 +280,6 @@ return {
 };
 })();
 
-(node as any).hash = "91a4bd398554cc733807e209ce30f77c";
+(node as any).hash = "37d572ec4046d0fa4ce2c9bacf7b6b4d";
 
 export default node;

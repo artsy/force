@@ -86,9 +86,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
           {item.notificationType !== "PARTNER_OFFER_CREATED" && (
             <Text variant="sm-display">{item.message}</Text>
           )}
-          {shouldDisplayExpiresInTimer(item) && (
-            <ExpiresInTimer expiresAt={item?.item?.expiresAt ?? ""} />
-          )}
+          {shouldDisplayExpiresInTimer(item) && <ExpiresInTimer item={item} />}
         </Flex>
 
         <Spacer y={1} />
@@ -156,6 +154,7 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
 
         item {
           ... on PartnerOfferCreatedNotificationItem {
+            available
             expiresAt
           }
         }

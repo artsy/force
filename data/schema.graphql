@@ -7271,6 +7271,14 @@ type Conversation implements Node {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  dismissedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
 
   # The participant who initiated the conversation
   from: ConversationInitiator!
@@ -11063,6 +11071,9 @@ type IdentityVerificationScanReference {
 
 type Image {
   aspectRatio: Float!
+
+  # Blurhash code for the image
+  blurhash: String
   caption: String
   cropped(
     height: Int!
@@ -14582,6 +14593,9 @@ type PartnerOfferCreatedNotificationItem {
     first: Int
     last: Int
   ): ArtworkConnection
+
+  # Whether or not the offer is still available
+  available: Boolean
   expiresAt(
     format: String
 
