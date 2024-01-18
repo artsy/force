@@ -6,6 +6,7 @@ import {
   Box,
   Clickable,
   Spacer,
+  useTheme,
 } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
@@ -16,8 +17,6 @@ import { ConversationHeader_conversation$key } from "__generated__/ConversationH
 import { useMobileLayoutActions } from "Apps/Conversations/hooks/useMobileLayoutActions"
 import { extractNodes } from "Utils/extractNodes"
 import { ReviewOrderButton } from "Apps/Conversations/components/Details/OrderInformation/ReviewOrderButton"
-
-const DROP_SHADOW = "0 2px 10px rgba(0, 0, 0, .08)"
 
 interface ConversationHeaderProps {
   conversation: ConversationHeader_conversation$key
@@ -83,6 +82,8 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
 
   const item = data?.items?.[0]?.item
 
+  const { theme } = useTheme()
+
   if (!item || item?.__typename !== "Artwork") {
     return null
   }
@@ -95,7 +96,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
           p={2}
           borderBottom="1px solid"
           borderBottomColor="black15"
-          style={{ boxShadow: DROP_SHADOW }}
+          style={{ boxShadow: theme.effects.dropShadow }}
         >
           <Text variant="lg">From {data.from.name}</Text>
 
@@ -152,7 +153,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
           backgroundColor="white100"
           borderBottom="1px solid"
           borderBottomColor="black15"
-          style={{ boxShadow: DROP_SHADOW }}
+          style={{ boxShadow: theme.effects.dropShadow }}
         >
           <Flex
             flexDirection="row"

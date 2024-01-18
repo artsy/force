@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Box, Flex, Join, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Join, Spacer, Text, useTheme } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { ChannelApp_channel$data } from "__generated__/ChannelApp_channel.graphql"
@@ -16,6 +16,10 @@ interface ChannelAppProps {
 }
 
 const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
+  const { theme } = useTheme()
+
+  const rgb = theme.name === "light" ? "255, 255, 255" : "0, 0, 0"
+
   return (
     <ArticleAdProvider>
       <MetaTags
@@ -45,7 +49,7 @@ const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
                 {channel.tagline && (
                   <Text
                     variant="lg-display"
-                    color="rgba(255, 255, 255, 0.8)"
+                    color={`rgba(${rgb}, 0.8)`}
                     as="h2"
                   >
                     {channel.tagline}

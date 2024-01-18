@@ -1,12 +1,12 @@
 import * as React from "react"
-import { Box, Flex, FullBleed, Image, Text, TEXT_SHADOW } from "@artsy/palette"
+import { Box, Flex, FullBleed, Image, Text, useTheme } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomHeader_viewingRoom$data } from "__generated__/ViewingRoomHeader_viewingRoom.graphql"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { resized } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
-import { getStatus } from "../Utils/getStatus"
+import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
 
 interface ViewingRoomHeaderProps {
   viewingRoom: ViewingRoomHeader_viewingRoom$data
@@ -54,9 +54,8 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = ({
 }) => {
   const { desktop } = useNavBarHeight()
 
-  const img = resized(viewingRoom.image?.imageURLs?.normalized!, {
-    width: 1200,
-  })
+  const src = viewingRoom.image?.imageURLs?.normalized
+  const img = src ? resized(src, { width: 1200 }) : null
 
   return (
     <FullBleed
@@ -66,15 +65,17 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = ({
       height={`calc(90vh - ${desktop}px)`}
     >
       <Box bg="black5" width="50%" height="100%">
-        <Image
-          src={img.src}
-          srcSet={img.srcSet}
-          alt=""
-          width="100%"
-          height="100%"
-          decoding="async"
-          style={{ objectFit: "cover" }}
-        />
+        {img && (
+          <Image
+            src={img.src}
+            srcSet={img.srcSet}
+            alt=""
+            width="100%"
+            height="100%"
+            decoding="async"
+            style={{ objectFit: "cover" }}
+          />
+        )}
       </Box>
 
       <Flex
@@ -98,7 +99,7 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = ({
           justifyContent="space-between"
         >
           {viewingRoom.partner && (
-            <RouterLink to={viewingRoom.partner.href!} textDecoration="none">
+            <RouterLink to={viewingRoom.partner.href} textDecoration="none">
               {viewingRoom.partner.name}
             </RouterLink>
           )}
@@ -121,9 +122,15 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = ({
 }) => {
   const { mobile } = useNavBarHeight()
 
-  const img = resized(viewingRoom.image?.imageURLs?.normalized!, {
-    width: 1200,
-  })
+  const src = viewingRoom.image?.imageURLs?.normalized
+  const img = src ? resized(src, { width: 1200 }) : null
+
+  const { theme } = useTheme()
+
+  const background =
+    theme.name === "light"
+      ? "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.33) 100%)"
+      : "linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.33) 100%)"
 
   return (
     <FullBleed
@@ -134,25 +141,31 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = ({
       position="relative"
       height={`calc(80vh - ${mobile}px)`}
     >
-      <Image
-        src={img.src}
-        srcSet={img.srcSet}
-        alt=""
-        width="100%"
-        height="100%"
-        decoding="async"
-        style={{ objectFit: "cover" }}
-      />
+      {img && (
+        <Image
+          src={img.src}
+          srcSet={img.srcSet}
+          alt=""
+          width="100%"
+          height="100%"
+          decoding="async"
+          style={{ objectFit: "cover" }}
+        />
+      )}
 
       <Box
         position="absolute"
         top={0}
         width="100%"
         height="100%"
-        background="linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.33) 100%)"
+        background={background}
       />
 
-      <Box position="absolute" bottom="20%" style={{ textShadow: TEXT_SHADOW }}>
+      <Box
+        position="absolute"
+        bottom="20%"
+        style={{ textShadow: theme.effects.textShadow }}
+      >
         <Text variant="xl" textAlign="center" as="h1" color="white100" p={2}>
           {viewingRoom.title}
         </Text>
@@ -169,7 +182,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = ({
         justifyContent="space-between"
       >
         {viewingRoom.partner && (
-          <RouterLink to={viewingRoom.partner.href!} textDecoration="none">
+          <RouterLink to={viewingRoom.partner.href} textDecoration="none">
             {viewingRoom.partner.name}
           </RouterLink>
         )}

@@ -12,6 +12,7 @@ import {
   Tab,
   Tabs,
   Text,
+  useTheme,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
@@ -70,6 +71,8 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
 
   const { showAuthDialog } = useAuthDialog()
 
+  const { theme } = useTheme()
+
   return (
     <>
       <FairsMeta />
@@ -101,11 +104,14 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
               width="100%"
               height="100%"
               p={4}
-              bg="rgba(0, 0, 0, 0.25)"
               display="flex"
               alignItems="center"
               justifyContent="center"
               textAlign="center"
+              style={{
+                background: theme.effects.overlayGradient,
+                textShadow: theme.effects.textShadow,
+              }}
             >
               Collect from leading art fairs on Artsy
             </Text>

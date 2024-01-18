@@ -11,6 +11,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import {
   CARD_HEIGHT,
   CARD_HEIGHT_MD,
@@ -202,9 +203,5 @@ const LinearGradient = styled(Box)`
   background: transparent;
   position: absolute;
   transition: background-color 200ms;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 50%,
-    rgba(0, 0, 0, 1) 100%
-  );
+  background: ${themeGet("effects.overlayGradient")};
 `

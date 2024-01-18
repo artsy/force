@@ -15,7 +15,7 @@ import {
 import { themeGet } from "@styled-system/theme-get"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { ResponsiveValue, variant } from "styled-system"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -265,17 +265,21 @@ export const ArticleVideoFragmentContainer = createFragmentContainer(
 )
 
 const Cover = styled(Clickable)`
-  background-color: rgba(0, 0, 0, 0.33);
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.25)
-  );
-  transition: background-color 200ms;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.4);
-  }
+  ${({ theme }) => {
+    const rgb = theme.name === "dark" ? "255, 255, 255" : "0, 0, 0"
+    return css`
+      background-color: rgba(${rgb}, 0.33);
+      background-image: linear-gradient(
+        to bottom,
+        rgba(${rgb}, 0),
+        rgba(${rgb}, 0.25)
+      );
+      transition: background-color 200ms;
+      &:hover {
+        background-color: rgba(${rgb}, 0.4);
+      }
+    `
+  }}
 `
 
 const Play = styled(Box)<{ variant: ResponsiveValue<"sm" | "lg"> }>`

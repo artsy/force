@@ -39,11 +39,16 @@ const GradientBg = styled(Box)<GradientBgProps>`
   width: 100px;
   height: 30px;
   background: transparent;
-  background-image: linear-gradient(
-    to ${props => props.placement},
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 1) 40%
-  );
+  ${({ placement, theme }) => {
+    const rgb = theme.name === "dark" ? "0, 0, 0" : "255, 255, 255"
+    return css`
+      background-image: linear-gradient(
+        to ${placement},
+        rgba(${rgb}, 0) 0%,
+        rgba(${rgb}, 1) 40%
+      );
+    `
+  }}
 `
 
 const PillsContainer = styled(Flex)`
@@ -168,7 +173,7 @@ const SearchInputPills: FC<SearchInputPillsProps> = ({
   }
 
   return (
-    <Flex alignItems="center" bg="white">
+    <Flex alignItems="center" bg="white100">
       {enableChevronNavigation && (
         <Flex
           position="absolute"

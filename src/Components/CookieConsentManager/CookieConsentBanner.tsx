@@ -3,10 +3,10 @@ import {
   Button,
   Clickable,
   Column,
-  DROP_SHADOW,
   GridColumns,
   Spacer,
   Text,
+  useTheme,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -23,6 +23,8 @@ export const CookieConsentBanner: FC<CookieConsentBannerProps> = ({
   onManage,
   onAccept,
 }) => {
+  const { theme } = useTheme()
+
   return (
     <Box
       position="fixed"
@@ -34,7 +36,7 @@ export const CookieConsentBanner: FC<CookieConsentBannerProps> = ({
       borderColor="black10"
       py={[2, 4]}
       zIndex={Z.globalNav}
-      style={{ boxShadow: DROP_SHADOW }}
+      style={{ boxShadow: theme.effects.dropShadow }}
     >
       <AppContainer>
         <HorizontalPadding>

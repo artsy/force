@@ -128,7 +128,10 @@ const Play = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(
+    ${({ theme }) => (theme.name === "light" ? "255, 255, 255" : "0, 0, 0")},
+    0.7
+  );
   width: 65px;
   height: 45px;
 
@@ -138,7 +141,7 @@ const Play = styled.div`
     color: ${themeGet("colors.black100")};
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left: 20px solid black;
+    border-left: 20px solid ${themeGet("colors.black100")};
   }
 `
 
@@ -149,7 +152,11 @@ const Cover = styled(Clickable)`
 
   &:hover {
     ${Play} {
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(
+        ${({ theme }) =>
+          theme.name === "light" ? "255, 255, 255" : "0, 0, 0"},
+        0.9
+      );
     }
   }
 `

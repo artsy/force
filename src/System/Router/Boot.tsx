@@ -6,7 +6,7 @@ import {
 } from "@artsy/palette"
 import { SystemContextProvider } from "System/SystemContext"
 import { AppRouteConfig } from "System/Router/Route"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import * as React from "react"
 import { HeadProvider } from "react-head"
 import { Environment } from "react-relay"
@@ -75,8 +75,24 @@ export const Boot = track(undefined, {
     ...context,
   }
 
+  const [theme, setTheme] = useState<"light" | "dark">("light")
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.metaKey && e.key === "i") {
+        setTheme(prevTheme => (prevTheme === "light" ? "dark" : "light"))
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [])
+
   return (
-    <Theme>
+    <Theme theme={theme}>
       <GlobalStyles />
 
       <HeadProvider headTags={headTags}>

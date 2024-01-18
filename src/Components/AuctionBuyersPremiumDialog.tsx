@@ -1,11 +1,11 @@
 import {
   Box,
   Clickable,
-  DROP_SHADOW,
   ModalBase,
   Separator,
   Spinner,
   Text,
+  useTheme,
 } from "@artsy/palette"
 import { compact } from "lodash"
 import * as React from "react"
@@ -29,6 +29,8 @@ const AuctionBuyersPremiumDialog: React.FC<AuctionBuyersPremiumDialogProps> = ({
     (a, b) => (a.cents ?? 0) - (b.cents ?? 0)
   )
 
+  const { theme } = useTheme()
+
   return (
     <Box
       bg="white100"
@@ -36,7 +38,7 @@ const AuctionBuyersPremiumDialog: React.FC<AuctionBuyersPremiumDialogProps> = ({
       position="relative"
       width={550}
       height="100%"
-      style={{ boxShadow: DROP_SHADOW }}
+      style={{ boxShadow: theme.effects.dropShadow }}
     >
       <Clickable
         position="absolute"
