@@ -1,17 +1,21 @@
+import { NotificationType } from "Components/Notifications/types"
 import { useRouter } from "System/Router/useRouter"
 import { createContext, FC, useState, useContext, useEffect } from "react"
 
 export type State = {
   currentNotificationId: string | null
+  currentNotificationFilterType: NotificationType
 }
 
 export const DEFAULT_STATE: State = {
   currentNotificationId: null,
+  currentNotificationFilterType: "all",
 }
 
 type NotificationsContextType = {
   state: State
   setCurrentNotificationId: (id: string) => void
+  setCurrentNotificationFilterType: (type: NotificationType) => void
 }
 
 const NotificationsContext = createContext<NotificationsContextType>(({
@@ -28,6 +32,10 @@ export const NotificationsContextProvider: FC<NotificationsContextProviderProps>
 }) => {
   const { match } = useRouter()
   const [currentNotificationId, setCurrentNotificationId] = useState(id)
+  const [
+    currentNotificationFilterType,
+    setCurrentNotificationFilterType,
+  ] = useState<NotificationType>("all")
 
   useEffect(() => {
     setCurrentNotificationId(match.params.notificationId)
@@ -36,8 +44,9 @@ export const NotificationsContextProvider: FC<NotificationsContextProviderProps>
   return (
     <NotificationsContext.Provider
       value={{
-        state: { currentNotificationId },
+        state: { currentNotificationId, currentNotificationFilterType },
         setCurrentNotificationId,
+        setCurrentNotificationFilterType,
       }}
     >
       {children}
