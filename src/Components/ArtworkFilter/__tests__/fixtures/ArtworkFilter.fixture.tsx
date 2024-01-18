@@ -60,6 +60,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1.35,
               placeholder: "74.20097898070833%",
               url:
@@ -106,6 +107,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.79,
               placeholder: "126.35956493921945%",
               url:
@@ -152,6 +154,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1.33,
               placeholder: "75.44910179640718%",
               url:
@@ -201,6 +204,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1.07,
               placeholder: "93.81044487427465%",
               url:
@@ -248,6 +252,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.78,
               placeholder: "128.15296989422293%",
               url:
@@ -294,6 +299,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.82,
               placeholder: "121.67539267015708%",
               url:
@@ -340,6 +346,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1.42,
               placeholder: "70.31349968010237%",
               url:
@@ -386,6 +393,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1,
               placeholder: "100%",
               url:
@@ -432,6 +440,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1,
               placeholder: "100.45558086560365%",
               url:
@@ -478,6 +487,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1.21,
               placeholder: "82.84023668639054%",
               url:
@@ -526,6 +536,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1,
               placeholder: "99.71291866028709%",
               url:
@@ -574,6 +585,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1,
               placeholder: "100.2248201438849%",
               url:
@@ -624,6 +636,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.58,
               placeholder: "172.1784776902887%",
               url:
@@ -674,6 +687,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.8,
               placeholder: "124.82435597189696%",
               url:
@@ -724,6 +738,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.76,
               placeholder: "131.11395646606914%",
               url:
@@ -771,6 +786,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.75,
               placeholder: "133.57142857142856%",
               url:
@@ -817,6 +833,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.73,
               placeholder: "137.22126929674099%",
               url:
@@ -863,6 +880,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1,
               placeholder: "99.9002493765586%",
               url:
@@ -909,6 +927,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.78,
               placeholder: "128.2233936458185%",
               url:
@@ -957,6 +976,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.79,
               placeholder: "125.92766557069046%",
               url:
@@ -1005,6 +1025,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.65,
               placeholder: "153.60983102918587%",
               url:
@@ -1051,6 +1072,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.99,
               placeholder: "101.26150698943061%",
               url:
@@ -1099,6 +1121,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.69,
               placeholder: "145.1534339990258%",
               url:
@@ -1145,6 +1168,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1.24,
               placeholder: "80.53691275167785%",
               url:
@@ -1191,6 +1215,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.87,
               placeholder: "115.29525653436592%",
               url:
@@ -1239,6 +1264,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 1,
               placeholder: "99.70089730807578%",
               url:
@@ -1285,6 +1311,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.88,
               placeholder: "113.60239162929746%",
               url:
@@ -1331,6 +1358,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.69,
               placeholder: "144.65281297516472%",
               url:
@@ -1377,6 +1405,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.74,
               placeholder: "134.3361674296926%",
               url:
@@ -1425,6 +1454,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 height: 200,
               },
               versions: [],
+              blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj",
               aspectRatio: 0.62,
               placeholder: "160.09673518742443%",
               url:
