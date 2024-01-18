@@ -275,6 +275,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
           url(version: ["larger", "large"])
           aspectRatio
           versions
+          blurhash
         }
         artistNames
         href
