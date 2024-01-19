@@ -1,5 +1,5 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { Box, Flex, ResponsiveBox } from "@artsy/palette"
+import { Box, Flex, ResponsiveBox, Image } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { MagnifyImage } from "Components/MagnifyImage"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -14,6 +14,7 @@ import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
+import { blurHashToDataURL } from "./blurHashToDataURL"
 
 export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
 
@@ -133,7 +134,8 @@ const ArtworkGridItemImage: React.FC<
 > = ({ artwork, lazyLoad, localImage }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
-
+  const blurhash = artwork.image?.blurhash ?? undefined
+  const blurHashDataUrl = blurHashToDataURL(blurhash)
   const aspectRatio =
     localImage?.aspectRatio ??
     artwork.image?.aspectRatio ??
@@ -148,8 +150,6 @@ const ArtworkGridItemImage: React.FC<
         height,
       })
     : { src: "", srcSet: "" }
-
-  const blurhash = artwork.image?.blurhash ?? undefined
 
   if (localImage) {
     return (
@@ -173,14 +173,14 @@ const ArtworkGridItemImage: React.FC<
 
   if (imageURL) {
     return (
-      <MagnifyImage
-        alt={artwork.imageTitle ?? ""}
-        blurhash={blurhash}
-        src={src}
-        srcSet={srcSet}
-        lazyLoad={lazyLoad}
-        preventRightClick={!isTeam}
-      />
+      <img alt="cool" src={blurHashDataUrl} width={width} height={height} />
+      // <Image
+      //   alt={artwork.imageTitle ?? ""}
+      //   // blurhash={blurhash}
+      //   src={blurHashDataUrl}
+      //   lazyLoad={lazyLoad}
+      //   preventRightClick={!isTeam}
+      // />
     )
   }
 
