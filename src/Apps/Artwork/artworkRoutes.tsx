@@ -23,11 +23,14 @@ export const artworkRoutes: AppRouteConfig[] = [
     },
     query: graphql`
       query artworkRoutes_ArtworkQuery($artworkID: String!) {
-        artwork(id: $artworkID) @principalField {
+        artwork(id: $artworkID) {
           ...ArtworkApp_artwork
         }
         me {
           ...ArtworkApp_me
+        }
+        featuredEventsOrderedSet: orderedSet(id: "529939e2275b245e290004a0") {
+          ...ArtworkApp_featuredEventsOrderedSet
         }
       }
     `,

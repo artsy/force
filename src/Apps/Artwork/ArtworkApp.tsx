@@ -11,6 +11,7 @@ import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
 import { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.graphql"
+import { ArtworkApp_featuredEventsOrderedSet$data } from "__generated__/ArtworkApp_featuredEventsOrderedSet.graphql"
 import { ArtworkApp_me$data } from "__generated__/ArtworkApp_me.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
@@ -42,9 +43,12 @@ import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/C
 import { compact } from "lodash"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { FullBleedBanner } from "Components/FullBleedBanner"
+import { HomeFeaturedEventsRailFragmentContainer } from "Apps/Home/Components/HomeFeaturedEventsRail"
+import { HomeEmergingPicksArtworksRailQueryRenderer } from "Apps/Home/Components/HomeEmergingPicksArtworksRail"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
+  featuredEventsOrderedSet: ArtworkApp_featuredEventsOrderedSet$data | null
   tracking?: TrackingProp
   referrer: string
   routerPathname: string
@@ -305,9 +309,7 @@ export const ArtworkApp: React.FC<Props> = props => {
 }
 
 const WrappedArtworkApp: React.FC<Props> = props => {
-  const {
-    artwork: { artists, attributionClass, internalID, mediumType, sale },
-  } = props
+  const { artwork, featuredEventsOrderedSet } = props
 
   const {
     match: {
@@ -319,6 +321,29 @@ const WrappedArtworkApp: React.FC<Props> = props => {
   // @see interceptLinks.ts
   const referrer = state && state.previousHref
   const { isComplete } = useRouteComplete()
+
+  // TODO: Check if this is actually 404, be able to augment the layout with
+  // some interesting snippets. Maybe requires some backend work to expose _some_
+  // minimal data about an unpublished artwork (like artist id so 'More From This Artist' can render).
+  if (!props.artwork)
+    return (
+      <>
+        <Text my={2}>
+          Artwork Not Found, but check out some other cool content!
+        </Text>
+        {featuredEventsOrderedSet && (
+          <>
+            <HomeFeaturedEventsRailFragmentContainer
+              orderedSet={featuredEventsOrderedSet}
+            />
+          </>
+        )}
+        <Spacer y={6} />
+        <HomeEmergingPicksArtworksRailQueryRenderer />
+      </>
+    )
+
+  const { artists, attributionClass, internalID, mediumType, sale } = artwork
 
   const websocketEnabled = !!sale?.extendedBiddingIntervalMinutes
 
@@ -419,6 +444,11 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me
+      }
+    `,
+    featuredEventsOrderedSet: graphql`
+      fragment ArtworkApp_featuredEventsOrderedSet on OrderedSet {
+        ...HomeFeaturedEventsRail_orderedSet
       }
     `,
   }

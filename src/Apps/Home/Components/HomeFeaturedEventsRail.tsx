@@ -74,7 +74,6 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
                         width={image.small.width}
                         height={image.small.height}
                         alt=""
-                        lazyLoad
                       />
                     ) : (
                       <Box bg="black10" width={95} height={63} />
