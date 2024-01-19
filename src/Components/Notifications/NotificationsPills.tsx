@@ -19,10 +19,10 @@ export const NotificationsPills: React.FC = () => {
     )
   }
 
-  const sendAnalytics = pill => {
+  const sendAnalytics = pillName => {
     trackEvent({
       action: ActionType.clickedActivityPanelTab,
-      tab_name: pill,
+      tab_name: pillName,
     })
   }
 
