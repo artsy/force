@@ -27,7 +27,7 @@ export const NotificationsPills: React.FC = () => {
   }
 
   return (
-    <Flex gap={1}>
+    <Flex gap={0.5}>
       {NOTIFICATIONS_PILLS.map((pill, i) => {
         return (
           <Pill
