@@ -177,6 +177,7 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
     })
 
     resetValue()
+    redirect(option.href)
   }
 
   const handleFocus = () => {
@@ -221,6 +222,7 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
       defaultValue={value}
       onChange={handleChange}
       onClear={resetValue}
+      onSelect={handleSelect}
       onSubmit={handleSubmit}
       onClick={handleFocus}
       header={
