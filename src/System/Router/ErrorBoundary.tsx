@@ -5,6 +5,8 @@ import { ErrorPage } from "Components/ErrorPage"
 import { Button, Spacer } from "@artsy/palette"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { getENV } from "Utils/getENV"
+import { ErrorInfo } from "react"
+import { HttpError } from "found"
 
 const logger = createLogger()
 
@@ -13,12 +15,13 @@ interface Props {
   onCatch?: () => void
 }
 
-type Kind = "Pending" | "AsyncChunkLoadError" | "GenericError"
+type Kind = "Pending" | "AsyncChunkLoadError" | "GenericError" | "RouterError"
 
 interface State {
   kind: Kind
   detail?: string
-  message: string
+  message?: string
+  code?: number
 }
 
 export class ErrorBoundary extends React.Component<Props, State> {
@@ -28,17 +31,25 @@ export class ErrorBoundary extends React.Component<Props, State> {
     kind: "Pending",
   }
 
-  componentDidCatch(error: Error, errorInfo) {
-    logger.error(new ErrorWithMetadata(error.message, errorInfo))
+  componentDidCatch(error: Error | HttpError, errorInfo: ErrorInfo) {
+    const message = error instanceof HttpError ? error.status : error.message
+    logger.error(new ErrorWithMetadata(message, errorInfo))
 
     if (this.props.onCatch) {
       this.props.onCatch()
     }
   }
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(error: Error | HttpError) {
+    if (error instanceof HttpError) {
+      return {
+        kind: "RouterError",
+        code: error.status,
+      }
+    }
+
     const displayStackTrace = getENV("NODE_ENV") === "development"
-    const message = `${error?.message || "Internal Server Error"}
+    const message = `${error.message || "Internal Error"}
 Current URL: ${window.location.href}
 Time: ${new Date().toUTCString()}`
     const detail = displayStackTrace ? error.stack : undefined
@@ -50,7 +61,7 @@ Time: ${new Date().toUTCString()}`
      *
      * @see https://reactjs.org/docs/code-splitting.html
      */
-    if (error.message.match(/Loading chunk .* failed/)) {
+    if (message.match(/Loading chunk .* failed/)) {
       return {
         kind: "AsyncChunkLoadError",
         detail,
@@ -66,7 +77,7 @@ Time: ${new Date().toUTCString()}`
   }
 
   render() {
-    const { kind, detail, message } = this.state
+    const { kind, detail, message, code } = this.state
 
     const handleClick = () => {
       window.location.reload()
@@ -112,6 +123,14 @@ Time: ${new Date().toUTCString()}`
                 Reload
               </Button>
             </ErrorPage>
+          </LayoutLogoOnly>
+        )
+      }
+
+      case "RouterError": {
+        return (
+          <LayoutLogoOnly>
+            <ErrorPage code={code || 500} />
           </LayoutLogoOnly>
         )
       }
