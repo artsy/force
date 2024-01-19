@@ -14,7 +14,7 @@ const emptyStateByType: Record<
 > = {
   all: {
     //TODO: add new copy for "all" notifications
-    title: "Stay up to date, follow artists and galleries",
+    title: "Follow artists and galleries to stay up to date",
     message:
       "Keep track of the art and events you love, and get recommendations based on who you follow.",
   },

@@ -13,7 +13,7 @@ describe("NotificationsEmptyStateByType", () => {
   it("should render correct state when type is 'All'", () => {
     render(<NotificationsEmptyStateByType type="all" />)
 
-    const title = "Stay up to date, follow artists and galleries"
+    const title = "Follow artists and galleries to stay up to date"
     const message =
       "Keep track of the art and events you love, and get recommendations based on who you follow."
 
