@@ -1,12 +1,4 @@
-import {
-  Box,
-  Clickable,
-  DROP_SHADOW,
-  Flex,
-  Separator,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import MoreIcon from "@artsy/icons/MoreIcon"
 import { NotificationsPills } from "Components/Notifications/NotificationsPills"
@@ -20,12 +12,7 @@ export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
   mode,
 }) => {
   return (
-    <Box
-      backgroundColor="white100"
-      width="100%"
-      p="20px 20px 0"
-      style={{ boxShadow: mode === "dropdown" ? DROP_SHADOW : "none" }}
-    >
+    <Box backgroundColor="white100" width="100%" p="20px 20px 0">
       <Flex
         flexDirection="row"
         justifyContent="space-between"
@@ -48,7 +35,6 @@ export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
         <NotificationsPills />
       </Flex>
       <Spacer y={1} />
-      <Separator />
     </Box>
   )
 }
