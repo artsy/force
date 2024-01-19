@@ -4,10 +4,6 @@ import { screen } from "@testing-library/react"
 import { ArtistOverviewRouteFragmentContainer } from "Apps/Artist/Routes/Overview/ArtistOverviewRoute"
 
 jest.unmock("react-relay")
-jest.mock("react-head", () => ({
-  Title: () => null,
-  Meta: () => null,
-}))
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ArtistOverviewRouteFragmentContainer,

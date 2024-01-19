@@ -270,6 +270,7 @@ const getAllPendingOperationNames = (env: RelayMockEnvironment) => {
 
 let realConsoleError: typeof console.error
 
+// FIXME: MockBoot interfering somehow...
 describe.skip("Shipping", () => {
   const mockUseRouter = useRouter as jest.Mock
   let isCommittingMutation: boolean

@@ -10,11 +10,6 @@ import { HttpError } from "found"
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter")
 jest.mock("found")
-jest.mock("react-head", () => ({
-  Title: ({ children }) => <title>{children}</title>,
-  Meta: () => null,
-  Link: () => null,
-}))
 
 const { renderWithRelay } = setupTestWrapperTL<
   CollectorProfileSavesRoute_Test_Query

@@ -13,6 +13,7 @@ jest.mock("@artsy/palette", () => {
 })
 
 jest.mock("react-head", () => ({
+  ...jest.requireActual("react-head"),
   Link: props => {
     return <div data-testid={props.imagesrcset} />
   },

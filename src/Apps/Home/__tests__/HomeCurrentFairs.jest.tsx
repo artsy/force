@@ -56,7 +56,7 @@ describe("HomeCurrentFairs", () => {
       }),
     })
 
-    expect(wrapper.isEmptyRender()).toBe(true)
+    expect(wrapper.html()).toEqual("")
   })
 
   describe("tracking", () => {

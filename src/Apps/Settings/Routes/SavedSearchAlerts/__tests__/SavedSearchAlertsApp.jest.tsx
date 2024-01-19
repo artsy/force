@@ -7,11 +7,6 @@ import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("react-head", () => ({
-  Title: () => null,
-  Meta: () => null,
-  Link: () => null,
-}))
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))

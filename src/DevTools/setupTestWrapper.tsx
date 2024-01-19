@@ -1,4 +1,5 @@
 import { act, render, RenderResult } from "@testing-library/react"
+import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
 import * as React from "react"
 import {
@@ -110,18 +111,20 @@ export const setupTestWrapperTL = <T extends OperationType>({
 
     const TestRenderer = () =>
       query ? (
-        <QueryRenderer<T>
-          environment={env}
-          variables={variables}
-          query={query}
-          render={({ props, error }) => {
-            if (props) {
-              return <Component {...componentProps} {...(props as {})} />
-            } else if (error) {
-              console.error(error)
-            }
-          }}
-        />
+        <MockBoot relayEnvironment={env}>
+          <QueryRenderer<T>
+            environment={env}
+            variables={variables}
+            query={query}
+            render={({ props, error }) => {
+              if (props) {
+                return <Component {...componentProps} {...(props as {})} />
+              } else if (error) {
+                console.error(error)
+              }
+            }}
+          />
+        </MockBoot>
       ) : (
         <RelayEnvironmentProvider environment={env}>
           <Component {...componentProps} />
@@ -190,18 +193,22 @@ export const setupTestWrapper = <T extends OperationType>({
     const env = mockedEnv ?? createMockEnvironment()
 
     const TestRenderer = () => (
-      <QueryRenderer<T>
-        environment={env}
-        variables={variables}
-        query={query}
-        render={({ props, error }) => {
-          if (props) {
-            return <Component {...(componentProps || {})} {...(props as {})} />
-          } else if (error) {
-            console.error(error)
-          }
-        }}
-      />
+      <MockBoot relayEnvironment={env}>
+        <QueryRenderer<T>
+          environment={env}
+          variables={variables}
+          query={query}
+          render={({ props, error }) => {
+            if (props) {
+              return (
+                <Component {...(componentProps || {})} {...(props as {})} />
+              )
+            } else if (error) {
+              console.error(error)
+            }
+          }}
+        />
+      </MockBoot>
     )
 
     const mockResolveLastOperation = (mockResolvers: MockResolvers) => {

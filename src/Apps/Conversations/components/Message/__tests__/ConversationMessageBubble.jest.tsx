@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { ConversationMessageBubble } from "Apps/Conversations/components/Message/ConversationMessageBubble"
+import { render } from "DevTools/renderWithMockBoot"
 
 describe("ConversationMessageBubble", () => {
   it("renders given fromViewer", () => {

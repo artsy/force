@@ -2,9 +2,10 @@ import {
   CreateNewListModalWizard,
   CreateNewListModalWizardProps,
 } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModalWizard"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useSystemContext } from "System/useSystemContext"
+import { render } from "DevTools/renderWithMockBoot"
 
 jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMutation")

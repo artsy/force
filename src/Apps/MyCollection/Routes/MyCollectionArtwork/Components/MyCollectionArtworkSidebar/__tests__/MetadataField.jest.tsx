@@ -1,27 +1,32 @@
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
-import { MetadataField as Field } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarMetadata"
+import { act, fireEvent, screen, waitFor } from "@testing-library/react"
+import { MetadataField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarMetadata"
+import { render } from "DevTools/renderWithMockBoot"
 
-describe("Field", () => {
+describe("MetadataField", () => {
   it("Value is truncated when truncateLimit is set", () => {
-    render(<Field label="Test" value={longText} truncateLimit={5} />)
+    render(<MetadataField label="Test" value={longText} truncateLimit={5} />)
     expect(screen.queryByText(longText)).not.toBeInTheDocument()
 
     expect(screen.queryByText("Lorem")).toBeInTheDocument()
   })
 
   it("Value is NOT truncated when truncateLimit is not given", () => {
-    render(<Field label="Test" value={longText} />)
+    render(<MetadataField label="Test" value={longText} />)
     expect(screen.queryByText(longText)).toBeInTheDocument()
   })
 
   it("Read More button is only present if value can be expanded", () => {
     render(
-      <Field label="Test" value={longText} truncateLimit={longText.length} />
+      <MetadataField
+        label="Test"
+        value={longText}
+        truncateLimit={longText.length}
+      />
     )
     expect(screen.queryByText("Read More")).not.toBeInTheDocument()
 
     render(
-      <Field
+      <MetadataField
         label="Test"
         value={longText}
         truncateLimit={longText.length - 20}
@@ -31,7 +36,7 @@ describe("Field", () => {
   })
 
   it('Pressing "Read More" expands the text value', async () => {
-    render(<Field label="Test" value={longText} truncateLimit={10} />)
+    render(<MetadataField label="Test" value={longText} truncateLimit={10} />)
 
     expect(screen.queryByText(longText)).not.toBeInTheDocument()
 
