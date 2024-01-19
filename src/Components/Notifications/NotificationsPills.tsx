@@ -22,7 +22,7 @@ export const NotificationsPills: React.FC = () => {
   const sendAnalytics = pill => {
     trackEvent({
       action: ActionType.clickedActivityPanelTab,
-      tab_name: pill.name,
+      tab_name: pill,
     })
   }
 
