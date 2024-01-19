@@ -7,6 +7,9 @@ import { DateTime } from "luxon"
 import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
 import { useSystemContext } from "System/useSystemContext"
 import createLogger from "Utils/logger"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { NotificationsWrapper } from "./NotificationsWrapper"
+import { NotificationsContextProvider } from "Components/Notifications/useNotificationsContext"
 
 const logger = createLogger("Notifications")
 
@@ -19,6 +22,8 @@ export const Notifications: React.FC<NotificationsProps> = ({
   ...rest
 }) => {
   const { relayEnvironment } = useSystemContext()
+
+  const enableNewActivityPanel = useFeatureFlag("onyx_new_notification_page")
 
   const markAsSeen = async () => {
     if (!relayEnvironment) {
@@ -46,21 +51,29 @@ export const Notifications: React.FC<NotificationsProps> = ({
   }, [])
 
   return (
-    <NofiticationsTabs {...rest}>
-      <Tab name="All">
-        <NotificationsListQueryRenderer
-          mode={rest.mode}
-          type="all"
-          paginationType={paginationType}
-        />
-      </Tab>
-      <Tab name="Alerts">
-        <NotificationsListQueryRenderer
-          mode={rest.mode}
-          type="alerts"
-          paginationType={paginationType}
-        />
-      </Tab>
-    </NofiticationsTabs>
+    <>
+      {!enableNewActivityPanel ? (
+        <NofiticationsTabs {...rest}>
+          <Tab name="All">
+            <NotificationsListQueryRenderer
+              mode={rest.mode}
+              type="all"
+              paginationType={paginationType}
+            />
+          </Tab>
+          <Tab name="Alerts">
+            <NotificationsListQueryRenderer
+              mode={rest.mode}
+              type="alerts"
+              paginationType={paginationType}
+            />
+          </Tab>
+        </NofiticationsTabs>
+      ) : (
+        <NotificationsContextProvider>
+          <NotificationsWrapper {...rest} />
+        </NotificationsContextProvider>
+      )}
+    </>
   )
 }

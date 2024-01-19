@@ -24,14 +24,16 @@ import { NotificationListMode } from "Components/Notifications/NotificationsTabs
 
 interface NotificationsListQueryRendererProps {
   mode: NotificationListMode
-  type: NotificationType
+  type?: NotificationType
   paginationType?: NotificationPaginationType
 }
 
-interface NotificationsListProps extends NotificationsListQueryRendererProps {
-  mode: NotificationListMode
+interface NotificationsListProps {
   viewer: NotificationsList_viewer$data
   relay: RelayPaginationProp
+  mode: NotificationListMode
+  type: NotificationType
+  paginationType?: NotificationPaginationType
 }
 
 const NotificationsList: React.FC<NotificationsListProps> = ({
@@ -197,7 +199,11 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
   paginationType,
 }) => {
   const { relayEnvironment } = useContext(SystemContext)
-  const types = getNotificationTypes(type)
+  const { state } = useNotificationsContext()
+
+  // TODO: Remove this prop once we remove the code for the tabs
+  const notificationType = type || state.currentNotificationFilterType
+  const types = getNotificationTypes(notificationType)
 
   return (
     <SystemQueryRenderer<NotificationsListQuery>
@@ -232,7 +238,7 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
             mode={mode}
             viewer={props.viewer}
             paginationType={paginationType}
-            type={type}
+            type={notificationType}
           />
         )
       }}
@@ -245,6 +251,9 @@ const getNotificationTypes = (
 ): NotificationTypesEnum[] | undefined => {
   if (type === "alerts") {
     return ["ARTWORK_ALERT"]
+  }
+  if (type === "following") {
+    return ["ARTWORK_PUBLISHED"]
   }
 
   return []
