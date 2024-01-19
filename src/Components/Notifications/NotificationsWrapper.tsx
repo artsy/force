@@ -1,4 +1,4 @@
-import { Box, Flex, Separator } from "@artsy/palette"
+import { Box, DROP_SHADOW, Flex, Separator } from "@artsy/palette"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { Sticky } from "Components/Sticky"
 import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
@@ -20,7 +20,7 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
   return (
     <Box>
       {mode === "dropdown" ? (
-        <>
+        <Box style={{ boxShadow: DROP_SHADOW }}>
           <Flex flex={1} overflow="hidden">
             <NotificationsHeader mode="dropdown" />
           </Flex>
@@ -31,7 +31,7 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
           >
             <NotificationsListQueryRenderer mode={mode} />
           </Box>
-        </>
+        </Box>
       ) : (
         <>
           <Sticky>
