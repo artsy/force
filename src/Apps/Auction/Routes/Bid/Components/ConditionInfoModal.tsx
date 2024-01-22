@@ -1,5 +1,6 @@
 import * as React from "react"
 import { ModalDialog, Clickable, Text, Box } from "@artsy/palette"
+import { useState } from "react"
 
 interface ConditionInfoModalProps {
   onClose: () => void
