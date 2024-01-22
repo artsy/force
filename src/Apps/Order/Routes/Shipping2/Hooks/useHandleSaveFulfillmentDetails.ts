@@ -27,8 +27,7 @@ export const useHandleSaveFulfillmentDetails = () => {
   const orderTracking = useOrderTracking()
 
   const handleSaveFulfillmentDetails = async (
-    values: FulfillmentValues,
-    helpers?: FormikHelpers<FulfillmentValues>
+    values: FulfillmentValues
   ): Promise<
     | {
         error: ExchangeOrGravityError

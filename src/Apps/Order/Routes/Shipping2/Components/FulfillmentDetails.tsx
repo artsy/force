@@ -101,16 +101,18 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
       shippingContext.orderData.savedFulfillmentDetails
     if (
       existingFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
-      existingFulfillmentDetails.isArtsyShipping &&
-      shippingMode === "new_address"
+      shippingContext.orderData.requiresArtsyShippingTo(
+        existingFulfillmentDetails.attributes.country
+      )
     ) {
-      //  re-saving fulfillment details")
       const refreshShippingQuotes = async () => {
+        // instead of handleSubmit, call the save fulfillment details function
+        // directly
         const result = await handleSaveFulfillmentDetails({
-          attributes: existingFulfillmentDetails.attributes as ShipValues["attributes"],
+          attributes: existingFulfillmentDetails.attributes,
           fulfillmentType: FulfillmentType.SHIP,
           meta: {
-            mode: "new_address",
+            mode: "unused" as any,
             // FIXME: Will clobber previous address verification (but we can't
             // know what the previous status was unless we read from server)
             addressVerifiedBy: null,
@@ -158,17 +160,13 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
     values: FulfillmentValues,
     helpers: FormikHelpers<FulfillmentValues>
   ) => {
-    // console.log("*** handleSubmit")
     // Trigger address verification and return early if appropriate
     if (shouldVerifyAddressOnSubmit(values)) {
       setVerifyAddressNow(true)
-      // console.log("*** setVerifyAddressNow(true)")
       return
     }
 
     try {
-      // console.log("*** setVerifyAddressNow(true)")
-
       shippingContext.actions.setIsPerformingOperation(true)
 
       if (values.fulfillmentType === FulfillmentType.SHIP) {
@@ -190,15 +188,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
             } else if (userAddressUpdateResult.actionType === "delete") {
               shippingContext.actions.setNewSavedAddressId(null)
             }
-
-            // TODO: double check if we need this and continue from here
-            helpers.setValues({
-              ...values,
-              meta: {
-                ...values.meta,
-              },
-            })
-
             if (
               userAddressUpdateResult.data?.internalID &&
               shippingMode === "new_address"
@@ -212,25 +201,20 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
       }
 
       const saveFulfillmentDetailsResult = await handleSaveFulfillmentDetails(
-        values,
-        helpers
+        values
       )
 
       if (saveFulfillmentDetailsResult.data) {
         if (
           saveFulfillmentDetailsResult.data.requiresArtsyShippingToDestination
         ) {
-          // TODO: move to caller
-          // if (shippingContext.state.addressModalAction) {
-          //   shippingContext.actions.setAddressModalAction(null)
-          // }
           shippingContext.actions.setStage("shipping_quotes")
         } else if (shippingMode === "new_address") {
           // Advance to payment
           router.push(`/orders/${orderData.internalID}/payment`)
         } else {
           // Don't advance if we're using saved addresses; instead wait for click
-          shippingContext.actions.setStage("advance_on_click")
+          shippingContext.actions.setStage("fulfillment_details_saved")
         }
       } else {
         logger.error(

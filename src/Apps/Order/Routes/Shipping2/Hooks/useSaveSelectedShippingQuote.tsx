@@ -40,7 +40,6 @@ export const useSaveSelectedShippingQuote = (
         shippingContext.state.fulfillmentDetailsCtx?.values.meta.mode ===
         "new_address"
       ) {
-        // console.log("*** handleNewUserAddressUpdates before shipping quote")
         await handleNewUserAddressUpdates(
           shippingContext.state.fulfillmentDetailsCtx.values
         )

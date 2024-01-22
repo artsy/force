@@ -24,9 +24,13 @@ import { useSelectFirstShippingQuote } from "Apps/Order/Routes/Shipping2/Hooks/u
 import { CollapseDetails } from "Apps/Order/Routes/Shipping2/Components/CollapseDetails"
 
 export type ShippingStage =
-  | "advance_on_click"
+  // User choosing fulfillment type
   | "fulfillment_details"
+  // User choosing shipping quote
   | "shipping_quotes"
+  // Temporary stage after address has been automatically saved
+  // to wait for click
+  | "fulfillment_details_saved"
 
 export interface ShippingProps {
   order: Shipping2_order$data

@@ -72,10 +72,7 @@ export const FulfillmentDetailsForm = ({
       initialValues={initialValues}
       initialStatus={{}}
       onSubmit={onSubmit}
-      validationSchema={
-        // Defer to SavedAddresses for validation
-        shippingMode === "new_address" ? VALIDATION_SCHEMA : null
-      }
+      validationSchema={VALIDATION_SCHEMA}
     >
       <FulfillmentDetailsFormLayout
         shippingMode={shippingMode}
@@ -128,6 +125,8 @@ const FulfillmentDetailsFormLayout = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formikContext.values, formikContext.isValid])
 
+  // Wrapper for change handlers that sets the stage to fulfillment_details
+  // when the user edits an address field
   const withBackToFulfillmentDetails = <F extends (...args: any[]) => void>(
     cb: F
   ) => (...args: Parameters<F>) => {
@@ -159,7 +158,7 @@ const FulfillmentDetailsFormLayout = (
 
   const handleSelectSavedAddress = useCallback(
     async (address: SavedAddressType) => {
-      // console.log("*** handleSelectSavedAddress")
+      shippingContext.actions.setStage("fulfillment_details")
       await formikContext.setValues({
         ...formikContext.values,
         fulfillmentType: FulfillmentType.SHIP,
@@ -192,7 +191,7 @@ const FulfillmentDetailsFormLayout = (
     }
     await setValues(newValues)
     await props.onAddressVerificationComplete()
-    //  Submitting after choosing")
+
     formikContext.submitForm()
   }
 
@@ -204,35 +203,35 @@ const FulfillmentDetailsFormLayout = (
   const previousValues = usePrevious(values)
 
   useEffect(() => {
-    const resetAttributes = async () => {
-      if (values.fulfillmentType === FulfillmentType.PICKUP) {
-        await setValues({
-          ...values,
-          attributes: {
-            name: "",
-            phoneNumber: "",
-            addressLine1: "",
-            addressLine2: "",
-            city: "",
-            region: "",
-            postalCode: "",
-            country: "",
-          },
-          meta: {
-            mode: "pickup",
-          },
-        })
-        return
-      }
+    const resetAttributesOnFulfillmentTypeChange = async () => {
+      if (values.fulfillmentType !== previousValues.fulfillmentType) {
+        if (values.fulfillmentType === FulfillmentType.PICKUP) {
+          await setValues({
+            ...values,
+            attributes: {
+              name: "",
+              phoneNumber: "",
+              addressLine1: "",
+              addressLine2: "",
+              city: "",
+              region: "",
+              postalCode: "",
+              country: "",
+            },
+            meta: {
+              mode: "pickup",
+            },
+          })
+          return
+        }
 
-      if (values.fulfillmentType === FulfillmentType.SHIP) {
-        // reset to initial values
-        formikContext.resetForm()
+        if (values.fulfillmentType === FulfillmentType.SHIP) {
+          // reset to current initialValues (based on calculation in FulfillmentDetails.tsx)
+          formikContext.resetForm()
+        }
       }
     }
-    if (values.fulfillmentType !== previousValues.fulfillmentType) {
-      resetAttributes()
-    }
+    resetAttributesOnFulfillmentTypeChange()
   }, [
     setValues,
     previousValues.fulfillmentType,
@@ -245,7 +244,6 @@ const FulfillmentDetailsFormLayout = (
   // inputs should not be tabbable
   const tabbableIf = (activeForm: AddressFormMode): 0 | -1 =>
     addressFormMode === activeForm ? 0 : -1
-  // console.log("***HERE")
 
   return (
     <Form data-testid="FulfillmentDetails_form">

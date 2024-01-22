@@ -277,7 +277,7 @@ describe.skip("Shipping", () => {
                 operation.request.node.operation.name
             )
             env.mock.rejectMostRecentOperation(error)
-            console.warn(error.message)
+            console.log(error.message)
             resolve()
           } catch (error) {
             reject(error)
@@ -302,12 +302,6 @@ describe.skip("Shipping", () => {
         push: mockPush,
       },
     })
-  })
-
-  afterEach(async () => {
-    // TODO: Cleanup?
-    // await waitForRelay()
-    // console.error = realConsoleError
   })
 
   let mockRelayEnv
@@ -1571,7 +1565,7 @@ describe.skip("Shipping", () => {
         })
 
         await userEvent.click(premiumShipping)
-        // console.log("*** Last click")
+
         await saveAndContinue()
 
         await flushPromiseQueue()
@@ -1816,7 +1810,7 @@ describe.skip("Shipping", () => {
         })
 
         describe("with artwork located in Germany", () => {
-          it.only("does not set shipping on order automatically if the collector is in the EU", async () => {
+          it("does not set shipping on order automatically if the collector is in the EU", async () => {
             // TODO: Why would we want this behavior? We can now set shipping on all valid saved addresses-
             // no need to check whether it needs artsy shipping.
             const meWithDefaultAddressInSpain = cloneDeep(
@@ -1881,7 +1875,7 @@ describe.skip("Shipping", () => {
           // TODO: Like the test above, these tests assume we don't want to automatically set shipping
           // unless the default address would require artsy shipping. That is no longer the case-
           // We can safely set the shipping. See alsoped test above (~L1957)
-          it.only("sets shipping on order if the collector is in Germany", async () => {
+          it("sets shipping on order if the collector is in the EU", async () => {
             const meWithDefaultAddressInSpain = cloneDeep(
               meWithAddresses
             ) as any
@@ -1893,6 +1887,7 @@ describe.skip("Shipping", () => {
                 UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
               Me: () => meWithDefaultAddressInSpain,
             })
+
             const fulfillmentRequest = await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
               settingOrderShipmentSuccess.commerceSetShipping
@@ -1910,7 +1905,7 @@ describe.skip("Shipping", () => {
                   addressLine1: "1 Main St",
                   addressLine2: "",
                   city: "Madrid",
-                  country: "DE",
+                  country: "ES",
                   name: "Test Name",
                   phoneNumber: "",
                   postalCode: "28001",
@@ -1920,7 +1915,7 @@ describe.skip("Shipping", () => {
             })
           })
 
-          it.only("does not set shipping on order if the collector is in the US", async () => {
+          it("does not set shipping on order if the collector is in the US", async () => {
             const { env } = renderWithRelay({
               CommerceOrder: () =>
                 UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
@@ -1938,7 +1933,7 @@ describe.skip("Shipping", () => {
         })
 
         describe("with artwork located in the US", () => {
-          it.only("does not fetch or show shipping quotes if the collector is in the EU", async () => {
+          it("does not fetch or show shipping quotes if the collector is in the EU", async () => {
             const meWithDefaultAddressInSpain = cloneDeep(
               meWithAddresses
             ) as any

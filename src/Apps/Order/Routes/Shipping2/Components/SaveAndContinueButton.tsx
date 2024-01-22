@@ -49,7 +49,7 @@ export const SaveAndContinueButton: React.FC<SaveAndContinueButtonProps> = ({
       await saveSelectedShippingQuote()
     }
 
-    if (shippingContext.state.stage === "advance_on_click") {
+    if (shippingContext.state.stage === "fulfillment_details_saved") {
       router.push(`/orders/${data.internalID}/payment`)
     }
   }

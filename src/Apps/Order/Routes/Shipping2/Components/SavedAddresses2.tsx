@@ -26,8 +26,7 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippin
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useFormikContext } from "formik"
 import { extractNodes } from "Utils/extractNodes"
-import { cloneDeep, compact, isEqual, isObject } from "lodash"
-import { useRef } from "react"
+import { compact } from "lodash"
 import { graphql, useFragment } from "react-relay"
 // import { SavedAddresses2_addressConnection$key } from "__generated__/SavedAddresses2_addressConnection.graphql"
 import { SavedAddresses2_me$key } from "__generated__/SavedAddresses2_me.graphql"
@@ -36,37 +35,6 @@ export interface SavedAddressesProps {
   active: boolean
   me: SavedAddresses2_me$key | null
   onSelect: (address: SavedAddressType) => void
-}
-
-function useLogChanges<T>(props: T, logName: string) {
-  const prevProps = useRef<T>(props)
-  const deepDiff = (object1, object2, path = "") => {
-    if (isEqual(object1, object2)) {
-      return []
-    }
-
-    // todo: does this handle arrays?
-    if (!isObject(object1) || !isObject(object2)) {
-      return [{ path, value1: object1, value2: object2 }]
-    }
-
-    const diffs = [] as any
-    const allKeys = new Set([...Object.keys(object1), ...Object.keys(object2)])
-    allKeys.forEach(key => {
-      const newPath = path ? `${path}.${key}` : key
-      diffs.push(...deepDiff(object1[key], object2[key], newPath))
-    })
-
-    return diffs
-  }
-
-  useEffect(() => {
-    const diffs = deepDiff(prevProps.current, props)
-    if (diffs.length > 0) {
-      prevProps.current = cloneDeep(props)
-      console.log(`*** ${logName} changed ***`, diffs)
-    }
-  })
 }
 
 export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
@@ -140,17 +108,21 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
   // Automatically update selected address to match what is on order order (without saving)
   const savedToOrderAddressID = savedToOrderAddress?.internalID
   useEffect(() => {
-    if (
-      props.active &&
-      savedToOrderAddressID &&
-      savedToOrderAddressID !== previousSavedToOrderAddressID &&
-      savedToOrderAddressID !== locallySelectedAddress?.internalID
-    ) {
-      const address = getAddressByID(addressList, savedToOrderAddressID)
-      if (address) {
-        setLocallySelectedAddress(address)
+    const updateSelectedAddressAfterSave = () => {
+      const savedAddressChanged =
+        savedToOrderAddressID &&
+        savedToOrderAddressID !== previousSavedToOrderAddressID
+      if (
+        savedAddressChanged &&
+        savedToOrderAddressID !== locallySelectedAddress?.internalID
+      ) {
+        const address = getAddressByID(addressList, savedToOrderAddressID)
+        if (address) {
+          setLocallySelectedAddress(address)
+        }
       }
     }
+    updateSelectedAddressAfterSave()
   }, [
     previousSavedToOrderAddressID,
     addressList,
@@ -160,33 +132,32 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
     savedToOrderAddressID,
   ])
 
-  // Automatically select (save) best available address ID if it isn't present
-  // TODO: account for errors on save? maybe using formik status or modal dialog
-  // Note: Does not account for whether the address is valid for the selected country
+  // TODO: What if mutation fails? Locally selected address will be out of sync with order
 
   useEffect(() => {
-    if (
-      shippingContext.state.isPerformingOperation ||
-      formikContext.isSubmitting ||
-      !props.active ||
-      locallySelectedAddress ||
-      addressList.length === 0
-    ) {
-      return
+    // Automatically select (save) best available address ID if it isn't present
+    // TODO: account for errors on save? maybe using formik status or modal dialog
+    // Note: Does not account for whether the address is valid for the selected country
+    const automaticallySelectBestAddress = async () => {
+      if (
+        props.active &&
+        !shippingContext.state.isPerformingOperation &&
+        !formikContext.isSubmitting &&
+        !locallySelectedAddress &&
+        addressList.length > 0
+      ) {
+        const bestAddress = getBestAvailableAddress(
+          addressList,
+          savedToOrderAddressID,
+          shippingContext.orderData.availableShippingCountries
+        )
+        if (bestAddress) {
+          setLocallySelectedAddress(bestAddress)
+          props.onSelect(bestAddress)
+        }
+      }
     }
-    const bestAddress = getBestAvailableAddress(
-      addressList,
-      savedToOrderAddressID,
-      shippingContext.orderData.availableShippingCountries
-    )
-    if (!bestAddress) {
-      // console.log("*** No best address found ***")
-      logger.error("No best address found")
-      return
-    }
-    // console.log("*** Selecting best address automatically ***")
-    setLocallySelectedAddress(bestAddress)
-    props.onSelect(bestAddress)
+    automaticallySelectBestAddress()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     addressList,
@@ -247,11 +218,6 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
                 address.internalID === locallySelectedAddress?.internalID
               }
               tabIndex={props.active ? 0 : -1}
-              disabled={
-                !shippingContext.orderData.availableShippingCountries.includes(
-                  address.country
-                )
-              }
               key={index}
               position="relative"
               data-testid="savedAddress"

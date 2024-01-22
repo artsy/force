@@ -146,9 +146,11 @@ describe("FulfillmentDetailsForm", () => {
 
     it("has name and phone number fields", async () => {
       renderTree(testProps)
+
       await userEvent.click(
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
+
       const fullNameField = await screen.findByPlaceholderText("Full name")
       const phoneNumberField = await screen.findByPlaceholderText(
         "Add phone number including country code"
@@ -164,7 +166,20 @@ describe("FulfillmentDetailsForm", () => {
     it("will not submit without required fields", async () => {
       renderTree(testProps)
 
+      await userEvent.click(
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
+      )
+
+      // expect radio to be checked
+      expect(
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
+      ).toBeChecked()
+
+      await flushPromiseQueue()
+
       await submitForm()
+
+      await flushPromiseQueue()
 
       await waitFor(() => {
         ;["Full name is required", "Phone number is required"].forEach(
@@ -199,6 +214,15 @@ describe("FulfillmentDetailsForm", () => {
             attributes: {
               name: "John Doe",
               phoneNumber: "1234567890",
+              city: "",
+              region: "",
+              postalCode: "",
+              country: "",
+              addressLine1: "",
+              addressLine2: "",
+            },
+            meta: {
+              mode: "pickup",
             },
           },
           expect.anything()
@@ -360,8 +384,6 @@ describe("FulfillmentDetailsForm", () => {
                 region: "",
                 postalCode: "",
                 phoneNumber: "5555937743",
-                addressVerifiedBy: null,
-                saveAddress: false,
               },
             },
             expect.anything()
@@ -433,8 +455,6 @@ describe("FulfillmentDetailsForm", () => {
                 region: validAddress.region,
                 postalCode: validAddress.postalCode,
                 phoneNumber: validAddress.phoneNumber,
-                addressVerifiedBy: null,
-                saveAddress: false,
               },
             },
             expect.anything()
@@ -443,6 +463,7 @@ describe("FulfillmentDetailsForm", () => {
       })
     })
   })
+
   describe("Address autocomplete", () => {
     let mockFetch: jest.Mock
     beforeEach(() => {

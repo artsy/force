@@ -14,6 +14,9 @@ export interface PickupValues {
   attributes: {
     name: string
     phoneNumber: string
+    // Even though these don't appear on the form
+    // we want values to not mess with the controlled/
+    // uncontrolled component state
     addressLine1: ""
     addressLine2: ""
     city: ""
