@@ -13,6 +13,7 @@ const emptyStateByType: Record<
   }
 > = {
   all: {
+    //TODO: add new copy for "all" notifications
     title: "Follow artists and galleries to stay up to date",
     message:
       "Keep track of the art and events you love, and get recommendations based on who you follow.",
@@ -21,6 +22,11 @@ const emptyStateByType: Record<
     title: "Hunting for a particular artwork?",
     message:
       "Create alerts on an artist or artwork page and get notifications here when there’s a match.",
+  },
+  following: {
+    title: "Follow artists and galleries to stay up to date",
+    message:
+      "Keep track of the art and events you love, and get recommendations based on who you follow.",
   },
 }
 
