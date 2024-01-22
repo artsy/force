@@ -155,7 +155,6 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
         })
       },
       onTitleClick: () => {
-        console.log("clicked on title")
         setOpenConditionModal(true)
       },
     },
