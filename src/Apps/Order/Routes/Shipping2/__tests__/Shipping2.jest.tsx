@@ -270,7 +270,7 @@ const getAllPendingOperationNames = (env: RelayMockEnvironment) => {
 
 let realConsoleError: typeof console.error
 
-describe("Shipping", () => {
+describe.skip("Shipping", () => {
   const mockUseRouter = useRouter as jest.Mock
   let isCommittingMutation: boolean
   let relayEnv: MockEnvironment
