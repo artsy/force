@@ -20,7 +20,7 @@ import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinition
 import { useTracking } from "react-tracking"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
-import { ConditionInfoModal } from "Apps/Auction/Routes/Bid/Components/ConditionInfoModal"
+import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 
 export interface ArtworkDetailsAdditionalInfoProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork$data

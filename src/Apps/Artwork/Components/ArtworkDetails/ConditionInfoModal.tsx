@@ -14,9 +14,8 @@ export const ConditionInfoModal: React.FC<ConditionInfoModalProps> = ({
           Excellent Condition:
         </Text>
         <Text>
-          {" "}
           No signs of age or wear, undulation associated with hinging. Work may
-          be unsealed in original packaging.{" "}
+          be unsealed in original packaging.
         </Text>
         <Spacer y={2} />
         <Text fontWeight="bold">Very Good Condition:</Text>
@@ -28,7 +27,6 @@ export const ConditionInfoModal: React.FC<ConditionInfoModalProps> = ({
         <Spacer y={2} />
         <Text fontWeight="bold">Good Condition:</Text>
         <Text>
-          {" "}
           Overall good condition but with noticeable wear or age such as hard
           creases, scratches, indentations, water damage (associated buckling),
           foxing, discoloration, attenuation, material loss and tearing. May
