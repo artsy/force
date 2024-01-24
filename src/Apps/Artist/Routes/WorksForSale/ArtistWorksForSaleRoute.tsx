@@ -20,9 +20,24 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
 
   const { jumpTo } = useJump({ behavior: "smooth", offset: 10 })
 
+  const lastSearchCriteriaID = React.useRef<string>(
+    match?.location?.query?.search_criteria_id
+  )
+
   useEffect(() => {
+    // bail unless we have a search criteria
     if (!match?.location?.query?.search_criteria_id) return
 
+    // bail unless the search criteria has *changed*
+    if (
+      match.location.query.search_criteria_id === lastSearchCriteriaID.current
+    ) {
+      return
+    }
+
+    lastSearchCriteriaID.current = match.location.query.search_criteria_id
+
+    // now, safe to jump
     const timeout = setTimeout(() => {
       jumpTo("artworkFilter")
     }, 0)
@@ -30,8 +45,7 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
     return () => {
       clearTimeout(timeout)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [jumpTo, match.location.query])
 
   const total = artist.sidebarAggregations?.counts?.total ?? 0
 
