@@ -13982,6 +13982,7 @@ type Partner implements Node {
 
     # Return artworks that are missing priority metadata
     missingPriorityMetadata: Boolean
+    page: Int
 
     # Only return artworks that are partner-offerable
     partnerOfferable: Boolean
