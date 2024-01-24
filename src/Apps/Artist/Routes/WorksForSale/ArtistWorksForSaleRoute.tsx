@@ -30,7 +30,8 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
     return () => {
       clearTimeout(timeout)
     }
-  }, [jumpTo, match.location.query.search_criteria_id])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const total = artist.sidebarAggregations?.counts?.total ?? 0
 
