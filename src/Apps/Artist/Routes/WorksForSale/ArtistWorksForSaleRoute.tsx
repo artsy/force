@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistArtworkFilterRefetchContainer } from "./Components/ArtistArtworkFilter"
 import { ArtistWorksForSaleRoute_artist$data } from "__generated__/ArtistWorksForSaleRoute_artist.graphql"
@@ -7,6 +7,8 @@ import { Title, Meta } from "react-head"
 import { useRouter } from "System/Router/useRouter"
 import { useJump } from "Utils/Hooks/useJump"
 import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
+import { usePrevious } from "@artsy/palette"
+import { useRouteComplete } from "Utils/Hooks/useRouteComplete"
 
 interface ArtistWorksForSaleRouteProps {
   artist: ArtistWorksForSaleRoute_artist$data
@@ -18,34 +20,32 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
   const { match } = useRouter()
   const { title, description } = artist.meta
 
-  const { jumpTo } = useJump({ behavior: "smooth", offset: 10 })
+  const pathname = useRef(match?.location?.pathname)
+  const previousPathname = usePrevious(pathname)
 
-  const lastSearchCriteriaID = React.useRef<string>(
-    match?.location?.query?.search_criteria_id
-  )
+  useRouteComplete({
+    onComplete: () => {
+      pathname.current = match?.location?.pathname
+    },
+  })
+
+  const { jumpTo } = useJump({ behavior: "smooth", offset: 10 })
 
   useEffect(() => {
     // bail unless we have a search criteria
     if (!match?.location?.query?.search_criteria_id) return
 
-    // bail unless the search criteria has *changed*
-    if (
-      match.location.query.search_criteria_id === lastSearchCriteriaID.current
-    ) {
-      return
+    if (pathname.current !== previousPathname.current) {
+      // Do thing here
+      const timeout = setTimeout(() => {
+        jumpTo("artworkFilter")
+      }, 0)
+
+      return () => {
+        clearTimeout(timeout)
+      }
     }
-
-    lastSearchCriteriaID.current = match.location.query.search_criteria_id
-
-    // now, safe to jump
-    const timeout = setTimeout(() => {
-      jumpTo("artworkFilter")
-    }, 0)
-
-    return () => {
-      clearTimeout(timeout)
-    }
-  }, [jumpTo, match.location.query])
+  }, [jumpTo, match.location.query.search_criteria_id, previousPathname])
 
   const total = artist.sidebarAggregations?.counts?.total ?? 0
 
