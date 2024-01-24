@@ -1,11 +1,9 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistArtworkFilterRefetchContainer } from "./Components/ArtistArtworkFilter"
 import { ArtistWorksForSaleRoute_artist$data } from "__generated__/ArtistWorksForSaleRoute_artist.graphql"
 import { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { Title, Meta } from "react-head"
-import { useRouter } from "System/Router/useRouter"
-import { useJump } from "Utils/Hooks/useJump"
 import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
 
 interface ArtistWorksForSaleRouteProps {
@@ -15,23 +13,7 @@ interface ArtistWorksForSaleRouteProps {
 const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
   artist,
 }) => {
-  const { match } = useRouter()
   const { title, description } = artist.meta
-
-  const { jumpTo } = useJump({ behavior: "smooth", offset: 10 })
-
-  useEffect(() => {
-    if (!match?.location?.query?.search_criteria_id) return
-
-    const timeout = setTimeout(() => {
-      jumpTo("artworkFilter")
-    }, 0)
-
-    return () => {
-      clearTimeout(timeout)
-    }
-  }, [jumpTo, match.location.query.search_criteria_id])
-
   const total = artist.sidebarAggregations?.counts?.total ?? 0
 
   return (
