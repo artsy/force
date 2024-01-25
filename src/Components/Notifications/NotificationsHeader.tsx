@@ -1,15 +1,17 @@
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
-import MoreIcon from "@artsy/icons/MoreIcon"
 import { NotificationsPills } from "Components/Notifications/NotificationsPills"
 import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
+import { NofiticationsContextualMenu } from "Components/Notifications/NotificationsContextualMenu"
+import { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
 
-export interface NotificationsHeaderProps {
+export interface NotificationsHeaderProps extends MarkAllAsReadPanelProps {
   mode: NotificationListMode
 }
 
 export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
   mode,
+  unreadCounts,
 }) => {
   return (
     <Box backgroundColor="white100" width="100%" px={2} pt={2} pb={1}>
@@ -21,8 +23,8 @@ export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
         <Flex justifyContent="flex-start">
           <Text variant="lg-display">Activity</Text>
         </Flex>
-        <Flex justifyContent="flex-end" gap={4}>
-          <MoreIcon />
+        <Flex justifyContent="flex-end" gap={4} alignItems="center">
+          <NofiticationsContextualMenu unreadCounts={unreadCounts} />
           {mode === "dropdown" && (
             <Clickable as="a">
               <CloseIcon display="block" />

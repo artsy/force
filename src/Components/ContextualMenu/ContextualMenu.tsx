@@ -7,11 +7,11 @@ import {
   ContextualMenuItem,
 } from "Components/ContextualMenu/ContextualMenuItem"
 
-const MORE_ICON_SIZE = [24, 32]
-
 interface ContextualMenuProps {
   /** Supply `ContextualMenuItem`s and `ContextualMenuDivider`s as needed  */
   children: React.ReactNode
+  placement?: "bottom-end" | "bottom-start" | "top-end" | "top-start"
+  zIndex?: number
 }
 
 const validateChildren = (children: React.ReactNode) => {
@@ -32,15 +32,20 @@ const validateChildren = (children: React.ReactNode) => {
  * Creates a contextual menu by composing a MoreIcon (⋯) trigger
  * and a Dropdown component from Palette.
  */
-export const ContextualMenu: React.FC<ContextualMenuProps> = ({ children }) => {
+export const ContextualMenu: React.FC<ContextualMenuProps> = ({
+  children,
+  placement,
+  zIndex,
+}) => {
   validateChildren(children)
 
   return (
     <Dropdown
-      minWidth={["calc(100% - 40px)", 300]}
+      minWidth={200}
       openDropdownByClick
-      placement="bottom-end"
+      placement={placement}
       offset={0}
+      zIndex={zIndex}
       dropdown={({ onHide }) => {
         /*
          * Each ContextualMenuItem must be able to close this
@@ -70,7 +75,7 @@ export const ContextualMenu: React.FC<ContextualMenuProps> = ({ children }) => {
             p={1}
             aria-label="Open contextual menu"
           >
-            <MoreIcon width={MORE_ICON_SIZE} height={MORE_ICON_SIZE} />
+            <MoreIcon />
           </Clickable>
         )
       }}

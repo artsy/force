@@ -60,7 +60,7 @@ export const ArtworkListContextualMenu: React.FC<ArtworkListContextualMenuProps>
         />
       )}
 
-      <ContextualMenu>
+      <ContextualMenu placement="bottom-end">
         <ContextualMenuItem onClick={openEditModal}>
           {t("collectorSaves.contextualMenu.edit")}
         </ContextualMenuItem>
