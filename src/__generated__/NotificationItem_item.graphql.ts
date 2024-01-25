@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b10b8b34db157c4bd4946d7cb20aa95d>>
+ * @generated SignedSource<<c571e95c06369521e2c369f5a5a52433>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,9 @@ export type NotificationItem_item$data = {
         readonly title: string | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
   } | null | undefined;
+  readonly headline: string;
   readonly id: string;
   readonly internalID: string;
   readonly isUnread: boolean;
@@ -75,7 +77,13 @@ return {
       "storageKey": null
     },
     (v0/*: any*/),
-    (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "headline",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -173,6 +181,13 @@ return {
         {
           "alias": null,
           "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "ArtworkEdge",
           "kind": "LinkedField",
           "name": "edges",
@@ -243,13 +258,14 @@ return {
         }
       ],
       "storageKey": "artworksConnection(first:4)"
-    }
+    },
+    (v1/*: any*/)
   ],
   "type": "Notification",
   "abstractKey": null
 };
 })();
 
-(node as any).hash = "0f0cf8445e15f503e004091786373eda";
+(node as any).hash = "1b5d62e648170aed3e2b9af9b1151156";
 
 export default node;

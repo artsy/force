@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7ebf84ab84e83da0f54a2939e93ce0c8>>
+ * @generated SignedSource<<1c7f8e48689d143de24fd05388f93e07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -153,7 +153,13 @@ return {
                 "selections": [
                   (v1/*: any*/),
                   (v2/*: any*/),
-                  (v3/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "headline",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -258,6 +264,13 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "totalCount",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "ArtworkEdge",
                         "kind": "LinkedField",
                         "name": "edges",
@@ -329,7 +342,8 @@ return {
                       }
                     ],
                     "storageKey": "artworksConnection(first:4)"
-                  }
+                  },
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -342,7 +356,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "367dbf9b550ef101dfb242473700bdf5",
+    "cacheID": "cf8e09092b7d0e097188d33f20802265",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -399,6 +413,13 @@ return {
         "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.srcSet": (v5/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.edges.node.internalID": (v4/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.edges.node.title": (v6/*: any*/),
+        "notificationsConnection.edges.node.artworksConnection.totalCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "notificationsConnection.edges.node.headline": (v5/*: any*/),
         "notificationsConnection.edges.node.id": (v4/*: any*/),
         "notificationsConnection.edges.node.internalID": (v4/*: any*/),
         "notificationsConnection.edges.node.isUnread": {
@@ -448,7 +469,7 @@ return {
     },
     "name": "NotificationItem_test_Query",
     "operationKind": "query",
-    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  title\n}\n"
   }
 };
 })();
