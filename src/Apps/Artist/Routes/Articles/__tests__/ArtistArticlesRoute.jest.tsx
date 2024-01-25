@@ -4,9 +4,6 @@ import { ArtistArticlesRouteFragmentContainer } from "Apps/Artist/Routes/Article
 import { ArtistArticlesRoute_Test_Query } from "__generated__/ArtistArticlesRoute_Test_Query.graphql"
 
 jest.unmock("react-relay")
-jest.mock("react-head", () => ({
-  Title: () => null,
-}))
 jest.mock("Components/Pagination", () => ({
   PaginationFragmentContainer: () => null,
 }))

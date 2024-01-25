@@ -1,6 +1,5 @@
 import {
   Clickable,
-  DROP_SHADOW,
   Flex,
   ModalBase,
   ModalBaseProps,
@@ -9,6 +8,7 @@ import {
   ShelfPrevious,
   splitBoxProps,
   useDidMount,
+  useTheme,
 } from "@artsy/palette"
 import { useCareerHighlightsStoriesContext } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStoriesContext"
 import { omit } from "lodash"
@@ -27,13 +27,15 @@ export const CareerHighlightModal: React.FC<CareerHighlightModalProps> = ({
   const { dotPosition, total, back, next } = useCareerHighlightsStoriesContext()
   const { containerRef } = useNextPrevious({ onNext: next, onPrevious: back })
 
+  const { theme } = useTheme()
+
   return (
     <ModalBase
       onClose={onClose}
       style={
         isMounted
           ? {
-              backgroundColor: "rgba(0, 0, 0, 0.44)",
+              backgroundColor: theme.effects.backdrop,
               transition: "background-color 250ms",
             }
           : { backgroundColor: "transparent" }
@@ -55,7 +57,7 @@ export const CareerHighlightModal: React.FC<CareerHighlightModalProps> = ({
         bg="white100"
         px={2}
         style={{
-          boxShadow: DROP_SHADOW,
+          boxShadow: theme.effects.dropShadow,
           maxHeight: "90%",
           ...(isMounted
             ? {

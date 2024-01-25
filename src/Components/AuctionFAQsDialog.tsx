@@ -1,12 +1,4 @@
-import {
-  Box,
-  Clickable,
-  DROP_SHADOW,
-  HTML,
-  Tab,
-  Tabs,
-  Text,
-} from "@artsy/palette"
+import { Box, Clickable, HTML, Tab, Tabs, Text, useTheme } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
@@ -22,6 +14,7 @@ const AuctionFAQsDialog: React.FC<AuctionFAQsDialogProps> = ({
   onClose,
   viewer,
 }) => {
+  const { theme } = useTheme()
   return (
     <Box
       bg="white100"
@@ -30,7 +23,10 @@ const AuctionFAQsDialog: React.FC<AuctionFAQsDialogProps> = ({
       width={800}
       height={600}
       overflowY="auto"
-      style={{ boxShadow: DROP_SHADOW, WebkitOverflowScrolling: "auto" }}
+      style={{
+        boxShadow: theme.effects.dropShadow,
+        WebkitOverflowScrolling: "auto",
+      }}
     >
       <Clickable
         position="absolute"

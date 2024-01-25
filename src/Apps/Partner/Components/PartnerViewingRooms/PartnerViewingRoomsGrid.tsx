@@ -44,7 +44,7 @@ const PartnerViewingRoomsGrid: React.FC<PartnerViewingRoomsGridProps> = ({
 
   return (
     <>
-      <Text color="black" variant="lg-display" mb={6}>
+      <Text color="black100" variant="lg-display" mb={6}>
         {sectionTitle}
       </Text>
 

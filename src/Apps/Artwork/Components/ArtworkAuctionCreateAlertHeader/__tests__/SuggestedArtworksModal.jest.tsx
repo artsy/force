@@ -1,8 +1,9 @@
 import { OwnerType } from "@artsy/cohesion"
-import { render, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { SuggestedArtworksModal } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModal"
 import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
+import { render } from "DevTools/renderWithMockBoot"
 
 describe("SuggestedArtworksModal", () => {
   const savedSearchEntity: SavedSearchEntity = {

@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { Notifications } from "Components/Notifications/Notifications"
 import { NotificationsWrapper } from "Components/Notifications/NotificationsWrapper"
+import { render } from "DevTools/renderWithMockBoot"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.mock("System/useFeatureFlag", () => ({

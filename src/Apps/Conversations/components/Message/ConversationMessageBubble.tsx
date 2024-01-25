@@ -1,11 +1,9 @@
 import PersonIcon from "@artsy/icons/PersonIcon"
-import { Avatar, Box, Flex, Text } from "@artsy/palette"
+import { Avatar, Box, Flex, Text, useTheme } from "@artsy/palette"
 import { FC, isValidElement } from "react"
 import Linkify from "react-linkify"
 import { ConversationMessageImage } from "./ConversationMessageImage"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
-
-const DROP_SHADOW = "0 2px 10px 0 rgba(0, 0, 0, 0.06)"
 
 /**
  * The following props can be used together, details:
@@ -45,6 +43,8 @@ export const ConversationMessageBubble: FC<ConversationMessageBubbleProps> = ({
 
   const isMessageImage =
     isValidElement(children) && children?.type === ConversationMessageImage
+
+  const { theme } = useTheme()
 
   return (
     <Flex maxWidth="85%" alignSelf={bubbleDirection}>
@@ -92,7 +92,7 @@ export const ConversationMessageBubble: FC<ConversationMessageBubbleProps> = ({
           width="100%"
           p={isMessageImage ? 0 : 1}
           style={{
-            boxShadow: DROP_SHADOW,
+            boxShadow: theme.effects.dropShadow,
             wordBreak: "break-word",
             hyphens: "auto",
             whiteSpace: "pre-line",

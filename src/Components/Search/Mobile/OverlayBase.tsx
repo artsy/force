@@ -2,10 +2,10 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 import {
   Box,
   Clickable,
-  DROP_SHADOW,
   Flex,
   ModalBase,
   useSentinelVisibility,
+  useTheme,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { FC } from "react"
@@ -28,6 +28,8 @@ export const OverlayBase: FC<OverlayBaseProps> = ({
     isSentinelVisible: isAtTop,
   } = useSentinelVisibility()
 
+  const { theme } = useTheme()
+
   return (
     <ModalBase
       dialogProps={{
@@ -37,7 +39,10 @@ export const OverlayBase: FC<OverlayBaseProps> = ({
         backgroundColor: "white100",
       }}
     >
-      <Flex bg="white100" style={{ boxShadow: DROP_SHADOW }}></Flex>
+      <Flex
+        bg="white100"
+        style={{ boxShadow: theme.effects.dropShadow }}
+      ></Flex>
 
       <Flex flexDirection="column" overflow="hidden" width="100%">
         <Flex
@@ -45,7 +50,7 @@ export const OverlayBase: FC<OverlayBaseProps> = ({
           zIndex={1}
           style={{
             transition: "box-shadow 250ms",
-            boxShadow: isAtTop ? DROP_SHADOW : undefined,
+            boxShadow: isAtTop ? theme.effects.dropShadow : undefined,
           }}
         >
           <Flex alignItems="flex-start" justifyContent="space-between">

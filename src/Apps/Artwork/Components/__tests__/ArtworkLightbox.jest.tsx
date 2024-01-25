@@ -3,9 +3,6 @@ import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
 
 jest.unmock("react-relay")
-jest.mock("react-head", () => ({
-  Link: () => null,
-}))
 
 describe("ArtworkLightbox", () => {
   const setup = (

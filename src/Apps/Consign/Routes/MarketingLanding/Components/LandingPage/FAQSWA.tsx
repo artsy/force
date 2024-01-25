@@ -1,4 +1,4 @@
-import { Button, Text, Image } from "@artsy/palette"
+import { Button, Text, Image, Box } from "@artsy/palette"
 import { TextAndImageLayout } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/TextAndImageLayout"
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
@@ -36,15 +36,16 @@ export const FAQSWA: React.FC = () => {
         </Button>
       }
       image={
-        <Image
-          width="100%"
-          height="100%"
-          src={image.src}
-          srcSet={image.srcSet}
-          lazyLoad
-          style={{ backgroundColor: "black" }}
-          alt="Collage of five artworks on a black background"
-        />
+        <Box width="100%" height="100%" bg="black100">
+          <Image
+            width="100%"
+            height="100%"
+            src={image.src}
+            srcSet={image.srcSet}
+            lazyLoad
+            alt="Collage of five artworks on a black background"
+          />
+        </Box>
       }
       references="Andy Warhol, Cow, II.12A, 1976. Alex Katz, Yellow Tulips, 2014. Hunt Slonem, Abraham Lincoln, 2020. Julian Opie, Walking in Melbourne, 1, 2018  "
     />

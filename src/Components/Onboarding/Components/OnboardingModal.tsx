@@ -5,8 +5,8 @@ import {
   splitBoxProps,
   useDidMount,
   Box,
-  DROP_SHADOW,
   ModalClose,
+  useTheme,
 } from "@artsy/palette"
 
 export type OnboardingModalProps = ModalBaseProps
@@ -19,6 +19,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 }) => {
   const isMounted = useDidMount()
   const [boxProps, modalProps] = splitBoxProps(rest)
+
+  const { theme } = useTheme()
 
   return (
     <ModalBase
@@ -45,7 +47,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
         overflowY="auto"
         style={{
           WebkitOverflowScrolling: "touch",
-          boxShadow: DROP_SHADOW,
+          boxShadow: theme.effects.dropShadow,
           ...(isMounted
             ? {
                 opacity: 1,

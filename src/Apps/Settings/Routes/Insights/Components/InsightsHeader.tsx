@@ -1,5 +1,5 @@
 import { OwnerType } from "@artsy/cohesion"
-import { Box, Button, DROP_SHADOW, Flex, FullBleed } from "@artsy/palette"
+import { Box, Button, Flex, FullBleed, useTheme } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
@@ -11,6 +11,8 @@ export const InsightsHeader: React.FC = () => {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
 
+  const { theme } = useTheme()
+
   return (
     <Box mt={[-2, -4]}>
       <Sticky>
@@ -18,7 +20,9 @@ export const InsightsHeader: React.FC = () => {
           return (
             <FullBleed
               backgroundColor="white100"
-              style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+              style={
+                stuck ? { boxShadow: theme.effects.dropShadow } : undefined
+              }
             >
               <AppContainer>
                 <HorizontalPadding>

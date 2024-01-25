@@ -4,7 +4,6 @@ import {
   Props,
   GENERIC_FAIL_MESSAGE,
 } from "Apps/Order/Components/AddressModal"
-import { mount } from "enzyme"
 import { validAddress } from "Components/__tests__/Utils/addressForm"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { useSystemContext } from "System/useSystemContext"
@@ -12,11 +11,14 @@ import {
   updateAddressFailure,
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
+import { mount } from "DevTools/mountWithMockBoot"
+
 jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 jest.mock("Utils/user", () => ({
+  ...jest.requireActual("Utils/user"),
   userHasLabFeature: jest.fn(),
 }))
 

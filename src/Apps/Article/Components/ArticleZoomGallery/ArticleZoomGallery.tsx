@@ -1,4 +1,12 @@
-import { Box, Clickable, Flex, ModalBase, Spinner, Text } from "@artsy/palette"
+import {
+  Box,
+  Clickable,
+  Flex,
+  ModalBase,
+  Spinner,
+  Text,
+  useTheme,
+} from "@artsy/palette"
 import { FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -94,6 +102,19 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
 
           <Box position="relative" flex={1} minHeight={0} p={2}>
             {figures.map((figure, i) => {
+              return (
+                <div key={figure.id}>
+                  xxx{figure.id}
+                  <ArticleZoomGalleryFigureFragmentContainer
+                    figure={figure}
+                    active={i === index}
+                    preload={
+                      i === mapCursorToMax(index - 1, figures.length) ||
+                      i === mapCursorToMax(index + 1, figures.length)
+                    }
+                  />
+                </div>
+              )
               return (
                 <ArticleZoomGalleryFigureFragmentContainer
                   key={i}
@@ -199,8 +220,9 @@ export const ArticleZoomGalleryFragmentContainer = createFragmentContainer(
 )
 
 const ArticleZoomGalleryPlaceholder: FC = () => {
+  const { theme } = useTheme()
   return (
-    <ModalBase bg="rgba(255, 255, 255, 0.8)">
+    <ModalBase bg={theme.effects.backdrop}>
       <Spinner />
     </ModalBase>
   )

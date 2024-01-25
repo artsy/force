@@ -1,6 +1,6 @@
 import { screen, fireEvent } from "@testing-library/react"
-import { mount } from "enzyme"
 import { MyCollectionArtworkSWAHowItWorksModal } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWAHowItWorksModal"
+import { mount } from "DevTools/mountWithMockBoot"
 
 jest.unmock("react-relay")
 const onClose = jest.fn()

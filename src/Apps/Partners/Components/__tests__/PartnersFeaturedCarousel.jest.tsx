@@ -56,10 +56,10 @@ describe("PartnersFeaturedCarousel", () => {
       }),
     })
 
-    expect(screen.getAllByText("Example Partner")).toHaveLength(2)
-    expect(screen.getAllByText("Example Show")).toHaveLength(2)
-    expect(screen.getAllByText("Current Show")).toHaveLength(2)
+    expect(screen.getByText("Example Partner")).toBeInTheDocument()
+    expect(screen.getByText("Example Show")).toBeInTheDocument()
+    expect(screen.getByText("Current Show")).toBeInTheDocument()
     expect(screen.queryByText("Online Exclusive")).not.toBeInTheDocument()
-    expect(screen.getAllByText("New York, Oct 19 – Oct 31")).toHaveLength(2)
+    expect(screen.getByText("New York, Oct 19 – Oct 31")).toBeInTheDocument()
   })
 })

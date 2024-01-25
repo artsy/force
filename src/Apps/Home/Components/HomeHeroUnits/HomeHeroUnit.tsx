@@ -8,6 +8,7 @@ import {
   Button,
   GridColumns,
   Column,
+  useTheme,
 } from "@artsy/palette"
 import { cropped } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
@@ -100,6 +101,13 @@ const HomeHeroUnitLarge: React.FC<HomeHeroUnitProps> = ({
   const imageUrl = heroUnit.image?.imageURL
   const image = imageUrl && cropped(imageUrl, { width: 1270, height: 500 })
 
+  const { theme } = useTheme()
+
+  const background =
+    theme.name === "light"
+      ? "linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%)"
+      : "linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 100%)"
+
   return (
     <RouterLink
       aria-label={`${heroUnit.title} - ${heroUnit.body}`}
@@ -132,7 +140,7 @@ const HomeHeroUnitLarge: React.FC<HomeHeroUnitProps> = ({
                 px={2}
                 pb={1}
                 pt={6}
-                background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
+                background={background}
               >
                 <HomeHeroUnitCredit>{heroUnit.credit}</HomeHeroUnitCredit>
               </Box>

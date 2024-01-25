@@ -24,7 +24,7 @@ export const UserVerifiedIcon: React.FC<Props> = ({ variant = "sm" }) => {
         >
           <PersonIcon size={18} />
           <Box
-            backgroundColor="white"
+            backgroundColor="white100"
             position="absolute"
             size={6}
             borderRadius="50%"
@@ -50,7 +50,7 @@ export const UserVerifiedIcon: React.FC<Props> = ({ variant = "sm" }) => {
         >
           <PersonIcon height={12} width={14} />
           <Box
-            backgroundColor="white"
+            backgroundColor="white100"
             position="absolute"
             size={6}
             borderRadius="50%"

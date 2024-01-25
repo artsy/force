@@ -185,7 +185,7 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
               minHeight: "50px",
               maxHeight: "40vh",
               height: textAreaHeight,
-              borderColor: "white",
+              borderColor: "white100",
               paddingRight: "100px",
               resize: "none",
             }}

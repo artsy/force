@@ -1,4 +1,4 @@
-import { Box, DROP_SHADOW, Flex, Separator } from "@artsy/palette"
+import { Box, Flex, Separator, useTheme } from "@artsy/palette"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { Sticky } from "Components/Sticky"
 import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
@@ -17,14 +17,18 @@ export interface NotificationsWrapperProps {
 export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
   mode,
 }) => {
+  const { theme } = useTheme()
+
   return (
     <Box>
       {mode === "dropdown" ? (
-        <Box style={{ boxShadow: DROP_SHADOW }}>
+        <Box style={{ boxShadow: theme.effects.dropShadow }}>
           <Flex flex={1} overflow="hidden">
             <NotificationsHeader mode="dropdown" />
           </Flex>
+
           <Separator />
+
           <Box
             maxHeight={`calc(100vh - ${DROPDOWN_CONTENT_HEIGHT}px)`}
             overflowY="scroll"
@@ -36,8 +40,10 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
         <>
           <Sticky>
             <NotificationsHeader mode="page" />
+
             <Separator />
           </Sticky>
+
           <Flex overflow="scroll" flexDirection="column">
             <NotificationsListQueryRenderer mode={mode} />
           </Flex>

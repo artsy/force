@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair$data } from "__generated__/FairApp_fair.graphql"
-import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
+import { FullBleed, Spacer, useTheme } from "@artsy/palette"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "System/useSystemContext"
 import { Analytics } from "System/Analytics/AnalyticsContext"
@@ -117,11 +117,13 @@ export const FairAppFragmentContainer = createFragmentContainer(
 )
 
 const Stuck: React.FC<{ stuck: boolean }> = ({ stuck, children }) => {
+  const { theme } = useTheme()
+
   return (
     <FullBleed
       mb={stuck ? 1 : 0}
       backgroundColor="white100"
-      style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+      style={stuck ? { boxShadow: theme.effects.dropShadow } : undefined}
     >
       <AppContainer>
         <HorizontalPadding>{children}</HorizontalPadding>

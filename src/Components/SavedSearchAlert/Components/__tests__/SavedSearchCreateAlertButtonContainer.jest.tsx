@@ -6,6 +6,7 @@ import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { SavedSearchCreateAlertButtonContainer } from "Components/SavedSearchAlert/Components/SavedSearchCreateAlertButtonContainer"
 import { Button } from "@artsy/palette"
 import { useAuthDialog } from "Components/AuthDialog"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.mock("System/useSystemContext")
 jest.mock("react-tracking")
@@ -33,27 +34,29 @@ describe("SavedSearchCreateAlertButtonContainer", () => {
 
   const renderButton = () => {
     render(
-      <SavedSearchCreateAlertButtonContainer
-        entity={savedSearchEntity}
-        criteria={{}}
-        authDialogOptions={{
-          options: {
-            title: "Sign up to create an alert",
-            afterAuthAction: {
-              action: "createAlert",
-              kind: "artist",
-              objectId: "owner-slug",
+      <MockBoot>
+        <SavedSearchCreateAlertButtonContainer
+          entity={savedSearchEntity}
+          criteria={{}}
+          authDialogOptions={{
+            options: {
+              title: "Sign up to create an alert",
+              afterAuthAction: {
+                action: "createAlert",
+                kind: "artist",
+                objectId: "owner-slug",
+              },
             },
-          },
-          analytics: {
-            contextModule: ContextModule.artworkGrid,
-            intent: Intent.createAlert,
-          },
-        }}
-        renderButton={({ onClick }) => (
-          <Button onClick={onClick}>Create Alert</Button>
-        )}
-      />
+            analytics: {
+              contextModule: ContextModule.artworkGrid,
+              intent: Intent.createAlert,
+            },
+          }}
+          renderButton={({ onClick }) => (
+            <Button onClick={onClick}>Create Alert</Button>
+          )}
+        />
+      </MockBoot>
     )
   }
 

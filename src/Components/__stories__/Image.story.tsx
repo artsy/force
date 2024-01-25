@@ -1,12 +1,12 @@
 import {
   Box,
   Clickable,
-  DROP_SHADOW,
   HorizontalOverflow,
   Join,
   ModalDialog,
   Spacer,
   Text,
+  useTheme,
 } from "@artsy/palette"
 import { useState } from "react"
 import styled from "styled-components"
@@ -79,6 +79,8 @@ const Detail = ({
 }: typeof IMAGES[number] & { quality: number }) => {
   const [show, setShow] = useState(false)
 
+  const { theme } = useTheme()
+
   return (
     <>
       {show && (
@@ -104,7 +106,7 @@ const Detail = ({
                 px={1}
                 py={0.5}
                 borderRadius={2}
-                style={{ boxShadow: DROP_SHADOW }}
+                style={{ boxShadow: theme.effects.dropShadow }}
               >
                 100%
               </Text>
@@ -123,7 +125,7 @@ const Detail = ({
                 px={1}
                 py={0.5}
                 borderRadius={2}
-                style={{ boxShadow: DROP_SHADOW }}
+                style={{ boxShadow: theme.effects.dropShadow }}
               >
                 {quality}%
               </Text>
