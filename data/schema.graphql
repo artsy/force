@@ -4066,7 +4066,7 @@ type CollectorProfileType {
       reason: "identityVerified is going to be removed, use isIdentityVerified instead"
     )
   initials(length: Int = 3): String
-  inquiryRequestsCount: Int
+  inquiryRequestsCount: Int!
   institutionalAffiliations: String
   intents: [String]
 
@@ -11208,7 +11208,7 @@ type InquirerCollectorProfile {
       reason: "identityVerified is going to be removed, use isIdentityVerified instead"
     )
   initials(length: Int = 3): String
-  inquiryRequestsCount: Int
+  inquiryRequestsCount: Int!
   institutionalAffiliations: String
   intents: [String]
 
@@ -18654,7 +18654,7 @@ type UpdateCollectorProfilePayload {
       reason: "identityVerified is going to be removed, use isIdentityVerified instead"
     )
   initials(length: Int = 3): String
-  inquiryRequestsCount: Int
+  inquiryRequestsCount: Int!
   institutionalAffiliations: String
   intents: [String]
 
