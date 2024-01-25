@@ -12,7 +12,7 @@ export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
   mode,
 }) => {
   return (
-    <Box backgroundColor="white100" width="100%" px={2} pt={2}>
+    <Box backgroundColor="white100" width="100%" px={2} pt={2} pb={1}>
       <Flex
         flexDirection="row"
         justifyContent="space-between"
@@ -30,11 +30,12 @@ export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
           )}
         </Flex>
       </Flex>
+
       <Spacer y={2} />
+
       <Flex flexDirection="row">
         <NotificationsPills />
       </Flex>
-      <Spacer y={1} />
     </Box>
   )
 }

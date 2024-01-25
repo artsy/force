@@ -90,7 +90,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
       {enableNewActivityPanel ? (
         <Flex flex={1} flexDirection="column">
           {!!artworks.length && (
-            <Flex flexDirection="row" alignItems="center" mb={1}>
+            <Flex flexDirection="row" alignItems="center" mb={0.5}>
               <Flex flex={1}>
                 <Join separator={<Spacer x={1} />}>
                   {artworks.map(artwork => {
