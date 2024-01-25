@@ -14,6 +14,7 @@ import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
 
@@ -142,6 +143,10 @@ const ArtworkGridItemImage: React.FC<
   const height = Math.floor(width / aspectRatio)
   const transform = aspectRatio === 1 ? cropped : resized
   const imageURL = artwork.image?.url
+  const blurhashFeatureEnabled = useFeatureFlag("onyx_blurhash_placeholders")
+  const blurHashDataURI = blurhashFeatureEnabled
+    ? artwork.image?.blurhashDataURI
+    : undefined
   const { src, srcSet } = imageURL
     ? transform(imageURL, {
         width,
@@ -177,6 +182,7 @@ const ArtworkGridItemImage: React.FC<
         srcSet={srcSet}
         lazyLoad={lazyLoad}
         preventRightClick={!isTeam}
+        blurDataURL={blurHashDataURI ?? undefined}
       />
     )
   }
@@ -275,6 +281,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
           url(version: ["larger", "large"])
           aspectRatio
           versions
+          blurhashDataURI
         }
         artistNames
         href

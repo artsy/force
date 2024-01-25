@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f264b6b0074bb6781abeb07ce6793296>>
+ * @generated SignedSource<<c061fa1469e305e6509a81d0d0ad62ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type GridItem_artwork$data = {
   readonly href: string | null | undefined;
   readonly image: {
     readonly aspectRatio: number;
+    readonly blurhashDataURI: string | null | undefined;
     readonly internalID: string | null | undefined;
     readonly placeholder: string | null | undefined;
     readonly url: string | null | undefined;
@@ -117,6 +118,13 @@ return {
           "kind": "ScalarField",
           "name": "versions",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhashDataURI",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -151,6 +159,6 @@ return {
 };
 })();
 
-(node as any).hash = "4f2eeda7d15a4f217dca36ab130d55a6";
+(node as any).hash = "088824ad9034a446c7c6d9fcb1c1e62e";
 
 export default node;
