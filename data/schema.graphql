@@ -13601,6 +13601,7 @@ type Notification implements Node {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String @deprecated(reason: "Please use `publishedAt` instead")
+  headline: String!
 
   # A globally unique ID.
   id: ID!
