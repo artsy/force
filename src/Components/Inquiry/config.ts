@@ -31,14 +31,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
       workflow: [
         {
           askSpecialist: {
-            true: [
-              "Specialist",
-              {
-                isLoggedOut: {
-                  true: ["Account"],
-                },
-              },
-            ],
+            true: ["Specialist"],
             false: [
               "Inquiry",
               {
