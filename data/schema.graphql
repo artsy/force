@@ -4056,6 +4056,7 @@ type CollectorProfileType {
     @deprecated(
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
+  firstNameLastInitial: String
   icon: Image
 
   # A globally unique ID.
@@ -4131,6 +4132,13 @@ type CollectorProfileTypeEdge {
 
   # The item at the end of the edge
   node: CollectorProfileType
+}
+
+type CollectorResume {
+  collectorProfile: CollectorProfileType!
+
+  # The Collector follows the Gallery profile
+  isCollectorFollowingPartner: Boolean!
 }
 
 # Represents either an action or a potential failure
@@ -7264,6 +7272,9 @@ type Conversation implements Node {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+
+  # The collector profile of the user who initiated the conversation. Do not use this field for Partners
+  collectorResume: CollectorResume
   createdAt(
     format: String
 
@@ -7295,6 +7306,7 @@ type Conversation implements Node {
 
   # The collector profile of the user who initiated the conversation
   fromProfile: CollectorProfileType
+    @deprecated(reason: "Use `collectorResume` instead")
 
   # The user who initiated the conversation
   fromUser: User
@@ -11182,6 +11194,7 @@ type InquirerCollectorProfile {
     @deprecated(
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
+  firstNameLastInitial: String
 
   # The Collector follows the Gallery profile
   hasPartnerFollow: Boolean
@@ -18629,6 +18642,7 @@ type UpdateCollectorProfilePayload {
     @deprecated(
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
+  firstNameLastInitial: String
   icon: Image
 
   # A globally unique ID.
