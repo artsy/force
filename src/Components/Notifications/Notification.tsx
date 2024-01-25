@@ -4,12 +4,14 @@ import {
   SkeletonBox,
   SkeletonText,
   Spacer,
-  Text,
 } from "@artsy/palette"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { NotificationQuery } from "__generated__/NotificationQuery.graphql"
 import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
-import { Suspense } from "react"
+import { Suspense, useEffect } from "react"
+import { ArtworkPublishedNotification } from "Components/Notifications/ArtworkPublishedNotification"
+import { AlertNotification } from "Components/Notifications/AlertNotification"
+import { useRouter } from "found"
 
 export const SUPPORTED_NOTIFICATION_TYPES = [
   "ARTWORK_ALERT",
@@ -21,34 +23,40 @@ interface NotificationProps {
 }
 
 const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
-  const { me } = useLazyLoadQuery<NotificationQuery>(notificationQuery, {
-    id: notificationId,
+  const { router } = useRouter()
+
+  const data = useLazyLoadQuery<NotificationQuery>(notificationQuery, {
+    internalID: notificationId,
   })
 
-  if (!me) {
+  const notification = data.me?.notification
+
+  // Redirect user to the notifications targetHref if the notification type is not supported
+  useEffect(() => {
+    if (
+      !SUPPORTED_NOTIFICATION_TYPES.includes(
+        notification?.notificationType as string
+      )
+    ) {
+      router.push(notification?.targetHref as string)
+    }
+  }, [notification, router])
+
+  // TODO: Implement error handling
+  if (!data.me?.notification) {
     return null
   }
 
-  const { notification } = me
-
-  if (!notification) {
-    return (
-      <Text variant="sm-display" px={2} py={4}>
-        There is nothing to show.
-      </Text>
-    )
+  switch (notification?.notificationType) {
+    case "ARTWORK_ALERT":
+      return <AlertNotification notification={data.me?.notification} />
+    case "ARTWORK_PUBLISHED":
+      return (
+        <ArtworkPublishedNotification notification={data.me?.notification} />
+      )
+    default:
+      return null
   }
-
-  return (
-    <Flex flexDirection="column" m={4}>
-      <Text variant="xl" mb={2}>
-        {notification.title}
-      </Text>
-
-      {/* TODO: Please remove me. I'm just here to test scrolling. */}
-      <Flex height={2000} />
-    </Flex>
-  )
 }
 
 export const NotificationQueryRenderer: React.FC = props => {
@@ -66,10 +74,14 @@ export const NotificationQueryRenderer: React.FC = props => {
 }
 
 const notificationQuery = graphql`
-  query NotificationQuery($id: String!) {
+  query NotificationQuery($internalID: String!) {
     me {
-      notification(id: $id) {
-        title
+      notification(id: $internalID) {
+        notificationType
+        targetHref
+
+        ...AlertNotification_notification
+        ...ArtworkPublishedNotification_notification
       }
     }
   }
