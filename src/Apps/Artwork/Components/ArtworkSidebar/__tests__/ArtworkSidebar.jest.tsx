@@ -3,10 +3,18 @@ import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ArtworkSidebarFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebar"
+import { DateTime } from "luxon"
 
 jest.unmock("react-relay")
 
 jest.mock("react-tracking")
+
+jest.mock(
+  "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer",
+  () => ({
+    ArtworkSidebarAuctionTimerFragmentContainer: () => <div>AuctionTimer</div>,
+  })
+)
 
 const ArtworkSidebar_TEST_QUERY = graphql`
   query ArtworkSidebar_Test_Query @relay_test_operation {
@@ -236,6 +244,60 @@ describe("ArtworkSidebarArtists", () => {
           },
         ]
       `)
+    })
+  })
+
+  describe("Auction Timer", () => {
+    it("should show if the artwork is in an auction", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isInAuction: true,
+        }),
+        SaleArtwork: () => ({
+          endAt: new Date(DateTime.local().toMillis() - 1000),
+        }),
+        Sale: () => ({
+          isAuction: true,
+          isClosed: false,
+          endAt: new Date(DateTime.local().toMillis() - 10000),
+        }),
+      })
+
+      expect(screen.queryByText("Bidding closed")).toBeInTheDocument()
+      expect(screen.queryByText("AuctionTimer")).toBeInTheDocument()
+    })
+
+    it("should show if the artwork is in a timed sale", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isInAuction: false,
+        }),
+        Sale: () => ({
+          isAuction: false,
+          isClosed: false,
+          endAt: new Date(DateTime.local().toMillis() + 10000),
+        }),
+        SaleArtwork: () => ({
+          endedAt: null,
+        }),
+      })
+
+      expect(screen.queryByText("AuctionTimer")).toBeInTheDocument()
+    })
+
+    it("should not show if the artwork is in a timed sale that has ended", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isInAuction: false,
+        }),
+        Sale: () => ({
+          isAuction: false,
+          isClosed: true,
+          endAt: "2020-08-19T08:00:00+00:00",
+        }),
+      })
+
+      expect(screen.queryByText("AuctionTimer")).not.toBeInTheDocument()
     })
   })
 })

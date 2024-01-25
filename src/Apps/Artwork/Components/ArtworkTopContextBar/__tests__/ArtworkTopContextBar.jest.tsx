@@ -49,6 +49,7 @@ describe("ArtworkTopContextBar", () => {
           sale: {
             isBenefit: false,
             isGalleryAuction: false,
+            isAuction: true,
           },
         }),
         Partner: () => ({
@@ -65,6 +66,28 @@ describe("ArtworkTopContextBar", () => {
       expect(text).toContain("In auction")
     })
 
+    it("has correct meta text if auction", () => {
+      const { wrapper } = getWrapper({
+        Artwork: () => ({
+          sale: {
+            isAuction: true,
+          },
+        }),
+      })
+      expect(wrapper.html()).toContain("In auction")
+    })
+
+    it("has correct meta text if not an auction", () => {
+      const { wrapper } = getWrapper({
+        Artwork: () => ({
+          sale: {
+            isAuction: false,
+          },
+        }),
+      })
+      expect(wrapper.html()).toContain("In sale")
+    })
+
     it("does not render partnerName if benefit or gallery auction", () => {
       const { wrapper } = getWrapper({
         Artwork: () => ({
@@ -74,6 +97,25 @@ describe("ArtworkTopContextBar", () => {
           sale: {
             isBenefit: true,
             isGalleryAuction: true,
+          },
+        }),
+        Partner: () => ({
+          name: "partnerName",
+        }),
+      })
+
+      const html = wrapper.html()
+      expect(html).not.toContain("partnerHref")
+    })
+
+    it("does not render partnerName if not an auction", () => {
+      const { wrapper } = getWrapper({
+        Artwork: () => ({
+          context: {
+            __typename: "Sale",
+          },
+          sale: {
+            isAuction: false,
           },
         }),
         Partner: () => ({

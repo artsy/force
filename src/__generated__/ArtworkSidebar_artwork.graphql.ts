@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0beee4634bc89c75fb5804906faee09d>>
+ * @generated SignedSource<<3d6bf7077e1a0393c4e009f0b12f0b14>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,8 @@ export type ArtworkSidebar_artwork$data = {
   readonly isOfferable: boolean | null | undefined;
   readonly isSold: boolean | null | undefined;
   readonly sale: {
+    readonly endAt: string | null | undefined;
+    readonly isAuction: boolean | null | undefined;
     readonly isClosed: boolean | null | undefined;
     readonly startAt: string | null | undefined;
   } | null | undefined;
@@ -42,7 +44,15 @@ export type ArtworkSidebar_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar_artwork">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "endAt",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -179,6 +189,7 @@ const node: ReaderFragment = {
       "name": "sale",
       "plural": false,
       "selections": [
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -191,6 +202,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "isClosed",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isAuction",
           "storageKey": null
         }
       ],
@@ -225,13 +243,7 @@ const node: ReaderFragment = {
           "name": "extendedBiddingEndAt",
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "endAt",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -264,7 +276,8 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "876fc67965005cc29e33af2d55142799";
+(node as any).hash = "48659afbd86a0f92627e3c5e69723dce";
 
 export default node;
