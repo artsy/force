@@ -4056,6 +4056,7 @@ type CollectorProfileType {
     @deprecated(
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
+  firstNameLastInitial: String
   icon: Image
 
   # A globally unique ID.
@@ -4131,6 +4132,13 @@ type CollectorProfileTypeEdge {
 
   # The item at the end of the edge
   node: CollectorProfileType
+}
+
+type CollectorResume {
+  collectorProfile: CollectorProfileType!
+
+  # The Collector follows the Gallery profile
+  isCollectorFollowingPartner: Boolean!
 }
 
 # Represents either an action or a potential failure
@@ -7264,6 +7272,9 @@ type Conversation implements Node {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+
+  # The collector profile of the user who initiated the conversation. Do not use this field for Partners
+  collectorResume: CollectorResume
   createdAt(
     format: String
 
@@ -7295,6 +7306,7 @@ type Conversation implements Node {
 
   # The collector profile of the user who initiated the conversation
   fromProfile: CollectorProfileType
+    @deprecated(reason: "Use `collectorResume` instead")
 
   # The user who initiated the conversation
   fromUser: User
@@ -11083,6 +11095,7 @@ type Image {
 
   # Blurhash code for the image
   blurhash: String
+  blurhashDataURI(width: Int = 64): String
   caption: String
   cropped(
     height: Int!
@@ -11181,6 +11194,7 @@ type InquirerCollectorProfile {
     @deprecated(
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
+  firstNameLastInitial: String
 
   # The Collector follows the Gallery profile
   hasPartnerFollow: Boolean
@@ -13600,6 +13614,7 @@ type Notification implements Node {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String @deprecated(reason: "Please use `publishedAt` instead")
+  headline: String!
 
   # A globally unique ID.
   id: ID!
@@ -13982,15 +13997,13 @@ type Partner implements Node {
 
     # Return artworks that are missing priority metadata
     missingPriorityMetadata: Boolean
+    page: Int
 
     # Only return artworks that are partner-offerable
     partnerOfferable: Boolean
 
     # Return artworks published less than x seconds ago.
     publishedWithin: Int
-
-    # Return artworks that were saved by collectors at least one time.
-    savedAtLeastOnce: Boolean
 
     # Only allowed for authorized admin/partner requests. When false fetch :all
     # properties on an artwork, when true or not present fetch artwork :short properties
@@ -18629,6 +18642,7 @@ type UpdateCollectorProfilePayload {
     @deprecated(
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
+  firstNameLastInitial: String
   icon: Image
 
   # A globally unique ID.
