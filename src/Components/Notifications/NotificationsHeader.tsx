@@ -2,7 +2,7 @@ import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import { NotificationsPills } from "Components/Notifications/NotificationsPills"
 import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
-import { NofiticationsContextualMenu } from "Components/Notifications/NotificationsContextualMenu"
+import { NotificationsContextualMenu } from "Components/Notifications/NotificationsContextualMenu"
 import { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
 
 export interface NotificationsHeaderProps extends MarkAllAsReadPanelProps {
@@ -24,7 +24,7 @@ export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
           <Text variant="lg-display">Activity</Text>
         </Flex>
         <Flex justifyContent="flex-end" gap={4} alignItems="center">
-          <NofiticationsContextualMenu unreadCounts={unreadCounts} />
+          <NotificationsContextualMenu unreadCounts={unreadCounts} />
           {mode === "dropdown" && (
             <Clickable as="a">
               <CloseIcon display="block" />

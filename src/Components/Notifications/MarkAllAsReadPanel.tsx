@@ -71,7 +71,7 @@ export const MarkAllAsReadPanel: React.FC<MarkAllAsReadPanelProps> = ({
         <>
           <Clickable onClick={markAllAsRead} disabled={!hasUnreadNotifications}>
             <Text
-              variant="xs"
+              variant="sm-display"
               color={!hasUnreadNotifications ? "black60" : "black100"}
             >
               {t`activityPanel.markAllAsRead`}

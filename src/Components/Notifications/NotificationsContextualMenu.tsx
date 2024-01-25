@@ -4,11 +4,11 @@ import { Z } from "Apps/Components/constants"
 import { RouterLink } from "System/Router/RouterLink"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 
-interface NofiticationsContextualMenuProps {
+interface NotificationsContextualMenuProps {
   unreadCounts: number
 }
 
-export const NofiticationsContextualMenu: React.FC<NofiticationsContextualMenuProps> = ({
+export const NotificationsContextualMenu: React.FC<NotificationsContextualMenuProps> = ({
   unreadCounts,
 }) => {
   return (
@@ -17,7 +17,12 @@ export const NofiticationsContextualMenu: React.FC<NofiticationsContextualMenuPr
         <MarkAllAsReadPanel unreadCounts={unreadCounts} />
       </ContextualMenuItem>
       <ContextualMenuItem>
-        <RouterLink to={BASE_SAVES_PATH} textDecoration="none" color="black100">
+        <RouterLink
+          to={BASE_SAVES_PATH}
+          textDecoration="none"
+          color="black100"
+          display="block"
+        >
           Manage Saves
         </RouterLink>
       </ContextualMenuItem>
@@ -26,6 +31,7 @@ export const NofiticationsContextualMenu: React.FC<NofiticationsContextualMenuPr
           to="/collector-profile/follows"
           textDecoration="none"
           color="black100"
+          display="block"
         >
           Manage Follows
         </RouterLink>
