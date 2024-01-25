@@ -59,7 +59,7 @@ export const InquirySpecialist: React.FC = () => {
         contactGallery: false,
       })
       setMode("Success")
-      await wait(500)
+      await wait(1500)
       next()
     } catch (err) {
       logger.error(err)
