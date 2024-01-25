@@ -20,6 +20,7 @@ import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinition
 import { useTracking } from "react-tracking"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 
 export interface ArtworkDetailsAdditionalInfoProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork$data
@@ -47,6 +48,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
 
   const [openMediumModal, setOpenMediumModal] = useState(false)
   const [openRarityModal, setOpenRarityModal] = useState(false)
+  const [openConditionModal, setOpenConditionModal] = useState(false)
 
   const { dimensionsLabel } = useArtworkDimensions(dimensions)
 
@@ -152,6 +154,9 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
           subject: "Read more",
         })
       },
+      onTitleClick: () => {
+        setOpenConditionModal(true)
+      },
     },
 
     {
@@ -179,26 +184,37 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
   }
 
   return (
-    <StackableBorderBox flexDirection="column">
-      <Join separator={<Spacer y={1} />}>
-        {displayItems.map(({ title, value, onReadMoreClicked }, index) => (
-          <ArtworkDefinitionList key={title + index} term={title}>
-            <HTML variant="xs" color="black60">
-              {/* TODO: not sure why this check is here */}
-              {React.isValidElement(value) ? (
-                value
-              ) : (
-                <ReadMore
-                  onReadMoreClicked={onReadMoreClicked}
-                  maxChars={140}
-                  content={value as string}
-                />
-              )}
-            </HTML>
-          </ArtworkDefinitionList>
-        ))}
-      </Join>
-    </StackableBorderBox>
+    <>
+      {openConditionModal && (
+        <ConditionInfoModal onClose={() => setOpenConditionModal(false)} />
+      )}
+      <StackableBorderBox flexDirection="column">
+        <Join separator={<Spacer y={1} />}>
+          {displayItems.map(
+            ({ title, value, onReadMoreClicked, onTitleClick }, index) => (
+              <ArtworkDefinitionList
+                key={title + index}
+                term={title}
+                onTitleClick={onTitleClick}
+              >
+                <HTML variant="xs" color="black60">
+                  {/* TODO: not sure why this check is here */}
+                  {React.isValidElement(value) ? (
+                    value
+                  ) : (
+                    <ReadMore
+                      onReadMoreClicked={onReadMoreClicked}
+                      maxChars={140}
+                      content={value as string}
+                    />
+                  )}
+                </HTML>
+              </ArtworkDefinitionList>
+            )
+          )}
+        </Join>
+      </StackableBorderBox>
+    </>
   )
 }
 
