@@ -74,10 +74,10 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
   const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
 
-  const { hasEnded } = useTimer(
-    updatedBiddingEndAt as string,
-    startAt as string
-  )
+  const timerEndAt = sale?.isAuction ? updatedBiddingEndAt : sale?.endAt
+
+  const { hasEnded } = useTimer(timerEndAt as string, startAt as string)
+
   const shouldHideDetailsCreateAlertCTA =
     !isEligibleToCreateAlert ||
     (isInAuction && hasEnded) ||
@@ -85,6 +85,8 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
     isSold
 
   const shoudlDisplayLotLabel = !!isInAuction && !!lotLabel
+
+  const showTimedSaleTimer = sale && !sale.isAuction && !hasEnded
 
   return (
     <Flex flexDirection="column" data-test={ContextModule.artworkSidebar}>
@@ -132,7 +134,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         <ArtworkSidebarCommercialButtonsFragmentContainer artwork={artwork} />
       )}
 
-      {!hasEnded && sale && !sale.isAuction && (
+      {showTimedSaleTimer && (
         <>
           <ArtworkSidebarAuctionTimerFragmentContainer artwork={artwork} />
           <Spacer y={2} />
@@ -212,6 +214,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarAuctionTimer_artwork
         ...ArtworkSidebarAuctionInfoPolling_artwork
         sale {
+          endAt
           startAt
           isClosed
           isAuction
