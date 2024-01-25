@@ -6,6 +6,7 @@ import {
   Spacer,
   Text,
   TextArea,
+  useToasts,
 } from "@artsy/palette"
 import * as React from "react"
 import { useSystemContext } from "System/useSystemContext"
@@ -23,6 +24,7 @@ type Mode = "Pending" | "Sending" | "Error" | "Success"
 
 export const InquirySpecialist: React.FC = () => {
   const { user } = useSystemContext()
+  const { sendToast } = useToasts()
 
   const { next, setInquiry, inquiry, artworkID } = useInquiryContext()
 
@@ -59,7 +61,11 @@ export const InquirySpecialist: React.FC = () => {
         contactGallery: false,
       })
       setMode("Success")
-      await wait(1500)
+      await wait(500)
+      sendToast({
+        variant: "success",
+        message: "Your message has been sent",
+      })
       next()
     } catch (err) {
       logger.error(err)
