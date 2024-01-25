@@ -144,8 +144,8 @@ const ArtworkGridItemImage: React.FC<
   const transform = aspectRatio === 1 ? cropped : resized
   const imageURL = artwork.image?.url
   const blurhashFeatureEnabled = useFeatureFlag("onyx_blurhash_placeholders")
-  const blurHashDataURI = blurhashFeatureEnabled
-    ? artwork.image?.blurhashDataURI
+  const blurHashDataURL = blurhashFeatureEnabled
+    ? artwork.image?.blurhashDataURL
     : undefined
   const { src, srcSet } = imageURL
     ? transform(imageURL, {
@@ -182,7 +182,7 @@ const ArtworkGridItemImage: React.FC<
         srcSet={srcSet}
         lazyLoad={lazyLoad}
         preventRightClick={!isTeam}
-        blurDataURL={blurHashDataURI ?? undefined}
+        placeHolderURL={blurHashDataURL ?? undefined}
       />
     )
   }
@@ -281,7 +281,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
           url(version: ["larger", "large"])
           aspectRatio
           versions
-          blurhashDataURI
+          blurhashDataURL
         }
         artistNames
         href
