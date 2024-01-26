@@ -13,25 +13,27 @@ export const NotificationsContextualMenu: React.FC<NotificationsContextualMenuPr
 }) => {
   return (
     <ContextualMenu placement="bottom-start" zIndex={Z.dropdown}>
-      <ContextualMenuItem>
+      <ContextualMenuItem p={0}>
         <MarkAllAsReadPanel unreadCounts={unreadCounts} />
       </ContextualMenuItem>
-      <ContextualMenuItem>
+      <ContextualMenuItem p={0}>
         <RouterLink
           to={BASE_SAVES_PATH}
           textDecoration="none"
           color="black100"
-          display="block"
+          display={"block"}
+          p={2}
         >
           Manage Saves
         </RouterLink>
       </ContextualMenuItem>
-      <ContextualMenuItem>
+      <ContextualMenuItem p={0}>
         <RouterLink
           to="/collector-profile/follows"
           textDecoration="none"
           color="black100"
-          display="block"
+          display={"block"}
+          p={2}
         >
           Manage Follows
         </RouterLink>
