@@ -37,7 +37,7 @@ describe("Notifications with pills", () => {
   })
 
   it("should render pills", () => {
-    render(<NotificationsWrapper mode="dropdown" />)
+    render(<NotificationsWrapper mode="dropdown" unreadCounts={5} />)
 
     expect(screen.getByText("All")).toBeInTheDocument()
     expect(screen.getByText("Alerts")).toBeInTheDocument()
