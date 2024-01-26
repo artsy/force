@@ -47,8 +47,8 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
           </Sticky>
 
           <Box
-            // The notification list needs a maximum height to be independently scrollable.
             overflow="scroll"
+            // The notification list needs a maximum height to be independently scrollable.
             maxHeight={`calc(100vh - ${DROPDOWN_CONTENT_HEIGHT}px)`}
             pb={2}
           >
