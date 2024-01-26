@@ -1,4 +1,3 @@
-import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { NotificationQueryRenderer } from "Components/Notifications/Notification"
 import { NotificationsContextProvider } from "Components/Notifications/useNotificationsContext"
