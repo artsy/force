@@ -21,7 +21,7 @@ export const NotificationsContextualMenu: React.FC<NotificationsContextualMenuPr
           to={BASE_SAVES_PATH}
           textDecoration="none"
           color="black100"
-          display={"block"}
+          display="block"
           p={2}
         >
           Manage Saves
@@ -32,7 +32,7 @@ export const NotificationsContextualMenu: React.FC<NotificationsContextualMenuPr
           to="/collector-profile/follows"
           textDecoration="none"
           color="black100"
-          display={"block"}
+          display="block"
           p={2}
         >
           Manage Follows
