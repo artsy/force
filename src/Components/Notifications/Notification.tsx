@@ -12,7 +12,7 @@ import { useNotificationsContext } from "Components/Notifications/useNotificatio
 import { Suspense, useEffect } from "react"
 import { ArtworkPublishedNotification } from "Components/Notifications/ArtworkPublishedNotification"
 import { AlertNotification } from "Components/Notifications/AlertNotification"
-import { useRouter } from "found"
+import { useRouter } from "System/Router/useRouter"
 
 export const SUPPORTED_NOTIFICATION_TYPES = [
   "ARTWORK_ALERT",
