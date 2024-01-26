@@ -3,8 +3,10 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.unmock("react-relay")
+jest.mock("System/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
 const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
   Component: props => {
@@ -30,28 +32,18 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
 })
 
 describe("NotificationItem", () => {
-  it("should render title", () => {
-    renderWithRelay({
-      Notification: () => notification,
-    })
-
-    expect(screen.getByText("Notification Title")).toBeInTheDocument()
+  beforeAll(() => {
+    ;(useFeatureFlag as jest.Mock).mockImplementation(
+      featureName => featureName === "onyx_new_notification_page"
+    )
   })
 
-  it("should render message", () => {
+  it("should render headline", () => {
     renderWithRelay({
       Notification: () => notification,
     })
 
-    expect(screen.getByText("Notification Message")).toBeInTheDocument()
-  })
-
-  it("should render the formatted publication date", () => {
-    renderWithRelay({
-      Notification: () => notification,
-    })
-
-    expect(screen.getByText("2 days ago")).toBeInTheDocument()
+    expect(screen.getByText("Notification Headline")).toBeInTheDocument()
   })
 
   it("should render artwork images", () => {
@@ -124,15 +116,6 @@ describe("NotificationItem", () => {
   })
 
   describe("Notification type", () => {
-    it("should NOT be rendered by default", () => {
-      renderWithRelay({
-        Notification: () => notification,
-      })
-
-      const label = screen.queryByLabelText(/Notification type: .+/i)
-      expect(label).not.toBeInTheDocument()
-    })
-
     it("should render 'Alert'", () => {
       renderWithRelay({
         Notification: () => ({
@@ -142,6 +125,18 @@ describe("NotificationItem", () => {
       })
 
       const label = screen.getByLabelText("Notification type: Alert")
+      expect(label).toBeInTheDocument()
+    })
+
+    it("should render 'Follow'", () => {
+      renderWithRelay({
+        Notification: () => ({
+          ...notification,
+          notificationType: "ARTWORK_PUBLISHED",
+        }),
+      })
+
+      const label = screen.getByLabelText("Notification type: Follow")
       expect(label).toBeInTheDocument()
     })
 
@@ -213,6 +208,7 @@ const artworks = [
 const notification = {
   title: "Notification Title",
   message: "Notification Message",
+  headline: "Notification Headline",
   publishedAt: "2 days ago",
   isUnread: false,
   notificationType: "ARTWORK_PUBLISHED",
