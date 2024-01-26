@@ -1,6 +1,7 @@
 import { Box, Flex } from "@artsy/palette"
 import styled from "styled-components"
 import { TriangleDownIcon } from "./TriangleDownIcon"
+import { themeGet } from "@styled-system/theme-get"
 
 export const DemandIndexBar: React.FC<{ progress: number }> = ({
   progress,
@@ -23,5 +24,9 @@ export const DemandIndexBar: React.FC<{ progress: number }> = ({
 }
 
 const GradientBar = styled(Box)`
-  background: linear-gradient(90deg, #f3f0f8 2.6%, #1023d7 100%);
+  background: linear-gradient(
+    90deg,
+    ${themeGet("colors.black5")} 2.6%,
+    ${themeGet("colors.brand")} 100%
+  );
 `

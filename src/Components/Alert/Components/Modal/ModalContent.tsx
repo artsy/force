@@ -1,8 +1,7 @@
 import React from "react"
 import { useSentinelVisibility } from "@artsy/palette/dist/utils/useSentinelVisibility"
-import { DROP_SHADOW } from "@artsy/palette/dist/helpers/shadow"
 import { Box, BoxProps } from "@artsy/palette/dist/elements/Box/Box"
-import { Flex, ModalClose } from "@artsy/palette"
+import { Flex, ModalClose, useTheme } from "@artsy/palette"
 
 export interface ModalDialogContentProps
   extends BoxProps,
@@ -28,10 +27,12 @@ export const ModalContent: React.FC<ModalDialogContentProps> = ({
     isSentinelVisible: isAtBottom,
   } = useSentinelVisibility()
 
+  const { theme } = useTheme()
+
   return (
     <Flex
       bg="white100"
-      style={{ boxShadow: DROP_SHADOW }}
+      style={{ boxShadow: theme.effects.dropShadow }}
       width="100%"
       flexDirection="column"
       overflow="hidden"
@@ -42,7 +43,7 @@ export const ModalContent: React.FC<ModalDialogContentProps> = ({
         zIndex={1}
         style={{
           transition: "box-shadow 250ms",
-          boxShadow: isAtTop ? DROP_SHADOW : undefined,
+          boxShadow: isAtTop ? theme.effects.dropShadow : undefined,
         }}
       >
         {header && (
@@ -70,7 +71,7 @@ export const ModalContent: React.FC<ModalDialogContentProps> = ({
         zIndex={1}
         style={{
           transition: "box-shadow 250ms",
-          boxShadow: isAtBottom ? DROP_SHADOW : undefined,
+          boxShadow: isAtBottom ? theme.effects.dropShadow : undefined,
         }}
       >
         {footer && (

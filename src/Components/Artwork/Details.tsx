@@ -32,7 +32,6 @@ interface DetailsProps {
 }
 
 const StyledConditionalLink = styled(RouterLink)`
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   color: ${themeGet("colors.black100")};
   text-decoration: none;
   &:hover {
@@ -95,7 +94,7 @@ const TitleLine: React.FC<DetailsProps> = ({
   artwork: { title, date, href },
 }) => {
   return (
-    <ConditionalLink includeLinks={includeLinks} to={href!}>
+    <ConditionalLink includeLinks={includeLinks} to={href}>
       <Text variant="sm-display" color="black60" overflowEllipsis>
         <i>{title}</i>
         {date && `, ${date}`}
@@ -118,7 +117,7 @@ const PartnerLine: React.FC<DetailsProps> = ({
 
   if (partner) {
     return (
-      <ConditionalLink includeLinks={includeLinks} to={partner?.href!}>
+      <ConditionalLink includeLinks={includeLinks} to={partner?.href}>
         <Text variant="xs" color="black60" overflowEllipsis>
           {partner.name}
         </Text>
@@ -218,7 +217,10 @@ export const Details: React.FC<DetailsProps> = ({
 
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
+  // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
+    if (!contextModule) return null
+
     if (!showSaveButton) {
       return null
     }
@@ -230,7 +232,7 @@ export const Details: React.FC<DetailsProps> = ({
     if (!saveOnlyToDefaultList) {
       return (
         <SaveArtworkToListsButtonFragmentContainer
-          contextModule={contextModule!}
+          contextModule={contextModule}
           artwork={rest.artwork}
         />
       )
@@ -238,7 +240,7 @@ export const Details: React.FC<DetailsProps> = ({
 
     return (
       <SaveButtonFragmentContainer
-        contextModule={contextModule!}
+        contextModule={contextModule}
         artwork={rest.artwork}
       />
     )
@@ -302,7 +304,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   const [isExtended, setIsExtended] = useState(!!extendedBiddingEndAt)
 
   useAuctionWebsocket({
-    lotID: lotID!,
+    lotID: lotID ?? "",
     onChange: ({ extended_bidding_end_at }) => {
       setUpdatedBiddingEndAt(extended_bidding_end_at)
       setIsExtended(true)
@@ -310,13 +312,13 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   })
 
   const { hasEnded: lotHasClosed, time } = useTimer(
-    updatedBiddingEndAt!,
-    sale.startAt!
+    updatedBiddingEndAt ?? "",
+    sale.startAt ?? ""
   )
 
   const { hasEnded: lotsAreClosing, hasStarted: saleHasStarted } = useTimer(
-    sale.endAt!,
-    sale.startAt!
+    sale.endAt ?? "",
+    sale.startAt ?? ""
   )
 
   if (!saleHasStarted) {
@@ -334,6 +336,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   let lotCloseCopy
   let labelColor = "black60"
 
+  // FIXME: Yikes...
   // Lot has already closed
   if (lotHasClosed) {
     lotCloseCopy = "Closed"

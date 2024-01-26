@@ -6,6 +6,7 @@ import {
   Text,
   Image,
   Spacer,
+  useTheme,
 } from "@artsy/palette"
 import { FC } from "react"
 import { RouterLink } from "System/Router/RouterLink"
@@ -20,6 +21,8 @@ interface ArticleSeriesItemProps {
 const ArticleSeriesItem: FC<ArticleSeriesItemProps> = ({ article }) => {
   const image = article.thumbnailImage?.display
   const context = article.seriesArticle?.title ?? article.vertical
+
+  const { theme } = useTheme()
 
   return (
     <RouterLink to={article.href} display="block" textDecoration="none">
@@ -59,13 +62,23 @@ const ArticleSeriesItem: FC<ArticleSeriesItemProps> = ({ article }) => {
             bg="black30"
           >
             {image && (
-              <Image
-                src={image.src}
-                srcSet={image.srcSet}
-                width="100%"
-                height="100%"
-                lazyLoad
-              />
+              <>
+                <Image
+                  src={image.src}
+                  srcSet={image.srcSet}
+                  width="100%"
+                  height="100%"
+                  lazyLoad
+                />
+                <Box
+                  width="100%"
+                  height="100%"
+                  position="absolute"
+                  bottom={0}
+                  left={0}
+                  style={{ background: theme.effects.overlayGradient }}
+                ></Box>
+              </>
             )}
 
             {article.media && (

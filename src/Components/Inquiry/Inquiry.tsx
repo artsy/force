@@ -5,7 +5,7 @@ import {
   useInquiryContext,
 } from "./Hooks/useInquiryContext"
 import { InquiryBackdrop } from "./Components/InquiryBackdrop"
-import { Box, Clickable, DROP_SHADOW } from "@artsy/palette"
+import { Box, Clickable, useTheme } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
 
 interface InquiryProps {
@@ -40,6 +40,8 @@ export const Inquiry: React.FC<InquiryProps> = ({
 const InquiryDialog: React.FC = () => {
   const { onClose, next, current, View } = useInquiryContext()
 
+  const { theme } = useTheme()
+
   return (
     <Box
       position="relative"
@@ -47,7 +49,7 @@ const InquiryDialog: React.FC = () => {
       width={["100vw", current === "Confirmation" ? 450 : 550]}
       height={["100vh", "100%"]}
       p={2}
-      style={{ boxShadow: DROP_SHADOW }}
+      style={{ boxShadow: theme.effects.dropShadow }}
     >
       <Clickable
         position="absolute"

@@ -198,16 +198,6 @@ export const auctionRoutes: AppRouteConfig[] = [
       }) as any,
     ],
   },
-  {
-    // Redirect from the old route to the new one
-    path: "/sale/:slug?",
-    children: [
-      new Redirect({
-        from: "/",
-        to: "/auction/:slug?",
-      }) as any,
-    ],
-  },
 ]
 
 function checkIfLoggedIn({ req, res }) {

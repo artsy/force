@@ -47,12 +47,16 @@ const computeBannerProps = (props: ArtworkTopContextBarProps) => {
         return null
       }
 
+      const meta = sale.isAuction ? "In auction" : "In sale"
+
       return {
         image: sale.coverImage?.url,
-        meta: "In auction",
+        meta,
         name: context.name,
         subHeadline:
-          sale.isBenefit || sale.isGalleryAuction ? null : partner?.name,
+          sale.isBenefit || sale.isGalleryAuction || !sale.isAuction
+            ? null
+            : partner?.name,
         href: context.href,
         rightContent: <RegistrationAuctionTimerFragmentContainer sale={sale} />,
       }

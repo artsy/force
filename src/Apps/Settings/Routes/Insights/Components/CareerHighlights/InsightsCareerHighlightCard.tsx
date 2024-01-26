@@ -68,7 +68,7 @@ const CardWrapper: React.FC<CardWrapperProps> = ({
 }
 
 const ClickableCard = styled(Clickable)`
-  background: white;
+  background: ${themeGet("colors.white100")};
   border: 1px solid ${themeGet("colors.black10")};
   display: flex;
   flex-direction: column;

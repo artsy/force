@@ -1,7 +1,7 @@
 import { mount } from "enzyme"
-import { SystemContextProvider } from "System/SystemContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.mock("Components/ConfirmPasswordModal/Mutations/ConfirmPassword", () => ({
   ConfirmPassword: jest.fn(),
@@ -27,13 +27,9 @@ describe("ConfirmPasswordModal", () => {
 
   const getWrapper = () =>
     mount(
-      <SystemContextProvider relayEnvironment={{} as any}>
-        <ConfirmPasswordModal
-          onCancel={onCancel}
-          onConfirm={onConfirm}
-          show={true}
-        />
-      </SystemContextProvider>
+      <MockBoot>
+        <ConfirmPasswordModal onCancel={onCancel} onConfirm={onConfirm} show />
+      </MockBoot>
     )
 
   it("requires password to submit", () => {
@@ -62,7 +58,9 @@ describe("ConfirmPasswordModal", () => {
       })
     wrapper.find("button[type='submit']").simulate("submit")
     await flushPromiseQueue()
-    expect(ConfirmPassword).toBeCalledWith({}, { password: "mypassword" }) // pragma: allowlist secret
+    expect(ConfirmPassword).toBeCalledWith(expect.anything(), {
+      password: "mypassword", // pragma: allowlist secret
+    })
     expect(onConfirm).toBeCalled()
   })
 
@@ -79,7 +77,9 @@ describe("ConfirmPasswordModal", () => {
       })
     wrapper.find("button[type='submit']").simulate("submit")
     await flushPromiseQueue()
-    expect(ConfirmPassword).toBeCalledWith({}, { password: "mypassword" }) // pragma: allowlist secret
+    expect(ConfirmPassword).toBeCalledWith(expect.anything(), {
+      password: "mypassword", // pragma: allowlist secret
+    })
     expect(onConfirm).not.toBeCalled()
     expect(wrapper.text()).toContain("Invalid password.")
   })

@@ -1,7 +1,7 @@
 import { LabeledInput, Text } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ProvenanceModal } from "Apps/MyCollection/Routes/EditArtwork/Components/ProvenanceModal"
-import { mount, ReactWrapper } from "enzyme"
+import { ReactWrapper } from "enzyme"
 import { Formik } from "formik"
 import {
   ArtworkDetailsForm,
@@ -9,6 +9,7 @@ import {
   getArtworkDetailsFormInitialValues,
   SubmissionType,
 } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtworkDetailsForm"
+import { mount } from "DevTools/mountWithMockBoot"
 
 const renderArtworkForm = (values: ArtworkDetailsFormModel) =>
   mount(

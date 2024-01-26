@@ -1,11 +1,11 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
-
 import { useMutation } from "Utils/Hooks/useMutation"
 import {
   DeleteArtworkListModal,
   DeleteArtworkListEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/DeleteArtworkListModal"
 import { useTracking } from "react-tracking"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.mock("Utils/Hooks/useMutation")
 
@@ -35,10 +35,12 @@ describe("DeleteArtworkListModal", () => {
 
   it("renders the modal content", async () => {
     render(
-      <DeleteArtworkListModal
-        artworkList={artworkList}
-        onClose={closeDeleteModal}
-      />
+      <MockBoot>
+        <DeleteArtworkListModal
+          artworkList={artworkList}
+          onClose={closeDeleteModal}
+        />
+      </MockBoot>
     )
 
     expect(screen.getByText("Delete Foo Bar list?")).toBeInTheDocument()
@@ -48,10 +50,12 @@ describe("DeleteArtworkListModal", () => {
 
   it("dismisses when the Cancel button is clicked", async () => {
     render(
-      <DeleteArtworkListModal
-        artworkList={artworkList}
-        onClose={closeDeleteModal}
-      />
+      <MockBoot>
+        <DeleteArtworkListModal
+          artworkList={artworkList}
+          onClose={closeDeleteModal}
+        />
+      </MockBoot>
     )
 
     fireEvent.click(screen.getByRole("button", { name: /Cancel/ }))
@@ -61,10 +65,12 @@ describe("DeleteArtworkListModal", () => {
 
   it("calls the mutation when the Delete button is clicked", async () => {
     render(
-      <DeleteArtworkListModal
-        artworkList={artworkList}
-        onClose={closeDeleteModal}
-      />
+      <MockBoot>
+        <DeleteArtworkListModal
+          artworkList={artworkList}
+          onClose={closeDeleteModal}
+        />
+      </MockBoot>
     )
 
     fireEvent.click(screen.getByRole("button", { name: /Delete/ }))
@@ -91,10 +97,12 @@ describe("DeleteArtworkListModal", () => {
     }))
 
     render(
-      <DeleteArtworkListModal
-        artworkList={artworkList}
-        onClose={closeDeleteModal}
-      />
+      <MockBoot>
+        <DeleteArtworkListModal
+          artworkList={artworkList}
+          onClose={closeDeleteModal}
+        />
+      </MockBoot>
     )
 
     fireEvent.click(screen.getByRole("button", { name: /Delete/ }))

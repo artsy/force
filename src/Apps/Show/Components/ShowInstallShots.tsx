@@ -8,6 +8,7 @@ import {
   ResponsiveBox,
   Shelf,
   Text,
+  useTheme,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowInstallShots_show$data } from "__generated__/ShowInstallShots_show.graphql"
@@ -40,6 +41,8 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
     selectImage(null)
   }
 
+  const { theme } = useTheme()
+
   if (show.images?.length === 0) return null
 
   const images = compact(show.images)
@@ -70,7 +73,6 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
                 style={{
                   display: "block",
                   objectFit: "contain",
-                  backgroundColor: "rgba(0, 0, 0, 0.1)",
                 }}
                 alt={`${show.name}, installation view`}
                 lazyLoad={i > 2}
@@ -101,7 +103,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
         <ModalBase
           onClose={handleClose}
           dialogProps={{
-            background: "rgba(0, 0, 0, 0.6)",
+            background: theme.effects.backdrop,
             height: "100%",
             width: "100%",
           }}

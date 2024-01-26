@@ -68,7 +68,7 @@ const data: StepsWithImageBlackDataType[] = [
 
 export const WaysWeSell = () => {
   return (
-    <FullBleed background="black" position="relative">
+    <FullBleed background="black100" position="relative">
       <AppContainer>
         <HorizontalPadding>
           <Box mx={[-2, -4]} px={[2, 4]} py={[4, 12]}>

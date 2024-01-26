@@ -7,9 +7,9 @@ import {
   Box,
   Text,
   Sup,
-  DROP_SHADOW,
   Clickable,
   Flex,
+  useTheme,
 } from "@artsy/palette"
 import { useArticleZoomGallery } from "Apps/Article/Components/ArticleZoomGallery/ArticleZoomGallery"
 import ImageSetIcon from "@artsy/icons/ImageSetIcon"
@@ -25,6 +25,8 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
     showArticleZoomGallery,
     articleZoomGalleryComponent,
   } = useArticleZoomGallery()
+
+  const { theme } = useTheme()
 
   const handleClick = () => {
     if (
@@ -108,8 +110,8 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
             return (
               <ResponsiveBox
                 position="relative"
-                aspectWidth={image.large?.width!}
-                aspectHeight={image.large?.height!}
+                aspectWidth={image.large?.width ?? 1}
+                aspectHeight={image.large?.height ?? 1}
                 maxWidth="100%"
               >
                 <Clickable onClick={handleClick} width="100%" height="100%">
@@ -129,7 +131,7 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
                       bg="white100"
                       p={2}
                       width="fit-content"
-                      style={{ boxShadow: DROP_SHADOW }}
+                      style={{ boxShadow: theme.effects.dropShadow }}
                     >
                       <Box>
                         <Text variant="sm-display">

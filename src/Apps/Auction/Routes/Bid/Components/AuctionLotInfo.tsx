@@ -16,7 +16,7 @@ const AuctionLotInfo: React.FC<AuctionLotInfoProps> = ({
   ...rest
 }) => {
   const artwork = saleArtwork.artwork
-  const bidCount = saleArtwork.counts?.bidderPositions!
+  const bidCount = saleArtwork.counts?.bidderPositions
 
   if (!artwork) {
     return null
@@ -30,6 +30,7 @@ const AuctionLotInfo: React.FC<AuctionLotInfoProps> = ({
         width={150} // keep the box area consistent
         display="flex"
         justifyContent="center"
+        bg="white100"
       >
         <Image
           src={artwork?.image?.resized?.src}
@@ -37,9 +38,6 @@ const AuctionLotInfo: React.FC<AuctionLotInfoProps> = ({
           width={artwork?.image?.resized?.width}
           height={artwork?.image?.resized?.height}
           lazyLoad
-          style={{
-            backgroundColor: "white",
-          }}
         />
       </RouterLink>
 

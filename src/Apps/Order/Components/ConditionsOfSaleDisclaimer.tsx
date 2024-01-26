@@ -17,7 +17,8 @@ export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
         By clicking Complete Purchase, I agree to the{" "}
         <RouterLink
           inline
-          style={{ textDecoration: "underline", color: "#000" }}
+          color="black100"
+          textDecoration="underline"
           to="/private-sales-conditions-of-sale"
           target="_blank"
           rel="noopener noreferrer"

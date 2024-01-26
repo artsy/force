@@ -15,16 +15,6 @@ export const isArtworksBasedNotification = (
   return ["ARTWORK_ALERT", "ARTWORK_PUBLISHED"].includes(notificationType)
 }
 
-export const shouldDisplayNotificationTypeLabel = (
-  notificationType: string
-) => {
-  return [
-    "ARTWORK_ALERT",
-    "ARTICLE_FEATURED_ARTIST",
-    "PARTNER_OFFER_CREATED",
-  ].includes(notificationType)
-}
-
 export const formattedTimeLeft = (time: {
   days: string
   hours: string

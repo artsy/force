@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { FairsFairBanner_fair$data } from "__generated__/FairsFairBanner_fair.graphql"
+import { themeGet } from "@styled-system/theme-get"
 
 const Overlay = styled(Box)`
   position: absolute;
@@ -13,7 +14,7 @@ const Overlay = styled(Box)`
   left: 0;
   display: flex;
   align-items: flex-end;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: ${themeGet("effects.overlayGradient")};
   opacity: 0;
   transition: opacity 250ms;
 

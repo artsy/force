@@ -24,7 +24,6 @@ const PartnerContainer = styled(Box)`
 `
 
 const StyledPartnerLink = styled(RouterLink)`
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   color: ${themeGet("colors.black100")};
 
   &:hover {

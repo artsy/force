@@ -2,10 +2,10 @@ import {
   Box,
   Button,
   Clickable,
-  DROP_SHADOW,
   Flex,
   Spacer,
   Text,
+  useTheme,
   useToasts,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -43,6 +43,8 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
 
+  const { theme } = useTheme()
+
   const [
     showLeaveWithoutSavingModal,
     setShowLeaveWithoutSavingModal,
@@ -54,12 +56,14 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
   const onlyPhotos = match?.location?.query?.step === "photos"
 
   const handleDelete = async () => {
-    trackDeleteCollectedArtwork(artwork?.internalID!, artwork?.slug!)
+    if (!artwork) return
+
+    trackDeleteCollectedArtwork(artwork.internalID, artwork.slug)
 
     try {
       await deleteArtwork({
         variables: {
-          input: { artworkId: artwork?.internalID! },
+          input: { artworkId: artwork.internalID },
         },
         rejectIf: res => {
           return res.myCollectionDeleteArtwork?.artworkOrError?.mutationError
@@ -181,7 +185,7 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
                 px={2}
                 py={1}
                 backgroundColor="white100"
-                style={{ boxShadow: DROP_SHADOW }}
+                style={{ boxShadow: theme.effects.dropShadow }}
               >
                 <Button
                   width="100%"

@@ -46,7 +46,8 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
             This purchase is subject to{" "}
             <RouterLink
               inline
-              style={{ textDecoration: "underline", color: "#000" }}
+              textDecoration="underline"
+              color="black100"
               to="/private-sales-conditions-of-sale"
               target="_blank"
               rel="noopener noreferrer"

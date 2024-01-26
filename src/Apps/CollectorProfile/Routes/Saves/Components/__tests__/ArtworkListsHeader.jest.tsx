@@ -1,5 +1,6 @@
-import { render, screen, fireEvent } from "@testing-library/react"
+import { screen, fireEvent } from "@testing-library/react"
 import { ArtworkListsHeader } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListsHeader"
+import { render } from "DevTools/renderWithMockBoot"
 
 describe("ArtworkListsHeader", () => {
   it("renders header text and creates button", () => {

@@ -5,7 +5,7 @@ import { CategoriesIntro } from "./Components/CategoriesIntro"
 import { GeneFamiliesFragmentContainer } from "./Components/GeneFamilies"
 import { CategoriesApp_geneFamiliesConnection$data } from "__generated__/CategoriesApp_geneFamiliesConnection.graphql"
 import { StickyNavFragmentContainer } from "./Components/StickyNav"
-import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
+import { FullBleed, Spacer, useTheme } from "@artsy/palette"
 import { Sticky } from "Components/Sticky"
 import { AppContainer } from "Apps/Components/AppContainer"
 
@@ -16,6 +16,8 @@ interface CategoriesAppProps {
 const CategoriesApp: React.FC<CategoriesAppProps> = ({
   geneFamiliesConnection,
 }) => {
+  const { theme } = useTheme()
+
   return (
     <>
       <MetaTags pathname="categories" />
@@ -31,7 +33,9 @@ const CategoriesApp: React.FC<CategoriesAppProps> = ({
           return (
             <FullBleed
               backgroundColor="white100"
-              style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+              style={
+                stuck ? { boxShadow: theme.effects.dropShadow } : undefined
+              }
             >
               <AppContainer maxWidth="none">
                 <Spacer y={1} />

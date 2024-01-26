@@ -33,7 +33,7 @@ const ViewingRoomCard: React.FC<ViewingRoomCardProps> = ({ viewingRoom }) => {
         <Text
           as="h5"
           textTransform="capitalize"
-          color="black"
+          color="black100"
           variant="sm-display"
           mt={1}
         >
@@ -41,7 +41,7 @@ const ViewingRoomCard: React.FC<ViewingRoomCardProps> = ({ viewingRoom }) => {
         </Text>
       )}
       {title && (
-        <Text as="h4" variant="lg-display" color="black">
+        <Text as="h4" variant="lg-display" color="black100">
           {title}
         </Text>
       )}
