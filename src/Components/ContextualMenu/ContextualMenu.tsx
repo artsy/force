@@ -34,7 +34,7 @@ const validateChildren = (children: React.ReactNode) => {
  */
 export const ContextualMenu: React.FC<ContextualMenuProps> = ({
   children,
-  placement,
+  placement = "bottom-end",
   zIndex,
 }) => {
   validateChildren(children)
