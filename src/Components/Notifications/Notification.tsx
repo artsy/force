@@ -4,6 +4,7 @@ import {
   SkeletonBox,
   SkeletonText,
   Spacer,
+  Text,
 } from "@artsy/palette"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { NotificationQuery } from "__generated__/NotificationQuery.graphql"
@@ -38,13 +39,16 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
         notification?.notificationType as string
       )
     ) {
-      router.push(notification?.targetHref as string)
+      router.replace(notification?.targetHref as string)
     }
   }, [notification, router])
 
-  // TODO: Implement error handling
   if (!data.me?.notification) {
-    return null
+    return (
+      <Text variant="lg" m={4}>
+        Sorry, something went wrong.
+      </Text>
+    )
   }
 
   switch (notification?.notificationType) {
