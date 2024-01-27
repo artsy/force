@@ -2692,6 +2692,12 @@ interface ArtworkEdgeInterface {
   node: Artwork
 }
 
+# An error type, potentially containing a partial artwork response
+type ArtworkError {
+  artwork: PartialArtwork
+  requestError: RequestError
+}
+
 union ArtworkFigures = Image | Video
 
 union ArtworkFilterFacet = Gene | Tag
@@ -2839,6 +2845,8 @@ type ArtworkPublishedNotificationItem {
     last: Int
   ): ArtworkConnection
 }
+
+union ArtworkResult = Artwork | ArtworkError
 
 # The results for one of the requested aggregations
 type ArtworksAggregationResults {
@@ -13917,6 +13925,12 @@ type PageInfo {
   startCursor: String
 }
 
+# An artwork with partial data. useful for rendering an error state
+type PartialArtwork {
+  artists: [Artist]
+  layers: [ArtworkLayer]
+}
+
 type Partner implements Node {
   alertsSummaryArtistsConnection(
     activeInventory: Boolean
@@ -15399,6 +15413,12 @@ type Query {
   # List of all artwork mediums
   artworkMediums: [ArtworkMedium]
 
+  # An artwork result
+  artworkResult(
+    # The slug or ID of the artwork
+    id: String!
+  ): ArtworkResult
+
   # A list of Artworks
   artworks(
     after: String
@@ -16592,6 +16612,10 @@ input RequestCredentialsForAssetUploadInput {
 type RequestCredentialsForAssetUploadPayload {
   asset: Credentials
   clientMutationId: String
+}
+
+type RequestError {
+  statusCode: Int!
 }
 
 type RequestLocation {
@@ -20176,6 +20200,12 @@ type Viewer {
 
   # List of all artwork mediums
   artworkMediums: [ArtworkMedium]
+
+  # An artwork result
+  artworkResult(
+    # The slug or ID of the artwork
+    id: String!
+  ): ArtworkResult
 
   # A list of Artworks
   artworks(

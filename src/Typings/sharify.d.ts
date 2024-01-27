@@ -125,6 +125,7 @@ declare module "sharify" {
       }
 
       unleash: any
+      statusCode?: number
     }
 
     export interface ResponseLocalData extends GlobalData {
