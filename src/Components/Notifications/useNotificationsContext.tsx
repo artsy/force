@@ -38,6 +38,8 @@ export const NotificationsContextProvider: FC<NotificationsContextProviderProps>
   ] = useState<NotificationType>("all")
 
   useEffect(() => {
+    if (!match.params.notificationId) return
+
     setCurrentNotificationId(match.params.notificationId)
   }, [match.params.notificationId, setCurrentNotificationId])
 
