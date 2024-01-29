@@ -103,19 +103,6 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
           <Box position="relative" flex={1} minHeight={0} p={2}>
             {figures.map((figure, i) => {
               return (
-                <div key={figure.id}>
-                  xxx{figure.id}
-                  <ArticleZoomGalleryFigureFragmentContainer
-                    figure={figure}
-                    active={i === index}
-                    preload={
-                      i === mapCursorToMax(index - 1, figures.length) ||
-                      i === mapCursorToMax(index + 1, figures.length)
-                    }
-                  />
-                </div>
-              )
-              return (
                 <ArticleZoomGalleryFigureFragmentContainer
                   key={i}
                   figure={figure}
