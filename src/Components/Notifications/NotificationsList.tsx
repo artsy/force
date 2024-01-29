@@ -21,6 +21,7 @@ import { shouldDisplayNotification } from "./util"
 import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
 import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
 import { NotificationListMode } from "Components/Notifications/NotificationsTabs"
+import { useRouter } from "System/Router/useRouter"
 
 interface NotificationsListQueryRendererProps {
   mode: NotificationListMode
@@ -43,6 +44,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
   type,
   paginationType = "showMoreButton",
 }) => {
+  const { router } = useRouter()
   const [loading, setLoading] = useState(false)
   const [currentPaginationType, setCurrentPaginationType] = useState(
     paginationType
@@ -51,7 +53,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
     shouldDisplayNotification(node)
   )
 
-  const { state, setCurrentNotificationId } = useNotificationsContext()
+  const { state } = useNotificationsContext()
 
   // Set the current notification ID to the first one from the list in case no ID is selected.
   useEffect(() => {
@@ -65,8 +67,9 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
       return
     }
 
-    setCurrentNotificationId(firstNotificationId)
-  })
+    router.replace(`/notification/${firstNotificationId}`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleLoadNext = () => {
     if (!relay.hasMore() || relay.isLoading()) {
