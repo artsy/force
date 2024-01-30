@@ -16,12 +16,18 @@ import { Dialog } from "Apps/Order/Dialogs"
 import { useHandleExchangeError } from "Apps/Order/Routes/Shipping2/Hooks/useHandleExchangeError"
 
 export interface State {
+  // Form state for fulfillment details
   fulfillmentDetailsCtx: FormikProps<FulfillmentValues>
-  newSavedAddressId: string | null
-  selectedShippingQuoteId: string | null
+  // Presence of this value indicates that the user has saved their first address
+  newSavedAddressID: string | null
+  // Form state for saved address radio buttons
+  selectedSavedAddressID: string | null
+  // Form state for shipping quote radio buttons
+  selectedShippingQuoteID: string | null
+  // Stage of the shipping flow the user is in
   stage: ShippingStage
+  // Manually set & unset when performing mutations
   isPerformingOperation: boolean
-  isArtsyShipping: boolean
 }
 
 interface Actions {
@@ -35,7 +41,8 @@ interface Actions {
   ) => void
   setFulfillmentDetailsCtx: (payload: FormikProps<FulfillmentValues>) => void
   setSelectedShippingQuote: (payload: string | null) => void
-  setNewSavedAddressId: (payload: string | null) => void
+  setNewSavedAddressID: (payload: string | null) => void
+  setSelectedSavedAddressID: (payload: string | null) => void
   setIsPerformingOperation: (payload: boolean) => void
   setStage: (payload: ShippingStage) => void
 }
@@ -65,8 +72,6 @@ export const ShippingContextProvider: FC<Pick<
   )
   const orderData = computeOrderData(props.order, meData)
 
-  const isArtsyShipping = !!orderData.savedFulfillmentDetails?.isArtsyShipping
-
   /*
    * Because there is a single button for both fulfillment details and
    * shipping quote steps (and duplicated in the sidebar)
@@ -88,18 +93,20 @@ export const ShippingContextProvider: FC<Pick<
 
   const initialState: State = {
     fulfillmentDetailsCtx: fulfillmentFormikRef.current,
-    isArtsyShipping,
     isPerformingOperation: false,
-    newSavedAddressId: null,
-    selectedShippingQuoteId: orderData.selectedShippingQuoteId ?? null,
+    newSavedAddressID: null,
+    selectedShippingQuoteID: orderData.selectedShippingQuoteID ?? null,
     stage: "fulfillment_details",
+    selectedSavedAddressID:
+      orderData.savedFulfillmentDetails?.selectedSavedAddressID ?? null,
   }
 
   const [state, dispatch] = useReducer(shippingStateReducer, initialState)
 
   const { handleExchangeError } = useHandleExchangeError({
     dialog: props.dialog,
-    isArtsyShipping,
+    isArtsyShipping:
+      orderData.savedFulfillmentDetails?.isArtsyShipping ?? false,
     orderData,
   })
 
@@ -110,7 +117,10 @@ export const ShippingContextProvider: FC<Pick<
     setSelectedShippingQuote: (payload: string | null) => {
       dispatch({ type: "SET_SELECTED_SHIPPING_QUOTE", payload })
     },
-    setNewSavedAddressId: (payload: string | null) => {
+    setSelectedSavedAddressID: (payload: string | null) => {
+      dispatch({ type: "SET_SELECTED_SAVED_ADDRESS_ID", payload })
+    },
+    setNewSavedAddressID: (payload: string | null) => {
       dispatch({ type: "SET_NEW_SAVED_ADDRESS_ID", payload })
     },
     setStage: (payload: ShippingStage) => {
@@ -144,6 +154,7 @@ export type Action =
       payload: FormikProps<FulfillmentValues>
     }
   | { type: "SET_SELECTED_SHIPPING_QUOTE"; payload: string | null }
+  | { type: "SET_SELECTED_SAVED_ADDRESS_ID"; payload: string | null }
   | { type: "SET_NEW_SAVED_ADDRESS_ID"; payload: string | null }
   | { type: "SET_STAGE"; payload: ShippingStage }
   | { type: "SET_IS_PERFORMING_OPERATION"; payload: boolean }
@@ -165,13 +176,13 @@ const shippingStateReducer = (state: State, action: Action): State => {
     case "SET_NEW_SAVED_ADDRESS_ID": {
       return {
         ...state,
-        newSavedAddressId: action.payload,
+        newSavedAddressID: action.payload,
       }
     }
     case "SET_SELECTED_SHIPPING_QUOTE": {
       return {
         ...state,
-        selectedShippingQuoteId: action.payload,
+        selectedShippingQuoteID: action.payload,
       }
     }
     case "SET_STAGE": {

@@ -34,9 +34,9 @@ export const SaveAndContinueButton: React.FC<SaveAndContinueButtonProps> = ({
   if (shippingContext.state.isPerformingOperation) {
     disableSubmit = true
   } else if (shippingContext.state.stage === "fulfillment_details") {
-    disableSubmit = !shippingContext.state.fulfillmentDetailsCtx.isValid
+    disableSubmit = shippingContext.state.fulfillmentDetailsCtx.isSubmitting
   } else if (shippingContext.state.stage === "shipping_quotes") {
-    disableSubmit = !shippingContext.state.selectedShippingQuoteId
+    disableSubmit = !shippingContext.state.selectedShippingQuoteID
   }
 
   const onContinueButtonPressed = async () => {

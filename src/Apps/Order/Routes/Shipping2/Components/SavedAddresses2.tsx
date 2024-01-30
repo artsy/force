@@ -1,13 +1,7 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import {
-  RadioGroup,
-  BorderedRadio,
-  Spacer,
-  Clickable,
-  usePrevious,
-} from "@artsy/palette"
+import { RadioGroup, BorderedRadio, Spacer, Clickable } from "@artsy/palette"
 import {
   AddressModal,
   AddressModalAction,
@@ -88,7 +82,7 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
     extractNodes(data?.addressConnection) ?? []
   )
 
-  const savedToOrderAddress = shippingContext.orderData.savedFulfillmentDetails
+  const savedAddressOnOrder = shippingContext.orderData.savedFulfillmentDetails
     ?.selectedSavedAddressID
     ? getAddressByID(
         addressList,
@@ -96,80 +90,39 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
           ?.selectedSavedAddressID
       ) ?? null
     : null
-  const previousSavedToOrderAddressID = usePrevious(
-    savedToOrderAddress?.internalID
-  )
 
-  const [
-    locallySelectedAddress,
-    setLocallySelectedAddress,
-  ] = useState<SavedAddressType | null>(savedToOrderAddress)
+  const selectAndSubmitAddress = (address: SavedAddressType) => {
+    shippingContext.actions.setSelectedSavedAddressID(address.internalID)
+    props.onSelect(address)
+  }
 
-  // Automatically update selected address to match what is on order order (without saving)
-  const savedToOrderAddressID = savedToOrderAddress?.internalID
-  useEffect(() => {
-    const updateSelectedAddressAfterSave = () => {
-      const savedAddressChanged =
-        savedToOrderAddressID &&
-        savedToOrderAddressID !== previousSavedToOrderAddressID
-      if (
-        savedAddressChanged &&
-        savedToOrderAddressID !== locallySelectedAddress?.internalID
-      ) {
-        const address = getAddressByID(addressList, savedToOrderAddressID)
-        if (address) {
-          setLocallySelectedAddress(address)
-        }
-      }
-    }
-    updateSelectedAddressAfterSave()
-  }, [
-    previousSavedToOrderAddressID,
-    addressList,
-    setLocallySelectedAddress,
-    props.active,
-    locallySelectedAddress,
-    savedToOrderAddressID,
-  ])
+  const addressSavedToOrderID = savedAddressOnOrder?.internalID
 
-  // TODO: What if mutation fails? Locally selected address will be out of sync with order
-
+  // TODO: Make sure this can't create an infinite loop if submitting fails
+  // Is it necessary beyond the initial render?
   useEffect(() => {
     // Automatically select (save) best available address ID if it isn't present
-    // TODO: account for errors on save? maybe using formik status or modal dialog
-    // Note: Does not account for whether the address is valid for the selected country
     const automaticallySelectBestAddress = async () => {
       if (
         props.active &&
         !shippingContext.state.isPerformingOperation &&
         !formikContext.isSubmitting &&
-        !locallySelectedAddress &&
+        !shippingContext.state.selectedSavedAddressID &&
         addressList.length > 0
       ) {
         const bestAddress = getBestAvailableAddress(
           addressList,
-          savedToOrderAddressID,
+          addressSavedToOrderID,
           shippingContext.orderData.availableShippingCountries
         )
         if (bestAddress) {
-          setLocallySelectedAddress(bestAddress)
-          props.onSelect(bestAddress)
+          selectAndSubmitAddress(bestAddress)
         }
       }
     }
     automaticallySelectBestAddress()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    addressList,
-    savedToOrderAddressID,
-    shippingContext.orderData.availableShippingCountries,
-    props.active,
-    locallySelectedAddress,
-    props.onSelect,
-    formikContext.isSubmitting,
-    logger,
-    shippingContext.state.isPerformingOperation,
-  ])
+  }, [props.active])
 
   /* Select an address radio button and pass the address to the parent.
    */
@@ -180,8 +133,7 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
       logger.error("Address not found: ", id)
       return
     }
-
-    props.onSelect(address)
+    selectAndSubmitAddress(address)
   }
 
   const handleClickEditAddress = async (address: SavedAddressType) => {
@@ -194,9 +146,7 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleAddressModalSuccess = (address: SavedAddressType) => {
-    // TODO: Check that address is valid?
-    props.onSelect(address)
-    // set save in process before clearing the modal?
+    selectAndSubmitAddress(address)
     setAddressModalAction(null)
   }
 
@@ -208,14 +158,15 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
         data-testid="saved-addresses"
         disabled={!props.active}
         onSelect={handleClickAddress}
-        defaultValue={locallySelectedAddress?.internalID}
+        defaultValue={shippingContext.state.selectedSavedAddressID ?? undefined}
       >
         {addressList.map((address, index) => {
           return (
             <BorderedRadio
               value={address.internalID}
               selected={
-                address.internalID === locallySelectedAddress?.internalID
+                address.internalID ===
+                shippingContext.state.selectedSavedAddressID
               }
               tabIndex={props.active ? 0 : -1}
               key={index}

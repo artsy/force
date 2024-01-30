@@ -40,7 +40,7 @@ interface FormMetaValues {
   // Address was verified (in this flow instance)
   addressVerifiedBy?: AddressVerifiedBy | null
   // User saved an address within the lifecycle of this form
-  newSavedAddressId?: string
+  newSavedAddressID?: string
   // Address should be saved (create/update) to user's address book
   saveAddress?: boolean
   // Address should be set as default in user's address book

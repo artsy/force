@@ -166,10 +166,24 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
       return
     }
 
+    const resetSelectedSavedAddress = () => {
+      if (
+        shippingMode === "saved_addresses" &&
+        shippingContext.state.newSavedAddressID
+      ) {
+        shippingContext.actions.setSelectedSavedAddressID(
+          shippingContext.state.selectedSavedAddressID
+        )
+      }
+    }
+
     try {
       shippingContext.actions.setIsPerformingOperation(true)
 
-      if (values.fulfillmentType === FulfillmentType.SHIP) {
+      if (
+        values.fulfillmentType === FulfillmentType.SHIP &&
+        shippingMode === "new_address"
+      ) {
         const userAddressUpdateResult = await handleNewUserAddressUpdates(
           values
         )
@@ -182,17 +196,17 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
             return
           } else {
             if (userAddressUpdateResult.actionType === "create") {
-              shippingContext.actions.setNewSavedAddressId(
+              shippingContext.actions.setNewSavedAddressID(
                 userAddressUpdateResult.data.internalID
               )
             } else if (userAddressUpdateResult.actionType === "delete") {
-              shippingContext.actions.setNewSavedAddressId(null)
+              shippingContext.actions.setNewSavedAddressID(null)
             }
             if (
               userAddressUpdateResult.data?.internalID &&
               shippingMode === "new_address"
             ) {
-              shippingContext.actions.setNewSavedAddressId(
+              shippingContext.actions.setNewSavedAddressID(
                 userAddressUpdateResult.data.internalID
               )
             }
@@ -217,6 +231,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           shippingContext.actions.setStage("fulfillment_details_saved")
         }
       } else {
+        resetSelectedSavedAddress()
         logger.error(
           "No request for saveFulfillmentDetails - this should not happen"
         )
@@ -229,7 +244,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           "Something went wrong. Please try again or contact orders@artsy.net.",
         flow: "user selects a shipping option",
       })
-
+      resetSelectedSavedAddress()
       shippingContext.actions.dialog.showErrorDialog()
     } finally {
       shippingContext.actions.setIsPerformingOperation(false)

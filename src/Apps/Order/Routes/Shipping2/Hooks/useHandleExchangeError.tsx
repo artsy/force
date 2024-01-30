@@ -78,7 +78,7 @@ export const useHandleExchangeError = ({
         title,
         message: formattedMessage,
       })
-    } else if (isArtsyShipping && !orderData.selectedShippingQuoteId) {
+    } else if (isArtsyShipping && !orderData.selectedShippingQuoteID) {
       orderTracking.errorMessageViewed({
         error_code: null,
         title: "An error occurred",

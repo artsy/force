@@ -119,7 +119,7 @@ describe("useUserAddressUpdates", () => {
 
         it("calls the create mutation and returns the result if the save address box is checked and there is no *new* saved address ID", async () => {
           values.meta.saveAddress = true
-          mockShippingContext.state.newSavedAddressId = null
+          mockShippingContext.state.newSavedAddressID = null
 
           const { result } = setupHook()
           const { handleNewUserAddressUpdates } = result.current
@@ -149,7 +149,7 @@ describe("useUserAddressUpdates", () => {
           mockShippingContext.meData.addressList = [
             { internalID: "1234" } as any,
           ]
-          mockShippingContext.state.newSavedAddressId = "1234"
+          mockShippingContext.state.newSavedAddressID = "1234"
           mockShippingContext.orderData.savedFulfillmentDetails = {
             fulfillmentType: FulfillmentType.SHIP,
             fulfillmentDetails: {},
@@ -184,7 +184,7 @@ describe("useUserAddressUpdates", () => {
 
         it("calls the delete mutation if a new address is saved and the save address box is not checked", async () => {
           // TODO: form values or dispatch to state? Form value updates can be awaited...
-          mockShippingContext.state.newSavedAddressId = "1234"
+          mockShippingContext.state.newSavedAddressID = "1234"
           values.meta.saveAddress = false
 
           const { result } = setupHook()

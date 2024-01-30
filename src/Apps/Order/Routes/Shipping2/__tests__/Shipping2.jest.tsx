@@ -27,7 +27,7 @@ import {
   Shipping2TestQuery,
   Shipping2TestQuery$rawResponse,
 } from "__generated__/Shipping2TestQuery.graphql"
-import { act, screen, waitFor } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import {
@@ -265,7 +265,7 @@ const getAllPendingOperationNames = (env: MockEnvironment) => {
 let mockTrackEvent: jest.Mock
 
 // FIXME: MockBoot interfering somehow...
-describe.skip("Shipping", () => {
+describe("Shipping", () => {
   const exhaustRelayOperations = async (env: MockEnvironment) => {
     while (env.mock.getAllOperations().length > 0) {
       await new Promise<void>((resolve, reject) => {
@@ -722,8 +722,12 @@ describe.skip("Shipping", () => {
               screen.queryByText(/[\w\s]is required/)
             ).not.toBeInTheDocument()
 
-            await fillAddressForm(validAddress)
-            userEvent.clear(screen.getByPlaceholderText("Street address"))
+            await fillAddressForm({ ...validAddress, addressLine1: undefined })
+
+            await flushPromiseQueue()
+            expect(
+              screen.queryByText(/[\w\s]is required/)
+            ).not.toBeInTheDocument()
 
             await userEvent.click(screen.getByText("Save and Continue"))
 
@@ -2368,18 +2372,19 @@ describe.skip("Shipping", () => {
     })
 
     it("disables submission without a phone number", async () => {
-      renderWithRelay({
+      const { env } = renderWithRelay({
         CommerceOrder: () => order,
         Me: () => meWithoutAddress,
       })
 
       userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
+
       await flushPromiseQueue()
-      expect(
-        screen.getByRole("button", {
-          name: "Save and Continue",
-        }) as HTMLInputElement
-      ).toBeDisabled()
+      await saveAndContinue()
+
+      expect(screen.getByText("Phone number is required")).toBeInTheDocument()
+
+      expect(env.mock.getAllOperations()).toHaveLength(0)
     })
   })
 })

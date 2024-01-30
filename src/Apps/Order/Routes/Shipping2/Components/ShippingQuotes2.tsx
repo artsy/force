@@ -51,15 +51,15 @@ export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({
     return null
   }
 
-  const handleShippingQuoteSelected = (newShippingQuoteId: string) => {
-    orderTracking.clickedSelectShippingOption(newShippingQuoteId)
-    shippingContext.actions.setSelectedShippingQuote(newShippingQuoteId)
+  const handleShippingQuoteSelected = (newShippingQuoteID: string) => {
+    orderTracking.clickedSelectShippingOption(newShippingQuoteID)
+    shippingContext.actions.setSelectedShippingQuote(newShippingQuoteID)
   }
 
   return (
     <RadioGroup
       onSelect={handleShippingQuoteSelected}
-      defaultValue={shippingContext.orderData.selectedShippingQuoteId}
+      defaultValue={shippingContext.orderData.selectedShippingQuoteID}
     >
       {quotes.map(shippingQuote => {
         const description =
@@ -143,9 +143,9 @@ const useAutoSelectBestShippingQuote = (
    * or that is already selected on the server,
    * or the first quote in the list
    */
-  const bestArtsyShippingQuoteId =
+  const bestArtsyShippingQuoteID =
     quotes.find(
-      quote => quote.id === shippingContext.state.selectedShippingQuoteId
+      quote => quote.id === shippingContext.state.selectedShippingQuoteID
     )?.id ||
     quotes.find(quote => quote.isSelected)?.id ||
     quotes?.[0]?.id
@@ -153,16 +153,16 @@ const useAutoSelectBestShippingQuote = (
   useEffect(() => {
     if (
       shippingContext.state.stage === "shipping_quotes" &&
-      bestArtsyShippingQuoteId &&
-      bestArtsyShippingQuoteId !== shippingContext.state.selectedShippingQuoteId
+      bestArtsyShippingQuoteID &&
+      bestArtsyShippingQuoteID !== shippingContext.state.selectedShippingQuoteID
     ) {
-      shippingContext.actions.setSelectedShippingQuote(bestArtsyShippingQuoteId)
+      shippingContext.actions.setSelectedShippingQuote(bestArtsyShippingQuoteID)
     }
   }, [
-    bestArtsyShippingQuoteId,
-    shippingContext.orderData.selectedShippingQuoteId,
+    bestArtsyShippingQuoteID,
+    shippingContext.orderData.selectedShippingQuoteID,
     shippingContext.state.stage,
-    shippingContext.state.selectedShippingQuoteId,
+    shippingContext.state.selectedShippingQuoteID,
     shippingContext.actions,
   ])
 }

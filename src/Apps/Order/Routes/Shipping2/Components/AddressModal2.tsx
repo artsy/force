@@ -70,27 +70,6 @@ export const AddressModal: FC<AddressModalProps> = ({
   const shippingContext = useShippingContext()
 
   const { executeUserAddressAction } = useUserAddressUpdates()
-  // const previousAddressModalAction = usePrevious(addressModalAction)
-  // useEffect(() => {
-  //   if (
-  //     !addressModalAction ||
-  //     previousAddressModalAction === addressModalAction
-  //   ) {
-  //     return
-  //   }
-  //   if (addressModalAction?.type === "edit") {
-  //     formikContext.setValues({
-  //       ...addressWithFallbackValues(addressModalAction.address),
-  //     })
-  //   } else {
-  //     formikContext.setFieldValue("attributes", addressWithFallbackValues({}))
-  //   }
-  // }, [
-  //   addressModalAction,
-  //   formikContext,
-  //   previousAddressModalAction,
-  //   shippingContext.meData.addressList,
-  // ])
 
   let initialValues: FormValues
 

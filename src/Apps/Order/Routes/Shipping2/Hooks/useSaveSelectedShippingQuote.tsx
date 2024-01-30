@@ -22,7 +22,7 @@ export const useSaveSelectedShippingQuote = (
   const { handleNewUserAddressUpdates } = useUserAddressUpdates()
 
   const saveSelectedShippingQuote = async () => {
-    if (!shippingContext.state.selectedShippingQuoteId) {
+    if (!shippingContext.state.selectedShippingQuoteID) {
       logger.error("No shipping quote selected")
       return
     }
@@ -50,7 +50,7 @@ export const useSaveSelectedShippingQuote = (
           input: {
             id: order.internalID,
             selectedShippingQuoteId:
-              shippingContext.state.selectedShippingQuoteId,
+              shippingContext.state.selectedShippingQuoteID,
           },
         },
       })

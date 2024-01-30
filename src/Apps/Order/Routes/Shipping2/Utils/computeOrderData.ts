@@ -17,7 +17,7 @@ export interface ComputedOrderData {
   requiresArtsyShippingTo: (shipTo: string) => boolean
   savedFulfillmentDetails: SavedFulfillmentData
   savedShippingQuoteData: SavedShippingQuoteData
-  selectedShippingQuoteId?: string
+  selectedShippingQuoteID?: string
   shippingQuotes?: Array<{ id: string; isSelected: boolean }>
   shipsFrom: string
 }
@@ -38,7 +38,7 @@ type SavedFulfillmentData =
   | null
 
 type SavedShippingQuoteData = {
-  selectedShippingQuoteId: string | null
+  selectedShippingQuoteID: string | null
   shippingQuotes: Array<{ id: string; isSelected: boolean }>
 } | null
 
@@ -91,14 +91,14 @@ export const computeOrderData = (
 
   const shippingQuotes = extractNodes(firstLineItem.shippingQuoteOptions) ?? []
 
-  const selectedShippingQuoteId =
+  const selectedShippingQuoteID =
     shippingQuotes.find(quote => quote.isSelected)?.id ?? null
 
   return {
     internalID: order.internalID,
     savedFulfillmentDetails,
     savedShippingQuoteData: {
-      selectedShippingQuoteId,
+      selectedShippingQuoteID,
       shippingQuotes,
     },
     shippingQuotes,
@@ -123,6 +123,12 @@ const getSavedFulfillmentDetails = (
         attributes: {
           phoneNumber: order.requestedFulfillment.phoneNumber ?? "",
           name: "",
+          addressLine1: "",
+          addressLine2: "",
+          city: "",
+          region: "",
+          country: "",
+          postalCode: "",
         },
         selectedSavedAddressID: null,
       }
@@ -133,7 +139,7 @@ const getSavedFulfillmentDetails = (
         order.requestedFulfillment
       )
       // TODO: can this logic be colocated with other areas, like FulfillmentDetails' getInitialValues?
-      const selectedSavedAddressId =
+      const selectedSavedAddressID =
         (fulfillmentDetails &&
           meData.addressList.find(node =>
             matchAddressFields(node, fulfillmentDetails)
@@ -144,7 +150,7 @@ const getSavedFulfillmentDetails = (
         fulfillmentType: FulfillmentType.SHIP,
         isArtsyShipping: fulfillmentTypeName === "CommerceShipArta",
         attributes: addressWithFallbackValues(order.requestedFulfillment),
-        selectedSavedAddressID: selectedSavedAddressId,
+        selectedSavedAddressID: selectedSavedAddressID,
       }
     }
   }

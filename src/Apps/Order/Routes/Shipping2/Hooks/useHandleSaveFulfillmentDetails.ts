@@ -7,7 +7,6 @@ import {
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import createLogger from "Utils/logger"
 import { CommerceSetShippingInput } from "__generated__/useSaveFulfillmentDetailsMutation.graphql"
-import { FormikHelpers } from "formik"
 
 const logger = createLogger(
   "Order/Routes/Shipping2/Hooks/useHandleSaveFulfillmentDetails"

@@ -161,12 +161,12 @@ export const useUserAddressUpdates = () => {
           // if (mode === "new_address" && result.data) {
           //   // TODO: form values or dispatch to state? Form value updates can be awaited...
           //   await helpers.setFieldValue(
-          //     "meta.newSavedAddressId",
+          //     "meta.newSavedAddressID",
           //     result.data.internalID
           //   )
           // }
           // if (mode === "new_address" && result.data) {
-          //   await helpers.setFieldValue("meta.newSavedAddressId", undefined)
+          //   await helpers.setFieldValue("meta.newSavedAddressID", undefined)
           // }
 
           break
@@ -228,8 +228,8 @@ const getUserAddressActionForAddressFormValues = (
 
   if (values.meta.saveAddress) {
     // The address form doesn't include this input, and is only used for the
-    // user's first address.
-    if (!shippingContext.state.newSavedAddressId) {
+    // user's first address (not when they already have saved addresses).
+    if (!shippingContext.state.newSavedAddressID) {
       return { type: "create", address: values.attributes, setAsDefault: false }
     } else if (
       savedFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
@@ -240,7 +240,7 @@ const getUserAddressActionForAddressFormValues = (
     ) {
       const newSavedAddress = getAddressByID(
         shippingContext.meData.addressList,
-        shippingContext.state.newSavedAddressId
+        shippingContext.state.newSavedAddressID
       )
 
       if (!newSavedAddress) {
@@ -255,17 +255,17 @@ const getUserAddressActionForAddressFormValues = (
           type: "edit",
           address: {
             ...formAddressAttributes,
-            internalID: shippingContext.state.newSavedAddressId,
+            internalID: shippingContext.state.newSavedAddressID,
           },
           setAsDefault: false,
         }
       }
     }
   }
-  if (!values.meta.saveAddress && shippingContext.state.newSavedAddressId) {
+  if (!values.meta.saveAddress && shippingContext.state.newSavedAddressID) {
     return {
       type: "delete",
-      address: { internalID: shippingContext.state.newSavedAddressId },
+      address: { internalID: shippingContext.state.newSavedAddressID },
     }
   }
   return null
