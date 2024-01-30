@@ -4136,10 +4136,14 @@ type CollectorProfileTypeEdge {
 }
 
 type CollectorResume {
+  buyerActivity: CommerceBuyerActivity
   collectorProfile: CollectorProfileType!
 
   # The Collector follows the Gallery profile
   isCollectorFollowingPartner: Boolean!
+
+  # The Collector's id
+  userId: String!
 }
 
 # Represents either an action or a potential failure
