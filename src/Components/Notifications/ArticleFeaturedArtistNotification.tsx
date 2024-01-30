@@ -35,7 +35,7 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
   const artists = extractNodes(item?.artistsConnection)
   const image = article?.thumbnailImage?.cropped
 
-  if (!article || !artists || !image) {
+  if (!article || !artists) {
     return (
       <Text variant="lg" m={4}>
         Sorry, something went wrong.
