@@ -4,6 +4,7 @@ import { renderToString } from "react-dom/server"
 import { ServerAppResolve } from "./buildServerApp"
 import loadAssetManifest from "Server/manifest"
 import path from "path"
+import { getENV } from "Utils/getENV"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -77,5 +78,6 @@ export const renderServerApp = ({
     sd: sharify.data,
   }
 
-  res.status(code).render(`${PUBLIC_DIR}/html.ejs`, options)
+  const statusCode = getENV("statusCode") ?? code
+  res.status(statusCode).render(`${PUBLIC_DIR}/html.ejs`, options)
 }
