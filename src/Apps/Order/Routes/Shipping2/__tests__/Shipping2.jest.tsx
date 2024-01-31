@@ -266,27 +266,6 @@ let mockTrackEvent: jest.Mock
 
 // FIXME: MockBoot interfering somehow...
 describe("Shipping", () => {
-  const exhaustRelayOperations = async (env: MockEnvironment) => {
-    while (env.mock.getAllOperations().length > 0) {
-      await new Promise<void>((resolve, reject) => {
-        act(() => {
-          try {
-            const operation = env.mock.getMostRecentOperation()
-            const error = new Error(
-              "Unresolved operation after test: " +
-                operation.request.node.operation.name
-            )
-            env.mock.rejectMostRecentOperation(error)
-            console.log(error.message)
-            resolve()
-          } catch (error) {
-            reject(error)
-          }
-        })
-      })
-    }
-  }
-
   const mockUseRouter = useRouter as jest.Mock
   const mockPush = jest.fn()
 
@@ -1823,14 +1802,18 @@ describe("Shipping", () => {
             meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
             meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
 
-            const { env } = renderWithRelay({
+            const { env, mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
                 UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
               Me: () => meWithDefaultAddressInSpain,
             })
-            await flushPromiseQueue()
 
-            expect(() => env.mock.getMostRecentOperation()).toThrow()
+            await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
+            )
+
+            expect(getAllPendingOperationNames(env)).toEqual([])
             expect(
               screen.queryByRole("radio", {
                 name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
@@ -1920,14 +1903,18 @@ describe("Shipping", () => {
           })
 
           it("does not set shipping on order if the collector is in the US", async () => {
-            const { env } = renderWithRelay({
+            const { env, mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
                 UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
               Me: () => meWithAddresses,
             })
-            await flushPromiseQueue()
 
-            expect(() => env.mock.getMostRecentOperation()).toThrow()
+            await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
+            )
+
+            expect(getAllPendingOperationNames(env)).toEqual([])
             expect(
               screen.queryByRole("radio", {
                 name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
@@ -1944,14 +1931,18 @@ describe("Shipping", () => {
             meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
             meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
 
-            const { env } = renderWithRelay({
+            const { env, mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
                 UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
               Me: () => meWithDefaultAddressInSpain,
             })
-            await flushPromiseQueue()
 
-            expect(() => env.mock.getMostRecentOperation()).toThrow()
+            await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
+            )
+
+            expect(getAllPendingOperationNames(env)).toEqual([])
             expect(
               screen.queryByRole("radio", {
                 name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
