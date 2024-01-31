@@ -8036,6 +8036,7 @@ union createPartnerOfferResponseOrError =
   | createPartnerOfferSuccess
 
 type createPartnerOfferSuccess {
+  partner: Partner
   partnerOffer: PartnerOffer
 }
 
