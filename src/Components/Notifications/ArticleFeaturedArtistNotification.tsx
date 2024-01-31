@@ -44,12 +44,10 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
   }
 
   return (
-    <Box mx={4} my={4}>
+    <Box m={4}>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1}>
-          <Text fontWeight="bold" variant="xl">
-            {headline}
-          </Text>
+          <Text variant="lg-display">{headline}</Text>
         </Flex>
       </Flex>
 
@@ -67,17 +65,22 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
           />
         )}
 
-        {artists.map(artist => {
-          return (
-            <RouterLink
-              to={artist.href}
-              key={artist.internalID}
-              textDecoration="none"
-            >
-              <Text>{artist.name}</Text>
-            </RouterLink>
-          )
-        })}
+        <Flex flexDirection="row">
+          {artists.map((artist, index) => {
+            return (
+              <RouterLink
+                to={artist.href}
+                key={artist.internalID}
+                textDecoration="none"
+              >
+                <Text variant="xs">
+                  {index > 0 && ", "}
+                  {artist.name}
+                </Text>
+              </RouterLink>
+            )
+          })}
+        </Flex>
       </Flex>
 
       <Spacer y={4} />
