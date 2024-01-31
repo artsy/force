@@ -125,6 +125,9 @@ declare module "sharify" {
       }
 
       unleash: any
+
+      // Injected by route when rendering a custom error page
+      statusCode?: number
     }
 
     export interface ResponseLocalData extends GlobalData {

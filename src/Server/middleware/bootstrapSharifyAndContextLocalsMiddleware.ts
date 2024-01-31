@@ -72,6 +72,10 @@ export function updateSharifyAndContext(
   value: any
 ) {
   res.locals.sd[key] = value
+  updateContext(key, value)
+}
+
+export function updateContext(key: string, value: any) {
   const asyncLocalStorage = getAsyncLocalStorage()
   asyncLocalStorage.getStore()?.set(key, value)
 }
