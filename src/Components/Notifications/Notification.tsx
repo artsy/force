@@ -13,10 +13,12 @@ import { Suspense, useEffect } from "react"
 import { ArtworkPublishedNotification } from "Components/Notifications/ArtworkPublishedNotification"
 import { AlertNotification } from "Components/Notifications/AlertNotification"
 import { useRouter } from "System/Router/useRouter"
+import { ArticleFeaturedArtistNotification } from "Components/Notifications/ArticleFeaturedArtistNotification"
 
 export const SUPPORTED_NOTIFICATION_TYPES = [
   "ARTWORK_ALERT",
   "ARTWORK_PUBLISHED",
+  "ARTICLE_FEATURED_ARTIST",
 ]
 
 interface NotificationProps {
@@ -58,6 +60,12 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
       return (
         <ArtworkPublishedNotification notification={data.me?.notification} />
       )
+    case "ARTICLE_FEATURED_ARTIST":
+      return (
+        <ArticleFeaturedArtistNotification
+          notification={data.me?.notification}
+        />
+      )
     default:
       return null
   }
@@ -86,6 +94,7 @@ const notificationQuery = graphql`
 
         ...AlertNotification_notification
         ...ArtworkPublishedNotification_notification
+        ...ArticleFeaturedArtistNotification_notification
       }
     }
   }
