@@ -34,9 +34,6 @@ export interface ShipValues {
 }
 
 interface FormMetaValues {
-  // TODO: still needed here?
-  mode: "new_address" | "saved_addresses" | "pickup"
-
   // Address was verified (in this flow instance)
   addressVerifiedBy?: AddressVerifiedBy | null
   // User saved an address within the lifecycle of this form

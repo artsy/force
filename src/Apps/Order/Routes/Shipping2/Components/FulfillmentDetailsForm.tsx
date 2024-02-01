@@ -56,7 +56,6 @@ interface FulfillmentDetailsFormLayoutProps {
   verifyAddressNow: boolean
   onAddressVerificationComplete: () => void
   availableFulfillmentTypes: FulfillmentType[]
-  shippingMode: Exclude<AddressFormMode, "pickup">
 }
 
 export type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
@@ -64,7 +63,6 @@ export type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
 export const FulfillmentDetailsForm = ({
   initialValues,
   onSubmit,
-  shippingMode,
   ...layoutProps
 }: FulfillmentDetailsFormProps) => {
   return (
@@ -73,10 +71,7 @@ export const FulfillmentDetailsForm = ({
       onSubmit={onSubmit}
       validationSchema={VALIDATION_SCHEMA}
     >
-      <FulfillmentDetailsFormLayout
-        shippingMode={shippingMode}
-        {...layoutProps}
-      />
+      <FulfillmentDetailsFormLayout {...layoutProps} />
     </Formik>
   )
 }
@@ -113,7 +108,9 @@ const FulfillmentDetailsFormLayout = (
   } = formikContext
 
   const addressFormMode: AddressFormMode =
-    values.fulfillmentType === "SHIP" ? props.shippingMode : "pickup"
+    values.fulfillmentType === "SHIP"
+      ? shippingContext.state.shippingFormMode
+      : "pickup"
 
   /**
    * Expose formik context to entire shipping route
@@ -216,9 +213,6 @@ const FulfillmentDetailsFormLayout = (
               region: "",
               postalCode: "",
               country: "",
-            },
-            meta: {
-              mode: "pickup",
             },
           })
           return

@@ -41,7 +41,7 @@ jest.mock("react-tracking")
 const mockOnSubmit = jest.fn()
 const mockOnAddressVerificationComplete = jest.fn()
 let testProps: DeepPartial<FulfillmentDetailsFormProps>
-let mockShippingContext: DeepPartial<ShippingContextProps>
+let mockShippingContext: ShippingContextProps
 
 jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => ({
   useShippingContext: () => mockShippingContext,
@@ -72,7 +72,6 @@ beforeEach(() => {
   }))
   mockOnAddressVerificationComplete.mockReset()
   testProps = {
-    shippingMode: "saved_addresses",
     availableFulfillmentTypes: [FulfillmentType.SHIP],
     initialValues: {
       fulfillmentType: FulfillmentType.SHIP,
@@ -85,6 +84,7 @@ beforeEach(() => {
         postalCode: "",
         country: "US",
       },
+      meta: {},
     },
     onSubmit: mockOnSubmit,
     onAddressVerificationComplete: mockOnAddressVerificationComplete,
@@ -95,14 +95,17 @@ beforeEach(() => {
       },
     },
   }
-  mockShippingContext = {
+  mockShippingContext = ({
     actions: {
       setFulfillmentDetailsFormikContext: jest.fn(),
     },
     orderData: {
       shippingQuotes: [],
     },
-  }
+    state: {
+      shippingFormMode: "saved_addresses",
+    },
+  } as unknown) as ShippingContextProps
 })
 
 const addressFormErrors = {
@@ -220,9 +223,7 @@ describe("FulfillmentDetailsForm", () => {
               addressLine1: "",
               addressLine2: "",
             },
-            meta: {
-              mode: "pickup",
-            },
+            meta: {},
           },
           expect.anything()
         )
@@ -284,7 +285,7 @@ describe("FulfillmentDetailsForm", () => {
       })
 
       it("shows the saved addresses or plain address form depending on the passed prop", async () => {
-        testProps.shippingMode = "saved_addresses"
+        mockShippingContext.state.shippingFormMode = "saved_addresses"
         renderTree(testProps)
         // Note - SavedAddresses is mocked out.
         await waitFor(() => {
@@ -298,7 +299,7 @@ describe("FulfillmentDetailsForm", () => {
 
         cleanup()
 
-        testProps.shippingMode = "new_address"
+        mockShippingContext.state.shippingFormMode = "new_address"
         renderTree(testProps)
         await waitFor(() => {
           expect(screen.getByTestId("savedAddressesCollapse")).toHaveStyle({
@@ -384,6 +385,7 @@ describe("FulfillmentDetailsForm", () => {
                 postalCode: "",
                 phoneNumber: "5555937743",
               },
+              meta: {},
             },
             expect.anything()
           )
@@ -455,6 +457,7 @@ describe("FulfillmentDetailsForm", () => {
                 postalCode: validAddress.postalCode,
                 phoneNumber: validAddress.phoneNumber,
               },
+              meta: {},
             },
             expect.anything()
           )

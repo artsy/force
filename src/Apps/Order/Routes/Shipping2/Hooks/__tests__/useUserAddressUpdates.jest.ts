@@ -37,9 +37,7 @@ beforeEach(() => {
 
   values = {
     fulfillmentType: FulfillmentType.SHIP,
-    meta: {
-      mode: "saved_addresses",
-    },
+    meta: {},
     attributes: {
       addressLine1: "401 Broadway",
       addressLine2: "",
@@ -54,7 +52,7 @@ beforeEach(() => {
 
   mockShippingContext = ({
     state: {
-      addressModalAction: null,
+      mode: "saved_addresses",
     },
     actions: {
       setIsPerformingOperation: jest.fn(),
@@ -114,7 +112,7 @@ describe("useUserAddressUpdates", () => {
 
       describe("mode is new_address", () => {
         beforeEach(() => {
-          values.meta.mode = "new_address"
+          mockShippingContext.state.shippingFormMode = "new_address"
         })
 
         it("calls the create mutation and returns the result if the save address box is checked and there is no *new* saved address ID", async () => {
@@ -212,7 +210,7 @@ describe("useUserAddressUpdates", () => {
       })
       describe("executeUserAddressAction", () => {
         beforeEach(() => {
-          values.meta.mode = "saved_addresses"
+          mockShippingContext.state.shippingFormMode = "saved_addresses"
         })
 
         it("calls the create mutation and returns the result if the user address action is create", async () => {

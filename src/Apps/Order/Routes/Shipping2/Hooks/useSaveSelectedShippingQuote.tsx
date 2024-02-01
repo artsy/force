@@ -36,10 +36,7 @@ export const useSaveSelectedShippingQuote = (
     try {
       shippingContext.actions.setIsPerformingOperation(true)
 
-      if (
-        shippingContext.state.fulfillmentDetailsFormikContext?.values.meta
-          .mode === "new_address"
-      ) {
+      if (shippingContext.state.shippingFormMode === "new_address") {
         await handleNewUserAddressUpdates(
           shippingContext.state.fulfillmentDetailsFormikContext.values
         )

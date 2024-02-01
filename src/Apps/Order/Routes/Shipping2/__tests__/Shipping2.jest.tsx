@@ -265,7 +265,7 @@ const getAllPendingOperationNames = (env: MockEnvironment) => {
 let mockTrackEvent: jest.Mock
 
 // FIXME: MockBoot interfering somehow...
-describe.skip("Shipping", () => {
+describe("Shipping", () => {
   const mockUseRouter = useRouter as jest.Mock
   const mockPush = jest.fn()
 

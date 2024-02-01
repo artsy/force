@@ -18,6 +18,8 @@ import { useHandleExchangeError } from "Apps/Order/Routes/Shipping2/Hooks/useHan
 export interface State {
   // Form state for fulfillment details
   fulfillmentDetailsFormikContext: FormikProps<FulfillmentValues>
+  // Whether to show the new address form or the saved addresses radio buttons
+  shippingFormMode: "new_address" | "saved_addresses"
   // Presence of this value indicates that the user has saved their first address
   newSavedAddressID: string | null
   // Form state for saved address radio buttons
@@ -45,6 +47,7 @@ interface Actions {
   setSelectedShippingQuote: (payload: string | null) => void
   setNewSavedAddressID: (payload: string | null) => void
   setSelectedSavedAddressID: (payload: string | null) => void
+  setShippingFormMode: (payload: "new_address" | "saved_addresses") => void
   setIsPerformingOperation: (payload: boolean) => void
   setStage: (payload: ShippingStage) => void
 }
@@ -95,6 +98,8 @@ export const ShippingContextProvider: FC<Pick<
 
   const initialState: State = {
     fulfillmentDetailsFormikContext: fulfillmentFormikRef.current,
+    shippingFormMode:
+      meData.addressList.length > 0 ? "saved_addresses" : "new_address",
     isPerformingOperation: false,
     newSavedAddressID: null,
     selectedShippingQuoteID: orderData.selectedShippingQuoteID ?? null,
@@ -118,20 +123,23 @@ export const ShippingContextProvider: FC<Pick<
     ) => {
       dispatch({ type: "SET_FULFILLMENT_DETAILS_CTX", payload: formHelpers })
     },
+    setIsPerformingOperation: (payload: boolean) => {
+      dispatch({ type: "SET_IS_PERFORMING_OPERATION", payload })
+    },
+    setNewSavedAddressID: (payload: string | null) => {
+      dispatch({ type: "SET_NEW_SAVED_ADDRESS_ID", payload })
+    },
     setSelectedShippingQuote: (payload: string | null) => {
       dispatch({ type: "SET_SELECTED_SHIPPING_QUOTE", payload })
     },
     setSelectedSavedAddressID: (payload: string | null) => {
       dispatch({ type: "SET_SELECTED_SAVED_ADDRESS_ID", payload })
     },
-    setNewSavedAddressID: (payload: string | null) => {
-      dispatch({ type: "SET_NEW_SAVED_ADDRESS_ID", payload })
+    setShippingFormMode: (payload: "new_address" | "saved_addresses") => {
+      dispatch({ type: "SET_SHIPPING_FORM_MODE", payload })
     },
     setStage: (payload: ShippingStage) => {
       dispatch({ type: "SET_STAGE", payload })
-    },
-    setIsPerformingOperation: (payload: boolean) => {
-      dispatch({ type: "SET_IS_PERFORMING_OPERATION", payload })
     },
 
     handleExchangeError,
@@ -157,11 +165,15 @@ export type Action =
       type: "SET_FULFILLMENT_DETAILS_CTX"
       payload: FormikProps<FulfillmentValues>
     }
+  | { type: "SET_IS_PERFORMING_OPERATION"; payload: boolean }
+  | { type: "SET_NEW_SAVED_ADDRESS_ID"; payload: string | null }
   | { type: "SET_SELECTED_SHIPPING_QUOTE"; payload: string | null }
   | { type: "SET_SELECTED_SAVED_ADDRESS_ID"; payload: string | null }
-  | { type: "SET_NEW_SAVED_ADDRESS_ID"; payload: string | null }
+  | {
+      type: "SET_SHIPPING_FORM_MODE"
+      payload: "new_address" | "saved_addresses"
+    }
   | { type: "SET_STAGE"; payload: ShippingStage }
-  | { type: "SET_IS_PERFORMING_OPERATION"; payload: boolean }
 
 const shippingStateReducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -183,10 +195,22 @@ const shippingStateReducer = (state: State, action: Action): State => {
         newSavedAddressID: action.payload,
       }
     }
+    case "SET_SELECTED_SAVED_ADDRESS_ID": {
+      return {
+        ...state,
+        selectedSavedAddressID: action.payload,
+      }
+    }
     case "SET_SELECTED_SHIPPING_QUOTE": {
       return {
         ...state,
         selectedShippingQuoteID: action.payload,
+      }
+    }
+    case "SET_SHIPPING_FORM_MODE": {
+      return {
+        ...state,
+        shippingFormMode: action.payload,
       }
     }
     case "SET_STAGE": {

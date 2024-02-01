@@ -4,10 +4,7 @@ import { graphql, useFragment } from "react-relay"
 import { FormikHelpers } from "formik"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import {
-  AddressFormMode,
-  FulfillmentDetailsForm,
-} from "Apps/Order/Routes/Shipping2/Components/FulfillmentDetailsForm"
+import { FulfillmentDetailsForm } from "Apps/Order/Routes/Shipping2/Components/FulfillmentDetailsForm"
 import {
   FulfillmentType,
   FulfillmentValues,
@@ -61,19 +58,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork!
 
-  // Once the user sees the address form, they should always see it.
-  const [forceNewAddressFormMode, setForceNewAddressFormMode] = useState(
-    !hasSavedAddresses
-  )
-
   const initialValues = getInitialValues(meData, shippingContext.orderData)
-
-  const shippingMode: Exclude<AddressFormMode, "pickup"> = (() => {
-    if (forceNewAddressFormMode || !hasSavedAddresses) {
-      return "new_address"
-    }
-    return "saved_addresses"
-  })()
 
   const availableFulfillmentTypes: FulfillmentType[] = firstArtwork.pickupAvailable
     ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
@@ -88,10 +73,14 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
    * the rest of its life
    */
   useEffect(() => {
-    if (!forceNewAddressFormMode && !hasSavedAddresses) {
-      setForceNewAddressFormMode(true)
+    if (
+      shippingContext.state.shippingFormMode !== "new_address" &&
+      !hasSavedAddresses
+    ) {
+      shippingContext.actions.setShippingFormMode("new_address")
     }
-  }, [forceNewAddressFormMode, hasSavedAddresses])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasSavedAddresses])
 
   /*
    * Re-save fulfillment details on load if they are already saved
@@ -113,7 +102,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           attributes: existingFulfillmentDetails.attributes,
           fulfillmentType: FulfillmentType.SHIP,
           meta: {
-            mode: "unused" as any,
             // FIXME: Will clobber previous address verification (but we can't
             // know what the previous status was unless we read from server)
             addressVerifiedBy: null,
@@ -143,7 +131,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
     return (
       values.fulfillmentType === FulfillmentType.SHIP &&
-      shippingMode === "new_address" &&
+      shippingContext.state.shippingFormMode === "new_address" &&
       enabledForAddress &&
       values.meta.addressVerifiedBy === null
     )
@@ -169,7 +157,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
     const resetSelectedSavedAddress = () => {
       if (
-        shippingMode === "saved_addresses" &&
+        shippingContext.state.shippingFormMode === "saved_addresses" &&
         shippingContext.state.newSavedAddressID
       ) {
         shippingContext.actions.setSelectedSavedAddressID(
@@ -183,7 +171,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
       if (
         values.fulfillmentType === FulfillmentType.SHIP &&
-        shippingMode === "new_address"
+        shippingContext.state.shippingFormMode === "new_address"
       ) {
         const userAddressUpdateResult = await handleNewUserAddressUpdates(
           values
@@ -205,7 +193,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
             }
             if (
               userAddressUpdateResult.data?.internalID &&
-              shippingMode === "new_address"
+              shippingContext.state.shippingFormMode === "new_address"
             ) {
               shippingContext.actions.setNewSavedAddressID(
                 userAddressUpdateResult.data.internalID
@@ -224,7 +212,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           saveFulfillmentDetailsResult.data.requiresArtsyShippingToDestination
         ) {
           shippingContext.actions.setStage("shipping_quotes")
-        } else if (shippingMode === "new_address") {
+        } else if (shippingContext.state.shippingFormMode === "new_address") {
           // Advance to payment
           router.push(`/orders/${orderData.internalID}/payment`)
         } else {
@@ -260,7 +248,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
       verifyAddressNow={verifyAddressNow}
       onSubmit={handleSubmit}
       availableFulfillmentTypes={availableFulfillmentTypes}
-      shippingMode={shippingMode}
     />
   )
 }
@@ -384,7 +371,6 @@ const getInitialValues = (
         ),
       },
       meta: {
-        mode: "pickup",
         userAddressAction: null,
         addressVerifiedBy: null,
       },
@@ -392,10 +378,7 @@ const getInitialValues = (
   }
 
   const savedAddresses = extractNodes(me.addressConnection)
-  const mode =
-    forceNewAddressFormMode || !savedAddresses.length
-      ? "new_address"
-      : "saved_addresses"
+
   // The default ship-to address should be the first one that
   // can be shipped-to, preferring the default
 
@@ -411,7 +394,6 @@ const getInitialValues = (
       meta: {
         saveAddress: false,
         addressVerifiedBy: null,
-        mode,
       },
     }
   }
@@ -431,7 +413,6 @@ const getInitialValues = (
     meta: {
       addressVerifiedBy: null,
       saveAddress: true,
-      mode,
     },
   }
 }
