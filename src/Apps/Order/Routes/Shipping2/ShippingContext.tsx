@@ -17,7 +17,7 @@ import { useHandleExchangeError } from "Apps/Order/Routes/Shipping2/Hooks/useHan
 
 export interface State {
   // Form state for fulfillment details
-  fulfillmentDetailsCtx: FormikProps<FulfillmentValues>
+  fulfillmentDetailsFormikContext: FormikProps<FulfillmentValues>
   // Presence of this value indicates that the user has saved their first address
   newSavedAddressID: string | null
   // Form state for saved address radio buttons
@@ -39,7 +39,9 @@ interface Actions {
     },
     logger: ReturnType<typeof createLogger>
   ) => void
-  setFulfillmentDetailsCtx: (payload: FormikProps<FulfillmentValues>) => void
+  setFulfillmentDetailsFormikContext: (
+    payload: FormikProps<FulfillmentValues>
+  ) => void
   setSelectedShippingQuote: (payload: string | null) => void
   setNewSavedAddressID: (payload: string | null) => void
   setSelectedSavedAddressID: (payload: string | null) => void
@@ -92,7 +94,7 @@ export const ShippingContextProvider: FC<Pick<
   } as unknown) as FormikProps<FulfillmentValues>)
 
   const initialState: State = {
-    fulfillmentDetailsCtx: fulfillmentFormikRef.current,
+    fulfillmentDetailsFormikContext: fulfillmentFormikRef.current,
     isPerformingOperation: false,
     newSavedAddressID: null,
     selectedShippingQuoteID: orderData.selectedShippingQuoteID ?? null,
@@ -111,7 +113,9 @@ export const ShippingContextProvider: FC<Pick<
   })
 
   const actions = {
-    setFulfillmentDetailsCtx: (formHelpers: FormikProps<FulfillmentValues>) => {
+    setFulfillmentDetailsFormikContext: (
+      formHelpers: FormikProps<FulfillmentValues>
+    ) => {
       dispatch({ type: "SET_FULFILLMENT_DETAILS_CTX", payload: formHelpers })
     },
     setSelectedShippingQuote: (payload: string | null) => {
@@ -164,7 +168,7 @@ const shippingStateReducer = (state: State, action: Action): State => {
     case "SET_FULFILLMENT_DETAILS_CTX": {
       return {
         ...state,
-        fulfillmentDetailsCtx: action.payload,
+        fulfillmentDetailsFormikContext: action.payload,
       }
     }
     case "SET_IS_PERFORMING_OPERATION": {

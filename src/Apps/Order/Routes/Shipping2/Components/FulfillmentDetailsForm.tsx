@@ -120,7 +120,7 @@ const FulfillmentDetailsFormLayout = (
    * via `shippingContext.state.fulfillmentDetailsCtx`
    */
   useEffect(() => {
-    shippingContext.actions.setFulfillmentDetailsCtx(formikContext)
+    shippingContext.actions.setFulfillmentDetailsFormikContext(formikContext)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formikContext.values, formikContext.isValid])
 

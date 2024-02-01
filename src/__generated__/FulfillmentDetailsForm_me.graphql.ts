@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b6e7e5369db94d6e2b410ccaec23eef>>
+ * @generated SignedSource<<7b3263cf7b5ad31d05d3fcbc7ea55804>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -92,11 +92,6 @@ return {
   "metadata": null,
   "name": "FulfillmentDetailsForm_me",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SavedAddresses2_me"
-    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -117,6 +112,11 @@ return {
         (v2/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SavedAddresses2_me"
     },
     {
       "alias": null,
@@ -244,6 +244,6 @@ return {
 };
 })();
 
-(node as any).hash = "29365aeaf4f0689f5f24a6fb2ebca551";
+(node as any).hash = "9b2480f681205ee128c09e100cf9fb85";
 
 export default node;

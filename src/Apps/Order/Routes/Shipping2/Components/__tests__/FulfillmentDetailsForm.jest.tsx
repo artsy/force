@@ -97,7 +97,7 @@ beforeEach(() => {
   }
   mockShippingContext = {
     actions: {
-      setFulfillmentDetailsCtx: jest.fn(),
+      setFulfillmentDetailsFormikContext: jest.fn(),
     },
     orderData: {
       shippingQuotes: [],
