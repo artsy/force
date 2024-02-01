@@ -31,17 +31,19 @@ import { Analytics } from "System/Analytics/AnalyticsContext"
 import { useRouteComplete } from "Utils/Hooks/useRouteComplete"
 import { Media } from "Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
-import { Router, Match } from "found"
+import { Router, Match, RenderProps } from "found"
 import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtworkBanner"
-import { useCallback, useEffect } from "react"
+import React, { useCallback, useEffect } from "react"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
 import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
 import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertHeader"
 import { compact } from "lodash"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { FullBleedBanner } from "Components/FullBleedBanner"
+import { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkResult.graphql"
+import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorApp"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -359,7 +361,7 @@ const SpinnerContainer = styled.div`
   position: relative;
 `
 
-export const ArtworkAppFragmentContainer = createFragmentContainer(
+const ArtworkAppFragmentContainer = createFragmentContainer(
   withSystemContext(WrappedArtworkApp),
   {
     artwork: graphql`
@@ -416,6 +418,37 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkAuctionCreateAlertHeader_artwork
       }
     `,
+  }
+)
+
+interface ArtworkResultProps extends RenderProps {
+  artworkResult: ArtworkApp_artworkResult$data
+  me: ArtworkApp_me$data
+}
+
+const ArtworkResult: React.FC<ArtworkResultProps> = props => {
+  const { artworkResult } = props
+  const { __typename } = artworkResult
+
+  if (__typename === "Artwork") {
+    return <ArtworkAppFragmentContainer artwork={artworkResult} {...props} />
+  }
+
+  return <ArtworkErrorApp artworkError={artworkResult} />
+}
+
+export const ArtworkResultFragmentContainer = createFragmentContainer(
+  ArtworkResult,
+  {
+    artworkResult: graphql`
+      fragment ArtworkApp_artworkResult on ArtworkResult {
+        __typename
+
+        ...ArtworkApp_artwork
+        ...ArtworkErrorApp_artworkError
+      }
+    `,
+
     me: graphql`
       fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me

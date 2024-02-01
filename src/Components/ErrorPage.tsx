@@ -108,7 +108,7 @@ const Detail = styled(Code).attrs({
   -webkit-overflow-scrolling: touch;
 `
 
-const ERROR_MESSAGES: Record<number, string> = {
+export const ERROR_MESSAGES: Record<number, string> = {
   // 4×× Client Error
   400: "Bad Request",
   401: "Unauthorized",

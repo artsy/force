@@ -17,4 +17,11 @@ describe("/artwork/:id", () => {
     cy.get("h1").should("contain", "Guernica, 1937")
     cy.contains("Museo Reina Sofía")
   })
+
+  it("renders a 404", () => {
+    cy.request({ url: "/artwork/blahblahblah", failOnStatusCode: false })
+      .its("status")
+      .should("equal", 404)
+    cy.visit("/artwork/blahblahblah", { failOnStatusCode: false })
+  })
 })
