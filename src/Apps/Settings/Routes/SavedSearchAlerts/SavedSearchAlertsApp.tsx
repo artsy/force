@@ -27,16 +27,13 @@ import {
 import { SavedSearchAlertHeader } from "./Components/SavedSearchAlertHeader"
 import { MetaTags } from "Components/MetaTags"
 import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmptyResults"
-import { SavedSearchAlertEditFormDesktop } from "./Components/SavedSearchAlertEditFormDesktop"
 import { Sticky } from "Components/Sticky"
-import { SavedSearchAlertEditFormMobile } from "./Components/SavedSearchAlertEditFormMobile"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 import { useSystemContext } from "System/SystemContext"
 import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
 import { NewSavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -58,7 +55,6 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const { relayEnvironment } = useSystemContext()
   const { sendToast } = useToasts()
   const { trackEvent } = useTracking()
-  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [sort, setSort] = useState("CREATED_AT_DESC")
   const [loading, setLoading] = useState(false)
@@ -218,123 +214,63 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   return (
     <>
       <MetaTags title="Alerts | Artsy" pathname="/settings/alerts" />
-      {newAlertModalEnabled ? (
-        <Box mx={[-2, 0]}>
-          {alerts.length === 0 ? (
-            <SavedSearchAlertsEmptyResults />
-          ) : (
-            <>
-              <SavedSearchAlertHeader
-                selected={sort}
-                onSortSelect={handleSortSelect}
-              />
-              <Separator color="black15" />
-              <Media greaterThanOrEqual="md">
-                <GridColumns gridColumnGap={0}>
-                  <Column span={isEditMode ? 6 : 12}>{list}</Column>
-                  {isEditMode && editAlertEntity && (
-                    <Column
-                      span={6}
-                      borderLeft="1px solid"
-                      borderLeftColor="black15"
-                    >
-                      <Sticky bottomBoundary="#content-end">
-                        <NewSavedSearchAlertEditFormQueryRenderer
-                          editAlertEntity={editAlertEntity}
-                          onCloseClick={closeEditForm}
-                          onCompleted={handleCompleted}
-                          onDeleteClick={handleDeleteClick}
-                        />
-                      </Sticky>
-                    </Column>
-                  )}
-                </GridColumns>
 
-                <Box id="content-end" />
-              </Media>
-
-              <Media lessThan="md">
-                {list}
+      <Box mx={[-2, 0]}>
+        {alerts.length === 0 ? (
+          <SavedSearchAlertsEmptyResults />
+        ) : (
+          <>
+            <SavedSearchAlertHeader
+              selected={sort}
+              onSortSelect={handleSortSelect}
+            />
+            <Separator color="black15" />
+            <Media greaterThanOrEqual="md">
+              <GridColumns gridColumnGap={0}>
+                <Column span={isEditMode ? 6 : 12}>{list}</Column>
                 {isEditMode && editAlertEntity && (
-                  <NewSavedSearchAlertEditFormQueryRenderer
-                    editAlertEntity={editAlertEntity}
-                    onCloseClick={closeEditForm}
-                    onCompleted={handleCompleted}
-                    onDeleteClick={handleDeleteClick}
-                  />
+                  <Column
+                    span={6}
+                    borderLeft="1px solid"
+                    borderLeftColor="black15"
+                  >
+                    <Sticky bottomBoundary="#content-end">
+                      <NewSavedSearchAlertEditFormQueryRenderer
+                        editAlertEntity={editAlertEntity}
+                        onCloseClick={closeEditForm}
+                        onCompleted={handleCompleted}
+                        onDeleteClick={handleDeleteClick}
+                      />
+                    </Sticky>
+                  </Column>
                 )}
-              </Media>
+              </GridColumns>
 
-              {showDeleteModal && editAlertEntity && (
-                <SavedSearchAlertDeleteModal
-                  id={editAlertEntity.id}
-                  onCloseClick={closeDeleteModal}
-                  onDeleted={handleDeleted}
+              <Box id="content-end" />
+            </Media>
+
+            <Media lessThan="md">
+              {list}
+              {isEditMode && editAlertEntity && (
+                <NewSavedSearchAlertEditFormQueryRenderer
+                  editAlertEntity={editAlertEntity}
+                  onCloseClick={closeEditForm}
+                  onCompleted={handleCompleted}
+                  onDeleteClick={handleDeleteClick}
                 />
               )}
-            </>
-          )}
-        </Box>
-      ) : (
-        <>
-          <Box mx={[-2, 0]}>
-            {alerts.length === 0 ? (
-              <SavedSearchAlertsEmptyResults />
-            ) : (
-              <>
-                <SavedSearchAlertHeader
-                  selected={sort}
-                  onSortSelect={handleSortSelect}
-                />
-                <Separator color="black15" />
-                <Media greaterThanOrEqual="md">
-                  <GridColumns gridColumnGap={0}>
-                    <Column span={isEditMode ? 6 : 12}>{list}</Column>
-                    {isEditMode && editAlertEntity && (
-                      <Column
-                        span={6}
-                        borderLeft="1px solid"
-                        borderLeftColor="black15"
-                      >
-                        <Sticky bottomBoundary="#content-end">
-                          <SavedSearchAlertEditFormDesktop
-                            editAlertEntity={editAlertEntity}
-                            onCloseClick={closeEditForm}
-                            onCompleted={handleCompleted}
-                            onDeleteClick={handleDeleteClick}
-                          />
-                        </Sticky>
-                      </Column>
-                    )}
-                  </GridColumns>
+            </Media>
 
-                  <Box id="content-end" />
-                </Media>
-
-                <Media lessThan="md">
-                  {list}
-                  {isEditMode && editAlertEntity && (
-                    <SavedSearchAlertEditFormMobile
-                      editAlertEntity={editAlertEntity}
-                      onCloseClick={closeEditForm}
-                      onCompleted={handleCompleted}
-                      onDeleteClick={handleDeleteClick}
-                    />
-                  )}
-                </Media>
-
-                {showDeleteModal && editAlertEntity && (
-                  <SavedSearchAlertDeleteModal
-                    id={editAlertEntity.id}
-                    onCloseClick={closeDeleteModal}
-                    onDeleted={handleDeleted}
-                  />
-                )}
-              </>
+            {showDeleteModal && editAlertEntity && (
+              <SavedSearchAlertDeleteModal
+                id={editAlertEntity.id}
+                onCloseClick={closeDeleteModal}
+                onDeleted={handleDeleted}
+              />
             )}
-          </Box>
-        </>
-      )}
+          </>
+        )}
+      </Box>
     </>
   )
 }
