@@ -1,10 +1,7 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Spacer, Text } from "@artsy/palette"
-import { ArtworkCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkCreateAlertButton"
 import { useTranslation } from "react-i18next"
 import { ArtworkSidebarBiddingClosedMessage_artwork$data } from "__generated__/ArtworkSidebarBiddingClosedMessage_artwork.graphql"
-import { ContextModule } from "@artsy/cohesion"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
@@ -16,7 +13,6 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
   artwork,
 }) => {
   const { t } = useTranslation()
-  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
 
   return (
     <>
@@ -30,18 +26,10 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
             {t(`artworkPage.sidebar.createAlert.description`)}
           </Text>
           <Spacer y={2} />
-          {newAlertModalEnabled ? (
-            <>
-              <ProgressiveOnboardingAlertCreateSimple>
-                <CreateAlertButton width="100%" size="large" />
-              </ProgressiveOnboardingAlertCreateSimple>
-            </>
-          ) : (
-            <ArtworkCreateAlertButtonFragmentContainer
-              artwork={artwork}
-              analyticsContextModule={ContextModule.artworkSidebar}
-            />
-          )}
+
+          <ProgressiveOnboardingAlertCreateSimple>
+            <CreateAlertButton width="100%" size="large" />
+          </ProgressiveOnboardingAlertCreateSimple>
         </>
       )}
     </>
@@ -53,7 +41,6 @@ export const ArtworkSidebarBiddingClosedMessageFragmentContainer = createFragmen
   {
     artwork: graphql`
       fragment ArtworkSidebarBiddingClosedMessage_artwork on Artwork {
-        ...ArtworkCreateAlertButton_artwork
         isEligibleToCreateAlert
         artists {
           internalID
