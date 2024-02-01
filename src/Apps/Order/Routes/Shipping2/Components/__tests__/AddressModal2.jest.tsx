@@ -23,13 +23,6 @@ jest.unmock("react-relay")
 jest.mock("System/useSystemContext")
 const mockUseSystemContext = useSystemContext as jest.Mock
 
-jest.mock("Utils/Hooks/useMatchMedia", () => ({
-  __internal__useMatchMedia: () => ({}),
-}))
-jest.mock("Utils/user", () => ({
-  userHasLabFeature: jest.fn(),
-}))
-
 const errorBoxQuery = "Banner[data-testid='form-banner-error']"
 
 const mockSavedAddress: SavedAddressType = {
