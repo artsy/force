@@ -162,7 +162,6 @@ export const AddressModal: FC<AddressModalProps> = ({
       <Formik<FormValues>
         validateOnMount
         validationSchema={validationSchema}
-        // reset form when initial values change
         enableReinitialize={true}
         initialValues={initialValues}
         onSubmit={handleSubmit}

@@ -1,6 +1,7 @@
 import { FulfillmentDetailsForm_order$key } from "__generated__/FulfillmentDetailsForm_order.graphql"
 import { FC, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { FormikHelpers } from "formik"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import {
@@ -18,14 +19,14 @@ import {
   FulfillmentDetailsForm_me$data,
   FulfillmentDetailsForm_me$key,
 } from "__generated__/FulfillmentDetailsForm_me.graphql"
+import createLogger from "Utils/logger"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { useUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useUserAddressUpdates"
 import { useRouter } from "System/Router/useRouter"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
-import { FormikHelpers } from "formik"
-import { useHandleSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/Hooks/useHandleSaveFulfillmentDetails"
-import { logger } from "Components/Inquiry/util"
+
+const logger = createLogger("Routes/Shipping2/FulfillmentDetails.tsx")
 
 export interface FulfillmentDetailsProps {
   me: FulfillmentDetailsForm_me$key
@@ -39,7 +40,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   const meData = useFragment(ME_FRAGMENT, me)
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const { router } = useRouter()
-
   const shippingContext = useShippingContext()
   const orderTracking = useOrderTracking()
   const { handleNewUserAddressUpdates } = useUserAddressUpdates()
@@ -158,7 +158,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
    */
   const handleSubmit = async (
     values: FulfillmentValues,
-    helpers: FormikHelpers<FulfillmentValues>
+    _helpers: FormikHelpers<FulfillmentValues>
   ) => {
     // Trigger address verification and return early if appropriate
     if (shouldVerifyAddressOnSubmit(values)) {
@@ -333,13 +333,13 @@ const ME_FRAGMENT = graphql`
       after: { type: "String" }
       before: { type: "String" }
     ) {
-    ...SavedAddresses2_me
     name
     email
     id
     location {
       country
     }
+    ...SavedAddresses2_me
     addressConnection(
       first: $first
       last: $last

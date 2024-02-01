@@ -1,5 +1,7 @@
-import * as React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, FC } from "react"
+import { compact } from "lodash"
+import { graphql, useFragment } from "react-relay"
+import { SavedAddresses2_me$key } from "__generated__/SavedAddresses2_me.graphql"
 import styled from "styled-components"
 import { RadioGroup, BorderedRadio, Spacer, Clickable } from "@artsy/palette"
 import {
@@ -20,10 +22,6 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippin
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useFormikContext } from "formik"
 import { extractNodes } from "Utils/extractNodes"
-import { compact } from "lodash"
-import { graphql, useFragment } from "react-relay"
-// import { SavedAddresses2_addressConnection$key } from "__generated__/SavedAddresses2_addressConnection.graphql"
-import { SavedAddresses2_me$key } from "__generated__/SavedAddresses2_me.graphql"
 
 export interface SavedAddressesProps {
   active: boolean
@@ -31,7 +29,7 @@ export interface SavedAddressesProps {
   onSelect: (address: SavedAddressType) => void
 }
 
-export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
+export const SavedAddresses2: FC<SavedAddressesProps> = props => {
   const logger = createLogger("SavedAddresses.tsx")
 
   const shippingContext = useShippingContext()
@@ -99,7 +97,6 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
   const addressSavedToOrderID = savedAddressOnOrder?.internalID
 
   // TODO: Make sure this can't create an infinite loop if submitting fails
-  // Is it necessary beyond the initial render?
   useEffect(() => {
     // Automatically select (save) best available address ID if it isn't present
     const automaticallySelectBestAddress = async () => {
@@ -124,7 +121,8 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.active])
 
-  /* Select an address radio button and pass the address to the parent.
+  /*
+   * Select an address radio button and pass the address to the parent.
    */
   const handleClickAddress = (id: string): void => {
     orderTracking.clickedShippingAddress()

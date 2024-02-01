@@ -70,7 +70,6 @@ export const FulfillmentDetailsForm = ({
   return (
     <Formik<FulfillmentValues>
       initialValues={initialValues}
-      initialStatus={{}}
       onSubmit={onSubmit}
       validationSchema={VALIDATION_SCHEMA}
     >

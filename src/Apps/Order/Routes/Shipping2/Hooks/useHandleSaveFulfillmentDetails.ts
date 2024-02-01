@@ -71,12 +71,6 @@ export const useHandleSaveFulfillmentDetails = () => {
 
         const { phoneNumber, ...addressValues } = values.attributes
 
-        // TODO: Ponder, should we be using the same values for the fulfillment mutation
-        // in all cases, or should we use the result of the user address action if it is
-        // used? We are assuming the result of the user address action
-        // will be consistent with the values in the form which seems fair. OTOH the
-        // result there could include a saved address ID... Seems unumportant for today.
-
         fulfillmentMutationValues = {
           id: shippingContext.orderData.internalID,
           fulfillmentType: requiresArtsyShippingToDestination
@@ -110,9 +104,12 @@ export const useHandleSaveFulfillmentDetails = () => {
           )
           return { error: orderOrError.error }
         default:
-          // Should never happen
           logger.error("Unexpected mutation result", orderOrError)
-          return { error: new Error("Unexpected mutation result typename") }
+          return {
+            error: new Error(
+              "Unexpected mutation result: " + orderOrError?.__typename
+            ),
+          }
       }
     } catch (error) {
       orderTracking.errorMessageViewed({

@@ -157,18 +157,6 @@ export const useUserAddressUpdates = () => {
             },
           })
           processedPayload = handleMutationPayload(response.deleteUserAddress)
-          // TODO: Handle in caller
-          // if (mode === "new_address" && result.data) {
-          //   // TODO: form values or dispatch to state? Form value updates can be awaited...
-          //   await helpers.setFieldValue(
-          //     "meta.newSavedAddressID",
-          //     result.data.internalID
-          //   )
-          // }
-          // if (mode === "new_address" && result.data) {
-          //   await helpers.setFieldValue("meta.newSavedAddressID", undefined)
-          // }
-
           break
         }
       }
@@ -262,12 +250,14 @@ const getUserAddressActionForAddressFormValues = (
       }
     }
   }
+
   if (!values.meta.saveAddress && shippingContext.state.newSavedAddressID) {
     return {
       type: "delete",
       address: { internalID: shippingContext.state.newSavedAddressID },
     }
   }
+
   return null
 }
 

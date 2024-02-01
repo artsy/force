@@ -26,11 +26,11 @@ import { CollapseDetails } from "Apps/Order/Routes/Shipping2/Components/Collapse
 export type ShippingStage =
   // User choosing fulfillment type
   | "fulfillment_details"
-  // User choosing shipping quote
-  | "shipping_quotes"
   // Temporary stage after address has been automatically saved
   // to wait for click
   | "fulfillment_details_saved"
+  // User choosing shipping quote
+  | "shipping_quotes"
 
 export interface ShippingProps {
   order: Shipping2_order$data

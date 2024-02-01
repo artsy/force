@@ -116,7 +116,6 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
   }
 
   beforeEach(() => {
-    // if (true) return
     return new Promise((resolve, reject) => {
       ;["error", "warn"].forEach((type: "error" | "warn") => {
         // Don't spy on loggers that have been modified by the current test.

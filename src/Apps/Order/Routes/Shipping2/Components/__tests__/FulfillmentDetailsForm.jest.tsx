@@ -170,7 +170,6 @@ describe("FulfillmentDetailsForm", () => {
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
 
-      // expect radio to be checked
       expect(
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       ).toBeChecked()
