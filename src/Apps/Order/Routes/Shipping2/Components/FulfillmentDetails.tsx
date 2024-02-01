@@ -25,6 +25,7 @@ import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContex
 import { useUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useUserAddressUpdates"
 import { useRouter } from "System/Router/useRouter"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
+import { useHandleSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/Hooks/useHandleSaveFulfillmentDetails"
 
 const logger = createLogger("Routes/Shipping2/FulfillmentDetails.tsx")
 
