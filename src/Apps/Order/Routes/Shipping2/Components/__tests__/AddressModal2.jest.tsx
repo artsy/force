@@ -80,6 +80,7 @@ afterEach(() => {
 })
 
 // FIXME: MockBoot interfering somehow...
+// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("AddressModal", () => {
   beforeEach(() => {
     mockRelayEnv = createMockEnvironment()

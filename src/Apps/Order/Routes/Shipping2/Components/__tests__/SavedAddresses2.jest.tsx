@@ -62,9 +62,7 @@ const TestWrapper = ({ children }) => (
             region: "",
           },
           fulfillmentType: FulfillmentType.SHIP,
-          meta: {
-            mode: "saved_addresses",
-          },
+          meta: {},
         }}
         onSubmit={mockFormikSubmit}
       >
@@ -108,6 +106,7 @@ describe("Saved Addresses", () => {
       state: {
         isPerformingOperation: false,
         selectedSavedAddressID: "2",
+        shippingFormMode: "saved_addresses",
       },
       actions: {
         setIsPerformingOperation: jest.fn(),
