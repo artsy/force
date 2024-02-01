@@ -2,7 +2,6 @@ import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
-import { ArtworkCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkCreateAlertButton"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { FC } from "react"
@@ -15,14 +14,13 @@ import {
   SavedSearchEntityCriteria,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { OwnerType } from "@artsy/cohesion"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Router/RouterLink"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
@@ -151,7 +149,14 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
                 Manage your alerts
               </Button>
             ) : (
-              <CreateAlertButtonSwitch artwork={artwork} />
+              <ProgressiveOnboardingAlertCreateSimple>
+                <CreateAlertButton
+                  width="100%"
+                  size="large"
+                  backgroundColor="black100"
+                  color="white100"
+                />
+              </ProgressiveOnboardingAlertCreateSimple>
             )}
           </Box>
         </Column>
@@ -221,39 +226,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
         myLotStandingManageAlerts: myLotStanding {
           isHighestBidder
         }
-
-        ...ArtworkCreateAlertButton_artwork
       }
     `,
   }
 )
-
-interface CreateAlertButtonSwitchProps {
-  artwork: ArtworkAuctionCreateAlertHeader_artwork$data
-}
-
-const CreateAlertButtonSwitch: FC<CreateAlertButtonSwitchProps> = ({
-  artwork,
-}) => {
-  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
-
-  if (newAlertModalEnabled) {
-    return (
-      <ProgressiveOnboardingAlertCreateSimple>
-        <CreateAlertButton
-          width="100%"
-          size="large"
-          backgroundColor="black100"
-          color="white100"
-        />
-      </ProgressiveOnboardingAlertCreateSimple>
-    )
-  }
-
-  return (
-    <ArtworkCreateAlertButtonFragmentContainer
-      artwork={artwork}
-      analyticsContextModule={ContextModule.artworkSidebar}
-    />
-  )
-}
