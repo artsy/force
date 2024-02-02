@@ -50,6 +50,7 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
 
   const dateOfSale = getDisplaySaleDate(saleDate)
   const image = images?.thumbnail?.cropped
+  const blurhashDataURL = images?.thumbnail?.blurhashDataURL
   const artistName = artist?.name
 
   const onAuctionResultClick = (
@@ -91,6 +92,7 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
               <Image
                 src={image.src}
                 srcSet={image.srcSet}
+                placeHolderURL={blurhashDataURL ?? undefined}
                 width="100%"
                 height="100%"
                 alt=""
@@ -201,6 +203,7 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
         }
         images {
           thumbnail {
+            blurhashDataURL
             cropped(width: 130, height: 130, version: ["square140"]) {
               src
               srcSet
