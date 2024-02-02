@@ -79,3 +79,26 @@ describe("feature flag: onyx_enable-artist-series-filter", () => {
     })
   })
 })
+
+describe("feature flag: onyx_availability", () => {
+  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
+
+  describe("when the feature flag is enabled", () => {
+    beforeEach(() => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+    })
+    it("renders the Availability filter", () => {
+      render(<ArtistArtworkFilters />)
+      expect(screen.getByText("Availability")).toBeInTheDocument()
+    })
+  })
+  describe("when the feature flag is disabled", () => {
+    beforeEach(() => {
+      mockUseFeatureFlag.mockImplementation(() => false)
+    })
+    it("does not render the Availability filter", () => {
+      render(<ArtistArtworkFilters />)
+      expect(screen.queryByText("Availability")).not.toBeInTheDocument()
+    })
+  })
+})
