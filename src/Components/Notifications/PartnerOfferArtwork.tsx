@@ -1,44 +1,47 @@
-import * as React from "react"
+import { FC } from "react"
 import { graphql, useFragment } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { NotificationArtwork_artwork$key } from "__generated__/NotificationArtwork_artwork.graphql"
-import Metadata from "Components/Artwork/Metadata"
-import { AuthContextModule } from "@artsy/cohesion"
-import { Box, Button, Image } from "@artsy/palette"
-import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
+import { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwork_artwork.graphql"
 import { resized } from "Utils/resized"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
+import { RouterLink } from "System/Router/RouterLink"
+import { Box, Button, Image } from "@artsy/palette"
+import Metadata from "Components/Artwork/Metadata"
+import { ContextModule } from "@artsy/cohesion"
+import { useTimer } from "Utils/Hooks/useTimer"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 
-export interface NotificationArtworkProps
-  extends Omit<RouterLinkProps, "to" | "width"> {
-  artwork: NotificationArtwork_artwork$key
-  contextModule?: AuthContextModule
-  onClick?: () => void
+interface PartnerOfferArtworkProps {
+  artwork: PartnerOfferArtwork_artwork$key
+  targetHref: string
+  expiresAt?: string | null
+  available?: boolean | null
 }
 
-export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
+export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   artwork: artworkProp,
-  contextModule,
-  onClick,
-  ...rest
+  targetHref,
+  expiresAt = "",
+  available = false,
 }) => {
-  const artwork = useFragment(notificationArtworkFragment, artworkProp)
+  const { hasEnded } = useTimer(expiresAt || "")
+  const fullyAvailable = !!(available && !hasEnded)
 
-  if (!artwork.image?.src) {
-    return null
-  }
-
-  const image = resized(artwork.image.src, { width: CARD_MAX_WIDTH })
-
+  const artwork = useFragment(partnerOfferArtworkFragment, artworkProp)
+  const image = resized(artwork?.image?.src ?? "", { width: CARD_MAX_WIDTH })
   const label =
     (artwork.title ?? "Artwork") +
     (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
 
+  let buttonText = "Continue To Purchase"
+  if (hasEnded) buttonText = "View Work"
+  if (!available) buttonText = "Create Alert"
+
+  const href = fullyAvailable ? targetHref : artwork?.href
+
   return (
     <ManageArtworkForSavesProvider>
       <RouterLink
-        to={artwork?.href}
-        onClick={onClick}
+        to={href}
         display="flex"
         flexDirection="column"
         textDecoration="none"
@@ -46,7 +49,6 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
         maxWidth={CARD_MAX_WIDTH}
         overflow="hidden"
         width="100%"
-        {...rest}
         mb={2}
       >
         <Box
@@ -70,7 +72,7 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
 
         <Metadata
           artwork={artwork}
-          contextModule={contextModule}
+          contextModule={ContextModule.activity}
           showSaveButton
           disableRouterLinking
           maxWidth="100%"
@@ -81,27 +83,25 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
         <Button
           // @ts-ignore
           as={RouterLink}
-          to={artwork?.href}
-          onClick={onClick}
+          to={href}
         >
-          View Work
+          {buttonText}
         </Button>
       </Box>
     </ManageArtworkForSavesProvider>
   )
 }
 
-const notificationArtworkFragment = graphql`
-  fragment NotificationArtwork_artwork on Artwork {
-    artistNames
+const partnerOfferArtworkFragment = graphql`
+  fragment PartnerOfferArtwork_artwork on Artwork {
     href
+    title
+    artistNames
     image {
       src: url(version: ["larger", "large"])
       width
       height
     }
-    title
-
     ...Metadata_artwork
   }
 `
