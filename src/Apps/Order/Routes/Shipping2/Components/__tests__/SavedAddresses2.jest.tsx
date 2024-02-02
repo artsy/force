@@ -38,7 +38,7 @@ jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => {
   }
 })
 
-jest.mock("Apps/Order/routes/Shipping2/Hooks/useUserAddressUpdates", () => {
+jest.mock("Apps/Order/Routes/Shipping2/Hooks/useUserAddressUpdates", () => {
   return {
     useUserAddressUpdates: () => ({
       executeUserAddressAction: mockExecuteUserAddressAction,
