@@ -7,59 +7,57 @@ import {
   GridColumns,
   Column,
   FullBleed,
-  Flex,
+  Stack,
+  ResponsiveBox,
 } from "@artsy/palette"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { useWindowSize } from "Utils/Hooks/useWindowSize"
 
-export type StepsWithImageBlackDataType = {
-  src: string
-  srcSet: string
-  text?: string
-  title?: string
-  useBlackBackground?: boolean
-  imageHeight?: number
+interface ShelfItemProps {
+  image: {
+    src: string
+    width: number
+    height: number
+  }
+  text: string
+  title: string
 }
 
-const IMAGE_WIDTH = 600
-const BIG_IMAGE_HEIGHT = 575
+// FIXME: These images are far too small to be used!
+const IMAGE_AUCTIONS = {
+  src: "https://files.artsy.net/images/ways-we-sell-auctions.jpg",
+  width: 633,
+  height: 415,
+}
 
-const waysWeSellImage1 = resized(
-  "https://files.artsy.net/images/ways-we-sell-auctions.jpg",
-  { width: IMAGE_WIDTH, height: 415, quality: 100 }
-)
+const IMAGE_PRIVATE_SALES = {
+  src: "https://files.artsy.net/images/ways-we-sell-private-sales.jpg",
+  width: 622,
+  height: 597,
+}
 
-const waysWeSellImage2 = resized(
-  "https://files.artsy.net/images/ways-we-sell-private-sales.jpg",
-  { width: IMAGE_WIDTH, height: BIG_IMAGE_HEIGHT, quality: 100 }
-)
+const IMAGE_STOREFRONT = {
+  src: "https://files.artsy.net/images/ways-we-sell-online-storefront.jpg",
+  width: 420,
+  height: 344,
+}
 
-const waysWeSellImage3 = resized(
-  "https://files.artsy.net/images/ways-we-sell-online-storefront.jpg",
-  { width: IMAGE_WIDTH, height: 344, quality: 100 }
-)
-
-const data: StepsWithImageBlackDataType[] = [
+const DATA: ShelfItemProps[] = [
   {
-    src: waysWeSellImage1.src,
-    srcSet: waysWeSellImage1.srcSet,
+    image: IMAGE_AUCTIONS,
     text:
       "Our curated auctions provide you with multiple opportunities to reach the widest audience and successfully achieve your artwork’s full potential.",
     title: "Auctions",
   },
   {
-    src: waysWeSellImage2.src,
-    srcSet: waysWeSellImage2.srcSet,
+    image: IMAGE_PRIVATE_SALES,
     text:
       "​​We offer tailored and discreet sales arrangements for our collectors’ highest value and most sensitive artworks.",
     title: "Private sales",
   },
   {
-    src: waysWeSellImage3.src,
-    srcSet: waysWeSellImage3.srcSet,
+    image: IMAGE_STOREFRONT,
     text:
       "When your work is listed directly on Artsy.net—the world’s largest online art marketplace—it reaches over 3 million art lovers.",
     title: "Online marketplace",
@@ -68,113 +66,72 @@ const data: StepsWithImageBlackDataType[] = [
 
 export const WaysWeSell = () => {
   return (
-    <FullBleed background="black100" position="relative">
+    <FullBleed bg="black100" color="white100">
       <AppContainer>
-        <HorizontalPadding>
-          <Box mx={[-2, -4]} px={[2, 4]} py={[4, 12]}>
-            <Text
-              mb={[1, 2]}
-              variant={["lg-display", "xl", "xxl"]}
-              color="white100"
-            >
-              A sales strategy tailored to your artwork
-            </Text>
+        <Box px={[2, 4]} py={[4, 12]}>
+          <Text mb={[1, 2]} variant={["lg-display", "xl", "xxl"]}>
+            A sales strategy tailored to your artwork
+          </Text>
 
-            <Text mb={[4, 4, 6]} variant={["xs", "sm"]} color="white100">
-              A dedicated specialist works with you to select the best sales
-              option for your artwork.
-            </Text>
-            <DesctopLayout />
-            <MobileLayout />
-          </Box>
-        </HorizontalPadding>
+          <Text mb={[4, 4, 6]} variant={["xs", "sm"]}>
+            A dedicated specialist works with you to select the best sales
+            option for your artwork.
+          </Text>
+
+          <DesktopLayout />
+
+          <MobileLayout />
+        </Box>
       </AppContainer>
     </FullBleed>
   )
 }
 
-const ShelfItem: React.FC<StepsWithImageBlackDataType> = ({
-  src,
-  title,
-  text,
-  srcSet,
-}) => {
-  const { width } = useWindowSize()
-
-  const aspectRatio = BIG_IMAGE_HEIGHT / IMAGE_WIDTH
-
-  // calculating the width of the image contailer
-  // (screen width - HorizontalPadding - px of the parent - gridColumnGap) / 3
-  const collumnHeightMediumcreen =
-    ((width - 20 * 2 - 20 * 2 - 20 * 2) / 3) * aspectRatio
-  const collumnHeightBigScreen =
-    ((width - 40 * 2 - 40 * 2 - 40 * 2) / 3) * aspectRatio
-
+const ShelfItem: React.FC<ShelfItemProps> = ({ image, title, text }) => {
   return (
-    <>
-      <Box
+    <Stack gap={[1, 2]}>
+      <ResponsiveBox
+        aspectWidth={image.width}
+        aspectHeight={image.height}
         maxWidth="100%"
-        bg="black100"
-        mb={[1, 2]}
-        height={["auto", collumnHeightMediumcreen, collumnHeightBigScreen]}
-        maxHeight={BIG_IMAGE_HEIGHT}
       >
-        <Flex height="100%" alignItems="flex-end">
-          <Image
-            src={src}
-            srcSet={srcSet}
-            width="100%"
-            height="auto"
-            lazyLoad
-            alt={`${title} image`}
-            style={{
-              display: "flex",
-              alignSelf: "flex-end",
-            }}
-          />
-        </Flex>
-      </Box>
+        <Image
+          {...resized(image.src, { width: 500, height: 500 })}
+          width="100%"
+          height="100%"
+          lazyLoad
+          style={{ display: "block" }}
+        />
+      </ResponsiveBox>
 
-      {title && (
-        <Text
-          mb={[0.5, 1]}
-          variant={["md", "lg-display", "xl"]}
-          color="white100"
-        >
-          {title}
-        </Text>
-      )}
+      <Stack
+        gap={[0.5, 1]}
+        // Magic numbers to bottom align images
+        minHeight={[100, 200, 140]}
+      >
+        {title && <Text variant={["md", "lg-display", "xl"]}>{title}</Text>}
 
-      {text && (
-        <Text variant={["xs", "sm"]} color="white100">
-          {text}
-        </Text>
-      )}
-    </>
+        {text && <Text variant={["xs", "sm"]}>{text}</Text>}
+      </Stack>
+    </Stack>
   )
 }
 
-const DesctopLayout: React.FC = () => {
+const DesktopLayout: React.FC = () => {
   return (
     <Media greaterThan="xs">
       <GridColumns gridColumnGap={[0, 2, 4]}>
-        {data.map((step, index) => {
+        {DATA.map((step, index) => {
           return (
             <Column
               key={index}
               span={4}
-              mb={[2, 0]}
               data-test="artworkShelfArtwork"
               display="flex"
               flexDirection="column"
-              justifyContent={["flex-end", "flex-start", "flex-start"]}
+              justifyContent="flex-end"
             >
-              <ShelfItem
-                src={step.src}
-                srcSet={step.srcSet}
-                text={step.text}
-                title={step.title}
-              />
+              <ShelfItem {...step} />
             </Column>
           )
         })}
@@ -186,8 +143,8 @@ const DesctopLayout: React.FC = () => {
 const MobileLayout: React.FC = () => {
   return (
     <Media at="xs">
-      <Shelf showProgress={false}>
-        {data.map((step, index) => {
+      <Shelf>
+        {DATA.map((step, index) => {
           return (
             <Box
               key={index}
@@ -195,14 +152,9 @@ const MobileLayout: React.FC = () => {
               flexDirection="column"
               justifyContent="flex-end"
               data-test="artworkShelfArtwork"
-              minWidth={305}
+              minWidth={300}
             >
-              <ShelfItem
-                src={step.src}
-                srcSet={step.srcSet}
-                text={step.text}
-                title={step.title}
-              />
+              <ShelfItem {...step} />
             </Box>
           )
         })}
