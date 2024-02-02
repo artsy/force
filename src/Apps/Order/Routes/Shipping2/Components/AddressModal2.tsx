@@ -1,5 +1,4 @@
-import { useState } from "react"
-import * as React from "react"
+import { useState, FC } from "react"
 import * as Yup from "yup"
 import {
   Button,
@@ -11,287 +10,395 @@ import {
   Spacer,
   Text,
   Banner,
+  GridColumns,
+  Column,
 } from "@artsy/palette"
 
-import { Formik, FormikHelpers, FormikProps } from "formik"
-import { AddressModalFields } from "Components/Address/AddressModalFields"
+import { Form, Formik, FormikHelpers, useFormikContext } from "formik"
 
 import {
   ADDRESS_VALIDATION_SHAPE,
-  SavedAddressType,
-} from "Apps/Order/Utils/shippingUtils"
-import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
-import { useCreateSavedAddressMutation$data } from "__generated__/useCreateSavedAddressMutation.graphql"
-import { useUpdateSavedAddressMutation$data } from "__generated__/useUpdateSavedAddressMutation.graphql"
+  addressWithFallbackValues,
+} from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import createLogger from "Utils/logger"
-import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useCreateSavedAddress"
-import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useDeleteSavedAddress"
-import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateSavedAddress"
-import { useUpdateUserDefaultAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateUserDefaultAddress"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
+import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
+import {
+  SavedAddressResult,
+  UserAddressAction,
+  useUserAddressUpdates,
+} from "Apps/Order/Routes/Shipping2/Hooks/useUserAddressUpdates"
+import { CountrySelect } from "Components/CountrySelect"
+
+const logger = createLogger("AddressModal2.tsx")
+
+/**
+ * Modal type to be rendered. the `address` property is used
+ * when the modal is in edit mode as the starting values.
+ */
+export type AddressModalAction =
+  | { type: "create" }
+  | { type: "edit"; address: SavedAddressType }
 
 export interface AddressModalProps {
   closeModal: () => void
-  onSuccess: (addressID: string) => void
-  modalAction: AddressModalAction | null
+  onSuccess: (address: SavedAddressType) => void
+  addressModalAction: AddressModalAction | null
 }
 
-export const AddressModal: React.FC<AddressModalProps> = ({
+interface FormValues {
+  attributes: {
+    name: string
+    phoneNumber: string
+    isDefault?: boolean
+    addressLine1: string
+    addressLine2?: string
+    city: string
+    region?: string
+    postalCode?: string
+    country: string
+  }
+  setAsDefault: boolean
+}
+
+export const AddressModal: FC<AddressModalProps> = ({
   closeModal,
+  addressModalAction,
   onSuccess,
-  modalAction,
 }) => {
   const logger = createLogger("AddressModal2.tsx")
-
-  const [createUpdateError, setCreateUpdateError] = useState<string | null>(
-    null
-  )
-  const [showDialog, setShowDialog] = useState<boolean>(false)
   const shippingContext = useShippingContext()
 
-  const createSavedAddress = useCreateSavedAddress().submitMutation
-  const deleteSavedAddress = useDeleteSavedAddress().submitMutation
-  const updateSavedAddress = useUpdateSavedAddress().submitMutation
-  const updateUserDefaultAddress = useUpdateUserDefaultAddress().submitMutation
+  const { executeUserAddressAction } = useUserAddressUpdates()
 
-  if (!modalAction) {
-    return null
-  }
+  let initialValues: FormValues
 
-  const title = (modalAction && MODAL_TITLE_MAP[modalAction.type]) || ""
-
-  const initialAddress =
-    modalAction.type === "editUserAddress"
-      ? modalAction.address
-      : {
-          // TODO: Instead of using ShippingContext, initialValues could be a shippingUtils function
-          country: shippingContext.orderData.shipsFrom,
-          internalID: undefined,
-          isDefault: false,
-        }
-
-  const handleModalClose = () => {
-    closeModal()
-    setCreateUpdateError(null)
-  }
-
-  const handleErrors = (
-    errors: ReadonlyArray<{ message: string }>,
-    formikHelpers
-  ) => {
-    if (!errors?.length) return
-
-    const userMessage: Record<string, string> | null =
-      SERVER_ERROR_MAP[errors[0].message]
-
-    if (userMessage) {
-      formikHelpers.setFieldError(userMessage.field, userMessage.message)
-    } else {
-      setCreateUpdateError(GENERIC_FAIL_MESSAGE)
+  if (!addressModalAction) {
+    initialValues = {
+      attributes: {
+        isDefault: false,
+        ...addressWithFallbackValues({}),
+      },
+      setAsDefault: false,
     }
+  } else {
+    const incomingAddress =
+      addressModalAction.type === "edit" ? addressModalAction.address : null
 
-    formikHelpers?.setSubmitting(false)
-    logger.error(errors.map(error => error.message).join(", "))
-  }
+    initialValues = {
+      attributes: {
+        isDefault: incomingAddress?.isDefault ?? false,
 
-  const handleDeleteAddress = async (addressID: string) => {
-    try {
-      return deleteSavedAddress({
-        variables: {
-          input: { userAddressID: addressID },
-        },
-      })
-    } catch (error) {
-      logger.error(error)
-    }
-  }
-
-  const handleMutationPayload = (
-    payload:
-      | useUpdateSavedAddressMutation$data["updateUserAddress"]
-      | useCreateSavedAddressMutation$data["createUserAddress"]
-  ):
-    | { data: SavedAddressType; errors: null }
-    | { data: null; errors: ReadonlyArray<{ message: string }> } => {
-    const addressOrErrors = payload?.userAddressOrErrors
-
-    if (addressOrErrors?.__typename === "Errors") {
-      return {
-        errors: addressOrErrors.errors,
-        data: null,
-      }
-    }
-    return {
-      errors: null,
-      data: addressOrErrors as SavedAddressType,
+        ...addressWithFallbackValues(
+          addressModalAction.type === "edit" ? addressModalAction.address : {}
+        ),
+      },
+      setAsDefault: false,
     }
   }
 
   const handleSubmit = async (
-    values: SavedAddressType,
-    helpers: FormikHelpers<SavedAddressType>
+    values: FormValues,
+    helpers: FormikHelpers<FormValues>
   ) => {
-    const addressInput = addressWithFallbackValues(values)
+    if (!addressModalAction) {
+      return
+    }
 
-    let operation: () => Promise<ReturnType<typeof handleMutationPayload>>
+    let userAddressAction: UserAddressAction
+    switch (addressModalAction.type) {
+      case "edit":
+        userAddressAction = {
+          type: "edit",
+          address: {
+            ...values.attributes,
+            internalID: addressModalAction.address.internalID,
+          },
+          setAsDefault: values.setAsDefault,
+        }
+        break
+      case "create":
+        userAddressAction = {
+          type: "create",
+          address: {
+            ...values.attributes,
+          },
+          setAsDefault: values.setAsDefault,
+        }
+        break
+      default:
+        throw new Error("Invalid address modal action")
+    }
 
     try {
       shippingContext.actions.setIsPerformingOperation(true)
+      const result = await executeUserAddressAction(userAddressAction)
 
-      if (modalAction.type === "createUserAddress") {
-        operation = async () => {
-          const result = await createSavedAddress({
-            variables: {
-              input: { attributes: addressInput },
-            },
-          })
-
-          return handleMutationPayload(result.createUserAddress)
-        }
-      } else {
-        operation = async () => {
-          const result = await updateSavedAddress({
-            variables: {
-              input: {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                userAddressID: initialAddress.internalID!,
-                attributes: addressInput,
-              },
-            },
-          })
-
-          return handleMutationPayload(result.updateUserAddress)
-        }
-      }
-
-      const { data, errors } = await operation()
-
-      if (errors) {
-        handleErrors(errors, helpers)
+      if (result.errors) {
+        handleGravityErrors(result.errors, helpers)
+        closeModal()
         return
       }
-
-      const savedAddressID = data?.internalID
-
-      if (
-        !!savedAddressID &&
-        values?.isDefault &&
-        values?.isDefault !== initialAddress?.isDefault
-      ) {
-        const updateAddressResult = await updateUserDefaultAddress({
-          variables: {
-            input: { userAddressID: savedAddressID },
-          },
-        })
-
-        const updateAddressPayload =
-          updateAddressResult.updateUserDefaultAddress?.userAddressOrErrors
-
-        if (updateAddressPayload?.__typename === "Errors") {
-          logger.error(
-            updateAddressPayload.errors.map(error => error.message).join(", ")
-          )
-
-          return
-        }
-      }
-
-      onSuccess(savedAddressID)
-      setCreateUpdateError(null)
+      onSuccess(result.data)
       closeModal()
     } catch (error) {
-      handleErrors([error], helpers)
+      logger.error(error)
+
+      helpers.setStatus(GENERIC_FAIL_MESSAGE)
     } finally {
       shippingContext.actions.setIsPerformingOperation(false)
     }
   }
 
-  if (createUpdateError) {
-    logger.log({ createUpdateError })
+  const handleDeleteAddress = async (address: SavedAddressType) => {
+    return await executeUserAddressAction({
+      type: "delete",
+      address: address,
+    })
   }
 
   return (
     <>
+      <Formik<FormValues>
+        validateOnMount
+        validationSchema={validationSchema}
+        enableReinitialize={true}
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+      >
+        {
+          <AddressModalForm
+            addressModalAction={addressModalAction}
+            onClose={closeModal}
+            onDeleteAddress={handleDeleteAddress}
+          />
+        }
+      </Formik>
+    </>
+  )
+}
+
+const AddressModalForm: FC<{
+  onClose: () => void
+  addressModalAction: AddressModalProps["addressModalAction"]
+  onDeleteAddress: (address: SavedAddressType) => Promise<SavedAddressResult>
+}> = ({ addressModalAction, onClose, onDeleteAddress }) => {
+  const shippingContext = useShippingContext()
+  const formikContext = useFormikContext<FormValues>()
+  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
+
+  if (!addressModalAction) {
+    return null
+  }
+
+  const handleDeleteAddress = async () => {
+    if (addressModalAction?.type === "edit") {
+      try {
+        shippingContext.actions.setIsPerformingOperation(true)
+        await onDeleteAddress(addressModalAction.address)
+      } catch (error) {
+        logger.error(error)
+      } finally {
+        shippingContext.actions.setIsPerformingOperation(false)
+        setShowDeleteDialog(false)
+        onClose()
+      }
+    }
+  }
+
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+  } = formikContext
+
+  const handleModalClose = () => {
+    formikContext.resetForm()
+    onClose()
+  }
+
+  const title =
+    addressModalAction.type === "create" ? "Add address" : "Edit address"
+
+  return (
+    <>
       <ModalDialog title={title} onClose={handleModalClose} width={900}>
-        <Formik
-          validateOnMount
-          initialValues={initialAddress}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {(formik: FormikProps<SavedAddressType>) => (
-            <form onSubmit={formik.handleSubmit}>
-              {createUpdateError && (
-                <Banner my={2} data-testid="form-banner-error" variant="error">
-                  {createUpdateError}
-                </Banner>
-              )}
-
-              <AddressModalFields />
-
-              <Spacer y={2} />
-
-              <Input
-                title="Phone number"
-                description="Required for shipping logistics"
-                placeholder="Add phone number"
-                name="phoneNumber"
-                type="tel"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.phoneNumber && formik.errors.phoneNumber}
-                value={formik.values?.phoneNumber || ""}
-                data-test="phoneInputWithoutValidationFlag"
-              />
-
-              <Spacer y={2} />
-
-              {!initialAddress?.isDefault && (
-                <Checkbox
-                  onSelect={selected => {
-                    formik.setFieldValue("isDefault", selected)
-                  }}
-                  selected={formik.values?.isDefault}
-                  data-test="setAsDefault"
-                >
-                  Set as default
-                </Checkbox>
-              )}
-
-              {modalAction.type === "editUserAddress" && (
-                <Flex mt={2} flexDirection="column" alignItems="center">
-                  <Clickable
-                    data-test="deleteButton"
-                    onClick={() => setShowDialog(true)}
-                  >
-                    <Text variant="xs" color="red100">
-                      Delete address
-                    </Text>
-                  </Clickable>
-                </Flex>
-              )}
-
-              <Button
-                data-test="saveButton"
-                type="submit"
-                variant="primaryBlack"
-                loading={formik.isSubmitting || undefined}
-                disabled={Object.keys(formik.errors).length > 0}
-                width="100%"
-                mt={2}
-              >
-                Save
-              </Button>
-            </form>
+        <Form data-testid="AddressModal">
+          {formikContext.status && (
+            <Banner my={2} data-testid="form-banner-error" variant="error">
+              {formikContext.status}
+            </Banner>
           )}
-        </Formik>
-      </ModalDialog>
 
-      {showDialog && (
+          <GridColumns mt={[1, 2]}>
+            <Column span={12}>
+              <Input
+                title="Full name"
+                placeholder="Full name"
+                id="name"
+                name="attributes.name"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.attributes?.name && errors.attributes?.name}
+                value={values.attributes.name || undefined}
+              />
+            </Column>
+            <Column span={12}>
+              <CountrySelect
+                title="Country"
+                data-testid="AddressModalForm_country"
+                selected={values.attributes.country}
+                onSelect={countryCode => {
+                  setFieldValue("attributes.country", countryCode)
+                }}
+                error={
+                  touched.attributes?.country && errors.attributes?.country
+                    ? errors.attributes.country
+                    : ""
+                }
+              />
+            </Column>
+            <Column span={12}>
+              <Input
+                title="Address Line 1"
+                placeholder="Street address"
+                name="attributes.addressLine1"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={
+                  touched.attributes?.addressLine1 &&
+                  errors.attributes?.addressLine1
+                }
+                value={values.attributes.addressLine1}
+              />
+            </Column>
+            <Column span={12}>
+              <Input
+                title="Address Line 2"
+                placeholder="Apt, floor, suite, etc."
+                name="attributes.addressLine2"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={
+                  touched.attributes?.addressLine2 &&
+                  errors.attributes?.addressLine2
+                }
+                value={values.attributes.addressLine2 || ""}
+              />
+            </Column>
+            <Column span={12}>
+              <Input
+                title="City"
+                placeholder="City"
+                name="attributes.city"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.attributes?.city && errors.attributes?.city}
+                value={values.attributes.city}
+              />
+            </Column>
+            <Column span={6}>
+              <Input
+                title="State, province, or region"
+                placeholder="State, province, or region"
+                name="attributes.region"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.attributes?.region && errors.attributes?.region}
+                value={values.attributes?.region || ""}
+              />
+            </Column>
+            <Column span={6}>
+              <Input
+                placeholder={
+                  values.attributes.country === "US"
+                    ? "ZIP code"
+                    : "ZIP/Postal code"
+                }
+                title={
+                  values.attributes.country === "US"
+                    ? "ZIP code"
+                    : "Postal code"
+                }
+                name="attributes.postalCode"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={
+                  touched.attributes?.postalCode &&
+                  errors.attributes?.postalCode
+                }
+                value={values.attributes.postalCode || ""}
+              />
+            </Column>
+          </GridColumns>
+
+          <Spacer y={2} />
+
+          <Input
+            title="Phone number"
+            description="Required for shipping logistics"
+            placeholder="Add phone number including country code"
+            name="attributes.phoneNumber"
+            type="tel"
+            onChange={formikContext.handleChange}
+            onBlur={formikContext.handleBlur}
+            error={
+              formikContext.touched.attributes?.phoneNumber &&
+              formikContext.errors.attributes?.phoneNumber
+            }
+            value={formikContext.values.attributes.phoneNumber}
+            data-testid="phoneInputWithoutValidationFlag"
+          />
+
+          <Spacer y={2} />
+
+          {!formikContext.initialValues.attributes.isDefault && (
+            <Checkbox
+              onSelect={selected => {
+                formikContext.setFieldValue("setAsDefault", selected)
+              }}
+              selected={formikContext.values.setAsDefault}
+              data-testid="setAsDefault"
+            >
+              Set as default
+            </Checkbox>
+          )}
+
+          {addressModalAction.type === "edit" && (
+            <Flex mt={2} flexDirection="column" alignItems="center">
+              <Clickable
+                data-testid="deleteButton"
+                onClick={() => setShowDeleteDialog(true)}
+              >
+                <Text variant="xs" color="red100">
+                  Delete address
+                </Text>
+              </Clickable>
+            </Flex>
+          )}
+
+          <Button
+            data-testid="saveButton"
+            type="submit"
+            variant="primaryBlack"
+            loading={formikContext.isSubmitting || undefined}
+            disabled={Object.keys(formikContext.errors).length > 0}
+            width="100%"
+            mt={2}
+          >
+            Save
+          </Button>
+        </Form>
+      </ModalDialog>
+      {showDeleteDialog && (
         <ModalDialog
-          data-test="deleteAddressDialog"
+          data-testid="deleteAddressDialog"
           title="Delete address?"
-          onClose={() => setShowDialog(false)}
+          onClose={() => setShowDeleteDialog(false)}
           width="350px"
         >
           <Text variant="xs">
@@ -304,23 +411,14 @@ export const AddressModal: React.FC<AddressModalProps> = ({
             <Button
               variant="secondaryNeutral"
               size="small"
-              onClick={() => setShowDialog(false)}
+              onClick={() => setShowDeleteDialog(false)}
             >
               Cancel
             </Button>
 
             <Spacer x={1} />
 
-            <Button
-              size="small"
-              onClick={() => {
-                setShowDialog(false)
-                closeModal()
-                if (initialAddress.internalID) {
-                  handleDeleteAddress(initialAddress.internalID)
-                }
-              }}
-            >
+            <Button size="small" onClick={handleDeleteAddress}>
               Delete
             </Button>
           </Flex>
@@ -330,37 +428,45 @@ export const AddressModal: React.FC<AddressModalProps> = ({
   )
 }
 
-export enum AddressModalActionType {
-  EDIT_USER_ADDRESS = "editUserAddress",
-  CREATE_USER_ADDRESS = "createUserAddress",
-}
-
-export type AddressModalAction =
-  | {
-      type: AddressModalActionType.CREATE_USER_ADDRESS
-    }
-  | {
-      type: AddressModalActionType.EDIT_USER_ADDRESS
-      address: SavedAddressType
-    }
-
-const MODAL_TITLE_MAP: Record<AddressModalActionType, string> = {
-  createUserAddress: "Add address",
-  editUserAddress: "Edit address",
-}
-
+// two different error messages for the same error?
 const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
   "Validation failed for phone: not a valid phone number": {
-    field: "phoneNumber",
+    field: "attributes.phoneNumber",
     message: "Please enter a valid phone number",
   },
   "Validation failed: Phone not a valid phone number": {
-    field: "phoneNumber",
+    field: "attributes.phoneNumber",
     message: "Please enter a valid phone number",
   },
 }
+
+const validationSchema = Yup.object().shape({
+  attributes: Yup.object().shape(ADDRESS_VALIDATION_SHAPE),
+})
 
 export const GENERIC_FAIL_MESSAGE =
   "Sorry, there has been an issue saving your address. Please try again."
 
-const validationSchema = Yup.object().shape(ADDRESS_VALIDATION_SHAPE)
+const handleGravityErrors = (
+  errors: ReadonlyArray<{ message: string }>,
+  helpers: {
+    setFieldError: (field: string, message: string) => void
+    setStatus: (message: string) => void
+  }
+) => {
+  if (!errors?.length) return
+
+  const userMessage: Record<string, string> | null =
+    SERVER_ERROR_MAP[errors[0].message]
+
+  if (userMessage) {
+    helpers.setFieldError(
+      `attributes.${userMessage.field}`,
+      userMessage.message
+    )
+  } else {
+    helpers.setStatus(GENERIC_FAIL_MESSAGE)
+  }
+
+  logger.error(errors.map(error => error.message).join(", "))
+}

@@ -66,7 +66,7 @@ const artworkFromGermany = {
 
 const OrderArtworkVersionNode = {
   artworkVersion: {
-    id: "02393",
+    id: "av02393",
     artistNames: "Lisa Breslow",
     title: "Gramercy Park South",
     provenance: "",
