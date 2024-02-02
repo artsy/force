@@ -18,7 +18,7 @@ export const TextAndImageLayout: React.FC<{
   references?: string
 }> = ({ text, button, image, references }) => {
   return (
-    <FullBleed background="black100" position="relative">
+    <FullBleed bg="black100" position="relative">
       <AppContainer>
         <HorizontalPadding>
           <Box mx={[-2, -4]} pt={[4, 6, 12]} pb={[0, 6, 12]}>
