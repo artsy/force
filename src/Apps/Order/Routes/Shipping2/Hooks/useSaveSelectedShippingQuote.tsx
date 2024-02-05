@@ -1,5 +1,5 @@
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
-import { useHandleUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useHandleUserAddressUpdates"
+import { useUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useUserAddressUpdates"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { useSelectShippingQuote } from "Apps/Order/Routes/Shipping2/Mutations/useSelectShippingQuote"
 import { FulfillmentType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
@@ -19,10 +19,10 @@ export const useSaveSelectedShippingQuote = (
   const orderTracking = useOrderTracking()
   const shippingContext = useShippingContext()
   const selectShippingQuote = useSelectShippingQuote()
-  const { handleUserAddressUpdates } = useHandleUserAddressUpdates()
+  const { handleNewUserAddressUpdates } = useUserAddressUpdates()
 
   const saveSelectedShippingQuote = async () => {
-    if (!shippingContext.state.selectedShippingQuoteId) {
+    if (!shippingContext.state.selectedShippingQuoteID) {
       logger.error("No shipping quote selected")
       return
     }
@@ -36,12 +36,18 @@ export const useSaveSelectedShippingQuote = (
     try {
       shippingContext.actions.setIsPerformingOperation(true)
 
+      if (shippingContext.state.shippingFormMode === "new_address") {
+        await handleNewUserAddressUpdates(
+          shippingContext.state.fulfillmentDetailsFormikContext.values
+        )
+      }
+
       const result = await selectShippingQuote.submitMutation({
         variables: {
           input: {
             id: order.internalID,
             selectedShippingQuoteId:
-              shippingContext.state.selectedShippingQuoteId,
+              shippingContext.state.selectedShippingQuoteID,
           },
         },
       })
@@ -52,8 +58,6 @@ export const useSaveSelectedShippingQuote = (
         shippingContext.actions.handleExchangeError(orderOrError.error, logger)
         return
       }
-
-      await handleUserAddressUpdates(shippingContext.state.formHelpers.values)
 
       // Advance to payment
       router.push(`/orders/${order.internalID}/payment`)
