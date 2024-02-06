@@ -8,7 +8,6 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ArtworkActionsSaveButton_Test_Query } from "__generated__/ArtworkActionsSaveButton_Test_Query.graphql"
 import { wait } from "Utils/wait"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
@@ -81,51 +80,20 @@ describe("ArtworkActionsSaveButton", () => {
       }))
     })
 
-    describe("when PartnerOffer feature flag is enabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          featureName => featureName === "emerald_partner-offers-from-saves"
+    it("should display a toast message", async () => {
+      renderWithRelay({
+        Artwork: () => unsavedArtwork,
+      })
+
+      fireEvent.click(screen.getByText("Save"))
+
+      expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
+      expect(
+        await screen.findByText(
+          "Saving an artwork signals interest to galleries."
         )
-      })
-
-      it("should display a toast message", async () => {
-        renderWithRelay({
-          Artwork: () => unsavedArtwork,
-        })
-
-        fireEvent.click(screen.getByText("Save"))
-
-        expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
-        expect(
-          await screen.findByText(
-            "Saving an artwork signals interest to galleries."
-          )
-        ).toBeInTheDocument()
-        expect(await screen.findByText("Add to a List")).toBeInTheDocument()
-      })
-    })
-
-    describe("when PartnerOffer feature flag is disabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          featureName => featureName !== "emerald_partner-offers-from-saves"
-        )
-      })
-
-      it("should display a toast message", async () => {
-        renderWithRelay({
-          Artwork: () => unsavedArtwork,
-        })
-
-        fireEvent.click(screen.getByText("Save"))
-
-        expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
-        expect(await screen.findByText("Add to a List")).toBeInTheDocument()
-
-        expect(
-          screen.queryByText("Saving an artwork signals interest to galleries.")
-        ).not.toBeInTheDocument()
-      })
+      ).toBeInTheDocument()
+      expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 
     it("should not display the toast message when artwork is in auction", async () => {

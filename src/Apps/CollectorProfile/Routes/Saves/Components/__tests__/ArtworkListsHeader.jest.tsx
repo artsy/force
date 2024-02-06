@@ -7,10 +7,12 @@ describe("ArtworkListsHeader", () => {
     render(<ArtworkListsHeader savedArtworksCount={0} />)
 
     const title = "Saves"
-    const description = "Curate your own lists of the works you love"
+    const description = "Curate your own lists of the works you love and"
+    const link = "signal your interest to galleries"
 
     expect(screen.getByText(title)).toBeInTheDocument()
     expect(screen.getByText(description)).toBeInTheDocument()
+    expect(screen.getByText(link)).toBeInTheDocument()
   })
 
   it("opens the 'Create a new list' modal", () => {

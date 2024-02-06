@@ -8,7 +8,6 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { SaveArtworkToListsButton_Test_Query } from "__generated__/SaveArtworkToListsButton_Test_Query.graphql"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
@@ -73,51 +72,20 @@ describe("SaveArtworkToListsButton", () => {
       }))
     })
 
-    describe("when PartnerOffer feature flag is enabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          featureName => featureName === "emerald_partner-offers-from-saves"
+    it("should display a toast message with the description", async () => {
+      renderWithRelay({
+        Artwork: () => unsavedArtwork,
+      })
+
+      fireEvent.click(screen.getByLabelText("Save"))
+
+      expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
+      expect(
+        await screen.findByText(
+          "Saving an artwork signals interest to galleries."
         )
-      })
-
-      it("should display a toast message with the description", async () => {
-        renderWithRelay({
-          Artwork: () => unsavedArtwork,
-        })
-
-        fireEvent.click(screen.getByLabelText("Save"))
-
-        expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
-        expect(
-          await screen.findByText(
-            "Saving an artwork signals interest to galleries."
-          )
-        ).toBeInTheDocument()
-        expect(await screen.findByText("Add to a List")).toBeInTheDocument()
-      })
-    })
-
-    describe("when PartnerOffer feature flag is disabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          featureName => featureName !== "emerald_partner-offers-from-saves"
-        )
-      })
-
-      it("should display a toast message with the description", async () => {
-        renderWithRelay({
-          Artwork: () => unsavedArtwork,
-        })
-
-        fireEvent.click(screen.getByLabelText("Save"))
-
-        expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
-        expect(await screen.findByText("Add to a List")).toBeInTheDocument()
-
-        expect(
-          screen.queryByText("Saving an artwork signals interest to galleries.")
-        ).not.toBeInTheDocument()
-      })
+      ).toBeInTheDocument()
+      expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 
     it("should open the modal when `Add to a List` button was pressed", async () => {
