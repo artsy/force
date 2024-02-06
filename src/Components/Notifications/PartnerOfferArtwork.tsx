@@ -4,7 +4,7 @@ import { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwo
 import { resized } from "Utils/resized"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { RouterLink } from "System/Router/RouterLink"
-import { Box, Button, Image } from "@artsy/palette"
+import { Box, Button, Flex, Image, Text } from "@artsy/palette"
 import Metadata from "Components/Artwork/Metadata"
 import { ContextModule } from "@artsy/cohesion"
 import { useTimer } from "Utils/Hooks/useTimer"
@@ -36,7 +36,16 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   if (hasEnded) buttonText = "View Work"
   if (!available) buttonText = "Create Alert"
 
-  const href = fullyAvailable ? targetHref : artwork?.href
+  let href = targetHref
+  if (!available) {
+    href = `${artwork.href}${
+      artwork.href?.includes("?") ? "&" : "?"
+    }unavailable=true`
+  } else if (hasEnded) {
+    href = `${artwork.href}${
+      artwork.href?.includes("?") ? "&" : "?"
+    }expired_offer=true`
+  }
 
   return (
     <ManageArtworkForSavesProvider>
@@ -75,8 +84,25 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           contextModule={ContextModule.activity}
           showSaveButton
           disableRouterLinking
+          hideSaleInfo
           maxWidth="100%"
         />
+
+        {fullyAvailable && (
+          <Flex flexDirection="row">
+            <Text
+              variant="xs"
+              color="black100"
+              fontWeight="bold"
+              overflowEllipsis
+            >
+              US$1000000{" "}
+            </Text>
+            <Text variant="xs" color="black60" overflowEllipsis>
+              (List price: US$10000000)
+            </Text>
+          </Flex>
+        )}
       </RouterLink>
 
       <Box mb={4} width="100%" maxWidth={CARD_MAX_WIDTH}>
