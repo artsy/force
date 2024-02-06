@@ -7,26 +7,27 @@ import { useEffect } from "react"
 export const useSelectFirstShippingQuote = () => {
   const shippingContext = useShippingContext()
 
-  const defaultShippingQuoteId =
+  const defaultShippingQuoteID =
     shippingContext.orderData.shippingQuotes?.[0]?.id
 
-  const bestArtsyShippingQuote = shippingContext.state.isArtsyShipping
+  const bestArtsyShippingQuote = shippingContext.orderData
+    .savedFulfillmentDetails?.isArtsyShipping
     ? shippingContext.orderData.shippingQuotes?.find(quote => quote.isSelected)
-        ?.id || defaultShippingQuoteId
+        ?.id || defaultShippingQuoteID
     : null
 
   useEffect(() => {
     if (
       bestArtsyShippingQuote &&
       bestArtsyShippingQuote !==
-        shippingContext.orderData.selectedShippingQuoteId
+        shippingContext.orderData.selectedShippingQuoteID
     ) {
       shippingContext.actions.setSelectedShippingQuote(bestArtsyShippingQuote)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    shippingContext.orderData.selectedShippingQuoteId,
-    defaultShippingQuoteId,
+    shippingContext.orderData.selectedShippingQuoteID,
+    defaultShippingQuoteID,
     bestArtsyShippingQuote,
   ])
 }

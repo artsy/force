@@ -47,37 +47,55 @@ export const fillCountrySelect = (component, value) => {
   input.props().onSelect(value)
 }
 
-export const fillAddressForm = async (address: Address) => {
+export const clickSaveAddress = async () => {
+  await userEvent.click(
+    screen.getByRole("checkbox", { name: /Save shipping address/ })
+  )
+}
+
+export const fillAddressForm = async (address: Partial<Address>) => {
   await waitFor(() => {
     const line1Input = screen.getByPlaceholderText("Street address")
     expect(line1Input).toBeEnabled()
   })
-  const country = screen.getByTestId("AddressForm_country")
-  await userEvent.selectOptions(country, [address.country])
 
-  const name = screen.getByPlaceholderText("Full name")
-  const addressLine1 = screen.getByPlaceholderText("Street address")
-  const addressLine2 = screen.getByPlaceholderText("Apt, floor, suite, etc.")
-  const city = screen.getByPlaceholderText("City")
-  const region = screen.getByPlaceholderText(
-    address.country === "US" ? "State" : "State, province, or region"
-  )
-  const postalCode = screen.getByPlaceholderText(
-    address.country === "US" ? "ZIP code" : /ZIP\/postal code/,
-    { exact: false }
-  )
-  const phoneNumber = screen.getAllByPlaceholderText(
-    "Add phone number including country code"
-  )[0]
+  if (address.country) {
+    const country = await screen.findByTestId(/Form_country/)
+    await userEvent.selectOptions(country, [address.country])
+  }
+
+  const [
+    name,
+    addressLine1,
+    addressLine2,
+    city,
+    region,
+    postalCode,
+    phoneNumber,
+  ] = await Promise.all([
+    screen.findByPlaceholderText("Full name"),
+    screen.findByPlaceholderText("Street address"),
+    screen.findByPlaceholderText("Apt, floor, suite, etc."),
+    screen.findByPlaceholderText("City"),
+    screen.findByPlaceholderText(
+      address.country === "US" ? "State" : "State, province, or region"
+    ),
+    screen.findByPlaceholderText(
+      address.country === "US" ? "ZIP code" : /ZIP\/Postal code/,
+      { exact: false }
+    ),
+    screen
+      .findAllByPlaceholderText("Add phone number including country code")
+      .then(inputs => inputs[0]),
+  ])
 
   await Promise.all([
-    userEvent.paste(name, address.name),
-    userEvent.paste(addressLine1, address.addressLine1),
-    userEvent.paste(addressLine2, address.addressLine2),
-    userEvent.paste(city, address.city),
-    userEvent.paste(region, address.region),
-    userEvent.paste(postalCode, address.postalCode),
+    address.name && userEvent.paste(name, address.name),
+    address.addressLine1 && userEvent.paste(addressLine1, address.addressLine1),
+    address.addressLine2 && userEvent.paste(addressLine2, address.addressLine2),
+    address.city && userEvent.paste(city, address.city),
+    address.region && userEvent.paste(region, address.region),
+    address.postalCode && userEvent.paste(postalCode, address.postalCode),
+    address.phoneNumber && userEvent.paste(phoneNumber, address.phoneNumber),
   ])
-  address.phoneNumber &&
-    (await userEvent.paste(phoneNumber, address.phoneNumber))
 }

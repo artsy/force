@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e0e4fc3199c6e8190e9193a7212f14d>>
+ * @generated SignedSource<<8b4f3495917b5c9aedce4a77a73f39dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,8 @@ export type SavedAddresses2_me$data = {
       readonly node: {
         readonly addressLine1: string;
         readonly addressLine2: string | null | undefined;
-        readonly addressLine3: string | null | undefined;
         readonly city: string;
         readonly country: string;
-        readonly id: string;
         readonly internalID: string;
         readonly isDefault: boolean;
         readonly name: string | null | undefined;
@@ -28,9 +26,7 @@ export type SavedAddresses2_me$data = {
         readonly region: string | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
-    readonly totalCount: number;
   } | null | undefined;
-  readonly id: string;
   readonly " $fragmentType": "SavedAddresses2_me";
 };
 export type SavedAddresses2_me$key = {
@@ -38,15 +34,7 @@ export type SavedAddresses2_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses2_me">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -70,36 +58,38 @@ return {
     }
   ],
   "kind": "Fragment",
-  "metadata": {
-    "connection": [
-      {
-        "count": null,
-        "cursor": null,
-        "direction": "bidirectional",
-        "path": [
-          "addressConnection"
-        ]
-      }
-    ]
-  },
+  "metadata": null,
   "name": "SavedAddresses2_me",
   "selections": [
-    (v0/*: any*/),
     {
-      "alias": "addressConnection",
-      "args": null,
+      "alias": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "after",
+          "variableName": "after"
+        },
+        {
+          "kind": "Variable",
+          "name": "before",
+          "variableName": "before"
+        },
+        {
+          "kind": "Variable",
+          "name": "first",
+          "variableName": "first"
+        },
+        {
+          "kind": "Variable",
+          "name": "last",
+          "variableName": "last"
+        }
+      ],
       "concreteType": "UserAddressConnection",
       "kind": "LinkedField",
-      "name": "__SavedAddresses_addressConnection_connection",
+      "name": "addressConnection",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -116,12 +106,18 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "name",
                   "storageKey": null
                 },
                 {
@@ -142,49 +138,7 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "addressLine3",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "city",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "country",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "isDefault",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "name",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "phoneNumber",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "postalCode",
                   "storageKey": null
                 },
                 {
@@ -198,56 +152,31 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "__typename",
+                  "name": "postalCode",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "country",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "phoneNumber",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isDefault",
                   "storageKey": null
                 }
               ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasPreviousPage",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "startCursor",
               "storageKey": null
             }
           ],
@@ -260,8 +189,7 @@ return {
   "type": "Me",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "0f7178f7033b8a9711893f215d6ae5e2";
+(node as any).hash = "867a8f08f34219c6ea9e11d3ef48d063";
 
 export default node;

@@ -20,14 +20,17 @@ import { FulfillmentDetails } from "Apps/Order/Routes/Shipping2/Components/Fulfi
 import { ShippingContextProvider } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SaveAndContinueButton } from "Apps/Order/Routes/Shipping2/Components/SaveAndContinueButton"
-import { useBackToFullfillmentDetails } from "Apps/Order/Routes/Shipping2/Hooks/useBackToFulfillmentDetails"
 import { useSelectFirstShippingQuote } from "Apps/Order/Routes/Shipping2/Hooks/useSelectFirstShippingQuote"
 import { CollapseDetails } from "Apps/Order/Routes/Shipping2/Components/CollapseDetails"
 
 export type ShippingStage =
+  // User choosing fulfillment type
   | "fulfillment_details"
+  // Temporary stage after address has been automatically saved
+  // to wait for click
+  | "fulfillment_details_saved"
+  // User choosing shipping quote
   | "shipping_quotes"
-  | "refresh_shipping_quotes"
 
 export interface ShippingProps {
   order: Shipping2_order$data
@@ -58,15 +61,11 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
 
   const isOffer = order.mode === "OFFER"
 
-  // Go back to fulfillment details stage if the user edits the address or
-  // deletes a saved address.
-  useBackToFullfillmentDetails(me)
-
   // Automatically selects first shipping quote when they change
   useSelectFirstShippingQuote()
 
   return (
-    <Box data-test="orderShipping">
+    <Box data-testid="orderShipping">
       <OrderRouteContainer
         order={order}
         currentStep="Shipping"
@@ -220,7 +219,6 @@ export const ShippingFragmentContainer = createFragmentContainer(
           before: { type: "String" }
         ) {
         ...FulfillmentDetailsForm_me
-        ...SavedAddresses2_me
         addressConnection(
           first: $first
           last: $last

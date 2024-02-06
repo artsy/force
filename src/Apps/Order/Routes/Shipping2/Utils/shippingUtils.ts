@@ -1,6 +1,8 @@
+import * as Yup from "yup"
 import { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
 import { ShippingProps } from "Apps/Order/Routes/Shipping2"
 import { pick, omitBy, isNil, isEqual } from "lodash"
+import { postalCodeValidator } from "Components/Address/utils"
 
 export enum FulfillmentType {
   SHIP = "SHIP",
@@ -12,15 +14,34 @@ export interface PickupValues {
   attributes: {
     name: string
     phoneNumber: string
+    // Even though these don't appear on the form
+    // we want values to not mess with the controlled/
+    // uncontrolled component state
+    addressLine1: ""
+    addressLine2: ""
+    city: ""
+    region: ""
+    country: ""
+    postalCode: ""
   }
+  meta: FormMetaValues
 }
 
 export interface ShipValues {
   fulfillmentType: FulfillmentType.SHIP
-  attributes: ShippingAddressFormValues & {
-    saveAddress: boolean
-    addressVerifiedBy: AddressVerifiedBy | null
-  }
+  attributes: ShippingAddressFormValues
+  meta: FormMetaValues
+}
+
+interface FormMetaValues {
+  // Address was verified (in this flow instance)
+  addressVerifiedBy?: AddressVerifiedBy | null
+  // User saved an address within the lifecycle of this form
+  newSavedAddressID?: string
+  // Address should be saved (create/update) to user's address book
+  saveAddress?: boolean
+  // Address should be set as default in user's address book
+  setAddressAsDefault?: boolean
 }
 
 export type FulfillmentValues = ShipValues | PickupValues
@@ -29,11 +50,24 @@ export interface ShippingAddressFormValues {
   name: string
   phoneNumber: string
   addressLine1: string
-  addressLine2?: string
+  addressLine2: string
   city: string
   region: string
   country: string
   postalCode: string
+}
+
+export const ADDRESS_VALIDATION_SHAPE = {
+  addressLine1: Yup.string().required("Street address is required"),
+  addressLine2: Yup.string().nullable(),
+  city: Yup.string().required("City is required"),
+  postalCode: postalCodeValidator,
+  region: Yup.string().when("country", {
+    is: country => ["US", "CA"].includes(country),
+    then: Yup.string().required("State is required"),
+    otherwise: Yup.string(),
+  }),
+  country: Yup.string().required("Country is required"),
 }
 
 const ORDER_EMPTY_ADDRESS: ShippingAddressFormValues = {
@@ -54,6 +88,11 @@ export const onlyAddressValues = (values: any) => {
   )
 }
 
+/**
+ * Takes an address object and returns a new address object with all the
+ * non-null values from the original address object. Useful for converting
+ * a SavedAddress from relay to a ShippingAddressFormValues object.
+ */
 export const addressWithFallbackValues = (
   address: any
 ): ShippingAddressFormValues => ({
@@ -68,6 +107,13 @@ export type SavedAddressType = NonNullable<
     >[number]
   >["node"]
 >
+
+export const getAddressByID = (
+  addressList: SavedAddressType[],
+  addressID: string
+) => {
+  return addressList.find(node => node.internalID === addressID)
+}
 
 // Get the user's default address, optionally filtering by a list of countries.
 export const getDefaultUserAddress = (

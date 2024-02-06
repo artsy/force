@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6fe4d569a270b763ef14bc4f7780cd39>>
+ * @generated SignedSource<<674a5a90c6f146126dd4d56803f8c68e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,7 +29,7 @@ export type Shipping2_me$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"FulfillmentDetailsForm_me" | "SavedAddresses2_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"FulfillmentDetailsForm_me">;
   readonly " $fragmentType": "Shipping2_me";
 };
 export type Shipping2_me$key = {
@@ -68,11 +68,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FulfillmentDetailsForm_me"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SavedAddresses2_me"
     },
     {
       "alias": null,
@@ -217,6 +212,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3d53d3dbf9bf4b645d6902a001000ff0";
+(node as any).hash = "1f0a40ff07ee40074ab6f360a991a47c";
 
 export default node;
