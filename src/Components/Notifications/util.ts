@@ -12,7 +12,11 @@ export const shouldDisplayNotification = notification => {
 export const isArtworksBasedNotification = (
   notificationType: NotificationTypesEnum
 ) => {
-  return ["ARTWORK_ALERT", "ARTWORK_PUBLISHED"].includes(notificationType)
+  return [
+    "ARTWORK_ALERT",
+    "ARTWORK_PUBLISHED",
+    "PARTNER_OFFER_CREATED",
+  ].includes(notificationType)
 }
 
 export const formattedTimeLeft = (time: {
