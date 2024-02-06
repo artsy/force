@@ -6,7 +6,6 @@ import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModa
 import { ArtworkList } from "./CreateNewListModal/CreateNewListModal"
 import { ProgressiveOnboardingSaveTitle } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveTitle"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkListsHeaderProps {
   savedArtworksCount: number
@@ -38,10 +37,6 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
     setModalIsOpened(false)
   }
 
-  const isPartnerOfferEnabled = useFeatureFlag(
-    "emerald_partner-offers-from-saves"
-  )
-
   return (
     <>
       {modalIsOpened && (
@@ -64,19 +59,15 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
           alignItems={["stretch", "center"]}
         >
           <Text variant="sm-display" color="black60">
-            {isPartnerOfferEnabled ? (
-              <ProgressiveOnboardingSaveTitle>
-                {t("collectorSaves.artworkListsHeader.curateYourList") +
-                  " " +
-                  t("collectorSaves.artworkListsHeader.connector") +
-                  " "}
-                <RouterLink to="https://support.artsy.net/s/article/Offers-on-saved-works">
-                  {t("collectorSaves.artworkListsHeader.signalInterest")}
-                </RouterLink>
-              </ProgressiveOnboardingSaveTitle>
-            ) : (
-              t("collectorSaves.artworkListsHeader.curateYourList")
-            )}
+            <ProgressiveOnboardingSaveTitle>
+              {t("collectorSaves.artworkListsHeader.curateYourList") +
+                " " +
+                t("collectorSaves.artworkListsHeader.connector") +
+                " "}
+              <RouterLink to="https://support.artsy.net/s/article/Offers-on-saved-works">
+                {t("collectorSaves.artworkListsHeader.signalInterest")}
+              </RouterLink>
+            </ProgressiveOnboardingSaveTitle>
           </Text>
 
           <Button

@@ -5,7 +5,6 @@ import {
   withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { useDismissibleContext } from "@artsy/dismissible"
 import {
   PROGRESSIVE_ONBOARDING_ALERTS,
@@ -23,9 +22,6 @@ export const __ProgressiveOnboardingSaveArtwork__: FC<ProgressiveOnboardingSaveA
   children,
 }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
-  const isPartnerOfferEnabled = useFeatureFlag(
-    "emerald_partner-offers-from-saves"
-  )
 
   const isDisplayble =
     !isDismissed(ALERT_ID).status &&
@@ -65,15 +61,9 @@ export const __ProgressiveOnboardingSaveArtwork__: FC<ProgressiveOnboardingSaveA
         <Text variant="xs">
           <strong>Like what you see?</strong>
           <br />
-          {isPartnerOfferEnabled ? (
-            <>
-              Tap the heart to save an artwork
-              <br />
-              and signal your interest to galleries.
-            </>
-          ) : (
-            <>Hit the heart to save an artwork.</>
-          )}
+          Tap the heart to save an artwork
+          <br />
+          and signal your interest to galleries.
         </Text>
       }
     >

@@ -120,7 +120,7 @@ describe("CollectorProfileSavesRoute", () => {
     })
 
     const selectedElement = screen.getAllByRole("link")
-    const lockedElement = selectedElement[1]
+    const lockedElement = selectedElement[2]
 
     // Check the second slot
     expect(lockedElement).toHaveTextContent("Collection Three")

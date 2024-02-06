@@ -6,7 +6,6 @@ import {
 } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
 import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 
 export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
@@ -19,9 +18,6 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
     saveArtworkToLists: saveToLists,
     openSelectListsForArtworkModal,
   } = useSaveArtworkToLists(options)
-  const isPartnerOfferEnabled = useFeatureFlag(
-    "emerald_partner-offers-from-saves"
-  )
 
   useEffect(() => {
     if (
@@ -54,11 +50,9 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
         message: t(
           `collectorSaves.saveArtworkToLists.toast.artworkSaved.message`
         ),
-        ...(isPartnerOfferEnabled && {
-          description: t(
-            `collectorSaves.saveArtworkToLists.toast.artworkSaved.description`
-          ),
-        }),
+        description: t(
+          `collectorSaves.saveArtworkToLists.toast.artworkSaved.description`
+        ),
         action: {
           label: t(
             "collectorSaves.saveArtworkToLists.toast.artworkSaved.button"
