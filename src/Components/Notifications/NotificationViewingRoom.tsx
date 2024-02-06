@@ -59,6 +59,7 @@ export const NotificationViewingRoom: React.FC<NotificationViewingRoomProps> = (
           bg="black10"
         >
           <Image
+            data-testid="viewing-room-image"
             src={image.src}
             srcSet={image.srcSet}
             width="100%"
@@ -82,6 +83,7 @@ export const NotificationViewingRoom: React.FC<NotificationViewingRoomProps> = (
           as={RouterLink}
           to={viewingRoom?.href}
           onClick={onClick}
+          data-testid="view-works-button"
         >
           View Works
         </Button>
