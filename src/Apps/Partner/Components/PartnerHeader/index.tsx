@@ -95,7 +95,8 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
 
                   {!!partner?.profile?.counts?.follows && (
                     <FollowButtonInlineCount display={["block", "none"]}>
-                      {formatFollowerCount(partner.profile.counts.follows)}
+                      {hasFollows &&
+                        formatFollowerCount(partner.profile.counts.follows)}
                     </FollowButtonInlineCount>
                   )}
                 </Stack>
