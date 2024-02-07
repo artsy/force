@@ -10,7 +10,7 @@ interface ArtworkErrorAppProps {
   artworkError: ArtworkErrorApp_artworkError$key
 }
 
-const HEADLINE_404 = "The artwork you were looking for isn't available."
+const HEADLINE_404 = "The artwork you were looking for isn’t available."
 
 export const ArtworkErrorApp: React.FC<ArtworkErrorAppProps> = ({
   artworkError,
