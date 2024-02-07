@@ -14637,7 +14637,10 @@ type PartnerOffer {
 
   # A type-specific ID.
   internalID: ID!
+  isAvailable: Boolean
   partnerId: String
+  priceListedMessage: String
+  priceWithDiscountMessage: String
   userIds: [String]
 }
 
@@ -14660,8 +14663,10 @@ type PartnerOfferCreatedNotificationItem {
     last: Int
   ): ArtworkConnection
 
-  # Whether or not the offer is still available
+  # Deprecated. Use `partnerOffer.isAvailable` instead.
   available: Boolean
+
+  # Deprecated. Use `partnerOffer.endAt` instead.
   expiresAt(
     format: String
 
@@ -14670,6 +14675,7 @@ type PartnerOfferCreatedNotificationItem {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  partnerOffer: PartnerOffer
 }
 
 # An edge in a connection.
