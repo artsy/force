@@ -17,7 +17,7 @@ const onListAdded = (
     return
   }
 
-  const key = "CollectorProfileSaves2Route_customArtworkLists"
+  const key = "CollectorProfileSavesRoute_customArtworkLists"
   const customArtworkListsConnection = ConnectionHandler.getConnection(me, key)
   const mutationPayload = store.getRootField("createCollection")
   const responseOrError = mutationPayload.getLinkedRecord("responseOrError")
