@@ -27,7 +27,7 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
     offerArtworksConnection,
   } = notificationData
 
-  if (!item || !offerArtworksConnection) {
+  if (!item || !offerArtworksConnection || !item.partnerOffer) {
     return (
       <Text variant="lg" m={4}>
         Sorry, something went wrong.
@@ -35,6 +35,7 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
     )
   }
 
+  const partnerOffer = item.partnerOffer
   const artwork = extractNodes(offerArtworksConnection)[0]
 
   return (
@@ -43,7 +44,7 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
         <Text variant="xs" color="blue100">
           Limited Time Offer
         </Text>
-        <RouterLink to={BASE_SAVES_PATH}>
+        <RouterLink to={BASE_SAVES_PATH} data-testid="manage-saves-link">
           <Text variant="xs">Manage Saves</Text>
         </RouterLink>
       </Flex>
@@ -68,7 +69,10 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
           </Text>
         </>
 
-        <ExpiresInTimer expiresAt={item.expiresAt} available={item.available} />
+        <ExpiresInTimer
+          expiresAt={partnerOffer.endAt}
+          available={partnerOffer.isAvailable}
+        />
       </Flex>
 
       <Spacer y={4} />
@@ -77,8 +81,10 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
         <PartnerOfferArtwork
           artwork={artwork}
           targetHref={targetHref}
-          expiresAt={item.expiresAt}
-          available={item.available}
+          endAt={partnerOffer.endAt}
+          available={partnerOffer.isAvailable}
+          priceListedMessage={partnerOffer.priceListedMessage}
+          priceWithDiscountMessage={partnerOffer.priceWithDiscountMessage}
         />
       </Flex>
     </Box>
@@ -88,14 +94,15 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
 export const PartnerOfferCreatedNotificationFragment = graphql`
   fragment PartnerOfferCreatedNotification_notification on Notification {
     headline
-    title
-    notificationType
-    publishedAt(format: "RELATIVE")
     targetHref
     item {
       ... on PartnerOfferCreatedNotificationItem {
-        expiresAt
-        available
+        partnerOffer {
+          endAt
+          isAvailable
+          priceListedMessage
+          priceWithDiscountMessage
+        }
       }
     }
     offerArtworksConnection: artworksConnection(first: 1) {

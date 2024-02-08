@@ -13,18 +13,27 @@ import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 interface PartnerOfferArtworkProps {
   artwork: PartnerOfferArtwork_artwork$key
   targetHref: string
-  expiresAt?: string | null
+  endAt?: string | null
   available?: boolean | null
+  priceListedMessage?: string | null
+  priceWithDiscountMessage?: string | null
 }
 
 export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   artwork: artworkProp,
   targetHref,
-  expiresAt = "",
+  priceListedMessage,
+  priceWithDiscountMessage,
+  endAt = "",
   available = false,
 }) => {
-  const { hasEnded } = useTimer(expiresAt || "")
-  const fullyAvailable = !!(available && !hasEnded)
+  const { hasEnded } = useTimer(endAt || "")
+  const fullyAvailable = !!(
+    available &&
+    !hasEnded &&
+    priceWithDiscountMessage &&
+    priceListedMessage
+  )
 
   const artwork = useFragment(partnerOfferArtworkFragment, artworkProp)
   const image = resized(artwork?.image?.src ?? "", { width: CARD_MAX_WIDTH })
@@ -96,10 +105,11 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
               fontWeight="bold"
               overflowEllipsis
             >
-              US$1000000{" "}
+              {priceWithDiscountMessage}
+              {" "}
             </Text>
             <Text variant="xs" color="black60" overflowEllipsis>
-              (List price: US$10000000)
+              (List price: {priceListedMessage})
             </Text>
           </Flex>
         )}
@@ -110,6 +120,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           // @ts-ignore
           as={RouterLink}
           to={href}
+          data-testid="partner-offer-artwork-button"
         >
           {buttonText}
         </Button>

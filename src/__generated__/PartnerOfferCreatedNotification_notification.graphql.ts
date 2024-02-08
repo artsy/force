@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<abd9be793be3997334ad5e0dadeae923>>
+ * @generated SignedSource<<dcefe7ccedcc25dced948ae3800e9591>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,15 +9,17 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerOfferCreatedNotification_notification$data = {
   readonly headline: string;
   readonly item: {
-    readonly available?: boolean | null | undefined;
-    readonly expiresAt?: string | null | undefined;
+    readonly partnerOffer?: {
+      readonly endAt: string | null | undefined;
+      readonly isAvailable: boolean | null | undefined;
+      readonly priceListedMessage: string | null | undefined;
+      readonly priceWithDiscountMessage: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
-  readonly notificationType: NotificationTypesEnum;
   readonly offerArtworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -25,9 +27,7 @@ export type PartnerOfferCreatedNotification_notification$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly publishedAt: string;
   readonly targetHref: string;
-  readonly title: string;
   readonly " $fragmentType": "PartnerOfferCreatedNotification_notification";
 };
 export type PartnerOfferCreatedNotification_notification$key = {
@@ -52,33 +52,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "notificationType",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "RELATIVE"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "publishedAt",
-      "storageKey": "publishedAt(format:\"RELATIVE\")"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "targetHref",
       "storageKey": null
     },
@@ -96,15 +69,40 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "kind": "ScalarField",
-              "name": "expiresAt",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "available",
+              "concreteType": "PartnerOffer",
+              "kind": "LinkedField",
+              "name": "partnerOffer",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "endAt",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isAvailable",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "priceListedMessage",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "priceWithDiscountMessage",
+                  "storageKey": null
+                }
+              ],
               "storageKey": null
             }
           ],
@@ -163,6 +161,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "165e8dd59c4101a5f820656b4a78b4c2";
+(node as any).hash = "27ee8f41ebeddc7b6d8289f322d7cd37";
 
 export default node;
