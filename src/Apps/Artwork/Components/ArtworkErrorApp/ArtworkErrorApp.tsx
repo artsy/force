@@ -10,6 +10,8 @@ interface ArtworkErrorAppProps {
   artworkError: ArtworkErrorApp_artworkError$key
 }
 
+const HEADLINE_404 = "The artwork you were looking for isn’t available."
+
 export const ArtworkErrorApp: React.FC<ArtworkErrorAppProps> = ({
   artworkError,
 }) => {
@@ -17,7 +19,10 @@ export const ArtworkErrorApp: React.FC<ArtworkErrorAppProps> = ({
 
   const { artwork, requestError } = data
   const statusCode = requestError?.statusCode ?? 500
-  const headline = ERROR_MESSAGES[statusCode] ?? "Internal Error"
+  const headline =
+    statusCode === 404
+      ? HEADLINE_404
+      : ERROR_MESSAGES[statusCode] ?? "Internal Error"
 
   const artworkSlug = artwork?.slug
 

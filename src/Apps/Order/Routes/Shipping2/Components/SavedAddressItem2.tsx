@@ -84,7 +84,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
           }
           handleClickEdit(event)
         }}
-        data-test="editAddressInShipping"
+        data-testid="editAddressInShipping"
       >
         Edit
       </EditButton>

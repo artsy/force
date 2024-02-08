@@ -41,7 +41,7 @@ jest.mock("react-tracking")
 const mockOnSubmit = jest.fn()
 const mockOnAddressVerificationComplete = jest.fn()
 let testProps: DeepPartial<FulfillmentDetailsFormProps>
-let mockShippingContext: DeepPartial<ShippingContextProps>
+let mockShippingContext: ShippingContextProps
 
 jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => ({
   useShippingContext: () => mockShippingContext,
@@ -49,7 +49,7 @@ jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => ({
 
 // Mock relay-connected component
 jest.mock("Apps/Order/Routes/Shipping2/Components/SavedAddresses2", () => ({
-  SavedAddressesFragmentContainer: () => <div />,
+  SavedAddresses2: () => <div />,
 }))
 
 const renderTree = testProps => {
@@ -72,7 +72,6 @@ beforeEach(() => {
   }))
   mockOnAddressVerificationComplete.mockReset()
   testProps = {
-    shippingMode: "saved_addresses",
     availableFulfillmentTypes: [FulfillmentType.SHIP],
     initialValues: {
       fulfillmentType: FulfillmentType.SHIP,
@@ -83,10 +82,9 @@ beforeEach(() => {
         city: "",
         region: "",
         postalCode: "",
-        saveAddress: false,
-        addressVerifiedBy: null,
         country: "US",
       },
+      meta: {},
     },
     onSubmit: mockOnSubmit,
     onAddressVerificationComplete: mockOnAddressVerificationComplete,
@@ -97,14 +95,17 @@ beforeEach(() => {
       },
     },
   }
-  mockShippingContext = {
+  mockShippingContext = ({
     actions: {
-      setFormHelpers: jest.fn(),
+      setFulfillmentDetailsFormikContext: jest.fn(),
     },
     orderData: {
       shippingQuotes: [],
     },
-  }
+    state: {
+      shippingFormMode: "saved_addresses",
+    },
+  } as unknown) as ShippingContextProps
 })
 
 const addressFormErrors = {
@@ -148,9 +149,11 @@ describe("FulfillmentDetailsForm", () => {
 
     it("has name and phone number fields", async () => {
       renderTree(testProps)
+
       await userEvent.click(
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
+
       const fullNameField = await screen.findByPlaceholderText("Full name")
       const phoneNumberField = await screen.findByPlaceholderText(
         "Add phone number including country code"
@@ -166,7 +169,19 @@ describe("FulfillmentDetailsForm", () => {
     it("will not submit without required fields", async () => {
       renderTree(testProps)
 
+      await userEvent.click(
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
+      )
+
+      expect(
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
+      ).toBeChecked()
+
+      await flushPromiseQueue()
+
       await submitForm()
+
+      await flushPromiseQueue()
 
       await waitFor(() => {
         ;["Full name is required", "Phone number is required"].forEach(
@@ -201,7 +216,14 @@ describe("FulfillmentDetailsForm", () => {
             attributes: {
               name: "John Doe",
               phoneNumber: "1234567890",
+              city: "",
+              region: "",
+              postalCode: "",
+              country: "",
+              addressLine1: "",
+              addressLine2: "",
             },
+            meta: {},
           },
           expect.anything()
         )
@@ -263,7 +285,7 @@ describe("FulfillmentDetailsForm", () => {
       })
 
       it("shows the saved addresses or plain address form depending on the passed prop", async () => {
-        testProps.shippingMode = "saved_addresses"
+        mockShippingContext.state.shippingFormMode = "saved_addresses"
         renderTree(testProps)
         // Note - SavedAddresses is mocked out.
         await waitFor(() => {
@@ -277,7 +299,7 @@ describe("FulfillmentDetailsForm", () => {
 
         cleanup()
 
-        testProps.shippingMode = "new_address"
+        mockShippingContext.state.shippingFormMode = "new_address"
         renderTree(testProps)
         await waitFor(() => {
           expect(screen.getByTestId("savedAddressesCollapse")).toHaveStyle({
@@ -362,9 +384,8 @@ describe("FulfillmentDetailsForm", () => {
                 region: "",
                 postalCode: "",
                 phoneNumber: "5555937743",
-                addressVerifiedBy: null,
-                saveAddress: false,
               },
+              meta: {},
             },
             expect.anything()
           )
@@ -435,9 +456,8 @@ describe("FulfillmentDetailsForm", () => {
                 region: validAddress.region,
                 postalCode: validAddress.postalCode,
                 phoneNumber: validAddress.phoneNumber,
-                addressVerifiedBy: null,
-                saveAddress: false,
               },
+              meta: {},
             },
             expect.anything()
           )
@@ -445,6 +465,7 @@ describe("FulfillmentDetailsForm", () => {
       })
     })
   })
+
   describe("Address autocomplete", () => {
     let mockFetch: jest.Mock
     beforeEach(() => {

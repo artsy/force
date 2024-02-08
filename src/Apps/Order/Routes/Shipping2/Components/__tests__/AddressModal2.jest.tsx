@@ -1,8 +1,6 @@
 import {
   AddressModal,
   AddressModalProps,
-  GENERIC_FAIL_MESSAGE,
-  AddressModalActionType,
 } from "Apps/Order/Routes/Shipping2/Components/AddressModal2"
 import { validAddress } from "Components/__tests__/Utils/addressForm2"
 import { useSystemContext } from "System/useSystemContext"
@@ -24,13 +22,6 @@ jest.setTimeout(10000)
 jest.unmock("react-relay")
 jest.mock("System/useSystemContext")
 const mockUseSystemContext = useSystemContext as jest.Mock
-
-jest.mock("Utils/Hooks/useMatchMedia", () => ({
-  __internal__useMatchMedia: () => ({}),
-}))
-jest.mock("Utils/user", () => ({
-  userHasLabFeature: jest.fn(),
-}))
 
 const errorBoxQuery = "Banner[data-testid='form-banner-error']"
 
@@ -89,6 +80,7 @@ afterEach(() => {
 })
 
 // FIXME: MockBoot interfering somehow...
+// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("AddressModal", () => {
   beforeEach(() => {
     mockRelayEnv = createMockEnvironment()
@@ -102,8 +94,8 @@ describe.skip("AddressModal", () => {
 
     testAddressModalProps = {
       onSuccess: jest.fn(),
-      modalAction: {
-        type: AddressModalActionType.EDIT_USER_ADDRESS,
+      addressModalAction: {
+        type: "edit",
         address: mockSavedAddress,
       },
 
@@ -118,17 +110,17 @@ describe.skip("AddressModal", () => {
     expect(wrapper.find("input").length).toBe(7)
     expect(wrapper.find("select").length).toBe(1)
 
-    expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
-    expect(wrapper.find("Clickable[data-test='deleteButton']").length).toBe(1)
-    expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
+    expect(wrapper.find("Checkbox[data-testid='setAsDefault']").length).toBe(1)
+    expect(wrapper.find("Clickable[data-testid='deleteButton']").length).toBe(1)
+    expect(wrapper.find("Button[data-testid='saveButton']").length).toBe(1)
   })
 
   it("renders EditModal without checkbox when address is default", () => {
     const { wrapper } = getWrapper({
       componentProps: {
         ...testAddressModalProps,
-        modalAction: {
-          type: AddressModalActionType.EDIT_USER_ADDRESS,
+        addressModalAction: {
+          type: "edit",
           address: {
             ...mockSavedAddress,
             isDefault: true,
@@ -137,15 +129,15 @@ describe.skip("AddressModal", () => {
       },
     })
     expect(wrapper.text()).toContain("Edit address")
-    expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(0)
+    expect(wrapper.find("Checkbox[data-testid='setAsDefault']").length).toBe(0)
   })
 
   it("renders AddModal with the title, input fields, checkbox and button", () => {
     const { wrapper } = getWrapper({
       componentProps: {
         ...testAddressModalProps,
-        modalAction: {
-          type: AddressModalActionType.CREATE_USER_ADDRESS,
+        addressModalAction: {
+          type: "create",
         },
       },
     })
@@ -153,17 +145,19 @@ describe.skip("AddressModal", () => {
     expect(wrapper.find("input").length).toBe(7)
     expect(wrapper.find("select").length).toBe(1)
 
-    expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
-    expect(wrapper.find("Clickable[data-test='deleteButton']").length).toBe(0)
-    expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
+    expect(wrapper.find("Checkbox[data-testid='setAsDefault']").length).toBe(1)
+    expect(wrapper.find("Clickable[data-testid='deleteButton']").length).toBe(0)
+    expect(wrapper.find("Button[data-testid='saveButton']").length).toBe(1)
   })
 
   it("clicking the delete button spawns a correct dialog", async () => {
     const { wrapper } = getWrapper()
-    const deleteButton = wrapper.find("Clickable[data-test='deleteButton']")
+    const deleteButton = wrapper.find("Clickable[data-testid='deleteButton']")
     deleteButton.simulate("click")
     await wrapper.update()
-    const dialog = wrapper.find("ModalDialog[data-test='deleteAddressDialog']")
+    const dialog = wrapper.find(
+      "ModalDialog[data-testid='deleteAddressDialog']"
+    )
 
     expect(dialog).toHaveLength(1)
     expect(dialog.text()).toContain("Delete address?")
@@ -179,9 +173,11 @@ describe.skip("AddressModal", () => {
   it("when the dialog is confirmed, the delete action happens", async () => {
     const { mockResolveLastOperation, wrapper } = getWrapper()
 
-    const deleteButton = wrapper.find("Clickable[data-test='deleteButton']")
+    const deleteButton = wrapper.find("Clickable[data-testid='deleteButton']")
     deleteButton.simulate("click")
-    const dialog = wrapper.find("ModalDialog[data-test='deleteAddressDialog']")
+    const dialog = wrapper.find(
+      "ModalDialog[data-testid='deleteAddressDialog']"
+    )
     const dialogDelete = dialog.find("Button").at(1)
     dialogDelete.simulate("click")
 
@@ -196,11 +192,15 @@ describe.skip("AddressModal", () => {
       input: { userAddressID: "internal-id" },
     })
 
+    await flushPromiseQueue()
+
     expect(wrapper.find(AddressModal).props().closeModal).toHaveBeenCalled()
   })
 
   describe("update mode", () => {
-    it("creates address when form is submitted with valid values", async () => {
+    // TODO: Migrate to RTL for easier address form filling?
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("updates address when form is submitted with valid values", async () => {
       const { mockResolveLastOperation, wrapper } = getWrapper()
 
       const formik = wrapper.find("Formik").first()
@@ -246,10 +246,11 @@ describe.skip("AddressModal", () => {
     it("shows generic error when mutation returns error", async () => {
       const { mockResolveLastOperation, wrapper } = getWrapper()
 
-      const formik = wrapper.find("Formik").first()
-      formik.props().onSubmit!(validAddress as any)
+      const form = wrapper.find("Form")
+      form.simulate("submit")
 
       await flushPromiseQueue()
+
       mockResolveLastOperation({
         UpdateUserAddressPayload: () => ({
           userAddressOrErrors: {
@@ -263,21 +264,34 @@ describe.skip("AddressModal", () => {
           },
         }),
       })
+
       await flushPromiseQueue()
+
       await wrapper.update()
-      expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
+
+      await flushPromiseQueue()
+
+      expect(wrapper.find(errorBoxQuery).text()).toContain(
+        "Sorry, there has been an issue saving your address. Please try again."
+      )
     })
 
     it("shows generic error when mutation fails", async () => {
       const { wrapper, mockRejectLastOperation } = getWrapper()
 
-      const formik = wrapper.find("Formik").first()
-      formik.props().onSubmit!(validAddress as any)
+      const form = wrapper.find("Form")
+      form.simulate("submit")
+
       await flushPromiseQueue()
+
       mockRejectLastOperation(new TypeError("Network request failed"))
+
       await flushPromiseQueue()
+
       await wrapper.update()
-      expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
+      expect(wrapper.find(errorBoxQuery).text()).toContain(
+        "Sorry, there has been an issue saving your address. Please try again."
+      )
     })
 
     // FIXME: Flakey test

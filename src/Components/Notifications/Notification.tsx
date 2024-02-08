@@ -16,12 +16,14 @@ import { useRouter } from "System/Router/useRouter"
 import { ArticleFeaturedArtistNotification } from "Components/Notifications/ArticleFeaturedArtistNotification"
 import { PartnerOfferCreatedNotification } from "Components/Notifications/PartnerOfferCreatedNotification"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
+import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
 
 export const SUPPORTED_NOTIFICATION_TYPES = [
   "ARTWORK_ALERT",
   "ARTWORK_PUBLISHED",
   "ARTICLE_FEATURED_ARTIST",
   "PARTNER_OFFER_CREATED",
+  "VIEWING_ROOM_PUBLISHED",
 ]
 
 interface NotificationProps {
@@ -73,6 +75,12 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
       return (
         <PartnerOfferCreatedNotification notification={data.me?.notification} />
       )
+    case "VIEWING_ROOM_PUBLISHED":
+      return (
+        <ViewingRoomPublishedNotification
+          notification={data.me?.notification}
+        />
+      )
     default:
       return null
   }
@@ -103,6 +111,7 @@ const notificationQuery = graphql`
         ...ArtworkPublishedNotification_notification
         ...ArticleFeaturedArtistNotification_notification
         ...PartnerOfferCreatedNotification_notification
+        ...ViewingRoomPublishedNotification_notification
       }
     }
   }

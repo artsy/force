@@ -30,7 +30,7 @@ export function useFeatureFlag(featureName: string): boolean | null {
 
   if (flagEnabled === undefined) {
     warnInDevelopment(
-      "[Force] Warning: cannot find flagName in featureFlags: ",
+      `[Force] Warning: cannot find ${featureName} in featureFlags: `,
       featureFlags
     )
     return null
@@ -71,6 +71,22 @@ export const getFeatureVariant = (
   }
 
   return variant
+}
+
+export const getFeatureFlag = (featureName: string): boolean | null => {
+  const featureFlags = getENV("FEATURE_FLAGS")
+  const flagEnabled = featureFlags?.[featureName]?.flagEnabled
+
+  if (flagEnabled === undefined) {
+    warnInDevelopment(
+      `[Force] Warning: cannot find ${featureName} in featureFlags: `,
+      featureFlags
+    )
+
+    return null
+  }
+
+  return flagEnabled
 }
 
 export function useTrackFeatureVariant({

@@ -71,7 +71,7 @@ export const ErrorDialogMessage = (props: ErrorDialogMessageProps) => {
     const testidSuffix = substrings.length > 2 ? `-${index}` : ""
 
     return (
-      <>
+      <React.Fragment key={`msg-${index}`}>
         {substring}
         {!isLastSubstring && (
           <RouterLink
@@ -82,7 +82,7 @@ export const ErrorDialogMessage = (props: ErrorDialogMessageProps) => {
             {SUPPORT_EMAIL}
           </RouterLink>
         )}
-      </>
+      </React.Fragment>
     )
   })
 

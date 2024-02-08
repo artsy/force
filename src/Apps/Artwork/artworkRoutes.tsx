@@ -3,7 +3,7 @@ import { HttpError } from "found"
 import { graphql } from "react-relay"
 import { updateContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 import { AppRouteConfig } from "System/Router/Route"
-import { getENV } from "Utils/getENV"
+import { getFeatureFlag } from "System/useFeatureFlag"
 
 const ArtworkApp = loadable(
   () => import(/* webpackChunkName: "artworkBundle" */ "./ArtworkApp"),
@@ -32,9 +32,9 @@ export const artworkRoutes: AppRouteConfig[] = [
       const requestError = (props as any).artworkResult?.requestError
       const requestErrorStatusCode = requestError?.statusCode
 
-      const featureFlags = getENV("FEATURE_FLAGS")
-      const enableCustomErrorPage =
-        featureFlags?.["onyx_custom_artwork_error_page"]
+      const enableCustomErrorPage = getFeatureFlag(
+        "onyx_custom_artwork_error_page"
+      )
 
       if (requestErrorStatusCode) {
         if (enableCustomErrorPage) {

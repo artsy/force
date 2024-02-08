@@ -16,6 +16,7 @@ import { Join, Spacer } from "@artsy/palette"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
 import { ArtistSeriesFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistSeriesFilter"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 
 interface ArtistArtworkFiltersProps {}
 
@@ -24,10 +25,12 @@ export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props =
   const isArtistSeriesFilterEnabled = useFeatureFlag(
     "onyx_enable-artist-series-filter"
   )
+  const isAvailabilityFilterEnabled = useFeatureFlag("onyx_availability-filter")
 
   return (
     <Join separator={<Spacer y={4} />}>
       <KeywordFilter />
+      {isAvailabilityFilterEnabled && <AvailabilityFilter />}
       <ArtistsFilter user={user} expanded />
       <ProgressiveOnboardingAlertSelectFilter>
         <AttributionClassFilter expanded />
