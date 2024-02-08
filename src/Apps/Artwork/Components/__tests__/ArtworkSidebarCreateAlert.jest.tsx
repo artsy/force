@@ -5,15 +5,34 @@ import { ArtworkSidebarCreateAlert_Test_Query } from "__generated__/ArtworkSideb
 import { fireEvent, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/useSystemContext"
+import { AlertProvider } from "Components/Alert/AlertProvider"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("System/useSystemContext")
 
+jest.mock("System/Analytics/AnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: Artwork.internalID,
+    contextPageOwnerSlug: Artwork.slug,
+    contextPageOwnerType: "artwork",
+  })),
+}))
+
+let relayEnv: MockEnvironment = createMockEnvironment()
+
 const { renderWithRelay } = setupTestWrapperTL<
   ArtworkSidebarCreateAlert_Test_Query
 >({
-  Component: ArtworkSidebarCreateAlertFragmentContainer,
+  Component: (props: any) => {
+    return (
+      <AlertProvider>
+        <ArtworkSidebarCreateAlertFragmentContainer artwork={props.artwork} />
+      </AlertProvider>
+    )
+  },
   query: graphql`
     query ArtworkSidebarCreateAlert_Test_Query @relay_test_operation {
       artwork(id: "test-artwork-id") {
@@ -36,6 +55,7 @@ describe("ArtworkSidebarCreateAlert", () => {
     mockuseSystemContext.mockImplementation(() => {
       return {
         isLoggedIn: true,
+        relayEnvironment: relayEnv,
       }
     })
   })
@@ -48,42 +68,48 @@ describe("ArtworkSidebarCreateAlert", () => {
     expect(screen.queryByText("Create Alert")).not.toBeInTheDocument()
   })
 
-  it("should correctly render pills", () => {
-    renderWithRelay({
-      Artwork: () => Artwork,
-    })
+  it("should correctly render pills", async () => {
+    const { mockResolveLastOperation } = renderWithRelay(
+      {
+        Artwork: () => Artwork,
+      },
+      {},
+      relayEnv
+    )
 
     fireEvent.click(screen.getByText("Create Alert"))
+
+    const mockedPreviewResolver = {
+      Viewer: () => ({
+        previewSavedSearch: {
+          labels: [
+            {
+              displayValue: "Banksy",
+              field: "artistIDs",
+              value: "artist-id",
+            },
+            {
+              displayValue: "Limited Edition",
+              field: "attributionClass",
+              value: "limited edition",
+            },
+            {
+              displayValue: "Print",
+              field: "additionalGeneIDs",
+              value: "prints",
+            },
+          ],
+        },
+      }),
+    }
+
+    mockResolveLastOperation(mockedPreviewResolver)
+
+    await flushPromiseQueue()
 
     expect(screen.getByText("Banksy")).toBeInTheDocument()
     expect(screen.getByText("Limited Edition")).toBeInTheDocument()
-    expect(screen.getByText("Prints")).toBeInTheDocument()
-  })
-
-  it("should not render `Rarity` pill if needed data is missing", () => {
-    renderWithRelay({
-      Artwork: () => ({
-        ...Artwork,
-        attributionClass: null,
-      }),
-    })
-
-    fireEvent.click(screen.getByText("Create Alert"))
-
-    expect(screen.queryByText("Limited Edition")).not.toBeInTheDocument()
-  })
-
-  it("should not render `Medium` pill if needed data is missing", () => {
-    renderWithRelay({
-      Artwork: () => ({
-        ...Artwork,
-        mediumType: null,
-      }),
-    })
-
-    fireEvent.click(screen.getByText("Create Alert"))
-
-    expect(screen.queryByText("Prints")).not.toBeInTheDocument()
+    expect(screen.getByText("Print")).toBeInTheDocument()
   })
 
   it("should correctly track event when `Create Alert` button is pressed", () => {
@@ -103,24 +129,7 @@ describe("ArtworkSidebarCreateAlert", () => {
 })
 
 const Artwork = {
-  title: "Some artwork title",
   slug: "artwork-slug",
   internalID: "artwork-id",
   isEligibleToCreateAlert: true,
-  artists: [
-    {
-      internalID: "4dd1584de0091e000100207c",
-      name: "Banksy",
-      slug: "banksy",
-    },
-  ],
-  attributionClass: {
-    internalID: "limited edition",
-  },
-  mediumType: {
-    filterGene: {
-      slug: "prints",
-      name: "Prints",
-    },
-  },
 }

@@ -29,7 +29,6 @@ import { useToasts } from "@artsy/palette"
 import { t } from "i18next"
 import createLogger from "Utils/logger"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 const logger = createLogger("AlertProvider.tsx")
 interface AlertProviderProps {
@@ -52,7 +51,6 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   metric,
   isEditMode,
 }) => {
-  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
   const { createdAlert } = useAlertTracking()
   const { showAuthDialog } = useAuthDialog()
   const { value, clearValue } = useAuthIntent()
@@ -223,13 +221,12 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   }, [state.visible, debouncedCriteria, relayEnvironment, state.isEditMode])
 
   useEffect(() => {
-    if (!newAlertModalEnabled || !value || value.action !== Intent.createAlert)
-      return
+    if (!value || value.action !== Intent.createAlert) return
 
     dispatch({ type: "SHOW" })
 
     clearValue()
-  }, [newAlertModalEnabled, value, clearValue])
+  }, [value, clearValue])
 
   return (
     <AlertContext.Provider

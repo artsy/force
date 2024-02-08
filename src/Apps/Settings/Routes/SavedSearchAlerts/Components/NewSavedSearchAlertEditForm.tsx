@@ -72,7 +72,7 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
           <Box p={4}>
             <Flex justifyContent="space-between">
               <ModalHeader />
-              <Clickable onClick={onCloseClick}>
+              <Clickable data-testid="closeButton" onClick={onCloseClick}>
                 <CloseIcon display="flex" />
               </Clickable>
             </Flex>
