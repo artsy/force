@@ -31,6 +31,7 @@ const NOTIFICATION_FIELDS = {
   productUpdates: false,
   guidanceOnCollecting: false,
   customAlerts: false,
+  partnerOffersOnSaves: false,
 }
 
 interface PreferencesAppProps {
@@ -43,6 +44,7 @@ interface FormValuesForNotificationPreferences {
   productUpdates: boolean
   guidanceOnCollecting: boolean
   customAlerts: boolean
+  partnerOffersOnSaves: boolean
 }
 
 export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
@@ -209,6 +211,23 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   onSelect={value => {
                     setFieldValue("customAlerts", value)
                     setFieldTouched("customAlerts", true)
+                  }}
+                >
+                  Email
+                </Checkbox>
+              </Column>
+              <Column span={10}>
+                <Text variant="sm-display">Offers on Saved Artworks</Text>
+                <Text variant="sm" color="black60">
+                  Offers from galleries on artworks you saved
+                </Text>
+              </Column>
+              <Column span={2}>
+                <Checkbox
+                  selected={values.partnerOffersOnSaves}
+                  onSelect={value => {
+                    setFieldValue("partnerOffersOnSaves", value)
+                    setFieldTouched("partnerOffersOnSaves", true)
                   }}
                 >
                   Email
