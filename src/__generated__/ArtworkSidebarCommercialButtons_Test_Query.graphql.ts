@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ae5f732147cbad5a599670e9130e678>>
+ * @generated SignedSource<<2e61b911f252fee5e1f8b21f20dd522a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -64,18 +64,15 @@ v5 = {
   "name": "saleMessage",
   "storageKey": null
 },
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-},
+v6 = [
+  (v4/*: any*/),
+  (v3/*: any*/)
+],
 v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "slug",
   "storageKey": null
 },
 v8 = [
@@ -95,13 +92,13 @@ v9 = {
 },
 v10 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
 v11 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "String"
 },
@@ -216,13 +213,11 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/),
-          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "title",
+            "name": "isEligibleToCreateAlert",
             "storageKey": null
           },
           {
@@ -232,12 +227,7 @@ return {
             "kind": "LinkedField",
             "name": "artists",
             "plural": true,
-            "selections": [
-              (v4/*: any*/),
-              (v7/*: any*/),
-              (v6/*: any*/),
-              (v3/*: any*/)
-            ],
+            "selections": (v6/*: any*/),
             "storageKey": null
           },
           {
@@ -247,44 +237,11 @@ return {
             "kind": "LinkedField",
             "name": "attributionClass",
             "plural": false,
-            "selections": [
-              (v4/*: any*/),
-              (v3/*: any*/)
-            ],
+            "selections": (v6/*: any*/),
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ArtworkMedium",
-            "kind": "LinkedField",
-            "name": "mediumType",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Gene",
-                "kind": "LinkedField",
-                "name": "filterGene",
-                "plural": false,
-                "selections": [
-                  (v6/*: any*/),
-                  (v7/*: any*/),
-                  (v3/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isEligibleToCreateAlert",
-            "storageKey": null
-          },
+          (v4/*: any*/),
+          (v7/*: any*/),
           (v5/*: any*/),
           {
             "alias": null,
@@ -323,6 +280,30 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworkMedium",
+            "kind": "LinkedField",
+            "name": "mediumType",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Gene",
+                "kind": "LinkedField",
+                "name": "filterGene",
+                "plural": false,
+                "selections": [
+                  (v7/*: any*/),
+                  (v3/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           (v3/*: any*/)
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
@@ -330,7 +311,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8686c061289c9959d1bd0ece9ca0c50e",
+    "cacheID": "3d6b53f8baefaac0039f74491d6e3177",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -348,8 +329,6 @@ return {
         },
         "artwork.artists.id": (v9/*: any*/),
         "artwork.artists.internalID": (v9/*: any*/),
-        "artwork.artists.name": (v10/*: any*/),
-        "artwork.artists.slug": (v9/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
           "nullable": true,
@@ -364,21 +343,21 @@ return {
           "plural": true,
           "type": "EditionSet"
         },
-        "artwork.editionSets.__isSellable": (v11/*: any*/),
+        "artwork.editionSets.__isSellable": (v10/*: any*/),
         "artwork.editionSets.dimensions": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "dimensions"
         },
-        "artwork.editionSets.dimensions.cm": (v10/*: any*/),
-        "artwork.editionSets.dimensions.in": (v10/*: any*/),
-        "artwork.editionSets.editionOf": (v10/*: any*/),
+        "artwork.editionSets.dimensions.cm": (v11/*: any*/),
+        "artwork.editionSets.dimensions.in": (v11/*: any*/),
+        "artwork.editionSets.editionOf": (v11/*: any*/),
         "artwork.editionSets.id": (v9/*: any*/),
         "artwork.editionSets.internalID": (v9/*: any*/),
         "artwork.editionSets.isAcquireable": (v12/*: any*/),
         "artwork.editionSets.isOfferable": (v12/*: any*/),
-        "artwork.editionSets.saleMessage": (v10/*: any*/),
+        "artwork.editionSets.saleMessage": (v11/*: any*/),
         "artwork.id": (v9/*: any*/),
         "artwork.internalID": (v9/*: any*/),
         "artwork.isAcquireable": (v12/*: any*/),
@@ -397,8 +376,8 @@ return {
           "plural": false,
           "type": "ListPrice"
         },
-        "artwork.listPrice.__typename": (v11/*: any*/),
-        "artwork.listPrice.display": (v10/*: any*/),
+        "artwork.listPrice.__typename": (v10/*: any*/),
+        "artwork.listPrice.display": (v11/*: any*/),
         "artwork.mediumType": {
           "enumValues": null,
           "nullable": true,
@@ -412,16 +391,14 @@ return {
           "type": "Gene"
         },
         "artwork.mediumType.filterGene.id": (v9/*: any*/),
-        "artwork.mediumType.filterGene.name": (v10/*: any*/),
         "artwork.mediumType.filterGene.slug": (v9/*: any*/),
-        "artwork.saleMessage": (v10/*: any*/),
-        "artwork.slug": (v9/*: any*/),
-        "artwork.title": (v10/*: any*/)
+        "artwork.saleMessage": (v11/*: any*/),
+        "artwork.slug": (v9/*: any*/)
       }
     },
     "name": "ArtworkSidebarCommercialButtons_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCommercialButtons_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarCommercialButtons_artwork\n    id\n  }\n}\n\nfragment ArtworkCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarCommercialButtons_artwork on Artwork {\n  ...ArtworkSidebarEditionSets_artwork\n  ...ArtworkCreateAlertButton_artwork\n  isEligibleToCreateAlert\n  artists {\n    internalID\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  internalID\n  slug\n  saleMessage\n  isInquireable\n  isAcquireable\n  isOfferable\n  isSold\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  mediumType {\n    filterGene {\n      slug\n      id\n    }\n  }\n  editionSets {\n    id\n    internalID\n    isAcquireable\n    isOfferable\n    saleMessage\n  }\n}\n\nfragment ArtworkSidebarEditionSets_artwork on Artwork {\n  isInquireable\n  isOfferable\n  isAcquireable\n  editionSets {\n    id\n    internalID\n    isOfferable\n    isAcquireable\n    saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  editionOf\n}\n"
+    "text": "query ArtworkSidebarCommercialButtons_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarCommercialButtons_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercialButtons_artwork on Artwork {\n  ...ArtworkSidebarEditionSets_artwork\n  isEligibleToCreateAlert\n  artists {\n    internalID\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  internalID\n  slug\n  saleMessage\n  isInquireable\n  isAcquireable\n  isOfferable\n  isSold\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  mediumType {\n    filterGene {\n      slug\n      id\n    }\n  }\n  editionSets {\n    id\n    internalID\n    isAcquireable\n    isOfferable\n    saleMessage\n  }\n}\n\nfragment ArtworkSidebarEditionSets_artwork on Artwork {\n  isInquireable\n  isOfferable\n  isAcquireable\n  editionSets {\n    id\n    internalID\n    isOfferable\n    isAcquireable\n    saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  editionOf\n}\n"
   }
 };
 })();

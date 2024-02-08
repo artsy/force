@@ -4,15 +4,21 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { SavedSearchAlertsAppPaginationContainer } from "Apps/Settings/Routes/SavedSearchAlerts/SavedSearchAlertsApp"
 import { SavedSearchAlertsApp_Test_Query } from "__generated__/SavedSearchAlertsApp_Test_Query.graphql"
 import { useTracking } from "react-tracking"
+import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { useSystemContext } from "System/useSystemContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
+jest.mock("System/useSystemContext")
+
+let relayEnv: MockEnvironment = createMockEnvironment()
 
 describe("SavedSearchAlertsApp", () => {
   const trackEvent = jest.fn()
+  const mockuseSystemContext = useSystemContext as jest.Mock
 
   const { renderWithRelay } = setupTestWrapperTL<
     SavedSearchAlertsApp_Test_Query
@@ -35,6 +41,16 @@ describe("SavedSearchAlertsApp", () => {
         trackEvent,
       }
     })
+
+    mockuseSystemContext.mockImplementation(() => {
+      return {
+        relayEnvironment: relayEnv,
+      }
+    })
+  })
+
+  afterEach(() => {
+    relayEnv.mockClear()
   })
 
   it("renders all alert titles", () => {
@@ -106,16 +122,37 @@ describe("SavedSearchAlertsApp", () => {
   })
 
   it('renders edit form when "Edit" button is pressed', async () => {
-    renderWithRelay({
-      Me: () => ({
-        savedSearchesConnection: mockedSavedSearchesConnection,
-      }),
-    })
+    const { mockResolveLastOperation } = renderWithRelay(
+      {
+        Me: () => ({
+          savedSearchesConnection: mockedSavedSearchesConnection,
+        }),
+      },
+      {},
+      relayEnv
+    )
+
     fireEvent.click(screen.getAllByText("Edit")[0])
 
     expect(window.location.pathname).toEqual(
       `/settings/alerts/example-id-1/edit`
     )
+
+    const mockedPreviewResolver = {
+      Me: () => ({
+        savedSearch: {
+          internalID: "search-criteria-id",
+          artistIDs: ["artist-id"],
+          userAlertSettings: {
+            name: "user-search-criteria-custom-name",
+          },
+        },
+      }),
+    }
+
+    mockResolveLastOperation(mockedPreviewResolver)
+
+    expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
 
     screen.getByTestId("closeButton").click()
 

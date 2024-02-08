@@ -14,7 +14,6 @@ import {
 } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { FC, useCallback, useEffect, useState } from "react"
-import { ArtworkCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkCreateAlertButton"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
@@ -28,7 +27,6 @@ import currency from "currency.js"
 import { useTranslation } from "react-i18next"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
@@ -319,27 +317,16 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
   const isSecondaryContactGalleryButton =
     artwork.isOfferable || isCreateAlertAvailable
 
-  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
-
   const AlertSwitch: FC = () => {
     if (!isCreateAlertAvailable) {
       return null
     }
 
-    if (newAlertModalEnabled) {
-      return (
-        <ProgressiveOnboardingAlertCreateSimple>
-          <CreateAlertButton width="100%" size="large" />
-        </ProgressiveOnboardingAlertCreateSimple>
-      )
-    } else {
-      return (
-        <ArtworkCreateAlertButtonFragmentContainer
-          artwork={artwork}
-          analyticsContextModule={ContextModule.artworkSidebar}
-        />
-      )
-    }
+    return (
+      <ProgressiveOnboardingAlertCreateSimple>
+        <CreateAlertButton width="100%" size="large" />
+      </ProgressiveOnboardingAlertCreateSimple>
+    )
   }
 
   return (
@@ -447,7 +434,6 @@ export const ArtworkSidebarCommercialButtonsFragmentContainer = createFragmentCo
     artwork: graphql`
       fragment ArtworkSidebarCommercialButtons_artwork on Artwork {
         ...ArtworkSidebarEditionSets_artwork
-        ...ArtworkCreateAlertButton_artwork
         isEligibleToCreateAlert
         artists {
           internalID
