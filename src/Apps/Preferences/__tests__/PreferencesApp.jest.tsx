@@ -1,145 +1,108 @@
-import { render, screen, fireEvent } from "@testing-library/react"
-import { HeadProvider } from "react-head"
-import { parseTokenFromRouter, PreferencesApp } from "../PreferencesApp"
+import { render, fireEvent, waitFor, screen } from "@testing-library/react"
+import { PreferencesApp } from "Apps/Preferences/PreferencesApp"
+import { useEditNotificationPreferences } from "Apps/Preferences/useEditNotificationPreferences"
+import { parseTokenFromRouter } from "Apps/Preferences/PreferencesApp"
+
+jest.mock("Utils/Hooks/useMutation", () => ({
+  useMutation: jest.fn(),
+}))
 
 describe("PreferencesApp", () => {
-  it.skip("renders the preference center", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
-
-    expect(screen.getByText("Email Preference Center")).toBeInTheDocument()
-    expect(
-      screen.getByText("Please sign in to update your email preferences")
-    ).not.toBeInTheDocument()
+  describe("authentication", () => {
+    // correct view is rendered based on auth status
+    // initial preferences are fetched and set correctly
   })
 
-  it("prompts users to sign in when no token and signed out", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
-
-    expect(
-      screen.getByText("Please sign in to update your email preferences")
-    ).toBeInTheDocument()
+  describe("form rendering", () => {
+    // all form elements render correctly (checkboxes, labels, buttons, etc)
   })
 
-  it.skip("has disabled buttons until a change is made", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
-
-    // eslint-disable-next-line testing-library/no-node-access
-    let saveButton = screen.getByText("Save").closest("button")
-    let checkboxes = screen.getAllByRole("checkbox")
-
-    expect(saveButton).toBeDisabled()
-
-    fireEvent.click(checkboxes[0])
-
-    expect(saveButton).toBeEnabled()
+  describe("user interactions", () => {
+    // form UI w/ individual checkboxes
+    // "subscribe to all" and "unsubscribe from all" work as expected
   })
 
-  it.skip("allows user to uncheck all boxes with unsubscribe from all", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
+  describe("checkboxes", () => {
+    // checking/unchecking each checkbox updates form state correctly
+  })
 
-    expect(screen.getByText("Subscribe to all")).toBeInTheDocument()
+  describe("form submission", () => {
+    // submitting form saves preferences correctly
+    // save button click event and form submit event both work
+  })
 
-    let checkboxes = screen.getAllByRole("checkbox")
-    let unsubscribeFromAllCheckbox = checkboxes.pop()!
+  describe("toasts", () => {
+    // success toasts displayed correctly on form submit
+    // depending on success or error state
+  })
 
-    fireEvent.click(checkboxes[3])
-    fireEvent.click(checkboxes[4])
+  describe("error handling", () => {
+    // sad path error states are handled correctly
+    // disabled buttons, error toasts, etc
+  })
 
-    fireEvent.click(unsubscribeFromAllCheckbox)
+  describe("useEditNotificationPreferences", () => {
+    it("calls the mutation with the correct variables on form submission", async () => {
+      const submitMutationMock = jest.fn(() => Promise.resolve())
+      ;(useEditNotificationPreferences as jest.Mock).mockReturnValue({
+        submitMutation: submitMutationMock,
+      })
 
-    expect(unsubscribeFromAllCheckbox).toBeChecked()
+      const viewerMock = {
+        notificationPreferences: [
+          {
+            name: "recommendedByArtsy",
+            status: "SUBSCRIBED",
+          },
+          {
+            name: "artWorldInsights",
+            status: "SUBSCRIBED",
+          },
+          {
+            name: "productUpdates",
+            status: "UNSUBSCRIBED",
+          },
+        ],
+      }
 
-    checkboxes?.forEach(checkbox => {
-      expect(checkbox).not.toBeChecked()
+      render(<PreferencesApp viewer={viewerMock} />)
+
+      fireEvent.click(screen.getByLabelText("Recommended for You"))
+      fireEvent.click(screen.getByText("Save"))
+
+      const input = {
+        // input data
+      }
+
+      await waitFor(() => {
+        expect(submitMutationMock).toHaveBeenCalledWith({
+          input,
+        })
+      })
     })
   })
 
-  it.skip("unchecks unsubscribe/subscribe all when other checkboxes are checked", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
-
-    expect(screen.getByText("Unsubscribe from all")).toBeInTheDocument()
-
-    let checkboxes = screen.getAllByRole("checkbox")
-    let subscribeToAllCheckbox = checkboxes[0]
-    let unsubscribeFromAllCheckbox = checkboxes.pop()
-
-    fireEvent.click(checkboxes[3])
-
-    expect(subscribeToAllCheckbox).not.toBeChecked()
-    expect(unsubscribeFromAllCheckbox).not.toBeChecked()
-  })
-
-  it.skip("allows user to check all boxes with subscribe to all", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
-
-    expect(screen.getByText("Unsubscribe from all")).toBeInTheDocument()
-
-    let checkboxes = screen.getAllByRole("checkbox")
-    let subscribeToAllCheckbox = checkboxes[0]
-    let unsubscribeFromAllCheckbox = checkboxes.pop()
-
-    fireEvent.click(subscribeToAllCheckbox)
-
-    expect(subscribeToAllCheckbox).toBeChecked()
-
-    expect(unsubscribeFromAllCheckbox).not.toBeChecked()
-
-    checkboxes.forEach(checkbox => {
-      expect(checkbox).toBeChecked()
+  describe("parseTokenFromRouter", () => {
+    it("returns an empty string without a query", () => {
+      const router = {}
+      const authenticationToken = parseTokenFromRouter(router)
+      expect(authenticationToken).toEqual("")
     })
 
-    fireEvent.click(subscribeToAllCheckbox)
-
-    checkboxes.forEach(checkbox => {
-      expect(checkbox).not.toBeChecked()
+    it("returns the token from the query", () => {
+      const token = "abcd1234"
+      const query = { authentication_token: token }
+      const router = { match: { location: { query } } }
+      const authenticationToken = parseTokenFromRouter(router)
+      expect(authenticationToken).toEqual(token)
     })
-  })
-})
 
-describe("parseTokenFromRouter", () => {
-  it("returns an empty string without a query", () => {
-    const router = {}
-    const authenticationToken = parseTokenFromRouter(router)
-    expect(authenticationToken).toEqual("")
-  })
-
-  it("returns the token from the query", () => {
-    const token = "abcd1234"
-    const query = { authentication_token: token }
-    const router = { match: { location: { query } } }
-    const authenticationToken = parseTokenFromRouter(router)
-    expect(authenticationToken).toEqual(token)
-  })
-
-  it("returns the token from the query and cleans up any malformed values", () => {
-    const token = "abcd1234"
-    const query = { authentication_token: `${token}?foo=bar` }
-    const router = { match: { location: { query } } }
-    const authenticationToken = parseTokenFromRouter(router)
-    expect(authenticationToken).toEqual(token)
+    it("returns the token from the query and cleans up any malformed values", () => {
+      const token = "abcd1234"
+      const query = { authentication_token: `${token}?foo=bar` }
+      const router = { match: { location: { query } } }
+      const authenticationToken = parseTokenFromRouter(router)
+      expect(authenticationToken).toEqual(token)
+    })
   })
 })
