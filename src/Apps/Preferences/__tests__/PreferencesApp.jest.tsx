@@ -48,22 +48,22 @@ describe("PreferencesApp", () => {
         submitMutation: submitMutationMock,
       })
 
-      const viewerMock = {
-        notificationPreferences: [
-          {
-            name: "recommendedByArtsy",
-            status: "SUBSCRIBED",
-          },
-          {
-            name: "artWorldInsights",
-            status: "SUBSCRIBED",
-          },
-          {
-            name: "productUpdates",
-            status: "UNSUBSCRIBED",
-          },
-        ],
-      }
+      // const viewerMock = {
+      //   notificationPreferences: [
+      //     {
+      //       name: "recommendedByArtsy",
+      //       status: "SUBSCRIBED",
+      //     },
+      //     {
+      //       name: "artWorldInsights",
+      //       status: "SUBSCRIBED",
+      //     },
+      //     {
+      //       name: "productUpdates",
+      //       status: "UNSUBSCRIBED",
+      //     },
+      //   ],
+      // }
 
       // render(<PreferencesApp viewer={viewerMock} />)
 
