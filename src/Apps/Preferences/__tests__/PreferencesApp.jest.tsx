@@ -1,5 +1,5 @@
-import { render, fireEvent, waitFor, screen } from "@testing-library/react"
-import { PreferencesApp } from "Apps/Preferences/PreferencesApp"
+import { fireEvent, waitFor, screen } from "@testing-library/react"
+// import { PreferencesApp } from "Apps/Preferences/PreferencesApp"
 import { useEditNotificationPreferences } from "Apps/Preferences/useEditNotificationPreferences"
 import { parseTokenFromRouter } from "Apps/Preferences/PreferencesApp"
 
