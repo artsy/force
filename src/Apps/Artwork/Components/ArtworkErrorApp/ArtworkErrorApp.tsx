@@ -5,6 +5,8 @@ import { graphql, useFragment } from "react-relay"
 import { OtherWorksQueryRenderer } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorAppOtherWorks"
 import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorAppRelatedWorks"
 import { RecentlyViewed } from "Components/RecentlyViewed"
+import { useCallback, useEffect } from "react"
+import { getENV } from "Utils/getENV"
 
 interface ArtworkErrorAppProps {
   artworkError: ArtworkErrorApp_artworkError$key
@@ -25,6 +27,30 @@ export const ArtworkErrorApp: React.FC<ArtworkErrorAppProps> = ({
       : ERROR_MESSAGES[statusCode] ?? "Internal Error"
 
   const artworkSlug = artwork?.slug
+
+  // Artwork paths are excluded from regular pageview tracking via
+  // `trackingMiddleware`, since `ArtworkApp` does some custom tracking.
+  // However, we still want to track pageviews for error pages.
+  // This is mostly cribbed from `ArtworkApp`.
+  const trackPageview = useCallback(() => {
+    const path = window.location.pathname
+
+    if (typeof window.analytics !== "undefined") {
+      const properties: any = {
+        path,
+        url: getENV("APP_URL") + path,
+        error: true,
+      }
+
+      window.analytics.page(properties, { integrations: { Marketo: false } })
+    }
+  }, [])
+
+  useEffect(() => {
+    trackPageview()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Box>
