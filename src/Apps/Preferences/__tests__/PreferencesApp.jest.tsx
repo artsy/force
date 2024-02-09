@@ -65,7 +65,7 @@ describe("PreferencesApp", () => {
         ],
       }
 
-      render(<PreferencesApp viewer={viewerMock} />)
+      // render(<PreferencesApp viewer={viewerMock} />)
 
       fireEvent.click(screen.getByLabelText("Recommended for You"))
       fireEvent.click(screen.getByText("Save"))
