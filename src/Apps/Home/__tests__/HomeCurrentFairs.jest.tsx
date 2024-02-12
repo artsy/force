@@ -43,8 +43,8 @@ describe("HomeCurrentFairs", () => {
       }),
     })
 
-    expect(wrapper.text()).toContain("Current Fairs")
-    expect(wrapper.text()).toContain("View All Fairs")
+    expect(wrapper.text()).toContain("Current Fairs & Events")
+    expect(wrapper.text()).toContain("View All Fairs & Events")
     expect(wrapper.text()).toContain("Test Fair")
     expect(wrapper.html()).toContain("/fair/test-href")
   })
