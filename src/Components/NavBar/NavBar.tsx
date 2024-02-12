@@ -449,7 +449,7 @@ export const NavBar: React.FC = track(
                 <NavBarItemLink
                   href="/art-fairs"
                   onClick={handleClick}
-                  data-label="Fairs"
+                  data-label="Fairs & Events"
                 >
                   {t`navbar.fairs`}
                 </NavBarItemLink>
