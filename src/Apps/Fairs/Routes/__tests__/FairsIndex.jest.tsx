@@ -44,7 +44,7 @@ describe("FairsIndex", () => {
 
     expect(wrapper.find("h1")).toHaveLength(1)
 
-    expect(html).toContain("Current Fairs & Events")
+    expect(html).toContain("Current Fairs &amp; Events")
     expect(html).toContain("Past Events")
     expect(html).toContain("Upcoming Events")
   })
