@@ -6,18 +6,19 @@ import { NotificationItem_item$data } from "__generated__/NotificationItem_item.
 import { FC } from "react"
 
 interface ExpiresInTimerProps {
-  item: NotificationItem_item$data
+  expiresAt?: string | null
+  available?: boolean | null
 }
 
 const WatchIcon: FC<{ fill?: string }> = ({ fill = "red100" }) => {
   return <StopwatchIcon fill={fill} height={15} width={15} mr="2px" ml="-2px" />
 }
 
-export const ExpiresInTimer: FC<ExpiresInTimerProps> = ({ item }) => {
-  const expiresAt = item?.item?.expiresAt ?? ""
-  const available = item?.item?.available ?? false
-
-  const { hasEnded, time } = useTimer(expiresAt)
+export const ExpiresInTimer: FC<ExpiresInTimerProps> = ({
+  expiresAt = "",
+  available = false,
+}) => {
+  const { hasEnded, time } = useTimer(expiresAt ?? "")
 
   if (!available) {
     return (

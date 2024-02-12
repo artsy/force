@@ -124,7 +124,12 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
             </Flex>
           )}
 
-          {shouldDisplayExpiresInTimer(item) && <ExpiresInTimer item={item} />}
+          {shouldDisplayExpiresInTimer(item) && (
+            <ExpiresInTimer
+              expiresAt={item.item?.expiresAt}
+              available={item.item?.available}
+            />
+          )}
 
           <Text fontWeight="bold" variant="sm">
             {item.headline}
@@ -146,7 +151,10 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
               <Text variant="sm-display">{item.message}</Text>
             )}
             {shouldDisplayExpiresInTimer(item) && (
-              <ExpiresInTimer item={item} />
+              <ExpiresInTimer
+                expiresAt={item.item?.expiresAt}
+                available={item.item?.available}
+              />
             )}
           </Flex>
 

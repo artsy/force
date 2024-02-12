@@ -32,10 +32,8 @@ export const ArtworkPublishedNotification: FC<ArtworkPublishedNotificationProps>
   }
 
   return (
-    <Box mx={4} my={4}>
-      <Text fontWeight="bold" variant="xl">
-        {headline}
-      </Text>
+    <Box m={4}>
+      <Text variant="lg-display">{headline}</Text>
 
       <Spacer y={1} />
 
