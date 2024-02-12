@@ -58,7 +58,7 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
 
       <Spacer y={0.5} />
 
-      <Flex flex-flexDirection="row" alignItems="center" gap="3px">
+      <Flex flexDirection="row" alignItems="center">
         <>
           <Text
             variant="xs"
