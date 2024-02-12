@@ -45,16 +45,17 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   if (hasEnded) buttonText = "View Work"
   if (!available) buttonText = "Create Alert"
 
-  let href = targetHref
+  let url = new URL(targetHref);
+
   if (!available) {
-    href = `${artwork.href}${
-      artwork.href?.includes("?") ? "&" : "?"
-    }unavailable=true`
+    url = new URL(artwork.href)
+    url.searchParams.append("unavailable", "true");
   } else if (hasEnded) {
-    href = `${artwork.href}${
-      artwork.href?.includes("?") ? "&" : "?"
-    }expired_offer=true`
+    url = new URL(artwork.href)
+    url.searchParams.append("expired_offer", "true");
   }
+
+  const href = url.href;
 
   return (
     <ManageArtworkForSavesProvider>
