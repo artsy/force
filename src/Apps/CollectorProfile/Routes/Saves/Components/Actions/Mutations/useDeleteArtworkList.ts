@@ -27,7 +27,7 @@ const deleteArtworkListUpdater = (
 
   const customArtworkListsConnection = ConnectionHandler.getConnection(
     me,
-    "CollectorProfileSaves2Route_customArtworkLists"
+    "CollectorProfileSavesRoute_customArtworkLists"
   )
 
   if (!customArtworkListsConnection) {

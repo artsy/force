@@ -1,19 +1,7 @@
 import { Flex, Separator, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarCreateAlert_artwork$data } from "__generated__/ArtworkSidebarCreateAlert_artwork.graphql"
-import {
-  SavedSearchEntity,
-  SavedSearchEntityCriteria,
-  SearchCriteriaAttributes,
-} from "Components/SavedSearchAlert/types"
-import { compact } from "lodash"
-import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import { OwnerType } from "@artsy/cohesion"
-import { SavedSearchCreateAlertButton } from "Components/SavedSearchAlert/Components/SavedSearchCreateAlertButton"
-import { ContextModule, Intent } from "@artsy/cohesion"
-import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useTranslation } from "react-i18next"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface ArtworkSidebarCreateAlertProps {
@@ -24,59 +12,6 @@ const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps> = ({
   artwork,
 }) => {
   const { t } = useTranslation()
-  let aggregations: Aggregations = []
-  let additionalGeneIDs: string[] = []
-  const artists = compact(artwork.artists)
-  const attributionClass = compact([artwork.attributionClass?.internalID])
-  const artistIDs = artists.map(artist => artist.internalID)
-
-  const defaultArtistsCriteria: SavedSearchEntityCriteria[] = artists.map(
-    artist => ({
-      value: artist.internalID,
-      displayValue: artist.name ?? "",
-    })
-  )
-
-  const entity: SavedSearchEntity = {
-    defaultCriteria: {
-      artistIDs: defaultArtistsCriteria,
-    },
-    owner: {
-      type: OwnerType.artwork,
-      slug: artwork.slug,
-      id: artwork.internalID,
-      name: artwork.title as string,
-    },
-  }
-
-  if (
-    artwork.mediumType?.filterGene?.name &&
-    artwork.mediumType?.filterGene.slug
-  ) {
-    additionalGeneIDs = [artwork.mediumType.filterGene.slug]
-    aggregations = [
-      {
-        slice: "MEDIUM",
-        counts: [
-          {
-            name: artwork.mediumType.filterGene.name,
-            value: artwork.mediumType.filterGene.slug,
-            count: 0,
-          },
-        ],
-      },
-    ]
-  }
-
-  const criteria: SearchCriteriaAttributes = {
-    artistIDs,
-    attributionClass,
-    additionalGeneIDs,
-  }
-  const allowedCriteria = getAllowedSearchCriteria(criteria)
-
-  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
-
   if (!artwork.isEligibleToCreateAlert) return null
 
   return (
@@ -92,32 +27,7 @@ const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps> = ({
         <Text variant="xs" mr={2}>
           {t("artworkPage.sidebar.createAlert.description")}
         </Text>
-        {newAlertModalEnabled ? (
-          <>
-            <CreateAlertButton />
-          </>
-        ) : (
-          <SavedSearchCreateAlertButton
-            entity={entity}
-            criteria={allowedCriteria}
-            aggregations={aggregations}
-            currentArtworkID={artwork.internalID}
-            authDialogOptions={{
-              options: {
-                title: "Sign up to create your alert",
-                afterAuthAction: {
-                  action: "createAlert",
-                  kind: "artworks",
-                  objectId: artwork.internalID,
-                },
-              },
-              analytics: {
-                contextModule: ContextModule.artworkSidebar,
-                intent: Intent.createAlert,
-              },
-            }}
-          />
-        )}
+        <CreateAlertButton />
       </Flex>
     </>
   )
