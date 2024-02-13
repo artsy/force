@@ -9,7 +9,6 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useSystemContext } from "System/SystemContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -80,38 +79,50 @@ describe("AlertProvider", () => {
       Viewer: () => ({
         previewSavedSearch: {
           labels: [
-            {
-              displayValue: "Andy Warhol",
-              field: "artistIDs",
-              value: "artist-id",
-            },
+            { displayValue: "Andy Warhol" },
+            { displayValue: "Limited edition" },
           ],
         },
       }),
     }
 
+    const mockedSuggestionResolver = {
+      PreviewSavedSearch: () => ({
+        suggestedFilters: [
+          { displayValue: "Photography" },
+          { displayValue: "Print" },
+        ],
+      }),
+    }
+
     mockResolveLastOperation(mockedNotificationPreferencesResolver)
     mockResolveLastOperation(mockedPreviewResolver)
+    mockResolveLastOperation(mockedSuggestionResolver)
 
     await flushPromiseQueue()
 
-    // expect(screen.getByText("Add Filters:")).toBeInTheDocument()
+    // initial criteria
     expect(screen.getByText("Andy Warhol")).toBeInTheDocument()
+    expect(screen.getByText("Limited edition")).toBeInTheDocument()
+
+    // suggested criteria
+    expect(screen.getByText("Add Filters")).toBeInTheDocument()
+    expect(screen.getByText("Photography")).toBeInTheDocument()
+    expect(screen.getByText("Print")).toBeInTheDocument()
 
     // transition to filters step
-    // screen.getByTestId("addFilters").click()
+    screen.getByTestId("moreFilters").click()
 
-    // expect(screen.getByText("Medium")).toBeInTheDocument()
-    // expect(screen.getByText("Rarity")).toBeInTheDocument()
-    // expect(screen.getByText("Price Range")).toBeInTheDocument()
-    // expect(screen.getByText("Colors")).toBeInTheDocument()
-    // expect(screen.getByText("Ways to Buy")).toBeInTheDocument()
+    expect(screen.getByText("Medium")).toBeInTheDocument()
+    expect(screen.getByText("Rarity")).toBeInTheDocument()
+    expect(screen.getByText("Price Range")).toBeInTheDocument()
+    expect(screen.getByText("Colors")).toBeInTheDocument()
+    expect(screen.getByText("Ways to Buy")).toBeInTheDocument()
 
     // transition back to details step
-    // screen.getByTestId("setFilters").click()
+    screen.getByTestId("setFilters").click()
 
-    // expect(screen.getByText("Add Filters:")).toBeInTheDocument()
-
+    expect(screen.getByText("Add Filters")).toBeInTheDocument()
     // submit form
     screen.getByTestId("submitCreateAlert").click()
     await flushPromiseQueue()
