@@ -100,7 +100,7 @@ const HomeCurrentFairsContainer: React.FC = ({ children }) => {
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
-        <Text variant="lg">Current Fairs</Text>
+        <Text variant="lg">Current Fairs & Events</Text>
 
         <Text
           variant="sm"
@@ -119,7 +119,7 @@ const HomeCurrentFairsContainer: React.FC = ({ children }) => {
             trackEvent(trackingEvent)
           }}
         >
-          View All Fairs
+          View All Fairs & Events
         </Text>
       </Flex>
 

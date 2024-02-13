@@ -64,7 +64,7 @@ describe("NavBarTracking", () => {
 
       expect(trackEvent).toHaveBeenLastCalledWith({
         action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-        subject: "Fairs",
+        subject: "Fairs & Events",
         destination_path: "/art-fairs",
       })
 

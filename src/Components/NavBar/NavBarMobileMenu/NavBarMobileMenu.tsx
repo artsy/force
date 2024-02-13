@@ -112,7 +112,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
             </NavBarMobileMenuItemLink>
 
             <NavBarMobileMenuItemLink to="/art-fairs" onClick={handleClick}>
-              Fairs
+              Fairs & Events
             </NavBarMobileMenuItemLink>
 
             <NavBarMobileMenuItemLink to="/shows" onClick={handleClick}>

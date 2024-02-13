@@ -14,8 +14,7 @@ import { NotificationTypeLabel } from "Components/Notifications/NotificationType
 import { ArticleFeaturedArtistNotification_notification$key } from "__generated__/ArticleFeaturedArtistNotification_notification.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-
-const MAX_WIDTH = 600
+import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 
 interface ArticleFeaturedArtistNotificationProps {
   notification: ArticleFeaturedArtistNotification_notification$key
@@ -96,7 +95,7 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
             bg="black30"
             aspectWidth={910}
             aspectHeight={607}
-            maxWidth={MAX_WIDTH}
+            maxWidth={CARD_MAX_WIDTH}
           >
             {image && (
               <Image
@@ -112,7 +111,7 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
 
         <Spacer y={1} />
 
-        <Box maxWidth={MAX_WIDTH}>
+        <Box maxWidth={CARD_MAX_WIDTH}>
           <RouterLink to={article.href} display="block" textDecoration="none">
             <Text variant="xl">{article.thumbnailTitle}</Text>
             <Text variant="lg">By {article.byline}</Text>
@@ -124,7 +123,7 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
 
         <Spacer y={2} />
 
-        <Box mb={4} width="100%" maxWidth={MAX_WIDTH}>
+        <Box mb={4} width="100%" maxWidth={CARD_MAX_WIDTH}>
           <Button
             // @ts-ignore
             as={RouterLink}

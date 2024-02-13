@@ -7,8 +7,7 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Button, Image } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { resized } from "Utils/resized"
-
-const MAX_WIDTH = 600
+import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 
 export interface NotificationArtworkProps
   extends Omit<RouterLinkProps, "to" | "width"> {
@@ -29,7 +28,7 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
     return null
   }
 
-  const image = resized(artwork.image.src, { width: MAX_WIDTH })
+  const image = resized(artwork.image.src, { width: CARD_MAX_WIDTH })
 
   const label =
     (artwork.title ?? "Artwork") +
@@ -44,7 +43,7 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
         flexDirection="column"
         textDecoration="none"
         aria-label={label}
-        maxWidth={MAX_WIDTH}
+        maxWidth={CARD_MAX_WIDTH}
         overflow="hidden"
         width="100%"
         {...rest}
@@ -78,7 +77,7 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
         />
       </RouterLink>
 
-      <Box mb={4} width="100%" maxWidth={MAX_WIDTH}>
+      <Box mb={4} width="100%" maxWidth={CARD_MAX_WIDTH}>
         <Button
           // @ts-ignore
           as={RouterLink}

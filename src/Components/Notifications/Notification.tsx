@@ -14,12 +14,15 @@ import { ArtworkPublishedNotification } from "Components/Notifications/ArtworkPu
 import { AlertNotification } from "Components/Notifications/AlertNotification"
 import { useRouter } from "System/Router/useRouter"
 import { ArticleFeaturedArtistNotification } from "Components/Notifications/ArticleFeaturedArtistNotification"
+import { PartnerOfferCreatedNotification } from "Components/Notifications/PartnerOfferCreatedNotification"
+import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
 
 export const SUPPORTED_NOTIFICATION_TYPES = [
   "ARTWORK_ALERT",
   "ARTWORK_PUBLISHED",
   "ARTICLE_FEATURED_ARTIST",
+  "PARTNER_OFFER_CREATED",
   "VIEWING_ROOM_PUBLISHED",
 ]
 
@@ -68,6 +71,10 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
           notification={data.me?.notification}
         />
       )
+    case "PARTNER_OFFER_CREATED":
+      return (
+        <PartnerOfferCreatedNotification notification={data.me?.notification} />
+      )
     case "VIEWING_ROOM_PUBLISHED":
       return (
         <ViewingRoomPublishedNotification
@@ -103,6 +110,7 @@ const notificationQuery = graphql`
         ...AlertNotification_notification
         ...ArtworkPublishedNotification_notification
         ...ArticleFeaturedArtistNotification_notification
+        ...PartnerOfferCreatedNotification_notification
         ...ViewingRoomPublishedNotification_notification
       }
     }
@@ -119,9 +127,9 @@ export const Placeholder: React.FC = () => (
       <Spacer y={4} />
 
       <Flex flexDirection="column" alignItems="center">
-        <SkeletonBox width={600} height={600} mb={4} />
-        <SkeletonBox width={600} height={600} mb={4} />
-        <SkeletonBox width={600} height={600} mb={4} />
+        <SkeletonBox width={CARD_MAX_WIDTH} height={CARD_MAX_WIDTH} mb={4} />
+        <SkeletonBox width={CARD_MAX_WIDTH} height={CARD_MAX_WIDTH} mb={4} />
+        <SkeletonBox width={CARD_MAX_WIDTH} height={CARD_MAX_WIDTH} mb={4} />
       </Flex>
     </Skeleton>
   </Flex>

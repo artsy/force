@@ -29,12 +29,10 @@ export const AlertNotification: FC<AlertNotificationProps> = ({
   }
 
   return (
-    <Box mx={4} my={4}>
+    <Box m={4}>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1}>
-          <Text fontWeight="bold" variant="xl">
-            {headline}
-          </Text>
+          <Text variant="lg-display">{headline}</Text>
         </Flex>
         <RouterLink to={`/settings/alerts/${alert.internalID}/edit`}>
           <Text>Edit Alert</Text>
