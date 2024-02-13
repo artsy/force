@@ -1,6 +1,6 @@
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
-import { NotificationsPills } from "Components/Notifications/NotificationsPills"
+import { NotificationsPillsQueryRenderer } from "Components/Notifications/NotificationsPills"
 import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
 import { NotificationsContextualMenu } from "Components/Notifications/NotificationsContextualMenu"
 import { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
@@ -41,7 +41,7 @@ export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
       <Spacer y={2} />
 
       <Flex flexDirection="row">
-        <NotificationsPills />
+        <NotificationsPillsQueryRenderer />
       </Flex>
     </Box>
   )
