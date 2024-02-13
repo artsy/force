@@ -22,7 +22,6 @@ import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
 import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
 import { NotificationListMode } from "Components/Notifications/NotificationsTabs"
 import { useRouter } from "System/Router/useRouter"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 interface NotificationsListQueryRendererProps {
   mode: NotificationListMode
@@ -53,18 +52,11 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
 
   const { state } = useNotificationsContext()
 
-  const xs = __internal__useMatchMedia(THEME.mediaQueries.xs)
-  const sm = __internal__useMatchMedia(THEME.mediaQueries.sm)
-  const isMobile = xs || sm
-
   // Set the current notification ID to the first one from the list in case no ID is selected.
   useEffect(() => {
-    if (isMobile === null) return
-
     const firstNotificationId = nodes[0]?.internalID
 
     if (
-      isMobile ||
       mode !== "page" ||
       state.currentNotificationId ||
       !firstNotificationId
@@ -74,7 +66,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
 
     router.replace(`/notification/${firstNotificationId}`)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile])
+  }, [])
 
   const handleLoadNext = () => {
     if (!relay.hasMore() || relay.isLoading()) {
@@ -236,6 +228,9 @@ const getNotificationTypes = (
   }
   if (type === "following") {
     return ["ARTWORK_PUBLISHED"]
+  }
+  if (type === "offers") {
+    return ["PARTNER_OFFER_CREATED"]
   }
 
   return []

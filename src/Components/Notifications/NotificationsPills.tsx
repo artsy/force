@@ -8,15 +8,19 @@ export const NOTIFICATIONS_PILLS = [
   { value: "All", name: "all" },
   { value: "Alerts", name: "alerts" },
   { value: "Following", name: "following" },
+  { value: "Offers", name: "offers" },
 ]
+
 export const NotificationsPills: React.FC = () => {
   const { trackEvent } = useTracking()
   const { setCurrentNotificationFilterType, state } = useNotificationsContext()
 
   const handleClick = tabNumber => {
-    setCurrentNotificationFilterType(
-      NOTIFICATIONS_PILLS[tabNumber].name as NotificationType
-    )
+    if (tabNumber >= 0 && tabNumber < NOTIFICATIONS_PILLS.length) {
+      setCurrentNotificationFilterType(
+        NOTIFICATIONS_PILLS[tabNumber].name as NotificationType
+      )
+    }
   }
 
   const sendAnalytics = pillName => {
@@ -29,6 +33,9 @@ export const NotificationsPills: React.FC = () => {
   return (
     <Flex gap={0.5}>
       {NOTIFICATIONS_PILLS.map((pill, i) => {
+        // if (pill.name === "offers" && hasOffers > 0) {
+        //   return null
+        // }
         return (
           <Pill
             key={i}
