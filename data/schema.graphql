@@ -4048,6 +4048,7 @@ type CollectorProfileType {
     timezone: String
   ): String
   bio: String
+  collectedArtworksCount: Int!
   collectorLevel: Int
 
   # List of artists the Collector is interested in.
@@ -4068,6 +4069,7 @@ type CollectorProfileType {
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
   firstNameLastInitial: String
+  followedArtistsCount: Int!
   icon: Image
 
   # A globally unique ID.
@@ -4122,7 +4124,9 @@ type CollectorProfileType {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  savedArtworksCount: Int!
   selfReportedPurchases: String
+  totalBidsCount: Int!
   userInterests: [UserInterest]!
 }
 
@@ -11198,6 +11202,7 @@ type InquirerCollectorProfile {
     timezone: String
   ): String
   bio: String
+  collectedArtworksCount: Int!
   collectorLevel: Int
 
   # List of artists the Collector is interested in.
@@ -11218,6 +11223,7 @@ type InquirerCollectorProfile {
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
   firstNameLastInitial: String
+  followedArtistsCount: Int!
 
   # The Collector follows the Gallery profile
   hasPartnerFollow: Boolean
@@ -11275,7 +11281,9 @@ type InquirerCollectorProfile {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  savedArtworksCount: Int!
   selfReportedPurchases: String
+  totalBidsCount: Int!
   userInterests: [UserInterest]!
 }
 
@@ -18686,6 +18694,7 @@ type UpdateCollectorProfilePayload {
   ): String
   bio: String
   clientMutationId: String
+  collectedArtworksCount: Int!
   collectorLevel: Int
 
   # List of artists the Collector is interested in.
@@ -18706,6 +18715,7 @@ type UpdateCollectorProfilePayload {
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
   firstNameLastInitial: String
+  followedArtistsCount: Int!
   icon: Image
 
   # A globally unique ID.
@@ -18760,7 +18770,9 @@ type UpdateCollectorProfilePayload {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  savedArtworksCount: Int!
   selfReportedPurchases: String
+  totalBidsCount: Int!
   userInterests: [UserInterest]!
 }
 
