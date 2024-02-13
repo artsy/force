@@ -64,22 +64,21 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
           />
         )}
 
-        <Flex flexDirection="row">
+        <Text variant="xs">
           {artists.map((artist, index) => {
             return (
               <RouterLink
                 to={artist.href}
                 key={artist.internalID}
                 textDecoration="none"
+                inline
               >
-                <Text variant="xs">
-                  {index > 0 && ", "}
-                  {artist.name}
-                </Text>
+                {index > 0 && ", "}
+                {artist.name}
               </RouterLink>
             )
           })}
-        </Flex>
+        </Text>
       </Flex>
 
       <Spacer y={4} />
