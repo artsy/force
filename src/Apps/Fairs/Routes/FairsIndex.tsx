@@ -245,7 +245,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
           {currentFairs.length > 0 && (
             <>
               <Text as="h1" variant="xl" my={2}>
-                Current Events
+                Current Fairs & Events
               </Text>
 
               <GridColumns my={2}>

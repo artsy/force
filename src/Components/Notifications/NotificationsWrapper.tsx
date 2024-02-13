@@ -14,10 +14,12 @@ export type NotificationListMode = "dropdown" | "page"
 
 export interface NotificationsWrapperProps extends MarkAllAsReadPanelProps {
   mode: NotificationListMode
+  onHide?: () => void
 }
 
 export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
   mode,
+  onHide,
   unreadCounts,
 }) => {
   const { theme } = useTheme()
@@ -27,7 +29,11 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
       {mode === "dropdown" ? (
         <Box style={{ boxShadow: theme.effects.dropShadow }}>
           <Flex flex={1} overflow="hidden">
-            <NotificationsHeader mode="dropdown" unreadCounts={unreadCounts} />
+            <NotificationsHeader
+              mode="dropdown"
+              onHide={onHide}
+              unreadCounts={unreadCounts}
+            />
           </Flex>
 
           <Separator />
@@ -42,7 +48,11 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
       ) : (
         <>
           <Sticky>
-            <NotificationsHeader mode="page" unreadCounts={unreadCounts} />
+            <NotificationsHeader
+              mode="page"
+              onHide={onHide}
+              unreadCounts={unreadCounts}
+            />
             <Separator />
           </Sticky>
 
