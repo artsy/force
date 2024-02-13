@@ -20,7 +20,6 @@ import { NewSavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFo
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
-import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 import { Filters } from "Components/Alert/Components/Steps/Filters"
@@ -33,7 +32,6 @@ import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface NewSavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -115,9 +113,6 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
   onDeleteClick,
   onCompleted,
 }) => {
-  const enableSuggestedFilters = useFeatureFlag(
-    "onyx_saved_searches_suggested_filters"
-  )
   const { state, goToFilters, dispatch, onComplete } = useAlertContext()
 
   const isMounted = useDidMount()
@@ -166,24 +161,9 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                 </Flex>
               </Box>
 
-              {enableSuggestedFilters ? (
-                <SugggestedFiltersQueryRenderer
-                  transitionToFiltersAndTrack={transitionToFilters}
-                />
-              ) : (
-                <Clickable onClick={transitionToFilters} width="100%">
-                  <Flex justifyContent="space-between" alignItems={"center"}>
-                    <Box>
-                      <Text variant="sm-display">Add Filters:</Text>
-
-                      <Text variant="sm" color="black60">
-                        Including Price Range, Rarity, Medium, Color
-                      </Text>
-                    </Box>
-                    <ChevronRightIcon />
-                  </Flex>
-                </Clickable>
-              )}
+              <SugggestedFiltersQueryRenderer
+                transitionToFiltersAndTrack={transitionToFilters}
+              />
 
               <DetailsInput />
 
