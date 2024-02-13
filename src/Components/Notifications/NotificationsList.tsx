@@ -177,6 +177,20 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
                 totalCount
               }
               ...NotificationItem_item
+
+              item {
+                ... on ViewingRoomPublishedNotificationItem {
+                  viewingRoomsConnection(first: 1) {
+                    totalCount
+                  }
+                }
+
+                ... on ArticleFeaturedArtistNotificationItem {
+                  article {
+                    internalID
+                  }
+                }
+              }
             }
           }
         }

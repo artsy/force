@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<83969e4293e3d58515588838a639cbf9>>
+ * @generated SignedSource<<76d41408a0d0f5180be5d12697997137>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,14 @@ export type NotificationsList_viewer$data = {
           readonly totalCount: number | null | undefined;
         } | null | undefined;
         readonly internalID: string;
+        readonly item: {
+          readonly article?: {
+            readonly internalID: string;
+          } | null | undefined;
+          readonly viewingRoomsConnection?: {
+            readonly totalCount: number | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
         readonly notificationType: NotificationTypesEnum;
         readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_item">;
       } | null | undefined;
@@ -31,7 +39,24 @@ export type NotificationsList_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"NotificationsList_viewer">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "totalCount",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [
     {
       "defaultValue": 10,
@@ -88,13 +113,7 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -109,21 +128,66 @@ const node: ReaderFragment = {
                   "kind": "LinkedField",
                   "name": "artworksConnection",
                   "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "totalCount",
-                      "storageKey": null
-                    }
-                  ],
+                  "selections": (v1/*: any*/),
                   "storageKey": null
                 },
                 {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "NotificationItem_item"
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "item",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "kind": "InlineFragment",
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": [
+                            {
+                              "kind": "Literal",
+                              "name": "first",
+                              "value": 1
+                            }
+                          ],
+                          "concreteType": "ViewingRoomsConnection",
+                          "kind": "LinkedField",
+                          "name": "viewingRoomsConnection",
+                          "plural": false,
+                          "selections": (v1/*: any*/),
+                          "storageKey": "viewingRoomsConnection(first:1)"
+                        }
+                      ],
+                      "type": "ViewingRoomPublishedNotificationItem",
+                      "abstractKey": null
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "Article",
+                          "kind": "LinkedField",
+                          "name": "article",
+                          "plural": false,
+                          "selections": [
+                            (v0/*: any*/)
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "type": "ArticleFeaturedArtistNotificationItem",
+                      "abstractKey": null
+                    }
+                  ],
+                  "storageKey": null
                 },
                 {
                   "alias": null,
@@ -177,7 +241,8 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "b1fc107a2fde16d8574ed621d4fe3abe";
+(node as any).hash = "00ed829ed7cade687cc38e132910031e";
 
 export default node;
