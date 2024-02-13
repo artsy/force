@@ -1,5 +1,5 @@
 import { Box, Flex, Separator, useTheme } from "@artsy/palette"
-import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
+import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { Sticky } from "Components/Sticky"
 import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
 import { NotificationsHeader } from "Components/Notifications/NotificationsHeader"
@@ -8,7 +8,7 @@ import { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadP
 const DROPDOWN_HEADER_HEIGHT = 113
 const VERTICAL_OFFSET = 10
 const DROPDOWN_CONTENT_HEIGHT =
-  DROPDOWN_HEADER_HEIGHT + DESKTOP_NAV_BAR_TOP_TIER_HEIGHT + VERTICAL_OFFSET
+  DROPDOWN_HEADER_HEIGHT + DESKTOP_NAV_BAR_HEIGHT + VERTICAL_OFFSET
 
 export type NotificationListMode = "dropdown" | "page"
 
@@ -64,7 +64,6 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
           >
             <NotificationsListQueryRenderer mode={mode} />
           </Box>
-          <Separator />
         </>
       )}
     </Box>
