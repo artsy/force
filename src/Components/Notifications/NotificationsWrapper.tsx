@@ -14,6 +14,7 @@ export type NotificationListMode = "dropdown" | "page"
 
 export interface NotificationsWrapperProps extends MarkAllAsReadPanelProps {
   mode: NotificationListMode
+  onHide?: () => void
 }
 
 export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({

@@ -7,6 +7,7 @@ import { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadP
 
 export interface NotificationsHeaderProps extends MarkAllAsReadPanelProps {
   mode: NotificationListMode
+  onHide?: () => void
 }
 
 export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
