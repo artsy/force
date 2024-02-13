@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Join, Separator, THEME, Text } from "@artsy/palette"
+import { Flex, Join, Separator, Spinner, THEME, Text } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
@@ -43,13 +43,10 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
   viewer,
   relay,
   type,
-  paginationType = "showMoreButton",
 }) => {
   const { router } = useRouter()
   const [loading, setLoading] = useState(false)
-  const [currentPaginationType, setCurrentPaginationType] = useState(
-    paginationType
-  )
+
   const nodes = extractNodes(viewer.notifications).filter(node =>
     shouldDisplayNotification(node)
   )
@@ -90,35 +87,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
       if (err) console.error(err)
 
       setLoading(false)
-
-      // Change pagination type to "infinite" when "show more" button was pressed
-      if (paginationType === "showMoreButton") {
-        setCurrentPaginationType("infinite")
-      }
     })
-  }
-
-  const renderFooter = () => {
-    if (!relay.hasMore()) {
-      return
-    }
-
-    if (currentPaginationType === "infinite") {
-      return <NotificationsListScrollSentinel onNext={handleLoadNext} />
-    }
-
-    return (
-      <Box textAlign="center" my={4}>
-        <Button
-          onClick={handleLoadNext}
-          loading={loading}
-          size="small"
-          variant="secondaryBlack"
-        >
-          Show More
-        </Button>
-      </Box>
-    )
   }
 
   if (nodes.length === 0) {
@@ -136,7 +105,9 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
         ))}
       </Join>
 
-      {renderFooter()}
+      {loading && <Spinner position="static" m="auto" mt={2} mb={4} />}
+
+      <NotificationsListScrollSentinel onNext={handleLoadNext} />
     </>
   )
 }
