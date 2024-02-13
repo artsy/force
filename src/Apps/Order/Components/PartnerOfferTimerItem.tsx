@@ -19,7 +19,6 @@ export const PartnerOfferTimerItem: React.FC<{
   const { remainingTime, percentComplete, isImminent } = useCountdownTimer({
     startTime: startTime,
     endTime: endTime,
-    includeSeconds: true,
     imminentTime: 1,
   })
 
@@ -47,14 +46,14 @@ export const PartnerOfferTimerItem: React.FC<{
           height={17}
           fill={remainingTimeColor}
         />
-        {remainingTime} left
+        {remainingTime === "Expired" ? remainingTime : `${remainingTime} left`}
       </Text>
       <ProgressBar percentComplete={percentComplete} highlight="blue100" />
       <Text variant="sm" fontWeight="bold">
         Purchase by {actionDeadline}
       </Text>
       <Text variant="xs" color="black60">
-        Offer Expires after 72 hours.
+        Offers expire after 72 hours.
       </Text>
       <Text variant="xs" color="black60">
         Keep in mind the work can be sold to another buyer in the meantime.
