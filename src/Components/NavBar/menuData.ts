@@ -89,24 +89,24 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "Trending Artists",
           links: [
             {
-              text: "Robert Nava",
-              href: "/artist/robert-nava",
+              text: "Emily Mason",
+              href: "/artist/emily-mason",
             },
             {
-              text: "Issy Wood",
-              href: "/artist/issy-wood",
+              text: "Jeffrey Gibson",
+              href: "/artist/jeffrey-gibson",
             },
             {
-              text: "Tunji Adeniyi-Jones",
-              href: "/artist/tunji-adeniyi-jones",
+              text: "Mika Tajima",
+              href: "/artist/mika-tajima",
             },
             {
-              text: "Anna Park",
-              href: "/artist/anna-park",
+              text: "Theaster Gates",
+              href: "/artist/theaster-gates",
             },
             {
-              text: "Louis Fratino",
-              href: "/artist/louis-fratino",
+              text: "Firelei Báez",
+              href: "/artist/firelei-baez-1",
             },
           ],
         },
