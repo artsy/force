@@ -27,11 +27,9 @@ export const NotificationsPills: React.FC = () => {
     pills.viewer?.notificationsConnection?.totalCount ?? 0 > 0
 
   const handleClick = tabNumber => {
-    if (tabNumber >= 0 && tabNumber < NOTIFICATIONS_PILLS.length) {
-      setCurrentNotificationFilterType(
-        NOTIFICATIONS_PILLS[tabNumber].name as NotificationType
-      )
-    }
+    setCurrentNotificationFilterType(
+      NOTIFICATIONS_PILLS[tabNumber].name as NotificationType
+    )
   }
 
   const sendAnalytics = pillName => {
