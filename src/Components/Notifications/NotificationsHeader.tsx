@@ -11,6 +11,7 @@ export interface NotificationsHeaderProps extends MarkAllAsReadPanelProps {
 
 export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
   mode,
+  onHide,
   unreadCounts,
 }) => {
   return (
@@ -24,7 +25,10 @@ export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
           <Text variant="lg-display">Activity</Text>
         </Flex>
         <Flex justifyContent="flex-end" gap={4} alignItems="center">
-          <NotificationsContextualMenu unreadCounts={unreadCounts} />
+          <NotificationsContextualMenu
+            unreadCounts={unreadCounts}
+            onHide={onHide}
+          />
           {mode === "dropdown" && (
             <Clickable as="a">
               <CloseIcon display="block" />

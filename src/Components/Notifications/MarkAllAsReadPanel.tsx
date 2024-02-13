@@ -10,6 +10,7 @@ export const MARK_ALL_AS_READ_PANEL_HEIGHT = 40
 const logger = createLogger("MarkAllAsReadPanel")
 
 export interface MarkAllAsReadPanelProps {
+  onHide?: () => void
   unreadCounts: number
 }
 
