@@ -13,7 +13,6 @@ import { Formik } from "formik"
 import { FC } from "react"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
-import { PriceRangeFilter } from "Components/Alert/Components/Form/PriceRange"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
@@ -34,9 +33,6 @@ export const Details: FC = () => {
 
   const { onComplete, dispatch, goToFilters, state } = useAlertContext()
 
-  const newAlertModalFilteresEnabled = useFeatureFlag(
-    "onyx_artwork_alert_modal_v2_filters"
-  )
   const enableSuggestedFilters = useFeatureFlag(
     "onyx_saved_searches_suggested_filters"
   )
@@ -80,7 +76,7 @@ export const Details: FC = () => {
                   </Flex>
                 </Box>
 
-                {newAlertModalFilteresEnabled && !enableSuggestedFilters && (
+                {!enableSuggestedFilters && (
                   <Clickable
                     data-testid="addFilters"
                     onClick={transitionToFiltersAndTrack}
@@ -100,11 +96,7 @@ export const Details: FC = () => {
                   </Clickable>
                 )}
 
-                {!newAlertModalFilteresEnabled && (
-                  <PriceRangeFilter expanded={false} />
-                )}
-
-                {newAlertModalFilteresEnabled && enableSuggestedFilters && (
+                {enableSuggestedFilters && (
                   <SugggestedFiltersQueryRenderer
                     transitionToFiltersAndTrack={transitionToFiltersAndTrack}
                   />

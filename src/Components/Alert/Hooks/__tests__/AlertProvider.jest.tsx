@@ -58,8 +58,6 @@ describe("AlertProvider", () => {
     }))
     ;(useFeatureFlag as jest.Mock).mockImplementation(flag => {
       switch (flag) {
-        case "onyx_artwork_alert_modal_v2_filters":
-          return true
         case "onyx_saved_searches_suggested_filters":
           return false
       }
