@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<83969e4293e3d58515588838a639cbf9>>
+ * @generated SignedSource<<e241975c2ddd8bdf9ca34eb8eeeb2120>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
 export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type NotificationsList_viewer$data = {
@@ -31,7 +31,11 @@ export type NotificationsList_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"NotificationsList_viewer">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  "notifications"
+];
+return {
   "argumentDefinitions": [
     {
       "defaultValue": 10,
@@ -56,11 +60,23 @@ const node: ReaderFragment = {
         "count": "count",
         "cursor": "cursor",
         "direction": "forward",
-        "path": [
-          "notifications"
-        ]
+        "path": (v0/*: any*/)
       }
-    ]
+    ],
+    "refetch": {
+      "connection": {
+        "forward": {
+          "count": "count",
+          "cursor": "cursor"
+        },
+        "backward": null,
+        "path": (v0/*: any*/)
+      },
+      "fragmentPathInResult": [
+        "viewer"
+      ],
+      "operation": require('./NotificationsListPaginationQuery.graphql')
+    }
   },
   "name": "NotificationsList_viewer",
   "selections": [
@@ -177,7 +193,8 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "b1fc107a2fde16d8574ed621d4fe3abe";
+(node as any).hash = "dfed71d087588ea0502018574c75600e";
 
 export default node;

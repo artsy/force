@@ -1,19 +1,13 @@
-import { Box, Button, Flex, Join, Separator, THEME, Text } from "@artsy/palette"
-import {
-  createPaginationContainer,
-  graphql,
-  RelayPaginationProp,
-} from "react-relay"
+import { Flex, Join, Separator, Spinner, THEME, Text } from "@artsy/palette"
+import { graphql, usePaginationFragment } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { NotificationsList_viewer$data } from "__generated__/NotificationsList_viewer.graphql"
+import { NotificationsList_viewer$key } from "__generated__/NotificationsList_viewer.graphql"
 import {
   NotificationsListQuery,
   NotificationTypesEnum,
 } from "__generated__/NotificationsListQuery.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useContext, useEffect, useState } from "react"
-import { SystemContext } from "System/SystemContext"
+import { useEffect } from "react"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
 import { NotificationPaginationType, NotificationType } from "./types"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
@@ -23,6 +17,9 @@ import { useNotificationsContext } from "Components/Notifications/useNotificatio
 import { NotificationListMode } from "Components/Notifications/NotificationsTabs"
 import { useRouter } from "System/Router/useRouter"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+
+const INITIAL_LOADING_SIZE = 10
 
 interface NotificationsListQueryRendererProps {
   mode: NotificationListMode
@@ -31,26 +28,54 @@ interface NotificationsListQueryRendererProps {
 }
 
 interface NotificationsListProps {
-  viewer: NotificationsList_viewer$data
-  relay: RelayPaginationProp
+  viewer: NotificationsList_viewer$key
   mode: NotificationListMode
   type: NotificationType
   paginationType?: NotificationPaginationType
 }
 
-const NotificationsList: React.FC<NotificationsListProps> = ({
+export const NotificationsList: React.FC<NotificationsListProps> = ({
   mode,
   viewer,
-  relay,
   type,
-  paginationType = "showMoreButton",
 }) => {
-  const { router } = useRouter()
-  const [loading, setLoading] = useState(false)
-  const [currentPaginationType, setCurrentPaginationType] = useState(
-    paginationType
+  const {
+    data: { notifications },
+    loadNext,
+    hasNext,
+    isLoadingNext,
+  } = usePaginationFragment(
+    graphql`
+      fragment NotificationsList_viewer on Viewer
+        @refetchable(queryName: "NotificationsListPaginationQuery")
+        @argumentDefinitions(
+          count: { type: "Int", defaultValue: 10 }
+          cursor: { type: "String" }
+          types: { type: "[NotificationTypesEnum]" }
+        ) {
+        notifications: notificationsConnection(
+          first: $count
+          after: $cursor
+          notificationTypes: $types
+        ) @connection(key: "NotificationsList_notifications", filters: []) {
+          edges {
+            node {
+              internalID
+              notificationType
+              artworks: artworksConnection {
+                totalCount
+              }
+              ...NotificationItem_item
+            }
+          }
+        }
+      }
+    `,
+    viewer
   )
-  const nodes = extractNodes(viewer.notifications).filter(node =>
+  const { router } = useRouter()
+
+  const nodes = extractNodes(notifications).filter(node =>
     shouldDisplayNotification(node)
   )
 
@@ -80,46 +105,20 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
   }, [isMobile])
 
   const handleLoadNext = () => {
-    if (!relay.hasMore() || relay.isLoading()) {
+    if (!hasNext || isLoadingNext) {
       return
     }
 
-    setLoading(true)
-
-    relay.loadMore(10, err => {
-      if (err) console.error(err)
-
-      setLoading(false)
-
-      // Change pagination type to "infinite" when "show more" button was pressed
-      if (paginationType === "showMoreButton") {
-        setCurrentPaginationType("infinite")
-      }
+    loadNext(10, {
+      onComplete: err => {
+        if (err) console.error(err)
+      },
     })
   }
 
-  const renderFooter = () => {
-    if (!relay.hasMore()) {
-      return
-    }
-
-    if (currentPaginationType === "infinite") {
-      return <NotificationsListScrollSentinel onNext={handleLoadNext} />
-    }
-
-    return (
-      <Box textAlign="center" my={4}>
-        <Button
-          onClick={handleLoadNext}
-          loading={loading}
-          size="small"
-          variant="secondaryBlack"
-        >
-          Show More
-        </Button>
-      </Box>
-    )
-  }
+  // This is needed because `totalCount` and therefor `relay.hasMore()` doesn't work reliably
+  // TODO: Remove this once we have a reliable `totalCount`
+  const isLoading = isLoadingNext && nodes.length >= INITIAL_LOADING_SIZE
 
   if (nodes.length === 0) {
     return <NotificationsEmptyStateByType type={type} />
@@ -136,123 +135,55 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
         ))}
       </Join>
 
-      {renderFooter()}
+      {isLoading && <Spinner position="static" m="auto" mt={2} mb={4} />}
+
+      <NotificationsListScrollSentinel onNext={handleLoadNext} />
     </>
   )
 }
-
-const NOTIFICATIONS_NEXT_QUERY = graphql`
-  query NotificationsListNextQuery(
-    $count: Int!
-    $cursor: String
-    $types: [NotificationTypesEnum]
-  ) {
-    viewer {
-      ...NotificationsList_viewer
-        @arguments(count: $count, cursor: $cursor, types: $types)
-    }
-  }
-`
-
-export const NotificationsListFragmentContainer = createPaginationContainer(
-  NotificationsList,
-  {
-    viewer: graphql`
-      fragment NotificationsList_viewer on Viewer
-        @argumentDefinitions(
-          count: { type: "Int", defaultValue: 10 }
-          cursor: { type: "String" }
-          types: { type: "[NotificationTypesEnum]" }
-        ) {
-        notifications: notificationsConnection(
-          first: $count
-          after: $cursor
-          notificationTypes: $types
-        ) @connection(key: "NotificationsList_notifications", filters: []) {
-          edges {
-            node {
-              internalID
-              notificationType
-              artworks: artworksConnection {
-                totalCount
-              }
-              ...NotificationItem_item
-            }
-          }
-        }
-      }
-    `,
-  },
-  {
-    query: NOTIFICATIONS_NEXT_QUERY,
-    getConnectionFromProps(props) {
-      return props.viewer.notifications
-    },
-    getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount,
-      }
-    },
-    getVariables(_props, { count, cursor }, fragmentVariables) {
-      return {
-        ...fragmentVariables,
-        count,
-        cursor,
-      }
-    },
-  }
-)
 
 export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRendererProps> = ({
   mode,
   type,
   paginationType,
 }) => {
-  const { relayEnvironment } = useContext(SystemContext)
   const { state } = useNotificationsContext()
 
   // TODO: Remove this prop once we remove the code for the tabs
   const notificationType = type || state.currentNotificationFilterType
   const types = getNotificationTypes(notificationType)
 
+  const { data, loading, error } = useClientQuery<NotificationsListQuery>({
+    query: graphql`
+      query NotificationsListQuery($types: [NotificationTypesEnum]) {
+        viewer {
+          ...NotificationsList_viewer @arguments(types: $types)
+        }
+      }
+    `,
+    variables: {
+      types,
+    },
+  })
+
+  if (loading) return <NotificationsListPlaceholder />
+
+  if (error || !data?.viewer) {
+    return (
+      <Flex justifyContent="center">
+        <Text variant="xs" color="red100">
+          Sorry, something went wrong...
+        </Text>
+      </Flex>
+    )
+  }
+
   return (
-    <SystemQueryRenderer<NotificationsListQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query NotificationsListQuery($types: [NotificationTypesEnum]) {
-          viewer {
-            ...NotificationsList_viewer @arguments(types: $types)
-          }
-        }
-      `}
-      variables={{
-        types,
-      }}
-      render={({ error, props }) => {
-        if (error) {
-          return (
-            <Flex justifyContent="center">
-              <Text variant="xs" color="red100">
-                {error.message}
-              </Text>
-            </Flex>
-          )
-        }
-
-        if (!props || !props.viewer) {
-          return <NotificationsListPlaceholder />
-        }
-
-        return (
-          <NotificationsListFragmentContainer
-            mode={mode}
-            viewer={props.viewer}
-            paginationType={paginationType}
-            type={notificationType}
-          />
-        )
-      }}
+    <NotificationsList
+      mode={mode}
+      viewer={data?.viewer}
+      paginationType={paginationType}
+      type={notificationType}
     />
   )
 }
@@ -265,6 +196,9 @@ const getNotificationTypes = (
   }
   if (type === "following") {
     return ["ARTWORK_PUBLISHED"]
+  }
+  if (type === "offers") {
+    return ["PARTNER_OFFER_CREATED"]
   }
 
   return []
