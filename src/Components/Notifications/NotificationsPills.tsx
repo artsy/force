@@ -2,57 +2,52 @@ import { ActionType } from "@artsy/cohesion"
 import { Flex, Pill, Skeleton, SkeletonBox } from "@artsy/palette"
 import { NotificationType } from "Components/Notifications/types"
 import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
-import { Suspense } from "react"
-import { graphql, useLazyLoadQuery } from "react-relay"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { NotificationsPillsQuery } from "__generated__/NotificationsPillsQuery.graphql"
-import { times } from "lodash"
-
-export const NOTIFICATIONS_PILLS = [
-  { value: "All", name: "all" },
-  { value: "Offers", name: "offers" },
-  { value: "Alerts", name: "alerts" },
-  { value: "Following", name: "following" },
-]
+import { compact, times } from "lodash"
+import { extractNodes } from "Utils/extractNodes"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
 
 export const NotificationsPills: React.FC = () => {
   const { trackEvent } = useTracking()
   const { setCurrentNotificationFilterType, state } = useNotificationsContext()
-  const pills = useLazyLoadQuery<NotificationsPillsQuery>(
-    notificationsPillsQuery,
-    {}
-  )
+
+  const { data, loading } = useClientQuery<NotificationsPillsQuery>({
+    query: notificationsPillsQuery,
+  })
 
   const hasPartnerOfferNotifications =
-    pills.viewer?.notificationsConnection?.totalCount ?? 0 > 0
+    extractNodes(data?.viewer?.partnerOfferNotifications).length > 0
+  const hasAlertNotifications =
+    extractNodes(data?.viewer?.alertNotifications).length > 0
+  const hasFollowNotifications =
+    extractNodes(data?.viewer?.followNotifications).length > 0
 
-  const handleClick = tabNumber => {
-    setCurrentNotificationFilterType(
-      NOTIFICATIONS_PILLS[tabNumber].name as NotificationType
-    )
-  }
+  const notificationPills = compact([
+    { value: "All", name: "all" },
+    hasPartnerOfferNotifications && { value: "Offers", name: "offers" },
+    hasAlertNotifications && { value: "Alerts", name: "alerts" },
+    hasFollowNotifications && { value: "Following", name: "following" },
+  ])
 
-  const sendAnalytics = pillName => {
-    trackEvent({
-      action: ActionType.clickedActivityPanelTab,
-      tab_name: pillName,
-    })
-  }
+  if (loading) return <Placeholder />
 
   return (
     <Flex gap={0.5}>
-      {NOTIFICATIONS_PILLS.map((pill, i) => {
-        if (pill.name === "offers" && !hasPartnerOfferNotifications) {
-          return null
-        }
+      {notificationPills.map(pill => {
         return (
           <Pill
-            key={i}
+            key={pill.name}
             selected={state.currentNotificationFilterType === pill.name}
             variant="default"
             onClick={() => {
-              sendAnalytics(pill.name)
-              handleClick(i)
+              setCurrentNotificationFilterType(pill.name as NotificationType)
+
+              trackEvent({
+                action: ActionType.clickedActivityPanelTab,
+                tab_name: pill.name,
+              })
             }}
           >
             {pill.value}
@@ -63,34 +58,52 @@ export const NotificationsPills: React.FC = () => {
   )
 }
 
-export const NotificationsPillsQueryRenderer: React.FC = props => {
-  return (
-    <Suspense fallback={<Placeholder />}>
-      <NotificationsPills {...props} />
-    </Suspense>
-  )
-}
-
 const notificationsPillsQuery = graphql`
   query NotificationsPillsQuery {
     viewer {
-      notificationsConnection(
-        first: 1
+      partnerOfferNotifications: notificationsConnection(
+        first: 10
         notificationTypes: [PARTNER_OFFER_CREATED]
       ) {
-        totalCount
+        # Total count does not work and returns a value even when there are no notifications
+        # TODO: Use totalCount once the issue is fixed
+        edges {
+          node {
+            id
+          }
+        }
+      }
+      alertNotifications: notificationsConnection(
+        first: 10
+        notificationTypes: [ARTWORK_ALERT]
+      ) {
+        # Total count does not work and returns a value even when there are no notifications
+        edges {
+          node {
+            id
+          }
+        }
+      }
+      followNotifications: notificationsConnection(
+        first: 10
+        notificationTypes: [ARTWORK_PUBLISHED]
+      ) {
+        # Total count does not work and returns a value even when there are no notifications
+        edges {
+          node {
+            id
+          }
+        }
       }
     }
   }
 `
 export const Placeholder: React.FC = () => (
-  <Flex flexDirection="column" gap={0.5}>
-    <Skeleton>
-      <Flex mb={4}>
-        {times(4).map(index => (
-          <SkeletonBox key={`pill-${index}`} width={70} height={30} />
-        ))}
-      </Flex>
-    </Skeleton>
-  </Flex>
+  <Skeleton>
+    <Flex gap={0.5}>
+      {times(3).map(index => (
+        <SkeletonBox key={`pill-${index}`} width={70} height={30} />
+      ))}
+    </Flex>
+  </Skeleton>
 )

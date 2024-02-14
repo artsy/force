@@ -24,6 +24,8 @@ import { NotificationListMode } from "Components/Notifications/NotificationsTabs
 import { useRouter } from "System/Router/useRouter"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
+const INITIAL_LOADING_SIZE = 10
+
 interface NotificationsListQueryRendererProps {
   mode: NotificationListMode
   type?: NotificationType
@@ -90,6 +92,10 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
     })
   }
 
+  // This is needed because `totalCount` and therefor `relay.hasMore()` doesn't work reliably
+  // TODO: Remove this once we have a reliable `totalCount`
+  const isLoading = loading && nodes.length >= INITIAL_LOADING_SIZE
+
   if (nodes.length === 0) {
     return <NotificationsEmptyStateByType type={type} />
   }
@@ -105,7 +111,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
         ))}
       </Join>
 
-      {loading && <Spinner position="static" m="auto" mt={2} mb={4} />}
+      {isLoading && <Spinner position="static" m="auto" mt={2} mb={4} />}
 
       <NotificationsListScrollSentinel onNext={handleLoadNext} />
     </>
