@@ -8,8 +8,8 @@ interface NotificationsEmptyStateByTypeProps {
 const emptyStateByType: Record<
   NotificationType,
   {
-    title: string
-    message: string
+    title?: string
+    message?: string
   }
 > = {
   all: {
@@ -28,6 +28,7 @@ const emptyStateByType: Record<
     message:
       "Keep track of the art and events you love, and get recommendations based on who you follow.",
   },
+  offers: {},
 }
 
 export const NotificationsEmptyStateByType: React.FC<NotificationsEmptyStateByTypeProps> = ({
