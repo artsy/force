@@ -19,16 +19,12 @@ export const NotificationsPills: React.FC = () => {
 
   const hasPartnerOfferNotifications =
     extractNodes(data?.viewer?.partnerOfferNotifications).length > 0
-  const hasAlertNotifications =
-    extractNodes(data?.viewer?.alertNotifications).length > 0
-  const hasFollowNotifications =
-    extractNodes(data?.viewer?.followNotifications).length > 0
 
   const notificationPills = compact([
     { value: "All", name: "all" },
     hasPartnerOfferNotifications && { value: "Offers", name: "offers" },
-    hasAlertNotifications && { value: "Alerts", name: "alerts" },
-    hasFollowNotifications && { value: "Following", name: "following" },
+    { value: "Alerts", name: "alerts" },
+    { value: "Following", name: "following" },
   ])
 
   if (loading) return <Placeholder />
