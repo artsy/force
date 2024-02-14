@@ -19,7 +19,9 @@ export const MarkAllAsReadPanel: React.FC<MarkAllAsReadPanelProps> = ({
   const { relayEnvironment } = useSystemContext()
   const { t } = useTranslation()
   const hasUnreadNotifications = unreadCounts > 0
-  const enableNewActivityPanel = useFeatureFlag("onyx_new_notification_page")
+  const enableActivityPanelPills = useFeatureFlag(
+    "onyx_activity_panel_filter_pills"
+  )
 
   const markAllAsRead = async () => {
     if (!relayEnvironment) {
@@ -42,7 +44,7 @@ export const MarkAllAsReadPanel: React.FC<MarkAllAsReadPanelProps> = ({
 
   return (
     <Box>
-      {!enableNewActivityPanel ? (
+      {!enableActivityPanelPills ? (
         <Flex
           height={MARK_ALL_AS_READ_PANEL_HEIGHT}
           p={2}
