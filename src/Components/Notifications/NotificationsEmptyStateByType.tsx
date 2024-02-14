@@ -51,7 +51,7 @@ export const NotificationsEmptyStateByType: React.FC<NotificationsEmptyStateByTy
         <RouterLink to={"/artists"} color="black100" mx={1}>
           Artists
         </RouterLink>
-        {type == "following" && (
+        {type !== "alerts" && (
           <RouterLink to={"/galleries"} color="black100">
             Galleries
           </RouterLink>
