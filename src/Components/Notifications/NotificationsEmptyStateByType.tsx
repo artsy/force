@@ -38,7 +38,7 @@ export const NotificationsEmptyStateByType: React.FC<NotificationsEmptyStateByTy
 
   return (
     <Box p={4} aria-label="There is nothing to show">
-      <Text variant="sm-display" textAlign={"left"}>
+      <Text variant="sm-display" textAlign="left">
         {state.title}
       </Text>
       <Spacer y={1} />
