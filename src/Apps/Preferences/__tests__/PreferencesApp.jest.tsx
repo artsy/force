@@ -1,83 +1,236 @@
-import { fireEvent, waitFor, screen } from "@testing-library/react"
-// import { PreferencesApp } from "Apps/Preferences/PreferencesApp"
+import { fireEvent, waitFor, screen, render } from "@testing-library/react"
+import { PreferencesApp } from "Apps/Preferences/PreferencesApp"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useEditNotificationPreferences } from "Apps/Preferences/useEditNotificationPreferences"
 import { parseTokenFromRouter } from "Apps/Preferences/PreferencesApp"
+import { graphql } from "react-relay"
+// eslint-disable-next-line no-unused-vars
+import { useToasts } from "@artsy/palette"
 
 jest.mock("Utils/Hooks/useMutation", () => ({
   useMutation: jest.fn(),
 }))
 
+jest.mock("@artsy/palette", () => {
+  const originalModule = jest.requireActual("@artsy/palette")
+  return {
+    ...originalModule,
+    useToasts: () => ({
+      sendToast: jest.fn(),
+    }),
+  }
+})
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: PreferencesApp,
+  query: graphql`
+    query PreferencesApp_Test_Query {
+      viewer {
+        ...PreferencesApp_viewer
+      }
+    }
+  `,
+})
+
 describe("PreferencesApp", () => {
-  describe("authentication", () => {
-    // correct view is rendered based on auth status
-    // initial preferences are fetched and set correctly
+  it("renders all checkboxes, labels, and buttons correctly", () => {
+    renderWithRelay({
+      Viewer: () => ({
+        notificationPreferences: [],
+      }),
+    })
+
+    expect(screen.getByLabelText("Subscribe to all")).toBeInTheDocument()
+    expect(screen.getByLabelText("Recommended for You")).toBeInTheDocument()
+    expect(screen.getByLabelText("Editorial")).toBeInTheDocument()
+    expect(screen.getByLabelText("Guidance on Collecting")).toBeInTheDocument()
+    expect(screen.getByLabelText("Custom Alerts")).toBeInTheDocument()
+    expect(
+      screen.getByLabelText("Offers on Saved Artworks")
+    ).toBeInTheDocument()
+    expect(screen.getByLabelText("Product Updates")).toBeInTheDocument()
+    expect(screen.getByLabelText("Unsubscribe from all")).toBeInTheDocument()
+    expect(screen.getByText("Save")).toBeInTheDocument()
   })
 
-  describe("form rendering", () => {
-    // all form elements render correctly (checkboxes, labels, buttons, etc)
+  it("'subscribe to all' selects all checkboxes", async () => {
+    renderWithRelay({
+      Viewer: () => ({
+        notificationPreferences: [
+          { name: "recommendedByArtsy", status: "UNSUBSCRIBED" },
+          { name: "artWorldInsights", status: "UNSUBSCRIBED" },
+          { name: "productUpdates", status: "UNSUBSCRIBED" },
+          { name: "guidanceOnCollecting", status: "UNSUBSCRIBED" },
+          { name: "customAlerts", status: "UNSUBSCRIBED" },
+          { name: "partnerOffersOnSaves", status: "UNSUBSCRIBED" },
+        ],
+      }),
+    })
+
+    fireEvent.click(screen.getByLabelText("Subscribe to all"))
+
+    expect(screen.getByLabelText("Recommended for You")).toBeChecked()
+    expect(screen.getByLabelText("Editorial")).toBeChecked()
+    expect(screen.getByLabelText("Guidance on Collecting")).toBeChecked()
+    expect(screen.getByLabelText("Custom Alerts")).toBeChecked()
+    expect(screen.getByLabelText("Offers on Saved Artworks")).toBeChecked()
+    expect(screen.getByLabelText("Product Updates")).toBeChecked()
   })
 
-  describe("user interactions", () => {
-    // form UI w/ individual checkboxes
-    // "subscribe to all" and "unsubscribe from all" work as expected
+  it("'unsubscribe from all' deselects all checkboxes", async () => {
+    renderWithRelay({
+      Viewer: () => ({
+        notificationPreferences: [
+          { name: "recommendedByArtsy", status: "SUBSCRIBED" },
+          { name: "artWorldInsights", status: "SUBSCRIBED" },
+          { name: "productUpdates", status: "SUBSCRIBED" },
+          { name: "guidanceOnCollecting", status: "SUBSCRIBED" },
+          { name: "customAlerts", status: "SUBSCRIBED" },
+          { name: "partnerOffersOnSaves", status: "SUBSCRIBED" },
+        ],
+      }),
+    })
+
+    fireEvent.click(screen.getByLabelText("Unsubscribe from all"))
+
+    expect(screen.getByLabelText("Recommended for You")).not.toBeChecked()
+    expect(screen.getByLabelText("Editorial")).not.toBeChecked()
+    expect(screen.getByLabelText("Guidance on Collecting")).not.toBeChecked()
+    expect(screen.getByLabelText("Custom Alerts")).not.toBeChecked()
+    expect(screen.getByLabelText("Offers on Saved Artworks")).not.toBeChecked()
+    expect(screen.getByLabelText("Product Updates")).not.toBeChecked()
   })
 
-  describe("checkboxes", () => {
-    // checking/unchecking each checkbox updates form state correctly
-  })
+  it("saves preferences correctly on form submission", async () => {
+    const submitMutationMock = jest.fn(() => Promise.resolve())
+    ;(useEditNotificationPreferences as jest.Mock).mockReturnValue({
+      submitMutation: submitMutationMock,
+    })
 
-  describe("form submission", () => {
-    // submitting form saves preferences correctly
-    // save button click event and form submit event both work
+    renderWithRelay({
+      Viewer: () => ({
+        notificationPreferences: [
+          { name: "recommendedByArtsy", status: "SUBSCRIBED" },
+          { name: "artWorldInsights", status: "SUBSCRIBED" },
+        ],
+      }),
+    })
+
+    fireEvent.click(screen.getByLabelText("Recommended for You"))
+    fireEvent.click(screen.getByLabelText("Art World Insights"))
+    fireEvent.click(screen.getByText("Save"))
+
+    await waitFor(() => {
+      expect(submitMutationMock).toHaveBeenCalledWith({
+        input: {
+          subscriptionGroups: [
+            { name: "recommendedByArtsy", status: "UNSUBSCRIBED" },
+            { name: "artWorldInsights", status: "UNSUBSCRIBED" },
+          ],
+        },
+      })
+    })
   })
 
   describe("toasts", () => {
-    // success toasts displayed correctly on form submit
-    // depending on success or error state
-  })
-
-  describe("error handling", () => {
-    // sad path error states are handled correctly
-    // disabled buttons, error toasts, etc
-  })
-
-  describe("useEditNotificationPreferences", () => {
-    it("calls the mutation with the correct variables on form submission", async () => {
+    it("displays a success toast on successful form submission", async () => {
       const submitMutationMock = jest.fn(() => Promise.resolve())
       ;(useEditNotificationPreferences as jest.Mock).mockReturnValue({
         submitMutation: submitMutationMock,
       })
 
-      // const viewerMock = {
-      //   notificationPreferences: [
-      //     {
-      //       name: "recommendedByArtsy",
-      //       status: "SUBSCRIBED",
-      //     },
-      //     {
-      //       name: "artWorldInsights",
-      //       status: "SUBSCRIBED",
-      //     },
-      //     {
-      //       name: "productUpdates",
-      //       status: "UNSUBSCRIBED",
-      //     },
-      //   ],
-      // }
+      renderWithRelay({
+        Viewer: () => ({
+          notificationPreferences: [],
+        }),
+      })
 
-      // render(<PreferencesApp viewer={viewerMock} />)
+      fireEvent.click(screen.getByText("Save"))
+      const { sendToast } = require("@artsy/palette").useToasts()
+
+      await waitFor(() => {
+        expect(sendToast).toHaveBeenCalledWith({
+          variant: "success",
+          message: "Preferences updated successfully.",
+        })
+      })
+    })
+
+    it("displays an error toast on submission failure", async () => {
+      const error = new Error("Something went wrong.")
+      const submitMutationMock = jest.fn(() => Promise.reject(error))
+      ;(useEditNotificationPreferences as jest.Mock).mockReturnValue({
+        submitMutation: submitMutationMock,
+      })
+
+      renderWithRelay({
+        Viewer: () => ({
+          notificationPreferences: [],
+        }),
+      })
+
+      fireEvent.click(screen.getByText("Save"))
+      const { sendToast } = require("@artsy/palette").useToasts()
+
+      await waitFor(() => {
+        expect(sendToast).toHaveBeenCalledWith({
+          variant: "error",
+          message: "Something went wrong.",
+          description: error.message,
+        })
+      })
+    })
+  })
+
+  describe("useEditNotificationPreferences", () => {
+    it("calls the mutation with correct variables on form submission", async () => {
+      const submitMutationMock = jest.fn(() => Promise.resolve())
+      ;(useEditNotificationPreferences as jest.Mock).mockReturnValue({
+        submitMutation: submitMutationMock,
+      })
+
+      renderWithRelay({
+        Viewer: () => ({
+          notificationPreferences: [
+            {
+              name: "recommendedByArtsy",
+              status: "SUBSCRIBED",
+            },
+            {
+              name: "artWorldInsights",
+              status: "UNSUBSCRIBED",
+            },
+            {
+              name: "productUpdates",
+              status: "UNSUBSCRIBED",
+            },
+          ],
+        }),
+      })
 
       fireEvent.click(screen.getByLabelText("Recommended for You"))
+      fireEvent.click(screen.getByLabelText("Art World Insights"))
       fireEvent.click(screen.getByText("Save"))
 
-      const input = {
-        // input data
+      const expectedInput = {
+        subscriptionGroups: [
+          {
+            name: "recommendedByArtsy",
+            status: "UNSUBSCRIBED",
+          },
+          {
+            name: "artWorldInsights",
+            status: "SUBSCRIBED",
+          },
+        ],
       }
 
       await waitFor(() => {
-        expect(submitMutationMock).toHaveBeenCalledWith({
-          input,
-        })
+        expect(submitMutationMock).toHaveBeenCalledWith(expectedInput)
       })
     })
   })
