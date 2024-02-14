@@ -23,9 +23,9 @@ export const Notifications: React.FC<NotificationsProps> = ({
 }) => {
   const { relayEnvironment } = useSystemContext()
 
-  // TODO: Use new feature flag
-  // const enableActivityPanelPills = useFeatureFlag("onyx_activity_panel_pills")
-  const enableActivityPanelPills = useFeatureFlag("onyx_new_notification_page")
+  const enableActivityPanelPills = useFeatureFlag(
+    "onyx_activity_panel_filter_pills"
+  )
 
   const markAsSeen = async () => {
     if (!relayEnvironment) {
@@ -54,7 +54,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
 
   return (
     <>
-      {!enableNewActivityPanel ? (
+      {!enableActivityPanelPills ? (
         <NofiticationsTabs {...rest}>
           <Tab name="All">
             <NotificationsListQueryRenderer

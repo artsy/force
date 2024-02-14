@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c562d08ab00300169115184c5111613>>
+ * @generated SignedSource<<d7071444ebb0bd82891165b810c15f6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,7 +44,7 @@ const node: ConcreteRequest = (function(){
 var v0 = {
   "kind": "Literal",
   "name": "first",
-  "value": 10
+  "value": 1
 },
 v1 = [
   {
@@ -103,7 +103,7 @@ v2 = [
         "name": "notificationsConnection",
         "plural": false,
         "selections": (v1/*: any*/),
-        "storageKey": "notificationsConnection(first:10,notificationTypes:[\"PARTNER_OFFER_CREATED\"])"
+        "storageKey": "notificationsConnection(first:1,notificationTypes:[\"PARTNER_OFFER_CREATED\"])"
       },
       {
         "alias": "alertNotifications",
@@ -122,7 +122,7 @@ v2 = [
         "name": "notificationsConnection",
         "plural": false,
         "selections": (v1/*: any*/),
-        "storageKey": "notificationsConnection(first:10,notificationTypes:[\"ARTWORK_ALERT\"])"
+        "storageKey": "notificationsConnection(first:1,notificationTypes:[\"ARTWORK_ALERT\"])"
       },
       {
         "alias": "followNotifications",
@@ -141,7 +141,7 @@ v2 = [
         "name": "notificationsConnection",
         "plural": false,
         "selections": (v1/*: any*/),
-        "storageKey": "notificationsConnection(first:10,notificationTypes:[\"ARTWORK_PUBLISHED\"])"
+        "storageKey": "notificationsConnection(first:1,notificationTypes:[\"ARTWORK_PUBLISHED\"])"
       }
     ],
     "storageKey": null
@@ -165,16 +165,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "08d18a5fde4345b2f200ed99c52c0f4a",
+    "cacheID": "624030ed38a59d8ae3c1f10009c20eda",
     "id": null,
     "metadata": {},
     "name": "NotificationsPillsQuery",
     "operationKind": "query",
-    "text": "query NotificationsPillsQuery {\n  viewer {\n    partnerOfferNotifications: notificationsConnection(first: 10, notificationTypes: [PARTNER_OFFER_CREATED]) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n    alertNotifications: notificationsConnection(first: 10, notificationTypes: [ARTWORK_ALERT]) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n    followNotifications: notificationsConnection(first: 10, notificationTypes: [ARTWORK_PUBLISHED]) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationsPillsQuery {\n  viewer {\n    partnerOfferNotifications: notificationsConnection(first: 1, notificationTypes: [PARTNER_OFFER_CREATED]) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n    alertNotifications: notificationsConnection(first: 1, notificationTypes: [ARTWORK_ALERT]) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n    followNotifications: notificationsConnection(first: 1, notificationTypes: [ARTWORK_PUBLISHED]) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "be9a5400fa3070a64aaff3ccf1e10caa";
+(node as any).hash = "5f97975bfd4195d006b9eeff1eaf6255";
 
 export default node;

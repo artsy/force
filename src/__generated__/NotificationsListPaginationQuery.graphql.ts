@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<78c6ad435bc137020fc6e7065a3c1cc0>>
+ * @generated SignedSource<<06f0956610f0a8c07e4acb8f016d010e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,25 +11,25 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
-export type NotificationsListNextQuery$variables = {
-  count: number;
+export type NotificationsListPaginationQuery$variables = {
+  count?: number | null | undefined;
   cursor?: string | null | undefined;
   types?: ReadonlyArray<NotificationTypesEnum | null | undefined> | null | undefined;
 };
-export type NotificationsListNextQuery$data = {
+export type NotificationsListPaginationQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"NotificationsList_viewer">;
   } | null | undefined;
 };
-export type NotificationsListNextQuery = {
-  response: NotificationsListNextQuery$data;
-  variables: NotificationsListNextQuery$variables;
+export type NotificationsListPaginationQuery = {
+  response: NotificationsListPaginationQuery$data;
+  variables: NotificationsListPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
+    "defaultValue": 10,
     "kind": "LocalArgument",
     "name": "count"
   },
@@ -101,7 +101,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "NotificationsListNextQuery",
+    "name": "NotificationsListPaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -143,7 +143,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "NotificationsListNextQuery",
+    "name": "NotificationsListPaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -427,16 +427,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1be58d0b7257af6b56fd8d3485f3d776",
+    "cacheID": "e4a0f58b81da0bb65504e25a52534d08",
     "id": null,
     "metadata": {},
-    "name": "NotificationsListNextQuery",
+    "name": "NotificationsListPaginationQuery",
     "operationKind": "query",
-    "text": "query NotificationsListNextQuery(\n  $count: Int!\n  $cursor: String\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_2TJroH\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  title\n}\n\nfragment NotificationsList_viewer_2TJroH on Viewer {\n  notifications: notificationsConnection(first: $count, after: $cursor, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsListPaginationQuery(\n  $count: Int = 10\n  $cursor: String\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_2TJroH\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  title\n}\n\nfragment NotificationsList_viewer_2TJroH on Viewer {\n  notifications: notificationsConnection(first: $count, after: $cursor, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c3f8425fbd367176f113851c58588ee2";
+(node as any).hash = "dfed71d087588ea0502018574c75600e";
 
 export default node;

@@ -10,7 +10,7 @@ import { GridColumns, Column, Flex, FullBleed } from "@artsy/palette"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 
 const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
-const MIN_LIST_WIDTH = 350
+const MIN_LIST_WIDTH = 370
 
 interface NotificationsAppProps {
   me: NotificationsApp_me$data

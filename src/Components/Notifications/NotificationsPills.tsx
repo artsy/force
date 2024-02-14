@@ -34,7 +34,7 @@ export const NotificationsPills: React.FC = () => {
   if (loading) return <Placeholder />
 
   return (
-    <Flex gap={0.5}>
+    <Flex gap={0.5} flexWrap="wrap">
       {notificationPills.map(pill => {
         return (
           <Pill
@@ -62,7 +62,7 @@ const notificationsPillsQuery = graphql`
   query NotificationsPillsQuery {
     viewer {
       partnerOfferNotifications: notificationsConnection(
-        first: 10
+        first: 1
         notificationTypes: [PARTNER_OFFER_CREATED]
       ) {
         # Total count does not work and returns a value even when there are no notifications
@@ -74,7 +74,7 @@ const notificationsPillsQuery = graphql`
         }
       }
       alertNotifications: notificationsConnection(
-        first: 10
+        first: 1
         notificationTypes: [ARTWORK_ALERT]
       ) {
         # Total count does not work and returns a value even when there are no notifications
@@ -85,7 +85,7 @@ const notificationsPillsQuery = graphql`
         }
       }
       followNotifications: notificationsConnection(
-        first: 10
+        first: 1
         notificationTypes: [ARTWORK_PUBLISHED]
       ) {
         # Total count does not work and returns a value even when there are no notifications
