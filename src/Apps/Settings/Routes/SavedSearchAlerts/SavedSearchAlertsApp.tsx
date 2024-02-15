@@ -33,7 +33,7 @@ import { ActionType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 import { useSystemContext } from "System/SystemContext"
 import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
-import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
+import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
