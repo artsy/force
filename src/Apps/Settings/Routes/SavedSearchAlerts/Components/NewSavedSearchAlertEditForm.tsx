@@ -33,14 +33,14 @@ import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
 
-interface NewSavedSearchAlertEditFormQueryRendererProps {
+interface SavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
   onDeleteClick: () => void
   onCompleted: () => void
   onCloseClick: () => void
 }
 
-interface NewSavedSearchAlertEditStepsProps {
+interface SavedSearchAlertEditStepsProps {
   savedSearch: NonNullable<
     NewSavedSearchAlertEditFormQuery["response"]["me"]
   >["savedSearch"]
@@ -50,12 +50,13 @@ interface NewSavedSearchAlertEditStepsProps {
   onCloseClick: () => void
 }
 
-interface NewSavedSearchAlertEditFormProps {
+interface SavedSearchAlertEditFormProps {
   viewer: NewSavedSearchAlertEditForm_viewer$data
   onDeleteClick: () => void
   onCompleted: () => void
 }
-const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> = ({
+
+const SavedSearchAlertEditSteps: React.FC<SavedSearchAlertEditStepsProps> = ({
   viewer,
   onDeleteClick,
   onCompleted,
@@ -75,7 +76,7 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
               </Clickable>
             </Flex>
             <Spacer y={4} />
-            <NewSavedSearchAlertEditForm
+            <SavedSearchAlertEditForm
               viewer={viewer}
               onDeleteClick={onDeleteClick}
               onCompleted={onCompleted}
@@ -95,7 +96,7 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
         <Modal onClose={onCloseClick}>
           <Flex mx={2}>
             {current === "ALERT_DETAILS" && (
-              <NewSavedSearchAlertEditForm
+              <SavedSearchAlertEditForm
                 viewer={viewer}
                 onDeleteClick={onDeleteClick}
                 onCompleted={onCompleted}
@@ -109,7 +110,7 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
   )
 }
 
-const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = ({
+const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   onDeleteClick,
   onCompleted,
 }) => {
@@ -229,8 +230,8 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
   )
 }
 
-export const NewSavedSearchAlertEditFormFragmentContainer = createFragmentContainer(
-  NewSavedSearchAlertEditSteps,
+export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer(
+  SavedSearchAlertEditSteps,
   {
     viewer: graphql`
       fragment NewSavedSearchAlertEditForm_viewer on Viewer {
@@ -273,7 +274,7 @@ export const NewSavedSearchAlertEditFormFragmentContainer = createFragmentContai
   }
 )
 
-export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAlertEditFormQueryRendererProps> = ({
+export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEditFormQueryRendererProps> = ({
   editAlertEntity,
   onDeleteClick,
   onCompleted,
@@ -322,7 +323,7 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
             }}
             isEditMode
           >
-            <NewSavedSearchAlertEditFormFragmentContainer
+            <SavedSearchAlertEditFormFragmentContainer
               savedSearch={props.me.savedSearch}
               viewer={props.viewer}
               onDeleteClick={onDeleteClick}
