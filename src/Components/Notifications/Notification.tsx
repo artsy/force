@@ -59,7 +59,7 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
   useEffect(() => {
     markAsRead()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [notification])
 
   const markAsRead = async () => {
     if (!relayEnvironment || !notification) {
