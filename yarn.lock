@@ -91,12 +91,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@37.1.2":
-  version "37.1.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-37.1.2.tgz#581649a34e1ff9a6daddcfa611c50bf61cf10c42"
-  integrity sha512-ewhPBtkIpuSepDkOtX1MAuzxkA1jEoJyALDBcqHG81FX6RAPE7oMBOSZwhGbOQNXJMtcD4QMDzb+fcCIU3rCZw==
+"@artsy/palette-charts@37.1.3":
+  version "37.1.3"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-37.1.3.tgz#7b2db3b648a0e3c0dee4effa5aa5c24b921e653e"
+  integrity sha512-A4c1ct2AA6loVo3NaC/j2DrMgAfctlYEiuoxZZmG1rHD+tq+AI8Uz8fgLu5PT2KatRgS1U/xgm61YNJBBQoRLA==
   dependencies:
-    "@artsy/palette" "^38.1.2"
+    "@artsy/palette" "^38.1.3"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -108,28 +108,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-6.0.0.tgz#13aa853b2e39e40894f8ca3bad5125b2db4204cb"
   integrity sha512-g7U2UjLfP0RNvZYFPuWfp5MXEkvCiJJ6EpF0vgi4Quiv1mC8DvD4Sbk1bKDszx/e3SZmlTLH7LF+zK9HQLR+IQ==
 
-"@artsy/palette@38.1.3":
+"@artsy/palette@38.1.3", "@artsy/palette@^38.1.3":
   version "38.1.3"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-38.1.3.tgz#b7f284c2b99f129342cef9faad4eaafa8b393034"
   integrity sha512-rt/Crci7fWmVB3snVKF6KTm8AikNKl+HgW0XiFko1nBQdbLwMJ2AabKlbNhkd5hmF0T6PhO9wJUvbYjz25C7gQ==
-  dependencies:
-    "@artsy/icons" "^3.2.2"
-    "@artsy/palette-tokens" "^6.0.0"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    lodash "^4.17.21"
-    proportional-scale "^4.0.0"
-    react-focus-on "^3.7.0"
-    react-lazy-load-image-component "1.5.5"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-    use-keyboard-list-navigation "2.4.2"
-
-"@artsy/palette@^38.1.2":
-  version "38.1.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-38.1.2.tgz#05e60aabdef9d5dff618e93b3178e5f205116c90"
-  integrity sha512-Yu5lCgsZYpPyOmMLOyKjRIpW32LiTxz1Pge7k2L2gVZliMJ+O6iOOR2q2HXsEGuuqV47LT749fMQtLKo3T2emQ==
   dependencies:
     "@artsy/icons" "^3.2.2"
     "@artsy/palette-tokens" "^6.0.0"
