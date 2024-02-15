@@ -1,16 +1,14 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { AlertProvider } from "Components/Alert/AlertProvider"
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { PriceQueryRenderer } from "Components/Alert/Components/Filters/Price"
-import { MockBoot } from "DevTools/MockBoot"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 
 describe("PriceFilter", () => {
   let alertContext
-  const environment = createMockEnvironment()
 
   const PriceFilterTestComponent = () => {
     alertContext = useAlertContext()
@@ -18,18 +16,20 @@ describe("PriceFilter", () => {
     return <PriceQueryRenderer />
   }
 
-  const renderPriceRangeFilter = (contextProps = {}, initialCriteria = {}) => {
-    return render(
-      <MockBoot relayEnvironment={environment}>
-        <AlertProvider visible initialCriteria={initialCriteria}>
-          <PriceFilterTestComponent />
-        </AlertProvider>
-      </MockBoot>
+  const TestRenderer = ({ initialCriteria = {} }) => {
+    return (
+      <AlertProvider visible initialCriteria={initialCriteria}>
+        <PriceFilterTestComponent />
+      </AlertProvider>
     )
   }
 
   it("sets price range and only updates alert context", () => {
-    renderPriceRangeFilter()
+    const { renderWithRelay } = setupTestWrapperTL({
+      Component: () => <TestRenderer />,
+    })
+
+    renderWithRelay()
 
     expect(screen.getByText("Price Range")).toBeInTheDocument()
 
@@ -44,7 +44,11 @@ describe("PriceFilter", () => {
   })
 
   it("sets only max price value", () => {
-    renderPriceRangeFilter()
+    const { renderWithRelay } = setupTestWrapperTL({
+      Component: () => <TestRenderer />,
+    })
+
+    renderWithRelay()
 
     fireEvent.input(screen.queryAllByLabelText("Max price")[1], {
       target: { valueAsNumber: 10000 },
@@ -54,7 +58,11 @@ describe("PriceFilter", () => {
   })
 
   it("sets only min price value", () => {
-    renderPriceRangeFilter()
+    const { renderWithRelay } = setupTestWrapperTL({
+      Component: () => <TestRenderer />,
+    })
+
+    renderWithRelay()
 
     fireEvent.input(screen.queryAllByLabelText("Min price")[1], {
       target: { valueAsNumber: 1000 },
@@ -64,36 +72,40 @@ describe("PriceFilter", () => {
   })
 
   it("fetches aggreagations and renders price range bars", async () => {
-    renderPriceRangeFilter({}, { artistIDs: ["artist-id"] })
+    const { renderWithRelay } = setupTestWrapperTL({
+      Component: () => (
+        <TestRenderer initialCriteria={{ artistIDs: ["artist-id"] }} />
+      ),
+    })
+
+    const { mockResolveLastOperation } = renderWithRelay()
 
     await flushPromiseQueue()
 
-    environment.mock.resolveMostRecentOperation(operation =>
-      MockPayloadGenerator.generate(operation, {
-        FilterArtworksConnection: () => ({
-          counts: {
-            total: 10915,
+    mockResolveLastOperation({
+      FilterArtworksConnection: () => ({
+        counts: {
+          total: 10915,
+        },
+        aggregations: [
+          {
+            slice: "SIMPLE_PRICE_HISTOGRAM",
+            counts: [
+              {
+                name: "0",
+                value: "42",
+                count: 5542,
+              },
+              {
+                name: "50000",
+                value: "424242",
+                count: 704,
+              },
+            ],
           },
-          aggregations: [
-            {
-              slice: "SIMPLE_PRICE_HISTOGRAM",
-              counts: [
-                {
-                  name: "0",
-                  value: "42",
-                  count: 5542,
-                },
-                {
-                  name: "50000",
-                  value: "424242",
-                  count: 704,
-                },
-              ],
-            },
-          ],
-        }),
-      })
-    )
+        ],
+      }),
+    })
 
     expect(screen.getByText("$0")).toBeInTheDocument()
     expect(screen.getByText("$50000+")).toBeInTheDocument()
