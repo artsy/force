@@ -33,7 +33,7 @@ import { ActionType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 import { useSystemContext } from "System/SystemContext"
 import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
-import { NewSavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
+import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -235,7 +235,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                     borderLeftColor="black15"
                   >
                     <Sticky bottomBoundary="#content-end">
-                      <NewSavedSearchAlertEditFormQueryRenderer
+                      <SavedSearchAlertEditFormQueryRenderer
                         editAlertEntity={editAlertEntity}
                         onCloseClick={closeEditForm}
                         onCompleted={handleCompleted}
@@ -252,7 +252,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             <Media lessThan="md">
               {list}
               {isEditMode && editAlertEntity && (
-                <NewSavedSearchAlertEditFormQueryRenderer
+                <SavedSearchAlertEditFormQueryRenderer
                   editAlertEntity={editAlertEntity}
                   onCloseClick={closeEditForm}
                   onCompleted={handleCompleted}
