@@ -8,15 +8,15 @@ import {
   Text,
   useDidMount,
 } from "@artsy/palette"
-import { NewSavedSearchAlertEditFormQuery } from "__generated__/NewSavedSearchAlertEditFormQuery.graphql"
-import { NewSavedSearchAlertEditForm_viewer$data } from "__generated__/NewSavedSearchAlertEditForm_viewer.graphql"
+import { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEditFormQuery.graphql"
+import { SavedSearchAlertEditForm_viewer$data } from "__generated__/SavedSearchAlertEditForm_viewer.graphql"
 
 import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { Media } from "Utils/Responsive"
-import { NewSavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
+import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
@@ -42,16 +42,16 @@ interface SavedSearchAlertEditFormQueryRendererProps {
 
 interface SavedSearchAlertEditStepsProps {
   savedSearch: NonNullable<
-    NewSavedSearchAlertEditFormQuery["response"]["me"]
+    SavedSearchAlertEditFormQuery["response"]["me"]
   >["savedSearch"]
-  viewer: NewSavedSearchAlertEditForm_viewer$data
+  viewer: SavedSearchAlertEditForm_viewer$data
   onDeleteClick: () => void
   onCompleted: () => void
   onCloseClick: () => void
 }
 
 interface SavedSearchAlertEditFormProps {
-  viewer: NewSavedSearchAlertEditForm_viewer$data
+  viewer: SavedSearchAlertEditForm_viewer$data
   onDeleteClick: () => void
   onCompleted: () => void
 }
@@ -234,7 +234,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
   SavedSearchAlertEditSteps,
   {
     viewer: graphql`
-      fragment NewSavedSearchAlertEditForm_viewer on Viewer {
+      fragment SavedSearchAlertEditForm_viewer on Viewer {
         notificationPreferences {
           status
           name
@@ -243,7 +243,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
       }
     `,
     savedSearch: graphql`
-      fragment NewSavedSearchAlertEditForm_searchCriteria on SearchCriteria {
+      fragment SavedSearchAlertEditForm_searchCriteria on SearchCriteria {
         internalID
         acquireable
         additionalGeneIDs
@@ -281,15 +281,15 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
   onCloseClick,
 }) => {
   return (
-    <SystemQueryRenderer<NewSavedSearchAlertEditFormQuery>
+    <SystemQueryRenderer<SavedSearchAlertEditFormQuery>
       query={graphql`
-        query NewSavedSearchAlertEditFormQuery($id: ID!) {
+        query SavedSearchAlertEditFormQuery($id: ID!) {
           viewer {
-            ...NewSavedSearchAlertEditForm_viewer
+            ...SavedSearchAlertEditForm_viewer
           }
           me {
             savedSearch(id: $id) {
-              ...NewSavedSearchAlertEditForm_searchCriteria @relay(mask: false)
+              ...SavedSearchAlertEditForm_searchCriteria @relay(mask: false)
             }
           }
         }
@@ -297,7 +297,7 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
       variables={{
         id: editAlertEntity.id,
       }}
-      placeholder={<NewSavedSearchAlertEditFormPlaceholder />}
+      placeholder={<SavedSearchAlertEditFormPlaceholder />}
       cacheConfig={{ force: true }}
       render={({ props, error }) => {
         if (error) {
@@ -306,7 +306,7 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
         }
 
         if (!props?.me?.savedSearch || !props?.viewer) {
-          return <NewSavedSearchAlertEditFormPlaceholder />
+          return <SavedSearchAlertEditFormPlaceholder />
         }
 
         return (
