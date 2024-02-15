@@ -57,13 +57,13 @@ const notifications = {
     {
       node: {
         title: "Notification One",
-        notificationType: "PARTNER_OFFER_CREATED",
+        notificationType: "ARTWORK_ALERT",
       },
     },
     {
       node: {
         title: "Notification Two",
-        notificationType: "PARTNER_OFFER_CREATED",
+        notificationType: "ARTWORK_PUBLISHED",
       },
     },
     {
