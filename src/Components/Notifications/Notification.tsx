@@ -17,6 +17,11 @@ import { ArticleFeaturedArtistNotification } from "Components/Notifications/Arti
 import { PartnerOfferCreatedNotification } from "Components/Notifications/PartnerOfferCreatedNotification"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
+import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
+import { useSystemContext } from "System/SystemContext"
+import createLogger from "Utils/logger"
+
+const logger = createLogger("NotificationItem")
 
 export const SUPPORTED_NOTIFICATION_TYPES = [
   "ARTWORK_ALERT",
@@ -31,6 +36,7 @@ interface NotificationProps {
 }
 
 const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
+  const { relayEnvironment } = useSystemContext()
   const { router } = useRouter()
 
   const data = useLazyLoadQuery<NotificationQuery>(notificationQuery, {
@@ -49,6 +55,33 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
       router.replace(notification?.targetHref as string)
     }
   }, [notification, router])
+
+  useEffect(() => {
+    markAsRead()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const markAsRead = async () => {
+    if (!relayEnvironment || !notification) {
+      return
+    }
+
+    try {
+      const response = await markNotificationAsRead(
+        relayEnvironment,
+        notification.id,
+        notification.internalID
+      )
+      const responseOrError = response.markNotificationAsRead?.responseOrError
+      const errorMessage = responseOrError?.mutationError?.message
+
+      if (errorMessage) {
+        throw new Error(errorMessage)
+      }
+    } catch (error) {
+      logger.error(error)
+    }
+  }
 
   if (!data.me?.notification) {
     return (
@@ -104,6 +137,8 @@ const notificationQuery = graphql`
   query NotificationQuery($internalID: String!) {
     me {
       notification(id: $internalID) {
+        id
+        internalID
         notificationType
         targetHref
 
