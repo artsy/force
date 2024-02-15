@@ -15,7 +15,7 @@ import {
 import { isServer } from "Server/isServer"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { Z } from "Apps/Components/constants"
-import { NavBarNewNotifications } from "./Menus/NavBarNewNotifications"
+import { NavBarNotifications } from "./Menus/NavBarNotifications"
 import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
@@ -44,9 +44,14 @@ export const NavBarLoggedInActions: React.FC<Partial<
     <>
       <Dropdown
         zIndex={Z.dropdown}
-        dropdown={
-          <NavBarNewNotifications unreadCounts={unreadNotificationsCount} />
-        }
+        dropdown={({ onHide }) => {
+          return (
+            <NavBarNotifications
+              unreadCounts={unreadNotificationsCount}
+              onHide={onHide}
+            />
+          )
+        }}
         placement="bottom-end"
         offset={0}
         openDropdownByClick

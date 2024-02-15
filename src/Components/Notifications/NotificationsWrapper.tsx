@@ -1,5 +1,5 @@
 import { Box, Flex, Separator, useTheme } from "@artsy/palette"
-import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
+import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { Sticky } from "Components/Sticky"
 import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
 import { NotificationsHeader } from "Components/Notifications/NotificationsHeader"
@@ -8,16 +8,18 @@ import { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadP
 const DROPDOWN_HEADER_HEIGHT = 113
 const VERTICAL_OFFSET = 10
 const DROPDOWN_CONTENT_HEIGHT =
-  DROPDOWN_HEADER_HEIGHT + DESKTOP_NAV_BAR_TOP_TIER_HEIGHT + VERTICAL_OFFSET
+  DROPDOWN_HEADER_HEIGHT + DESKTOP_NAV_BAR_HEIGHT + VERTICAL_OFFSET
 
 export type NotificationListMode = "dropdown" | "page"
 
 export interface NotificationsWrapperProps extends MarkAllAsReadPanelProps {
   mode: NotificationListMode
+  onHide?: () => void
 }
 
 export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
   mode,
+  onHide,
   unreadCounts,
 }) => {
   const { theme } = useTheme()
@@ -27,7 +29,11 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
       {mode === "dropdown" ? (
         <Box style={{ boxShadow: theme.effects.dropShadow }}>
           <Flex flex={1} overflow="hidden">
-            <NotificationsHeader mode="dropdown" unreadCounts={unreadCounts} />
+            <NotificationsHeader
+              mode="dropdown"
+              onHide={onHide}
+              unreadCounts={unreadCounts}
+            />
           </Flex>
 
           <Separator />
@@ -42,7 +48,11 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
       ) : (
         <>
           <Sticky>
-            <NotificationsHeader mode="page" unreadCounts={unreadCounts} />
+            <NotificationsHeader
+              mode="page"
+              onHide={onHide}
+              unreadCounts={unreadCounts}
+            />
             <Separator />
           </Sticky>
 
@@ -54,7 +64,6 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
           >
             <NotificationsListQueryRenderer mode={mode} />
           </Box>
-          <Separator />
         </>
       )}
     </Box>

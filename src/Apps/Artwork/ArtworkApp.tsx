@@ -225,8 +225,8 @@ export const ArtworkApp: React.FC<Props> = props => {
       {showExpiredOfferBanner && (
         <FullBleedBanner variant="brand">
           <Text>
-            This offer has expired. Please make a new offer or contact the
-            gallery.
+            This offer has expired. Please make an offer, purchase, or contact
+            the gallery.
           </Text>
         </FullBleedBanner>
       )}

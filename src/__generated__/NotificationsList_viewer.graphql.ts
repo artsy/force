@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<76d41408a0d0f5180be5d12697997137>>
+ * @generated SignedSource<<f067b62f30cb3618851a9f64a0a1ac93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
 export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type NotificationsList_viewer$data = {
@@ -40,14 +40,17 @@ export type NotificationsList_viewer$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = {
+var v0 = [
+  "notifications"
+],
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v1 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -81,11 +84,23 @@ return {
         "count": "count",
         "cursor": "cursor",
         "direction": "forward",
-        "path": [
-          "notifications"
-        ]
+        "path": (v0/*: any*/)
       }
-    ]
+    ],
+    "refetch": {
+      "connection": {
+        "forward": {
+          "count": "count",
+          "cursor": "cursor"
+        },
+        "backward": null,
+        "path": (v0/*: any*/)
+      },
+      "fragmentPathInResult": [
+        "viewer"
+      ],
+      "operation": require('./NotificationsListPaginationQuery.graphql')
+    }
   },
   "name": "NotificationsList_viewer",
   "selections": [
@@ -113,7 +128,7 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -128,7 +143,7 @@ return {
                   "kind": "LinkedField",
                   "name": "artworksConnection",
                   "plural": false,
-                  "selections": (v1/*: any*/),
+                  "selections": (v2/*: any*/),
                   "storageKey": null
                 },
                 {
@@ -160,7 +175,7 @@ return {
                           "kind": "LinkedField",
                           "name": "viewingRoomsConnection",
                           "plural": false,
-                          "selections": (v1/*: any*/),
+                          "selections": (v2/*: any*/),
                           "storageKey": "viewingRoomsConnection(first:1)"
                         }
                       ],
@@ -178,7 +193,7 @@ return {
                           "name": "article",
                           "plural": false,
                           "selections": [
-                            (v0/*: any*/)
+                            (v1/*: any*/)
                           ],
                           "storageKey": null
                         }
@@ -243,6 +258,6 @@ return {
 };
 })();
 
-(node as any).hash = "00ed829ed7cade687cc38e132910031e";
+(node as any).hash = "3e622d99dbfc9cabb654d6a2e33a12eb";
 
 export default node;

@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { NotificationsListFragmentContainer } from "Components/Notifications/NotificationsList"
+import { NotificationsList } from "Components/Notifications/NotificationsList"
 import { NotificationsList_test_Query } from "__generated__/NotificationsList_test_Query.graphql"
 
 jest.unmock("react-relay")
@@ -10,11 +10,7 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationsList_test_Query>({
   Component: props => {
     if (props.viewer) {
       return (
-        <NotificationsListFragmentContainer
-          mode="dropdown"
-          type="all"
-          viewer={props.viewer}
-        />
+        <NotificationsList mode="dropdown" type="all" viewer={props.viewer} />
       )
     }
 

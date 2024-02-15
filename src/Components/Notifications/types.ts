@@ -1,2 +1,2 @@
-export type NotificationType = "all" | "alerts" | "following"
+export type NotificationType = "all" | "alerts" | "following" | "offers"
 export type NotificationPaginationType = "showMoreButton" | "infinite"
