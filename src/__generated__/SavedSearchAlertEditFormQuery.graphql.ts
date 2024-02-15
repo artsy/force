@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55c8d19b6d7dd2217f0314877cdbff02>>
+ * @generated SignedSource<<4aaf8b7e5e98490ffc9bf20c40f01e34>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,10 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NewSavedSearchAlertEditFormQuery$variables = {
+export type SavedSearchAlertEditFormQuery$variables = {
   id: string;
 };
-export type NewSavedSearchAlertEditFormQuery$data = {
+export type SavedSearchAlertEditFormQuery$data = {
   readonly me: {
     readonly savedSearch: {
       readonly acquireable: boolean | null | undefined;
@@ -44,12 +44,12 @@ export type NewSavedSearchAlertEditFormQuery$data = {
     } | null | undefined;
   } | null | undefined;
   readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"NewSavedSearchAlertEditForm_viewer">;
+    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_viewer">;
   } | null | undefined;
 };
-export type NewSavedSearchAlertEditFormQuery = {
-  response: NewSavedSearchAlertEditFormQuery$data;
-  variables: NewSavedSearchAlertEditFormQuery$variables;
+export type SavedSearchAlertEditFormQuery = {
+  response: SavedSearchAlertEditFormQuery$data;
+  variables: SavedSearchAlertEditFormQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -255,7 +255,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "NewSavedSearchAlertEditFormQuery",
+    "name": "SavedSearchAlertEditFormQuery",
     "selections": [
       {
         "alias": null,
@@ -268,7 +268,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "NewSavedSearchAlertEditForm_viewer"
+            "name": "SavedSearchAlertEditForm_viewer"
           }
         ],
         "storageKey": null
@@ -293,7 +293,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "NewSavedSearchAlertEditFormQuery",
+    "name": "SavedSearchAlertEditFormQuery",
     "selections": [
       {
         "alias": null,
@@ -354,16 +354,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "04bb3500b151eb23817586e4d5b38ba8",
+    "cacheID": "a6bfc90d0b24e250dfb971056586abe2",
     "id": null,
     "metadata": {},
-    "name": "NewSavedSearchAlertEditFormQuery",
+    "name": "SavedSearchAlertEditFormQuery",
     "operationKind": "query",
-    "text": "query NewSavedSearchAlertEditFormQuery(\n  $id: ID!\n) {\n  viewer {\n    ...NewSavedSearchAlertEditForm_viewer\n  }\n  me {\n    savedSearch(id: $id) {\n      internalID\n      acquireable\n      additionalGeneIDs\n      artistIDs\n      artistSeriesIDs\n      atAuction\n      attributionClass\n      colors\n      dimensionRange\n      sizes\n      width\n      height\n      inquireableOnly\n      locationCities\n      majorPeriods\n      materialsTerms\n      offerable\n      partnerIDs\n      priceRange\n      userAlertSettings {\n        name\n        email\n        push\n        details\n      }\n    }\n    id\n  }\n}\n\nfragment NewSavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
+    "text": "query SavedSearchAlertEditFormQuery(\n  $id: ID!\n) {\n  viewer {\n    ...SavedSearchAlertEditForm_viewer\n  }\n  me {\n    savedSearch(id: $id) {\n      internalID\n      acquireable\n      additionalGeneIDs\n      artistIDs\n      artistSeriesIDs\n      atAuction\n      attributionClass\n      colors\n      dimensionRange\n      sizes\n      width\n      height\n      inquireableOnly\n      locationCities\n      majorPeriods\n      materialsTerms\n      offerable\n      partnerIDs\n      priceRange\n      userAlertSettings {\n        name\n        email\n        push\n        details\n      }\n    }\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8475d89b180561005f686caeeb660f3b";
+(node as any).hash = "349263322a2ac5f70a86099a7b30d701";
 
 export default node;
