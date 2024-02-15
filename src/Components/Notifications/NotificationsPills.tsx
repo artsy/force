@@ -72,6 +72,7 @@ const notificationsPillsQuery = graphql`
     }
   }
 `
+
 export const Placeholder: React.FC = () => (
   <Skeleton>
     <Flex gap={0.5}>
