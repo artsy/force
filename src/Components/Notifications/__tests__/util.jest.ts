@@ -1,14 +1,8 @@
 import { shouldDisplayNotification } from "Components/Notifications/util"
 
 describe("shouldDisplayNotification", () => {
-  it("returns true when notification is not artworks based", () => {
-    const result = shouldDisplayNotification({
-      notificationType: "VIEWING_ROOM_PUBLISHED",
-    })
-    expect(result).toEqual(true)
-  })
-
-  it("returns true when notification is artworks based, but has artworks", () => {
+  it("returns true when notification satisfies conditions", () => {
+    // artwork based notifications have artworks
     const result = shouldDisplayNotification({
       notificationType: "ARTWORK_ALERT",
       artworks: { totalCount: 1 },
@@ -26,9 +20,24 @@ describe("shouldDisplayNotification", () => {
       artworks: { totalCount: 1 },
     })
     expect(result3).toEqual(true)
+
+    // viewing room notification has viewing rooms
+    const result4 = shouldDisplayNotification({
+      notificationType: "VIEWING_ROOM_PUBLISHED",
+      item: { viewingRoomsConnection: { totalCount: 1 } },
+    })
+    expect(result4).toEqual(true)
+
+    // editorial notification has article
+    const result5 = shouldDisplayNotification({
+      notificationType: "ARTICLE_FEATURED_ARTIST",
+      item: { article: { internalID: 1 } },
+    })
+    expect(result5).toEqual(true)
   })
 
-  it("returns false when notification is artworks based, and has no artworks", () => {
+  it("returns false when notification does not satisfy conditions", () => {
+    // artwork based notifications have no artworks
     const result = shouldDisplayNotification({
       notificationType: "ARTWORK_ALERT",
       artworks: { totalCount: 0 },
@@ -46,5 +55,19 @@ describe("shouldDisplayNotification", () => {
       artworks: { totalCount: 0 },
     })
     expect(result3).toEqual(false)
+
+    // viewing room notification has no viewing rooms
+    const result4 = shouldDisplayNotification({
+      notificationType: "VIEWING_ROOM_PUBLISHED",
+      item: { viewingRoomsConnection: { totalCount: 0 } },
+    })
+    expect(result4).toEqual(false)
+
+    // editorial notification has no article
+    const result5 = shouldDisplayNotification({
+      notificationType: "ARTICLE_FEATURED_ARTIST",
+      item: {},
+    })
+    expect(result5).toEqual(false)
   })
 })

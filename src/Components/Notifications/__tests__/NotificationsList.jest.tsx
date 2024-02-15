@@ -53,16 +53,19 @@ const notifications = {
     {
       node: {
         title: "Notification One",
+        notificationType: "ARTWORK_ALERT",
       },
     },
     {
       node: {
         title: "Notification Two",
+        notificationType: "ARTWORK_PUBLISHED",
       },
     },
     {
       node: {
         title: "Notification Three",
+        notificationType: "PARTNER_OFFER_CREATED",
       },
     },
   ],
