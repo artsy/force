@@ -7,7 +7,6 @@ import {
   SkeletonBox,
 } from "@artsy/palette"
 import { CriteriaPillsPlaceholder } from "Components/Alert/Components/CriteriaPills"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { times } from "lodash"
 
@@ -75,17 +74,13 @@ export const SavedSearchAlertEditFormPlaceholder = () => {
 }
 
 export const NewSavedSearchAlertEditFormPlaceholder = () => {
-  const enableSuggestedFilters = useFeatureFlag(
-    "onyx_saved_searches_suggested_filters"
-  )
-
   return (
     <Box flex={1} p={4}>
       <Text variant="lg" mb={4}>
         Edit Alert
       </Text>
       <SkeletonText variant="sm-display" mb={2}>
-        Wi'll send you alerts for
+        We'll send you alerts for
       </SkeletonText>
       <CriteriaPillsPlaceholder />
       <Spacer y={4} />
@@ -94,15 +89,9 @@ export const NewSavedSearchAlertEditFormPlaceholder = () => {
         Add Filters
       </SkeletonText>
 
-      {enableSuggestedFilters ? (
-        <SkeletonText variant="sm-display" mb={2}>
-          More Filters
-        </SkeletonText>
-      ) : (
-        <SkeletonText variant="sm-display" mb={2}>
-          Including Price Range, Rarity, Medium, Color
-        </SkeletonText>
-      )}
+      <SkeletonText variant="sm-display" mb={2}>
+        More Filters
+      </SkeletonText>
 
       <Spacer y={4} />
 
