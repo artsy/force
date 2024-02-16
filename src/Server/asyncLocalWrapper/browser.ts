@@ -3,7 +3,6 @@ import type { AsyncLocalStorage } from "async_hooks"
 const map = new Map()
 
 // A no-op stub in case this is accessed in the browser.
-// ts-prune-ignore-next
 export const asyncLocalStorage: AsyncLocalStorage<Map<any, any>> = {
   getStore: () => {
     return map
