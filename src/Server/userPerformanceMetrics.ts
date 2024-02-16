@@ -58,7 +58,6 @@ export function measure(
 /**
  * Aggregates all marks and measures into a single report
  */
-// ts-prune-ignore-next
 export function getUserTiming() {
   if (typeof PerformanceMark === "undefined") return null
 
@@ -123,7 +122,6 @@ export function getLoadEventEnd() {
  *
  * https://varvy.com/performance/dominteractive.html
  */
-// ts-prune-ignore-next
 export function getDomInteractive() {
   if (!timingAvailable) return null
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.domInteractive)
