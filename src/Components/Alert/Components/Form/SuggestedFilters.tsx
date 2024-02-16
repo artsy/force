@@ -105,7 +105,11 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
           )
         })}
 
-        <Clickable onClick={transitionToFiltersAndTrack} mt={1}>
+        <Clickable
+          onClick={transitionToFiltersAndTrack}
+          mt={1}
+          data-testid="moreFilters"
+        >
           <Flex justifyContent={"space-between"} alignItems={"center"}>
             <Text variant="xs" color="black100" mr={0.5}>
               More Filters

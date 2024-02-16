@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<15a6c639161ed96de104cc20bb36930e>>
+ * @generated SignedSource<<c8a72e0320bb0fbd813716e7a0188fe2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NewSavedSearchAlertEditForm_searchCriteria$data = {
+export type SavedSearchAlertEditForm_searchCriteria$data = {
   readonly acquireable: boolean | null | undefined;
   readonly additionalGeneIDs: ReadonlyArray<string>;
   readonly artistIDs: ReadonlyArray<string> | null | undefined;
@@ -36,18 +36,18 @@ export type NewSavedSearchAlertEditForm_searchCriteria$data = {
     readonly push: boolean;
   };
   readonly width: string | null | undefined;
-  readonly " $fragmentType": "NewSavedSearchAlertEditForm_searchCriteria";
+  readonly " $fragmentType": "SavedSearchAlertEditForm_searchCriteria";
 };
-export type NewSavedSearchAlertEditForm_searchCriteria$key = {
-  readonly " $data"?: NewSavedSearchAlertEditForm_searchCriteria$data;
-  readonly " $fragmentSpreads": FragmentRefs<"NewSavedSearchAlertEditForm_searchCriteria">;
+export type SavedSearchAlertEditForm_searchCriteria$key = {
+  readonly " $data"?: SavedSearchAlertEditForm_searchCriteria$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_searchCriteria">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "NewSavedSearchAlertEditForm_searchCriteria",
+  "name": "SavedSearchAlertEditForm_searchCriteria",
   "selections": [
     {
       "alias": null,
@@ -226,6 +226,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "89ca30cf0aa095c54123abd353fbcb35";
+(node as any).hash = "3e2d3c86c8e55e44a64781d471d086cc";
 
 export default node;

@@ -1,8 +1,6 @@
-import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   Box,
   Button,
-  Clickable,
   Flex,
   Join,
   Spacer,
@@ -13,9 +11,7 @@ import { Formik } from "formik"
 import { FC } from "react"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
-import { PriceRangeFilter } from "Components/Alert/Components/Form/PriceRange"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
@@ -33,13 +29,6 @@ export const Details: FC = () => {
   const { clickedAddFilters } = useAlertTracking()
 
   const { onComplete, dispatch, goToFilters, state } = useAlertContext()
-
-  const newAlertModalFilteresEnabled = useFeatureFlag(
-    "onyx_artwork_alert_modal_v2_filters"
-  )
-  const enableSuggestedFilters = useFeatureFlag(
-    "onyx_saved_searches_suggested_filters"
-  )
 
   const isMounted = useDidMount()
 
@@ -79,38 +68,10 @@ export const Details: FC = () => {
                     <CriteriaPills />
                   </Flex>
                 </Box>
-
-                {newAlertModalFilteresEnabled && !enableSuggestedFilters && (
-                  <Clickable
-                    data-testid="addFilters"
-                    onClick={transitionToFiltersAndTrack}
-                    width="100%"
-                  >
-                    <Flex justifyContent="space-between" alignItems={"center"}>
-                      <Box>
-                        <Text variant="sm-display">Add Filters:</Text>
-
-                        <Text variant="sm" color="black60">
-                          Including Price Range, Rarity, Medium, Color
-                        </Text>
-                      </Box>
-
-                      <ChevronRightIcon />
-                    </Flex>
-                  </Clickable>
-                )}
-
-                {!newAlertModalFilteresEnabled && (
-                  <PriceRangeFilter expanded={false} />
-                )}
-
-                {newAlertModalFilteresEnabled && enableSuggestedFilters && (
-                  <SugggestedFiltersQueryRenderer
-                    transitionToFiltersAndTrack={transitionToFiltersAndTrack}
-                  />
-                )}
+                <SugggestedFiltersQueryRenderer
+                  transitionToFiltersAndTrack={transitionToFiltersAndTrack}
+                />
                 <DetailsInput />
-
                 <NotificationPreferencesQueryRenderer mode="create" />
               </Join>
             </Flex>
