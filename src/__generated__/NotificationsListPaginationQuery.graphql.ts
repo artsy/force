@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06f0956610f0a8c07e4acb8f016d010e>>
+ * @generated SignedSource<<4b1e027bb524e133c54c82d0a372fbb8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -75,21 +75,24 @@ v3 = {
   "name": "totalCount",
   "storageKey": null
 },
-v4 = {
+v4 = [
+  (v3/*: any*/)
+],
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -192,12 +195,10 @@ return {
                         "kind": "LinkedField",
                         "name": "artworksConnection",
                         "plural": false,
-                        "selections": [
-                          (v3/*: any*/)
-                        ],
+                        "selections": (v4/*: any*/),
                         "storageKey": null
                       },
-                      (v4/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -254,7 +255,7 @@ return {
                         "name": "item",
                         "plural": false,
                         "selections": [
-                          (v5/*: any*/),
+                          (v6/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
@@ -274,6 +275,49 @@ return {
                               }
                             ],
                             "type": "PartnerOfferCreatedNotificationItem",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": [
+                                  {
+                                    "kind": "Literal",
+                                    "name": "first",
+                                    "value": 1
+                                  }
+                                ],
+                                "concreteType": "ViewingRoomsConnection",
+                                "kind": "LinkedField",
+                                "name": "viewingRoomsConnection",
+                                "plural": false,
+                                "selections": (v4/*: any*/),
+                                "storageKey": "viewingRoomsConnection(first:1)"
+                              }
+                            ],
+                            "type": "ViewingRoomPublishedNotificationItem",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Article",
+                                "kind": "LinkedField",
+                                "name": "article",
+                                "plural": false,
+                                "selections": [
+                                  (v2/*: any*/),
+                                  (v5/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "type": "ArticleFeaturedArtistNotificationItem",
                             "abstractKey": null
                           }
                         ],
@@ -311,7 +355,7 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v2/*: any*/),
-                                  (v6/*: any*/),
+                                  (v7/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -359,7 +403,7 @@ return {
                                     ],
                                     "storageKey": null
                                   },
-                                  (v4/*: any*/)
+                                  (v5/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -369,8 +413,8 @@ return {
                         ],
                         "storageKey": "artworksConnection(first:4)"
                       },
-                      (v6/*: any*/),
-                      (v5/*: any*/)
+                      (v7/*: any*/),
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -427,16 +471,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e4a0f58b81da0bb65504e25a52534d08",
+    "cacheID": "e7213fa71577e8547cf0cae1c82581d4",
     "id": null,
     "metadata": {},
     "name": "NotificationsListPaginationQuery",
     "operationKind": "query",
-    "text": "query NotificationsListPaginationQuery(\n  $count: Int = 10\n  $cursor: String\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_2TJroH\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  title\n}\n\nfragment NotificationsList_viewer_2TJroH on Viewer {\n  notifications: notificationsConnection(first: $count, after: $cursor, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsListPaginationQuery(\n  $count: Int = 10\n  $cursor: String\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_2TJroH\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  title\n}\n\nfragment NotificationsList_viewer_2TJroH on Viewer {\n  notifications: notificationsConnection(first: $count, after: $cursor, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        item {\n          __typename\n          ... on ViewingRoomPublishedNotificationItem {\n            viewingRoomsConnection(first: 1) {\n              totalCount\n            }\n          }\n          ... on ArticleFeaturedArtistNotificationItem {\n            article {\n              internalID\n              id\n            }\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "dfed71d087588ea0502018574c75600e";
+(node as any).hash = "3e622d99dbfc9cabb654d6a2e33a12eb";
 
 export default node;

@@ -66,6 +66,19 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
                 totalCount
               }
               ...NotificationItem_item
+              item {
+                ... on ViewingRoomPublishedNotificationItem {
+                  viewingRoomsConnection(first: 1) {
+                    totalCount
+                  }
+                }
+
+                ... on ArticleFeaturedArtistNotificationItem {
+                  article {
+                    internalID
+                  }
+                }
+              }
             }
           }
         }
