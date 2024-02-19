@@ -50,6 +50,7 @@ declare global {
     // Zendesk properties
     zEmbed: { show: () => void; hide: () => void }
     zESettings: object
+    __TEST__?: boolean
   }
 }
 

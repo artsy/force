@@ -72,6 +72,7 @@ if (typeof window !== "undefined") {
   // Needed for new tests
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   window.matchMedia = undefined
+  ;(window as Window).__TEST__ = true
 
   window.grecaptcha = {
     ready: jest.fn(cb => cb()),

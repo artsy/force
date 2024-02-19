@@ -41,6 +41,11 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error | HttpError) {
+    // This adds a useful stacktrace that can make debugging easier when writing tests
+    if (window.__TEST__) {
+      console.log(error)
+    }
+
     if (error instanceof HttpError) {
       return {
         kind: "RouterError",

@@ -4,12 +4,15 @@ import {
   THEME,
   ToastsProvider,
 } from "@artsy/palette"
-import { SystemContextProvider } from "System/SystemContext"
+import {
+  SystemContextConsumer,
+  SystemContextProvider,
+} from "System/SystemContext"
 import { AppRouteConfig } from "System/Router/Route"
 import { useEffect, useState } from "react"
 import * as React from "react"
 import { HeadProvider } from "react-head"
-import { Environment } from "react-relay"
+import { Environment, RelayEnvironmentProvider } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 // eslint-disable-next-line no-restricted-imports
@@ -102,34 +105,46 @@ export const Boot = track(undefined, {
       <HeadProvider headTags={headTags}>
         <StateProvider>
           <SystemContextProvider {...contextProps}>
-            <ErrorBoundary>
-              <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                <ResponsiveProvider
-                  mediaQueries={THEME.mediaQueries}
-                  initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                >
-                  <ToastsProvider>
-                    <StickyProvider>
-                      <AuthIntentProvider>
-                        <AuthDialogProvider>
-                          <DismissibleProvider
-                            userID={props.user?.id}
-                            keys={getProgressiveOnboardingAlertKeys()}
-                          >
-                            <CookieConsentManager>
-                              <FocusVisible />
-                              <SiftContainer />
+            <SystemContextConsumer>
+              {contextValues => {
+                return (
+                  <RelayEnvironmentProvider
+                    environment={contextValues.relayEnvironment}
+                  >
+                    <ErrorBoundary>
+                      <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                        <ResponsiveProvider
+                          mediaQueries={THEME.mediaQueries}
+                          initialMatchingMediaQueries={
+                            onlyMatchMediaQueries as any
+                          }
+                        >
+                          <ToastsProvider>
+                            <StickyProvider>
+                              <AuthIntentProvider>
+                                <AuthDialogProvider>
+                                  <DismissibleProvider
+                                    userID={props.user?.id}
+                                    keys={getProgressiveOnboardingAlertKeys()}
+                                  >
+                                    <CookieConsentManager>
+                                      <FocusVisible />
+                                      <SiftContainer />
 
-                              {children}
-                            </CookieConsentManager>
-                          </DismissibleProvider>
-                        </AuthDialogProvider>
-                      </AuthIntentProvider>
-                    </StickyProvider>
-                  </ToastsProvider>
-                </ResponsiveProvider>
-              </MediaContextProvider>
-            </ErrorBoundary>
+                                      {children}
+                                    </CookieConsentManager>
+                                  </DismissibleProvider>
+                                </AuthDialogProvider>
+                              </AuthIntentProvider>
+                            </StickyProvider>
+                          </ToastsProvider>
+                        </ResponsiveProvider>
+                      </MediaContextProvider>
+                    </ErrorBoundary>
+                  </RelayEnvironmentProvider>
+                )
+              }}
+            </SystemContextConsumer>
           </SystemContextProvider>
         </StateProvider>
       </HeadProvider>
