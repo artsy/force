@@ -1,63 +1,65 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { AlertProvider } from "Components/Alert/AlertProvider"
-import { MockBoot } from "DevTools/MockBoot"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { Formik } from "formik"
+import { createMockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 
 describe("NotificationPreferences", () => {
   const environment = createMockEnvironment()
 
-  const renderNotificationPreferences = ({ mode }) => {
-    return render(
-      <MockBoot relayEnvironment={environment}>
-        <AlertProvider visible>
-          <Formik<AlertFormikValues>
-            initialValues={{
-              email: false,
-              name: "",
-              push: false,
-              details: "",
-            }}
-            onSubmit={jest.fn()}
-          >
-            <NotificationPreferencesQueryRenderer mode={mode} />
-          </Formik>
-        </AlertProvider>
-      </MockBoot>
+  const TestRenderer = ({ mode }) => {
+    return (
+      <AlertProvider visible>
+        <Formik<AlertFormikValues>
+          initialValues={{
+            email: false,
+            name: "",
+            push: false,
+            details: "",
+          }}
+          onSubmit={jest.fn()}
+        >
+          <NotificationPreferencesQueryRenderer mode={mode} />
+        </Formik>
+      </AlertProvider>
     )
   }
+
+  beforeEach(() => {
+    environment.mockClear()
+  })
 
   describe("when mode is `edit`", () => {
     describe("when custom alert email notifications are enabled", () => {
       it("defaults do not get overwritten.", async () => {
-        renderNotificationPreferences({ mode: "edit" })
+        const { renderWithRelay } = setupTestWrapperTL({
+          Component: () => <TestRenderer mode={"edit"} />,
+        })
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            FilterArtworksConnection: () => ({
-              aggregations: [],
-            }),
-          })
-        )
+        const { mockResolveLastOperation } = renderWithRelay()
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            Viewer: () => ({
-              notificationPreferences: [
-                {
-                  channel: "email",
-                  name: "custom_alerts",
-                  status: "SUBSCRIBED",
-                },
-              ],
-            }),
-          })
-        )
+        mockResolveLastOperation({
+          FilterArtworksConnection: () => ({
+            aggregations: [],
+          }),
+        })
+
+        mockResolveLastOperation({
+          Viewer: () => ({
+            notificationPreferences: [
+              {
+                channel: "email",
+                name: "custom_alerts",
+                status: "SUBSCRIBED",
+              },
+            ],
+          }),
+        })
 
         const checkboxes = screen.getAllByRole("checkbox")
 
@@ -68,29 +70,29 @@ describe("NotificationPreferences", () => {
 
     describe("when custom alert email notifications are disabled", () => {
       it("defaults do not get overwritten.", async () => {
-        renderNotificationPreferences({ mode: "edit" })
+        const { renderWithRelay } = setupTestWrapperTL({
+          Component: () => <TestRenderer mode={"edit"} />,
+        })
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            FilterArtworksConnection: () => ({
-              aggregations: [],
-            }),
-          })
-        )
+        const { mockResolveLastOperation } = renderWithRelay()
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            Viewer: () => ({
-              notificationPreferences: [
-                {
-                  channel: "email",
-                  name: "custom_alerts",
-                  status: "NOT_SUBSCRIBED",
-                },
-              ],
-            }),
-          })
-        )
+        mockResolveLastOperation({
+          FilterArtworksConnection: () => ({
+            aggregations: [],
+          }),
+        })
+
+        mockResolveLastOperation({
+          Viewer: () => ({
+            notificationPreferences: [
+              {
+                channel: "email",
+                name: "custom_alerts",
+                status: "NOT_SUBSCRIBED",
+              },
+            ],
+          }),
+        })
 
         await flushPromiseQueue()
 
@@ -101,29 +103,29 @@ describe("NotificationPreferences", () => {
       })
 
       it("shows warning message when checkbox is checked", async () => {
-        renderNotificationPreferences({ mode: "edit" })
+        const { renderWithRelay } = setupTestWrapperTL({
+          Component: () => <TestRenderer mode={"edit"} />,
+        })
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            FilterArtworksConnection: () => ({
-              aggregations: [],
-            }),
-          })
-        )
+        const { mockResolveLastOperation } = renderWithRelay()
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            Viewer: () => ({
-              notificationPreferences: [
-                {
-                  channel: "email",
-                  name: "custom_alerts",
-                  status: "NOT_SUBSCRIBED",
-                },
-              ],
-            }),
-          })
-        )
+        mockResolveLastOperation({
+          FilterArtworksConnection: () => ({
+            aggregations: [],
+          }),
+        })
+
+        mockResolveLastOperation({
+          Viewer: () => ({
+            notificationPreferences: [
+              {
+                channel: "email",
+                name: "custom_alerts",
+                status: "NOT_SUBSCRIBED",
+              },
+            ],
+          }),
+        })
 
         await flushPromiseQueue()
 
@@ -146,29 +148,29 @@ describe("NotificationPreferences", () => {
   describe("when mode is `create`", () => {
     describe("when custom alert email notifications are enabled", () => {
       it("email checkbox is enabled by default", async () => {
-        renderNotificationPreferences({ mode: "create" })
+        const { renderWithRelay } = setupTestWrapperTL({
+          Component: () => <TestRenderer mode={"create"} />,
+        })
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            FilterArtworksConnection: () => ({
-              aggregations: [],
-            }),
-          })
-        )
+        const { mockResolveLastOperation } = renderWithRelay()
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            Viewer: () => ({
-              notificationPreferences: [
-                {
-                  channel: "email",
-                  name: "custom_alerts",
-                  status: "SUBSCRIBED",
-                },
-              ],
-            }),
-          })
-        )
+        mockResolveLastOperation({
+          FilterArtworksConnection: () => ({
+            aggregations: [],
+          }),
+        })
+
+        mockResolveLastOperation({
+          Viewer: () => ({
+            notificationPreferences: [
+              {
+                channel: "email",
+                name: "custom_alerts",
+                status: "SUBSCRIBED",
+              },
+            ],
+          }),
+        })
 
         const checkboxes = screen.getAllByRole("checkbox")
 
@@ -179,29 +181,29 @@ describe("NotificationPreferences", () => {
 
     describe("when custom alert email notifications are disabled", () => {
       it("email checkbox is enabled by default", async () => {
-        renderNotificationPreferences({ mode: "create" })
+        const { renderWithRelay } = setupTestWrapperTL({
+          Component: () => <TestRenderer mode={"create"} />,
+        })
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            FilterArtworksConnection: () => ({
-              aggregations: [],
-            }),
-          })
-        )
+        const { mockResolveLastOperation } = renderWithRelay()
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            Viewer: () => ({
-              notificationPreferences: [
-                {
-                  channel: "email",
-                  name: "custom_alerts",
-                  status: "NOT_SUBSCRIBED",
-                },
-              ],
-            }),
-          })
-        )
+        mockResolveLastOperation({
+          FilterArtworksConnection: () => ({
+            aggregations: [],
+          }),
+        })
+
+        mockResolveLastOperation({
+          Viewer: () => ({
+            notificationPreferences: [
+              {
+                channel: "email",
+                name: "custom_alerts",
+                status: "NOT_SUBSCRIBED",
+              },
+            ],
+          }),
+        })
 
         await flushPromiseQueue()
 
@@ -212,29 +214,29 @@ describe("NotificationPreferences", () => {
       })
 
       it("shows warning message only when checkbox is checked", async () => {
-        renderNotificationPreferences({ mode: "create" })
+        const { renderWithRelay } = setupTestWrapperTL({
+          Component: () => <TestRenderer mode={"create"} />,
+        })
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            FilterArtworksConnection: () => ({
-              aggregations: [],
-            }),
-          })
-        )
+        const { mockResolveLastOperation } = renderWithRelay()
 
-        environment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            Viewer: () => ({
-              notificationPreferences: [
-                {
-                  channel: "email",
-                  name: "custom_alerts",
-                  status: "NOT_SUBSCRIBED",
-                },
-              ],
-            }),
-          })
-        )
+        mockResolveLastOperation({
+          FilterArtworksConnection: () => ({
+            aggregations: [],
+          }),
+        })
+
+        mockResolveLastOperation({
+          Viewer: () => ({
+            notificationPreferences: [
+              {
+                channel: "email",
+                name: "custom_alerts",
+                status: "NOT_SUBSCRIBED",
+              },
+            ],
+          }),
+        })
 
         await flushPromiseQueue()
 

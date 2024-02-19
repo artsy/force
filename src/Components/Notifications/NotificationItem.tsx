@@ -43,6 +43,14 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
     remainingArtworksCount > 0
 
   const markAsRead = async () => {
+    // If the notification is opened as a page, we don't need to mark the notification as read
+    // because it's already marked as read when the page is opened.
+    if (
+      enableNewActivityPanel &&
+      SUPPORTED_NOTIFICATION_TYPES.includes(item.notificationType)
+    ) {
+      return
+    }
     if (!relayEnvironment) {
       return
     }

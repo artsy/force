@@ -126,9 +126,11 @@ export const setupTestWrapperTL = <T extends OperationType>({
           />
         </MockBoot>
       ) : (
-        <RelayEnvironmentProvider environment={env}>
-          <Component {...componentProps} />
-        </RelayEnvironmentProvider>
+        <MockBoot relayEnvironment={env}>
+          <RelayEnvironmentProvider environment={env}>
+            <Component {...componentProps} />
+          </RelayEnvironmentProvider>
+        </MockBoot>
       )
 
     const mockResolveLastOperation = (mockResolvers: MockResolvers) => {
