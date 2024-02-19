@@ -69,31 +69,10 @@ const notificationsPillsQuery = graphql`
           }
         }
       }
-      alertNotifications: notificationsConnection(
-        first: 1
-        notificationTypes: [ARTWORK_ALERT]
-      ) {
-        # Total count does not work and returns a value even when there are no notifications
-        edges {
-          node {
-            id
-          }
-        }
-      }
-      followNotifications: notificationsConnection(
-        first: 1
-        notificationTypes: [ARTWORK_PUBLISHED]
-      ) {
-        # Total count does not work and returns a value even when there are no notifications
-        edges {
-          node {
-            id
-          }
-        }
-      }
     }
   }
 `
+
 export const Placeholder: React.FC = () => (
   <Skeleton>
     <Flex gap={0.5}>
