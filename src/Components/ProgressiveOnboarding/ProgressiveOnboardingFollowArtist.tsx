@@ -68,7 +68,7 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
   return (
     <ProgressiveOnboardingPopover
       name={ALERT_ID}
-      placement="bottom"
+      placement="bottom-start"
       onClose={handleClose}
       popover={
         <Text variant="xs">
