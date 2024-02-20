@@ -4103,6 +4103,7 @@ type CollectorProfileType {
 
   # Collector's position with relevant institutions
   otherRelevantPositions: String
+  owner: User!
 
   # User ID of the collector profile's owner
   ownerID: ID!
@@ -4128,6 +4129,7 @@ type CollectorProfileType {
   selfReportedPurchases: String
   totalBidsCount: Int!
   userInterests: [UserInterest]!
+    @deprecated(reason: "Use \"owner#interestsConnection\" field instead.")
 }
 
 # A connection to a list of items.
@@ -11260,6 +11262,7 @@ type InquirerCollectorProfile {
 
   # Collector's position with relevant institutions
   otherRelevantPositions: String
+  owner: User!
 
   # User ID of the collector profile's owner
   ownerID: ID!
@@ -11285,6 +11288,7 @@ type InquirerCollectorProfile {
   selfReportedPurchases: String
   totalBidsCount: Int!
   userInterests: [UserInterest]!
+    @deprecated(reason: "Use \"owner#interestsConnection\" field instead.")
 }
 
 union InquiryItemType = Artwork | Show
@@ -18749,6 +18753,7 @@ type UpdateCollectorProfilePayload {
 
   # Collector's position with relevant institutions
   otherRelevantPositions: String
+  owner: User!
 
   # User ID of the collector profile's owner
   ownerID: ID!
@@ -18774,6 +18779,7 @@ type UpdateCollectorProfilePayload {
   selfReportedPurchases: String
   totalBidsCount: Int!
   userInterests: [UserInterest]!
+    @deprecated(reason: "Use \"owner#interestsConnection\" field instead.")
 }
 
 type UpdateCollectorProfileWithIDFailure {
