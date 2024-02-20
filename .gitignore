@@ -5,6 +5,7 @@
 .DS_Store
 .env
 .env.*
+!.env.development
 .swc/
 .yalc
 *.csv
@@ -59,6 +60,9 @@ manifest-legacy-artwork-dll.json
 
 # Intelli
 .idea/
+
+# Hokusai
+.hokusai-tmp/
 
 # Depdency Cruiser
 .dependency-cruiser.js
