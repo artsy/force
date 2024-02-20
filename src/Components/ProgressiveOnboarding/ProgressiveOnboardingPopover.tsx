@@ -29,7 +29,11 @@ export const ProgressiveOnboardingPopover: FC<ProgressiveOnboardingPopoverProps>
       {...rest}
     >
       {({ anchorRef }) => {
-        return <Box ref={anchorRef as any}>{children}</Box>
+        return (
+          <Box width="fit-content" ref={anchorRef as any}>
+            {children}
+          </Box>
+        )
       }}
     </Popover>
   )
