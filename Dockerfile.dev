@@ -1,0 +1,30 @@
+FROM node:18.15.0-bullseye-slim
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+  bash \
+  build-essential \
+  git \
+  unzip \
+  wget 
+
+ENV WATCHMAN_VERSION=v2024.02.05.00
+
+# Watchman is required to run relay --watch
+# Pre-built binaries can be found at https://github.com/facebook/watchman/releases
+RUN wget -qO watchman.zip "https://github.com/facebook/watchman/releases/download/${WATCHMAN_VERSION}/watchman-${WATCHMAN_VERSION}-linux.zip"
+RUN unzip watchman.zip
+RUN cd watchman-${WATCHMAN_VERSION}-linux && \
+    mkdir -p /usr/local/bin /usr/local/lib /usr/local/var/run/watchman && \
+    cp bin/* /usr/local/bin && \
+    cp lib/* /usr/local/lib && \
+    chmod 755 /usr/local/bin/watchman && \
+    chmod 2777 /usr/local/var/run/watchman && \
+    cd .. && \
+    rm -rf watchman.zip watchman-${WATCHMAN_VERSION}-linux
+
+COPY package.json yarn.lock /app/
+
+RUN --mount=type=cache,id=yarndev,target=/usr/local/share/.cache \
+    yarn install --frozen-lockfile --quiet

@@ -2,21 +2,14 @@
 version: "3.8"
 services:
   force:
-    image: hokusai_force:latest
-    build:
-      context: ../
-      target: builder-src
-    environment:
-      - NODE_ENV=development
-      - REDIS_URL=redis://force-redis:6379/0
-      - OPENREDIS_URL=redis://force-redis:6379/0
-      - PORT=5000
+{% include 'templates/docker-compose-service-dev.yml.j2' %}
     env_file:
       - ../.env.shared
+      - ../.env.development
       - ../.env
     command: ["yarn", "start"]
     ports:
-      - 5000:5000
+      - 4000:4000
     volumes:
       - ../:/app
       # prevents bind mount from overwriting node_modules in docker image.
@@ -24,6 +17,6 @@ services:
     depends_on:
       - force-redis
   force-redis:
-    image: redis:3.2-alpine
+    image: redis:5.0.6-alpine
     ports:
       - 6379:6379
