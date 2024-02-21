@@ -1,4 +1,5 @@
 import {
+  Box,
   Flex,
   Skeleton,
   SkeletonBox,
@@ -127,9 +128,11 @@ export const NotificationQueryRenderer: React.FC = props => {
   }
 
   return (
-    <Suspense fallback={<Placeholder />}>
-      <Notification notificationId={state.currentNotificationId} {...props} />
-    </Suspense>
+    <Box mx={[2, 4]} my={2}>
+      <Suspense fallback={<Placeholder />}>
+        <Notification notificationId={state.currentNotificationId} {...props} />
+      </Suspense>
+    </Box>
   )
 }
 
@@ -153,11 +156,15 @@ const notificationQuery = graphql`
 `
 
 export const Placeholder: React.FC = () => (
-  <Flex flexDirection="column" m={4}>
+  <Flex flexDirection="column">
     <Skeleton>
+      <SkeletonText variant="xl">Name of the Artist</SkeletonText>
+
       <SkeletonText variant="xs">Alert - Today</SkeletonText>
 
-      <SkeletonText variant="xl">Name of the Artist</SkeletonText>
+      <Spacer y={0.5} />
+
+      <SkeletonBox width={130} height={30} />
 
       <Spacer y={4} />
 
