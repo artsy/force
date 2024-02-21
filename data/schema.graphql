@@ -323,6 +323,7 @@ type Alert {
   partnerIDs: [String]
   priceArray: [Int]
   priceRange: String
+  searchCriteriaID: String!
   settings: AlertSettings!
   sizes: [String]
   summary: JSON
