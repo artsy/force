@@ -28,18 +28,14 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
   } = notificationData
 
   if (!item || !offerArtworksConnection || !item.partnerOffer) {
-    return (
-      <Text variant="lg" m={4}>
-        Sorry, something went wrong.
-      </Text>
-    )
+    return <Text variant="lg">Sorry, something went wrong.</Text>
   }
 
   const partnerOffer = item.partnerOffer
   const artwork = extractNodes(offerArtworksConnection)[0]
 
   return (
-    <Box m={4}>
+    <Box>
       <Flex width="100%" justifyContent="space-between">
         <Text variant="xs" color="blue100">
           Limited Time Offer
