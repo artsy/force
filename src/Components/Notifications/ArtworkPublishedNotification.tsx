@@ -24,15 +24,11 @@ export const ArtworkPublishedNotification: FC<ArtworkPublishedNotificationProps>
   const artist = item?.artists?.[0]
 
   if (!artist) {
-    return (
-      <Text variant="lg" m={4}>
-        Sorry, something went wrong.
-      </Text>
-    )
+    return <Text variant="lg">Sorry, something went wrong.</Text>
   }
 
   return (
-    <Box m={4}>
+    <Box>
       <Text variant="lg-display">{headline}</Text>
 
       <Spacer y={1} />

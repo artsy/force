@@ -35,15 +35,11 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
   const image = article?.thumbnailImage?.cropped
 
   if (!article || !artists) {
-    return (
-      <Text variant="lg" m={4}>
-        Sorry, something went wrong.
-      </Text>
-    )
+    return <Text variant="lg">Sorry, something went wrong.</Text>
   }
 
   return (
-    <Box m={4}>
+    <Box>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1}>
           <Text variant="lg-display">{headline}</Text>

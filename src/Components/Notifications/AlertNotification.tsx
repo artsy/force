@@ -21,15 +21,11 @@ export const AlertNotification: FC<AlertNotificationProps> = ({
   const artist = item?.alert?.artists?.[0]
 
   if (!alert || !artist) {
-    return (
-      <Text variant="lg" m={4}>
-        Sorry, something went wrong.
-      </Text>
-    )
+    return <Text variant="lg">Sorry, something went wrong.</Text>
   }
 
   return (
-    <Box m={4}>
+    <Box>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1} mr={1}>
           <Text variant="lg-display">{headline}</Text>
