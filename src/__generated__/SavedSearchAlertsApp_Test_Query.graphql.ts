@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b67d9f389989e84605efaae3956976a3>>
+ * @generated SignedSource<<64486ca5e8117e07729689eadc6bf843>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,21 +18,21 @@ export type SavedSearchAlertsApp_Test_Query$data = {
 };
 export type SavedSearchAlertsApp_Test_Query$rawResponse = {
   readonly me: {
-    readonly id: string;
-    readonly savedSearchesConnection: {
+    readonly alertsConnection: {
       readonly edges: ReadonlyArray<{
         readonly cursor: string;
         readonly node: {
-          readonly __typename: "SearchCriteria";
-          readonly artistIDs: ReadonlyArray<string> | null | undefined;
-          readonly artistSeriesIDs: ReadonlyArray<string>;
+          readonly __typename: "Alert";
+          readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;
+          readonly artistSeriesIDs: ReadonlyArray<string | null | undefined> | null | undefined;
           readonly displayName: string;
-          readonly href: string;
+          readonly href: string | null | undefined;
+          readonly id: string;
           readonly internalID: string;
           readonly labels: ReadonlyArray<{
             readonly displayValue: string;
           }>;
-          readonly userAlertSettings: {
+          readonly settings: {
             readonly name: string | null | undefined;
           };
         } | null | undefined;
@@ -41,7 +41,8 @@ export type SavedSearchAlertsApp_Test_Query$rawResponse = {
         readonly endCursor: string | null | undefined;
         readonly hasNextPage: boolean;
       };
-    } | null | undefined;
+    };
+    readonly id: string;
   } | null | undefined;
 };
 export type SavedSearchAlertsApp_Test_Query = {
@@ -56,13 +57,15 @@ var v0 = [
     "kind": "Literal",
     "name": "first",
     "value": 10
-  },
-  {
-    "kind": "Literal",
-    "name": "sort",
-    "value": "CREATED_AT_DESC"
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -107,15 +110,15 @@ return {
           {
             "alias": null,
             "args": (v0/*: any*/),
-            "concreteType": "SearchCriteriaConnection",
+            "concreteType": "AlertConnection",
             "kind": "LinkedField",
-            "name": "savedSearchesConnection",
+            "name": "alertsConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "SearchCriteriaEdge",
+                "concreteType": "AlertEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -123,7 +126,7 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "SearchCriteria",
+                    "concreteType": "Alert",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
@@ -184,9 +187,9 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "SavedSearchUserAlertSettings",
+                        "concreteType": "AlertSettings",
                         "kind": "LinkedField",
-                        "name": "userAlertSettings",
+                        "name": "settings",
                         "plural": false,
                         "selections": [
                           {
@@ -199,6 +202,7 @@ return {
                         ],
                         "storageKey": null
                       },
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -245,7 +249,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "savedSearchesConnection(first:10,sort:\"CREATED_AT_DESC\")"
+            "storageKey": "alertsConnection(first:10)"
           },
           {
             "alias": null,
@@ -254,29 +258,23 @@ return {
               "sort"
             ],
             "handle": "connection",
-            "key": "SavedSearchAlertsApp_savedSearchesConnection",
+            "key": "SavedSearchAlertsApp_alertsConnection",
             "kind": "LinkedHandle",
-            "name": "savedSearchesConnection"
+            "name": "alertsConnection"
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "d694a047f72182dfd8ab73b4fc9953e6",
+    "cacheID": "db8c8725b246ffc251cd193ecb02826c",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsApp_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

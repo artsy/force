@@ -5,14 +5,16 @@ import {
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { DEFAULT_METRIC } from "Utils/metrics"
-import { FilterPill } from "./types"
+import { FilterPill, SearchCriteriaAttributes } from "./types"
 import { extractPillsFromCriteria } from "./Utils/extractPills"
 import { getAllowedSearchCriteria } from "./Utils/savedSearchCriteria"
 
 export const useActiveFilterPills = (defaultPills: FilterPill[] = []) => {
   const { aggregations, setFilter, filters } = useArtworkFilterContext()
 
-  const criteria = getAllowedSearchCriteria(filters ?? {})
+  const criteria = getAllowedSearchCriteria(
+    (filters as SearchCriteriaAttributes) ?? {}
+  )
 
   const metric = filters?.metric ?? DEFAULT_METRIC
 

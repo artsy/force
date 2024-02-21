@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7d3dbc5deb9febfebe7d6831a2a1458a>>
+ * @generated SignedSource<<4e06b81167afe92a280b9c522d534872>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,54 +9,52 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type UserSearchCriteriaFrequency = "daily" | "instant" | "%future added value";
-export type CreateSavedSearchInput = {
-  attributes: SearchCriteriaAttributes;
-  clientMutationId?: string | null | undefined;
-  userAlertSettings?: UserAlertSettingsInput | null | undefined;
-};
-export type SearchCriteriaAttributes = {
+export type AlertSettingsFrequency = "DAILY" | "INSTANT" | "%future added value";
+export type createAlertInput = {
   acquireable?: boolean | null | undefined;
-  additionalGeneIDs?: ReadonlyArray<string> | null | undefined;
-  artistID?: string | null | undefined;
-  artistIDs?: ReadonlyArray<string> | null | undefined;
-  artistSeriesIDs?: ReadonlyArray<string> | null | undefined;
+  additionalGeneIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  artistIDs: ReadonlyArray<string | null | undefined>;
+  artistSeriesIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
   atAuction?: boolean | null | undefined;
-  attributionClass?: ReadonlyArray<string> | null | undefined;
-  colors?: ReadonlyArray<string> | null | undefined;
+  attributionClass?: ReadonlyArray<string | null | undefined> | null | undefined;
+  clientMutationId?: string | null | undefined;
+  colors?: ReadonlyArray<string | null | undefined> | null | undefined;
   dimensionRange?: string | null | undefined;
   height?: string | null | undefined;
   inquireableOnly?: boolean | null | undefined;
   keyword?: string | null | undefined;
-  locationCities?: ReadonlyArray<string> | null | undefined;
-  majorPeriods?: ReadonlyArray<string> | null | undefined;
-  materialsTerms?: ReadonlyArray<string> | null | undefined;
+  locationCities?: ReadonlyArray<string | null | undefined> | null | undefined;
+  majorPeriods?: ReadonlyArray<string | null | undefined> | null | undefined;
+  materialsTerms?: ReadonlyArray<string | null | undefined> | null | undefined;
   offerable?: boolean | null | undefined;
-  partnerIDs?: ReadonlyArray<string> | null | undefined;
+  partnerIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
   priceRange?: string | null | undefined;
-  sizes?: ReadonlyArray<string> | null | undefined;
+  settings?: AlertSettingsInput | null | undefined;
+  sizes?: ReadonlyArray<string | null | undefined> | null | undefined;
   width?: string | null | undefined;
 };
-export type UserAlertSettingsInput = {
+export type AlertSettingsInput = {
   details?: string | null | undefined;
   email?: boolean | null | undefined;
-  frequency?: UserSearchCriteriaFrequency | null | undefined;
+  frequency?: AlertSettingsFrequency | null | undefined;
   name?: string | null | undefined;
   push?: boolean | null | undefined;
 };
 export type useCreateAlertMutation$variables = {
-  input: CreateSavedSearchInput;
+  input: createAlertInput;
 };
 export type useCreateAlertMutation$data = {
-  readonly createSavedSearch: {
-    readonly me: {
-      readonly counts: {
-        readonly savedSearches: number;
+  readonly createAlert: {
+    readonly responseOrError: {
+      readonly alert?: {
+        readonly internalID: string;
       } | null | undefined;
+      readonly me?: {
+        readonly counts: {
+          readonly savedSearches: number;
+        } | null | undefined;
+      };
     } | null | undefined;
-    readonly savedSearchOrErrors: {
-      readonly internalID?: string;
-    };
   } | null | undefined;
 };
 export type useCreateAlertMutation = {
@@ -82,6 +80,13 @@ v1 = [
 v2 = {
   "alias": null,
   "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
   "concreteType": "MeCounts",
   "kind": "LinkedField",
   "name": "counts",
@@ -97,19 +102,12 @@ v2 = {
   ],
   "storageKey": null
 },
-v3 = {
-  "kind": "InlineFragment",
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    }
-  ],
-  "type": "SearchCriteria",
-  "abstractKey": null
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -121,32 +119,50 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateSavedSearchPayload",
+        "concreteType": "createAlertPayload",
         "kind": "LinkedField",
-        "name": "createSavedSearch",
+        "name": "createAlert",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "Me",
-            "kind": "LinkedField",
-            "name": "me",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": null,
             "kind": "LinkedField",
-            "name": "savedSearchOrErrors",
+            "name": "responseOrError",
             "plural": false,
             "selections": [
-              (v3/*: any*/)
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Alert",
+                    "kind": "LinkedField",
+                    "name": "alert",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Me",
+                    "kind": "LinkedField",
+                    "name": "me",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "type": "CreateAlertSuccess",
+                "abstractKey": null
+              }
             ],
             "storageKey": null
           }
@@ -166,36 +182,17 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateSavedSearchPayload",
+        "concreteType": "createAlertPayload",
         "kind": "LinkedField",
-        "name": "createSavedSearch",
+        "name": "createAlert",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "Me",
-            "kind": "LinkedField",
-            "name": "me",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "id",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": null,
             "kind": "LinkedField",
-            "name": "savedSearchOrErrors",
+            "name": "responseOrError",
             "plural": false,
             "selections": [
               {
@@ -205,7 +202,39 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v3/*: any*/)
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Alert",
+                    "kind": "LinkedField",
+                    "name": "alert",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      (v4/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Me",
+                    "kind": "LinkedField",
+                    "name": "me",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      (v4/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "type": "CreateAlertSuccess",
+                "abstractKey": null
+              }
             ],
             "storageKey": null
           }
@@ -215,16 +244,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8729cfb07282420011b03da0ef40bb35",
+    "cacheID": "40b889a2a8e9575180b3e7dcc0aaac2a",
     "id": null,
     "metadata": {},
     "name": "useCreateAlertMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateAlertMutation(\n  $input: CreateSavedSearchInput!\n) {\n  createSavedSearch(input: $input) {\n    me {\n      counts {\n        savedSearches\n      }\n      id\n    }\n    savedSearchOrErrors {\n      __typename\n      ... on SearchCriteria {\n        internalID\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateAlertMutation(\n  $input: createAlertInput!\n) {\n  createAlert(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateAlertSuccess {\n        alert {\n          internalID\n          id\n        }\n        me {\n          counts {\n            savedSearches\n          }\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "642d1ca6dc04d2921a812dd3187a69ab";
+(node as any).hash = "1de2d4dea6fe7c881d083214b64608ed";
 
 export default node;

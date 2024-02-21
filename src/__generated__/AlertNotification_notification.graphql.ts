@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<94273a9b501b1c968a3de7dd60cc74f2>>
+ * @generated SignedSource<<80ff8951471414a76f5e60ccaa77efc9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type AlertNotification_notification$data = {
       readonly internalID: string;
       readonly labels: ReadonlyArray<{
         readonly displayValue: string;
-      } | null | undefined>;
+      }>;
     } | null | undefined;
   } | null | undefined;
   readonly notificationType: NotificationTypesEnum;

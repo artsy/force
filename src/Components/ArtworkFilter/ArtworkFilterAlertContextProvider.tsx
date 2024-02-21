@@ -18,7 +18,9 @@ export const ArtworkFilterAlertContextProvider: FC<ArtworkFilterAlertContextProv
   ...rest
 }) => {
   const filters = useCurrentlySelectedFilters()
-  const allowedFilters = getAllowedSearchCriteria(filters)
+  const allowedFilters = getAllowedSearchCriteria(
+    filters as SearchCriteriaAttributes
+  )
 
   const criteria = {
     ...allowedFilters,

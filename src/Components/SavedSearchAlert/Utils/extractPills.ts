@@ -284,9 +284,12 @@ export const extractPills = ({
   entity?: SavedSearchEntity
   metric?: Metric
 }) => {
-  const defaultCriteria = entity?.defaultCriteria ?? {}
+  const defaultCriteria = entity?.defaultCriteria ?? { artistIDs: [] }
   const defaultPills = extractPillsFromDefaultCriteria(defaultCriteria)
-  const excludedCriteria = excludeDefaultCriteria(criteria, defaultCriteria)
+  const excludedCriteria = excludeDefaultCriteria(
+    criteria,
+    defaultCriteria
+  ) as { artistIDs: string[] }
   const pillsFromCriteria = extractPillsFromCriteria({
     criteria: excludedCriteria,
     aggregations,

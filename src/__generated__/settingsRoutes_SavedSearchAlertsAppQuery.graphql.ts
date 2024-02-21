@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<49ef32c8a0dfafacb00af43a59fb2b6c>>
+ * @generated SignedSource<<c973fec4642b1765dff86ab98a4f18ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,13 +27,15 @@ var v0 = [
     "kind": "Literal",
     "name": "first",
     "value": 10
-  },
-  {
-    "kind": "Literal",
-    "name": "sort",
-    "value": "CREATED_AT_DESC"
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -78,15 +80,15 @@ return {
           {
             "alias": null,
             "args": (v0/*: any*/),
-            "concreteType": "SearchCriteriaConnection",
+            "concreteType": "AlertConnection",
             "kind": "LinkedField",
-            "name": "savedSearchesConnection",
+            "name": "alertsConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "SearchCriteriaEdge",
+                "concreteType": "AlertEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -94,7 +96,7 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "SearchCriteria",
+                    "concreteType": "Alert",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
@@ -155,9 +157,9 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "SavedSearchUserAlertSettings",
+                        "concreteType": "AlertSettings",
                         "kind": "LinkedField",
-                        "name": "userAlertSettings",
+                        "name": "settings",
                         "plural": false,
                         "selections": [
                           {
@@ -170,6 +172,7 @@ return {
                         ],
                         "storageKey": null
                       },
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -216,7 +219,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "savedSearchesConnection(first:10,sort:\"CREATED_AT_DESC\")"
+            "storageKey": "alertsConnection(first:10)"
           },
           {
             "alias": null,
@@ -225,29 +228,23 @@ return {
               "sort"
             ],
             "handle": "connection",
-            "key": "SavedSearchAlertsApp_savedSearchesConnection",
+            "key": "SavedSearchAlertsApp_alertsConnection",
             "kind": "LinkedHandle",
-            "name": "savedSearchesConnection"
+            "name": "alertsConnection"
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "289af4bf8dafbf54e15d68d7f1e3890c",
+    "cacheID": "2a1f1c99f61b9f928725f8c6e4b18771",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_SavedSearchAlertsAppQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsAppQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsAppQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

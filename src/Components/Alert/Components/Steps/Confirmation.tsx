@@ -19,6 +19,7 @@ export const Confirmation: FC = () => {
             dispatch({ type: "RESET" })
           }}
           searchCriteriaId={state.searchCriteriaID as string}
+          alertID={state.alertID as string}
           excludeArtworkIDs={
             state.currentArtworkID ? [state.currentArtworkID] : undefined
           }

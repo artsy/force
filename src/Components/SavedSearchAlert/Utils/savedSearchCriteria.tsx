@@ -23,7 +23,7 @@ export const isDefaultValue = (
 export const getAllowedSearchCriteria = (
   criteria: SearchCriteriaAttributes
 ) => {
-  const allowedCriteria: SearchCriteriaAttributes = {}
+  const allowedCriteria: SearchCriteriaAttributes = { artistIDs: [] }
 
   Object.entries(criteria ?? {}).forEach(entry => {
     const [key, value] = entry
@@ -63,7 +63,9 @@ export const getSearchCriteriaFromFilters = (
   entity: SavedSearchEntity,
   filters: ArtworkFiltersState
 ): SearchCriteriaAttributes => {
-  const allowedFilters = getAllowedSearchCriteria(filters)
+  const allowedFilters = getAllowedSearchCriteria(
+    filters as SearchCriteriaAttributes
+  )
   const defaultCriteria = parseDefaultCriteria(entity.defaultCriteria ?? {})
 
   return {

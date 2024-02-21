@@ -30,6 +30,7 @@ export const useAlertTracking = () => {
     createdAlert: (searchCriteriaID: string) => {
       const payload: ToggledSavedSearch = {
         action: ActionType.toggledSavedSearch,
+        // TODO: Double-check payload and add `search_criteria_id`
         search_criteria_id: searchCriteriaID,
         context_screen_owner_id: contextPageOwnerId,
         context_screen_owner_slug: contextPageOwnerSlug,

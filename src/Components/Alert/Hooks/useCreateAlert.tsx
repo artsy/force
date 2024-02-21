@@ -6,16 +6,18 @@ import { useMutation } from "Utils/Hooks/useMutation"
 export const useCreateAlert = () => {
   return useMutation<useCreateAlertMutation>({
     mutation: graphql`
-      mutation useCreateAlertMutation($input: CreateSavedSearchInput!) {
-        createSavedSearch(input: $input) {
-          me {
-            counts {
-              savedSearches
-            }
-          }
-          savedSearchOrErrors {
-            ... on SearchCriteria {
-              internalID
+      mutation useCreateAlertMutation($input: createAlertInput!) {
+        createAlert(input: $input) {
+          responseOrError {
+            ... on CreateAlertSuccess {
+              alert {
+                internalID
+              }
+              me {
+                counts {
+                  savedSearches
+                }
+              }
             }
           }
         }

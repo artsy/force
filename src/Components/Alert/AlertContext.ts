@@ -23,6 +23,7 @@ export type PreviewSavedSearch = NonNullable<
 export type State = {
   settings: Settings
   criteria: SearchCriteriaAttributes
+  alertID?: string
   searchCriteriaID?: string
   currentArtworkID?: string
   preview: PreviewSavedSearch
@@ -39,7 +40,7 @@ export const DEFAULT_STATE: State = {
     email: true,
     push: false,
   },
-  criteria: {},
+  criteria: { artistIDs: [] },
   preview: null,
   visible: false,
   metric: DEFAULT_METRIC,
@@ -68,6 +69,7 @@ type Action =
     }
   | { type: "SET_SETTINGS"; payload: Settings }
   | { type: "SET_SEARCH_CRITERIA_ID"; payload: string }
+  | { type: "SET_ALERT_ID"; payload: string }
   | { type: "SET_METRIC"; payload: Metric }
 
 export const reducer = (onShow: (State) => State, onReset: () => State) => (
@@ -128,6 +130,12 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
       return {
         ...state,
         searchCriteriaID: action.payload,
+      }
+
+    case "SET_ALERT_ID":
+      return {
+        ...state,
+        alertID: action.payload,
       }
 
     case "SET_SETTINGS":
