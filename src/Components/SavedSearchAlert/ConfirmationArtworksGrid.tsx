@@ -29,13 +29,13 @@ export const NUMBER_OF_ARTWORKS_TO_SHOW = 10
 
 interface ConfirmationArtworksProps {
   artworksConnection: ConfirmationArtworksGridQuery$data["artworksConnection"]
-  searchCriteriaId: string
+  alertID: string
   onClose: () => void
 }
 
 export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
   artworksConnection,
-  searchCriteriaId,
+  alertID,
   onClose,
 }) => {
   const { t } = useTranslation()
@@ -51,7 +51,7 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
 
         <ConfirmationStepFooterQueryRenderer
           artworksCount={artworksCount!}
-          searchCriteriaId={searchCriteriaId}
+          alertID={alertID}
           onClose={onClose}
         />
       </>
@@ -101,7 +101,7 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
 
       <ConfirmationStepFooterQueryRenderer
         artworksCount={artworksCount!}
-        searchCriteriaId={searchCriteriaId}
+        alertID={alertID}
         onClose={onClose}
       />
     </Flex>
@@ -110,13 +110,13 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
 
 interface ConfirmationArtworksGridQueryRendererProps
   extends SearchCriteriaAttributes {
-  searchCriteriaId: string
+  alertID: string
   onClose: () => void
   excludeArtworkIDs?: string[]
 }
 
 export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQueryRendererProps> = props => {
-  const { searchCriteriaId, onClose, excludeArtworkIDs, ...inputProps } = props
+  const { onClose, excludeArtworkIDs, alertID, ...inputProps } = props
 
   return (
     <SystemQueryRenderer<ConfirmationArtworksGridQuery>

@@ -7,7 +7,7 @@ interface SavedSearchAlertHeaderProps {
 }
 
 const SORT_OPTIONS: Option[] = [
-  { value: "CREATED_AT_DESC", text: "Recently Added" },
+  { value: "ENABLED_AT_DESC", text: "Recently Added" },
   { value: "NAME_ASC", text: "Name (A-Z)" },
 ]
 

@@ -73,9 +73,7 @@ describe("PriceFilter", () => {
 
   it("fetches aggreagations and renders price range bars", async () => {
     const { renderWithRelay } = setupTestWrapperTL({
-      Component: () => (
-        <TestRenderer initialCriteria={{ artistIDs: ["artist-id"] }} />
-      ),
+      Component: () => <TestRenderer />,
     })
 
     const { mockResolveLastOperation } = renderWithRelay()

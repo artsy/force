@@ -226,7 +226,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         `,
       },
       {
-        path: "alerts/:searchCriteriaID/edit",
+        path: "alerts/:alertID/edit",
         getComponent: () => AlertsRoute,
         onClientSideRender: () => {
           AlertsRoute.preload()

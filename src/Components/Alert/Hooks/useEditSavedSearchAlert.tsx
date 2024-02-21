@@ -5,15 +5,15 @@ import { useEditSavedSearchAlertMutation } from "__generated__/useEditSavedSearc
 export const useEditSavedSearchAlert = () => {
   return useMutation<useEditSavedSearchAlertMutation>({
     mutation: graphql`
-      mutation useEditSavedSearchAlertMutation(
-        $input: UpdateSavedSearchInput!
-      ) {
-        updateSavedSearch(input: $input) {
-          savedSearchOrErrors {
-            ... on SearchCriteria {
-              internalID
-              userAlertSettings {
-                name
+      mutation useEditSavedSearchAlertMutation($input: updateAlertInput!) {
+        updateAlert(input: $input) {
+          responseOrError {
+            ... on UpdateAlertSuccess {
+              alert {
+                internalID
+                settings {
+                  name
+                }
               }
             }
           }

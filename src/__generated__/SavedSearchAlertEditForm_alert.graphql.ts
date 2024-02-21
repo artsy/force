@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8a72e0320bb0fbd813716e7a0188fe2>>
+ * @generated SignedSource<<80d2c1bdfcb491e6ad34c2559ba733d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,44 +10,44 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertEditForm_searchCriteria$data = {
+export type SavedSearchAlertEditForm_alert$data = {
   readonly acquireable: boolean | null | undefined;
-  readonly additionalGeneIDs: ReadonlyArray<string>;
-  readonly artistIDs: ReadonlyArray<string> | null | undefined;
-  readonly artistSeriesIDs: ReadonlyArray<string>;
+  readonly additionalGeneIDs: ReadonlyArray<string | null | undefined> | null | undefined;
+  readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;
+  readonly artistSeriesIDs: ReadonlyArray<string | null | undefined> | null | undefined;
   readonly atAuction: boolean | null | undefined;
-  readonly attributionClass: ReadonlyArray<string>;
-  readonly colors: ReadonlyArray<string>;
+  readonly attributionClass: ReadonlyArray<string | null | undefined> | null | undefined;
+  readonly colors: ReadonlyArray<string | null | undefined> | null | undefined;
   readonly dimensionRange: string | null | undefined;
   readonly height: string | null | undefined;
   readonly inquireableOnly: boolean | null | undefined;
   readonly internalID: string;
-  readonly locationCities: ReadonlyArray<string>;
-  readonly majorPeriods: ReadonlyArray<string>;
-  readonly materialsTerms: ReadonlyArray<string>;
+  readonly locationCities: ReadonlyArray<string | null | undefined> | null | undefined;
+  readonly majorPeriods: ReadonlyArray<string | null | undefined> | null | undefined;
+  readonly materialsTerms: ReadonlyArray<string | null | undefined> | null | undefined;
   readonly offerable: boolean | null | undefined;
-  readonly partnerIDs: ReadonlyArray<string>;
+  readonly partnerIDs: ReadonlyArray<string | null | undefined> | null | undefined;
   readonly priceRange: string | null | undefined;
-  readonly sizes: ReadonlyArray<string>;
-  readonly userAlertSettings: {
+  readonly settings: {
     readonly details: string | null | undefined;
     readonly email: boolean;
     readonly name: string | null | undefined;
     readonly push: boolean;
   };
+  readonly sizes: ReadonlyArray<string | null | undefined> | null | undefined;
   readonly width: string | null | undefined;
-  readonly " $fragmentType": "SavedSearchAlertEditForm_searchCriteria";
+  readonly " $fragmentType": "SavedSearchAlertEditForm_alert";
 };
-export type SavedSearchAlertEditForm_searchCriteria$key = {
-  readonly " $data"?: SavedSearchAlertEditForm_searchCriteria$data;
-  readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_searchCriteria">;
+export type SavedSearchAlertEditForm_alert$key = {
+  readonly " $data"?: SavedSearchAlertEditForm_alert$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_alert">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SavedSearchAlertEditForm_searchCriteria",
+  "name": "SavedSearchAlertEditForm_alert",
   "selections": [
     {
       "alias": null,
@@ -185,9 +185,9 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "SavedSearchUserAlertSettings",
+      "concreteType": "AlertSettings",
       "kind": "LinkedField",
-      "name": "userAlertSettings",
+      "name": "settings",
       "plural": false,
       "selections": [
         {
@@ -222,10 +222,10 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "SearchCriteria",
+  "type": "Alert",
   "abstractKey": null
 };
 
-(node as any).hash = "3e2d3c86c8e55e44a64781d471d086cc";
+(node as any).hash = "4785e6b553b699302af9da671f2460c3";
 
 export default node;

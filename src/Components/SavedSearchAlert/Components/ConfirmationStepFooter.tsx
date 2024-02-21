@@ -22,7 +22,7 @@ export const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
   onClose,
 }) => {
   const { t } = useTranslation()
-  const savedSearch = me?.savedSearch
+  const savedSearch = me?.alert
 
   return (
     <Flex flexDirection={["column", "row"]} gap={1}>
@@ -31,7 +31,7 @@ export const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
           width="100%"
           // @ts-ignore
           as={RouterLink}
-          to={savedSearch?.href!}
+          to={savedSearch?.href}
           onClick={() => {
             onClose()
           }}
@@ -60,7 +60,7 @@ export const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
 
 interface ConfirmationStepFooterQueryRendererProps {
   artworksCount: number
-  searchCriteriaId: string
+  alertID: string
   onClose: () => void
 }
 
@@ -71,17 +71,17 @@ export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQuery
       // Temporary workaround internalID is requested because there is a bug in Metaphysics. If a user's field is not requested, the
       // query returns null for savedSearch.
       query={graphql`
-        query ConfirmationStepFooterQuery($searchCriteriaId: ID!) {
+        query ConfirmationStepFooterQuery($alertID: String!) {
           me {
             internalID
-            savedSearch(id: $searchCriteriaId) {
+            alert(id: $alertID) {
               href
             }
           }
         }
       `}
       variables={{
-        searchCriteriaId: props.searchCriteriaId,
+        alertID: props.alertID,
       }}
       render={({ props: relayProps, error }) => {
         if (error) {
@@ -89,7 +89,7 @@ export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQuery
           return null
         }
 
-        if (!relayProps?.me?.savedSearch) {
+        if (!relayProps?.me?.alert) {
           return <ConfirmationStepFooterContentPlaceholder />
         }
 
