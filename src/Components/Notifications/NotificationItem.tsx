@@ -132,19 +132,25 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
             </Flex>
           )}
 
-          {shouldDisplayExpiresInTimer(item) && (
-            <ExpiresInTimer
-              expiresAt={item.item?.expiresAt}
-              available={item.item?.available}
-            />
-          )}
+          <Text variant="xs" color="blue100">
+            {getNotificationPrelude(item)}
+          </Text>
 
           <Text fontWeight="bold" variant="sm">
             {item.headline}
           </Text>
+
           {!!subTitle && <Text variant="xs">{subTitle}</Text>}
 
-          <NotificationTypeLabel item={item} />
+          <Flex flexDirection="row" gap={0.5}>
+            <NotificationTypeLabel item={item} />
+            {shouldDisplayExpiresInTimer(item) && (
+              <ExpiresInTimer
+                expiresAt={item.item?.expiresAt}
+                available={item.item?.available}
+              />
+            )}
+          </Flex>
         </Flex>
       ) : (
         <Flex flex={1} flexDirection="column">
@@ -280,6 +286,15 @@ const getNotificationUrl = (notification: NotificationItem_item$data) => {
   }
 
   return notification.targetHref
+}
+
+const getNotificationPrelude = (item: NotificationItem_item$data) => {
+  switch (item.notificationType) {
+    case "PARTNER_OFFER_CREATED":
+      return "Limited Time Offer"
+    default:
+      return null
+  }
 }
 
 const getNotificationSubTitle = (item: NotificationItem_item$data) => {

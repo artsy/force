@@ -1,9 +1,6 @@
 import { Flex, Text } from "@artsy/palette"
 import { NotificationTypesEnum } from "__generated__/NotificationItem_item.graphql"
 
-const HIGHLIGHTED_NOTIFICATION_TYPES: NotificationTypesEnum[] = [
-  "PARTNER_OFFER_CREATED",
-]
 interface Props {
   item: {
     notificationType: NotificationTypesEnum
@@ -16,28 +13,24 @@ export const NotificationTypeLabel: React.FC<Props> = ({ item }) => {
 
   const notificationTypeLabel = getNotificationTypeLabel(notificationType)
 
-  const notificationTypeColor = HIGHLIGHTED_NOTIFICATION_TYPES.includes(
-    notificationType
-  )
-    ? "blue100"
-    : "black100"
+  const showPublishedAt = notificationType !== "PARTNER_OFFER_CREATED"
 
   return (
     <Flex flex-flexDirection="row" alignItems="center" gap="3px">
-      {notificationTypeLabel && (
-        <>
-          <Text
-            variant="xs"
-            color={notificationTypeColor}
-            fontWeight="bold"
-            aria-label={`Notification type: ${notificationTypeLabel}`}
-          >
-            {notificationTypeLabel}
-          </Text>
-          <Text variant="xs">•</Text>
-        </>
+      {!!notificationTypeLabel && (
+        <Text
+          variant="xs"
+          color="black100"
+          fontWeight="bold"
+          aria-label={`Notification type: ${notificationTypeLabel}`}
+        >
+          {notificationTypeLabel}
+        </Text>
       )}
-      <Text variant="xs">{item.publishedAt}</Text>
+      {showPublishedAt && !!notificationTypeLabel && (
+        <Text variant="xs">•</Text>
+      )}
+      {showPublishedAt && <Text variant="xs">{item.publishedAt}</Text>}
     </Flex>
   )
 }
@@ -51,7 +44,7 @@ const getNotificationTypeLabel = (notificationType: NotificationTypesEnum) => {
     case "ARTICLE_FEATURED_ARTIST":
       return "Artsy Editorial"
     case "PARTNER_OFFER_CREATED":
-      return "Limited Time Offer"
+      return "Offer"
     case "PARTNER_SHOW_OPENED":
       return "Show"
     case "VIEWING_ROOM_PUBLISHED":
