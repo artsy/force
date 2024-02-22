@@ -14,7 +14,6 @@ export const ShowInfoLocation: React.FC<ShowInfoLocationProps> = ({
   const location = show.location ?? show.fair?.location
 
   const lines = [
-    location?.display,
     location?.address,
     location?.address2,
     [location?.city, location?.state, location?.country]
