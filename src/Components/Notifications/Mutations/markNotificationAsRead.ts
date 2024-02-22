@@ -25,6 +25,9 @@ export const markNotificationAsRead = (
             responseOrError {
               ... on MarkNotificationAsReadSuccess {
                 success
+                me {
+                  unreadNotificationsCount
+                }
               }
 
               ... on MarkNotificationAsReadFailure {
