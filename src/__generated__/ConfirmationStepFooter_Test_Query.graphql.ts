@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<adb1449b196aa973e59348a9baf48f91>>
+ * @generated SignedSource<<c390b7f37eaf74e0a9a85f7d3340cb63>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,14 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type ConfirmationStepFooter_Test_Query$variables = {
-  searchCriteriaId: string;
+  alertID: string;
 };
 export type ConfirmationStepFooter_Test_Query$data = {
   readonly me: {
-    readonly internalID: string;
-    readonly savedSearch: {
-      readonly href: string;
+    readonly alert: {
+      readonly href: string | null | undefined;
     } | null | undefined;
+    readonly internalID: string;
   } | null | undefined;
 };
 export type ConfirmationStepFooter_Test_Query = {
@@ -30,7 +30,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "searchCriteriaId"
+    "name": "alertID"
   }
 ],
 v1 = {
@@ -40,31 +40,28 @@ v1 = {
   "name": "internalID",
   "storageKey": null
 },
-v2 = {
+v2 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "alertID"
+  }
+],
+v3 = {
   "alias": null,
-  "args": [
-    {
-      "kind": "Variable",
-      "name": "id",
-      "variableName": "searchCriteriaId"
-    }
-  ],
-  "concreteType": "SearchCriteria",
-  "kind": "LinkedField",
-  "name": "savedSearch",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
-    }
-  ],
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
   "storageKey": null
 },
-v3 = {
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -86,7 +83,18 @@ return {
         "plural": false,
         "selections": [
           (v1/*: any*/),
-          (v2/*: any*/)
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "Alert",
+            "kind": "LinkedField",
+            "name": "alert",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
@@ -109,21 +117,27 @@ return {
         "plural": false,
         "selections": [
           (v1/*: any*/),
-          (v2/*: any*/),
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "args": (v2/*: any*/),
+            "concreteType": "Alert",
+            "kind": "LinkedField",
+            "name": "alert",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              (v4/*: any*/)
+            ],
             "storageKey": null
-          }
+          },
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "d6e13f447726f5b9a7d3c0364806cc66",
+    "cacheID": "8a741a905ebc4b68b45db51d0842ef13",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -133,29 +147,30 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v3/*: any*/),
-        "me.internalID": (v3/*: any*/),
-        "me.savedSearch": {
+        "me.alert": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "SearchCriteria"
+          "type": "Alert"
         },
-        "me.savedSearch.href": {
+        "me.alert.href": {
           "enumValues": null,
-          "nullable": false,
+          "nullable": true,
           "plural": false,
           "type": "String"
-        }
+        },
+        "me.alert.id": (v5/*: any*/),
+        "me.id": (v5/*: any*/),
+        "me.internalID": (v5/*: any*/)
       }
     },
     "name": "ConfirmationStepFooter_Test_Query",
     "operationKind": "query",
-    "text": "query ConfirmationStepFooter_Test_Query(\n  $searchCriteriaId: ID!\n) {\n  me {\n    internalID\n    savedSearch(id: $searchCriteriaId) {\n      href\n    }\n    id\n  }\n}\n"
+    "text": "query ConfirmationStepFooter_Test_Query(\n  $alertID: String!\n) {\n  me {\n    internalID\n    alert(id: $alertID) {\n      href\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cdce34495769d494c53b8dfaaa9e9d81";
+(node as any).hash = "21b36afdca2f02a481a7c0fa7ab74161";
 
 export default node;

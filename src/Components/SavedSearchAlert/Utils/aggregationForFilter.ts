@@ -1,5 +1,5 @@
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { aggregationNameFromFilter } from "../constants"
+import { aggregationNameFromFilter } from "Components/SavedSearchAlert/constants"
 
 export const aggregationForFilter = (
   filterKey: string,

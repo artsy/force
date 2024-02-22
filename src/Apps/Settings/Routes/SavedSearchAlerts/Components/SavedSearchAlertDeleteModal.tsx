@@ -1,7 +1,7 @@
 import { Text, Flex, ModalDialog, Button } from "@artsy/palette"
 import { useState } from "react"
 import createLogger from "Utils/logger"
-import { useDeleteSavedSearchAlert } from "Apps/Settings/Routes/SavedSearchAlerts/useDeleteSavedSearchAlert"
+import { useDeleteAlert } from "Apps/Settings/Routes/SavedSearchAlerts/useDeleteAlert"
 import { Media } from "Utils/Responsive"
 
 const logger = createLogger(
@@ -20,7 +20,7 @@ export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalPr
   onDeleted,
 }) => {
   const [isDeleting, setIsDeleting] = useState(false)
-  const { submitMutation: submitDeleteAlert } = useDeleteSavedSearchAlert()
+  const { submitMutation: submitDeleteAlert } = useDeleteAlert()
 
   const deleteAlertById = async () => {
     try {
@@ -28,7 +28,7 @@ export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalPr
       await submitDeleteAlert({
         variables: {
           input: {
-            searchCriteriaID: id,
+            id,
           },
         },
       })
