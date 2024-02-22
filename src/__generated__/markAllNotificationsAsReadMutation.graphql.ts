@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f6b099da723ca78d6342805d7feb23a0>>
+ * @generated SignedSource<<cd06491c330e4ee044f8540eed93a152>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,9 @@ export type markAllNotificationsAsReadMutation$variables = Record<PropertyKey, n
 export type markAllNotificationsAsReadMutation$data = {
   readonly markAllNotificationsAsRead: {
     readonly responseOrError: {
+      readonly me?: {
+        readonly unreadNotificationsCount: number;
+      };
       readonly mutationError?: {
         readonly message: string;
       } | null | undefined;
@@ -34,20 +37,20 @@ var v0 = [
   }
 ],
 v1 = {
-  "kind": "InlineFragment",
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "success",
-      "storageKey": null
-    }
-  ],
-  "type": "MarkAllNotificationsAsReadSuccess",
-  "abstractKey": null
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "success",
+  "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "unreadNotificationsCount",
+  "storageKey": null
+},
+v3 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -95,8 +98,27 @@ return {
             "name": "responseOrError",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
-              (v2/*: any*/)
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Me",
+                    "kind": "LinkedField",
+                    "name": "me",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "type": "MarkAllNotificationsAsReadSuccess",
+                "abstractKey": null
+              },
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -136,8 +158,34 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v1/*: any*/),
-              (v2/*: any*/)
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Me",
+                    "kind": "LinkedField",
+                    "name": "me",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "type": "MarkAllNotificationsAsReadSuccess",
+                "abstractKey": null
+              },
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -147,16 +195,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "aa5b00343c9084c3ae1b6777a79b85a9",
+    "cacheID": "5f27cc9c09d7f032279f77a81770a88f",
     "id": null,
     "metadata": {},
     "name": "markAllNotificationsAsReadMutation",
     "operationKind": "mutation",
-    "text": "mutation markAllNotificationsAsReadMutation {\n  markAllNotificationsAsRead(input: {}) {\n    responseOrError {\n      __typename\n      ... on MarkAllNotificationsAsReadSuccess {\n        success\n      }\n      ... on MarkAllNotificationsAsReadFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation markAllNotificationsAsReadMutation {\n  markAllNotificationsAsRead(input: {}) {\n    responseOrError {\n      __typename\n      ... on MarkAllNotificationsAsReadSuccess {\n        success\n        me {\n          unreadNotificationsCount\n          id\n        }\n      }\n      ... on MarkAllNotificationsAsReadFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "69f2b3bf625a94023e88f559683ecd66";
+(node as any).hash = "8c8e4533699e6daadb9983c781b64c54";
 
 export default node;

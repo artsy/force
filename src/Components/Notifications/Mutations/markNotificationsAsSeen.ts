@@ -32,6 +32,9 @@ export const markNotificationsAsSeen = (
             responseOrError {
               ... on MarkNotificationsAsSeenSuccess {
                 success
+                me {
+                  unseenNotificationsCount
+                }
               }
               ... on MarkNotificationsAsSeenFailure {
                 mutationError {
