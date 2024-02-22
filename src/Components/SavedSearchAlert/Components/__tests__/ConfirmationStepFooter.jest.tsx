@@ -13,11 +13,11 @@ describe("ConfirmationStepFooter", () => {
   >({
     Component: ConfirmationStepFooter,
     query: graphql`
-      query ConfirmationStepFooter_Test_Query($searchCriteriaId: ID!)
+      query ConfirmationStepFooter_Test_Query($alertID: String!)
         @relay_test_operation {
         me {
           internalID
-          savedSearch(id: $searchCriteriaId) {
+          alert(id: $alertID) {
             href
           }
         }
@@ -30,13 +30,13 @@ describe("ConfirmationStepFooter", () => {
       {
         Me: () => ({
           internalID: "1234",
-          savedSearch: {
+          alert: {
             href:
               "/artist/banksy?sort=-published_at&attribution_class%5B0%5D=unique&additional_gene_ids%5B0%5D=prints&for_sale=true&search_criteria_id=289e87de-97e7-4c36-87aa-9fcd479b46b7",
           },
         }),
       },
-      { artworksCount: artworksCount }
+      { artworksCount }
     )
   }
 

@@ -29,7 +29,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
   variant,
   onEditAlertClick,
 }) => {
-  const viewAllHref = `${item.href}&search_criteria_id=${item.internalID}`
+  const viewAllHref = item.href
   const [isExpanded, setIsExpanded] = useState(false)
   const Icon = isExpanded ? ChevronUpIcon : ChevronDownIcon
 
