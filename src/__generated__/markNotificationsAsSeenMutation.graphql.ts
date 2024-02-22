@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<483bffe39929657563220006ebf9838d>>
+ * @generated SignedSource<<a91515755c22c1a2e7082ed4e7ffaee6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,9 @@ export type markNotificationsAsSeenMutation$variables = {
 export type markNotificationsAsSeenMutation$data = {
   readonly markNotificationsAsSeen: {
     readonly responseOrError: {
+      readonly me?: {
+        readonly unseenNotificationsCount: number;
+      };
       readonly mutationError?: {
         readonly message: string;
       } | null | undefined;
@@ -47,20 +50,20 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "InlineFragment",
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "success",
-      "storageKey": null
-    }
-  ],
-  "type": "MarkNotificationsAsSeenSuccess",
-  "abstractKey": null
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "success",
+  "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "unseenNotificationsCount",
+  "storageKey": null
+},
+v4 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -108,8 +111,27 @@ return {
             "name": "responseOrError",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/)
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v2/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Me",
+                    "kind": "LinkedField",
+                    "name": "me",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "type": "MarkNotificationsAsSeenSuccess",
+                "abstractKey": null
+              },
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -149,8 +171,34 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v2/*: any*/),
-              (v3/*: any*/)
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v2/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Me",
+                    "kind": "LinkedField",
+                    "name": "me",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "type": "MarkNotificationsAsSeenSuccess",
+                "abstractKey": null
+              },
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -160,16 +208,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "16cb900fff6e2d536010fe0a0c0966f3",
+    "cacheID": "392e4e71632d824620f3db01d34ae186",
     "id": null,
     "metadata": {},
     "name": "markNotificationsAsSeenMutation",
     "operationKind": "mutation",
-    "text": "mutation markNotificationsAsSeenMutation(\n  $input: MarkNotificationsAsSeenInput!\n) {\n  markNotificationsAsSeen(input: $input) {\n    responseOrError {\n      __typename\n      ... on MarkNotificationsAsSeenSuccess {\n        success\n      }\n      ... on MarkNotificationsAsSeenFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation markNotificationsAsSeenMutation(\n  $input: MarkNotificationsAsSeenInput!\n) {\n  markNotificationsAsSeen(input: $input) {\n    responseOrError {\n      __typename\n      ... on MarkNotificationsAsSeenSuccess {\n        success\n        me {\n          unseenNotificationsCount\n          id\n        }\n      }\n      ... on MarkNotificationsAsSeenFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "471062a68c5acb14e8edfcadb817d96d";
+(node as any).hash = "038e527ef0cd8d8d83960838c0cb36bd";
 
 export default node;

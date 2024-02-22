@@ -41,6 +41,9 @@ export const markAllNotificationsAsRead = (
             responseOrError {
               ... on MarkAllNotificationsAsReadSuccess {
                 success
+                me {
+                  unreadNotificationsCount
+                }
               }
               ... on MarkAllNotificationsAsReadFailure {
                 mutationError {
