@@ -21,6 +21,7 @@ import { ViewingRoomPublishedNotification } from "Components/Notifications/Viewi
 import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
 import { useSystemContext } from "System/SystemContext"
 import createLogger from "Utils/logger"
+import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 
 const logger = createLogger("NotificationItem")
 
@@ -85,11 +86,7 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
   }
 
   if (!data.me?.notification) {
-    return (
-      <Text variant="lg" m={4}>
-        Sorry, something went wrong.
-      </Text>
-    )
+    return <NotificationErrorMessage />
   }
 
   switch (notification?.notificationType) {

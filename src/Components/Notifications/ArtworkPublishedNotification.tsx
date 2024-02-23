@@ -6,6 +6,7 @@ import { useFragment, graphql } from "react-relay"
 import { ArtworkPublishedNotification_notification$key } from "__generated__/ArtworkPublishedNotification_notification.graphql"
 import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
 import { NotificationArtworkList } from "Components/Notifications/NotificationArtworkList"
+import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 
 interface ArtworkPublishedNotificationProps {
   notification: ArtworkPublishedNotification_notification$key
@@ -24,7 +25,7 @@ export const ArtworkPublishedNotification: FC<ArtworkPublishedNotificationProps>
   const artist = item?.artists?.[0]
 
   if (!artist) {
-    return <Text variant="lg">Sorry, something went wrong.</Text>
+    return <NotificationErrorMessage />
   }
 
   return (
