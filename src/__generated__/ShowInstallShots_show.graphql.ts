@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2a2d5fc60ea1e7c1df2dfe0991f25150>>
+ * @generated SignedSource<<04de00ed2c69c5347fe805135c64b655>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,18 +12,13 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowInstallShots_show$data = {
   readonly images: ReadonlyArray<{
+    readonly blurhashDataURL: string | null | undefined;
     readonly caption: string | null | undefined;
-    readonly desktop: {
-      readonly height: number | null | undefined;
-      readonly src: string;
-      readonly srcSet: string;
-      readonly width: number | null | undefined;
-    } | null | undefined;
+    readonly height: number | null | undefined;
     readonly internalID: string | null | undefined;
-    readonly mobile: {
-      readonly height: number | null | undefined;
-      readonly width: number | null | undefined;
-    } | null | undefined;
+    readonly src: string | null | undefined;
+    readonly versions: ReadonlyArray<string | null | undefined> | null | undefined;
+    readonly width: number | null | undefined;
     readonly zoom: {
       readonly height: number | null | undefined;
       readonly src: string;
@@ -41,52 +36,19 @@ export type ShowInstallShots_show$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "Literal",
-  "name": "quality",
-  "value": 85
-},
-v1 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "main",
-    "normalized",
-    "larger",
-    "large"
-  ]
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v3 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
-},
-v4 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  },
-  (v2/*: any*/),
-  (v3/*: any*/)
-];
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -134,43 +96,36 @@ return {
           "storageKey": null
         },
         {
-          "alias": "mobile",
+          "alias": "src",
           "args": [
-            (v0/*: any*/),
-            (v1/*: any*/),
             {
               "kind": "Literal",
-              "name": "width",
-              "value": 200
+              "name": "version",
+              "value": [
+                "larger",
+                "large"
+              ]
             }
           ],
-          "concreteType": "ResizedImageUrl",
-          "kind": "LinkedField",
-          "name": "resized",
-          "plural": false,
-          "selections": [
-            (v2/*: any*/),
-            (v3/*: any*/)
-          ],
-          "storageKey": "resized(quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:200)"
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:[\"larger\",\"large\"])"
+        },
+        (v0/*: any*/),
+        (v1/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "versions",
+          "storageKey": null
         },
         {
-          "alias": "desktop",
-          "args": [
-            (v0/*: any*/),
-            (v1/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 325
-            }
-          ],
-          "concreteType": "ResizedImageUrl",
-          "kind": "LinkedField",
-          "name": "resized",
-          "plural": false,
-          "selections": (v4/*: any*/),
-          "storageKey": "resized(quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:325)"
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhashDataURL",
+          "storageKey": null
         },
         {
           "alias": "zoom",
@@ -180,8 +135,21 @@ return {
               "name": "height",
               "value": 900
             },
-            (v0/*: any*/),
-            (v1/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "quality",
+              "value": 85
+            },
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "main",
+                "normalized",
+                "larger",
+                "large"
+              ]
+            },
             {
               "kind": "Literal",
               "name": "width",
@@ -192,7 +160,24 @@ return {
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v4/*: any*/),
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
+            },
+            (v0/*: any*/),
+            (v1/*: any*/)
+          ],
           "storageKey": "resized(height:900,quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:900)"
         }
       ],
@@ -204,6 +189,6 @@ return {
 };
 })();
 
-(node as any).hash = "3439e5399514191f97f1b0403e53f6cf";
+(node as any).hash = "f2b6459acd74ed0edb9c617d9e1a6269";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0360038801192f94a0f32e3a93087363>>
+ * @generated SignedSource<<956a4d0c1d575b6f7501629ff0124391>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,71 +30,32 @@ var v0 = [
   }
 ],
 v1 = {
-  "kind": "Literal",
-  "name": "quality",
-  "value": 85
-},
-v2 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "main",
-    "normalized",
-    "larger",
-    "large"
-  ]
-},
-v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v4 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v5 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  },
-  (v3/*: any*/),
-  (v4/*: any*/)
-],
-v6 = {
+v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v7 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "ResizedImageUrl"
-},
-v8 = {
+v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Int"
 },
-v9 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -182,43 +143,36 @@ return {
                 "storageKey": null
               },
               {
-                "alias": "mobile",
+                "alias": "src",
                 "args": [
-                  (v1/*: any*/),
-                  (v2/*: any*/),
                   {
                     "kind": "Literal",
-                    "name": "width",
-                    "value": 200
+                    "name": "version",
+                    "value": [
+                      "larger",
+                      "large"
+                    ]
                   }
                 ],
-                "concreteType": "ResizedImageUrl",
-                "kind": "LinkedField",
-                "name": "resized",
-                "plural": false,
-                "selections": [
-                  (v3/*: any*/),
-                  (v4/*: any*/)
-                ],
-                "storageKey": "resized(quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:200)"
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:[\"larger\",\"large\"])"
+              },
+              (v1/*: any*/),
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "versions",
+                "storageKey": null
               },
               {
-                "alias": "desktop",
-                "args": [
-                  (v1/*: any*/),
-                  (v2/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 325
-                  }
-                ],
-                "concreteType": "ResizedImageUrl",
-                "kind": "LinkedField",
-                "name": "resized",
-                "plural": false,
-                "selections": (v5/*: any*/),
-                "storageKey": "resized(quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:325)"
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blurhashDataURL",
+                "storageKey": null
               },
               {
                 "alias": "zoom",
@@ -228,8 +182,21 @@ return {
                     "name": "height",
                     "value": 900
                   },
-                  (v1/*: any*/),
-                  (v2/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "quality",
+                    "value": 85
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": [
+                      "main",
+                      "normalized",
+                      "larger",
+                      "large"
+                    ]
+                  },
                   {
                     "kind": "Literal",
                     "name": "width",
@@ -240,7 +207,24 @@ return {
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "src",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "srcSet",
+                    "storageKey": null
+                  },
+                  (v1/*: any*/),
+                  (v2/*: any*/)
+                ],
                 "storageKey": "resized(height:900,quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:900)"
               }
             ],
@@ -259,7 +243,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "90b7fae04cb63ae9411297f879fd8a5a",
+    "cacheID": "00d0be7957863981c565fdd39a848257",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -281,32 +265,39 @@ return {
           "plural": true,
           "type": "Image"
         },
-        "show.images.caption": (v6/*: any*/),
-        "show.images.desktop": (v7/*: any*/),
-        "show.images.desktop.height": (v8/*: any*/),
-        "show.images.desktop.src": (v9/*: any*/),
-        "show.images.desktop.srcSet": (v9/*: any*/),
-        "show.images.desktop.width": (v8/*: any*/),
+        "show.images.blurhashDataURL": (v3/*: any*/),
+        "show.images.caption": (v3/*: any*/),
+        "show.images.height": (v4/*: any*/),
         "show.images.internalID": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ID"
         },
-        "show.images.mobile": (v7/*: any*/),
-        "show.images.mobile.height": (v8/*: any*/),
-        "show.images.mobile.width": (v8/*: any*/),
-        "show.images.zoom": (v7/*: any*/),
-        "show.images.zoom.height": (v8/*: any*/),
-        "show.images.zoom.src": (v9/*: any*/),
-        "show.images.zoom.srcSet": (v9/*: any*/),
-        "show.images.zoom.width": (v8/*: any*/),
-        "show.name": (v6/*: any*/)
+        "show.images.src": (v3/*: any*/),
+        "show.images.versions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "String"
+        },
+        "show.images.width": (v4/*: any*/),
+        "show.images.zoom": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "show.images.zoom.height": (v4/*: any*/),
+        "show.images.zoom.src": (v5/*: any*/),
+        "show.images.zoom.srcSet": (v5/*: any*/),
+        "show.images.zoom.width": (v4/*: any*/),
+        "show.name": (v3/*: any*/)
       }
     },
     "name": "ShowInstallShots_Test_Query",
     "operationKind": "query",
-    "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    mobile: resized(quality: 85, width: 200, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n    }\n    desktop: resized(quality: 85, width: 325, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    zoom: resized(quality: 85, width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
+    "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    versions\n    blurhashDataURL\n    zoom: resized(quality: 85, width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
   }
 };
 })();
