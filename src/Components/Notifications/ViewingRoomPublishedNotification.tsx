@@ -7,6 +7,7 @@ import { ViewingRoomPublishedNotification_notification$key } from "__generated__
 import { ContextModule } from "@artsy/cohesion"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { NotificationViewingRoomsList } from "Components/Notifications/NotificationViewingRoomsList"
+import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 
 interface ViewingRoomPublishedNotificationProps {
   notification: ViewingRoomPublishedNotification_notification$key
@@ -26,11 +27,7 @@ export const ViewingRoomPublishedNotification: FC<ViewingRoomPublishedNotificati
   const profile = partner?.profile
 
   if (!profile) {
-    return (
-      <Text variant="lg" m={4}>
-        Sorry, something went wrong.
-      </Text>
-    )
+    return <NotificationErrorMessage />
   }
 
   return (

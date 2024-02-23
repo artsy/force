@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8484fab65e215e99d4c6807bf09634bf>>
+ * @generated SignedSource<<9f6d015cf529d3eebf77c4889f51d260>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchesSortEnum = "CREATED_AT_DESC" | "NAME_ASC" | "%future added value";
+export type AlertsConnectionSortEnum = "ENABLED_AT_DESC" | "NAME_ASC" | "%future added value";
 export type SavedSearchAlertsAppRefetchQuery$variables = {
   after?: string | null | undefined;
   count: number;
-  sort?: SavedSearchesSortEnum | null | undefined;
+  sort?: AlertsConnectionSortEnum | null | undefined;
 };
 export type SavedSearchAlertsAppRefetchQuery$data = {
   readonly me: {
@@ -62,7 +62,14 @@ v3 = [
     "variableName": "count"
   },
   (v2/*: any*/)
-];
+],
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -115,15 +122,15 @@ return {
           {
             "alias": null,
             "args": (v3/*: any*/),
-            "concreteType": "SearchCriteriaConnection",
+            "concreteType": "AlertConnection",
             "kind": "LinkedField",
-            "name": "savedSearchesConnection",
+            "name": "alertsConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "SearchCriteriaEdge",
+                "concreteType": "AlertEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -131,7 +138,7 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "SearchCriteria",
+                    "concreteType": "Alert",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
@@ -192,9 +199,9 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "SavedSearchUserAlertSettings",
+                        "concreteType": "AlertSettings",
                         "kind": "LinkedField",
-                        "name": "userAlertSettings",
+                        "name": "settings",
                         "plural": false,
                         "selections": [
                           {
@@ -207,6 +214,7 @@ return {
                         ],
                         "storageKey": null
                       },
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -262,33 +270,27 @@ return {
               "sort"
             ],
             "handle": "connection",
-            "key": "SavedSearchAlertsApp_savedSearchesConnection",
+            "key": "SavedSearchAlertsApp_alertsConnection",
             "kind": "LinkedHandle",
-            "name": "savedSearchesConnection"
+            "name": "alertsConnection"
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "bb3ba5f4e2141ef7c795604d7d68f028",
+    "cacheID": "882570a20d383b6f34c73cbbb67aaa1c",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsAppRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n  $sort: SavedSearchesSortEnum\n) {\n  me {\n    ...SavedSearchAlertsApp_me_3P8D4U\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_3P8D4U on Me {\n  savedSearchesConnection(first: $count, after: $after, sort: $sort) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n  $sort: AlertsConnectionSortEnum\n) {\n  me {\n    ...SavedSearchAlertsApp_me_3P8D4U\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_3P8D4U on Me {\n  alertsConnection(first: $count, after: $after, sort: $sort) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cc3a87efafde010064adaeb79d565e4c";
+(node as any).hash = "448e1293c76ccf18d062604741c8baeb";
 
 export default node;

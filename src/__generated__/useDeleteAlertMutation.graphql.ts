@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c40027bf177611baaed8346b3cfae3e7>>
+ * @generated SignedSource<<69bc6a65b9da04853a7ab99dc079faa4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,56 +9,25 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type AlertSettingsFrequency = "DAILY" | "INSTANT" | "%future added value";
-export type updateAlertInput = {
-  acquireable?: boolean | null | undefined;
-  additionalGeneIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
-  artistIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
-  artistSeriesIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
-  atAuction?: boolean | null | undefined;
-  attributionClass?: ReadonlyArray<string | null | undefined> | null | undefined;
+export type deleteAlertInput = {
   clientMutationId?: string | null | undefined;
-  colors?: ReadonlyArray<string | null | undefined> | null | undefined;
-  dimensionRange?: string | null | undefined;
-  height?: string | null | undefined;
   id: string;
-  inquireableOnly?: boolean | null | undefined;
-  keyword?: string | null | undefined;
-  locationCities?: ReadonlyArray<string | null | undefined> | null | undefined;
-  majorPeriods?: ReadonlyArray<string | null | undefined> | null | undefined;
-  materialsTerms?: ReadonlyArray<string | null | undefined> | null | undefined;
-  offerable?: boolean | null | undefined;
-  partnerIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
-  priceRange?: string | null | undefined;
-  settings?: AlertSettingsInput | null | undefined;
-  sizes?: ReadonlyArray<string | null | undefined> | null | undefined;
-  width?: string | null | undefined;
 };
-export type AlertSettingsInput = {
-  details?: string | null | undefined;
-  email?: boolean | null | undefined;
-  frequency?: AlertSettingsFrequency | null | undefined;
-  name?: string | null | undefined;
-  push?: boolean | null | undefined;
+export type useDeleteAlertMutation$variables = {
+  input: deleteAlertInput;
 };
-export type useEditSavedSearchAlertMutation$variables = {
-  input: updateAlertInput;
-};
-export type useEditSavedSearchAlertMutation$data = {
-  readonly updateAlert: {
+export type useDeleteAlertMutation$data = {
+  readonly deleteAlert: {
     readonly responseOrError: {
       readonly alert?: {
         readonly internalID: string;
-        readonly settings: {
-          readonly name: string | null | undefined;
-        };
       } | null | undefined;
     } | null | undefined;
   } | null | undefined;
 };
-export type useEditSavedSearchAlertMutation = {
-  response: useEditSavedSearchAlertMutation$data;
-  variables: useEditSavedSearchAlertMutation$variables;
+export type useDeleteAlertMutation = {
+  response: useDeleteAlertMutation$data;
+  variables: useDeleteAlertMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -82,38 +51,20 @@ v2 = {
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "AlertSettings",
-  "kind": "LinkedField",
-  "name": "settings",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    }
-  ],
-  "storageKey": null
 };
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useEditSavedSearchAlertMutation",
+    "name": "useDeleteAlertMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "updateAlertPayload",
+        "concreteType": "deleteAlertPayload",
         "kind": "LinkedField",
-        "name": "updateAlert",
+        "name": "deleteAlert",
         "plural": false,
         "selections": [
           {
@@ -135,13 +86,12 @@ return {
                     "name": "alert",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v3/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
-                "type": "UpdateAlertSuccess",
+                "type": "DeleteAlertSuccess",
                 "abstractKey": null
               }
             ],
@@ -158,14 +108,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useEditSavedSearchAlertMutation",
+    "name": "useDeleteAlertMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "updateAlertPayload",
+        "concreteType": "deleteAlertPayload",
         "kind": "LinkedField",
-        "name": "updateAlert",
+        "name": "deleteAlert",
         "plural": false,
         "selections": [
           {
@@ -195,7 +145,6 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -207,7 +156,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "UpdateAlertSuccess",
+                "type": "DeleteAlertSuccess",
                 "abstractKey": null
               }
             ],
@@ -219,16 +168,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2e55e43636430de4eefcf034e62cfea9",
+    "cacheID": "e3a4147ddbd03c8d806b279493ec4f7e",
     "id": null,
     "metadata": {},
-    "name": "useEditSavedSearchAlertMutation",
+    "name": "useDeleteAlertMutation",
     "operationKind": "mutation",
-    "text": "mutation useEditSavedSearchAlertMutation(\n  $input: updateAlertInput!\n) {\n  updateAlert(input: $input) {\n    responseOrError {\n      __typename\n      ... on UpdateAlertSuccess {\n        alert {\n          internalID\n          settings {\n            name\n          }\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useDeleteAlertMutation(\n  $input: deleteAlertInput!\n) {\n  deleteAlert(input: $input) {\n    responseOrError {\n      __typename\n      ... on DeleteAlertSuccess {\n        alert {\n          internalID\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "825327cbbe26e00ee9810501cc376585";
+(node as any).hash = "fcb2784d6ccf26ec63e896d7f70b682a";
 
 export default node;

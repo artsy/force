@@ -36,6 +36,7 @@ interface AlertProviderProps {
   initialSettings?: Settings
   currentArtworkID?: string
   searchCriteriaID?: string
+  alertID?: string
   visible?: boolean
   metric?: Metric
   isEditMode?: boolean
@@ -47,6 +48,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   initialSettings,
   currentArtworkID,
   searchCriteriaID,
+  alertID,
   visible,
   metric,
   isEditMode,
@@ -54,7 +56,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   const { createdAlert } = useAlertTracking()
   const { showAuthDialog } = useAuthDialog()
   const { value, clearValue } = useAuthIntent()
-  const { submitMutation } = useCreateAlert()
+  const { submitMutation: submitCreateAlert } = useCreateAlert()
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
   const { sendToast } = useToasts()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
@@ -70,6 +72,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     criteria: getAllowedSearchCriteria(initialCriteria ?? {}),
     currentArtworkID,
     searchCriteriaID,
+    alertID,
     preview: null,
     visible: visible ?? false,
     isEditMode,
@@ -91,7 +94,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   }, [initialCriteria, isEditMode])
 
   const handleCompleteEdit = async () => {
-    if (!searchCriteriaID) {
+    if (!alertID) {
       return sendToast({
         variant: "error",
         message: t("common.errors.somethingWentWrong"),
@@ -101,9 +104,9 @@ export const AlertProvider: FC<AlertProviderProps> = ({
       await submitEditAlert({
         variables: {
           input: {
-            searchCriteriaID: searchCriteriaID,
-            attributes: state.criteria,
-            userAlertSettings: state.settings,
+            id: alertID,
+            ...state.criteria,
+            settings: state.settings,
           },
         },
       })
@@ -115,26 +118,33 @@ export const AlertProvider: FC<AlertProviderProps> = ({
 
   const handleComplete = async () => {
     try {
-      const reponse = await submitMutation({
+      const reponse = await submitCreateAlert({
         variables: {
           input: {
-            attributes: state.criteria,
-            userAlertSettings: state.settings,
-          },
+            ...state.criteria,
+            settings: state.settings,
+          } as { artistIDs: string[] }, // artistIDs is required in the input type
         },
       })
 
+      const alertID = reponse.createAlert?.responseOrError?.alert?.internalID
       const searchCriteriaID =
-        reponse.createSavedSearch?.savedSearchOrErrors.internalID
+        reponse.createAlert?.responseOrError?.alert?.searchCriteriaID
+      if (alertID) {
+        dispatch({
+          type: "SET_ALERT_ID",
+          payload: alertID,
+        })
+      }
 
       if (searchCriteriaID) {
         dispatch({
           type: "SET_SEARCH_CRITERIA_ID",
           payload: searchCriteriaID,
         })
-
         createdAlert(searchCriteriaID)
       }
+
       setCurrent("ALERT_CONFIRMATION")
     } catch (error) {
       console.error("Alert/useAlertContext", error)

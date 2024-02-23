@@ -10,7 +10,6 @@ import {
 } from "@artsy/palette"
 import { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEditFormQuery.graphql"
 import { SavedSearchAlertEditForm_viewer$data } from "__generated__/SavedSearchAlertEditForm_viewer.graphql"
-
 import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -43,7 +42,7 @@ interface SavedSearchAlertEditFormQueryRendererProps {
 interface SavedSearchAlertEditStepsProps {
   savedSearch: NonNullable<
     SavedSearchAlertEditFormQuery["response"]["me"]
-  >["savedSearch"]
+  >["alert"]
   viewer: SavedSearchAlertEditForm_viewer$data
   onDeleteClick: () => void
   onCompleted: () => void
@@ -243,7 +242,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
       }
     `,
     savedSearch: graphql`
-      fragment SavedSearchAlertEditForm_searchCriteria on SearchCriteria {
+      fragment SavedSearchAlertEditForm_alert on Alert {
         internalID
         acquireable
         additionalGeneIDs
@@ -263,7 +262,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
         offerable
         partnerIDs
         priceRange
-        userAlertSettings {
+        settings {
           name
           email
           push
@@ -283,13 +282,13 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
   return (
     <SystemQueryRenderer<SavedSearchAlertEditFormQuery>
       query={graphql`
-        query SavedSearchAlertEditFormQuery($id: ID!) {
+        query SavedSearchAlertEditFormQuery($id: String!) {
           viewer {
             ...SavedSearchAlertEditForm_viewer
           }
           me {
-            savedSearch(id: $id) {
-              ...SavedSearchAlertEditForm_searchCriteria @relay(mask: false)
+            alert(id: $id) {
+              ...SavedSearchAlertEditForm_alert @relay(mask: false)
             }
           }
         }
@@ -305,26 +304,26 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           return null
         }
 
-        if (!props?.me?.savedSearch || !props?.viewer) {
+        if (!props?.me?.alert || !props?.viewer) {
           return <SavedSearchAlertEditFormPlaceholder />
         }
 
         return (
           <AlertProvider
             initialCriteria={getAllowedSearchCriteria(
-              (props.me.savedSearch as unknown) as SearchCriteriaAttributes
+              (props.me.alert as unknown) as SearchCriteriaAttributes
             )}
-            searchCriteriaID={props.me.savedSearch.internalID}
+            alertID={props.me.alert.internalID}
             initialSettings={{
-              name: props.me.savedSearch.userAlertSettings.name ?? "",
-              push: props.me.savedSearch.userAlertSettings.push,
-              email: props.me.savedSearch.userAlertSettings.email,
-              details: props?.me?.savedSearch.userAlertSettings.details ?? "",
+              name: props.me.alert.settings.name ?? "",
+              push: props.me.alert.settings.push,
+              email: props.me.alert.settings.email,
+              details: props?.me?.alert.settings.details ?? "",
             }}
             isEditMode
           >
             <SavedSearchAlertEditFormFragmentContainer
-              savedSearch={props.me.savedSearch}
+              savedSearch={props.me.alert}
               viewer={props.viewer}
               onDeleteClick={onDeleteClick}
               onCompleted={onCompleted}

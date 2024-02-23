@@ -1,81 +1,91 @@
-import { useState } from "react"
-import * as React from "react"
+import { FC, useState } from "react"
 import {
-  BoxProps,
+  Box,
   Clickable,
   Image,
   ModalBase,
-  ResponsiveBox,
   Shelf,
   Text,
   useTheme,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ShowInstallShots_show$data } from "__generated__/ShowInstallShots_show.graphql"
 import { compact } from "lodash"
+import { createFragmentContainer, graphql } from "react-relay"
+import { maxDimensionsByArea, resized } from "Utils/resized"
+import { ShowInstallShots_show$data } from "__generated__/ShowInstallShots_show.graphql"
+import { themeGet } from "@styled-system/theme-get"
+import { useCursor } from "use-cursor"
+import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
+import styled from "styled-components"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import { FullscreenBox } from "Components/FullscreenBox"
 
-export interface CarouselProps extends BoxProps {
-  children: JSX.Element | JSX.Element[]
-  arrowHeight?: number
-  onChange?(index: number): void
-  onPageCountChange?(count: number): void
-}
-
-type InstallShot = NonNullable<ShowInstallShots_show$data["images"]>[number]
-
-interface ShowInstallShotsProps extends Omit<CarouselProps, "children"> {
+interface ShowInstallShotsProps {
   show: ShowInstallShots_show$data
 }
 
-export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
+export const ShowInstallShots: FC<ShowInstallShotsProps> = ({
   show,
   ...rest
 }) => {
-  const [selectedImage, selectImage] = useState<InstallShot | null>(null)
-
-  const handleOpen = (image: InstallShot) => () => {
-    selectImage(image)
-  }
-
-  const handleClose = () => {
-    selectImage(null)
-  }
-
   const { theme } = useTheme()
 
-  if (show.images?.length === 0) return null
+  const [mode, setMode] = useState<"Idle" | "Zoom">("Idle")
 
   const images = compact(show.images)
+
+  const { handleNext, handlePrev, index, setCursor } = useCursor({
+    max: images.length,
+  })
+
+  const { containerRef } = useNextPrevious({
+    onNext: handleNext,
+    onPrevious: handlePrev,
+  })
+
+  const selected = images[index]
+
+  if (images.length === 0) return null
 
   return (
     <>
       <Shelf alignItems="flex-end" {...rest}>
         {images.map((image, i) => {
-          if (!image.desktop || !image.mobile) return <></>
+          if (!image.internalID || !image.src || !image.width || !image.height)
+            return <></>
+
+          const { width, height } = maxDimensionsByArea({
+            area: 300 * 300,
+            height: image.height,
+            width: image.width,
+          })
+
+          const thumb = resized(image.src, { width, height })
 
           return (
             <Clickable
-              key={image.internalID ?? i}
-              onClick={handleOpen(image)}
+              key={image.internalID}
               display="block"
+              width={width}
+              height={height}
+              bg="black10"
+              onClick={() => {
+                setCursor(i)
+                setMode("Zoom")
+              }}
             >
               <Image
-                src={image.desktop.src}
-                srcSet={image.desktop.srcSet}
-                width={[
-                  image.mobile.width as number,
-                  image.desktop.width as number,
-                ]}
-                height={[
-                  image.mobile.height as number,
-                  image.desktop.height as number,
-                ]}
+                src={thumb.src}
+                srcSet={thumb.srcSet}
+                width="100%"
+                height="100%"
+                alt={`${show.name}, installation view`}
+                lazyLoad={i > 2}
+                placeHolderURL={image.blurhashDataURL ?? undefined}
                 style={{
                   display: "block",
                   objectFit: "contain",
                 }}
-                alt={`${show.name}, installation view`}
-                lazyLoad={i > 2}
               />
 
               {image.caption && (
@@ -83,11 +93,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
                   variant="xs"
                   mt={1}
                   color="black60"
-                  textAlign="left"
-                  width={[
-                    image.mobile.width as number,
-                    image.desktop.width as number,
-                  ]}
+                  width={width}
                   title={image.caption}
                   overflowEllipsis
                 >
@@ -99,40 +105,73 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
         })}
       </Shelf>
 
-      {selectedImage !== null && !!selectedImage?.zoom && (
+      {mode === "Zoom" && selected.zoom && (
         <ModalBase
-          onClose={handleClose}
+          onClose={() => {
+            setMode("Idle")
+          }}
           dialogProps={{
             background: theme.effects.backdrop,
             height: "100%",
             width: "100%",
           }}
         >
-          <Clickable
+          <Box
+            ref={containerRef as any}
             width="100%"
             height="100%"
             display="flex"
-            alignItems="center"
-            justifyContent="center"
-            overflowY="auto"
-            onClick={handleClose}
           >
-            <ResponsiveBox
-              maxWidth={selectedImage?.zoom.width as number}
-              maxHeight={selectedImage?.zoom.height as number}
-              aspectWidth={selectedImage?.zoom.width as number}
-              aspectHeight={selectedImage?.zoom.height as number}
+            <Clickable
+              width="100%"
+              height="100%"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              overflowY="auto"
+              onClick={() => {
+                setMode("Idle")
+              }}
             >
-              <Image
-                src={selectedImage?.zoom.src}
-                srcSet={selectedImage?.zoom.srcSet}
-                width="100%"
-                height="100%"
-                alt={`${show.name}, installation view`}
-                lazyLoad
-              />
-            </ResponsiveBox>
-          </Clickable>
+              <FullscreenBox
+                maxWidth={selected.zoom.width ?? 1}
+                maxHeight={selected.zoom.height ?? 1}
+                aspectWidth={selected.zoom.width ?? 1}
+                aspectHeight={selected.zoom.height ?? 1}
+                bg="black10"
+              >
+                <Image
+                  key={selected.zoom.src}
+                  src={selected.zoom.src}
+                  srcSet={selected.zoom.srcSet}
+                  width="100%"
+                  height="100%"
+                  placeHolderURL={selected.blurhashDataURL ?? undefined}
+                  alt={`${show.name}, installation view`}
+                />
+              </FullscreenBox>
+            </Clickable>
+
+            {images.length > 1 && (
+              <>
+                <NextPrevious
+                  onClick={handlePrev}
+                  left={0}
+                  aria-label="Previous"
+                >
+                  <ChevronLeftIcon fill="currentColor" width={30} height={30} />
+                </NextPrevious>
+
+                <NextPrevious onClick={handleNext} right={0} aria-label="Next">
+                  <ChevronRightIcon
+                    fill="currentColor"
+                    width={30}
+                    height={30}
+                  />
+                </NextPrevious>
+              </>
+            )}
+          </Box>
         </ModalBase>
       )}
     </>
@@ -148,24 +187,11 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
         images(default: false, size: 100) {
           internalID
           caption
-          mobile: resized(
-            quality: 85
-            width: 200
-            version: ["main", "normalized", "larger", "large"]
-          ) {
-            width
-            height
-          }
-          desktop: resized(
-            quality: 85
-            width: 325
-            version: ["main", "normalized", "larger", "large"]
-          ) {
-            src
-            srcSet
-            width
-            height
-          }
+          src: url(version: ["larger", "large"])
+          width
+          height
+          versions
+          blurhashDataURL
           zoom: resized(
             quality: 85
             width: 900
@@ -182,3 +208,21 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const NextPrevious = styled(Clickable).attrs({
+  p: 2,
+})`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  transition: color 250ms;
+  color: ${themeGet("colors.black60")};
+
+  &:hover,
+  &:focus,
+  &.focus-visible {
+    outline: none;
+    color: ${themeGet("colors.black100")};
+  }
+`
