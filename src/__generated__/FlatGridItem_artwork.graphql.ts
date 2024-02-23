@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ca110de22adba3a95a393dad36a7ca4>>
+ * @generated SignedSource<<978dfa3e415fc6ce5e3931e134e50493>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type FlatGridItem_artwork$data = {
   readonly artistNames: string | null | undefined;
   readonly href: string | null | undefined;
   readonly image: {
+    readonly blurhashDataURL: string | null | undefined;
     readonly resized: {
       readonly height: number | null | undefined;
       readonly src: string;
@@ -216,6 +217,13 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": "resized(version:[\"larger\",\"large\"],width:445)"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhashDataURL",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -246,6 +254,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "10e0241f23ca34639d8fa3f7aff84702";
+(node as any).hash = "7c1bb010885fbddb746b5b54f2d0fb43";
 
 export default node;
