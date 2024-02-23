@@ -15,6 +15,7 @@ import { ArticleFeaturedArtistNotification_notification$key } from "__generated_
 import { extractNodes } from "Utils/extractNodes"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
+import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 
 interface ArticleFeaturedArtistNotificationProps {
   notification: ArticleFeaturedArtistNotification_notification$key
@@ -35,7 +36,7 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
   const image = article?.thumbnailImage?.cropped
 
   if (!article || !artists) {
-    return <Text variant="lg">Sorry, something went wrong.</Text>
+    return <NotificationErrorMessage />
   }
 
   return (
