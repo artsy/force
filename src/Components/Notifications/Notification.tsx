@@ -5,7 +5,6 @@ import {
   SkeletonBox,
   SkeletonText,
   Spacer,
-  Text,
 } from "@artsy/palette"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { NotificationQuery } from "__generated__/NotificationQuery.graphql"
