@@ -29,6 +29,7 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
   })
 
   const image = artwork.image?.resized
+  const blurHashDataURL = artwork.image?.blurhashDataURL
 
   const handleClick = () => {
     onClick?.()
@@ -88,6 +89,7 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
               width="100%"
               height="100%"
               style={{ display: "block" }}
+              placeHolderURL={blurHashDataURL ?? undefined}
               lazyLoad
             />
           )}
@@ -148,6 +150,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
             width
             height
           }
+          blurhashDataURL
         }
         artistNames
         href
