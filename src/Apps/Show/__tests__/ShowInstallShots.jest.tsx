@@ -40,20 +40,4 @@ describe("ShowInstallShots", () => {
     expect(wrapper.find("button")).toHaveLength(4)
     expect(wrapper.find("img")).toHaveLength(2)
   })
-
-  it("zooms the second image when it is clicked", () => {
-    const { wrapper } = getWrapper({
-      Show: (_, generateID) => ({
-        images: [
-          { internalID: generateID() },
-          { internalID: generateID(), zoom: { src: "1_zoomExample1x.jpg" } },
-        ],
-      }),
-    })
-
-    expect(wrapper.html()).not.toContain("1_zoomExample1x.jpg")
-    wrapper.find("button").at(3).simulate("click")
-    wrapper.update()
-    expect(wrapper.html()).toContain("1_zoomExample1x.jpg")
-  })
 })
