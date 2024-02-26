@@ -47,13 +47,13 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
       py={4}
       opacity={variant === "inactive" ? 0.24 : 1}
       bg={variant === "active" ? "black5" : "transparent"}
-      /* onClick={() => {
+      onClick={() => {
         onEditAlertClick({
           id: item.internalID,
           name: item.settings?.name ?? undefined,
           artistIds: item.artistIDs as string[],
         })
-      }} */
+      }}
     >
       <Flex
         flexDirection="row"
