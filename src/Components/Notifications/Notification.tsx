@@ -165,9 +165,21 @@ export const Placeholder: React.FC = () => (
       <Spacer y={4} />
 
       <Flex flexDirection="column" alignItems="center">
-        <SkeletonBox width={CARD_MAX_WIDTH} height={CARD_MAX_WIDTH} mb={4} />
-        <SkeletonBox width={CARD_MAX_WIDTH} height={CARD_MAX_WIDTH} mb={4} />
-        <SkeletonBox width={CARD_MAX_WIDTH} height={CARD_MAX_WIDTH} mb={4} />
+        <SkeletonBox
+          width={["100%", CARD_MAX_WIDTH]}
+          height={CARD_MAX_WIDTH}
+          mb={4}
+        />
+        <SkeletonBox
+          width={["100%", CARD_MAX_WIDTH]}
+          height={CARD_MAX_WIDTH}
+          mb={4}
+        />
+        <SkeletonBox
+          width={["100%", CARD_MAX_WIDTH]}
+          height={CARD_MAX_WIDTH}
+          mb={4}
+        />
       </Flex>
     </Skeleton>
   </Flex>
