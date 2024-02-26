@@ -36,7 +36,7 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
             />
           </Flex>
 
-          <Separator />
+          <Separator borderColor="black5" />
 
           <Box
             maxHeight={`calc(100vh - ${DROPDOWN_CONTENT_HEIGHT}px)`}
@@ -53,7 +53,7 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
               onHide={onHide}
               unreadCounts={unreadCounts}
             />
-            <Separator />
+            <Separator borderColor="black5" />
           </Sticky>
 
           <Box
