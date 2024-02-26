@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ef15d9e50467804ec3b0d0758cd2ea8>>
+ * @generated SignedSource<<21d55e8611048ddc1da41064ff235bcb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,11 @@ export type SavedSearchAlertsApp_me$data = {
   readonly alertsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;
         readonly internalID: string;
+        readonly settings: {
+          readonly name: string | null | undefined;
+        };
         readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertListItem_item">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -97,6 +101,31 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "artistIDs",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "AlertSettings",
+                  "kind": "LinkedField",
+                  "name": "settings",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "name",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "SavedSearchAlertListItem_item"
@@ -154,6 +183,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "16d34e3fbe8f023f9ecc16f82c71383d";
+(node as any).hash = "119eae4587db770fb295149678a2a657";
 
 export default node;
