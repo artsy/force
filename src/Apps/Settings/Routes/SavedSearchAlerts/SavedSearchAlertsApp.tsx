@@ -68,6 +68,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const isEditMode = editAlertEntity !== null
 
   useEffect(() => {
+    if (!alerts || !alerts[0]) return
     if (isMobile === null) return
     if (!isMobile) {
       setEditAlertEntity({
