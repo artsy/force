@@ -4160,6 +4160,12 @@ type CollectorProfileType {
   inquiryRequestsCount: Int!
   institutionalAffiliations: String
   intents: [String]
+  interestsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): UserInterestConnection
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
@@ -11319,6 +11325,12 @@ type InquirerCollectorProfile {
   inquiryRequestsCount: Int!
   institutionalAffiliations: String
   intents: [String]
+  interestsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): UserInterestConnection
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
@@ -18834,6 +18846,12 @@ type UpdateCollectorProfilePayload {
   inquiryRequestsCount: Int!
   institutionalAffiliations: String
   intents: [String]
+  interestsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): UserInterestConnection
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
