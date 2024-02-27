@@ -21,6 +21,7 @@ import { markNotificationAsRead } from "Components/Notifications/Mutations/markN
 import { useSystemContext } from "System/SystemContext"
 import createLogger from "Utils/logger"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { ErrorBoundary } from "System/Router/ErrorBoundary"
 
 const logger = createLogger("NotificationItem")
 
@@ -125,9 +126,14 @@ export const NotificationQueryRenderer: React.FC = props => {
 
   return (
     <Box mx={[2, 4]} my={2}>
-      <Suspense fallback={<Placeholder />}>
-        <Notification notificationId={state.currentNotificationId} {...props} />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<Placeholder />}>
+          <Notification
+            notificationId={state.currentNotificationId}
+            {...props}
+          />
+        </Suspense>
+      </ErrorBoundary>
     </Box>
   )
 }
