@@ -6,7 +6,6 @@ import {
   Join,
   useToasts,
   Button,
-  THEME,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -36,6 +35,7 @@ import { useSystemContext } from "System/SystemContext"
 import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
 import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { getENV } from "Utils/getENV"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -58,7 +58,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const [sort, setSort] = useState("ENABLED_AT_DESC")
   const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.alertsConnection)
-  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
+  const isMobile = getENV("IS_MOBILE")
 
   const [
     editAlertEntity,
