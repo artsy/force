@@ -15,7 +15,6 @@ import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAle
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
-import { Media } from "Utils/Responsive"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 

@@ -53,7 +53,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const { relayEnvironment } = useSystemContext()
   const { sendToast } = useToasts()
   const { trackEvent } = useTracking()
-  const { silentPush } = useRouter()
+  const { match, silentPush } = useRouter()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [sort, setSort] = useState("ENABLED_AT_DESC")
   const [loading, setLoading] = useState(false)
@@ -69,6 +69,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
   useEffect(() => {
     if (!alerts || !alerts[0]) return
+    if (match?.params?.alertID) return
     if (isMobile === null) return
     if (!isMobile) {
       setEditAlertEntity({
@@ -165,7 +166,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     })
   }
 
-  const alertID = editAlertEntity?.id
+  const alertID = match?.params?.alertID ?? editAlertEntity?.id
 
   useEffect(() => {
     if (!alertID) return
@@ -197,7 +198,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
           name: alert.settings.name ?? "",
         })
 
-        silentPush(`/settings/alerts/${editAlertEntity?.id}/edit`)
+        silentPush(`/settings/alerts/${alert.internalID}/edit`)
       },
     })
 
