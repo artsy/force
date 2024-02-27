@@ -142,7 +142,7 @@
     "i18next": "^21.6.14",
     "i18next-browser-languagedetector": "^6.1.4",
     "insane": "2.6.1",
-    "ip": "^1.1.5",
+    "ip": "^1.1.9",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "20.0.0",
     "jwt-decode": "2.2.0",
