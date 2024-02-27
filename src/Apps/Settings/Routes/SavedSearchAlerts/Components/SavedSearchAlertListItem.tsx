@@ -47,13 +47,6 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
       py={4}
       opacity={variant === "inactive" ? 0.24 : 1}
       bg={variant === "active" ? "black5" : "transparent"}
-      onClick={() => {
-        onEditAlertClick({
-          id: item.internalID,
-          name: item.settings?.name ?? undefined,
-          artistIds: item.artistIDs as string[],
-        })
-      }}
     >
       <Flex
         flexDirection="row"
@@ -83,21 +76,19 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           </Clickable>
         </Flex>
         <Flex flexDirection="row" alignItems={["flex-start", "center"]}>
-          <Media lessThan="md">
-            <Clickable
-              textDecoration="underline"
-              onClick={() => {
-                onEditAlertClick({
-                  id: item.internalID,
-                  name: item.settings?.name ?? undefined,
-                  artistIds: item.artistIDs as string[],
-                })
-              }}
-            >
-              <Text variant="sm">Edit</Text>
-            </Clickable>
-          </Media>
-          <Spacer x={[2, 0]} />
+          <Clickable
+            textDecoration="underline"
+            onClick={() => {
+              onEditAlertClick({
+                id: item.internalID,
+                name: item.settings?.name ?? undefined,
+                artistIds: item.artistIDs as string[],
+              })
+            }}
+          >
+            <Text variant="sm">Edit</Text>
+          </Clickable>
+          <Spacer x={2} />
           <RouterLink to={viewAllHref} textDecoration="underline" zIndex={1000}>
             <Text variant="sm">View All</Text>
           </RouterLink>
