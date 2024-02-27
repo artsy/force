@@ -2,7 +2,7 @@ import { Box, BoxProps, Flex, Join, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { getENV } from "Utils/getENV"
-import TwitterIcon from "@artsy/icons/TwitterIcon"
+import XIcon from "@artsy/icons/XIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 
@@ -52,12 +52,12 @@ export const ArticleShare: FC<ArticleShareProps> = ({
         <Box
           as="a"
           display="flex"
-          title="Share on Twitter"
+          title="Share on X"
           // @ts-ignore
-          href={`https://twitter.com/intent/tweet?original_referer=${url}&text=${description}&url=${url}&via=artsy`}
+          href={`https://twitter.com/intent/post?original_referer=${url}&text=${description}&url=${url}&via=artsy`}
           onClick={clickedArticleShare}
         >
-          <TwitterIcon />
+          <XIcon />
         </Box>
       </Join>
     </Flex>

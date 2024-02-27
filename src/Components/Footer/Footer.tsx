@@ -20,7 +20,7 @@ import {
 import { useCCPARequest } from "Components/CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import TwitterIcon from "@artsy/icons/TwitterIcon"
+import XIcon from "@artsy/icons/XIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import WeChatIcon from "@artsy/icons/WeChatIcon"
 import InstagramIcon from "@artsy/icons/InstagramIcon"
@@ -236,7 +236,7 @@ export const Footer: React.FC<FooterProps> = props => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <TwitterIcon />
+                <XIcon />
               </FooterLink>
 
               <FooterLink
