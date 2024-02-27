@@ -36,7 +36,7 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
             />
           </Flex>
 
-          <Separator />
+          <Separator borderColor="black5" />
 
           <Box
             maxHeight={`calc(100vh - ${DROPDOWN_CONTENT_HEIGHT}px)`}
@@ -53,13 +53,13 @@ export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
               onHide={onHide}
               unreadCounts={unreadCounts}
             />
-            <Separator />
+            <Separator borderColor="black5" />
           </Sticky>
 
           <Box
             overflow="scroll"
             // The notification list needs a maximum height to be independently scrollable.
-            maxHeight={`calc(100vh - ${DROPDOWN_CONTENT_HEIGHT}px)`}
+            maxHeight={[null, `calc(100vh - ${DROPDOWN_CONTENT_HEIGHT}px)`]}
             pb={2}
           >
             <NotificationsListQueryRenderer mode={mode} />
