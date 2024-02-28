@@ -180,16 +180,6 @@ export const Placeholder: React.FC = () => (
           height={CARD_MAX_WIDTH}
           mb={4}
         />
-        <SkeletonBox
-          width={["100%", CARD_MAX_WIDTH]}
-          height={CARD_MAX_WIDTH}
-          mb={4}
-        />
-        <SkeletonBox
-          width={["100%", CARD_MAX_WIDTH]}
-          height={CARD_MAX_WIDTH}
-          mb={4}
-        />
       </Flex>
     </Skeleton>
   </Flex>
