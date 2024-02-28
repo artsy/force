@@ -247,7 +247,7 @@ const getNotificationTypes = (
   if (type === "alerts") {
     return ["ARTWORK_ALERT"]
   }
-  if (type === "following") {
+  if (type === "follows") {
     return ["ARTWORK_PUBLISHED"]
   }
   if (type === "offers") {
