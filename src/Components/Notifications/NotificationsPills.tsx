@@ -24,7 +24,7 @@ export const NotificationsPills: React.FC = () => {
     { value: "All", name: "all" },
     hasPartnerOfferNotifications && { value: "Offers", name: "offers" },
     { value: "Alerts", name: "alerts" },
-    { value: "Following", name: "following" },
+    { value: "Follows", name: "following" },
   ])
 
   if (loading) return <Placeholder />
