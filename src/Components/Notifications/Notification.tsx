@@ -6,10 +6,10 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { graphql, useLazyLoadQuery } from "react-relay"
+import { graphql } from "react-relay"
 import { NotificationQuery } from "__generated__/NotificationQuery.graphql"
 import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
-import { Suspense, useEffect } from "react"
+import { useEffect } from "react"
 import { ArtworkPublishedNotification } from "Components/Notifications/ArtworkPublishedNotification"
 import { AlertNotification } from "Components/Notifications/AlertNotification"
 import { useRouter } from "System/Router/useRouter"
@@ -21,6 +21,7 @@ import { markNotificationAsRead } from "Components/Notifications/Mutations/markN
 import { useSystemContext } from "System/SystemContext"
 import createLogger from "Utils/logger"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
 
 const logger = createLogger("NotificationItem")
 
@@ -40,15 +41,17 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
   const { relayEnvironment } = useSystemContext()
   const { router } = useRouter()
 
-  const data = useLazyLoadQuery<NotificationQuery>(notificationQuery, {
-    internalID: notificationId,
+  const { data, loading, error } = useClientQuery<NotificationQuery>({
+    query: notificationQuery,
+    variables: { internalID: notificationId },
   })
 
-  const notification = data.me?.notification
+  const notification = data?.me?.notification
 
   // Redirect user to the notifications targetHref if the notification type is not supported
   useEffect(() => {
     if (
+      notification &&
       !SUPPORTED_NOTIFICATION_TYPES.includes(
         notification?.notificationType as string
       )
@@ -58,6 +61,10 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
   }, [notification, router])
 
   useEffect(() => {
+    if (!notification) {
+      return
+    }
+
     markAsRead()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notification])
@@ -84,7 +91,12 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
     }
   }
 
-  if (!data.me?.notification) {
+  if (loading) {
+    return <Placeholder />
+  }
+
+  if (error || !notification) {
+    // logger.error(error)
     return <NotificationErrorMessage />
   }
 
@@ -125,9 +137,7 @@ export const NotificationQueryRenderer: React.FC = props => {
 
   return (
     <Box mx={[2, 4]} my={2}>
-      <Suspense fallback={<Placeholder />}>
-        <Notification notificationId={state.currentNotificationId} {...props} />
-      </Suspense>
+      <Notification notificationId={state.currentNotificationId} {...props} />
     </Box>
   )
 }

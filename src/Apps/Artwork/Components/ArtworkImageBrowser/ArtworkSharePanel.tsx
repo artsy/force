@@ -15,7 +15,7 @@ import { ArtworkSharePanel_artwork$data } from "__generated__/ArtworkSharePanel_
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { RouterLink } from "System/Router/RouterLink"
-import TwitterIcon from "@artsy/icons/TwitterIcon"
+import XIcon from "@artsy/icons/XIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 import TumblrIcon from "@artsy/icons/TumblrIcon"
@@ -119,10 +119,10 @@ export const ArtworkSharePanel: React.FC<ArtworkSharePanelProps> = ({
 
         <ShareButton
           onClick={openShareModal}
-          service="twitter"
-          label="Twitter"
-          message="Share on Twitter"
-          url={`https://twitter.com/intent/tweet?original_referer=${url}&text=${share}&url=${url}&via=artsy`}
+          service="x"
+          label="X"
+          message="Share on X"
+          url={`https://twitter.com/intent/post?original_referer=${url}&text=${share}&url=${url}&via=artsy`}
         />
 
         <RouterLink
@@ -195,8 +195,8 @@ const ICONS = {
       fill="currentColor"
     />
   ),
-  twitter: (
-    <TwitterIcon
+  x: (
+    <XIcon
       // @ts-ignore
       fill="currentColor"
     />

@@ -136,7 +136,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
             {getNotificationPrelude(item)}
           </Text>
 
-          <Text fontWeight="bold" variant="sm">
+          <Text fontWeight="bold" variant="sm-display">
             {item.headline}
           </Text>
 
