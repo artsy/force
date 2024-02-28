@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e840324b4757d0c00a5be79903004414>>
+ * @generated SignedSource<<f00b40f03a65a1f7396b4f0b53907d3b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,16 +25,20 @@ export type SavedSearchAlertsApp_Test_Query$rawResponse = {
           readonly __typename: "Alert";
           readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;
           readonly artistSeriesIDs: ReadonlyArray<string | null | undefined> | null | undefined;
-          readonly displayName: string;
+          readonly artworksConnection: {
+            readonly counts: {
+              readonly total: any | null | undefined;
+            } | null | undefined;
+            readonly id: string;
+          } | null | undefined;
           readonly href: string | null | undefined;
           readonly id: string;
           readonly internalID: string;
-          readonly labels: ReadonlyArray<{
-            readonly displayValue: string;
-          }>;
           readonly settings: {
             readonly name: string | null | undefined;
           };
+          readonly subtitle: string;
+          readonly title: string;
         } | null | undefined;
       } | null | undefined> | null | undefined;
       readonly pageInfo: {
@@ -64,7 +68,10 @@ var v0 = [
     "value": "ENABLED_AT_DESC"
   }
 ],
-v1 = {
+v1 = [
+  "artistIDs"
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -172,13 +179,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "displayName",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "artistSeriesIDs",
                         "storageKey": null
                       },
@@ -190,24 +190,68 @@ return {
                         "storageKey": null
                       },
                       {
+                        "alias": "title",
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "only",
+                            "value": (v1/*: any*/)
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "displayName",
+                        "storageKey": "displayName(only:[\"artistIDs\"])"
+                      },
+                      {
+                        "alias": "subtitle",
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "except",
+                            "value": (v1/*: any*/)
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "displayName",
+                        "storageKey": "displayName(except:[\"artistIDs\"])"
+                      },
+                      {
                         "alias": null,
-                        "args": null,
-                        "concreteType": "SearchCriteriaLabel",
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "first",
+                            "value": 1
+                          }
+                        ],
+                        "concreteType": "FilterArtworksConnection",
                         "kind": "LinkedField",
-                        "name": "labels",
-                        "plural": true,
+                        "name": "artworksConnection",
+                        "plural": false,
                         "selections": [
                           {
                             "alias": null,
                             "args": null,
-                            "kind": "ScalarField",
-                            "name": "displayValue",
+                            "concreteType": "FilterArtworksCounts",
+                            "kind": "LinkedField",
+                            "name": "counts",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "total",
+                                "storageKey": null
+                              }
+                            ],
                             "storageKey": null
-                          }
+                          },
+                          (v2/*: any*/)
                         ],
-                        "storageKey": null
+                        "storageKey": "artworksConnection(first:1)"
                       },
-                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -267,19 +311,19 @@ return {
             "kind": "LinkedHandle",
             "name": "alertsConnection"
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "1b996b97b3ad366308d8860f1e7ac549",
+    "cacheID": "f91c61201553788965224cf9599757af",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsApp_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10, sort: ENABLED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        settings {\n          name\n        }\n        ...SavedSearchAlertListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  artistIDs\n  artistSeriesIDs\n  href\n  title: displayName(only: [artistIDs])\n  subtitle: displayName(except: [artistIDs])\n  artworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10, sort: ENABLED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        settings {\n          name\n        }\n        ...SavedSearchAlertListItem_item\n        title: displayName(only: [artistIDs])\n        subtitle: displayName(except: [artistIDs])\n        artworksConnection(first: 1) {\n          counts {\n            total\n          }\n          id\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

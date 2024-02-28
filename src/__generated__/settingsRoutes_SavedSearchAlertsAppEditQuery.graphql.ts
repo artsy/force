@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<651055104fed7c0feeffa54a01ad93f0>>
+ * @generated SignedSource<<6ddbd79abb3f65aae9d365abcce14928>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,7 +34,10 @@ var v0 = [
     "value": "ENABLED_AT_DESC"
   }
 ],
-v1 = {
+v1 = [
+  "artistIDs"
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -142,13 +145,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "displayName",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "artistSeriesIDs",
                         "storageKey": null
                       },
@@ -160,24 +156,68 @@ return {
                         "storageKey": null
                       },
                       {
+                        "alias": "title",
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "only",
+                            "value": (v1/*: any*/)
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "displayName",
+                        "storageKey": "displayName(only:[\"artistIDs\"])"
+                      },
+                      {
+                        "alias": "subtitle",
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "except",
+                            "value": (v1/*: any*/)
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "displayName",
+                        "storageKey": "displayName(except:[\"artistIDs\"])"
+                      },
+                      {
                         "alias": null,
-                        "args": null,
-                        "concreteType": "SearchCriteriaLabel",
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "first",
+                            "value": 1
+                          }
+                        ],
+                        "concreteType": "FilterArtworksConnection",
                         "kind": "LinkedField",
-                        "name": "labels",
-                        "plural": true,
+                        "name": "artworksConnection",
+                        "plural": false,
                         "selections": [
                           {
                             "alias": null,
                             "args": null,
-                            "kind": "ScalarField",
-                            "name": "displayValue",
+                            "concreteType": "FilterArtworksCounts",
+                            "kind": "LinkedField",
+                            "name": "counts",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "total",
+                                "storageKey": null
+                              }
+                            ],
                             "storageKey": null
-                          }
+                          },
+                          (v2/*: any*/)
                         ],
-                        "storageKey": null
+                        "storageKey": "artworksConnection(first:1)"
                       },
-                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -237,19 +277,19 @@ return {
             "kind": "LinkedHandle",
             "name": "alertsConnection"
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "53e2fe815be2712088e49f9a71cd881f",
+    "cacheID": "bbc59e5c12f406fd8b4918a4f5b8008a",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_SavedSearchAlertsAppEditQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsAppEditQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10, sort: ENABLED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        settings {\n          name\n        }\n        ...SavedSearchAlertListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsAppEditQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  artistIDs\n  artistSeriesIDs\n  href\n  title: displayName(only: [artistIDs])\n  subtitle: displayName(except: [artistIDs])\n  artworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10, sort: ENABLED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        settings {\n          name\n        }\n        ...SavedSearchAlertListItem_item\n        title: displayName(only: [artistIDs])\n        subtitle: displayName(except: [artistIDs])\n        artworksConnection(first: 1) {\n          counts {\n            total\n          }\n          id\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
