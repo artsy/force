@@ -1,4 +1,4 @@
-import { Flex, Join, Separator, Spinner, THEME, Text } from "@artsy/palette"
+import { Flex, Join, Separator, Spinner, Text } from "@artsy/palette"
 import {
   RelayPaginationProp,
   createPaginationContainer,
@@ -20,9 +20,9 @@ import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
 import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
 import { NotificationListMode } from "Components/Notifications/NotificationsTabs"
 import { useRouter } from "System/Router/useRouter"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SystemContext } from "System/SystemContext"
+import { getENV } from "Utils/getENV"
 
 interface NotificationsListQueryRendererProps {
   mode: NotificationListMode
@@ -53,9 +53,7 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
 
   const { state } = useNotificationsContext()
 
-  const xs = __internal__useMatchMedia(THEME.mediaQueries.xs)
-  const sm = __internal__useMatchMedia(THEME.mediaQueries.sm)
-  const isMobile = xs || sm
+  const isMobile = getENV("IS_MOBILE")
 
   // Set the current notification ID to the first one from the list in case no ID is selected.
   useEffect(() => {
