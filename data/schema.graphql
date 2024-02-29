@@ -144,6 +144,8 @@ type AddUserToSubmissionMutationPayload {
 }
 
 type Admin {
+  featureFlag(id: String): FeatureFlag
+
   # A list of feature flags
   featureFlags(
     # The sort order of the results
@@ -4076,6 +4078,7 @@ type Collection {
 
   # True if this collection represents artworks explicitly saved by the user, false otherwise.
   saves: Boolean!
+  shareableWithPartners: Boolean!
 }
 
 enum CollectionArtworkSorts {
@@ -7812,6 +7815,7 @@ type CreateCollectionFailure {
 input createCollectionInput {
   clientMutationId: String
   name: String!
+  shareableWithPartners: Boolean
 }
 
 type createCollectionPayload {
@@ -9905,7 +9909,6 @@ type FeatureFlag {
     timezone: String
   ): String
   description: String
-  enabled: Boolean!
   environments: [FeatureFlagEnvironments]
 
   # A globally unique ID.
@@ -9923,7 +9926,7 @@ type FeatureFlag {
   project: String!
   stale: Boolean!
   type: String!
-  variants: [FeatureFlagVariantType!]!
+  variants: [FeatureFlagVariantType]
 }
 
 type FeatureFlagEnvironments {
@@ -9962,9 +9965,9 @@ input FeatureFlagVariantInputName {
 }
 
 type FeatureFlagVariantType {
-  name: String!
+  name: String
   stickiness: String
-  weight: Int!
+  weight: Int
   weightType: String
 }
 
