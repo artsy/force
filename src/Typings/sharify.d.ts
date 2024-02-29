@@ -42,6 +42,7 @@ declare module "sharify" {
       CSRF_TOKEN: string
       CURRENT_PATH: string
       CURRENT_USER: User
+      E2E_FEATURE_FLAGS: any
       EIGEN: boolean
       ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH: boolean
       ENABLE_I18N_DEBUG: boolean

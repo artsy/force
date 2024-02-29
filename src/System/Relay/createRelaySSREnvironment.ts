@@ -90,6 +90,12 @@ export function createRelaySSREnvironment(config: Config = {}) {
     logger.warn("Browser does not support i18n API, not setting TZ header.")
   }
 
+  const e2eFeatureFlags = getENV("E2E_FEATURE_FLAGS")
+
+  if (e2eFeatureFlags) {
+    headers["X-Variants"] = JSON.stringify(e2eFeatureFlags)
+  }
+
   const authenticatedHeaders = !!user
     ? {
         ...headers,
