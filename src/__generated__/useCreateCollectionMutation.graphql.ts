@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b01dfd1cac2f8659e08aa4d0f08612c3>>
+ * @generated SignedSource<<abb06e8a23018a2d420a3fc1511ff417>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type createCollectionInput = {
   clientMutationId?: string | null | undefined;
   name: string;
+  shareableWithPartners?: boolean | null | undefined;
 };
 export type useCreateCollectionMutation$variables = {
   input: createCollectionInput;
