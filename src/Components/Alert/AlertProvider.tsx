@@ -101,6 +101,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
       })
     }
     try {
+      dispatch({ type: "SET_IS_SUBMITTING", payload: true })
+
       await submitEditAlert({
         variables: {
           input: {
@@ -110,6 +112,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           },
         },
       })
+
+      dispatch({ type: "SET_IS_SUBMITTING", payload: false })
     } catch (error) {
       console.error("Alert/useAlertContext", error)
       logger.error(error)
@@ -118,6 +122,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
 
   const handleComplete = async () => {
     try {
+      dispatch({ type: "SET_IS_SUBMITTING", payload: true })
+
       const reponse = await submitCreateAlert({
         variables: {
           input: {
@@ -145,6 +151,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
         createdAlert(searchCriteriaID)
       }
 
+      dispatch({ type: "SET_IS_SUBMITTING", payload: false })
       setCurrent("ALERT_CONFIRMATION")
     } catch (error) {
       console.error("Alert/useAlertContext", error)
