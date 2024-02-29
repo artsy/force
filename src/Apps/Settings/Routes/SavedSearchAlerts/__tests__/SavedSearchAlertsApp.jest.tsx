@@ -134,7 +134,7 @@ describe("SavedSearchAlertsApp", () => {
     })
   })
 
-  describe("desctop", () => {
+  describe("desktop", () => {
     beforeEach(() => {
       breakpoint = "md"
     })

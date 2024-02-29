@@ -101,6 +101,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
       })
     }
     try {
+      dispatch({ type: "SET_IS_SUBMITTING", payload: true })
+
       await submitEditAlert({
         variables: {
           input: {
@@ -110,6 +112,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           },
         },
       })
+
+      dispatch({ type: "SET_IS_SUBMITTING", payload: false })
     } catch (error) {
       console.error("Alert/useAlertContext", error)
       logger.error(error)
