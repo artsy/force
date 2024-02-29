@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Clickable,
   Flex,
   Join,
   Spacer,
@@ -22,7 +21,6 @@ import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInpu
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 import { Filters } from "Components/Alert/Components/Steps/Filters"
-import CloseIcon from "@artsy/icons/CloseIcon"
 import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { isEqual } from "lodash"
@@ -36,7 +34,7 @@ interface SavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
   onDeleteClick: () => void
   onCompleted: () => void
-  onCloseClick: () => void
+  onCloseClick?: () => void
 }
 
 interface SavedSearchAlertEditStepsProps {
@@ -46,7 +44,7 @@ interface SavedSearchAlertEditStepsProps {
   viewer: SavedSearchAlertEditForm_viewer$data
   onDeleteClick: () => void
   onCompleted: () => void
-  onCloseClick: () => void
+  onCloseClick?: () => void
 }
 
 interface SavedSearchAlertEditFormProps {
@@ -70,9 +68,6 @@ const SavedSearchAlertEditSteps: React.FC<SavedSearchAlertEditStepsProps> = ({
           <Box p={4}>
             <Flex justifyContent="space-between">
               <ModalHeader />
-              <Clickable data-testid="closeButton" onClick={onCloseClick}>
-                <CloseIcon display="flex" />
-              </Clickable>
             </Flex>
             <Spacer y={4} />
             <SavedSearchAlertEditForm

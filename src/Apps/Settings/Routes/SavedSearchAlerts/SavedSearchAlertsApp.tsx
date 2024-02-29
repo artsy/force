@@ -34,6 +34,8 @@ import { useRouter } from "System/Router/useRouter"
 import { useSystemContext } from "System/SystemContext"
 import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
 import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { getENV } from "Utils/getENV"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -48,19 +50,36 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   me,
   relay,
 }) => {
-  const [
-    editAlertEntity,
-    setEditAlertEntity,
-  ] = useState<EditAlertEntity | null>(null)
   const { relayEnvironment } = useSystemContext()
   const { sendToast } = useToasts()
   const { trackEvent } = useTracking()
+  const { match, silentPush } = useRouter()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [sort, setSort] = useState("ENABLED_AT_DESC")
   const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.alertsConnection)
+  const isMobile = getENV("IS_MOBILE")
+
+  const [
+    editAlertEntity,
+    setEditAlertEntity,
+  ] = useState<EditAlertEntity | null>(null)
+
   const isEditMode = editAlertEntity !== null
-  const { match, silentPush } = useRouter()
+
+  useEffect(() => {
+    if (!alerts || !alerts[0]) return
+    if (match?.params?.alertID) return
+    if (isMobile === null) return
+    if (!isMobile) {
+      setEditAlertEntity({
+        id: alerts[0].internalID,
+        name: alerts[0].settings.name ?? "",
+        artistIds: alerts[0]?.artistIDs as string[],
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile])
 
   const closeEditForm = () => {
     setEditAlertEntity(null)
@@ -75,15 +94,27 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     relay.refetchConnection(10, null, relayRefetchVariables)
   }
 
-  const closeEditFormAndRefetch = () => {
-    closeEditForm()
+  const refresh = () => {
     setTimeout(() => {
       refetch()
     }, 100)
   }
 
+  const closeEditFormAndRefetch = () => {
+    closeEditForm()
+    refresh()
+  }
+
   const closeDeleteModal = () => {
     setShowDeleteModal(false)
+  }
+
+  const handleCompletedDesctop = () => {
+    refresh()
+
+    sendToast({
+      message: "Your Alert has been updated.",
+    })
   }
 
   const handleCompleted = () => {
@@ -135,7 +166,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     })
   }
 
-  const alertID = match?.params?.alertID
+  const alertID = match?.params?.alertID ?? editAlertEntity?.id
 
   useEffect(() => {
     if (!alertID) return
@@ -166,12 +197,15 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
           artistIds: alert.artistIDs as string[],
           name: alert.settings.name ?? "",
         })
+
+        silentPush(`/settings/alerts/${alert.internalID}/edit`)
       },
     })
 
     return () => {
       subscription?.unsubscribe?.()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alertID, relayEnvironment])
 
   const list = (
@@ -227,8 +261,8 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             <Separator color="black15" />
             <Media greaterThanOrEqual="md">
               <GridColumns gridColumnGap={0}>
-                <Column span={isEditMode ? 6 : 12}>{list}</Column>
-                {isEditMode && editAlertEntity && (
+                <Column span={6}>{list}</Column>
+                {editAlertEntity && (
                   <Column
                     span={6}
                     borderLeft="1px solid"
@@ -237,8 +271,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                     <Sticky bottomBoundary="#content-end">
                       <SavedSearchAlertEditFormQueryRenderer
                         editAlertEntity={editAlertEntity}
-                        onCloseClick={closeEditForm}
-                        onCompleted={handleCompleted}
+                        onCompleted={handleCompletedDesctop}
                         onDeleteClick={handleDeleteClick}
                       />
                     </Sticky>
@@ -293,6 +326,10 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
           edges {
             node {
               internalID
+              artistIDs
+              settings {
+                name
+              }
               ...SavedSearchAlertListItem_item
             }
           }

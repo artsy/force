@@ -6,6 +6,8 @@ import { SavedSearchAlertsApp_Test_Query } from "__generated__/SavedSearchAlerts
 import { useTracking } from "react-tracking"
 import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
 import { useSystemContext } from "System/useSystemContext"
+import { MediaContextProvider } from "Utils/Responsive"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -17,13 +19,18 @@ jest.mock("System/useSystemContext")
 let relayEnv: MockEnvironment = createMockEnvironment()
 
 describe("SavedSearchAlertsApp", () => {
+  let breakpoint: "md" | "sm" | "xs"
   const trackEvent = jest.fn()
   const mockuseSystemContext = useSystemContext as jest.Mock
 
   const { renderWithRelay } = setupTestWrapperTL<
     SavedSearchAlertsApp_Test_Query
   >({
-    Component: SavedSearchAlertsAppPaginationContainer,
+    Component: ({ me }) => (
+      <MediaContextProvider onlyMatch={[breakpoint]}>
+        <SavedSearchAlertsAppPaginationContainer me={me!} />
+      </MediaContextProvider>
+    ),
     query: graphql`
       query SavedSearchAlertsApp_Test_Query @raw_response_type {
         me {
@@ -53,110 +60,208 @@ describe("SavedSearchAlertsApp", () => {
     relayEnv.mockClear()
   })
 
-  it("renders all alert titles", () => {
-    renderWithRelay({
-      Me: () => ({
-        alertsConnection: mockedAlertsConnection,
-      }),
+  describe("alerts list", () => {
+    beforeEach(() => {
+      breakpoint = "sm"
     })
 
-    expect(screen.getAllByText("Alert Name 1")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Alert Name 2")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Alert Name 3")[0]).toBeInTheDocument()
-  })
-
-  it("should expand/collapse filter pills when user toggles show all/close all filters button", async () => {
-    renderWithRelay({
-      Me: () => ({
-        alertsConnection: mockedAlertsConnectionWithFilters,
-      }),
-    })
-
-    expect(
-      screen.getAllByText("Alert With Some Filters")[0]
-    ).toBeInTheDocument()
-
-    // the rest of the filters are hidden by default
-    expect(screen.queryAllByText("Limited Edition")).toStrictEqual([])
-    expect(screen.queryAllByText("Andy Warhol")).toStrictEqual([])
-    expect(screen.queryAllByText("$0–$34,240")).toStrictEqual([])
-    expect(screen.queryAllByText("Painting")).toStrictEqual([])
-
-    // the show all filters button is displayed
-    expect(screen.getAllByText("Show all filters")[0]).toBeInTheDocument()
-    expect(screen.queryAllByText("Close all filters")).toStrictEqual([])
-    fireEvent.click(screen.getAllByText("Show all filters")[0])
-
-    // after pressing show all filters the hidden filters appear
-    expect(screen.getAllByText("Close all filters")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Limited Edition")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Andy Warhol")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("$0–$34,240")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Painting")[0]).toBeInTheDocument()
-
-    // collapses the filters
-    fireEvent.click(screen.getByText("Close all filters"))
-
-    await waitFor(() =>
-      expect(screen.queryByText("Close all filters")).not.toBeInTheDocument()
-    )
-    // after pressing close all filters, all the filters are collapsed
-    expect(screen.queryAllByText("Limited Edition")).toStrictEqual([])
-    expect(screen.queryAllByText("Andy Warhol")).toStrictEqual([])
-    expect(screen.queryAllByText("$0–$34,240")).toStrictEqual([])
-    expect(screen.queryAllByText("Painting")).toStrictEqual([])
-  })
-
-  it("renders a empty results message if there are no alerts", () => {
-    renderWithRelay({
-      Me: () => ({
-        alertsConnection: {
-          edges: [],
-        },
-      }),
-    })
-
-    expect(
-      screen.getByText("Get notifications when there’s a match.")
-    ).toBeInTheDocument()
-  })
-
-  it.skip('renders edit form when "Edit" button is pressed', async () => {
-    const { mockResolveLastOperation } = renderWithRelay(
-      {
+    it("renders all alert titles", () => {
+      renderWithRelay({
         Me: () => ({
           alertsConnection: mockedAlertsConnection,
         }),
-      },
-      {},
-      relayEnv
-    )
+      })
 
-    fireEvent.click(screen.getAllByText("Edit")[0])
+      expect(screen.getAllByText("Alert Name 1")[0]).toBeInTheDocument()
+      expect(screen.getAllByText("Alert Name 2")[0]).toBeInTheDocument()
+      expect(screen.getAllByText("Alert Name 3")[0]).toBeInTheDocument()
+    })
 
-    expect(window.location.pathname).toEqual(
-      `/settings/alerts/example-id-1/edit`
-    )
+    it("should expand/collapse filter pills when user toggles show all/close all filters button", async () => {
+      renderWithRelay({
+        Me: () => ({
+          alertsConnection: mockedAlertsConnectionWithFilters,
+        }),
+      })
 
-    const mockedPreviewResolver = {
-      Me: () => ({
-        alert: {
-          internalID: "example-id-1",
-          artistIDs: ["artist-id"],
-          settings: {
-            name: "user-search-criteria-custom-name",
+      expect(
+        screen.getAllByText("Alert With Some Filters")[0]
+      ).toBeInTheDocument()
+
+      // the rest of the filters are hidden by default
+      expect(screen.queryAllByText("Limited Edition")).toStrictEqual([])
+      expect(screen.queryAllByText("Andy Warhol")).toStrictEqual([])
+      expect(screen.queryAllByText("$0–$34,240")).toStrictEqual([])
+      expect(screen.queryAllByText("Painting")).toStrictEqual([])
+
+      // the show all filters button is displayed
+      expect(screen.getAllByText("Show all filters")[0]).toBeInTheDocument()
+      expect(screen.queryAllByText("Close all filters")).toStrictEqual([])
+      fireEvent.click(screen.getAllByText("Show all filters")[0])
+
+      // after pressing show all filters the hidden filters appear
+      expect(screen.getAllByText("Close all filters")[0]).toBeInTheDocument()
+      expect(screen.getAllByText("Limited Edition")[0]).toBeInTheDocument()
+      expect(screen.getAllByText("Andy Warhol")[0]).toBeInTheDocument()
+      expect(screen.getAllByText("$0–$34,240")[0]).toBeInTheDocument()
+      expect(screen.getAllByText("Painting")[0]).toBeInTheDocument()
+
+      // collapses the filters
+      fireEvent.click(screen.getByText("Close all filters"))
+
+      await waitFor(() =>
+        expect(screen.queryByText("Close all filters")).not.toBeInTheDocument()
+      )
+      // after pressing close all filters, all the filters are collapsed
+      expect(screen.queryAllByText("Limited Edition")).toStrictEqual([])
+      expect(screen.queryAllByText("Andy Warhol")).toStrictEqual([])
+      expect(screen.queryAllByText("$0–$34,240")).toStrictEqual([])
+      expect(screen.queryAllByText("Painting")).toStrictEqual([])
+    })
+
+    it("renders a empty results message if there are no alerts", () => {
+      renderWithRelay({
+        Me: () => ({
+          alertsConnection: {
+            edges: [],
           },
+        }),
+      })
+
+      expect(
+        screen.getByText("Get notifications when there’s a match.")
+      ).toBeInTheDocument()
+    })
+  })
+
+  describe("desctop", () => {
+    beforeEach(() => {
+      breakpoint = "md"
+    })
+
+    afterEach(() => {
+      relayEnv.mockClear()
+    })
+
+    it("on render opens the edit form of the first alert in the list", async () => {
+      const { mockResolveLastOperation } = renderWithRelay(
+        {
+          Me: () => ({
+            alertsConnection: mockedAlertsConnection,
+          }),
         },
-      }),
-    }
+        {},
+        relayEnv
+      )
 
-    mockResolveLastOperation(mockedPreviewResolver)
+      await flushPromiseQueue()
 
-    expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+      setTimeout(() => {
+        expect(window.location.pathname).toEqual(
+          `/settings/alerts/example-id-1/edit`
+        )
+      }, 200)
 
-    screen.getByTestId("closeButton").click()
+      const mockedPreviewResolver = {
+        Me: () => ({
+          alert: {
+            internalID: "example-id-1",
+            artistIDs: ["artist-id"],
+            settings: {
+              name: "user-search-criteria-custom-name",
+            },
+          },
+        }),
+      }
 
-    expect(window.location.pathname).toEqual(`/settings/alerts`)
+      mockResolveLastOperation(mockedPreviewResolver)
+
+      expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+    })
+
+    it("opens the edit form on Edit CTA press", async () => {
+      const { mockResolveLastOperation } = renderWithRelay(
+        {
+          Me: () => ({
+            alertsConnection: mockedAlertsConnection,
+          }),
+        },
+        {},
+        relayEnv
+      )
+
+      setTimeout(() => {
+        expect(window.location.pathname).toEqual(
+          `/settings/alerts/example-id-1/edit`
+        )
+      }, 200)
+
+      const mockedPreviewResolver = {
+        Me: () => ({
+          alert: {
+            internalID: "example-id-1",
+            artistIDs: ["artist-id"],
+            settings: {
+              name: "user-search-criteria-custom-name",
+            },
+          },
+        }),
+      }
+
+      mockResolveLastOperation(mockedPreviewResolver)
+
+      expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+
+      fireEvent.click(screen.getAllByText("Edit")[1])
+
+      expect(window.location.pathname).toEqual(
+        `/settings/alerts/example-id-2/edit`
+      )
+    })
+  })
+
+  describe("mobile", () => {
+    beforeEach(() => {
+      breakpoint = "sm"
+    })
+
+    it("show edit form on Edit CTA press", () => {
+      const { mockResolveLastOperation } = renderWithRelay(
+        {
+          Me: () => ({
+            alertsConnection: mockedAlertsConnection,
+          }),
+        },
+        {},
+        relayEnv
+      )
+
+      fireEvent.click(screen.getAllByText("Edit")[0])
+
+      expect(window.location.pathname).toEqual(
+        `/settings/alerts/example-id-1/edit`
+      )
+
+      const mockedPreviewResolver = {
+        Me: () => ({
+          alert: {
+            internalID: "example-id-1",
+            artistIDs: ["artist-id"],
+            settings: {
+              name: "user-search-criteria-custom-name",
+            },
+          },
+        }),
+      }
+
+      mockResolveLastOperation(mockedPreviewResolver)
+
+      expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+
+      fireEvent.click(screen.getByLabelText("Close"))
+
+      expect(window.location.pathname).toEqual(`/settings/alerts`)
+    })
   })
 })
 
