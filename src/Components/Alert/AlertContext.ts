@@ -31,6 +31,7 @@ export type State = {
   isEditMode?: boolean
   criteriaChanged?: boolean
   metric?: Metric
+  isSubmitting?: boolean
 }
 
 export const DEFAULT_STATE: State = {
@@ -71,6 +72,7 @@ type Action =
   | { type: "SET_SEARCH_CRITERIA_ID"; payload: string }
   | { type: "SET_ALERT_ID"; payload: string }
   | { type: "SET_METRIC"; payload: Metric }
+  | { type: "SET_IS_SUBMITTING"; payload: boolean }
 
 export const reducer = (onShow: (State) => State, onReset: () => State) => (
   state: State,
@@ -149,6 +151,12 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
       return {
         ...state,
         metric: action.payload,
+      }
+
+    case "SET_IS_SUBMITTING":
+      return {
+        ...state,
+        isSubmitting: action.payload,
       }
 
     default:

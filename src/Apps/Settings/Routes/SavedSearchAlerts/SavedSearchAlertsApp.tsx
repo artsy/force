@@ -109,7 +109,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     setShowDeleteModal(false)
   }
 
-  const handleCompletedDesctop = () => {
+  const handleCompletedDesktop = () => {
     refresh()
 
     sendToast({
@@ -271,7 +271,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                     <Sticky bottomBoundary="#content-end">
                       <SavedSearchAlertEditFormQueryRenderer
                         editAlertEntity={editAlertEntity}
-                        onCompleted={handleCompletedDesctop}
+                        onCompleted={handleCompletedDesktop}
                         onDeleteClick={handleDeleteClick}
                       />
                     </Sticky>
