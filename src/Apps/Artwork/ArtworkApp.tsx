@@ -264,7 +264,13 @@ export const ArtworkApp: React.FC<Props> = props => {
           <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
           {isPrivateArtwork ? (
-            <PrivateArtworkDetails artwork={artwork} />
+            <>
+              <Spacer y={6} />
+
+              <PrivateArtworkDetails artwork={artwork} />
+
+              <Spacer y={6} />
+            </>
           ) : (
             <Media greaterThanOrEqual="sm">
               <BelowTheFoldArtworkDetails
