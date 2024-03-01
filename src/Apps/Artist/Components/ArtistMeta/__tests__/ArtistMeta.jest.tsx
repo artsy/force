@@ -149,13 +149,13 @@ describe("AdminMeta", () => {
 
   describe("alternate names", () => {
     it("skips rendering them without the data", () => {
-      const artist = { alternate_names: [] }
+      const artist = { alternateNames: [] }
       renderWithRelay({ Artist: () => artist })
       expect(getMetaBy({ name: "skos:prefLabel" })).toBeNull()
     })
 
     it("renders them with the data", () => {
-      const artist = { alternate_names: ["Bonnie", "Betty"] }
+      const artist = { alternateNames: ["Bonnie", "Betty"] }
       renderWithRelay({ Artist: () => artist })
       expect(
         getMetaBy({ name: "skos:prefLabel", content: "Bonnie; Betty" })

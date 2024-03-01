@@ -36,6 +36,9 @@ import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlert
 import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { getENV } from "Utils/getENV"
+import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
+
+const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -263,12 +266,15 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
               <Media greaterThanOrEqual="md">
                 <GridColumns gridColumnGap={0}>
                   <Column span={6}>{list}</Column>
-                  {editAlertEntity && (
-                    <Column
-                      span={6}
-                      borderLeft="1px solid"
-                      borderLeftColor="black15"
-                    >
+                  <Column
+                    span={6}
+                    borderLeft="1px solid"
+                    borderLeftColor="black15"
+                    borderRight="1px solid"
+                    borderRightColor="black15"
+                    height={DESKTOP_HEIGHT}
+                  >
+                    {editAlertEntity && (
                       <Sticky bottomBoundary="#content-end">
                         <SavedSearchAlertEditFormQueryRenderer
                           editAlertEntity={editAlertEntity}
@@ -276,8 +282,8 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                           onDeleteClick={handleDeleteClick}
                         />
                       </Sticky>
-                    </Column>
-                  )}
+                    )}
+                  </Column>
                 </GridColumns>
 
                 <Box id="content-end" />

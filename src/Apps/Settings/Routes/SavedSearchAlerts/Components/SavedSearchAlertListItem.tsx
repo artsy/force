@@ -86,11 +86,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           </TextWrapper>
           <Spacer x={2} />
           <TextWrapper textVariant="sm">
-            <RouterLink
-              to={viewAllHref}
-              textDecoration="underline"
-              zIndex={1000}
-            >
+            <RouterLink to={viewAllHref} textDecoration="underline">
               View Artworks
             </RouterLink>
             <Sup color="brand">{matchingArtworksCount}</Sup>

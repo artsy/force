@@ -112,16 +112,18 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
   const isMounted = useDidMount()
 
+  const handleSubmit = () => {
+    onComplete()
+    onCompleted()
+  }
+
   return (
     <Formik<AlertFormikValues>
       initialValues={state.settings}
-      onSubmit={() => {
-        onComplete()
-        onCompleted()
-      }}
+      onSubmit={handleSubmit}
       validateOnChange
     >
-      {({ isSubmitting, values, handleSubmit }) => {
+      {({ values, handleSubmit }) => {
         let isSaveAlertButtonDisabled = true
 
         if (state.criteriaChanged || !isEqual(state.settings, values)) {
@@ -178,7 +180,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                   <Spacer x={2} />
                   <Button
                     flex={1}
-                    loading={isSubmitting}
+                    loading={state.isSubmitting}
                     onClick={() => {
                       dispatch({ type: "SET_SETTINGS", payload: values })
                       handleSubmit()
@@ -194,7 +196,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                 <Spacer y={4} />
 
                 <Button
-                  loading={isSubmitting}
+                  loading={state.isSubmitting}
                   width="100%"
                   onClick={() => {
                     dispatch({ type: "SET_SETTINGS", payload: values })

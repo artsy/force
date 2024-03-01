@@ -22,6 +22,8 @@ import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSi
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuctionTimer"
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
 import { ContextModule } from "@artsy/cohesion"
+import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPrivateArtwork"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork$data
@@ -60,6 +62,13 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const lotLabel = saleArtwork?.lotLabel
   const extendedBiddingEndAt = saleArtwork?.extendedBiddingEndAt
   const biddingEndAt = extendedBiddingEndAt ?? endAt
+
+  const privateArtworksEnabled = useFeatureFlag(
+    "amber_artwork_visibility_unlisted"
+  )
+
+  const isPrivateArtwork =
+    privateArtworksEnabled && artwork?.visibilityLevel == "UNLISTED"
 
   const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
 
@@ -102,6 +111,8 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
       <Spacer y={2} />
 
       <ArtworkSidebarDetailsFragmentContainer artwork={artwork} />
+
+      {isPrivateArtwork && <ArtworkSidebarPrivateArtwork artwork={artwork} />}
 
       {isInAuction ? (
         <>
@@ -192,15 +203,6 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkSidebar_artwork on Artwork {
-        slug
-        isSold
-        isAcquireable
-        isOfferable
-        isInAuction
-        saleMessage
-        isBiddable
-        isEligibleForArtsyGuarantee
-        isEligibleToCreateAlert
         ...ArtworkSidebarArtworkTitle_artwork
         ...ArtworkSidebarArtists_artwork
         ...ArtworkSidebarDetails_artwork
@@ -213,6 +215,20 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarBiddingClosedMessage_artwork
         ...ArtworkSidebarAuctionTimer_artwork
         ...ArtworkSidebarAuctionInfoPolling_artwork
+        ...ArtworkSidebarPrivateArtwork_artwork
+
+        slug
+        isSold
+        isAcquireable
+        isOfferable
+        isInAuction
+        saleMessage
+        isBiddable
+        isEligibleForArtsyGuarantee
+        isEligibleToCreateAlert
+        partner {
+          internalID
+        }
         sale {
           endAt
           startAt
@@ -229,6 +245,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         artists {
           internalID
         }
+        visibilityLevel
       }
     `,
     me: graphql`
