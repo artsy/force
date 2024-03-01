@@ -70,7 +70,6 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
               "black100",
               variant === "active" ? "black100" : "black60",
             ]}
-            style={{ overflowWrap: "break-word" }}
           >
             <Clickable
               textDecoration="underline"
@@ -92,7 +91,6 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
               "black100",
               variant === "active" ? "black100" : "black60",
             ]}
-            style={{ overflowWrap: "break-word" }}
           >
             <RouterLink to={viewAllHref} textDecoration="underline">
               View Artworks
