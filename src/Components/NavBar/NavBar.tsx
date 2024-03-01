@@ -372,7 +372,7 @@ export const NavBar: React.FC = track(
                     />
                   )}
                 >
-                  {({ anchorRef, anchorProps, visible }) => (
+                  {({ anchorRef, anchorProps, visible, setVisible }) => (
                     <NavBarItemButton
                       ref={anchorRef as any}
                       px={0}
@@ -382,7 +382,14 @@ export const NavBar: React.FC = track(
                     >
                       <NavBarItemUnfocusableAnchor
                         href="/artists"
-                        onClick={handleClick}
+                        onClick={event => {
+                          handleClick(event)
+
+                          // Small timeout to avoid transition race condition
+                          setTimeout(() => {
+                            setVisible(false)
+                          }, 100)
+                        }}
                         data-label="Artists"
                       />
                       {t`navbar.artists`}
@@ -406,7 +413,7 @@ export const NavBar: React.FC = track(
                     />
                   )}
                 >
-                  {({ anchorRef, anchorProps, visible }) => (
+                  {({ anchorRef, anchorProps, visible, setVisible }) => (
                     <NavBarItemButton
                       ref={anchorRef as any}
                       active={visible}
@@ -414,7 +421,14 @@ export const NavBar: React.FC = track(
                     >
                       <NavBarItemUnfocusableAnchor
                         href="/collect"
-                        onClick={handleClick}
+                        onClick={event => {
+                          handleClick(event)
+
+                          // Small timeout to avoid transition race condition
+                          setTimeout(() => {
+                            setVisible(false)
+                          }, 100)
+                        }}
                         data-label="Artworks"
                       />
                       {t`navbar.artworks`}
