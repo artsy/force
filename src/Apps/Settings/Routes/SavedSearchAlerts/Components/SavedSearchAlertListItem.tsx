@@ -3,7 +3,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
-import { Media } from "Utils/Responsive"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 
@@ -20,29 +19,6 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
 }) => {
   const viewAllHref = item.href
   const matchingArtworksCount = item.artworksConnection?.counts?.total
-
-  const TextWrapper = ({ children, textVariant }) => (
-    <>
-      <Media greaterThanOrEqual="md">
-        <Text
-          variant={textVariant}
-          color={variant === "active" ? "black100" : "black60"}
-          style={{ overflowWrap: "break-word" }}
-        >
-          {children}
-        </Text>
-      </Media>
-      <Media lessThan="md">
-        <Text
-          variant={textVariant}
-          color="black100"
-          style={{ overflowWrap: "break-word" }}
-        >
-          {children}
-        </Text>
-      </Media>
-    </>
-  )
 
   return (
     <Box
@@ -64,13 +40,38 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           overflow="hidden"
         >
           <Flex flexDirection="column">
-            <TextWrapper textVariant="lg-display">{item.title}</TextWrapper>
-            <TextWrapper textVariant="md">{item.subtitle}</TextWrapper>
+            <Text
+              variant="lg-display"
+              textColor={[
+                "black100",
+                variant === "active" ? "black100" : "black60",
+              ]}
+              style={{ overflowWrap: "break-word" }}
+            >
+              {item.title}
+            </Text>
+            <Text
+              variant="md"
+              textColor={[
+                "black100",
+                variant === "active" ? "black100" : "black60",
+              ]}
+              style={{ overflowWrap: "break-word" }}
+            >
+              {item.subtitle}
+            </Text>
           </Flex>
           <Spacer x={2} y={2} />
         </Flex>
         <Flex flexDirection="row" alignItems={["flex-start", "center"]}>
-          <TextWrapper textVariant="sm">
+          <Text
+            variant="sm"
+            textColor={[
+              "black100",
+              variant === "active" ? "black100" : "black60",
+            ]}
+            style={{ overflowWrap: "break-word" }}
+          >
             <Clickable
               textDecoration="underline"
               onClick={() => {
@@ -83,14 +84,21 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
             >
               Edit
             </Clickable>
-          </TextWrapper>
+          </Text>
           <Spacer x={2} />
-          <TextWrapper textVariant="sm">
+          <Text
+            variant="sm"
+            textColor={[
+              "black100",
+              variant === "active" ? "black100" : "black60",
+            ]}
+            style={{ overflowWrap: "break-word" }}
+          >
             <RouterLink to={viewAllHref} textDecoration="underline">
               View Artworks
             </RouterLink>
             <Sup color="brand">{matchingArtworksCount}</Sup>
-          </TextWrapper>
+          </Text>
         </Flex>
       </Flex>
     </Box>
