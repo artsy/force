@@ -11,14 +11,14 @@ interface Props {
 }
 
 export const ArtistMeta: React.FC<Props> = ({ artist }) => {
-  const alternateNames = artist?.alternate_names || []
+  const alternateNames = artist?.alternateNames || []
 
   return (
     <>
       <MetaTags
         title={artist.meta.title}
         description={artist.meta.description}
-        imageURL={artist.image?.large}
+        imageURL={artist.coverArtwork?.image?.large}
         pathname={artist.href}
       />
 
@@ -66,11 +66,11 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
         description
         title
       }
-      alternate_names: alternateNames
-      image {
-        versions
-        large: url(version: "large")
-        square: url(version: "square")
+      alternateNames
+      coverArtwork {
+        image {
+          large: url(version: "large")
+        }
       }
       counts {
         artworks
