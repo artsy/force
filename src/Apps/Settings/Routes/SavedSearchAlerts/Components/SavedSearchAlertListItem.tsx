@@ -15,7 +15,7 @@ interface SavedSearchAlertListItemProps {
 
 export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> = ({
   item,
-  variant = "inaclive",
+  variant,
   onEditAlertClick,
 }) => {
   const viewAllHref = item.href
