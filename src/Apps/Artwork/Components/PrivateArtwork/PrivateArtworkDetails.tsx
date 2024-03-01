@@ -1,11 +1,9 @@
-import { Column, GridColumns } from "@artsy/palette"
+import { Box, Separator } from "@artsy/palette"
 import { PrivateArtworkDetails_artwork$key } from "__generated__/PrivateArtworkDetails_artwork.graphql"
-import { PrivateArtworkAboutArtist } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkAboutArtist"
+import { PrivateArtworkAboutArtist } from "./PrivateArtworkAboutArtist"
 import { PrivateArtworkAboutWork } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkAboutWork"
-import { PrivateArtworkCondition } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkCondition"
-import { PrivateArtworkExhibitionHistory } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkExhibitionHistory"
-import { PrivateArtworkProvenance } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkProvenance"
 import { graphql, useFragment } from "react-relay"
+import { PrivateArtworkMetadata } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkMetadata"
 
 interface PrivateArtworkDetailsProps {
   artwork: PrivateArtworkDetails_artwork$key
@@ -19,30 +17,23 @@ export const PrivateArtworkDetails: React.FC<PrivateArtworkDetailsProps> = ({
       fragment PrivateArtworkDetails_artwork on Artwork {
         ...PrivateArtworkAboutWork_artwork
         ...PrivateArtworkAboutArtist_artwork
-        ...PrivateArtworkCondition_artwork
-        ...PrivateArtworkProvenance_artwork
-        ...PrivateArtworkExhibitionHistory_artwork
+        ...PrivateArtworkMetadata_artwork
       }
     `,
     artwork
   )
 
   return (
-    <>
+    <Box>
       <PrivateArtworkAboutWork artwork={data} />
+
+      <Separator mt={4} borderWidth={1} />
+
       <PrivateArtworkAboutArtist artwork={data} />
 
-      <GridColumns>
-        <Column span={4}>
-          <PrivateArtworkCondition artwork={data} />
-        </Column>
-        <Column span={4}>
-          <PrivateArtworkProvenance artwork={data} />
-        </Column>
-        <Column span={4}>
-          <PrivateArtworkExhibitionHistory artwork={data} />
-        </Column>
-      </GridColumns>
-    </>
+      <Separator mb={4} borderWidth={1} />
+
+      <PrivateArtworkMetadata artwork={data} />
+    </Box>
   )
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e28a150e87769f080cda5e5860ef0392>>
+ * @generated SignedSource<<343c50f095cd1c66dc06b268ad64d679>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrivateArtworkDetails_artwork$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"PrivateArtworkAboutArtist_artwork" | "PrivateArtworkAboutWork_artwork" | "PrivateArtworkCondition_artwork" | "PrivateArtworkExhibitionHistory_artwork" | "PrivateArtworkProvenance_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"PrivateArtworkAboutArtist_artwork" | "PrivateArtworkAboutWork_artwork" | "PrivateArtworkMetadata_artwork">;
   readonly " $fragmentType": "PrivateArtworkDetails_artwork";
 };
 export type PrivateArtworkDetails_artwork$key = {
@@ -38,23 +38,13 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "PrivateArtworkCondition_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "PrivateArtworkProvenance_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "PrivateArtworkExhibitionHistory_artwork"
+      "name": "PrivateArtworkMetadata_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "11d5526fbabf07d9c4d9ff3a5cb116e4";
+(node as any).hash = "4facb03839a4004c135b672287a97c0a";
 
 export default node;
