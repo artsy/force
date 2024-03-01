@@ -44,6 +44,8 @@ import { AlertProvider } from "Components/Alert/AlertProvider"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkResult.graphql"
 import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorApp"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { PrivateArtworkDetails } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkDetails"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -90,8 +92,14 @@ export const ArtworkApp: React.FC<Props> = props => {
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
   const { match, silentPush } = useRouter()
 
+  const privateArtworksEnabled = useFeatureFlag(
+    "amber_artwork_visibility_unlisted"
+  )
+
   const showUnlistedArtworkBanner =
     artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
+
+  const isPrivateArtwork = privateArtworksEnabled && showUnlistedArtworkBanner
 
   const showExpiredOfferBanner = !!match?.location?.query?.expired_offer
   const showUnavailableArtworkBanner = !!match?.location?.query?.unavailable
@@ -255,52 +263,60 @@ export const ArtworkApp: React.FC<Props> = props => {
         >
           <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
-          <Media greaterThanOrEqual="sm">
-            <BelowTheFoldArtworkDetails
-              slug={artwork.slug}
-              artists={artwork.artists}
-            />
-          </Media>
+          {isPrivateArtwork ? (
+            <PrivateArtworkDetails artwork={artwork} />
+          ) : (
+            <Media greaterThanOrEqual="sm">
+              <BelowTheFoldArtworkDetails
+                slug={artwork.slug}
+                artists={artwork.artists}
+              />
+            </Media>
+          )}
         </Column>
         <Column span={4} pt={[0, 2]}>
           <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
         </Column>
       </GridColumns>
 
-      <Media lessThan="sm">
-        <BelowTheFoldArtworkDetails
-          slug={artwork.slug}
-          artists={artwork.artists}
-        />
-      </Media>
-
-      <Spacer y={6} />
-
-      <ArtworkArtistSeriesQueryRenderer slug={artwork.slug} />
-
-      <Spacer y={6} />
-
-      <OtherWorksQueryRenderer slug={artwork.slug} />
-
-      <Spacer y={6} />
-
-      {/* Temporarily suppressed while we investigate performance. See PLATFORM-4980  */}
-      {/* <RelatedWorksQueryRenderer slug={artwork.slug} /> */}
-
-      {artwork.artist && (
+      {!isPrivateArtwork && (
         <>
+          <Media lessThan="sm">
+            <BelowTheFoldArtworkDetails
+              slug={artwork.slug}
+              artists={artwork.artists}
+            />
+          </Media>
+
           <Spacer y={6} />
 
-          <ArtworkRelatedArtistsQueryRenderer slug={artwork.slug} />
+          <ArtworkArtistSeriesQueryRenderer slug={artwork.slug} />
+
+          <Spacer y={6} />
+
+          <OtherWorksQueryRenderer slug={artwork.slug} />
+
+          <Spacer y={6} />
+
+          {/* Temporarily suppressed while we investigate performance. See PLATFORM-4980  */}
+          {/* <RelatedWorksQueryRenderer slug={artwork.slug} /> */}
+
+          {artwork.artist && (
+            <>
+              <Spacer y={6} />
+
+              <ArtworkRelatedArtistsQueryRenderer slug={artwork.slug} />
+            </>
+          )}
+
+          <Spacer y={6} />
+
+          <RecentlyViewed />
+
+          {!!submittedOrderId && (
+            <SubmittedOrderModalQueryRenderer orderId={submittedOrderId} />
+          )}
         </>
-      )}
-
-      <Spacer y={6} />
-
-      <RecentlyViewed />
-
-      {!!submittedOrderId && (
-        <SubmittedOrderModalQueryRenderer orderId={submittedOrderId} />
       )}
     </>
   )
@@ -366,6 +382,14 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkApp_artwork on Artwork {
+        ...ArtworkRelatedArtists_artwork
+        ...ArtworkMeta_artwork
+        ...ArtworkTopContextBar_artwork
+        ...ArtworkImageBrowser_artwork
+        ...ArtworkSidebar_artwork
+        ...ArtworkAuctionCreateAlertHeader_artwork
+        ...PrivateArtworkDetails_artwork
+
         attributionClass {
           internalID
         }
@@ -410,12 +434,6 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         artist {
           ...ArtistInfo_artist
         }
-        ...ArtworkRelatedArtists_artwork
-        ...ArtworkMeta_artwork
-        ...ArtworkTopContextBar_artwork
-        ...ArtworkImageBrowser_artwork
-        ...ArtworkSidebar_artwork
-        ...ArtworkAuctionCreateAlertHeader_artwork
       }
     `,
   }
