@@ -113,8 +113,6 @@ describe("Meta", () => {
         description:
           "Discover and purchase Claes Oldenburg’s artworks, available for sale. Browse our selection of paintings, prints, and sculptures by the artist, and find art you love.",
         gender: "male",
-        image:
-          "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA/large.jpg",
         mainEntityOfPage: "https://www.artsy-test.net/artist/claes-oldenburg",
         makesOffer: [
           {

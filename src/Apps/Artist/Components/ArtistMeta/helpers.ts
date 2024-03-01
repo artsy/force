@@ -140,7 +140,7 @@ export const structuredDataAttributes = (artist: ArtistMeta_artist$data) => {
     deathDate: artist.deathday,
     description: artist.meta ? artist.meta.description : "",
     gender: artist.gender,
-    image: artist.image ? artist.image.large : "",
+    image: artist.coverArtwork?.image ? artist.coverArtwork.image.large : "",
     mainEntityOfPage: `${getENV("APP_URL")}${artist.href}`,
     makesOffer,
     name: artist.name,

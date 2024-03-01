@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4048aebe9fe7d8766be50cb0e4c1f37>>
+ * @generated SignedSource<<915ca8325554ab7d5c2b6a2ff71c4755>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -49,7 +49,7 @@ export type ArtworkApp_artwork$data = {
   } | null | undefined;
   readonly slug: string;
   readonly visibilityLevel: Visibility | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork" | "PrivateArtworkDetails_artwork">;
   readonly " $fragmentType": "ArtworkApp_artwork";
 };
 export type ArtworkApp_artwork$key = {
@@ -92,6 +92,41 @@ return {
   "metadata": null,
   "name": "ArtworkApp_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkRelatedArtists_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkMeta_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkTopContextBar_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkImageBrowser_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebar_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkAuctionCreateAlertHeader_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "PrivateArtworkDetails_artwork"
+    },
     {
       "alias": null,
       "args": null,
@@ -267,36 +302,6 @@ return {
         (v3/*: any*/)
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkRelatedArtists_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkMeta_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkTopContextBar_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkImageBrowser_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSidebar_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkAuctionCreateAlertHeader_artwork"
     }
   ],
   "type": "Artwork",
@@ -304,6 +309,6 @@ return {
 };
 })();
 
-(node as any).hash = "360cb0ea8dcbccba61ed19e08edaf79c";
+(node as any).hash = "27fca7cd666dc2cbdc3985d18f4a2109";
 
 export default node;

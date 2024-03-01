@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa33e5d6a799e615d7ffa6c51141be5a>>
+ * @generated SignedSource<<56a897f1ce03181217e6c215070c3db3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -74,11 +74,18 @@ v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "major",
   "storageKey": null
 },
-v7 = [
-  (v6/*: any*/),
+v8 = [
+  (v7/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -87,7 +94,7 @@ v7 = [
     "storageKey": null
   }
 ],
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "concreteType": "Image",
@@ -112,18 +119,11 @@ v8 = {
   ],
   "storageKey": null
 },
-v9 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
 v10 = {
   "enumValues": null,
   "nullable": true,
-  "plural": true,
-  "type": "String"
+  "plural": false,
+  "type": "Artwork"
 },
 v11 = {
   "enumValues": null,
@@ -259,7 +259,7 @@ return {
             "storageKey": "meta(page:\"ABOUT\")"
           },
           {
-            "alias": "alternate_names",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "alternateNames",
@@ -268,32 +268,24 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Image",
+            "concreteType": "Artwork",
             "kind": "LinkedField",
-            "name": "image",
+            "name": "coverArtwork",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "versions",
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "image",
+                "plural": false,
+                "selections": [
+                  (v5/*: any*/)
+                ],
                 "storageKey": null
               },
-              (v5/*: any*/),
-              {
-                "alias": "square",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "square"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"square\")"
-              }
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
@@ -410,7 +402,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "minPrice",
                                 "plural": false,
-                                "selections": (v7/*: any*/),
+                                "selections": (v8/*: any*/),
                                 "storageKey": null
                               },
                               {
@@ -421,7 +413,7 @@ return {
                                 "name": "maxPrice",
                                 "plural": false,
                                 "selections": [
-                                  (v6/*: any*/)
+                                  (v7/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -431,7 +423,7 @@ return {
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v7/*: any*/),
+                            "selections": (v8/*: any*/),
                             "type": "Money",
                             "abstractKey": null
                           }
@@ -446,7 +438,7 @@ return {
                         "storageKey": null
                       },
                       (v2/*: any*/),
-                      (v8/*: any*/),
+                      (v9/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -465,16 +457,16 @@ return {
                             "name": "profile",
                             "plural": false,
                             "selections": [
-                              (v8/*: any*/),
-                              (v9/*: any*/)
+                              (v9/*: any*/),
+                              (v6/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v9/*: any*/)
+                          (v6/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v9/*: any*/)
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -484,14 +476,14 @@ return {
             ],
             "storageKey": "artworksConnection(filter:\"IS_FOR_SALE\",first:10,published:true)"
           },
-          (v9/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": "artist(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "eb72c630bfca9cfecf5893707eea7d4c",
+    "cacheID": "d30597a2d8348997161daeb281373838",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -501,7 +493,12 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "artist.alternate_names": (v10/*: any*/),
+        "artist.alternateNames": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "String"
+        },
         "artist.artworks_connection": {
           "enumValues": null,
           "nullable": true,
@@ -514,12 +511,7 @@ return {
           "plural": true,
           "type": "ArtworkEdge"
         },
-        "artist.artworks_connection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Artwork"
-        },
+        "artist.artworks_connection.edges.node": (v10/*: any*/),
         "artist.artworks_connection.edges.node.availability": (v11/*: any*/),
         "artist.artworks_connection.edges.node.category": (v11/*: any*/),
         "artist.artworks_connection.edges.node.date": (v11/*: any*/),
@@ -578,14 +570,14 @@ return {
           "plural": false,
           "type": "FormattedNumber"
         },
+        "artist.coverArtwork": (v10/*: any*/),
+        "artist.coverArtwork.id": (v12/*: any*/),
+        "artist.coverArtwork.image": (v13/*: any*/),
+        "artist.coverArtwork.image.large": (v11/*: any*/),
         "artist.deathday": (v11/*: any*/),
         "artist.gender": (v11/*: any*/),
         "artist.href": (v11/*: any*/),
         "artist.id": (v12/*: any*/),
-        "artist.image": (v13/*: any*/),
-        "artist.image.large": (v11/*: any*/),
-        "artist.image.square": (v11/*: any*/),
-        "artist.image.versions": (v10/*: any*/),
         "artist.meta": {
           "enumValues": null,
           "nullable": false,
@@ -601,7 +593,7 @@ return {
     },
     "name": "ArtistMeta_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  gender\n  href\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternate_names: alternateNames\n  image {\n    versions\n    large: url(version: \"large\")\n    square: url(version: \"square\")\n  }\n  counts {\n    artworks\n  }\n  blurb\n  artworks_connection: artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {\n    edges {\n      node {\n        title\n        date\n        description\n        category\n        price_currency: priceCurrency\n        listPrice {\n          __typename\n          ... on PriceRange {\n            minPrice {\n              major\n              currencyCode\n            }\n            maxPrice {\n              major\n            }\n          }\n          ... on Money {\n            major\n            currencyCode\n          }\n        }\n        availability\n        href\n        image {\n          small: url(version: \"small\")\n          large: url(version: \"large\")\n        }\n        partner {\n          name\n          href\n          profile {\n            image {\n              small: url(version: \"small\")\n              large: url(version: \"large\")\n            }\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  gender\n  href\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternateNames\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n  counts {\n    artworks\n  }\n  blurb\n  artworks_connection: artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {\n    edges {\n      node {\n        title\n        date\n        description\n        category\n        price_currency: priceCurrency\n        listPrice {\n          __typename\n          ... on PriceRange {\n            minPrice {\n              major\n              currencyCode\n            }\n            maxPrice {\n              major\n            }\n          }\n          ... on Money {\n            major\n            currencyCode\n          }\n        }\n        availability\n        href\n        image {\n          small: url(version: \"small\")\n          large: url(version: \"large\")\n        }\n        partner {\n          name\n          href\n          profile {\n            image {\n              small: url(version: \"small\")\n              large: url(version: \"large\")\n            }\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

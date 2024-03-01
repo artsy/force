@@ -33,13 +33,13 @@ describe("NotificationsEmptyStateByType", () => {
   })
 })
 
-describe("NotificationsEmptyStateByType Following alerts", () => {
+describe("NotificationsEmptyStateByType Follows alerts", () => {
   beforeEach(() => {
     ;(useFeatureFlag as jest.Mock).mockImplementation(() => true)
   })
 
-  it("should render correct state when type is 'Following'", () => {
-    render(<NotificationsEmptyStateByType type="following" />)
+  it("should render correct state when type is 'Follows'", () => {
+    render(<NotificationsEmptyStateByType type="follows" />)
 
     const title = "Follow artists and galleries to stay up to date"
     const message =

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0223d05ed2b70d937db40154ad113ffa>>
+ * @generated SignedSource<<fe706e8f00fb4865174704e1ecc0e4ed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistMeta_artist$data = {
-  readonly alternate_names: ReadonlyArray<string | null | undefined> | null | undefined;
+  readonly alternateNames: ReadonlyArray<string | null | undefined> | null | undefined;
   readonly artworks_connection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -62,14 +62,14 @@ export type ArtistMeta_artist$data = {
   readonly counts: {
     readonly artworks: any | null | undefined;
   } | null | undefined;
+  readonly coverArtwork: {
+    readonly image: {
+      readonly large: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly deathday: string | null | undefined;
   readonly gender: string | null | undefined;
   readonly href: string | null | undefined;
-  readonly image: {
-    readonly large: string | null | undefined;
-    readonly square: string | null | undefined;
-    readonly versions: ReadonlyArray<string | null | undefined> | null | undefined;
-  } | null | undefined;
   readonly meta: {
     readonly description: string;
     readonly title: string;
@@ -231,7 +231,7 @@ return {
       "storageKey": "meta(page:\"ABOUT\")"
     },
     {
-      "alias": "alternate_names",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "alternateNames",
@@ -240,31 +240,22 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Image",
+      "concreteType": "Artwork",
       "kind": "LinkedField",
-      "name": "image",
+      "name": "coverArtwork",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "versions",
-          "storageKey": null
-        },
-        (v4/*: any*/),
-        {
-          "alias": "square",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "square"
-            }
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "image",
+          "plural": false,
+          "selections": [
+            (v4/*: any*/)
           ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:\"square\")"
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -459,6 +450,6 @@ return {
 };
 })();
 
-(node as any).hash = "d6640e0fe3cda5eff7e06b3e35a12723";
+(node as any).hash = "317d787474ecc45eac65f861049794ed";
 
 export default node;
