@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { SavedSearchAlertsAppPaginationContainer } from "Apps/Settings/Routes/SavedSearchAlerts/SavedSearchAlertsApp"
@@ -72,51 +72,21 @@ describe("SavedSearchAlertsApp", () => {
         }),
       })
 
-      expect(screen.getAllByText("Alert Name 1")[0]).toBeInTheDocument()
-      expect(screen.getAllByText("Alert Name 2")[0]).toBeInTheDocument()
-      expect(screen.getAllByText("Alert Name 3")[0]).toBeInTheDocument()
+      expect(screen.getAllByText("Artist Name 1")[0]).toBeInTheDocument()
+      expect(screen.getAllByText("Artist Name 2")[0]).toBeInTheDocument()
+      expect(screen.getAllByText("Artist Name 3")[0]).toBeInTheDocument()
     })
 
-    it("should expand/collapse filter pills when user toggles show all/close all filters button", async () => {
+    it("renders all alert subtitles", () => {
       renderWithRelay({
         Me: () => ({
-          alertsConnection: mockedAlertsConnectionWithFilters,
+          alertsConnection: mockedAlertsConnection,
         }),
       })
 
-      expect(
-        screen.getAllByText("Alert With Some Filters")[0]
-      ).toBeInTheDocument()
-
-      // the rest of the filters are hidden by default
-      expect(screen.queryAllByText("Limited Edition")).toStrictEqual([])
-      expect(screen.queryAllByText("Andy Warhol")).toStrictEqual([])
-      expect(screen.queryAllByText("$0–$34,240")).toStrictEqual([])
-      expect(screen.queryAllByText("Painting")).toStrictEqual([])
-
-      // the show all filters button is displayed
-      expect(screen.getAllByText("Show all filters")[0]).toBeInTheDocument()
-      expect(screen.queryAllByText("Close all filters")).toStrictEqual([])
-      fireEvent.click(screen.getAllByText("Show all filters")[0])
-
-      // after pressing show all filters the hidden filters appear
-      expect(screen.getAllByText("Close all filters")[0]).toBeInTheDocument()
-      expect(screen.getAllByText("Limited Edition")[0]).toBeInTheDocument()
-      expect(screen.getAllByText("Andy Warhol")[0]).toBeInTheDocument()
-      expect(screen.getAllByText("$0–$34,240")[0]).toBeInTheDocument()
-      expect(screen.getAllByText("Painting")[0]).toBeInTheDocument()
-
-      // collapses the filters
-      fireEvent.click(screen.getByText("Close all filters"))
-
-      await waitFor(() =>
-        expect(screen.queryByText("Close all filters")).not.toBeInTheDocument()
-      )
-      // after pressing close all filters, all the filters are collapsed
-      expect(screen.queryAllByText("Limited Edition")).toStrictEqual([])
-      expect(screen.queryAllByText("Andy Warhol")).toStrictEqual([])
-      expect(screen.queryAllByText("$0–$34,240")).toStrictEqual([])
-      expect(screen.queryAllByText("Painting")).toStrictEqual([])
+      expect(screen.getAllByText("Alert Subtitle 1")[0]).toBeInTheDocument()
+      expect(screen.getAllByText("Alert Subtitle 2")[0]).toBeInTheDocument()
+      expect(screen.getAllByText("Alert Subtitle 3")[0]).toBeInTheDocument()
     })
 
     it("renders a empty results message if there are no alerts", () => {
@@ -270,42 +240,21 @@ const mockedAlertsConnection = {
     {
       node: {
         internalID: "example-id-1",
-        labels: [
-          { displayValue: "Limited Edition" },
-          { displayValue: "Andy Warhol" },
-        ],
-        displayName: "Alert Name 1",
+        title: "Artist Name 1",
+        subtitle: "Alert Subtitle 1",
       },
     },
     {
       node: {
         internalID: "example-id-2",
-        displayName: "Alert Name 2",
+        title: "Artist Name 2",
+        subtitle: "Alert Subtitle 2",
       },
     },
     {
       node: {
-        labels: [{ displayValue: "$0–$34,240" }, { displayValue: "Omar Ba" }],
-        displayName: "Alert Name 3",
-      },
-    },
-  ],
-}
-
-const mockedAlertsConnectionWithFilters = {
-  edges: [
-    {
-      node: {
-        settings: {
-          name: "Alert With Some Filters",
-        },
-        displayName: "Alert With Some Filters",
-        labels: [
-          { displayValue: "Limited Edition" },
-          { displayValue: "Andy Warhol" },
-          { displayValue: "$0–$34,240" },
-          { displayValue: "Painting" },
-        ],
+        title: "Artist Name 3",
+        subtitle: "Alert Subtitle 3",
       },
     },
   ],

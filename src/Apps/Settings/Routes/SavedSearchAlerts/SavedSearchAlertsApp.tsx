@@ -36,6 +36,9 @@ import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlert
 import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { getENV } from "Utils/getENV"
+import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
+
+const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -109,7 +112,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     setShowDeleteModal(false)
   }
 
-  const handleCompletedDesktop = () => {
+  const handleCompletedDesctop = () => {
     refresh()
 
     sendToast({
@@ -210,7 +213,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
   const list = (
     <>
-      <Join separator={<Separator color="black15" />}>
+      <Join separator={<Separator borderColor="black5" />}>
         {alerts.map(node => {
           const isCurrentEdgeSelected = editAlertEntity?.id === node.internalID
           let variant: SavedSearchAlertListItemVariant | undefined
@@ -258,30 +261,34 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
               selected={sort}
               onSortSelect={handleSortSelect}
             />
-            <Separator color="black15" />
-            <Media greaterThanOrEqual="md">
-              <GridColumns gridColumnGap={0}>
-                <Column span={6}>{list}</Column>
-                {editAlertEntity && (
+            <Box mx={-4}>
+              <Separator color="black15" />
+              <Media greaterThanOrEqual="md">
+                <GridColumns gridColumnGap={0}>
+                  <Column span={6}>{list}</Column>
                   <Column
                     span={6}
                     borderLeft="1px solid"
                     borderLeftColor="black15"
+                    borderRight="1px solid"
+                    borderRightColor="black15"
+                    height={DESKTOP_HEIGHT}
                   >
-                    <Sticky bottomBoundary="#content-end">
-                      <SavedSearchAlertEditFormQueryRenderer
-                        editAlertEntity={editAlertEntity}
-                        onCompleted={handleCompletedDesktop}
-                        onDeleteClick={handleDeleteClick}
-                      />
-                    </Sticky>
+                    {editAlertEntity && (
+                      <Sticky bottomBoundary="#content-end">
+                        <SavedSearchAlertEditFormQueryRenderer
+                          editAlertEntity={editAlertEntity}
+                          onCompleted={handleCompletedDesctop}
+                          onDeleteClick={handleDeleteClick}
+                        />
+                      </Sticky>
+                    )}
                   </Column>
-                )}
-              </GridColumns>
+                </GridColumns>
 
-              <Box id="content-end" />
-            </Media>
-
+                <Box id="content-end" />
+              </Media>
+            </Box>
             <Media lessThan="md">
               {list}
               {isEditMode && editAlertEntity && (
@@ -331,6 +338,13 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
                 name
               }
               ...SavedSearchAlertListItem_item
+              title: displayName(only: [artistIDs])
+              subtitle: displayName(except: [artistIDs])
+              artworksConnection(first: 1) {
+                counts {
+                  total
+                }
+              }
             }
           }
         }

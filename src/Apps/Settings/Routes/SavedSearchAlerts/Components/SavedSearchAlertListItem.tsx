@@ -1,20 +1,8 @@
-import {
-  Box,
-  Clickable,
-  Column,
-  Flex,
-  GridColumns,
-  Pill,
-  Spacer,
-  Text,
-} from "@artsy/palette"
-import { useState } from "react"
+import { Box, Clickable, Flex, Spacer, Sup, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
-import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
-import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 
@@ -30,25 +18,17 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
   onEditAlertClick,
 }) => {
   const viewAllHref = item.href
-  const [isExpanded, setIsExpanded] = useState(false)
-  const Icon = isExpanded ? ChevronUpIcon : ChevronDownIcon
-
-  const toggleExpandFilters = () => setIsExpanded(isExpanded => !isExpanded)
-
-  const toggleExpandFiltersText = isExpanded
-    ? "Close all filters"
-    : "Show all filters"
+  const matchingArtworksCount = item.artworksConnection?.counts?.total
 
   return (
     <Box
       key={item.internalID}
       px={[2, 4]}
       py={4}
-      opacity={variant === "inactive" ? 0.24 : 1}
-      bg={variant === "active" ? "black5" : "transparent"}
+      bg={variant === "active" ? "black5" : "white100"}
     >
       <Flex
-        flexDirection="row"
+        flexDirection={["column", "row"]}
         alignItems={["stretch", "center"]}
         justifyContent="space-between"
       >
@@ -59,57 +39,66 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           flex={1}
           overflow="hidden"
         >
-          <Text
-            variant={["md", "lg"]}
-            color={variant === "active" ? "blue100" : "black100"}
-            style={{ overflowWrap: "break-word" }}
-          >
-            {item.displayName}
-          </Text>
+          <Flex flexDirection="column">
+            <Text
+              variant="lg-display"
+              textColor={[
+                "black100",
+                variant === "active" ? "black100" : "black60",
+              ]}
+              style={{ overflowWrap: "break-word" }}
+            >
+              {item.title}
+            </Text>
+            <Text
+              variant="md"
+              textColor={[
+                "black100",
+                variant === "active" ? "black100" : "black60",
+              ]}
+              style={{ overflowWrap: "break-word" }}
+            >
+              {item.subtitle}
+            </Text>
+          </Flex>
           <Spacer x={2} y={2} />
-          <Clickable textDecoration="underline" onClick={toggleExpandFilters}>
-            <Flex flexDirection="row" alignItems="center">
-              <Text variant="sm">{toggleExpandFiltersText}</Text>
-              <Icon height={18} width={18} ml={0.5} />
-            </Flex>
-          </Clickable>
         </Flex>
         <Flex flexDirection="row" alignItems={["flex-start", "center"]}>
-          <Clickable
-            textDecoration="underline"
-            onClick={() => {
-              onEditAlertClick({
-                id: item.internalID,
-                name: item.settings?.name ?? undefined,
-                artistIds: item.artistIDs as string[],
-              })
-            }}
+          <Text
+            variant="sm"
+            textColor={[
+              "black100",
+              variant === "active" ? "black100" : "black60",
+            ]}
           >
-            <Text variant="sm">Edit</Text>
-          </Clickable>
+            <Clickable
+              textDecoration="underline"
+              onClick={() => {
+                onEditAlertClick({
+                  id: item.internalID,
+                  name: item.settings?.name ?? undefined,
+                  artistIds: item.artistIDs as string[],
+                })
+              }}
+            >
+              Edit
+            </Clickable>
+          </Text>
           <Spacer x={2} />
-          <RouterLink to={viewAllHref} textDecoration="underline">
-            <Text variant="sm">View All</Text>
-          </RouterLink>
+          <Text
+            variant="sm"
+            textColor={[
+              "black100",
+              variant === "active" ? "black100" : "black60",
+            ]}
+          >
+            <RouterLink to={viewAllHref} textDecoration="underline">
+              View Artworks
+            </RouterLink>
+            <Sup color="brand">{matchingArtworksCount}</Sup>
+          </Text>
         </Flex>
       </Flex>
-      <Spacer y={2} />
-      <GridColumns>
-        <Column span={[12, 8]}>
-          {isExpanded &&
-            item.labels.map(label => (
-              <Pill
-                key={label.displayValue}
-                variant="filter"
-                disabled
-                mr={1}
-                mb={1}
-              >
-                {label.displayValue}
-              </Pill>
-            ))}
-        </Column>
-      </GridColumns>
     </Box>
   )
 }
@@ -120,12 +109,15 @@ export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer
     item: graphql`
       fragment SavedSearchAlertListItem_item on Alert {
         internalID
-        displayName
         artistIDs
         artistSeriesIDs
         href
-        labels {
-          displayValue
+        title: displayName(only: [artistIDs])
+        subtitle: displayName(except: [artistIDs])
+        artworksConnection(first: 1) {
+          counts {
+            total
+          }
         }
         settings {
           name

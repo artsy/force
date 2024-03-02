@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21d55e8611048ddc1da41064ff235bcb>>
+ * @generated SignedSource<<56f111cac315f00a442da1726797d224>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,10 +15,17 @@ export type SavedSearchAlertsApp_me$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;
+        readonly artworksConnection: {
+          readonly counts: {
+            readonly total: any | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
         readonly internalID: string;
         readonly settings: {
           readonly name: string | null | undefined;
         };
+        readonly subtitle: string;
+        readonly title: string;
         readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertListItem_item">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -30,7 +37,11 @@ export type SavedSearchAlertsApp_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  "artistIDs"
+];
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -131,6 +142,67 @@ const node: ReaderFragment = {
                   "name": "SavedSearchAlertListItem_item"
                 },
                 {
+                  "alias": "title",
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "only",
+                      "value": (v0/*: any*/)
+                    }
+                  ],
+                  "kind": "ScalarField",
+                  "name": "displayName",
+                  "storageKey": "displayName(only:[\"artistIDs\"])"
+                },
+                {
+                  "alias": "subtitle",
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "except",
+                      "value": (v0/*: any*/)
+                    }
+                  ],
+                  "kind": "ScalarField",
+                  "name": "displayName",
+                  "storageKey": "displayName(except:[\"artistIDs\"])"
+                },
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "first",
+                      "value": 1
+                    }
+                  ],
+                  "concreteType": "FilterArtworksConnection",
+                  "kind": "LinkedField",
+                  "name": "artworksConnection",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "FilterArtworksCounts",
+                      "kind": "LinkedField",
+                      "name": "counts",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "total",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": "artworksConnection(first:1)"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -182,7 +254,8 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "119eae4587db770fb295149678a2a657";
+(node as any).hash = "768d846c7b061bec0957e0d00fd721f4";
 
 export default node;
