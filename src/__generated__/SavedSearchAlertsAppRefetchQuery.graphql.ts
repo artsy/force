@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d5b1942acbcb7ad2f980e92681a9a155>>
+ * @generated SignedSource<<d06c3b63f57ddad9d88fab8d9a25780f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,7 +63,10 @@ v3 = [
   },
   (v2/*: any*/)
 ],
-v4 = {
+v4 = [
+  "artistIDs"
+],
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -179,13 +182,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "displayName",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "artistSeriesIDs",
                         "storageKey": null
                       },
@@ -197,24 +193,68 @@ return {
                         "storageKey": null
                       },
                       {
+                        "alias": "title",
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "only",
+                            "value": (v4/*: any*/)
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "displayName",
+                        "storageKey": "displayName(only:[\"artistIDs\"])"
+                      },
+                      {
+                        "alias": "subtitle",
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "except",
+                            "value": (v4/*: any*/)
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "displayName",
+                        "storageKey": "displayName(except:[\"artistIDs\"])"
+                      },
+                      {
                         "alias": null,
-                        "args": null,
-                        "concreteType": "SearchCriteriaLabel",
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "first",
+                            "value": 1
+                          }
+                        ],
+                        "concreteType": "FilterArtworksConnection",
                         "kind": "LinkedField",
-                        "name": "labels",
-                        "plural": true,
+                        "name": "artworksConnection",
+                        "plural": false,
                         "selections": [
                           {
                             "alias": null,
                             "args": null,
-                            "kind": "ScalarField",
-                            "name": "displayValue",
+                            "concreteType": "FilterArtworksCounts",
+                            "kind": "LinkedField",
+                            "name": "counts",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "total",
+                                "storageKey": null
+                              }
+                            ],
                             "storageKey": null
-                          }
+                          },
+                          (v5/*: any*/)
                         ],
-                        "storageKey": null
+                        "storageKey": "artworksConnection(first:1)"
                       },
-                      (v4/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -274,19 +314,19 @@ return {
             "kind": "LinkedHandle",
             "name": "alertsConnection"
           },
-          (v4/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "c03018e287ffba5d70d22165ecb7730f",
+    "cacheID": "0b439806939e9c5a62f81ba1af16f4ec",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsAppRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n  $sort: AlertsConnectionSortEnum\n) {\n  me {\n    ...SavedSearchAlertsApp_me_3P8D4U\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_3P8D4U on Me {\n  alertsConnection(first: $count, after: $after, sort: $sort) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        settings {\n          name\n        }\n        ...SavedSearchAlertListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n  $sort: AlertsConnectionSortEnum\n) {\n  me {\n    ...SavedSearchAlertsApp_me_3P8D4U\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  artistIDs\n  artistSeriesIDs\n  href\n  title: displayName(only: [artistIDs])\n  subtitle: displayName(except: [artistIDs])\n  artworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_3P8D4U on Me {\n  alertsConnection(first: $count, after: $after, sort: $sort) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        settings {\n          name\n        }\n        ...SavedSearchAlertListItem_item\n        title: displayName(only: [artistIDs])\n        subtitle: displayName(except: [artistIDs])\n        artworksConnection(first: 1) {\n          counts {\n            total\n          }\n          id\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

@@ -24,7 +24,7 @@ export const SavedSearchAlertHeader: FC<SavedSearchAlertHeaderProps> = ({
       mx={[2, 0]}
     >
       <Text variant={["md", "lg"]} mb={[4, 0]} mr={[0, 2]}>
-        Alerts
+        Your Alerts
       </Text>
 
       <Select
