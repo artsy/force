@@ -6,6 +6,7 @@ import {
   Join,
   useToasts,
   Button,
+  Flex,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -39,7 +40,10 @@ import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
 import { Jump } from "Utils/Hooks/useJump"
 
-const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
+const SETTINGS_NAVIGATION_BAR_HEIGHT = 300
+const DESKTOP_HEIGHT = `calc(100vh - ${
+  DESKTOP_NAV_BAR_HEIGHT + SETTINGS_NAVIGATION_BAR_HEIGHT
+}px)`
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -252,7 +256,12 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   }, [alertID, relayEnvironment])
 
   const list = (
-    <>
+    <Box
+      overflow="scroll"
+      // The notification list needs a maximum height to be independently scrollable.
+      maxHeight={[null, DESKTOP_HEIGHT]}
+      pb={2}
+    >
       <Join separator={<Separator borderColor="black5" />}>
         {alerts.map(node => {
           const isCurrentEdgeSelected = editAlertEntity?.id === node.internalID
@@ -291,7 +300,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
           </Button>
         </Box>
       )}
-    </>
+    </Box>
   )
 
   return (
@@ -310,8 +319,19 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             <Box mx={-4}>
               <Separator color="black15" />
               <Media greaterThanOrEqual="md">
-                <GridColumns gridColumnGap={0}>
-                  <Column span={6}>{list}</Column>
+                <GridColumns>
+                  <Column span={6}>
+                    <Flex height={DESKTOP_HEIGHT} flexDirection="column">
+                      <Flex
+                        overflow="hidden"
+                        maxHeight={DESKTOP_HEIGHT}
+                        flexDirection="column"
+                      >
+                        {list}
+                      </Flex>
+                    </Flex>
+                  </Column>
+
                   <Column
                     span={6}
                     borderLeft="1px solid"
@@ -319,21 +339,28 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                     borderRightColor="black15"
                     minHeight={DESKTOP_HEIGHT}
                   >
-                    <Jump id="SavedSearchAlertEditForm" />
+                    <Flex
+                      flexDirection="column"
+                      height={DESKTOP_HEIGHT}
+                      overflow="auto"
+                      paddingBottom={2}
+                    >
+                      <Jump id="SavedSearchAlertEditForm" />
 
-                    {viewOption === "EDIT" && editAlertEntity && (
-                      <SavedSearchAlertEditFormQueryRenderer
-                        editAlertEntity={editAlertEntity}
-                        onCompleted={handleCompleted}
-                        onDeleteClick={handleDeleteClick}
-                      />
-                    )}
-                    {viewOption === "ARTWORKS" && editAlertEntity && (
-                      <SavedSearchAlertsArtworksQueryRenderer
-                        editAlertEntity={editAlertEntity}
-                        onEditAlertClick={handleOpenEditForm}
-                      />
-                    )}
+                      {viewOption === "EDIT" && editAlertEntity && (
+                        <SavedSearchAlertEditFormQueryRenderer
+                          editAlertEntity={editAlertEntity}
+                          onCompleted={handleCompleted}
+                          onDeleteClick={handleDeleteClick}
+                        />
+                      )}
+                      {viewOption === "ARTWORKS" && editAlertEntity && (
+                        <SavedSearchAlertsArtworksQueryRenderer
+                          editAlertEntity={editAlertEntity}
+                          onEditAlertClick={handleOpenEditForm}
+                        />
+                      )}
+                    </Flex>
                   </Column>
                 </GridColumns>
 
