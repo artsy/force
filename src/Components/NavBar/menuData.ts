@@ -176,7 +176,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Emerging Art",
-              href: "/gene/emerging-art",
+              href: "/collection/emerging-art",
             },
             {
               text: "Street Art",
