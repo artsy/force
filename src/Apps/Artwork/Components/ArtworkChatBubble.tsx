@@ -17,6 +17,7 @@ const ArtworkChatBubble: FC<ArtworkChatBubbleProps> = ({ artwork }) => {
     isOfferable,
     listPrice,
     isInAuction,
+    saleArtwork,
   } = artwork
 
   const price = useMemo(() => {
@@ -32,14 +33,29 @@ const ArtworkChatBubble: FC<ArtworkChatBubbleProps> = ({ artwork }) => {
     }
   }, [listPrice])
 
+  if (!getENV("SALESFORCE_CHAT_ENABLED")) {
+    return null
+  }
+
+  const openingBid = saleArtwork?.openingBid?.cents
+  const currency = saleArtwork?.currency
+
+  if (
+    openingBid &&
+    currency &&
+    exceedsChatSupportThreshold(openingBid, currency)
+  ) {
+    return (
+      <Media greaterThan="xs">
+        <SalesforceWrapper isInAuction={isInAuction} />
+      </Media>
+    )
+  }
+
   // Don't display on inquiry artworks
   if (isInquireable && !isAcquireable && !isOfferable) return null
 
   if (!price || !exceedsChatSupportThreshold(price.major, price.currencyCode)) {
-    return null
-  }
-
-  if (!getENV("SALESFORCE_CHAT_ENABLED")) {
     return null
   }
 
@@ -70,6 +86,12 @@ export const ArtworkChatBubbleFragmentContainer = createFragmentContainer(
               currencyCode
               major
             }
+          }
+        }
+        saleArtwork {
+          currency
+          openingBid {
+            cents
           }
         }
       }
