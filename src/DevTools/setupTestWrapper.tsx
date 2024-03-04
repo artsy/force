@@ -2,17 +2,12 @@ import { act, render, RenderResult } from "@testing-library/react"
 import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
 import * as React from "react"
-import {
-  GraphQLTaggedNode,
-  QueryRenderer,
-  RelayEnvironmentProvider,
-  Variables,
-} from "react-relay"
+import { GraphQLTaggedNode, QueryRenderer, Variables } from "react-relay"
 import { OperationDescriptor, OperationType } from "relay-runtime"
 import {
   createMockEnvironment,
-  MockPayloadGenerator,
   MockEnvironment,
+  MockPayloadGenerator,
 } from "relay-test-utils"
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
@@ -127,9 +122,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
         </MockBoot>
       ) : (
         <MockBoot relayEnvironment={env}>
-          <RelayEnvironmentProvider environment={env}>
-            <Component {...componentProps} />
-          </RelayEnvironmentProvider>
+          <Component {...componentProps} />
         </MockBoot>
       )
 
