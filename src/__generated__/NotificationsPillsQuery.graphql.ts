@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d65ce93278bf54daf7757e1bc5d35dff>>
+ * @generated SignedSource<<db801f75fc0c166cd03f0e8aa4a37b5b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,11 +13,7 @@ export type NotificationsPillsQuery$variables = Record<PropertyKey, never>;
 export type NotificationsPillsQuery$data = {
   readonly viewer: {
     readonly partnerOfferNotifications: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly id: string;
-        } | null | undefined;
-      } | null | undefined> | null | undefined;
+      readonly totalCount: number | null | undefined;
     } | null | undefined;
   } | null | undefined;
 };
@@ -60,30 +56,8 @@ var v0 = [
           {
             "alias": null,
             "args": null,
-            "concreteType": "NotificationEdge",
-            "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Notification",
-                "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
+            "kind": "ScalarField",
+            "name": "totalCount",
             "storageKey": null
           }
         ],
@@ -111,16 +85,16 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "fa469323db0050a1db65946d5e982562",
+    "cacheID": "433d8d3fe81095c9f4efc9cb8374313d",
     "id": null,
     "metadata": {},
     "name": "NotificationsPillsQuery",
     "operationKind": "query",
-    "text": "query NotificationsPillsQuery {\n  viewer {\n    partnerOfferNotifications: notificationsConnection(first: 1, notificationTypes: [PARTNER_OFFER_CREATED]) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationsPillsQuery {\n  viewer {\n    partnerOfferNotifications: notificationsConnection(first: 1, notificationTypes: [PARTNER_OFFER_CREATED]) {\n      totalCount\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9ae025952c37bf7c1ba6f8eb8274d9b7";
+(node as any).hash = "4ed88655cb24835dd2a564ccdf7cb5fb";
 
 export default node;
