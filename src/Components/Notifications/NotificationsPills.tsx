@@ -6,7 +6,6 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { NotificationsPillsQuery } from "__generated__/NotificationsPillsQuery.graphql"
 import { compact, times } from "lodash"
-import { extractNodes } from "Utils/extractNodes"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 
 export const NotificationsPills: React.FC = () => {
@@ -17,8 +16,8 @@ export const NotificationsPills: React.FC = () => {
     query: notificationsPillsQuery,
   })
 
-  const hasPartnerOfferNotifications =
-    extractNodes(data?.viewer?.partnerOfferNotifications).length > 0
+  const hasPartnerOfferNotifications = !!data?.viewer?.partnerOfferNotifications
+    ?.totalCount
 
   const notificationPills = compact([
     { value: "All", name: "all" },
@@ -61,13 +60,7 @@ const notificationsPillsQuery = graphql`
         first: 1
         notificationTypes: [PARTNER_OFFER_CREATED]
       ) {
-        # Total count does not work and returns a value even when there are no notifications
-        # TODO: Use totalCount once the issue is fixed
-        edges {
-          node {
-            id
-          }
-        }
+        totalCount
       }
     }
   }
