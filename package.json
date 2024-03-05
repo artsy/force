@@ -158,7 +158,7 @@
     "openseadragon": "2.4.2",
     "passport": "0.3.2",
     "passport-apple": "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f",
-    "passport-facebook": "2.1.1",
+    "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-strategy": "1.x.x",
     "path-to-regexp": "6.1.0",
