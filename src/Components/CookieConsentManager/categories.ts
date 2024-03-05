@@ -92,6 +92,14 @@ export const CUSTOM_DESTINATIONS: Destination[] = [
     website: "https://www.youtube.com/",
     creationName: "YouTube",
   },
+  {
+    category: "necessary",
+    description: "Cloudflare analytics and security",
+    id: "Cloudflare",
+    name: "Cloudflare",
+    website: "https://www.cloudflare.com/",
+    creationName: "Cloudflare",
+  },
 ]
 
 export const DEFAULT_CATEGORIZATION = "functional"
@@ -102,6 +110,7 @@ export const DESTINATION_MAPPING = {
   "Google Analytics": "performance",
   "Google Ads": "targeting",
   YouTube: "targeting",
+  Cloudflare: "necessary",
   // Add more mappings as needed
 } as const
 
