@@ -45,7 +45,7 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
       textAlign="center"
     >
       <Text variant="sm">
-        <b>Exclusive access.</b> This work was privately shared by{" "}
+        <b>Exclusive access.</b> This work was privately shared by
         <RouterLink to={`/partner/${data.partner?.slug}`}>
           {data.partner?.name}
         </RouterLink>
