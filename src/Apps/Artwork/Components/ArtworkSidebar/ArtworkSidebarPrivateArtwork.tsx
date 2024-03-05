@@ -2,6 +2,8 @@ import React from "react"
 import { graphql, useFragment } from "react-relay"
 import { ArtworkSidebarPrivateArtwork_artwork$key } from "__generated__/ArtworkSidebarPrivateArtwork_artwork.graphql"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { RouterLink } from "System/Router/RouterLink"
+import { Box, Text } from "@artsy/palette"
 
 interface ArtworkSidebarPrivateArtworkProps {
   artwork: ArtworkSidebarPrivateArtwork_artwork$key
@@ -19,6 +21,7 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
       fragment ArtworkSidebarPrivateArtwork_artwork on Artwork {
         partner {
           name
+          slug
         }
         visibilityLevel
       }
@@ -34,12 +37,19 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
   }
 
   return (
-    <div>
-      <h2>Private Artwork</h2>
-      <p>
-        Private artwork is only visible to the owner and the people who have
-        been given access to it.
-      </p>
-    </div>
+    <Box
+      border="1px solid"
+      borderColor="black100"
+      borderRadius={2}
+      p={2}
+      textAlign="center"
+    >
+      <Text variant="sm">
+        <b>Exclusive access.</b> This work was privately shared by{" "}
+        <RouterLink to={`/partner/${data.partner?.slug}`}>
+          {data.partner?.name}
+        </RouterLink>
+      </Text>
+    </Box>
   )
 }
