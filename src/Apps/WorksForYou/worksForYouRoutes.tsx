@@ -13,11 +13,6 @@ export const worksForYouRoutes: AppRouteConfig[] = [
   {
     path: "/works-for-you/:artistSlug?",
     getComponent: () => WorksForYouApp,
-    onServerSideRender: ({ req, res }) => {
-      if (!req.user) {
-        res.redirect("/")
-      }
-    },
     onClientSideRender: () => {
       WorksForYouApp.preload()
     },
