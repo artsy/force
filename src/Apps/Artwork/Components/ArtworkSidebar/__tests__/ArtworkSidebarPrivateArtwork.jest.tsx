@@ -43,12 +43,17 @@ describe("ArtworkSidebarPrivateArtwork", () => {
     expect(await screen.findByText("Commerce Test Partner")).toBeInTheDocument()
   })
 
-  it.skip("links to partner page", () => {
+  it("links to partner page", () => {
     renderWithRelay({
       Partner: () => {
         return {
           name: "Commerce Test Partner",
           slug: "commerce-test-partner",
+        }
+      },
+      Artwork: () => {
+        return {
+          visibilityLevel: "UNLISTED",
         }
       },
     })
