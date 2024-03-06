@@ -138,7 +138,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       saved_search_id: editAlertEntity?.id,
     })
 
-    closeEditFormAndRefetch()
+    isMobile ? refresh() : closeEditFormAndRefetch()
     closeDeleteModal()
 
     sendToast({
