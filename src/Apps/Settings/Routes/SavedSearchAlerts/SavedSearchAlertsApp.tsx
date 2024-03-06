@@ -145,6 +145,8 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       message: "Your Alert has been deleted.",
     })
 
+    if (isMobile) return
+
     if (editAlertEntity?.id === alerts[0].internalID) {
       setEditAlertEntity({
         id: alerts[1].internalID,
