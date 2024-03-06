@@ -96,7 +96,8 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
   }
 
   if (error || !notification) {
-    // logger.error(error)
+    logger.error(error)
+
     return <NotificationErrorMessage />
   }
 
