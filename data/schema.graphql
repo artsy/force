@@ -8118,7 +8118,8 @@ type createPartnerOfferFailure {
 input createPartnerOfferMutationInput {
   artwork_id: String!
   clientMutationId: String
-  discount_percentage: Int
+  discount_percentage: Int!
+  note: String
 }
 
 type createPartnerOfferMutationPayload {
@@ -14751,6 +14752,7 @@ type PartnerOffer {
   # A type-specific ID.
   internalID: ID!
   isAvailable: Boolean
+  note: String
   partnerId: String
   priceListedMessage: String
   priceWithDiscountMessage: String
