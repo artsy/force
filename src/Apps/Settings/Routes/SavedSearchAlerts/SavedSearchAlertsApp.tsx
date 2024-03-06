@@ -37,6 +37,7 @@ import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/Save
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { getENV } from "Utils/getENV"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
+import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
 
 const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 
@@ -68,6 +69,11 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     setEditAlertEntity,
   ] = useState<EditAlertEntity | null>(null)
 
+  const [
+    viewArtwoksEntity,
+    setViewArtwoksEntity,
+  ] = useState<EditAlertEntity | null>(null) // TODO: rename
+
   const isEditMode = editAlertEntity !== null
 
   useEffect(() => {
@@ -86,6 +92,11 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
   const closeEditForm = () => {
     setEditAlertEntity(null)
+    silentPush("/settings/alerts")
+  }
+
+  const closeArtworksView = () => {
+    setViewArtwoksEntity(null)
     silentPush("/settings/alerts")
   }
 
@@ -231,7 +242,13 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
               variant={variant}
               onEditAlertClick={entity => {
                 setEditAlertEntity(entity)
+                setViewArtwoksEntity(null)
                 silentPush(`/settings/alerts/${entity.id}/edit`)
+              }}
+              onViewArtworksClick={entity => {
+                setViewArtwoksEntity(entity)
+                setEditAlertEntity(null)
+                silentPush(`/settings/alerts/${entity.id}/artworks`)
               }}
             />
           )
@@ -272,7 +289,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                     borderLeftColor="black15"
                     borderRight="1px solid"
                     borderRightColor="black15"
-                    height={DESKTOP_HEIGHT}
+                    minHeight={DESKTOP_HEIGHT}
                   >
                     {editAlertEntity && (
                       <Sticky bottomBoundary="#content-end">
@@ -280,6 +297,13 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                           editAlertEntity={editAlertEntity}
                           onCompleted={handleCompletedDesctop}
                           onDeleteClick={handleDeleteClick}
+                        />
+                      </Sticky>
+                    )}
+                    {viewArtwoksEntity && (
+                      <Sticky bottomBoundary="#content-end">
+                        <SavedSearchAlertsArtworksQueryRenderer
+                          editAlertEntity={viewArtwoksEntity}
                         />
                       </Sticky>
                     )}
@@ -297,6 +321,12 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                   onCloseClick={closeEditForm}
                   onCompleted={handleCompleted}
                   onDeleteClick={handleDeleteClick}
+                />
+              )}
+              {viewArtwoksEntity && (
+                <SavedSearchAlertsArtworksQueryRenderer
+                  editAlertEntity={viewArtwoksEntity}
+                  onCloseClick={closeArtworksView}
                 />
               )}
             </Media>
@@ -340,7 +370,7 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
               ...SavedSearchAlertListItem_item
               title: displayName(only: [artistIDs])
               subtitle: displayName(except: [artistIDs])
-              artworksConnection(first: 1) {
+              artworksConnection(first: 10) {
                 counts {
                   total
                 }
