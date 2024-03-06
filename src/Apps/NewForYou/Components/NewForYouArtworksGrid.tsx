@@ -20,7 +20,7 @@ export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({
           columnCount={[2, 3, 4]}
         />
       ) : (
-        <Text variant="lg" mt={4} color="black60">
+        <Text variant="lg-display" mt={4} color="black60">
           Nothing yet.
         </Text>
       )}

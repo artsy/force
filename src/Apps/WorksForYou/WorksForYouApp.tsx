@@ -18,6 +18,9 @@ import { WorksForYouArtistFeedPaginationContainer } from "./Components/WorksForY
 import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
+import { LogInPrompt } from "Apps/Components/LogInPrompt"
+import { AuthContextModule, ContextModule } from "@artsy/cohesion"
+import { useSystemContext } from "System/SystemContext"
 
 interface WorksForYouProps {
   viewerArtist: WorksForYouApp_viewerArtist$data
@@ -30,6 +33,8 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
   viewerFeed,
   viewerMe,
 }) => {
+  const { isLoggedIn } = useSystemContext()
+
   const { router } = useRouter()
 
   const followedArtists = extractNodes(
@@ -63,16 +68,27 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
 
       <Spacer y={2} />
 
+      <LogInPrompt
+        contextModule={
+          ContextModule.recommendedWorksForYouRail as AuthContextModule
+        }
+      />
+
       {savedArtworks.length === 0 ? (
         <>
-          <Text variant="lg-display">Nothing yet.</Text>
-          <Text variant="lg-display" color="black60" mt={1}>
-            Follow{" "}
-            <RouterLink color="black60" to="/artists">
-              some artists
-            </RouterLink>
-            .
+          <Text variant="lg-display" color="black60">
+            Nothing yet.
           </Text>
+
+          {isLoggedIn && (
+            <Text variant="lg-display" color="black60" mt={1}>
+              Follow{" "}
+              <RouterLink color="black60" to="/artists">
+                some artists
+              </RouterLink>
+              .
+            </Text>
+          )}
         </>
       ) : (
         <GridColumns>
