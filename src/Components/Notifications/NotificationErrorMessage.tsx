@@ -1,8 +1,18 @@
 import { Text, Box, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/SystemContext"
 import { FC } from "react"
 
 export const NotificationErrorMessage: FC = () => {
+  const { isLoggedIn } = useSystemContext()
+
+  if (!isLoggedIn)
+    return (
+      <Box maxWidth={800}>
+        <Text variant="lg">Please log in to view your notifications.</Text>
+      </Box>
+    )
+
   return (
     <Box maxWidth={800}>
       <Text variant="lg">

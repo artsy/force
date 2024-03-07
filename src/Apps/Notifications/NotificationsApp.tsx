@@ -8,6 +8,10 @@ import { NotificationQueryRenderer } from "Components/Notifications/Notification
 import { useRouter } from "found"
 import { GridColumns, Column, Flex, FullBleed } from "@artsy/palette"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { useAuthDialog } from "Components/AuthDialog"
+import { useSystemContext } from "System/SystemContext"
+import { useEffect } from "react"
 
 const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 const MIN_LIST_WIDTH = 370
@@ -18,6 +22,27 @@ interface NotificationsAppProps {
 
 const NotificationsApp: React.FC<NotificationsAppProps> = ({ me }) => {
   const { match } = useRouter()
+  const { showAuthDialog } = useAuthDialog()
+  const { isLoggedIn } = useSystemContext()
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      showAuthDialog({
+        mode: "Login",
+        options: {
+          title: mode => {
+            const action = mode === "Login" ? "Log in" : "Sign up"
+            return `${action} to view your notifications.`
+          },
+        },
+        analytics: {
+          contextModule: ContextModule.activity,
+          intent: Intent.login,
+        },
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const isNotificationsPage = match.location.pathname.startsWith(
     "/notifications"
@@ -42,7 +67,7 @@ const NotificationsApp: React.FC<NotificationsAppProps> = ({ me }) => {
               <Flex height={DESKTOP_HEIGHT} flexDirection="column">
                 <Notifications
                   mode="page"
-                  unreadCounts={me.unreadNotificationsCount ?? 0}
+                  unreadCounts={me?.unreadNotificationsCount ?? 0}
                 />
               </Flex>
             </Column>
