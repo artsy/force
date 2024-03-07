@@ -147,14 +147,20 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
     if (isMobile) return
 
-    if (editAlertEntity?.id === alerts[0].internalID) {
+    // the right collumn of the screen should always display alert's edit form
+    // this is why when we delete and alert we update the editAlertEntity
+    // to contain the details of the first alert on the alerts' list
+    if (editAlertEntity?.id === alerts[0].internalID && alerts.length > 1) {
       setEditAlertEntity({
         id: alerts[1].internalID,
         name: alerts[1].settings.name ?? "",
         artistIds: alerts[1]?.artistIDs as string[],
       })
       silentPush(`/settings/alerts/${alerts[1].internalID}/edit`)
-    } else if (editAlertEntity?.id !== alerts[0].internalID) {
+    } else if (
+      editAlertEntity?.id !== alerts[0].internalID &&
+      alerts.length > 1
+    ) {
       setEditAlertEntity({
         id: alerts[0].internalID,
         name: alerts[0].settings.name ?? "",
@@ -162,6 +168,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       })
       silentPush(`/settings/alerts/${alerts[0].internalID}/edit`)
     } else {
+      // if we deleted the last alert we display the screen's empty state
       setEditAlertEntity(null)
       silentPush("/settings/alerts/")
     }
