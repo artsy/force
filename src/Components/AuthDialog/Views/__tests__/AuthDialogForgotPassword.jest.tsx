@@ -44,7 +44,7 @@ describe("AuthDialogForgotPassword", () => {
 
     expect(
       screen.queryByText(
-        "If an Artsy account is associated with this email, we've sent a password reset link to its inbox."
+        "We've sent a link to reset your password if an account is associated with this email.."
       )
     ).not.toBeInTheDocument()
 
@@ -57,7 +57,7 @@ describe("AuthDialogForgotPassword", () => {
 
       expect(
         screen.getByText(
-          "If an Artsy account is associated with this email, we've sent a password reset link to its inbox."
+          "We've sent a link to reset your password if an account is associated with this email.."
         )
       ).toBeInTheDocument()
     })

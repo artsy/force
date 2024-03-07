@@ -81,8 +81,8 @@ export const AuthDialogForgotPassword: FC = () => {
 
               {values.mode === "Success" && (
                 <Message variant="success">
-                  If an Artsy account is associated with this email, we've sent
-                  a password reset link to its inbox.
+                  We've sent a link to reset your password if an account is
+                  associated with this email.
                 </Message>
               )}
 
