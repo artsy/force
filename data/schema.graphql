@@ -7386,6 +7386,12 @@ type Conversation implements Node {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  collectorInterestsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): UserInterestConnection
 
   # The collector profile of the user who initiated the conversation. Do not use this field for Partners
   collectorResume: CollectorResume
@@ -10383,6 +10389,7 @@ input FollowProfileInput {
 
 type FollowProfilePayload {
   clientMutationId: String
+  me: Me!
   profile: Profile
 }
 
@@ -12601,6 +12608,9 @@ type Me implements Node {
 
 type MeCounts {
   followedArtists: Int!
+
+  # Returns the total count of followed profiles. There is currently no way to filter this count by `owner_type`.
+  followedProfiles: Int!
   savedArtworks: Int!
   savedSearches: Int!
 }

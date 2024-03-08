@@ -81,7 +81,8 @@ export const AuthDialogForgotPassword: FC = () => {
 
               {values.mode === "Success" && (
                 <Message variant="success">
-                  We’ve sent you an email with a link to reset your password.
+                  We've sent a link to reset your password if an account is
+                  associated with this email.
                 </Message>
               )}
 
