@@ -157,10 +157,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
         artistIds: alerts[1]?.artistIDs as string[],
       })
       silentPush(`/settings/alerts/${alerts[1].internalID}/edit`)
-    } else if (
-      editAlertEntity?.id !== alerts[0].internalID &&
-      alerts.length > 1
-    ) {
+    } else if (editAlertEntity?.id !== alerts[0].internalID) {
       setEditAlertEntity({
         id: alerts[0].internalID,
         name: alerts[0].settings.name ?? "",
