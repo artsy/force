@@ -1,15 +1,19 @@
-import { screen } from "@testing-library/react"
+import { act, screen } from "@testing-library/react"
 import { Notifications } from "Components/Notifications/Notifications"
 import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { render } from "DevTools/renderWithMockBoot"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { createMockEnvironment } from "relay-test-utils"
+import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 
 jest.mock("System/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
 }))
-
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: { params: { notificationId: "test-notification-id" } },
+  }),
+}))
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
@@ -41,18 +45,30 @@ describe("Notifications with pills", () => {
     ;(useFeatureFlag as jest.Mock).mockImplementation(() => true)
   })
 
-  // TODO: Bring back this test!
-  it.skip("should render pills", async () => {
+  it("should render pills", async () => {
     render(
       <MockBoot relayEnvironment={environment}>
         <Notifications mode="page" unreadCounts={0} />
       </MockBoot>
     )
 
+    act(() => {
+      environment.mock.resolveMostRecentOperation(operation => {
+        return MockPayloadGenerator.generate(operation, {})
+      })
+      environment.mock.resolveMostRecentOperation(operation => {
+        return MockPayloadGenerator.generate(operation, {})
+      })
+      environment.mock.resolveMostRecentOperation(operation => {
+        return MockPayloadGenerator.generate(operation, {})
+      })
+    })
+
     await flushPromiseQueue()
 
     expect(screen.getByText("All")).toBeInTheDocument()
     expect(screen.getByText("Alerts")).toBeInTheDocument()
-    expect(screen.getByText("Following")).toBeInTheDocument()
+    expect(screen.getByText("Follows")).toBeInTheDocument()
+    expect(screen.getByText("Offers")).toBeInTheDocument()
   })
 })
