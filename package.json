@@ -343,7 +343,7 @@
     "swc-loader": "^0.2.3",
     "terser-webpack-plugin": "5.1.3",
     "time-fix-plugin": "^2.0.7",
-    "typescript": "4.7.4",
+    "typescript": "4.9.5",
     "typescript-styled-plugin": "0.15.0",
     "webpack": "5.76.0",
     "webpack-bundle-analyzer": "4.4.2",
