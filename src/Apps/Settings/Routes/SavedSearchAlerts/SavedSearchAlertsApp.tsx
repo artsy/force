@@ -181,6 +181,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   }
 
   const alertID = match?.params?.alertID ?? editAlertEntity?.id
+  const path = match.location.pathname
 
   useEffect(() => {
     if (!alertID) return
@@ -206,13 +207,23 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
         const alert = data?.me?.alert
         if (!alert) return
 
-        setEditAlertEntity({
-          id: alert.internalID,
-          artistIds: alert.artistIDs as string[],
-          name: alert.settings.name ?? "",
-        })
+        if (path.includes("/artworks")) {
+          setViewArtwoksEntity({
+            id: alert.internalID,
+            artistIds: alert.artistIDs as string[],
+            name: alert.settings.name ?? "",
+          })
 
-        silentPush(`/settings/alerts/${alert.internalID}/edit`)
+          silentPush(`/settings/alerts/${alert.internalID}/artworks`)
+        } else {
+          setEditAlertEntity({
+            id: alert.internalID,
+            artistIds: alert.artistIDs as string[],
+            name: alert.settings.name ?? "",
+          })
+
+          silentPush(`/settings/alerts/${alert.internalID}/edit`)
+        }
       },
     })
 
