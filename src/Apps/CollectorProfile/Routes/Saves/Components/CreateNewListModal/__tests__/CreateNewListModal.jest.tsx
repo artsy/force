@@ -7,6 +7,11 @@ import { render } from "DevTools/renderWithMockBoot"
 import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTracking } from "react-tracking"
+import { useFeatureFlag } from "System/useFeatureFlag"
+
+jest.mock("System/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => false),
+}))
 
 jest.mock("Utils/Hooks/useMutation")
 
@@ -63,7 +68,7 @@ describe("CreateNewListModal", () => {
       "placeholder",
       "E.g. Photography, Warhol, etc."
     )
-    expect(screen.getByText("40 characters remaining")).toBeInTheDocument()
+    expect(screen.getByText("0/40")).toBeInTheDocument()
   })
 
   it("create button is disabled when name is empty", () => {
@@ -84,7 +89,7 @@ describe("CreateNewListModal", () => {
       },
     })
 
-    expect(screen.getByText("25 characters remaining")).toBeInTheDocument()
+    expect(screen.getByText("25/40")).toBeInTheDocument()
 
     const createButton = screen.getAllByRole("button", {
       name: "Create List",
@@ -197,6 +202,64 @@ describe("CreateNewListModal", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Name cannot be empty")).toBeInTheDocument()
+    })
+  })
+
+  describe("shared list toggle", () => {
+    beforeEach(() => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation(() => true)
+    })
+
+    it("allows user to enable list shareability by default", async () => {
+      render(<TestComponent />)
+
+      fireEvent.change(screen.getByRole("textbox"), {
+        target: {
+          value: "Artwork List Name",
+        },
+      })
+
+      fireEvent.click(screen.getByText("Create List"))
+
+      await waitFor(() =>
+        expect(submitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                name: "Artwork List Name",
+                shareableWithPartners: true,
+              },
+            },
+          })
+        )
+      )
+    })
+
+    it("allows user to disable list shareability", async () => {
+      render(<TestComponent />)
+
+      fireEvent.change(screen.getByRole("textbox"), {
+        target: {
+          value: "Artwork List Name",
+        },
+      })
+
+      fireEvent.click(screen.getByRole("toggle"))
+
+      fireEvent.click(screen.getByText("Create List"))
+
+      await waitFor(() =>
+        expect(submitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                name: "Artwork List Name",
+                shareableWithPartners: false,
+              },
+            },
+          })
+        )
+      )
     })
   })
 })
