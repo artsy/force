@@ -1,4 +1,4 @@
-import { Text, Flex, Box, Spacer } from "@artsy/palette"
+import { Text, Flex, Box, Spacer, Join, Separator } from "@artsy/palette"
 import { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEditFormQuery.graphql"
 import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -19,13 +19,25 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
   alert,
   onCloseClick,
 }) => {
+  const count = alert.artworksConnection.counts.total
+
   return (
     <>
       <Media greaterThanOrEqual="md">
         <Box p={4} flex={1}>
-          <Text variant="lg">View Artworks</Text>
-          <Spacer y={2} />
-
+          <Join separator={<Spacer y={2} />}>
+            <Text variant="lg">View Artworks</Text>
+            <Text>Pills</Text>
+            <Separator />
+            <Text variant="sm-display" color="black60" mb={4}>
+              {count}
+              {count > 1 ? " works" : " work"} currently on Artsy match your
+              criteria.
+              <Text variant="sm-display" color="black60">
+                See our top picks for you:
+              </Text>
+            </Text>
+          </Join>
           <ArtworkGrid
             artworks={alert.artworksConnection}
             columnCount={2}
@@ -39,7 +51,18 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
       <Media lessThan="md">
         <Modal onClose={onCloseClick}>
           <Flex mx={2} flexDirection="column">
-            <Text variant="lg">View Artworks</Text>
+            <Join separator={<Spacer y={2} />}>
+              <Text variant="lg">View Artworks</Text>
+              <Text>Pills</Text>
+              <Text variant="sm-display" color="black60" mb={4}>
+                {count}
+                {count > 1 ? " works" : " work"} currently on Artsy match your
+                criteria.
+                <Text variant="sm-display" color="black60">
+                  See our top picks for you:
+                </Text>
+              </Text>
+            </Join>
             <Spacer y={2} />
             <ArtworkGrid
               artworks={alert.artworksConnection}
