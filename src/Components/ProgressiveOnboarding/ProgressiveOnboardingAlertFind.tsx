@@ -7,9 +7,9 @@ import {
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
 import { useDismissibleContext } from "@artsy/dismissible"
-import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
-const ALERT_ID = PROGRESSIVE_ONBOARDING_ALERTS.alertFind
+const KEY = PROGRESSIVE_ONBOARDING.alertFind
 
 interface ProgressiveOnboardingAlertFindProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -20,11 +20,10 @@ export const __ProgressiveOnboardingAlertFind__: FC<ProgressiveOnboardingAlertFi
 }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
-  const isDisplayable =
-    counts.savedSearches === 1 && !isDismissed(ALERT_ID).status
+  const isDisplayable = counts.savedSearches === 1 && !isDismissed(KEY).status
 
   const handleClose = () => {
-    dismiss(ALERT_ID)
+    dismiss(KEY)
   }
 
   const handleDismiss = () => {
@@ -37,7 +36,7 @@ export const __ProgressiveOnboardingAlertFind__: FC<ProgressiveOnboardingAlertFi
 
   return (
     <ProgressiveOnboardingPopover
-      name={ALERT_ID}
+      name={KEY}
       placement="bottom-end"
       onClose={handleClose}
       onDismiss={handleDismiss}

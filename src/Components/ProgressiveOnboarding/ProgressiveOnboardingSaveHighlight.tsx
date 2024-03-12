@@ -3,12 +3,12 @@ import {
   ProgressiveOnboardingHighlight,
   ProgressiveOnboardingHighlightPosition,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
-import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { FC, useEffect } from "react"
 
 const ALERTS = {
-  saveFind: PROGRESSIVE_ONBOARDING_ALERTS.saveFind,
-  saveHighlight: PROGRESSIVE_ONBOARDING_ALERTS.saveHighlight,
+  saveFind: PROGRESSIVE_ONBOARDING.saveFind,
+  saveHighlight: PROGRESSIVE_ONBOARDING.saveHighlight,
 }
 
 interface ProgressiveOnboardingSaveHighlightProps {

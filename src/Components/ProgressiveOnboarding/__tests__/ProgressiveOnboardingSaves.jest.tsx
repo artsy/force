@@ -7,9 +7,9 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { FC, useEffect } from "react"
 import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
 import {
-  PROGRESSIVE_ONBOARDING_ALERTS,
-  getProgressiveOnboardingAlertKeys,
-} from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+  PROGRESSIVE_ONBOARDING_KEYS,
+  PROGRESSIVE_ONBOARDING,
+} from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
 jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight",
@@ -34,7 +34,7 @@ const Example: FC = () => {
   )
 
   return (
-    <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
+    <DismissibleProvider keys={PROGRESSIVE_ONBOARDING_KEYS}>
       <ProgressiveOnboardingSaveFind>
         <button>Profile</button>
       </ProgressiveOnboardingSaveFind>
@@ -123,7 +123,7 @@ const DismissSaveFind = () => {
   const { dismiss } = useDismissibleContext()
 
   useEffect(() => {
-    dismiss(PROGRESSIVE_ONBOARDING_ALERTS.saveFind)
+    dismiss(PROGRESSIVE_ONBOARDING.saveFind)
   }, [dismiss])
 
   return null
@@ -132,7 +132,7 @@ const DismissSaveFind = () => {
 describe("ProgressiveOnboardingSaveHighlight", () => {
   it("renders the highlight", () => {
     render(
-      <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
+      <DismissibleProvider keys={PROGRESSIVE_ONBOARDING_KEYS}>
         <DismissSaveFind />
         <ProgressiveOnboardingSaveHighlight position="center">
           <div>Example</div>
@@ -149,7 +149,7 @@ describe("ProgressiveOnboardingSaveHighlight", () => {
 
     const Example = ({ display }) => {
       return (
-        <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
+        <DismissibleProvider keys={PROGRESSIVE_ONBOARDING_KEYS}>
           <DismissSaveFind />
 
           {display && (

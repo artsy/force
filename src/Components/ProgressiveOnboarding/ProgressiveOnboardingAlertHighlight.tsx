@@ -3,7 +3,7 @@ import {
   ProgressiveOnboardingHighlight,
   ProgressiveOnboardingHighlightPosition,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
-import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { FC, useEffect } from "react"
 
 interface ProgressiveOnboardingAlertHighlightProps {
@@ -18,18 +18,18 @@ export const ProgressiveOnboardingAlertHighlight: FC<ProgressiveOnboardingAlertH
 
   const isDisplayable =
     // You haven't already dismissed this
-    !isDismissed(PROGRESSIVE_ONBOARDING_ALERTS.alertHighlight).status &&
+    !isDismissed(PROGRESSIVE_ONBOARDING.alertHighlight).status &&
     // And you've previously dismissed the previous onboarding tip
-    isDismissed(PROGRESSIVE_ONBOARDING_ALERTS.alertFind).status &&
+    isDismissed(PROGRESSIVE_ONBOARDING.alertFind).status &&
     // And you've dismissed the previous step within the last 20 seconds
-    isDismissed(PROGRESSIVE_ONBOARDING_ALERTS.alertFind).timestamp >
+    isDismissed(PROGRESSIVE_ONBOARDING.alertFind).timestamp >
       Date.now() - 20 * 1000
 
   useEffect(() => {
     if (!isDisplayable) return
 
     const handleClick = () => {
-      dismiss(PROGRESSIVE_ONBOARDING_ALERTS.alertHighlight)
+      dismiss(PROGRESSIVE_ONBOARDING.alertHighlight)
     }
 
     document.addEventListener("click", handleClick, { once: true })
@@ -46,7 +46,7 @@ export const ProgressiveOnboardingAlertHighlight: FC<ProgressiveOnboardingAlertH
   return (
     <ProgressiveOnboardingHighlight
       position={position}
-      name={PROGRESSIVE_ONBOARDING_ALERTS.alertHighlight}
+      name={PROGRESSIVE_ONBOARDING.alertHighlight}
     >
       {children}
     </ProgressiveOnboardingHighlight>

@@ -7,11 +7,11 @@ import {
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
 import { useDismissibleContext } from "@artsy/dismissible"
-import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
 const ALERTS = {
-  saveFind: PROGRESSIVE_ONBOARDING_ALERTS.saveFind,
-  saveHighlight: PROGRESSIVE_ONBOARDING_ALERTS.saveHighlight,
+  saveFind: PROGRESSIVE_ONBOARDING.saveFind,
+  saveHighlight: PROGRESSIVE_ONBOARDING.saveHighlight,
 }
 
 interface ProgressiveOnboardingSaveFindProps

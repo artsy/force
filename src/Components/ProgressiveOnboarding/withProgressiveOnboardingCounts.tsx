@@ -8,6 +8,7 @@ export interface WithProgressiveOnboardingCountsProps {
   counts: {
     isReady: boolean
     followedArtists: number
+    followedProfiles: number
     savedArtworks: number
     savedSearches: number
   }
@@ -15,6 +16,7 @@ export interface WithProgressiveOnboardingCountsProps {
 
 const INITIAL_COUNTS = {
   followedArtists: 0,
+  followedProfiles: 0,
   savedArtworks: 0,
   savedSearches: 0,
 }
@@ -46,6 +48,7 @@ export const withProgressiveOnboardingCounts = <
             me {
               counts {
                 followedArtists
+                followedProfiles
                 savedArtworks
                 savedSearches
               }

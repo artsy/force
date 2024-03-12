@@ -7,9 +7,9 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { FC, useEffect } from "react"
 import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
 import {
-  PROGRESSIVE_ONBOARDING_ALERTS,
-  getProgressiveOnboardingAlertKeys,
-} from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+  PROGRESSIVE_ONBOARDING_KEYS,
+  PROGRESSIVE_ONBOARDING,
+} from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
 jest.mock("System/useSystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({ isLoggedIn: true }),
@@ -48,7 +48,7 @@ const Example: FC = () => {
   )
 
   return (
-    <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
+    <DismissibleProvider keys={PROGRESSIVE_ONBOARDING_KEYS}>
       <ProgressiveOnboardingFollowFind>
         <button>Profile</button>
       </ProgressiveOnboardingFollowFind>
@@ -151,7 +151,7 @@ const DismissFollowFind = () => {
   const { dismiss } = useDismissibleContext()
 
   useEffect(() => {
-    dismiss(PROGRESSIVE_ONBOARDING_ALERTS.followFind)
+    dismiss(PROGRESSIVE_ONBOARDING.followFind)
   }, [dismiss])
 
   return null
@@ -160,7 +160,7 @@ const DismissFollowFind = () => {
 describe("ProgressiveOnboardingFollowHighlight", () => {
   it("renders the highlight", () => {
     render(
-      <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
+      <DismissibleProvider keys={PROGRESSIVE_ONBOARDING_KEYS}>
         <DismissFollowFind />
         <ProgressiveOnboardingFollowHighlight position="center">
           <div>Example</div>
@@ -177,7 +177,7 @@ describe("ProgressiveOnboardingFollowHighlight", () => {
 
     const Example = ({ display }) => {
       return (
-        <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
+        <DismissibleProvider keys={PROGRESSIVE_ONBOARDING_KEYS}>
           <DismissFollowFind />
 
           {display && (

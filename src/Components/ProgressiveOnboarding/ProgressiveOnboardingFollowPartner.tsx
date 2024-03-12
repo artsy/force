@@ -15,11 +15,11 @@ import {
   PROGRESSIVE_ONBOARDING_SAVE_CHAIN,
 } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
-const KEY = PROGRESSIVE_ONBOARDING.followArtist
-interface ProgressiveOnboardingFollowArtistProps
+const KEY = PROGRESSIVE_ONBOARDING.followPartner
+interface ProgressiveOnboardingFollowPartnerProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFollowArtistProps> = ({
+export const __ProgressiveOnboardingFollowPartner__: FC<ProgressiveOnboardingFollowPartnerProps> = ({
   counts,
   children,
 }) => {
@@ -29,25 +29,25 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =
-    // Hasn't dismissed the follow artist onboarding.
+    // Hasn't dismissed the follow Partner onboarding.
     !isDismissed(KEY).status &&
-    // Hasn't followed an artist yet.
+    // Hasn't followed an Partner yet.
     counts.isReady &&
-    counts.followedArtists === 0 &&
-    // If you've already dismissed the alerts onboarding OR you're logged out OR you're not on the artist page.
+    counts.followedProfiles === 0 &&
+    // If you've already dismissed the alerts onboarding OR you're logged out OR you're not on the Partner page.
     (!isLoggedIn ||
       PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(
         key => isDismissed(key).status
       ) ||
-      !pathToRegexp("/artist/:artistID").test(router.match.location.pathname))
+      !pathToRegexp("/Partner/:PartnerID").test(router.match.location.pathname))
 
   const handleClose = useCallback(() => {
     dismiss(KEY)
   }, [dismiss])
 
   useEffect(() => {
-    // Dismiss the follow artist onboarding once you follow an artist.
-    if (counts.followedArtists > 0 && !isDismissed(KEY).status) {
+    // Dismiss the follow Partner onboarding once you follow an Partner.
+    if (counts.followedProfiles > 0 && !isDismissed(KEY).status) {
       dismiss(KEY)
 
       // If you've started another onboarding chain, ensure they are dismissed.
@@ -59,7 +59,7 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
         dismiss(PROGRESSIVE_ONBOARDING_ALERT_CHAIN)
       }
     }
-  }, [counts.followedArtists, dismiss, isDismissed])
+  }, [counts.followedProfiles, dismiss, isDismissed])
 
   if (!isDisplayable) {
     return <>{children}</>
@@ -72,7 +72,7 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
       onClose={handleClose}
       popover={
         <Text variant="xs">
-          <strong>Interested in this artist?</strong>
+          <strong>Interested in this Partner?</strong>
           <br />
           Follow them to get updates when new works are added.
         </Text>
@@ -83,6 +83,6 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
   )
 }
 
-export const ProgressiveOnboardingFollowArtist = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingFollowArtist__
+export const ProgressiveOnboardingFollowPartner = withProgressiveOnboardingCounts(
+  __ProgressiveOnboardingFollowPartner__
 )
