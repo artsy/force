@@ -14,13 +14,13 @@ const STATUSES: {
   "submission in progress": {
     color: "yellow150",
     text: "In Progress",
-    description: "The artwork is being reviewd or is in the sale process",
+    description: "The artwork is being reviewed or is in the sale process.",
   },
   "submission evaluated": {
     color: "orange150",
     text: "Evaluation Complete",
     description:
-      "Our specialists have reviewed this submission and determined that we do not currently have a market for it.  ",
+      "Our specialists have reviewed this submission and determined that we do not currently have a market for it.",
   },
   sold: { color: "black100", text: "Artwork Sold" },
 }
@@ -44,9 +44,9 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
   const article =
     "https://support.artsy.net/s/topic/0TO3b000000UevOGAS/sell-with-artsy"
 
-  const approvedDisplayText = STATUSES[displayText!.toLowerCase()]?.text
+  const approvedDisplayText = STATUSES[displayText.toLowerCase()]?.text
   const statusDescription =
-    STATUSES[displayText!.toLowerCase()]?.description || ""
+    STATUSES[displayText.toLowerCase()]?.description || ""
 
   if (!Boolean(approvedDisplayText)) {
     return null
@@ -88,7 +88,7 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
         <Flex flex={1} flexDirection="column">
           <Text
             variant="sm"
-            color={STATUSES[displayText!.toLowerCase()]?.color ?? "black100"}
+            color={STATUSES[displayText.toLowerCase()]?.color ?? "black100"}
           >
             {toTitleCase(approvedDisplayText)}
           </Text>
