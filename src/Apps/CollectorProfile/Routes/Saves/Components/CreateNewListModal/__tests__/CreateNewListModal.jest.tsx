@@ -15,6 +15,7 @@ jest.mock("System/useFeatureFlag", () => ({
 
 jest.mock("Utils/Hooks/useMutation")
 
+const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 const mockUseMutation = useMutation as jest.Mock
 const mockUseTracking = useTracking as jest.Mock
 const onCloseMock = jest.fn()
@@ -207,7 +208,7 @@ describe("CreateNewListModal", () => {
 
   describe("shared list toggle", () => {
     beforeEach(() => {
-      ;(useFeatureFlag as jest.Mock).mockImplementation(() => true)
+      mockUseFeatureFlag.mockImplementation(() => true)
     })
 
     it("allows user to enable list shareability by default", async () => {

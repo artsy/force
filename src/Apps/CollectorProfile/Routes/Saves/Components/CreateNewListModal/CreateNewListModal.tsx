@@ -54,7 +54,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   const handleBackOnCancelClick = onBackClick ?? onClose
   const cancelMode = onBackClick ? "back" : "dismiss"
 
-  const trackAnalyticEvent = (artworkListId: string) => {
+  const trackCreatedArtworkList = (artworkListId: string) => {
     const event: CreatedArtworkList = {
       action: ActionType.createdArtworkList,
       context_owner_id: analytics.contextPageOwnerId,
@@ -98,7 +98,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
           name: values.name,
         })
 
-        trackAnalyticEvent(artworkListId)
+        trackCreatedArtworkList(artworkListId)
       }
     } catch (error) {
       logger.error(error)
