@@ -19,6 +19,7 @@ import { themeGet } from "@styled-system/theme-get"
 import { Jump } from "Utils/Hooks/useJump"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import { FollowButtonInlineCount } from "Components/FollowButton/Button"
+import { ProgressiveOnboardingFollowPartner } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowPartner"
 
 export interface PartnerHeaderProps {
   partner: PartnerHeader_partner$data
@@ -84,24 +85,30 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
 
         {canFollow && (
           <Column span={[12, 2]}>
-            <FollowProfileButtonQueryRenderer
-              id={partner.profile.internalID}
-              contextModule={ContextModule.partnerHeader}
-              width="100%"
-            >
-              {label => (
-                <Stack gap={0.5} flexDirection="row" alignItems="center">
-                  <Box>{label}</Box>
+            <Stack gap={0.5} flexDirection="row" alignItems="center">
+              <ProgressiveOnboardingFollowPartner>
+                {({ anchorRef }) => {
+                  if (!partner.profile) return <></>
 
-                  {!!partner?.profile?.counts?.follows && (
-                    <FollowButtonInlineCount display={["block", "none"]}>
-                      {hasFollows &&
-                        formatFollowerCount(partner.profile.counts.follows)}
-                    </FollowButtonInlineCount>
-                  )}
-                </Stack>
+                  return (
+                    <Box ref={anchorRef as any} width="100%">
+                      <FollowProfileButtonQueryRenderer
+                        id={partner.profile.internalID}
+                        contextModule={ContextModule.partnerHeader}
+                        width="100%"
+                      />
+                    </Box>
+                  )
+                }}
+              </ProgressiveOnboardingFollowPartner>
+
+              {!!partner?.profile?.counts?.follows && (
+                <FollowButtonInlineCount display={["block", "none"]}>
+                  {hasFollows &&
+                    formatFollowerCount(partner.profile.counts.follows)}
+                </FollowButtonInlineCount>
               )}
-            </FollowProfileButtonQueryRenderer>
+            </Stack>
 
             {hasFollows && (
               <Text
