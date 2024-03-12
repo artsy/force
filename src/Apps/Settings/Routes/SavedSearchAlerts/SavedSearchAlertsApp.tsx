@@ -98,6 +98,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     silentPush("/settings/alerts")
   }
 
+  const handleOpenEditForm = () => {
+    setViewOption("EDIT")
+  }
+
   const refetch = (variables?: RefetchVariables) => {
     const relayRefetchVariables = {
       sort: variables?.sort ?? sort,
@@ -334,6 +338,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                       <Sticky bottomBoundary="#content-end">
                         <SavedSearchAlertsArtworksQueryRenderer
                           editAlertEntity={editAlertEntity}
+                          onEditAlertClick={handleOpenEditForm}
                         />
                       </Sticky>
                     )}
@@ -357,6 +362,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                 <SavedSearchAlertsArtworksQueryRenderer
                   editAlertEntity={editAlertEntity}
                   onCloseClick={closeArtworksView}
+                  onEditAlertClick={handleOpenEditForm}
                 />
               )}
             </Media>
