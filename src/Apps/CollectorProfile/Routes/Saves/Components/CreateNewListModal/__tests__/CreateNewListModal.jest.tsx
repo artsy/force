@@ -90,7 +90,7 @@ describe("CreateNewListModal", () => {
       },
     })
 
-    expect(screen.getByText("25/40")).toBeInTheDocument()
+    expect(screen.getByText("15/40")).toBeInTheDocument()
 
     const createButton = screen.getAllByRole("button", {
       name: "Create List",
