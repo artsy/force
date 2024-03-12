@@ -87,19 +87,11 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
           <Column span={[12, 2]}>
             <Stack gap={0.5} flexDirection="row" alignItems="center">
               <ProgressiveOnboardingFollowPartner>
-                {({ anchorRef }) => {
-                  if (!partner.profile) return <></>
-
-                  return (
-                    <Box ref={anchorRef as any} width="100%">
-                      <FollowProfileButtonQueryRenderer
-                        id={partner.profile.internalID}
-                        contextModule={ContextModule.partnerHeader}
-                        width="100%"
-                      />
-                    </Box>
-                  )
-                }}
+                <FollowProfileButtonQueryRenderer
+                  id={partner.profile.internalID}
+                  contextModule={ContextModule.partnerHeader}
+                  width="100%"
+                />
               </ProgressiveOnboardingFollowPartner>
 
               {!!partner?.profile?.counts?.follows && (

@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect } from "react"
-import { PopoverProps, Text } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
   withProgressiveOnboardingCounts,
@@ -16,8 +16,7 @@ import {
 const KEY = PROGRESSIVE_ONBOARDING.followPartner
 
 interface ProgressiveOnboardingFollowPartnerProps
-  extends WithProgressiveOnboardingCountsProps,
-    Pick<PopoverProps, "children"> {}
+  extends WithProgressiveOnboardingCountsProps {}
 
 export const __ProgressiveOnboardingFollowPartner__: FC<ProgressiveOnboardingFollowPartnerProps> = ({
   counts,
@@ -62,6 +61,7 @@ export const __ProgressiveOnboardingFollowPartner__: FC<ProgressiveOnboardingFol
       visible={isDisplayable}
       placement="bottom"
       onClose={handleClose}
+      boxProps={{ width: "100%" }}
       popover={
         <Text variant="xs">
           <strong>Interested in this Gallery?</strong>

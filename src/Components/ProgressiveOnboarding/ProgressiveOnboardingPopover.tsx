@@ -1,17 +1,21 @@
 import { FC } from "react"
-import { Box, Popover, PopoverProps } from "@artsy/palette"
+import { Box, BoxProps, Popover, PopoverProps } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useProgressiveOnboardingTracking } from "Components/ProgressiveOnboarding/useProgressiveOnboardingTracking"
 
 interface ProgressiveOnboardingPopoverProps
   extends Omit<PopoverProps, "children"> {
   name: string
+  boxProps?: BoxProps
 }
 
 export const ProgressiveOnboardingPopover: FC<ProgressiveOnboardingPopoverProps> = ({
   popover,
   children,
   name,
+  boxProps = {
+    width: "fit-content",
+  },
   ...rest
 }) => {
   useProgressiveOnboardingTracking({ name })
@@ -30,7 +34,7 @@ export const ProgressiveOnboardingPopover: FC<ProgressiveOnboardingPopoverProps>
     >
       {({ anchorRef }) => {
         return (
-          <Box width="fit-content" ref={anchorRef as any}>
+          <Box {...boxProps} ref={anchorRef as any}>
             {children}
           </Box>
         )
