@@ -138,12 +138,37 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       saved_search_id: editAlertEntity?.id,
     })
 
-    closeEditFormAndRefetch()
+    isMobile ? refresh() : closeEditFormAndRefetch()
     closeDeleteModal()
 
     sendToast({
       message: "Your Alert has been deleted.",
     })
+
+    if (isMobile) return
+
+    // the right collumn of the screen should always display alert's edit form
+    // this is why when we delete and alert we update the editAlertEntity
+    // to contain the details of the first alert on the alerts' list
+    if (editAlertEntity?.id === alerts[0].internalID && alerts.length > 1) {
+      setEditAlertEntity({
+        id: alerts[1].internalID,
+        name: alerts[1].settings.name ?? "",
+        artistIds: alerts[1]?.artistIDs as string[],
+      })
+      silentPush(`/settings/alerts/${alerts[1].internalID}/edit`)
+    } else if (editAlertEntity?.id !== alerts[0].internalID) {
+      setEditAlertEntity({
+        id: alerts[0].internalID,
+        name: alerts[0].settings.name ?? "",
+        artistIds: alerts[0]?.artistIDs as string[],
+      })
+      silentPush(`/settings/alerts/${alerts[0].internalID}/edit`)
+    } else {
+      // if we deleted the last alert we display the screen's empty state
+      setEditAlertEntity(null)
+      silentPush("/settings/alerts/")
+    }
   }
 
   const handleLoadMore = () => {
