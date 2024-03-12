@@ -16,6 +16,7 @@ import {
   ArtworkModalHeaderInfo,
   ArtworkModalHeaderInfoEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkModalHeaderInfo"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export interface ArtworkList {
   internalID: string
@@ -48,6 +49,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   const { submitMutation } = useCreateCollection()
   const { trackEvent } = useTracking()
   const analytics = useAnalyticsContext()
+  const sharedListEnabled = useFeatureFlag("emerald_artwork-list-offerability")
 
   const handleBackOnCancelClick = onBackClick ?? onClose
   const cancelMode = onBackClick ? "back" : "dismiss"
@@ -57,7 +59,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       action: ActionType.createdArtworkList,
       context_owner_id: analytics.contextPageOwnerId,
       context_owner_slug: analytics.contextPageOwnerSlug,
-      context_owner_type: analytics.contextPageOwnerType!,
+      context_owner_type: analytics.contextPageOwnerType,
       owner_id: artworkListId,
     }
 
@@ -71,7 +73,13 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
     try {
       const { createCollection } = await submitMutation({
         variables: {
-          input: { name: values.name.trim() },
+          input: {
+            name: values.name.trim(),
+            // add shareableWithPartners to the input only if the feature flag is enabled
+            ...(sharedListEnabled
+              ? { shareableWithPartners: values.shareableWithPartners }
+              : {}),
+          },
         },
         rejectIf: response => {
           const result = response.createCollection?.responseOrError
@@ -82,14 +90,16 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       })
 
       const response = createCollection?.responseOrError
-      const artworkListId = response?.collection?.internalID!
+      const artworkListId = response?.collection?.internalID
 
-      onComplete({
-        internalID: artworkListId,
-        name: values.name,
-      })
+      if (artworkListId) {
+        onComplete({
+          internalID: artworkListId,
+          name: values.name,
+        })
 
-      trackAnalyticEvent(artworkListId)
+        trackAnalyticEvent(artworkListId)
+      }
     } catch (error) {
       logger.error(error)
 
@@ -110,14 +120,14 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
 
   return (
     <Formik<ArtworkListFormikValues>
-      initialValues={{ name: "" }}
+      initialValues={{ name: "", shareableWithPartners: true }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       {formik => {
         return (
           <ModalDialog
-            width={["100%", 700]}
+            width={["100%", 713]}
             onClose={onClose}
             title={t("collectorSaves.createNewListModal.title")}
             data-testid="CreateNewList"
