@@ -7,9 +7,9 @@ import {
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useSystemContext } from "System/SystemContext"
 import { useDismissibleContext } from "@artsy/dismissible"
-import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
-const ALERT_ID = PROGRESSIVE_ONBOARDING_ALERTS.alertCreate
+const KEY = PROGRESSIVE_ONBOARDING.alertCreate
 
 interface ProgressiveOnboardingAlertCreateSimpleProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -24,12 +24,12 @@ export const __ProgressiveOnboardingAlertCreateSimple__: FC<ProgressiveOnboardin
 
   const isDisplayable =
     isLoggedIn &&
-    !isDismissed(ALERT_ID).status &&
+    !isDismissed(KEY).status &&
     counts.isReady &&
     counts.savedSearches === 0
 
   const handleClose = () => {
-    dismiss(ALERT_ID)
+    dismiss(KEY)
   }
 
   if (!isDisplayable) {
@@ -38,7 +38,7 @@ export const __ProgressiveOnboardingAlertCreateSimple__: FC<ProgressiveOnboardin
 
   return (
     <ProgressiveOnboardingPopover
-      name={ALERT_ID}
+      name={KEY}
       ignoreClickOutside
       placement="left"
       onClose={handleClose}

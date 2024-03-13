@@ -33,7 +33,7 @@ import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
 import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
 import { CookieConsentManager } from "Components/CookieConsentManager/CookieConsentManager"
 import { DismissibleProvider } from "@artsy/dismissible"
-import { getProgressiveOnboardingAlertKeys } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
 export interface BootProps {
   children: React.ReactNode
@@ -114,7 +114,7 @@ export const Boot = track(undefined, {
                         <AuthDialogProvider>
                           <DismissibleProvider
                             userID={props.user?.id}
-                            keys={getProgressiveOnboardingAlertKeys()}
+                            keys={PROGRESSIVE_ONBOARDING_KEYS}
                           >
                             <CookieConsentManager>
                               <FocusVisible />
