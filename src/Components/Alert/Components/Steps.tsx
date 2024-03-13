@@ -15,7 +15,7 @@ export const Steps: FC = () => {
     case "ALERT_CONFIRMATION":
       return <Confirmation />
     default:
-      console.warn("'current' parameter is unknown for useAlertContext()")
+      console.warn("no matching case is found in AlertContext")
       return null
   }
 }

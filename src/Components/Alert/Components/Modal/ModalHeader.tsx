@@ -21,7 +21,7 @@ export const ModalHeader: FC = () => {
     case "ALERT_ARTWORKS":
       return <Text variant="lg">View Artworks</Text>
     default:
-      console.warn("'current' parameter is unknown for useAlertContext()")
+      console.warn("no matching case is found in AlertContext")
       return null
   }
 }
