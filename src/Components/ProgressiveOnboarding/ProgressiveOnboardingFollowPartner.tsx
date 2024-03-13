@@ -61,7 +61,6 @@ export const __ProgressiveOnboardingFollowPartner__: FC<ProgressiveOnboardingFol
       visible={isDisplayable}
       placement="bottom"
       onClose={handleClose}
-      boxProps={{ width: "100%" }}
       popover={
         <Text variant="xs">
           <strong>Interested in this Gallery?</strong>
