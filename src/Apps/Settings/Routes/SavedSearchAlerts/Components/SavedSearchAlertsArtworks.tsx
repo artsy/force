@@ -10,8 +10,8 @@ import {
   Column,
 } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
-import { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEditFormQuery.graphql"
-import { graphql } from "react-relay"
+import { SavedSearchAlertsArtworksQuery } from "__generated__/SavedSearchAlertsArtworksQuery.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
@@ -20,9 +20,10 @@ import { AlertProvider } from "Components/Alert/AlertProvider"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { Media } from "Utils/Responsive"
+import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 
 interface AlertArtworksProps {
-  alert: any
+  alert: NonNullable<SavedSearchAlertsArtworksQuery["response"]["me"]>["alert"]
   onCloseClick?: () => void
   onEditAlertClick: () => void
 }
@@ -32,7 +33,9 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
   onCloseClick,
   onEditAlertClick,
 }) => {
-  const count = alert.artworksConnection.counts.total
+  if (!alert || !alert.artworksConnection) return <></>
+
+  const count = alert.artworksConnection?.counts?.total
   const href = alert.href
 
   return (
@@ -42,7 +45,9 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
           <Join separator={<Spacer y={2} />}>
             <Text variant="lg">View Artworks</Text>
 
-            <Text>Pills</Text>
+            <Flex flexWrap="wrap" gap={1}>
+              <CriteriaPills editable={false} />
+            </Flex>
 
             <Separator />
 
@@ -141,24 +146,54 @@ interface SavedSearchAlertsArtworksQueryRendererProps {
   onEditAlertClick: () => void
 }
 
+export const SavedSearchAlertsArtworksFragmentContainer = createFragmentContainer(
+  AlertArtworks,
+  {
+    alert: graphql`
+      fragment SavedSearchAlertsArtworks_alert on Alert {
+        internalID
+        acquireable
+        additionalGeneIDs
+        artistIDs
+        artistSeriesIDs
+        atAuction
+        attributionClass
+        colors
+        dimensionRange
+        sizes
+        width
+        height
+        inquireableOnly
+        locationCities
+        majorPeriods
+        materialsTerms
+        offerable
+        partnerIDs
+        priceRange
+      }
+    `,
+  }
+)
+
 export const SavedSearchAlertsArtworksQueryRenderer: React.FC<SavedSearchAlertsArtworksQueryRendererProps> = ({
   editAlertEntity,
   onCloseClick,
   onEditAlertClick,
 }) => {
   return (
-    <SystemQueryRenderer<SavedSearchAlertEditFormQuery>
+    <SystemQueryRenderer<SavedSearchAlertsArtworksQuery>
       query={graphql`
         query SavedSearchAlertsArtworksQuery($id: String!) {
           me {
             alert(id: $id) {
-              href
               artworksConnection(first: 10) {
                 counts {
                   total
                 }
                 ...ArtworkGrid_artworks
               }
+              href
+              ...SavedSearchAlertsArtworks_alert @relay(mask: false)
             }
           }
         }
@@ -184,8 +219,9 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<SavedSearchAlertsA
               (props.me.alert as unknown) as SearchCriteriaAttributes
             )}
             alertID={props.me.alert.internalID}
+            isEditMode
           >
-            <AlertArtworks
+            <SavedSearchAlertsArtworksFragmentContainer
               alert={props.me.alert}
               onCloseClick={onCloseClick}
               onEditAlertClick={onEditAlertClick}
