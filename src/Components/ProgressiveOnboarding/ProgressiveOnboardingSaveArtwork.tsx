@@ -7,12 +7,12 @@ import {
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useDismissibleContext } from "@artsy/dismissible"
 import {
-  PROGRESSIVE_ONBOARDING_ALERTS,
+  PROGRESSIVE_ONBOARDING,
   PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
-  PROGRESSIVE_ONBOARDING_FOLLOW_CHAIN,
-} from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+  PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST_CHAIN,
+} from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
-const ALERT_ID = PROGRESSIVE_ONBOARDING_ALERTS.saveArtwork
+const KEY = PROGRESSIVE_ONBOARDING.saveArtwork
 
 interface ProgressiveOnboardingSaveArtworkProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -24,22 +24,20 @@ export const __ProgressiveOnboardingSaveArtwork__: FC<ProgressiveOnboardingSaveA
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayble =
-    !isDismissed(ALERT_ID).status &&
-    counts.isReady &&
-    counts.savedArtworks === 0
+    !isDismissed(KEY).status && counts.isReady && counts.savedArtworks === 0
 
   const handleClose = useCallback(() => {
-    dismiss(ALERT_ID)
+    dismiss(KEY)
   }, [dismiss])
 
   useEffect(() => {
     // Dismiss the save artwork onboarding once you save an artwork.
-    if (counts.savedArtworks > 0 && !isDismissed(ALERT_ID).status) {
-      dismiss(ALERT_ID)
+    if (counts.savedArtworks > 0 && !isDismissed(KEY).status) {
+      dismiss(KEY)
 
       // If you've started another onboarding chain, ensure they are dismissed.
-      if (isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_CHAIN[0]).status) {
-        dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_CHAIN)
+      if (isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST_CHAIN[0]).status) {
+        dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST_CHAIN)
       }
 
       if (isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CHAIN[0]).status) {
@@ -54,7 +52,7 @@ export const __ProgressiveOnboardingSaveArtwork__: FC<ProgressiveOnboardingSaveA
 
   return (
     <ProgressiveOnboardingPopover
-      name={ALERT_ID}
+      name={KEY}
       placement="bottom"
       onClose={handleClose}
       popover={

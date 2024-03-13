@@ -6,10 +6,10 @@ import {
   WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useDismissibleContext } from "@artsy/dismissible"
-import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { t } from "i18next"
 
-const ALERT_ID = PROGRESSIVE_ONBOARDING_ALERTS.saveTitle
+const KEY = PROGRESSIVE_ONBOARDING.saveTitle
 
 interface ProgressiveOnboardingSaveTitleProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -19,10 +19,10 @@ export const __ProgressiveOnboardingSaveTitle__: FC<ProgressiveOnboardingSaveTit
 }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
-  const isDisplayble = !isDismissed(ALERT_ID).status
+  const isDisplayble = !isDismissed(KEY).status
 
   const handleClose = useCallback(() => {
-    dismiss(ALERT_ID)
+    dismiss(KEY)
   }, [dismiss])
 
   if (!isDisplayble) {
@@ -31,7 +31,7 @@ export const __ProgressiveOnboardingSaveTitle__: FC<ProgressiveOnboardingSaveTit
 
   return (
     <ProgressiveOnboardingPopover
-      name={ALERT_ID}
+      name={KEY}
       placement="top-end"
       onClose={handleClose}
       popover={

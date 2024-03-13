@@ -22,7 +22,7 @@ export const ShowHeader: React.FC<ShowHeaderProps> = ({ show, ...rest }) => {
         <Text variant="xs">Show</Text>
 
         <Box>
-          <Text as="h1" variant="xl">
+          <Text as="h1" variant="xl" hyphenate>
             {name}
           </Text>
 

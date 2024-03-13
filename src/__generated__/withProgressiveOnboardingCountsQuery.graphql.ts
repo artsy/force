@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b47dff7d7382bee82e7a15d93efa07f7>>
+ * @generated SignedSource<<f7cdb881147a665261b8d322686f8063>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type withProgressiveOnboardingCountsQuery$data = {
   readonly me: {
     readonly counts: {
       readonly followedArtists: number;
+      readonly followedProfiles: number;
       readonly savedArtworks: number;
       readonly savedSearches: number;
     } | null | undefined;
@@ -38,6 +39,13 @@ var v0 = {
       "args": null,
       "kind": "ScalarField",
       "name": "followedArtists",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "followedProfiles",
       "storageKey": null
     },
     {
@@ -108,16 +116,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5707555280f2fb274405016cb0f4cf08",
+    "cacheID": "457c3f65a942f5ee7d59891f512aa0b4",
     "id": null,
     "metadata": {},
     "name": "withProgressiveOnboardingCountsQuery",
     "operationKind": "query",
-    "text": "query withProgressiveOnboardingCountsQuery {\n  me {\n    counts {\n      followedArtists\n      savedArtworks\n      savedSearches\n    }\n    id\n  }\n}\n"
+    "text": "query withProgressiveOnboardingCountsQuery {\n  me {\n    counts {\n      followedArtists\n      followedProfiles\n      savedArtworks\n      savedSearches\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "12c1938b5b4cb9e64f15c0e394ae3705";
+(node as any).hash = "563c912e49346cb7841595f74dbdc70e";
 
 export default node;

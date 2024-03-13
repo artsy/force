@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<981c1515a1eea8d529d28e5e04caa445>>
+ * @generated SignedSource<<e5531f376695ea4dbc8f4fb2c2fa8440>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,6 +29,12 @@ export type ArtworkChatBubble_artwork$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
+  } | null | undefined;
+  readonly saleArtwork: {
+    readonly currency: string | null | undefined;
+    readonly openingBid: {
+      readonly cents: number | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "ArtworkChatBubble_artwork";
 };
@@ -128,6 +134,42 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "SaleArtwork",
+      "kind": "LinkedField",
+      "name": "saleArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "currency",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "SaleArtworkOpeningBid",
+          "kind": "LinkedField",
+          "name": "openingBid",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cents",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -135,6 +177,6 @@ return {
 };
 })();
 
-(node as any).hash = "10b98c9d42fc5a7a6f3bce56fa7c4083";
+(node as any).hash = "053bfb9d3c7e9bdb01b1f95d6cf9a109";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3627db047ec23607168368ec0f4a4e1a>>
+ * @generated SignedSource<<adb8538ee9e427ceda424c16ce2f638a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowProfileButton_profile$data = {
+  readonly counts: {
+    readonly follows: any | null | undefined;
+  } | null | undefined;
   readonly id: string;
   readonly internalID: string;
   readonly isFollowed: boolean | null | undefined;
@@ -63,12 +66,30 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "isFollowed",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ProfileCounts",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "follows",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Profile",
   "abstractKey": null
 };
 
-(node as any).hash = "5e106dc0f6d28037e1b1cb894aa58dca";
+(node as any).hash = "dc86710f8a7e5d1b087b73a1b940efef";
 
 export default node;

@@ -23,12 +23,16 @@ const { renderWithRelay } = setupTestWrapperTL<FollowProfileButton_Test_Query>({
     return (
       <FollowProfileButtonFragmentContainer
         profile={props.partner!.profile!}
+        me={props.me!}
         onFollow={onFollow}
       />
     )
   },
   query: graphql`
     query FollowProfileButton_Test_Query @relay_test_operation {
+      me {
+        ...FollowProfileButton_me
+      }
       partner(id: "example") {
         profile {
           ...FollowProfileButton_profile

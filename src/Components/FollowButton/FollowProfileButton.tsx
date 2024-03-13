@@ -3,6 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { FollowButton, FollowButtonRenderProps } from "./Button"
 import { FollowProfileButton_profile$data } from "__generated__/FollowProfileButton_profile.graphql"
+import { FollowProfileButton_me$data } from "__generated__/FollowProfileButton_me.graphql"
 import { ButtonProps } from "@artsy/palette"
 import {
   Intent,
@@ -18,15 +19,17 @@ import { useAuthDialog } from "Components/AuthDialog"
 
 interface FollowProfileButtonProps extends Omit<ButtonProps, "variant"> {
   children?: FollowButtonRenderProps
-  profile: FollowProfileButton_profile$data
+  me: FollowProfileButton_me$data | null | undefined
   contextModule?: AuthContextModule
   onFollow?: (followed: boolean) => void
+  profile: FollowProfileButton_profile$data
 }
 
 const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
-  profile,
   contextModule = ContextModule.partnerHeader,
+  me,
   onFollow,
+  profile,
   ...rest
 }) => {
   const { isLoggedIn } = useSystemContext()
@@ -38,22 +41,43 @@ const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
     contextModule,
   })
 
+  const profileCount = profile.counts?.follows ?? 0
+  const meCount = me?.counts?.followedProfiles ?? 0
+
   const { submitMutation } = useMutation({
     mutation: graphql`
       mutation FollowProfileButtonMutation($input: FollowProfileInput!) {
         followProfile(input: $input) {
+          me {
+            id
+            counts {
+              followedProfiles
+            }
+          }
           profile {
             id
             isFollowed
+            counts {
+              follows
+            }
           }
         }
       }
     `,
     optimisticResponse: {
       followProfile: {
+        me: {
+          id: me?.id ?? "logged-out",
+          counts: {
+            followedProfiles: profile.isFollowed ? meCount - 1 : meCount + 1,
+          },
+        },
         profile: {
           id: profile.id,
           isFollowed: !profile.isFollowed,
+          counts: {
+            follows: profile.isFollowed ? profileCount - 1 : profileCount + 1,
+          },
         },
       },
     },
@@ -119,6 +143,14 @@ const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
 export const FollowProfileButtonFragmentContainer = createFragmentContainer(
   FollowProfileButton,
   {
+    me: graphql`
+      fragment FollowProfileButton_me on Me {
+        id
+        counts {
+          followedProfiles
+        }
+      }
+    `,
     profile: graphql`
       fragment FollowProfileButton_profile on Profile {
         id
@@ -126,13 +158,16 @@ export const FollowProfileButtonFragmentContainer = createFragmentContainer(
         name
         internalID
         isFollowed
+        counts {
+          follows
+        }
       }
     `,
   }
 )
 
 interface FollowProfileButtonQueryRendererProps
-  extends Omit<FollowProfileButtonProps, "profile"> {
+  extends Omit<FollowProfileButtonProps, "profile" | "me"> {
   id: string
 }
 
@@ -145,6 +180,9 @@ export const FollowProfileButtonQueryRenderer: React.FC<FollowProfileButtonQuery
       lazyLoad
       query={graphql`
         query FollowProfileButtonQuery($id: String!) {
+          me {
+            ...FollowProfileButton_me
+          }
           profile(id: $id) {
             ...FollowProfileButton_profile
           }
@@ -160,6 +198,7 @@ export const FollowProfileButtonQueryRenderer: React.FC<FollowProfileButtonQuery
         return (
           <FollowProfileButtonFragmentContainer
             {...rest}
+            me={props.me}
             profile={props.profile}
           />
         )

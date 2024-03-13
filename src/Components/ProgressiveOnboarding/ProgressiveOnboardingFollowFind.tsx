@@ -7,7 +7,7 @@ import {
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
 import { useDismissibleContext } from "@artsy/dismissible"
-import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
 interface ProgressiveOnboardingFollowFindProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -20,15 +20,15 @@ export const __ProgressiveOnboardingFollowFind__: FC<ProgressiveOnboardingFollow
 
   const isDisplayable =
     counts.followedArtists === 1 &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_ALERTS.followFind).status
+    !isDismissed(PROGRESSIVE_ONBOARDING.followFind).status
 
   const handleClose = () => {
-    dismiss(PROGRESSIVE_ONBOARDING_ALERTS.followFind)
+    dismiss(PROGRESSIVE_ONBOARDING.followFind)
   }
 
   const handleDismiss = () => {
     handleClose()
-    dismiss(PROGRESSIVE_ONBOARDING_ALERTS.followHighlight)
+    dismiss(PROGRESSIVE_ONBOARDING.followHighlight)
   }
 
   if (!isDisplayable) {
@@ -37,7 +37,7 @@ export const __ProgressiveOnboardingFollowFind__: FC<ProgressiveOnboardingFollow
 
   return (
     <ProgressiveOnboardingPopover
-      name={PROGRESSIVE_ONBOARDING_ALERTS.followFind}
+      name={PROGRESSIVE_ONBOARDING.followFind}
       placement="bottom-end"
       onClose={handleClose}
       onDismiss={handleDismiss}

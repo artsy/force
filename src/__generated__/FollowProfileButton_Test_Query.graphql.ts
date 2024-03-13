@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dce229c126ec44e4559241359a199899>>
+ * @generated SignedSource<<bfde6076ae03eb2ca02853ba9366eff4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,9 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowProfileButton_Test_Query$variables = Record<PropertyKey, never>;
 export type FollowProfileButton_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_me">;
+  } | null | undefined;
   readonly partner: {
     readonly profile: {
       readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
@@ -53,6 +56,22 @@ return {
     "selections": [
       {
         "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "FollowProfileButton_me"
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
         "args": (v0/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
@@ -88,6 +107,36 @@ return {
     "kind": "Operation",
     "name": "FollowProfileButton_Test_Query",
     "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "MeCounts",
+            "kind": "LinkedField",
+            "name": "counts",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "followedProfiles",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": (v0/*: any*/),
@@ -132,6 +181,24 @@ return {
                 "kind": "ScalarField",
                 "name": "isFollowed",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ProfileCounts",
+                "kind": "LinkedField",
+                "name": "counts",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "follows",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -143,10 +210,29 @@ return {
     ]
   },
   "params": {
-    "cacheID": "14f72f94b9b2cd587bcb1cd5c4eeb73d",
+    "cacheID": "b5f4ea518e4a4e683da4ae31e15397aa",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MeCounts"
+        },
+        "me.counts.followedProfiles": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Int"
+        },
+        "me.id": (v2/*: any*/),
         "partner": {
           "enumValues": null,
           "nullable": true,
@@ -159,6 +245,18 @@ return {
           "nullable": true,
           "plural": false,
           "type": "Profile"
+        },
+        "partner.profile.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ProfileCounts"
+        },
+        "partner.profile.counts.follows": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
         },
         "partner.profile.id": (v2/*: any*/),
         "partner.profile.internalID": (v2/*: any*/),
@@ -179,11 +277,11 @@ return {
     },
     "name": "FollowProfileButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowProfileButton_Test_Query {\n  partner(id: \"example\") {\n    profile {\n      ...FollowProfileButton_profile\n      id\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
+    "text": "query FollowProfileButton_Test_Query {\n  me {\n    ...FollowProfileButton_me\n    id\n  }\n  partner(id: \"example\") {\n    profile {\n      ...FollowProfileButton_profile\n      id\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_me on Me {\n  id\n  counts {\n    followedProfiles\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b07d88251880bd24bdfa7de9fb3d0ebb";
+(node as any).hash = "76221880cb358078228feb98493890ae";
 
 export default node;

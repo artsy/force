@@ -4,7 +4,7 @@ import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterC
 import { __ProgressiveOnboardingAlertCreate__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
 import { ProgressiveOnboardingAlertReady } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertReady"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
-import { getProgressiveOnboardingAlertKeys } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { FC, useState } from "react"
@@ -27,7 +27,7 @@ const Example: FC = () => {
   )
 
   return (
-    <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
+    <DismissibleProvider keys={PROGRESSIVE_ONBOARDING_KEYS}>
       <div>{renders}</div>
 
       <ProgressiveOnboardingAlertSelectFilter>
