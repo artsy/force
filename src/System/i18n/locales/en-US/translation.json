@@ -264,12 +264,6 @@
       "viewAllWorks": "View All Works"
     }
   },
-  "specialists": {
-    "auctions": "Auctions",
-    "collectorSales": "Collector Sales",
-    "meetTheSpecialists": "Meet the Specialists",
-    "ourTeamIsReady": "Whether you’re seeking a specific work for your growing collection or wish to sell, our globe-spanning team is ready to source, sell, advise, and research on your behalf."
-  },
   "searchApp": {
     "noResultsFound": "No results found.",
     "resultsCount_zero": "No results found for",
