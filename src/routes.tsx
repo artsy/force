@@ -26,7 +26,6 @@ import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVe
 import { institutionPartnershipsRoutes } from "Apps/InstitutionPartnerships/institutionPartnershipsRoutes"
 import { jobsRoutes } from "Apps/Jobs/jobsRoutes"
 import { marketingRoutes } from "Apps/Marketing/marketingRoutes"
-import { meetTheSpecialistsRoutes } from "Apps/MeetTheSpecialists/meetTheSpecialistsRoutes"
 import { myCollectionRoutes } from "Apps/MyCollection/myCollectionRoutes"
 import { myCollectionInsightsRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsRoutes"
 import { newForYouRoutes } from "Apps/NewForYou/newForYouRoutes"
@@ -99,7 +98,6 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: institutionPartnershipsRoutes },
     { routes: jobsRoutes },
     { routes: marketingRoutes },
-    { routes: meetTheSpecialistsRoutes },
     { routes: myCollectionRoutes },
     { routes: myCollectionInsightsRoutes },
     { routes: myCollectionInsightsCollectorProfileRoutes },
