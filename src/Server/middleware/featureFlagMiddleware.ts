@@ -43,7 +43,14 @@ export function featureFlagMiddleware(serviceType: symbol) {
           }
         }, {})
 
+        const e2eFeatureFlags = Object.fromEntries(
+          Object.entries(featureFlags).filter(
+            ([key, value]) => key.startsWith("e2e_") && value.flagEnabled
+          )
+        )
+
         updateSharifyAndContext(res, "FEATURE_FLAGS", featureFlags)
+        updateSharifyAndContext(res, "E2E_FEATURE_FLAGS", e2eFeatureFlags)
 
         next()
       })
