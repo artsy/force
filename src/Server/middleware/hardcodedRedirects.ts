@@ -153,6 +153,7 @@ const PERMANENT_REDIRECTS = {
   "/collector-profile": "/collector-profile/my-collection",
   "/log_in": "/login",
   "/sign_up": "/signup",
+  "/meet-the-specialists": "/sell",
 }
 
 const router = express.Router()
