@@ -8,6 +8,9 @@ import {
   Button,
   GridColumns,
   Column,
+  SkeletonText,
+  Skeleton,
+  SkeletonBox,
 } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { SavedSearchAlertsArtworksQuery } from "__generated__/SavedSearchAlertsArtworksQuery.graphql"
@@ -17,10 +20,16 @@ import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { AlertProvider } from "Components/Alert/AlertProvider"
-import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
+import ArtworkGrid, {
+  ArtworkGridPlaceholder,
+} from "Components/ArtworkGrid/ArtworkGrid"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { Media } from "Utils/Responsive"
-import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
+import {
+  CriteriaPills,
+  CriteriaPillsPlaceholder,
+} from "Components/Alert/Components/CriteriaPills"
+import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
 
 interface AlertArtworksProps {
   alert: NonNullable<SavedSearchAlertsArtworksQuery["response"]["me"]>["alert"]
@@ -33,7 +42,8 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
   onCloseClick,
   onEditAlertClick,
 }) => {
-  if (!alert || !alert.artworksConnection) return <></>
+  if (!alert || !alert.artworksConnection)
+    return <SavedSearchAlertsArtworksPlaseholder onCloseClick={onCloseClick} />
 
   const count = alert.artworksConnection?.counts?.total
   const href = alert.href
@@ -43,7 +53,7 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
       <Media greaterThanOrEqual="md">
         <Box p={4} flex={1}>
           <Join separator={<Spacer y={2} />}>
-            <Text variant="lg">View Artworks</Text>
+            <ModalHeader />
 
             <Flex flexWrap="wrap" gap={1}>
               <CriteriaPills editable={false} />
@@ -99,9 +109,9 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
         <Modal onClose={onCloseClick}>
           <Flex mx={2} mb={2} flexDirection="column">
             <Join separator={<Spacer y={2} />}>
-              <Text variant="lg">View Artworks</Text>
-
-              <Text>Pills</Text>
+              <Flex flexWrap="wrap" gap={1}>
+                <CriteriaPills editable={false} />
+              </Flex>
 
               <Text variant="sm-display" color="black60">
                 {count}
@@ -201,7 +211,9 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<SavedSearchAlertsA
       variables={{
         id: editAlertEntity.id,
       }}
-      placeholder={<></>}
+      placeholder={
+        <SavedSearchAlertsArtworksPlaseholder onCloseClick={onCloseClick} />
+      }
       cacheConfig={{ force: true }}
       render={({ props, error }) => {
         if (error) {
@@ -210,7 +222,9 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<SavedSearchAlertsA
         }
 
         if (!props || !props?.me || !props?.me.alert) {
-          return <></> // plaseholder
+          return (
+            <SavedSearchAlertsArtworksPlaseholder onCloseClick={onCloseClick} />
+          )
         }
 
         return (
@@ -219,7 +233,7 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<SavedSearchAlertsA
               (props.me.alert as unknown) as SearchCriteriaAttributes
             )}
             alertID={props.me.alert.internalID}
-            isEditMode
+            isAlertArtworksView
           >
             <SavedSearchAlertsArtworksFragmentContainer
               alert={props.me.alert}
@@ -230,5 +244,52 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<SavedSearchAlertsA
         )
       }}
     />
+  )
+}
+
+const SavedSearchAlertsArtworksPlaseholderContext: React.FC = () => {
+  return (
+    <Join separator={<Spacer y={2} />}>
+      <CriteriaPillsPlaceholder />
+      <SkeletonBox display={["none", "block"]}>
+        <Separator />
+      </SkeletonBox>
+      <Flex flexDirection="column">
+        <SkeletonText variant="sm-display">
+          20 works currently on Artsy match your criteria.
+        </SkeletonText>
+        <SkeletonText variant="sm-display">
+          See our top picks for you:
+        </SkeletonText>
+        <Spacer y={[4, 2]} />
+      </Flex>
+      <ArtworkGridPlaceholder columnCount={2} />
+    </Join>
+  )
+}
+
+const SavedSearchAlertsArtworksPlaseholder: React.FC<{
+  onCloseClick?: () => void
+}> = ({ onCloseClick }) => {
+  return (
+    <>
+      <Media greaterThanOrEqual="md">
+        <Skeleton p={4}>
+          <Text variant="lg" mb={2}>
+            View Artworks
+          </Text>
+          <SavedSearchAlertsArtworksPlaseholderContext />
+        </Skeleton>
+      </Media>
+      <Media lessThan="md">
+        <AlertProvider isAlertArtworksView>
+          <Modal onClose={onCloseClick}>
+            <Skeleton px={2}>
+              <SavedSearchAlertsArtworksPlaseholderContext />
+            </Skeleton>
+          </Modal>
+        </AlertProvider>
+      </Media>
+    </>
   )
 }

@@ -18,5 +18,10 @@ export const ModalHeader: FC = () => {
       return <FiltersHeader />
     case "ALERT_CONFIRMATION":
       return <ConfirmationHeader />
+    case "ALERT_ARTWORKS":
+      return <Text variant="lg">View Artworks</Text>
+    default:
+      console.warn("'current' parameter is unknown for useAlertContext()")
+      return null
   }
 }

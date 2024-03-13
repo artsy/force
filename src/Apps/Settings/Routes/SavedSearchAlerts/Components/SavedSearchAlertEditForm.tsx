@@ -293,7 +293,9 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
       variables={{
         id: editAlertEntity.id,
       }}
-      placeholder={<SavedSearchAlertEditFormPlaceholder />}
+      placeholder={
+        <SavedSearchAlertEditFormPlaceholder onCloseClick={onCloseClick} />
+      }
       cacheConfig={{ force: true }}
       render={({ props, error }) => {
         if (error) {
@@ -301,8 +303,10 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           return null
         }
 
-        if (!props?.me?.alert || !props?.viewer) {
-          return <SavedSearchAlertEditFormPlaceholder />
+        if (!props || !props?.me?.alert || !props?.viewer) {
+          return (
+            <SavedSearchAlertEditFormPlaceholder onCloseClick={onCloseClick} />
+          )
         }
 
         return (

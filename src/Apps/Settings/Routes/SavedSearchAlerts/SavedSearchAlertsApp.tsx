@@ -240,7 +240,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
           name: alert.settings.name ?? "",
         })
 
-        if (path.includes("/artworks")) {
+        if (path.includes("/artworks") || viewOption === "ARTWORKS") {
           setViewOption("ARTWORKS")
           silentPush(`/settings/alerts/${alert.internalID}/artworks`)
         } else {
