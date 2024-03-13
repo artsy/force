@@ -275,7 +275,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
               <Spacer y={4} />
               <OfferNote
                 onChange={offerNoteValue => setOfferNoteValue(offerNoteValue)}
-                artworkId={artworkId!}
+                artworkId={artworkId ?? ""}
                 visibilityLevel={visibilityLevel}
                 value={offerNoteValue.value}
               />
