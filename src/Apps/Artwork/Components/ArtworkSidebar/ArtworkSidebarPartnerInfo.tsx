@@ -34,13 +34,14 @@ const StyledPartnerLink = styled(RouterLink)`
 const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   artwork,
 }) => {
-  const { internalID, partner, sale, slug, isInquireable } = artwork
+  const { internalID, visibilityLevel, partner, sale, slug, isInquireable } = artwork
 
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
 
   const { showInquiry, inquiryComponent } = useInquiry({
     artworkID: internalID,
+    visibilityLevel: visibilityLevel
   })
 
   const shouldRenderContactGalleryCTA =
@@ -119,6 +120,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
     artwork: graphql`
       fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
         internalID
+        visibilityLevel
         slug
         isInquireable
         partner {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e579cf3ef130e86f2aa483f09fb5358>>
+ * @generated SignedSource<<79d21d8bb8fac5bf21a6b0126824708f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
+export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Offer_order$data = {
   readonly currencyCode: string;
@@ -42,6 +43,7 @@ export type Offer_order$data = {
           } | null | undefined;
           readonly price: string | null | undefined;
           readonly slug: string;
+          readonly visibilityLevel: Visibility | null | undefined;
           readonly " $fragmentSpreads": FragmentRefs<"PriceOptions_artwork">;
         } | null | undefined;
         readonly artworkOrEditionSet: {
@@ -187,6 +189,13 @@ return {
                       "args": null,
                       "kind": "ScalarField",
                       "name": "slug",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "visibilityLevel",
                       "storageKey": null
                     },
                     (v1/*: any*/),
@@ -353,6 +362,6 @@ return {
 };
 })();
 
-(node as any).hash = "29644a990f455d037931e680e2f88f62";
+(node as any).hash = "145ea131ea9b0c20683b8dccf8069eab";
 
 export default node;

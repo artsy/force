@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6e47ab084ab2da5687e8aecdef5fb01f>>
+ * @generated SignedSource<<b0cf72d6a7309fc370849ebb55dbc9c9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -121,6 +121,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "visibilityLevel",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "slug",
             "storageKey": null
           },
@@ -168,7 +175,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2dcb470f97b837b92541ecc8221868eb",
+    "cacheID": "48de848e9e3e28c2a5545837bdd3c0c6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -216,12 +223,21 @@ return {
         "artwork.sale.href": (v6/*: any*/),
         "artwork.sale.id": (v5/*: any*/),
         "artwork.sale.name": (v6/*: any*/),
-        "artwork.slug": (v5/*: any*/)
+        "artwork.slug": (v5/*: any*/),
+        "artwork.visibilityLevel": {
+          "enumValues": [
+            "LISTED",
+            "UNLISTED"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "Visibility"
+        }
       }
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  visibilityLevel\n  slug\n  isInquireable\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();

@@ -1,12 +1,14 @@
 import { useState } from "react"
 import * as React from "react"
 import { Inquiry } from "./Inquiry"
+import { Visibility } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
 
 export interface UseInquiryProps {
   artworkID: string
+  visibilityLevel?: Visibility | null | undefined
 }
 
-export const useInquiry = ({ artworkID }: UseInquiryProps) => {
+export const useInquiry = ({ artworkID, visibilityLevel }: UseInquiryProps) => {
   const [isInquiryVisible, setIsInquiryVisible] = useState(false)
   const [askSpecialist, setAskSpecialist] = useState(false)
   const [enableCreateAlert, setEnableCreateAlert] = useState(false)
@@ -34,6 +36,7 @@ export const useInquiry = ({ artworkID }: UseInquiryProps) => {
             onClose={hideInquiry}
             askSpecialist={askSpecialist}
             enableCreateAlert={enableCreateAlert}
+            visibilityLevel={visibilityLevel}
           />
         </>
       )}
@@ -61,11 +64,11 @@ export function withInquiry<T extends WithInquiryProps = WithInquiryProps>(
   const ComponentWithInquiry: React.FC<
     Omit<T, keyof WithInquiryProps> & UseInquiryProps
   > = props => {
-    const { artworkID, ...rest } = props
-    const inquiry = useInquiry({ artworkID })
+    const { artworkID, visibilityLevel, ...rest } = props
+    const inquiry = useInquiry({ artworkID, visibilityLevel })
 
     return (
-      <WrappedComponent artworkID={artworkID} {...inquiry} {...(rest as any)} />
+      <WrappedComponent artworkID={artworkID} visibilityLevel={visibilityLevel} {...inquiry} {...(rest as any)} />
     )
   }
 

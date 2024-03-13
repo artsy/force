@@ -7,11 +7,13 @@ import {
 import { InquiryBackdrop } from "./Components/InquiryBackdrop"
 import { Box, Clickable, useTheme } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
+import { Visibility } from "__generated__/ArtworkApp_artwork.graphql"
 
 interface InquiryProps {
   artworkID: string
   askSpecialist?: boolean
   enableCreateAlert?: boolean
+  visibilityLevel?: Visibility | null | undefined
   onClose(): void
 }
 
@@ -19,6 +21,7 @@ export const Inquiry: React.FC<InquiryProps> = ({
   artworkID,
   askSpecialist,
   enableCreateAlert,
+  visibilityLevel,
   onClose,
 }) => {
   return (
@@ -26,6 +29,7 @@ export const Inquiry: React.FC<InquiryProps> = ({
       artworkID={artworkID}
       askSpecialist={askSpecialist}
       enableCreateAlert={enableCreateAlert}
+      visibilityLevel={visibilityLevel}
       onClose={onClose}
     >
       <InquiryBackdrop>

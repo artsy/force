@@ -1,15 +1,18 @@
 import { TextArea, TextAreaChange } from "@artsy/palette"
 import * as React from "react"
 import { useInquiry } from "Components/Inquiry/useInquiry"
+import { Visibility } from "__generated__/ArtworkApp_artwork.graphql"
 
 export const OfferNote: React.FC<{
   onChange(change: TextAreaChange): void
   artworkId: string
   counteroffer?: boolean
   value?: string
-}> = ({ onChange, artworkId, value }) => {
+  visibilityLevel?: Visibility | null | undefined
+}> = ({ onChange, artworkId, value, visibilityLevel }) => {
   const { inquiryComponent } = useInquiry({
     artworkID: artworkId,
+    visibilityLevel: visibilityLevel
   })
 
   return (

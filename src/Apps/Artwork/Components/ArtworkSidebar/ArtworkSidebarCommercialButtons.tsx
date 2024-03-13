@@ -74,6 +74,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
 
   const { inquiryComponent, showInquiry } = useInquiry({
     artworkID: artwork.internalID,
+    visibilityLevel: artwork.visibilityLevel
   })
 
   const { showAuthDialog } = useAuthDialog()
@@ -442,6 +443,7 @@ export const ArtworkSidebarCommercialButtonsFragmentContainer = createFragmentCo
           internalID
         }
         internalID
+        visibilityLevel
         slug
         saleMessage
         isInquireable

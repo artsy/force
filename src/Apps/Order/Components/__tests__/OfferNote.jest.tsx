@@ -29,7 +29,7 @@ describe("OfferNote", () => {
   const getWrapper = (props: Partial<ExtractProps<typeof OfferNote>> = {}) => {
     return mount(
       <SystemContextProvider>
-        <OfferNote onChange={onChange} artworkId="artwork-id" {...props} />
+        <OfferNote onChange={onChange} artworkId="artwork-id" visibilityLevel="LISTED" {...props} />
       </SystemContextProvider>
     )
   }

@@ -20,6 +20,7 @@ import { Location } from "Components/LocationAutocompleteInput"
 import { Spinner } from "@artsy/palette"
 import { Environment as IEnvironment } from "react-relay"
 import { setAfterAuthAction } from "Utils/Hooks/useAuthIntent"
+import { Visibility } from "__generated__/ArtworkApp_artwork.graphql"
 
 export type Context = {
   askSpecialist: boolean
@@ -45,8 +46,8 @@ export const DEFAULT_CONTEXT: Context = {
   shareFollows: false,
 }
 
-export const AUTOMATED_MESSAGES = [
-  "Hi, I’m interested in purchasing this work. Could you please provide more information about the piece?",
+export const AUTOMATED_MESSAGES_LISTED = [
+  "Hi, I'm interested in purchasing this work. Could you please provide more information about the piece?",
   "Hello, I'm interested in this artwork. Could you provide more details about it?",
   "Hi, I came across this piece and would love to learn more about it. Can you provide additional information?",
   "Hi there, I'm interested in buying this work. Could you please share some more information about it?",
@@ -88,10 +89,40 @@ export const AUTOMATED_MESSAGES = [
   "Hi, I'm a collector and would like to know more about this artwork. Can you please provide additional information?",
 ]
 
-const getAutomatedMessages = () => {
-  return AUTOMATED_MESSAGES[
-    Math.floor(Math.random() * AUTOMATED_MESSAGES.length)
-  ]
+export const AUTOMATED_MESSAGES_UNLISTED = [
+"Hi, I'm interested in purchasing this work. Could you please provide more information about the piece?",
+"Hello, I'm interested in this artwork. Could you provide more details about it?",
+"Hi there, I'm interested in buying this work. Could you please share some more information about it?",
+"Hello, I'm interested in this piece. Could you please provide me with more information about it?",
+"Hi, I would love to add this artwork to my collection. Could you please provide me with more details?",
+"Hi there, I'm interested in this piece. Could you please provide me with additional details?",
+"Hello, I'm interested in purchasing this artwork. Can you provide me with more information about it?",
+"Hi, I'm interested in this piece and would love to know more about it. Could you please provide additional information?",
+"Hi there, I'm interested in this piece and would like to learn more about it. Could you please provide additional details?",
+"Hello! Could you give me some additional information about this artwork? I'm really interested in it.",
+"I'm very interested in this artwork. Could you please provide me with more details about it?",
+"I'm very interested in this artwork. Would you mind providing me with more information about it?",
+"I'd like to know more about this work. Could you share some additional information with me?",
+"I'm very interested in this artwork. Can you give me more information about it?",
+"Hello, I'm interested in learning more about this artwork. Could you provide me with additional details?",
+"I'm very interested in this artwork. Would you mind giving me more details about it?",
+"Hello! Could you please provide me with more details about this artwork? I'm quite interested in it.",
+"Hi, I'm very interested in this artwork and would appreciate more information about it.",
+"Hi there, I'm interested in this artwork and would like to know more about it. Can you provide further information?",
+]
+
+export const AUTOMATED_MESSAGES = AUTOMATED_MESSAGES_LISTED.concat(AUTOMATED_MESSAGES_UNLISTED)
+
+const getAutomatedMessages = (visibilityLevel) => {
+  if (visibilityLevel === 'UNLISTED') {
+    return AUTOMATED_MESSAGES_UNLISTED[
+      Math.floor(Math.random() * AUTOMATED_MESSAGES_UNLISTED.length)
+    ]
+  } else {
+    return AUTOMATED_MESSAGES_LISTED[
+      Math.floor(Math.random() * AUTOMATED_MESSAGES_LISTED.length)
+    ] 
+  }
 }
 
 export interface InquiryState {
@@ -119,13 +150,14 @@ const InquiryContext = createContext<{
     updatedEnvironment: Environment
   ) => React.RefObject<Environment>
   View: React.FC
+  visibilityLevel?: Visibility | null | undefined,
   visited: Visited
 }>({
   artworkID: "",
   context: React.createRef<Context>(),
   current: "",
   engine: new WorkflowEngine({ workflow: [] }),
-  inquiry: { message: getAutomatedMessages() },
+  inquiry: { message: getAutomatedMessages("LISTED") },
   next: () => {},
   dispatchCreateAlert: () => {},
   onClose: () => {},
@@ -135,6 +167,7 @@ const InquiryContext = createContext<{
   setRelayEnvironment: () => React.createRef<Environment>(),
   View: () => <></>,
   visited: new Visited("empty"),
+  visibilityLevel: "LISTED"
 })
 
 interface InquiryProviderProps {
@@ -142,6 +175,7 @@ interface InquiryProviderProps {
   askSpecialist?: boolean
   enableCreateAlert?: boolean
   onClose(): void
+  visibilityLevel?: Visibility | null | undefined
 }
 
 export const InquiryProvider: React.FC<InquiryProviderProps> = ({
@@ -150,6 +184,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
   children,
   enableCreateAlert,
   onClose,
+  visibilityLevel
 }) => {
   /**
    * We store the data concerning the decisions inside of a ref instead of state.
@@ -169,7 +204,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
   }, [])
 
   const [inquiry, setInquiry] = useState<InquiryState>({
-    message: getAutomatedMessages(),
+    message: getAutomatedMessages(visibilityLevel),
   })
 
   const handleClose = () => {
@@ -238,6 +273,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
         setRelayEnvironment,
         View,
         visited,
+        visibilityLevel
       }}
     >
       {children}

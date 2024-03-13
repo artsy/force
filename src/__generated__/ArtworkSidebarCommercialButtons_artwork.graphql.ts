@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d1255845a1db747175f20bd14d1d803a>>
+ * @generated SignedSource<<cf5d667b293ff017480cc59bdfe022fa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCommercialButtons_artwork$data = {
   readonly artists: ReadonlyArray<{
@@ -40,6 +41,7 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
   } | null | undefined;
   readonly saleMessage: string | null | undefined;
   readonly slug: string;
+  readonly visibilityLevel: Visibility | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarEditionSets_artwork">;
   readonly " $fragmentType": "ArtworkSidebarCommercialButtons_artwork";
 };
@@ -135,6 +137,13 @@ return {
       "storageKey": null
     },
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "visibilityLevel",
+      "storageKey": null
+    },
     (v2/*: any*/),
     (v3/*: any*/),
     {
@@ -227,6 +236,6 @@ return {
 };
 })();
 
-(node as any).hash = "3d3b1a0f3df16612b3df345758e4656a";
+(node as any).hash = "7c1a10ace71c4046831e28b4ff423066";
 
 export default node;

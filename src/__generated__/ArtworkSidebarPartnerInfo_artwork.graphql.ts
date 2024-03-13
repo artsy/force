@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4de02bd282263f330c78f183f330df63>>
+ * @generated SignedSource<<5bb8ab8e3c50b5ca8736e07ee8b8c26b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork$data = {
   readonly internalID: string;
@@ -24,6 +25,7 @@ export type ArtworkSidebarPartnerInfo_artwork$data = {
     readonly name: string | null | undefined;
   } | null | undefined;
   readonly slug: string;
+  readonly visibilityLevel: Visibility | null | undefined;
   readonly " $fragmentType": "ArtworkSidebarPartnerInfo_artwork";
 };
 export type ArtworkSidebarPartnerInfo_artwork$key = {
@@ -64,6 +66,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "visibilityLevel",
       "storageKey": null
     },
     {
@@ -114,6 +123,6 @@ return {
 };
 })();
 
-(node as any).hash = "da5b640e870574e095613971197caded";
+(node as any).hash = "277597671347242b50d9f436857f75fb";
 
 export default node;

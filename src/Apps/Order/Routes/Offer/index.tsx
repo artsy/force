@@ -213,6 +213,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
   const offerItem = getOfferItemFromOrder(order.lineItems)
   const artwork = order.lineItems?.edges?.[0]?.node?.artwork
   const artworkId = artwork?.slug
+  const visibilityLevel = artwork?.visibilityLevel
   const orderCurrency = order.currencyCode
   const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
   const hasPrice =
@@ -275,6 +276,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
               <OfferNote
                 onChange={offerNoteValue => setOfferNoteValue(offerNoteValue)}
                 artworkId={artworkId!}
+                visibilityLevel={visibilityLevel}
                 value={offerNoteValue.value}
               />
             </>
@@ -353,6 +355,7 @@ export const OfferFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
+                visibilityLevel
                 price
                 isPriceRange
                 listPrice {
