@@ -24,7 +24,6 @@ import { wait } from "Utils/wait"
 import {
   useInquiryContext,
   InquiryState,
-  AUTOMATED_MESSAGES,
 } from "Components/Inquiry/Hooks/useInquiryContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { logger } from "Components/Inquiry/util"
@@ -46,7 +45,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
-    if (mode === "Confirm" && !AUTOMATED_MESSAGES.includes(value)) {
+    if (mode === "Confirm" && value !== inquiry.message) {
       setMode("Pending")
     }
 
@@ -62,7 +61,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
 
-    if (AUTOMATED_MESSAGES.includes(inquiry.message) && mode !== "Confirm") {
+    if (inquiry.message && mode !== "Confirm") {
       setMode("Confirm")
       return
     }

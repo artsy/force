@@ -1,7 +1,10 @@
 import { mount } from "enzyme"
 import { InquirySpecialist } from "Components/Inquiry/Views/InquirySpecialist"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import {
+  DEFAULT_MESSAGE,
+  useInquiryContext,
+} from "Components/Inquiry/Hooks/useInquiryContext"
 import { fill } from "Components/Inquiry/__tests__/util"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useSystemContext } from "System/useSystemContext"
@@ -27,15 +30,7 @@ describe("InquirySpecialist", () => {
 
       setInqirySpy = jest.spyOn(actual, "setInquiry")
 
-      return {
-        ...actual,
-        next,
-        artworkID: "example",
-        inquiry: {
-          message:
-            "Hello, I'm interested in this artwork. Could you provide more details about it?",
-        },
-      }
+      return { ...actual, next, artworkID: "example" }
     })
   })
 
@@ -121,8 +116,7 @@ describe("InquirySpecialist", () => {
         contactGallery: false,
         // TODO: Figure out why this state doesn't update within text (works in dev)
         // message: "Hello world.",
-        message:
-          "Hello, I'm interested in this artwork. Could you provide more details about it?",
+        message: DEFAULT_MESSAGE,
       })
 
       // Calls next
