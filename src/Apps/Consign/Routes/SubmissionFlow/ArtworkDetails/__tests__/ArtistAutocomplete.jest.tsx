@@ -89,7 +89,7 @@ const simulateTyping = async (wrapper: ReactWrapper, text: string) => {
 const simulateSelectSuggestion = async (wrapper: ReactWrapper, idx: number) => {
   wrapper.find(inputSelector).simulate("focus")
   const suggestion = wrapper.find(optionsSelector).at(idx)
-  suggestion.simulate("click")
+  suggestion.simulate("mouseenter").simulate("mousedown").simulate("mouseup")
   await flushPromiseQueue()
   wrapper.update()
 }
