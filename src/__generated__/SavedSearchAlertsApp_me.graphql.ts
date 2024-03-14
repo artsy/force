@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2520ba6e9e624583a1182a009555d167>>
+ * @generated SignedSource<<16be811773128373d123d5194d53d765>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,9 +21,6 @@ export type SavedSearchAlertsApp_me$data = {
           } | null | undefined;
         } | null | undefined;
         readonly internalID: string;
-        readonly settings: {
-          readonly name: string | null | undefined;
-        };
         readonly subtitle: string;
         readonly title: string;
         readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertListItem_item">;
@@ -116,24 +113,6 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "artistIDs",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "AlertSettings",
-                  "kind": "LinkedField",
-                  "name": "settings",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    }
-                  ],
                   "storageKey": null
                 },
                 {
@@ -256,6 +235,6 @@ return {
 };
 })();
 
-(node as any).hash = "4825114686ef4cbc6724f6602276aa0b";
+(node as any).hash = "0257b11a740e18fa68b0e85216fa7b9d";
 
 export default node;

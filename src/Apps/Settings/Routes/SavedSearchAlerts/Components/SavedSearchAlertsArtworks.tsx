@@ -20,9 +20,10 @@ import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { AlertProvider } from "Components/Alert/AlertProvider"
-import ArtworkGrid, {
+// TODO: do something with placeholder, it was causing breaking when the array os works is empty
+import ArtworkGrid /* , {
   ArtworkGridPlaceholder,
-} from "Components/ArtworkGrid/ArtworkGrid"
+}  */ from "Components/ArtworkGrid/ArtworkGrid"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { Media } from "Utils/Responsive"
 import {
@@ -263,7 +264,7 @@ const SavedSearchAlertsArtworksPlaseholderContext: React.FC = () => {
         </SkeletonText>
         <Spacer y={[4, 2]} />
       </Flex>
-      <ArtworkGridPlaceholder columnCount={2} />
+      {/* <ArtworkGridPlaceholder columnCount={2} /> */}
     </Join>
   )
 }

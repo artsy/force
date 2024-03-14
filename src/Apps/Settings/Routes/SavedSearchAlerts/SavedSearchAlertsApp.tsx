@@ -78,21 +78,14 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     if (!isMobile) {
       setEditAlertEntity({
         id: alerts[0].internalID,
-        name: alerts[0].settings.name ?? "",
+        name: alerts[0].title ?? "",
         artistIds: alerts[0]?.artistIDs as string[],
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile])
 
-  const closeEditForm = () => {
-    setEditAlertEntity(null)
-    setViewOption(null)
-    silentPush("/settings/alerts")
-  }
-
-  const closeArtworksView = () => {
-    // TODO: use the same as closeEditForm
+  const closeModal = () => {
     setEditAlertEntity(null)
     setViewOption(null)
     silentPush("/settings/alerts")
@@ -116,8 +109,8 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     }, 100)
   }
 
-  const closeEditFormAndRefetch = () => {
-    closeEditForm()
+  const closeModalAndRefetch = () => {
+    closeModal()
     refresh()
   }
 
@@ -125,16 +118,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     setShowDeleteModal(false)
   }
 
-  const handleCompletedDesctop = () => {
-    refresh()
-
-    sendToast({
-      message: "Your Alert has been updated.",
-    })
-  }
-
   const handleCompleted = () => {
-    closeEditFormAndRefetch()
+    if (isMobile) {
+      closeModalAndRefetch()
+    } else refresh()
 
     sendToast({
       message: "Your Alert has been updated.",
@@ -151,7 +138,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       saved_search_id: editAlertEntity?.id,
     })
 
-    isMobile ? refresh() : closeEditFormAndRefetch()
+    if (isMobile) {
+      closeModalAndRefetch()
+    } else refresh()
+
     closeDeleteModal()
 
     sendToast({
@@ -166,14 +156,14 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     if (editAlertEntity?.id === alerts[0].internalID && alerts.length > 1) {
       setEditAlertEntity({
         id: alerts[1].internalID,
-        name: alerts[1].settings.name ?? "",
+        name: alerts[1].title ?? "",
         artistIds: alerts[1]?.artistIDs as string[],
       })
       silentPush(`/settings/alerts/${alerts[1].internalID}/edit`)
     } else if (editAlertEntity?.id !== alerts[0].internalID) {
       setEditAlertEntity({
         id: alerts[0].internalID,
-        name: alerts[0].settings.name ?? "",
+        name: alerts[0].title ?? "",
         artistIds: alerts[0]?.artistIDs as string[],
       })
       silentPush(`/settings/alerts/${alerts[0].internalID}/edit`)
@@ -221,8 +211,12 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             alert(id: $alertID) {
               internalID
               artistIDs
-              settings {
-                name
+              title: displayName(only: [artistIDs])
+              subtitle: displayName(except: [artistIDs])
+              artworksConnection(first: 1) {
+                counts {
+                  total
+                }
               }
             }
           }
@@ -237,7 +231,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
         setEditAlertEntity({
           id: alert.internalID,
           artistIds: alert.artistIDs as string[],
-          name: alert.settings.name ?? "",
+          name: alert.title ?? "",
         })
 
         if (path.includes("/artworks") || viewOption === "ARTWORKS") {
@@ -329,7 +323,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                       <Sticky bottomBoundary="#content-end">
                         <SavedSearchAlertEditFormQueryRenderer
                           editAlertEntity={editAlertEntity}
-                          onCompleted={handleCompletedDesctop}
+                          onCompleted={handleCompleted}
                           onDeleteClick={handleDeleteClick}
                         />
                       </Sticky>
@@ -353,7 +347,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
               {viewOption === "EDIT" && editAlertEntity && (
                 <SavedSearchAlertEditFormQueryRenderer
                   editAlertEntity={editAlertEntity}
-                  onCloseClick={closeEditForm}
+                  onCloseClick={closeModal}
                   onCompleted={handleCompleted}
                   onDeleteClick={handleDeleteClick}
                 />
@@ -361,7 +355,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
               {viewOption === "ARTWORKS" && editAlertEntity && (
                 <SavedSearchAlertsArtworksQueryRenderer
                   editAlertEntity={editAlertEntity}
-                  onCloseClick={closeArtworksView}
+                  onCloseClick={closeModal}
                   onEditAlertClick={handleOpenEditForm}
                 />
               )}
@@ -400,9 +394,6 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
             node {
               internalID
               artistIDs
-              settings {
-                name
-              }
               ...SavedSearchAlertListItem_item
               title: displayName(only: [artistIDs])
               subtitle: displayName(except: [artistIDs])

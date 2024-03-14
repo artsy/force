@@ -15,6 +15,18 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
 jest.mock("System/useSystemContext")
+jest.mock("System/Router/useRouter")
+
+const mockSilentPush = jest.fn()
+
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: jest.fn(() => ({
+    silentPush: mockSilentPush,
+    match: {
+      location: { pathname: "" },
+    },
+  })),
+}))
 
 let relayEnv: MockEnvironment = createMockEnvironment()
 
@@ -130,6 +142,44 @@ describe("SavedSearchAlertsApp", () => {
         expect(window.location.pathname).toEqual(
           `/settings/alerts/example-id-1/edit`
         )
+      }, 600)
+
+      const mockedPreviewResolver = {
+        Me: () => ({
+          alert: {
+            internalID: "example-id-1",
+            artistIDs: ["artist-id"],
+            settings: {
+              name: "user-search-criteria-custom-name",
+            },
+          },
+        }),
+      }
+
+      mockResolveLastOperation(mockedPreviewResolver)
+
+      setTimeout(() => {
+        expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+      }, 200)
+    })
+
+    it("opens the edit form on Edit CTA press", async () => {
+      const { mockResolveLastOperation } = renderWithRelay(
+        {
+          Me: () => ({
+            alertsConnection: mockedAlertsConnection,
+          }),
+        },
+        {},
+        relayEnv
+      )
+
+      await flushPromiseQueue()
+
+      setTimeout(() => {
+        expect(window.location.pathname).toEqual(
+          `/settings/alerts/example-id-1/edit`
+        )
       }, 200)
 
       const mockedPreviewResolver = {
@@ -146,10 +196,28 @@ describe("SavedSearchAlertsApp", () => {
 
       mockResolveLastOperation(mockedPreviewResolver)
 
-      expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+      setTimeout(() => {
+        expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+      }, 200)
+
+      fireEvent.click(screen.getAllByText("Edit")[1])
+
+      await flushPromiseQueue()
+
+      setTimeout(() => {
+        expect(window.location.pathname).toEqual(
+          `/settings/alerts/example-id-2/edit`
+        )
+      }, 200)
+    })
+  })
+
+  describe("mobile", () => {
+    beforeEach(() => {
+      breakpoint = "sm"
     })
 
-    it("opens the edit form on Edit CTA press", async () => {
+    it("show edit form on Edit CTA press", () => {
       const { mockResolveLastOperation } = renderWithRelay(
         {
           Me: () => ({
@@ -159,6 +227,8 @@ describe("SavedSearchAlertsApp", () => {
         {},
         relayEnv
       )
+
+      fireEvent.click(screen.getAllByText("Edit")[0])
 
       setTimeout(() => {
         expect(window.location.pathname).toEqual(
@@ -182,55 +252,11 @@ describe("SavedSearchAlertsApp", () => {
 
       expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
 
-      fireEvent.click(screen.getAllByText("Edit")[1])
-
-      expect(window.location.pathname).toEqual(
-        `/settings/alerts/example-id-2/edit`
-      )
-    })
-  })
-
-  describe("mobile", () => {
-    beforeEach(() => {
-      breakpoint = "sm"
-    })
-
-    it("show edit form on Edit CTA press", () => {
-      const { mockResolveLastOperation } = renderWithRelay(
-        {
-          Me: () => ({
-            alertsConnection: mockedAlertsConnection,
-          }),
-        },
-        {},
-        relayEnv
-      )
-
-      fireEvent.click(screen.getAllByText("Edit")[0])
-
-      expect(window.location.pathname).toEqual(
-        `/settings/alerts/example-id-1/edit`
-      )
-
-      const mockedPreviewResolver = {
-        Me: () => ({
-          alert: {
-            internalID: "example-id-1",
-            artistIDs: ["artist-id"],
-            settings: {
-              name: "user-search-criteria-custom-name",
-            },
-          },
-        }),
-      }
-
-      mockResolveLastOperation(mockedPreviewResolver)
-
-      expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
-
       fireEvent.click(screen.getByLabelText("Close"))
 
-      expect(window.location.pathname).toEqual(`/settings/alerts`)
+      setTimeout(() => {
+        expect(window.location.pathname).toEqual(`/settings/alerts`)
+      }, 200)
     })
   })
 })
