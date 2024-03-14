@@ -4,7 +4,6 @@ import {
   Button,
   Flex,
   Image,
-  Input,
   Separator,
   Skeleton,
   SkeletonBox,
@@ -23,12 +22,10 @@ import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInq
 import { wait } from "Utils/wait"
 import {
   useInquiryContext,
-  InquiryState,
   AUTOMATED_MESSAGES,
 } from "Components/Inquiry/Hooks/useInquiryContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { logger } from "Components/Inquiry/util"
-import { RouterLink } from "System/Router/RouterLink"
 
 type Mode = "Pending" | "Confirm" | "Sending" | "Error" | "Success"
 
@@ -51,12 +48,6 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
     }
 
     setInquiry(prevState => ({ ...prevState, message: value }))
-  }
-
-  const handleInputChange = (name: keyof InquiryState) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
@@ -157,36 +148,6 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
         onChange={handleTextAreaChange}
         required
       />
-
-      {!user && (
-        <>
-          <Input
-            name="name"
-            title="Your name"
-            placeholder="Your full name"
-            onChange={handleInputChange("name")}
-            required
-            my={1}
-          />
-
-          <Input
-            name="email"
-            title="Your email"
-            placeholder="Your email address"
-            onChange={handleInputChange("email")}
-            type="email"
-            required
-            my={1}
-          />
-
-          <Text variant="xs">
-            By clicking send, you accept our{" "}
-            <RouterLink inline to="/privacy" target="_blank">
-              Privacy Policy.
-            </RouterLink>
-          </Text>
-        </>
-      )}
 
       <Spacer y={1} />
 
