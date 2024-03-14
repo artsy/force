@@ -12,9 +12,6 @@ export const formatErrorMessage = (error: Error) => {
     case "User Already Exists":
       return "An account with this email already exists."
 
-    case "User Not Found":
-      return "No account with this email exists."
-
     case `Unexpected token '<', "<!DOCTYPE "... is not valid JSON`:
     case `Unexpected token '<', "<html> <"... is not valid JSON`:
       return "An error occurred. Please try again."

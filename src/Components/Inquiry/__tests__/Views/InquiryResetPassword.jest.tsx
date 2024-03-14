@@ -26,17 +26,23 @@ describe("InquiryResetPassword", () => {
     trackEvent.mockClear()
   })
 
-  it("renders correctly", () => {
+  it("renders correctly", async () => {
     const wrapper = mount(<InquiryResetPassword />)
 
+    // Submit form
+    wrapper.find("form").simulate("submit")
+    await flushPromiseQueue()
+
     expect(wrapper.html()).toContain(
-      "Please check your email (example@example.com) for instructions on how to reset your password."
+      "We've sent a link to reset your password if an account is associated with this email."
     )
   })
 
   it("tracks the action", async () => {
-    mount(<InquiryResetPassword />)
+    const wrapper = mount(<InquiryResetPassword />)
 
+    // Submit form
+    wrapper.find("form").simulate("submit")
     await flushPromiseQueue()
 
     expect(trackEvent).toBeCalledTimes(1)
