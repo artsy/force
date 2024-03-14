@@ -47,6 +47,7 @@ describe("InquirySignUp", () => {
     next.mockReset()
     submitArtworkInquiryRequest.mockReset()
     trackEvent.mockClear()
+    setInqirySpy.mockReset()
   })
 
   it("renders correctly", () => {
