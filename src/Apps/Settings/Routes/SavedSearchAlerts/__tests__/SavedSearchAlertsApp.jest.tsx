@@ -116,147 +116,249 @@ describe("SavedSearchAlertsApp", () => {
     })
   })
 
-  describe("desktop", () => {
-    beforeEach(() => {
-      breakpoint = "md"
-    })
+  describe("Edit Alert Form", () => {
+    describe("desktop", () => {
+      beforeEach(() => {
+        breakpoint = "md"
+      })
 
-    afterEach(() => {
-      relayEnv.mockClear()
-    })
-
-    it("on render opens the edit form of the first alert in the list", async () => {
-      const { mockResolveLastOperation } = renderWithRelay(
-        {
-          Me: () => ({
-            alertsConnection: mockedAlertsConnection,
-          }),
-        },
-        {},
-        relayEnv
-      )
-
-      await flushPromiseQueue()
-
-      setTimeout(() => {
-        expect(window.location.pathname).toEqual(
-          `/settings/alerts/example-id-1/edit`
-        )
-      }, 600)
-
-      const mockedPreviewResolver = {
-        Me: () => ({
-          alert: {
-            internalID: "example-id-1",
-            artistIDs: ["artist-id"],
-            settings: {
-              name: "user-search-criteria-custom-name",
-            },
+      it("on render opens the edit form of the first alert in the list", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            Me: () => ({
+              alertsConnection: mockedAlertsConnection,
+            }),
           },
-        }),
-      }
+          {},
+          relayEnv
+        )
 
-      mockResolveLastOperation(mockedPreviewResolver)
+        await flushPromiseQueue()
 
-      setTimeout(() => {
-        expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
-      }, 200)
+        setTimeout(() => {
+          expect(window.location.pathname).toEqual(
+            `/settings/alerts/example-id-1/edit`
+          )
+        }, 600)
+
+        const mockedPreviewResolver = {
+          Me: () => ({
+            alert: {
+              internalID: "example-id-1",
+              artistIDs: ["artist-id"],
+              settings: {
+                name: "user-search-criteria-custom-name",
+              },
+            },
+          }),
+        }
+
+        mockResolveLastOperation(mockedPreviewResolver)
+
+        setTimeout(() => {
+          expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+        }, 200)
+      })
+
+      it("opens the edit form on Edit CTA press", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            Me: () => ({
+              alertsConnection: mockedAlertsConnection,
+            }),
+          },
+          {},
+          relayEnv
+        )
+
+        await flushPromiseQueue()
+
+        setTimeout(() => {
+          expect(window.location.pathname).toEqual(
+            `/settings/alerts/example-id-1/edit`
+          )
+        }, 200)
+
+        const mockedPreviewResolver = {
+          Me: () => ({
+            alert: {
+              internalID: "example-id-1",
+              artistIDs: ["artist-id"],
+              settings: {
+                name: "user-search-criteria-custom-name",
+              },
+            },
+          }),
+        }
+
+        mockResolveLastOperation(mockedPreviewResolver)
+
+        setTimeout(() => {
+          expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+        }, 200)
+
+        fireEvent.click(screen.getAllByText("Edit")[1])
+
+        setTimeout(() => {
+          expect(window.location.pathname).toEqual(
+            `/settings/alerts/example-id-2/edit`
+          )
+        }, 200)
+      })
     })
 
-    it("opens the edit form on Edit CTA press", async () => {
-      const { mockResolveLastOperation } = renderWithRelay(
-        {
-          Me: () => ({
-            alertsConnection: mockedAlertsConnection,
-          }),
-        },
-        {},
-        relayEnv
-      )
+    describe("mWeb", () => {
+      beforeEach(() => {
+        breakpoint = "sm"
+      })
 
-      await flushPromiseQueue()
-
-      setTimeout(() => {
-        expect(window.location.pathname).toEqual(
-          `/settings/alerts/example-id-1/edit`
-        )
-      }, 200)
-
-      const mockedPreviewResolver = {
-        Me: () => ({
-          alert: {
-            internalID: "example-id-1",
-            artistIDs: ["artist-id"],
-            settings: {
-              name: "user-search-criteria-custom-name",
-            },
+      it("show edit form on Edit CTA press", () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            Me: () => ({
+              alertsConnection: mockedAlertsConnection,
+            }),
           },
-        }),
-      }
-
-      mockResolveLastOperation(mockedPreviewResolver)
-
-      setTimeout(() => {
-        expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
-      }, 200)
-
-      fireEvent.click(screen.getAllByText("Edit")[1])
-
-      await flushPromiseQueue()
-
-      setTimeout(() => {
-        expect(window.location.pathname).toEqual(
-          `/settings/alerts/example-id-2/edit`
+          {},
+          relayEnv
         )
-      }, 200)
+
+        fireEvent.click(screen.getAllByText("Edit")[0])
+
+        setTimeout(() => {
+          expect(window.location.pathname).toEqual(
+            `/settings/alerts/example-id-1/edit`
+          )
+        }, 200)
+
+        const mockedPreviewResolver = {
+          Me: () => ({
+            alert: {
+              internalID: "example-id-1",
+              artistIDs: ["artist-id"],
+              settings: {
+                name: "user-search-criteria-custom-name",
+              },
+            },
+          }),
+        }
+
+        mockResolveLastOperation(mockedPreviewResolver)
+
+        expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+
+        fireEvent.click(screen.getByLabelText("Close"))
+
+        setTimeout(() => {
+          expect(window.location.pathname).toEqual(`/settings/alerts`)
+        }, 200)
+      })
     })
   })
 
-  describe("mobile", () => {
-    beforeEach(() => {
-      breakpoint = "sm"
-    })
+  describe("View Artworks", () => {
+    /*     describe("desktop", () => {
+      beforeEach(() => {
+        breakpoint = "md"
+      })
 
-    it("show edit form on Edit CTA press", () => {
-      const { mockResolveLastOperation } = renderWithRelay(
-        {
-          Me: () => ({
-            alertsConnection: mockedAlertsConnection,
-          }),
-        },
-        {},
-        relayEnv
-      )
-
-      fireEvent.click(screen.getAllByText("Edit")[0])
-
-      setTimeout(() => {
-        expect(window.location.pathname).toEqual(
-          `/settings/alerts/example-id-1/edit`
-        )
-      }, 200)
-
-      const mockedPreviewResolver = {
-        Me: () => ({
-          alert: {
-            internalID: "example-id-1",
-            artistIDs: ["artist-id"],
-            settings: {
-              name: "user-search-criteria-custom-name",
-            },
+      it("opens the matching artworks when View Artwoks CTA is pressed", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            Me: () => ({
+              alertsConnection: mockedAlertsConnection,
+            }),
           },
-        }),
-      }
+          {},
+          relayEnv
+        )
 
-      mockResolveLastOperation(mockedPreviewResolver)
+        await flushPromiseQueue()
 
-      expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+        fireEvent.click(screen.getAllByText("View Artworks")[0])
 
-      fireEvent.click(screen.getByLabelText("Close"))
+        setTimeout(() => {
+          expect(window.location.pathname).toEqual(
+            `/settings/alerts/example-id-1/artworks`
+          )
+        }, 600)
 
-      setTimeout(() => {
-        expect(window.location.pathname).toEqual(`/settings/alerts`)
-      }, 200)
+        const mockedPreviewResolver = {
+          Me: () => ({
+            alert: {
+              internalID: "example-id-1",
+              artistIDs: ["artist-id"],
+              settings: {
+                name: "user-search-criteria-custom-name",
+              },
+            },
+          }),
+        }
+
+        mockResolveLastOperation(mockedPreviewResolver)
+
+        setTimeout(() => {
+          expect(screen.getAllByText("View Artworks")[0]).toBeInTheDocument()
+        }, 200)
+
+        fireEvent.click(screen.getAllByText("View Artworks")[1])
+
+        await flushPromiseQueue()
+
+        setTimeout(() => {
+          expect(window.location.pathname).toEqual(
+            `/settings/alerts/example-id-2/artworks`
+          )
+        }, 200)
+      })
+    }) */
+
+    describe("mWeb", () => {
+      beforeEach(() => {
+        breakpoint = "sm"
+      })
+
+      it("opens the matching artworks when View Artwoks CTA is pressed", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            Me: () => ({
+              alertsConnection: mockedAlertsConnection,
+            }),
+          },
+          {},
+          relayEnv
+        )
+
+        fireEvent.click(screen.getAllByText("View Artworks")[0])
+
+        setTimeout(() => {
+          expect(window.location.pathname).toEqual(
+            `/settings/alerts/example-id-1/artworks`
+          )
+        }, 200)
+
+        const mockedPreviewResolver = {
+          Me: () => ({
+            alert: {
+              internalID: "example-id-1",
+              artistIDs: ["artist-id"],
+              settings: {
+                name: "user-search-criteria-custom-name",
+              },
+            },
+          }),
+        }
+
+        mockResolveLastOperation(mockedPreviewResolver)
+
+        expect(screen.getAllByText("View Artworks")[0]).toBeInTheDocument()
+
+        fireEvent.click(screen.getByLabelText("Close"))
+
+        setTimeout(() => {
+          expect(window.location.pathname).toEqual(`/settings/alerts`)
+        }, 200)
+      })
     })
   })
 })
