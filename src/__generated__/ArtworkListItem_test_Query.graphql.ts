@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0fed0ea49e15eae7be49c9f12ebc50e3>>
+ * @generated SignedSource<<208d7915acde7750bea20924ddc12a7a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,6 +47,12 @@ v2 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -182,6 +188,13 @@ return {
                       },
                       {
                         "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "shareableWithPartners",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -261,7 +274,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5be2a5c170db9fbbbaf88d989379b03c",
+    "cacheID": "d5b62f223f07108ee24bb0bb2d47db3f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -326,12 +339,7 @@ return {
           "plural": false,
           "type": "Int"
         },
-        "me.collectionsConnection.edges.node.default": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
-        },
+        "me.collectionsConnection.edges.node.default": (v3/*: any*/),
         "me.collectionsConnection.edges.node.id": (v2/*: any*/),
         "me.collectionsConnection.edges.node.internalID": (v2/*: any*/),
         "me.collectionsConnection.edges.node.name": {
@@ -340,12 +348,13 @@ return {
           "plural": false,
           "type": "String"
         },
+        "me.collectionsConnection.edges.node.shareableWithPartners": (v3/*: any*/),
         "me.id": (v2/*: any*/)
       }
     },
     "name": "ArtworkListItem_test_Query",
     "operationKind": "query",
-    "text": "query ArtworkListItem_test_Query {\n  me {\n    collectionsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtworkListItem_item\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkListItem_test_Query {\n  me {\n    collectionsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtworkListItem_item\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

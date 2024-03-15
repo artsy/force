@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<09c5c9e5a80fb87feb367846d22da382>>
+ * @generated SignedSource<<000a7280dec0724c2829b349b532e3e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type ArtworkListItem_item$data = {
   readonly default: boolean;
   readonly internalID: string;
   readonly name: string;
+  readonly shareableWithPartners: boolean;
   readonly " $fragmentType": "ArtworkListItem_item";
 };
 export type ArtworkListItem_item$key = {
@@ -70,6 +71,13 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "artworksCount",
       "storageKey": "artworksCount(onlyVisible:true)"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shareableWithPartners",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -139,6 +147,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a34d6233a17f4ad5bfeb6365b334bcb6";
+(node as any).hash = "fa77e2bb26297673636b8c0b27a8bab2";
 
 export default node;

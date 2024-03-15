@@ -14,6 +14,9 @@ jest.mock("System/Router/useRouter", () => ({
     },
   })),
 }))
+jest.mock("System/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
 
 const { renderWithRelay } = setupTestWrapperTL<ArtworkListContent_Test_Query>({
   Component: props => {
@@ -38,6 +41,7 @@ describe("ArtworkListContent", () => {
       Me: () => ({
         artworkList: {
           default: true,
+          shareableWithPartners: true,
           artworks: {
             totalCount: 0,
             edges: [],
@@ -49,9 +53,29 @@ describe("ArtworkListContent", () => {
     const title = "Keep track of artworks you love"
     const description =
       "Select the heart on an artwork to save it or add it to a list."
+    const shareStatus = "Shared"
 
     expect(screen.getByText(title)).toBeInTheDocument()
     expect(screen.getByText(description)).toBeInTheDocument()
+    expect(screen.getByText(shareStatus)).toBeInTheDocument()
+  })
+
+  it("should render a private note if list is not shared with partners", () => {
+    renderWithRelay({
+      Me: () => ({
+        artworkList: {
+          default: true,
+          shareableWithPartners: false,
+          artworks: {
+            totalCount: 0,
+            edges: [],
+          },
+        },
+      }),
+    })
+
+    const shareStatus = "Private"
+    expect(screen.getByText(shareStatus)).toBeInTheDocument()
   })
 
   describe("Actions contextual menu", () => {
