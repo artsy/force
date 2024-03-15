@@ -72,7 +72,7 @@ export const InquiryResetPassword: React.FC = () => {
   return (
     <>
       <Box as="form" onSubmit={handleSubmit}>
-        <Text variant="lg-display" mr={4} my={1}>
+        <Text variant="lg-display" mr={4}>
           Reset your password
         </Text>
 

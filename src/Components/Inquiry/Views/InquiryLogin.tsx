@@ -156,7 +156,7 @@ export const InquiryLogin: React.FC = () => {
   return (
     <>
       <Box as="form" onSubmit={handleSubmit}>
-        <Text variant="lg-display" mr={4} my={1}>
+        <Text variant="lg-display" mr={4}>
           Log in to send your message
         </Text>
 
