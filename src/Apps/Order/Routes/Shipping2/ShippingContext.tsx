@@ -234,8 +234,7 @@ const shippingStateReducer = (state: State, action: Action): State => {
 
 const ORDER_FRAGMENT = graphql`
   fragment ShippingContext_order on CommerceOrder {
-    __typename
-    mode
+    internalID
     requestedFulfillment {
       __typename
       ... on CommercePickup {
@@ -270,17 +269,12 @@ const ORDER_FRAGMENT = graphql`
               node {
                 id
                 isSelected
-                price(precision: 2)
-                priceCents
-                typeName
               }
             }
           }
           artwork {
-            slug
             processWithArtsyShippingDomestic
             artsyShippingInternational
-            pickup_available: pickupAvailable
             onlyShipsDomestically
             euShippingOrigin
             shippingCountry

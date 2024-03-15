@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c1093fb6ec94a4e86595f0700390f51>>
+ * @generated SignedSource<<3c547d240fddb31607a344bbb3528916>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,9 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ShippingContext_order$data = {
-  readonly __typename: string;
+  readonly internalID: string;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -20,26 +19,20 @@ export type ShippingContext_order$data = {
           readonly artsyShippingInternational: boolean | null | undefined;
           readonly euShippingOrigin: boolean | null | undefined;
           readonly onlyShipsDomestically: boolean | null | undefined;
-          readonly pickup_available: boolean | null | undefined;
           readonly processWithArtsyShippingDomestic: boolean | null | undefined;
           readonly shippingCountry: string | null | undefined;
-          readonly slug: string;
         } | null | undefined;
         readonly shippingQuoteOptions: {
           readonly edges: ReadonlyArray<{
             readonly node: {
               readonly id: string;
               readonly isSelected: boolean;
-              readonly price: string | null | undefined;
-              readonly priceCents: number;
-              readonly typeName: string;
             } | null | undefined;
           } | null | undefined> | null | undefined;
         } | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly requestedFulfillment: {
     readonly __typename: "CommercePickup";
     readonly phoneNumber: string | null | undefined;
@@ -80,17 +73,10 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "phoneNumber",
   "storageKey": null
 },
-v2 = [
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -140,7 +126,7 @@ v2 = [
     "name": "postalCode",
     "storageKey": null
   },
-  (v1/*: any*/)
+  (v0/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -148,12 +134,11 @@ return {
   "metadata": null,
   "name": "ShippingContext_order",
   "selections": [
-    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "mode",
+      "name": "internalID",
       "storageKey": null
     },
     {
@@ -164,24 +149,30 @@ return {
       "name": "requestedFulfillment",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        },
         {
           "kind": "InlineFragment",
           "selections": [
-            (v1/*: any*/)
+            (v0/*: any*/)
           ],
           "type": "CommercePickup",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": (v1/*: any*/),
           "type": "CommerceShip",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": (v1/*: any*/),
           "type": "CommerceShipArta",
           "abstractKey": null
         }
@@ -249,33 +240,6 @@ return {
                               "kind": "ScalarField",
                               "name": "isSelected",
                               "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": [
-                                {
-                                  "kind": "Literal",
-                                  "name": "precision",
-                                  "value": 2
-                                }
-                              ],
-                              "kind": "ScalarField",
-                              "name": "price",
-                              "storageKey": "price(precision:2)"
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "priceCents",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "typeName",
-                              "storageKey": null
                             }
                           ],
                           "storageKey": null
@@ -298,13 +262,6 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "slug",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
                       "name": "processWithArtsyShippingDomestic",
                       "storageKey": null
                     },
@@ -313,13 +270,6 @@ return {
                       "args": null,
                       "kind": "ScalarField",
                       "name": "artsyShippingInternational",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": "pickup_available",
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "pickupAvailable",
                       "storageKey": null
                     },
                     {
@@ -361,6 +311,6 @@ return {
 };
 })();
 
-(node as any).hash = "a042a854dc58cdf4b9a8c70bdeaa7da5";
+(node as any).hash = "b78fdff211d54d644f9a5f078a23452f";
 
 export default node;

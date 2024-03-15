@@ -1,4 +1,3 @@
-import { ShippingProps } from "Apps/Order/Routes/Shipping2"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import {
   FulfillmentType,
@@ -111,7 +110,7 @@ export const computeOrderData = (
 }
 
 const getSavedFulfillmentDetails = (
-  order: ShippingProps["order"],
+  order: ShippingContext_order$data,
   meData: ShippingContextProps["meData"]
 ): SavedFulfillmentData => {
   const fulfillmentTypeName = order.requestedFulfillment?.__typename
