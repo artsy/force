@@ -29,7 +29,8 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
     if (match.params.artistId && isLoaded && isMobile !== null) {
       jumpTo("PartnerArtistDetails")
     }
-  }, [isLoaded, isMobile, jumpTo, match.params.artistId])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded, isMobile, match.params.artistId])
 
   return (
     <Box mt={4}>
