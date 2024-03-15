@@ -147,64 +147,18 @@ export const ShippingFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment Shipping2_order on CommerceOrder {
+        mode
+        internalID
+        ...ShippingContext_order
         ...FulfillmentDetailsForm_order
         ...SaveAndContinueButton_order
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
         ...OrderStepper_order
-        __typename
-        internalID
-        mode
-        requestedFulfillment {
-          __typename
-          ... on CommercePickup {
-            phoneNumber
-          }
-          ... on CommerceShip {
-            name
-            addressLine1
-            addressLine2
-            city
-            region
-            country
-            postalCode
-            phoneNumber
-          }
-          ... on CommerceShipArta {
-            name
-            addressLine1
-            addressLine2
-            city
-            region
-            country
-            postalCode
-            phoneNumber
-          }
-        }
         lineItems {
           edges {
             node {
               ...ShippingQuotes2_commerceLineItem
-              shippingQuoteOptions {
-                edges {
-                  node {
-                    id
-                    isSelected
-                    price(precision: 2)
-                    priceCents
-                    typeName
-                  }
-                }
-              }
-              artwork {
-                slug
-                processWithArtsyShippingDomestic
-                artsyShippingInternational
-                pickup_available: pickupAvailable
-                onlyShipsDomestically
-                euShippingOrigin
-                shippingCountry
-              }
             }
           }
         }
@@ -219,29 +173,8 @@ export const ShippingFragmentContainer = createFragmentContainer(
           before: { type: "String" }
         ) {
         ...FulfillmentDetailsForm_me
-        addressConnection(
-          first: $first
-          last: $last
-          before: $before
-          after: $after
-        ) {
-          edges {
-            node {
-              id
-              internalID
-              addressLine1
-              addressLine2
-              addressLine3
-              city
-              country
-              isDefault
-              name
-              phoneNumber
-              postalCode
-              region
-            }
-          }
-        }
+        ...ShippingContext_me
+          @arguments(first: $first, last: $last, before: $before, after: $after)
       }
     `,
   }

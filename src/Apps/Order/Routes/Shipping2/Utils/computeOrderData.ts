@@ -9,6 +9,7 @@ import {
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
+import { ShippingContext_order$data } from "__generated__/ShippingContext_order.graphql"
 
 export interface ComputedOrderData {
   internalID: string
@@ -43,7 +44,7 @@ type SavedShippingQuoteData = {
 } | null
 
 export const computeOrderData = (
-  order: ShippingProps["order"],
+  order: ShippingContext_order$data,
   meData: ShippingContextProps["meData"]
 ): ComputedOrderData => {
   // FIXME: Non-null assertion
