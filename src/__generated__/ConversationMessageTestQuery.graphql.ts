@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<60f5582de89f44579104027718292e59>>
+ * @generated SignedSource<<450f09b16de4859309f70d954a458224>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -257,6 +257,13 @@ return {
                         "storageKey": null
                       },
                       {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isMessageSentOnPlatform",
+                        "storageKey": null
+                      },
+                      {
                         "alias": "createdAtTime",
                         "args": [
                           {
@@ -357,7 +364,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "49c36c2a35faee833a1c0df2cd1d99cd",
+    "cacheID": "fab2f3ffc55f6b67ea106ea284ea0433",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -422,12 +429,13 @@ return {
         "conversation.messagesConnection.edges.node.internalID": (v4/*: any*/),
         "conversation.messagesConnection.edges.node.isFirstMessage": (v8/*: any*/),
         "conversation.messagesConnection.edges.node.isFromUser": (v8/*: any*/),
+        "conversation.messagesConnection.edges.node.isMessageSentOnPlatform": (v8/*: any*/),
         "conversation.messagesConnection.edges.node.to": (v7/*: any*/)
       }
     },
     "name": "ConversationMessageTestQuery",
     "operationKind": "query",
-    "text": "query ConversationMessageTestQuery {\n  conversation(id: \"123\") {\n    messagesConnection(first: 1) {\n      edges {\n        node {\n          ...ConversationMessage_message\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  __typename\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n"
+    "text": "query ConversationMessageTestQuery {\n  conversation(id: \"123\") {\n    messagesConnection(first: 1) {\n      edges {\n        node {\n          ...ConversationMessage_message\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  __typename\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  isMessageSentOnPlatform\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n"
   }
 };
 })();

@@ -26,6 +26,7 @@ import {
   Intent,
   SuccessfullyLoggedIn,
 } from "@artsy/cohesion"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 
 type Mode =
   | "Pending"
@@ -36,6 +37,7 @@ type Mode =
   | "Success"
 
 interface InquiryLoginState {
+  email: string
   password: string
   authenticationCode: string
 }
@@ -47,6 +49,7 @@ export const InquiryLogin: React.FC = () => {
     inquiry,
     next,
     setContext,
+    setInquiry,
     setRelayEnvironment,
   } = useInquiryContext()
   const { navigateTo } = useInquiryAccountContext()
@@ -56,7 +59,10 @@ export const InquiryLogin: React.FC = () => {
   const [state, setState] = useState<InquiryLoginState>({
     password: "",
     authenticationCode: "",
+    email: inquiry.email ?? "",
   })
+
+  const [error, setError] = useState("")
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
@@ -68,7 +74,7 @@ export const InquiryLogin: React.FC = () => {
     setMode("Loading")
 
     try {
-      const { user } = await login({ email: inquiry.email!, ...state })
+      const { user } = await login({ ...state })
 
       setContext({
         collectorLevel: user.collector_level,
@@ -127,8 +133,8 @@ export const InquiryLogin: React.FC = () => {
         return
       }
 
-      // TODO: Improve error messaging
       setMode("Error")
+      setError(formatErrorMessage(err))
       logger.error(err)
     }
   }
@@ -136,6 +142,9 @@ export const InquiryLogin: React.FC = () => {
   const handleInputChange = (name: keyof InquiryLoginState) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    if (name === "email") {
+      setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
+    }
     setState(prevState => ({ ...prevState, [name]: event.target.value }))
     mode === "Error" && setMode("Pending")
   }
@@ -148,14 +157,22 @@ export const InquiryLogin: React.FC = () => {
     <>
       <Box as="form" onSubmit={handleSubmit}>
         <Text variant="lg-display" mr={4}>
-          We found an Artsy account associated with {inquiry.email}.
-        </Text>
-
-        <Text variant="lg-display" mr={4} my={1}>
-          Please log in to continue.
+          Log in to send your message
         </Text>
 
         <Separator my={2} />
+
+        <Input
+          name="email"
+          title="Email"
+          defaultValue={inquiry.email}
+          placeholder="Your email address"
+          onChange={handleInputChange("email")}
+          type="email"
+          required
+          autoFocus
+          my={1}
+        />
 
         <Input
           name="password"
@@ -163,9 +180,7 @@ export const InquiryLogin: React.FC = () => {
           placeholder="Enter your password"
           onChange={handleInputChange("password")}
           type="password"
-          error={mode === "Error" && "Invalid password"}
           required
-          autoFocus
           my={1}
         />
 
@@ -189,6 +204,8 @@ export const InquiryLogin: React.FC = () => {
           />
         )}
 
+        {mode === "Error" && <Message variant="error">{error}</Message>}
+
         <Spacer y={2} />
 
         <Button
@@ -200,6 +217,21 @@ export const InquiryLogin: React.FC = () => {
         >
           Login and Send Message
         </Button>
+
+        <Spacer y={2} />
+
+        <Text variant="xs" color="black60" textAlign="center">
+          Don't have an account?{" "}
+          <Clickable
+            data-test="login"
+            textDecoration="underline"
+            onClick={() => {
+              navigateTo(Screen.SignUp)
+            }}
+          >
+            Sign up.
+          </Clickable>
+        </Text>
 
         <Spacer y={2} />
 

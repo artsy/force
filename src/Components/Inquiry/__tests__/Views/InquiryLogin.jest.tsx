@@ -17,19 +17,30 @@ describe("InquiryLogin", () => {
   const next = jest.fn()
   const submitArtworkInquiryRequest = jest.fn()
   const trackEvent = jest.fn()
+  let setInqirySpy: jest.SpyInstance
 
   beforeAll(() => {
     ;(useArtworkInquiryRequest as jest.Mock).mockImplementation(() => ({
       submitArtworkInquiryRequest,
     }))
-    ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
-      artworkID: "example",
-      engine: { decide: jest.fn().mockReturnValue(false) },
-      inquiry: { email: "example@example.com", message: "Hello world" },
-      next,
-      setContext: jest.fn(),
-      setRelayEnvironment: jest.fn(),
-    }))
+    ;(useInquiryContext as jest.Mock).mockImplementation(() => {
+      const actual = jest
+        .requireActual("../../Hooks/useInquiryContext")
+        .useInquiryContext()
+
+      setInqirySpy = jest.spyOn(actual, "setInquiry")
+
+      return {
+        ...actual,
+        artworkID: "example",
+        engine: { decide: jest.fn().mockReturnValue(false) },
+        inquiry: { email: "example@example.com", message: "Hello world" },
+        next,
+        setContext: jest.fn(),
+        setRelayEnvironment: jest.fn(),
+        setInquiry: jest.fn(),
+      }
+    })
     ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
   })
 
@@ -37,14 +48,13 @@ describe("InquiryLogin", () => {
     next.mockReset()
     submitArtworkInquiryRequest.mockReset()
     trackEvent.mockClear()
+    setInqirySpy.mockReset()
   })
 
   it("renders correctly", () => {
     const wrapper = mount(<InquiryLogin />)
 
-    expect(wrapper.html()).toContain(
-      "We found an Artsy account associated with example@example.com."
-    )
+    expect(wrapper.html()).toContain("Log in to send your message")
   })
 
   describe("without two-factor auth", () => {
