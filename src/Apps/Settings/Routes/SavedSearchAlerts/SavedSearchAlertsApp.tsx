@@ -27,7 +27,6 @@ import {
 import { SavedSearchAlertHeader } from "./Components/SavedSearchAlertHeader"
 import { MetaTags } from "Components/MetaTags"
 import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmptyResults"
-import { Sticky } from "Components/Sticky"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
@@ -315,31 +314,26 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                     span={6}
                     borderLeft="1px solid"
                     borderLeftColor="black15"
-                    borderRight="1px solid"
                     borderRightColor="black15"
                     minHeight={DESKTOP_HEIGHT}
                   >
                     {viewOption === "EDIT" && editAlertEntity && (
-                      <Sticky bottomBoundary="#content-end">
-                        <SavedSearchAlertEditFormQueryRenderer
-                          editAlertEntity={editAlertEntity}
-                          onCompleted={handleCompleted}
-                          onDeleteClick={handleDeleteClick}
-                        />
-                      </Sticky>
+                      <SavedSearchAlertEditFormQueryRenderer
+                        editAlertEntity={editAlertEntity}
+                        onCompleted={handleCompleted}
+                        onDeleteClick={handleDeleteClick}
+                      />
                     )}
                     {viewOption === "ARTWORKS" && editAlertEntity && (
-                      <Sticky bottomBoundary="#content-end">
-                        <SavedSearchAlertsArtworksQueryRenderer
-                          editAlertEntity={editAlertEntity}
-                          onEditAlertClick={handleOpenEditForm}
-                        />
-                      </Sticky>
+                      <SavedSearchAlertsArtworksQueryRenderer
+                        editAlertEntity={editAlertEntity}
+                        onEditAlertClick={handleOpenEditForm}
+                      />
                     )}
                   </Column>
                 </GridColumns>
 
-                <Box id="content-end" />
+                <Box />
               </Media>
             </Box>
             <Media lessThan="md">
