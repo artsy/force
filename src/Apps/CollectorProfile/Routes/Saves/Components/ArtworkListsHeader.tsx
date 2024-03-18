@@ -1,29 +1,38 @@
 import { FC, useState } from "react"
-import { Box, Text, Spacer, Button, Join } from "@artsy/palette"
+import { Box, Text, Spacer, Button, Join, Flex } from "@artsy/palette"
 import { useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
 import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModalWizard"
 import { ArtworkList } from "./CreateNewListModal/CreateNewListModal"
 import { ProgressiveOnboardingSaveTitle } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveTitle"
 import { RouterLink } from "System/Router/RouterLink"
+import { EditListPrivacyModal } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditListPrivacyModal"
+import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 
 interface ArtworkListsHeaderProps {
   savedArtworksCount: number
+  me: CollectorProfileSavesRoute_me$data
 }
 
 export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
   savedArtworksCount,
+  me,
 }) => {
   const { t } = useTranslation()
   const { sendToast } = useToasts()
-  const [modalIsOpened, setModalIsOpened] = useState(false)
+  const [createModalIsOpened, setCreateModalIsOpened] = useState(false)
+  const [editModalIsOpened, setEditModalIsOpened] = useState(false)
 
-  const handleCreateNewListClick = () => {
-    setModalIsOpened(true)
+  const handleCreateListClick = () => {
+    setCreateModalIsOpened(true)
   }
 
-  const handleComplete = (artworkList: ArtworkList) => {
-    setModalIsOpened(false)
+  const handleEditListClick = () => {
+    setEditModalIsOpened(true)
+  }
+
+  const handleCreateComplete = (artworkList: ArtworkList) => {
+    setCreateModalIsOpened(false)
 
     sendToast({
       variant: "success",
@@ -33,17 +42,29 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
     })
   }
 
-  const handleClose = () => {
-    setModalIsOpened(false)
+  const handleCreateClose = () => {
+    setCreateModalIsOpened(false)
+  }
+
+  const handleEditComplete = () => {
+    setEditModalIsOpened(false)
   }
 
   return (
     <>
-      {modalIsOpened && (
+      {createModalIsOpened && (
         <CreateNewListModalWizard
-          onComplete={handleComplete}
-          onClose={handleClose}
+          onComplete={handleCreateComplete}
+          onClose={handleCreateClose}
           savedArtworksCount={savedArtworksCount}
+        />
+      )}
+
+      {editModalIsOpened && (
+        <EditListPrivacyModal
+          me={me}
+          onClose={handleEditComplete}
+          onComplete={handleEditComplete}
         />
       )}
 
@@ -70,14 +91,25 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
             </ProgressiveOnboardingSaveTitle>
           </Text>
 
-          <Button
-            variant="secondaryBlack"
-            size="small"
-            onClick={handleCreateNewListClick}
-            mt={[2, 0]}
-          >
-            {t("collectorSaves.artworkListsHeader.createNewListButton")}
-          </Button>
+          <Flex>
+            <Button
+              variant="tertiary"
+              size="large"
+              onClick={handleEditListClick}
+              mt={[2, 0]}
+            >
+              {t("collectorSaves.artworkListsHeader.editListPrivacy")}
+            </Button>
+            <Spacer x={4} />
+            <Button
+              variant="secondaryBlack"
+              size="large"
+              onClick={handleCreateListClick}
+              mt={[2, 0]}
+            >
+              {t("collectorSaves.artworkListsHeader.createNewListButton")}
+            </Button>
+          </Flex>
         </Box>
       </Join>
     </>

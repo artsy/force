@@ -88,6 +88,7 @@ const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
         savedArtworksCount={
           me?.savedArtworksArtworkList?.artworksConnection?.totalCount ?? 0
         }
+        me={me}
       />
 
       <Jump id={ARTWORK_LIST_SCROLL_TARGET_ID} />
