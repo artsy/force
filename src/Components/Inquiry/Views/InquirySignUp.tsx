@@ -1,4 +1,13 @@
-import { Box, Button, Input, Separator, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Clickable,
+  Input,
+  Message,
+  Separator,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import * as React from "react"
 import { useState } from "react"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
@@ -18,6 +27,11 @@ import {
 import { useTracking } from "react-tracking"
 import { useMode } from "Utils/Hooks/useMode"
 import { RouterLink } from "System/Router/RouterLink"
+import {
+  Screen,
+  useInquiryAccountContext,
+} from "Components/Inquiry/Views/InquiryAccount"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 
 type Mode = "Pending" | "Loading" | "Error" | "Done" | "Success"
 
@@ -31,19 +45,22 @@ export const InquirySignUp: React.FC = () => {
   const [mode, setMode] = useMode<Mode>("Pending")
   const [error, setError] = useState("")
 
+  const { navigateTo } = useInquiryAccountContext()
+
   const {
     artworkID,
     engine,
     inquiry,
     next,
     setContext,
+    setInquiry,
     setRelayEnvironment,
   } = useInquiryContext()
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
   const [state, setState] = useState<InquirySignUpState>({
-    name: inquiry.name ?? "",
+    name: "",
     email: inquiry.email ?? "",
     password: "",
   })
@@ -90,7 +107,7 @@ export const InquirySignUp: React.FC = () => {
 
       trackEvent(options)
     } catch (err) {
-      setError(err.message)
+      setError(formatErrorMessage(err))
       setMode("Error")
       logger.error(err)
     }
@@ -99,6 +116,10 @@ export const InquirySignUp: React.FC = () => {
   const handleInputChange = (name: keyof InquirySignUpState) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    if (name === "email") {
+      setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
+    }
+
     setState(prevState => ({ ...prevState, [name]: event.target.value }))
     mode === "Error" && setMode("Pending")
   }
@@ -142,11 +163,12 @@ export const InquirySignUp: React.FC = () => {
           placeholder="Your password"
           onChange={handleInputChange("password")}
           defaultValue={state.password}
-          error={mode === "Error" && error}
           type="password"
           required
           my={1}
         />
+
+        {mode === "Error" && <Message variant="error">{error}</Message>}
 
         <Spacer y={2} />
 
@@ -159,6 +181,21 @@ export const InquirySignUp: React.FC = () => {
         >
           Sign up and send message
         </Button>
+
+        <Spacer y={2} />
+
+        <Text variant="xs" color="black60" textAlign="center">
+          Already have an account?{" "}
+          <Clickable
+            data-test="login"
+            textDecoration="underline"
+            onClick={() => {
+              navigateTo(Screen.Login)
+            }}
+          >
+            Log in.
+          </Clickable>
+        </Text>
 
         <Spacer y={2} />
 

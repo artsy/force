@@ -1,5 +1,4 @@
-import * as React from "react";
-import { InquiryExistingUserQueryRenderer } from "./InquiryExistingUser"
+import * as React from "react"
 import { InquirySignUp } from "./InquirySignUp"
 import { InquiryLogin } from "./InquiryLogin"
 import { InquiryResetPassword } from "./InquiryResetPassword"
@@ -27,7 +26,7 @@ export const useInquiryAccountContext = () => {
 }
 
 export const InquiryAccount: React.FC = () => {
-  const [screen, navigateTo] = useState(Screen.ExistingUser)
+  const [screen, navigateTo] = useState(Screen.SignUp)
 
   return (
     <InquiryAccountContext.Provider value={{ screen, navigateTo }}>
@@ -35,8 +34,6 @@ export const InquiryAccount: React.FC = () => {
         switch (screen) {
           case Screen.Login:
             return <InquiryLogin />
-          case Screen.ExistingUser:
-            return <InquiryExistingUserQueryRenderer />
           case Screen.SignUp:
             return <InquirySignUp />
           case Screen.ResetPassword:
