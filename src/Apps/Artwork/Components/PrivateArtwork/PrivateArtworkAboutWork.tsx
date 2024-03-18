@@ -12,14 +12,13 @@ export const PrivateArtworkAboutWork: React.FC<PrivateArtworkAboutWorkProps> = (
   const data = useFragment(
     graphql`
       fragment PrivateArtworkAboutWork_artwork on Artwork {
-        title
+        additionalInformation
       }
     `,
     artwork
   )
 
   // FIXME: Remove (typechecker)
-  console.log(data)
 
   return (
     <Box textAlign="center">
@@ -27,17 +26,18 @@ export const PrivateArtworkAboutWork: React.FC<PrivateArtworkAboutWorkProps> = (
         About this work
       </Text>
 
-      <Spacer y={2} />
-
-      <HTML variant="lg">
-        <ReadMore
-          inlineReadMoreLink={false}
-          content={
-            "Through a practice that is self-described as monastic, austere and concrete, Balliano’s meticulous paintings appear, upon first glance, clean and precise. However, closer inspection reveals scrapes and scratches that uncover the organic wooden surface underneath the layers of paint, as a decaying façade of modernistic intentions"
-          }
-          maxChars={200}
-        />
-      </HTML>
+      {data.additionalInformation && (
+        <>
+          <Spacer y={2} />
+          <HTML variant="lg">
+            <ReadMore
+              inlineReadMoreLink={false}
+              content={`${data.additionalInformation}`}
+              maxChars={200}
+            />
+          </HTML>
+        </>
+      )}
     </Box>
   )
 }

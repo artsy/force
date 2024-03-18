@@ -21,14 +21,19 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
   const data = useFragment(
     graphql`
       fragment PrivateArtworkAboutArtist_artwork on Artwork {
-        title
+        slug
+        artist {
+          name
+          biographyBlurb(format: HTML, partnerBio: false) {
+            text
+          }
+        }
       }
     `,
     artwork
   )
 
   // FIXME: Remove (typechecker)
-  console.log(data)
 
   return (
     <Box minHeight={275} width="100%" p={6}>
@@ -44,7 +49,7 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
 
             <Spacer y={2} />
 
-            <Text variant="lg">Davide Balliano</Text>
+            <Text variant="lg">{data.artist?.name}</Text>
 
             <Spacer y={1} />
 
@@ -52,14 +57,17 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
               Follow
             </Button>
 
-            <Spacer y={1} />
-
-            <HTML variant="sm">
-              <ReadMore
-                maxChars={190}
-                content="Davide Balliano’s research operates on the thin line of demarcation between painting and sculpture. Utilizing an austere, minimal language of abstract geometries in strong dialogue with architecture, his work"
-              />
-            </HTML>
+            {data.artist?.biographyBlurb?.text && (
+              <>
+                <Spacer y={1} />
+                <HTML variant="sm">
+                  <ReadMore
+                    maxChars={190}
+                    content={`${data.artist.biographyBlurb.text}`}
+                  />
+                </HTML>
+              </>
+            )}
           </Box>
         </Flex>
       </Flex>

@@ -55,7 +55,7 @@ describe("ArtworkSidebarPrivateArtwork", () => {
         return {
           visibilityLevel: "UNLISTED",
         }
-      },
+      }
     })
 
     const link = screen.getByRole("link", { name: /Commerce Test Partner/i })
