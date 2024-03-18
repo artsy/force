@@ -86,6 +86,7 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
         name={data.isFromUser && data.from.name ? data.from.name : undefined}
         time={!simplified ? data.createdAtTime : undefined}
         seenBy={data.attachments?.length === 0 ? seenBy : undefined}
+        isMessageSentOnPlatform={!!data.isMessageSentOnPlatform}
       >
         <Message data={data} formattedFirstMessage={formattedFirstMessage} />
       </ConversationMessageBubble>
@@ -139,6 +140,7 @@ const FRAGMENT = graphql`
     }
     body
     createdAt
+    isMessageSentOnPlatform
     createdAtTime: createdAt(format: "h:mmA") @required(action: NONE)
     deliveries @required(action: NONE) {
       openedAt
