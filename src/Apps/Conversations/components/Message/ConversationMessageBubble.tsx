@@ -13,22 +13,24 @@ import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
  * See use cases https://www.figma.com/file/oXwV4SeYmsAuXgP3bFwiH6/Conversations-CMS?node-id=675%3A10844&t=AjHgDGzZ5Tkhi5fr-4
  */
 type ConversationMessageBubbleProps = {
-  fromViewer?: boolean
-  simplified?: boolean
-  name?: string
-  time?: string
-  seenBy?: string
   avatarUrl?: string
+  fromViewer?: boolean
+  isMessageSentOnPlatform?: boolean
+  name?: string
+  seenBy?: string
+  simplified?: boolean
+  time?: string
 }
 
 export const ConversationMessageBubble: FC<ConversationMessageBubbleProps> = ({
-  fromViewer,
   avatarUrl,
-  simplified,
-  name,
-  time,
-  seenBy,
   children,
+  fromViewer,
+  isMessageSentOnPlatform,
+  name,
+  seenBy,
+  simplified,
+  time,
 }) => {
   const bubbleDirection = fromViewer ? "flex-end" : "flex-start"
 
@@ -47,7 +49,11 @@ export const ConversationMessageBubble: FC<ConversationMessageBubbleProps> = ({
   const { theme } = useTheme()
 
   return (
-    <Flex maxWidth="85%" alignSelf={bubbleDirection}>
+    <Flex
+      maxWidth={isMessageSentOnPlatform ? 450 : 650}
+      minWidth={100}
+      alignSelf={bubbleDirection}
+    >
       {/* Avatar section */}
       {!simplified && !fromViewer && (
         <Flex
