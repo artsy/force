@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a6981577659ae4a363bc8d0be5f8109>>
+ * @generated SignedSource<<370768798696c635f56d0b8e0c85ed7e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type CollectorProfileSavesRoute_me$data = {
       readonly node: {
         readonly default: boolean;
         readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item" | "EditArtworkListItem_item">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -25,7 +25,7 @@ export type CollectorProfileSavesRoute_me$data = {
       readonly totalCount: number | null | undefined;
     } | null | undefined;
     readonly internalID: string;
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item" | "EditArtworkListItem_item">;
   } | null | undefined;
   readonly " $fragmentType": "CollectorProfileSavesRoute_me";
 };
@@ -46,6 +46,11 @@ v1 = {
   "args": null,
   "kind": "FragmentSpread",
   "name": "ArtworkListItem_item"
+},
+v2 = {
+  "args": null,
+  "kind": "FragmentSpread",
+  "name": "EditArtworkListItem_item"
 };
 return {
   "argumentDefinitions": [],
@@ -80,6 +85,7 @@ return {
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": [
@@ -140,6 +146,7 @@ return {
                   "storageKey": null
                 },
                 (v1/*: any*/),
+                (v2/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -194,6 +201,6 @@ return {
 };
 })();
 
-(node as any).hash = "8eddbc82ae1dae7923e32d332d5f21c6";
+(node as any).hash = "2f57fdb321ea3c97c9b03aa65a3a97a5";
 
 export default node;

@@ -28,9 +28,9 @@ const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
   const { trackEvent } = useTracking()
   const initialArtworkListId = useRef(match.params.id)
   const { page, sort } = match.location.query ?? {}
-  const savedArtworksArtworkList = me.savedArtworksArtworkList!
+  const savedArtworksArtworkList = me.savedArtworksArtworkList
   const selectedArtworkListId =
-    match.params.id ?? savedArtworksArtworkList.internalID
+    match.params.id ?? savedArtworksArtworkList?.internalID
   let customArtworkLists = extractNodes(me.customArtworkLists)
 
   useEffect(() => {
@@ -58,7 +58,9 @@ const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
   }
 
   // Always display "Saved Artworks" artwork list first in the list
-  const artworkLists = [savedArtworksArtworkList, ...customArtworkLists]
+  const artworkLists = savedArtworksArtworkList
+    ? [savedArtworksArtworkList, ...customArtworkLists]
+    : customArtworkLists
 
   /**
    * When the artwork list has been successfully deleted,
@@ -98,7 +100,7 @@ const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
       <Shelf showProgress={false}>
         {artworkLists.map(artworkList => {
           const isDefaultArtworkList =
-            artworkList.internalID === savedArtworksArtworkList.internalID
+            artworkList.internalID === savedArtworksArtworkList?.internalID
 
           return (
             <ArtworkListItemFragmentContainer
@@ -138,6 +140,7 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
         savedArtworksArtworkList: collection(id: "saved-artwork") {
           internalID
           ...ArtworkListItem_item
+          ...EditArtworkListItem_item
 
           artworksConnection(first: 4) {
             totalCount
@@ -159,6 +162,7 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
               internalID
               default
               ...ArtworkListItem_item
+              ...EditArtworkListItem_item
             }
           }
         }
