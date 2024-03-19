@@ -91,7 +91,7 @@ beforeEach(() => {
     verifyAddressNow: false,
     me: {
       addressConnection: {
-        edges: [],
+        totalCount: 0,
       },
     },
   }
