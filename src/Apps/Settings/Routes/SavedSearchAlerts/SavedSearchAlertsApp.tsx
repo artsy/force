@@ -202,7 +202,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   useEffect(() => {
     if (!alertID) return
 
-    const subscription = fetchQuery<SavedSearchAlertsApp_Alert_Query>(
+    fetchQuery<SavedSearchAlertsApp_Alert_Query>(
       relayEnvironment as Environment,
       graphql`
         query SavedSearchAlertsApp_Alert_Query($alertID: String!) {
@@ -222,8 +222,9 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
         }
       `,
       { alertID }
-    )?.subscribe?.({
-      next: data => {
+    )
+      ?.toPromise()
+      .then(data => {
         const alert = data?.me?.alert
         if (!alert) return
 
@@ -240,12 +241,8 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
           setViewOption("EDIT")
           silentPush(`/settings/alerts/${alert.internalID}/edit`)
         }
-      },
-    })
+      })
 
-    return () => {
-      subscription?.unsubscribe?.()
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alertID, relayEnvironment])
 

@@ -39,7 +39,7 @@ export const SavedSearchAlertEditFormPlaceholder: React.FC<{
 const SavedSearchAlertEditFormPlaceholderContext = () => {
   return (
     <>
-      <Media greaterThan="md">
+      <Media greaterThanOrEqual="md">
         <Text variant="lg" mb={4}>
           Edit Alert
         </Text>

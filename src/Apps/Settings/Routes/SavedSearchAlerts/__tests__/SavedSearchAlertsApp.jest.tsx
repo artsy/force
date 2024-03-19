@@ -68,10 +68,6 @@ describe("SavedSearchAlertsApp", () => {
     })
   })
 
-  afterEach(() => {
-    relayEnv.mockClear()
-  })
-
   describe("alerts list", () => {
     beforeEach(() => {
       breakpoint = "sm"
@@ -135,12 +131,6 @@ describe("SavedSearchAlertsApp", () => {
 
         await flushPromiseQueue()
 
-        setTimeout(() => {
-          expect(window.location.pathname).toEqual(
-            `/settings/alerts/example-id-1/edit`
-          )
-        }, 600)
-
         const mockedPreviewResolver = {
           Me: () => ({
             alert: {
@@ -155,9 +145,13 @@ describe("SavedSearchAlertsApp", () => {
 
         mockResolveLastOperation(mockedPreviewResolver)
 
-        setTimeout(() => {
-          expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
-        }, 200)
+        await flushPromiseQueue()
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-1/edit"
+        )
+
+        expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
       })
 
       it("opens the edit form on Edit CTA press", async () => {
@@ -173,12 +167,6 @@ describe("SavedSearchAlertsApp", () => {
 
         await flushPromiseQueue()
 
-        setTimeout(() => {
-          expect(window.location.pathname).toEqual(
-            `/settings/alerts/example-id-1/edit`
-          )
-        }, 200)
-
         const mockedPreviewResolver = {
           Me: () => ({
             alert: {
@@ -190,20 +178,21 @@ describe("SavedSearchAlertsApp", () => {
             },
           }),
         }
-
         mockResolveLastOperation(mockedPreviewResolver)
 
-        setTimeout(() => {
-          expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
-        }, 200)
+        await flushPromiseQueue()
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-1/edit"
+        )
+
+        expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
 
         fireEvent.click(screen.getAllByText("Edit")[1])
 
-        setTimeout(() => {
-          expect(window.location.pathname).toEqual(
-            `/settings/alerts/example-id-2/edit`
-          )
-        }, 200)
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-2/edit"
+        )
       })
     })
 
@@ -212,7 +201,7 @@ describe("SavedSearchAlertsApp", () => {
         breakpoint = "sm"
       })
 
-      it("show edit form on Edit CTA press", () => {
+      it("show edit form on Edit CTA press", async () => {
         const { mockResolveLastOperation } = renderWithRelay(
           {
             Me: () => ({
@@ -223,13 +212,7 @@ describe("SavedSearchAlertsApp", () => {
           relayEnv
         )
 
-        fireEvent.click(screen.getAllByText("Edit")[0])
-
-        setTimeout(() => {
-          expect(window.location.pathname).toEqual(
-            `/settings/alerts/example-id-1/edit`
-          )
-        }, 200)
+        await flushPromiseQueue()
 
         const mockedPreviewResolver = {
           Me: () => ({
@@ -245,19 +228,25 @@ describe("SavedSearchAlertsApp", () => {
 
         mockResolveLastOperation(mockedPreviewResolver)
 
+        await flushPromiseQueue()
+
+        fireEvent.click(screen.getAllByText("Edit")[0])
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-1/edit"
+        )
+
         expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
 
         fireEvent.click(screen.getByLabelText("Close"))
 
-        setTimeout(() => {
-          expect(window.location.pathname).toEqual(`/settings/alerts`)
-        }, 200)
+        expect(mockSilentPush).toHaveBeenCalledWith("/settings/alerts")
       })
     })
   })
 
   describe("View Artworks", () => {
-    /*     describe("desktop", () => {
+    describe("desktop", () => {
       beforeEach(() => {
         breakpoint = "md"
       })
@@ -275,14 +264,6 @@ describe("SavedSearchAlertsApp", () => {
 
         await flushPromiseQueue()
 
-        fireEvent.click(screen.getAllByText("View Artworks")[0])
-
-        setTimeout(() => {
-          expect(window.location.pathname).toEqual(
-            `/settings/alerts/example-id-1/artworks`
-          )
-        }, 600)
-
         const mockedPreviewResolver = {
           Me: () => ({
             alert: {
@@ -297,21 +278,23 @@ describe("SavedSearchAlertsApp", () => {
 
         mockResolveLastOperation(mockedPreviewResolver)
 
-        setTimeout(() => {
-          expect(screen.getAllByText("View Artworks")[0]).toBeInTheDocument()
-        }, 200)
+        await flushPromiseQueue()
+
+        fireEvent.click(screen.getAllByText("View Artworks")[0])
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-1/artworks"
+        )
+
+        expect(screen.getAllByText("View Artworks")[0]).toBeInTheDocument()
 
         fireEvent.click(screen.getAllByText("View Artworks")[1])
 
-        await flushPromiseQueue()
-
-        setTimeout(() => {
-          expect(window.location.pathname).toEqual(
-            `/settings/alerts/example-id-2/artworks`
-          )
-        }, 200)
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-2/artworks"
+        )
       })
-    }) */
+    })
 
     describe("mWeb", () => {
       beforeEach(() => {
@@ -328,14 +311,7 @@ describe("SavedSearchAlertsApp", () => {
           {},
           relayEnv
         )
-
-        fireEvent.click(screen.getAllByText("View Artworks")[0])
-
-        setTimeout(() => {
-          expect(window.location.pathname).toEqual(
-            `/settings/alerts/example-id-1/artworks`
-          )
-        }, 200)
+        await flushPromiseQueue()
 
         const mockedPreviewResolver = {
           Me: () => ({
@@ -351,13 +327,19 @@ describe("SavedSearchAlertsApp", () => {
 
         mockResolveLastOperation(mockedPreviewResolver)
 
+        await flushPromiseQueue()
+
+        fireEvent.click(screen.getAllByText("View Artworks")[0])
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-1/artworks"
+        )
+
         expect(screen.getAllByText("View Artworks")[0]).toBeInTheDocument()
 
         fireEvent.click(screen.getByLabelText("Close"))
 
-        setTimeout(() => {
-          expect(window.location.pathname).toEqual(`/settings/alerts`)
-        }, 200)
+        expect(mockSilentPush).toHaveBeenCalledWith("/settings/alerts")
       })
     })
   })
