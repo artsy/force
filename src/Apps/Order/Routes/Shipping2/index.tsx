@@ -147,14 +147,14 @@ export const ShippingFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment Shipping2_order on CommerceOrder {
-        mode
-        internalID
         ...ShippingContext_order
         ...FulfillmentDetailsForm_order
         ...SaveAndContinueButton_order
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
         ...OrderStepper_order
+        mode
+        internalID
         lineItems {
           edges {
             node {

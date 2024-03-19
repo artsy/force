@@ -105,6 +105,7 @@ const meWithoutAddress: Shipping2TestQuery$rawResponse["me"] = {
     country: "United States",
   },
   addressConnection: {
+    totalCount: 0,
     edges: [],
   },
 }
@@ -114,7 +115,7 @@ const meWithAddresses: Shipping2TestQuery$rawResponse["me"] = Object.assign(
   meWithoutAddress,
   {
     addressConnection: {
-      totalCount: 0,
+      totalCount: 2,
       edges: [
         {
           node: {
@@ -264,7 +265,7 @@ const getAllPendingOperationNames = (env: MockEnvironment) => {
 
 let mockTrackEvent: jest.Mock
 
-// FIXME: MockBoot interfering somehow...
+// FIXME: CI Timeouts likely due to fillAddressForm() duration...
 describe.skip("Shipping", () => {
   const mockUseRouter = useRouter as jest.Mock
   const mockPush = jest.fn()
@@ -343,7 +344,7 @@ describe.skip("Shipping", () => {
 
       it("does not render fulfillment selection if artwork is not available for pickup", async () => {
         const shippingOnlyOrder = cloneDeep(order) as any
-        shippingOnlyOrder.lineItems.edges[0].node.artwork.pickup_available = false
+        shippingOnlyOrder.lineItems.edges[0].node.artwork.pickupAvailable = false
 
         renderWithRelay({
           CommerceOrder: () => shippingOnlyOrder,

@@ -12,10 +12,7 @@ import {
   addressWithFallbackValues,
   getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
-import {
-  FulfillmentDetailsForm_me$data,
-  FulfillmentDetailsForm_me$key,
-} from "__generated__/FulfillmentDetailsForm_me.graphql"
+import { FulfillmentDetailsForm_me$key } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import createLogger from "Utils/logger"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
@@ -53,12 +50,14 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   // Trigger address verification by setting this to true
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
 
-  const savedAddresses = extractNodes(meData.addressConnection)
-  const hasSavedAddresses = savedAddresses.length > 0
+  const hasSavedAddresses = (meData.addressConnection?.totalCount ?? 0) > 0
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork!
 
-  const initialValues = getInitialValues(meData, shippingContext.orderData)
+  const initialValues = getInitialValues(
+    shippingContext.meData,
+    shippingContext.orderData
+  )
 
   const availableFulfillmentTypes: FulfillmentType[] = firstArtwork.pickupAvailable
     ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
@@ -255,54 +254,11 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 const ORDER_FRAGMENT = graphql`
   fragment FulfillmentDetailsForm_order on CommerceOrder {
     internalID
-    mode
-    state
-    requestedFulfillment {
-      __typename
-      ... on CommercePickup {
-        phoneNumber
-      }
-      ... on CommerceShip {
-        name
-        addressLine1
-        addressLine2
-        city
-        region
-        country
-        postalCode
-        phoneNumber
-      }
-      ... on CommerceShipArta {
-        name
-        addressLine1
-        addressLine2
-        city
-        region
-        country
-        postalCode
-        phoneNumber
-      }
-    }
     lineItems {
       edges {
         node {
           artwork {
-            slug
-            processWithArtsyShippingDomestic
-            artsyShippingInternational
             pickupAvailable
-            onlyShipsDomestically
-            euShippingOrigin
-            shippingCountry
-          }
-          shippingQuoteOptions {
-            edges {
-              ...ShippingQuotes_shippingQuotes
-              node {
-                id
-                isSelected
-              }
-            }
           }
         }
       }
@@ -334,22 +290,7 @@ const ME_FRAGMENT = graphql`
       before: $before
       after: $after
     ) {
-      edges {
-        node {
-          id
-          internalID
-          addressLine1
-          addressLine2
-          addressLine3
-          city
-          country
-          isDefault
-          name
-          phoneNumber
-          postalCode
-          region
-        }
-      }
+      totalCount
     }
   }
 `
@@ -358,7 +299,7 @@ const ME_FRAGMENT = graphql`
  * Get form values for initial data or suitable for resetting to.
  */
 const getInitialValues = (
-  me: FulfillmentDetailsForm_me$data,
+  me: ShippingContextProps["meData"],
   orderData: ShippingContextProps["orderData"],
   forceNewAddressFormMode?: boolean
 ): FulfillmentValues => {
@@ -377,7 +318,7 @@ const getInitialValues = (
     } as FulfillmentValues
   }
 
-  const savedAddresses = extractNodes(me.addressConnection)
+  const savedAddresses = me.addressList
 
   // The default ship-to address should be the first one that
   // can be shipped-to, preferring the default

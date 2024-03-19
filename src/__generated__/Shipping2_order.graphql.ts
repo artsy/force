@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0a4521acba6173d9d9133c595072a90>>
+ * @generated SignedSource<<1b599af4c84b710c2f28493e54c52f89>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,20 +36,6 @@ const node: ReaderFragment = {
   "name": "Shipping2_order",
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "mode",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ShippingContext_order"
@@ -78,6 +64,20 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "OrderStepper_order"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -122,6 +122,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "b1a7c0b523e33ea4169af6cd714c832b";
+(node as any).hash = "a946000fd42ba886e9259029a26a3620";
 
 export default node;
