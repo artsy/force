@@ -20,6 +20,8 @@ import { ArtworkListContextualMenu } from "./Actions/ArtworkListContextualMenu"
 import { useJump } from "Utils/Hooks/useJump"
 import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
 import { ARTWORK_LIST_SCROLL_TARGET_ID } from "Apps/CollectorProfile/Routes/Saves/CollectorProfileSavesRoute"
+import LockIcon from "@artsy/icons/LockIcon"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkListContentQueryRendererProps {
   listID: string
@@ -71,6 +73,10 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
     }
   }, [jumpTo, artworkListItemHasBeenTouched])
 
+  const shareableWithPartnersEnabled = useFeatureFlag(
+    "emerald_artwork-list-offerability"
+  )
+
   return (
     <ArtworkFilterContextProvider
       filters={match.location.query}
@@ -96,6 +102,19 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
           )}
         </Join>
       </Flex>
+      {shareableWithPartnersEnabled &&
+        (artworkList.shareableWithPartners ? (
+          <Text variant={["xs", "sm-display"]} color="black60" paddingTop={1}>
+            Shared
+          </Text>
+        ) : (
+          <Flex paddingTop={1}>
+            <LockIcon marginRight={0.5} minWidth="18px" />
+            <Text variant={["xs", "sm-display"]} color="black60">
+              Private
+            </Text>
+          </Flex>
+        ))}
 
       <Spacer y={4} />
 
@@ -134,7 +153,7 @@ export const ArtworkListContentRefetchContainer = createRefetchContainer(
           internalID
           name
           default
-
+          shareableWithPartners
           artworks: artworksConnection(first: 30, page: $page, sort: $sort) {
             totalCount
           }

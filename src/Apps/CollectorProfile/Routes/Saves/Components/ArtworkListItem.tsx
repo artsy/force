@@ -11,6 +11,8 @@ import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 import styled, { css } from "styled-components"
 import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
 import { themeGet } from "@styled-system/theme-get"
+import LockIcon from "@artsy/icons/LockIcon"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkListItemProps {
   isSelected?: boolean
@@ -32,6 +34,10 @@ const ArtworkListItem: FC<ArtworkListItemProps> = props => {
 
     return `${BASE_SAVES_PATH}/${item.internalID}`
   }
+
+  const shareableWithPartnersEnabled = useFeatureFlag(
+    "emerald_artwork-list-offerability"
+  )
 
   return (
     <ArtworkListItemLink
@@ -55,9 +61,15 @@ const ArtworkListItem: FC<ArtworkListItemProps> = props => {
         )}
 
         <Box>
-          <Text variant={["xs", "sm-display"]} overflowEllipsis>
-            {item.name}
-          </Text>
+          <Flex>
+            <Text variant={["xs", "sm-display"]} overflowEllipsis>
+              {item.name}
+            </Text>
+            {shareableWithPartnersEnabled && !item.shareableWithPartners && (
+              <LockIcon marginLeft={0.5} minWidth="18px" />
+            )}
+          </Flex>
+
           <Text variant={["xs", "sm-display"]} color="black60" overflowEllipsis>
             {t("collectorSaves.artworkLists.artworkWithCount", {
               count: item.artworksCount,
@@ -78,6 +90,7 @@ export const ArtworkListItemFragmentContainer = createFragmentContainer(
         name
         internalID
         artworksCount(onlyVisible: true)
+        shareableWithPartners
         artworksConnection(first: 4) {
           edges {
             node {
