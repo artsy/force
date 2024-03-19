@@ -11,6 +11,7 @@ import {
   SkeletonText,
   Skeleton,
   SkeletonBox,
+  Message,
 } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { SavedSearchAlertsArtworksQuery } from "__generated__/SavedSearchAlertsArtworksQuery.graphql"
@@ -61,46 +62,56 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
 
             <Separator />
 
-            <Text variant="sm-display" color="black60" mb={4}>
-              {count}
-              {count > 1 ? " works" : " work"} currently on Artsy match your
-              criteria.
-              <Text variant="sm-display" color="black60">
-                See our top picks for you:
+            {count > 0 && (
+              <Text variant="sm-display" color="black60" mb={4}>
+                {count}
+                {count > 1 ? " works" : " work"} currently on Artsy match your
+                criteria.
+                <Text variant="sm-display" color="black60">
+                  See our top picks for you:
+                </Text>
               </Text>
-            </Text>
+            )}
 
             <Spacer y={2} />
 
             <ArtworkGrid
               artworks={alert.artworksConnection}
               columnCount={2}
-              onBrickClick={() => {
-                /* TODO: to track or not to track? */
-              }}
+              emptyStateComponent={<ArtworksGridEmptyState />}
             />
 
-            <GridColumns>
-              <Column span={6}>
-                <Button
-                  width="100%"
-                  // @ts-ignore
-                  as={RouterLink}
-                  to={href}
-                >
-                  See All Matching Works
-                </Button>
-              </Column>
-              <Column span={6}>
-                <Button
-                  width="100%"
-                  variant="secondaryBlack"
-                  onClick={onEditAlertClick}
-                >
-                  Edit Alert
-                </Button>
-              </Column>
-            </GridColumns>
+            {count > 0 ? (
+              <GridColumns>
+                <Column span={6}>
+                  <Button
+                    width="100%"
+                    // @ts-ignore
+                    as={RouterLink}
+                    to={href}
+                  >
+                    See All Matching Works
+                  </Button>
+                </Column>
+                <Column span={6}>
+                  <Button
+                    width="100%"
+                    variant="secondaryBlack"
+                    onClick={onEditAlertClick}
+                  >
+                    Edit Alert
+                  </Button>
+                </Column>
+              </GridColumns>
+            ) : (
+              <Button
+                width="100%"
+                variant="secondaryBlack"
+                onClick={onEditAlertClick}
+              >
+                Edit Alert
+              </Button>
+            )}
           </Join>
         </Box>
       </Media>
@@ -113,32 +124,35 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
                 <CriteriaPills editable={false} />
               </Flex>
 
-              <Text variant="sm-display" color="black60">
-                {count}
-                {count > 1 ? " works" : " work"} currently on Artsy match your
-                criteria.
-                <Text variant="sm-display" color="black60">
-                  See our top picks for you:
-                </Text>
-              </Text>
-
-              <Spacer y={2} />
+              {count > 0 && (
+                <>
+                  <Text variant="sm-display" color="black60">
+                    {count}
+                    {count > 1 ? " works" : " work"} currently on Artsy match
+                    your criteria.
+                    <Text variant="sm-display" color="black60">
+                      See our top picks for you:
+                    </Text>
+                  </Text>
+                  <Spacer y={2} />
+                </>
+              )}
 
               <ArtworkGrid
                 artworks={alert.artworksConnection}
                 columnCount={2}
-                onBrickClick={() => {
-                  /* TODO: to track or not to track? */
-                }}
+                emptyStateComponent={<ArtworksGridEmptyState />}
               />
 
-              <Button
-                // @ts-ignore
-                as={RouterLink}
-                to={href}
-              >
-                See All Matching Works
-              </Button>
+              {count > 0 && (
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  to={href}
+                >
+                  See All Matching Works
+                </Button>
+              )}
               <Button variant="secondaryBlack" onClick={onEditAlertClick}>
                 Edit Alert
               </Button>
@@ -147,6 +161,14 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
         </Modal>
       </Media>
     </>
+  )
+}
+
+const ArtworksGridEmptyState = () => {
+  return (
+    <Message width="100%" title="No matches">
+      There aren’t any works available that meet the criteria at this time.
+    </Message>
   )
 }
 
