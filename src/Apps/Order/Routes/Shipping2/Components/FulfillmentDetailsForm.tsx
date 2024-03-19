@@ -302,7 +302,6 @@ const FulfillmentDetailsFormLayout = (
             open={addressFormMode === "saved_addresses"}
           >
             <SavedAddresses2
-              me={props.me ?? null}
               active={addressFormMode === "saved_addresses"}
               onSelect={handleSelectSavedAddress}
             />

@@ -1,7 +1,4 @@
 import { useEffect, useState, FC } from "react"
-import { compact } from "lodash"
-import { graphql, useFragment } from "react-relay"
-import { SavedAddresses2_me$key } from "__generated__/SavedAddresses2_me.graphql"
 import styled from "styled-components"
 import { RadioGroup, BorderedRadio, Spacer, Clickable } from "@artsy/palette"
 import {
@@ -21,11 +18,9 @@ import {
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useFormikContext } from "formik"
-import { extractNodes } from "Utils/extractNodes"
 
 export interface SavedAddressesProps {
   active: boolean
-  me: SavedAddresses2_me$key | null
   onSelect: (address: SavedAddressType) => void
 }
 
@@ -41,44 +36,7 @@ export const SavedAddresses2: FC<SavedAddressesProps> = props => {
     setAddressModalAction,
   ] = useState<AddressModalAction | null>(null)
 
-  const data = useFragment(
-    graphql`
-      fragment SavedAddresses2_me on Me
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 30 }
-          last: { type: "Int" }
-          after: { type: "String" }
-          before: { type: "String" }
-        ) {
-        addressConnection(
-          first: $first
-          last: $last
-          before: $before
-          after: $after
-        ) {
-          edges {
-            node {
-              internalID
-              name
-              addressLine1
-              addressLine2
-              city
-              region
-              postalCode
-              country
-              phoneNumber
-              isDefault
-            }
-          }
-        }
-      }
-    `,
-    props.me
-  )
-
-  const addressList = compact<SavedAddressType>(
-    extractNodes(data?.addressConnection) ?? []
-  )
+  const { addressList } = shippingContext.meData
 
   const savedAddressOnOrder = shippingContext.orderData.savedFulfillmentDetails
     ?.selectedSavedAddressID

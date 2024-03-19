@@ -283,7 +283,6 @@ const ME_FRAGMENT = graphql`
     location {
       country
     }
-    ...SavedAddresses2_me
     addressConnection(
       first: $first
       last: $last
@@ -299,7 +298,7 @@ const ME_FRAGMENT = graphql`
  * Get form values for initial data or suitable for resetting to.
  */
 const getInitialValues = (
-  me: ShippingContextProps["meData"],
+  meData: ShippingContextProps["meData"],
   orderData: ShippingContextProps["orderData"],
   forceNewAddressFormMode?: boolean
 ): FulfillmentValues => {
@@ -318,7 +317,7 @@ const getInitialValues = (
     } as FulfillmentValues
   }
 
-  const savedAddresses = me.addressList
+  const savedAddresses = meData.addressList
 
   // The default ship-to address should be the first one that
   // can be shipped-to, preferring the default

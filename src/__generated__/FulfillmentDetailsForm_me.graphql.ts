@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34fc028bfb9e23d27d9fc9578f245438>>
+ * @generated SignedSource<<3902a2d6fcce77c5e26339b3ebfea118>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,6 @@ export type FulfillmentDetailsForm_me$data = {
     readonly country: string | null | undefined;
   } | null | undefined;
   readonly name: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses2_me">;
   readonly " $fragmentType": "FulfillmentDetailsForm_me";
 };
 export type FulfillmentDetailsForm_me$key = {
@@ -95,11 +94,6 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SavedAddresses2_me"
-    },
-    {
       "alias": null,
       "args": [
         {
@@ -143,6 +137,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "49aa2aea8ec7ea84adcde5c6c9511784";
+(node as any).hash = "d8d9607dc7cd65f89060ac09751ccddb";
 
 export default node;

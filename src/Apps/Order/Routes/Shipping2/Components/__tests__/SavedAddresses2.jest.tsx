@@ -76,14 +76,14 @@ const { renderWithRelay } = setupTestWrapperTL<SavedAddresses2TestQuery>({
   Component: props => {
     return (
       <TestWrapper>
-        <SavedAddresses2 {...testProps} me={props.me!} />
+        <SavedAddresses2 {...testProps} />
       </TestWrapper>
     )
   },
   query: graphql`
     query SavedAddresses2TestQuery {
       me {
-        ...SavedAddresses2_me
+        email # need something for the wrapper to render
       }
     }
   `,
@@ -99,6 +99,9 @@ describe("Saved Addresses", () => {
       onSelect: jest.fn(),
     }
     mockShippingContext = ({
+      meData: {
+        addressList: basicAddressList,
+      },
       orderData: {
         availableShippingCountries: ["US"],
         savedFulfillmentDetails: { selectedSavedAddressID: "2" },
@@ -144,6 +147,7 @@ describe("Saved Addresses", () => {
     expect(testProps.onSelect).toHaveBeenCalledWith({
       addressLine1: "1 Main St",
       addressLine2: "",
+      addressLine3: "",
       city: "Madrid",
       country: "Spain",
       internalID: "1",
@@ -298,37 +302,31 @@ describe("Saved Addresses", () => {
   })
 })
 
-const basicAddressList = {
-  edges: [
-    {
-      node: {
-        internalID: "1",
-        addressLine1: "1 Main St",
-        addressLine2: "",
-        addressLine3: "",
-        city: "Madrid",
-        country: "Spain",
-        isDefault: false,
-        name: "Test Name",
-        phoneNumber: "555-555-5555",
-        postalCode: "28001",
-        region: "",
-      },
-    },
-    {
-      node: {
-        internalID: "2",
-        addressLine1: "401 Broadway",
-        addressLine2: "Floor 25",
-        addressLine3: "",
-        city: "New York",
-        country: "US",
-        isDefault: true,
-        name: "Test Name",
-        phoneNumber: "422-424-4242",
-        postalCode: "10013",
-        region: "NY",
-      },
-    },
-  ],
-}
+const basicAddressList = [
+  {
+    internalID: "1",
+    addressLine1: "1 Main St",
+    addressLine2: "",
+    addressLine3: "",
+    city: "Madrid",
+    country: "Spain",
+    isDefault: false,
+    name: "Test Name",
+    phoneNumber: "555-555-5555",
+    postalCode: "28001",
+    region: "",
+  },
+  {
+    internalID: "2",
+    addressLine1: "401 Broadway",
+    addressLine2: "Floor 25",
+    addressLine3: "",
+    city: "New York",
+    country: "US",
+    isDefault: true,
+    name: "Test Name",
+    phoneNumber: "422-424-4242",
+    postalCode: "10013",
+    region: "NY",
+  },
+]
