@@ -1,8 +1,14 @@
 import { FC } from "react"
-import { RelayProp, createFragmentContainer, graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
-import { Shipping2_order$data } from "__generated__/Shipping2_order.graphql"
-import { Shipping2_me$data } from "__generated__/Shipping2_me.graphql"
+import {
+  Shipping2_order$data,
+  Shipping2_order$key,
+} from "__generated__/Shipping2_order.graphql"
+import {
+  Shipping2_me$data,
+  Shipping2_me$key,
+} from "__generated__/Shipping2_me.graphql"
 import { Media } from "Utils/Responsive"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
@@ -35,19 +41,24 @@ export type ShippingStage =
 export interface ShippingProps {
   order: Shipping2_order$data
   me: Shipping2_me$data
-  relay?: RelayProp
   dialog: Dialog
 }
 
-export const ShippingRoute: FC<ShippingProps> = props => {
+export const ShippingRoute: FC<{
+  order: Shipping2_order$key
+  me: Shipping2_me$key
+  dialog: Dialog
+}> = props => {
+  const orderData = useFragment(ORDER_FRAGMENT, props.order)
+  const meData = useFragment(ME_FRAGMENT, props.me)
   return (
-    <Analytics contextPageOwnerId={props.order.internalID}>
+    <Analytics contextPageOwnerId={orderData.internalID}>
       <ShippingContextProvider
         dialog={props.dialog}
-        order={props.order}
-        me={props.me}
+        order={orderData}
+        me={meData}
       >
-        <ShippingRouteLayout order={props.order} me={props.me} />
+        <ShippingRouteLayout order={orderData} me={meData} />
       </ShippingContextProvider>
     </Analytics>
   )
@@ -142,107 +153,37 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
   )
 }
 
-export const ShippingFragmentContainer = createFragmentContainer(
-  injectDialog(ShippingRoute),
-  {
-    order: graphql`
-      fragment Shipping2_order on CommerceOrder {
-        ...FulfillmentDetailsForm_order
-        ...SaveAndContinueButton_order
-        ...ArtworkSummaryItem_order
-        ...TransactionDetailsSummaryItem_order
-        ...OrderStepper_order
-        __typename
-        internalID
-        mode
-        requestedFulfillment {
-          __typename
-          ... on CommercePickup {
-            phoneNumber
-          }
-          ... on CommerceShip {
-            name
-            addressLine1
-            addressLine2
-            city
-            region
-            country
-            postalCode
-            phoneNumber
-          }
-          ... on CommerceShipArta {
-            name
-            addressLine1
-            addressLine2
-            city
-            region
-            country
-            postalCode
-            phoneNumber
-          }
-        }
-        lineItems {
-          edges {
-            node {
-              ...ShippingQuotes2_commerceLineItem
-              shippingQuoteOptions {
-                edges {
-                  node {
-                    id
-                    isSelected
-                    price(precision: 2)
-                    priceCents
-                    typeName
-                  }
-                }
-              }
-              artwork {
-                slug
-                processWithArtsyShippingDomestic
-                artsyShippingInternational
-                pickup_available: pickupAvailable
-                onlyShipsDomestically
-                euShippingOrigin
-                shippingCountry
-              }
-            }
-          }
+const ORDER_FRAGMENT = graphql`
+  fragment Shipping2_order on CommerceOrder {
+    ...ShippingContext_order
+    ...FulfillmentDetailsForm_order
+    ...SaveAndContinueButton_order
+    ...ArtworkSummaryItem_order
+    ...TransactionDetailsSummaryItem_order
+    ...OrderStepper_order
+    mode
+    internalID
+    lineItems {
+      edges {
+        node {
+          ...ShippingQuotes2_commerceLineItem
         }
       }
-    `,
-    me: graphql`
-      fragment Shipping2_me on Me
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 30 }
-          last: { type: "Int" }
-          after: { type: "String" }
-          before: { type: "String" }
-        ) {
-        ...FulfillmentDetailsForm_me
-        addressConnection(
-          first: $first
-          last: $last
-          before: $before
-          after: $after
-        ) {
-          edges {
-            node {
-              id
-              internalID
-              addressLine1
-              addressLine2
-              addressLine3
-              city
-              country
-              isDefault
-              name
-              phoneNumber
-              postalCode
-              region
-            }
-          }
-        }
-      }
-    `,
+    }
   }
-)
+`
+const ME_FRAGMENT = graphql`
+  fragment Shipping2_me on Me
+    @argumentDefinitions(
+      first: { type: "Int", defaultValue: 30 }
+      last: { type: "Int" }
+      after: { type: "String" }
+      before: { type: "String" }
+    ) {
+    ...FulfillmentDetailsForm_me
+    ...ShippingContext_me
+      @arguments(first: $first, last: $last, before: $before, after: $after)
+  }
+`
+
+export const ShippingRouteWithDialog = injectDialog(ShippingRoute)

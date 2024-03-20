@@ -2,7 +2,7 @@
 import { cloneDeep, merge } from "lodash"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
-import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping2"
+import { ShippingRouteWithDialog } from "Apps/Order/Routes/Shipping2"
 import { graphql } from "react-relay"
 import {
   UntouchedBuyOrder,
@@ -105,6 +105,7 @@ const meWithoutAddress: Shipping2TestQuery$rawResponse["me"] = {
     country: "United States",
   },
   addressConnection: {
+    totalCount: 0,
     edges: [],
   },
 }
@@ -114,7 +115,7 @@ const meWithAddresses: Shipping2TestQuery$rawResponse["me"] = Object.assign(
   meWithoutAddress,
   {
     addressConnection: {
-      totalCount: 0,
+      totalCount: 2,
       edges: [
         {
           node: {
@@ -264,7 +265,7 @@ const getAllPendingOperationNames = (env: MockEnvironment) => {
 
 let mockTrackEvent: jest.Mock
 
-// FIXME: MockBoot interfering somehow...
+// FIXME: CI Timeouts likely due to fillAddressForm() duration...
 describe.skip("Shipping", () => {
   const mockUseRouter = useRouter as jest.Mock
   const mockPush = jest.fn()
@@ -301,7 +302,7 @@ describe.skip("Shipping", () => {
     Component: props => {
       return (
         <MockBoot relayEnvironment={mockRelayEnv}>
-          <ShippingFragmentContainer order={props.order!} me={props.me!} />
+          <ShippingRouteWithDialog order={props.order!} me={props.me!} />
         </MockBoot>
       )
     },
@@ -343,7 +344,7 @@ describe.skip("Shipping", () => {
 
       it("does not render fulfillment selection if artwork is not available for pickup", async () => {
         const shippingOnlyOrder = cloneDeep(order) as any
-        shippingOnlyOrder.lineItems.edges[0].node.artwork.pickup_available = false
+        shippingOnlyOrder.lineItems.edges[0].node.artwork.pickupAvailable = false
 
         renderWithRelay({
           CommerceOrder: () => shippingOnlyOrder,
