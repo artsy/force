@@ -1,4 +1,4 @@
-import { commitMutation, createFragmentContainer, graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import {
   ArtworkSidebarEditionSetFragmentContainer,
   EditionSet,
@@ -18,7 +18,8 @@ import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
 import { useSystemContext } from "System/useSystemContext"
-import { ArtworkSidebarCommercialButtons_artwork$data } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
+import { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
+import { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
 import { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
 import { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
 import { useTracking } from "react-tracking"
@@ -29,6 +30,11 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { useRouter } from "System/Router/useRouter"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
+import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { useTimer } from "Utils/Hooks/useTimer"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { extractNodes } from "Utils/extractNodes"
 
 interface SaleMessageProps {
   saleMessage: string | null | undefined
@@ -47,13 +53,34 @@ const SaleMessage: React.FC<SaleMessageProps> = ({ saleMessage }) => {
 }
 
 interface ArtworkSidebarCommercialButtonsProps {
-  artwork: ArtworkSidebarCommercialButtons_artwork$data
+  artwork: ArtworkSidebarCommercialButtons_artwork$key
+  me: ArtworkSidebarCommercialButtons_me$key
 }
 
-const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsProps> = ({
-  artwork,
-}) => {
-  const { relayEnvironment, router, user } = useSystemContext()
+const THE_PAST = new Date(0).toISOString()
+
+export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialButtonsProps> = props => {
+  const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
+  const me = useFragment(ME_FRAGMENT, props.me)
+
+  const partnerOfferVisibilityEnabled = useFeatureFlag(
+    "emerald_partner-offers-to-artwork-page"
+  )
+
+  // Get the first not-ended partner offer, if available
+  const partnerOffer =
+    (partnerOfferVisibilityEnabled &&
+      me?.partnerOffersConnection &&
+      extractNodes(me.partnerOffersConnection)[0]) ||
+    null
+
+  // Fall back to a definitely past value because the timer hook doesn't like nulls
+  const partnerOfferTimer = useTimer(partnerOffer?.endAt || THE_PAST)
+
+  const activePartnerOffer =
+    (!partnerOfferTimer.hasEnded && partnerOffer) || null
+
+  const { router, user } = useSystemContext()
   const { match } = useRouter()
 
   const { t } = useTranslation()
@@ -61,6 +88,11 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
   const tracking = useTracking()
 
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false)
+
+  const createPartnerOfferCheckout = usePartnerOfferCheckoutMutation()
+
+  const createOrder = useCreateOrderMutation()
+  const createOfferOrder = useCreateOfferOrderMutation()
 
   const [
     isCommitingCreateOrderMutation,
@@ -99,7 +131,51 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
     showInquiry({ enableCreateAlert: true })
   }
 
-  const handleCreateOrder = () => {
+  const handleCreatePartnerOfferOrder = async () => {
+    if (activePartnerOffer?.internalID) {
+      try {
+        setIsCommitingCreateOrderMutation(true)
+        const response = await createPartnerOfferCheckout.submitMutation({
+          variables: {
+            input: {
+              partnerOfferId: activePartnerOffer.internalID,
+            },
+          },
+        })
+
+        let redirectUrl = "/"
+        let orderOrError =
+          response.commerceCreatePartnerOfferOrder?.orderOrError
+
+        if (orderOrError?.error) {
+          const errorCode = orderOrError.error.code
+          const errorData = JSON.parse(
+            orderOrError.error.data?.toString() ?? ""
+          )
+
+          switch (errorCode) {
+            // TODO: these cases are unlikely from the artwork page, copied from the special create route
+            case "expired_partner_offer":
+              redirectUrl = `/artwork/${errorData.artwork_id}?expired_offer=true`
+              break
+            case "not_acquireable":
+              redirectUrl = `/artwork/${errorData.artwork_id}?unavailable=true`
+              break
+            default:
+              throw new ErrorWithMetadata(errorCode, orderOrError.error)
+          }
+        } else {
+          redirectUrl = `/orders/${orderOrError?.order?.internalID}`
+        }
+        setIsCommitingCreateOrderMutation(false)
+        router?.push(redirectUrl)
+      } catch (error) {
+        onMutationError(error)
+      }
+    }
+  }
+
+  const handleCreateOrder = async () => {
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.ClickedBuyNow,
       flow: DeprecatedSchema.Flow.BuyNow,
@@ -115,63 +191,34 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
       ],
     })
     if (!!user?.id) {
-      setIsCommitingCreateOrderMutation(true)
-      commitMutation<ArtworkSidebarCommercialButtonsOrderMutation>(
-        relayEnvironment,
-        {
-          mutation: graphql`
-            mutation ArtworkSidebarCommercialButtonsOrderMutation(
-              $input: CommerceCreateOrderWithArtworkInput!
-            ) {
-              commerceCreateOrderWithArtwork(input: $input) {
-                orderOrError {
-                  ... on CommerceOrderWithMutationSuccess {
-                    __typename
-                    order {
-                      internalID
-                      mode
-                    }
-                  }
-                  ... on CommerceOrderWithMutationFailure {
-                    error {
-                      type
-                      code
-                      data
-                    }
-                  }
-                }
-              }
-            }
-          `,
+      try {
+        setIsCommitingCreateOrderMutation(true)
+        const data = await createOrder.submitMutation({
           variables: {
             input: {
               artworkId: artwork.internalID,
               editionSetId: selectedEditionSet?.internalID,
             },
           },
-          onCompleted: data => {
-            setIsCommitingCreateOrderMutation(false)
-            const {
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              commerceCreateOrderWithArtwork: { orderOrError },
-            } = data
+        })
+        setIsCommitingCreateOrderMutation(false)
+        const {
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+          commerceCreateOrderWithArtwork: { orderOrError },
+        } = data
+        if (orderOrError.error) {
+          throw new ErrorWithMetadata(
+            orderOrError.error.code,
+            orderOrError.error
+          )
+        } else {
+          const url = `/orders/${orderOrError.order.internalID}`
 
-            if (orderOrError.error) {
-              onMutationError(
-                new ErrorWithMetadata(
-                  orderOrError.error.code,
-                  orderOrError.error
-                )
-              )
-            } else {
-              const url = `/orders/${orderOrError.order.internalID}`
-
-              router?.push(url)
-            }
-          },
-          onError: onMutationError,
+          router?.push(url)
         }
-      )
+      } catch (e) {
+        onMutationError(e)
+      }
     } else {
       showAuthDialog({
         mode: "SignUp",
@@ -196,7 +243,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
     }
   }
 
-  const handleCreateOfferOrder = () => {
+  const handleCreateOfferOrder = async () => {
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.ClickedMakeOffer,
       flow: DeprecatedSchema.Flow.MakeOffer,
@@ -206,62 +253,35 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
     })
 
     if (!!user?.id) {
-      setIsCommitingCreateOfferOrderMutation(true)
-      commitMutation<ArtworkSidebarCommercialButtonsOfferOrderMutation>(
-        relayEnvironment,
-        {
-          mutation: graphql`
-            mutation ArtworkSidebarCommercialButtonsOfferOrderMutation(
-              $input: CommerceCreateOfferOrderWithArtworkInput!
-            ) {
-              commerceCreateOfferOrderWithArtwork(input: $input) {
-                orderOrError {
-                  ... on CommerceOrderWithMutationSuccess {
-                    __typename
-                    order {
-                      internalID
-                      mode
-                    }
-                  }
-                  ... on CommerceOrderWithMutationFailure {
-                    error {
-                      type
-                      code
-                      data
-                    }
-                  }
-                }
-              }
-            }
-          `,
+      try {
+        setIsCommitingCreateOfferOrderMutation(true)
+        const data = await createOfferOrder.submitMutation({
           variables: {
             input: {
               artworkId: artwork.internalID,
               editionSetId: selectedEditionSet?.internalID,
             },
           },
-          onCompleted: data => {
-            setIsCommitingCreateOfferOrderMutation(false)
+        })
 
-            const {
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              commerceCreateOfferOrderWithArtwork: { orderOrError },
-            } = data
-            if (orderOrError.error) {
-              onMutationError(
-                new ErrorWithMetadata(
-                  orderOrError.error.code,
-                  orderOrError.error
-                )
-              )
-            } else {
-              const url = `/orders/${orderOrError.order.internalID}/offer`
-              router?.push(url)
-            }
-          },
-          onError: onMutationError,
+        setIsCommitingCreateOfferOrderMutation(false)
+
+        const {
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+          commerceCreateOfferOrderWithArtwork: { orderOrError },
+        } = data
+        if (orderOrError.error) {
+          throw new ErrorWithMetadata(
+            orderOrError.error.code,
+            orderOrError.error
+          )
+        } else {
+          const url = `/orders/${orderOrError.order.internalID}/offer`
+          router?.push(url)
         }
-      )
+      } catch (error) {
+        onMutationError(error)
+      }
     } else {
       showAuthDialog({
         mode: "SignUp",
@@ -329,6 +349,10 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
     )
   }
 
+  const buyNowOrPartnerOfferAvailable = !!(
+    artwork.isAcquireable || activePartnerOffer
+  )
+
   return (
     <>
       {inquiryComponent}
@@ -362,12 +386,17 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
       <Flex flexDirection={["column", "column", "column", "column", "row"]}>
         <Join separator={<Spacer x={1} y={1} />}>
           <AlertSwitch />
-          {artwork.isAcquireable && (
+          {buyNowOrPartnerOfferAvailable && (
             <Button
               width="100%"
               size="large"
               loading={isCommitingCreateOrderMutation}
-              onClick={handleCreateOrder}
+              onClick={
+                // TODO: make sure the timer will reset the active partner offer
+                activePartnerOffer
+                  ? handleCreatePartnerOfferOrder
+                  : handleCreateOrder
+              }
             >
               {t("artworkPage.sidebar.commercialButtons.buyNow")}
             </Button>
@@ -375,7 +404,9 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
           {artwork.isOfferable && (
             <Button
               variant={
-                artwork.isAcquireable ? "secondaryBlack" : "primaryBlack"
+                buyNowOrPartnerOfferAvailable
+                  ? "secondaryBlack"
+                  : "primaryBlack"
               }
               width="100%"
               size="large"
@@ -428,47 +459,114 @@ const ErrorToast: React.FC<{ onClose(): void; show: boolean }> = ({
   return null
 }
 
-export const ArtworkSidebarCommercialButtonsFragmentContainer = createFragmentContainer(
-  ArtworkSidebarCommerialButtons,
-  {
-    artwork: graphql`
-      fragment ArtworkSidebarCommercialButtons_artwork on Artwork {
-        ...ArtworkSidebarEditionSets_artwork
-        isEligibleToCreateAlert
-        artists {
-          internalID
-        }
-        attributionClass {
-          internalID
-        }
-        internalID
-        slug
-        saleMessage
-        isInquireable
-        isAcquireable
-        isOfferable
-        isSold
-        listPrice {
-          ... on PriceRange {
-            display
+const useCreateOrderMutation = () => {
+  return useMutation<ArtworkSidebarCommercialButtonsOrderMutation>({
+    mutation: graphql`
+      mutation ArtworkSidebarCommercialButtonsOrderMutation(
+        $input: CommerceCreateOrderWithArtworkInput!
+      ) {
+        commerceCreateOrderWithArtwork(input: $input) {
+          orderOrError {
+            ... on CommerceOrderWithMutationSuccess {
+              __typename
+              order {
+                internalID
+                mode
+              }
+            }
+            ... on CommerceOrderWithMutationFailure {
+              error {
+                type
+                code
+                data
+              }
+            }
           }
-          ... on Money {
-            display
-          }
-        }
-        mediumType {
-          filterGene {
-            slug
-          }
-        }
-        editionSets {
-          id
-          internalID
-          isAcquireable
-          isOfferable
-          saleMessage
         }
       }
     `,
+  })
+}
+
+const useCreateOfferOrderMutation = () => {
+  return useMutation<ArtworkSidebarCommercialButtonsOfferOrderMutation>({
+    mutation: graphql`
+      mutation ArtworkSidebarCommercialButtonsOfferOrderMutation(
+        $input: CommerceCreateOfferOrderWithArtworkInput!
+      ) {
+        commerceCreateOfferOrderWithArtwork(input: $input) {
+          orderOrError {
+            ... on CommerceOrderWithMutationSuccess {
+              __typename
+              order {
+                internalID
+                mode
+              }
+            }
+            ... on CommerceOrderWithMutationFailure {
+              error {
+                type
+                code
+                data
+              }
+            }
+          }
+        }
+      }
+    `,
+  })
+}
+
+const ARTWORK_FRAGMENT = graphql`
+  fragment ArtworkSidebarCommercialButtons_artwork on Artwork {
+    ...ArtworkSidebarEditionSets_artwork
+    isEligibleToCreateAlert
+    artists {
+      internalID
+    }
+    attributionClass {
+      internalID
+    }
+    internalID
+    slug
+    saleMessage
+    isInquireable
+    isAcquireable
+    isOfferable
+    isSold
+    listPrice {
+      ... on PriceRange {
+        display
+      }
+      ... on Money {
+        display
+      }
+    }
+    mediumType {
+      filterGene {
+        slug
+      }
+    }
+    editionSets {
+      id
+      internalID
+      isAcquireable
+      isOfferable
+      saleMessage
+    }
   }
-)
+`
+
+const ME_FRAGMENT = graphql`
+  fragment ArtworkSidebarCommercialButtons_me on Me
+    @argumentDefinitions(artworkID: { type: "String!" }) {
+    partnerOffersConnection(artworkID: $artworkID, first: 1) {
+      edges {
+        node {
+          endAt
+          internalID
+        }
+      }
+    }
+  }
+`

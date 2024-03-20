@@ -414,6 +414,7 @@ interface ArtworkResultProps extends RenderProps {
 const ArtworkResult: React.FC<ArtworkResultProps> = props => {
   const { artworkResult, ...rest } = props
   const { __typename } = artworkResult
+  console.log("ME!!!!!!!!", props.me)
 
   if (__typename === "Artwork") {
     return <ArtworkAppFragmentContainer artwork={artworkResult} {...rest} />
@@ -437,7 +438,7 @@ export const ArtworkResultFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkApp_me on Me
         @argumentDefinitions(artworkID: { type: "String!" }) {
-        ...ArtworkSidebar_me
+        ...ArtworkSidebar_me @arguments(artworkID: $artworkID)
         ...ArtworkPageBanner_me @arguments(artworkID: $artworkID)
       }
     `,

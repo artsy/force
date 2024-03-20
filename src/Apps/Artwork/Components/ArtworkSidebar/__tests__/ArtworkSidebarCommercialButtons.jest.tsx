@@ -1,17 +1,25 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { screen, fireEvent } from "@testing-library/react"
+import { screen, fireEvent, waitFor } from "@testing-library/react"
 import { ArtworkSidebarCommercialButtons_Test_Query } from "__generated__/ArtworkSidebarCommercialButtons_Test_Query.graphql"
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { createMockEnvironment } from "relay-test-utils"
 import { MockBoot } from "DevTools/MockBoot"
-import { ArtworkSidebarCommercialButtonsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercialButtons"
+import { ArtworkSidebarCommercialButtons } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercialButtons"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useRouter } from "System/Router/useRouter"
+import userEvent from "@testing-library/user-event"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.unmock("react-relay")
 
 jest.mock("System/Router/useRouter")
+
+jest.mock("System/useFeatureFlag", () => {
+  return {
+    useFeatureFlag: jest.fn(),
+  }
+})
 
 jest.mock("Components/AuthDialog/useAuthDialog", () => ({
   useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
@@ -19,33 +27,62 @@ jest.mock("Components/AuthDialog/useAuthDialog", () => ({
 
 describe("ArtworkSidebarCommercialButtons", () => {
   let user
+  let partnerOffers
 
-  let mockEnvironment = createMockEnvironment()
+  let mockEnvironment
+  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
-  const { renderWithRelay } = setupTestWrapperTL<
+  const { renderWithRelay: renderRaw } = setupTestWrapperTL<
     ArtworkSidebarCommercialButtons_Test_Query
   >({
-    Component: ({ artwork }) => (
-      <MockBoot relayEnvironment={mockEnvironment} context={{ user }}>
-        <ToastsProvider>
-          <Toasts />
-          <ArtworkSidebarCommercialButtonsFragmentContainer
-            artwork={artwork!}
-          />
-        </ToastsProvider>
-      </MockBoot>
-    ),
+    Component: ({ artwork, me }) => {
+      return (
+        <MockBoot relayEnvironment={mockEnvironment} context={{ user }}>
+          <ToastsProvider>
+            <Toasts />
+            <ArtworkSidebarCommercialButtons artwork={artwork!} me={me!} />
+          </ToastsProvider>
+        </MockBoot>
+      )
+    },
     query: graphql`
       query ArtworkSidebarCommercialButtons_Test_Query @relay_test_operation {
         artwork(id: "josef-albers-homage-to-the-square-85") {
           ...ArtworkSidebarCommercialButtons_artwork
         }
+        me {
+          ...ArtworkSidebarCommercialButtons_me
+            @arguments(artworkID: "josef-albers-homage-to-the-square-85")
+        }
       }
     `,
   })
 
+  const renderWithRelay: typeof renderRaw = (
+    mockResolvers: Parameters<typeof renderRaw>[0] = {}
+  ) => {
+    const mockMe = !!user
+      ? {
+          internalID: user.id,
+          partnerOffersConnection: {
+            edges: partnerOffers.map(node => ({ node })),
+          },
+        }
+      : null
+    // If `user` is defined, use it to mock the Me query and add
+    // any defined partner offers.
+    const defaultMockResolvers = {
+      Query: () => ({ me: mockMe }),
+    }
+
+    const finalMockResolvers = { ...defaultMockResolvers, ...mockResolvers }
+    return renderRaw(finalMockResolvers, {}, mockEnvironment)
+  }
+
   beforeEach(() => {
+    mockEnvironment = createMockEnvironment()
     user = { id: "123", name: "User" }
+    partnerOffers = []
     window.history.pushState({}, "Artwork Title", "/artwork/the-id")
   })
 
@@ -248,6 +285,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
   describe("authentication", () => {
     const mockUseRouter = useRouter as jest.Mock
     const mockUseAuthDialog = useAuthDialog as jest.Mock
+
     mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog: jest.fn() }))
     mockUseRouter.mockImplementation(() => ({
       match: {
@@ -337,6 +375,142 @@ describe("ArtworkSidebarCommercialButtons", () => {
           intent: "makeOffer",
         },
       })
+    })
+  })
+
+  describe("Starting an order", () => {
+    beforeEach(() => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+    })
+
+    it("creates an offer order via mutation when clicking make offer", async () => {
+      const { mockResolveLastOperation } = renderWithRelay({
+        Artwork: () => ({
+          internalID: "artwork-1",
+          isOfferable: true,
+          editionSets: [
+            {
+              internalID: "edition-set-id",
+              isOfferable: true,
+            },
+          ],
+        }),
+      })
+
+      userEvent.click(screen.getByText("Make an Offer"))
+
+      const { operationName } = await mockResolveLastOperation({})
+
+      await waitFor(() => {
+        expect(operationName).toBe(
+          "ArtworkSidebarCommercialButtonsOfferOrderMutation"
+        )
+      })
+    })
+
+    it("creates an order via mutation when clicking 'purchase' with no partner offer", async () => {
+      const { mockResolveLastOperation } = renderWithRelay({
+        Artwork: () => ({
+          internalID: "artwork-1",
+          isAcquireable: true,
+          isOfferable: true,
+          editionSets: [
+            {
+              internalID: "edition-set-id",
+              isAcquirable: true,
+            },
+          ],
+        }),
+      })
+
+      userEvent.click(screen.getByText("Purchase"))
+
+      const { operationName } = await mockResolveLastOperation({})
+
+      expect(operationName).toBe("ArtworkSidebarCommercialButtonsOrderMutation")
+    })
+
+    it("creates a partner offer order via mutation when clicking 'purchase' with an active partner offer", async () => {
+      const futureDate = new Date()
+      futureDate.setDate(futureDate.getDate() + 1)
+
+      const { mockResolveLastOperation } = renderWithRelay({
+        Query: () => ({
+          me: {
+            partnerOffersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "partner-offer-id",
+                    endAt: futureDate.toISOString(),
+                  },
+                },
+              ],
+            },
+          },
+        }),
+        Artwork: () => ({
+          internalID: "artwork-1",
+          isAcquireable: true,
+          editionSets: [
+            {
+              internalID: "edition-set-id",
+              isAcquireable: true,
+            },
+          ],
+        }),
+      })
+
+      userEvent.click(screen.getByText("Purchase"))
+
+      const { operationName } = await mockResolveLastOperation({
+        CommerceCreateOrderWithArtworkPayload: () => ({
+          orderOrError: {
+            __typename: "CommerceOrderWithMutationSuccess",
+            order: { internalID: "order-id" },
+          },
+        }),
+      })
+
+      expect(operationName).toBe("UsePartnerOfferCheckoutMutation")
+    })
+
+    it("uses the regular order mutation if the partner offer expires after the page loads", async () => {
+      const expiringSoon = new Date()
+      expiringSoon.setSeconds(expiringSoon.getSeconds() + 1)
+
+      const { mockResolveLastOperation } = renderWithRelay({
+        Query: () => ({
+          me: {
+            partnerOffersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "partner-offer-id",
+                    endAt: expiringSoon.toISOString(),
+                  },
+                },
+              ],
+            },
+          },
+        }),
+        Artwork: () => ({
+          internalID: "artwork-1",
+          isAcquireable: true,
+          editionSets: [
+            {
+              internalID: "edition-set-id",
+              isAcquireable: true,
+            },
+          ],
+        }),
+      })
+      jest.advanceTimersByTime(2000)
+
+      await userEvent.click(screen.getByText("Purchase"))
+
+      const { operationName } = await mockResolveLastOperation({})
+      expect(operationName).toBe("ArtworkSidebarCommercialButtonsOrderMutation")
     })
   })
 })
