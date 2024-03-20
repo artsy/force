@@ -121,7 +121,7 @@ export const ShippingContextProvider: FC<{
     dialog: props.dialog,
     isArtsyShipping:
       orderData.savedFulfillmentDetails?.isArtsyShipping ?? false,
-    orderData: orderData,
+    orderData,
   })
 
   const actions = {
@@ -156,7 +156,7 @@ export const ShippingContextProvider: FC<{
   const contextProps = {
     actions,
     meData,
-    orderData: orderData,
+    orderData,
     state,
   }
 

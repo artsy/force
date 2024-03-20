@@ -50,7 +50,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   // Trigger address verification by setting this to true
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
 
-  const hasSavedAddresses = (meData.addressConnection?.totalCount ?? 0) > 0
+  const hasSavedAddresses = !!meData.addressConnection?.totalCount
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork!
 
