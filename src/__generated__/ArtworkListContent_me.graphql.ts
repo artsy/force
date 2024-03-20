@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5fe5fed9f9f2eb3ea5ffd34506102441>>
+ * @generated SignedSource<<77ae2573181a5edede342d45a831d380>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type ArtworkListContent_me$data = {
     readonly default: boolean;
     readonly internalID: string;
     readonly name: string;
+    readonly shareableWithPartners: boolean;
   } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkListArtworksGrid_me">;
   readonly " $fragmentType": "ArtworkListContent_me";
@@ -96,6 +97,13 @@ return {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "shareableWithPartners",
+          "storageKey": null
+        },
+        {
           "alias": "artworks",
           "args": [
             {
@@ -143,6 +151,6 @@ return {
 };
 })();
 
-(node as any).hash = "44934bb899fe4769458b3db09bee9aa3";
+(node as any).hash = "f4ad69becbbc5c6e7b4acf4ff78362b0";
 
 export default node;

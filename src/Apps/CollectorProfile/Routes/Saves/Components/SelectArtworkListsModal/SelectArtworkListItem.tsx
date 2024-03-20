@@ -7,6 +7,8 @@ import { SelectArtworkListItem_item$data } from "__generated__/SelectArtworkList
 import { extractNodes } from "Utils/extractNodes"
 import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves/Components/SavesEntityImage"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import LockIcon from "@artsy/icons/LockIcon"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 const ICON_SIZE = 24
 
@@ -24,6 +26,10 @@ const SelectArtworkListItem: FC<SelectArtworkListItemProps> = ({
   const { t } = useTranslation()
   const nodes = extractNodes(item.artworksConnection)
   const imageURL = nodes[0]?.image?.url ?? null
+
+  const shareableWithPartnersEnabled = useFeatureFlag(
+    "emerald_artwork-list-offerability"
+  )
 
   return (
     <Clickable
@@ -44,7 +50,13 @@ const SelectArtworkListItem: FC<SelectArtworkListItemProps> = ({
       <Spacer x={1} />
 
       <Flex flexDirection="column" flex={1}>
-        <Text variant="sm-display">{item.name}</Text>
+        <Flex>
+          <Text variant="sm-display">{item.name}</Text>
+          {shareableWithPartnersEnabled && !item.shareableWithPartners && (
+            <LockIcon marginLeft={0.5} minWidth="18px" />
+          )}
+        </Flex>
+
         <Text variant="sm-display" color="black60">
           {t("collectorSaves.artworkLists.artworkWithCount", {
             count: item.artworksCount,
@@ -70,6 +82,7 @@ export const SelectArtworkListItemFragmentContainer = createFragmentContainer(
       fragment SelectArtworkListItem_item on Collection {
         name
         artworksCount(onlyVisible: true)
+        shareableWithPartners
         artworksConnection(first: 1, sort: SAVED_AT_DESC) {
           edges {
             node {
