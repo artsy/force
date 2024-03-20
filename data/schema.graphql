@@ -15755,6 +15755,7 @@ type Query {
     last: Int
     marketable: Boolean
     maxWorksPerArtist: Int
+    onlyAtAuction: Boolean = false
     page: Int
     userId: String
     version: String
@@ -20578,6 +20579,7 @@ type Viewer {
     last: Int
     marketable: Boolean
     maxWorksPerArtist: Int
+    onlyAtAuction: Boolean = false
     page: Int
     userId: String
     version: String
