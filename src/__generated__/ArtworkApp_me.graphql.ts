@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<466e3c8e8ab4706bc794b97d2346a22a>>
+ * @generated SignedSource<<80ac805efef8eec997178cb27b1eb90d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkApp_me$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar_me">;
+  readonly partnerOffersConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArtworkApp_me";
 };
 export type ArtworkApp_me$key = {
@@ -20,21 +26,73 @@ export type ArtworkApp_me$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "artworkID"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkApp_me",
   "selections": [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSidebar_me"
+      "alias": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "artworkID",
+          "variableName": "artworkID"
+        },
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        }
+      ],
+      "concreteType": "PartnerOfferToCollectorConnection",
+      "kind": "LinkedField",
+      "name": "partnerOffersConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PartnerOfferToCollectorEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "PartnerOfferToCollector",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "aae03275c844ec61c6893b5eee528e86";
+(node as any).hash = "c2610d42acc069722d046635905e6248";
 
 export default node;

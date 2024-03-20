@@ -46,6 +46,7 @@ import { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkR
 import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorApp"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { PrivateArtworkDetails } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkDetails"
+import { extractNodes } from "Utils/extractNodes"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -96,13 +97,39 @@ export const ArtworkApp: React.FC<Props> = props => {
     "amber_artwork_visibility_unlisted"
   )
 
+  const partnerOfferVisibilityEnabled = useFeatureFlag(
+    "emerald_partner-offers-to-artwork-page"
+  )
+
   const showUnlistedArtworkBanner =
     artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
 
   const isPrivateArtwork = privateArtworksEnabled && showUnlistedArtworkBanner
 
-  const showExpiredOfferBanner = !!match?.location?.query?.expired_offer
-  const showUnavailableArtworkBanner = !!match?.location?.query?.unavailable
+  let showExpiredOfferBanner = false
+  let showUnavailableArtworkBanner
+
+  const expectedPartnerOfferID = match?.location?.query?.partner_offer_id as
+    | string
+    | undefined
+
+  if (partnerOfferVisibilityEnabled && expectedPartnerOfferID) {
+    const partnerOffer = extractNodes(me?.partnerOffersConnection)[0]
+    if (!artwork.is_acquireable) {
+      showUnavailableArtworkBanner = true
+    } else if (
+      !partnerOffer ||
+      partnerOffer.internalID !== expectedPartnerOfferID
+    ) {
+      showExpiredOfferBanner = true
+    }
+  } else if (!!match?.location?.query?.expired_offer) {
+    // show expired offer imperatively if the query param is present
+    showExpiredOfferBanner = true
+  } else {
+    // show unavailable artwork imperatively if the query param is present
+    showUnavailableArtworkBanner = !!match?.location?.query?.unavailable
+  }
 
   const trackPageview = useCallback(() => {
     const { listPrice, availability, is_offerable, is_acquireable } = artwork
@@ -474,8 +501,15 @@ export const ArtworkResultFragmentContainer = createFragmentContainer(
     `,
 
     me: graphql`
-      fragment ArtworkApp_me on Me {
-        ...ArtworkSidebar_me
+      fragment ArtworkApp_me on Me
+        @argumentDefinitions(artworkID: { type: "String!" }) {
+        partnerOffersConnection(artworkID: $artworkID, first: 1) {
+          edges {
+            node {
+              internalID
+            }
+          }
+        }
       }
     `,
   }
