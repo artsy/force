@@ -2,7 +2,7 @@
 import { cloneDeep, merge } from "lodash"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
-import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping2"
+import { ShippingRouteWithDialog } from "Apps/Order/Routes/Shipping2"
 import { graphql } from "react-relay"
 import {
   UntouchedBuyOrder,
@@ -302,7 +302,7 @@ describe.skip("Shipping", () => {
     Component: props => {
       return (
         <MockBoot relayEnvironment={mockRelayEnv}>
-          <ShippingFragmentContainer order={props.order!} me={props.me!} />
+          <ShippingRouteWithDialog order={props.order!} me={props.me!} />
         </MockBoot>
       )
     },

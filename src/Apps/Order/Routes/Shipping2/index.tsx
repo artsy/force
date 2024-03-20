@@ -186,4 +186,4 @@ const ME_FRAGMENT = graphql`
   }
 `
 
-export const ShippingFragmentContainer = injectDialog(ShippingRoute)
+export const ShippingRouteWithDialog = injectDialog(ShippingRoute)
