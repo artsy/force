@@ -78,7 +78,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
               artwork.image?.height ?? 1
             }`,
           }}
-          maxHeight={"40vh"}
+          maxHeight={"35vh"}
         >
           <Image
             src={image.src}
