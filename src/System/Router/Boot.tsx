@@ -6,7 +6,7 @@ import {
 } from "@artsy/palette"
 import { SystemContextProvider } from "System/SystemContext"
 import { AppRouteConfig } from "System/Router/Route"
-import { useEffect, useState } from "react"
+import { FC, useEffect } from "react"
 import * as React from "react"
 import { HeadProvider } from "react-head"
 import { Environment } from "react-relay"
@@ -34,6 +34,10 @@ import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
 import { CookieConsentManager } from "Components/CookieConsentManager/CookieConsentManager"
 import { DismissibleProvider } from "@artsy/dismissible"
 import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
+import {
+  AppPreferencesProvider,
+  useAppPreferences,
+} from "Apps/AppPreferences/useAppPreferences"
 
 export interface BootProps {
   children: React.ReactNode
@@ -75,64 +79,51 @@ export const Boot = track(undefined, {
     ...context,
   }
 
-  const [theme, setTheme] = useState<"light" | "dark">("light")
-
-  const user = props.user
-
-  useEffect(() => {
-    if (!user?.email?.endsWith("artsymail.com")) return
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.metaKey && e.key === "i") {
-        setTheme(prevTheme => (prevTheme === "light" ? "dark" : "light"))
-      }
-    }
-
-    document.addEventListener("keydown", handleKeyDown)
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [user])
-
   return (
-    <Theme theme={theme}>
-      <GlobalStyles />
+    <AppPreferencesProvider>
+      <ThemeProvider>
+        <GlobalStyles />
 
-      <HeadProvider headTags={headTags}>
-        <StateProvider>
-          <SystemContextProvider {...contextProps}>
-            <ErrorBoundary>
-              <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                <ResponsiveProvider
-                  mediaQueries={THEME.mediaQueries}
-                  initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                >
-                  <ToastsProvider>
-                    <StickyProvider>
-                      <AuthIntentProvider>
-                        <AuthDialogProvider>
-                          <DismissibleProvider
-                            userID={props.user?.id}
-                            keys={PROGRESSIVE_ONBOARDING_KEYS}
-                          >
-                            <CookieConsentManager>
-                              <FocusVisible />
-                              <SiftContainer />
+        <HeadProvider headTags={headTags}>
+          <StateProvider>
+            <SystemContextProvider {...contextProps}>
+              <ErrorBoundary>
+                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                  <ResponsiveProvider
+                    mediaQueries={THEME.mediaQueries}
+                    initialMatchingMediaQueries={onlyMatchMediaQueries as any}
+                  >
+                    <ToastsProvider>
+                      <StickyProvider>
+                        <AuthIntentProvider>
+                          <AuthDialogProvider>
+                            <DismissibleProvider
+                              userID={props.user?.id}
+                              keys={PROGRESSIVE_ONBOARDING_KEYS}
+                            >
+                              <CookieConsentManager>
+                                <FocusVisible />
+                                <SiftContainer />
 
-                              {children}
-                            </CookieConsentManager>
-                          </DismissibleProvider>
-                        </AuthDialogProvider>
-                      </AuthIntentProvider>
-                    </StickyProvider>
-                  </ToastsProvider>
-                </ResponsiveProvider>
-              </MediaContextProvider>
-            </ErrorBoundary>
-          </SystemContextProvider>
-        </StateProvider>
-      </HeadProvider>
-    </Theme>
+                                {children}
+                              </CookieConsentManager>
+                            </DismissibleProvider>
+                          </AuthDialogProvider>
+                        </AuthIntentProvider>
+                      </StickyProvider>
+                    </ToastsProvider>
+                  </ResponsiveProvider>
+                </MediaContextProvider>
+              </ErrorBoundary>
+            </SystemContextProvider>
+          </StateProvider>
+        </HeadProvider>
+      </ThemeProvider>
+    </AppPreferencesProvider>
   )
 })
+
+const ThemeProvider: FC = ({ children }) => {
+  const { preferences } = useAppPreferences()
+  return <Theme theme={preferences.theme}>{children}</Theme>
+}
