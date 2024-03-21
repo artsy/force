@@ -68,6 +68,7 @@ import {
 } from "./Server/featureFlags/unleashService"
 import { registerFeatureFlagService } from "./Server/featureFlags/featureFlagService"
 import { userPreferencesMiddleware } from "./Server/middleware/userPreferencesMiddleware"
+import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 
@@ -174,7 +175,7 @@ function applySecurityMiddleware(app) {
   // because `local.asset` is required to render the error page.
   app.use(assetMiddleware())
 
-  // // Passport middleware for authentication.
+  // Passport middleware for authentication.
   app.use(
     artsyPassport({
       APP_URL,
@@ -215,6 +216,9 @@ function applySecurityMiddleware(app) {
 
   // Get user preferences (e.g. metric, currency)
   app.use(userPreferencesMiddleware)
+
+  // Get app preferences (e.g. theme)
+  app.use(appPreferencesMiddleware)
 }
 
 function applyStaticAssetMiddlewares(app) {
