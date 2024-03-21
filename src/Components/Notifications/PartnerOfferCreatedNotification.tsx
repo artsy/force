@@ -79,6 +79,7 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
           artwork={artwork}
           targetHref={targetHref}
           endAt={partnerOffer.endAt}
+          note={partnerOffer.note}
           available={partnerOffer.isAvailable}
           priceListedMessage={partnerOffer.priceListedMessage}
           priceWithDiscountMessage={partnerOffer.priceWithDiscountMessage}
@@ -97,6 +98,7 @@ export const PartnerOfferCreatedNotificationFragment = graphql`
         partnerOffer {
           endAt
           isAvailable
+          note
           priceListedMessage
           priceWithDiscountMessage
         }

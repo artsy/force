@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dcefe7ccedcc25dced948ae3800e9591>>
+ * @generated SignedSource<<3c1c29e1eeb4a75346eb2afd94543cc3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type PartnerOfferCreatedNotification_notification$data = {
     readonly partnerOffer?: {
       readonly endAt: string | null | undefined;
       readonly isAvailable: boolean | null | undefined;
+      readonly note: string | null | undefined;
       readonly priceListedMessage: string | null | undefined;
       readonly priceWithDiscountMessage: string | null | undefined;
     } | null | undefined;
@@ -92,6 +93,13 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "note",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "priceListedMessage",
                   "storageKey": null
                 },
@@ -161,6 +169,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "27ee8f41ebeddc7b6d8289f322d7cd37";
+(node as any).hash = "e7af6bb2d6895dfc9bd04d9f92518a26";
 
 export default node;
