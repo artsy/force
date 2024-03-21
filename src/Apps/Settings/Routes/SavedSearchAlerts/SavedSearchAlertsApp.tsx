@@ -82,7 +82,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile])
+  }, [isMobile, match.params])
 
   const closeModal = () => {
     setEditAlertEntity(null)
