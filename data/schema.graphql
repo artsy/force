@@ -4115,10 +4115,6 @@ enum CollectionSorts {
   UPDATED_AT_DESC
 }
 
-type CollectorProfileArtists {
-  name: String
-}
-
 type CollectorProfileType implements Node {
   artsyUserSince(
     format: String
@@ -4131,9 +4127,6 @@ type CollectorProfileType implements Node {
   bio: String
   collectedArtworksCount: Int!
   collectorLevel: Int
-
-  # List of artists the Collector is interested in.
-  collectorProfileArtists: [CollectorProfileArtists]
   companyName: String
   companyWebsite: String
   confirmedBuyerAt(
@@ -11304,9 +11297,6 @@ type InquirerCollectorProfile {
   bio: String
   collectedArtworksCount: Int!
   collectorLevel: Int
-
-  # List of artists the Collector is interested in.
-  collectorProfileArtists: [CollectorProfileArtists]
   companyName: String
   companyWebsite: String
   confirmedBuyerAt(
@@ -18927,9 +18917,6 @@ type UpdateCollectorProfilePayload {
   clientMutationId: String
   collectedArtworksCount: Int!
   collectorLevel: Int
-
-  # List of artists the Collector is interested in.
-  collectorProfileArtists: [CollectorProfileArtists]
   companyName: String
   companyWebsite: String
   confirmedBuyerAt(
