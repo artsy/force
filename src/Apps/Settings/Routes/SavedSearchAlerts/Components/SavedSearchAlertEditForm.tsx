@@ -303,7 +303,7 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           return null
         }
 
-        if (!props || !props?.me?.alert || !props?.viewer) {
+        if (!props?.me?.alert || !props?.viewer) {
           return (
             <SavedSearchAlertEditFormPlaceholder onCloseClick={onCloseClick} />
           )
