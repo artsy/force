@@ -62,55 +62,58 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
 
             <Separator />
 
-            {count > 0 && (
-              <Text variant="sm-display" color="black60" mb={4}>
-                {count}
-                {count > 1 ? " works" : " work"} currently on Artsy match your
-                criteria.
-                <Text variant="sm-display" color="black60">
-                  See our top picks for you:
-                </Text>
-              </Text>
-            )}
-
-            <Spacer y={2} />
-
-            <ArtworkGrid
-              artworks={alert.artworksConnection}
-              columnCount={2}
-              emptyStateComponent={<ArtworksGridEmptyState />}
-            />
-
             {count > 0 ? (
-              <GridColumns>
-                <Column span={6}>
-                  <Button
-                    width="100%"
-                    // @ts-ignore
-                    as={RouterLink}
-                    to={href}
-                  >
-                    See All Matching Works
-                  </Button>
-                </Column>
-                <Column span={6}>
-                  <Button
-                    width="100%"
-                    variant="secondaryBlack"
-                    onClick={onEditAlertClick}
-                  >
-                    Edit Alert
-                  </Button>
-                </Column>
-              </GridColumns>
+              <>
+                <Text variant="sm-display" color="black60" mb={4}>
+                  {count}
+                  {count > 1 ? " works" : " work"} currently on Artsy match your
+                  criteria.
+                  <Text variant="sm-display" color="black60">
+                    See our top picks for you:
+                  </Text>
+                </Text>
+                <Spacer y={2} />
+
+                <ArtworkGrid
+                  artworks={alert.artworksConnection}
+                  columnCount={2}
+                  emptyStateComponent={<ArtworksGridEmptyState />}
+                />
+
+                <GridColumns>
+                  <Column span={6}>
+                    <Button
+                      width="100%"
+                      // @ts-ignore
+                      as={RouterLink}
+                      to={href}
+                    >
+                      See All Matching Works
+                    </Button>
+                  </Column>
+                  <Column span={6}>
+                    <Button
+                      width="100%"
+                      variant="secondaryBlack"
+                      onClick={onEditAlertClick}
+                    >
+                      Edit Alert
+                    </Button>
+                  </Column>
+                </GridColumns>
+              </>
             ) : (
-              <Button
-                width="100%"
-                variant="secondaryBlack"
-                onClick={onEditAlertClick}
-              >
-                Edit Alert
-              </Button>
+              <>
+                <ArtworksGridEmptyState />
+
+                <Button
+                  width="100%"
+                  variant="secondaryBlack"
+                  onClick={onEditAlertClick}
+                >
+                  Edit Alert
+                </Button>
+              </>
             )}
           </Join>
         </Box>
@@ -124,7 +127,7 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
                 <CriteriaPills editable={false} />
               </Flex>
 
-              {count > 0 && (
+              {count > 0 ? (
                 <>
                   <Text variant="sm-display" color="black60">
                     {count}
@@ -134,28 +137,33 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
                       See our top picks for you:
                     </Text>
                   </Text>
+
                   <Spacer y={2} />
+
+                  <ArtworkGrid
+                    artworks={alert.artworksConnection}
+                    columnCount={2}
+                    emptyStateComponent={<ArtworksGridEmptyState />}
+                  />
+                  <Button
+                    // @ts-ignore
+                    as={RouterLink}
+                    to={href}
+                  >
+                    See All Matching Works
+                  </Button>
+                  <Button variant="secondaryBlack" onClick={onEditAlertClick}>
+                    Edit Alert
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <ArtworksGridEmptyState />
+                  <Button variant="secondaryBlack" onClick={onEditAlertClick}>
+                    Edit Alert
+                  </Button>
                 </>
               )}
-
-              <ArtworkGrid
-                artworks={alert.artworksConnection}
-                columnCount={2}
-                emptyStateComponent={<ArtworksGridEmptyState />}
-              />
-
-              {count > 0 && (
-                <Button
-                  // @ts-ignore
-                  as={RouterLink}
-                  to={href}
-                >
-                  See All Matching Works
-                </Button>
-              )}
-              <Button variant="secondaryBlack" onClick={onEditAlertClick}>
-                Edit Alert
-              </Button>
             </Join>
           </Flex>
         </Modal>
