@@ -48,6 +48,9 @@ export const artworkRoutes: AppRouteConfig[] = [
     },
     query: graphql`
       query artworkRoutes_ArtworkQuery($artworkID: String!) {
+        resultViewer: viewer {
+          ...ArtworkApp_resultViewer @arguments(artworkID: $artworkID)
+        }
         artworkResult(id: $artworkID) {
           ...ArtworkApp_artworkResult
 
@@ -58,7 +61,7 @@ export const artworkRoutes: AppRouteConfig[] = [
           }
         }
         me {
-          ...ArtworkApp_me @arguments(artworkID: $artworkID)
+          ...ArtworkApp_me
         }
       }
     `,

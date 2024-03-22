@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<915ca8325554ab7d5c2b6a2ff71c4755>>
+ * @generated SignedSource<<0e0d43c8b597877219361fea4bec312e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,14 +38,13 @@ export type ArtworkApp_artwork$data = {
     } | null | undefined;
   } | null | undefined;
   readonly partner: {
-    readonly " $fragmentSpreads": FragmentRefs<"UnlistedArtworkBanner_partner">;
+    readonly __typename: "Partner";
   } | null | undefined;
   readonly published: boolean;
   readonly sale: {
     readonly extendedBiddingIntervalMinutes: number | null | undefined;
     readonly internalID: string;
     readonly slug: string;
-    readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
   } | null | undefined;
   readonly slug: string;
   readonly visibilityLevel: Visibility | null | undefined;
@@ -231,9 +230,11 @@ return {
       "plural": false,
       "selections": [
         {
+          "alias": null,
           "args": null,
-          "kind": "FragmentSpread",
-          "name": "UnlistedArtworkBanner_partner"
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -253,11 +254,6 @@ return {
       "name": "sale",
       "plural": false,
       "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "CascadingEndTimesBanner_sale"
-        },
         (v0/*: any*/),
         (v1/*: any*/),
         {
@@ -309,6 +305,6 @@ return {
 };
 })();
 
-(node as any).hash = "27fca7cd666dc2cbdc3985d18f4a2109";
+(node as any).hash = "064505da392d1e72c8b001954947a98f";
 
 export default node;

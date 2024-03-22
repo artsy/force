@@ -11,6 +11,8 @@ import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
 import { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.graphql"
+import { ArtworkApp_resultViewer$data } from "__generated__/ArtworkApp_resultViewer.graphql"
+import { ArtworkApp_viewer$data } from "__generated__/ArtworkApp_viewer.graphql"
 import { ArtworkApp_me$data } from "__generated__/ArtworkApp_me.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
@@ -33,28 +35,26 @@ import { Media } from "Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match, RenderProps } from "found"
 import { WebsocketContextProvider } from "System/WebsocketContext"
-import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
-import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtworkBanner"
 import React, { useCallback, useEffect } from "react"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
 import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
 import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertHeader"
 import { compact } from "lodash"
 import { AlertProvider } from "Components/Alert/AlertProvider"
-import { FullBleedBanner } from "Components/FullBleedBanner"
 import { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkResult.graphql"
 import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorApp"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { PrivateArtworkDetails } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkDetails"
-import { extractNodes } from "Utils/extractNodes"
+import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
+  me: ArtworkApp_me$data
+  viewer: ArtworkApp_viewer$data
   tracking?: TrackingProp
   referrer: string
   routerPathname: string
   shouldTrackPageView: boolean
-  me: ArtworkApp_me$data
   router: Router
   match: Match
 }
@@ -97,33 +97,10 @@ export const ArtworkApp: React.FC<Props> = props => {
     "amber_artwork_visibility_unlisted"
   )
 
-  const partnerOfferVisibilityEnabled = useFeatureFlag(
-    "emerald_partner-offers-to-artwork-page"
-  )
-
-  const showUnlistedArtworkBanner =
-    artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
-
-  const isPrivateArtwork = privateArtworksEnabled && showUnlistedArtworkBanner
-
-  const expectedPartnerOfferID = match?.location?.query?.partner_offer_id as
-    | string
-    | undefined
-
-  const partnerOffer = expectedPartnerOfferID
-    ? extractNodes(me?.partnerOffersConnection)[0]
-    : null
-
-  const expectedPartnerOfferNotFound =
-    partnerOfferVisibilityEnabled &&
-    expectedPartnerOfferID &&
-    (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID)
-
-  const showExpiredOfferBanner =
-    expectedPartnerOfferNotFound || !!match?.location?.query?.expired_offer
-
-  // show unavailable artwork imperatively if the query param is present
-  const showUnavailableArtworkBanner = !!match?.location?.query?.unavailable
+  const isPrivateArtwork =
+    privateArtworksEnabled &&
+    artwork?.visibilityLevel == "UNLISTED" &&
+    artwork?.partner
 
   const trackPageview = useCallback(() => {
     const { listPrice, availability, is_offerable, is_acquireable } = artwork
@@ -237,44 +214,11 @@ export const ArtworkApp: React.FC<Props> = props => {
   return (
     <>
       <UseRecordArtworkView />
-
-      {!artwork.published && (
-        <FullBleedBanner variant="error">
-          <Text>This work is not currently published on Artsy.</Text>
-        </FullBleedBanner>
-      )}
-
-      {artwork.sale && (
-        <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
-      )}
-      {showUnlistedArtworkBanner && (
-        <UnlistedArtworkBannerFragmentContainer partner={artwork.partner} />
-      )}
-
-      {showExpiredOfferBanner && (
-        <FullBleedBanner variant="brand">
-          <Text>
-            This offer has expired. Please make an offer, purchase, or contact
-            the gallery.
-          </Text>
-        </FullBleedBanner>
-      )}
-
-      {showUnavailableArtworkBanner && (
-        <FullBleedBanner variant="brand">
-          <Text>
-            Sorry, this artwork is no longer available. Please create an alert
-            or contact the gallery to find similar artworks.
-          </Text>
-        </FullBleedBanner>
-      )}
+      <ArtworkPageBanner viewer={props.viewer} />
 
       <ArtworkMetaFragmentContainer artwork={artwork} />
-
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
-
       <ArtworkAuctionCreateAlertHeaderFragmentContainer artwork={artwork} />
-
       <GridColumns>
         <Column
           span={8}
@@ -305,7 +249,6 @@ export const ArtworkApp: React.FC<Props> = props => {
           <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
         </Column>
       </GridColumns>
-
       {!isPrivateArtwork && (
         <>
           <Media lessThan="sm">
@@ -407,6 +350,12 @@ const SpinnerContainer = styled.div`
 const ArtworkAppFragmentContainer = createFragmentContainer(
   withSystemContext(WrappedArtworkApp),
   {
+    viewer: graphql`
+      fragment ArtworkApp_viewer on Viewer
+        @argumentDefinitions(artworkID: { type: "String!" }) {
+        ...ArtworkPageBanner_viewer @arguments(artworkID: $artworkID)
+      }
+    `,
     artwork: graphql`
       fragment ArtworkApp_artwork on Artwork {
         ...ArtworkRelatedArtists_artwork
@@ -443,11 +392,10 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
           }
         }
         partner {
-          ...UnlistedArtworkBanner_partner
+          __typename
         }
         is_in_auction: isInAuction
         sale {
-          ...CascadingEndTimesBanner_sale
           internalID
           slug
           extendedBiddingIntervalMinutes
@@ -469,14 +417,22 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
 interface ArtworkResultProps extends RenderProps {
   artworkResult: ArtworkApp_artworkResult$data
   me: ArtworkApp_me$data
+  resultViewer: ArtworkApp_resultViewer$data
 }
 
 const ArtworkResult: React.FC<ArtworkResultProps> = props => {
-  const { artworkResult } = props
+  const { artworkResult, resultViewer: viewer, ...rest } = props
   const { __typename } = artworkResult
 
+  console.log(props.resultViewer)
   if (__typename === "Artwork") {
-    return <ArtworkAppFragmentContainer artwork={artworkResult} {...props} />
+    return (
+      <ArtworkAppFragmentContainer
+        artwork={artworkResult}
+        viewer={viewer}
+        {...rest}
+      />
+    )
   }
 
   return <ArtworkErrorApp artworkError={artworkResult} />
@@ -485,6 +441,12 @@ const ArtworkResult: React.FC<ArtworkResultProps> = props => {
 export const ArtworkResultFragmentContainer = createFragmentContainer(
   ArtworkResult,
   {
+    resultViewer: graphql`
+      fragment ArtworkApp_resultViewer on Viewer
+        @argumentDefinitions(artworkID: { type: "String!" }) {
+        ...ArtworkApp_viewer @arguments(artworkID: $artworkID)
+      }
+    `,
     artworkResult: graphql`
       fragment ArtworkApp_artworkResult on ArtworkResult {
         __typename
@@ -495,16 +457,8 @@ export const ArtworkResultFragmentContainer = createFragmentContainer(
     `,
 
     me: graphql`
-      fragment ArtworkApp_me on Me
-        @argumentDefinitions(artworkID: { type: "String!" }) {
+      fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me
-        partnerOffersConnection(artworkID: $artworkID, first: 1) {
-          edges {
-            node {
-              internalID
-            }
-          }
-        }
       }
     `,
   }
