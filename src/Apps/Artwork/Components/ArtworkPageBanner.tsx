@@ -1,7 +1,8 @@
 import { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 import { Text } from "@artsy/palette"
-import { ArtworkPageBanner_viewer$key } from "__generated__/ArtworkPageBanner_viewer.graphql"
+import { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_artwork.graphql"
+import { ArtworkPageBanner_me$key } from "__generated__/ArtworkPageBanner_me.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -10,10 +11,12 @@ import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEn
 import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtworkBanner"
 
 interface ArtworkPageBannerProps {
-  viewer: ArtworkPageBanner_viewer$key
+  artwork: ArtworkPageBanner_artwork$key
+  me: ArtworkPageBanner_me$key
 }
-export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = ({ viewer }) => {
-  const { me, artwork } = useFragment(VIEWER_FRAGMENT, viewer)
+export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
+  const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
+  const me = useFragment(ME_FRAGMENT, props.me)
   const { match } = useRouter()
 
   const partnerOfferVisibilityEnabled = useFeatureFlag(
@@ -92,29 +95,29 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = ({ viewer }) => {
   )
 }
 
-const VIEWER_FRAGMENT = graphql`
-  fragment ArtworkPageBanner_viewer on Viewer
-    @argumentDefinitions(artworkID: { type: "String!" }) {
-    me {
-      partnerOffersConnection(artworkID: $artworkID, first: 1) {
-        edges {
-          node {
-            internalID
-          }
+const ME_FRAGMENT = graphql`
+  fragment ArtworkPageBanner_me on Me {
+    partnerOffersConnection(artworkID: $artworkID, first: 1) {
+      edges {
+        node {
+          internalID
         }
       }
     }
-    artwork(id: $artworkID) {
-      published
-      visibilityLevel
-      partner {
-        __typename
-        ...UnlistedArtworkBanner_partner
-      }
-      sale {
-        __typename
-        ...CascadingEndTimesBanner_sale
-      }
+  }
+`
+
+const ARTWORK_FRAGMENT = graphql`
+  fragment ArtworkPageBanner_artwork on Artwork {
+    published
+    visibilityLevel
+    partner {
+      __typename
+      ...UnlistedArtworkBanner_partner
+    }
+    sale {
+      __typename
+      ...CascadingEndTimesBanner_sale
     }
   }
 `

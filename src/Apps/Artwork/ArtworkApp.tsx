@@ -11,8 +11,6 @@ import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
 import { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.graphql"
-import { ArtworkApp_resultViewer$data } from "__generated__/ArtworkApp_resultViewer.graphql"
-import { ArtworkApp_viewer$data } from "__generated__/ArtworkApp_viewer.graphql"
 import { ArtworkApp_me$data } from "__generated__/ArtworkApp_me.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
@@ -50,7 +48,6 @@ import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 export interface Props {
   artwork: ArtworkApp_artwork$data
   me: ArtworkApp_me$data
-  viewer: ArtworkApp_viewer$data
   tracking?: TrackingProp
   referrer: string
   routerPathname: string
@@ -214,7 +211,7 @@ export const ArtworkApp: React.FC<Props> = props => {
   return (
     <>
       <UseRecordArtworkView />
-      <ArtworkPageBanner viewer={props.viewer} />
+      <ArtworkPageBanner artwork={artwork} me={me} />
 
       <ArtworkMetaFragmentContainer artwork={artwork} />
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
@@ -350,12 +347,6 @@ const SpinnerContainer = styled.div`
 const ArtworkAppFragmentContainer = createFragmentContainer(
   withSystemContext(WrappedArtworkApp),
   {
-    viewer: graphql`
-      fragment ArtworkApp_viewer on Viewer
-        @argumentDefinitions(artworkID: { type: "String!" }) {
-        ...ArtworkPageBanner_viewer @arguments(artworkID: $artworkID)
-      }
-    `,
     artwork: graphql`
       fragment ArtworkApp_artwork on Artwork {
         ...ArtworkRelatedArtists_artwork
@@ -365,6 +356,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkSidebar_artwork
         ...ArtworkAuctionCreateAlertHeader_artwork
         ...PrivateArtworkDetails_artwork
+        ...ArtworkPageBanner_artwork
 
         attributionClass {
           internalID
@@ -417,22 +409,14 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
 interface ArtworkResultProps extends RenderProps {
   artworkResult: ArtworkApp_artworkResult$data
   me: ArtworkApp_me$data
-  resultViewer: ArtworkApp_resultViewer$data
 }
 
 const ArtworkResult: React.FC<ArtworkResultProps> = props => {
-  const { artworkResult, resultViewer: viewer, ...rest } = props
+  const { artworkResult, ...rest } = props
   const { __typename } = artworkResult
 
-  console.log(props.resultViewer)
   if (__typename === "Artwork") {
-    return (
-      <ArtworkAppFragmentContainer
-        artwork={artworkResult}
-        viewer={viewer}
-        {...rest}
-      />
-    )
+    return <ArtworkAppFragmentContainer artwork={artworkResult} {...rest} />
   }
 
   return <ArtworkErrorApp artworkError={artworkResult} />
@@ -441,12 +425,6 @@ const ArtworkResult: React.FC<ArtworkResultProps> = props => {
 export const ArtworkResultFragmentContainer = createFragmentContainer(
   ArtworkResult,
   {
-    resultViewer: graphql`
-      fragment ArtworkApp_resultViewer on Viewer
-        @argumentDefinitions(artworkID: { type: "String!" }) {
-        ...ArtworkApp_viewer @arguments(artworkID: $artworkID)
-      }
-    `,
     artworkResult: graphql`
       fragment ArtworkApp_artworkResult on ArtworkResult {
         __typename
@@ -459,6 +437,7 @@ export const ArtworkResultFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me
+        ...ArtworkPageBanner_me
       }
     `,
   }
