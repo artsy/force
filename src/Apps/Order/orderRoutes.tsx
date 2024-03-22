@@ -30,7 +30,7 @@ const ShippingRouteLegacy = loadable(
 const ShippingRoute2 = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Shipping2"),
   {
-    resolveComponent: component => component.ShippingFragmentContainer,
+    resolveComponent: component => component.ShippingRouteWithDialog,
   }
 )
 

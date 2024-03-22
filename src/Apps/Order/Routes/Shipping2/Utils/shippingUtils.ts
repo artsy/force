@@ -1,6 +1,6 @@
 import * as Yup from "yup"
 import { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
-import { ShippingProps } from "Apps/Order/Routes/Shipping2"
+import { ShippingContext_me$data } from "__generated__/ShippingContext_me.graphql"
 import { pick, omitBy, isNil, isEqual } from "lodash"
 import { postalCodeValidator } from "Components/Address/utils"
 
@@ -103,7 +103,7 @@ export const addressWithFallbackValues = (
 export type SavedAddressType = NonNullable<
   NonNullable<
     NonNullable<
-      NonNullable<ShippingProps["me"]["addressConnection"]>["edges"]
+      NonNullable<ShippingContext_me$data["addressConnection"]>["edges"]
     >[number]
   >["node"]
 >

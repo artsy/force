@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b3263cf7b5ad31d05d3fcbc7ea55804>>
+ * @generated SignedSource<<3902a2d6fcce77c5e26339b3ebfea118>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,22 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FulfillmentDetailsForm_me$data = {
   readonly addressConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly addressLine1: string;
-        readonly addressLine2: string | null | undefined;
-        readonly addressLine3: string | null | undefined;
-        readonly city: string;
-        readonly country: string;
-        readonly id: string;
-        readonly internalID: string;
-        readonly isDefault: boolean;
-        readonly name: string | null | undefined;
-        readonly phoneNumber: string | null | undefined;
-        readonly postalCode: string | null | undefined;
-        readonly region: string | null | undefined;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
+    readonly totalCount: number;
   } | null | undefined;
   readonly email: string | null | undefined;
   readonly id: string;
@@ -35,7 +20,6 @@ export type FulfillmentDetailsForm_me$data = {
     readonly country: string | null | undefined;
   } | null | undefined;
   readonly name: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses2_me">;
   readonly " $fragmentType": "FulfillmentDetailsForm_me";
 };
 export type FulfillmentDetailsForm_me$key = {
@@ -43,29 +27,7 @@ export type FulfillmentDetailsForm_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"FulfillmentDetailsForm_me">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "country",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -92,7 +54,13 @@ return {
   "metadata": null,
   "name": "FulfillmentDetailsForm_me",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -100,7 +68,13 @@ return {
       "name": "email",
       "storageKey": null
     },
-    (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -109,14 +83,15 @@ return {
       "name": "location",
       "plural": false,
       "selections": [
-        (v2/*: any*/)
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "country",
+          "storageKey": null
+        }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SavedAddresses2_me"
     },
     {
       "alias": null,
@@ -150,89 +125,8 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "UserAddressEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "UserAddress",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                (v1/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "addressLine1",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "addressLine2",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "addressLine3",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "city",
-                  "storageKey": null
-                },
-                (v2/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "isDefault",
-                  "storageKey": null
-                },
-                (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "phoneNumber",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "postalCode",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "region",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
+          "kind": "ScalarField",
+          "name": "totalCount",
           "storageKey": null
         }
       ],
@@ -242,8 +136,7 @@ return {
   "type": "Me",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "9b2480f681205ee128c09e100cf9fb85";
+(node as any).hash = "d8d9607dc7cd65f89060ac09751ccddb";
 
 export default node;

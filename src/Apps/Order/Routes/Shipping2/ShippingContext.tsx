@@ -3,6 +3,8 @@ import {
   ComputedOrderData,
   computeOrderData,
 } from "Apps/Order/Routes/Shipping2/Utils/computeOrderData"
+import { ShippingContext_order$key } from "__generated__/ShippingContext_order.graphql"
+import { ShippingContext_me$key } from "__generated__/ShippingContext_me.graphql"
 import { compact } from "lodash"
 import { extractNodes } from "Utils/extractNodes"
 import { ShippingProps, ShippingStage } from "Apps/Order/Routes/Shipping2"
@@ -14,6 +16,7 @@ import {
 import createLogger from "Utils/logger"
 import { Dialog } from "Apps/Order/Dialogs"
 import { useHandleExchangeError } from "Apps/Order/Routes/Shipping2/Hooks/useHandleExchangeError"
+import { graphql, useFragment } from "react-relay"
 
 export interface State {
   // Form state for fulfillment details
@@ -63,19 +66,23 @@ export interface ShippingContextProps {
 
 export const ShippingContext = createContext<ShippingContextProps>({} as any)
 
-export const ShippingContextProvider: FC<Pick<
-  ShippingProps,
-  "order" | "me" | "dialog"
->> = props => {
+export const ShippingContextProvider: FC<{
+  order: ShippingContext_order$key
+  me: ShippingContext_me$key
+  dialog: ShippingProps["dialog"]
+}> = props => {
+  const orderFragmentData = useFragment(ORDER_FRAGMENT, props.order)
+  const meFragmentData = useFragment(ME_FRAGMENT, props.me)
   const meData = useMemo(
     () => ({
       addressList: compact<SavedAddressType>(
-        extractNodes(props.me?.addressConnection) ?? []
+        extractNodes(meFragmentData?.addressConnection) ?? []
       ),
     }),
-    [props.me.addressConnection]
+    [meFragmentData.addressConnection]
   )
-  const orderData = computeOrderData(props.order, meData)
+
+  const orderData = computeOrderData(orderFragmentData, meData)
 
   /*
    * Because there is a single button for both fulfillment details and
@@ -224,3 +231,90 @@ const shippingStateReducer = (state: State, action: Action): State => {
     }
   }
 }
+
+const ORDER_FRAGMENT = graphql`
+  fragment ShippingContext_order on CommerceOrder {
+    internalID
+    requestedFulfillment {
+      __typename
+      ... on CommercePickup {
+        phoneNumber
+      }
+      ... on CommerceShip {
+        name
+        addressLine1
+        addressLine2
+        city
+        region
+        country
+        postalCode
+        phoneNumber
+      }
+      ... on CommerceShipArta {
+        name
+        addressLine1
+        addressLine2
+        city
+        region
+        country
+        postalCode
+        phoneNumber
+      }
+    }
+    lineItems {
+      edges {
+        node {
+          shippingQuoteOptions {
+            edges {
+              node {
+                id
+                isSelected
+              }
+            }
+          }
+          artwork {
+            processWithArtsyShippingDomestic
+            artsyShippingInternational
+            onlyShipsDomestically
+            euShippingOrigin
+            shippingCountry
+          }
+        }
+      }
+    }
+  }
+`
+
+const ME_FRAGMENT = graphql`
+  fragment ShippingContext_me on Me
+    @argumentDefinitions(
+      first: { type: "Int", defaultValue: 30 }
+      last: { type: "Int" }
+      after: { type: "String" }
+      before: { type: "String" }
+    ) {
+    addressConnection(
+      first: $first
+      last: $last
+      before: $before
+      after: $after
+    ) {
+      edges {
+        node {
+          id
+          internalID
+          addressLine1
+          addressLine2
+          addressLine3
+          city
+          country
+          isDefault
+          name
+          phoneNumber
+          postalCode
+          region
+        }
+      }
+    }
+  }
+`

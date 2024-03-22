@@ -70,6 +70,18 @@ describe("PartnerOfferCreatedNotification", () => {
     )
   })
 
+  describe("when note is present", () => {
+    it("renders note", () => {
+      renderWithRelay({
+        Notification: () =>
+          notification("2099-01-01T00:00:00+00:00", true, "Please buy this!"),
+      })
+
+      expect(screen.getByText("Note from the gallery:")).toBeInTheDocument()
+      expect(screen.getByText("Please buy this!")).toBeInTheDocument()
+    })
+  })
+
   describe("button states", () => {
     describe("when offer is expired", () => {
       it("renders View Work button", () => {
@@ -101,7 +113,8 @@ describe("PartnerOfferCreatedNotification", () => {
 
 const notification = (
   endAt = "2099-01-01T00:00:00+00:00",
-  isAvailable = true
+  isAvailable = true,
+  note = ""
 ) => {
   return {
     headline: "Saved work by Damon Zucconi",
@@ -110,6 +123,7 @@ const notification = (
       partnerOffer: {
         endAt: endAt,
         isAvailable: isAvailable,
+        note: note,
         priceListedMessage: "US$1,000",
         priceWithDiscountMessage: "US$900",
       },

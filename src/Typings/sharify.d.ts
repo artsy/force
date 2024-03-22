@@ -23,6 +23,7 @@ declare module "sharify" {
       ALLOWED_REDIRECT_HOSTS: string
       API_REQUEST_TIMEOUT?: number
       API_URL: string
+      APP_PREFERENCES: AppPreferences
       APP_URL: string
       APPLICATION_NAME: string
       ARTIST_COLLECTIONS_RAIL?: string // TODO: remove after CollectionsRail a/b test

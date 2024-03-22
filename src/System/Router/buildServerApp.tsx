@@ -154,13 +154,13 @@ export function buildServerApp(
           return (
             <Boot
               context={serverContext}
-              user={user}
               headTags={tags}
+              relayEnvironment={relayEnvironment}
+              routes={routes}
+              user={user}
               // FIXME:
               // @ts-ignore
               onlyMatchMediaQueries={matchingMediaQueries}
-              relayEnvironment={relayEnvironment}
-              routes={routes}
             >
               {farceResults.element}
             </Boot>

@@ -4,7 +4,7 @@ import { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwo
 import { resized } from "Utils/resized"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { RouterLink } from "System/Router/RouterLink"
-import { Box, Button, Flex, Image, Text } from "@artsy/palette"
+import { Box, Button, Flex, Image, THEME, Text } from "@artsy/palette"
 import Metadata from "Components/Artwork/Metadata"
 import { ContextModule } from "@artsy/cohesion"
 import { useTimer } from "Utils/Hooks/useTimer"
@@ -14,6 +14,7 @@ interface PartnerOfferArtworkProps {
   artwork: PartnerOfferArtwork_artwork$key
   targetHref: string
   endAt?: string | null
+  note?: string | null
   available?: boolean | null
   priceListedMessage?: string | null
   priceWithDiscountMessage?: string | null
@@ -25,6 +26,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   priceListedMessage,
   priceWithDiscountMessage,
   endAt = "",
+  note = "",
   available = false,
 }) => {
   const { hasEnded } = useTimer(endAt || "")
@@ -76,13 +78,17 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
               artwork.image?.height ?? 1
             }`,
           }}
-          bg="black10"
+          maxHeight={"35vh"}
         >
           <Image
             src={image.src}
             srcSet={image.srcSet}
             width="100%"
             height="100%"
+            style={{
+              objectFit: "contain",
+              backgroundColor: THEME.colors.white100,
+            }}
             lazyLoad
             alt=""
           />
@@ -114,7 +120,22 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           </Flex>
         )}
       </RouterLink>
-
+      {note && (
+        <Box
+          backgroundColor={"black10"}
+          mb={2}
+          padding={1}
+          width="100%"
+          maxWidth={CARD_MAX_WIDTH}
+        >
+          <Text variant="xs" color="black100">
+            Note from the gallery:
+          </Text>
+          <Text variant="xs" color="black60">
+            {note}
+          </Text>
+        </Box>
+      )}
       <Box mb={4} width="100%" maxWidth={CARD_MAX_WIDTH}>
         <Button
           // @ts-ignore

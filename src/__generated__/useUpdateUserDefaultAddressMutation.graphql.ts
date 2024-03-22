@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<abedfa09c724db5a89861f4da25d3454>>
+ * @generated SignedSource<<6ac29bccd79890bed2042f7673086ec1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -219,6 +219,13 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "totalCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "UserAddressEdge",
                     "kind": "LinkedField",
                     "name": "edges",
@@ -232,6 +239,7 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
+                          (v5/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -239,7 +247,6 @@ return {
                             "name": "internalID",
                             "storageKey": null
                           },
-                          (v4/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -258,24 +265,25 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
+                            "name": "addressLine3",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
                             "name": "city",
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "region",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "postalCode",
-                            "storageKey": null
-                          },
                           (v6/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isDefault",
+                            "storageKey": null
+                          },
+                          (v4/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -287,15 +295,14 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "isDefault",
+                            "name": "postalCode",
                             "storageKey": null
                           },
-                          (v5/*: any*/),
                           {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "addressLine3",
+                            "name": "region",
                             "storageKey": null
                           }
                         ],
@@ -337,12 +344,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "246771be6b0549a8abeacc150a081b33",
+    "cacheID": "45359d646baa9528e78c3673b8c3070a",
     "id": null,
     "metadata": {},
     "name": "useUpdateUserDefaultAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateUserDefaultAddressMutation(\n  $input: UpdateUserDefaultAddressInput!\n) {\n  updateUserDefaultAddress(input: $input) {\n    me {\n      ...Shipping2_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n      }\n    }\n  }\n}\n\nfragment FulfillmentDetailsForm_me on Me {\n  name\n  email\n  id\n  location {\n    country\n    id\n  }\n  ...SavedAddresses2_me\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n\nfragment SavedAddresses2_me on Me {\n  addressConnection(first: 30) {\n    edges {\n      node {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        isDefault\n        id\n      }\n    }\n  }\n}\n\nfragment Shipping2_me on Me {\n  ...FulfillmentDetailsForm_me\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateUserDefaultAddressMutation(\n  $input: UpdateUserDefaultAddressInput!\n) {\n  updateUserDefaultAddress(input: $input) {\n    me {\n      ...Shipping2_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n      }\n    }\n  }\n}\n\nfragment FulfillmentDetailsForm_me on Me {\n  name\n  email\n  id\n  location {\n    country\n    id\n  }\n  addressConnection(first: 30) {\n    totalCount\n  }\n}\n\nfragment Shipping2_me on Me {\n  ...FulfillmentDetailsForm_me\n  ...ShippingContext_me_dXEtb\n}\n\nfragment ShippingContext_me_dXEtb on Me {\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n"
   }
 };
 })();
