@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b445c5d90fd0a7403a8c136747596405>>
+ * @generated SignedSource<<418b2fddcc477067d2ef719cc3f3a6aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,13 @@ export type ArtworkApp_me$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "artworkID"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkApp_me",
@@ -31,7 +37,13 @@ const node: ReaderFragment = {
       "name": "ArtworkSidebar_me"
     },
     {
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "artworkID",
+          "variableName": "artworkID"
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "ArtworkPageBanner_me"
     }
@@ -40,6 +52,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2268413403c42c1b601195a884250f9a";
+(node as any).hash = "f4cd5f29ce1ba067ea880ea725b5949e";
 
 export default node;

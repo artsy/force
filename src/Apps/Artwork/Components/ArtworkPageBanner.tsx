@@ -27,8 +27,6 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
     "amber_artwork_visibility_unlisted"
   )
 
-  if (!artwork) return null
-
   const showUnlistedArtworkBanner = !!(
     privateArtworksEnabled &&
     artwork?.visibilityLevel == "UNLISTED" &&
@@ -96,7 +94,8 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
 }
 
 const ME_FRAGMENT = graphql`
-  fragment ArtworkPageBanner_me on Me {
+  fragment ArtworkPageBanner_me on Me
+    @argumentDefinitions(artworkID: { type: "String!" }) {
     partnerOffersConnection(artworkID: $artworkID, first: 1) {
       edges {
         node {

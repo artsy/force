@@ -435,9 +435,10 @@ export const ArtworkResultFragmentContainer = createFragmentContainer(
     `,
 
     me: graphql`
-      fragment ArtworkApp_me on Me {
+      fragment ArtworkApp_me on Me
+        @argumentDefinitions(artworkID: { type: "String!" }) {
         ...ArtworkSidebar_me
-        ...ArtworkPageBanner_me
+        ...ArtworkPageBanner_me @arguments(artworkID: $artworkID)
       }
     `,
   }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<09db634261f6fffd1dd10400018523e5>>
+ * @generated SignedSource<<21d54474001d39398a5f6e34be008528>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,8 @@ export type ArtworkPageBanner_me$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "kind": "RootArgument",
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "artworkID"
     }
   ],
@@ -92,6 +93,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "188049007fb00a68c403d9610c6853ea";
+(node as any).hash = "92c6a7724e067972687eb857ebd89268";
 
 export default node;
