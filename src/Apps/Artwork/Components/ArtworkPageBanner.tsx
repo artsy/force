@@ -27,6 +27,8 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
     "amber_artwork_visibility_unlisted"
   )
 
+  // Show unlisted artwork banner if the artwork is unlisted and associated with
+  // a partner (i.e. not a user's private collection artwork)
   const showUnlistedArtworkBanner = !!(
     privateArtworksEnabled &&
     artwork?.visibilityLevel == "UNLISTED" &&
@@ -41,18 +43,20 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
     ? extractNodes(me?.partnerOffersConnection)[0]
     : null
 
+  // show expired if query param says to expect one and it's not found
   const expectedPartnerOfferNotFound =
     partnerOfferVisibilityEnabled &&
     expectedPartnerOfferID &&
     (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID)
 
+  // show expired imperatively if the query param is present
   const showExpiredOfferBanner =
     expectedPartnerOfferNotFound || !!match?.location?.query?.expired_offer
 
   // show unavailable artwork imperatively if the query param is present
   const showUnavailableArtworkBanner = !!match?.location?.query?.unavailable
 
-  // Does not necessariliy show a banner
+  // [Maybe] show banners associated with auction closing times
   const showCascadingEndTimesBanner = !!artwork.sale
 
   const showUnpublishedArtworkBanner = !artwork.published
