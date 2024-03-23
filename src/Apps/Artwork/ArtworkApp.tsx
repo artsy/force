@@ -33,27 +33,25 @@ import { Media } from "Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match, RenderProps } from "found"
 import { WebsocketContextProvider } from "System/WebsocketContext"
-import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
-import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtworkBanner"
 import React, { useCallback, useEffect } from "react"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
 import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
 import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertHeader"
 import { compact } from "lodash"
 import { AlertProvider } from "Components/Alert/AlertProvider"
-import { FullBleedBanner } from "Components/FullBleedBanner"
 import { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkResult.graphql"
 import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorApp"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { PrivateArtworkDetails } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkDetails"
+import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
+  me: ArtworkApp_me$data
   tracking?: TrackingProp
   referrer: string
   routerPathname: string
   shouldTrackPageView: boolean
-  me: ArtworkApp_me$data
   router: Router
   match: Match
 }
@@ -96,13 +94,10 @@ export const ArtworkApp: React.FC<Props> = props => {
     "amber_artwork_visibility_unlisted"
   )
 
-  const showUnlistedArtworkBanner =
-    artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
-
-  const isPrivateArtwork = privateArtworksEnabled && showUnlistedArtworkBanner
-
-  const showExpiredOfferBanner = !!match?.location?.query?.expired_offer
-  const showUnavailableArtworkBanner = !!match?.location?.query?.unavailable
+  const isPrivateArtwork =
+    privateArtworksEnabled &&
+    artwork?.visibilityLevel == "UNLISTED" &&
+    artwork?.partner
 
   const trackPageview = useCallback(() => {
     const { listPrice, availability, is_offerable, is_acquireable } = artwork
@@ -216,44 +211,11 @@ export const ArtworkApp: React.FC<Props> = props => {
   return (
     <>
       <UseRecordArtworkView />
-
-      {!artwork.published && (
-        <FullBleedBanner variant="error">
-          <Text>This work is not currently published on Artsy.</Text>
-        </FullBleedBanner>
-      )}
-
-      {artwork.sale && (
-        <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
-      )}
-      {showUnlistedArtworkBanner && (
-        <UnlistedArtworkBannerFragmentContainer partner={artwork.partner} />
-      )}
-
-      {showExpiredOfferBanner && (
-        <FullBleedBanner variant="brand">
-          <Text>
-            This offer has expired. Please make an offer, purchase, or contact
-            the gallery.
-          </Text>
-        </FullBleedBanner>
-      )}
-
-      {showUnavailableArtworkBanner && (
-        <FullBleedBanner variant="brand">
-          <Text>
-            Sorry, this artwork is no longer available. Please create an alert
-            or contact the gallery to find similar artworks.
-          </Text>
-        </FullBleedBanner>
-      )}
+      <ArtworkPageBanner artwork={artwork} me={me} />
 
       <ArtworkMetaFragmentContainer artwork={artwork} />
-
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
-
       <ArtworkAuctionCreateAlertHeaderFragmentContainer artwork={artwork} />
-
       <GridColumns>
         <Column
           span={8}
@@ -284,7 +246,6 @@ export const ArtworkApp: React.FC<Props> = props => {
           <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
         </Column>
       </GridColumns>
-
       {!isPrivateArtwork && (
         <>
           <Media lessThan="sm">
@@ -395,6 +356,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkSidebar_artwork
         ...ArtworkAuctionCreateAlertHeader_artwork
         ...PrivateArtworkDetails_artwork
+        ...ArtworkPageBanner_artwork
 
         attributionClass {
           internalID
@@ -422,11 +384,10 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
           }
         }
         partner {
-          ...UnlistedArtworkBanner_partner
+          __typename
         }
         is_in_auction: isInAuction
         sale {
-          ...CascadingEndTimesBanner_sale
           internalID
           slug
           extendedBiddingIntervalMinutes
@@ -451,11 +412,11 @@ interface ArtworkResultProps extends RenderProps {
 }
 
 const ArtworkResult: React.FC<ArtworkResultProps> = props => {
-  const { artworkResult } = props
+  const { artworkResult, ...rest } = props
   const { __typename } = artworkResult
 
   if (__typename === "Artwork") {
-    return <ArtworkAppFragmentContainer artwork={artworkResult} {...props} />
+    return <ArtworkAppFragmentContainer artwork={artworkResult} {...rest} />
   }
 
   return <ArtworkErrorApp artworkError={artworkResult} />
@@ -474,8 +435,10 @@ export const ArtworkResultFragmentContainer = createFragmentContainer(
     `,
 
     me: graphql`
-      fragment ArtworkApp_me on Me {
+      fragment ArtworkApp_me on Me
+        @argumentDefinitions(artworkID: { type: "String!" }) {
         ...ArtworkSidebar_me
+        ...ArtworkPageBanner_me @arguments(artworkID: $artworkID)
       }
     `,
   }

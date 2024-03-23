@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<915ca8325554ab7d5c2b6a2ff71c4755>>
+ * @generated SignedSource<<a093e80f72cc627ae3f4232e4d49803d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,18 +38,17 @@ export type ArtworkApp_artwork$data = {
     } | null | undefined;
   } | null | undefined;
   readonly partner: {
-    readonly " $fragmentSpreads": FragmentRefs<"UnlistedArtworkBanner_partner">;
+    readonly __typename: "Partner";
   } | null | undefined;
   readonly published: boolean;
   readonly sale: {
     readonly extendedBiddingIntervalMinutes: number | null | undefined;
     readonly internalID: string;
     readonly slug: string;
-    readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
   } | null | undefined;
   readonly slug: string;
   readonly visibilityLevel: Visibility | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork" | "PrivateArtworkDetails_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkPageBanner_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork" | "PrivateArtworkDetails_artwork">;
   readonly " $fragmentType": "ArtworkApp_artwork";
 };
 export type ArtworkApp_artwork$key = {
@@ -126,6 +125,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "PrivateArtworkDetails_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkPageBanner_artwork"
     },
     {
       "alias": null,
@@ -231,9 +235,11 @@ return {
       "plural": false,
       "selections": [
         {
+          "alias": null,
           "args": null,
-          "kind": "FragmentSpread",
-          "name": "UnlistedArtworkBanner_partner"
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -253,11 +259,6 @@ return {
       "name": "sale",
       "plural": false,
       "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "CascadingEndTimesBanner_sale"
-        },
         (v0/*: any*/),
         (v1/*: any*/),
         {
@@ -309,6 +310,6 @@ return {
 };
 })();
 
-(node as any).hash = "27fca7cd666dc2cbdc3985d18f4a2109";
+(node as any).hash = "0507b6e44670ba48f1e53ee55be7c295";
 
 export default node;

@@ -58,7 +58,7 @@ export const artworkRoutes: AppRouteConfig[] = [
           }
         }
         me {
-          ...ArtworkApp_me
+          ...ArtworkApp_me @arguments(artworkID: $artworkID)
         }
       }
     `,
