@@ -109,7 +109,11 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
           </Text>
         ) : (
           <Flex paddingTop={1}>
-            <LockIcon marginRight={0.5} minWidth="18px" />
+            <LockIcon
+              marginRight={0.5}
+              minWidth="18px"
+              data-testid="lock-icon"
+            />
             <Text variant={["xs", "sm-display"]} color="black60">
               Private
             </Text>
