@@ -1,20 +1,49 @@
 import {
-  Box,
   Flex,
   Text,
   Spacer,
   SkeletonText,
   SkeletonBox,
+  Skeleton,
 } from "@artsy/palette"
+import { AlertProvider } from "Components/Alert/AlertProvider"
 import { CriteriaPillsPlaceholder } from "Components/Alert/Components/CriteriaPills"
+import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { Media } from "Utils/Responsive"
 
-export const SavedSearchAlertEditFormPlaceholder = () => {
+export const SavedSearchAlertEditFormPlaceholder: React.FC<{
+  onCloseClick?: () => void
+}> = ({ onCloseClick }) => {
   return (
-    <Box flex={1} p={4}>
-      <Text variant="lg" mb={4}>
-        Edit Alert
-      </Text>
+    <>
+      <Media greaterThanOrEqual="md">
+        <Skeleton flex={1} p={4}>
+          <SavedSearchAlertEditFormPlaceholderContext />
+        </Skeleton>
+      </Media>
+      <Media lessThan="md">
+        <AlertProvider isEditMode>
+          <Skeleton flex={1} p={4}>
+            <Modal onClose={onCloseClick} backgroundColor="white100">
+              <Skeleton px={2}>
+                <SavedSearchAlertEditFormPlaceholderContext />
+              </Skeleton>
+            </Modal>
+          </Skeleton>
+        </AlertProvider>
+      </Media>
+    </>
+  )
+}
+
+const SavedSearchAlertEditFormPlaceholderContext = () => {
+  return (
+    <>
+      <Media greaterThanOrEqual="md">
+        <Text variant="lg" mb={4}>
+          Edit Alert
+        </Text>
+      </Media>
       <SkeletonText variant="sm-display" mb={2}>
         We'll send you alerts for
       </SkeletonText>
@@ -67,6 +96,6 @@ export const SavedSearchAlertEditFormPlaceholder = () => {
           <SkeletonBox flex={1} height={50} />
         </Flex>
       </Media>
-    </Box>
+    </>
   )
 }

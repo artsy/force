@@ -29,6 +29,8 @@ import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
+import { Sticky } from "Components/Sticky"
+import { useJump } from "Utils/Hooks/useJump"
 
 interface SavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -65,17 +67,19 @@ const SavedSearchAlertEditSteps: React.FC<SavedSearchAlertEditStepsProps> = ({
     <>
       <Media greaterThanOrEqual="md">
         {current === "ALERT_DETAILS" && (
-          <Box p={4}>
-            <Flex justifyContent="space-between">
-              <ModalHeader />
-            </Flex>
-            <Spacer y={4} />
-            <SavedSearchAlertEditForm
-              viewer={viewer}
-              onDeleteClick={onDeleteClick}
-              onCompleted={onCompleted}
-            />
-          </Box>
+          <Sticky bottomBoundary="#content-end">
+            <Box p={4}>
+              <Flex justifyContent="space-between">
+                <ModalHeader />
+              </Flex>
+              <Spacer y={4} />
+              <SavedSearchAlertEditForm
+                viewer={viewer}
+                onDeleteClick={onDeleteClick}
+                onCompleted={onCompleted}
+              />
+            </Box>
+          </Sticky>
         )}
         {current === "ALERT_FILTERS" && (
           <Box flex={1} px={2} pt={4}>
@@ -109,6 +113,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   onCompleted,
 }) => {
   const { state, goToFilters, dispatch, onComplete } = useAlertContext()
+  const { jumpTo } = useJump()
 
   const isMounted = useDidMount()
 
@@ -132,6 +137,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
         const transitionToFilters = () => {
           goToFilters()
+          jumpTo("SavedSearchAlertEditForm")
         }
 
         return (
@@ -293,7 +299,9 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
       variables={{
         id: editAlertEntity.id,
       }}
-      placeholder={<SavedSearchAlertEditFormPlaceholder />}
+      placeholder={
+        <SavedSearchAlertEditFormPlaceholder onCloseClick={onCloseClick} />
+      }
       cacheConfig={{ force: true }}
       render={({ props, error }) => {
         if (error) {
@@ -302,7 +310,9 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
         }
 
         if (!props?.me?.alert || !props?.viewer) {
-          return <SavedSearchAlertEditFormPlaceholder />
+          return (
+            <SavedSearchAlertEditFormPlaceholder onCloseClick={onCloseClick} />
+          )
         }
 
         return (

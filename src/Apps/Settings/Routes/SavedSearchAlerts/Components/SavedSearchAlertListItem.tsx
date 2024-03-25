@@ -1,6 +1,5 @@
 import { Box, Clickable, Flex, Spacer, Sup, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
 import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 
@@ -10,14 +9,15 @@ interface SavedSearchAlertListItemProps {
   item: SavedSearchAlertListItem_item$data
   variant?: SavedSearchAlertListItemVariant
   onEditAlertClick: (entity: EditAlertEntity) => void
+  onViewArtworksClick: (entity: EditAlertEntity) => void
 }
 
 export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> = ({
   item,
   variant,
   onEditAlertClick,
+  onViewArtworksClick,
 }) => {
-  const viewAllHref = item.href
   const matchingArtworksCount = item.artworksConnection?.counts?.total
 
   return (
@@ -92,9 +92,18 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
               variant === "active" ? "black100" : "black60",
             ]}
           >
-            <RouterLink to={viewAllHref} textDecoration="underline">
+            <Clickable
+              onClick={() =>
+                onViewArtworksClick({
+                  id: item.internalID,
+                  name: item.settings?.name ?? undefined,
+                  artistIds: item.artistIDs as string[],
+                })
+              }
+              textDecoration="underline"
+            >
               View Artworks
-            </RouterLink>
+            </Clickable>
             &nbsp;
             <Sup color="brand">{matchingArtworksCount}</Sup>
           </Text>
@@ -115,7 +124,7 @@ export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer
         href
         title: displayName(only: [artistIDs])
         subtitle: displayName(except: [artistIDs])
-        artworksConnection(first: 1) {
+        artworksConnection(first: 10) {
           counts {
             total
           }

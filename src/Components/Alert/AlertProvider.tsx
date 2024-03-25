@@ -40,6 +40,7 @@ interface AlertProviderProps {
   visible?: boolean
   metric?: Metric
   isEditMode?: boolean
+  isAlertArtworksView?: boolean
 }
 
 export const AlertProvider: FC<AlertProviderProps> = ({
@@ -52,6 +53,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   visible,
   metric,
   isEditMode,
+  isAlertArtworksView,
 }) => {
   const { createdAlert } = useAlertTracking()
   const { showAuthDialog } = useAuthDialog()
@@ -76,22 +78,23 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     preview: null,
     visible: visible ?? false,
     isEditMode,
+    isAlertArtworksView,
     criteriaChanged: false,
     metric: metric ?? userPreferences?.metric ?? DEFAULT_METRIC,
   }
 
   const [current, setCurrent] = useState<
-    "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION"
-  >("ALERT_DETAILS")
+    "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION" | "ALERT_ARTWORKS"
+  >(isAlertArtworksView ? "ALERT_ARTWORKS" : "ALERT_DETAILS")
 
   useEffect(() => {
     // inject the values only when creating the alert
     // for the edit mode we inject the values on mount
-    if (isEditMode) return
+    if (isEditMode || isAlertArtworksView) return
     const criteria = getAllowedSearchCriteria(initialCriteria ?? {})
 
     dispatch({ type: "SET_CRITERIA", payload: criteria })
-  }, [initialCriteria, isEditMode])
+  }, [initialCriteria, isEditMode, isAlertArtworksView])
 
   const handleCompleteEdit = async () => {
     if (!alertID) {
@@ -202,7 +205,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   useEffect(() => {
     // inject the values only when creating the alert
     // for the edit mode we inject the values on mount
-    if (!state.visible && !state.isEditMode) return
+    if (!state.visible && !state.isEditMode && !state.isAlertArtworksView)
+      return
 
     const subscription = fetchQuery<AlertProviderPreviewQuery>(
       relayEnvironment as Environment,
@@ -235,7 +239,13 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     return () => {
       subscription?.unsubscribe?.()
     }
-  }, [state.visible, debouncedCriteria, relayEnvironment, state.isEditMode])
+  }, [
+    state.visible,
+    debouncedCriteria,
+    relayEnvironment,
+    state.isEditMode,
+    state.isAlertArtworksView,
+  ])
 
   useEffect(() => {
     if (!value || value.action !== Intent.createAlert) return

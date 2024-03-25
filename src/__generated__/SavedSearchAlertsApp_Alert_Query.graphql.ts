@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<32b06feea6bd77ed950333fb37cd1cbe>>
+ * @generated SignedSource<<e39a2fc0411330f2e0007f06a0066b17>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,14 @@ export type SavedSearchAlertsApp_Alert_Query$data = {
   readonly me: {
     readonly alert: {
       readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;
+      readonly artworksConnection: {
+        readonly counts: {
+          readonly total: any | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
       readonly internalID: string;
-      readonly settings: {
-        readonly name: string | null | undefined;
-      };
+      readonly subtitle: string;
+      readonly title: string;
     } | null | undefined;
   } | null | undefined;
 };
@@ -57,25 +61,61 @@ v3 = {
   "name": "artistIDs",
   "storageKey": null
 },
-v4 = {
+v4 = [
+  "artistIDs"
+],
+v5 = {
+  "alias": "title",
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "only",
+      "value": (v4/*: any*/)
+    }
+  ],
+  "kind": "ScalarField",
+  "name": "displayName",
+  "storageKey": "displayName(only:[\"artistIDs\"])"
+},
+v6 = {
+  "alias": "subtitle",
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "except",
+      "value": (v4/*: any*/)
+    }
+  ],
+  "kind": "ScalarField",
+  "name": "displayName",
+  "storageKey": "displayName(except:[\"artistIDs\"])"
+},
+v7 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1
+  }
+],
+v8 = {
   "alias": null,
   "args": null,
-  "concreteType": "AlertSettings",
+  "concreteType": "FilterArtworksCounts",
   "kind": "LinkedField",
-  "name": "settings",
+  "name": "counts",
   "plural": false,
   "selections": [
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "name",
+      "name": "total",
       "storageKey": null
     }
   ],
   "storageKey": null
 },
-v5 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -107,7 +147,20 @@ return {
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
-              (v4/*: any*/)
+              (v5/*: any*/),
+              (v6/*: any*/),
+              {
+                "alias": null,
+                "args": (v7/*: any*/),
+                "concreteType": "FilterArtworksConnection",
+                "kind": "LinkedField",
+                "name": "artworksConnection",
+                "plural": false,
+                "selections": [
+                  (v8/*: any*/)
+                ],
+                "storageKey": "artworksConnection(first:1)"
+              }
             ],
             "storageKey": null
           }
@@ -142,28 +195,42 @@ return {
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/)
+              (v5/*: any*/),
+              (v6/*: any*/),
+              {
+                "alias": null,
+                "args": (v7/*: any*/),
+                "concreteType": "FilterArtworksConnection",
+                "kind": "LinkedField",
+                "name": "artworksConnection",
+                "plural": false,
+                "selections": [
+                  (v8/*: any*/),
+                  (v9/*: any*/)
+                ],
+                "storageKey": "artworksConnection(first:1)"
+              },
+              (v9/*: any*/)
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v9/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "4782c640d6aaeada6c04914b18ff7a3a",
+    "cacheID": "49202e5f880c7ed9962a0739460ca0bf",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsApp_Alert_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsApp_Alert_Query(\n  $alertID: String!\n) {\n  me {\n    alert(id: $alertID) {\n      internalID\n      artistIDs\n      settings {\n        name\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query SavedSearchAlertsApp_Alert_Query(\n  $alertID: String!\n) {\n  me {\n    alert(id: $alertID) {\n      internalID\n      artistIDs\n      title: displayName(only: [artistIDs])\n      subtitle: displayName(except: [artistIDs])\n      artworksConnection(first: 1) {\n        counts {\n          total\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "bddc8eb33c85689d519ba4151cd04187";
+(node as any).hash = "5b88cfa50f696b25465ab2196d3c2fd0";
 
 export default node;

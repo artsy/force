@@ -15,6 +15,18 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
 jest.mock("System/useSystemContext")
+jest.mock("System/Router/useRouter")
+
+const mockSilentPush = jest.fn()
+
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: jest.fn(() => ({
+    silentPush: mockSilentPush,
+    match: {
+      location: { pathname: "" },
+    },
+  })),
+}))
 
 let relayEnv: MockEnvironment = createMockEnvironment()
 
@@ -54,10 +66,6 @@ describe("SavedSearchAlertsApp", () => {
         relayEnvironment: relayEnv,
       }
     })
-  })
-
-  afterEach(() => {
-    relayEnv.mockClear()
   })
 
   describe("alerts list", () => {
@@ -104,133 +112,235 @@ describe("SavedSearchAlertsApp", () => {
     })
   })
 
-  describe("desktop", () => {
-    beforeEach(() => {
-      breakpoint = "md"
-    })
+  describe("Edit Alert Form", () => {
+    describe("desktop", () => {
+      beforeEach(() => {
+        breakpoint = "md"
+      })
 
-    afterEach(() => {
-      relayEnv.mockClear()
-    })
-
-    it("on render opens the edit form of the first alert in the list", async () => {
-      const { mockResolveLastOperation } = renderWithRelay(
-        {
-          Me: () => ({
-            alertsConnection: mockedAlertsConnection,
-          }),
-        },
-        {},
-        relayEnv
-      )
-
-      await flushPromiseQueue()
-
-      setTimeout(() => {
-        expect(window.location.pathname).toEqual(
-          `/settings/alerts/example-id-1/edit`
-        )
-      }, 200)
-
-      const mockedPreviewResolver = {
-        Me: () => ({
-          alert: {
-            internalID: "example-id-1",
-            artistIDs: ["artist-id"],
-            settings: {
-              name: "user-search-criteria-custom-name",
-            },
+      it("on render opens the edit form of the first alert in the list", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            Me: () => ({
+              alertsConnection: mockedAlertsConnection,
+            }),
           },
-        }),
-      }
+          {},
+          relayEnv
+        )
 
-      mockResolveLastOperation(mockedPreviewResolver)
+        await flushPromiseQueue()
 
-      expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+        const mockedPreviewResolver = {
+          Me: () => ({
+            alert: {
+              internalID: "example-id-1",
+              artistIDs: ["artist-id"],
+              settings: {
+                name: "user-search-criteria-custom-name",
+              },
+            },
+          }),
+        }
+
+        mockResolveLastOperation(mockedPreviewResolver)
+
+        await flushPromiseQueue()
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-1/edit"
+        )
+
+        expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+      })
+
+      it("opens the edit form on Edit CTA press", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            Me: () => ({
+              alertsConnection: mockedAlertsConnection,
+            }),
+          },
+          {},
+          relayEnv
+        )
+
+        await flushPromiseQueue()
+
+        const mockedPreviewResolver = {
+          Me: () => ({
+            alert: {
+              internalID: "example-id-1",
+              artistIDs: ["artist-id"],
+              settings: {
+                name: "user-search-criteria-custom-name",
+              },
+            },
+          }),
+        }
+        mockResolveLastOperation(mockedPreviewResolver)
+
+        await flushPromiseQueue()
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-1/edit"
+        )
+
+        expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+
+        fireEvent.click(screen.getAllByText("Edit")[1])
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-2/edit"
+        )
+      })
     })
 
-    it("opens the edit form on Edit CTA press", async () => {
-      const { mockResolveLastOperation } = renderWithRelay(
-        {
-          Me: () => ({
-            alertsConnection: mockedAlertsConnection,
-          }),
-        },
-        {},
-        relayEnv
-      )
+    describe("mWeb", () => {
+      beforeEach(() => {
+        breakpoint = "sm"
+      })
 
-      setTimeout(() => {
-        expect(window.location.pathname).toEqual(
-          `/settings/alerts/example-id-1/edit`
-        )
-      }, 200)
-
-      const mockedPreviewResolver = {
-        Me: () => ({
-          alert: {
-            internalID: "example-id-1",
-            artistIDs: ["artist-id"],
-            settings: {
-              name: "user-search-criteria-custom-name",
-            },
+      it("show edit form on Edit CTA press", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            Me: () => ({
+              alertsConnection: mockedAlertsConnection,
+            }),
           },
-        }),
-      }
+          {},
+          relayEnv
+        )
 
-      mockResolveLastOperation(mockedPreviewResolver)
+        await flushPromiseQueue()
 
-      expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+        const mockedPreviewResolver = {
+          Me: () => ({
+            alert: {
+              internalID: "example-id-1",
+              artistIDs: ["artist-id"],
+              settings: {
+                name: "user-search-criteria-custom-name",
+              },
+            },
+          }),
+        }
 
-      fireEvent.click(screen.getAllByText("Edit")[1])
+        mockResolveLastOperation(mockedPreviewResolver)
 
-      expect(window.location.pathname).toEqual(
-        `/settings/alerts/example-id-2/edit`
-      )
+        await flushPromiseQueue()
+
+        fireEvent.click(screen.getAllByText("Edit")[0])
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-1/edit"
+        )
+
+        expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+
+        fireEvent.click(screen.getByLabelText("Close"))
+
+        expect(mockSilentPush).toHaveBeenCalledWith("/settings/alerts")
+      })
     })
   })
 
-  describe("mobile", () => {
-    beforeEach(() => {
-      breakpoint = "sm"
+  describe("View Artworks", () => {
+    describe("desktop", () => {
+      beforeEach(() => {
+        breakpoint = "md"
+      })
+
+      it("opens the matching artworks when View Artwoks CTA is pressed", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            Me: () => ({
+              alertsConnection: mockedAlertsConnection,
+            }),
+          },
+          {},
+          relayEnv
+        )
+
+        await flushPromiseQueue()
+
+        const mockedPreviewResolver = {
+          Me: () => ({
+            alert: {
+              internalID: "example-id-1",
+              artistIDs: ["artist-id"],
+              settings: {
+                name: "user-search-criteria-custom-name",
+              },
+            },
+          }),
+        }
+
+        mockResolveLastOperation(mockedPreviewResolver)
+
+        await flushPromiseQueue()
+
+        fireEvent.click(screen.getAllByText("View Artworks")[0])
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-1/artworks"
+        )
+
+        expect(screen.getAllByText("View Artworks")[0]).toBeInTheDocument()
+
+        fireEvent.click(screen.getAllByText("View Artworks")[1])
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-2/artworks"
+        )
+      })
     })
 
-    it("show edit form on Edit CTA press", () => {
-      const { mockResolveLastOperation } = renderWithRelay(
-        {
-          Me: () => ({
-            alertsConnection: mockedAlertsConnection,
-          }),
-        },
-        {},
-        relayEnv
-      )
+    describe("mWeb", () => {
+      beforeEach(() => {
+        breakpoint = "sm"
+      })
 
-      fireEvent.click(screen.getAllByText("Edit")[0])
-
-      expect(window.location.pathname).toEqual(
-        `/settings/alerts/example-id-1/edit`
-      )
-
-      const mockedPreviewResolver = {
-        Me: () => ({
-          alert: {
-            internalID: "example-id-1",
-            artistIDs: ["artist-id"],
-            settings: {
-              name: "user-search-criteria-custom-name",
-            },
+      it("opens the matching artworks when View Artwoks CTA is pressed", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            Me: () => ({
+              alertsConnection: mockedAlertsConnection,
+            }),
           },
-        }),
-      }
+          {},
+          relayEnv
+        )
+        await flushPromiseQueue()
 
-      mockResolveLastOperation(mockedPreviewResolver)
+        const mockedPreviewResolver = {
+          Me: () => ({
+            alert: {
+              internalID: "example-id-1",
+              artistIDs: ["artist-id"],
+              settings: {
+                name: "user-search-criteria-custom-name",
+              },
+            },
+          }),
+        }
 
-      expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+        mockResolveLastOperation(mockedPreviewResolver)
 
-      fireEvent.click(screen.getByLabelText("Close"))
+        await flushPromiseQueue()
 
-      expect(window.location.pathname).toEqual(`/settings/alerts`)
+        fireEvent.click(screen.getAllByText("View Artworks")[0])
+
+        expect(mockSilentPush).toHaveBeenCalledWith(
+          "/settings/alerts/example-id-1/artworks"
+        )
+
+        expect(screen.getAllByText("View Artworks")[0]).toBeInTheDocument()
+
+        fireEvent.click(screen.getByLabelText("Close"))
+
+        expect(mockSilentPush).toHaveBeenCalledWith("/settings/alerts")
+      })
     })
   })
 })

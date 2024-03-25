@@ -29,6 +29,7 @@ export type State = {
   preview: PreviewSavedSearch
   visible: boolean
   isEditMode?: boolean
+  isAlertArtworksView?: boolean
   criteriaChanged?: boolean
   metric?: Metric
   isSubmitting?: boolean
@@ -165,7 +166,11 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
 }
 
 export interface AlertContextProps {
-  current: "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION"
+  current:
+    | "ALERT_DETAILS"
+    | "ALERT_FILTERS"
+    | "ALERT_CONFIRMATION"
+    | "ALERT_ARTWORKS"
   dispatch: React.Dispatch<Action>
   goToFilters(): void
   goToDetails(): void
