@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<abb06e8a23018a2d420a3fc1511ff417>>
+ * @generated SignedSource<<e50bbdce3a7a342a1330bb3d0d3bec93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type useCreateCollectionMutation$data = {
         readonly artworksCount: number;
         readonly internalID: string;
         readonly name: string;
+        readonly shareableWithPartners: boolean;
       } | null | undefined;
       readonly mutationError?: {
         readonly fieldErrors: ReadonlyArray<{
@@ -70,6 +71,13 @@ v3 = {
 },
 v4 = {
   "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "shareableWithPartners",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
   "args": [
     {
       "kind": "Literal",
@@ -81,7 +89,7 @@ v4 = {
   "name": "artworksCount",
   "storageKey": "artworksCount(onlyVisible:true)"
 },
-v5 = {
+v6 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -154,7 +162,8 @@ return {
                     "selections": [
                       (v2/*: any*/),
                       (v3/*: any*/),
-                      (v4/*: any*/)
+                      (v4/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -162,7 +171,7 @@ return {
                 "type": "CreateCollectionSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           }
@@ -216,6 +225,7 @@ return {
                       (v2/*: any*/),
                       (v3/*: any*/),
                       (v4/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -230,7 +240,7 @@ return {
                 "type": "CreateCollectionSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           }
@@ -240,16 +250,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4cd61d0ff560a8f7a56f939f29468a4a",
+    "cacheID": "f1ebd996e39b20b09887b6c8f9f09b41",
     "id": null,
     "metadata": {},
     "name": "useCreateCollectionMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateCollectionMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          name\n          artworksCount(onlyVisible: true)\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateCollectionMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          name\n          shareableWithPartners\n          artworksCount(onlyVisible: true)\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5bb03b60934cc8261b089eba863075dc";
+(node as any).hash = "be444ba3b82b338907eaf07a6d66a431";
 
 export default node;
