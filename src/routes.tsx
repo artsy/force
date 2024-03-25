@@ -60,6 +60,7 @@ import { newWorksFromGalleriesYouFollowRoutes } from "Apps/NewWorksFromGalleries
 import { alertRoutes } from "Apps/Alert/alertRoutes"
 import { partnerOfferRoutes } from "Apps/PartnerOffer/partnerOfferRoutes"
 import { conversationsRoutes } from "Apps/Conversations/conversationsRoutes"
+import { saleAgreementsRoutes } from "Apps/SaleAgreements/saleAgreementsRoutes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([
@@ -97,6 +98,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: identityVerificationRoutes },
     { routes: institutionPartnershipsRoutes },
     { routes: jobsRoutes },
+    { routes: saleAgreementsRoutes },
     { routes: marketingRoutes },
     { routes: myCollectionRoutes },
     { routes: myCollectionInsightsRoutes },
