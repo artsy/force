@@ -33,6 +33,7 @@ const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
             width={[40, 60]}
             height={[40, 60]}
             lazyLoad
+            alt="Artwork image"
           />
         ) : (
           <ArtworkImagePlaceholder />
@@ -60,6 +61,11 @@ const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
         )}
         <Spacer x={2} />
         <Toggle
+          aria-label={
+            values[item.internalID]
+              ? "Toggle list privacy to private"
+              : "Toggle list privacy to shared"
+          }
           selected={values[item.internalID]}
           onSelect={value => {
             setFieldValue(item.internalID, value)
