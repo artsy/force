@@ -64,7 +64,12 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
             </Flex>
             <Spacer y={2} />
             <Flex justifyContent="flex-end">
-              <Button type="submit" onClick={onComplete} display="flex">
+              <Button
+                type="submit"
+                onClick={onComplete}
+                display="flex"
+                width={["100%", "30%"]}
+              >
                 Save Changes
               </Button>
             </Flex>
