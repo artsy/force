@@ -80,6 +80,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
         name: alerts[0].title ?? "",
         artistIds: alerts[0]?.artistIDs as string[],
       })
+      setViewOption("EDIT")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, match.params])
