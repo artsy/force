@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<72497c6e5239fde2ee13734f08a6b192>>
+ * @generated SignedSource<<03a1b7bc75b25e70de5b66a378b9f959>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,9 @@ export type EditArtworkListItem_item$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly image: {
-          readonly url: string | null | undefined;
+          readonly resized: {
+            readonly src: string;
+          } | null | undefined;
         } | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -92,13 +94,36 @@ const node: ReaderFragment = {
                       "args": [
                         {
                           "kind": "Literal",
+                          "name": "height",
+                          "value": 60
+                        },
+                        {
+                          "kind": "Literal",
                           "name": "version",
-                          "value": "square"
+                          "value": [
+                            "square"
+                          ]
+                        },
+                        {
+                          "kind": "Literal",
+                          "name": "width",
+                          "value": 60
                         }
                       ],
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": "url(version:\"square\")"
+                      "concreteType": "ResizedImageUrl",
+                      "kind": "LinkedField",
+                      "name": "resized",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "src",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": "resized(height:60,version:[\"square\"],width:60)"
                     }
                   ],
                   "storageKey": null
@@ -117,6 +142,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5b4eb8ef06b4b6516935e3d588a40313";
+(node as any).hash = "4cbad1c8fecbe4fc582ecf10f0b141b0";
 
 export default node;
