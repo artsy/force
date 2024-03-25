@@ -18,15 +18,23 @@ const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
   const { item } = props
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURL = artworkNodes[0]?.image?.resized?.src ?? null
+  const totalArtworks = item.artworksConnection?.totalCount ?? 0
   const { values, setFieldValue } = useFormikContext<EditListPrivacyFormModel>()
 
   return (
     <Flex justifyContent="space-between">
       <Flex alignItems="center">
         <Image src={imageURL ?? ""} width="60px" height="60px" lazyLoad />
-        <Text variant="sm" paddingLeft={1}>
-          {item.name}
-        </Text>
+        <Flex flexDirection="column">
+          <Text variant="sm" paddingLeft={1}>
+            {item.name}
+          </Text>
+          <Text variant="xs" color="black60" paddingLeft={1}>
+            {totalArtworks === 1
+              ? `${totalArtworks} artwork`
+              : `${totalArtworks} artworks`}
+          </Text>
+        </Flex>
         <Spacer x={1} />
         {!values[item.internalID] && <LockIcon />}
       </Flex>
@@ -54,6 +62,7 @@ export const EditArtworkListItemFragmentContainer = createFragmentContainer(
         name
         internalID
         artworksConnection(first: 4) {
+          totalCount
           edges {
             node {
               image {
