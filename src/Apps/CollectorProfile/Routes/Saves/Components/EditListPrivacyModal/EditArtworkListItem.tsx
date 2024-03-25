@@ -1,4 +1,4 @@
-import { Flex, Image, Toggle, Text, Spacer, THEME } from "@artsy/palette"
+import { Flex, Image, Toggle, Text, Spacer, THEME, Box } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
@@ -6,6 +6,7 @@ import { EditArtworkListItem_item$data } from "__generated__/EditArtworkListItem
 import { useFormikContext } from "formik"
 import LockIcon from "@artsy/icons/LockIcon"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import NoArtIcon from "@artsy/icons/NoArtIcon"
 
 interface EditArtworkListItemProps {
   item: EditArtworkListItem_item$data
@@ -26,12 +27,16 @@ const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
   return (
     <Flex justifyContent="space-between">
       <Flex alignItems="center">
-        <Image
-          src={imageURL ?? ""}
-          width={[40, 60]}
-          height={[40, 60]}
-          lazyLoad
-        />
+        {imageURL ? (
+          <Image
+            src={imageURL ?? ""}
+            width={[40, 60]}
+            height={[40, 60]}
+            lazyLoad
+          />
+        ) : (
+          <ArtworkImagePlaceholder />
+        )}
         <Flex flexDirection="column">
           <Flex alignItems="center">
             <Text variant={["xs", "sm"]} paddingLeft={1}>
@@ -88,3 +93,18 @@ export const EditArtworkListItemFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const ArtworkImagePlaceholder = () => {
+  return (
+    <Flex
+      alignItems="center"
+      justifyContent="center"
+      width={[40, 60]}
+      height={[40, 60]}
+      backgroundColor="black5"
+      aria-label="Image placeholder"
+    >
+      <NoArtIcon width={18} height={18} fill="black60" />
+    </Flex>
+  )
+}
