@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<370768798696c635f56d0b8e0c85ed7e>>
+ * @generated SignedSource<<be161f99c3794900726c02ad249942c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type CollectorProfileSavesRoute_me$data = {
       readonly node: {
         readonly default: boolean;
         readonly internalID: string;
+        readonly shareableWithPartners: boolean;
         readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item" | "EditArtworkListItem_item">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -25,6 +26,7 @@ export type CollectorProfileSavesRoute_me$data = {
       readonly totalCount: number | null | undefined;
     } | null | undefined;
     readonly internalID: string;
+    readonly shareableWithPartners: boolean;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item" | "EditArtworkListItem_item">;
   } | null | undefined;
   readonly " $fragmentType": "CollectorProfileSavesRoute_me";
@@ -43,11 +45,18 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "shareableWithPartners",
+  "storageKey": null
+},
+v2 = {
   "args": null,
   "kind": "FragmentSpread",
   "name": "ArtworkListItem_item"
 },
-v2 = {
+v3 = {
   "args": null,
   "kind": "FragmentSpread",
   "name": "EditArtworkListItem_item"
@@ -86,6 +95,7 @@ return {
         (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
+        (v3/*: any*/),
         {
           "alias": null,
           "args": [
@@ -147,6 +157,7 @@ return {
                 },
                 (v1/*: any*/),
                 (v2/*: any*/),
+                (v3/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -201,6 +212,6 @@ return {
 };
 })();
 
-(node as any).hash = "2f57fdb321ea3c97c9b03aa65a3a97a5";
+(node as any).hash = "31009dcee3ed95fc6e4444e65347bb6d";
 
 export default node;

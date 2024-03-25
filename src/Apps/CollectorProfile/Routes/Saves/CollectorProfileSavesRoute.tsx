@@ -139,6 +139,7 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
       fragment CollectorProfileSavesRoute_me on Me {
         savedArtworksArtworkList: collection(id: "saved-artwork") {
           internalID
+          shareableWithPartners
           ...ArtworkListItem_item
           ...EditArtworkListItem_item
 
@@ -161,6 +162,7 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
             node {
               internalID
               default
+              shareableWithPartners
               ...ArtworkListItem_item
               ...EditArtworkListItem_item
             }

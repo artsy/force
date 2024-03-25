@@ -1,24 +1,34 @@
-import { Flex } from "@artsy/palette"
+import { Flex, Image, Toggle } from "@artsy/palette"
 import { FC } from "react"
-import { useTranslation } from "react-i18next"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { EditArtworkListItem_item$data } from "__generated__/EditArtworkListItem_item.graphql"
+import { useFormikContext } from "formik"
 
 interface EditArtworkListItemProps {
   item: EditArtworkListItem_item$data
 }
 
+interface EditListPrivacyFormModel {
+  [key: string]: boolean
+}
+
 const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
   const { item } = props
-  const { t } = useTranslation()
   const artworkNodes = extractNodes(item.artworksConnection)
-  const imageURL = artworkNodes.map(node => node.image?.url ?? null)
+  const imageURL = artworkNodes[0]?.image?.url ?? null
+  const { values, setFieldValue } = useFormikContext<EditListPrivacyFormModel>()
+
   return (
     <Flex>
+      <Image src={imageURL ?? ""} width="50px" height="50px" lazyLoad />
       {item.name}
-      {item.shareableWithPartners ? "yes" : "no"}
-      {imageURL}
+      <Toggle
+        selected={values[item.internalID]}
+        onSelect={value => {
+          setFieldValue(item.internalID, value)
+        }}
+      />
     </Flex>
   )
 }
@@ -30,7 +40,6 @@ export const EditArtworkListItemFragmentContainer = createFragmentContainer(
       fragment EditArtworkListItem_item on Collection {
         name
         internalID
-        shareableWithPartners
         artworksConnection(first: 4) {
           edges {
             node {
