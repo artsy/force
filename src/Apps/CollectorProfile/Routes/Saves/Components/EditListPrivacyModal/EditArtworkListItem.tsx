@@ -18,7 +18,7 @@ const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
   const { item } = props
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURL = artworkNodes[0]?.image?.resized?.src ?? null
-  const totalArtworks = item.artworksConnection?.totalCount ?? 0
+  const totalArtworks = item.artworksCount ?? 0
   const { values, setFieldValue } = useFormikContext<EditListPrivacyFormModel>()
 
   return (
@@ -61,8 +61,8 @@ export const EditArtworkListItemFragmentContainer = createFragmentContainer(
       fragment EditArtworkListItem_item on Collection {
         name
         internalID
+        artworksCount(onlyVisible: true)
         artworksConnection(first: 4) {
-          totalCount
           edges {
             node {
               image {

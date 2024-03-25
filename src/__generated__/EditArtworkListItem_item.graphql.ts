@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77922ceb4a7d6fd54601bf6bbde126a4>>
+ * @generated SignedSource<<79c680d68b73cf9d364928a7da2a1c10>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,8 +21,8 @@ export type EditArtworkListItem_item$data = {
         } | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
-    readonly totalCount: number | null | undefined;
   } | null | undefined;
+  readonly artworksCount: number;
   readonly internalID: string;
   readonly name: string;
   readonly " $fragmentType": "EditArtworkListItem_item";
@@ -57,6 +57,19 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Literal",
+          "name": "onlyVisible",
+          "value": true
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "artworksCount",
+      "storageKey": "artworksCount(onlyVisible:true)"
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
           "name": "first",
           "value": 4
         }
@@ -66,13 +79,6 @@ const node: ReaderFragment = {
       "name": "artworksConnection",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -150,6 +156,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6edc4ad179b8604101ed715a6c5fe090";
+(node as any).hash = "0f58e8527fcb3366f8722093b978dc8d";
 
 export default node;
