@@ -10,6 +10,8 @@ export const FiltersFooter: FC = () => {
       data-testid="setFilters"
       onClick={() => {
         goToDetails()
+        // hack: scroll by 1 pixel to make edit alert form Sticky to re-appear on the screen
+        window.scrollBy(0, -1)
       }}
       width="100%"
     >

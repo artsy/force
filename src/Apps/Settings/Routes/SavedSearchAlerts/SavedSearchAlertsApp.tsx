@@ -37,6 +37,8 @@ import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { getENV } from "Utils/getENV"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
+import { Sticky } from "Components/Sticky"
+import { Jump } from "Utils/Hooks/useJump"
 
 const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 
@@ -315,12 +317,16 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                     borderRightColor="black15"
                     minHeight={DESKTOP_HEIGHT}
                   >
+                    <Jump id="SavedSearchAlertEditForm" />
+
                     {viewOption === "EDIT" && editAlertEntity && (
-                      <SavedSearchAlertEditFormQueryRenderer
-                        editAlertEntity={editAlertEntity}
-                        onCompleted={handleCompleted}
-                        onDeleteClick={handleDeleteClick}
-                      />
+                      <Sticky bottomBoundary="#content-end">
+                        <SavedSearchAlertEditFormQueryRenderer
+                          editAlertEntity={editAlertEntity}
+                          onCompleted={handleCompleted}
+                          onDeleteClick={handleDeleteClick}
+                        />
+                      </Sticky>
                     )}
                     {viewOption === "ARTWORKS" && editAlertEntity && (
                       <SavedSearchAlertsArtworksQueryRenderer
@@ -331,7 +337,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                   </Column>
                 </GridColumns>
 
-                <Box />
+                <Box id="content-end" />
               </Media>
             </Box>
             <Media lessThan="md">
