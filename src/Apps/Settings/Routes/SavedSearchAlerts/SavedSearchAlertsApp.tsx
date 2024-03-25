@@ -81,7 +81,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
         name: alerts[0].title ?? "",
         artistIds: alerts[0]?.artistIDs as string[],
       })
+      // the two following lines update the right colump and url when
+      // "/settings/alerts" is called from the tab of side menu
       setViewOption("EDIT")
+      silentPush(`/settings/alerts/${alerts[0].internalID}/edit`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, match.params])
