@@ -115,7 +115,10 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
                 <Button
                   width="100%"
                   variant="secondaryBlack"
-                  onClick={onEditAlertClick}
+                  onClick={() => {
+                    onEditAlertClick()
+                    jumpTo("SavedSearchAlertEditForm")
+                  }}
                 >
                   Edit Alert
                 </Button>
