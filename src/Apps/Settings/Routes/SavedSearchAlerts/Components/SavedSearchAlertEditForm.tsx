@@ -29,6 +29,7 @@ import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
+import { Sticky } from "Components/Sticky"
 
 interface SavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -65,17 +66,19 @@ const SavedSearchAlertEditSteps: React.FC<SavedSearchAlertEditStepsProps> = ({
     <>
       <Media greaterThanOrEqual="md">
         {current === "ALERT_DETAILS" && (
-          <Box p={4}>
-            <Flex justifyContent="space-between">
-              <ModalHeader />
-            </Flex>
-            <Spacer y={4} />
-            <SavedSearchAlertEditForm
-              viewer={viewer}
-              onDeleteClick={onDeleteClick}
-              onCompleted={onCompleted}
-            />
-          </Box>
+          <Sticky bottomBoundary="#content-end">
+            <Box p={4}>
+              <Flex justifyContent="space-between">
+                <ModalHeader />
+              </Flex>
+              <Spacer y={4} />
+              <SavedSearchAlertEditForm
+                viewer={viewer}
+                onDeleteClick={onDeleteClick}
+                onCompleted={onCompleted}
+              />
+            </Box>
+          </Sticky>
         )}
         {current === "ALERT_FILTERS" && (
           <Box flex={1} px={2} pt={4}>

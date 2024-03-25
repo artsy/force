@@ -106,11 +106,7 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
         })}
 
         <Clickable
-          onClick={() => {
-            transitionToFiltersAndTrack()
-            // hack: scroll by 1 pixel to make edit alert form Sticky to re-appear on the screen
-            window.scrollBy(0, 1)
-          }}
+          onClick={transitionToFiltersAndTrack}
           mt={1}
           data-testid="moreFilters"
         >
