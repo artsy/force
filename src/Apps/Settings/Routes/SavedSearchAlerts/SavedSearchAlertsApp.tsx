@@ -41,7 +41,7 @@ import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/Sav
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 
 const SETTINGS_NAVIGATION_BAR_HEIGHT = 300
-const DESKTOP_HEIGHT = `calc(100vh - ${
+export const ALERTS_APP_DESKTOP_HEIGHT = `calc(100vh - ${
   DESKTOP_NAV_BAR_HEIGHT + SETTINGS_NAVIGATION_BAR_HEIGHT
 }px)`
 
@@ -254,7 +254,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     <Box
       overflow="scroll"
       // The notification list needs a maximum height to be independently scrollable.
-      maxHeight={[null, DESKTOP_HEIGHT]}
+      maxHeight={[null, ALERTS_APP_DESKTOP_HEIGHT]}
       pb={2}
     >
       <Join separator={<Separator borderColor="black5" />}>
@@ -319,10 +319,13 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
               <Media greaterThanOrEqual="md">
                 <GridColumns gridColumnGap={0}>
                   <Column span={6}>
-                    <Flex height={DESKTOP_HEIGHT} flexDirection="column">
+                    <Flex
+                      height={ALERTS_APP_DESKTOP_HEIGHT}
+                      flexDirection="column"
+                    >
                       <Flex
                         overflow="hidden"
-                        maxHeight={DESKTOP_HEIGHT}
+                        maxHeight={ALERTS_APP_DESKTOP_HEIGHT}
                         flexDirection="column"
                       >
                         {list}
@@ -335,11 +338,11 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                     borderLeft="1px solid"
                     borderLeftColor="black15"
                     borderRightColor="black15"
-                    minHeight={DESKTOP_HEIGHT}
+                    minHeight={ALERTS_APP_DESKTOP_HEIGHT}
                   >
                     <Flex
                       flexDirection="column"
-                      height={DESKTOP_HEIGHT}
+                      height={ALERTS_APP_DESKTOP_HEIGHT}
                       overflow="auto"
                       paddingBottom={2}
                     >

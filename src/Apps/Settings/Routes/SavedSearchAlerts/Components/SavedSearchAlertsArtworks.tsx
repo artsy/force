@@ -31,8 +31,7 @@ import {
   CriteriaPillsPlaceholder,
 } from "Components/Alert/Components/CriteriaPills"
 import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
-
-const PLACEHOLDER_MAX_HEIGHT = 500
+import { ALERTS_APP_DESKTOP_HEIGHT } from "Apps/Settings/Routes/SavedSearchAlerts/SavedSearchAlertsApp"
 
 interface AlertArtworksProps {
   alert: NonNullable<SavedSearchAlertsArtworksQuery["response"]["me"]>["alert"]
@@ -286,11 +285,7 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<SavedSearchAlertsA
 const SavedSearchAlertsArtworksPlaseholderContext: React.FC = () => {
   return (
     // Setting a max height to force scrolling to top when the content changes.
-    <Flex
-      maxHeight={PLACEHOLDER_MAX_HEIGHT}
-      overflow="hidden"
-      flexDirection="column"
-    >
+    <>
       <Join separator={<Spacer y={2} />}>
         <CriteriaPillsPlaceholder />
         <SkeletonBox display={["none", "block"]}>
@@ -307,7 +302,7 @@ const SavedSearchAlertsArtworksPlaseholderContext: React.FC = () => {
         </Flex>
         <ArtworkGridPlaceholder columnCount={2} amount={2} />
       </Join>
-    </Flex>
+    </>
   )
 }
 
@@ -317,8 +312,13 @@ const SavedSearchAlertsArtworksPlaseholder: React.FC<{
   return (
     <>
       <Media greaterThanOrEqual="md">
-        <Skeleton p={4}>
-          <Text variant="lg" mb={2}>
+        <Skeleton
+          p={4}
+          maxHeight={ALERTS_APP_DESKTOP_HEIGHT}
+          overflow="hidden"
+          flexDirection="column"
+        >
+          <Text variant="lg" pb={2}>
             View Artworks
           </Text>
           <SavedSearchAlertsArtworksPlaseholderContext />
