@@ -242,13 +242,17 @@ not_staging_or_release: &not_staging_or_release
         - release
 
 only_main: &only_main
-  context: hokusai
+  context:
+    - hokusai
+    - slack-orb
   filters:
     branches:
       only: main
 
 only_release: &only_release
-  context: hokusai
+  context:
+    - hokusai
+    - slack-orb
   filters:
     branches:
       only: release
@@ -361,7 +365,6 @@ workflows:
           <<: *only_main
           name: deploy-staging
           project-name: force
-          context: slack-orb
           executor: hokusai/beta
           requires:
             - production-image-push
@@ -400,7 +403,6 @@ workflows:
 
       - validate_production_schema:
           <<: *only_release
-          context: slack-orb
 
       # Production
       - hokusai/deploy-production:
