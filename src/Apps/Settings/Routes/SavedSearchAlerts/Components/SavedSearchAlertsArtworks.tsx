@@ -32,6 +32,8 @@ import {
 } from "Components/Alert/Components/CriteriaPills"
 import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
 
+const PLACEHOLDER_MAX_HEIGHT = 500
+
 interface AlertArtworksProps {
   alert: NonNullable<SavedSearchAlertsArtworksQuery["response"]["me"]>["alert"]
   onCloseClick?: () => void
@@ -283,7 +285,12 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<SavedSearchAlertsA
 
 const SavedSearchAlertsArtworksPlaseholderContext: React.FC = () => {
   return (
-    <Flex maxHeight={500} overflow="hidden" flexDirection="column">
+    // Setting a max height to force scrolling to top when the content changes.
+    <Flex
+      maxHeight={PLACEHOLDER_MAX_HEIGHT}
+      overflow="hidden"
+      flexDirection="column"
+    >
       <Join separator={<Spacer y={2} />}>
         <CriteriaPillsPlaceholder />
         <SkeletonBox display={["none", "block"]}>
