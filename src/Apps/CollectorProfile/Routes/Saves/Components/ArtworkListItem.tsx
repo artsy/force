@@ -61,12 +61,16 @@ const ArtworkListItem: FC<ArtworkListItemProps> = props => {
         )}
 
         <Box>
-          <Flex>
+          <Flex justifyContent="space-between">
             <Text variant={["xs", "sm-display"]} overflowEllipsis>
               {item.name}
             </Text>
             {shareableWithPartnersEnabled && !item.shareableWithPartners && (
-              <LockIcon marginLeft={0.5} minWidth="18px" />
+              <LockIcon
+                marginLeft={0.5}
+                minWidth="18px"
+                data-testid="lock-icon"
+              />
             )}
           </Flex>
 

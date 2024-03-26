@@ -22,7 +22,6 @@ import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilter
 import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawer"
 import { ArtworkFilterExpandableSort } from "Components/ArtworkFilter/ArtworkFilters/ArtworkFilterExpandableSort"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/useSystemContext"
@@ -266,35 +265,33 @@ export const BaseArtworkFilter: React.FC<
               borderBottom="1px solid"
               borderColor="black10"
             >
-              <ProgressiveOnboardingAlertSelectFilter placement="bottom-start">
-                <Clickable
-                  onClick={handleOpen}
-                  display="flex"
-                  alignItems="center"
-                  gap={0.5}
-                >
-                  <FilterIcon />
-                  <Text variant="xs">
-                    Sort & Filter
-                    {appliedFiltersTotalCount > 0 && (
-                      <Box as="span" color="brand">
-                        {" "}
-                        • {appliedFiltersTotalCount}
-                      </Box>
-                    )}
-                  </Text>
-                </Clickable>
+              <Clickable
+                onClick={handleOpen}
+                display="flex"
+                alignItems="center"
+                gap={0.5}
+              >
+                <FilterIcon />
+                <Text variant="xs">
+                  Sort & Filter
+                  {appliedFiltersTotalCount > 0 && (
+                    <Box as="span" color="brand">
+                      {" "}
+                      • {appliedFiltersTotalCount}
+                    </Box>
+                  )}
+                </Text>
+              </Clickable>
 
-                {isOpen && (
-                  <ArtworkFilterMobileOverlay onClose={handleClose}>
-                    <ArtworkFilterExpandableSort />
+              {isOpen && (
+                <ArtworkFilterMobileOverlay onClose={handleClose}>
+                  <ArtworkFilterExpandableSort />
 
-                    <Spacer y={4} />
+                  <Spacer y={4} />
 
-                    {Filters ? Filters : <ArtworkFilters user={user} />}
-                  </ArtworkFilterMobileOverlay>
-                )}
-              </ProgressiveOnboardingAlertSelectFilter>
+                  {Filters ? Filters : <ArtworkFilters user={user} />}
+                </ArtworkFilterMobileOverlay>
+              )}
 
               <ArtworkFilterCreateAlert
                 renderButton={props => {

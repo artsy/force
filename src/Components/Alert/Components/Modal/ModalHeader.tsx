@@ -18,5 +18,10 @@ export const ModalHeader: FC = () => {
       return <FiltersHeader />
     case "ALERT_CONFIRMATION":
       return <ConfirmationHeader />
+    case "ALERT_ARTWORKS":
+      return <Text variant="lg">View Artworks</Text>
+    default:
+      console.warn("no matching case is found in AlertContext")
+      return null
   }
 }

@@ -16,10 +16,7 @@ import {
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useSystemContext } from "System/SystemContext"
 import { useDismissibleContext } from "@artsy/dismissible"
-import {
-  PROGRESSIVE_ONBOARDING,
-  PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
-} from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
+import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
 const KEY = PROGRESSIVE_ONBOARDING.alertCreate
 
@@ -44,20 +41,8 @@ export const __ProgressiveOnboardingAlertCreate__: FC<ProgressiveOnboardingAlert
 
   const image = resized(IMAGE.src, { width: 230 })
 
-  const handleDismiss = () => {
-    dismiss(PROGRESSIVE_ONBOARDING_ALERT_CHAIN)
-  }
-
-  const handleNext = () => {
-    dismiss(KEY)
-  }
-
   const handleClose = () => {
     dismiss(KEY)
-  }
-
-  if (!isDisplayable) {
-    return <>{children({ onSkip: () => {} })}</>
   }
 
   return (
@@ -66,6 +51,7 @@ export const __ProgressiveOnboardingAlertCreate__: FC<ProgressiveOnboardingAlert
       ignoreClickOutside
       onClose={handleClose}
       variant="defaultLight"
+      visible={isDisplayable}
       popover={({ onHide }) => {
         return (
           <Box py={1}>
@@ -96,25 +82,10 @@ export const __ProgressiveOnboardingAlertCreate__: FC<ProgressiveOnboardingAlert
             <Flex>
               <Button
                 size="small"
-                variant="secondaryBlack"
-                flex={1}
-                onClick={() => {
-                  onHide()
-                  handleNext()
-                }}
-              >
-                Learn More
-              </Button>
-
-              <Spacer x={1} />
-
-              <Button
-                size="small"
                 variant="primaryBlack"
                 flex={1}
                 onClick={() => {
                   onHide()
-                  handleDismiss()
                 }}
               >
                 Got It
@@ -124,7 +95,7 @@ export const __ProgressiveOnboardingAlertCreate__: FC<ProgressiveOnboardingAlert
         )
       }}
     >
-      {children({ onSkip: handleDismiss })}
+      {children({ onSkip: handleClose })}
     </ProgressiveOnboardingPopover>
   )
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c931db4bef4a055f923289a379a451dc>>
+ * @generated SignedSource<<fb0ce74a6c6044933965e34eaa63a5c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_SavedSearchAlertsAppEditQuery$variables = Record<PropertyKey, never>;
-export type settingsRoutes_SavedSearchAlertsAppEditQuery$data = {
+export type settingsRoutes_SavedSearchAlertsArtworksQuery$variables = Record<PropertyKey, never>;
+export type settingsRoutes_SavedSearchAlertsArtworksQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
   } | null | undefined;
 };
-export type settingsRoutes_SavedSearchAlertsAppEditQuery = {
-  response: settingsRoutes_SavedSearchAlertsAppEditQuery$data;
-  variables: settingsRoutes_SavedSearchAlertsAppEditQuery$variables;
+export type settingsRoutes_SavedSearchAlertsArtworksQuery = {
+  response: settingsRoutes_SavedSearchAlertsArtworksQuery$data;
+  variables: settingsRoutes_SavedSearchAlertsArtworksQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -50,7 +50,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "settingsRoutes_SavedSearchAlertsAppEditQuery",
+    "name": "settingsRoutes_SavedSearchAlertsArtworksQuery",
     "selections": [
       {
         "alias": null,
@@ -76,7 +76,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "settingsRoutes_SavedSearchAlertsAppEditQuery",
+    "name": "settingsRoutes_SavedSearchAlertsArtworksQuery",
     "selections": [
       {
         "alias": null,
@@ -281,16 +281,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "734998ec7b4b5ce6600eef5ba5daa93d",
+    "cacheID": "bc38345fb7fe7c8f573cb4c9b8621819",
     "id": null,
     "metadata": {},
-    "name": "settingsRoutes_SavedSearchAlertsAppEditQuery",
+    "name": "settingsRoutes_SavedSearchAlertsArtworksQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsAppEditQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  artistIDs\n  artistSeriesIDs\n  href\n  title: displayName(only: [artistIDs])\n  subtitle: displayName(except: [artistIDs])\n  artworksConnection(first: 10) {\n    counts {\n      total\n    }\n    id\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10, sort: ENABLED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        ...SavedSearchAlertListItem_item\n        title: displayName(only: [artistIDs])\n        subtitle: displayName(except: [artistIDs])\n        artworksConnection(first: 10) {\n          counts {\n            total\n          }\n          id\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsArtworksQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  artistIDs\n  artistSeriesIDs\n  href\n  title: displayName(only: [artistIDs])\n  subtitle: displayName(except: [artistIDs])\n  artworksConnection(first: 10) {\n    counts {\n      total\n    }\n    id\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10, sort: ENABLED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        ...SavedSearchAlertListItem_item\n        title: displayName(only: [artistIDs])\n        subtitle: displayName(except: [artistIDs])\n        artworksConnection(first: 10) {\n          counts {\n            total\n          }\n          id\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8df33aeecf080d4a56a31f7b7411b096";
+(node as any).hash = "c7aad02fc425d278b76b653cd2f5a203";
 
 export default node;

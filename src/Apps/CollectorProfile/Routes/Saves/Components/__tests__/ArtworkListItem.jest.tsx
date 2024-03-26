@@ -148,6 +148,7 @@ const collectionNode = {
   artworksCount: 4,
   artworksConnection,
   default: false,
+  shareableWithPartners: true,
 }
 
 const collectionsConnection = {

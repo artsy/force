@@ -1,8 +1,13 @@
 import { mount } from "enzyme"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.mock("Apps/Auction/Hooks/useFormContext")
+
+jest.mock("System/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
+}))
 
 describe("ConditionsOfSaleCheckbox", () => {
   const mockUseFormContext = useFormContext as jest.Mock
@@ -32,6 +37,22 @@ describe("ConditionsOfSaleCheckbox", () => {
     expect(wrapper.text()).toContain(
       "I agree to the Conditions of Sale. I understand that all bids are binding and may not be retracted."
     )
+  })
+
+  describe("new terms and conditions enabled", () => {
+    beforeEach(() => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation(
+        (f: string) => f === "diamond_new-terms-and-conditions"
+      )
+    })
+
+    it("renders correct components", () => {
+      const wrapper = getWrapper()
+      expect(wrapper.find("Checkbox")).toHaveLength(1)
+      expect(wrapper.text()).toContain(
+        "I agree to Artsy's General Terms and Conditions of Sale. I understand that all bids are binding and may not be retracted."
+      )
+    })
   })
 
   it("shows error message if error", () => {

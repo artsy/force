@@ -50,6 +50,7 @@ export const useCreateCollection = () => {
               collection {
                 internalID
                 name
+                shareableWithPartners
                 artworksCount(onlyVisible: true)
               }
             }

@@ -241,6 +241,21 @@ export const settingsRoutes: AppRouteConfig[] = [
         `,
       },
       {
+        path: "alerts/:alertID/artworks",
+        getComponent: () => AlertsRoute,
+        onClientSideRender: () => {
+          AlertsRoute.preload()
+        },
+        onServerSideRender: handleServerSideRender,
+        query: graphql`
+          query settingsRoutes_SavedSearchAlertsArtworksQuery {
+            me {
+              ...SavedSearchAlertsApp_me
+            }
+          }
+        `,
+      },
+      {
         path: "edit-settings",
         getComponent: () => EditSettingsRoute,
         onClientSideRender: () => {

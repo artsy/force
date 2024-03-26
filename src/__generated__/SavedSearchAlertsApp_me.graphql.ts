@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56f111cac315f00a442da1726797d224>>
+ * @generated SignedSource<<16be811773128373d123d5194d53d765>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,9 +21,6 @@ export type SavedSearchAlertsApp_me$data = {
           } | null | undefined;
         } | null | undefined;
         readonly internalID: string;
-        readonly settings: {
-          readonly name: string | null | undefined;
-        };
         readonly subtitle: string;
         readonly title: string;
         readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertListItem_item">;
@@ -119,24 +116,6 @@ return {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "AlertSettings",
-                  "kind": "LinkedField",
-                  "name": "settings",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "SavedSearchAlertListItem_item"
@@ -173,7 +152,7 @@ return {
                     {
                       "kind": "Literal",
                       "name": "first",
-                      "value": 1
+                      "value": 10
                     }
                   ],
                   "concreteType": "FilterArtworksConnection",
@@ -200,7 +179,7 @@ return {
                       "storageKey": null
                     }
                   ],
-                  "storageKey": "artworksConnection(first:1)"
+                  "storageKey": "artworksConnection(first:10)"
                 },
                 {
                   "alias": null,
@@ -256,6 +235,6 @@ return {
 };
 })();
 
-(node as any).hash = "768d846c7b061bec0957e0d00fd721f4";
+(node as any).hash = "0257b11a740e18fa68b0e85216fa7b9d";
 
 export default node;

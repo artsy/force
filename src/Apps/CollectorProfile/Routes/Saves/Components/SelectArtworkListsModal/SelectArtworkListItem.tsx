@@ -53,7 +53,11 @@ const SelectArtworkListItem: FC<SelectArtworkListItemProps> = ({
         <Flex>
           <Text variant="sm-display">{item.name}</Text>
           {shareableWithPartnersEnabled && !item.shareableWithPartners && (
-            <LockIcon marginLeft={0.5} minWidth="18px" />
+            <LockIcon
+              marginLeft={0.5}
+              minWidth="18px"
+              data-testid="lock-icon"
+            />
           )}
         </Flex>
 

@@ -14,5 +14,8 @@ export const Steps: FC = () => {
       return <Filters />
     case "ALERT_CONFIRMATION":
       return <Confirmation />
+    default:
+      console.warn("no matching case is found in AlertContext")
+      return null
   }
 }
