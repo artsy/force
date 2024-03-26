@@ -284,7 +284,6 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<SavedSearchAlertsA
 
 const SavedSearchAlertsArtworksPlaseholderContext: React.FC = () => {
   return (
-    // Setting a max height to force scrolling to top when the content changes.
     <>
       <Join separator={<Spacer y={2} />}>
         <CriteriaPillsPlaceholder />
@@ -314,6 +313,7 @@ const SavedSearchAlertsArtworksPlaseholder: React.FC<{
       <Media greaterThanOrEqual="md">
         <Skeleton
           p={4}
+          // Setting a max height to force scrolling to top when the content changes.
           maxHeight={ALERTS_APP_DESKTOP_HEIGHT}
           overflow="hidden"
           flexDirection="column"
