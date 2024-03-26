@@ -4,11 +4,22 @@ import { useTranslation } from "react-i18next"
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { Formik, Form } from "formik"
 import { EditArtworkListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditArtworkListItem"
+import { useUpdateMeCollection } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/Mutations/useUpdateMeCollection"
+import createLogger from "Utils/logger"
+import { UpdateMeCollectionInput } from "__generated__/useUpdateMeCollectionMutation.graphql"
 
 interface EditListPrivacyModalProps {
   onClose: () => void
   me: CollectorProfileSavesRoute_me$data
 }
+
+export interface EditListPrivacyFormModel {
+  [key: string]: boolean
+}
+
+interface EditListPrivacyFormikValues extends Array<EditListPrivacyFormModel> {}
+
+const logger = createLogger("EditListPrivacyModal")
 
 export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
   onClose,
@@ -22,9 +33,33 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
     : customArtworkLists
   const initialValues = artworkLists && getInitialValues(artworkLists)
 
-  const handleSubmit = async (values: any) => {
-    // handle submit
-    console.log("handle submit", values)
+  const { submitMutation } = useUpdateMeCollection()
+
+  const handleSubmit = async (formikValues: EditListPrivacyFormikValues) => {
+    try {
+      await submitMutation({
+        variables: {
+          input: {
+            attributes: (Object.entries(formikValues).map(
+              ([id, shareableWithPartners]) => ({
+                id,
+                shareableWithPartners,
+              })
+            ) as unknown) as UpdateMeCollectionInput[],
+          },
+        },
+        rejectIf: res => {
+          const result = res.updateMeCollectionsMutation?.meCollectionsOrErrors
+
+          // if (result.__typename === "UpdateMeCollectionsFailure") {
+          //   return results.mutationError
+          // }
+        },
+      })
+      onClose()
+    } catch (error) {
+      logger.error(error)
+    }
   }
 
   return (
@@ -34,8 +69,11 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
       title={t("collectorSaves.editListPrivacyModal.title")}
       data-testid="CreateNewList"
     >
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {() => (
+      <Formik<EditListPrivacyFormikValues>
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+      >
+        {formik => (
           <Form>
             <Text variant="xs">
               Share your interest in artworks with their respective galleries.
@@ -64,7 +102,7 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
             <Flex justifyContent="flex-end">
               <Button
                 type="submit"
-                onClick={onClose}
+                loading={!!formik.isSubmitting}
                 display="flex"
                 width={["100%", "30%"]}
               >

@@ -46,7 +46,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
     setCreateModalIsOpened(false)
   }
 
-  const handleEditComplete = () => {
+  const handleEditClose = () => {
     setEditModalIsOpened(false)
   }
 
@@ -61,11 +61,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
       )}
 
       {editModalIsOpened && (
-        <EditListPrivacyModal
-          me={me}
-          onClose={handleEditComplete}
-          onComplete={handleEditComplete}
-        />
+        <EditListPrivacyModal me={me} onClose={handleEditClose} />
       )}
 
       <Join separator={<Spacer y={0.5} />}>

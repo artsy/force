@@ -7,13 +7,10 @@ import { useFormikContext } from "formik"
 import LockIcon from "@artsy/icons/LockIcon"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
+import { EditListPrivacyFormModel } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditListPrivacyModal"
 
 interface EditArtworkListItemProps {
   item: EditArtworkListItem_item$data
-}
-
-interface EditListPrivacyFormModel {
-  [key: string]: boolean
 }
 
 const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
