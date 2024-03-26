@@ -93,6 +93,12 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     if (isEditMode || isAlertArtworksView) return
     const criteria = getAllowedSearchCriteria(initialCriteria ?? {})
 
+    // `forSale` is allowed as a filter criterion,
+    // but NOT as an alert criterion, so we remove it.
+    // (Alerts, by definition, stipulate forSale=true
+    // when they are created in Gravity.)
+    delete criteria.forSale
+
     dispatch({ type: "SET_CRITERIA", payload: criteria })
   }, [initialCriteria, isEditMode, isAlertArtworksView])
 
