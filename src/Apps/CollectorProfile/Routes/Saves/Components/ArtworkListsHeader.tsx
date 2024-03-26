@@ -94,7 +94,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
               onClick={handleEditListClick}
               mt={[2, 0]}
             >
-              {t("collectorSaves.artworkListsHeader.editListPrivacy")}
+              {t("collectorSaves.artworkListsHeader.editListPrivacyButton")}
             </Button>
             <Spacer x={4} />
             <Button

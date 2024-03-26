@@ -1,4 +1,12 @@
-import { Button, Flex, Join, ModalDialog, Spacer, Text } from "@artsy/palette"
+import {
+  Button,
+  Flex,
+  Join,
+  Link,
+  ModalDialog,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
 import { useTranslation } from "react-i18next"
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
@@ -51,9 +59,7 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
         rejectIf: res => {
           const result = res.updateMeCollectionsMutation?.meCollectionsOrErrors
 
-          // if (result.__typename === "UpdateMeCollectionsFailure") {
-          //   return results.mutationError
-          // }
+          return result && result[0].mutationError
         },
       })
       onClose()
@@ -76,9 +82,14 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
         {formik => (
           <Form>
             <Text variant="xs">
-              Share your interest in artworks with their respective galleries.
-              Switching lists to private will make them visible only to you and
-              opt them out of offers. Learn more
+              {t("collectorSaves.editListPrivacyModal.description")}{" "}
+              <Link
+                href="https://support.artsy.net/s/article/Offers-on-saved-works"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn more
+              </Link>
             </Text>
             <Spacer y={2} />
             <Flex

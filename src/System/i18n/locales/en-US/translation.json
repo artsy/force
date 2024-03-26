@@ -140,13 +140,14 @@
       "connector": "and",
       "signalInterest": "signal your interest to galleries",
       "popover": "Learn more about saves and how to manage your preferences.",
-      "editListPrivacy": "Edit List Privacy"
+      "editListPrivacyButton": "Offer Settings"
     },
     "createNewListModal": {
       "title": "Create a new list"
     },
     "editListPrivacyModal": {
-      "title": "Edit list privacy"
+      "title": "Offer settings",
+      "description": "Shared lists are eligible to receive offers from galleries. Switching sharing off will make them visible only to you, and you won't receive offers."
     },
     "manageArtworkForSaves": {
       "toasts": {
