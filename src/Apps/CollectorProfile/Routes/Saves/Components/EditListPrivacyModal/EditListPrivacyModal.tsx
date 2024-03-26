@@ -131,7 +131,7 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
   )
 }
 
-const getInitialValues = (artworkLists: any[]) => {
+const getInitialValues = artworkLists => {
   return artworkLists.reduce((acc, list) => {
     return {
       ...acc,
