@@ -25,7 +25,7 @@ import {
   AlertProviderPreviewQuery,
   PreviewSavedSearchAttributes,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
-import { useToasts } from "@artsy/palette"
+import { Banner, useToasts } from "@artsy/palette"
 import { t } from "i18next"
 import createLogger from "Utils/logger"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
@@ -87,6 +87,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION" | "ALERT_ARTWORKS"
   >(isAlertArtworksView ? "ALERT_ARTWORKS" : "ALERT_DETAILS")
 
+  const [createAlertError, setCreateAlertError] = useState<string>("")
+
   useEffect(() => {
     // inject the values only when creating the alert
     // for the edit mode we inject the values on mount
@@ -114,10 +116,24 @@ export const AlertProvider: FC<AlertProviderProps> = ({
             settings: state.settings,
           },
         },
+        rejectIf: res => {
+          return !res.updateAlert?.responseOrError?.alert
+        },
       })
 
       dispatch({ type: "SET_IS_SUBMITTING", payload: false })
+
+      sendToast({
+        message: "Your Alert has been updated.",
+      })
     } catch (error) {
+      dispatch({ type: "SET_IS_SUBMITTING", payload: false })
+
+      sendToast({
+        variant: "error",
+        message: t("common.errors.somethingWentWrong"),
+      })
+
       console.error("Alert/useAlertContext", error)
       logger.error(error)
     }
@@ -127,18 +143,22 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     try {
       dispatch({ type: "SET_IS_SUBMITTING", payload: true })
 
-      const reponse = await submitCreateAlert({
+      const response = await submitCreateAlert({
         variables: {
           input: {
             ...state.criteria,
             settings: state.settings,
           } as { artistIDs: string[] }, // artistIDs is required in the input type
         },
+        rejectIf: res => {
+          return !res.createAlert?.responseOrError?.alert
+        },
       })
 
-      const alertID = reponse.createAlert?.responseOrError?.alert?.internalID
+      const alertID = response.createAlert?.responseOrError?.alert?.internalID
       const searchCriteriaID =
-        reponse.createAlert?.responseOrError?.alert?.searchCriteriaID
+        response.createAlert?.responseOrError?.alert?.searchCriteriaID
+
       if (alertID) {
         dispatch({
           type: "SET_ALERT_ID",
@@ -157,12 +177,17 @@ export const AlertProvider: FC<AlertProviderProps> = ({
       dispatch({ type: "SET_IS_SUBMITTING", payload: false })
       setCurrent("ALERT_CONFIRMATION")
     } catch (error) {
+      dispatch({ type: "SET_IS_SUBMITTING", payload: false })
+
+      setCreateAlertError(t("common.errors.somethingWentWrong"))
+
       console.error("Alert/useAlertContext", error)
       logger.error(error)
     }
   }
 
   const onReset = (): State => {
+    setCreateAlertError("")
     setCurrent("ALERT_DETAILS")
     return initialState
   }
@@ -264,21 +289,30 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           setCurrent("ALERT_DETAILS")
         },
         goToFilters: () => {
+          setCreateAlertError("")
           setCurrent("ALERT_FILTERS")
         },
         onComplete: isEditMode ? handleCompleteEdit : handleComplete,
         state,
+        createAlertError,
       }}
     >
       {children}
       {state.visible && (
-        <Modal
-          onClose={() => {
-            dispatch({ type: "RESET" })
-          }}
-        >
-          <Steps />
-        </Modal>
+        <>
+          <Modal
+            onClose={() => {
+              dispatch({ type: "RESET" })
+            }}
+          >
+            <Steps />
+            {!!createAlertError && (
+              <Banner variant="error" dismissable>
+                {createAlertError}
+              </Banner>
+            )}
+          </Modal>
+        </>
       )}
     </AlertContext.Provider>
   )
