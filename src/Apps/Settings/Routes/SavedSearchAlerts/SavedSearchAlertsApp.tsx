@@ -315,8 +315,9 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             />
             <Box mx={-4}>
               <Separator color="black15" />
+
               <Media greaterThanOrEqual="md">
-                <GridColumns>
+                <GridColumns gridColumnGap={0}>
                   <Column span={6}>
                     <Flex height={DESKTOP_HEIGHT} flexDirection="column">
                       <Flex
