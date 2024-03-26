@@ -8,6 +8,7 @@ import { ProgressiveOnboardingSaveTitle } from "Components/ProgressiveOnboarding
 import { RouterLink } from "System/Router/RouterLink"
 import { EditListPrivacyModal } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditListPrivacyModal"
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkListsHeaderProps {
   savedArtworksCount: number
@@ -22,6 +23,10 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
   const { sendToast } = useToasts()
   const [createModalIsOpened, setCreateModalIsOpened] = useState(false)
   const [editModalIsOpened, setEditModalIsOpened] = useState(false)
+
+  const offerSettingsEnabled = useFeatureFlag(
+    "emerald_artwork-list-offerability"
+  )
 
   const handleCreateListClick = () => {
     setCreateModalIsOpened(true)
@@ -88,14 +93,16 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
           </Text>
 
           <Flex>
-            <Button
-              variant="tertiary"
-              size="large"
-              onClick={handleEditListClick}
-              mt={[2, 0]}
-            >
-              {t("collectorSaves.artworkListsHeader.editListPrivacyButton")}
-            </Button>
+            {offerSettingsEnabled && (
+              <Button
+                variant="tertiary"
+                size="large"
+                onClick={handleEditListClick}
+                mt={[2, 0]}
+              >
+                {t("collectorSaves.artworkListsHeader.offerSettingsButton")}
+              </Button>
+            )}
             <Spacer x={4} />
             <Button
               variant="secondaryBlack"
