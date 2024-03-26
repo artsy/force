@@ -140,7 +140,8 @@
       "connector": "and",
       "signalInterest": "signal your interest to galleries",
       "popover": "Learn more about saves and how to manage your preferences.",
-      "offerSettingsButton": "Offer Settings"
+      "offerSettingsButton": "Offer Settings",
+      "offerSettingsPopover": "Edit list settings to indicate to galleries which artworks you want to receive offers on."
     },
     "createNewListModal": {
       "title": "Create a new list"

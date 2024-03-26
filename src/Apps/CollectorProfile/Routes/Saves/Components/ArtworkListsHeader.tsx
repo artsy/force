@@ -9,6 +9,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { EditListPrivacyModal } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditListPrivacyModal"
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { ProgressiveOnboardingSaveOfferSettings } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveOfferSettings"
 
 interface ArtworkListsHeaderProps {
   savedArtworksCount: number
@@ -94,16 +95,20 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
 
           <Flex>
             {offerSettingsEnabled && (
-              <Button
-                variant="tertiary"
-                size="large"
-                onClick={handleEditListClick}
-                mt={[2, 0]}
-              >
-                {t("collectorSaves.artworkListsHeader.offerSettingsButton")}
-              </Button>
+              <ProgressiveOnboardingSaveOfferSettings>
+                <Button
+                  variant="tertiary"
+                  size="large"
+                  onClick={handleEditListClick}
+                  mt={[2, 0]}
+                >
+                  {t("collectorSaves.artworkListsHeader.offerSettingsButton")}
+                </Button>
+              </ProgressiveOnboardingSaveOfferSettings>
             )}
+
             <Spacer x={4} />
+
             <Button
               variant="secondaryBlack"
               size="large"
