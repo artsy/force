@@ -58,7 +58,7 @@ describe("ArtworkListContent", () => {
     expect(screen.getByText(title)).toBeInTheDocument()
     expect(screen.getByText(description)).toBeInTheDocument()
     expect(screen.getByText(shareStatus)).toBeInTheDocument()
-    expect(screen.queryByTestId("lock-icon")).not.toBeInTheDocument()
+    expect(screen.queryByTestId("hide-icon")).not.toBeInTheDocument()
   })
 
   it("should render a private note if list is not shared with partners", () => {
@@ -77,7 +77,7 @@ describe("ArtworkListContent", () => {
 
     const shareStatus = "Private"
     expect(screen.getByText(shareStatus)).toBeInTheDocument()
-    expect(screen.getByTestId("lock-icon")).toBeInTheDocument()
+    expect(screen.getByTestId("hide-icon")).toBeInTheDocument()
   })
 
   describe("Actions contextual menu", () => {
