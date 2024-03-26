@@ -13,7 +13,6 @@ import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFi
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { useSystemContext } from "System/useSystemContext"
 import { Join, Spacer } from "@artsy/palette"
-import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
 import { ArtistSeriesFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistSeriesFilter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
@@ -32,9 +31,7 @@ export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props =
       <KeywordFilter />
       {isAvailabilityFilterEnabled && <AvailabilityFilter />}
       <ArtistsFilter user={user} expanded />
-      <ProgressiveOnboardingAlertSelectFilter>
-        <AttributionClassFilter expanded />
-      </ProgressiveOnboardingAlertSelectFilter>
+      <AttributionClassFilter expanded />
       <MediumFilter expanded />
       <PriceRangeFilter expanded />
       {isArtistSeriesFilterEnabled && <ArtistSeriesFilter expanded />}

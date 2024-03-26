@@ -1,6 +1,5 @@
 import { FC, ReactNode } from "react"
 import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
-import { ProgressiveOnboardingAlertReady } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertReady"
 import { isEmpty } from "lodash"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
@@ -24,19 +23,14 @@ export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
       <CreateAlertButton
         renderButton={({ onClick }) => (
           <ProgressiveOnboardingAlertCreate>
-            {({ onSkip: createSkip }) => (
-              <ProgressiveOnboardingAlertReady>
-                {({ onSkip: readySkip }) =>
-                  renderButton({
-                    onClick: () => {
-                      createSkip()
-                      readySkip()
-                      onClick()
-                    },
-                  })
-                }
-              </ProgressiveOnboardingAlertReady>
-            )}
+            {({ onSkip: createSkip }) =>
+              renderButton({
+                onClick: () => {
+                  createSkip()
+                  onClick()
+                },
+              })
+            }
           </ProgressiveOnboardingAlertCreate>
         )}
       />

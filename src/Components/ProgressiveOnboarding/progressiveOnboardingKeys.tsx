@@ -15,8 +15,6 @@ export const PROGRESSIVE_ONBOARDING = {
 
   // Alerts
   alertCreate: "alert-create",
-  alertSelectFilter: "alert-select-filter",
-  alertReady: "alert-ready",
   alertFind: "alert-find",
   alertHighlight: "alert-highlight",
 }
@@ -29,8 +27,6 @@ export const PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST_CHAIN = [
 
 export const PROGRESSIVE_ONBOARDING_ALERT_CHAIN = [
   PROGRESSIVE_ONBOARDING.alertCreate,
-  PROGRESSIVE_ONBOARDING.alertSelectFilter,
-  PROGRESSIVE_ONBOARDING.alertReady,
   PROGRESSIVE_ONBOARDING.alertFind,
   PROGRESSIVE_ONBOARDING.alertHighlight,
 ] as const
