@@ -38,7 +38,6 @@ import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { getENV } from "Utils/getENV"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
-import { Jump } from "Utils/Hooks/useJump"
 
 const SETTINGS_NAVIGATION_BAR_HEIGHT = 300
 const DESKTOP_HEIGHT = `calc(100vh - ${
@@ -345,8 +344,6 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                       overflow="auto"
                       paddingBottom={2}
                     >
-                      <Jump id="SavedSearchAlertEditForm" />
-
                       {viewOption === "EDIT" && editAlertEntity && (
                         <SavedSearchAlertEditFormQueryRenderer
                           editAlertEntity={editAlertEntity}

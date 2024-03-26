@@ -137,7 +137,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
         const transitionToFilters = () => {
           goToFilters()
-          jumpTo("SavedSearchAlertEditForm")
         }
 
         return (

@@ -100,7 +100,6 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
                       variant="secondaryBlack"
                       onClick={() => {
                         onEditAlertClick()
-                        jumpTo("SavedSearchAlertEditForm")
                       }}
                     >
                       Edit Alert
@@ -117,7 +116,6 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
                   variant="secondaryBlack"
                   onClick={() => {
                     onEditAlertClick()
-                    jumpTo("SavedSearchAlertEditForm")
                   }}
                 >
                   Edit Alert
@@ -288,22 +286,24 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<SavedSearchAlertsA
 
 const SavedSearchAlertsArtworksPlaseholderContext: React.FC = () => {
   return (
-    <Join separator={<Spacer y={2} />}>
-      <CriteriaPillsPlaceholder />
-      <SkeletonBox display={["none", "block"]}>
-        <Separator />
-      </SkeletonBox>
-      <Flex flexDirection="column">
-        <SkeletonText variant="sm-display">
-          20 works currently on Artsy match your criteria.
-        </SkeletonText>
-        <SkeletonText variant="sm-display">
-          See our top picks for you:
-        </SkeletonText>
-        <Spacer y={[4, 2]} />
-      </Flex>
-      <ArtworkGridPlaceholder columnCount={2} />
-    </Join>
+    <Flex maxHeight={500} overflow="hidden" flexDirection="column">
+      <Join separator={<Spacer y={2} />}>
+        <CriteriaPillsPlaceholder />
+        <SkeletonBox display={["none", "block"]}>
+          <Separator />
+        </SkeletonBox>
+        <Flex flexDirection="column">
+          <SkeletonText variant="sm-display">
+            20 works currently on Artsy match your criteria.
+          </SkeletonText>
+          <SkeletonText variant="sm-display">
+            See our top picks for you:
+          </SkeletonText>
+          <Spacer y={[4, 2]} />
+        </Flex>
+        <ArtworkGridPlaceholder columnCount={2} amount={2} />
+      </Join>
+    </Flex>
   )
 }
 
