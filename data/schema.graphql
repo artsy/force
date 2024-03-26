@@ -13460,6 +13460,11 @@ type Mutation {
     input: UpdateHeroUnitMutationInput!
   ): UpdateHeroUnitMutationPayload
 
+  # Updates the user's collections in batch.
+  updateMeCollectionsMutation(
+    input: updateMeCollectionsMutationInput!
+  ): updateMeCollectionsMutationPayload
+
   # Update a message.
   updateMessage(
     input: UpdateMessageMutationInput!
@@ -19172,6 +19177,33 @@ union updateHeroUnitResponseOrError =
 
 type updateHeroUnitSuccess {
   heroUnit: HeroUnit
+}
+
+input UpdateMeCollectionInput {
+  id: String!
+  shareableWithPartners: Boolean!
+}
+
+type UpdateMeCollectionsFailure {
+  mutationError: GravityMutationError
+}
+
+input updateMeCollectionsMutationInput {
+  attributes: [UpdateMeCollectionInput!]!
+  clientMutationId: String
+}
+
+type updateMeCollectionsMutationPayload {
+  clientMutationId: String
+  meCollectionsOrErrors: [UpdateMeCollectionsResponseOrError!]!
+}
+
+union UpdateMeCollectionsResponseOrError =
+    UpdateMeCollectionsFailure
+  | UpdateMeCollectionsSuccess
+
+type UpdateMeCollectionsSuccess {
+  collection: Collection
 }
 
 type UpdateMessageFailure {
