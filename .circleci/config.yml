@@ -361,6 +361,7 @@ workflows:
           <<: *only_main
           name: deploy-staging
           project-name: force
+          context: slack-orb
           executor: hokusai/beta
           requires:
             - production-image-push
@@ -399,6 +400,7 @@ workflows:
 
       - validate_production_schema:
           <<: *only_release
+          context: slack-orb
 
       # Production
       - hokusai/deploy-production:
