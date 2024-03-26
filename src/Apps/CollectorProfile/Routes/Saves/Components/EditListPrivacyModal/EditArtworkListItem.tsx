@@ -4,10 +4,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { EditArtworkListItem_item$data } from "__generated__/EditArtworkListItem_item.graphql"
 import { useFormikContext } from "formik"
-import LockIcon from "@artsy/icons/LockIcon"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 import { EditListPrivacyFormModel } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditListPrivacyModal"
+import HideIcon from "@artsy/icons/HideIcon"
 
 interface EditArtworkListItemProps {
   item: EditArtworkListItem_item$data
@@ -35,14 +35,18 @@ const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
         ) : (
           <ArtworkImagePlaceholder />
         )}
+
         <Flex flexDirection="column">
           <Flex alignItems="center">
             <Text variant={["xs", "sm"]} paddingLeft={1}>
               {item.name}
             </Text>
+
             <Spacer x={[0.5, 1]} />
-            {!values[item.internalID] && <LockIcon />}
+
+            {!values[item.internalID] && <HideIcon />}
           </Flex>
+
           <Text variant="xs" color="black60" paddingLeft={1}>
             {totalArtworks === 1
               ? `${totalArtworks} artwork`
@@ -50,13 +54,16 @@ const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
           </Text>
         </Flex>
       </Flex>
+
       <Flex alignItems="center">
         {!isMobile && (
           <Text variant="sm">
             {values[item.internalID] ? "Shared" : "Private"}
           </Text>
         )}
+
         <Spacer x={2} />
+
         <Toggle
           aria-label={
             values[item.internalID]

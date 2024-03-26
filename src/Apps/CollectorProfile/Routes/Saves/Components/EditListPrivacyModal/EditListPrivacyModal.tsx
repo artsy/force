@@ -91,7 +91,9 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
                 Learn more
               </Link>
             </Text>
+
             <Spacer y={2} />
+
             <Flex
               flexDirection="column"
               overflowY="scroll"
@@ -109,7 +111,9 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
                 })}
               </Join>
             </Flex>
+
             <Spacer y={2} />
+
             <Flex justifyContent="flex-end">
               <Button
                 type="submit"
