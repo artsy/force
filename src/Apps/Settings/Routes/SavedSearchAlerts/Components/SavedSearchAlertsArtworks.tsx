@@ -31,7 +31,6 @@ import {
   CriteriaPillsPlaceholder,
 } from "Components/Alert/Components/CriteriaPills"
 import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
-import { useJump } from "Utils/Hooks/useJump"
 
 interface AlertArtworksProps {
   alert: NonNullable<SavedSearchAlertsArtworksQuery["response"]["me"]>["alert"]
@@ -44,8 +43,6 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
   onCloseClick,
   onEditAlertClick,
 }) => {
-  const { jumpTo } = useJump()
-
   if (!alert || !alert.artworksConnection)
     return <SavedSearchAlertsArtworksPlaseholder onCloseClick={onCloseClick} />
 

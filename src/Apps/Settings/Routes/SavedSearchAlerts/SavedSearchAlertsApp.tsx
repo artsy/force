@@ -7,6 +7,7 @@ import {
   useToasts,
   Button,
   Flex,
+  Spinner,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -38,6 +39,7 @@ import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { getENV } from "Utils/getENV"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
+import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 
 const SETTINGS_NAVIGATION_BAR_HEIGHT = 300
 const DESKTOP_HEIGHT = `calc(100vh - ${
@@ -293,11 +295,13 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       </Join>
 
       {relay.hasMore() && (
-        <Box textAlign="center" mt={4}>
-          <Button onClick={handleLoadMore} loading={loading}>
-            Show More
-          </Button>
-        </Box>
+        <>
+          <InfiniteScrollSentinel onNext={handleLoadMore} once={false} />
+
+          <Flex width="100%" my={4} alignItems="center">
+            <Spinner position="relative" />
+          </Flex>
+        </>
       )}
     </Box>
   )
