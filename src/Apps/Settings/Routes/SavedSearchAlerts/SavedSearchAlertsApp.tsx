@@ -5,7 +5,6 @@ import {
   Box,
   Join,
   useToasts,
-  Button,
   Flex,
   Spinner,
 } from "@artsy/palette"
@@ -65,7 +64,6 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const { match, silentPush } = useRouter()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [sort, setSort] = useState("ENABLED_AT_DESC")
-  const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.alertsConnection)
   const isMobile = getENV("IS_MOBILE")
 
@@ -188,14 +186,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       return
     }
 
-    setLoading(true)
-
     relay.loadMore(10, err => {
       if (err) {
         console.error(err)
       }
-
-      setLoading(false)
     })
   }
 
