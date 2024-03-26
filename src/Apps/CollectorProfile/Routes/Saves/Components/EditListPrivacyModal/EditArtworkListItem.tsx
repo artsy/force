@@ -1,4 +1,4 @@
-import { Flex, Image, Toggle, Text, Spacer, THEME, Box } from "@artsy/palette"
+import { Flex, Image, Toggle, Text, Spacer, THEME } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
@@ -88,7 +88,7 @@ export const EditArtworkListItemFragmentContainer = createFragmentContainer(
           edges {
             node {
               image {
-                resized(width: 60, height: 60, version: ["square"]) {
+                resized(width: 200, version: ["square"]) {
                   src
                 }
               }
@@ -107,7 +107,7 @@ const ArtworkImagePlaceholder = () => {
       justifyContent="center"
       width={[40, 60]}
       height={[40, 60]}
-      backgroundColor="black5"
+      backgroundColor="black10"
       aria-label="Image placeholder"
     >
       <NoArtIcon width={18} height={18} fill="black60" />

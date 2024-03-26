@@ -7,13 +7,11 @@ import { EditArtworkListItemFragmentContainer } from "Apps/CollectorProfile/Rout
 
 interface EditListPrivacyModalProps {
   onClose: () => void
-  onComplete: () => void
   me: CollectorProfileSavesRoute_me$data
 }
 
 export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
   onClose,
-  onComplete,
   me,
 }) => {
   const { t } = useTranslation()
@@ -66,7 +64,7 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
             <Flex justifyContent="flex-end">
               <Button
                 type="submit"
-                onClick={onComplete}
+                onClick={onClose}
                 display="flex"
                 width={["100%", "30%"]}
               >
