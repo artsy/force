@@ -98,9 +98,9 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
       >
         <Join separator={<Spacer x={2} />}>
           <Flex alignItems="center">
-            <Text variant="lg-display">{artworkList.name}</Text>
+            <Text variant="lg-display">{artworkList?.name}</Text>
             {shareableWithPartnersEnabled &&
-              !artworkList.shareableWithPartners && (
+              !artworkList?.shareableWithPartners && (
                 <Tooltip
                   pointer
                   variant="defaultDark"
@@ -121,7 +121,7 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
                 </Tooltip>
               )}
           </Flex>
-          {!artworkList.default && (
+          {!artworkList?.default && artworkList && (
             <ArtworkListContextualMenu artworkList={artworkList} />
           )}
         </Join>
