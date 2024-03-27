@@ -61,10 +61,9 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
 
   const { jumpTo } = useJump()
   const { artworkListItemHasBeenTouched } = useArtworkListVisibilityContext()
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const artworkList = me.artworkList!
+  const artworkList = me.artworkList
   const counts: Counts = {
-    artworks: artworkList.artworks?.totalCount ?? 0,
+    artworks: artworkList?.artworks?.totalCount ?? 0,
   }
 
   useEffect(() => {
