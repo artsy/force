@@ -6,6 +6,7 @@ import {
   ModalDialog,
   Spacer,
   Text,
+  useToasts,
 } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
 import { useTranslation } from "react-i18next"
@@ -43,6 +44,8 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
 
   const { submitMutation } = useUpdateMeCollection()
 
+  const { sendToast } = useToasts()
+
   const handleSubmit = async (formikValues: EditListPrivacyFormikValues) => {
     try {
       await submitMutation({
@@ -62,6 +65,12 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
           return result && result[0].mutationError
         },
       })
+
+      sendToast({
+        variant: "success",
+        message: t("collectorSaves.editListPrivacyModal.success"),
+      })
+
       onClose()
     } catch (error) {
       logger.error(error)

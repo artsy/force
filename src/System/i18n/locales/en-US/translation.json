@@ -148,7 +148,8 @@
     },
     "editListPrivacyModal": {
       "title": "Offer settings",
-      "description": "Shared lists are eligible to receive offers from galleries. Switching sharing off will make them visible only to you, and you won't receive offers."
+      "description": "Shared lists are eligible to receive offers from galleries. Switching sharing off will make them visible only to you, and you won't receive offers.",
+      "success": "Changes saved"
     },
     "manageArtworkForSaves": {
       "toasts": {
