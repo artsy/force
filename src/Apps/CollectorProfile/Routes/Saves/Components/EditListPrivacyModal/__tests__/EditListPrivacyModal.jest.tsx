@@ -1,31 +1,19 @@
-import { screen, act } from "@testing-library/react"
+import { screen, fireEvent, waitFor, act } from "@testing-library/react"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/SystemContext"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 import { render } from "DevTools/renderWithMockBoot"
 import { EditListPrivacyModal } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditListPrivacyModal"
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
+import { createMockEnvironment } from "relay-test-utils"
 
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/useSystemContext")
 jest.unmock("react-relay")
 
 const relayEnv = createMockEnvironment()
-const resolveMostRecentOperation = () => {
-  act(() => {
-    relayEnv.mock.resolveMostRecentOperation(operation => {
-      return MockPayloadGenerator.generate(operation, {
-        Me: () => mockedMe,
-      })
-    })
-  })
-}
 
 describe("EditListPrivacyModal", () => {
-  const mockUseTracking = useTracking as jest.Mock
   const mockUseSystemContext = useSystemContext as jest.Mock
-  const trackEvent = jest.fn()
 
   let onClose: jest.Mock
   let submitMutation: jest.Mock
@@ -36,10 +24,6 @@ describe("EditListPrivacyModal", () => {
     ;(useMutation as jest.Mock).mockImplementation(() => {
       return { submitMutation }
     })
-
-    mockUseTracking.mockImplementation(() => ({
-      trackEvent,
-    }))
 
     mockUseSystemContext.mockImplementation(() => ({
       relayEnvironment: relayEnv,
@@ -54,36 +38,68 @@ describe("EditListPrivacyModal", () => {
     render(<EditListPrivacyModal me={mockedMe} onClose={onClose} />)
 
     const title = screen.getByText("Offer settings")
+    const description = screen.getByText(
+      "Shared lists are eligible to receive offers from galleries. Switching sharing off will make them visible only to you, and you won't receive offers."
+    )
+
     expect(title).toBeInTheDocument()
+    expect(description).toBeInTheDocument()
     expect(
       screen.getByRole("button", { name: /Save Changes/ })
     ).toBeInTheDocument()
   })
+
+  it.skip("calls the mutation when the Save button is clicked", async () => {
+    render(
+      <EditListPrivacyModal
+        me={(mockedMe as unknown) as CollectorProfileSavesRoute_me$data}
+        onClose={onClose}
+      />
+    )
+
+    const saveButton = screen.getByRole("button", { name: /Save/ })
+
+    fireEvent.click(saveButton)
+
+    await waitFor(() => expect(submitMutation).toHaveBeenCalledTimes(1))
+
+    expect(submitMutation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        variables: {
+          input: {
+            attributes: [
+              { id: "collection-one-id", shareableWithPartners: false },
+              { id: "collection-two-id", shareableWithPartners: true },
+              { id: "saved-artwork", shareableWithPartners: false },
+            ],
+          },
+        },
+      })
+    )
+  })
 })
 
-const mockedMe: CollectorProfileSavesRoute_me$data = {
+const mockedMe = ({
   $fragmentRefs: {
     customArtworkLists: {
       edges: [
         {
           node: {
             internalID: "collection-one-id",
-            name: "Collection One",
+            shareableWithPartners: false,
           },
         },
         {
           node: {
             internalID: "collection-two-id",
-            name: "Collection Two",
+            shareableWithPartners: true,
           },
         },
       ],
     },
     savedArtworksArtworkList: {
       internalID: "saved-artwork",
-      name: "Saved Artworks",
+      shareableWithPartners: false,
     },
   },
-  id: "123",
-  name: "Example Name",
-}
+} as unknown) as CollectorProfileSavesRoute_me$data
