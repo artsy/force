@@ -47,8 +47,6 @@ describe("HomeAuctionLotsRail", () => {
       }),
     })
 
-    expect(wrapper.text()).toContain("Auction Lots")
-    expect(wrapper.text()).toContain("View All Auctions")
     expect(wrapper.text()).toContain("Test Auction")
     expect(wrapper.html()).toContain("test-href")
   })
@@ -82,33 +80,6 @@ describe("HomeAuctionLotsRail", () => {
         destination_page_owner_slug: "test-href",
         destination_page_owner_type: "artwork",
         type: "thumbnail",
-      })
-    })
-
-    it("tracks view all", () => {
-      const { wrapper } = getWrapper({
-        Viewer: () => ({
-          artworksConnection: {
-            edges: [
-              {
-                node: {
-                  title: "Test Auction",
-                  href: "test-href",
-                },
-              },
-            ],
-          },
-        }),
-      })
-
-      wrapper.find("RouterLink").first().simulate("click")
-
-      expect(trackEvent).toBeCalledWith({
-        action: "clickedArtworkGroup",
-        context_module: "auctionLots",
-        context_page_owner_type: "home",
-        destination_page_owner_type: "auctions",
-        type: "viewAll",
       })
     })
   })

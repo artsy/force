@@ -15,15 +15,15 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 
-import { HomeAuctionLotsRail_viewer$data } from "__generated__/HomeAuctionLotsRail_viewer.graphql"
-import { HomeAuctionLotsRailQuery } from "__generated__/HomeAuctionLotsRailQuery.graphql"
+import { HomeAuctionLotsForYouRail_viewer$data } from "__generated__/HomeAuctionLotsForYouRail_viewer.graphql"
+import { HomeAuctionLotsForYouRailQuery } from "__generated__/HomeAuctionLotsForYouRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 
-interface HomeAuctionLotsRailProps {
-  viewer: HomeAuctionLotsRail_viewer$data
+interface HomeAuctionLotsForYouRailProps {
+  viewer: HomeAuctionLotsForYouRail_viewer$data
 }
 
-export const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
+const HomeAuctionLotsForYouRail: React.FC<HomeAuctionLotsForYouRailProps> = ({
   viewer,
 }) => {
   const { trackEvent } = useTracking()
@@ -44,6 +44,7 @@ export const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
             contextModule={ContextModule.auctionLots}
             lazyLoad
             onClick={() => {
+              //TODO: add tracking for Auction Lots For You
               const trackingEvent: ClickedArtworkGroup = {
                 action: ActionType.clickedArtworkGroup,
                 context_module: ContextModule.auctionLots,
@@ -72,11 +73,12 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const HomeAuctionLotsRailFragmentContainer = createFragmentContainer(
-  HomeAuctionLotsRail,
+//TODO: get recommended auction lots
+export const HomeAuctionLotsForYouRailFragmentContainer = createFragmentContainer(
+  HomeAuctionLotsForYouRail,
   {
     viewer: graphql`
-      fragment HomeAuctionLotsRail_viewer on Viewer {
+      fragment HomeAuctionLotsForYouRail_viewer on Viewer {
         artworksConnection(
           forSale: true
           first: 20
@@ -96,17 +98,17 @@ export const HomeAuctionLotsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeAuctionLotsRailQueryRenderer: React.FC = () => {
+export const HomeAuctionLotsForYouRailQueryRenderer: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<HomeAuctionLotsRailQuery>
+    <SystemQueryRenderer<HomeAuctionLotsForYouRailQuery>
       lazyLoad
       environment={relayEnvironment}
       query={graphql`
-        query HomeAuctionLotsRailQuery {
+        query HomeAuctionLotsForYouRailQuery {
           viewer {
-            ...HomeAuctionLotsRail_viewer
+            ...HomeAuctionLotsForYouRail_viewer
           }
         }
       `}
@@ -122,7 +124,9 @@ export const HomeAuctionLotsRailQueryRenderer: React.FC = () => {
         }
 
         if (props.viewer) {
-          return <HomeAuctionLotsRailFragmentContainer viewer={props.viewer} />
+          return (
+            <HomeAuctionLotsForYouRailFragmentContainer viewer={props.viewer} />
+          )
         }
 
         return null
