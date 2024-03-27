@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { EditArtworkListItem } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditArtworkListItem"
+import { OfferSettingsListItem } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsListItem"
 import { useFormikContext } from "formik"
-import { EditArtworkListItem_item$data } from "__generated__/EditArtworkListItem_item.graphql"
+import { OfferSettingsListItem_item$data } from "__generated__/OfferSettingsListItem_item.graphql"
 
 jest.mock("formik", () => ({
   useFormikContext: jest.fn().mockReturnValue({
@@ -10,9 +10,9 @@ jest.mock("formik", () => ({
   }),
 }))
 
-describe("EditArtworkListItem", () => {
+describe("OfferSettingsListItem", () => {
   it("renders the component with correct data", () => {
-    render(<EditArtworkListItem item={mockItem} />)
+    render(<OfferSettingsListItem item={mockItem} />)
 
     expect(screen.getByText("Test Artwork")).toBeInTheDocument()
 
@@ -24,7 +24,7 @@ describe("EditArtworkListItem", () => {
   })
 
   it("renders the artwork image when available", () => {
-    render(<EditArtworkListItem item={mockItem} />)
+    render(<OfferSettingsListItem item={mockItem} />)
 
     expect(screen.getByAltText("Artwork image")).toBeInTheDocument()
   })
@@ -35,15 +35,15 @@ describe("EditArtworkListItem", () => {
       artworksConnection: {
         edges: [{ node: { image: null } }],
       },
-    } as unknown) as EditArtworkListItem_item$data
+    } as unknown) as OfferSettingsListItem_item$data
 
-    render(<EditArtworkListItem item={item} />)
+    render(<OfferSettingsListItem item={item} />)
 
     expect(screen.getByLabelText("Image placeholder")).toBeInTheDocument()
   })
 
   it("sets field value when the toggle is clicked", () => {
-    render(<EditArtworkListItem item={mockItem} />)
+    render(<OfferSettingsListItem item={mockItem} />)
 
     const toggleButton = screen.getByRole("toggle")
 
@@ -60,4 +60,4 @@ const mockItem = ({
   artworksConnection: {
     edges: [{ node: { image: { resized: { src: "test.jpg" } } } }],
   },
-} as unknown) as EditArtworkListItem_item$data
+} as unknown) as OfferSettingsListItem_item$data

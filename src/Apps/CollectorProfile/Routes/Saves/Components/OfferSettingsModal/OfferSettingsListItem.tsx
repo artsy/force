@@ -2,23 +2,23 @@ import { Flex, Image, Toggle, Text, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { EditArtworkListItem_item$data } from "__generated__/EditArtworkListItem_item.graphql"
+import { OfferSettingsListItem_item$data } from "__generated__/OfferSettingsListItem_item.graphql"
 import { useFormikContext } from "formik"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
-import { EditListPrivacyFormModel } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditListPrivacyModal"
+import { OfferSettingsFormModel } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
 import HideIcon from "@artsy/icons/HideIcon"
 
-interface EditArtworkListItemProps {
-  item: EditArtworkListItem_item$data
+interface OfferSettingsListItemProps {
+  item: OfferSettingsListItem_item$data
 }
 
-export const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
+export const OfferSettingsListItem: FC<OfferSettingsListItemProps> = props => {
   const { item } = props
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURL = artworkNodes[0]?.image?.resized?.src ?? null
   const totalArtworks = item.artworksCount ?? 0
-  const { values, setFieldValue } = useFormikContext<EditListPrivacyFormModel>()
+  const { values, setFieldValue } = useFormikContext<OfferSettingsFormModel>()
 
   return (
     <Flex justifyContent="space-between">
@@ -77,11 +77,11 @@ export const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
   )
 }
 
-export const EditArtworkListItemFragmentContainer = createFragmentContainer(
-  EditArtworkListItem,
+export const OfferSettingsListItemFragmentContainer = createFragmentContainer(
+  OfferSettingsListItem,
   {
     item: graphql`
-      fragment EditArtworkListItem_item on Collection {
+      fragment OfferSettingsListItem_item on Collection {
         name
         internalID
         artworksCount(onlyVisible: true)

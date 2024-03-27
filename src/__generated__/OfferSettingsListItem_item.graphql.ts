@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36c4b3d8e5f8d58288e6cebe027d687a>>
+ * @generated SignedSource<<3ae10cdb064c7de76df69f523262d553>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EditArtworkListItem_item$data = {
+export type OfferSettingsListItem_item$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -25,18 +25,18 @@ export type EditArtworkListItem_item$data = {
   readonly artworksCount: number;
   readonly internalID: string;
   readonly name: string;
-  readonly " $fragmentType": "EditArtworkListItem_item";
+  readonly " $fragmentType": "OfferSettingsListItem_item";
 };
-export type EditArtworkListItem_item$key = {
-  readonly " $data"?: EditArtworkListItem_item$data;
-  readonly " $fragmentSpreads": FragmentRefs<"EditArtworkListItem_item">;
+export type OfferSettingsListItem_item$key = {
+  readonly " $data"?: OfferSettingsListItem_item$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OfferSettingsListItem_item">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "EditArtworkListItem_item",
+  "name": "OfferSettingsListItem_item",
   "selections": [
     {
       "alias": null,
@@ -151,6 +151,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c503d142e3f4b96b4b6e71b40ca8a615";
+(node as any).hash = "d1cbe49d63cc42d88c85f92a8cd3500b";
 
 export default node;

@@ -12,25 +12,25 @@ import { extractNodes } from "Utils/extractNodes"
 import { useTranslation } from "react-i18next"
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { Formik, Form } from "formik"
-import { EditArtworkListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditArtworkListItem"
+import { OfferSettingsListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsListItem"
 import { useUpdateMeCollection } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/Mutations/useUpdateMeCollection"
 import createLogger from "Utils/logger"
 import { UpdateMeCollectionInput } from "__generated__/useUpdateMeCollectionMutation.graphql"
 
-interface EditListPrivacyModalProps {
+interface OfferSettingsModalProps {
   onClose: () => void
   me: CollectorProfileSavesRoute_me$data
 }
 
-export interface EditListPrivacyFormModel {
+export interface OfferSettingsFormModel {
   [key: string]: boolean
 }
 
-interface EditListPrivacyFormikValues extends Array<EditListPrivacyFormModel> {}
+interface OfferSettingsFormikValues extends Array<OfferSettingsFormModel> {}
 
-const logger = createLogger("EditListPrivacyModal")
+const logger = createLogger("OfferSettingsModal")
 
-export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
+export const OfferSettingsModal: React.FC<OfferSettingsModalProps> = ({
   onClose,
   me,
 }) => {
@@ -46,7 +46,7 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
 
   const { sendToast } = useToasts()
 
-  const handleSubmit = async (formikValues: EditListPrivacyFormikValues) => {
+  const handleSubmit = async (formikValues: OfferSettingsFormikValues) => {
     try {
       await submitMutation({
         variables: {
@@ -68,7 +68,7 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
 
       sendToast({
         variant: "success",
-        message: t("collectorSaves.editListPrivacyModal.success"),
+        message: t("collectorSaves.offerSettingsModal.success"),
       })
 
       onClose()
@@ -81,17 +81,17 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
     <ModalDialog
       width={["100%", 600]}
       onClose={onClose}
-      title={t("collectorSaves.editListPrivacyModal.title")}
-      data-testid="EditListPrivacyModal"
+      title={t("collectorSaves.offerSettingsModal.title")}
+      data-testid="OfferSettingsModal"
     >
-      <Formik<EditListPrivacyFormikValues>
+      <Formik<OfferSettingsFormikValues>
         initialValues={initialValues}
         onSubmit={handleSubmit}
       >
         {formik => (
           <Form>
             <Text variant="xs">
-              {t("collectorSaves.editListPrivacyModal.description")}{" "}
+              {t("collectorSaves.offerSettingsModal.description")}{" "}
               <Link
                 href="https://support.artsy.net/s/article/Offers-on-saved-works"
                 target="_blank"
@@ -112,7 +112,7 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
               <Join separator={<Spacer y={2} />}>
                 {artworkLists.map(list => {
                   return (
-                    <EditArtworkListItemFragmentContainer
+                    <OfferSettingsListItemFragmentContainer
                       key={list.internalID}
                       item={list}
                     />

@@ -141,7 +141,7 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
           internalID
           shareableWithPartners
           ...ArtworkListItem_item
-          ...EditArtworkListItem_item
+          ...OfferSettingsListItem_item
 
           artworksConnection(first: 4) {
             totalCount
@@ -164,7 +164,7 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
               default
               shareableWithPartners
               ...ArtworkListItem_item
-              ...EditArtworkListItem_item
+              ...OfferSettingsListItem_item
             }
           }
         }

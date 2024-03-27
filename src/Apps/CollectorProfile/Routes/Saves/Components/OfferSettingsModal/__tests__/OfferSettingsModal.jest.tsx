@@ -1,8 +1,8 @@
-import { screen, fireEvent, waitFor, act } from "@testing-library/react"
+import { screen, fireEvent, waitFor } from "@testing-library/react"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useSystemContext } from "System/SystemContext"
 import { render } from "DevTools/renderWithMockBoot"
-import { EditListPrivacyModal } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditListPrivacyModal"
+import { OfferSettingsModal } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { createMockEnvironment } from "relay-test-utils"
 
@@ -12,7 +12,7 @@ jest.unmock("react-relay")
 
 const relayEnv = createMockEnvironment()
 
-describe("EditListPrivacyModal", () => {
+describe("OfferSettingsModal", () => {
   const mockUseSystemContext = useSystemContext as jest.Mock
 
   let onClose: jest.Mock
@@ -35,7 +35,7 @@ describe("EditListPrivacyModal", () => {
   })
 
   it("renders the modal content", async () => {
-    render(<EditListPrivacyModal me={mockedMe} onClose={onClose} />)
+    render(<OfferSettingsModal me={mockedMe} onClose={onClose} />)
 
     const title = screen.getByText("Offer settings")
     const description = screen.getByText(
@@ -51,7 +51,7 @@ describe("EditListPrivacyModal", () => {
 
   it.skip("calls the mutation when the Save button is clicked", async () => {
     render(
-      <EditListPrivacyModal
+      <OfferSettingsModal
         me={(mockedMe as unknown) as CollectorProfileSavesRoute_me$data}
         onClose={onClose}
       />

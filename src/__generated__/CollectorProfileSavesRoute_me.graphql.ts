@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be161f99c3794900726c02ad249942c8>>
+ * @generated SignedSource<<886867bad519579baf4c237b829a64df>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type CollectorProfileSavesRoute_me$data = {
         readonly default: boolean;
         readonly internalID: string;
         readonly shareableWithPartners: boolean;
-        readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item" | "EditArtworkListItem_item">;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item" | "OfferSettingsListItem_item">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -27,7 +27,7 @@ export type CollectorProfileSavesRoute_me$data = {
     } | null | undefined;
     readonly internalID: string;
     readonly shareableWithPartners: boolean;
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item" | "EditArtworkListItem_item">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item" | "OfferSettingsListItem_item">;
   } | null | undefined;
   readonly " $fragmentType": "CollectorProfileSavesRoute_me";
 };
@@ -59,7 +59,7 @@ v2 = {
 v3 = {
   "args": null,
   "kind": "FragmentSpread",
-  "name": "EditArtworkListItem_item"
+  "name": "OfferSettingsListItem_item"
 };
 return {
   "argumentDefinitions": [],
@@ -212,6 +212,6 @@ return {
 };
 })();
 
-(node as any).hash = "31009dcee3ed95fc6e4444e65347bb6d";
+(node as any).hash = "08a824fa4155abab44470b620fbd6640";
 
 export default node;

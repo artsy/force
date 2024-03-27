@@ -6,7 +6,7 @@ import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModa
 import { ArtworkList } from "./CreateNewListModal/CreateNewListModal"
 import { ProgressiveOnboardingSaveTitle } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveTitle"
 import { RouterLink } from "System/Router/RouterLink"
-import { EditListPrivacyModal } from "Apps/CollectorProfile/Routes/Saves/Components/EditListPrivacyModal/EditListPrivacyModal"
+import { OfferSettingsModal } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ProgressiveOnboardingSaveOfferSettings } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveOfferSettings"
@@ -67,7 +67,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
       )}
 
       {editModalIsOpened && (
-        <EditListPrivacyModal me={me} onClose={handleEditClose} />
+        <OfferSettingsModal me={me} onClose={handleEditClose} />
       )}
 
       <Join separator={<Spacer y={0.5} />}>
