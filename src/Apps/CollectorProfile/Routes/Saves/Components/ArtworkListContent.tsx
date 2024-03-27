@@ -13,15 +13,16 @@ import { FC, useEffect } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Flex, Join, Spacer, Text } from "@artsy/palette"
+import { Clickable, Flex, Join, Spacer, Text, Tooltip } from "@artsy/palette"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { ArtworkListArtworksGridPlaceholder } from "./ArtworkListPlaceholders"
 import { ArtworkListContextualMenu } from "./Actions/ArtworkListContextualMenu"
 import { useJump } from "Utils/Hooks/useJump"
 import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
 import { ARTWORK_LIST_SCROLL_TARGET_ID } from "Apps/CollectorProfile/Routes/Saves/CollectorProfileSavesRoute"
-import LockIcon from "@artsy/icons/LockIcon"
+import HideIcon from "@artsy/icons/HideIcon"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { useTranslation } from "react-i18next"
 
 interface ArtworkListContentQueryRendererProps {
   listID: string
@@ -55,14 +56,14 @@ function isContentOutOfView() {
 }
 
 const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
+  const { t } = useTranslation()
   const { match } = useRouter()
 
   const { jumpTo } = useJump()
   const { artworkListItemHasBeenTouched } = useArtworkListVisibilityContext()
-
-  const artworkList = me.artworkList!
+  const artworkList = me.artworkList
   const counts: Counts = {
-    artworks: artworkList.artworks?.totalCount ?? 0,
+    artworks: artworkList?.artworks?.totalCount ?? 0,
   }
 
   useEffect(() => {
@@ -96,29 +97,35 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
         justifyContent="space-between"
       >
         <Join separator={<Spacer x={2} />}>
-          <Text variant="lg-display">{artworkList.name}</Text>
-          {!artworkList.default && (
+          <Flex alignItems="center">
+            <Text variant="lg-display">{artworkList?.name}</Text>
+            {shareableWithPartnersEnabled &&
+              !artworkList?.shareableWithPartners && (
+                <Tooltip
+                  pointer
+                  variant="defaultDark"
+                  placement="bottom-start"
+                  content={
+                    <Text variant="xs">
+                      {t("collectorSaves.artworkListsHeader.hideIconTooltip")}
+                    </Text>
+                  }
+                >
+                  <Clickable style={{ lineHeight: 0 }}>
+                    <HideIcon
+                      minWidth="18px"
+                      data-testid="hide-icon"
+                      ml={0.5}
+                    />
+                  </Clickable>
+                </Tooltip>
+              )}
+          </Flex>
+          {!artworkList?.default && artworkList && (
             <ArtworkListContextualMenu artworkList={artworkList} />
           )}
         </Join>
       </Flex>
-      {shareableWithPartnersEnabled &&
-        (artworkList.shareableWithPartners ? (
-          <Text variant={["xs", "sm-display"]} color="black60" paddingTop={1}>
-            Shared
-          </Text>
-        ) : (
-          <Flex paddingTop={1}>
-            <LockIcon
-              marginRight={0.5}
-              minWidth="18px"
-              data-testid="lock-icon"
-            />
-            <Text variant={["xs", "sm-display"]} color="black60">
-              Private
-            </Text>
-          </Flex>
-        ))}
 
       <Spacer y={4} />
 

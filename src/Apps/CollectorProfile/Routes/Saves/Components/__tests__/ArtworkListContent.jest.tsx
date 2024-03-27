@@ -53,15 +53,13 @@ describe("ArtworkListContent", () => {
     const title = "Keep track of artworks you love"
     const description =
       "Select the heart on an artwork to save it or add it to a list."
-    const shareStatus = "Shared"
 
     expect(screen.getByText(title)).toBeInTheDocument()
     expect(screen.getByText(description)).toBeInTheDocument()
-    expect(screen.getByText(shareStatus)).toBeInTheDocument()
-    expect(screen.queryByTestId("lock-icon")).not.toBeInTheDocument()
+    expect(screen.queryByTestId("hide-icon")).not.toBeInTheDocument()
   })
 
-  it("should render a private note if list is not shared with partners", () => {
+  it("should render a hide icon if list is not shared with partners", () => {
     renderWithRelay({
       Me: () => ({
         artworkList: {
@@ -75,9 +73,7 @@ describe("ArtworkListContent", () => {
       }),
     })
 
-    const shareStatus = "Private"
-    expect(screen.getByText(shareStatus)).toBeInTheDocument()
-    expect(screen.getByTestId("lock-icon")).toBeInTheDocument()
+    expect(screen.getByTestId("hide-icon")).toBeInTheDocument()
   })
 
   describe("Actions contextual menu", () => {
