@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d71b895732681b27e1f5f1cd3bb752b>>
+ * @generated SignedSource<<6118d9a72b2fd23c254c6ad2488e1340>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,35 +40,7 @@ v1 = {
   "name": "endAt",
   "storageKey": null
 },
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v4 = [
-  {
-    "kind": "Literal",
-    "name": "shallow",
-    "value": true
-  }
-],
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v6 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -77,9 +49,37 @@ v6 = [
     "storageKey": null
   }
 ],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v5 = [
+  {
+    "kind": "Literal",
+    "name": "shallow",
+    "value": true
+  }
+],
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
 v7 = [
-  (v5/*: any*/),
-  (v2/*: any*/)
+  (v6/*: any*/),
+  (v3/*: any*/)
 ],
 v8 = {
   "enumValues": null,
@@ -254,18 +254,14 @@ return {
                               {
                                 "alias": null,
                                 "args": null,
-                                "kind": "ScalarField",
-                                "name": "priceListedMessage",
+                                "concreteType": "Money",
+                                "kind": "LinkedField",
+                                "name": "priceWithDiscount",
+                                "plural": false,
+                                "selections": (v2/*: any*/),
                                 "storageKey": null
                               },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "priceWithDiscountMessage",
-                                "storageKey": null
-                              },
-                              (v2/*: any*/)
+                              (v3/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -300,7 +296,7 @@ return {
                             "name": "node",
                             "plural": false,
                             "selections": [
-                              (v3/*: any*/),
+                              (v4/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -313,6 +309,13 @@ return {
                                 "args": null,
                                 "kind": "ScalarField",
                                 "name": "artistNames",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "price",
                                 "storageKey": null
                               },
                               {
@@ -410,7 +413,7 @@ return {
                                     ],
                                     "storageKey": null
                                   },
-                                  (v2/*: any*/)
+                                  (v3/*: any*/)
                                 ],
                                 "storageKey": null
                               },
@@ -434,15 +437,15 @@ return {
                               },
                               {
                                 "alias": null,
-                                "args": (v4/*: any*/),
+                                "args": (v5/*: any*/),
                                 "concreteType": "Artist",
                                 "kind": "LinkedField",
                                 "name": "artists",
                                 "plural": true,
                                 "selections": [
-                                  (v2/*: any*/),
                                   (v3/*: any*/),
-                                  (v5/*: any*/)
+                                  (v4/*: any*/),
+                                  (v6/*: any*/)
                                 ],
                                 "storageKey": "artists(shallow:true)"
                               },
@@ -455,15 +458,15 @@ return {
                               },
                               {
                                 "alias": null,
-                                "args": (v4/*: any*/),
+                                "args": (v5/*: any*/),
                                 "concreteType": "Partner",
                                 "kind": "LinkedField",
                                 "name": "partner",
                                 "plural": false,
                                 "selections": [
-                                  (v5/*: any*/),
-                                  (v3/*: any*/),
-                                  (v2/*: any*/)
+                                  (v6/*: any*/),
+                                  (v4/*: any*/),
+                                  (v3/*: any*/)
                                 ],
                                 "storageKey": "partner(shallow:true)"
                               },
@@ -511,7 +514,7 @@ return {
                                     "name": "isClosed",
                                     "storageKey": null
                                   },
-                                  (v2/*: any*/)
+                                  (v3/*: any*/)
                                 ],
                                 "storageKey": null
                               },
@@ -577,7 +580,7 @@ return {
                                     "kind": "LinkedField",
                                     "name": "highestBid",
                                     "plural": false,
-                                    "selections": (v6/*: any*/),
+                                    "selections": (v2/*: any*/),
                                     "storageKey": null
                                   },
                                   {
@@ -587,14 +590,14 @@ return {
                                     "kind": "LinkedField",
                                     "name": "openingBid",
                                     "plural": false,
-                                    "selections": (v6/*: any*/),
+                                    "selections": (v2/*: any*/),
                                     "storageKey": null
                                   },
-                                  (v2/*: any*/)
+                                  (v3/*: any*/)
                                 ],
                                 "storageKey": null
                               },
-                              (v2/*: any*/),
+                              (v3/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -680,7 +683,7 @@ return {
                     ],
                     "storageKey": "artworksConnection(first:1)"
                   },
-                  (v2/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -693,7 +696,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9ea913195773552ad467c18e26393642",
+    "cacheID": "cd8972b8eb890da19869cfc25f173e57",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -734,8 +737,13 @@ return {
         "notificationsConnection.edges.node.item.partnerOffer.id": (v9/*: any*/),
         "notificationsConnection.edges.node.item.partnerOffer.isAvailable": (v11/*: any*/),
         "notificationsConnection.edges.node.item.partnerOffer.note": (v10/*: any*/),
-        "notificationsConnection.edges.node.item.partnerOffer.priceListedMessage": (v10/*: any*/),
-        "notificationsConnection.edges.node.item.partnerOffer.priceWithDiscountMessage": (v10/*: any*/),
+        "notificationsConnection.edges.node.item.partnerOffer.priceWithDiscount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Money"
+        },
+        "notificationsConnection.edges.node.item.partnerOffer.priceWithDiscount.display": (v10/*: any*/),
         "notificationsConnection.edges.node.offerArtworksConnection": {
           "enumValues": null,
           "nullable": true,
@@ -840,6 +848,7 @@ return {
         "notificationsConnection.edges.node.offerArtworksConnection.edges.node.partner.name": (v10/*: any*/),
         "notificationsConnection.edges.node.offerArtworksConnection.edges.node.preview": (v12/*: any*/),
         "notificationsConnection.edges.node.offerArtworksConnection.edges.node.preview.url": (v10/*: any*/),
+        "notificationsConnection.edges.node.offerArtworksConnection.edges.node.price": (v10/*: any*/),
         "notificationsConnection.edges.node.offerArtworksConnection.edges.node.sale": {
           "enumValues": null,
           "nullable": true,
@@ -899,7 +908,7 @@ return {
     },
     "name": "PartnerOfferCreatedNotification_test_Query",
     "operationKind": "query",
-    "text": "query PartnerOfferCreatedNotification_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...PartnerOfferCreatedNotification_notification\n        id\n      }\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment PartnerOfferArtwork_artwork on Artwork {\n  href\n  title\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n  ...Metadata_artwork\n}\n\nfragment PartnerOfferCreatedNotification_notification on Notification {\n  headline\n  targetHref\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      partnerOffer {\n        endAt\n        isAvailable\n        note\n        priceListedMessage\n        priceWithDiscountMessage\n        id\n      }\n    }\n  }\n  offerArtworksConnection: artworksConnection(first: 1) {\n    edges {\n      node {\n        ...PartnerOfferArtwork_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n"
+    "text": "query PartnerOfferCreatedNotification_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...PartnerOfferCreatedNotification_notification\n        id\n      }\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment PartnerOfferArtwork_artwork on Artwork {\n  href\n  title\n  artistNames\n  price\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n  ...Metadata_artwork\n}\n\nfragment PartnerOfferCreatedNotification_notification on Notification {\n  headline\n  targetHref\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      partnerOffer {\n        endAt\n        isAvailable\n        note\n        priceWithDiscount {\n          display\n        }\n        id\n      }\n    }\n  }\n  offerArtworksConnection: artworksConnection(first: 1) {\n    edges {\n      node {\n        ...PartnerOfferArtwork_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n"
   }
 };
 })();

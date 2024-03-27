@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e694f44ba2b22e5b263662c2b2bcc480>>
+ * @generated SignedSource<<aca2c9f324af8bf2fdf2173d6e37a063>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type PartnerOfferArtwork_artwork$data = {
     readonly src: string | null | undefined;
     readonly width: number | null | undefined;
   } | null | undefined;
+  readonly price: string | null | undefined;
   readonly title: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
   readonly " $fragmentType": "PartnerOfferArtwork_artwork";
@@ -52,6 +53,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "artistNames",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "price",
       "storageKey": null
     },
     {
@@ -105,6 +113,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "fe75b0d21cfe22c2dba748e36e48c938";
+(node as any).hash = "ea4b3a0baac7e94cda2ba11dcade250e";
 
 export default node;
