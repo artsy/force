@@ -13,7 +13,7 @@ interface EditArtworkListItemProps {
   item: EditArtworkListItem_item$data
 }
 
-const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
+export const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
   const { item } = props
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURL = artworkNodes[0]?.image?.resized?.src ?? null
@@ -43,7 +43,7 @@ const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
 
             <Spacer x={[0.5, 1]} />
 
-            {!values[item.internalID] && <HideIcon />}
+            {!values[item.internalID] && <HideIcon data-testid="HideIcon" />}
           </Flex>
 
           <Text variant="xs" color="black60" paddingLeft={1}>
