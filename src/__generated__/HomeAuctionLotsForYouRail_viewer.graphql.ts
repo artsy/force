@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5da5925cb994d872aae4e00bb8f3e0f9>>
+ * @generated SignedSource<<88b6f69f97918c01d3431bbc31dd1d72>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeAuctionLotsRail_viewer$data = {
+export type HomeAuctionLotsForYouRail_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -21,18 +21,18 @@ export type HomeAuctionLotsRail_viewer$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly " $fragmentType": "HomeAuctionLotsRail_viewer";
+  readonly " $fragmentType": "HomeAuctionLotsForYouRail_viewer";
 };
-export type HomeAuctionLotsRail_viewer$key = {
-  readonly " $data"?: HomeAuctionLotsRail_viewer$data;
-  readonly " $fragmentSpreads": FragmentRefs<"HomeAuctionLotsRail_viewer">;
+export type HomeAuctionLotsForYouRail_viewer$key = {
+  readonly " $data"?: HomeAuctionLotsForYouRail_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeAuctionLotsForYouRail_viewer">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "HomeAuctionLotsRail_viewer",
+  "name": "HomeAuctionLotsForYouRail_viewer",
   "selections": [
     {
       "alias": null,
@@ -114,6 +114,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "23381ef077116e1e276e18689536114a";
+(node as any).hash = "33781f77b911aabdeae2d59b205dac51";
 
 export default node;

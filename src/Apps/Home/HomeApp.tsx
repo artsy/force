@@ -11,12 +11,12 @@ import { HomeFeaturedGalleriesRailQueryRenderer } from "./Components/HomeFeature
 import { HomeFeaturedShowsRailQueryRenderer } from "./Components/HomeFeaturedShowsRail"
 import { HomeCurrentFairsQueryRenderer } from "./Components/HomeCurrentFairs"
 import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingArtistsRail"
-import { HomeAuctionLotsRailQueryRenderer } from "./Components/HomeAuctionLotsRail"
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeEmergingPicksArtworksRailQueryRenderer } from "./Components/HomeEmergingPicksArtworksRail"
 import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits"
 import { HomeNewWorksFromGalleriesYouFollowRailQueryRenderer } from "Apps/Home/Components/HomeNewWorksFromGalleriesYouFollowRail"
+import { HomeAuctionLotsTabBar } from "Apps/Home/Components/HomeAuctionLotsTabBar"
 
 interface HomeAppProps {
   featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet$data | null
@@ -56,7 +56,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
         <HomeFeaturedMarketNewsQueryRenderer />
 
-        <HomeAuctionLotsRailQueryRenderer />
+        <HomeAuctionLotsTabBar />
 
         <HomeFeaturedShowsRailQueryRenderer />
 
