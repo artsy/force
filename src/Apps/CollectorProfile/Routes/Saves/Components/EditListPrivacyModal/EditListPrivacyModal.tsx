@@ -82,7 +82,7 @@ export const EditListPrivacyModal: React.FC<EditListPrivacyModalProps> = ({
       width={["100%", 600]}
       onClose={onClose}
       title={t("collectorSaves.editListPrivacyModal.title")}
-      data-testid="CreateNewList"
+      data-testid="EditListPrivacyModal"
     >
       <Formik<EditListPrivacyFormikValues>
         initialValues={initialValues}

@@ -1,4 +1,4 @@
-import { Flex, Image, Toggle, Text, Spacer, THEME } from "@artsy/palette"
+import { Flex, Image, Toggle, Text, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
@@ -19,7 +19,6 @@ const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
   const imageURL = artworkNodes[0]?.image?.resized?.src ?? null
   const totalArtworks = item.artworksCount ?? 0
   const { values, setFieldValue } = useFormikContext<EditListPrivacyFormModel>()
-  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   return (
     <Flex justifyContent="space-between">
@@ -56,11 +55,9 @@ const EditArtworkListItem: FC<EditArtworkListItemProps> = props => {
       </Flex>
 
       <Flex alignItems="center">
-        {!isMobile && (
-          <Text variant="sm">
-            {values[item.internalID] ? "Shared" : "Private"}
-          </Text>
-        )}
+        <Text variant="sm" display={["none", "block"]}>
+          {values[item.internalID] ? "Shared" : "Private"}
+        </Text>
 
         <Spacer x={2} />
 
