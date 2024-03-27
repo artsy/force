@@ -5,7 +5,8 @@ import {
   Box,
   Join,
   useToasts,
-  Button,
+  Flex,
+  Spinner,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -37,9 +38,12 @@ import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { getENV } from "Utils/getENV"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
-import { Jump } from "Utils/Hooks/useJump"
+import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 
-const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
+const SETTINGS_NAVIGATION_BAR_HEIGHT = 300
+export const ALERTS_APP_DESKTOP_HEIGHT = `calc(100vh - ${
+  DESKTOP_NAV_BAR_HEIGHT + SETTINGS_NAVIGATION_BAR_HEIGHT
+}px)`
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -60,7 +64,6 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const { match, silentPush } = useRouter()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [sort, setSort] = useState("ENABLED_AT_DESC")
-  const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.alertsConnection)
   const isMobile = getENV("IS_MOBILE")
 
@@ -183,14 +186,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       return
     }
 
-    setLoading(true)
-
     relay.loadMore(10, err => {
       if (err) {
         console.error(err)
       }
-
-      setLoading(false)
     })
   }
 
@@ -252,7 +251,12 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   }, [alertID, relayEnvironment])
 
   const list = (
-    <>
+    <Box
+      overflow="scroll"
+      // The notification list needs a maximum height to be independently scrollable.
+      maxHeight={[null, ALERTS_APP_DESKTOP_HEIGHT]}
+      pb={2}
+    >
       <Join separator={<Separator borderColor="black5" />}>
         {alerts.map(node => {
           const isCurrentEdgeSelected = editAlertEntity?.id === node.internalID
@@ -285,13 +289,15 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       </Join>
 
       {relay.hasMore() && (
-        <Box textAlign="center" mt={4}>
-          <Button onClick={handleLoadMore} loading={loading}>
-            Show More
-          </Button>
-        </Box>
+        <>
+          <InfiniteScrollSentinel onNext={handleLoadMore} once={false} />
+
+          <Flex width="100%" my={4} alignItems="center">
+            <Spinner position="relative" />
+          </Flex>
+        </>
       )}
-    </>
+    </Box>
   )
 
   return (
@@ -309,31 +315,51 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             />
             <Box mx={-4}>
               <Separator color="black15" />
+
               <Media greaterThanOrEqual="md">
                 <GridColumns gridColumnGap={0}>
-                  <Column span={6}>{list}</Column>
+                  <Column span={6}>
+                    <Flex
+                      height={ALERTS_APP_DESKTOP_HEIGHT}
+                      flexDirection="column"
+                    >
+                      <Flex
+                        overflow="hidden"
+                        maxHeight={ALERTS_APP_DESKTOP_HEIGHT}
+                        flexDirection="column"
+                      >
+                        {list}
+                      </Flex>
+                    </Flex>
+                  </Column>
+
                   <Column
                     span={6}
                     borderLeft="1px solid"
                     borderLeftColor="black15"
                     borderRightColor="black15"
-                    minHeight={DESKTOP_HEIGHT}
+                    minHeight={ALERTS_APP_DESKTOP_HEIGHT}
                   >
-                    <Jump id="SavedSearchAlertEditForm" />
-
-                    {viewOption === "EDIT" && editAlertEntity && (
-                      <SavedSearchAlertEditFormQueryRenderer
-                        editAlertEntity={editAlertEntity}
-                        onCompleted={handleCompleted}
-                        onDeleteClick={handleDeleteClick}
-                      />
-                    )}
-                    {viewOption === "ARTWORKS" && editAlertEntity && (
-                      <SavedSearchAlertsArtworksQueryRenderer
-                        editAlertEntity={editAlertEntity}
-                        onEditAlertClick={handleOpenEditForm}
-                      />
-                    )}
+                    <Flex
+                      flexDirection="column"
+                      height={ALERTS_APP_DESKTOP_HEIGHT}
+                      overflow="auto"
+                      paddingBottom={2}
+                    >
+                      {viewOption === "EDIT" && editAlertEntity && (
+                        <SavedSearchAlertEditFormQueryRenderer
+                          editAlertEntity={editAlertEntity}
+                          onCompleted={handleCompleted}
+                          onDeleteClick={handleDeleteClick}
+                        />
+                      )}
+                      {viewOption === "ARTWORKS" && editAlertEntity && (
+                        <SavedSearchAlertsArtworksQueryRenderer
+                          editAlertEntity={editAlertEntity}
+                          onEditAlertClick={handleOpenEditForm}
+                        />
+                      )}
+                    </Flex>
                   </Column>
                 </GridColumns>
 
