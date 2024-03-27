@@ -60,8 +60,8 @@ describe("PartnerOfferCreatedNotification", () => {
       "src",
       "undefined?quality=80&resize_to=width&src=artwork-image-one&width=600"
     )
-    expect(screen.getByText("US$900")).toBeInTheDocument()
-    expect(screen.getByText("(List price: US$1,000)")).toBeInTheDocument()
+    expect(screen.getByText("$900")).toBeInTheDocument()
+    expect(screen.getByText("(List price: $1,000)")).toBeInTheDocument()
 
     // Continue to purchase button
     expect(screen.getByTestId("partner-offer-artwork-button")).toHaveAttribute(
@@ -124,8 +124,9 @@ const notification = (
         endAt: endAt,
         isAvailable: isAvailable,
         note: note,
-        priceListedMessage: "US$1,000",
-        priceWithDiscountMessage: "US$900",
+        priceWithDiscount: {
+          display: "$900",
+        }
       },
     },
     offerArtworksConnection: {
@@ -136,6 +137,7 @@ const notification = (
             href: "/artwork/artwork-one",
             title: "Artwork One",
             artistNames: "Artist One",
+            price: "$1,000",
             image: {
               src: "artwork-image-one",
               width: 6720,
