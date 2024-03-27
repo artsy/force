@@ -1,17 +1,26 @@
 import { Checkbox } from "@artsy/palette"
-import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+  useCurrentlySelectedFilters,
+} from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 
 export const AvailabilityFilter: React.FC = () => {
-  const { setFilter, unsetFilter, filters } = useArtworkFilterContext()
+  const { setFilter } = useArtworkFilterContext()
+  const currentSelectedFilters = useCurrentlySelectedFilters()
+
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.forSale
+  )
+  const label = `Availability${filtersCount}`
 
   return (
-    <FilterExpandable label="Availability" expanded>
+    <FilterExpandable label={label} expanded>
       <Checkbox
-        selected={!!filters?.forSale}
-        onSelect={selected => {
-          selected ? setFilter("forSale", true) : unsetFilter("forSale")
-        }}
+        selected={!!currentSelectedFilters?.forSale}
+        onSelect={selected => setFilter("forSale", selected)}
         my={1}
       >
         Only works for sale
