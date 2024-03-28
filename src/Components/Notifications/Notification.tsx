@@ -22,6 +22,7 @@ import { useSystemContext } from "System/SystemContext"
 import createLogger from "Utils/logger"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
 
 const logger = createLogger("NotificationItem")
 
@@ -118,6 +119,10 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
       return (
         <PartnerOfferCreatedNotification notification={data.me?.notification} />
       )
+    case "PARTNER_SHOW_OPENED":
+      return (
+        <PartnerShowOpenedNotification notification={data.me?.notification} />
+      )
     case "VIEWING_ROOM_PUBLISHED":
       return (
         <ViewingRoomPublishedNotification
@@ -156,6 +161,7 @@ const notificationQuery = graphql`
         ...ArtworkPublishedNotification_notification
         ...ArticleFeaturedArtistNotification_notification
         ...PartnerOfferCreatedNotification_notification
+        ...PartnerShowOpenedNotification_notification
         ...ViewingRoomPublishedNotification_notification
       }
     }
