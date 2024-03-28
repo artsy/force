@@ -32,7 +32,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
   let mockEnvironment
   const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
-  const { renderWithRelay: renderRaw } = setupTestWrapperTL<
+  const { renderWithRelay: baseRenderWithRelay } = setupTestWrapperTL<
     ArtworkSidebarCommercialButtons_Test_Query
   >({
     Component: ({ artwork, me }) => {
@@ -58,8 +58,8 @@ describe("ArtworkSidebarCommercialButtons", () => {
     `,
   })
 
-  const renderWithRelay: typeof renderRaw = (
-    mockResolvers: Parameters<typeof renderRaw>[0] = {}
+  const renderWithRelay: typeof baseRenderWithRelay = (
+    mockResolvers: Parameters<typeof baseRenderWithRelay>[0] = {}
   ) => {
     const mockMe = !!user
       ? {
@@ -76,7 +76,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
     }
 
     const finalMockResolvers = { ...defaultMockResolvers, ...mockResolvers }
-    return renderRaw(finalMockResolvers, {}, mockEnvironment)
+    return baseRenderWithRelay(finalMockResolvers, {}, mockEnvironment)
   }
 
   beforeEach(() => {

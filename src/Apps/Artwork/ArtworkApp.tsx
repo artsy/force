@@ -414,7 +414,6 @@ interface ArtworkResultProps extends RenderProps {
 const ArtworkResult: React.FC<ArtworkResultProps> = props => {
   const { artworkResult, ...rest } = props
   const { __typename } = artworkResult
-  console.log("ME!!!!!!!!", props.me)
 
   if (__typename === "Artwork") {
     return <ArtworkAppFragmentContainer artwork={artworkResult} {...rest} />
