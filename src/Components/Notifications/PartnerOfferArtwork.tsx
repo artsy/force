@@ -16,28 +16,22 @@ interface PartnerOfferArtworkProps {
   endAt?: string | null
   note?: string | null
   available?: boolean | null
-  priceListedMessage?: string | null
-  priceWithDiscountMessage?: string | null
+  priceWithDiscount?: string | null
 }
 
 export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   artwork: artworkProp,
   targetHref,
-  priceListedMessage,
-  priceWithDiscountMessage,
+  priceWithDiscount,
   endAt = "",
   note = "",
   available = false,
 }) => {
   const { hasEnded } = useTimer(endAt || "")
-  const fullyAvailable = !!(
-    available &&
-    !hasEnded &&
-    priceWithDiscountMessage &&
-    priceListedMessage
-  )
+  const fullyAvailable = !!(available && !hasEnded && priceWithDiscount)
 
   const artwork = useFragment(partnerOfferArtworkFragment, artworkProp)
+  const priceListed = artwork.price || "Not publicly listed"
   const image = resized(artwork?.image?.src ?? "", { width: CARD_MAX_WIDTH })
   const label =
     (artwork.title ?? "Artwork") +
@@ -111,11 +105,11 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
               fontWeight="bold"
               overflowEllipsis
             >
-              {priceWithDiscountMessage}
+              {priceWithDiscount}
               {" "}
             </Text>
             <Text variant="xs" color="black60" overflowEllipsis>
-              (List price: {priceListedMessage})
+              (List price: {priceListed})
             </Text>
           </Flex>
         )}
@@ -155,6 +149,7 @@ const partnerOfferArtworkFragment = graphql`
     href
     title
     artistNames
+    price
     image {
       src: url(version: ["larger", "large"])
       width

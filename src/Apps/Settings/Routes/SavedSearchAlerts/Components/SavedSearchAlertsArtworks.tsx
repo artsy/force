@@ -31,7 +31,7 @@ import {
   CriteriaPillsPlaceholder,
 } from "Components/Alert/Components/CriteriaPills"
 import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
-import { useJump } from "Utils/Hooks/useJump"
+import { ALERTS_APP_DESKTOP_HEIGHT } from "Apps/Settings/Routes/SavedSearchAlerts/SavedSearchAlertsApp"
 
 interface AlertArtworksProps {
   alert: NonNullable<SavedSearchAlertsArtworksQuery["response"]["me"]>["alert"]
@@ -44,8 +44,6 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
   onCloseClick,
   onEditAlertClick,
 }) => {
-  const { jumpTo } = useJump()
-
   if (!alert || !alert.artworksConnection)
     return <SavedSearchAlertsArtworksPlaseholder onCloseClick={onCloseClick} />
 
@@ -100,7 +98,6 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
                       variant="secondaryBlack"
                       onClick={() => {
                         onEditAlertClick()
-                        jumpTo("SavedSearchAlertEditForm")
                       }}
                     >
                       Edit Alert
@@ -117,7 +114,6 @@ export const AlertArtworks: React.FC<AlertArtworksProps> = ({
                   variant="secondaryBlack"
                   onClick={() => {
                     onEditAlertClick()
-                    jumpTo("SavedSearchAlertEditForm")
                   }}
                 >
                   Edit Alert
@@ -288,22 +284,24 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<SavedSearchAlertsA
 
 const SavedSearchAlertsArtworksPlaseholderContext: React.FC = () => {
   return (
-    <Join separator={<Spacer y={2} />}>
-      <CriteriaPillsPlaceholder />
-      <SkeletonBox display={["none", "block"]}>
-        <Separator />
-      </SkeletonBox>
-      <Flex flexDirection="column">
-        <SkeletonText variant="sm-display">
-          20 works currently on Artsy match your criteria.
-        </SkeletonText>
-        <SkeletonText variant="sm-display">
-          See our top picks for you:
-        </SkeletonText>
-        <Spacer y={[4, 2]} />
-      </Flex>
-      <ArtworkGridPlaceholder columnCount={2} />
-    </Join>
+    <>
+      <Join separator={<Spacer y={2} />}>
+        <CriteriaPillsPlaceholder />
+        <SkeletonBox display={["none", "block"]}>
+          <Separator />
+        </SkeletonBox>
+        <Flex flexDirection="column">
+          <SkeletonText variant="sm-display">
+            20 works currently on Artsy match your criteria.
+          </SkeletonText>
+          <SkeletonText variant="sm-display">
+            See our top picks for you:
+          </SkeletonText>
+          <Spacer y={[4, 2]} />
+        </Flex>
+        <ArtworkGridPlaceholder columnCount={2} amount={2} />
+      </Join>
+    </>
   )
 }
 
@@ -313,8 +311,14 @@ const SavedSearchAlertsArtworksPlaseholder: React.FC<{
   return (
     <>
       <Media greaterThanOrEqual="md">
-        <Skeleton p={4}>
-          <Text variant="lg" mb={2}>
+        <Skeleton
+          p={4}
+          // Setting a max height to force scrolling to top when the content changes.
+          maxHeight={ALERTS_APP_DESKTOP_HEIGHT}
+          overflow="hidden"
+          flexDirection="column"
+        >
+          <Text variant="lg" pb={2}>
             View Artworks
           </Text>
           <SavedSearchAlertsArtworksPlaseholderContext />

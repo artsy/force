@@ -7,7 +7,7 @@ import { SelectArtworkListItem_item$data } from "__generated__/SelectArtworkList
 import { extractNodes } from "Utils/extractNodes"
 import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves/Components/SavesEntityImage"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
-import LockIcon from "@artsy/icons/LockIcon"
+import HideIcon from "@artsy/icons/HideIcon"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
 const ICON_SIZE = 24
@@ -53,10 +53,10 @@ const SelectArtworkListItem: FC<SelectArtworkListItemProps> = ({
         <Flex>
           <Text variant="sm-display">{item.name}</Text>
           {shareableWithPartnersEnabled && !item.shareableWithPartners && (
-            <LockIcon
+            <HideIcon
               marginLeft={0.5}
               minWidth="18px"
-              data-testid="lock-icon"
+              data-testid="hide-icon"
             />
           )}
         </Flex>

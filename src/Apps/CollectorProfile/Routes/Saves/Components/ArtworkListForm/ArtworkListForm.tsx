@@ -63,15 +63,15 @@ export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
 
       <Spacer y={4} />
 
-      {sharedListEnabled && (
+      {sharedListEnabled && mode === "create" && (
         <>
           <Text variant="sm">Shared list</Text>
           <Spacer y={1} />
           <Flex>
             <Text variant="xs" color="black60">
-              Share your interest in artworks with their respective galleries.
-              Switching lists to private will make them visible only to you and
-              opt them out of offers. List names are always private.
+              Shared lists are eligible to receive offers from galleries.
+              Switching sharing off will make them visible only to you, and you
+              won't receive offers. List names are always private.
             </Text>
             <Spacer x={1} />
             <Toggle

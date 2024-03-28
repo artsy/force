@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a6981577659ae4a363bc8d0be5f8109>>
+ * @generated SignedSource<<886867bad519579baf4c237b829a64df>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,8 @@ export type CollectorProfileSavesRoute_me$data = {
       readonly node: {
         readonly default: boolean;
         readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
+        readonly shareableWithPartners: boolean;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item" | "OfferSettingsListItem_item">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -25,7 +26,8 @@ export type CollectorProfileSavesRoute_me$data = {
       readonly totalCount: number | null | undefined;
     } | null | undefined;
     readonly internalID: string;
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
+    readonly shareableWithPartners: boolean;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item" | "OfferSettingsListItem_item">;
   } | null | undefined;
   readonly " $fragmentType": "CollectorProfileSavesRoute_me";
 };
@@ -43,9 +45,21 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "shareableWithPartners",
+  "storageKey": null
+},
+v2 = {
   "args": null,
   "kind": "FragmentSpread",
   "name": "ArtworkListItem_item"
+},
+v3 = {
+  "args": null,
+  "kind": "FragmentSpread",
+  "name": "OfferSettingsListItem_item"
 };
 return {
   "argumentDefinitions": [],
@@ -80,6 +94,8 @@ return {
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/),
+        (v2/*: any*/),
+        (v3/*: any*/),
         {
           "alias": null,
           "args": [
@@ -140,6 +156,8 @@ return {
                   "storageKey": null
                 },
                 (v1/*: any*/),
+                (v2/*: any*/),
+                (v3/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -194,6 +212,6 @@ return {
 };
 })();
 
-(node as any).hash = "8eddbc82ae1dae7923e32d332d5f21c6";
+(node as any).hash = "08a824fa4155abab44470b620fbd6640";
 
 export default node;
