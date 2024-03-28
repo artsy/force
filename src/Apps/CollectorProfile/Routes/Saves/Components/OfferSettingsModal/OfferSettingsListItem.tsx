@@ -18,7 +18,9 @@ export const OfferSettingsListItem: FC<OfferSettingsListItemProps> = props => {
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURL = artworkNodes[0]?.image?.resized?.src ?? null
   const totalArtworks = item.artworksCount ?? 0
-  const { values, setFieldValue } = useFormikContext<OfferSettingsFormModel>()
+  const { values, setFieldValue, isSubmitting } = useFormikContext<
+    OfferSettingsFormModel
+  >()
 
   return (
     <Flex justifyContent="space-between">
@@ -43,7 +45,9 @@ export const OfferSettingsListItem: FC<OfferSettingsListItemProps> = props => {
 
             <Spacer x={[0.5, 1]} />
 
-            {!values[item.internalID] && <HideIcon data-testid="HideIcon" />}
+            {!values[item.internalID] && (
+              <HideIcon minWidth={18} data-testid="HideIcon" />
+            )}
           </Flex>
 
           <Text variant="xs" color="black60" paddingLeft={1}>
@@ -62,6 +66,7 @@ export const OfferSettingsListItem: FC<OfferSettingsListItemProps> = props => {
         <Spacer x={2} />
 
         <Toggle
+          disabled={!!isSubmitting}
           aria-label={
             values[item.internalID]
               ? "Toggle list privacy to private"
