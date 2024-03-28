@@ -1,13 +1,20 @@
-import { screen, fireEvent, waitFor } from "@testing-library/react"
+import { screen, fireEvent } from "@testing-library/react"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useSystemContext } from "System/SystemContext"
 import { render } from "DevTools/renderWithMockBoot"
 import { OfferSettingsModal } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { createMockEnvironment } from "relay-test-utils"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/useSystemContext")
+jest.mock(
+  "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsListItem",
+  () => {
+    return { OfferSettingsListItemFragmentContainer: () => <div /> }
+  }
+)
 jest.unmock("react-relay")
 
 const relayEnv = createMockEnvironment()
@@ -49,7 +56,7 @@ describe("OfferSettingsModal", () => {
     ).toBeInTheDocument()
   })
 
-  it.skip("calls the mutation when the Save button is clicked", async () => {
+  it("calls the mutation when the Save button is clicked", async () => {
     render(
       <OfferSettingsModal
         me={(mockedMe as unknown) as CollectorProfileSavesRoute_me$data}
@@ -61,16 +68,16 @@ describe("OfferSettingsModal", () => {
 
     fireEvent.click(saveButton)
 
-    await waitFor(() => expect(submitMutation).toHaveBeenCalledTimes(1))
+    await flushPromiseQueue()
 
     expect(submitMutation).toHaveBeenCalledWith(
       expect.objectContaining({
         variables: {
           input: {
             attributes: [
+              { id: "saved-artworks", shareableWithPartners: false },
               { id: "collection-one-id", shareableWithPartners: false },
               { id: "collection-two-id", shareableWithPartners: true },
-              { id: "saved-artwork", shareableWithPartners: false },
             ],
           },
         },
@@ -80,26 +87,29 @@ describe("OfferSettingsModal", () => {
 })
 
 const mockedMe = ({
-  $fragmentRefs: {
-    customArtworkLists: {
-      edges: [
-        {
-          node: {
-            internalID: "collection-one-id",
-            shareableWithPartners: false,
-          },
+  customArtworkLists: {
+    edges: [
+      {
+        node: {
+          default: false,
+          internalID: "collection-one-id",
+          shareableWithPartners: false,
         },
-        {
-          node: {
-            internalID: "collection-two-id",
-            shareableWithPartners: true,
-          },
+      },
+      {
+        node: {
+          default: false,
+          internalID: "collection-two-id",
+          shareableWithPartners: true,
         },
-      ],
+      },
+    ],
+  },
+  savedArtworksArtworkList: {
+    artworksConnection: {
+      totalCount: 5,
     },
-    savedArtworksArtworkList: {
-      internalID: "saved-artwork",
-      shareableWithPartners: false,
-    },
+    internalID: "saved-artworks",
+    shareableWithPartners: false,
   },
 } as unknown) as CollectorProfileSavesRoute_me$data
