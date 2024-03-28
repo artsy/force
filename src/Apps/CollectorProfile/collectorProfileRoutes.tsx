@@ -111,6 +111,16 @@ const PriceEstimateConfirmation = loadable(
   }
 )
 
+const Artists = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/Artists/CollectorProfileArtistsRoute"
+    ),
+  {
+    resolveComponent: component => component.CollectorProfileArtistsRoute,
+  }
+)
+
 // Redirect home if the user is not logged in
 const handleServerSideRender = () => {
   // TODO: Redirect to the logged out experience once released
@@ -131,6 +141,13 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
       }
     `,
     children: [
+      {
+        path: "artists",
+        getComponent: () => Artists,
+        onClientSideRender: () => {
+          Artists.preload()
+        },
+      },
       {
         path: "my-collection",
         getComponent: () => MyCollectionRoute,
