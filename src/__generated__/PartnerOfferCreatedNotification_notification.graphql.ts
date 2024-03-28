@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c1c29e1eeb4a75346eb2afd94543cc3>>
+ * @generated SignedSource<<259a83e1734f8d7df0dc17cf8d0f9bb1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,9 @@ export type PartnerOfferCreatedNotification_notification$data = {
       readonly endAt: string | null | undefined;
       readonly isAvailable: boolean | null | undefined;
       readonly note: string | null | undefined;
-      readonly priceListedMessage: string | null | undefined;
-      readonly priceWithDiscountMessage: string | null | undefined;
+      readonly priceWithDiscount: {
+        readonly display: string | null | undefined;
+      } | null | undefined;
     } | null | undefined;
   } | null | undefined;
   readonly offerArtworksConnection: {
@@ -99,15 +100,19 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "priceListedMessage",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "priceWithDiscountMessage",
+                  "concreteType": "Money",
+                  "kind": "LinkedField",
+                  "name": "priceWithDiscount",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "display",
+                      "storageKey": null
+                    }
+                  ],
                   "storageKey": null
                 }
               ],
@@ -169,6 +174,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e7af6bb2d6895dfc9bd04d9f92518a26";
+(node as any).hash = "0cd1c7e0d834ed0be271259cfb5ecd54";
 
 export default node;

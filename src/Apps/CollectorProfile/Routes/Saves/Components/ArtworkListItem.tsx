@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@artsy/palette"
+import { Box, Clickable, Flex, Text, Tooltip } from "@artsy/palette"
 import { FourUpImageLayout } from "./Images/FourUpImageLayout"
 import { StackedImageLayout } from "./Images/StackedImageLayout"
 import { FC } from "react"
@@ -11,7 +11,7 @@ import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 import styled, { css } from "styled-components"
 import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
 import { themeGet } from "@styled-system/theme-get"
-import LockIcon from "@artsy/icons/LockIcon"
+import HideIcon from "@artsy/icons/HideIcon"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkListItemProps {
@@ -66,11 +66,24 @@ const ArtworkListItem: FC<ArtworkListItemProps> = props => {
               {item.name}
             </Text>
             {shareableWithPartnersEnabled && !item.shareableWithPartners && (
-              <LockIcon
-                marginLeft={0.5}
-                minWidth="18px"
-                data-testid="lock-icon"
-              />
+              <Tooltip
+                pointer
+                variant="defaultDark"
+                placement="bottom-start"
+                content={
+                  <Text variant="xs">
+                    {t("collectorSaves.artworkListsHeader.hideIconTooltip")}
+                  </Text>
+                }
+              >
+                <Clickable style={{ lineHeight: 0 }}>
+                  <HideIcon
+                    marginLeft={0.5}
+                    minWidth="18px"
+                    data-testid="hide-icon"
+                  />
+                </Clickable>
+              </Tooltip>
             )}
           </Flex>
 
