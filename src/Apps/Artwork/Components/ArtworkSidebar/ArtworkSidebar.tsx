@@ -16,7 +16,7 @@ import { useState } from "react"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import { ArtworkSidebarLinksFragmentContainer } from "./ArtworkSidebarLinks"
-import { ArtworkSidebarCommercialButtonsFragmentContainer } from "./ArtworkSidebarCommercialButtons"
+import { ArtworkSidebarCommercialButtons } from "./ArtworkSidebarCommercialButtons"
 import { ArtworkSidebarEstimatedValueFragmentContainer } from "./ArtworkSidebarEstimatedValue"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuctionTimer"
@@ -142,7 +142,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
           <Spacer y={2} />
         </>
       ) : (
-        <ArtworkSidebarCommercialButtonsFragmentContainer artwork={artwork} />
+        <ArtworkSidebarCommercialButtons artwork={artwork} me={me} />
       )}
 
       {showTimedSaleTimer && (
@@ -249,8 +249,10 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
       }
     `,
     me: graphql`
-      fragment ArtworkSidebar_me on Me {
+      fragment ArtworkSidebar_me on Me
+        @argumentDefinitions(artworkID: { type: "String!" }) {
         ...ArtworkSidebarAuctionInfoPolling_me
+        ...ArtworkSidebarCommercialButtons_me @arguments(artworkID: $artworkID)
       }
     `,
   }

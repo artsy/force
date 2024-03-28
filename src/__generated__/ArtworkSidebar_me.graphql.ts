@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95affabb8be6f5252ef818f4b0a3d4ac>>
+ * @generated SignedSource<<0726596a6eefd42b05c96682ee3e4540>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar_me$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me" | "ArtworkSidebarCommercialButtons_me">;
   readonly " $fragmentType": "ArtworkSidebar_me";
 };
 export type ArtworkSidebar_me$key = {
@@ -20,7 +20,13 @@ export type ArtworkSidebar_me$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "artworkID"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkSidebar_me",
@@ -29,12 +35,23 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebarAuctionInfoPolling_me"
+    },
+    {
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "artworkID",
+          "variableName": "artworkID"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarCommercialButtons_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "308a1473e0ac7659f4cfbf1f6fc696b7";
+(node as any).hash = "5a9e74e1db52124de96cafa0b1db4ec1";
 
 export default node;
