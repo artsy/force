@@ -4,16 +4,14 @@ import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-import { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
+import { useEffect } from "react"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
-const artworkFilterContext: Partial<ArtworkFilterContextProps> = {
-  filters: {
-    forSale: undefined,
-  },
-}
+jest.mock("Utils/Hooks/useMatchMedia")
 
-const render = createArtworkFilterTestRenderer(artworkFilterContext)
+const render = createArtworkFilterTestRenderer()
 
 describe(AvailabilityFilter, () => {
   it("renders a for-sale toggle", () => {
@@ -23,7 +21,7 @@ describe(AvailabilityFilter, () => {
 
   it("updates context on filter change", () => {
     render(<AvailabilityFilter />)
-    expect(currentArtworkFilterContext().filters?.forSale).toBeUndefined()
+    expect(currentArtworkFilterContext().filters?.forSale).toBeFalsy()
 
     userEvent.click(screen.getAllByRole("checkbox")[0])
     expect(currentArtworkFilterContext().filters?.forSale).toBeTruthy()
@@ -40,5 +38,55 @@ describe(AvailabilityFilter, () => {
     userEvent.click(screen.getByText("Clear all"))
 
     expect(currentArtworkFilterContext().filters?.forSale).toBeFalsy()
+  })
+
+  describe("mobile-specific behavior", () => {
+    beforeEach(() => {
+      // Simulate the media query that checks for xs size and returns true
+      ;(__internal__useMatchMedia as jest.Mock).mockImplementation(() => true)
+
+      /*
+       * A test component that simulates the usage of
+       * the AvailabilityFilter inside ArtworkFilterMobileOverlay
+       */
+      const MobileVersionOfAvailabilityFilter = () => {
+        const filterContext = useArtworkFilterContext()
+
+        useEffect(() => {
+          // on mount, initialize the staged filters
+          filterContext.setShouldStageFilterChanges?.(true)
+          if (filterContext.filters) {
+            filterContext.setStagedFilters?.(filterContext.filters)
+          }
+
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [])
+
+        return <AvailabilityFilter />
+      }
+      render(<MobileVersionOfAvailabilityFilter />)
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+
+    it("stages the filter change instead of applying", () => {
+      expect(currentArtworkFilterContext().filters?.forSale).toBeFalsy()
+
+      userEvent.click(screen.getAllByRole("checkbox")[0])
+
+      expect(currentArtworkFilterContext().filters?.forSale).toBeFalsy()
+      expect(currentArtworkFilterContext().stagedFilters?.forSale).toBeTruthy()
+    })
+
+    it("displays a filter count inline", () => {
+      expect(screen.getByText("Availability")).toBeInTheDocument()
+      expect(screen.queryByText("Availability • 1")).not.toBeInTheDocument()
+
+      userEvent.click(screen.getAllByRole("checkbox")[0])
+
+      expect(screen.getByText("Availability • 1")).toBeInTheDocument()
+    })
   })
 })

@@ -2,12 +2,12 @@ import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import {
   SavedSearchDefaultCriteria,
   SearchCriteriaAttributes,
-} from "../../types"
+} from "Components/SavedSearchAlert/types"
 import {
   extractPillsFromDefaultCriteria,
   excludeDefaultCriteria,
   extractPillFromAggregation,
-} from "../extractPills"
+} from "Components/SavedSearchAlert/Utils/extractPills"
 
 describe("extractPillFromAggregation", () => {
   it("returns pills", () => {
@@ -155,6 +155,24 @@ describe("extractPillsFromDefaultCriteria", () => {
         value: "limited edition",
         displayValue: "Limited Edition",
         field: "attributionClass",
+      },
+    ])
+  })
+
+  it("should support forSale", () => {
+    const result = extractPillsFromDefaultCriteria({
+      forSale: {
+        displayValue: "For sale",
+        value: true,
+      },
+    })
+
+    expect(result).toEqual([
+      {
+        isDefault: true,
+        displayValue: "For sale",
+        value: "true",
+        field: "forSale",
       },
     ])
   })

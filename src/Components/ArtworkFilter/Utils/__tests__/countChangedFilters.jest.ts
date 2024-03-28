@@ -96,9 +96,24 @@ describe("countChangedFilters", () => {
     ).toBe(0)
 
     expect(
+      countChangedFilters(EMPTY_FILTER, { ...EMPTY_FILTER, forSale: true })
+    ).toBe(1)
+
+    expect(
+      countChangedFilters(EMPTY_FILTER, { ...EMPTY_FILTER, forSale: false })
+    ).toBe(0)
+
+    expect(
       countChangedFilters(
         { ...EMPTY_FILTER, acquireable: false },
         { ...EMPTY_FILTER, acquireable: true }
+      )
+    ).toBe(1)
+
+    expect(
+      countChangedFilters(
+        { ...EMPTY_FILTER, forSale: false },
+        { ...EMPTY_FILTER, forSale: true }
       )
     ).toBe(1)
   })

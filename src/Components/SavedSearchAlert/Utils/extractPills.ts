@@ -204,6 +204,14 @@ export const extractPillsFromCriteria = ({
         }
         break
       }
+      case "forSale": {
+        result = {
+          field: paramName,
+          value: paramValue,
+          displayValue: "For sale",
+        }
+        break
+      }
       default: {
         result = null
       }
