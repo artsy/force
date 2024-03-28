@@ -23,6 +23,7 @@ import {
   acceptOfferInsufficientInventoryFailure,
   acceptOfferWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.unmock("react-relay")
 
@@ -62,6 +63,10 @@ jest.mock("@artsy/palette", () => {
     },
   }
 })
+
+jest.mock("System/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
+}))
 
 const realSetInterval = global.setInterval
 
@@ -166,6 +171,29 @@ describe("Accept seller offer", () => {
       expect(page.conditionsOfSaleDisclaimer.text()).toMatchInlineSnapshot(
         `"By clicking Submit, I agree to Artsy’s Conditions of Sale."`
       )
+    })
+
+    describe("with new terms and conditions enabled", () => {
+      beforeEach(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(
+          (f: string) => f === "diamond_new-terms-and-conditions"
+        )
+      })
+
+      afterEach(() => {
+        ;(useFeatureFlag as jest.Mock).mockReset()
+      })
+
+      it("renders the new terms and conditions disclaimer", () => {
+        const { wrapper } = getWrapper({
+          CommerceOrder: () => testOrder,
+        })
+        const page = new OrderAppTestPage(wrapper)
+
+        expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
+          "By clicking Submit, I agree to Artsy’s General Terms and Conditions of Sale."
+        )
+      })
     })
   })
 
