@@ -15,32 +15,36 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 
-import { HomeAuctionLotsForYouRail_viewer$data } from "__generated__/HomeAuctionLotsForYouRail_viewer.graphql"
+import { HomeAuctionLotsForYouRail_artworksForUser$data } from "__generated__/HomeAuctionLotsForYouRail_artworksForUser.graphql"
 import { HomeAuctionLotsForYouRailQuery } from "__generated__/HomeAuctionLotsForYouRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 
 interface HomeAuctionLotsForYouRailProps {
-  viewer: HomeAuctionLotsForYouRail_viewer$data
+  artworksForUser: HomeAuctionLotsForYouRail_artworksForUser$data
 }
 
 const HomeAuctionLotsForYouRail: React.FC<HomeAuctionLotsForYouRailProps> = ({
-  viewer,
+  artworksForUser,
 }) => {
   const { trackEvent } = useTracking()
 
-  const artworks = extractNodes(viewer.artworksConnection)
+  const artworks = extractNodes(artworksForUser)
 
-  if (artworks.length === 0) {
+  if (!artworks || artworks?.length === 0) {
     return null
   }
 
   return (
     <Shelf>
-      {artworks.map(artwork => {
+      {artworks.map((artwork, index) => {
+        if (!artwork) {
+          return <></>
+        }
+
         return (
           <ShelfArtworkFragmentContainer
             artwork={artwork}
-            key={artwork.slug}
+            key={index}
             contextModule={ContextModule.auctionLots}
             lazyLoad
             onClick={() => {
@@ -73,24 +77,16 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-//TODO: get recommended auction lots
 export const HomeAuctionLotsForYouRailFragmentContainer = createFragmentContainer(
   HomeAuctionLotsForYouRail,
   {
-    viewer: graphql`
-      fragment HomeAuctionLotsForYouRail_viewer on Viewer {
-        artworksConnection(
-          forSale: true
-          first: 20
-          geneIDs: "our-top-auction-lots"
-        ) {
-          edges {
-            node {
-              ...ShelfArtwork_artwork
-              internalID
-              slug
-              href
-            }
+    artworksForUser: graphql`
+      fragment HomeAuctionLotsForYouRail_artworksForUser on ArtworkConnection {
+        edges {
+          node {
+            internalID
+            slug
+            ...ShelfArtwork_artwork
           }
         }
       }
@@ -107,8 +103,14 @@ export const HomeAuctionLotsForYouRailQueryRenderer: React.FC = () => {
       environment={relayEnvironment}
       query={graphql`
         query HomeAuctionLotsForYouRailQuery {
-          viewer {
-            ...HomeAuctionLotsForYouRail_viewer
+          artworksForUser(
+            includeBackfill: true
+            first: 20
+            maxWorksPerArtist: 3
+            version: "C"
+            onlyAtAuction: true
+          ) {
+            ...HomeAuctionLotsForYouRail_artworksForUser
           }
         }
       `}
@@ -123,9 +125,11 @@ export const HomeAuctionLotsForYouRailQueryRenderer: React.FC = () => {
           return PLACEHOLDER
         }
 
-        if (props.viewer) {
+        if (props.artworksForUser) {
           return (
-            <HomeAuctionLotsForYouRailFragmentContainer viewer={props.viewer} />
+            <HomeAuctionLotsForYouRailFragmentContainer
+              artworksForUser={props.artworksForUser}
+            />
           )
         }
 
