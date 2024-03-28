@@ -1,4 +1,4 @@
-import { ArtworkFilters } from "../ArtworkFilterContext"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { isEqual, transform, isObject } from "lodash"
 
 const difference = (initial: {}, next: {}) => {
@@ -24,6 +24,7 @@ export const countChangedFilters = (
     acquireable: false,
     atAuction: false,
     inquireableOnly: false,
+    forSale: false,
     ...filtersBefore,
   }
 

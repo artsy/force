@@ -45,6 +45,7 @@ export enum FilterParamName {
   artistsIFollow = "includeArtworksByFollowedArtists",
   attributionClass = "attributionClass",
   colors = "colors",
+  forSale = "forSale",
   height = "height",
   keyword = "keyword",
   locationCities = "locationCities",
@@ -177,6 +178,7 @@ export enum SelectedFiltersCountsLabels {
   artistNationalities = "artistNationalities",
   attributionClass = "attributionClass",
   colors = "colors",
+  forSale = "forSale",
   locationCities = "locationCities",
   materialsTerms = "materialsTerms",
   medium = "medium",
@@ -677,6 +679,12 @@ export const getSelectedFiltersCounts = (
       }
       case paramName === FilterParamName.keyword: {
         if (paramValue?.length) {
+          counts[paramName] = 1
+        }
+        break
+      }
+      case paramName === FilterParamName.forSale: {
+        if (paramValue) {
           counts[paramName] = 1
         }
         break
