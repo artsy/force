@@ -3,8 +3,10 @@ import { ArtworkListsHeader } from "Apps/CollectorProfile/Routes/Saves/Component
 import { render } from "DevTools/renderWithMockBoot"
 
 describe("ArtworkListsHeader", () => {
+  let me
+
   it("renders header text and creates button", () => {
-    render(<ArtworkListsHeader savedArtworksCount={0} />)
+    render(<ArtworkListsHeader me={me} savedArtworksCount={0} />)
 
     const title = "Saves"
     const description = "Curate your own lists of the works you love and"
@@ -16,7 +18,7 @@ describe("ArtworkListsHeader", () => {
   })
 
   it("opens the 'Create a new list' modal", () => {
-    render(<ArtworkListsHeader savedArtworksCount={0} />)
+    render(<ArtworkListsHeader me={me} savedArtworksCount={0} />)
 
     const button = screen.getByText("Create New List")
     fireEvent.click(button)

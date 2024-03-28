@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2487cdbd616984f6adf12e5e734e71f1>>
+ * @generated SignedSource<<b72c35b50b5289374449db58bfbe7dd0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,17 +33,24 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "default",
+  "name": "shareableWithPartners",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "default",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v4 = {
   "alias": null,
   "args": [
     {
@@ -55,13 +62,6 @@ v3 = {
   "kind": "ScalarField",
   "name": "artworksCount",
   "storageKey": "artworksCount(onlyVisible:true)"
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "shareableWithPartners",
-  "storageKey": null
 },
 v5 = [
   {
@@ -113,6 +113,37 @@ v7 = {
               "kind": "ScalarField",
               "name": "url",
               "storageKey": "url(version:\"square\")"
+            },
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": [
+                    "square"
+                  ]
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 200
+                }
+              ],
+              "concreteType": "ResizedImageUrl",
+              "kind": "LinkedField",
+              "name": "resized",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": "resized(version:[\"square\"],width:200)"
             }
           ],
           "storageKey": null
@@ -254,8 +285,8 @@ return {
                     "plural": false,
                     "selections": [
                       (v0/*: any*/),
-                      (v1/*: any*/),
                       (v2/*: any*/),
+                      (v1/*: any*/),
                       (v3/*: any*/),
                       (v4/*: any*/),
                       {
@@ -335,12 +366,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c886b64eec36a04e09ebe1633c4a9049",
+    "cacheID": "6b9346476b204494cd9eae76795a87e4",
     "id": null,
     "metadata": {},
     "name": "collectorProfileRoutes_SavesRouteQuery",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_SavesRouteQuery {\n  me {\n    ...CollectorProfileSavesRoute_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSavesRoute_me on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query collectorProfileRoutes_SavesRouteQuery {\n  me {\n    ...CollectorProfileSavesRoute_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSavesRoute_me on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    shareableWithPartners\n    ...ArtworkListItem_item\n    ...OfferSettingsListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        shareableWithPartners\n        ...ArtworkListItem_item\n        ...OfferSettingsListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment OfferSettingsListItem_item on Collection {\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          resized(width: 200, version: [\"square\"]) {\n            src\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
