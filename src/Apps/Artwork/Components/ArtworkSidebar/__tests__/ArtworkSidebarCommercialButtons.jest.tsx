@@ -27,12 +27,12 @@ jest.mock("Components/AuthDialog/useAuthDialog", () => ({
 
 describe("ArtworkSidebarCommercialButtons", () => {
   let user
-  let partnerOffers
+  let meMock
 
   let mockEnvironment
   const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
-  const { renderWithRelay: baseRenderWithRelay } = setupTestWrapperTL<
+  const { renderWithRelay } = setupTestWrapperTL<
     ArtworkSidebarCommercialButtons_Test_Query
   >({
     Component: ({ artwork, me }) => {
@@ -58,31 +58,14 @@ describe("ArtworkSidebarCommercialButtons", () => {
     `,
   })
 
-  const renderWithRelay: typeof baseRenderWithRelay = (
-    mockResolvers: Parameters<typeof baseRenderWithRelay>[0] = {}
-  ) => {
-    const mockMe = !!user
-      ? {
-          internalID: user.id,
-          partnerOffersConnection: {
-            edges: partnerOffers.map(node => ({ node })),
-          },
-        }
-      : null
-    // If `user` is defined, use it to mock the Me query and add
-    // any defined partner offers.
-    const defaultMockResolvers = {
-      Query: () => ({ me: mockMe }),
-    }
-
-    const finalMockResolvers = { ...defaultMockResolvers, ...mockResolvers }
-    return baseRenderWithRelay(finalMockResolvers, {}, mockEnvironment)
-  }
-
   beforeEach(() => {
     mockEnvironment = createMockEnvironment()
     user = { id: "123", name: "User" }
-    partnerOffers = []
+    meMock = {
+      partnerOffersConnection: {
+        edges: [],
+      },
+    }
     window.history.pushState({}, "Artwork Title", "/artwork/the-id")
   })
 
@@ -92,6 +75,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("displays both Make an Offer and Contact Gallery CTAs when offerable from inquiry and exact price listed", () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         isOfferable: true,
         isInquireable: true,
@@ -105,6 +89,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("displays both Make an Offer and Contact Gallery CTAs when offerable from inquiry and price range", () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         isPriceRange: true,
         isOfferable: true,
@@ -119,6 +104,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("does not display Make an Offer CTA and only the Contact Gallery CTA when offerable from inquiry and price hidden", () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         isInquireable: true,
         isPriceHidden: true,
@@ -132,6 +118,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("displays radio buttons for Edition Sets for inquirable artworks", () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         isInquireable: true,
         editionSets: [
@@ -179,6 +166,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("displays single editioned hidden availability inquire work", () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         isInquireable: true,
         editionSets: [
@@ -200,6 +188,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("displays artwork enrolled in Buy Now", () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         isAcquireable: true,
         isInquireable: false,
@@ -213,6 +202,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("displays sold acquireable artwork", () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         saleMessage: "Sold",
         isSold: true,
@@ -224,6 +214,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("displays artwork enrolled in make offer", () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         saleMessage: "$10,000",
         isOfferable: true,
@@ -236,6 +227,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("displays artwork enrolled in Make Offer/Contact Gallery when enabled for both", async () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         isOfferable: true,
         isInquireable: true,
@@ -248,6 +240,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("displays artwork enrolled in both Buy Now and Make Offer", () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         isAcquireable: true,
         isInquireable: false,
@@ -261,6 +254,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("displays create alert button when artwork is sold", () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         isEligibleToCreateAlert: true,
         isSold: true,
@@ -273,6 +267,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   it("hides create alert button when artwork is sold but ineligible for alerts", () => {
     renderWithRelay({
+      Query: () => ({ me: meMock }),
       Artwork: () => ({
         isEligibleToCreateAlert: false,
         isSold: true,
@@ -297,6 +292,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
     beforeEach(() => {
       user = undefined
+      meMock = null
     })
 
     it("opens auth modal with expected args when clicking 'buy now' button", () => {
@@ -304,6 +300,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
       mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
 
       renderWithRelay({
+        Query: () => ({ me: meMock }),
         Artwork: () => ({
           internalID: "artwork-1",
           isAcquireable: true,
@@ -344,6 +341,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
       mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
 
       renderWithRelay({
+        Query: () => ({ me: meMock }),
         Artwork: () => ({
           internalID: "artwork-1",
           isOfferable: true,
@@ -381,21 +379,32 @@ describe("ArtworkSidebarCommercialButtons", () => {
   describe("Starting an order", () => {
     beforeEach(() => {
       mockUseFeatureFlag.mockImplementation(() => true)
+      user = { id: "123", name: "User" }
+      meMock = meMock = {
+        partnerOffersConnection: {
+          edges: [],
+        },
+      }
     })
 
     it("creates an offer order via mutation when clicking make offer", async () => {
-      const { mockResolveLastOperation } = renderWithRelay({
-        Artwork: () => ({
-          internalID: "artwork-1",
-          isOfferable: true,
-          editionSets: [
-            {
-              internalID: "edition-set-id",
-              isOfferable: true,
-            },
-          ],
-        }),
-      })
+      const { mockResolveLastOperation } = renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
+            internalID: "artwork-1",
+            isOfferable: true,
+            editionSets: [
+              {
+                internalID: "edition-set-id",
+                isOfferable: true,
+              },
+            ],
+          }),
+        },
+        null,
+        mockEnvironment
+      )
 
       userEvent.click(screen.getByText("Make an Offer"))
 
@@ -409,19 +418,24 @@ describe("ArtworkSidebarCommercialButtons", () => {
     })
 
     it("creates an order via mutation when clicking 'purchase' with no partner offer", async () => {
-      const { mockResolveLastOperation } = renderWithRelay({
-        Artwork: () => ({
-          internalID: "artwork-1",
-          isAcquireable: true,
-          isOfferable: true,
-          editionSets: [
-            {
-              internalID: "edition-set-id",
-              isAcquirable: true,
-            },
-          ],
-        }),
-      })
+      const { mockResolveLastOperation } = renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
+            internalID: "artwork-1",
+            isAcquireable: true,
+            isOfferable: true,
+            editionSets: [
+              {
+                internalID: "edition-set-id",
+                isAcquirable: true,
+              },
+            ],
+          }),
+        },
+        null,
+        mockEnvironment
+      )
 
       userEvent.click(screen.getByText("Purchase"))
 
@@ -433,33 +447,30 @@ describe("ArtworkSidebarCommercialButtons", () => {
     it("creates a partner offer order via mutation when clicking 'purchase' with an active partner offer", async () => {
       const futureDate = new Date()
       futureDate.setDate(futureDate.getDate() + 1)
-
-      const { mockResolveLastOperation } = renderWithRelay({
-        Query: () => ({
-          me: {
-            partnerOffersConnection: {
-              edges: [
-                {
-                  node: {
-                    internalID: "partner-offer-id",
-                    endAt: futureDate.toISOString(),
-                  },
-                },
-              ],
-            },
-          },
-        }),
-        Artwork: () => ({
-          internalID: "artwork-1",
-          isAcquireable: true,
-          editionSets: [
-            {
-              internalID: "edition-set-id",
-              isAcquireable: true,
-            },
-          ],
-        }),
+      meMock.partnerOffersConnection.edges.push({
+        node: {
+          internalID: "partner-offer-id",
+          endAt: futureDate.toISOString(),
+        },
       })
+
+      const { mockResolveLastOperation } = renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
+            internalID: "artwork-1",
+            isAcquireable: true,
+            editionSets: [
+              {
+                internalID: "edition-set-id",
+                isAcquireable: true,
+              },
+            ],
+          }),
+        },
+        null,
+        mockEnvironment
+      )
 
       userEvent.click(screen.getByText("Purchase"))
 
@@ -478,34 +489,31 @@ describe("ArtworkSidebarCommercialButtons", () => {
     it("uses the regular order mutation if the partner offer expires after the page loads", async () => {
       const expiringSoon = new Date()
       expiringSoon.setSeconds(expiringSoon.getSeconds() + 1)
-
-      const { mockResolveLastOperation } = renderWithRelay({
-        Query: () => ({
-          me: {
-            partnerOffersConnection: {
-              edges: [
-                {
-                  node: {
-                    internalID: "partner-offer-id",
-                    endAt: expiringSoon.toISOString(),
-                  },
-                },
-              ],
-            },
-          },
-        }),
-        Artwork: () => ({
-          internalID: "artwork-1",
-          isAcquireable: true,
-          editionSets: [
-            {
-              internalID: "edition-set-id",
-              isAcquireable: true,
-            },
-          ],
-        }),
+      meMock.partnerOffersConnection.edges.push({
+        node: {
+          internalID: "partner-offer-id",
+          endAt: expiringSoon.toISOString(),
+        },
       })
-      jest.advanceTimersByTime(2000)
+
+      const { mockResolveLastOperation } = renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
+            internalID: "artwork-1",
+            isAcquireable: true,
+            editionSets: [
+              {
+                internalID: "edition-set-id",
+                isAcquireable: true,
+              },
+            ],
+          }),
+        },
+        null,
+        mockEnvironment
+      )
+      jest.advanceTimersByTime(1010)
 
       await userEvent.click(screen.getByText("Purchase"))
 
