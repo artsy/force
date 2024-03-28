@@ -122,7 +122,7 @@ describe("Footer", () => {
         expect(wrapper.html()).toContain("/terms")
 
         expect(wrapper.text()).toContain("Auction Supplement")
-        expect(wrapper.html()).toContain("/supplemental-COS")
+        expect(wrapper.html()).toContain("/supplemental-auction-COS")
 
         expect(wrapper.text()).toContain("Buyer Guarantee")
         expect(wrapper.html()).toContain("/buyer-guarantee")
@@ -189,7 +189,7 @@ describe("Footer", () => {
         expect(wrapper.html()).toContain("/terms")
 
         expect(wrapper.text()).toContain("Auction Supplement")
-        expect(wrapper.html()).toContain("/supplemental-COS")
+        expect(wrapper.html()).toContain("/supplemental-auction-COS")
 
         expect(wrapper.text()).toContain("Buyer Guarantee")
         expect(wrapper.html()).toContain("/buyer-guarantee")
