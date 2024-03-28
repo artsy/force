@@ -55,8 +55,8 @@ describe("PartnerShowOpenedNotification", () => {
       screen.getByText("Presented by Institute of Contemporary Art")
     ).toBeInTheDocument()
 
-    expect(screen.getByAltText("Artwork Title 1")).toBeInTheDocument()
-    expect(screen.getByAltText("Artwork Title 2")).toBeInTheDocument()
+    expect(screen.getByText("Artwork Title 1")).toBeInTheDocument()
+    expect(screen.getByText("Artwork Title 2")).toBeInTheDocument()
 
     // buttons
 
