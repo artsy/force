@@ -1,9 +1,12 @@
-import { Shelf, Skeleton } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { Shelf, Skeleton } from "@artsy/palette"
+import { HomeAuctionLotsRail_viewer$data } from "__generated__/HomeAuctionLotsRail_viewer.graphql"
+import { HomeAuctionLotsRailQuery } from "__generated__/HomeAuctionLotsRailQuery.graphql"
+import { extractNodes } from "Utils/extractNodes"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
@@ -15,15 +18,11 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 
-import { HomeAuctionLotsRail_viewer$data } from "__generated__/HomeAuctionLotsRail_viewer.graphql"
-import { HomeAuctionLotsRailQuery } from "__generated__/HomeAuctionLotsRailQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
-
 interface HomeAuctionLotsRailProps {
   viewer: HomeAuctionLotsRail_viewer$data
 }
 
-export const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
+const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
   viewer,
 }) => {
   const { trackEvent } = useTracking()
