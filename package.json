@@ -348,7 +348,7 @@
     "webpack": "5.76.0",
     "webpack-bundle-analyzer": "4.4.2",
     "webpack-cli": "4.9.2",
-    "webpack-dev-middleware": "^6.1.1",
+    "webpack-dev-middleware": "^6.1.2",
     "webpack-hot-middleware": "^2.25.4",
     "webpack-manifest-plugin": "3.1.1",
     "webpack-node-externals": "3.0.0",
