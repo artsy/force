@@ -129,10 +129,6 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     if (isMobile) {
       closeModalAndRefetch()
     } else refresh()
-
-    sendToast({
-      message: "Your Alert has been updated.",
-    })
   }
 
   const handleDeleteClick = () => {
