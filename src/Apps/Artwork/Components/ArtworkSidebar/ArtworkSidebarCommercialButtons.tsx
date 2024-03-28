@@ -132,46 +132,47 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const handleCreatePartnerOfferOrder = async () => {
-    if (activePartnerOffer?.internalID) {
-      try {
-        setIsCommitingCreateOrderMutation(true)
-        const response = await createPartnerOfferCheckout.submitMutation({
-          variables: {
-            input: {
-              partnerOfferId: activePartnerOffer.internalID,
-            },
+    if (!activePartnerOffer?.internalID) {
+      throw new ErrorWithMetadata(
+        "handleCreatePartnerOfferOrder: no active partner offer"
+      )
+    }
+
+    try {
+      setIsCommitingCreateOrderMutation(true)
+      const response = await createPartnerOfferCheckout.submitMutation({
+        variables: {
+          input: {
+            partnerOfferId: activePartnerOffer.internalID,
           },
-        })
+        },
+      })
 
-        let redirectUrl = "/"
-        let orderOrError =
-          response.commerceCreatePartnerOfferOrder?.orderOrError
+      let redirectUrl = "/"
+      let orderOrError = response.commerceCreatePartnerOfferOrder?.orderOrError
 
-        if (orderOrError?.error) {
-          const errorCode = orderOrError.error.code
-          const errorData = JSON.parse(
-            orderOrError.error.data?.toString() ?? ""
-          )
+      if (orderOrError?.error) {
+        const errorCode = orderOrError.error.code
+        const errorData = JSON.parse(orderOrError.error.data?.toString() ?? "")
 
-          switch (errorCode) {
-            // TODO: these cases are unlikely from the artwork page, copied from the special create route
-            case "expired_partner_offer":
-              redirectUrl = `/artwork/${errorData.artwork_id}?expired_offer=true`
-              break
-            case "not_acquireable":
-              redirectUrl = `/artwork/${errorData.artwork_id}?unavailable=true`
-              break
-            default:
-              throw new ErrorWithMetadata(errorCode, orderOrError.error)
-          }
-        } else {
-          redirectUrl = `/orders/${orderOrError?.order?.internalID}`
+        switch (errorCode) {
+          // TODO: these cases are unlikely from the artwork page, copied from the special create route
+          case "expired_partner_offer":
+            redirectUrl = `/artwork/${errorData.artwork_id}?expired_offer=true`
+            break
+          case "not_acquireable":
+            redirectUrl = `/artwork/${errorData.artwork_id}?unavailable=true`
+            break
+          default:
+            throw new ErrorWithMetadata(errorCode, orderOrError.error)
         }
-        setIsCommitingCreateOrderMutation(false)
-        router?.push(redirectUrl)
-      } catch (error) {
-        onMutationError(error)
+      } else {
+        redirectUrl = `/orders/${orderOrError?.order?.internalID}`
       }
+      setIsCommitingCreateOrderMutation(false)
+      router?.push(redirectUrl)
+    } catch (error) {
+      onMutationError(error)
     }
   }
 
