@@ -71,7 +71,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
       )}
 
       <Join separator={<Spacer y={0.5} />}>
-        <Text variant="lg-display">
+        <Text variant={["md", "lg-display"]}>
           {t("collectorSaves.artworkListsHeader.savedArtworks")}
         </Text>
 
@@ -98,7 +98,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
               <ProgressiveOnboardingSaveOfferSettings>
                 <Button
                   variant="tertiary"
-                  size="large"
+                  size={["small", "large"]}
                   onClick={handleEditListClick}
                   mt={[2, 0]}
                 >
@@ -111,7 +111,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
 
             <Button
               variant="secondaryBlack"
-              size="large"
+              size={["small", "large"]}
               onClick={handleCreateListClick}
               mt={[2, 0]}
             >
