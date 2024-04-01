@@ -42,10 +42,14 @@ export const AuthDialogSignUpPlaceholder: FC = () => {
           Already have an account? Log in.
         </SkeletonText>
 
-        <SkeletonText variant="xs" textAlign="center">
-          By clicking Sign Up or Continue with Apple, Google, or Facebook, you
-          agree to Artsy’s Terms of Use and Privacy Policy and to receiving
-          emails from Artsy.
+        <SkeletonText
+          variant="xs"
+          textAlign="center"
+          data-testid="skeleton-disclaimer"
+        >
+          By clicking Sign Up or Continue with Email, Apple, Google, or
+          Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy
+          and to receiving emails from Artsy.
         </SkeletonText>
 
         <SkeletonText variant="xs" textAlign="center">

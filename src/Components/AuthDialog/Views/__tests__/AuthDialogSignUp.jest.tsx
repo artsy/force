@@ -114,6 +114,24 @@ describe("AuthDialogSignUp", () => {
     })
   })
 
+  describe("when the country code is loading", () => {
+    beforeEach(() => {
+      const useCountryCodeMock = jest.fn().mockReturnValue({
+        loading: true,
+        countryCode: "US",
+      })
+      ;(useCountryCode as jest.Mock).mockImplementation(useCountryCodeMock)
+    })
+
+    it("renders a skeleton disclaimer", () => {
+      render(<AuthDialogSignUp />)
+
+      expect(screen.getByTestId("skeleton-disclaimer")).toHaveTextContent(
+        "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
+      )
+    })
+  })
+
   describe("when the new disclaimer is enabled", () => {
     beforeEach(() => {
       ;(useFeatureFlag as jest.Mock).mockImplementation(
