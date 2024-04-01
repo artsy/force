@@ -108,7 +108,7 @@ export const ArtworkApp: React.FC<Props> = props => {
           options: {
             title: mode =>
               mode === "Login"
-                ? "Log in to view partner offer"
+                ? "Log in to view gallery offer"
                 : "Sign up to buy art with ease",
           },
           analytics: {
