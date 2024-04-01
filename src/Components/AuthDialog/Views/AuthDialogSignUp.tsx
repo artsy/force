@@ -23,6 +23,7 @@ import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialog
 import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export const AuthDialogSignUp: FC = () => {
   const {
@@ -35,6 +36,8 @@ export const AuthDialogSignUp: FC = () => {
   const track = useAuthDialogTracking()
 
   const { loading, countryCode } = useCountryCode()
+
+  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
 
   const isAutomaticallySubscribed = !!(
     countryCode && !GDPR_COUNTRY_CODES.includes(countryCode)
@@ -194,9 +197,10 @@ export const AuthDialogSignUp: FC = () => {
                 data-testid="disclaimer"
               >
                 By {isTouch ? "tapping" : "clicking"} Sign Up or Continue with
+                {showNewDisclaimer ? " Email, " : " "}
                 Apple, Google, or Facebook, you agree to Artsy’s{" "}
                 <RouterLink inline to="/terms" target="_blank">
-                  Terms of Use
+                  {showNewDisclaimer ? "Terms and Conditions" : "Terms of Use"}
                 </RouterLink>{" "}
                 and{" "}
                 <RouterLink inline to="/privacy" target="_blank">

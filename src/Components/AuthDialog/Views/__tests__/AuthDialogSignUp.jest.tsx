@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { signUp } from "Utils/auth"
 
 jest.mock("Utils/getENV", () => ({
@@ -30,13 +31,23 @@ jest.mock("Utils/device", () => ({
 
 // mocks the country code hook to return a specific country code
 jest.mock("Components/AuthDialog/Hooks/useCountryCode", () => ({
-  useCountryCode: jest.fn().mockReturnValue({
-    loading: false,
-    countryCode: "US",
-  }),
+  useCountryCode: jest.fn(),
+}))
+
+// mocks the feature flag hook to enable the new disclaimer
+jest.mock("System/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
 }))
 
 describe("AuthDialogSignUp", () => {
+  beforeEach(() => {
+    const useCountryCodeMock = jest.fn().mockReturnValue({
+      loading: false,
+      countryCode: "US",
+    })
+    ;(useCountryCode as jest.Mock).mockImplementation(useCountryCodeMock)
+  })
+
   it("renders correctly", () => {
     render(<AuthDialogSignUp />)
 
@@ -79,10 +90,19 @@ describe("AuthDialogSignUp", () => {
 
   describe("when the user is in a GDPR country", () => {
     beforeEach(() => {
-      ;(useCountryCode as jest.Mock).mockReturnValue({
+      const useCountryCodeMock = jest.fn().mockReturnValue({
         loading: false,
         countryCode: "DE",
       })
+      ;(useCountryCode as jest.Mock).mockImplementation(useCountryCodeMock)
+    })
+
+    afterEach(() => {
+      const useCountryCodeMock = jest.fn().mockReturnValue({
+        loading: false,
+        countryCode: "US",
+      })
+      ;(useCountryCode as jest.Mock).mockImplementation(useCountryCodeMock)
     })
 
     it("renders a disclaimer without the bit about receiving emails", () => {
@@ -90,6 +110,22 @@ describe("AuthDialogSignUp", () => {
 
       expect(screen.getByTestId("disclaimer")).toHaveTextContent(
         "By clicking Sign Up or Continue with Apple, Google, or Facebook, you agree to Artsy’s Terms of Use and Privacy Policy."
+      )
+    })
+  })
+
+  describe("when the new disclaimer is enabled", () => {
+    beforeEach(() => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation(
+        (f: string) => f === "diamond_new-terms-and-conditions"
+      )
+    })
+
+    it("renders a disclaimer with the new text", () => {
+      render(<AuthDialogSignUp />)
+
+      expect(screen.getByTestId("disclaimer")).toHaveTextContent(
+        "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
       )
     })
   })
@@ -124,7 +160,7 @@ describe("AuthDialogSignUp", () => {
         name: "Test User",
         email: "example@example.com",
         password: "Secret000", // pragma: allowlist secret
-        agreedToReceiveEmails: false,
+        agreedToReceiveEmails: true,
       })
     })
   })
