@@ -59,12 +59,6 @@ export const OfferSettingsListItem: FC<OfferSettingsListItemProps> = props => {
       </Flex>
 
       <Flex alignItems="center">
-        <Text variant="sm" display={["none", "block"]}>
-          {values[item.internalID] ? "Shared" : "Private"}
-        </Text>
-
-        <Spacer x={2} />
-
         <Toggle
           disabled={!!isSubmitting}
           aria-label={

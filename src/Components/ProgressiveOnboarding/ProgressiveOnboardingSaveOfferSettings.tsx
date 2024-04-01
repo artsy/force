@@ -32,7 +32,7 @@ export const __ProgressiveOnboardingSaveOfferSettings__: FC<ProgressiveOnboardin
   return (
     <ProgressiveOnboardingPopover
       name={KEY}
-      placement="top-end"
+      placement="bottom-start"
       onClose={handleClose}
       popover={
         <Text variant="xs">

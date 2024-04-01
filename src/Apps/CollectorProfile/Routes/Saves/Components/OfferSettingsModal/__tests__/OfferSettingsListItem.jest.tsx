@@ -18,8 +18,6 @@ describe("OfferSettingsListItem", () => {
 
     expect(screen.getByText("5 artworks")).toBeInTheDocument()
 
-    expect(screen.getByText("Private")).toBeInTheDocument()
-
     expect(screen.getByTestId("HideIcon")).toBeInTheDocument()
   })
 
