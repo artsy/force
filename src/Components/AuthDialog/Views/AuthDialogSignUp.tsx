@@ -187,7 +187,12 @@ export const AuthDialogSignUp: FC = () => {
                 </Clickable>
               </Text>
 
-              <Text variant="xs" color="black60" textAlign="center">
+              <Text
+                variant="xs"
+                color="black60"
+                textAlign="center"
+                data-testid="disclaimer"
+              >
                 By {isTouch ? "tapping" : "clicking"} Sign Up or Continue with
                 Apple, Google, or Facebook, you agree to Artsy’s{" "}
                 <RouterLink inline to="/terms" target="_blank">

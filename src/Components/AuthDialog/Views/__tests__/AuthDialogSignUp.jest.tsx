@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { signUp } from "Utils/auth"
 
@@ -19,6 +20,22 @@ jest.mock("Utils/auth", () => ({
   signUp: jest.fn(),
 }))
 
+// mocks the module that tells us if the user is on a touch device
+let mockIsTouch = false
+jest.mock("Utils/device", () => ({
+  get isTouch() {
+    return mockIsTouch
+  },
+}))
+
+// mocks the country code hook to return a specific country code
+jest.mock("Components/AuthDialog/Hooks/useCountryCode", () => ({
+  useCountryCode: jest.fn().mockReturnValue({
+    loading: false,
+    countryCode: "US",
+  }),
+}))
+
 describe("AuthDialogSignUp", () => {
   it("renders correctly", () => {
     render(<AuthDialogSignUp />)
@@ -32,6 +49,49 @@ describe("AuthDialogSignUp", () => {
     expect(screen.getByText("Continue with Facebook")).toBeInTheDocument()
     expect(screen.getByText("Continue with Google")).toBeInTheDocument()
     expect(screen.getByText("Continue with Apple")).toBeInTheDocument()
+  })
+
+  it("renders a disclaimer", () => {
+    render(<AuthDialogSignUp />)
+
+    expect(screen.getByTestId("disclaimer")).toHaveTextContent(
+      "By clicking Sign Up or Continue with Apple, Google, or Facebook, you agree to Artsy’s Terms of Use and Privacy Policy and to receiving emails from Artsy."
+    )
+  })
+
+  describe("when the user is on a touch device", () => {
+    beforeEach(() => {
+      mockIsTouch = true
+    })
+
+    afterEach(() => {
+      mockIsTouch = false
+    })
+
+    it("renders a disclaimer with 'tapping' instead of 'clicking'", () => {
+      render(<AuthDialogSignUp />)
+
+      expect(screen.getByTestId("disclaimer")).toHaveTextContent(
+        "By tapping Sign Up or Continue with Apple, Google, or Facebook, you agree to Artsy’s Terms of Use and Privacy Policy and to receiving emails from Artsy."
+      )
+    })
+  })
+
+  describe("when the user is in a GDPR country", () => {
+    beforeEach(() => {
+      ;(useCountryCode as jest.Mock).mockReturnValue({
+        loading: false,
+        countryCode: "DE",
+      })
+    })
+
+    it("renders a disclaimer without the bit about receiving emails", () => {
+      render(<AuthDialogSignUp />)
+
+      expect(screen.getByTestId("disclaimer")).toHaveTextContent(
+        "By clicking Sign Up or Continue with Apple, Google, or Facebook, you agree to Artsy’s Terms of Use and Privacy Policy."
+      )
+    })
   })
 
   it("submits the user details", async () => {
