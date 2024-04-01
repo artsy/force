@@ -44,6 +44,8 @@ import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/Artwork
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { PrivateArtworkDetails } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkDetails"
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
+import { useAuthDialog } from "Components/AuthDialog"
+import { ContextModule } from "@artsy/cohesion"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -88,11 +90,41 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 
 export const ArtworkApp: React.FC<Props> = props => {
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
-  const { match, silentPush } = useRouter()
+  const { match, silentPush, silentReplace } = useRouter()
+  const { showAuthDialog } = useAuthDialog()
 
   const privateArtworksEnabled = useFeatureFlag(
     "amber_artwork_visibility_unlisted"
   )
+
+  useEffect(() => {
+    const expectingPartnerOffer = !!match?.location?.query?.partner_offer_id
+    const isLoggedIn = !!me
+
+    if (expectingPartnerOffer && typeof window !== "undefined") {
+      if (!isLoggedIn) {
+        showAuthDialog({
+          mode: "Login",
+          options: {
+            title: mode =>
+              mode === "Login"
+                ? "Log in to view partner offer"
+                : "Sign up to buy art with ease",
+          },
+          analytics: {
+            // TODO: Placeholder - Determine correct tracking - EMI-1783
+            contextModule: ContextModule.artworkSidebar,
+          },
+        })
+        return
+      } else {
+        const url = new URL(window.location.href)
+        url.searchParams.delete("partner_offer_id")
+        silentReplace(url.toString())
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const isPrivateArtwork =
     privateArtworksEnabled &&
