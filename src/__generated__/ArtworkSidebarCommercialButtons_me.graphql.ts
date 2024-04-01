@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8c02d2c27ad86e8c6064263e76de6b2>>
+ * @generated SignedSource<<b1e332cc5bc8f529f3f531f2e64d066d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,10 @@ export type ArtworkSidebarCommercialButtons_me$data = {
       readonly node: {
         readonly endAt: string | null | undefined;
         readonly internalID: string;
+        readonly isAvailable: boolean | null | undefined;
+        readonly priceWithDiscount: {
+          readonly display: string | null | undefined;
+        } | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -86,6 +90,31 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "internalID",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isAvailable",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Money",
+                  "kind": "LinkedField",
+                  "name": "priceWithDiscount",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "display",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -101,6 +130,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e54a9bdd08ecf1db308c59e39e160f91";
+(node as any).hash = "8437f4f67465aa6a3c4e3c2928f9f420";
 
 export default node;

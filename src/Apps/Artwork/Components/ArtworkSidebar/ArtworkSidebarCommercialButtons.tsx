@@ -35,6 +35,7 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
+import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 
 interface SaleMessageProps {
   saleMessage: string | null | undefined
@@ -354,15 +355,64 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     artwork.isAcquireable || activePartnerOffer
   )
 
+  const SaleMessageOrOfferDisplay: FC = () => {
+    if (activePartnerOffer) {
+      return (
+        <>
+          <Spacer y={2} />
+          <Flex>
+            <Text
+              variant="xs"
+              color="blue100"
+              backgroundColor="blue10"
+              px={0.5}
+            >
+              Limited-Time Offer
+            </Text>
+          </Flex>
+
+          <Spacer y={0.5} />
+
+          <Flex
+            flexDirection={["column", "row"]}
+            width="100%"
+            justifyContent="start"
+          >
+            <SaleMessage
+              saleMessage={activePartnerOffer.priceWithDiscount?.display}
+            />
+            <Spacer x={1} />
+            <Text variant="md" color="black60" style={{ whiteSpace: "nowrap" }}>
+              {/* TODO: Move this logic of display to Artwrok MP model */}
+              (List price: {artwork.price || "Not publicly listed"})
+            </Text>
+          </Flex>
+
+          <Spacer y={0.5} />
+
+          <ExpiresInTimer
+            expiresAt={activePartnerOffer.endAt}
+            available={activePartnerOffer.isAvailable}
+          />
+          <Spacer y={2} />
+        </>
+      )
+    }
+
+    return (
+      <>
+        <SaleMessage saleMessage={artwork.saleMessage} />
+        {!!isCreateAlertAvailable && <Spacer y={1} />}
+      </>
+    )
+  }
+
   return (
     <>
       {inquiryComponent}
 
       {(artwork?.editionSets?.length ?? 0) < 2 ? (
-        <>
-          <SaleMessage saleMessage={artwork.saleMessage} />
-          {!!isCreateAlertAvailable && <Spacer y={1} />}
-        </>
+        <SaleMessageOrOfferDisplay />
       ) : (
         <>
           <Separator />
@@ -535,6 +585,7 @@ const ARTWORK_FRAGMENT = graphql`
     isAcquireable
     isOfferable
     isSold
+    price
     listPrice {
       ... on PriceRange {
         display
@@ -566,6 +617,10 @@ const ME_FRAGMENT = graphql`
         node {
           endAt
           internalID
+          isAvailable
+          priceWithDiscount {
+            display
+          }
         }
       }
     }

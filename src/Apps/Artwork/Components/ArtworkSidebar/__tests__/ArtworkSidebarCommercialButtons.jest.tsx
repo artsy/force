@@ -277,6 +277,38 @@ describe("ArtworkSidebarCommercialButtons", () => {
     expect(screen.queryByText("Create Alert")).not.toBeInTheDocument()
   })
 
+  it("displays offer details when viewed by user with an active partner offer on the artwork", async () => {
+    mockUseFeatureFlag.mockImplementation(() => true)
+    const futureDate = new Date()
+    futureDate.setDate(futureDate.getDate() + 1)
+    meMock.partnerOffersConnection.edges.push({
+      node: {
+        internalID: "partner-offer-id",
+        endAt: futureDate.toISOString(),
+        isAvailable: true,
+        priceWithDiscount: {
+          display: "$3,350.00",
+        },
+      },
+    })
+
+    renderWithRelay(
+      {
+        Query: () => ({ me: meMock }),
+        Artwork: () => ({
+          price: "$5,000",
+          isOfferable: true,
+        }),
+      },
+      null,
+      mockEnvironment
+    )
+
+    expect(screen.queryByText("Limited-Time Offer")).toBeInTheDocument()
+    expect(screen.queryByText("$3,350.00")).toBeInTheDocument()
+    expect(screen.queryByText("(List price: $5,000)")).toBeInTheDocument()
+  })
+
   describe("authentication", () => {
     const mockUseRouter = useRouter as jest.Mock
     const mockUseAuthDialog = useAuthDialog as jest.Mock
