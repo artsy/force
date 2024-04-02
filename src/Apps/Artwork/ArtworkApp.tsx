@@ -97,11 +97,13 @@ export const ArtworkApp: React.FC<Props> = props => {
     "amber_artwork_visibility_unlisted"
   )
 
+  // If the user is expecting a partner offer, require login and remove
+  // the query param from the URL after login.
   useEffect(() => {
     const expectingPartnerOffer = !!match?.location?.query?.partner_offer_id
     const isLoggedIn = !!me
 
-    if (expectingPartnerOffer && typeof window !== "undefined") {
+    if (expectingPartnerOffer) {
       if (!isLoggedIn) {
         showAuthDialog({
           mode: "Login",
@@ -117,11 +119,11 @@ export const ArtworkApp: React.FC<Props> = props => {
           },
         })
         return
-      } else {
-        const url = new URL(window.location.href)
-        url.searchParams.delete("partner_offer_id")
-        silentReplace(url.toString())
       }
+
+      const url = new URL(window.location.href)
+      url.searchParams.delete("partner_offer_id")
+      silentReplace(url.toString())
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
