@@ -24,6 +24,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
     <Box
       key={item.internalID}
       px={[2, 4]}
+      pr={[2, 2]}
       py={4}
       bg={variant === "active" ? "black5" : "white100"}
     >
@@ -63,7 +64,11 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           </Flex>
           <Spacer x={2} y={2} />
         </Flex>
-        <Flex flexDirection="row" alignItems={["flex-start", "center"]}>
+        <Flex
+          flexDirection="row"
+          alignItems={["flex-start", "center"]}
+          minWidth="200px"
+        >
           <Text
             variant="sm"
             textColor={[
