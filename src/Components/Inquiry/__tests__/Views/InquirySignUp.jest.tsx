@@ -6,6 +6,7 @@ import { signUp } from "Utils/auth"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { fill } from "Components/Inquiry/__tests__/util"
 import { useTracking } from "react-tracking"
+import { render, screen } from "@testing-library/react"
 
 jest.mock("Utils/auth")
 jest.mock("../../Hooks/useArtworkInquiryRequest")
@@ -54,6 +55,14 @@ describe("InquirySignUp", () => {
     const wrapper = mount(<InquirySignUp />)
 
     expect(wrapper.html()).toContain("Sign up to send your message")
+  })
+
+  it("renders a disclaimer", () => {
+    render(<InquirySignUp />)
+
+    expect(screen.getByTestId("disclaimer")).toHaveTextContent(
+      "By signing up, you agree to our Terms of Use, Privacy Policy, Conditions of Sale and to receiving emails from Artsy."
+    )
   })
 
   describe("success", () => {

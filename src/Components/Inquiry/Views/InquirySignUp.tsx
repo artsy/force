@@ -199,7 +199,7 @@ export const InquirySignUp: React.FC = () => {
 
         <Spacer y={2} />
 
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="black60" data-testid="disclaimer">
           By signing up, you agree to our{" "}
           <RouterLink inline to="/terms" target="_blank">
             Terms of Use
