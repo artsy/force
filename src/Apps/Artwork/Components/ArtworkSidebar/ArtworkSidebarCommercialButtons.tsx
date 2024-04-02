@@ -53,6 +53,54 @@ const SaleMessage: React.FC<SaleMessageProps> = ({ saleMessage }) => {
   )
 }
 
+interface OfferDisplayProps {
+  originalPrice: string | null | undefined
+  offerPrice: string | null | undefined
+  endAt?: string | null
+  isAvailable?: boolean | null
+}
+
+const OfferDisplay: React.FC<OfferDisplayProps> = ({
+  originalPrice,
+  offerPrice,
+  endAt,
+  isAvailable,
+}) => {
+  if (!offerPrice) {
+    return null
+  }
+
+  return (
+    <>
+      <Spacer y={2} />
+      <Flex>
+        <Text variant="xs" color="blue100" backgroundColor="blue10" px={0.5}>
+          Limited-Time Offer
+        </Text>
+      </Flex>
+
+      <Spacer y={0.5} />
+
+      <Flex
+        flexDirection={["column", "row"]}
+        width="100%"
+        justifyContent="start"
+      >
+        <SaleMessage saleMessage={offerPrice} />
+        <Spacer x={1} />
+        <Text variant="md" color="black60" style={{ whiteSpace: "nowrap" }}>
+          (List price: {originalPrice})
+        </Text>
+      </Flex>
+
+      <Spacer y={0.5} />
+
+      <ExpiresInTimer expiresAt={endAt} available={isAvailable} />
+      <Spacer y={2} />
+    </>
+  )
+}
+
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
   me: ArtworkSidebarCommercialButtons_me$key
@@ -356,49 +404,14 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   )
 
   const SaleMessageOrOfferDisplay: FC = () => {
-    if (partnerOffer) {
-      return (
-        <>
-          <Spacer y={2} />
-          <Flex>
-            <Text
-              variant="xs"
-              color="blue100"
-              backgroundColor="blue10"
-              px={0.5}
-            >
-              Limited-Time Offer
-            </Text>
-          </Flex>
-
-          <Spacer y={0.5} />
-
-          <Flex
-            flexDirection={["column", "row"]}
-            width="100%"
-            justifyContent="start"
-          >
-            <SaleMessage
-              saleMessage={partnerOffer.priceWithDiscount?.display}
-            />
-            <Spacer x={1} />
-            <Text variant="md" color="black60" style={{ whiteSpace: "nowrap" }}>
-              (List price: {artwork.priceListedDisplay})
-            </Text>
-          </Flex>
-
-          <Spacer y={0.5} />
-
-          <ExpiresInTimer
-            expiresAt={partnerOffer.endAt}
-            available={partnerOffer.isAvailable}
-          />
-          <Spacer y={2} />
-        </>
-      )
-    }
-
-    return (
+    return partnerOffer ? (
+      <OfferDisplay
+        originalPrice={artwork.priceListedDisplay}
+        offerPrice={partnerOffer.priceWithDiscount?.display}
+        endAt={partnerOffer.endAt}
+        isAvailable={partnerOffer.isAvailable}
+      />
+    ) : (
       <>
         <SaleMessage saleMessage={artwork.saleMessage} />
         {!!isCreateAlertAvailable && <Spacer y={1} />}
