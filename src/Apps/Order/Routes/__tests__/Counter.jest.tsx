@@ -16,6 +16,7 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
@@ -37,6 +38,10 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
   injectCommitMutation: Component => props => (
     <Component {...props} commitMutation={mockCommitMutation} />
   ),
+}))
+
+jest.mock("System/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
 }))
 
 const realSetInterval = global.setInterval
@@ -148,6 +153,29 @@ describe("Submit Pending Counter Offer", () => {
       expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
         "By clicking Submit, I agree to Artsy’s Conditions of Sale."
       )
+    })
+
+    describe("with new terms and conditions enabled", () => {
+      beforeEach(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(
+          (f: string) => f === "diamond_new-terms-and-conditions"
+        )
+      })
+
+      afterEach(() => {
+        ;(useFeatureFlag as jest.Mock).mockReset()
+      })
+
+      it("renders the new terms and conditions disclaimer", () => {
+        const { wrapper } = getWrapper({
+          CommerceOrder: () => testOrder,
+        })
+        const page = new OrderAppTestPage(wrapper)
+
+        expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
+          "By clicking Submit, I agree to Artsy’s General Terms and Conditions of Sale."
+        )
+      })
     })
 
     it("loading given isCommitingMutation", async () => {
