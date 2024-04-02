@@ -110,7 +110,11 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
               View Artworks
             </Clickable>
             &nbsp;
-            <Sup color="brand">{matchingArtworksCount}</Sup>
+            <Sup
+              textColor={["brand", variant === "active" ? "brand" : "black60"]}
+            >
+              {matchingArtworksCount}
+            </Sup>
           </Text>
         </Flex>
       </Flex>
