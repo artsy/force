@@ -356,7 +356,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   )
 
   const SaleMessageOrOfferDisplay: FC = () => {
-    if (activePartnerOffer) {
+    if (partnerOffer) {
       return (
         <>
           <Spacer y={2} />
@@ -379,20 +379,19 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
             justifyContent="start"
           >
             <SaleMessage
-              saleMessage={activePartnerOffer.priceWithDiscount?.display}
+              saleMessage={partnerOffer.priceWithDiscount?.display}
             />
             <Spacer x={1} />
             <Text variant="md" color="black60" style={{ whiteSpace: "nowrap" }}>
-              {/* TODO: Move this logic of display to Artwrok MP model */}
-              (List price: {artwork.price || "Not publicly listed"})
+              (List price: {artwork.priceListedDisplay})
             </Text>
           </Flex>
 
           <Spacer y={0.5} />
 
           <ExpiresInTimer
-            expiresAt={activePartnerOffer.endAt}
-            available={activePartnerOffer.isAvailable}
+            expiresAt={partnerOffer.endAt}
+            available={partnerOffer.isAvailable}
           />
           <Spacer y={2} />
         </>
@@ -585,7 +584,7 @@ const ARTWORK_FRAGMENT = graphql`
     isAcquireable
     isOfferable
     isSold
-    price
+    priceListedDisplay
     listPrice {
       ... on PriceRange {
         display

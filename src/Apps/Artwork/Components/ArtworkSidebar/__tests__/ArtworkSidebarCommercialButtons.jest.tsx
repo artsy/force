@@ -296,7 +296,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
       {
         Query: () => ({ me: meMock }),
         Artwork: () => ({
-          price: "$5,000",
+          priceListedDisplay: "$5,000",
           isOfferable: true,
         }),
       },

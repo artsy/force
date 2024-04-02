@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9cfade0db32531eddbf664dbf262a853>>
+ * @generated SignedSource<<bd21764040a14ed8a34802f1ec1f9eb7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,7 +38,7 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
       readonly slug: string;
     } | null | undefined;
   } | null | undefined;
-  readonly price: string | null | undefined;
+  readonly priceListedDisplay: string | null | undefined;
   readonly saleMessage: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarEditionSets_artwork">;
@@ -158,7 +158,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "price",
+      "name": "priceListedDisplay",
       "storageKey": null
     },
     {
@@ -235,6 +235,6 @@ return {
 };
 })();
 
-(node as any).hash = "38053f7b77fa82063b4d5929c05a7308";
+(node as any).hash = "f494d1d6b0325a86c7ccf5dc975a86ad";
 
 export default node;
