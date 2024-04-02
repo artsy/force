@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f6113367e7a762f968731d67e891d39c>>
+ * @generated SignedSource<<aa3bff6dab434e3af2b2652e0bbd4f30>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -152,12 +152,12 @@ v3 = {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 44
+              "value": 50
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 44
+              "value": 50
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -194,7 +194,7 @@ v3 = {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:44,width:44)"
+          "storageKey": "cropped(height:50,width:50)"
         }
       ],
       "storageKey": null
@@ -332,16 +332,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ee6256efc8eabd5b60a0802259ae7d86",
+    "cacheID": "931ba7dbc4798dc45f8396a59f0defc9",
     "id": null,
     "metadata": {},
     "name": "ArtistAutocomplete_SearchConnection_Query",
     "operationKind": "query",
-    "text": "query ArtistAutocomplete_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 6) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          counts {\n            artworks\n          }\n          formattedNationalityAndBirthday\n          name\n          initials\n          internalID\n          isPersonalArtist\n          image {\n            cropped(width: 44, height: 44) {\n              height\n              src\n              srcSet\n              width\n            }\n          }\n          targetSupply {\n            isP1\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistAutocomplete_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 6) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          counts {\n            artworks\n          }\n          formattedNationalityAndBirthday\n          name\n          initials\n          internalID\n          isPersonalArtist\n          image {\n            cropped(width: 50, height: 50) {\n              height\n              src\n              srcSet\n              width\n            }\n          }\n          targetSupply {\n            isP1\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c6318c01fb735a86d53e0671cc16bd24";
+(node as any).hash = "ac1f90f42bb270a699e1b608dba94473";
 
 export default node;
