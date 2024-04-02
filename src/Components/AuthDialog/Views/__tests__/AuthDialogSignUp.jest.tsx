@@ -68,6 +68,13 @@ describe("AuthDialogSignUp", () => {
     expect(screen.getByTestId("disclaimer")).toHaveTextContent(
       "By clicking Sign Up or Continue with Apple, Google, or Facebook, you agree to Artsy’s Terms of Use and Privacy Policy and to receiving emails from Artsy."
     )
+    expect(screen.getByRole("link", { name: "Terms of Use" })).toHaveAttribute(
+      "href",
+      "/terms"
+    )
+    expect(
+      screen.getByRole("link", { name: "Privacy Policy" })
+    ).toHaveAttribute("href", "/privacy")
   })
 
   describe("when the user is on a touch device", () => {
@@ -161,6 +168,12 @@ describe("AuthDialogSignUp", () => {
       expect(screen.getByTestId("disclaimer")).toHaveTextContent(
         "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
       )
+      expect(
+        screen.getByRole("link", { name: "Terms and Conditions" })
+      ).toHaveAttribute("href", "/terms")
+      expect(
+        screen.getByRole("link", { name: "Privacy Policy" })
+      ).toHaveAttribute("href", "/privacy")
     })
   })
 
