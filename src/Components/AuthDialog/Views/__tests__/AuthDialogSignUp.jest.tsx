@@ -127,8 +127,24 @@ describe("AuthDialogSignUp", () => {
       render(<AuthDialogSignUp />)
 
       expect(screen.getByTestId("skeleton-disclaimer")).toHaveTextContent(
-        "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
+        "By clicking Sign Up or Continue with Apple, Google, or Facebook, you agree to Artsy’s Terms of Use and Privacy Policy and to receiving emails from Artsy."
       )
+    })
+
+    describe("when the new disclaimer is enabled", () => {
+      beforeEach(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(
+          (f: string) => f === "diamond_new-terms-and-conditions"
+        )
+      })
+
+      it("renders a disclaimer with the new text", () => {
+        render(<AuthDialogSignUp />)
+
+        expect(screen.getByTestId("skeleton-disclaimer")).toHaveTextContent(
+          "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
+        )
+      })
     })
   })
 
