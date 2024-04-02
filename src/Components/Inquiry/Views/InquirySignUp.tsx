@@ -32,6 +32,7 @@ import {
   useInquiryAccountContext,
 } from "Components/Inquiry/Views/InquiryAccount"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 type Mode = "Pending" | "Loading" | "Error" | "Done" | "Success"
 
@@ -58,6 +59,8 @@ export const InquirySignUp: React.FC = () => {
   } = useInquiryContext()
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
+
+  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
 
   const [state, setState] = useState<InquirySignUpState>({
     name: "",
@@ -200,18 +203,22 @@ export const InquirySignUp: React.FC = () => {
         <Spacer y={2} />
 
         <Text variant="xs" color="black60" data-testid="disclaimer">
-          By signing up, you agree to our{" "}
+          By signing up, you agree to {showNewDisclaimer ? "Artsy's" : "our"}{" "}
           <RouterLink inline to="/terms" target="_blank">
-            Terms of Use
+            {showNewDisclaimer ? "Terms and Conditions" : "Terms of Use"}
           </RouterLink>
           ,{" "}
           <RouterLink inline to="/privacy" target="_blank">
             Privacy Policy
           </RouterLink>
-          ,{" "}
-          <RouterLink inline to="/conditions-of-sale" target="_blank">
-            Conditions of Sale
-          </RouterLink>{" "}
+          {!showNewDisclaimer && (
+            <>
+              {", "}
+              <RouterLink inline to="/conditions-of-sale" target="_blank">
+                Conditions of Sale
+              </RouterLink>
+            </>
+          )}{" "}
           and to receiving emails from Artsy.
         </Text>
 
