@@ -36,6 +36,9 @@ jest.mock("Utils/logger")
 jest.mock("Components/CookieConsentManager/CookieConsentManager", () => ({
   CookieConsentManager: ({ children }) => children,
 }))
+jest.mock("Components/TermsUpdateDialog", () => ({
+  TermsUpdateDialog: () => null,
+}))
 
 /**
  * We want each test to have assertions, otherwise it’s too easy to write async
