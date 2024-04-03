@@ -89,24 +89,24 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "Trending Artists",
           links: [
             {
-              text: "Emily Mason",
-              href: "/artist/emily-mason",
+              text: "Pat Steir",
+              href: "/artist/pat-steir",
             },
             {
-              text: "Jeffrey Gibson",
-              href: "/artist/jeffrey-gibson",
+              text: "Stanley Whitney",
+              href: "/artist/stanley-whitney",
             },
             {
-              text: "Mika Tajima",
-              href: "/artist/mika-tajima",
+              text: "Kikuo Saito",
+              href: "/artist/kikuo-saito",
             },
             {
-              text: "Theaster Gates",
-              href: "/artist/theaster-gates",
+              text: "Sayre Gomez",
+              href: "/artist/sayre-gomez",
             },
             {
-              text: "Firelei Báez",
-              href: "/artist/firelei-baez-1",
+              text: "Mickalene Thomas",
+              href: "/artist/mickalene-thomas",
             },
           ],
         },
