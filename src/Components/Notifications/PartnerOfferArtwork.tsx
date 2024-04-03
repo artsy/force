@@ -4,11 +4,12 @@ import { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwo
 import { resized } from "Utils/resized"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { RouterLink } from "System/Router/RouterLink"
-import { Box, Button, Flex, Image, THEME, Text } from "@artsy/palette"
+import { Box, Button, Flex, Image, Link, THEME, Text } from "@artsy/palette"
 import Metadata from "Components/Artwork/Metadata"
 import { ContextModule } from "@artsy/cohesion"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface PartnerOfferArtworkProps {
   artwork: PartnerOfferArtwork_artwork$key
@@ -16,6 +17,7 @@ interface PartnerOfferArtworkProps {
   endAt?: string | null
   note?: string | null
   available?: boolean | null
+  partnerOfferID?: string
   priceWithDiscount?: string | null
 }
 
@@ -26,6 +28,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   endAt = "",
   note = "",
   available = false,
+  partnerOfferID,
 }) => {
   const { hasEnded } = useTimer(endAt || "")
   const fullyAvailable = !!(available && !hasEnded && priceWithDiscount)
@@ -36,9 +39,14 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   const label =
     (artwork.title ?? "Artwork") +
     (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
+  const partnerOfferVisibilityEnabled = useFeatureFlag(
+    "emerald_partner-offers-to-artwork-page"
+  )
+  const artworkListingHref =
+    artwork.href + "?partner_offer_id=" + partnerOfferID
 
-  let buttonText = "Continue To Purchase"
-  if (hasEnded) buttonText = "View Work"
+  let buttonText = "Purchase"
+  if (hasEnded) buttonText = "View Artwork"
   if (!available) buttonText = "Create Alert"
 
   let href = targetHref
@@ -54,11 +62,9 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
 
   return (
     <ManageArtworkForSavesProvider>
-      <RouterLink
-        to={href}
+      <Box
         display="flex"
         flexDirection="column"
-        textDecoration="none"
         aria-label={label}
         maxWidth={CARD_MAX_WIDTH}
         overflow="hidden"
@@ -74,27 +80,39 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           }}
           maxHeight={"35vh"}
         >
-          <Image
-            src={image.src}
-            srcSet={image.srcSet}
-            width="100%"
-            height="100%"
-            style={{
-              objectFit: "contain",
-              backgroundColor: THEME.colors.white100,
-            }}
-            lazyLoad
-            alt=""
-          />
+          <Link
+            href={
+              partnerOfferVisibilityEnabled && fullyAvailable
+                ? artworkListingHref
+                : href
+            }
+          >
+            <Image
+              src={image.src}
+              srcSet={image.srcSet}
+              width="100%"
+              height="100%"
+              style={{
+                objectFit: "contain",
+                backgroundColor: THEME.colors.white100,
+              }}
+              lazyLoad
+              alt=""
+            />
+          </Link>
         </Box>
 
         <Metadata
           artwork={artwork}
           contextModule={ContextModule.activity}
           showSaveButton
-          disableRouterLinking
           hideSaleInfo
           maxWidth="100%"
+          to={
+            partnerOfferVisibilityEnabled && fullyAvailable
+              ? artworkListingHref
+              : href
+          }
         />
 
         {fullyAvailable && (
@@ -113,7 +131,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
             </Text>
           </Flex>
         )}
-      </RouterLink>
+      </Box>
       {note && (
         <Box
           backgroundColor={"black10"}
@@ -130,12 +148,32 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           </Text>
         </Box>
       )}
-      <Box mb={4} width="100%" maxWidth={CARD_MAX_WIDTH}>
+      <Box
+        mb={4}
+        display="flex"
+        justifyContent="space-between"
+        width="100%"
+        maxWidth={CARD_MAX_WIDTH}
+      >
+        {partnerOfferVisibilityEnabled && fullyAvailable && (
+          <Button
+            // @ts-ignore
+            as={RouterLink}
+            to={artworkListingHref}
+            data-testid="partner-offer-view-artwork-button"
+            flex={1}
+            mr={2}
+            variant={"secondaryBlack"}
+          >
+            {"View Artwork"}
+          </Button>
+        )}
         <Button
           // @ts-ignore
           as={RouterLink}
           to={href}
           data-testid="partner-offer-artwork-button"
+          flex={1}
         >
           {buttonText}
         </Button>

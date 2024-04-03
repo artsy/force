@@ -89,7 +89,7 @@ describe("PartnerOfferCreatedNotification", () => {
           Notification: () => notification("2021-01-01T00:00:00+00:00"),
         })
 
-        expect(screen.getByText("View Work")).toBeInTheDocument()
+        expect(screen.getByText("View Artwork")).toBeInTheDocument()
         expect(
           screen.getByTestId("partner-offer-artwork-button")
         ).toHaveAttribute("href", "/artwork/artwork-one?expired_offer=true")
