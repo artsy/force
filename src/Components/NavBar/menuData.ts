@@ -52,9 +52,9 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
         },
       },
       {
-        text: "Curator’s Picks",
+        text: "Curators’ Picks",
         menu: {
-          title: "Curator’s Picks",
+          title: "Curators’ Picks",
           links: [
             {
               text: "Curators’ Picks: Emerging",
@@ -146,9 +146,9 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         },
       },
       {
-        text: "Curator’s Picks",
+        text: "Curators’ Picks",
         menu: {
-          title: "Curator’s Picks",
+          title: "Curators’ Picks",
           links: [
             {
               text: "Contemporary Abstraction",
