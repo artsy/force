@@ -23,7 +23,11 @@ export const ConditionsOfSaleCheckbox: React.FC = () => {
 
   return (
     <>
-      <Checkbox selected={values.agreeToTerms} onSelect={handleCheckboxSelect}>
+      <Checkbox
+        selected={values.agreeToTerms}
+        onSelect={handleCheckboxSelect}
+        data-testid="disclaimer"
+      >
         {showNewDisclaimer ? (
           <Text variant="sm-display" ml={0.5}>
             I agree to Artsy's{" "}
@@ -31,7 +35,7 @@ export const ConditionsOfSaleCheckbox: React.FC = () => {
               inline
               display="inline"
               color="black100"
-              to="/conditions-of-sale"
+              to="/terms"
               target="_blank"
             >
               General Terms and Conditions of Sale

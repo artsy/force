@@ -2,15 +2,14 @@ import { mount } from "enzyme"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { render, screen } from "@testing-library/react"
 
 jest.mock("Apps/Auction/Hooks/useFormContext")
-
-jest.mock("System/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(),
-}))
+jest.mock("System/useFeatureFlag")
 
 describe("ConditionsOfSaleCheckbox", () => {
   const mockUseFormContext = useFormContext as jest.Mock
+  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
   const setFieldTouched = jest.fn()
   const setFieldValue = jest.fn()
   const formProps = {
@@ -31,27 +30,41 @@ describe("ConditionsOfSaleCheckbox", () => {
     })
   })
 
-  it("renders correct components", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.find("Checkbox")).toHaveLength(1)
-    expect(wrapper.text()).toContain(
+  it("renders a disclaimer", () => {
+    render(<ConditionsOfSaleCheckbox />)
+
+    expect(screen.getByTestId("disclaimer")).toHaveTextContent(
       "I agree to the Conditions of Sale. I understand that all bids are binding and may not be retracted."
     )
+    expect(
+      screen.getByRole("link", {
+        name: "Conditions of Sale",
+      })
+    ).toHaveAttribute("href", "/conditions-of-sale")
   })
 
-  describe("new terms and conditions enabled", () => {
-    beforeEach(() => {
-      ;(useFeatureFlag as jest.Mock).mockImplementation(
+  describe("when the new disclaimer is enabled", () => {
+    beforeAll(() => {
+      mockUseFeatureFlag.mockImplementation(
         (f: string) => f === "diamond_new-terms-and-conditions"
       )
     })
 
-    it("renders correct components", () => {
-      const wrapper = getWrapper()
-      expect(wrapper.find("Checkbox")).toHaveLength(1)
-      expect(wrapper.text()).toContain(
+    afterAll(() => {
+      mockUseFeatureFlag.mockReset()
+    })
+
+    it("renders the new disclaimer", () => {
+      render(<ConditionsOfSaleCheckbox />)
+
+      expect(screen.getByTestId("disclaimer")).toHaveTextContent(
         "I agree to Artsy's General Terms and Conditions of Sale. I understand that all bids are binding and may not be retracted."
       )
+      expect(
+        screen.getByRole("link", {
+          name: "General Terms and Conditions of Sale",
+        })
+      ).toHaveAttribute("href", "/terms")
     })
   })
 
@@ -76,10 +89,5 @@ describe("ConditionsOfSaleCheckbox", () => {
     wrapper.find("Checkbox").simulate("click")
     expect(setFieldTouched).toHaveBeenCalledWith("agreeToTerms")
     expect(setFieldValue).toHaveBeenCalledWith("agreeToTerms", true)
-  })
-
-  it("links out to conditions of sale", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.html()).toContain('href="/conditions-of-sale"')
   })
 })
