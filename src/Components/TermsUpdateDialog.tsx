@@ -2,12 +2,15 @@ import Cookies from "cookies-js"
 import { Button, ModalDialog, Text } from "@artsy/palette"
 import { FC, useEffect, useState } from "react"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { getENV } from "Utils/getENV"
 
 const TERMS_UPDATE_DIALOG_KEY = "terms-update-2024-dismissed"
 
 interface TermsUpdateDialogProps {}
 
 export const TermsUpdateDialog: FC<TermsUpdateDialogProps> = () => {
+  const isIntegrity = getENV("USER_AGENT") === "ArtsyIntegrity"
+
   const isTermsUpdateActive = useFeatureFlag("diamond_new-terms-and-conditions")
 
   const [isDisplayable, setIsDisplayable] = useState(false)
@@ -18,13 +21,13 @@ export const TermsUpdateDialog: FC<TermsUpdateDialogProps> = () => {
   }
 
   useEffect(() => {
-    if (!isTermsUpdateActive) return
+    if (isIntegrity || !isTermsUpdateActive) return
 
     const isDismissed = Cookies.get(TERMS_UPDATE_DIALOG_KEY)
     if (isDismissed) return
 
     setIsDisplayable(true)
-  }, [isTermsUpdateActive])
+  }, [isIntegrity, isTermsUpdateActive])
 
   if (!isDisplayable) {
     return null
