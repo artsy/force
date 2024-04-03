@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c993a83c08912eae1f28f42fa7b134f8>>
+ * @generated SignedSource<<d185b54e29f1600c755207f2e9f83bac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,13 +25,12 @@ export type PartnerShowOpenedNotification_notification$data = {
             readonly totalCount: number | null | undefined;
             readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
           } | null | undefined;
-          readonly href: string | null | undefined;
-          readonly internalID: string;
         } | null | undefined;
       } | null | undefined> | null | undefined;
     } | null | undefined;
   } | null | undefined;
   readonly notificationType: NotificationTypesEnum;
+  readonly targetHref: string;
   readonly " $fragmentSpreads": FragmentRefs<"NotificationTypeLabel_notification">;
   readonly " $fragmentType": "PartnerShowOpenedNotification_notification";
 };
@@ -40,15 +39,7 @@ export type PartnerShowOpenedNotification_notification$key = {
   readonly " $fragmentSpreads": FragmentRefs<"PartnerShowOpenedNotification_notification">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -80,7 +71,13 @@ return {
               "name": "partner",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "href",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -143,14 +140,6 @@ return {
                             }
                           ],
                           "storageKey": "artworksConnection(first:2)"
-                        },
-                        (v0/*: any*/),
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "internalID",
-                          "storageKey": null
                         }
                       ],
                       "storageKey": null
@@ -176,6 +165,13 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "targetHref",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "NotificationTypeLabel_notification"
@@ -184,8 +180,7 @@ return {
   "type": "Notification",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "347dec78df981d0908cf391e4cf8db5e";
+(node as any).hash = "cd83f00c9987f6d4c909155623b7b59d";
 
 export default node;

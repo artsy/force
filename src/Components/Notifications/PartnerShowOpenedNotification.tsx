@@ -22,7 +22,7 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
     notification
   )
 
-  const { headline, item } = notificationData
+  const { headline, item, targetHref } = notificationData
 
   const partner = item?.partner
   const shows = extractNodes(item?.showsConnection)
@@ -37,7 +37,10 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
     <Box>
       <Text variant="lg-display">{headline}</Text>
       <Text variant="xs">
-        Presented by <RouterLink to={partner.href}>{partner.name}</RouterLink>
+        Presented by{" "}
+        <RouterLink to={partner.href} data-testid="partner-link">
+          {partner.name}
+        </RouterLink>
       </Text>
 
       <NotificationTypeLabel notification={notificationData} />
@@ -55,7 +58,8 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
           <Button
             // @ts-ignore
             as="a"
-            href={show.href}
+            href={targetHref}
+            data-testid="visit-show-button"
           >
             Visit Show
           </Button>
@@ -81,14 +85,14 @@ export const PartnerShowOpenedNotificationFragment = graphql`
                 ...ArtworkGrid_artworks
                 totalCount
               }
-              href
-              internalID
             }
           }
         }
       }
     }
     notificationType
+    targetHref
+
     ...NotificationTypeLabel_notification
   }
 `

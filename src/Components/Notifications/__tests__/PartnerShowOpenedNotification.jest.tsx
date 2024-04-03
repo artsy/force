@@ -45,89 +45,86 @@ describe("PartnerShowOpenedNotification", () => {
       Notification: () => notification,
     })
 
-    expect(
-      screen.getByText("2 shows published by Institute of Contemporary Art")
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText("Show • March 1 – April 1, 2024")
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText("Presented by Institute of Contemporary Art")
-    ).toBeInTheDocument()
+    // header
 
-    expect(screen.getByText("Artwork Title 1")).toBeInTheDocument()
-    expect(screen.getByText("Artwork Title 2")).toBeInTheDocument()
+    expect(
+      screen.getByText("New Show: Water Works - Katherine Bradford")
+    ).toBeInTheDocument()
+    expect(screen.getByText("Show")).toBeInTheDocument()
+    expect(screen.getByText("April 11 – April 14")).toBeInTheDocument()
+    expect(screen.getByText("Presented by")).toBeInTheDocument()
+    expect(screen.getByText("Galerie Charlot")).toBeInTheDocument()
+
+    // artworks
+
+    expect(screen.getByText("P2200_27831")).toBeInTheDocument()
+    expect(screen.getByText("P2500-2217aa")).toBeInTheDocument()
 
     // buttons
 
     expect(screen.getByText("Visit Show")).toBeInTheDocument()
   })
+
+  it("has working links to partner and show", () => {
+    renderWithRelay({
+      Notification: () => notification,
+    })
+
+    expect(screen.getByTestId("partner-link")).toHaveAttribute(
+      "href",
+      "/partner/galerie-charlot"
+    )
+    expect(screen.getByTestId("visit-show-button")).toHaveAttribute(
+      "href",
+      "/show/galerie-charlot-galerie-charlot-at-expo-chicago-2024"
+    )
+  })
 })
 
 const notification = {
-  title: "Institute of Contemporary Art",
-  message: "2 shows published",
-  headline: "2 shows published by Institute of Contemporary Art",
-  publishedAt: "2 days ago",
-  isUnread: false,
+  id: "Tm90aWZpY2F0aW9uOjY2MGQyNmYwMjQwMmQ3YjYzZTQ2MzU5Yg==",
+  internalID: "660d26f02402d7b63e46359b",
   notificationType: "PARTNER_SHOW_OPENED",
-  objectsCount: 1,
+  targetHref: "/show/galerie-charlot-galerie-charlot-at-expo-chicago-2024",
+  artworksConnection: {
+    edges: [],
+    totalCount: 0,
+  },
+  headline: "New Show: Water Works - Katherine Bradford",
   item: {
-    partner: {
-      href: "/partner/institute-of-contemporary-art",
-      name: "Institute of Contemporary Art",
-      profile: {
-        internalID: "ica-profile-id",
-      },
-    },
+    __typename: "ShowOpenedNotificationItem",
     showsConnection: {
-      edges: {
-        node: {
-          internalID: "show-one",
-          headline: "Damon Zucconi: When You’re Here, You’re Familiar",
-          href: "/show/damon-zucconi-when-youre-here-youre-familiar",
-          artworkConnection: {
-            edges: [
-              {
-                node: {
-                  title: "Artwork Title 1",
-                  internalID: "artwork-one",
-                  href: "/artwork/damon-zucconi-when-youre-here-youre-familiar",
-                  image: {
-                    imageURLs: {
-                      normalized: "artwork-image-one",
-                    },
-                    width: 6720,
-                    height: 4480,
+      edges: [
+        {
+          node: {
+            startAt: "April 11",
+            endAt: "April 14",
+            artworksConnection: {
+              edges: [
+                {
+                  node: {
+                    slug: "manfred-mohr-p2200-27831",
+                    href: "/artwork/manfred-mohr-p2200-27831",
+                    title: "P2200_27831",
                   },
                 },
-              },
-              {
-                node: {
-                  title: "Artwork Title 2",
-                  internalID: "artwork-two",
-                  href: "/artwork/damon-zucconi-when-youre-here-youre-familiar",
-                  image: {
-                    imageURLs: {
-                      normalized: "artwork-image-two",
-                    },
-                    width: 6720,
-                    height: 4480,
+                {
+                  node: {
+                    slug: "manfred-mohr-p2500-2217aa",
+                    href: "/artwork/manfred-mohr-p2500-2217aa",
+                    title: "P2500-2217aa",
                   },
                 },
-              },
-            ],
-          },
-          introStatement: "intro statement...",
-          image: {
-            imageURLs: {
-              normalized: "artwork-image-one",
+              ],
+              totalCount: 22,
             },
-            width: 6720,
-            height: 4480,
           },
         },
-      },
+      ],
+    },
+    partner: {
+      href: "/partner/galerie-charlot",
+      name: "Galerie Charlot",
     },
   },
 }
