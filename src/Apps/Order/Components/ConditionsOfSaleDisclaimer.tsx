@@ -12,9 +12,7 @@ export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
   textProps,
   orderSource,
 }) => {
-  const newTermsAndConditionsEnabled = useFeatureFlag(
-    "diamond_new-terms-and-conditions"
-  )
+  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
 
   if (orderSource === "private_sale") {
     return (
@@ -36,7 +34,7 @@ export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
     )
   }
 
-  return newTermsAndConditionsEnabled ? (
+  return showNewDisclaimer ? (
     <Text variant="xs" color="black60" {...textProps}>
       By clicking Submit, I agree to Artsy’s{" "}
       <RouterLink inline to="/terms" target="_blank">

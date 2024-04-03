@@ -12,9 +12,7 @@ export const ConditionsOfSaleCheckbox: React.FC = () => {
     setFieldValue,
   } = useFormContext()
 
-  const newTermsAndConditionsEnabled = useFeatureFlag(
-    "diamond_new-terms-and-conditions"
-  )
+  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
 
   const showErrorMessage = !!(touched.agreeToTerms && errors.agreeToTerms)
 
@@ -25,15 +23,19 @@ export const ConditionsOfSaleCheckbox: React.FC = () => {
 
   return (
     <>
-      <Checkbox selected={values.agreeToTerms} onSelect={handleCheckboxSelect}>
-        {newTermsAndConditionsEnabled ? (
+      <Checkbox
+        selected={values.agreeToTerms}
+        onSelect={handleCheckboxSelect}
+        data-testid="disclaimer"
+      >
+        {showNewDisclaimer ? (
           <Text variant="sm-display" ml={0.5}>
             I agree to Artsy's{" "}
             <RouterLink
               inline
               display="inline"
               color="black100"
-              to="/conditions-of-sale"
+              to="/terms"
               target="_blank"
             >
               General Terms and Conditions of Sale

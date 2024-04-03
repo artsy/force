@@ -12,10 +12,12 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { RouterLink } from "System/Router/RouterLink"
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
+jest.mock("System/useFeatureFlag")
 
 jest.mock("@artsy/palette", () => {
   return {
@@ -34,10 +36,6 @@ jest.mock("@artsy/palette", () => {
 })
 
 jest.unmock("react-relay")
-
-jest.mock("System/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(),
-}))
 
 const realSetInterval = global.setInterval
 
@@ -121,20 +119,23 @@ describe("Buyer rejects seller offer", () => {
       expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
         "By clicking Submit, I agree to Artsy’s Conditions of Sale."
       )
+      expect(
+        page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
+      ).toEqual("/conditions-of-sale")
     })
 
-    describe("with new terms and conditions enabled", () => {
-      beforeEach(() => {
+    describe("when new disclaimers are enabled", () => {
+      beforeAll(() => {
         ;(useFeatureFlag as jest.Mock).mockImplementation(
           (f: string) => f === "diamond_new-terms-and-conditions"
         )
       })
 
-      afterEach(() => {
+      afterAll(() => {
         ;(useFeatureFlag as jest.Mock).mockReset()
       })
 
-      it("renders the new terms and conditions disclaimer", () => {
+      it("renders the new disclaimer", () => {
         const { wrapper } = getWrapper({
           CommerceOrder: () => testOrder,
         })
@@ -143,6 +144,9 @@ describe("Buyer rejects seller offer", () => {
         expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
           "By clicking Submit, I agree to Artsy’s General Terms and Conditions of Sale."
         )
+        expect(
+          page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
+        ).toEqual("/terms")
       })
     })
 
