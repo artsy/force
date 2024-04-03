@@ -9,7 +9,6 @@ jest.mock("System/useFeatureFlag")
 
 describe("ConditionsOfSaleCheckbox", () => {
   const mockUseFormContext = useFormContext as jest.Mock
-  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
   const setFieldTouched = jest.fn()
   const setFieldValue = jest.fn()
   const formProps = {
@@ -45,13 +44,13 @@ describe("ConditionsOfSaleCheckbox", () => {
 
   describe("when the new disclaimer is enabled", () => {
     beforeAll(() => {
-      mockUseFeatureFlag.mockImplementation(
+      ;(useFeatureFlag as jest.Mock).mockImplementation(
         (f: string) => f === "diamond_new-terms-and-conditions"
       )
     })
 
     afterAll(() => {
-      mockUseFeatureFlag.mockReset()
+      ;(useFeatureFlag as jest.Mock).mockReset()
     })
 
     it("renders the new disclaimer", () => {
