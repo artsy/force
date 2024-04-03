@@ -18,7 +18,7 @@ const validForm = {
     internalID: "artistId",
     name: "Banksy",
   },
-  category: null,
+  category: "Painting",
   locationCity: "NY, USA",
   locationCountry: null,
   locationState: null,
@@ -354,7 +354,7 @@ describe("ArtworkDetails", () => {
           {
             artistID: "artistId",
             attributionClass: "LIMITED_EDITION",
-            category: null,
+            category: "Painting",
             depth: "5",
             dimensionsMetric: "cm",
             editionNumber: "1",
@@ -404,7 +404,7 @@ describe("ArtworkDetails", () => {
           {
             artistID: "artistId",
             attributionClass: "LIMITED_EDITION",
-            category: null,
+            category: "Painting",
             depth: "5",
             dimensionsMetric: "cm",
             editionNumber: "1",
