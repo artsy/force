@@ -10,6 +10,7 @@ interface TermsUpdateDialogProps {}
 
 export const TermsUpdateDialog: FC<TermsUpdateDialogProps> = () => {
   const isIntegrity = getENV("USER_AGENT") === "ArtsyIntegrity"
+  const isSmokeTest = getENV("USER_AGENT") === "ForceSmokeTest"
 
   const isTermsUpdateActive = useFeatureFlag("diamond_new-terms-and-conditions")
 
@@ -21,13 +22,13 @@ export const TermsUpdateDialog: FC<TermsUpdateDialogProps> = () => {
   }
 
   useEffect(() => {
-    if (isIntegrity || !isTermsUpdateActive) return
+    if (isSmokeTest || isIntegrity || !isTermsUpdateActive) return
 
     const isDismissed = Cookies.get(TERMS_UPDATE_DIALOG_KEY)
     if (isDismissed) return
 
     setIsDisplayable(true)
-  }, [isIntegrity, isTermsUpdateActive])
+  }, [isSmokeTest, isIntegrity, isTermsUpdateActive])
 
   if (!isDisplayable) {
     return null
