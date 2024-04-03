@@ -46,7 +46,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
     artwork.href + "?partner_offer_id=" + partnerOfferID
 
   let buttonText = "Purchase"
-  if (hasEnded) buttonText = "View Artwork"
+  if (hasEnded) buttonText = "View Work"
   if (!available) buttonText = "Create Alert"
 
   let href = targetHref
@@ -165,7 +165,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
             mr={2}
             variant={"secondaryBlack"}
           >
-            {"View Artwork"}
+            {"View Work"}
           </Button>
         )}
         <Button
@@ -173,7 +173,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           as={RouterLink}
           to={href}
           data-testid="partner-offer-artwork-button"
-          flex={1}
+          flex={partnerOfferVisibilityEnabled && fullyAvailable ? 1 : undefined}
         >
           {buttonText}
         </Button>
