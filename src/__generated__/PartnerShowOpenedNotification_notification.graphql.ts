@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8821ab4e12c553cfcad409c23c0d9a3d>>
+ * @generated SignedSource<<c993a83c08912eae1f28f42fa7b134f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,7 +32,7 @@ export type PartnerShowOpenedNotification_notification$data = {
     } | null | undefined;
   } | null | undefined;
   readonly notificationType: NotificationTypesEnum;
-  readonly publishedAt: string;
+  readonly " $fragmentSpreads": FragmentRefs<"NotificationTypeLabel_notification">;
   readonly " $fragmentType": "PartnerShowOpenedNotification_notification";
 };
 export type PartnerShowOpenedNotification_notification$key = {
@@ -176,17 +176,9 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "RELATIVE"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "publishedAt",
-      "storageKey": "publishedAt(format:\"RELATIVE\")"
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "NotificationTypeLabel_notification"
     }
   ],
   "type": "Notification",
@@ -194,6 +186,6 @@ return {
 };
 })();
 
-(node as any).hash = "701747e9f8a44554347b6a217c8e6969";
+(node as any).hash = "347dec78df981d0908cf391e4cf8db5e";
 
 export default node;

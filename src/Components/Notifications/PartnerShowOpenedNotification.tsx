@@ -1,4 +1,4 @@
-import { Flex, Spacer, Text, Box } from "@artsy/palette"
+import { Flex, Spacer, Text, Box, Button } from "@artsy/palette"
 import { FC } from "react"
 import { useFragment, graphql } from "react-relay"
 import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
@@ -7,6 +7,8 @@ import { extractNodes } from "Utils/extractNodes"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { RouterLink } from "System/Router/RouterLink"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
+
+const MAX_ARTWORK_GRID_WIDTH = 600
 
 interface PartnerShowOpenedNotificationProps {
   notification: PartnerShowOpenedNotification_notification$key
@@ -37,23 +39,28 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
       <Text variant="xs">
         Presented by <RouterLink to={partner.href}>{partner.name}</RouterLink>
       </Text>
-      <Text variant="xs">Show • {"March 1 – April 1, 2024"}</Text>
 
-      <Spacer y={1} />
-
-      <NotificationTypeLabel item={notificationData} />
+      <NotificationTypeLabel notification={notificationData} />
 
       <Spacer y={4} />
 
-      {!!artworksConnection && (
-        <ArtworkGrid artworks={artworksConnection} columnCount={2} />
-      )}
+      <Flex maxWidth={MAX_ARTWORK_GRID_WIDTH} flexDirection="column" m="auto">
+        {!!artworksConnection && (
+          <ArtworkGrid artworks={artworksConnection} columnCount={2} />
+        )}
 
-      <Spacer y={4} />
+        <Spacer y={4} />
 
-      <RouterLink to={show.href}>
-        <Text fontWeight="bold">Visit Show</Text>
-      </RouterLink>
+        <Flex>
+          <Button
+            // @ts-ignore
+            as="a"
+            href={show.href}
+          >
+            Visit Show
+          </Button>
+        </Flex>
+      </Flex>
     </Box>
   )
 }
@@ -82,6 +89,6 @@ export const PartnerShowOpenedNotificationFragment = graphql`
       }
     }
     notificationType
-    publishedAt(format: "RELATIVE")
+    ...NotificationTypeLabel_notification
   }
 `

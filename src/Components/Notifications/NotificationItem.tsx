@@ -143,7 +143,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
           {!!subTitle && <Text variant="xs">{subTitle}</Text>}
 
           <Flex flexDirection="row" gap={0.5}>
-            <NotificationTypeLabel item={item} />
+            <NotificationTypeLabel notification={item} />
             {shouldDisplayExpiresInTimer(item) && (
               <ExpiresInTimer
                 expiresAt={item.item?.expiresAt}
@@ -154,7 +154,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
         </Flex>
       ) : (
         <Flex flex={1} flexDirection="column">
-          <NotificationTypeLabel item={item} />
+          <NotificationTypeLabel notification={item} />
 
           <Text variant="sm-display" fontWeight="bold">
             {item.title}
@@ -230,7 +230,6 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         internalID
         headline
         message
-        publishedAt(format: "RELATIVE")
         targetHref
         isUnread
         notificationType
@@ -257,6 +256,7 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
           }
         }
         title
+        ...NotificationTypeLabel_notification
       }
     `,
   }

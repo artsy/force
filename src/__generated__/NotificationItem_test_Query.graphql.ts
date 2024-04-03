@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c7f8e48689d143de24fd05388f93e07>>
+ * @generated SignedSource<<5f8f574141366319965d9b5930d941ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,26 +47,33 @@ v2 = {
   "name": "internalID",
   "storageKey": null
 },
-v3 = {
+v3 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "MMMM D"
+  }
+],
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v6 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -169,19 +176,6 @@ return {
                   },
                   {
                     "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "format",
-                        "value": "RELATIVE"
-                      }
-                    ],
-                    "kind": "ScalarField",
-                    "name": "publishedAt",
-                    "storageKey": "publishedAt(format:\"RELATIVE\")"
-                  },
-                  {
-                    "alias": null,
                     "args": null,
                     "kind": "ScalarField",
                     "name": "targetHref",
@@ -243,6 +237,61 @@ return {
                         ],
                         "type": "PartnerOfferCreatedNotificationItem",
                         "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "ShowConnection",
+                            "kind": "LinkedField",
+                            "name": "showsConnection",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "ShowEdge",
+                                "kind": "LinkedField",
+                                "name": "edges",
+                                "plural": true,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "Show",
+                                    "kind": "LinkedField",
+                                    "name": "node",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": (v3/*: any*/),
+                                        "kind": "ScalarField",
+                                        "name": "startAt",
+                                        "storageKey": "startAt(format:\"MMMM D\")"
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": (v3/*: any*/),
+                                        "kind": "ScalarField",
+                                        "name": "endAt",
+                                        "storageKey": "endAt(format:\"MMMM D\")"
+                                      },
+                                      (v1/*: any*/)
+                                    ],
+                                    "storageKey": null
+                                  }
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "type": "ShowOpenedNotificationItem",
+                        "abstractKey": null
                       }
                     ],
                     "storageKey": null
@@ -285,7 +334,7 @@ return {
                             "plural": false,
                             "selections": [
                               (v2/*: any*/),
-                              (v3/*: any*/),
+                              (v4/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -343,7 +392,20 @@ return {
                     ],
                     "storageKey": "artworksConnection(first:4)"
                   },
-                  (v3/*: any*/)
+                  (v4/*: any*/),
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "format",
+                        "value": "RELATIVE"
+                      }
+                    ],
+                    "kind": "ScalarField",
+                    "name": "publishedAt",
+                    "storageKey": "publishedAt(format:\"RELATIVE\")"
+                  }
                 ],
                 "storageKey": null
               }
@@ -356,7 +418,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cf8e09092b7d0e097188d33f20802265",
+    "cacheID": "198c291ff400ee144c4d3ea0279f1d54",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -396,7 +458,7 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "notificationsConnection.edges.node.artworksConnection.edges.node.id": (v4/*: any*/),
+        "notificationsConnection.edges.node.artworksConnection.edges.node.id": (v5/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.edges.node.image": {
           "enumValues": null,
           "nullable": true,
@@ -409,19 +471,19 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.src": (v5/*: any*/),
-        "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.srcSet": (v5/*: any*/),
-        "notificationsConnection.edges.node.artworksConnection.edges.node.internalID": (v4/*: any*/),
-        "notificationsConnection.edges.node.artworksConnection.edges.node.title": (v6/*: any*/),
+        "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.src": (v6/*: any*/),
+        "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.srcSet": (v6/*: any*/),
+        "notificationsConnection.edges.node.artworksConnection.edges.node.internalID": (v5/*: any*/),
+        "notificationsConnection.edges.node.artworksConnection.edges.node.title": (v7/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.totalCount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Int"
         },
-        "notificationsConnection.edges.node.headline": (v5/*: any*/),
-        "notificationsConnection.edges.node.id": (v4/*: any*/),
-        "notificationsConnection.edges.node.internalID": (v4/*: any*/),
+        "notificationsConnection.edges.node.headline": (v6/*: any*/),
+        "notificationsConnection.edges.node.id": (v5/*: any*/),
+        "notificationsConnection.edges.node.internalID": (v5/*: any*/),
         "notificationsConnection.edges.node.isUnread": {
           "enumValues": null,
           "nullable": false,
@@ -434,15 +496,36 @@ return {
           "plural": false,
           "type": "NotificationItem"
         },
-        "notificationsConnection.edges.node.item.__typename": (v5/*: any*/),
+        "notificationsConnection.edges.node.item.__typename": (v6/*: any*/),
         "notificationsConnection.edges.node.item.available": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
-        "notificationsConnection.edges.node.item.expiresAt": (v6/*: any*/),
-        "notificationsConnection.edges.node.message": (v5/*: any*/),
+        "notificationsConnection.edges.node.item.expiresAt": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ShowConnection"
+        },
+        "notificationsConnection.edges.node.item.showsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ShowEdge"
+        },
+        "notificationsConnection.edges.node.item.showsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Show"
+        },
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.endAt": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.id": (v5/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.startAt": (v7/*: any*/),
+        "notificationsConnection.edges.node.message": (v6/*: any*/),
         "notificationsConnection.edges.node.notificationType": {
           "enumValues": [
             "ARTICLE_FEATURED_ARTIST",
@@ -462,14 +545,14 @@ return {
           "plural": false,
           "type": "Int"
         },
-        "notificationsConnection.edges.node.publishedAt": (v5/*: any*/),
-        "notificationsConnection.edges.node.targetHref": (v5/*: any*/),
-        "notificationsConnection.edges.node.title": (v5/*: any*/)
+        "notificationsConnection.edges.node.publishedAt": (v6/*: any*/),
+        "notificationsConnection.edges.node.targetHref": (v6/*: any*/),
+        "notificationsConnection.edges.node.title": (v6/*: any*/)
       }
     },
     "name": "NotificationItem_test_Query",
     "operationKind": "query",
-    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  title\n}\n"
+    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n    ... on ShowOpenedNotificationItem {\n      showsConnection {\n        edges {\n          node {\n            startAt(format: \"MMMM D\")\n            endAt(format: \"MMMM D\")\n            id\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

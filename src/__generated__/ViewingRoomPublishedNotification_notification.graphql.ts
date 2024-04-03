@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fefd5a282abb761ab35f0bb1e6ce95d9>>
+ * @generated SignedSource<<8684a5de5d7d40313e188b5a5a38bce3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type ViewingRoomPublishedNotification_notification$data = {
     } | null | undefined;
   } | null | undefined;
   readonly notificationType: NotificationTypesEnum;
-  readonly publishedAt: string;
+  readonly " $fragmentSpreads": FragmentRefs<"NotificationTypeLabel_notification">;
   readonly " $fragmentType": "ViewingRoomPublishedNotification_notification";
 };
 export type ViewingRoomPublishedNotification_notification$key = {
@@ -138,23 +138,15 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "RELATIVE"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "publishedAt",
-      "storageKey": "publishedAt(format:\"RELATIVE\")"
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "NotificationTypeLabel_notification"
     }
   ],
   "type": "Notification",
   "abstractKey": null
 };
 
-(node as any).hash = "214a49515cb814fdd3e72b5e5ecf5907";
+(node as any).hash = "00a5e36d35aa4c7fb153a89b9b23788b";
 
 export default node;
