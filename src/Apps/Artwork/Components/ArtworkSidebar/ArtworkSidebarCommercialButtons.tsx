@@ -35,22 +35,7 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
-
-interface SaleMessageProps {
-  saleMessage: string | null | undefined
-}
-
-const SaleMessage: React.FC<SaleMessageProps> = ({ saleMessage }) => {
-  if (!saleMessage) {
-    return null
-  }
-
-  return (
-    <Text variant="lg-display" color="black100" data-test="SaleMessage">
-      {saleMessage}
-    </Text>
-  )
-}
+import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
@@ -354,15 +339,28 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     artwork.isAcquireable || activePartnerOffer
   )
 
+  const SaleMessageOrOfferDisplay: FC = () => {
+    return partnerOffer ? (
+      <OfferDisplay
+        originalPrice={artwork.priceListedDisplay}
+        offerPrice={partnerOffer.priceWithDiscount?.display}
+        endAt={partnerOffer.endAt}
+        isAvailable={partnerOffer.isAvailable}
+      />
+    ) : (
+      <>
+        <SaleMessage saleMessage={artwork.saleMessage} />
+        {!!isCreateAlertAvailable && <Spacer y={1} />}
+      </>
+    )
+  }
+
   return (
     <>
       {inquiryComponent}
 
       {(artwork?.editionSets?.length ?? 0) < 2 ? (
-        <>
-          <SaleMessage saleMessage={artwork.saleMessage} />
-          {!!isCreateAlertAvailable && <Spacer y={1} />}
-        </>
+        <SaleMessageOrOfferDisplay />
       ) : (
         <>
           <Separator />
@@ -436,6 +434,70 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
 
       <Spacer y={4} />
       <ErrorToast onClose={onCloseModal} show={isErrorModalVisible} />
+    </>
+  )
+}
+
+interface SaleMessageProps {
+  saleMessage: string | null | undefined
+}
+
+const SaleMessage: React.FC<SaleMessageProps> = ({ saleMessage }) => {
+  if (!saleMessage) {
+    return null
+  }
+
+  return (
+    <Text variant="lg-display" color="black100" data-test="SaleMessage">
+      {saleMessage}
+    </Text>
+  )
+}
+
+interface OfferDisplayProps {
+  originalPrice: string | null | undefined
+  offerPrice: string | null | undefined
+  endAt?: string | null
+  isAvailable?: boolean | null
+}
+
+const OfferDisplay: React.FC<OfferDisplayProps> = ({
+  originalPrice,
+  offerPrice,
+  endAt,
+  isAvailable,
+}) => {
+  if (!offerPrice) {
+    return null
+  }
+
+  return (
+    <>
+      <Spacer y={2} />
+      <Flex>
+        <Text variant="xs" color="blue100" backgroundColor="blue10" px={0.5}>
+          Limited-Time Offer
+        </Text>
+      </Flex>
+
+      <Spacer y={0.5} />
+
+      <Flex
+        flexDirection={["column", "row"]}
+        width="100%"
+        justifyContent="start"
+      >
+        <SaleMessage saleMessage={offerPrice} />
+        <Spacer x={1} />
+        <Text variant="md" color="black60" style={{ whiteSpace: "nowrap" }}>
+          (List price: {originalPrice})
+        </Text>
+      </Flex>
+
+      <Spacer y={0.5} />
+
+      <ExpiresInTimer expiresAt={endAt} available={isAvailable} />
+      <Spacer y={2} />
     </>
   )
 }
@@ -535,6 +597,7 @@ const ARTWORK_FRAGMENT = graphql`
     isAcquireable
     isOfferable
     isSold
+    priceListedDisplay
     listPrice {
       ... on PriceRange {
         display
@@ -566,6 +629,10 @@ const ME_FRAGMENT = graphql`
         node {
           endAt
           internalID
+          isAvailable
+          priceWithDiscount {
+            display
+          }
         }
       }
     }
