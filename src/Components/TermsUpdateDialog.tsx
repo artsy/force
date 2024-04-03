@@ -10,7 +10,7 @@ interface TermsUpdateDialogProps {}
 
 export const TermsUpdateDialog: FC<TermsUpdateDialogProps> = () => {
   const isIntegrity = getENV("USER_AGENT") === "ArtsyIntegrity"
-
+  const isDevelopment = getENV("NODE_ENV") === "development"
   const isTermsUpdateActive = useFeatureFlag("diamond_new-terms-and-conditions")
 
   const [isDisplayable, setIsDisplayable] = useState(false)
@@ -21,13 +21,13 @@ export const TermsUpdateDialog: FC<TermsUpdateDialogProps> = () => {
   }
 
   useEffect(() => {
-    if (isIntegrity || !isTermsUpdateActive) return
+    if (isDevelopment || isIntegrity || !isTermsUpdateActive) return
 
     const isDismissed = Cookies.get(TERMS_UPDATE_DIALOG_KEY)
     if (isDismissed) return
 
     setIsDisplayable(true)
-  }, [isIntegrity, isTermsUpdateActive])
+  }, [isDevelopment, isIntegrity, isTermsUpdateActive])
 
   if (!isDisplayable) {
     return null
