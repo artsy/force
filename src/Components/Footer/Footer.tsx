@@ -298,7 +298,7 @@ const PolicyLinks = () => {
               Terms and Conditions
             </FooterLink>
 
-            <FooterLink color="black60" mr={1} to="/supplemental-auction-COS">
+            <FooterLink color="black60" mr={1} to="/supplemental-cos">
               Auction Supplement
             </FooterLink>
 
