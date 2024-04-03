@@ -39,7 +39,7 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
         )}
       </Text>
 
-      <Flex>
+      <Flex gap={1}>
         <Box minWidth={120} maxWidth="35%">
           <Select
             error={!!error}
