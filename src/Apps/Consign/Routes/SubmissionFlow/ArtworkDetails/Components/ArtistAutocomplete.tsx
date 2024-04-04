@@ -96,8 +96,8 @@ export const ArtistAutoComplete: React.FC<{
           const options = extractNodes(suggestions)
           setSuggestions(
             options.map((option: any) => ({
-              text: option.displayLabel!,
-              value: option.internalID!,
+              text: option.displayLabel,
+              value: option.internalID,
               option,
             }))
           )
@@ -167,9 +167,14 @@ export const ArtistAutoComplete: React.FC<{
         ) : (
           <Box width={44} height={44} backgroundColor="black10" />
         )}
-        <Text ml={1} variant="sm-display">
-          {option.text}
-        </Text>
+        <Flex flexDirection={"column"}>
+          <Text ml={1} variant="sm-display">
+            {option.text}
+          </Text>
+          <Text ml={1} lineHeight={1.5} variant="sm-display" color="black60">
+            {option.option?.formattedNationalityAndBirthday}
+          </Text>
+        </Flex>
       </Flex>
     )
   }
@@ -226,7 +231,7 @@ const fetchSuggestions = async (
                 internalID
                 isPersonalArtist
                 image {
-                  cropped(width: 44, height: 44) {
+                  cropped(width: 50, height: 50) {
                     height
                     src
                     srcSet

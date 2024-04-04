@@ -11,9 +11,7 @@ jest.mock("System/Router/useRouter", () => ({
   }),
 }))
 
-jest.mock("System/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(),
-}))
+jest.mock("System/useFeatureFlag")
 
 describe("Footer", () => {
   const getWrapper = (breakpoint: Breakpoint) =>
@@ -104,14 +102,14 @@ describe("Footer", () => {
       expect(wrapper.html()).toContain("/buyer-guarantee")
     })
 
-    describe("when diamond_new-terms-and-conditions is enabled", () => {
-      beforeEach(() => {
+    describe("when new footer links are enabled", () => {
+      beforeAll(() => {
         ;(useFeatureFlag as jest.Mock).mockImplementation(
           (f: string) => f === "diamond_new-terms-and-conditions"
         )
       })
 
-      afterEach(() => {
+      afterAll(() => {
         ;(useFeatureFlag as jest.Mock).mockReset()
       })
 
@@ -122,7 +120,7 @@ describe("Footer", () => {
         expect(wrapper.html()).toContain("/terms")
 
         expect(wrapper.text()).toContain("Auction Supplement")
-        expect(wrapper.html()).toContain("/supplemental-auction-COS")
+        expect(wrapper.html()).toContain("/supplemental-cos")
 
         expect(wrapper.text()).toContain("Buyer Guarantee")
         expect(wrapper.html()).toContain("/buyer-guarantee")
@@ -172,13 +170,13 @@ describe("Footer", () => {
     })
 
     describe("when diamond_new-terms-and-conditions is enabled", () => {
-      beforeEach(() => {
+      beforeAll(() => {
         ;(useFeatureFlag as jest.Mock).mockImplementation(
           (f: string) => f === "diamond_new-terms-and-conditions"
         )
       })
 
-      afterEach(() => {
+      afterAll(() => {
         ;(useFeatureFlag as jest.Mock).mockReset()
       })
 
@@ -189,7 +187,7 @@ describe("Footer", () => {
         expect(wrapper.html()).toContain("/terms")
 
         expect(wrapper.text()).toContain("Auction Supplement")
-        expect(wrapper.html()).toContain("/supplemental-auction-COS")
+        expect(wrapper.html()).toContain("/supplemental-cos")
 
         expect(wrapper.text()).toContain("Buyer Guarantee")
         expect(wrapper.html()).toContain("/buyer-guarantee")

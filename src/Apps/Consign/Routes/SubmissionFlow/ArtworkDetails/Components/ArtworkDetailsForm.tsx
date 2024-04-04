@@ -231,6 +231,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             onSelect={artist => setFieldValue("artistId", artist?.internalID)}
             onError={() => handleAutosuggestError(true)}
             title="Artist"
+            required
           />
         </Column>
         <Column span={6} mt={[4, 0]}>
@@ -242,6 +243,8 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.year}
+            required
+            error={touched.year && errors.year}
           />
         </Column>
       </GridColumns>
@@ -255,6 +258,8 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.title}
+            required
+            error={touched.title && errors.title}
           />
         </Column>
         <Column span={6} mt={[4, 0]}>
@@ -266,6 +271,8 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             onSelect={selected => setFieldValue("category", selected)}
+            required
+            error={touched.category && errors.category}
           />
         </Column>
       </GridColumns>
@@ -279,6 +286,8 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.materials}
+            required
+            error={touched.materials && errors.materials}
           />
         </Column>
       </GridColumns>
@@ -302,6 +311,8 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             onSelect={selected => setFieldValue("rarity", selected)}
+            required
+            error={touched.rarity && errors.rarity}
           />
         </Column>
         <Column display="flex" span={6}>
@@ -321,6 +332,8 @@ export const ArtworkDetailsForm: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionNumber}
+                required
+                error={touched.editionNumber && errors.editionNumber}
               />
               <Box px={[0.5, 2]} mt={2}>
                 /
@@ -333,6 +346,8 @@ export const ArtworkDetailsForm: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionSize}
+                required
+                error={touched.editionSize && errors.editionSize}
               />
             </Flex>
           )}
@@ -351,6 +366,8 @@ export const ArtworkDetailsForm: React.FC = () => {
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.height}
+              required
+              error={touched.height && errors.height}
             />
 
             <LabeledInput
@@ -362,6 +379,8 @@ export const ArtworkDetailsForm: React.FC = () => {
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.width}
+              required
+              error={touched.width && errors.width}
             />
           </Flex>
         </Column>
@@ -413,6 +432,8 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.provenance}
+            required
+            error={touched.provenance && errors.provenance}
           />
         </Column>
         <Column display="flex" alignItems="flex-end" span={6} mt={[4, 0]}>
@@ -429,6 +450,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             onSelect={handleLocationSelect}
             onChange={handleLocationChange}
             onClick={handleLocationClick}
+            required
           />
         </Column>
       </GridColumns>

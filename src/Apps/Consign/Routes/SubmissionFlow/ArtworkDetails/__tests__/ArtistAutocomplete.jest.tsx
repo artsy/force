@@ -21,6 +21,7 @@ const results = {
         node: {
           displayLabel: "Banksy",
           internalID: "111",
+          formattedNationalityAndBirthday: "British, b. 1974",
           image: {
             cropped: {
               height: 44,
@@ -31,7 +32,13 @@ const results = {
           },
         },
       },
-      { node: { displayLabel: "Andy Warhol", internalID: "222" } },
+      {
+        node: {
+          displayLabel: "Andy Warhol",
+          formattedNationalityAndBirthday: "American, 1928–1987",
+          internalID: "222",
+        },
+      },
     ],
   },
 }
@@ -158,7 +165,21 @@ describe("ArtistAutocomplete", () => {
       const suggestions = wrapper.find(optionsSelector)
 
       suggestions.forEach((node, idx) => {
-        expect(node.text()).toBe(correctSuggestionsLabels[idx])
+        expect(node.text()).toContain(correctSuggestionsLabels[idx])
+      })
+    })
+
+    it("render disambiguating info", async () => {
+      const correctDisambiguatingInfo = [
+        "British, b. 1974",
+        "American, 1928–1987",
+      ]
+      await simulateTyping(wrapper, "Ban")
+
+      const suggestions = wrapper.find(optionsSelector)
+
+      suggestions.forEach((node, idx) => {
+        expect(node.text()).toContain(correctDisambiguatingInfo[idx])
       })
     })
 

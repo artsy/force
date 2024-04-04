@@ -277,9 +277,7 @@ export const Footer: React.FC<FooterProps> = props => {
 
 const PolicyLinks = () => {
   const { CCPARequestComponent, showCCPARequest } = useCCPARequest()
-  const newTermsAndConditionsEnabled = useFeatureFlag(
-    "diamond_new-terms-and-conditions"
-  )
+  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
 
   return (
     <>
@@ -294,13 +292,13 @@ const PolicyLinks = () => {
       >
         <Flex mr={1}>© {new Date().getFullYear()} Artsy</Flex>
 
-        {newTermsAndConditionsEnabled ? (
+        {showNewDisclaimer ? (
           <>
             <FooterLink color="black60" mr={1} to="/terms">
               Terms and Conditions
             </FooterLink>
 
-            <FooterLink color="black60" mr={1} to="/supplemental-auction-COS">
+            <FooterLink color="black60" mr={1} to="/supplemental-cos">
               Auction Supplement
             </FooterLink>
 

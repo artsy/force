@@ -29,23 +29,15 @@ jest.mock("Utils/device", () => ({
   },
 }))
 
-// mocks the country code hook to return a specific country code
-jest.mock("Components/AuthDialog/Hooks/useCountryCode", () => ({
-  useCountryCode: jest.fn(),
-}))
-
-// mocks the feature flag hook to enable the new disclaimer
-jest.mock("System/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(),
-}))
+jest.mock("Components/AuthDialog/Hooks/useCountryCode")
+jest.mock("System/useFeatureFlag")
 
 describe("AuthDialogSignUp", () => {
-  beforeEach(() => {
-    const useCountryCodeMock = jest.fn().mockReturnValue({
+  beforeAll(() => {
+    ;(useCountryCode as jest.Mock).mockImplementation(() => ({
       loading: false,
       countryCode: "US",
-    })
-    ;(useCountryCode as jest.Mock).mockImplementation(useCountryCodeMock)
+    }))
   })
 
   it("renders correctly", () => {
@@ -96,20 +88,18 @@ describe("AuthDialogSignUp", () => {
   })
 
   describe("when the user is in a GDPR country", () => {
-    beforeEach(() => {
-      const useCountryCodeMock = jest.fn().mockReturnValue({
+    beforeAll(() => {
+      ;(useCountryCode as jest.Mock).mockImplementation(() => ({
         loading: false,
         countryCode: "DE",
-      })
-      ;(useCountryCode as jest.Mock).mockImplementation(useCountryCodeMock)
+      }))
     })
 
-    afterEach(() => {
-      const useCountryCodeMock = jest.fn().mockReturnValue({
+    afterAll(() => {
+      ;(useCountryCode as jest.Mock).mockImplementation(() => ({
         loading: false,
         countryCode: "US",
-      })
-      ;(useCountryCode as jest.Mock).mockImplementation(useCountryCodeMock)
+      }))
     })
 
     it("renders a disclaimer without the bit about receiving emails", () => {
@@ -122,12 +112,18 @@ describe("AuthDialogSignUp", () => {
   })
 
   describe("when the country code is loading", () => {
-    beforeEach(() => {
-      const useCountryCodeMock = jest.fn().mockReturnValue({
+    beforeAll(() => {
+      ;(useCountryCode as jest.Mock).mockImplementation(() => ({
         loading: true,
         countryCode: "US",
-      })
-      ;(useCountryCode as jest.Mock).mockImplementation(useCountryCodeMock)
+      }))
+    })
+
+    afterAll(() => {
+      ;(useCountryCode as jest.Mock).mockImplementation(() => ({
+        loading: false,
+        countryCode: "US",
+      }))
     })
 
     it("renders a skeleton disclaimer", () => {
@@ -139,10 +135,14 @@ describe("AuthDialogSignUp", () => {
     })
 
     describe("when the new disclaimer is enabled", () => {
-      beforeEach(() => {
+      beforeAll(() => {
         ;(useFeatureFlag as jest.Mock).mockImplementation(
           (f: string) => f === "diamond_new-terms-and-conditions"
         )
+      })
+
+      afterAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockReset()
       })
 
       it("renders a disclaimer with the new text", () => {
@@ -156,10 +156,14 @@ describe("AuthDialogSignUp", () => {
   })
 
   describe("when the new disclaimer is enabled", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       ;(useFeatureFlag as jest.Mock).mockImplementation(
         (f: string) => f === "diamond_new-terms-and-conditions"
       )
+    })
+
+    afterAll(() => {
+      ;(useFeatureFlag as jest.Mock).mockReset()
     })
 
     it("renders a disclaimer with the new text", () => {

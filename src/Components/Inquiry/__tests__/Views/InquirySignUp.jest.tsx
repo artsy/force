@@ -78,10 +78,14 @@ describe("InquirySignUp", () => {
   })
 
   describe("when the new disclaimer is enabled", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       ;(useFeatureFlag as jest.Mock).mockImplementation(
         (f: string) => f === "diamond_new-terms-and-conditions"
       )
+    })
+
+    afterAll(() => {
+      ;(useFeatureFlag as jest.Mock).mockReset()
     })
 
     it("renders the new disclaimer", () => {
@@ -96,6 +100,8 @@ describe("InquirySignUp", () => {
       expect(
         screen.getByRole("link", { name: "Privacy Policy" })
       ).toHaveAttribute("href", "/privacy")
+
+      // TODO: remove this assertion when deprecating diamond_new-terms-and-conditions
       expect(
         screen.queryByRole("link", { name: "Conditions of Sale" })
       ).not.toBeInTheDocument()
