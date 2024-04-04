@@ -36,7 +36,9 @@ const { renderWithRelay } = setupTestWrapperTL<
 describe("PartnerOfferCreatedNotification", () => {
   beforeAll(() => {
     ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "onyx_new_notification_page"
+      featureName =>
+        featureName === "onyx_new_notification_page" ||
+        featureName === "emerald_partner-offers-to-artwork-page"
     )
   })
 
@@ -67,6 +69,13 @@ describe("PartnerOfferCreatedNotification", () => {
     expect(screen.getByTestId("partner-offer-artwork-button")).toHaveAttribute(
       "href",
       "/partner-offer/offer-id/checkout"
+    )
+    // View Work button
+    expect(
+      screen.getByTestId("partner-offer-view-artwork-button")
+    ).toHaveAttribute(
+      "href",
+      "/artwork/artwork-one?partner_offer_id=<PartnerOffer-mock-id-1>"
     )
   })
 
@@ -126,7 +135,7 @@ const notification = (
         note: note,
         priceWithDiscount: {
           display: "$900",
-        }
+        },
       },
     },
     offerArtworksConnection: {
