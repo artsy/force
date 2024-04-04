@@ -257,7 +257,7 @@ export const Details: React.FC<DetailsProps> = ({
   }
 
   return (
-    <Box>
+    <Box minHeight={105}>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Join separator={<Spacer x={1} />}>
