@@ -99,7 +99,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           </Box>
         </Box>
 
-        <Box height={115} display="flex" alignItems="flex-start">
+        <Box height={105} display="flex" alignItems="flex-start">
           <Metadata
             artwork={artwork}
             hideSaleInfo={hideSaleInfo}

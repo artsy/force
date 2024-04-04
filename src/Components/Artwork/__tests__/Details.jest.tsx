@@ -377,6 +377,25 @@ describe("Details", () => {
     })
   })
 
+  describe("Exclusive Access", () => {
+    it("renders the Exclusive Access text when the artwork is unlisted", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        visibilityLevel: "UNLISTED",
+      }
+
+      const wrapper = await getWrapper(data)
+
+      expect(wrapper.html()).toContain("Exclusive Access")
+    })
+
+    it("does not render the Exclusive Access text when the artwork is listed", async () => {
+      const wrapper = await getWrapper(artworkInAuction)
+
+      expect(wrapper.html()).not.toContain("Exclusive Access")
+    })
+  })
+
   describe("Show High Demand Icon", () => {
     it("renders icon for MyCollectionArtwork in high demand", async () => {
       props = {
