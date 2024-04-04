@@ -516,6 +516,7 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
       isP1: true,
     },
   },
+  visibilityLevel: "LISTED",
   marketPriceInsights: {
     demandRank: 0.9,
   },
