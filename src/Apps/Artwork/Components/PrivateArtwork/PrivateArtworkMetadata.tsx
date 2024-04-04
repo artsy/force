@@ -36,9 +36,9 @@ export const PrivateArtworkMetadata: React.FC<PrivateArtworkMetadataProps> = ({
   return (
     <GridColumns>
       <Column span={4}>
-        {data.conditionHistory?.details && (
+        {data.conditionDescription?.details && (
           <MetadataDetailItem title="Condition">
-            <HTML variant="sm">{data.conditionHistory?.details}</HTML>
+            <HTML variant="sm">{data.conditionDescription?.details}</HTML>
           </MetadataDetailItem>
         )}
       </Column>
