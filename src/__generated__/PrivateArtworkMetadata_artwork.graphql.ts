@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dda600a2779e49e343d4f73174f7e5c4>>
+ * @generated SignedSource<<383b1a96621a0f109466c50331eec245>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrivateArtworkMetadata_artwork$data = {
-  readonly title: string | null | undefined;
+  readonly conditionDescription: {
+    readonly details: string | null | undefined;
+  } | null | undefined;
+  readonly exhibitionHistory: string | null | undefined;
+  readonly provenance: string | null | undefined;
   readonly " $fragmentType": "PrivateArtworkMetadata_artwork";
 };
 export type PrivateArtworkMetadata_artwork$key = {
@@ -28,8 +32,33 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "ArtworkInfoRow",
+      "kind": "LinkedField",
+      "name": "conditionDescription",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "details",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
-      "name": "title",
+      "name": "provenance",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "exhibitionHistory",
       "storageKey": null
     }
   ],
@@ -37,6 +66,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "7ca0f92107ec7eaa86b4f545a355c586";
+(node as any).hash = "3f0a81b2f5b81720295dcc1c9c96aa0a";
 
 export default node;
