@@ -81,6 +81,7 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
           endAt={partnerOffer.endAt}
           note={partnerOffer.note}
           available={partnerOffer.isAvailable}
+          partnerOfferID={partnerOffer.internalID}
           priceWithDiscount={partnerOffer.priceWithDiscount?.display}
         />
       </Flex>
@@ -95,6 +96,7 @@ export const PartnerOfferCreatedNotificationFragment = graphql`
     item {
       ... on PartnerOfferCreatedNotificationItem {
         partnerOffer {
+          internalID
           endAt
           isAvailable
           note
