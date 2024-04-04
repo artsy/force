@@ -82,7 +82,7 @@ describe("HomeAuctionLotsRail", () => {
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtworkGroup",
-        context_module: "auctionLots",
+        context_module: "topAuctionLotsRail",
         context_page_owner_type: "home",
         destination_page_owner_id: "test-internal-id",
         destination_page_owner_slug: "test-href",

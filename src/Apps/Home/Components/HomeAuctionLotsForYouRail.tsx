@@ -45,13 +45,11 @@ const HomeAuctionLotsForYouRail: React.FC<HomeAuctionLotsForYouRailProps> = ({
           <ShelfArtworkFragmentContainer
             artwork={artwork}
             key={index}
-            contextModule={ContextModule.auctionLots}
             lazyLoad
             onClick={() => {
-              //TODO: add tracking for Auction Lots For You
               const trackingEvent: ClickedArtworkGroup = {
                 action: ActionType.clickedArtworkGroup,
-                context_module: ContextModule.auctionLots,
+                context_module: ContextModule.lotsForYouRail,
                 context_page_owner_type: OwnerType.home,
                 destination_page_owner_id: artwork.internalID,
                 destination_page_owner_slug: artwork.slug,
