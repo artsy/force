@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de0031d2cc558ef9e99abf9187e842e2>>
+ * @generated SignedSource<<afc141cc10642f9411669d13d09ff56f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,10 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CollectorProfileArtistsListQuery$variables = {
+export type CollectorProfileArtistsListArtistsQuery$variables = {
   after?: string | null | undefined;
 };
-export type CollectorProfileArtistsListQuery$data = {
+export type CollectorProfileArtistsListArtistsQuery$data = {
   readonly me: {
     readonly userInterestsConnection: {
       readonly edges: ReadonlyArray<{
@@ -24,9 +24,9 @@ export type CollectorProfileArtistsListQuery$data = {
     } | null | undefined;
   } | null | undefined;
 };
-export type CollectorProfileArtistsListQuery = {
-  response: CollectorProfileArtistsListQuery$data;
-  variables: CollectorProfileArtistsListQuery$variables;
+export type CollectorProfileArtistsListArtistsQuery = {
+  response: CollectorProfileArtistsListArtistsQuery$data;
+  variables: CollectorProfileArtistsListArtistsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -80,7 +80,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CollectorProfileArtistsListQuery",
+    "name": "CollectorProfileArtistsListArtistsQuery",
     "selections": [
       {
         "alias": null,
@@ -130,7 +130,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CollectorProfileArtistsListQuery",
+    "name": "CollectorProfileArtistsListArtistsQuery",
     "selections": [
       {
         "alias": null,
@@ -332,16 +332,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "10059cb582bdc31b7d56bb74a1b0d5f2",
+    "cacheID": "bdb5979237dcb3efb7f94dba782ed0b9",
     "id": null,
     "metadata": {},
-    "name": "CollectorProfileArtistsListQuery",
+    "name": "CollectorProfileArtistsListArtistsQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileArtistsListQuery(\n  $after: String\n) {\n  me {\n    userInterestsConnection(first: 10, after: $after, interestType: ARTIST) {\n      totalCount\n      edges {\n        ...CollectorProfileArtistsListArtist_userInterestEdge\n        internalID\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query CollectorProfileArtistsListArtistsQuery(\n  $after: String\n) {\n  me {\n    userInterestsConnection(first: 10, after: $after, interestType: ARTIST) {\n      totalCount\n      edges {\n        ...CollectorProfileArtistsListArtist_userInterestEdge\n        internalID\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ca75691ce5b79ab95b7bb82229ec2476";
+(node as any).hash = "6d5461d527faabe29ef1a1ba1d290dc9";
 
 export default node;

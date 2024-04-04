@@ -1,8 +1,7 @@
-import { Stack, Text } from "@artsy/palette"
-import { FC } from "react"
-import { graphql } from "react-relay"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
-import { CollectorProfileArtistsListQuery } from "__generated__/CollectorProfileArtistsListQuery.graphql"
+import { Stack, Text, useDidMount } from "@artsy/palette"
+import { FC, Suspense } from "react"
+import { graphql, useLazyLoadQuery } from "react-relay"
+import { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
 import {
   CollectorProfileArtistsListArtist,
   CollectorProfileArtistsListArtistSkeleton,
@@ -12,11 +11,7 @@ import { compact } from "lodash"
 interface CollectorProfileArtistsListProps {}
 
 export const CollectorProfileArtistsList: FC<CollectorProfileArtistsListProps> = () => {
-  const { data, loading } = useClientQuery<CollectorProfileArtistsListQuery>({
-    query: COLLECTOR_PROFILE_ARTISTS_LIST_QUERY,
-  })
-
-  const userInterestEdges = compact(data?.me?.userInterestsConnection?.edges)
+  const isMounted = useDidMount()
 
   return (
     <Stack gap={2}>
@@ -46,28 +41,51 @@ export const CollectorProfileArtistsList: FC<CollectorProfileArtistsListProps> =
         </Text>
       </Stack>
 
-      {loading ? (
-        new Array(10).fill(null).map((_, i) => {
-          return <CollectorProfileArtistsListArtistSkeleton key={i} />
-        })
+      {isMounted ? (
+        <Suspense fallback={<CollectorProfileArtistsListPlaceholder />}>
+          <CollectorProfileArtistsListArtists />
+        </Suspense>
       ) : (
-        <>
-          {userInterestEdges.map(userInterestEdge => {
-            return (
-              <CollectorProfileArtistsListArtist
-                key={userInterestEdge.internalID}
-                userInterestEdge={userInterestEdge}
-              />
-            )
-          })}
-        </>
+        <CollectorProfileArtistsListPlaceholder />
       )}
     </Stack>
   )
 }
 
-const COLLECTOR_PROFILE_ARTISTS_LIST_QUERY = graphql`
-  query CollectorProfileArtistsListQuery($after: String) {
+const CollectorProfileArtistsListPlaceholder: FC = () => {
+  return (
+    <>
+      {new Array(10).fill(null).map((_, i) => {
+        return <CollectorProfileArtistsListArtistSkeleton key={i} />
+      })}
+    </>
+  )
+}
+
+const CollectorProfileArtistsListArtists: FC = () => {
+  const { me } = useLazyLoadQuery<CollectorProfileArtistsListArtistsQuery>(
+    QUERY,
+    {}
+  )
+
+  const userInterestEdges = compact(me?.userInterestsConnection?.edges)
+
+  return (
+    <>
+      {userInterestEdges.map(userInterestEdge => {
+        return (
+          <CollectorProfileArtistsListArtist
+            key={userInterestEdge.internalID}
+            userInterestEdge={userInterestEdge}
+          />
+        )
+      })}
+    </>
+  )
+}
+
+const QUERY = graphql`
+  query CollectorProfileArtistsListArtistsQuery($after: String) {
     me {
       userInterestsConnection(first: 10, after: $after, interestType: ARTIST) {
         totalCount
