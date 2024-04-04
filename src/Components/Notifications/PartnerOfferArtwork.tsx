@@ -155,6 +155,16 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
         width="100%"
         maxWidth={CARD_MAX_WIDTH}
       >
+        <Button
+          // @ts-ignore
+          as={RouterLink}
+          to={href}
+          data-testid="partner-offer-artwork-button"
+          mr={partnerOfferVisibilityEnabled && fullyAvailable ? 2 : 0}
+          flex={partnerOfferVisibilityEnabled && fullyAvailable ? 1 : [1, 0.5]}
+        >
+          {buttonText}
+        </Button>
         {partnerOfferVisibilityEnabled && fullyAvailable && (
           <Button
             // @ts-ignore
@@ -162,21 +172,11 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
             to={artworkListingHref}
             data-testid="partner-offer-view-artwork-button"
             flex={1}
-            mr={2}
             variant={"secondaryBlack"}
           >
             {"View Work"}
           </Button>
         )}
-        <Button
-          // @ts-ignore
-          as={RouterLink}
-          to={href}
-          data-testid="partner-offer-artwork-button"
-          flex={partnerOfferVisibilityEnabled && fullyAvailable ? 1 : undefined}
-        >
-          {buttonText}
-        </Button>
       </Box>
     </ManageArtworkForSavesProvider>
   )
