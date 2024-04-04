@@ -99,15 +99,17 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           </Box>
         </Box>
 
-        <Metadata
-          artwork={artwork}
-          hideSaleInfo={hideSaleInfo}
-          isHovered={isHovered}
-          contextModule={contextModule}
-          showSaveButton
-          disableRouterLinking
-          maxWidth="100%"
-        />
+        <Box height={115} display="flex" alignItems="flex-start">
+          <Metadata
+            artwork={artwork}
+            hideSaleInfo={hideSaleInfo}
+            isHovered={isHovered}
+            contextModule={contextModule}
+            showSaveButton
+            disableRouterLinking
+            maxWidth="100%"
+          />
+        </Box>
 
         {children}
       </RouterLink>
