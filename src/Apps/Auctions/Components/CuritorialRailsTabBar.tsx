@@ -20,15 +20,14 @@ export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
   return (
     <Tabs mb={4}>
       {showWorksForYouTab && (
-        <Tab name="Works For You">
+        <Tab name="Lots for You">
           <Join separator={<Spacer y={2} />}>
-            <MyBidsFragmentContainer me={viewer.me!} />
-
+            {viewer.me && <MyBidsFragmentContainer me={viewer.me} />}
             <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
           </Join>
         </Tab>
       )}
-      <Tab name="Current Highlights">
+      <Tab name="Curators’ Picks">
         <StandoutLotsRailFragmentContainer viewer={viewer} />
       </Tab>
       <Tab name="Trending Lots">

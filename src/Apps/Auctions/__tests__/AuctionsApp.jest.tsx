@@ -98,7 +98,7 @@ describe("AuctionsApp", () => {
 
     const { wrapper } = getWrapper()
     const html = wrapper.html()
-    expect(html).toContain("Current Highlights")
+    expect(html).toContain("Curators’ Picks")
   })
 
   it("does not render auctions if they are not present", () => {

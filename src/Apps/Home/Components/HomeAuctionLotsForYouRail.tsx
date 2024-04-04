@@ -106,8 +106,6 @@ export const HomeAuctionLotsForYouRailQueryRenderer: React.FC = () => {
           artworksForUser(
             includeBackfill: true
             first: 20
-            maxWorksPerArtist: 3
-            version: "C"
             onlyAtAuction: true
           ) {
             ...HomeAuctionLotsForYouRail_artworksForUser
