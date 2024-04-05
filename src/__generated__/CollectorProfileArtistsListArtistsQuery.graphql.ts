@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afc141cc10642f9411669d13d09ff56f>>
+ * @generated SignedSource<<cfc4b01eb62dee3f2ff9e038ab791ddb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -157,6 +157,8 @@ return {
                 "name": "edges",
                 "plural": true,
                 "selections": [
+                  (v4/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -316,9 +318,7 @@ return {
                       }
                     ],
                     "storageKey": null
-                  },
-                  (v3/*: any*/),
-                  (v4/*: any*/)
+                  }
                 ],
                 "storageKey": null
               }
@@ -332,12 +332,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bdb5979237dcb3efb7f94dba782ed0b9",
+    "cacheID": "0d1aa8486141841787b756a66ae82c79",
     "id": null,
     "metadata": {},
     "name": "CollectorProfileArtistsListArtistsQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileArtistsListArtistsQuery(\n  $after: String\n) {\n  me {\n    userInterestsConnection(first: 10, after: $after, interestType: ARTIST) {\n      totalCount\n      edges {\n        ...CollectorProfileArtistsListArtist_userInterestEdge\n        internalID\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query CollectorProfileArtistsListArtistsQuery(\n  $after: String\n) {\n  me {\n    userInterestsConnection(first: 10, after: $after, interestType: ARTIST) {\n      totalCount\n      edges {\n        ...CollectorProfileArtistsListArtist_userInterestEdge\n        internalID\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

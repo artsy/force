@@ -1,0 +1,111 @@
+import { screen } from "@testing-library/react"
+import { PrivateArtworkMetadata } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkMetadata"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
+import { PrivateArtworkMetadataQuery } from "__generated__/PrivateArtworkMetadataQuery.graphql"
+
+jest.unmock("react-relay")
+jest.mock("System/useFeatureFlag", () => {
+  return {
+    useFeatureFlag: jest.fn().mockReturnValue(true),
+  }
+})
+
+describe("PrivateArtworkMetadata", () => {
+  const { renderWithRelay } = setupTestWrapperTL<PrivateArtworkMetadataQuery>({
+    Component: props => <PrivateArtworkMetadata artwork={props.artwork!} />,
+    query: graphql`
+      query PrivateArtworkMetadataQuery {
+        artwork(id: "foo") {
+          ...PrivateArtworkMetadata_artwork
+        }
+      }
+    `,
+  })
+
+  it("displays condition info when condition info is present", async () => {
+    renderWithRelay({
+      Artwork: () => {
+        return {
+          conditionDescription: {
+            details: "Test Condition Description Details",
+          },
+          visibilityLevel: "UNLISTED",
+        }
+      },
+    })
+    expect(
+      screen.queryByText("Test Condition Description Details")
+    ).toBeInTheDocument()
+  })
+
+  it("does not display condition info when condition info is not present", async () => {
+    renderWithRelay({
+      Artwork: () => {
+        return {
+          conditionDescription: {
+            details: null,
+          },
+          visibilityLevel: "UNLISTED",
+        }
+      },
+    })
+    expect(
+      screen.queryByText("Test Condition Description Details")
+    ).not.toBeInTheDocument()
+  })
+
+  it("displays provenance info when provenance is present", async () => {
+    renderWithRelay({
+      Artwork: () => {
+        return {
+          provenance: "Test Provenance Details",
+          visibilityLevel: "UNLISTED",
+        }
+      },
+    })
+    expect(screen.queryByText("Test Provenance Details")).toBeInTheDocument()
+  })
+
+  it("does not display provenance info when provenance is not present", async () => {
+    renderWithRelay({
+      Artwork: () => {
+        return {
+          provenance: null,
+          visibilityLevel: "UNLISTED",
+        }
+      },
+    })
+    expect(
+      screen.queryByText("Test Provenance Details")
+    ).not.toBeInTheDocument()
+  })
+
+  it("displays exhibition history when exhibition history is present", async () => {
+    renderWithRelay({
+      Artwork: () => {
+        return {
+          exhibitionHistory: "Test Exhibition History Details",
+          visibilityLevel: "UNLISTED",
+        }
+      },
+    })
+    expect(
+      screen.queryByText("Test Exhibition History Details")
+    ).toBeInTheDocument()
+  })
+
+  it("does not display exhibition history when exhibition history is not present", async () => {
+    renderWithRelay({
+      Artwork: () => {
+        return {
+          exhibitionHistory: null,
+          visibilityLevel: "UNLISTED",
+        }
+      },
+    })
+    expect(
+      screen.queryByText("Test Exhibition History Details")
+    ).not.toBeInTheDocument()
+  })
+})

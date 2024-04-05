@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<df0e1d90528abb4d2c864775ac8f032a>>
+ * @generated SignedSource<<5da5925cb994d872aae4e00bb8f3e0f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,7 +40,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 50
+          "value": 20
         },
         {
           "kind": "Literal",
@@ -107,13 +107,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:50,forSale:true,geneIDs:\"our-top-auction-lots\")"
+      "storageKey": "artworksConnection(first:20,forSale:true,geneIDs:\"our-top-auction-lots\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "cbd0599e8d0323de9e8db234ae442f6b";
+(node as any).hash = "23381ef077116e1e276e18689536114a";
 
 export default node;

@@ -24,6 +24,7 @@ export const ConversationArtwork: React.FC<ConversationArtworkProps> = ({
               slug
               date
               title
+              visibilityLevel
               artist {
                 name
                 slug
@@ -73,6 +74,12 @@ export const ConversationArtwork: React.FC<ConversationArtworkProps> = ({
             </Text>
             {item?.date && `, ${item?.date}`}
           </Text>
+
+          {item.visibilityLevel == "UNLISTED" && (
+            <Text display="inline" variant="xs">
+              Exclusive Access
+            </Text>
+          )}
         </Flex>
       </Flex>
 

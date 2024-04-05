@@ -154,13 +154,13 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
         justifyContent="space-between"
         width="100%"
         maxWidth={CARD_MAX_WIDTH}
+        gap={2}
       >
         <Button
           // @ts-ignore
           as={RouterLink}
           to={href}
           data-testid="partner-offer-artwork-button"
-          mr={partnerOfferVisibilityEnabled && fullyAvailable ? 2 : 0}
           flex={partnerOfferVisibilityEnabled && fullyAvailable ? 1 : [1, 0.5]}
         >
           {buttonText}

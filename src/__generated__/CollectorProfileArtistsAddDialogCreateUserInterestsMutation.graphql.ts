@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7625eb852e24fe7e1ddb5d3294a48e37>>
+ * @generated SignedSource<<ee6c80af3d3ed217d380e3b991002200>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -76,6 +76,13 @@ v3 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 };
 return {
@@ -176,6 +183,8 @@ return {
                     "name": "edges",
                     "plural": true,
                     "selections": [
+                      (v3/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -201,13 +210,7 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "internalID",
-                                "storageKey": null
-                              },
+                              (v4/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -341,8 +344,7 @@ return {
                           }
                         ],
                         "storageKey": null
-                      },
-                      (v3/*: any*/)
+                      }
                     ],
                     "storageKey": null
                   }
@@ -359,12 +361,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "acae6199fc9d0bafbbd9f4087ddd8169",
+    "cacheID": "a0875c72250d77c5ab17ef161c5e3cc0",
     "id": null,
     "metadata": {},
     "name": "CollectorProfileArtistsAddDialogCreateUserInterestsMutation",
     "operationKind": "mutation",
-    "text": "mutation CollectorProfileArtistsAddDialogCreateUserInterestsMutation(\n  $input: CreateUserInterestsMutationInput!\n) {\n  createUserInterests(input: $input) {\n    me {\n      userInterestsConnection(first: 10, interestType: ARTIST) {\n        edges {\n          ...CollectorProfileArtistsListArtist_userInterestEdge\n          id\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "mutation CollectorProfileArtistsAddDialogCreateUserInterestsMutation(\n  $input: CreateUserInterestsMutationInput!\n) {\n  createUserInterests(input: $input) {\n    me {\n      userInterestsConnection(first: 10, interestType: ARTIST) {\n        edges {\n          ...CollectorProfileArtistsListArtist_userInterestEdge\n          id\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

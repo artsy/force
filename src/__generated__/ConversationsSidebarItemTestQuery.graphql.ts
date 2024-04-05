@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f937d50dc0d56d7e749aeac698c4089>>
+ * @generated SignedSource<<2a55152e6e2cfaefe84964592d4581e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -273,6 +273,13 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "visibilityLevel",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "Artist",
                         "kind": "LinkedField",
                         "name": "artist",
@@ -332,7 +339,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8b0455d8a139ae48b19b8bd94fb8ac88",
+    "cacheID": "aef735f3bd24309f932f25e87f3ea9d3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -404,6 +411,15 @@ return {
         },
         "conversation.items.item.image.url": (v6/*: any*/),
         "conversation.items.item.title": (v6/*: any*/),
+        "conversation.items.item.visibilityLevel": {
+          "enumValues": [
+            "LISTED",
+            "UNLISTED"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "Visibility"
+        },
         "conversation.lastMessageAt": (v6/*: any*/),
         "conversation.orderConnection": {
           "enumValues": null,
@@ -437,7 +453,7 @@ return {
     },
     "name": "ConversationsSidebarItemTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarItemTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationsSidebarItem_conversation\n    id\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarItemTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationsSidebarItem_conversation\n    id\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        visibilityLevel\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
