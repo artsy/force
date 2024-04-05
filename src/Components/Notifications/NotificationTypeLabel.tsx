@@ -4,7 +4,6 @@ import {
   NotificationTypeLabel_notification$key,
   NotificationTypesEnum,
 } from "__generated__/NotificationTypeLabel_notification.graphql"
-import { extractNodes } from "Utils/extractNodes"
 
 interface Props {
   notification: NotificationTypeLabel_notification$key
@@ -13,7 +12,7 @@ interface Props {
 export const NotificationTypeLabel: React.FC<Props> = ({ notification }) => {
   const data = useFragment(NotificationTypeLabelFragment, notification)
 
-  const { notificationType, publishedAt, item } = data
+  const { notificationType, publishedAt } = data
 
   const notificationTypeLabel = getNotificationTypeLabel(notificationType)
 
@@ -21,9 +20,6 @@ export const NotificationTypeLabel: React.FC<Props> = ({ notification }) => {
     switch (notificationType) {
       case "PARTNER_OFFER_CREATED":
         return null
-      case "PARTNER_SHOW_OPENED":
-        const show = extractNodes(item?.showsConnection)[0]
-        return `${show?.startAt} – ${show?.endAt}`
       default:
         return publishedAt
     }
@@ -55,22 +51,6 @@ const NotificationTypeLabelFragment = graphql`
   fragment NotificationTypeLabel_notification on Notification {
     notificationType
     publishedAt(format: "RELATIVE")
-    item {
-      ... on PartnerOfferCreatedNotificationItem {
-        available
-        expiresAt
-      }
-      ... on ShowOpenedNotificationItem {
-        showsConnection {
-          edges {
-            node {
-              startAt(format: "MMMM D")
-              endAt(format: "MMMM D")
-            }
-          }
-        }
-      }
-    }
   }
 `
 

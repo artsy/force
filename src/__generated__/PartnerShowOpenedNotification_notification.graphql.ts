@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d185b54e29f1600c755207f2e9f83bac>>
+ * @generated SignedSource<<67ce3355cc42b34a36dfa498c8825576>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,6 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerShowOpenedNotification_notification$data = {
   readonly headline: string;
@@ -21,16 +20,12 @@ export type PartnerShowOpenedNotification_notification$data = {
     readonly showsConnection?: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly artworksConnection: {
-            readonly totalCount: number | null | undefined;
-            readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
-          } | null | undefined;
+          readonly internalID: string;
+          readonly " $fragmentSpreads": FragmentRefs<"NotificationPartnerShow_show">;
         } | null | undefined;
       } | null | undefined> | null | undefined;
     } | null | undefined;
   } | null | undefined;
-  readonly notificationType: NotificationTypesEnum;
-  readonly targetHref: string;
   readonly " $fragmentSpreads": FragmentRefs<"NotificationTypeLabel_notification">;
   readonly " $fragmentType": "PartnerShowOpenedNotification_notification";
 };
@@ -114,32 +109,15 @@ const node: ReaderFragment = {
                       "selections": [
                         {
                           "alias": null,
-                          "args": [
-                            {
-                              "kind": "Literal",
-                              "name": "first",
-                              "value": 2
-                            }
-                          ],
-                          "concreteType": "ArtworkConnection",
-                          "kind": "LinkedField",
-                          "name": "artworksConnection",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "args": null,
-                              "kind": "FragmentSpread",
-                              "name": "ArtworkGrid_artworks"
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "totalCount",
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": "artworksConnection(first:2)"
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "internalID",
+                          "storageKey": null
+                        },
+                        {
+                          "args": null,
+                          "kind": "FragmentSpread",
+                          "name": "NotificationPartnerShow_show"
                         }
                       ],
                       "storageKey": null
@@ -158,20 +136,6 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "notificationType",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "targetHref",
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "NotificationTypeLabel_notification"
@@ -181,6 +145,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "cd83f00c9987f6d4c909155623b7b59d";
+(node as any).hash = "1762da910ab00621b46eb59b55ec19da";
 
 export default node;

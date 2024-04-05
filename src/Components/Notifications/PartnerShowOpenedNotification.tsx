@@ -6,9 +6,7 @@ import { PartnerShowOpenedNotification_notification$key } from "__generated__/Pa
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { RouterLink } from "System/Router/RouterLink"
-import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
-
-const MAX_ARTWORK_GRID_WIDTH = 600
+import { NotificationPartnerShow } from "Components/Notifications/NotificationPartnerShow"
 
 interface PartnerShowOpenedNotificationProps {
   notification: PartnerShowOpenedNotification_notification$key
@@ -22,20 +20,25 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
     notification
   )
 
-  const { headline, item, targetHref } = notificationData
+  const { headline, item } = notificationData
 
   const partner = item?.partner
   const shows = extractNodes(item?.showsConnection)
-  const show = shows[0]
-  const artworksConnection = show?.artworksConnection
 
-  if (!partner || !show) {
+  if (!partner || !shows.length) {
     return <NotificationErrorMessage />
   }
 
   return (
     <Box>
       <Text variant="lg-display">{headline}</Text>
+
+      <Spacer y={1} />
+
+      <NotificationTypeLabel notification={notificationData} />
+
+      <Spacer y={0.5} />
+
       <Text variant="xs">
         Presented by{" "}
         <RouterLink to={partner.href} data-testid="partner-link">
@@ -43,27 +46,12 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
         </RouterLink>
       </Text>
 
-      <NotificationTypeLabel notification={notificationData} />
-
       <Spacer y={4} />
 
-      <Flex maxWidth={MAX_ARTWORK_GRID_WIDTH} flexDirection="column" m="auto">
-        {!!artworksConnection && (
-          <ArtworkGrid artworks={artworksConnection} columnCount={2} />
-        )}
-
-        <Spacer y={4} />
-
-        <Flex>
-          <Button
-            // @ts-ignore
-            as="a"
-            href={targetHref}
-            data-testid="visit-show-button"
-          >
-            Visit Show
-          </Button>
-        </Flex>
+      <Flex flexDirection="column" alignItems="center">
+        {shows.map(show => (
+          <NotificationPartnerShow show={show} key={show.internalID} />
+        ))}
       </Flex>
     </Box>
   )
@@ -81,18 +69,13 @@ export const PartnerShowOpenedNotificationFragment = graphql`
         showsConnection {
           edges {
             node {
-              artworksConnection(first: 2) {
-                ...ArtworkGrid_artworks
-                totalCount
-              }
+              internalID
+              ...NotificationPartnerShow_show
             }
           }
         }
       }
     }
-    notificationType
-    targetHref
-
     ...NotificationTypeLabel_notification
   }
 `
