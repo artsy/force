@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c1097fe53bf018edc216e12ef1c77942>>
+ * @generated SignedSource<<19619ffc54cc580d0a4b249758509cb9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationArtwork_conversation$data = {
   readonly items: ReadonlyArray<{
@@ -25,6 +26,7 @@ export type ConversationArtwork_conversation$data = {
       } | null | undefined;
       readonly slug: string;
       readonly title: string | null | undefined;
+      readonly visibilityLevel: Visibility | null | undefined;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
@@ -103,6 +105,13 @@ return {
                 {
                   "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "visibilityLevel",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "Artist",
                   "kind": "LinkedField",
                   "name": "artist",
@@ -153,6 +162,6 @@ return {
 };
 })();
 
-(node as any).hash = "dd69d366f41fdb5c692852966f4100b4";
+(node as any).hash = "6d904ff795a278570e8fd68aa813c9f9";
 
 export default node;
