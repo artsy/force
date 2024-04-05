@@ -1,12 +1,9 @@
+import { Shelf, Skeleton } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Shelf, Skeleton } from "@artsy/palette"
-import { HomeAuctionLotsRail_viewer$data } from "__generated__/HomeAuctionLotsRail_viewer.graphql"
-import { HomeAuctionLotsRailQuery } from "__generated__/HomeAuctionLotsRailQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
@@ -18,33 +15,41 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 
-interface HomeAuctionLotsRailProps {
-  viewer: HomeAuctionLotsRail_viewer$data
+import { HomeAuctionLotsForYouRail_artworksForUser$data } from "__generated__/HomeAuctionLotsForYouRail_artworksForUser.graphql"
+import { HomeAuctionLotsForYouRailQuery } from "__generated__/HomeAuctionLotsForYouRailQuery.graphql"
+import { extractNodes } from "Utils/extractNodes"
+
+interface HomeAuctionLotsForYouRailProps {
+  artworksForUser: HomeAuctionLotsForYouRail_artworksForUser$data
 }
 
-const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
-  viewer,
+const HomeAuctionLotsForYouRail: React.FC<HomeAuctionLotsForYouRailProps> = ({
+  artworksForUser,
 }) => {
   const { trackEvent } = useTracking()
 
-  const artworks = extractNodes(viewer.artworksConnection)
+  const artworks = extractNodes(artworksForUser)
 
-  if (artworks.length === 0) {
+  if (!artworks || artworks?.length === 0) {
     return null
   }
 
   return (
     <Shelf>
-      {artworks.map(artwork => {
+      {artworks.map((artwork, index) => {
+        if (!artwork) {
+          return <></>
+        }
+
         return (
           <ShelfArtworkFragmentContainer
             artwork={artwork}
-            key={artwork.slug}
+            key={index}
             lazyLoad
             onClick={() => {
               const trackingEvent: ClickedArtworkGroup = {
                 action: ActionType.clickedArtworkGroup,
-                context_module: ContextModule.topAuctionLotsRail,
+                context_module: ContextModule.lotsForYouRail,
                 context_page_owner_type: OwnerType.home,
                 destination_page_owner_id: artwork.internalID,
                 destination_page_owner_slug: artwork.slug,
@@ -70,23 +75,16 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const HomeAuctionLotsRailFragmentContainer = createFragmentContainer(
-  HomeAuctionLotsRail,
+export const HomeAuctionLotsForYouRailFragmentContainer = createFragmentContainer(
+  HomeAuctionLotsForYouRail,
   {
-    viewer: graphql`
-      fragment HomeAuctionLotsRail_viewer on Viewer {
-        artworksConnection(
-          forSale: true
-          first: 20
-          geneIDs: "our-top-auction-lots"
-        ) {
-          edges {
-            node {
-              ...ShelfArtwork_artwork
-              internalID
-              slug
-              href
-            }
+    artworksForUser: graphql`
+      fragment HomeAuctionLotsForYouRail_artworksForUser on ArtworkConnection {
+        edges {
+          node {
+            internalID
+            slug
+            ...ShelfArtwork_artwork
           }
         }
       }
@@ -94,17 +92,21 @@ export const HomeAuctionLotsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeAuctionLotsRailQueryRenderer: React.FC = () => {
+export const HomeAuctionLotsForYouRailQueryRenderer: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<HomeAuctionLotsRailQuery>
+    <SystemQueryRenderer<HomeAuctionLotsForYouRailQuery>
       lazyLoad
       environment={relayEnvironment}
       query={graphql`
-        query HomeAuctionLotsRailQuery {
-          viewer {
-            ...HomeAuctionLotsRail_viewer
+        query HomeAuctionLotsForYouRailQuery {
+          artworksForUser(
+            includeBackfill: true
+            first: 20
+            onlyAtAuction: true
+          ) {
+            ...HomeAuctionLotsForYouRail_artworksForUser
           }
         }
       `}
@@ -119,8 +121,12 @@ export const HomeAuctionLotsRailQueryRenderer: React.FC = () => {
           return PLACEHOLDER
         }
 
-        if (props.viewer) {
-          return <HomeAuctionLotsRailFragmentContainer viewer={props.viewer} />
+        if (props.artworksForUser) {
+          return (
+            <HomeAuctionLotsForYouRailFragmentContainer
+              artworksForUser={props.artworksForUser}
+            />
+          )
         }
 
         return null

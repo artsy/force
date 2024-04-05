@@ -1,25 +1,28 @@
 import { graphql } from "react-relay"
-import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { HomeAuctionLotsRailFragmentContainer } from "Apps/Home/Components/HomeAuctionLotsRail"
+import { fireEvent, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
+import { HomeAuctionLotsForYouRailFragmentContainer } from "Apps/Home/Components/HomeAuctionLotsForYouRail"
 
-jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.unmock("react-relay")
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
-    return <HomeAuctionLotsRailFragmentContainer viewer={props.viewer!} />
+    return (
+      <HomeAuctionLotsForYouRailFragmentContainer
+        artworksForUser={props.artworksForUser}
+      />
+    )
   },
   query: graphql`
-    query HomeAuctionLotsRail_Test_Query @relay_test_operation {
-      viewer {
-        ...HomeAuctionLotsRail_viewer
+    query HomeAuctionLotsForYouRail_Test_Query @relay_test_operation {
+      artworksForUser(includeBackfill: true, first: 20) {
+        ...HomeAuctionLotsForYouRail_artworksForUser
       }
     }
   `,
 })
-
 const trackEvent = jest.fn()
 
 beforeAll(() => {
@@ -30,20 +33,18 @@ afterEach(() => {
   trackEvent.mockClear()
 })
 
-describe("HomeAuctionLotsRail", () => {
+describe("HomeAuctionLotsForYouRail", () => {
   it("renders correctly", () => {
     renderWithRelay({
-      Viewer: () => ({
-        artworksConnection: {
-          edges: [
-            {
-              node: {
-                title: "Test Auction",
-                href: "test-href",
-              },
+      ArtworkConnection: () => ({
+        edges: [
+          {
+            node: {
+              title: "Test Auction",
+              href: "test-href",
             },
-          ],
-        },
+          },
+        ],
       }),
     })
 
@@ -54,19 +55,17 @@ describe("HomeAuctionLotsRail", () => {
   describe("tracking", () => {
     it("tracks artwork click", async () => {
       renderWithRelay({
-        Viewer: () => ({
-          artworksConnection: {
-            edges: [
-              {
-                node: {
-                  internalID: "test-internal-id",
-                  title: "Test Auction",
-                  slug: "test-href",
-                  href: "test-href",
-                },
+        ArtworkConnection: () => ({
+          edges: [
+            {
+              node: {
+                internalID: "test-internal-id",
+                title: "Test Auction",
+                slug: "test-href",
+                href: "test-href",
               },
-            ],
-          },
+            },
+          ],
         }),
       })
 
@@ -82,7 +81,7 @@ describe("HomeAuctionLotsRail", () => {
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtworkGroup",
-        context_module: "topAuctionLotsRail",
+        context_module: "lotsForYouRail",
         context_page_owner_type: "home",
         destination_page_owner_id: "test-internal-id",
         destination_page_owner_slug: "test-href",
