@@ -51,33 +51,14 @@ it("renders all expected filters", () => {
   expect(screen.getByText("Rarity")).toBeInTheDocument()
   expect(screen.getByText("Medium")).toBeInTheDocument()
   expect(screen.getByText("Price")).toBeInTheDocument()
+  expect(screen.getByText("Artist Series")).toBeInTheDocument()
+  expect(screen.getByText("Size")).toBeInTheDocument()
   expect(screen.getByText("Ways to Buy")).toBeInTheDocument()
   expect(screen.getByText("Material")).toBeInTheDocument()
   expect(screen.getByText("Artwork Location")).toBeInTheDocument()
   expect(screen.getByText("Time Period")).toBeInTheDocument()
   expect(screen.getByText("Color")).toBeInTheDocument()
   expect(screen.getByText("Galleries and Institutions")).toBeInTheDocument()
-})
-
-describe("feature flag: onyx_enable-artist-series-filter", () => {
-  describe("when the feature flag is enabled", () => {
-    beforeEach(() => {
-      ;(useFeatureFlag as jest.Mock).mockImplementation(() => true)
-    })
-    it("renders the Artist Series filter", () => {
-      render(<ArtistArtworkFilters />)
-      expect(screen.getByText("Artist Series")).toBeInTheDocument()
-    })
-  })
-  describe("when the feature flag is disabled", () => {
-    beforeEach(() => {
-      ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
-    })
-    it("does not render the Artist Series filter", () => {
-      render(<ArtistArtworkFilters />)
-      expect(screen.queryByText("Artist Series")).not.toBeInTheDocument()
-    })
-  })
 })
 
 describe("feature flag: onyx_availability", () => {
