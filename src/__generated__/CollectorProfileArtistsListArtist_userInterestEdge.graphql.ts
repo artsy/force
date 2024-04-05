@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa7b1b7b7a211f57f7e875d1984c628c>>
+ * @generated SignedSource<<017c787330526d9db2ea130ba13724fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileArtistsListArtist_userInterestEdge$data = {
+  readonly id: string;
+  readonly internalID: string;
   readonly node: {
     readonly __typename: "Artist";
     readonly counts: {
@@ -32,12 +34,28 @@ export type CollectorProfileArtistsListArtist_userInterestEdge$key = {
   readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileArtistsListArtist_userInterestEdge">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "CollectorProfileArtistsListArtist_userInterestEdge",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -68,13 +86,7 @@ const node: ReaderFragment = {
               "kind": "FragmentSpread",
               "name": "EntityHeaderArtist_artist"
             },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "internalID",
-              "storageKey": null
-            },
+            (v0/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -111,7 +123,8 @@ const node: ReaderFragment = {
   "type": "UserInterestEdge",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "14a1c88b5eb6b99eb0777fce8fe27b6b";
+(node as any).hash = "61fcdadee4d48aa57d7d193aba7dfca1";
 
 export default node;
