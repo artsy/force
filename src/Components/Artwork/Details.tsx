@@ -193,6 +193,14 @@ const BidInfo: React.FC<DetailsProps> = ({
   )
 }
 
+const ExclusiveAccess = () => {
+  return (
+    <Text variant="xs" color="black100">
+      Exclusive Access
+    </Text>
+  )
+}
+
 export const Details: React.FC<DetailsProps> = ({
   contextModule,
   hideArtistName,
@@ -216,6 +224,8 @@ export const Details: React.FC<DetailsProps> = ({
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
+  const showExclusiveAccess =
+    rest?.artwork.visibilityLevel && rest?.artwork.visibilityLevel == "UNLISTED"
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -247,7 +257,7 @@ export const Details: React.FC<DetailsProps> = ({
   }
 
   return (
-    <Box>
+    <Box minHeight={105}>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Join separator={<Spacer x={1} />}>
@@ -284,6 +294,7 @@ export const Details: React.FC<DetailsProps> = ({
         )}
       </Box>
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
+      {showExclusiveAccess && <ExclusiveAccess />}
     </Box>
   )
 }
@@ -373,6 +384,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
+      visibilityLevel
       sale_message: saleMessage
       cultural_maker: culturalMaker
       artist {
