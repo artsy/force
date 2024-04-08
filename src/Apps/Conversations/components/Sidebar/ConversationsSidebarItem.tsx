@@ -103,7 +103,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
               {item.date && `, ${item.date}`}
             </Text>
 
-            {item.visibilityLevel == "UNLISTED" && (
+            {item.isUnlisted && (
               <Text display="inline" variant="xs">
                 Exclusive Access
               </Text>
@@ -159,7 +159,7 @@ const FRAGMENT = graphql`
           id
           title @required(action: NONE)
           date
-          visibilityLevel
+          isUnlisted
           artist @required(action: NONE) {
             name @required(action: NONE)
           }
