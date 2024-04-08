@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d4ec1a2a3a474d47ce938f9215b4aefb>>
+ * @generated SignedSource<<339c3b09aff3bd7eebf0e00803f06cda>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,6 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Details_artwork$data = {
   readonly artist: {
@@ -27,6 +26,7 @@ export type Details_artwork$data = {
   readonly date: string | null | undefined;
   readonly href: string | null | undefined;
   readonly internalID: string;
+  readonly isUnlisted: boolean;
   readonly marketPriceInsights: {
     readonly demandRank: number | null | undefined;
   } | null | undefined;
@@ -60,7 +60,6 @@ export type Details_artwork$data = {
   } | null | undefined;
   readonly sale_message: string | null | undefined;
   readonly title: string | null | undefined;
-  readonly visibilityLevel: Visibility | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"HoverDetails_artwork" | "SaveArtworkToListsButton_artwork" | "SaveButton_artwork">;
   readonly " $fragmentType": "Details_artwork";
 };
@@ -139,7 +138,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "visibilityLevel",
+      "name": "isUnlisted",
       "storageKey": null
     },
     {
@@ -389,6 +388,6 @@ return {
 };
 })();
 
-(node as any).hash = "31274c35dc057ee85419c1678e320458";
+(node as any).hash = "dad2965dc83e963914fba380fe6410f4";
 
 export default node;
