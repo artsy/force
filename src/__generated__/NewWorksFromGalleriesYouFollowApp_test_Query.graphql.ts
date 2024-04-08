@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<71558fa9ec1ee9ff1c2d48f33896afad>>
+ * @generated SignedSource<<c8905c83366d8ab2c74f0dc3e30f8ae8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -117,6 +117,12 @@ v13 = {
   "nullable": true,
   "plural": false,
   "type": "Int"
+},
+v14 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -227,7 +233,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "visibilityLevel",
+                        "name": "isUnlisted",
                         "storageKey": null
                       },
                       {
@@ -595,7 +601,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "906e7cd6f68e6bad4b6275822b1a83bc",
+    "cacheID": "20445fe867fdf44fc455e7a9021179db",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -668,12 +674,8 @@ return {
         "me.newWorksFromGalleriesYouFollowConnection.edges.node.image.width": (v13/*: any*/),
         "me.newWorksFromGalleriesYouFollowConnection.edges.node.internalID": (v9/*: any*/),
         "me.newWorksFromGalleriesYouFollowConnection.edges.node.isSaved": (v10/*: any*/),
-        "me.newWorksFromGalleriesYouFollowConnection.edges.node.isSavedToList": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
-        },
+        "me.newWorksFromGalleriesYouFollowConnection.edges.node.isSavedToList": (v14/*: any*/),
+        "me.newWorksFromGalleriesYouFollowConnection.edges.node.isUnlisted": (v14/*: any*/),
         "me.newWorksFromGalleriesYouFollowConnection.edges.node.marketPriceInsights": {
           "enumValues": null,
           "nullable": true,
@@ -764,21 +766,12 @@ return {
         "me.newWorksFromGalleriesYouFollowConnection.edges.node.sale_artwork.opening_bid.display": (v11/*: any*/),
         "me.newWorksFromGalleriesYouFollowConnection.edges.node.sale_message": (v11/*: any*/),
         "me.newWorksFromGalleriesYouFollowConnection.edges.node.slug": (v9/*: any*/),
-        "me.newWorksFromGalleriesYouFollowConnection.edges.node.title": (v11/*: any*/),
-        "me.newWorksFromGalleriesYouFollowConnection.edges.node.visibilityLevel": {
-          "enumValues": [
-            "LISTED",
-            "UNLISTED"
-          ],
-          "nullable": true,
-          "plural": false,
-          "type": "Visibility"
-        }
+        "me.newWorksFromGalleriesYouFollowConnection.edges.node.title": (v11/*: any*/)
       }
     },
     "name": "NewWorksFromGalleriesYouFollowApp_test_Query",
     "operationKind": "query",
-    "text": "query NewWorksFromGalleriesYouFollowApp_test_Query(\n  $first: Int\n) {\n  me {\n    newWorksFromGalleriesYouFollowConnection(first: $first) {\n      ...HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  visibilityLevel\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection on ArtworkConnection {\n  edges {\n    node {\n      internalID\n      slug\n      ...ShelfArtwork_artwork\n      id\n    }\n  }\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    blurhashDataURL\n  }\n}\n"
+    "text": "query NewWorksFromGalleriesYouFollowApp_test_Query(\n  $first: Int\n) {\n  me {\n    newWorksFromGalleriesYouFollowConnection(first: $first) {\n      ...HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  isUnlisted\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection on ArtworkConnection {\n  edges {\n    node {\n      internalID\n      slug\n      ...ShelfArtwork_artwork\n      id\n    }\n  }\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    blurhashDataURL\n  }\n}\n"
   }
 };
 })();

@@ -211,7 +211,7 @@ describe("Submit Pending Counter Offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/status`
+        `/orders/${testOrder?.internalID}/status`
       )
     })
 

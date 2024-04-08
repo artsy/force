@@ -381,7 +381,7 @@ describe("Details", () => {
     it("renders the Exclusive Access text when the artwork is unlisted", async () => {
       const data: any = {
         ...artworkInAuction,
-        visibilityLevel: "UNLISTED",
+        isUnlisted: true,
       }
 
       const wrapper = await getWrapper(data)
@@ -535,7 +535,7 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
       isP1: true,
     },
   },
-  visibilityLevel: "LISTED",
+  isUnlisted: false,
   marketPriceInsights: {
     demandRank: 0.9,
   },

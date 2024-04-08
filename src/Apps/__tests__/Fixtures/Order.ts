@@ -56,6 +56,7 @@ const OrderArtworkNodeWithoutShipping = {
   title: "Gramercy Park South",
   isPriceRange: false,
   editionSets: null,
+  isUnlisted: false,
 }
 
 const artworkFromGermany = {

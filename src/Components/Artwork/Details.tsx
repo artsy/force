@@ -224,8 +224,7 @@ export const Details: React.FC<DetailsProps> = ({
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
-  const showExclusiveAccess =
-    rest?.artwork.visibilityLevel && rest?.artwork.visibilityLevel == "UNLISTED"
+  const showExclusiveAccess = rest?.artwork.isUnlisted
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -384,7 +383,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
-      visibilityLevel
+      isUnlisted
       sale_message: saleMessage
       cultural_maker: culturalMaker
       artist {

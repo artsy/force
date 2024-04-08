@@ -46,7 +46,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     if (order.mode === "BUY") {
       let price_item_label
       if (order.source === "partner_offer") {
-        price_item_label = "Seller's offer"
+        price_item_label = "Gallery offer"
       } else {
         price_item_label = "Price"
       }

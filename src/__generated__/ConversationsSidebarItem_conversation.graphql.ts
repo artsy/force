@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e105c4967a25b369bd75d32b9d90dc88>>
+ * @generated SignedSource<<6fc120e7dbd8b8459437e2689827b9db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,6 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationsSidebarItem_conversation$data = {
   readonly from: {
@@ -32,8 +31,8 @@ export type ConversationsSidebarItem_conversation$data = {
       readonly image: {
         readonly url: string;
       };
+      readonly isUnlisted: boolean;
       readonly title: string;
-      readonly visibilityLevel: Visibility | null | undefined;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
@@ -254,7 +253,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "visibilityLevel",
+                    "name": "isUnlisted",
                     "storageKey": null
                   },
                   {
@@ -335,6 +334,6 @@ return {
 };
 })();
 
-(node as any).hash = "6cca151477dcff172661a6a2ed405c4c";
+(node as any).hash = "b76da419554ef825d77d83bbb8b4d92f";
 
 export default node;

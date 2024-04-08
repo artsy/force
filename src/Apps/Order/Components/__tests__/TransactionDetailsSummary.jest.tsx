@@ -233,7 +233,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
         const text = wrapper.text()
 
-        expect(text).toMatch("Seller's offer")
+        expect(text).toMatch("Gallery offer")
       })
     })
 
