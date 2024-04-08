@@ -312,16 +312,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     setSelectedEditionSet(firstAvailableEcommerceEditionSet())
   }, [artwork.editionSets, firstAvailableEcommerceEditionSet])
 
-  const artworkEcommerceAvailable = !!(
-    artwork.isAcquireable || artwork.isOfferable
-  )
-  const shouldRenderButtons =
-    artworkEcommerceAvailable || !!artwork.isInquireable
-
   const isCreateAlertAvailable =
     artwork.isEligibleToCreateAlert && artwork.isSold
-  const isSecondaryContactGalleryButton =
-    artwork.isOfferable || isCreateAlertAvailable
 
   const AlertSwitch: FC = () => {
     if (!isCreateAlertAvailable) {
@@ -338,6 +330,19 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   const buyNowOrPartnerOfferAvailable = !!(
     artwork.isAcquireable || activePartnerOffer
   )
+
+  const renderButtons = {}
+  if (buyNowOrPartnerOfferAvailable) {
+    renderButtons["buyNow"] = "primaryBlack"
+  }
+  if (artwork.isOfferable) {
+    renderButtons["makeOffer"] =
+      Object.keys(renderButtons).length == 0 ? "primaryBlack" : "secondaryBlack"
+  }
+  if (artwork.isInquireable && Object.keys(renderButtons).length < 2) {
+    renderButtons["contactGallery"] =
+      Object.keys(renderButtons).length == 0 ? "primaryBlack" : "secondaryBlack"
+  }
 
   const SaleMessageOrOfferDisplay: FC = () => {
     return partnerOffer ? (
@@ -380,13 +385,14 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
         </>
       )}
 
-      {shouldRenderButtons && <Spacer y={2} />}
+      {Object.keys(renderButtons).length > 0 && <Spacer y={2} />}
 
       <Flex flexDirection={["column", "column", "column", "column", "row"]}>
         <Join separator={<Spacer x={1} y={1} />}>
           <AlertSwitch />
-          {buyNowOrPartnerOfferAvailable && (
+          {renderButtons["buyNow"] && (
             <Button
+              variant={renderButtons["buyNow"]}
               width="100%"
               size="large"
               loading={isCommitingCreateOrderMutation}
@@ -400,13 +406,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
               {t("artworkPage.sidebar.commercialButtons.buyNow")}
             </Button>
           )}
-          {artwork.isOfferable && (
+          {renderButtons["makeOffer"] && (
             <Button
-              variant={
-                buyNowOrPartnerOfferAvailable
-                  ? "secondaryBlack"
-                  : "primaryBlack"
-              }
+              variant={renderButtons["makeOffer"]}
               width="100%"
               size="large"
               loading={isCommittingCreateOfferOrderMutation}
@@ -415,16 +417,12 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
               {t("artworkPage.sidebar.commercialButtons.makeOffer")}
             </Button>
           )}
-          {artwork.isInquireable && (
+          {renderButtons["contactGallery"] && (
             <Button
+              variant={renderButtons["contactGallery"]}
               width="100%"
               size="large"
               onClick={handleInquiry}
-              variant={
-                isSecondaryContactGalleryButton
-                  ? "secondaryBlack"
-                  : "primaryBlack"
-              }
             >
               {t("artworkPage.sidebar.commercialButtons.contactGallery")}
             </Button>

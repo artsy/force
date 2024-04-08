@@ -73,18 +73,60 @@ describe("ArtworkSidebarCommercialButtons", () => {
     mockEnvironment.mockClear()
   })
 
-  it("displays both Make an Offer and Contact Gallery CTAs when offerable from inquiry and exact price listed", () => {
-    renderWithRelay({
-      Query: () => ({ me: meMock }),
-      Artwork: () => ({
-        isOfferable: true,
-        isInquireable: true,
-        isAcquirable: false,
-      }),
+  describe("action buttons area for artwork with acitve offer", () => {
+    it("displays Purchse and Make Offer buttons and omits contact gallery for works eligeable for MO", async () => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+      meMock.partnerOffersConnection.edges.push({
+        node: {
+          internalID: "partner-offer-id",
+          isAvailable: true,
+        },
+      })
+
+      renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
+            isOfferable: true,
+            isInquireable: true,
+            isAcquirable: false,
+          }),
+        },
+        null,
+        mockEnvironment
+      )
+
+      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).toBeInTheDocument()
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
     })
 
-    expect(screen.queryByText("Make an Offer")).toBeInTheDocument()
-    expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
+    it("displays Purchse and Contact Gallery buttons for work not eligeable for MO", async () => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+      meMock.partnerOffersConnection.edges.push({
+        node: {
+          internalID: "partner-offer-id",
+          isAvailable: true,
+        },
+      })
+
+      renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
+            isOfferable: false,
+            isInquireable: true,
+            isAcquirable: false,
+          }),
+        },
+        null,
+        mockEnvironment
+      )
+
+      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
+    })
   })
 
   it("displays both Make an Offer and Contact Gallery CTAs when offerable from inquiry and price range", () => {
@@ -297,7 +339,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
         Query: () => ({ me: meMock }),
         Artwork: () => ({
           priceListedDisplay: "$5,000",
-          isOfferable: true,
         }),
       },
       null,
