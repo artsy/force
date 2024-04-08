@@ -31,8 +31,8 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   },
   ...others
 }) => {
-  const firstLineItem = get({}, () => lineItems?.edges?.[0]?.node!)
-  const { artwork, artworkVersion } = firstLineItem!
+  const firstLineItem = get({}, () => lineItems?.edges?.[0]?.node)
+  const { artwork, artworkVersion } = firstLineItem || {}
 
   const { artistNames, title, image, date } = artworkVersion || {}
   const { shippingOrigin, isUnlisted } = artwork || {}
@@ -60,10 +60,10 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
       <Box height="auto">
         {imageURL &&
           (isPrivateSale ? (
-            <Image src={imageURL} alt={title!} width="55px" mr={1} />
+            <Image src={imageURL} alt={title || ""} width="55px" mr={1} />
           ) : (
             <Link href={`/artwork/${artwork?.slug}`} target="_blank">
-              <Image src={imageURL} alt={title!} width="55px" mr={1} />
+              <Image src={imageURL} alt={title || ""} width="55px" mr={1} />
             </Link>
           ))}
       </Box>
