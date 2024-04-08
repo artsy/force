@@ -36,6 +36,7 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
+import { ResponsiveValue } from "styled-system"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
@@ -331,17 +332,23 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     artwork.isAcquireable || activePartnerOffer
   )
 
-  const renderButtons = {}
+  const renderButtons: {
+    buyNow?: ResponsiveValue<"primaryBlack" | "secondaryBlack">
+    makeOffer?: ResponsiveValue<"primaryBlack" | "secondaryBlack">
+    contactGallery?: ResponsiveValue<"primaryBlack" | "secondaryBlack">
+  } = {}
   if (buyNowOrPartnerOfferAvailable) {
-    renderButtons["buyNow"] = "primaryBlack"
+    renderButtons.buyNow = "primaryBlack"
   }
   if (artwork.isOfferable) {
-    renderButtons["makeOffer"] =
+    renderButtons.makeOffer =
       Object.keys(renderButtons).length == 0 ? "primaryBlack" : "secondaryBlack"
   }
   if (artwork.isInquireable && Object.keys(renderButtons).length < 2) {
-    renderButtons["contactGallery"] =
-      Object.keys(renderButtons).length == 0 ? "primaryBlack" : "secondaryBlack"
+    renderButtons.contactGallery =
+      Object.keys(renderButtons).length > 0 || isCreateAlertAvailable
+        ? "secondaryBlack"
+        : "primaryBlack"
   }
 
   const SaleMessageOrOfferDisplay: FC = () => {
@@ -390,9 +397,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       <Flex flexDirection={["column", "column", "column", "column", "row"]}>
         <Join separator={<Spacer x={1} y={1} />}>
           <AlertSwitch />
-          {renderButtons["buyNow"] && (
+          {renderButtons.buyNow && (
             <Button
-              variant={renderButtons["buyNow"]}
+              variant={renderButtons.buyNow}
               width="100%"
               size="large"
               loading={isCommitingCreateOrderMutation}
@@ -406,9 +413,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
               {t("artworkPage.sidebar.commercialButtons.buyNow")}
             </Button>
           )}
-          {renderButtons["makeOffer"] && (
+          {renderButtons.makeOffer && (
             <Button
-              variant={renderButtons["makeOffer"]}
+              variant={renderButtons.makeOffer}
               width="100%"
               size="large"
               loading={isCommittingCreateOfferOrderMutation}
@@ -417,9 +424,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
               {t("artworkPage.sidebar.commercialButtons.makeOffer")}
             </Button>
           )}
-          {renderButtons["contactGallery"] && (
+          {renderButtons.contactGallery && (
             <Button
-              variant={renderButtons["contactGallery"]}
+              variant={renderButtons.contactGallery}
               width="100%"
               size="large"
               onClick={handleInquiry}
