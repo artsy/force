@@ -26,6 +26,7 @@ import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerS
 
 const logger = createLogger("NotificationItem")
 
+export const NOTIFICATION_MAX_WIDTH = 600
 export const SUPPORTED_NOTIFICATION_TYPES = [
   "ARTWORK_ALERT",
   "ARTWORK_PUBLISHED",
