@@ -20,7 +20,10 @@ import { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_artwor
 import { InquiryInquiryQuery } from "__generated__/InquiryInquiryQuery.graphql"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { wait } from "Utils/wait"
-import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import {
+  DEFAULT_MESSAGE,
+  useInquiryContext,
+} from "Components/Inquiry/Hooks/useInquiryContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { logger } from "Components/Inquiry/util"
 import { RouterLink } from "System/Router/RouterLink"
@@ -41,7 +44,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
-    if (mode === "Confirm" && value !== inquiry.message) {
+    if (mode === "Confirm" && value !== DEFAULT_MESSAGE) {
       setMode("Pending")
     }
 
@@ -51,7 +54,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
 
-    if (inquiry.message && mode !== "Confirm") {
+    if (inquiry.message === DEFAULT_MESSAGE && mode !== "Confirm") {
       setMode("Confirm")
       return
     }
