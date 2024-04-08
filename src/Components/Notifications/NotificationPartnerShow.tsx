@@ -26,10 +26,6 @@ export const NotificationPartnerShow: React.FC<NotificationShowProps> = ({
 
   const image = show?.coverImage?.cropped
 
-  if (!image) {
-    return null
-  }
-
   return (
     <Box mb={4}>
       <RouterLink
@@ -50,7 +46,7 @@ export const NotificationPartnerShow: React.FC<NotificationShowProps> = ({
           maxWidth="100%"
           bg="black10"
         >
-          {image?.src && (
+          {!!image?.src && (
             <Image
               src={image.src}
               srcSet={image.srcSet}

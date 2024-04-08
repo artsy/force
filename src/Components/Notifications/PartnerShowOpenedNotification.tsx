@@ -1,4 +1,4 @@
-import { Flex, Spacer, Text, Box, Button } from "@artsy/palette"
+import { Flex, Spacer, Text, Box } from "@artsy/palette"
 import { FC } from "react"
 import { useFragment, graphql } from "react-relay"
 import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
