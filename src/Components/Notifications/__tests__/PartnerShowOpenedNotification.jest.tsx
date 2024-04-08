@@ -106,7 +106,7 @@ const notification = {
             endAt: "2024-04-21T14:00:00+02:00",
             name: "THEO  at ART OnO",
             description: "show description",
-            slug: "theo-theo-at-art-ono",
+            href: "/show/theo-theo-at-art-ono",
           },
         },
       ],

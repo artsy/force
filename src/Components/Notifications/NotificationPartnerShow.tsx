@@ -84,7 +84,7 @@ export const NotificationPartnerShow: React.FC<NotificationShowProps> = ({
         <Button
           // @ts-ignore
           as={RouterLink}
-          to={`/show/${show?.slug}`}
+          to={show?.href}
           onClick={onClick}
           data-testid="view-show-button"
         >
