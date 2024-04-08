@@ -7,6 +7,8 @@ import { extractNodes } from "Utils/extractNodes"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { RouterLink } from "System/Router/RouterLink"
 import { NotificationPartnerShow } from "Components/Notifications/NotificationPartnerShow"
+import { ContextModule } from "@artsy/cohesion"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 
 interface PartnerShowOpenedNotificationProps {
   notification: PartnerShowOpenedNotification_notification$key
@@ -24,8 +26,9 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
 
   const partner = item?.partner
   const shows = extractNodes(item?.showsConnection)
+  const profile = partner?.profile
 
-  if (!partner || !shows.length) {
+  if (!profile || !shows.length) {
     return <NotificationErrorMessage />
   }
 
@@ -37,14 +40,23 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
 
       <NotificationTypeLabel notification={notificationData} />
 
-      <Spacer y={0.5} />
+      <Spacer y={1} />
 
-      <Text variant="xs">
-        Presented by{" "}
-        <RouterLink to={partner.href} data-testid="partner-link">
-          {partner.name}
+      <Flex flexDirection="row" gap={1} alignItems="center">
+        <FollowProfileButtonQueryRenderer
+          id={profile.internalID}
+          contextModule={ContextModule.activity}
+          size="small"
+        />
+
+        <RouterLink
+          to={partner.href}
+          textDecoration="none"
+          data-testid="partner-link"
+        >
+          <Text variant="xs">{partner.name}</Text>
         </RouterLink>
-      </Text>
+      </Flex>
 
       <Spacer y={4} />
 
@@ -65,6 +77,9 @@ export const PartnerShowOpenedNotificationFragment = graphql`
         partner {
           href
           name
+          profile {
+            internalID
+          }
         }
         showsConnection {
           edges {

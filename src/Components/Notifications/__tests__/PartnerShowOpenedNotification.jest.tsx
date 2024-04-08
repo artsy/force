@@ -47,22 +47,18 @@ describe("PartnerShowOpenedNotification", () => {
 
     // header
 
-    expect(
-      screen.getByText("New Show: Water Works - Katherine Bradford")
-    ).toBeInTheDocument()
+    expect(screen.getByText("1 show opened at THEO")).toBeInTheDocument()
     expect(screen.getByText("Show")).toBeInTheDocument()
-    expect(screen.getByText("April 11 – April 14")).toBeInTheDocument()
-    expect(screen.getByText("Presented by")).toBeInTheDocument()
-    expect(screen.getByText("Galerie Charlot")).toBeInTheDocument()
+    expect(screen.getByText("Today")).toBeInTheDocument()
+    expect(screen.getByText("THEO")).toBeInTheDocument()
 
-    // artworks
+    // show
 
-    expect(screen.getByText("P2200_27831")).toBeInTheDocument()
-    expect(screen.getByText("P2500-2217aa")).toBeInTheDocument()
-
-    // buttons
-
-    expect(screen.getByText("Visit Show")).toBeInTheDocument()
+    expect(screen.getByText("THEO at ART OnO")).toBeInTheDocument()
+    expect(
+      screen.getByText("April 19 – 21, 2024 — Opening Soon")
+    ).toBeInTheDocument()
+    expect(screen.getByText("show description")).toBeInTheDocument()
   })
 
   it("has working links to partner and show", () => {
@@ -72,59 +68,52 @@ describe("PartnerShowOpenedNotification", () => {
 
     expect(screen.getByTestId("partner-link")).toHaveAttribute(
       "href",
-      "/partner/galerie-charlot"
+      "/partner/theo"
     )
-    expect(screen.getByTestId("visit-show-button")).toHaveAttribute(
+    expect(screen.getByTestId("view-show-button")).toHaveAttribute(
       "href",
-      "/show/galerie-charlot-galerie-charlot-at-expo-chicago-2024"
+      "/show/theo-theo-at-art-ono"
     )
   })
 })
 
 const notification = {
-  id: "Tm90aWZpY2F0aW9uOjY2MGQyNmYwMjQwMmQ3YjYzZTQ2MzU5Yg==",
-  internalID: "660d26f02402d7b63e46359b",
   notificationType: "PARTNER_SHOW_OPENED",
-  targetHref: "/show/galerie-charlot-galerie-charlot-at-expo-chicago-2024",
+  targetHref: "/show/theo-theo-at-art-ono",
   artworksConnection: {
     edges: [],
     totalCount: 0,
   },
-  headline: "New Show: Water Works - Katherine Bradford",
+  headline: "1 show opened at THEO ",
   item: {
     __typename: "ShowOpenedNotificationItem",
+    partner: {
+      href: "/partner/theo",
+      name: "THEO",
+      profile: {
+        internalID: "profile-id",
+      },
+    },
     showsConnection: {
       edges: [
         {
           node: {
-            startAt: "April 11",
-            endAt: "April 14",
-            artworksConnection: {
-              edges: [
-                {
-                  node: {
-                    slug: "manfred-mohr-p2200-27831",
-                    href: "/artwork/manfred-mohr-p2200-27831",
-                    title: "P2200_27831",
-                  },
-                },
-                {
-                  node: {
-                    slug: "manfred-mohr-p2500-2217aa",
-                    href: "/artwork/manfred-mohr-p2500-2217aa",
-                    title: "P2500-2217aa",
-                  },
-                },
-              ],
-              totalCount: 22,
+            location: {
+              city: null,
             },
+            exhibitionPeriod: "April 19 – 21, 2024",
+            startAt: "2024-04-19T14:00:00+02:00",
+            endAt: "2024-04-21T14:00:00+02:00",
+            name: "THEO  at ART OnO",
+            description: "show description",
+            slug: "theo-theo-at-art-ono",
           },
         },
       ],
     },
-    partner: {
-      href: "/partner/galerie-charlot",
-      name: "Galerie Charlot",
-    },
+  },
+  publishedAt: "Today",
+  offerArtworksConnection: {
+    edges: [],
   },
 }

@@ -4,7 +4,8 @@ import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Button, Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import { NotificationPartnerShow_show$key } from "__generated__/NotificationPartnerShow_show.graphql"
-import { compact } from "lodash"
+import { compact, truncate } from "lodash"
+import { CellShowStatus } from "Components/Cells/CellShow"
 
 const MAX_WIDTH = 600
 
@@ -30,7 +31,7 @@ export const NotificationPartnerShow: React.FC<NotificationShowProps> = ({
   }
 
   return (
-    <>
+    <Box mb={4}>
       <RouterLink
         to={show?.href}
         onClick={onClick}
@@ -66,29 +67,35 @@ export const NotificationPartnerShow: React.FC<NotificationShowProps> = ({
 
         <Text variant="md">{show?.name}</Text>
 
-        <Text variant="sm">
+        <Text variant="sm" color="black60">
           {compact([show.location?.city, show.exhibitionPeriod]).join(", ")}
+
+          {show.startAt && show.endAt && (
+            <CellShowStatus startAt={show.startAt} endAt={show.endAt} />
+          )}
         </Text>
 
         <Spacer y={1} />
 
-        <Text variant="sm-display" color="black60">
-          {show?.description}
-        </Text>
+        {!!show.description && (
+          <Text variant="sm-display">
+            {truncate(show.description, { length: 200 })}
+          </Text>
+        )}
       </RouterLink>
 
       <Box mb={4} width="100%" maxWidth={MAX_WIDTH}>
         <Button
           // @ts-ignore
           as={RouterLink}
-          to={show?.href}
+          to={`/show/${show?.slug}`}
           onClick={onClick}
-          data-testid="view-works-button"
+          data-testid="view-show-button"
         >
-          View Works
+          View Show
         </Button>
       </Box>
-    </>
+    </Box>
   )
 }
 
@@ -109,5 +116,6 @@ const notificationShowFragment = graphql`
         srcSet
       }
     }
+    slug
   }
 `

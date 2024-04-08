@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<789075104de9d1fbb36914b74c62ff72>>
+ * @generated SignedSource<<99dd4a8311ca12cd9f64be1a839818c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,22 +51,29 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 },
 v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 },
 v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -186,7 +193,20 @@ return {
                             "selections": [
                               (v1/*: any*/),
                               (v2/*: any*/),
-                              (v3/*: any*/)
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Profile",
+                                "kind": "LinkedField",
+                                "name": "profile",
+                                "plural": false,
+                                "selections": [
+                                  (v3/*: any*/),
+                                  (v4/*: any*/)
+                                ],
+                                "storageKey": null
+                              },
+                              (v4/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -214,13 +234,7 @@ return {
                                     "name": "node",
                                     "plural": false,
                                     "selections": [
-                                      {
-                                        "alias": null,
-                                        "args": null,
-                                        "kind": "ScalarField",
-                                        "name": "internalID",
-                                        "storageKey": null
-                                      },
+                                      (v3/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -236,7 +250,7 @@ return {
                                             "name": "city",
                                             "storageKey": null
                                           },
-                                          (v3/*: any*/)
+                                          (v4/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
@@ -325,7 +339,14 @@ return {
                                         ],
                                         "storageKey": null
                                       },
-                                      (v3/*: any*/)
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "slug",
+                                        "storageKey": null
+                                      },
+                                      (v4/*: any*/)
                                     ],
                                     "storageKey": null
                                   }
@@ -362,7 +383,7 @@ return {
                     "name": "publishedAt",
                     "storageKey": "publishedAt(format:\"RELATIVE\")"
                   },
-                  (v3/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -375,7 +396,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4a18e74160ffa2970f61ba56417cbd4e",
+    "cacheID": "251a78bb85ec4257dbf59a2680a7cd0f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -397,24 +418,32 @@ return {
           "plural": false,
           "type": "Notification"
         },
-        "notificationsConnection.edges.node.headline": (v4/*: any*/),
-        "notificationsConnection.edges.node.id": (v5/*: any*/),
+        "notificationsConnection.edges.node.headline": (v5/*: any*/),
+        "notificationsConnection.edges.node.id": (v6/*: any*/),
         "notificationsConnection.edges.node.item": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "NotificationItem"
         },
-        "notificationsConnection.edges.node.item.__typename": (v4/*: any*/),
+        "notificationsConnection.edges.node.item.__typename": (v5/*: any*/),
         "notificationsConnection.edges.node.item.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "notificationsConnection.edges.node.item.partner.href": (v6/*: any*/),
-        "notificationsConnection.edges.node.item.partner.id": (v5/*: any*/),
-        "notificationsConnection.edges.node.item.partner.name": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.partner.href": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.partner.id": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.partner.name": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "notificationsConnection.edges.node.item.partner.profile.id": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.partner.profile.internalID": (v6/*: any*/),
         "notificationsConnection.edges.node.item.showsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -445,24 +474,25 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.coverImage.cropped.src": (v4/*: any*/),
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.coverImage.cropped.srcSet": (v4/*: any*/),
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.description": (v6/*: any*/),
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.endAt": (v6/*: any*/),
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.exhibitionPeriod": (v6/*: any*/),
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.href": (v6/*: any*/),
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.id": (v5/*: any*/),
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.internalID": (v5/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.coverImage.cropped.src": (v5/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.coverImage.cropped.srcSet": (v5/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.description": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.endAt": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.exhibitionPeriod": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.href": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.id": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.internalID": (v6/*: any*/),
         "notificationsConnection.edges.node.item.showsConnection.edges.node.location": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Location"
         },
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.location.city": (v6/*: any*/),
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.location.id": (v5/*: any*/),
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.name": (v6/*: any*/),
-        "notificationsConnection.edges.node.item.showsConnection.edges.node.startAt": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.location.city": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.location.id": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.name": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.slug": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.startAt": (v7/*: any*/),
         "notificationsConnection.edges.node.notificationType": {
           "enumValues": [
             "ARTICLE_FEATURED_ARTIST",
@@ -476,12 +506,12 @@ return {
           "plural": false,
           "type": "NotificationTypesEnum"
         },
-        "notificationsConnection.edges.node.publishedAt": (v4/*: any*/)
+        "notificationsConnection.edges.node.publishedAt": (v5/*: any*/)
       }
     },
     "name": "PartnerShowOpenedNotification_test_Query",
     "operationKind": "query",
-    "text": "query PartnerShowOpenedNotification_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...PartnerShowOpenedNotification_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationPartnerShow_show on Show {\n  location {\n    city\n    id\n  }\n  exhibitionPeriod\n  startAt\n  endAt\n  name\n  description\n  href\n  coverImage {\n    cropped(width: 600, height: 450, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment PartnerShowOpenedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ShowOpenedNotificationItem {\n      partner {\n        href\n        name\n        id\n      }\n      showsConnection {\n        edges {\n          node {\n            internalID\n            ...NotificationPartnerShow_show\n            id\n          }\n        }\n      }\n    }\n  }\n  ...NotificationTypeLabel_notification\n}\n"
+    "text": "query PartnerShowOpenedNotification_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...PartnerShowOpenedNotification_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationPartnerShow_show on Show {\n  location {\n    city\n    id\n  }\n  exhibitionPeriod\n  startAt\n  endAt\n  name\n  description\n  href\n  coverImage {\n    cropped(width: 600, height: 450, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n  slug\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment PartnerShowOpenedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ShowOpenedNotificationItem {\n      partner {\n        href\n        name\n        profile {\n          internalID\n          id\n        }\n        id\n      }\n      showsConnection {\n        edges {\n          node {\n            internalID\n            ...NotificationPartnerShow_show\n            id\n          }\n        }\n      }\n    }\n  }\n  ...NotificationTypeLabel_notification\n}\n"
   }
 };
 })();

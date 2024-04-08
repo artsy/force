@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d31d7d4080052047069a2e908cf62973>>
+ * @generated SignedSource<<f918f8f59d437e75e2db2343e03ad9b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,7 @@ export type NotificationPartnerShow_show$data = {
     readonly city: string | null | undefined;
   } | null | undefined;
   readonly name: string | null | undefined;
+  readonly slug: string;
   readonly startAt: string | null | undefined;
   readonly " $fragmentType": "NotificationPartnerShow_show";
 };
@@ -153,12 +154,19 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
     }
   ],
   "type": "Show",
   "abstractKey": null
 };
 
-(node as any).hash = "8d46a40a0e75ea3d56757006cb4e5de6";
+(node as any).hash = "6a19d300a50142a9b1137dbda95ed911";
 
 export default node;
