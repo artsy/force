@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<defa1dd82f70ff840bf0b343ab8e8d40>>
+ * @generated SignedSource<<af25ec17ac06c506d9c9bd3667d8f407>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type ArtworkSummaryItem_order$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
+          readonly isUnlisted: boolean;
           readonly shippingOrigin: string | null | undefined;
           readonly slug: string;
         } | null | undefined;
@@ -194,6 +195,13 @@ return {
                       "kind": "ScalarField",
                       "name": "shippingOrigin",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isUnlisted",
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -280,6 +288,6 @@ return {
 };
 })();
 
-(node as any).hash = "37d572ec4046d0fa4ce2c9bacf7b6b4d";
+(node as any).hash = "3389bf5437c689478d9b92b4ea7550c2";
 
 export default node;

@@ -35,7 +35,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   const { artwork, artworkVersion } = firstLineItem!
 
   const { artistNames, title, image, date } = artworkVersion || {}
-  const { shippingOrigin } = artwork || {}
+  const { shippingOrigin, isUnlisted } = artwork || {}
 
   const imageURL =
     image &&
@@ -119,6 +119,11 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
         {!artworkPrice?.price && (
           <Text variant="sm">{`${priceLabel}`}: Not publicly listed</Text>
         )}
+        {isUnlisted && (
+          <Text variant="sm" color="black60">
+            Exclusive Access
+          </Text>
+        )}
       </Flex>
     </StackableBorderBox>
   )
@@ -152,6 +157,7 @@ export const ArtworkSummaryItemFragmentContainer = createFragmentContainer(
               artwork {
                 slug
                 shippingOrigin
+                isUnlisted
               }
               artworkVersion {
                 date
