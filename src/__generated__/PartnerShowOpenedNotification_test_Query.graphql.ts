@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be6b3ff05cd7e2b6c1131cb0890677bf>>
+ * @generated SignedSource<<99dd4a8311ca12cd9f64be1a839818c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,19 +10,19 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomPublishedNotification_test_Query$variables = Record<PropertyKey, never>;
-export type ViewingRoomPublishedNotification_test_Query$data = {
+export type PartnerShowOpenedNotification_test_Query$variables = Record<PropertyKey, never>;
+export type PartnerShowOpenedNotification_test_Query$data = {
   readonly notificationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomPublishedNotification_notification">;
+        readonly " $fragmentSpreads": FragmentRefs<"PartnerShowOpenedNotification_notification">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
 };
-export type ViewingRoomPublishedNotification_test_Query = {
-  response: ViewingRoomPublishedNotification_test_Query$data;
-  variables: ViewingRoomPublishedNotification_test_Query$variables;
+export type PartnerShowOpenedNotification_test_Query = {
+  response: PartnerShowOpenedNotification_test_Query$data;
+  variables: PartnerShowOpenedNotification_test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -44,46 +44,47 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "name",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 },
 v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 },
 v6 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "ID"
 },
 v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "String"
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ViewingRoomPublishedNotification_test_Query",
+    "name": "PartnerShowOpenedNotification_test_Query",
     "selections": [
       {
         "alias": null,
@@ -112,7 +113,7 @@ return {
                   {
                     "args": null,
                     "kind": "FragmentSpread",
-                    "name": "ViewingRoomPublishedNotification_notification"
+                    "name": "PartnerShowOpenedNotification_notification"
                   }
                 ],
                 "storageKey": null
@@ -131,7 +132,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ViewingRoomPublishedNotification_test_Query",
+    "name": "PartnerShowOpenedNotification_test_Query",
     "selections": [
       {
         "alias": null,
@@ -190,14 +191,8 @@ return {
                             "name": "partner",
                             "plural": false,
                             "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "name",
-                                "storageKey": null
-                              },
                               (v1/*: any*/),
+                              (v2/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -206,33 +201,27 @@ return {
                                 "name": "profile",
                                 "plural": false,
                                 "selections": [
-                                  (v2/*: any*/),
-                                  (v3/*: any*/)
+                                  (v3/*: any*/),
+                                  (v4/*: any*/)
                                 ],
                                 "storageKey": null
                               },
-                              (v3/*: any*/)
+                              (v4/*: any*/)
                             ],
                             "storageKey": null
                           },
                           {
                             "alias": null,
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "first",
-                                "value": 10
-                              }
-                            ],
-                            "concreteType": "ViewingRoomsConnection",
+                            "args": null,
+                            "concreteType": "ShowConnection",
                             "kind": "LinkedField",
-                            "name": "viewingRoomsConnection",
+                            "name": "showsConnection",
                             "plural": false,
                             "selections": [
                               {
                                 "alias": null,
                                 "args": null,
-                                "concreteType": "ViewingRoomsEdge",
+                                "concreteType": "ShowEdge",
                                 "kind": "LinkedField",
                                 "name": "edges",
                                 "plural": true,
@@ -240,70 +229,124 @@ return {
                                   {
                                     "alias": null,
                                     "args": null,
-                                    "concreteType": "ViewingRoom",
+                                    "concreteType": "Show",
                                     "kind": "LinkedField",
                                     "name": "node",
                                     "plural": false,
                                     "selections": [
+                                      (v3/*: any*/),
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": "Location",
+                                        "kind": "LinkedField",
+                                        "name": "location",
+                                        "plural": false,
+                                        "selections": [
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
+                                            "name": "city",
+                                            "storageKey": null
+                                          },
+                                          (v4/*: any*/)
+                                        ],
+                                        "storageKey": null
+                                      },
                                       {
                                         "alias": null,
                                         "args": null,
                                         "kind": "ScalarField",
-                                        "name": "title",
+                                        "name": "exhibitionPeriod",
+                                        "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "startAt",
+                                        "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "endAt",
+                                        "storageKey": null
+                                      },
+                                      (v2/*: any*/),
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "description",
                                         "storageKey": null
                                       },
                                       (v1/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
-                                        "kind": "ScalarField",
-                                        "name": "introStatement",
-                                        "storageKey": null
-                                      },
-                                      {
-                                        "alias": null,
-                                        "args": null,
-                                        "concreteType": "ARImage",
+                                        "concreteType": "Image",
                                         "kind": "LinkedField",
-                                        "name": "image",
+                                        "name": "coverImage",
                                         "plural": false,
                                         "selections": [
                                           {
                                             "alias": null,
-                                            "args": null,
-                                            "concreteType": "ImageURLs",
+                                            "args": [
+                                              {
+                                                "kind": "Literal",
+                                                "name": "height",
+                                                "value": 450
+                                              },
+                                              {
+                                                "kind": "Literal",
+                                                "name": "version",
+                                                "value": [
+                                                  "larger",
+                                                  "large"
+                                                ]
+                                              },
+                                              {
+                                                "kind": "Literal",
+                                                "name": "width",
+                                                "value": 600
+                                              }
+                                            ],
+                                            "concreteType": "CroppedImageUrl",
                                             "kind": "LinkedField",
-                                            "name": "imageURLs",
+                                            "name": "cropped",
                                             "plural": false,
                                             "selections": [
                                               {
                                                 "alias": null,
                                                 "args": null,
                                                 "kind": "ScalarField",
-                                                "name": "normalized",
+                                                "name": "src",
+                                                "storageKey": null
+                                              },
+                                              {
+                                                "alias": null,
+                                                "args": null,
+                                                "kind": "ScalarField",
+                                                "name": "srcSet",
                                                 "storageKey": null
                                               }
                                             ],
-                                            "storageKey": null
-                                          },
-                                          {
-                                            "alias": null,
-                                            "args": null,
-                                            "kind": "ScalarField",
-                                            "name": "width",
-                                            "storageKey": null
-                                          },
-                                          {
-                                            "alias": null,
-                                            "args": null,
-                                            "kind": "ScalarField",
-                                            "name": "height",
-                                            "storageKey": null
+                                            "storageKey": "cropped(height:450,version:[\"larger\",\"large\"],width:600)"
                                           }
                                         ],
                                         "storageKey": null
                                       },
-                                      (v2/*: any*/)
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "slug",
+                                        "storageKey": null
+                                      },
+                                      (v4/*: any*/)
                                     ],
                                     "storageKey": null
                                   }
@@ -311,10 +354,10 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "viewingRoomsConnection(first:10)"
+                            "storageKey": null
                           }
                         ],
-                        "type": "ViewingRoomPublishedNotificationItem",
+                        "type": "ShowOpenedNotificationItem",
                         "abstractKey": null
                       }
                     ],
@@ -340,7 +383,7 @@ return {
                     "name": "publishedAt",
                     "storageKey": "publishedAt(format:\"RELATIVE\")"
                   },
-                  (v3/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -353,7 +396,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6c4fdf4bc4efbcb35676e8da0f6879b3",
+    "cacheID": "251a78bb85ec4257dbf59a2680a7cd0f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -375,69 +418,81 @@ return {
           "plural": false,
           "type": "Notification"
         },
-        "notificationsConnection.edges.node.headline": (v4/*: any*/),
-        "notificationsConnection.edges.node.id": (v5/*: any*/),
+        "notificationsConnection.edges.node.headline": (v5/*: any*/),
+        "notificationsConnection.edges.node.id": (v6/*: any*/),
         "notificationsConnection.edges.node.item": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "NotificationItem"
         },
-        "notificationsConnection.edges.node.item.__typename": (v4/*: any*/),
+        "notificationsConnection.edges.node.item.__typename": (v5/*: any*/),
         "notificationsConnection.edges.node.item.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "notificationsConnection.edges.node.item.partner.href": (v6/*: any*/),
-        "notificationsConnection.edges.node.item.partner.id": (v5/*: any*/),
-        "notificationsConnection.edges.node.item.partner.name": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.partner.href": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.partner.id": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.partner.name": (v7/*: any*/),
         "notificationsConnection.edges.node.item.partner.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "notificationsConnection.edges.node.item.partner.profile.id": (v5/*: any*/),
-        "notificationsConnection.edges.node.item.partner.profile.internalID": (v5/*: any*/),
-        "notificationsConnection.edges.node.item.viewingRoomsConnection": {
+        "notificationsConnection.edges.node.item.partner.profile.id": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.partner.profile.internalID": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ViewingRoomsConnection"
+          "type": "ShowConnection"
         },
-        "notificationsConnection.edges.node.item.viewingRoomsConnection.edges": {
+        "notificationsConnection.edges.node.item.showsConnection.edges": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
-          "type": "ViewingRoomsEdge"
+          "type": "ShowEdge"
         },
-        "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node": {
+        "notificationsConnection.edges.node.item.showsConnection.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ViewingRoom"
+          "type": "Show"
         },
-        "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.href": (v6/*: any*/),
-        "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.image": {
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.coverImage": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ARImage"
+          "type": "Image"
         },
-        "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.image.height": (v7/*: any*/),
-        "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.image.imageURLs": {
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.coverImage.cropped": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ImageURLs"
+          "type": "CroppedImageUrl"
         },
-        "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.image.imageURLs.normalized": (v6/*: any*/),
-        "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.image.width": (v7/*: any*/),
-        "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.internalID": (v5/*: any*/),
-        "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.introStatement": (v6/*: any*/),
-        "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.title": (v4/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.coverImage.cropped.src": (v5/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.coverImage.cropped.srcSet": (v5/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.description": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.endAt": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.exhibitionPeriod": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.href": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.id": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.internalID": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.location": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Location"
+        },
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.location.city": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.location.id": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.name": (v7/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.slug": (v6/*: any*/),
+        "notificationsConnection.edges.node.item.showsConnection.edges.node.startAt": (v7/*: any*/),
         "notificationsConnection.edges.node.notificationType": {
           "enumValues": [
             "ARTICLE_FEATURED_ARTIST",
@@ -451,16 +506,16 @@ return {
           "plural": false,
           "type": "NotificationTypesEnum"
         },
-        "notificationsConnection.edges.node.publishedAt": (v4/*: any*/)
+        "notificationsConnection.edges.node.publishedAt": (v5/*: any*/)
       }
     },
-    "name": "ViewingRoomPublishedNotification_test_Query",
+    "name": "PartnerShowOpenedNotification_test_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomPublishedNotification_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...ViewingRoomPublishedNotification_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment NotificationViewingRoom_viewingRoom on ViewingRoom {\n  title\n  href\n  introStatement\n  image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n\nfragment NotificationViewingRoomsList_viewingRoomsConnection on ViewingRoomsConnection {\n  edges {\n    node {\n      ...NotificationViewingRoom_viewingRoom\n      internalID\n    }\n  }\n}\n\nfragment ViewingRoomPublishedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ViewingRoomPublishedNotificationItem {\n      partner {\n        name\n        href\n        profile {\n          internalID\n          id\n        }\n        id\n      }\n      viewingRoomsConnection(first: 10) {\n        ...NotificationViewingRoomsList_viewingRoomsConnection\n      }\n    }\n  }\n  notificationType\n  ...NotificationTypeLabel_notification\n}\n"
+    "text": "query PartnerShowOpenedNotification_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...PartnerShowOpenedNotification_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationPartnerShow_show on Show {\n  location {\n    city\n    id\n  }\n  exhibitionPeriod\n  startAt\n  endAt\n  name\n  description\n  href\n  coverImage {\n    cropped(width: 600, height: 450, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n  slug\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment PartnerShowOpenedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ShowOpenedNotificationItem {\n      partner {\n        href\n        name\n        profile {\n          internalID\n          id\n        }\n        id\n      }\n      showsConnection {\n        edges {\n          node {\n            internalID\n            ...NotificationPartnerShow_show\n            id\n          }\n        }\n      }\n    }\n  }\n  ...NotificationTypeLabel_notification\n}\n"
   }
 };
 })();
 
-(node as any).hash = "094b1974d901dc4574293eea319fae06";
+(node as any).hash = "8d8700044d4860bc59239aad6b0e5d95";
 
 export default node;

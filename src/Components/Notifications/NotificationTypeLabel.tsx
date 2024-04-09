@@ -1,19 +1,31 @@
 import { Flex, Text } from "@artsy/palette"
-import { NotificationTypesEnum } from "__generated__/NotificationItem_item.graphql"
+import { useFragment, graphql } from "react-relay"
+import {
+  NotificationTypeLabel_notification$key,
+  NotificationTypesEnum,
+} from "__generated__/NotificationTypeLabel_notification.graphql"
 
 interface Props {
-  item: {
-    notificationType: NotificationTypesEnum
-    publishedAt: string
-  }
+  notification: NotificationTypeLabel_notification$key
 }
 
-export const NotificationTypeLabel: React.FC<Props> = ({ item }) => {
-  const { notificationType } = item
+export const NotificationTypeLabel: React.FC<Props> = ({ notification }) => {
+  const data = useFragment(NotificationTypeLabelFragment, notification)
+
+  const { notificationType, publishedAt } = data
 
   const notificationTypeLabel = getNotificationTypeLabel(notificationType)
 
-  const showPublishedAt = notificationType !== "PARTNER_OFFER_CREATED"
+  const getPublishedAt = () => {
+    switch (notificationType) {
+      case "PARTNER_OFFER_CREATED":
+        return null
+      default:
+        return publishedAt
+    }
+  }
+
+  const timeDisplayText = getPublishedAt()
 
   return (
     <Flex flex-flexDirection="row" alignItems="center" gap="3px">
@@ -27,13 +39,20 @@ export const NotificationTypeLabel: React.FC<Props> = ({ item }) => {
           {notificationTypeLabel}
         </Text>
       )}
-      {showPublishedAt && !!notificationTypeLabel && (
+      {!!timeDisplayText && !!notificationTypeLabel && (
         <Text variant="xs">•</Text>
       )}
-      {showPublishedAt && <Text variant="xs">{item.publishedAt}</Text>}
+      {!!timeDisplayText && <Text variant="xs">{timeDisplayText}</Text>}
     </Flex>
   )
 }
+
+const NotificationTypeLabelFragment = graphql`
+  fragment NotificationTypeLabel_notification on Notification {
+    notificationType
+    publishedAt(format: "RELATIVE")
+  }
+`
 
 const getNotificationTypeLabel = (notificationType: NotificationTypesEnum) => {
   switch (notificationType) {

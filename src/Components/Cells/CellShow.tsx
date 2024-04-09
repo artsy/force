@@ -120,7 +120,7 @@ interface CellShowStatusProps {
   endAt: string
 }
 
-const CellShowStatus: FC<CellShowStatusProps> = ({ startAt, endAt }) => {
+export const CellShowStatus: FC<CellShowStatusProps> = ({ startAt, endAt }) => {
   const { formattedTime: status } = useEventTiming({
     currentTime: useCurrentTime({ syncWithServer: true }),
     startAt,

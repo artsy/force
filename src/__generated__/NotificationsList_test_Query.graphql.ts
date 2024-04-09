@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f4619a2969790a323b409f037279a53d>>
+ * @generated SignedSource<<bb611cad3c139ce43b06b3bc36a489ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -203,19 +203,6 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "format",
-                            "value": "RELATIVE"
-                          }
-                        ],
-                        "kind": "ScalarField",
-                        "name": "publishedAt",
-                        "storageKey": "publishedAt(format:\"RELATIVE\")"
-                      },
-                      {
-                        "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "targetHref",
@@ -402,6 +389,19 @@ return {
                         "storageKey": "artworksConnection(first:4)"
                       },
                       (v6/*: any*/),
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "RELATIVE"
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"RELATIVE\")"
+                      },
                       (v5/*: any*/)
                     ],
                     "storageKey": null
@@ -459,7 +459,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6466902a61a975c6624912393e8cc8bb",
+    "cacheID": "dceb641c4139294ec490ad2d78d952c8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -590,7 +590,7 @@ return {
     },
     "name": "NotificationsList_test_Query",
     "operationKind": "query",
-    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  title\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        item {\n          __typename\n          ... on ViewingRoomPublishedNotificationItem {\n            viewingRoomsConnection(first: 1) {\n              totalCount\n            }\n          }\n          ... on ArticleFeaturedArtistNotificationItem {\n            article {\n              internalID\n              id\n            }\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        item {\n          __typename\n          ... on ViewingRoomPublishedNotificationItem {\n            viewingRoomsConnection(first: 1) {\n              totalCount\n            }\n          }\n          ... on ArticleFeaturedArtistNotificationItem {\n            article {\n              internalID\n              id\n            }\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
