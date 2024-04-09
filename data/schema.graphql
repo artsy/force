@@ -2419,6 +2419,7 @@ type Artwork implements Node & Searchable & Sellable {
   depth: String
   description(format: Format): String
   dimensions: dimensions
+  displayArtistBio: Boolean
   displayLabel: String
   displayPriceRange: Boolean
 
