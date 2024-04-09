@@ -19008,6 +19008,7 @@ input updateCollectionInput {
   # The internal ID of the collection
   id: String!
   name: String!
+  shareableWithPartners: Boolean
 }
 
 type updateCollectionPayload {
