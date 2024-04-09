@@ -26,7 +26,7 @@ describe("CuritorialRailsTabBar", () => {
     expect(screen.queryByText("Trending Lots")).toBeInTheDocument()
   })
 
-  it('hides "Lots for You" tab if no sale artworks', () => {
+  it('hides "Works for You" tab if no sale artworks', () => {
     renderWithRelay({
       SaleArtworksConnection: () => ({
         counts: {
@@ -35,10 +35,10 @@ describe("CuritorialRailsTabBar", () => {
       }),
     })
 
-    expect(screen.queryByText("Lots for You")).not.toBeInTheDocument()
+    expect(screen.queryByText("Works for You")).not.toBeInTheDocument()
   })
 
-  it('shows "Lots for You" tab if sale artworks', () => {
+  it('shows "Works for You" tab if sale artworks', () => {
     renderWithRelay({
       SaleArtworksConnection: () => ({
         counts: {
@@ -48,6 +48,6 @@ describe("CuritorialRailsTabBar", () => {
       }),
     })
 
-    expect(screen.queryByText("Lots for You")).toBeInTheDocument()
+    expect(screen.queryByText("Works for You")).toBeInTheDocument()
   })
 })
