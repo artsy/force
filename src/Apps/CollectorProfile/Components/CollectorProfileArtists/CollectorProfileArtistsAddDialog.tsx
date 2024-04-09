@@ -26,6 +26,7 @@ import {
   UserInterestCategory,
   UserInterestInterestType,
 } from "__generated__/CollectorProfileArtistsAddDialogCreateUserInterestsMutation.graphql"
+import { CollectorProfileArtistsAddNewDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsAddNewDialog"
 
 interface CollectorProfileArtistsAddDialogProps {
   onClose: () => void
@@ -62,7 +63,7 @@ export const CollectorProfileArtistsAddDialog: FC<CollectorProfileArtistsAddDial
 
   const { sendToast } = useToasts()
 
-  const [mode, setMode] = useState<"Idle" | "Adding">("Idle")
+  const [mode, setMode] = useState<"Idle" | "Adding" | "New">("Idle")
 
   const { submitMutation } = useMutation<
     CollectorProfileArtistsAddDialogCreateUserInterestsMutation
@@ -101,96 +102,129 @@ export const CollectorProfileArtistsAddDialog: FC<CollectorProfileArtistsAddDial
   }
 
   return (
-    <ModalDialog
-      title="Select an artist"
-      onClose={onClose}
-      dialogProps={{ height: 700, width: 650 }}
-      footer={
-        <Button
-          disabled={selected.length === 0 || mode === "Adding"}
-          width="100%"
-          onClick={handleAdd}
-        >
-          Add{mode === "Adding" ? "ing" : ""} selected artist
-          {selected.length === 1 ? "" : "s"}
-          {selected.length > 0 && <>• {selected.length}</>}
-        </Button>
-      }
-    >
-      <Stack gap={2}>
-        <LabeledInput
-          ref={inputRef}
-          placeholder="Search artists for artists on Artsy"
-          label={
-            loading ? (
-              <Box width={18}>
-                <Spinner size="small" />
-              </Box>
-            ) : query ? (
-              <Clickable
-                onClick={handleClear}
-                height="100%"
-                display="flex"
-                alignItems="center"
-                aria-label="Clear input"
-              >
-                <CloseIcon fill="black60" aria-hidden />
-              </Clickable>
-            ) : (
-              <SearchIcon fill="black60" aria-hidden />
+    <>
+      <ModalDialog
+        title="Select an artist"
+        onClose={onClose}
+        dialogProps={{ height: 700, width: 650 }}
+        footer={
+          <Button
+            disabled={selected.length === 0 || mode === "Adding"}
+            width="100%"
+            onClick={handleAdd}
+          >
+            Add{mode === "Adding" ? "ing" : ""} selected artist
+            {selected.length === 1 ? "" : "s"}
+            {selected.length > 0 && <>• {selected.length}</>}
+          </Button>
+        }
+      >
+        <Stack gap={2}>
+          <LabeledInput
+            ref={inputRef}
+            placeholder="Search artists for artists on Artsy"
+            label={
+              loading ? (
+                <Box width={18}>
+                  <Spinner size="small" />
+                </Box>
+              ) : query ? (
+                <Clickable
+                  onClick={handleClear}
+                  height="100%"
+                  display="flex"
+                  alignItems="center"
+                  aria-label="Clear input"
+                >
+                  <CloseIcon fill="black60" aria-hidden />
+                </Clickable>
+              ) : (
+                <SearchIcon fill="black60" aria-hidden />
+              )
+            }
+            value={query}
+            onChange={event => {
+              setQuery(event.currentTarget.value)
+            }}
+          />
+
+          <Stack gap={0.5}>
+            {query.length > 0 && (
+              <Text variant="xs" color="black60">
+                Can’t find the artist?{" "}
+                <Clickable
+                  textDecoration="underline"
+                  onClick={() => {
+                    setMode("New")
+                  }}
+                >
+                  Add their name.
+                </Clickable>
+              </Text>
+            )}
+
+            <Text variant="xs">
+              {selected.length} artist{selected.length === 1 ? "" : "s"}{" "}
+              selected
+            </Text>
+          </Stack>
+
+          {debouncedQuery.length === 0 && (
+            <Message>
+              Results will appear here as you search. Select an artist to add
+              them to your collection.
+            </Message>
+          )}
+
+          {!loading && debouncedQuery.length > 0 && artists.length === 0 && (
+            <Message>No results found for {debouncedQuery}</Message>
+          )}
+
+          {artists.map(artist => {
+            return (
+              <CollectorProfileArtistsAddResult
+                key={artist.internalID}
+                artist={artist}
+                selected={selected.includes(String(artist.internalID))}
+                onSelect={isSelected => {
+                  setSelected(prevSelected => {
+                    if (isSelected) {
+                      return [...prevSelected, String(artist.internalID)]
+                    }
+
+                    return prevSelected.filter(
+                      id => id !== String(artist.internalID)
+                    )
+                  })
+                }}
+              />
             )
-          }
-          value={query}
-          onChange={event => {
-            setQuery(event.currentTarget.value)
+          })}
+
+          {loading && (
+            <>
+              {new Array(7).fill(null).map((_, index) => (
+                <EntityHeaderPlaceholder key={index} />
+              ))}
+            </>
+          )}
+        </Stack>
+      </ModalDialog>
+
+      {mode === "New" && (
+        <CollectorProfileArtistsAddNewDialog
+          name={query}
+          onClose={() => {
+            setMode("Idle")
+          }}
+          onAdd={artistId => {
+            setSelected(prevSelected => {
+              return [...prevSelected, artistId]
+            })
           }}
         />
-
-        <Text variant="xs">
-          {selected.length} artist{selected.length === 1 ? "" : "s"} selected
-        </Text>
-
-        {debouncedQuery.length === 0 && (
-          <Message>
-            Results will appear here as you search. Select an artist to add them
-            to your collection.
-          </Message>
-        )}
-
-        {!loading && debouncedQuery.length > 0 && artists.length === 0 && (
-          <Message>No results found for {debouncedQuery}</Message>
-        )}
-
-        {artists.map(artist => {
-          return (
-            <CollectorProfileArtistsAddResult
-              key={artist.internalID}
-              artist={artist}
-              selected={selected.includes(String(artist.internalID))}
-              onSelect={isSelected => {
-                setSelected(prevSelected => {
-                  if (isSelected) {
-                    return [...prevSelected, String(artist.internalID)]
-                  }
-
-                  return prevSelected.filter(
-                    id => id !== String(artist.internalID)
-                  )
-                })
-              }}
-            />
-          )
-        })}
-
-        {loading && (
-          <>
-            {new Array(7).fill(null).map((_, index) => (
-              <EntityHeaderPlaceholder key={index} />
-            ))}
-          </>
-        )}
-      </Stack>
-    </ModalDialog>
+      )}
+    </>
   )
 }
 

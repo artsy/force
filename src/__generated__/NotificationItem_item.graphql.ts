@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c571e95c06369521e2c369f5a5a52433>>
+ * @generated SignedSource<<6e06574711248eb8306259d3308dd09d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,9 +38,9 @@ export type NotificationItem_item$data = {
   readonly message: string;
   readonly notificationType: NotificationTypesEnum;
   readonly objectsCount: number;
-  readonly publishedAt: string;
   readonly targetHref: string;
   readonly title: string;
+  readonly " $fragmentSpreads": FragmentRefs<"NotificationTypeLabel_notification">;
   readonly " $fragmentType": "NotificationItem_item";
 };
 export type NotificationItem_item$key = {
@@ -90,19 +90,6 @@ return {
       "kind": "ScalarField",
       "name": "message",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "RELATIVE"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "publishedAt",
-      "storageKey": "publishedAt(format:\"RELATIVE\")"
     },
     {
       "alias": null,
@@ -259,13 +246,18 @@ return {
       ],
       "storageKey": "artworksConnection(first:4)"
     },
-    (v1/*: any*/)
+    (v1/*: any*/),
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "NotificationTypeLabel_notification"
+    }
   ],
   "type": "Notification",
   "abstractKey": null
 };
 })();
 
-(node as any).hash = "1b5d62e648170aed3e2b9af9b1151156";
+(node as any).hash = "d6d2ee859577ddff9612f5fc2dda01bb";
 
 export default node;

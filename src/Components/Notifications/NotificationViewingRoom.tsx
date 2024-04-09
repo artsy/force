@@ -5,8 +5,8 @@ import { NotificationViewingRoom_viewingRoom$key } from "__generated__/Notificat
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Button, Image, Spacer, Text } from "@artsy/palette"
 import { resized } from "Utils/resized"
-
-const MAX_WIDTH = 600
+import { NOTIFICATION_MAX_WIDTH } from "Components/Notifications/Notification"
+import { MAX_WIDTH } from "Components/ArtworkFilter/Utils/rangeToTuple"
 
 export interface NotificationViewingRoomProps
   extends Omit<RouterLinkProps, "to" | "width"> {
@@ -31,7 +31,7 @@ export const NotificationViewingRoom: React.FC<NotificationViewingRoomProps> = (
   }
 
   const image = resized(viewingRoom.image.imageURLs.normalized, {
-    width: MAX_WIDTH,
+    width: NOTIFICATION_MAX_WIDTH,
   })
 
   return (

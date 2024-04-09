@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c47e41fa70ea78cf228f9da3c65b5860>>
+ * @generated SignedSource<<88e6f9038cd1e1c5f45122f8b8d2066d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,7 +40,7 @@ export type ArticleFeaturedArtistNotification_notification$data = {
     } | null | undefined;
   } | null | undefined;
   readonly notificationType: NotificationTypesEnum;
-  readonly publishedAt: string;
+  readonly " $fragmentSpreads": FragmentRefs<"NotificationTypeLabel_notification">;
   readonly " $fragmentType": "ArticleFeaturedArtistNotification_notification";
 };
 export type ArticleFeaturedArtistNotification_notification$key = {
@@ -256,17 +256,9 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "RELATIVE"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "publishedAt",
-      "storageKey": "publishedAt(format:\"RELATIVE\")"
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "NotificationTypeLabel_notification"
     }
   ],
   "type": "Notification",
@@ -274,6 +266,6 @@ return {
 };
 })();
 
-(node as any).hash = "eb6784105c924ad9f23fd40bb4389680";
+(node as any).hash = "b522c5bf40a921e6466e005b67f83828";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8684a5de5d7d40313e188b5a5a38bce3>>
+ * @generated SignedSource<<610c11db51855111cd6470671546a100>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,9 +9,8 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomPublishedNotification_notification$data = {
+export type PartnerShowOpenedNotification_notification$data = {
   readonly headline: string;
   readonly item: {
     readonly partner?: {
@@ -21,24 +20,36 @@ export type ViewingRoomPublishedNotification_notification$data = {
         readonly internalID: string;
       } | null | undefined;
     } | null | undefined;
-    readonly viewingRoomsConnection?: {
-      readonly " $fragmentSpreads": FragmentRefs<"NotificationViewingRoomsList_viewingRoomsConnection">;
+    readonly showsConnection?: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly " $fragmentSpreads": FragmentRefs<"NotificationPartnerShow_show">;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
     } | null | undefined;
   } | null | undefined;
-  readonly notificationType: NotificationTypesEnum;
   readonly " $fragmentSpreads": FragmentRefs<"NotificationTypeLabel_notification">;
-  readonly " $fragmentType": "ViewingRoomPublishedNotification_notification";
+  readonly " $fragmentType": "PartnerShowOpenedNotification_notification";
 };
-export type ViewingRoomPublishedNotification_notification$key = {
-  readonly " $data"?: ViewingRoomPublishedNotification_notification$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomPublishedNotification_notification">;
+export type PartnerShowOpenedNotification_notification$key = {
+  readonly " $data"?: PartnerShowOpenedNotification_notification$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerShowOpenedNotification_notification">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ViewingRoomPublishedNotification_notification",
+  "name": "PartnerShowOpenedNotification_notification",
   "selections": [
     {
       "alias": null,
@@ -70,14 +81,14 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "name",
+                  "name": "href",
                   "storageKey": null
                 },
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "href",
+                  "name": "name",
                   "storageKey": null
                 },
                 {
@@ -88,13 +99,7 @@ const node: ReaderFragment = {
                   "name": "profile",
                   "plural": false,
                   "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "internalID",
-                      "storageKey": null
-                    }
+                    (v0/*: any*/)
                   ],
                   "storageKey": null
                 }
@@ -103,38 +108,48 @@ const node: ReaderFragment = {
             },
             {
               "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "first",
-                  "value": 10
-                }
-              ],
-              "concreteType": "ViewingRoomsConnection",
+              "args": null,
+              "concreteType": "ShowConnection",
               "kind": "LinkedField",
-              "name": "viewingRoomsConnection",
+              "name": "showsConnection",
               "plural": false,
               "selections": [
                 {
+                  "alias": null,
                   "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "NotificationViewingRoomsList_viewingRoomsConnection"
+                  "concreteType": "ShowEdge",
+                  "kind": "LinkedField",
+                  "name": "edges",
+                  "plural": true,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "Show",
+                      "kind": "LinkedField",
+                      "name": "node",
+                      "plural": false,
+                      "selections": [
+                        (v0/*: any*/),
+                        {
+                          "args": null,
+                          "kind": "FragmentSpread",
+                          "name": "NotificationPartnerShow_show"
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
-              "storageKey": "viewingRoomsConnection(first:10)"
+              "storageKey": null
             }
           ],
-          "type": "ViewingRoomPublishedNotificationItem",
+          "type": "ShowOpenedNotificationItem",
           "abstractKey": null
         }
       ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "notificationType",
       "storageKey": null
     },
     {
@@ -146,7 +161,8 @@ const node: ReaderFragment = {
   "type": "Notification",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "00a5e36d35aa4c7fb153a89b9b23788b";
+(node as any).hash = "face95e6e0438ab932eb6b0e19af336f";
 
 export default node;
