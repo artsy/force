@@ -35,26 +35,31 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
     artwork?.partner
   )
 
-  const expectedPartnerOfferID = match?.location?.query?.partner_offer_id as
-    | string
-    | undefined
+  const expectedPartnerOfferID = partnerOfferVisibilityEnabled
+    ? (match?.location?.query?.partner_offer_id as string | undefined)
+    : undefined
 
   const partnerOffer = expectedPartnerOfferID
     ? extractNodes(me?.partnerOffersConnection)[0]
     : null
 
+  // show unavailable artwork imperatively if the query param is present
+  // or a partner offer is expected and the work is not purchasable
+  const showUnavailableArtworkBanner =
+    (expectedPartnerOfferID && !artwork.isPurchasable) ||
+    !!match?.location?.query?.unavailable
+
   // show expired if query param says to expect one and it's not found
-  const expectedPartnerOfferNotFound =
-    partnerOfferVisibilityEnabled &&
-    expectedPartnerOfferID &&
-    (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID)
+  // or imperatively if the expired_offer query param is present
+  const expectedPartnerOfferNotFound = !!(
+    !showUnavailableArtworkBanner &&
+    (!!match?.location?.query?.expired_offer ||
+      (expectedPartnerOfferID &&
+        (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID)))
+  )
 
   // show expired imperatively if the query param is present
-  const showExpiredOfferBanner =
-    expectedPartnerOfferNotFound || !!match?.location?.query?.expired_offer
-
-  // show unavailable artwork imperatively if the query param is present
-  const showUnavailableArtworkBanner = !!match?.location?.query?.unavailable
+  const showExpiredOfferBanner = expectedPartnerOfferNotFound
 
   // [Maybe] show banners associated with auction closing times
   const showCascadingEndTimesBanner = !!artwork.sale
@@ -114,6 +119,7 @@ const ARTWORK_FRAGMENT = graphql`
   fragment ArtworkPageBanner_artwork on Artwork {
     published
     visibilityLevel
+    isPurchasable
     partner {
       __typename
       ...UnlistedArtworkBanner_partner
