@@ -9,6 +9,7 @@ import {
 } from "relay-test-utils/lib/RelayModernMockEnvironment"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useRouter } from "System/Router/useRouter"
+import { mockLocation } from "DevTools/mockLocation"
 
 let mockRelayEnv: RelayMockEnvironment
 let mockShowAuthDialog: jest.Mock
@@ -94,11 +95,6 @@ beforeEach(() => {
   useRouterMock.mockReturnValue(routerMock)
 })
 
-// Can only be done once per test because the property is read-only
-const setWindowLocation = (location: Partial<Location>) => {
-  Object.defineProperty(window, "location", { value: location })
-}
-
 describe("ArtworkApp", () => {
   describe("partner_offer_id param is present", () => {
     beforeEach(() => {
@@ -110,7 +106,7 @@ describe("ArtworkApp", () => {
         params: { artworkID: "artwork-id" },
       }
       useRouterMock.mockReturnValue(routerMock)
-      setWindowLocation({
+      mockLocation({
         href: "https://artsy.net/artwork/test-artwork?partner_offer_id=po-id",
       })
     })
