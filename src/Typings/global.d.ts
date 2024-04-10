@@ -42,9 +42,6 @@ declare global {
     desktopPageTimeTrackers: [{ path: string; reset: (path) => void }]
     embedded_svc?: any
     grecaptcha: any
-    OnetrustActiveGroups: string
-    Optanon: any
-    OptanonWrapper: () => void
     ReactNativeWebView?: { postMessage: (message: string) => void }
     sd: any
     // Zendesk properties

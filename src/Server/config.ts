@@ -77,7 +77,6 @@ export const IP_DENYLIST: any = ""
 export const METAPHYSICS_ENDPOINT: any =
   "https://metaphysics-production.artsy.net"
 export const NODE_ENV: any = "development"
-export const ONETRUST_SCRIPT_ID: any = null
 export const OPENREDIS_URL: any = null
 export const PAGE_CACHE_ENABLED: any = false
 export const PAGE_CACHE_EXPIRY_SECONDS: any = 600
