@@ -2419,6 +2419,7 @@ type Artwork implements Node & Searchable & Sellable {
   depth: String
   description(format: Format): String
   dimensions: dimensions
+  displayArtistBio: Boolean
   displayLabel: String
   displayPriceRange: Boolean
 
@@ -19008,6 +19009,7 @@ input updateCollectionInput {
   # The internal ID of the collection
   id: String!
   name: String!
+  shareableWithPartners: Boolean
 }
 
 type updateCollectionPayload {
