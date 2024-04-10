@@ -13,7 +13,7 @@ const SaleAgreementApp: FC<SaleAgreementAppProps> = ({ saleAgreement }) => {
   return (
     <>
       <TopContextBar displayBackArrow href="/supplemental-cos">
-        All Conditions of Sale
+        All Supplemental Conditions of Sale
       </TopContextBar>
 
       <Spacer y={4} />

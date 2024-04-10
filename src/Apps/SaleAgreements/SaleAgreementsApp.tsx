@@ -12,7 +12,9 @@ interface SaleAgreementsAppProps {
 const SaleAgreementsApp: FC<SaleAgreementsAppProps> = ({ viewer }) => {
   return (
     <Join separator={<Spacer y={6} />}>
-      <Text variant="xl">Supplemental Conditions of Sale</Text>
+      <Text variant="xl" my={4}>
+        Supplemental Conditions of Sale
+      </Text>
       <Text>
         Please note that any supplemental conditions of sale that are listed
         below should be read in conjunction with{" "}
