@@ -69,7 +69,6 @@ declare module "sharify" {
       NETWORK_CACHE_TTL: string
       NODE_ENV: string
       NOTIFICATION_COUNT: string
-      ONETRUST_SCRIPT_ID: string
       PAGE_TYPE?: string
       PARTNER_NEW_LAYOUT?: boolean
       PARTNER_PROFILE?: any // mobile partner app data
