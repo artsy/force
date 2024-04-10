@@ -61,9 +61,7 @@ const defaultMockResolvers = {
     __typename: "Artwork",
   }),
   Artwork: () => ({
-    // TODO: Why is snakecase required here?
-    // isInAuction: false,
-    is_in_auction: false,
+    isInAuction: false,
     sale: null,
     partner: {
       cities: ["Busytown USA"],

@@ -134,14 +134,14 @@ export const ArtworkApp: React.FC<Props> = props => {
     artwork?.partner
 
   const trackPageview = useCallback(() => {
-    const { listPrice, availability, is_offerable, is_acquireable } = artwork
+    const { listPrice, availability, isOfferable, isAcquireable } = artwork
     const path = window.location.pathname
 
     if (typeof window.analytics !== "undefined") {
       const properties: any = {
-        acquireable: is_acquireable,
+        acquireable: isAcquireable,
         availability,
-        offerable: is_offerable,
+        offerable: isOfferable,
         path,
         price_listed: !!listPrice,
         url: getENV("APP_URL") + path,
@@ -167,9 +167,9 @@ export const ArtworkApp: React.FC<Props> = props => {
   }, [artwork, referrer])
 
   const trackProductView = useCallback(() => {
-    const { is_acquireable, is_in_auction, internalID } = artwork
+    const { isAcquireable, isInAuction, internalID } = artwork
 
-    if (is_acquireable || is_in_auction) {
+    if (isAcquireable || isInAuction) {
       const trackingData = {
         action_type: DeprecatedSchema.ActionType.ViewedProduct,
         product_id: internalID,
@@ -181,9 +181,9 @@ export const ArtworkApp: React.FC<Props> = props => {
   }, [artwork, tracking])
 
   const trackLotView = useCallback(() => {
-    const { is_in_auction, slug, internalID, sale } = artwork
+    const { isInAuction, slug, internalID, sale } = artwork
 
-    if (tracking && is_in_auction) {
+    if (tracking && isInAuction) {
       const trackingData = {
         action_type: DeprecatedSchema.ActionType.ViewedLot,
         artwork_id: internalID,
@@ -397,8 +397,8 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         }
         slug
         internalID
-        is_acquireable: isAcquireable
-        is_offerable: isOfferable
+        isAcquireable
+        isOfferable
         published
         availability
         mediumType {
@@ -420,7 +420,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         partner {
           __typename
         }
-        is_in_auction: isInAuction
+        isInAuction
         sale {
           internalID
           slug

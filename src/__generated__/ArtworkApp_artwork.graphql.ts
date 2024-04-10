@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a093e80f72cc627ae3f4232e4d49803d>>
+ * @generated SignedSource<<0ca57402dc722c8c20799dbd0e845ac4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,9 +26,9 @@ export type ArtworkApp_artwork$data = {
   } | null | undefined;
   readonly availability: string | null | undefined;
   readonly internalID: string;
-  readonly is_acquireable: boolean | null | undefined;
-  readonly is_in_auction: boolean | null | undefined;
-  readonly is_offerable: boolean | null | undefined;
+  readonly isAcquireable: boolean | null | undefined;
+  readonly isInAuction: boolean | null | undefined;
+  readonly isOfferable: boolean | null | undefined;
   readonly listPrice: {
     readonly display?: string | null | undefined;
   } | null | undefined;
@@ -146,14 +146,14 @@ return {
     (v1/*: any*/),
     (v0/*: any*/),
     {
-      "alias": "is_acquireable",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isAcquireable",
       "storageKey": null
     },
     {
-      "alias": "is_offerable",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isOfferable",
@@ -245,7 +245,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "is_in_auction",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isInAuction",
@@ -310,6 +310,6 @@ return {
 };
 })();
 
-(node as any).hash = "0507b6e44670ba48f1e53ee55be7c295";
+(node as any).hash = "979c6803b59273922016cde5a6b47176";
 
 export default node;
