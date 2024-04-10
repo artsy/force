@@ -13,7 +13,7 @@ export const SaleAgreementListItem: FC<SaleAgreementListItemProps> = ({
   return (
     <Box>
       <RouterLink
-        to={`/conditions-of-sale/${saleAgreement.internalID}`}
+        to={`/supplemental-cos/${saleAgreement.internalID}`}
         display="block"
         textDecoration="none"
       >
