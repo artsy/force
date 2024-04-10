@@ -328,19 +328,15 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     )
   }
 
-  const buyNowOrPartnerOfferAvailable = !!(
-    artwork.isAcquireable || activePartnerOffer
-  )
-
   const renderButtons: {
     buyNow?: ResponsiveValue<"primaryBlack" | "secondaryBlack">
     makeOffer?: ResponsiveValue<"primaryBlack" | "secondaryBlack">
     contactGallery?: ResponsiveValue<"primaryBlack" | "secondaryBlack">
   } = {}
-  if (buyNowOrPartnerOfferAvailable) {
+  if (artwork.isAcquireable || activePartnerOffer) {
     renderButtons.buyNow = "primaryBlack"
   }
-  if (artwork.isOfferable) {
+  if (artwork.isOfferable && !(activePartnerOffer && artwork.isInquireable)) {
     renderButtons.makeOffer =
       Object.keys(renderButtons).length == 0 ? "primaryBlack" : "secondaryBlack"
   }
@@ -502,7 +498,7 @@ const OfferDisplay: React.FC<OfferDisplayProps> = ({
       <Spacer y={0.5} />
 
       <ExpiresInTimer expiresAt={endAt} available={isAvailable} />
-      <Spacer y={2} />
+      <Spacer y={1} />
     </>
   )
 }

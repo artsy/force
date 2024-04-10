@@ -74,7 +74,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
   })
 
   describe("action buttons area for artwork with acitve offer", () => {
-    it("displays Purchse and Make Offer buttons and omits contact gallery for works eligeable for MO", async () => {
+    it("for artwork that BN only displays Purchase button only", async () => {
       mockUseFeatureFlag.mockImplementation(() => true)
       meMock.partnerOffersConnection.edges.push({
         node: {
@@ -87,9 +87,36 @@ describe("ArtworkSidebarCommercialButtons", () => {
         {
           Query: () => ({ me: meMock }),
           Artwork: () => ({
-            isOfferable: true,
-            isInquireable: true,
+            isAcquirable: true,
+            isOfferable: false,
+            isInquireable: false,
+          }),
+        },
+        null,
+        mockEnvironment
+      )
+
+      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
+    it("for artwork that is MO only displays Purchase and Make offer buttons", async () => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+      meMock.partnerOffersConnection.edges.push({
+        node: {
+          internalID: "partner-offer-id",
+          isAvailable: true,
+        },
+      })
+
+      renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
             isAcquirable: false,
+            isOfferable: true,
+            isInquireable: false,
           }),
         },
         null,
@@ -101,7 +128,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
       expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
     })
 
-    it("displays Purchse and Contact Gallery buttons for work not eligeable for MO", async () => {
+    it("for artwork that is contact gallery only displays Purchase and Contact Gallery buttons", async () => {
       mockUseFeatureFlag.mockImplementation(() => true)
       meMock.partnerOffersConnection.edges.push({
         node: {
@@ -114,9 +141,36 @@ describe("ArtworkSidebarCommercialButtons", () => {
         {
           Query: () => ({ me: meMock }),
           Artwork: () => ({
+            isAcquirable: false,
             isOfferable: false,
             isInquireable: true,
+          }),
+        },
+        null,
+        mockEnvironment
+      )
+
+      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
+    })
+
+    it("for MOOEA artwork displays Purchase and Contact Gallery buttons", async () => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+      meMock.partnerOffersConnection.edges.push({
+        node: {
+          internalID: "partner-offer-id",
+          isAvailable: true,
+        },
+      })
+
+      renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
             isAcquirable: false,
+            isOfferable: true,
+            isInquireable: true,
           }),
         },
         null,
