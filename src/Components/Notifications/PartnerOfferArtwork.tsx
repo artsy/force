@@ -42,6 +42,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   const partnerOfferVisibilityEnabled = useFeatureFlag(
     "emerald_partner-offers-to-artwork-page"
   )
+  const partnerIcon = artwork.partner?.profile?.icon?.resized
   const artworkListingHref =
     artwork.href + "?partner_offer_id=" + partnerOfferID
 
@@ -132,24 +133,8 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           </Flex>
         )}
       </Box>
-      {note && (
-        <Box
-          backgroundColor={"black10"}
-          mb={2}
-          padding={1}
-          width="100%"
-          maxWidth={CARD_MAX_WIDTH}
-        >
-          <Text variant="xs" color="black100">
-            Note from the gallery:
-          </Text>
-          <Text variant="xs" color="black60">
-            {note}
-          </Text>
-        </Box>
-      )}
       <Box
-        mb={4}
+        mb={2}
         display="flex"
         justifyContent="space-between"
         width="100%"
@@ -178,6 +163,34 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           </Button>
         )}
       </Box>
+      {note && (
+        <Box
+          backgroundColor={"black5"}
+          padding={2}
+          width="100%"
+          maxWidth={CARD_MAX_WIDTH}
+          display={"flex"}
+          gap={1}
+        >
+          {partnerIcon && (
+            <Box>
+              <Image
+                borderRadius={"50%"}
+                src={partnerIcon.src}
+                srcSet={partnerIcon.srcSet}
+              />
+            </Box>
+          )}
+          <Box flex={1}>
+            <Text variant="sm" color="black100" fontWeight={"bold"}>
+              Note from the gallery
+            </Text>
+            <Text variant="sm" color="black100">
+              "{note}"
+            </Text>
+          </Box>
+        </Box>
+      )}
     </ManageArtworkForSavesProvider>
   )
 }
@@ -192,6 +205,16 @@ const partnerOfferArtworkFragment = graphql`
       src: url(version: ["larger", "large"])
       width
       height
+    }
+    partner(shallow: true) {
+      profile {
+        icon {
+          resized(width: 30, height: 30, version: "square") {
+            src
+            srcSet
+          }
+        }
+      }
     }
     ...Metadata_artwork
   }
