@@ -22,8 +22,12 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
     graphql`
       fragment PrivateArtworkAboutArtist_artwork on Artwork {
         slug
+        displayArtistBio
         artist {
           name
+          partnerArtists {
+            biography
+          }
           biographyBlurb(format: HTML, partnerBio: false) {
             text
           }
@@ -34,6 +38,10 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
   )
 
   // FIXME: Remove (typechecker)
+
+  if (!data.displayArtistBio) {
+    return null
+  }
 
   return (
     <Box minHeight={275} width="100%" p={6}>

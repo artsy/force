@@ -41,7 +41,7 @@ describe("ArtworkSidebarPrivateArtwork", () => {
     expect(await screen.findByText("Test Artist Name")).toBeInTheDocument()
   })
 
-  it("displays artist bio when artist bio is present", () => {
+  it("displays the artist bio when display_artist_bio is set to true", () => {
     renderWithRelay({
       Artist: () => {
         return {
@@ -51,6 +51,7 @@ describe("ArtworkSidebarPrivateArtwork", () => {
       Artwork: () => {
         return {
           visibilityLevel: "UNLISTED",
+          displayArtistBio: true,
         }
       },
     })
@@ -58,16 +59,17 @@ describe("ArtworkSidebarPrivateArtwork", () => {
     expect(biographyElement).toBeInTheDocument()
   })
 
-  it("does not display artist bio when artist bio is not present", async () => {
+  it("does not display the artist bio when display_artist_bio is set to false", () => {
     renderWithRelay({
       Artist: () => {
         return {
-          biographyBlurb: null,
+          biographyBlurb: { text: "Test Artist Biography" },
         }
       },
       Artwork: () => {
         return {
           visibilityLevel: "UNLISTED",
+          displayArtistBio: false,
         }
       },
     })
