@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3de40b46184d475a4df7f286d13837ac>>
+ * @generated SignedSource<<b3307018af41958e39c5853d226f5945>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkPageBanner_artwork$data = {
+  readonly isPurchasable: boolean | null | undefined;
   readonly partner: {
     readonly __typename: "Partner";
     readonly " $fragmentSpreads": FragmentRefs<"UnlistedArtworkBanner_partner">;
@@ -60,6 +61,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "isPurchasable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partner",
@@ -97,6 +105,6 @@ return {
 };
 })();
 
-(node as any).hash = "a6c0f1ff746a06381740e1fe70472ae0";
+(node as any).hash = "9a369ee038897274bb50610d600452ee";
 
 export default node;
