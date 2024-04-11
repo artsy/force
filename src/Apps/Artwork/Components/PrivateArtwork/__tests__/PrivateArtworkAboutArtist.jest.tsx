@@ -59,7 +59,7 @@ describe("ArtworkSidebarPrivateArtwork", () => {
     expect(biographyElement).toBeInTheDocument()
   })
 
-  it("does not display the artist bio when display_artist_bio is set to", () => {
+  it("does not display the artist bio when display_artist_bio is set to false", () => {
     renderWithRelay({
       Artist: () => {
         return {

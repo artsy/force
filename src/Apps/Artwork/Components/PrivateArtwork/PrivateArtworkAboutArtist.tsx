@@ -25,6 +25,9 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
         displayArtistBio
         artist {
           name
+          partnerArtists {
+            biography
+          }
           biographyBlurb(format: HTML, partnerBio: false) {
             text
           }

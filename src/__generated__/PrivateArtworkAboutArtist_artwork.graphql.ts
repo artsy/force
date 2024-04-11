@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f300104cff0fdecb99f81c79938f494>>
+ * @generated SignedSource<<63f27dfe735889015b47b3e9ed61cc8e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,9 @@ export type PrivateArtworkAboutArtist_artwork$data = {
       readonly text: string | null | undefined;
     } | null | undefined;
     readonly name: string | null | undefined;
+    readonly partnerArtists: ReadonlyArray<{
+      readonly biography: string | null | undefined;
+    } | null | undefined> | null | undefined;
   } | null | undefined;
   readonly displayArtistBio: boolean | null | undefined;
   readonly slug: string;
@@ -63,6 +66,24 @@ const node: ReaderFragment = {
         },
         {
           "alias": null,
+          "args": null,
+          "concreteType": "PartnerArtist",
+          "kind": "LinkedField",
+          "name": "partnerArtists",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "biography",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
           "args": [
             {
               "kind": "Literal",
@@ -98,6 +119,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "29ccf0af6639e8b377534b71faa7269f";
+(node as any).hash = "0d686dcedae441127098706e508ba31f";
 
 export default node;

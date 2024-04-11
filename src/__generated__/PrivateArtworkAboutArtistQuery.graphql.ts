@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b77c4a0ce38d55f90cf6e67eb4bccc07>>
+ * @generated SignedSource<<dcdd3b3e8e0eaecf903c1b439f7e07a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -108,6 +108,25 @@ return {
               },
               {
                 "alias": null,
+                "args": null,
+                "concreteType": "PartnerArtist",
+                "kind": "LinkedField",
+                "name": "partnerArtists",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "biography",
+                    "storageKey": null
+                  },
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
                 "args": [
                   {
                     "kind": "Literal",
@@ -146,12 +165,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8e027b7630cb4783f50185541f93a574",
+    "cacheID": "5e411e971bb43b0dd91f091587959eb1",
     "id": null,
     "metadata": {},
     "name": "PrivateArtworkAboutArtistQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  slug\n  displayArtistBio\n  artist {\n    name\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
+    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  slug\n  displayArtistBio\n  artist {\n    name\n    partnerArtists {\n      biography\n      id\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
   }
 };
 })();
