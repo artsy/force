@@ -1,4 +1,11 @@
-import { PaginationSkeleton, Stack, Text, useDidMount } from "@artsy/palette"
+import {
+  Column,
+  GridColumns,
+  PaginationSkeleton,
+  Stack,
+  Text,
+  useDidMount,
+} from "@artsy/palette"
 import { FC, Suspense, useState } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
@@ -20,31 +27,43 @@ export const CollectorProfileArtistsList: FC<CollectorProfileArtistsListProps> =
 
   return (
     <Stack gap={2}>
-      <Stack
-        gap={2}
-        flexDirection="row"
-        alignItems="center"
+      <GridColumns
         color="black60"
         borderBottom="1px solid"
         borderColor="black10"
         pb={2}
+        gridColumnGap={0.5}
       >
-        <Text size="sm-display" overflowEllipsis flex={1}>
-          Artist
-        </Text>
+        <Column span={3}>
+          <Text size="sm-display" overflowEllipsis>
+            Artist
+          </Text>
+        </Column>
 
-        <Text size="sm-display" overflowEllipsis flex={1}>
-          Artworks uploaded
-        </Text>
+        <Column span={2}>
+          <Text size="sm-display" overflowEllipsis>
+            Artworks uploaded
+          </Text>
+        </Column>
 
-        <Text size="sm-display" overflowEllipsis flex={1}>
-          Share with the galleries during inquiries
-        </Text>
+        <Column span={4}>
+          <Text size="sm-display" overflowEllipsis>
+            Share with the galleries during inquiries
+          </Text>
+        </Column>
 
-        <Text size="sm-display" overflowEllipsis flex={1} textAlign="right">
-          Follow artist
-        </Text>
-      </Stack>
+        <Column span={2}>
+          <Text size="sm-display" overflowEllipsis>
+            Follow artist
+          </Text>
+        </Column>
+
+        <Column span={1} display="flex" justifyContent="flex-end">
+          <Text size="sm-display" overflowEllipsis textAlign="right">
+            More
+          </Text>
+        </Column>
+      </GridColumns>
 
       {isMounted ? (
         <Suspense fallback={<CollectorProfileArtistsListPlaceholder />}>

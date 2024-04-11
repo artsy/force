@@ -1,10 +1,12 @@
-import { FC } from "react"
+import { FC, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { CollectorProfileArtistsListArtist_userInterestEdge$key } from "__generated__/CollectorProfileArtistsListArtist_userInterestEdge.graphql"
 import {
-  Box,
   Button,
   Checkbox,
+  Column,
+  Dropdown,
+  GridColumns,
   SkeletonText,
   Text,
   useToasts,
@@ -15,6 +17,10 @@ import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPl
 import styled from "styled-components"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { CollectorProfileArtistsListArtistUpdateMutation } from "__generated__/CollectorProfileArtistsListArtistUpdateMutation.graphql"
+import MoreIcon from "@artsy/icons/MoreIcon"
+import { Z } from "Apps/Components/constants"
+import { NavBarMenuItemButton } from "Components/NavBar/Menus/NavBarMenuItem"
+import { CollectorProfileArtistsDeleteDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsDeleteDialog"
 
 interface CollectorProfileArtistsListArtistProps {
   userInterestEdge: CollectorProfileArtistsListArtist_userInterestEdge$key
@@ -23,6 +29,8 @@ interface CollectorProfileArtistsListArtistProps {
 export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListArtistProps> = ({
   userInterestEdge,
 }) => {
+  const [mode, setMode] = useState<"Idle" | "Delete">("Idle")
+
   const { sendToast } = useToasts()
 
   const userInterest = useFragment(FRAGMENT, userInterestEdge)
@@ -66,6 +74,13 @@ export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListAr
     }
   }
 
+  const onHideRef = useRef<() => void>(() => {})
+
+  const handleClose = () => {
+    setMode("Idle")
+    onHideRef.current()
+  }
+
   if (!artist || artist.__typename !== "Artist") {
     return null
   }
@@ -73,59 +88,122 @@ export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListAr
   const count = artist.counts?.artworks || 0
 
   return (
-    <CollectorProfileArtistsListArtistRow>
-      <EntityHeaderArtistFragmentContainer
-        artist={artist}
-        displayFollowButton={false}
-        flex={1}
-      />
+    <>
+      <CollectorProfileArtistsListArtistRow>
+        <Column span={3}>
+          <EntityHeaderArtistFragmentContainer
+            artist={artist}
+            displayFollowButton={false}
+          />
+        </Column>
 
-      <Text variant="sm-display" flex={1} overflowEllipsis>
-        {count} artwork{count === 1 ? "" : "s"}
-      </Text>
+        <Column span={2}>
+          <Text variant="sm-display" overflowEllipsis>
+            {count} artwork{count === 1 ? "" : "s"}
+          </Text>
+        </Column>
 
-      <Checkbox
-        selected={!userInterest.private}
-        flex={1}
-        onClick={handleToggle}
-      >
-        Share with galleries
-      </Checkbox>
+        <Column span={4}>
+          <Checkbox selected={!userInterest.private} onClick={handleToggle}>
+            Share with galleries
+          </Checkbox>
+        </Column>
 
-      <Box flex={1} display="flex" justifyContent="flex-end">
-        <FollowArtistButtonQueryRenderer id={artist.internalID} size="small" />
-      </Box>
-    </CollectorProfileArtistsListArtistRow>
+        <Column span={2} overflowX="auto">
+          <FollowArtistButtonQueryRenderer
+            id={artist.internalID}
+            size="small"
+          />
+        </Column>
+
+        <Column
+          span={1}
+          display="flex"
+          justifyContent={["flex-start", "flex-end"]}
+        >
+          <Dropdown
+            zIndex={Z.dropdown}
+            dropdown={
+              <Text variant="sm" width={230}>
+                <NavBarMenuItemButton
+                  onClick={() => {
+                    setMode("Delete")
+                  }}
+                >
+                  Remove artist
+                </NavBarMenuItemButton>
+              </Text>
+            }
+            placement="bottom-end"
+            openDropdownByClick
+          >
+            {({ anchorRef, anchorProps, onHide }) => {
+              onHideRef.current = onHide
+
+              return (
+                <Button
+                  ref={anchorRef}
+                  {...anchorProps}
+                  variant="tertiary"
+                  size="small"
+                >
+                  <MoreIcon />
+                </Button>
+              )
+            }}
+          </Dropdown>
+        </Column>
+      </CollectorProfileArtistsListArtistRow>
+
+      {mode === "Delete" && (
+        <CollectorProfileArtistsDeleteDialog
+          id={artist.internalID}
+          name={artist.name}
+          onClose={handleClose}
+        />
+      )}
+    </>
   )
 }
 
 export const CollectorProfileArtistsListArtistSkeleton: FC = () => {
   return (
     <CollectorProfileArtistsListArtistRow>
-      <EntityHeaderPlaceholder flex={1} />
+      <Column span={3}>
+        <EntityHeaderPlaceholder />
+      </Column>
 
-      <SkeletonText variant="sm-display" flex={1} overflowEllipsis>
-        00 artworks
-      </SkeletonText>
+      <Column span={2}>
+        <SkeletonText variant="sm-display" overflowEllipsis>
+          00 artworks
+        </SkeletonText>
+      </Column>
 
-      <Checkbox disabled flex={1}>
-        Share with galleries
-      </Checkbox>
+      <Column span={4}>
+        <Checkbox disabled>Share with galleries</Checkbox>
+      </Column>
 
-      <Box flex={1} display="flex" justifyContent="flex-end">
+      <Column span={2} overflowX="auto">
         <Button variant="secondaryNeutral" size="small" disabled>
           Follow
         </Button>
-      </Box>
+      </Column>
+
+      <Column
+        span={1}
+        display="flex"
+        justifyContent={["flex-start", "flex-end"]}
+      >
+        <Button variant="secondaryNeutral" size="small" disabled>
+          <MoreIcon />
+        </Button>
+      </Column>
     </CollectorProfileArtistsListArtistRow>
   )
 }
 
-const CollectorProfileArtistsListArtistRow = styled(Box).attrs({
-  display: "flex",
-  gap: 2,
-  flexDirection: "row",
-  alignItems: "center",
+const CollectorProfileArtistsListArtistRow = styled(GridColumns).attrs({
+  gridColumnGap: 0.5,
   borderBottom: "1px solid",
   borderColor: "black10",
   py: 4,
