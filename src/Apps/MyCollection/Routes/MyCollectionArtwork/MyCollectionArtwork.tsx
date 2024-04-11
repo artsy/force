@@ -1,8 +1,10 @@
 import {
+  Box,
   Button,
   Column,
   Flex,
   GridColumns,
+  Join,
   Separator,
   Spacer,
   Tab,
@@ -19,7 +21,10 @@ import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkB
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
-import { MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer } from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
+import {
+  MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
+  MyCollectionPriceEstimateSentSection,
+} from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
 import { MyCollectionArtworkSWAHowItWorksModal } from "./Components/MyCollectionArtworkSWAHowItWorksModal"
@@ -31,6 +36,69 @@ import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectio
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
+}
+
+interface AboutTabMobileProps {
+  artwork: MyCollectionArtwork_artwork$data
+  submittedConsignment: boolean
+  onLearnMoreClick?: () => void
+}
+
+const AboutTabMobile: React.FC<AboutTabMobileProps> = ({
+  artwork,
+  submittedConsignment,
+  onLearnMoreClick,
+}) => {
+  const isP1Artist = artwork.artist?.targetSupply?.isP1
+  const showSubmitForSaleCtaMobile = isP1Artist && !submittedConsignment
+
+  return (
+    <>
+      <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
+
+      {!showSubmitForSaleCtaMobile && <Spacer x={6} y={6} />}
+
+      <Join
+        separator={
+          <>
+            <Spacer y={[4, 6]} />
+            <Separator my={2} />
+          </>
+        }
+      >
+        {artwork.hasPriceEstimateRequest && (
+          <MyCollectionPriceEstimateSentSection />
+        )}
+
+        {showSubmitForSaleCtaMobile && (
+          <>
+            <MyCollectionArtworkSWASectionMobileLayout
+              route={`/collector-profile/my-collection/submission/contact-information/${artwork.internalID}`}
+              learnMore={() => {
+                onLearnMoreClick?.()
+              }}
+              slug={artwork?.artist?.slug ?? ""}
+              artworkId={artwork.internalID}
+            />
+          </>
+        )}
+
+        {!artwork.hasPriceEstimateRequest && (
+          <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+            artwork={artwork}
+            ctaColor={
+              showSubmitForSaleCtaMobile ? "secondaryNeutral" : "primaryBlack"
+            }
+          />
+        )}
+
+        <ArtistCurrentArticlesRailQueryRenderer
+          slug={artwork?.artist?.slug ?? ""}
+          artworkId={artwork.internalID}
+        />
+      </Join>
+    </>
+  )
 }
 
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
@@ -58,9 +126,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     </Button>
   )
 
-  const slug = artwork?.artist?.slug!
+  const slug = artwork?.artist?.slug ?? ""
   const id = artwork.internalID
   const displayText = artwork.consignmentSubmission?.displayText
+  const submittedConsignment = !!displayText
 
   const showComparables = !!artwork.comparables?.totalCount
 
@@ -138,49 +207,26 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 <Tab name="Insights">
                   <MyCollectionArtworkInsightsFragmentContainer
                     artwork={artwork}
+                    isP1Artist={isP1Artist}
+                    displayText={displayText}
+                    onLearnMoreClick={() => setShowHowItWorksModal(true)}
                   />
-                  {isP1Artist && (
-                    <>
-                      {!displayText && (
-                        <MyCollectionArtworkSWASectionMobileLayout
-                          route={`/collector-profile/my-collection/submission/contact-information/${id}`}
-                          learnMore={() => setShowHowItWorksModal(true)}
-                          slug={slug}
-                          artworkId={artwork.internalID}
-                        />
-                      )}
-                    </>
-                  )}
                 </Tab>
 
                 <Tab name="About">
-                  <>
-                    <MyCollectionArtworkSidebarFragmentContainer
-                      artwork={artwork}
-                    />
-
-                    <Spacer x={6} y={6} />
-
-                    <ArtistCurrentArticlesRailQueryRenderer
-                      slug={slug}
-                      artworkId={artwork.internalID}
-                    />
-                  </>
+                  <AboutTabMobile
+                    artwork={artwork}
+                    submittedConsignment={submittedConsignment}
+                    onLearnMoreClick={() => setShowHowItWorksModal(true)}
+                  />
                 </Tab>
               </Tabs>
             ) : (
-              <>
-                <MyCollectionArtworkSidebarFragmentContainer
-                  artwork={artwork}
-                />
-
-                <Spacer x={6} y={6} />
-
-                <ArtistCurrentArticlesRailQueryRenderer
-                  slug={slug}
-                  artworkId={artwork.internalID}
-                />
-              </>
+              <AboutTabMobile
+                artwork={artwork}
+                submittedConsignment={submittedConsignment}
+                onLearnMoreClick={() => setShowHowItWorksModal(true)}
+              />
             )}
           </Media>
         </Column>
@@ -219,6 +265,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         comparables: comparableAuctionResults {
           totalCount
         }
+        hasPriceEstimateRequest
         hasMarketPriceInsights
         submissionId
         internalID

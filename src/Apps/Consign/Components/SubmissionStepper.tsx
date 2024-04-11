@@ -35,7 +35,7 @@ export const SubmissionStepper: FC<SubmissionStepperProps> = ({
         <Stepper
           initialTabIndex={stepIndex}
           currentStepIndex={stepIndex}
-          disableNavigation
+          // disableNavigation
           autoScroll
         >
           {steps.map(step => (

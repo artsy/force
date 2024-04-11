@@ -7,24 +7,33 @@ import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 
 interface MyCollectionArtworkRequestPriceEstimateSectionProps {
   artwork: MyCollectionArtworkRequestPriceEstimateSection_artwork$data
+  ctaColor?: "primaryBlack" | "secondaryNeutral" | null
+}
+
+export const MyCollectionPriceEstimateSentSection: React.FC = () => {
+  return (
+    <Flex alignItems="center" flexDirection={"row"} mb={2} mt={4}>
+      <CheckmarkStrokeIcon />
+      <Text variant="sm" ml={0.5}>
+        Price estimate request sent
+      </Text>
+    </Flex>
+  )
 }
 
 export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollectionArtworkRequestPriceEstimateSectionProps> = ({
   artwork,
+  ctaColor,
 }) => {
   if (artwork.hasPriceEstimateRequest) {
     return (
       <>
-        <Separator my={2} />
         <Flex alignItems="center" flexDirection={"row"} mb={2} mt={2}>
           <CheckmarkStrokeIcon />
           <Text variant="sm" ml={0.5}>
             Price estimate request sent
           </Text>
         </Flex>
-        <Media lessThan="sm">
-          <Separator my={2} />
-        </Media>
       </>
     )
   }
@@ -35,7 +44,6 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
 
   return (
     <>
-      <Separator my={2} />
       <Text mb={0.5} variant="sm-display">
         Get a Free Price Estimate
       </Text>
@@ -47,13 +55,10 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
         textDecoration="none"
         display="block"
       >
-        <Button variant="primaryBlack" width="100%">
+        <Button variant={ctaColor ? ctaColor : "primaryBlack"} width="100%">
           Request a Price Estimate
         </Button>
       </RouterLink>
-      <Media lessThan="sm">
-        <Separator my={2} />
-      </Media>
     </>
   )
 }
