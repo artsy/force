@@ -42,24 +42,17 @@ import {
   UploadPhotosForm,
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
+import {
+  SubmissionAsset,
+  getPhotoUrlFromAsset,
+  shouldRefetchPhotoUrls,
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/formHelpers"
 
 const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
 export interface UploadPhotosProps {
   submission?: UploadPhotos_submission$data
   myCollectionArtwork?: UploadPhotos_myCollectionArtwork$data
-}
-
-type SubmissionAsset = NonNullable<UploadPhotos_submission$data["assets"]>[0]
-
-const shouldRefetchPhotoUrls = (photos: Photo[]) => {
-  return photos.some(photo => !!photo.assetId && !photo.url && !photo.file)
-}
-
-const getPhotoUrlFromAsset = (asset: SubmissionAsset) => {
-  return (
-    (asset?.imageUrls as any)?.thumbnail || (asset?.imageUrls as any)?.square
-  )
 }
 
 export const getUploadPhotosFormInitialValues = (

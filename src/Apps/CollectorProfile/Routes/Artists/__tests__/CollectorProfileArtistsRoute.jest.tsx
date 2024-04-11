@@ -7,6 +7,10 @@ jest.mock("react-relay", () => ({
   useLazyLoadQuery: jest.fn().mockReturnValue({ me: {} }),
 }))
 
+jest.mock("Components/Pagination", () => ({
+  PaginationFragmentContainer: () => <div />,
+}))
+
 describe("CollectorProfileArtistsRoute", () => {
   it("renders correctly", () => {
     render(

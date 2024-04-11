@@ -5,12 +5,15 @@ import { CommercePagination_pageCursors$data } from "__generated__/CommercePagin
 import {
   Pagination as PaginationBase,
   PaginationProps as BasePaginationProps,
+  BoxProps,
 } from "@artsy/palette"
 import { useComputeHref } from "./useComputeHref"
 import { userIsForcingNavigation } from "System/Router/Utils/catchLinks"
 import { useJump } from "Utils/Hooks/useJump"
 
-export interface PaginationProps extends Pick<BasePaginationProps, "getHref"> {
+export interface PaginationProps
+  extends Pick<BasePaginationProps, "getHref">,
+    BoxProps {
   hasNextPage: boolean
   // TODO: Hacks around stitching. See if we can transform the schema to make this unnecessary.
   pageCursors?:
@@ -30,6 +33,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   onClick = _cursor => ({}),
   onNext = () => ({}),
   offset,
+  ...rest
 }) => {
   const { jumpTo } = useJump({ offset })
 
@@ -78,7 +82,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 
   return (
     // FIXME: Should not have external margin
-    <PaginationBase mt={6} {...paginationProps} />
+    <PaginationBase mt={6} {...paginationProps} {...rest} />
   )
 }
 

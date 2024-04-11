@@ -44,6 +44,8 @@ import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/Artwork
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { PrivateArtworkDetails } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkDetails"
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
+import { useAuthDialog } from "Components/AuthDialog"
+import { ContextModule } from "@artsy/cohesion"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -88,11 +90,43 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 
 export const ArtworkApp: React.FC<Props> = props => {
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
-  const { match, silentPush } = useRouter()
+  const { match, silentPush, silentReplace } = useRouter()
+  const { showAuthDialog } = useAuthDialog()
 
   const privateArtworksEnabled = useFeatureFlag(
     "amber_artwork_visibility_unlisted"
   )
+
+  // If the user is expecting a partner offer, require login and remove
+  // the query param from the URL after login.
+  useEffect(() => {
+    const expectingPartnerOffer = !!match?.location?.query?.partner_offer_id
+    const isLoggedIn = !!me
+
+    if (expectingPartnerOffer) {
+      if (!isLoggedIn) {
+        showAuthDialog({
+          mode: "Login",
+          options: {
+            title: mode =>
+              mode === "Login"
+                ? "Log in to view gallery offer"
+                : "Sign up to buy art with ease",
+          },
+          analytics: {
+            // TODO: Placeholder - Determine correct tracking - EMI-1783
+            contextModule: ContextModule.artworkSidebar,
+          },
+        })
+        return
+      }
+
+      const url = new URL(window.location.href)
+      url.searchParams.delete("partner_offer_id")
+      silentReplace(url.toString())
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const isPrivateArtwork =
     privateArtworksEnabled &&
@@ -100,14 +134,14 @@ export const ArtworkApp: React.FC<Props> = props => {
     artwork?.partner
 
   const trackPageview = useCallback(() => {
-    const { listPrice, availability, is_offerable, is_acquireable } = artwork
+    const { listPrice, availability, isOfferable, isAcquireable } = artwork
     const path = window.location.pathname
 
     if (typeof window.analytics !== "undefined") {
       const properties: any = {
-        acquireable: is_acquireable,
+        acquireable: isAcquireable,
         availability,
-        offerable: is_offerable,
+        offerable: isOfferable,
         path,
         price_listed: !!listPrice,
         url: getENV("APP_URL") + path,
@@ -133,9 +167,9 @@ export const ArtworkApp: React.FC<Props> = props => {
   }, [artwork, referrer])
 
   const trackProductView = useCallback(() => {
-    const { is_acquireable, is_in_auction, internalID } = artwork
+    const { isAcquireable, isInAuction, internalID } = artwork
 
-    if (is_acquireable || is_in_auction) {
+    if (isAcquireable || isInAuction) {
       const trackingData = {
         action_type: DeprecatedSchema.ActionType.ViewedProduct,
         product_id: internalID,
@@ -147,9 +181,9 @@ export const ArtworkApp: React.FC<Props> = props => {
   }, [artwork, tracking])
 
   const trackLotView = useCallback(() => {
-    const { is_in_auction, slug, internalID, sale } = artwork
+    const { isInAuction, slug, internalID, sale } = artwork
 
-    if (tracking && is_in_auction) {
+    if (tracking && isInAuction) {
       const trackingData = {
         action_type: DeprecatedSchema.ActionType.ViewedLot,
         artwork_id: internalID,
@@ -363,8 +397,8 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         }
         slug
         internalID
-        is_acquireable: isAcquireable
-        is_offerable: isOfferable
+        isAcquireable
+        isOfferable
         published
         availability
         mediumType {
@@ -386,7 +420,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         partner {
           __typename
         }
-        is_in_auction: isInAuction
+        isInAuction
         sale {
           internalID
           slug

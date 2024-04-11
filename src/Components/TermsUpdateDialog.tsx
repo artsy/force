@@ -3,6 +3,7 @@ import { Button, ModalDialog, Text } from "@artsy/palette"
 import { FC, useEffect, useState } from "react"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { getENV } from "Utils/getENV"
+import { useSystemContext } from "System/SystemContext"
 
 const TERMS_UPDATE_DIALOG_KEY = "terms-update-2024-dismissed"
 
@@ -11,6 +12,7 @@ interface TermsUpdateDialogProps {}
 export const TermsUpdateDialog: FC<TermsUpdateDialogProps> = () => {
   const isIntegrity = getENV("USER_AGENT") === "ArtsyIntegrity"
   const isSmokeTest = getENV("USER_AGENT") === "ForceSmokeTest"
+  const { isEigen } = useSystemContext()
 
   const isTermsUpdateActive = useFeatureFlag("diamond_new-terms-and-conditions")
 
@@ -22,13 +24,13 @@ export const TermsUpdateDialog: FC<TermsUpdateDialogProps> = () => {
   }
 
   useEffect(() => {
-    if (isSmokeTest || isIntegrity || !isTermsUpdateActive) return
+    if (isSmokeTest || isIntegrity || !isTermsUpdateActive || isEigen) return
 
     const isDismissed = Cookies.get(TERMS_UPDATE_DIALOG_KEY)
     if (isDismissed) return
 
     setIsDisplayable(true)
-  }, [isSmokeTest, isIntegrity, isTermsUpdateActive])
+  }, [isSmokeTest, isIntegrity, isTermsUpdateActive, isEigen])
 
   if (!isDisplayable) {
     return null

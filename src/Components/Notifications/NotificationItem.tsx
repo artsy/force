@@ -132,7 +132,13 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
             </Flex>
           )}
 
-          <Text variant="xs" color="blue100">
+          <Text
+            variant="xs"
+            color="blue100"
+            backgroundColor="blue10"
+            px={0.5}
+            alignSelf="flex-start"
+          >
             {getNotificationPrelude(item)}
           </Text>
 
@@ -291,7 +297,7 @@ const getNotificationUrl = (notification: NotificationItem_item$data) => {
 const getNotificationPrelude = (item: NotificationItem_item$data) => {
   switch (item.notificationType) {
     case "PARTNER_OFFER_CREATED":
-      return "Limited Time Offer"
+      return "Limited-Time Offer"
     default:
       return null
   }

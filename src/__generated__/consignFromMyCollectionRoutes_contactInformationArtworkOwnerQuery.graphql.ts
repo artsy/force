@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d33e1bba4489c1fc1de8d5ede21c399>>
+ * @generated SignedSource<<e617e20af254303c37b1c8eef437c81b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -397,6 +397,21 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "userName",
+            "storageKey": null
+          },
+          (v25/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "userPhone",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artist",
@@ -426,7 +441,6 @@ return {
           (v22/*: any*/),
           (v23/*: any*/),
           (v24/*: any*/),
-          (v25/*: any*/),
           (v27/*: any*/),
           (v26/*: any*/)
         ],
@@ -481,12 +495,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2f79f2ffd75d540585a77df21211c14a",
+    "cacheID": "14d23ceae960ea213fc88f42f757bf11",
     "id": null,
     "metadata": {},
     "name": "consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery",
     "operationKind": "query",
-    "text": "query consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ContactInformation_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n}\n"
+    "text": "query consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ContactInformation_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n  userName\n  userEmail\n  userPhone\n}\n"
   }
 };
 })();
