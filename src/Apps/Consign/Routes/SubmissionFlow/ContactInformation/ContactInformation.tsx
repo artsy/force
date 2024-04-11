@@ -24,26 +24,9 @@ import {
   ContactInformationFormModel,
 } from "./Components/ContactInformationForm"
 import { TopContextBar } from "Components/TopContextBar"
+import { getContactInformationFormInitialValues } from "Apps/Consign/Routes/SubmissionFlow/Utils/formHelpers"
 
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
-
-const getContactInformationFormInitialValues = (
-  me: ContactInformation_me$data
-): ContactInformationFormModel => {
-  const userRegionCode = me?.phoneNumber?.regionCode ?? ""
-  const countryCode = COUNTRY_CODES[userRegionCode.toLocaleUpperCase()]
-  let phoneNumber = me?.phone ?? ""
-
-  if (countryCode) {
-    phoneNumber = phoneNumber.replace(`+${countryCode}`, "")
-  }
-  return {
-    name: me?.name || "",
-    email: me?.email || "",
-    phoneNumber,
-    phoneNumberCountryCode: me?.phoneNumber?.regionCode || "us",
-  }
-}
 
 export interface ContactInformationProps {
   me: ContactInformation_me$data
@@ -58,7 +41,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
-  const initialValue = getContactInformationFormInitialValues(me)
+  const initialValue = getContactInformationFormInitialValues(me, submission)
   const initialErrors = validate(
     initialValue,
     contactInformationValidationSchema
@@ -268,6 +251,9 @@ export const ContactInformationFragmentContainer = createFragmentContainer(
     submission: graphql`
       fragment ContactInformation_submission on ConsignmentSubmission {
         externalId
+        userName
+        userEmail
+        userPhone
       }
     `,
     me: graphql`

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<888c5341e4a9f0ca1d613b68619fb4d7>>
+ * @generated SignedSource<<5d5a1b7122bd9c1e15293de46f76f2f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -182,6 +182,27 @@ return {
             "name": "externalId",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "userName",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "userEmail",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "userPhone",
+            "storageKey": null
+          },
           (v2/*: any*/)
         ],
         "storageKey": null
@@ -189,7 +210,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4cabf7f3fe975f7b2860fdf99bf9937b",
+    "cacheID": "03cc992235f250514f60e69a19779993",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -218,12 +239,15 @@ return {
           "type": "ConsignmentSubmission"
         },
         "submission.externalId": (v4/*: any*/),
-        "submission.id": (v4/*: any*/)
+        "submission.id": (v4/*: any*/),
+        "submission.userEmail": (v3/*: any*/),
+        "submission.userName": (v3/*: any*/),
+        "submission.userPhone": (v3/*: any*/)
       }
     },
     "name": "ContactInformation_SubmissionFlowTest_Query",
     "operationKind": "query",
-    "text": "query ContactInformation_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  me {\n    ...ContactInformation_me\n    id\n  }\n  submission(externalId: $externalId) {\n    ...ContactInformation_submission\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n}\n"
+    "text": "query ContactInformation_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  me {\n    ...ContactInformation_me\n    id\n  }\n  submission(externalId: $externalId) {\n    ...ContactInformation_submission\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n  userName\n  userEmail\n  userPhone\n}\n"
   }
 };
 })();
