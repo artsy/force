@@ -21,7 +21,7 @@ export const getContactInformationFormInitialValues = (
   const userRegionCode = me?.phoneNumber?.regionCode ?? ""
 
   const countryCode =
-    submission?.userPhone?.split(" ")?.[0].replace("+", "") ||
+    submission?.userPhone?.split(" ")?.[0]?.replace("+", "") ||
     COUNTRY_CODES[userRegionCode.toLocaleUpperCase()]
 
   const phoneNumberCountryCode =

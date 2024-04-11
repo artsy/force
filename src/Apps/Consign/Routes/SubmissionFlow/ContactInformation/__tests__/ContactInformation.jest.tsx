@@ -33,6 +33,16 @@ const mockEmptyMe = {
 
 const mockSubmission = {
   externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
+  userName: "Serge",
+  userEmail: "serge@test.test",
+  userPhone: "+1 415-555-0132",
+}
+
+const mockEmptySubmission = {
+  externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
+  userName: null,
+  userEmail: null,
+  userPhone: null,
 }
 
 const mockRouterPush = jest.fn()
@@ -96,7 +106,7 @@ const getWrapper = (user?: User) =>
       }
     `,
     variables: {
-      externalId: mockSubmission.externalId,
+      externalId: mockEmptySubmission.externalId,
     },
   })
 
@@ -117,10 +127,21 @@ describe("Save and Continue button", () => {
       }))
     })
 
+    describe("when submission has values", () => {
+      it("is enabled if all fields are received valid", async () => {
+        getWrapper().renderWithRelay({
+          Me: () => mockMe,
+          ConsignmentSubmission: () => mockSubmission,
+        })
+
+        expect(getSubmitButton()).toBeEnabled()
+      })
+    })
+
     it("is enabled if all fields are received valid", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockMe,
-        ConsignmentSubmission: () => mockSubmission,
+        ConsignmentSubmission: () => mockEmptySubmission,
       })
 
       expect(getSubmitButton()).toBeEnabled()
@@ -129,7 +150,7 @@ describe("Save and Continue button", () => {
     it("is enabled if all fields are typed valid", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockEmptyMe,
-        ConsignmentSubmission: () => mockSubmission,
+        ConsignmentSubmission: () => mockEmptySubmission,
       })
 
       await waitFor(() => {
@@ -166,7 +187,7 @@ describe("Save and Continue button", () => {
     it("is disabled when number is not valid", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockMe,
-        ConsignmentSubmission: () => mockSubmission,
+        ConsignmentSubmission: () => mockEmptySubmission,
       })
 
       simulateTyping("name", "Banksy")
@@ -190,7 +211,7 @@ describe("Save and Continue button", () => {
     it("is disabled when number is not valid", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockMe,
-        ConsignmentSubmission: () => mockSubmission,
+        ConsignmentSubmission: () => mockEmptySubmission,
       })
 
       simulateTyping("name", "Banksy")
@@ -205,7 +226,7 @@ describe("Save and Continue button", () => {
     it("is disabled when a valid number is removed by user", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockMe,
-        ConsignmentSubmission: () => mockSubmission,
+        ConsignmentSubmission: () => mockEmptySubmission,
       })
 
       simulateTyping("name", "Banksy")
@@ -240,7 +261,7 @@ describe("Contact Information step", () => {
     it("renders correctly", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockMe,
-        ConsignmentSubmission: () => mockSubmission,
+        ConsignmentSubmission: () => mockEmptySubmission,
       })
 
       expect(
@@ -256,7 +277,7 @@ describe("Contact Information step", () => {
         screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
       ).toHaveAttribute(
         "href",
-        `/sell/submission/${mockSubmission.externalId}/upload-photos`
+        `/sell/submission/${mockEmptySubmission.externalId}/upload-photos`
       )
 
       expect(getSubmitButton()).toBeInTheDocument()
@@ -267,7 +288,7 @@ describe("Contact Information step", () => {
     it("fields are not pre-populating from user profile", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockEmptyMe,
-        ConsignmentSubmission: () => mockSubmission,
+        ConsignmentSubmission: () => mockEmptySubmission,
       })
 
       expect(getInput("name")).not.toHaveValue()
@@ -278,7 +299,7 @@ describe("Contact Information step", () => {
     it("submitting a valid form", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockMe,
-        ConsignmentSubmission: () => mockSubmission,
+        ConsignmentSubmission: () => mockEmptySubmission,
       })
 
       simulateTyping("name", "Banksy")
@@ -286,7 +307,7 @@ describe("Contact Information step", () => {
       simulateTyping("phoneNumber", "415-555-0132")
 
       mockCreateOrUpdateConsignSubmission.mockResolvedValueOnce(
-        mockSubmission.externalId
+        mockEmptySubmission.externalId
       )
 
       fireEvent.click(getSubmitButton())
@@ -297,7 +318,7 @@ describe("Contact Information step", () => {
         })
         expect(mockCreateOrUpdateConsignSubmission).toHaveBeenCalled()
         expect(mockCreateOrUpdateConsignSubmission.mock.calls[0][1]).toEqual({
-          externalId: mockSubmission.externalId,
+          externalId: mockEmptySubmission.externalId,
           userName: "Banksy",
           userEmail: "banksy@test.test",
           userPhone: "+1 415-555-0132",
@@ -306,7 +327,7 @@ describe("Contact Information step", () => {
         })
         expect(mockRouterReplace).toHaveBeenCalledWith("/sell")
         expect(mockRouterPush).toHaveBeenCalledWith(
-          `/sell/submission/${mockSubmission.externalId}/thank-you`
+          `/sell/submission/${mockEmptySubmission.externalId}/thank-you`
         )
       })
     })
@@ -316,7 +337,7 @@ describe("Contact Information step", () => {
     it("fields are pre-populating from user profile", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockMe,
-        ConsignmentSubmission: () => mockSubmission,
+        ConsignmentSubmission: () => mockEmptySubmission,
       })
 
       expect(getInput("name")).toHaveValue(mockMe.name)
@@ -327,11 +348,11 @@ describe("Contact Information step", () => {
     it("submiting a valid form", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockMe,
-        ConsignmentSubmission: () => mockSubmission,
+        ConsignmentSubmission: () => mockEmptySubmission,
       })
 
       mockCreateOrUpdateConsignSubmission.mockResolvedValueOnce(
-        mockSubmission.externalId
+        mockEmptySubmission.externalId
       )
 
       fireEvent.click(getSubmitButton())
@@ -342,7 +363,7 @@ describe("Contact Information step", () => {
         })
         expect(mockCreateOrUpdateConsignSubmission).toHaveBeenCalled()
         expect(mockCreateOrUpdateConsignSubmission.mock.calls[0][1]).toEqual({
-          externalId: mockSubmission.externalId,
+          externalId: mockEmptySubmission.externalId,
           userName: "Serge",
           userEmail: "serge@test.test",
           userPhone: "+1 415-555-0132",
@@ -351,7 +372,7 @@ describe("Contact Information step", () => {
         })
         expect(mockRouterReplace).toHaveBeenCalledWith("/sell")
         expect(mockRouterPush).toHaveBeenCalledWith(
-          `/sell/submission/${mockSubmission.externalId}/thank-you`
+          `/sell/submission/${mockEmptySubmission.externalId}/thank-you`
         )
       })
     })
@@ -380,10 +401,12 @@ describe("Contact Information step", () => {
 
       getWrapper().renderWithRelay({
         Me: () => mockMe,
-        ConsignmentSubmission: () => null,
+        ConsignmentSubmission: () => mockEmptySubmission,
       })
 
       await flushPromiseQueue()
+
+      expect(getSubmitButton()).toBeEnabled()
 
       fireEvent.click(getSubmitButton())
 
@@ -401,7 +424,7 @@ describe("Contact Information step", () => {
   it("values are trimmed before any actions", async () => {
     getWrapper().renderWithRelay({
       Me: () => mockEmptyMe,
-      ConsignmentSubmission: () => mockSubmission,
+      ConsignmentSubmission: () => mockEmptySubmission,
     })
 
     simulateTyping("name", " Banksy  ")
@@ -417,7 +440,7 @@ describe("Contact Information step", () => {
     await waitFor(() => {
       expect(mockCreateOrUpdateConsignSubmission).toHaveBeenCalled()
       expect(mockCreateOrUpdateConsignSubmission.mock.calls[0][1]).toEqual({
-        externalId: mockSubmission.externalId,
+        externalId: mockEmptySubmission.externalId,
         userName: "Banksy",
         userEmail: "banksy@test.test",
         userPhone: "+1 415-555-0132",
@@ -431,7 +454,7 @@ describe("Contact Information step", () => {
     mockCreateOrUpdateConsignSubmission.mockRejectedValueOnce("rejected")
     getWrapper().renderWithRelay({
       Me: () => mockMe,
-      ConsignmentSubmission: () => mockSubmission,
+      ConsignmentSubmission: () => mockEmptySubmission,
     })
 
     fireEvent.click(getSubmitButton())
@@ -444,7 +467,7 @@ describe("Contact Information step", () => {
   it("tracks consignment submitted event with user email when logged in", async () => {
     getWrapper().renderWithRelay({
       Me: () => mockMe,
-      ConsignmentSubmission: () => mockSubmission,
+      ConsignmentSubmission: () => mockEmptySubmission,
     })
 
     fireEvent.click(getSubmitButton())
@@ -453,7 +476,7 @@ describe("Contact Information step", () => {
       expect(mockTrackEvent).toHaveBeenCalled()
       expect(mockTrackEvent).toHaveBeenCalledWith({
         action: ActionType.consignmentSubmitted,
-        submission_id: mockSubmission.externalId,
+        submission_id: mockEmptySubmission.externalId,
         user_id: "123",
         user_email: "serge@test.test",
       })
@@ -463,7 +486,7 @@ describe("Contact Information step", () => {
   it("tracks consignment submitted event with submission email when not logged in", async () => {
     getWrapper().renderWithRelay({
       Me: () => mockEmptyMe,
-      ConsignmentSubmission: () => mockSubmission,
+      ConsignmentSubmission: () => mockEmptySubmission,
     })
 
     simulateTyping("name", "Banksy")
@@ -482,7 +505,7 @@ describe("Contact Information step", () => {
       expect(mockTrackEvent).toHaveBeenCalled()
       expect(mockTrackEvent).toHaveBeenCalledWith({
         action: ActionType.consignmentSubmitted,
-        submission_id: mockSubmission.externalId,
+        submission_id: mockEmptySubmission.externalId,
         user_id: null,
         user_email: "banksy@test.test",
       })
