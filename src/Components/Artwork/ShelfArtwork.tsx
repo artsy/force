@@ -4,7 +4,7 @@ import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { ShelfArtwork_artwork$data } from "__generated__/ShelfArtwork_artwork.graphql"
 import Metadata, { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
-import { Box, Image, SkeletonBox } from "@artsy/palette"
+import { Box, Flex, Image, Label, SkeletonBox } from "@artsy/palette"
 import { useHoverMetadata } from "Components/Artwork/useHoverMetadata"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { maxDimensionsByArea, resized } from "Utils/resized"
@@ -76,7 +76,12 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         overflow="hidden"
         {...rest}
       >
-        <Box height={maxImageHeight} display="flex" alignItems="flex-end">
+        <Box
+          height={maxImageHeight}
+          display="flex"
+          alignItems="flex-end"
+          position="relative"
+        >
           <Box
             width="100%"
             style={{
@@ -97,6 +102,12 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
               placeHolderURL={blurHashDataURL ?? undefined}
             />
           </Box>
+
+          {artwork.isUnlisted && (
+            <Flex position="absolute" left={1} bottom={1}>
+              <Label>Exclusive Access</Label>
+            </Flex>
+          )}
         </Box>
 
         <Metadata
@@ -124,6 +135,7 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
         title
         href
         artistNames
+        isUnlisted
         image {
           src: url(version: ["larger", "large"])
           width

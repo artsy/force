@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56cff925354f693d517676cd8c61730f>>
+ * @generated SignedSource<<d35bfbdd04f717ea6ef6ba2f471e3840>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MetadataTestQuery$variables = Record<PropertyKey, never>;
-export type MetadataTestQuery$data = {
+export type ShelfArtwork_test_Query$variables = Record<PropertyKey, never>;
+export type ShelfArtwork_test_Query$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
   } | null | undefined;
 };
-export type MetadataTestQuery = {
-  response: MetadataTestQuery$data;
-  variables: MetadataTestQuery$variables;
+export type ShelfArtwork_test_Query = {
+  response: ShelfArtwork_test_Query$data;
+  variables: ShelfArtwork_test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -26,7 +26,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "artwork-id"
+    "value": "foo"
   }
 ],
 v1 = {
@@ -99,14 +99,26 @@ v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
+  "type": "Image"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
   "type": "Int"
+},
+v13 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "MetadataTestQuery",
+    "name": "ShelfArtwork_test_Query",
     "selections": [
       {
         "alias": null,
@@ -119,10 +131,10 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "Metadata_artwork"
+            "name": "ShelfArtwork_artwork"
           }
         ],
-        "storageKey": "artwork(id:\"artwork-id\")"
+        "storageKey": "artwork(id:\"foo\")"
       }
     ],
     "type": "Query",
@@ -132,7 +144,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "MetadataTestQuery",
+    "name": "ShelfArtwork_test_Query",
     "selections": [
       {
         "alias": null,
@@ -471,14 +483,69 @@ return {
               }
             ],
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isUnlisted",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": "src",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": [
+                      "larger",
+                      "large"
+                    ]
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:[\"larger\",\"large\"])"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "width",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "height",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blurhashDataURL",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           }
         ],
-        "storageKey": "artwork(id:\"artwork-id\")"
+        "storageKey": "artwork(id:\"foo\")"
       }
     ]
   },
   "params": {
-    "cacheID": "0c1cc9cca5189fc581995341519a4ed0",
+    "cacheID": "57714f8e556b472b89c1a9e42f4e48f8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -525,14 +592,15 @@ return {
         "artwork.date": (v10/*: any*/),
         "artwork.href": (v10/*: any*/),
         "artwork.id": (v8/*: any*/),
+        "artwork.image": (v11/*: any*/),
+        "artwork.image.blurhashDataURL": (v10/*: any*/),
+        "artwork.image.height": (v12/*: any*/),
+        "artwork.image.src": (v10/*: any*/),
+        "artwork.image.width": (v12/*: any*/),
         "artwork.internalID": (v8/*: any*/),
         "artwork.isSaved": (v9/*: any*/),
-        "artwork.isSavedToList": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
-        },
+        "artwork.isSavedToList": (v13/*: any*/),
+        "artwork.isUnlisted": (v13/*: any*/),
         "artwork.marketPriceInsights": {
           "enumValues": null,
           "nullable": true,
@@ -568,12 +636,7 @@ return {
         "artwork.partner.href": (v10/*: any*/),
         "artwork.partner.id": (v8/*: any*/),
         "artwork.partner.name": (v10/*: any*/),
-        "artwork.preview": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
+        "artwork.preview": (v11/*: any*/),
         "artwork.preview.url": (v10/*: any*/),
         "artwork.sale": {
           "enumValues": null,
@@ -581,9 +644,9 @@ return {
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.cascadingEndTimeIntervalMinutes": (v11/*: any*/),
+        "artwork.sale.cascadingEndTimeIntervalMinutes": (v12/*: any*/),
         "artwork.sale.endAt": (v10/*: any*/),
-        "artwork.sale.extendedBiddingIntervalMinutes": (v11/*: any*/),
+        "artwork.sale.extendedBiddingIntervalMinutes": (v12/*: any*/),
         "artwork.sale.id": (v8/*: any*/),
         "artwork.sale.is_auction": (v9/*: any*/),
         "artwork.sale.is_closed": (v9/*: any*/),
@@ -631,13 +694,13 @@ return {
         "artwork.title": (v10/*: any*/)
       }
     },
-    "name": "MetadataTestQuery",
+    "name": "ShelfArtwork_test_Query",
     "operationKind": "query",
-    "text": "query MetadataTestQuery {\n  artwork(id: \"artwork-id\") {\n    ...Metadata_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n"
+    "text": "query ShelfArtwork_test_Query {\n  artwork(id: \"foo\") {\n    ...ShelfArtwork_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  isUnlisted\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    blurhashDataURL\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cebe154e3dde0451c32cf0aeae0947c7";
+(node as any).hash = "b6d34d7f67f4f881b898833125540fff";
 
 export default node;
