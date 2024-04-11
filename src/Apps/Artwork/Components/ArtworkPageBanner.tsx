@@ -26,15 +26,6 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
   const privateArtworksEnabled = useFeatureFlag(
     "amber_artwork_visibility_unlisted"
   )
-
-  // Show unlisted artwork banner if the artwork is unlisted and associated with
-  // a partner (i.e. not a user's private collection artwork)
-  const showUnlistedArtworkBanner = !!(
-    privateArtworksEnabled &&
-    artwork?.visibilityLevel == "UNLISTED" &&
-    artwork?.partner
-  )
-
   const expectedPartnerOfferID = partnerOfferVisibilityEnabled
     ? (match?.location?.query?.partner_offer_id as string | undefined)
     : undefined
@@ -43,64 +34,71 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
     ? extractNodes(me?.partnerOffersConnection)[0]
     : null
 
-  // show unavailable artwork imperatively if the query param is present
-  // or a partner offer is expected and the work is not purchasable
-  const showUnavailableArtworkBanner =
-    (expectedPartnerOfferID && !artwork.isPurchasable) ||
-    !!match?.location?.query?.unavailable
+  const queryParams = match.location.query
 
-  // show expired if query param says to expect one and it's not found
-  // or imperatively if the expired_offer query param is present
-  const expectedPartnerOfferNotFound = !!(
-    !showUnavailableArtworkBanner &&
-    (!!match?.location?.query?.expired_offer ||
-      (expectedPartnerOfferID &&
-        (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID)))
-  )
+  // First show banners requested imperatively from the query string
+  if (!!queryParams.unavailable) {
+    return <ArtworkUnavailableBanner />
+  }
 
-  // show expired imperatively if the query param is present
-  const showExpiredOfferBanner = expectedPartnerOfferNotFound
+  if (!!queryParams.expired_offer) {
+    return <ExpiredOfferBanner />
+  }
 
-  // [Maybe] show banners associated with auction closing times
-  const showCascadingEndTimesBanner = !!artwork.sale
+  if (!!artwork.sale) {
+    return <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
+  }
 
-  const showUnpublishedArtworkBanner = !artwork.published
+  if (!artwork.published) {
+    return <UnpublishedArtworkBanner />
+  }
 
-  return (
-    <>
-      {showUnpublishedArtworkBanner && (
-        <FullBleedBanner variant="error">
-          <Text>This work is not currently published on Artsy.</Text>
-        </FullBleedBanner>
-      )}
+  if (
+    !!(
+      privateArtworksEnabled &&
+      artwork?.visibilityLevel == "UNLISTED" &&
+      artwork?.partner
+    )
+  ) {
+    return <UnlistedArtworkBannerFragmentContainer partner={artwork.partner} />
+  }
 
-      {showCascadingEndTimesBanner && (
-        <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
-      )}
-      {showUnlistedArtworkBanner && artwork.partner && (
-        <UnlistedArtworkBannerFragmentContainer partner={artwork.partner} />
-      )}
+  if (expectedPartnerOfferID) {
+    if (!artwork.isPurchasable) {
+      return <ArtworkUnavailableBanner />
+    }
 
-      {showExpiredOfferBanner && (
-        <FullBleedBanner variant="brand">
-          <Text>
-            This offer has expired. Please make an offer, purchase, or contact
-            the gallery.
-          </Text>
-        </FullBleedBanner>
-      )}
+    if (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID) {
+      return <ExpiredOfferBanner />
+    }
+  }
 
-      {showUnavailableArtworkBanner && (
-        <FullBleedBanner variant="brand">
-          <Text>
-            Sorry, this artwork is no longer available. Please create an alert
-            or contact the gallery to find similar artworks.
-          </Text>
-        </FullBleedBanner>
-      )}
-    </>
-  )
+  return null
 }
+
+const ArtworkUnavailableBanner = () => (
+  <FullBleedBanner variant="brand">
+    <Text>
+      Sorry, this artwork is no longer available. Please create an alert or
+      contact the gallery to find similar artworks.
+    </Text>
+  </FullBleedBanner>
+)
+
+const ExpiredOfferBanner = () => (
+  <FullBleedBanner variant="brand">
+    <Text>
+      This offer has expired. Please make an offer, purchase, or contact the
+      gallery.
+    </Text>
+  </FullBleedBanner>
+)
+
+const UnpublishedArtworkBanner = () => (
+  <FullBleedBanner variant="error">
+    <Text>This work is not currently published on Artsy.</Text>
+  </FullBleedBanner>
+)
 
 const ME_FRAGMENT = graphql`
   fragment ArtworkPageBanner_me on Me
