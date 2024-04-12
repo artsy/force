@@ -1,10 +1,8 @@
 import {
-  Box,
   Button,
   Column,
   Flex,
   GridColumns,
-  Join,
   Separator,
   Spacer,
   Tab,
@@ -21,83 +19,16 @@ import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkB
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
-import {
-  MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
-  MyCollectionPriceEstimateSentSection,
-} from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
+import { MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer } from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
 import { MyCollectionArtworkSWAHowItWorksModal } from "./Components/MyCollectionArtworkSWAHowItWorksModal"
-import {
-  MyCollectionArtworkSWASectionDesktopLayout,
-  MyCollectionArtworkSWASectionMobileLayout,
-} from "./Components/MyCollectionArtworkSWASection"
+import { MyCollectionArtworkSWASectionDesktopLayout } from "./Components/MyCollectionArtworkSWASection"
 import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
+import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtworkAboutTab"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
-}
-
-interface AboutTabMobileProps {
-  artwork: MyCollectionArtwork_artwork$data
-  submittedConsignment: boolean
-  onLearnMoreClick?: () => void
-}
-
-const AboutTabMobile: React.FC<AboutTabMobileProps> = ({
-  artwork,
-  submittedConsignment,
-  onLearnMoreClick,
-}) => {
-  const isP1Artist = artwork.artist?.targetSupply?.isP1
-  const showSubmitForSaleCtaMobile = isP1Artist && !submittedConsignment
-
-  return (
-    <>
-      <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
-
-      {!showSubmitForSaleCtaMobile && <Spacer x={6} y={6} />}
-
-      <Join
-        separator={
-          <>
-            <Spacer y={[4, 6]} />
-          </>
-        }
-      >
-        {artwork.hasPriceEstimateRequest && (
-          <MyCollectionPriceEstimateSentSection />
-        )}
-
-        {showSubmitForSaleCtaMobile && (
-          <>
-            <MyCollectionArtworkSWASectionMobileLayout
-              route={`/collector-profile/my-collection/submission/contact-information/${artwork.internalID}`}
-              learnMore={() => {
-                onLearnMoreClick?.()
-              }}
-              slug={artwork?.artist?.slug ?? ""}
-              artworkId={artwork.internalID}
-            />
-          </>
-        )}
-
-        {!artwork.hasPriceEstimateRequest && (
-          <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-            artwork={artwork}
-            ctaColor={
-              showSubmitForSaleCtaMobile ? "secondaryNeutral" : "primaryBlack"
-            }
-          />
-        )}
-
-        <ArtistCurrentArticlesRailQueryRenderer
-          slug={artwork?.artist?.slug ?? ""}
-          artworkId={artwork.internalID}
-        />
-      </Join>
-    </>
-  )
 }
 
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
@@ -216,7 +147,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 </Tab>
 
                 <Tab name="About">
-                  <AboutTabMobile
+                  <MyCollectionArtworkAboutTab
                     artwork={artwork}
                     submittedConsignment={submittedConsignment}
                     onLearnMoreClick={() => setShowHowItWorksModal(true)}
@@ -224,7 +155,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 </Tab>
               </Tabs>
             ) : (
-              <AboutTabMobile
+              <MyCollectionArtworkAboutTab
                 artwork={artwork}
                 submittedConsignment={submittedConsignment}
                 onLearnMoreClick={() => setShowHowItWorksModal(true)}
