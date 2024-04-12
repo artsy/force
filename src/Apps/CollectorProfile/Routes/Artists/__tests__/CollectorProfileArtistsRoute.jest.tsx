@@ -5,6 +5,7 @@ import { MockBoot } from "DevTools/MockBoot"
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
   useLazyLoadQuery: jest.fn().mockReturnValue({ me: {} }),
+  useFragment: jest.fn().mockReturnValue({}),
 }))
 
 jest.mock("Components/Pagination", () => ({

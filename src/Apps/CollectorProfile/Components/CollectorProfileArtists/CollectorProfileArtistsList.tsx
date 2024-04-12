@@ -6,8 +6,8 @@ import {
   Text,
   useDidMount,
 } from "@artsy/palette"
-import { FC, Suspense, useState } from "react"
-import { graphql, useLazyLoadQuery } from "react-relay"
+import { FC, Suspense } from "react"
+import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
 import { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
 import {
   CollectorProfileArtistsListArtist,
@@ -15,8 +15,8 @@ import {
 } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtist"
 import { compact } from "lodash"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { Jump } from "Utils/Hooks/useJump"
 import { useRouter } from "System/Router/useRouter"
+import { CollectorProfileArtistsList_me$key } from "__generated__/CollectorProfileArtistsList_me.graphql"
 
 const PAGE_SIZE = 10
 
@@ -90,16 +90,24 @@ const CollectorProfileArtistsListPlaceholder: FC = () => {
 
 const CollectorProfileArtistsListArtists: FC = () => {
   const {
+    router,
+    match,
     match: { location: { query } } = {
       location: { query: { page: "1" } },
     },
   } = useRouter()
 
-  const [page, setPage] = useState(parseInt(query.page, 10) || 1)
+  const page = parseInt(query.page, 10) || 1
 
-  const { me } = useLazyLoadQuery<CollectorProfileArtistsListArtistsQuery>(
+  const data = useLazyLoadQuery<CollectorProfileArtistsListArtistsQuery>(
     QUERY,
-    { page, size: PAGE_SIZE }
+    { page, size: PAGE_SIZE },
+    { fetchPolicy: "network-only" }
+  )
+
+  const me = useFragment(
+    FRAGMENT,
+    data.me as CollectorProfileArtistsList_me$key
   )
 
   const userInterestEdges = compact(me?.userInterestsConnection?.edges)
@@ -111,53 +119,58 @@ const CollectorProfileArtistsListArtists: FC = () => {
   }
 
   const handlePage = (_cursor: string | null, page: number) => {
-    setPage(page)
+    router.push({
+      pathname: match.location.pathname,
+      query: { ...match.location.query, page },
+    })
   }
 
   return (
-    <div>
-      <Jump id="top" />
+    <Stack gap={2}>
+      {userInterestEdges.map(userInterestEdge => {
+        return (
+          <CollectorProfileArtistsListArtist
+            key={userInterestEdge.internalID}
+            userInterestEdge={userInterestEdge}
+          />
+        )
+      })}
 
-      <Stack gap={2}>
-        {userInterestEdges.map(userInterestEdge => {
-          return (
-            <CollectorProfileArtistsListArtist
-              key={userInterestEdge.internalID}
-              userInterestEdge={userInterestEdge}
-            />
-          )
-        })}
-
-        <PaginationFragmentContainer
-          hasNextPage={!!hasNextPage}
-          pageCursors={pageCursors}
-          onClick={handlePage}
-          onNext={handleNext}
-          scrollTo="top"
-          offset={20}
-          mt={0}
-        />
-      </Stack>
-    </div>
+      <PaginationFragmentContainer
+        hasNextPage={!!hasNextPage}
+        pageCursors={pageCursors}
+        onClick={handlePage}
+        onNext={handleNext}
+        offset={20}
+        mt={0}
+      />
+    </Stack>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment CollectorProfileArtistsList_me on Me
+    @argumentDefinitions(page: { type: "Int" }, size: { type: "Int" }) {
+    userInterestsConnection(page: $page, size: $size, interestType: ARTIST) {
+      totalCount
+      pageCursors {
+        ...Pagination_pageCursors
+      }
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        ...CollectorProfileArtistsListArtist_userInterestEdge
+        internalID
+      }
+    }
+  }
+`
 
 const QUERY = graphql`
   query CollectorProfileArtistsListArtistsQuery($page: Int!, $size: Int!) {
     me {
-      userInterestsConnection(page: $page, size: $size, interestType: ARTIST) {
-        totalCount
-        pageCursors {
-          ...Pagination_pageCursors
-        }
-        pageInfo {
-          hasNextPage
-        }
-        edges {
-          ...CollectorProfileArtistsListArtist_userInterestEdge
-          internalID
-        }
-      }
+      ...CollectorProfileArtistsList_me @arguments(page: $page, size: $size)
     }
   }
 `
