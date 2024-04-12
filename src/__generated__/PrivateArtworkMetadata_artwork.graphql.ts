@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<383b1a96621a0f109466c50331eec245>>
+ * @generated SignedSource<<5a9e7951a591bcedb6fdfca2774d5794>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,7 +23,15 @@ export type PrivateArtworkMetadata_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"PrivateArtworkMetadata_artwork">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "HTML"
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -49,23 +57,24 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": (v0/*: any*/),
       "kind": "ScalarField",
       "name": "provenance",
-      "storageKey": null
+      "storageKey": "provenance(format:\"HTML\")"
     },
     {
       "alias": null,
-      "args": null,
+      "args": (v0/*: any*/),
       "kind": "ScalarField",
       "name": "exhibitionHistory",
-      "storageKey": null
+      "storageKey": "exhibitionHistory(format:\"HTML\")"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "3f0a81b2f5b81720295dcc1c9c96aa0a";
+(node as any).hash = "36ee7b3f157ea9312cd5947abc2fc82e";
 
 export default node;

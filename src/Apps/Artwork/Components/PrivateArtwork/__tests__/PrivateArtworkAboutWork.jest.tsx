@@ -5,11 +5,6 @@ import { graphql } from "react-relay"
 import { PrivateArtworkAboutWorkQuery } from "__generated__/PrivateArtworkAboutWorkQuery.graphql"
 
 jest.unmock("react-relay")
-jest.mock("System/useFeatureFlag", () => {
-  return {
-    useFeatureFlag: jest.fn().mockReturnValue(true),
-  }
-})
 
 describe("PrivateArtworkAboutWork", () => {
   const { renderWithRelay } = setupTestWrapperTL<PrivateArtworkAboutWorkQuery>({
@@ -27,13 +22,12 @@ describe("PrivateArtworkAboutWork", () => {
     renderWithRelay({
       Artwork: () => {
         return {
-          additionalInformation: "Additional Artwork Information",
-          visibilityLevel: "UNLISTED",
+          additionalInformationHTML: "Additional Artwork Information",
         }
       },
     })
     expect(
-      screen.queryByText("Additional Artwork Information")
+      screen.getByText("Additional Artwork Information")
     ).toBeInTheDocument()
   })
 
@@ -41,8 +35,7 @@ describe("PrivateArtworkAboutWork", () => {
     renderWithRelay({
       Artwork: () => {
         return {
-          additionalInformation: null,
-          visibilityLevel: "UNLISTED",
+          additionalInformationHTML: null,
         }
       },
     })

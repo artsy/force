@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dcdd3b3e8e0eaecf903c1b439f7e07a5>>
+ * @generated SignedSource<<f8710dea90ad7405237bedaa674fc2a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,9 +33,30 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v3 = {
+  "kind": "Literal",
+  "name": "format",
+  "value": "HTML"
+},
+v4 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "text",
+    "storageKey": null
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -77,20 +98,7 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "displayArtistBio",
-            "storageKey": null
-          },
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -99,11 +107,139 @@ return {
             "name": "artist",
             "plural": false,
             "selections": [
+              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "name",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isFollowed",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistCounts",
+                "kind": "LinkedField",
+                "name": "counts",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "follows",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "artworks",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "forSaleArtworks",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "href",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "initials",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "formattedNationalityAndBirthday",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Artwork",
+                "kind": "LinkedField",
+                "name": "coverArtwork",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Image",
+                    "kind": "LinkedField",
+                    "name": "image",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "height",
+                            "value": 145
+                          },
+                          {
+                            "kind": "Literal",
+                            "name": "width",
+                            "value": 145
+                          }
+                        ],
+                        "concreteType": "CroppedImageUrl",
+                        "kind": "LinkedField",
+                        "name": "cropped",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "src",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "srcSet",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": "cropped(height:145,width:145)"
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
+                ],
                 "storageKey": null
               },
               {
@@ -121,18 +257,31 @@ return {
                     "name": "biography",
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               },
               {
-                "alias": null,
+                "alias": "partnerBiographyBlurb",
                 "args": [
+                  (v3/*: any*/),
                   {
                     "kind": "Literal",
-                    "name": "format",
-                    "value": "HTML"
-                  },
+                    "name": "partnerBio",
+                    "value": true
+                  }
+                ],
+                "concreteType": "ArtistBlurb",
+                "kind": "LinkedField",
+                "name": "biographyBlurb",
+                "plural": false,
+                "selections": (v4/*: any*/),
+                "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)"
+              },
+              {
+                "alias": null,
+                "args": [
+                  (v3/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "partnerBio",
@@ -143,34 +292,25 @@ return {
                 "kind": "LinkedField",
                 "name": "biographyBlurb",
                 "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "text",
-                    "storageKey": null
-                  }
-                ],
+                "selections": (v4/*: any*/),
                 "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
-              },
-              (v1/*: any*/)
+              }
             ],
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "artwork(id:\"foo\")"
       }
     ]
   },
   "params": {
-    "cacheID": "5e411e971bb43b0dd91f091587959eb1",
+    "cacheID": "85c99e2335203b44fb1ea982fcd7feb4",
     "id": null,
     "metadata": {},
     "name": "PrivateArtworkAboutArtistQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  slug\n  displayArtistBio\n  artist {\n    name\n    partnerArtists {\n      biography\n      id\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
+    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  slug\n  artist {\n    ...FollowArtistButton_artist\n    internalID\n    href\n    slug\n    name\n    initials\n    formattedNationalityAndBirthday\n    counts {\n      artworks\n      forSaleArtworks\n      follows\n    }\n    coverArtwork {\n      image {\n        cropped(width: 145, height: 145) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    partnerArtists {\n      biography\n      id\n    }\n    partnerBiographyBlurb: biographyBlurb(format: HTML, partnerBio: true) {\n      text\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
   }
 };
 })();
