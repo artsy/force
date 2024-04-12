@@ -4,10 +4,11 @@ import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { ShelfArtwork_artwork$data } from "__generated__/ShelfArtwork_artwork.graphql"
 import Metadata, { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
-import { Box, Flex, Image, Label, SkeletonBox } from "@artsy/palette"
+import { Box, Image, SkeletonBox } from "@artsy/palette"
 import { useHoverMetadata } from "Components/Artwork/useHoverMetadata"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { maxDimensionsByArea, resized } from "Utils/resized"
+import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
 
 const DEFAULT_AREA = 200 * 200
 const DEFAULT_MAX_IMG_HEIGHT = 250
@@ -103,11 +104,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
             />
           </Box>
 
-          {artwork.isUnlisted && (
-            <Flex position="absolute" left={1} bottom={1}>
-              <Label>Exclusive Access</Label>
-            </Flex>
-          )}
+          <ExclusiveAccessBadge artwork={artwork} />
         </Box>
 
         <Metadata
@@ -131,6 +128,7 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ShelfArtwork_artwork on Artwork {
+        ...ExclusiveAccessBadge_artwork
         ...Metadata_artwork
         title
         href

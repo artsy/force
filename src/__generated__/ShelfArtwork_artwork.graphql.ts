@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0161490e356b74f2cbfb1eb14d8b9c6e>>
+ * @generated SignedSource<<ac6c38d4dd3db8936b9b4bf1c808a7e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,7 @@ export type ShelfArtwork_artwork$data = {
   } | null | undefined;
   readonly isUnlisted: boolean;
   readonly title: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ExclusiveAccessBadge_artwork" | "Metadata_artwork">;
   readonly " $fragmentType": "ShelfArtwork_artwork";
 };
 export type ShelfArtwork_artwork$key = {
@@ -35,6 +35,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ShelfArtwork_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ExclusiveAccessBadge_artwork"
+    },
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -121,6 +126,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c9e0fcabc33fa781d9ebfa0a574ad838";
+(node as any).hash = "1c78062da40df279094a43d2e645407e";
 
 export default node;
