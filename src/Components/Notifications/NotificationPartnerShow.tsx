@@ -6,7 +6,6 @@ import { Box, Button, Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import { NotificationPartnerShow_show$key } from "__generated__/NotificationPartnerShow_show.graphql"
 import { compact, truncate } from "lodash"
 import { CellShowStatus } from "Components/Cells/CellShow"
-import { MAX_WIDTH } from "Components/ArtworkFilter/Utils/rangeToTuple"
 import { NOTIFICATION_MAX_WIDTH } from "Components/Notifications/Notification"
 
 export interface NotificationShowProps
@@ -27,14 +26,13 @@ export const NotificationPartnerShow: React.FC<NotificationShowProps> = ({
   const image = show?.coverImage?.cropped
 
   return (
-    <Box mb={4}>
+    <Box mb={4} width="100%" maxWidth={NOTIFICATION_MAX_WIDTH}>
       <RouterLink
         to={show?.href}
         onClick={onClick}
         display="flex"
         flexDirection="column"
         textDecoration="none"
-        maxWidth={NOTIFICATION_MAX_WIDTH}
         overflow="hidden"
         width="100%"
         {...rest}
@@ -80,7 +78,7 @@ export const NotificationPartnerShow: React.FC<NotificationShowProps> = ({
         )}
       </RouterLink>
 
-      <Box mb={4} width="100%" maxWidth={MAX_WIDTH}>
+      <Box mb={4} width="100%">
         <Button
           // @ts-ignore
           as={RouterLink}

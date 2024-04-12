@@ -6,7 +6,6 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Button, Image, Spacer, Text } from "@artsy/palette"
 import { resized } from "Utils/resized"
 import { NOTIFICATION_MAX_WIDTH } from "Components/Notifications/Notification"
-import { MAX_WIDTH } from "Components/ArtworkFilter/Utils/rangeToTuple"
 
 export interface NotificationViewingRoomProps
   extends Omit<RouterLinkProps, "to" | "width"> {
@@ -43,7 +42,7 @@ export const NotificationViewingRoom: React.FC<NotificationViewingRoomProps> = (
         flexDirection="column"
         textDecoration="none"
         aria-label={viewingRoom?.title}
-        maxWidth={MAX_WIDTH}
+        maxWidth={NOTIFICATION_MAX_WIDTH}
         overflow="hidden"
         width="100%"
         {...rest}
@@ -77,7 +76,7 @@ export const NotificationViewingRoom: React.FC<NotificationViewingRoomProps> = (
         </Text>
       </RouterLink>
 
-      <Box mb={4} width="100%" maxWidth={MAX_WIDTH}>
+      <Box mb={4} width="100%">
         <Button
           // @ts-ignore
           as={RouterLink}
