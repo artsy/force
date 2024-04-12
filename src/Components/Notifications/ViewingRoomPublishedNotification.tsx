@@ -31,7 +31,7 @@ export const ViewingRoomPublishedNotification: FC<ViewingRoomPublishedNotificati
   }
 
   return (
-    <Box m={4}>
+    <Box>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1}>
           <Text variant="lg-display">{headline}</Text>
