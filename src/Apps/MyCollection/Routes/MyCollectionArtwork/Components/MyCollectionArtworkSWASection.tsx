@@ -20,6 +20,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
 
   return (
     <>
+      <Separator my={2} />
       <Text mb={0.5} mt={4} variant="sm-display">
         Interested in Selling This Work?
       </Text>
@@ -73,6 +74,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
           selling with Artsy.
         </Clickable>
       </Text>
+      <Separator my={2} />
     </>
   )
 }

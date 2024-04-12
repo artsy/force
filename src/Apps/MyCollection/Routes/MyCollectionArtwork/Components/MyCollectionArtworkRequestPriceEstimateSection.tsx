@@ -1,7 +1,6 @@
-import { Button, Flex, Separator, Text } from "@artsy/palette"
+import { Button, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkRequestPriceEstimateSection_artwork$data } from "__generated__/MyCollectionArtworkRequestPriceEstimateSection_artwork.graphql"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 

@@ -62,7 +62,6 @@ const AboutTabMobile: React.FC<AboutTabMobileProps> = ({
         separator={
           <>
             <Spacer y={[4, 6]} />
-            <Separator my={2} />
           </>
         }
       >
@@ -169,9 +168,12 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
 
             {!displayText && (
-              <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-                artwork={artwork}
-              />
+              <>
+                <Separator my={2} />
+                <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+                  artwork={artwork}
+                />
+              </>
             )}
 
             {isP1Artist &&

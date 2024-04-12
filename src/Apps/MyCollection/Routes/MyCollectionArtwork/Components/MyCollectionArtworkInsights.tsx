@@ -35,7 +35,6 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
       separator={
         <>
           <Spacer y={[4, 6]} />
-          <Separator my={2} />
         </>
       }
     >
@@ -82,12 +81,14 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
 
       {!artwork.hasPriceEstimateRequest && (
         <Media lessThan="sm">
+          <Separator my={2} />
           <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
             artwork={artwork}
             ctaColor={
               showSubmitForSaleCtaMobile ? "secondaryNeutral" : "primaryBlack"
             }
           />
+          <Separator my={2} />
         </Media>
       )}
     </Join>
