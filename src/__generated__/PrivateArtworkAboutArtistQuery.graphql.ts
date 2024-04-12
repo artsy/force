@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<624d172a3a6002295448fa47c31bb178>>
+ * @generated SignedSource<<dcdd3b3e8e0eaecf903c1b439f7e07a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -87,6 +87,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "displayArtistBio",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artist",
@@ -97,6 +104,25 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "name",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PartnerArtist",
+                "kind": "LinkedField",
+                "name": "partnerArtists",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "biography",
+                    "storageKey": null
+                  },
+                  (v1/*: any*/)
+                ],
                 "storageKey": null
               },
               {
@@ -139,12 +165,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "06cdcb30da8e4aecf57f09e7794da9d0",
+    "cacheID": "5e411e971bb43b0dd91f091587959eb1",
     "id": null,
     "metadata": {},
     "name": "PrivateArtworkAboutArtistQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  slug\n  artist {\n    name\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
+    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  slug\n  displayArtistBio\n  artist {\n    name\n    partnerArtists {\n      biography\n      id\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
   }
 };
 })();

@@ -33,6 +33,7 @@ beforeEach(() => {
   mockUseRouter.mockClear()
   artworkMock = {
     sale: null,
+    isPurchasable: true,
   }
   meMock = {}
 })
@@ -193,6 +194,60 @@ describe("ArtworkPageBanner", () => {
 
         expect(getAllBannerTexts()).toEqual([
           "This offer has expired. Please make an offer, purchase, or contact the gallery.",
+        ])
+      })
+    })
+
+    it("shows the partner offer banner if the user has a matching partner offer but it is not purchasable", async () => {
+      renderWithRelay({
+        Artwork: () => ({ ...artworkMock, isPurchasable: false }),
+        Me: () => ({
+          ...meMock,
+          partnerOffersConnection: {
+            edges: [
+              {
+                node: {
+                  internalID: "123",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            "Sorry, this artwork is no longer available. Please create an alert or contact the gallery to find similar artworks."
+          )
+        ).toBeInTheDocument()
+
+        expect(getAllBannerTexts()).toEqual([
+          "Sorry, this artwork is no longer available. Please create an alert or contact the gallery to find similar artworks.",
+        ])
+      })
+    })
+
+    it("shows the partner offer banner if the user has no matching partner offer and it is not purchasable", async () => {
+      renderWithRelay({
+        Artwork: () => ({ ...artworkMock, isPurchasable: false }),
+        Me: () => ({
+          ...meMock,
+          partnerOffersConnection: {
+            edges: [],
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            "Sorry, this artwork is no longer available. Please create an alert or contact the gallery to find similar artworks."
+          )
+        ).toBeInTheDocument()
+
+        expect(getAllBannerTexts()).toEqual([
+          "Sorry, this artwork is no longer available. Please create an alert or contact the gallery to find similar artworks.",
         ])
       })
     })

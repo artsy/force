@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1515f2e895687f6d905f11fa300d95cd>>
+ * @generated SignedSource<<6f9648cdd621150d659c8a627802d71f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,34 +10,25 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UserInterestCategory = "COLLECTED_BEFORE" | "INTERESTED_IN_COLLECTING" | "%future added value";
-export type UserInterestInterestType = "ARTIST" | "GENE" | "%future added value";
-export type CreateUserInterestsMutationInput = {
-  clientMutationId?: string | null | undefined;
-  userInterests: ReadonlyArray<UserInterestInput>;
-};
-export type UserInterestInput = {
+export type DeleteUserInterestMutationInput = {
   anonymousSessionId?: string | null | undefined;
-  body?: string | null | undefined;
-  category: UserInterestCategory;
-  interestId: string;
-  interestType: UserInterestInterestType;
-  private?: boolean | null | undefined;
+  clientMutationId?: string | null | undefined;
+  id: string;
   sessionID?: string | null | undefined;
 };
-export type CollectorProfileArtistsAddDialogCreateUserInterestsMutation$variables = {
-  input: CreateUserInterestsMutationInput;
+export type CollectorProfileArtistsDeleteDialogMutation$variables = {
+  input: DeleteUserInterestMutationInput;
 };
-export type CollectorProfileArtistsAddDialogCreateUserInterestsMutation$data = {
-  readonly createUserInterests: {
+export type CollectorProfileArtistsDeleteDialogMutation$data = {
+  readonly deleteUserInterest: {
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileArtistsList_me">;
     };
   } | null | undefined;
 };
-export type CollectorProfileArtistsAddDialogCreateUserInterestsMutation = {
-  response: CollectorProfileArtistsAddDialogCreateUserInterestsMutation$data;
-  variables: CollectorProfileArtistsAddDialogCreateUserInterestsMutation$variables;
+export type CollectorProfileArtistsDeleteDialogMutation = {
+  response: CollectorProfileArtistsDeleteDialogMutation$data;
+  variables: CollectorProfileArtistsDeleteDialogMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -109,14 +100,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CollectorProfileArtistsAddDialogCreateUserInterestsMutation",
+    "name": "CollectorProfileArtistsDeleteDialogMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateUserInterestsMutationPayload",
+        "concreteType": "DeleteUserInterestMutationPayload",
         "kind": "LinkedField",
-        "name": "createUserInterests",
+        "name": "deleteUserInterest",
         "plural": false,
         "selections": [
           {
@@ -149,14 +140,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CollectorProfileArtistsAddDialogCreateUserInterestsMutation",
+    "name": "CollectorProfileArtistsDeleteDialogMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateUserInterestsMutationPayload",
+        "concreteType": "DeleteUserInterestMutationPayload",
         "kind": "LinkedField",
-        "name": "createUserInterests",
+        "name": "deleteUserInterest",
         "plural": false,
         "selections": [
           {
@@ -448,16 +439,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e8dd40e4a6f8a68c73d5ed481cce4fba",
+    "cacheID": "da8026ea5e9a539ed8f498a962346b9b",
     "id": null,
     "metadata": {},
-    "name": "CollectorProfileArtistsAddDialogCreateUserInterestsMutation",
+    "name": "CollectorProfileArtistsDeleteDialogMutation",
     "operationKind": "mutation",
-    "text": "mutation CollectorProfileArtistsAddDialogCreateUserInterestsMutation(\n  $input: CreateUserInterestsMutationInput!\n) {\n  createUserInterests(input: $input) {\n    me {\n      ...CollectorProfileArtistsList_me_4aMZep\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsList_me_4aMZep on Me {\n  userInterestsConnection(page: 1, size: 10, interestType: ARTIST) {\n    totalCount\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    pageInfo {\n      hasNextPage\n    }\n    edges {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      internalID\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "mutation CollectorProfileArtistsDeleteDialogMutation(\n  $input: DeleteUserInterestMutationInput!\n) {\n  deleteUserInterest(input: $input) {\n    me {\n      ...CollectorProfileArtistsList_me_4aMZep\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsList_me_4aMZep on Me {\n  userInterestsConnection(page: 1, size: 10, interestType: ARTIST) {\n    totalCount\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    pageInfo {\n      hasNextPage\n    }\n    edges {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      internalID\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5db077f8aca7c3b3a296135a9665d193";
+(node as any).hash = "092dacb05871aab0dccf7fcc673f7840";
 
 export default node;

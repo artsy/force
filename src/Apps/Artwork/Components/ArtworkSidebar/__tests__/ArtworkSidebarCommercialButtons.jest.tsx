@@ -73,18 +73,114 @@ describe("ArtworkSidebarCommercialButtons", () => {
     mockEnvironment.mockClear()
   })
 
-  it("displays both Make an Offer and Contact Gallery CTAs when offerable from inquiry and exact price listed", () => {
-    renderWithRelay({
-      Query: () => ({ me: meMock }),
-      Artwork: () => ({
-        isOfferable: true,
-        isInquireable: true,
-        isAcquirable: false,
-      }),
+  describe("action buttons area for artwork with acitve offer", () => {
+    it("for artwork that BN only displays Purchase button only", async () => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+      meMock.partnerOffersConnection.edges.push({
+        node: {
+          internalID: "partner-offer-id",
+          isAvailable: true,
+        },
+      })
+
+      renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
+            isAcquirable: true,
+            isOfferable: false,
+            isInquireable: false,
+          }),
+        },
+        null,
+        mockEnvironment
+      )
+
+      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
     })
 
-    expect(screen.queryByText("Make an Offer")).toBeInTheDocument()
-    expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
+    it("for artwork that is MO only displays Purchase and Make offer buttons", async () => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+      meMock.partnerOffersConnection.edges.push({
+        node: {
+          internalID: "partner-offer-id",
+          isAvailable: true,
+        },
+      })
+
+      renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
+            isAcquirable: false,
+            isOfferable: true,
+            isInquireable: false,
+          }),
+        },
+        null,
+        mockEnvironment
+      )
+
+      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).toBeInTheDocument()
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
+    it("for artwork that is contact gallery only displays Purchase and Contact Gallery buttons", async () => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+      meMock.partnerOffersConnection.edges.push({
+        node: {
+          internalID: "partner-offer-id",
+          isAvailable: true,
+        },
+      })
+
+      renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
+            isAcquirable: false,
+            isOfferable: false,
+            isInquireable: true,
+          }),
+        },
+        null,
+        mockEnvironment
+      )
+
+      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
+    })
+
+    it("for MOOEA artwork displays Purchase and Contact Gallery buttons", async () => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+      meMock.partnerOffersConnection.edges.push({
+        node: {
+          internalID: "partner-offer-id",
+          isAvailable: true,
+        },
+      })
+
+      renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
+            isAcquirable: false,
+            isOfferable: true,
+            isInquireable: true,
+          }),
+        },
+        null,
+        mockEnvironment
+      )
+
+      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
+    })
   })
 
   it("displays both Make an Offer and Contact Gallery CTAs when offerable from inquiry and price range", () => {
@@ -297,7 +393,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
         Query: () => ({ me: meMock }),
         Artwork: () => ({
           priceListedDisplay: "$5,000",
-          isOfferable: true,
         }),
       },
       null,
@@ -307,6 +402,36 @@ describe("ArtworkSidebarCommercialButtons", () => {
     expect(screen.queryByText("Limited-Time Offer")).toBeInTheDocument()
     expect(screen.queryByText("$3,350.00")).toBeInTheDocument()
     expect(screen.queryByText("(List price: $5,000)")).toBeInTheDocument()
+  })
+
+  it("displays partner offer note if present", () => {
+    mockUseFeatureFlag.mockImplementation(() => true)
+    const futureDate = new Date()
+    futureDate.setDate(futureDate.getDate() + 1)
+    meMock.partnerOffersConnection.edges.push({
+      node: {
+        internalID: "partner-offer-id",
+        endAt: futureDate.toISOString(),
+        isAvailable: true,
+        priceWithDiscount: {
+          display: "$3,350.00",
+        },
+        note: "This is a note",
+      },
+    })
+
+    renderWithRelay(
+      {
+        Query: () => ({ me: meMock }),
+        Artwork: () => ({
+          priceListedDisplay: "$5,000",
+        }),
+      },
+      null,
+      mockEnvironment
+    )
+
+    expect(screen.queryByText('"This is a note"')).toBeInTheDocument()
   })
 
   describe("authentication", () => {

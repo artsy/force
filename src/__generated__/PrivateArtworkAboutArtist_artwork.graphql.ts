@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2cfc086d4b052ca9c0275a95db7d2706>>
+ * @generated SignedSource<<63f27dfe735889015b47b3e9ed61cc8e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,11 @@ export type PrivateArtworkAboutArtist_artwork$data = {
       readonly text: string | null | undefined;
     } | null | undefined;
     readonly name: string | null | undefined;
+    readonly partnerArtists: ReadonlyArray<{
+      readonly biography: string | null | undefined;
+    } | null | undefined> | null | undefined;
   } | null | undefined;
+  readonly displayArtistBio: boolean | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "PrivateArtworkAboutArtist_artwork";
 };
@@ -41,6 +45,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "displayArtistBio",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -51,6 +62,24 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "name",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PartnerArtist",
+          "kind": "LinkedField",
+          "name": "partnerArtists",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "biography",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         },
         {
@@ -90,6 +119,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "cb0275be3516ecf12bffaf9271baa2cd";
+(node as any).hash = "0d686dcedae441127098706e508ba31f";
 
 export default node;

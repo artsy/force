@@ -1,4 +1,3 @@
-import FilterIcon from "@artsy/icons/FilterIcon"
 import AddIcon from "@artsy/icons/AddIcon"
 import { AutocompleteInput, Button, Stack } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
@@ -33,10 +32,6 @@ export const CollectorProfileArtistsRoute: FC<CollectorProfileArtistsRouteProps>
             options={[]}
             flex={1}
           />
-
-          <Button variant="tertiary" Icon={FilterIcon} size="small">
-            Sort & Filter
-          </Button>
 
           <Button variant="primaryBlack" Icon={AddIcon} onClick={handleAdd}>
             Add Artist

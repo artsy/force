@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aca2c9f324af8bf2fdf2173d6e37a063>>
+ * @generated SignedSource<<eb8e943c3ee52604f90eb31d16a8d97a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,16 @@ export type PartnerOfferArtwork_artwork$data = {
     readonly height: number | null | undefined;
     readonly src: string | null | undefined;
     readonly width: number | null | undefined;
+  } | null | undefined;
+  readonly partner: {
+    readonly profile: {
+      readonly icon: {
+        readonly resized: {
+          readonly src: string;
+          readonly srcSet: string;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly price: string | null | undefined;
   readonly title: string | null | undefined;
@@ -104,6 +114,86 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
+      "concreteType": "Partner",
+      "kind": "LinkedField",
+      "name": "partner",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Profile",
+          "kind": "LinkedField",
+          "name": "profile",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Image",
+              "kind": "LinkedField",
+              "name": "icon",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "height",
+                      "value": 30
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "version",
+                      "value": "square"
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 30
+                    }
+                  ],
+                  "concreteType": "ResizedImageUrl",
+                  "kind": "LinkedField",
+                  "name": "resized",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "src",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "srcSet",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": "resized(height:30,version:\"square\",width:30)"
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "partner(shallow:true)"
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Metadata_artwork"
@@ -113,6 +203,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "ea4b3a0baac7e94cda2ba11dcade250e";
+(node as any).hash = "9bc5ac4bc8dacfb93c8f5c020e305b33";
 
 export default node;

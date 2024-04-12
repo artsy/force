@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cfc4b01eb62dee3f2ff9e038ab791ddb>>
+ * @generated SignedSource<<ef587356e1b52c7d68686b6e2f24a94e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,12 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileArtistsListArtistsQuery$variables = {
-  after?: string | null | undefined;
+  page: number;
+  size: number;
 };
 export type CollectorProfileArtistsListArtistsQuery$data = {
   readonly me: {
-    readonly userInterestsConnection: {
-      readonly edges: ReadonlyArray<{
-        readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileArtistsListArtist_userInterestEdge">;
-      } | null | undefined> | null | undefined;
-      readonly totalCount: number | null | undefined;
-    } | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileArtistsList_me">;
   } | null | undefined;
 };
 export type CollectorProfileArtistsListArtistsQuery = {
@@ -34,45 +29,61 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "after"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
-    "name": "after",
-    "variableName": "after"
+    "name": "page"
   },
   {
-    "kind": "Literal",
-    "name": "first",
-    "value": 10
-  },
-  {
-    "kind": "Literal",
-    "name": "interestType",
-    "value": "ARTIST"
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "size"
   }
 ],
+v1 = {
+  "kind": "Variable",
+  "name": "page",
+  "variableName": "page"
+},
 v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "totalCount",
-  "storageKey": null
+  "kind": "Variable",
+  "name": "size",
+  "variableName": "size"
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "cursor",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "page",
+  "storageKey": null
+},
+v5 = [
+  (v3/*: any*/),
+  (v4/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "isCurrent",
+    "storageKey": null
+  }
+],
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 };
 return {
@@ -91,33 +102,12 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": (v1/*: any*/),
-            "concreteType": "UserInterestConnection",
-            "kind": "LinkedField",
-            "name": "userInterestsConnection",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "UserInterestEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "args": null,
-                    "kind": "FragmentSpread",
-                    "name": "CollectorProfileArtistsListArtist_userInterestEdge"
-                  },
-                  (v3/*: any*/)
-                ],
-                "storageKey": null
-              }
+            "args": [
+              (v1/*: any*/),
+              (v2/*: any*/)
             ],
-            "storageKey": null
+            "kind": "FragmentSpread",
+            "name": "CollectorProfileArtistsList_me"
           }
         ],
         "storageKey": null
@@ -142,13 +132,99 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v1/*: any*/),
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "interestType",
+                "value": "ARTIST"
+              },
+              (v1/*: any*/),
+              (v2/*: any*/)
+            ],
             "concreteType": "UserInterestConnection",
             "kind": "LinkedField",
             "name": "userInterestsConnection",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageCursors",
+                "kind": "LinkedField",
+                "name": "pageCursors",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "around",
+                    "plural": true,
+                    "selections": (v5/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "first",
+                    "plural": false,
+                    "selections": (v5/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "last",
+                    "plural": false,
+                    "selections": (v5/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "previous",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      (v4/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -157,8 +233,8 @@ return {
                 "name": "edges",
                 "plural": true,
                 "selections": [
-                  (v4/*: any*/),
-                  (v3/*: any*/),
+                  (v6/*: any*/),
+                  (v7/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -184,7 +260,7 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v3/*: any*/),
+                          (v7/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -300,7 +376,7 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v4/*: any*/)
+                              (v6/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -311,7 +387,7 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v4/*: any*/)
+                          (v6/*: any*/)
                         ],
                         "type": "Node",
                         "abstractKey": "__isNode"
@@ -325,23 +401,23 @@ return {
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "0d1aa8486141841787b756a66ae82c79",
+    "cacheID": "26f74de71c6100dc930f84ee348b6516",
     "id": null,
     "metadata": {},
     "name": "CollectorProfileArtistsListArtistsQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileArtistsListArtistsQuery(\n  $after: String\n) {\n  me {\n    userInterestsConnection(first: 10, after: $after, interestType: ARTIST) {\n      totalCount\n      edges {\n        ...CollectorProfileArtistsListArtist_userInterestEdge\n        internalID\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query CollectorProfileArtistsListArtistsQuery(\n  $page: Int!\n  $size: Int!\n) {\n  me {\n    ...CollectorProfileArtistsList_me_2dULyu\n    id\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsList_me_2dULyu on Me {\n  userInterestsConnection(page: $page, size: $size, interestType: ARTIST) {\n    totalCount\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    pageInfo {\n      hasNextPage\n    }\n    edges {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      internalID\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6d5461d527faabe29ef1a1ba1d290dc9";
+(node as any).hash = "3987fce8002c1ef61b7ac1ff83c09175";
 
 export default node;
