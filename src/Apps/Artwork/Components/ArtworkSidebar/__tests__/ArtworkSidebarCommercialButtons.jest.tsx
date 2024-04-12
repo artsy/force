@@ -404,6 +404,36 @@ describe("ArtworkSidebarCommercialButtons", () => {
     expect(screen.queryByText("(List price: $5,000)")).toBeInTheDocument()
   })
 
+  it("displays partner offer note if present", () => {
+    mockUseFeatureFlag.mockImplementation(() => true)
+    const futureDate = new Date()
+    futureDate.setDate(futureDate.getDate() + 1)
+    meMock.partnerOffersConnection.edges.push({
+      node: {
+        internalID: "partner-offer-id",
+        endAt: futureDate.toISOString(),
+        isAvailable: true,
+        priceWithDiscount: {
+          display: "$3,350.00",
+        },
+        note: "This is a note",
+      },
+    })
+
+    renderWithRelay(
+      {
+        Query: () => ({ me: meMock }),
+        Artwork: () => ({
+          priceListedDisplay: "$5,000",
+        }),
+      },
+      null,
+      mockEnvironment
+    )
+
+    expect(screen.queryByText('"This is a note"')).toBeInTheDocument()
+  })
+
   describe("authentication", () => {
     const mockUseRouter = useRouter as jest.Mock
     const mockUseAuthDialog = useAuthDialog as jest.Mock

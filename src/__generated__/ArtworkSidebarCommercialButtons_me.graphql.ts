@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b1e332cc5bc8f529f3f531f2e64d066d>>
+ * @generated SignedSource<<60a563aee0a37455f3b7f1b8144f4e76>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type ArtworkSidebarCommercialButtons_me$data = {
         readonly endAt: string | null | undefined;
         readonly internalID: string;
         readonly isAvailable: boolean | null | undefined;
+        readonly note: string | null | undefined;
         readonly priceWithDiscount: {
           readonly display: string | null | undefined;
         } | null | undefined;
@@ -101,6 +102,13 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "note",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "Money",
                   "kind": "LinkedField",
                   "name": "priceWithDiscount",
@@ -130,6 +138,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8437f4f67465aa6a3c4e3c2928f9f420";
+(node as any).hash = "561d7c8217a88351b27beacf348dd3c2";
 
 export default node;
