@@ -3,6 +3,7 @@ import { FC, useState } from "react"
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { CollectorProfileArtistsDeleteDialogMutation } from "__generated__/CollectorProfileArtistsDeleteDialogMutation.graphql"
+import { useRouter } from "System/Router/useRouter"
 
 interface CollectorProfileArtistsDeleteDialogProps {
   id: string
@@ -15,6 +16,8 @@ export const CollectorProfileArtistsDeleteDialog: FC<CollectorProfileArtistsDele
   name,
   onClose,
 }) => {
+  const { router } = useRouter()
+
   const { submitMutation } = useMutation<
     CollectorProfileArtistsDeleteDialogMutation
   >({
@@ -31,10 +34,12 @@ export const CollectorProfileArtistsDeleteDialog: FC<CollectorProfileArtistsDele
     try {
       await submitMutation({ variables: { input: { id } } })
 
-      onClose()
+      router.push({
+        pathname: "/collector-profile/artists",
+        query: { page: 1 },
+      })
 
-      // FIXME: We do not have a good way to fetch an updated page
-      window.location.reload()
+      onClose()
     } catch (err) {
       console.error(err)
 
@@ -80,7 +85,7 @@ const MUTATION = graphql`
   ) {
     deleteUserInterest(input: $input) {
       me {
-        id
+        ...CollectorProfileArtistsList_me @arguments(page: 1, size: 10)
       }
     }
   }

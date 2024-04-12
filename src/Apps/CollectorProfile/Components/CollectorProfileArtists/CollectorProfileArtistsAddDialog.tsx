@@ -27,6 +27,7 @@ import {
   UserInterestInterestType,
 } from "__generated__/CollectorProfileArtistsAddDialogCreateUserInterestsMutation.graphql"
 import { CollectorProfileArtistsAddNewDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsAddNewDialog"
+import { useRouter } from "System/Router/useRouter"
 
 interface CollectorProfileArtistsAddDialogProps {
   onClose: () => void
@@ -35,6 +36,8 @@ interface CollectorProfileArtistsAddDialogProps {
 export const CollectorProfileArtistsAddDialog: FC<CollectorProfileArtistsAddDialogProps> = ({
   onClose,
 }) => {
+  const { router } = useRouter()
+
   const [query, setQuery] = useState("")
 
   const { debouncedValue: debouncedQuery } = useDebouncedValue({
@@ -89,6 +92,11 @@ export const CollectorProfileArtistsAddDialog: FC<CollectorProfileArtistsAddDial
         message: `Added artist${
           selected.length === 1 ? "" : "s"
         } to your collection.`,
+      })
+
+      router.push({
+        pathname: "/collector-profile/artists",
+        query: { page: 1 },
       })
 
       onClose()
@@ -254,11 +262,7 @@ const MUTATION = graphql`
   ) {
     createUserInterests(input: $input) {
       me {
-        userInterestsConnection(first: 10, interestType: ARTIST) {
-          edges {
-            ...CollectorProfileArtistsListArtist_userInterestEdge
-          }
-        }
+        ...CollectorProfileArtistsList_me @arguments(page: 1, size: 10)
       }
     }
   }
