@@ -4,9 +4,11 @@ import { ArtworkSidebarLinksFragmentContainer } from "Apps/Artwork/Components/Ar
 import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkSidebarLinks_Test_Query } from "__generated__/ArtworkSidebarLinks_Test_Query.graphql"
 import { useTracking } from "react-tracking"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
+jest.mock("System/useFeatureFlag")
 
 const mockUseTracking = useTracking as jest.Mock
 const trackEvent = jest.fn()
@@ -64,20 +66,48 @@ describe("ArtworkSidebarLinks", () => {
   })
 
   describe("render auction faq section when artwork", () => {
-    it("is in auction and auction is ongoing", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          isInAuction: true,
-          sale: {
-            isClosed: false,
-          },
-        }),
+    describe("is in auction and auction is ongoing", () => {
+      beforeEach(() => {
+        renderWithRelay({
+          Artwork: () => ({
+            isInAuction: true,
+            sale: {
+              isClosed: false,
+            },
+          }),
+        })
       })
 
-      expect(
-        screen.queryByText(/By placing your bid you agree to Artsy's/i)
-      ).toBeInTheDocument()
-      expect(screen.queryByText(/Conditions of Sale/i)).toBeInTheDocument()
+      it("shows conditions of sale link", () => {
+        expect(
+          screen.queryByText("By placing your bid you agree to Artsy's")
+        ).toBeInTheDocument()
+        expect(
+          screen.getByRole("link", {
+            name: "Conditions of Sale",
+          })
+        ).toHaveAttribute("href", "/conditions-of-sale")
+      })
+
+      describe("new disclaimer is shown", () => {
+        beforeAll(() => {
+          ;(useFeatureFlag as jest.Mock).mockImplementation(
+            (f: string) => f === "diamond_new-terms-and-conditions"
+          )
+        })
+
+        afterAll(() => {
+          ;(useFeatureFlag as jest.Mock).mockReset()
+        })
+
+        it("shows general terms and conditions of sale link", () => {
+          expect(
+            screen.getByRole("link", {
+              name: "General Terms and Conditions of Sale",
+            })
+          ).toHaveAttribute("href", "/terms")
+        })
+      })
     })
 
     it("tracks conditions of sale link click", () => {
