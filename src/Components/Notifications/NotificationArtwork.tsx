@@ -8,6 +8,7 @@ import { Box, Button, Image } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { resized } from "Utils/resized"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
+import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
 
 export interface NotificationArtworkProps
   extends Omit<RouterLinkProps, "to" | "width"> {
@@ -50,6 +51,7 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
         mb={2}
       >
         <Box
+          position="relative"
           width="100%"
           style={{
             aspectRatio: `${artwork.image?.width ?? 1} / ${
@@ -66,6 +68,8 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
             lazyLoad
             alt=""
           />
+
+          <ExclusiveAccessBadge artwork={artwork} />
         </Box>
 
         <Metadata
@@ -93,6 +97,8 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
 
 const notificationArtworkFragment = graphql`
   fragment NotificationArtwork_artwork on Artwork {
+    ...ExclusiveAccessBadge_artwork
+    ...Metadata_artwork
     artistNames
     href
     image {
@@ -101,7 +107,5 @@ const notificationArtworkFragment = graphql`
       height
     }
     title
-
-    ...Metadata_artwork
   }
 `

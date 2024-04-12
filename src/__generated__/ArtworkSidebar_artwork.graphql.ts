@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6eb62bc73994bd84d6ee15bf675331a4>>
+ * @generated SignedSource<<e77c4c80dfe6daf93464087fbfd18a7d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,6 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar_artwork$data = {
   readonly artists: ReadonlyArray<{
@@ -22,6 +21,7 @@ export type ArtworkSidebar_artwork$data = {
   readonly isInAuction: boolean | null | undefined;
   readonly isOfferable: boolean | null | undefined;
   readonly isSold: boolean | null | undefined;
+  readonly isUnlisted: boolean;
   readonly partner: {
     readonly internalID: string;
   } | null | undefined;
@@ -40,7 +40,6 @@ export type ArtworkSidebar_artwork$data = {
   } | null | undefined;
   readonly saleMessage: string | null | undefined;
   readonly slug: string;
-  readonly visibilityLevel: Visibility | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarArtworkTitle_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercialButtons_artwork" | "ArtworkSidebarCreateAlert_artwork" | "ArtworkSidebarDetails_artwork" | "ArtworkSidebarEstimatedValue_artwork" | "ArtworkSidebarLinks_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarPrivateArtwork_artwork" | "ArtworkSidebarShippingInformation_artwork">;
   readonly " $fragmentType": "ArtworkSidebar_artwork";
 };
@@ -297,7 +296,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "visibilityLevel",
+      "name": "isUnlisted",
       "storageKey": null
     }
   ],
@@ -306,6 +305,6 @@ return {
 };
 })();
 
-(node as any).hash = "78177a2793be16c8bc9c6805fbf2d3aa";
+(node as any).hash = "e6b81a500161cede74ad6c5c907a996a";
 
 export default node;

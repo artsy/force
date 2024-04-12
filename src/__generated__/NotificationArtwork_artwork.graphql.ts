@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7650ac6b2a95b6c7900a5cbc7cbaea35>>
+ * @generated SignedSource<<09308af68c8638986dd7f15f94bdeb95>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type NotificationArtwork_artwork$data = {
     readonly width: number | null | undefined;
   } | null | undefined;
   readonly title: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ExclusiveAccessBadge_artwork" | "Metadata_artwork">;
   readonly " $fragmentType": "NotificationArtwork_artwork";
 };
 export type NotificationArtwork_artwork$key = {
@@ -33,6 +33,16 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "NotificationArtwork_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ExclusiveAccessBadge_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Metadata_artwork"
+    },
     {
       "alias": null,
       "args": null,
@@ -94,17 +104,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "title",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Metadata_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "ea1790fa8c90a2e29d64de77fb5346fd";
+(node as any).hash = "47776d21078a6ded59591f9daf8e9278";
 
 export default node;

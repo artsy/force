@@ -14,6 +14,7 @@ import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
+import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
 
 export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
 
@@ -106,6 +107,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
               localImage={localImage}
             />
           </LinkContainer>
+          <ExclusiveAccessBadge artwork={artwork} />
           <Badge artwork={artwork} />
         </Box>
         <Metadata
@@ -282,6 +284,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         artistNames
         href
         ...Metadata_artwork
+        ...ExclusiveAccessBadge_artwork
         ...Badge_artwork
       }
     `,

@@ -46,6 +46,16 @@ describe("GridItem", () => {
       "/my-collection/artwork/artwork-id"
     )
   })
+
+  it("renders exclusive access badge", async () => {
+    renderWithRelay({
+      Artwork: () => ({
+        isUnlisted: true,
+      }),
+    })
+
+    expect(screen.getByText("Exclusive Access")).toBeInTheDocument()
+  })
 })
 
 const mockResolvers = {
