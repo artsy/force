@@ -4,9 +4,11 @@ import {
   EditionSet,
 } from "./ArtworkSidebarEditionSets"
 import {
+  Box,
   Button,
   Flex,
   Join,
+  Image,
   Separator,
   Spacer,
   Text,
@@ -62,6 +64,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
 
   // Fall back to a definitely past value because the timer hook doesn't like nulls
   const partnerOfferTimer = useTimer(partnerOffer?.endAt || THE_PAST)
+  const partnerIcon = artwork.partner?.profile?.icon?.resized
 
   const activePartnerOffer =
     (!partnerOfferTimer.hasEnded && partnerOffer) || null
@@ -432,6 +435,36 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
           )}
         </Join>
       </Flex>
+      {partnerOffer?.note && (
+        <>
+          <Spacer y={2} />
+          <Box
+            backgroundColor={"black5"}
+            padding={2}
+            width="100%"
+            display={"flex"}
+            gap={1}
+          >
+            {partnerIcon && (
+              <Box>
+                <Image
+                  borderRadius={"50%"}
+                  src={partnerIcon.src}
+                  srcSet={partnerIcon.srcSet}
+                />
+              </Box>
+            )}
+            <Box flex={1}>
+              <Text variant="sm" color="black100" fontWeight={"bold"}>
+                Note from the gallery
+              </Text>
+              <Text variant="sm" color="black100">
+                "{partnerOffer.note}"
+              </Text>
+            </Box>
+          </Box>
+        </>
+      )}
 
       <Spacer y={4} />
       <ErrorToast onClose={onCloseModal} show={isErrorModalVisible} />
@@ -619,6 +652,16 @@ const ARTWORK_FRAGMENT = graphql`
       isOfferable
       saleMessage
     }
+    partner {
+      profile {
+        icon {
+          resized(width: 30, height: 30, version: "square") {
+            src
+            srcSet
+          }
+        }
+      }
+    }
   }
 `
 
@@ -631,6 +674,7 @@ const ME_FRAGMENT = graphql`
           endAt
           internalID
           isAvailable
+          note
           priceWithDiscount {
             display
           }

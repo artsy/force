@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd21764040a14ed8a34802f1ec1f9eb7>>
+ * @generated SignedSource<<2ac3fb9aed41ebbf281726d53411bf45>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,6 +36,16 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
   readonly mediumType: {
     readonly filterGene: {
       readonly slug: string;
+    } | null | undefined;
+  } | null | undefined;
+  readonly partner: {
+    readonly profile: {
+      readonly icon: {
+        readonly resized: {
+          readonly src: string;
+          readonly srcSet: string;
+        } | null | undefined;
+      } | null | undefined;
     } | null | undefined;
   } | null | undefined;
   readonly priceListedDisplay: string | null | undefined;
@@ -228,6 +238,80 @@ return {
         (v3/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Partner",
+      "kind": "LinkedField",
+      "name": "partner",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Profile",
+          "kind": "LinkedField",
+          "name": "profile",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Image",
+              "kind": "LinkedField",
+              "name": "icon",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "height",
+                      "value": 30
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "version",
+                      "value": "square"
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 30
+                    }
+                  ],
+                  "concreteType": "ResizedImageUrl",
+                  "kind": "LinkedField",
+                  "name": "resized",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "src",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "srcSet",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": "resized(height:30,version:\"square\",width:30)"
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -235,6 +319,6 @@ return {
 };
 })();
 
-(node as any).hash = "f494d1d6b0325a86c7ccf5dc975a86ad";
+(node as any).hash = "aabe2a5f85790527c06be7bac8a07468";
 
 export default node;
