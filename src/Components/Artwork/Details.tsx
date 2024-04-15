@@ -193,14 +193,6 @@ const BidInfo: React.FC<DetailsProps> = ({
   )
 }
 
-const ExclusiveAccess = () => {
-  return (
-    <Text variant="xs" color="black100">
-      Exclusive Access
-    </Text>
-  )
-}
-
 export const Details: React.FC<DetailsProps> = ({
   contextModule,
   hideArtistName,
@@ -224,7 +216,6 @@ export const Details: React.FC<DetailsProps> = ({
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
-  const showExclusiveAccess = rest?.artwork.isUnlisted
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -278,12 +269,14 @@ export const Details: React.FC<DetailsProps> = ({
           </Join>
         </Flex>
       )}
+
       <Flex flexDirection="row" justifyContent="space-between">
         {!hideArtistName && (
           <ArtistLine showSaveButton={showSaveButton} {...rest} />
         )}
         {renderSaveButtonComponent()}
       </Flex>
+
       <Box position="relative">
         <TitleLine {...rest} />
         {showHighDemandInfo && <HighDemandInfo />}
@@ -292,8 +285,8 @@ export const Details: React.FC<DetailsProps> = ({
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
         )}
       </Box>
+
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
-      {showExclusiveAccess && <ExclusiveAccess />}
     </Box>
   )
 }
@@ -383,7 +376,6 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
-      isUnlisted
       sale_message: saleMessage
       cultural_maker: culturalMaker
       artist {

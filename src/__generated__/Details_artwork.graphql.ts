@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<339c3b09aff3bd7eebf0e00803f06cda>>
+ * @generated SignedSource<<cd27e1e4296e93b175957f48ba675e44>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,6 @@ export type Details_artwork$data = {
   readonly date: string | null | undefined;
   readonly href: string | null | undefined;
   readonly internalID: string;
-  readonly isUnlisted: boolean;
   readonly marketPriceInsights: {
     readonly demandRank: number | null | undefined;
   } | null | undefined;
@@ -132,13 +131,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "date",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isUnlisted",
       "storageKey": null
     },
     {
@@ -388,6 +380,6 @@ return {
 };
 })();
 
-(node as any).hash = "dad2965dc83e963914fba380fe6410f4";
+(node as any).hash = "5dcce28c94d475776c831b33cdc523b6";
 
 export default node;

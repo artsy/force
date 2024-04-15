@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ff7fa32b115323db22863275ec23690>>
+ * @generated SignedSource<<ac6c38d4dd3db8936b9b4bf1c808a7e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,9 @@ export type ShelfArtwork_artwork$data = {
     readonly src: string | null | undefined;
     readonly width: number | null | undefined;
   } | null | undefined;
+  readonly isUnlisted: boolean;
   readonly title: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ExclusiveAccessBadge_artwork" | "Metadata_artwork">;
   readonly " $fragmentType": "ShelfArtwork_artwork";
 };
 export type ShelfArtwork_artwork$key = {
@@ -34,6 +35,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ShelfArtwork_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ExclusiveAccessBadge_artwork"
+    },
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -58,6 +64,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "artistNames",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isUnlisted",
       "storageKey": null
     },
     {
@@ -113,6 +126,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "591d46b3cb9b7b7573eb07c170868d47";
+(node as any).hash = "1c78062da40df279094a43d2e645407e";
 
 export default node;

@@ -67,8 +67,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
     "amber_artwork_visibility_unlisted"
   )
 
-  const isPrivateArtwork =
-    privateArtworksEnabled && artwork?.visibilityLevel == "UNLISTED"
+  const isUnlisted = privateArtworksEnabled && artwork?.isUnlisted
 
   const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
 
@@ -112,7 +111,12 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       <ArtworkSidebarDetailsFragmentContainer artwork={artwork} />
 
-      {isPrivateArtwork && <ArtworkSidebarPrivateArtwork artwork={artwork} />}
+      {isUnlisted && (
+        <>
+          <ArtworkSidebarPrivateArtwork artwork={artwork} />
+          <Spacer y={2} />
+        </>
+      )}
 
       {isInAuction ? (
         <>
@@ -245,7 +249,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         artists {
           internalID
         }
-        visibilityLevel
+        isUnlisted
       }
     `,
     me: graphql`

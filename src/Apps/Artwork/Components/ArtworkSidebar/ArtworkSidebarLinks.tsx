@@ -5,6 +5,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { ArtworkSidebarLinks_artwork$data } from "__generated__/ArtworkSidebarLinks_artwork.graphql"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkSidebarLinksProps {
   artwork: ArtworkSidebarLinks_artwork$data
@@ -16,6 +17,8 @@ const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
   const { t } = useTranslation()
   const tracking = useTracking()
   const { sale, isInAuction } = artwork
+
+  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
 
   const isInOpenAuction = isInAuction && sale && !sale.isClosed
 
@@ -44,10 +47,12 @@ const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
             {t("artworkPage.sidebar.conditionsOfSale")}{" "}
             <RouterLink
               inline
-              to="/conditions-of-sale"
+              to={showNewDisclaimer ? "/terms" : "/conditions-of-sale"}
               onClick={trackClickedConditionsOfSale}
             >
-              {t("artworkPage.sidebar.conditionsOfSaleLink")}
+              {showNewDisclaimer
+                ? t("artworkPage.sidebar.generalTermsAndConditionsOfSaleLink")
+                : t("artworkPage.sidebar.conditionsOfSaleLink")}
             </RouterLink>
           </Text>
           <Spacer y={1} />

@@ -90,6 +90,7 @@
       "sellWithArtsyLink": "Sell with Artsy",
       "conditionsOfSale": "By placing your bid you agree to Artsy's",
       "conditionsOfSaleLink": "Conditions of Sale",
+      "generalTermsAndConditionsOfSaleLink": "General Terms and Conditions of Sale",
       "auction": {
         "biddingClosed": "Bidding closed",
         "estimatedValue": "Estimated value: {{value}}"

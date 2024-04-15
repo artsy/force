@@ -377,25 +377,6 @@ describe("Details", () => {
     })
   })
 
-  describe("Exclusive Access", () => {
-    it("renders the Exclusive Access text when the artwork is unlisted", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        isUnlisted: true,
-      }
-
-      const wrapper = await getWrapper(data)
-
-      expect(wrapper.html()).toContain("Exclusive Access")
-    })
-
-    it("does not render the Exclusive Access text when the artwork is listed", async () => {
-      const wrapper = await getWrapper(artworkInAuction)
-
-      expect(wrapper.html()).not.toContain("Exclusive Access")
-    })
-  })
-
   describe("Show High Demand Icon", () => {
     it("renders icon for MyCollectionArtwork in high demand", async () => {
       props = {
@@ -535,7 +516,6 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
       isP1: true,
     },
   },
-  isUnlisted: false,
   marketPriceInsights: {
     demandRank: 0.9,
   },
