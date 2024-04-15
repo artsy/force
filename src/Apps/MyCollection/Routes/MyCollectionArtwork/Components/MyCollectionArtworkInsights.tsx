@@ -87,7 +87,7 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
         />
       )}
 
-      {!artwork.hasPriceEstimateRequest && (
+      {!artwork.hasPriceEstimateRequest && artwork.isPriceEstimateRequestable && (
         <Media lessThan="sm">
           <Separator my={2} />
           <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
@@ -109,6 +109,7 @@ export const MyCollectionArtworkInsightsFragmentContainer = createFragmentContai
     artwork: graphql`
       fragment MyCollectionArtworkInsights_artwork on Artwork {
         hasPriceEstimateRequest
+        isPriceEstimateRequestable
         internalID
         auctionResults: comparableAuctionResults(first: 1) @optionalField {
           totalCount

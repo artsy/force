@@ -46,6 +46,7 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
 
         {showSubmitForSaleCtaMobile && (
           <>
+            <Separator my={2} />
             <MyCollectionArtworkSWASectionMobileLayout
               route={`/collector-profile/my-collection/submission/contact-information/${artwork.internalID}`}
               learnMore={() => {

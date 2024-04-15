@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cb3ad882ab055713f6df1f4d50200be7>>
+ * @generated SignedSource<<8ea5d5af347e0eb1eb7353735e60617d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type MyCollectionArtworkInsights_artwork$data = {
   } | null | undefined;
   readonly hasPriceEstimateRequest: boolean | null | undefined;
   readonly internalID: string;
+  readonly isPriceEstimateRequestable: boolean | null | undefined;
   readonly marketPriceInsights: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights" | "MyCollectionArtworkDemandIndex_marketPriceInsights">;
   } | null | undefined;
@@ -62,6 +63,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "hasPriceEstimateRequest",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isPriceEstimateRequestable",
       "storageKey": null
     },
     {
@@ -151,6 +159,6 @@ return {
 };
 })();
 
-(node as any).hash = "b1037b22bd40acc86e920f43f7c02d13";
+(node as any).hash = "8705d297de9f71b7219523fffee77a1d";
 
 export default node;

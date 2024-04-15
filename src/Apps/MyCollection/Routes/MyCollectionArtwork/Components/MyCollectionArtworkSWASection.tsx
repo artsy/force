@@ -112,7 +112,7 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
         }}
       >
         <Button
-          variant="secondaryNeutral"
+          variant="primaryBlack"
           width="100%"
           mb={2}
           data-testid="submit-for-sale-desktop"

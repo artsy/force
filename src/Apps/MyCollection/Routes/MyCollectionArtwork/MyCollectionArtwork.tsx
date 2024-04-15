@@ -19,7 +19,10 @@ import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkB
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
-import { MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer } from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
+import {
+  MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
+  MyCollectionPriceEstimateSentSection,
+} from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
 import { MyCollectionArtworkSWAHowItWorksModal } from "./Components/MyCollectionArtworkSWAHowItWorksModal"
@@ -98,12 +101,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <Media greaterThanOrEqual="sm">
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
 
-            {!displayText && (
+            {artwork.hasPriceEstimateRequest && (
               <>
                 <Separator my={2} />
-                <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-                  artwork={artwork}
-                />
+                <MyCollectionPriceEstimateSentSection />
               </>
             )}
 
@@ -114,7 +115,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   <MyCollectionArtworkSWASectionSubmitted
                     displayText={displayText}
                   />
-                  <Separator my={2} />
                 </>
               ) : (
                 <MyCollectionArtworkSWASectionDesktopLayout
@@ -124,6 +124,17 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   artworkId={artwork.internalID}
                 />
               ))}
+
+            {!artwork.hasPriceEstimateRequest && !displayText && (
+              <>
+                <Spacer y={2} />
+                <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+                  artwork={artwork}
+                  ctaColor={isP1Artist ? "secondaryNeutral" : "primaryBlack"}
+                />
+                <Separator my={2} />
+              </>
+            )}
           </Media>
 
           <Media lessThan="sm">
