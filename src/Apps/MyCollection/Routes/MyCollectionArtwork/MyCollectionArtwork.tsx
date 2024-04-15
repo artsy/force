@@ -103,7 +103,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
             {artwork.hasPriceEstimateRequest && (
               <>
-                <Separator my={2} />
+                <Separator mt={2} />
                 <MyCollectionPriceEstimateSentSection />
               </>
             )}
@@ -122,6 +122,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   learnMore={() => setShowHowItWorksModal(true)}
                   slug={slug}
                   artworkId={artwork.internalID}
+                  ctaColor={
+                    artwork.hasPriceEstimateRequest
+                      ? "secondaryNeutral"
+                      : "primaryBlack"
+                  }
                 />
               ))}
 

@@ -59,12 +59,15 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
         )}
 
         {!artwork.hasPriceEstimateRequest && (
-          <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-            artwork={artwork}
-            ctaColor={
-              showSubmitForSaleCtaMobile ? "secondaryNeutral" : "primaryBlack"
-            }
-          />
+          <>
+            <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+              artwork={artwork}
+              ctaColor={
+                showSubmitForSaleCtaMobile ? "secondaryNeutral" : "primaryBlack"
+              }
+            />
+            <Separator my={2} />
+          </>
         )}
 
         <ArtistCurrentArticlesRailQueryRenderer

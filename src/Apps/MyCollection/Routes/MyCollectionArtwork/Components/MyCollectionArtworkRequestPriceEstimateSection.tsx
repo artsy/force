@@ -11,7 +11,7 @@ interface MyCollectionArtworkRequestPriceEstimateSectionProps {
 
 export const MyCollectionPriceEstimateSentSection: React.FC = () => {
   return (
-    <Flex alignItems="center" flexDirection={"row"} mb={2} mt={4}>
+    <Flex alignItems="center" flexDirection={"row"} mb={2} mt={2}>
       <CheckmarkStrokeIcon />
       <Text variant="sm" ml={0.5}>
         Price estimate request sent
