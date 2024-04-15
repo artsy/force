@@ -1,9 +1,12 @@
 import { Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export const IdentityVerificationWarning: React.FC<{
   additionalText?: string
 }> = ({ additionalText }) => {
+  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
+
   return (
     <>
       <Text variant="sm-display">
@@ -19,18 +22,20 @@ export const IdentityVerificationWarning: React.FC<{
 
       <Spacer y={1} />
 
-      <Text variant="sm-display">
-        To complete your registration, please confirm that you agree to the{" "}
-        <RouterLink
-          inline
-          color="black100"
-          to="/conditions-of-sale"
-          target="_blank"
-        >
-          Conditions of Sale
-        </RouterLink>
-        {additionalText}.
-      </Text>
+      {!showNewDisclaimer && (
+        <Text variant="sm-display">
+          To complete your registration, please confirm that you agree to the{" "}
+          <RouterLink
+            inline
+            color="black100"
+            to="/conditions-of-sale"
+            target="_blank"
+          >
+            Conditions of Sale
+          </RouterLink>
+          {additionalText}.
+        </Text>
+      )}
     </>
   )
 }
