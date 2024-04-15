@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3307018af41958e39c5853d226f5945>>
+ * @generated SignedSource<<2794e51d5e33f1fddce0574dec10faeb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,6 @@ export type ArtworkPageBanner_artwork$data = {
   readonly isPurchasable: boolean | null | undefined;
   readonly partner: {
     readonly __typename: "Partner";
-    readonly " $fragmentSpreads": FragmentRefs<"UnlistedArtworkBanner_partner">;
   } | null | undefined;
   readonly published: boolean;
   readonly sale: {
@@ -73,12 +72,7 @@ return {
       "name": "partner",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "UnlistedArtworkBanner_partner"
-        }
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -105,6 +99,6 @@ return {
 };
 })();
 
-(node as any).hash = "9a369ee038897274bb50610d600452ee";
+(node as any).hash = "3a0601b96902b76bce0ed6c344bd0e91";
 
 export default node;

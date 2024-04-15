@@ -8,7 +8,6 @@ import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
-import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtworkBanner"
 
 interface ArtworkPageBannerProps {
   artwork: ArtworkPageBanner_artwork$key
@@ -23,9 +22,6 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
     "emerald_partner-offers-to-artwork-page"
   )
 
-  const privateArtworksEnabled = useFeatureFlag(
-    "amber_artwork_visibility_unlisted"
-  )
   const expectedPartnerOfferID = partnerOfferVisibilityEnabled
     ? (match?.location?.query?.partner_offer_id as string | undefined)
     : undefined
@@ -51,16 +47,6 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
 
   if (!artwork.published) {
     return <UnpublishedArtworkBanner />
-  }
-
-  if (
-    !!(
-      privateArtworksEnabled &&
-      artwork?.visibilityLevel == "UNLISTED" &&
-      artwork?.partner
-    )
-  ) {
-    return <UnlistedArtworkBannerFragmentContainer partner={artwork.partner} />
   }
 
   if (expectedPartnerOfferID) {
@@ -120,7 +106,6 @@ const ARTWORK_FRAGMENT = graphql`
     isPurchasable
     partner {
       __typename
-      ...UnlistedArtworkBanner_partner
     }
     sale {
       __typename
