@@ -8,6 +8,7 @@ import { render } from "DevTools/renderWithMockBoot"
 const artworkList: ArtworkListEntity = {
   internalID: "foobar",
   name: "Foo Bar",
+  shareableWithPartners: false,
 }
 
 describe("ArtworkListContextualMenu", () => {

@@ -13,6 +13,7 @@ export const useUpdateArtworkList = () => {
               artworkList: collection {
                 internalID
                 name
+                shareableWithPartners
               }
             }
             ... on UpdateCollectionFailure {

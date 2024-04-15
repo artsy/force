@@ -14,6 +14,7 @@ import {
 export interface EditArtworkListEntity {
   internalID: string
   name: string
+  shareableWithPartners: boolean
 }
 
 interface EditArtworkListModalProps {
@@ -32,6 +33,7 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
 
   const initialValues: ArtworkListFormikValues = {
     name: artworkList.name,
+    shareableWithPartners: artworkList.shareableWithPartners,
   }
 
   const { submitMutation } = useUpdateArtworkList()
@@ -58,6 +60,7 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
           input: {
             id: artworkList.internalID,
             name: formikValues.name.trim(),
+            shareableWithPartners: formikValues.shareableWithPartners,
           },
         },
         rejectIf: res => {
