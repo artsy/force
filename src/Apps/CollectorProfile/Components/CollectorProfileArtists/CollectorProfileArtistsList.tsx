@@ -1,9 +1,11 @@
 import {
+  Box,
   Column,
   GridColumns,
   PaginationSkeleton,
   Stack,
   Text,
+  Tooltip,
   useDidMount,
 } from "@artsy/palette"
 import { FC, Suspense } from "react"
@@ -17,6 +19,7 @@ import { compact } from "lodash"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { useRouter } from "System/Router/useRouter"
 import { CollectorProfileArtistsList_me$key } from "__generated__/CollectorProfileArtistsList_me.graphql"
+import InfoIcon from "@artsy/icons/InfoIcon"
 
 const PAGE_SIZE = 10
 
@@ -46,10 +49,16 @@ export const CollectorProfileArtistsList: FC<CollectorProfileArtistsListProps> =
           </Text>
         </Column>
 
-        <Column span={4}>
+        <Column span={4} display="flex" gap={0.5} alignItems="center">
           <Text size="sm-display" overflowEllipsis>
             Share with the galleries during inquiries
           </Text>
+
+          <Tooltip content="Galleries are more likely to respond if they can see the artists you collect.">
+            <Box as="span" style={{ lineHeight: 0 }}>
+              <InfoIcon />
+            </Box>
+          </Tooltip>
         </Column>
 
         <Column span={2}>
