@@ -4,12 +4,20 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SaleAgreementApp_saleAgreement$data } from "__generated__/SaleAgreementApp_saleAgreement.graphql"
 import { PageHTML } from "Apps/Page/Components/PageHTML"
 import { TopContextBar } from "Components/TopContextBar"
+import { HttpError } from "found"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface SaleAgreementAppProps {
   saleAgreement: SaleAgreementApp_saleAgreement$data
 }
 
 const SaleAgreementApp: FC<SaleAgreementAppProps> = ({ saleAgreement }) => {
+  const showSupplementalCosPage = useFeatureFlag("sapphire_supplemental-cos")
+
+  if (!showSupplementalCosPage) {
+    throw new HttpError(404)
+  }
+
   return (
     <>
       <TopContextBar displayBackArrow href="/supplemental-cos">
