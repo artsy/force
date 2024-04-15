@@ -1,4 +1,4 @@
-import { Join, Spacer } from "@artsy/palette"
+import { Join, Separator, Spacer } from "@artsy/palette"
 import {
   MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
   MyCollectionPriceEstimateSentSection,
@@ -37,7 +37,11 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
         }
       >
         {artwork.hasPriceEstimateRequest && (
-          <MyCollectionPriceEstimateSentSection />
+          <>
+            {showSubmitForSaleCtaMobile && <Separator my={2} />}
+
+            <MyCollectionPriceEstimateSentSection />
+          </>
         )}
 
         {showSubmitForSaleCtaMobile && (

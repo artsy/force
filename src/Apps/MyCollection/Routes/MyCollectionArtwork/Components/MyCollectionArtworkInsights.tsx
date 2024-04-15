@@ -38,30 +38,38 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
         </>
       }
     >
-      {artwork.marketPriceInsights && (
-        <MyCollectionArtworkDemandIndexFragmentContainer
-          marketPriceInsights={artwork.marketPriceInsights}
-        />
-      )}
-
-      {artwork.hasPriceEstimateRequest && (
-        <Media lessThan="sm">
-          <MyCollectionPriceEstimateSentSection />
-        </Media>
-      )}
-
-      {showSubmitForSaleCtaMobile && (
-        <Media lessThan="sm">
-          <MyCollectionArtworkSWASectionMobileLayout
-            route={`/collector-profile/my-collection/submission/contact-information/${artwork.internalID}`}
-            learnMore={() => {
-              onLearnMoreClick?.()
-            }}
-            slug={artwork?.artist?.slug ?? ""}
-            artworkId={artwork.internalID}
+      <Join
+        separator={
+          <Media lessThan="sm">
+            <Separator my={2} />
+          </Media>
+        }
+      >
+        {artwork.marketPriceInsights && (
+          <MyCollectionArtworkDemandIndexFragmentContainer
+            marketPriceInsights={artwork.marketPriceInsights}
           />
-        </Media>
-      )}
+        )}
+
+        {artwork.hasPriceEstimateRequest && (
+          <Media lessThan="sm">
+            <MyCollectionPriceEstimateSentSection />
+          </Media>
+        )}
+
+        {showSubmitForSaleCtaMobile && (
+          <Media lessThan="sm">
+            <MyCollectionArtworkSWASectionMobileLayout
+              route={`/collector-profile/my-collection/submission/contact-information/${artwork.internalID}`}
+              learnMore={() => {
+                onLearnMoreClick?.()
+              }}
+              slug={artwork?.artist?.slug ?? ""}
+              artworkId={artwork.internalID}
+            />
+          </Media>
+        )}
+      </Join>
 
       {artwork.marketPriceInsights && (
         <MyCollectionArtworkArtistMarketFragmentContainer

@@ -89,7 +89,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         <EditArtworkButton />
       </Flex>
 
-      <GridColumns gridRowGap={[2, null]}>
+      <GridColumns gridRowGap={[2, null]} mb={[0, 4]}>
         <Column span={8}>
           <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
         </Column>
