@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3ef3a7cd236b842af9d2987ffe6b018>>
+ * @generated SignedSource<<7c137f2ac26e0fa9ee018a47483ab7d9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CollectorProfileArtistsListArtist_userInterestEdge$data = {
+export type CollectorProfileArtistsListArtistDialog_userInterestEdge$data = {
   readonly id: string;
   readonly internalID: string;
   readonly node: {
@@ -27,12 +27,11 @@ export type CollectorProfileArtistsListArtist_userInterestEdge$data = {
     readonly __typename: "%other";
   } | null | undefined;
   readonly private: boolean;
-  readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileArtistsListArtistDialog_userInterestEdge">;
-  readonly " $fragmentType": "CollectorProfileArtistsListArtist_userInterestEdge";
+  readonly " $fragmentType": "CollectorProfileArtistsListArtistDialog_userInterestEdge";
 };
-export type CollectorProfileArtistsListArtist_userInterestEdge$key = {
-  readonly " $data"?: CollectorProfileArtistsListArtist_userInterestEdge$data;
-  readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileArtistsListArtist_userInterestEdge">;
+export type CollectorProfileArtistsListArtistDialog_userInterestEdge$key = {
+  readonly " $data"?: CollectorProfileArtistsListArtistDialog_userInterestEdge$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileArtistsListArtistDialog_userInterestEdge">;
 };
 
 const node: ReaderFragment = (function(){
@@ -47,13 +46,8 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "CollectorProfileArtistsListArtist_userInterestEdge",
+  "name": "CollectorProfileArtistsListArtistDialog_userInterestEdge",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "CollectorProfileArtistsListArtistDialog_userInterestEdge"
-    },
     {
       "alias": null,
       "args": null,
@@ -131,6 +125,6 @@ return {
 };
 })();
 
-(node as any).hash = "2c25cc76576c95e6428c6f5566919859";
+(node as any).hash = "6d2eb7d999e7c4db69b52c42d687280c";
 
 export default node;

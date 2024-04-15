@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31af7302839826e1568bdb80232a7d44>>
+ * @generated SignedSource<<023adb738c482c6f472925e823bd2e58>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,10 +15,10 @@ export type UpdateUserInterestMutationInput = {
   id: string;
   private?: boolean | null | undefined;
 };
-export type CollectorProfileArtistsListArtistUpdateMutation$variables = {
+export type CollectorProfileArtistsListArtistDialogUpdateMutation$variables = {
   input: UpdateUserInterestMutationInput;
 };
-export type CollectorProfileArtistsListArtistUpdateMutation$data = {
+export type CollectorProfileArtistsListArtistDialogUpdateMutation$data = {
   readonly updateUserInterest: {
     readonly userInterestEdge: {
       readonly id: string;
@@ -32,9 +32,9 @@ export type CollectorProfileArtistsListArtistUpdateMutation$data = {
     } | null | undefined;
   } | null | undefined;
 };
-export type CollectorProfileArtistsListArtistUpdateMutation = {
-  response: CollectorProfileArtistsListArtistUpdateMutation$data;
-  variables: CollectorProfileArtistsListArtistUpdateMutation$variables;
+export type CollectorProfileArtistsListArtistDialogUpdateMutation = {
+  response: CollectorProfileArtistsListArtistDialogUpdateMutation$data;
+  variables: CollectorProfileArtistsListArtistDialogUpdateMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -110,7 +110,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CollectorProfileArtistsListArtistUpdateMutation",
+    "name": "CollectorProfileArtistsListArtistDialogUpdateMutation",
     "selections": [
       {
         "alias": null,
@@ -161,7 +161,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CollectorProfileArtistsListArtistUpdateMutation",
+    "name": "CollectorProfileArtistsListArtistDialogUpdateMutation",
     "selections": [
       {
         "alias": null,
@@ -351,16 +351,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "caadd171cd448bc9a7b1e00b480928fe",
+    "cacheID": "914d9ba28e584ada56f50d640a30eb69",
     "id": null,
     "metadata": {},
-    "name": "CollectorProfileArtistsListArtistUpdateMutation",
+    "name": "CollectorProfileArtistsListArtistDialogUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation CollectorProfileArtistsListArtistUpdateMutation(\n  $input: UpdateUserInterestMutationInput!\n) {\n  updateUserInterest(input: $input) {\n    userInterestEdge {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      id\n      private\n    }\n    userInterestOrError {\n      __typename\n      ... on UpdateUserInterestFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtistDialog_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  ...CollectorProfileArtistsListArtistDialog_userInterestEdge\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "mutation CollectorProfileArtistsListArtistDialogUpdateMutation(\n  $input: UpdateUserInterestMutationInput!\n) {\n  updateUserInterest(input: $input) {\n    userInterestEdge {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      id\n      private\n    }\n    userInterestOrError {\n      __typename\n      ... on UpdateUserInterestFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtistDialog_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  ...CollectorProfileArtistsListArtistDialog_userInterestEdge\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f88486b1603d62a352d823dd338634db";
+(node as any).hash = "9b444bce7dcf2462d74282accd2d4393";
 
 export default node;
