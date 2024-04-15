@@ -25,12 +25,17 @@ export const CollectorProfileArtistsRoute: FC<CollectorProfileArtistsRouteProps>
         pathname="collector-profile/artists"
       />
 
-      <Stack gap={6}>
-        <Stack gap={2} flexDirection="row" alignItems="center">
+      <Stack gap={[4, 6]}>
+        <Stack
+          gap={[1, 2]}
+          flexDirection={["column", "row"]}
+          alignItems={["flex-start", "center"]}
+        >
           <AutocompleteInput
             placeholder="Search artists in your collection"
             options={[]}
             flex={1}
+            width="100%"
           />
 
           <Button variant="primaryBlack" Icon={AddIcon} onClick={handleAdd}>
