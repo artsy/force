@@ -22,7 +22,7 @@ export const MyCollectionPriceEstimateSentSection: React.FC = () => {
 
 export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollectionArtworkRequestPriceEstimateSectionProps> = ({
   artwork,
-  ctaColor,
+  ctaColor = "primaryBlack",
 }) => {
   if (artwork.hasPriceEstimateRequest) {
     return (
@@ -54,7 +54,7 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
         textDecoration="none"
         display="block"
       >
-        <Button variant={ctaColor ? ctaColor : "primaryBlack"} width="100%">
+        <Button variant={ctaColor} width="100%">
           Request a Price Estimate
         </Button>
       </RouterLink>

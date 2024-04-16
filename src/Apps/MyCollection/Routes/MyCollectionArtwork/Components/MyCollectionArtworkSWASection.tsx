@@ -21,7 +21,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
 
   return (
     <>
-      <Text mb={0.5} mt={4} variant="sm-display">
+      <Text mb={0.5} mt={2} variant="sm-display">
         Interested in Selling This Work?
       </Text>
       <Text mb={2} color="black60" variant="xs">
