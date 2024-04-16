@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb8e943c3ee52604f90eb31d16a8d97a>>
+ * @generated SignedSource<<23c064c5e5e92cd71320f0a4a17801be>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,10 +21,7 @@ export type PartnerOfferArtwork_artwork$data = {
   readonly partner: {
     readonly profile: {
       readonly icon: {
-        readonly resized: {
-          readonly src: string;
-          readonly srcSet: string;
-        } | null | undefined;
+        readonly url: string | null | undefined;
       } | null | undefined;
     } | null | undefined;
   } | null | undefined;
@@ -148,41 +145,13 @@ const node: ReaderFragment = {
                   "args": [
                     {
                       "kind": "Literal",
-                      "name": "height",
-                      "value": 30
-                    },
-                    {
-                      "kind": "Literal",
                       "name": "version",
-                      "value": "square"
-                    },
-                    {
-                      "kind": "Literal",
-                      "name": "width",
-                      "value": 30
+                      "value": "square140"
                     }
                   ],
-                  "concreteType": "ResizedImageUrl",
-                  "kind": "LinkedField",
-                  "name": "resized",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "src",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "srcSet",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": "resized(height:30,version:\"square\",width:30)"
+                  "kind": "ScalarField",
+                  "name": "url",
+                  "storageKey": "url(version:\"square140\")"
                 }
               ],
               "storageKey": null
@@ -203,6 +172,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9bc5ac4bc8dacfb93c8f5c020e305b33";
+(node as any).hash = "292015fa50c144181215a922e80c8385";
 
 export default node;

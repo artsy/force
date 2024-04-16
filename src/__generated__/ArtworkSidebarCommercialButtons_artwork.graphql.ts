@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2ac3fb9aed41ebbf281726d53411bf45>>
+ * @generated SignedSource<<e59254f2f314f59bbe46d4533505f669>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,10 +41,7 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
   readonly partner: {
     readonly profile: {
       readonly icon: {
-        readonly resized: {
-          readonly src: string;
-          readonly srcSet: string;
-        } | null | undefined;
+        readonly url: string | null | undefined;
       } | null | undefined;
     } | null | undefined;
   } | null | undefined;
@@ -268,41 +265,13 @@ return {
                   "args": [
                     {
                       "kind": "Literal",
-                      "name": "height",
-                      "value": 30
-                    },
-                    {
-                      "kind": "Literal",
                       "name": "version",
-                      "value": "square"
-                    },
-                    {
-                      "kind": "Literal",
-                      "name": "width",
-                      "value": 30
+                      "value": "square140"
                     }
                   ],
-                  "concreteType": "ResizedImageUrl",
-                  "kind": "LinkedField",
-                  "name": "resized",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "src",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "srcSet",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": "resized(height:30,version:\"square\",width:30)"
+                  "kind": "ScalarField",
+                  "name": "url",
+                  "storageKey": "url(version:\"square140\")"
                 }
               ],
               "storageKey": null
@@ -319,6 +288,6 @@ return {
 };
 })();
 
-(node as any).hash = "aabe2a5f85790527c06be7bac8a07468";
+(node as any).hash = "bfbffc86fec930ebd24c5032f5df3148";
 
 export default node;
