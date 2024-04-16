@@ -8,6 +8,7 @@ interface Props {
   learnMore: () => void
   slug: string
   artworkId: string
+  ctaColor?: "primaryBlack" | "secondaryNeutral" | null
 }
 
 export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
@@ -20,7 +21,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
 
   return (
     <>
-      <Text mb={0.5} mt={4} variant="sm-display">
+      <Text mb={0.5} mt={2} variant="sm-display">
         Interested in Selling This Work?
       </Text>
       <Text mb={2} color="black60" variant="xs">
@@ -73,6 +74,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
           selling with Artsy.
         </Clickable>
       </Text>
+      <Separator my={2} />
     </>
   )
 }
@@ -82,6 +84,7 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
   learnMore,
   slug,
   artworkId,
+  ctaColor = "primaryBlack",
 }) => {
   const tracking = useTracking()
 
@@ -111,7 +114,7 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
         }}
       >
         <Button
-          variant="secondaryNeutral"
+          variant={ctaColor}
           width="100%"
           mb={2}
           data-testid="submit-for-sale-desktop"

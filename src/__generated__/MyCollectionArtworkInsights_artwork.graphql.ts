@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a9797208fef2a5547af5569aba810c6f>>
+ * @generated SignedSource<<8ea5d5af347e0eb1eb7353735e60617d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,18 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkInsights_artwork$data = {
   readonly artist: {
+    readonly auctionResultsCount: {
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+    readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
   } | null | undefined;
+  readonly auctionResults: {
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
+  readonly hasPriceEstimateRequest: boolean | null | undefined;
+  readonly internalID: string;
+  readonly isPriceEstimateRequestable: boolean | null | undefined;
   readonly marketPriceInsights: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights" | "MyCollectionArtworkDemandIndex_marketPriceInsights">;
   } | null | undefined;
@@ -25,12 +35,60 @@ export type MyCollectionArtworkInsights_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkInsights_artwork">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1
+  }
+],
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "totalCount",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "MyCollectionArtworkInsights_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasPriceEstimateRequest",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isPriceEstimateRequestable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": "auctionResults",
+      "args": (v0/*: any*/),
+      "concreteType": "AuctionResultConnection",
+      "kind": "LinkedField",
+      "name": "comparableAuctionResults",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": "comparableAuctionResults(first:1)"
+    },
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -49,6 +107,23 @@ const node: ReaderFragment = {
       "name": "artist",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
+          "storageKey": null
+        },
+        {
+          "alias": "auctionResultsCount",
+          "args": (v0/*: any*/),
+          "concreteType": "AuctionResultConnection",
+          "kind": "LinkedField",
+          "name": "auctionResultsConnection",
+          "plural": false,
+          "selections": (v1/*: any*/),
+          "storageKey": "auctionResultsConnection(first:1)"
+        },
         {
           "args": null,
           "kind": "FragmentSpread",
@@ -82,7 +157,8 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "b76e773bda7b98da07b3b6bad8ebf040";
+(node as any).hash = "8705d297de9f71b7219523fffee77a1d";
 
 export default node;

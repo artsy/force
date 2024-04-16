@@ -19,15 +19,16 @@ import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkB
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
-import { MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer } from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
+import {
+  MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
+  MyCollectionPriceEstimateSentSection,
+} from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
 import { MyCollectionArtworkSWAHowItWorksModal } from "./Components/MyCollectionArtworkSWAHowItWorksModal"
-import {
-  MyCollectionArtworkSWASectionDesktopLayout,
-  MyCollectionArtworkSWASectionMobileLayout,
-} from "./Components/MyCollectionArtworkSWASection"
+import { MyCollectionArtworkSWASectionDesktopLayout } from "./Components/MyCollectionArtworkSWASection"
 import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
+import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtworkAboutTab"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
@@ -58,9 +59,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     </Button>
   )
 
-  const slug = artwork?.artist?.slug!
+  const slug = artwork?.artist?.slug ?? ""
   const id = artwork.internalID
   const displayText = artwork.consignmentSubmission?.displayText
+  const submittedConsignment = !!displayText
 
   const showComparables = !!artwork.comparables?.totalCount
 
@@ -90,7 +92,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         <EditArtworkButton />
       </Flex>
 
-      <GridColumns gridRowGap={[2, null]}>
+      <GridColumns gridRowGap={[2, null]} mb={[0, 4]}>
         <Column span={8}>
           <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
         </Column>
@@ -99,10 +101,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <Media greaterThanOrEqual="sm">
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
 
-            {!displayText && (
-              <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-                artwork={artwork}
-              />
+            {artwork.hasPriceEstimateRequest && (
+              <>
+                <Separator mt={2} />
+                <MyCollectionPriceEstimateSentSection />
+              </>
             )}
 
             {isP1Artist &&
@@ -112,7 +115,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   <MyCollectionArtworkSWASectionSubmitted
                     displayText={displayText}
                   />
-                  <Separator my={2} />
                 </>
               ) : (
                 <MyCollectionArtworkSWASectionDesktopLayout
@@ -120,8 +122,24 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   learnMore={() => setShowHowItWorksModal(true)}
                   slug={slug}
                   artworkId={artwork.internalID}
+                  ctaColor={
+                    artwork.hasPriceEstimateRequest
+                      ? "secondaryNeutral"
+                      : "primaryBlack"
+                  }
                 />
               ))}
+
+            {!artwork.hasPriceEstimateRequest && !displayText && (
+              <>
+                <Spacer y={2} />
+                <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+                  artwork={artwork}
+                  ctaColor={isP1Artist ? "secondaryNeutral" : "primaryBlack"}
+                />
+                <Separator my={2} />
+              </>
+            )}
           </Media>
 
           <Media lessThan="sm">
@@ -138,49 +156,26 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 <Tab name="Insights">
                   <MyCollectionArtworkInsightsFragmentContainer
                     artwork={artwork}
+                    isP1Artist={isP1Artist}
+                    displayText={displayText}
+                    onLearnMoreClick={() => setShowHowItWorksModal(true)}
                   />
-                  {isP1Artist && (
-                    <>
-                      {!displayText && (
-                        <MyCollectionArtworkSWASectionMobileLayout
-                          route={`/collector-profile/my-collection/submission/contact-information/${id}`}
-                          learnMore={() => setShowHowItWorksModal(true)}
-                          slug={slug}
-                          artworkId={artwork.internalID}
-                        />
-                      )}
-                    </>
-                  )}
                 </Tab>
 
                 <Tab name="About">
-                  <>
-                    <MyCollectionArtworkSidebarFragmentContainer
-                      artwork={artwork}
-                    />
-
-                    <Spacer x={6} y={6} />
-
-                    <ArtistCurrentArticlesRailQueryRenderer
-                      slug={slug}
-                      artworkId={artwork.internalID}
-                    />
-                  </>
+                  <MyCollectionArtworkAboutTab
+                    artwork={artwork}
+                    submittedConsignment={submittedConsignment}
+                    onLearnMoreClick={() => setShowHowItWorksModal(true)}
+                  />
                 </Tab>
               </Tabs>
             ) : (
-              <>
-                <MyCollectionArtworkSidebarFragmentContainer
-                  artwork={artwork}
-                />
-
-                <Spacer x={6} y={6} />
-
-                <ArtistCurrentArticlesRailQueryRenderer
-                  slug={slug}
-                  artworkId={artwork.internalID}
-                />
-              </>
+              <MyCollectionArtworkAboutTab
+                artwork={artwork}
+                submittedConsignment={submittedConsignment}
+                onLearnMoreClick={() => setShowHowItWorksModal(true)}
+              />
             )}
           </Media>
         </Column>
@@ -219,6 +214,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         comparables: comparableAuctionResults {
           totalCount
         }
+        hasPriceEstimateRequest
         hasMarketPriceInsights
         submissionId
         internalID
