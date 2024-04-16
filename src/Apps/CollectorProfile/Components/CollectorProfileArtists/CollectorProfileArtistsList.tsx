@@ -1,9 +1,11 @@
 import {
+  Box,
   Column,
   GridColumns,
   PaginationSkeleton,
   Stack,
   Text,
+  Tooltip,
   useDidMount,
 } from "@artsy/palette"
 import { FC, Suspense } from "react"
@@ -17,6 +19,8 @@ import { compact } from "lodash"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { useRouter } from "System/Router/useRouter"
 import { CollectorProfileArtistsList_me$key } from "__generated__/CollectorProfileArtistsList_me.graphql"
+import InfoIcon from "@artsy/icons/InfoIcon"
+import { Media } from "Utils/Responsive"
 
 const PAGE_SIZE = 10
 
@@ -27,43 +31,51 @@ export const CollectorProfileArtistsList: FC<CollectorProfileArtistsListProps> =
 
   return (
     <Stack gap={2}>
-      <GridColumns
-        color="black60"
-        borderBottom="1px solid"
-        borderColor="black10"
-        pb={2}
-        gridColumnGap={0.5}
-      >
-        <Column span={3}>
-          <Text size="sm-display" overflowEllipsis>
-            Artist
-          </Text>
-        </Column>
+      <Media greaterThan="xs">
+        <GridColumns
+          color="black60"
+          borderBottom="1px solid"
+          borderColor="black10"
+          pb={2}
+          gridColumnGap={1}
+        >
+          <Column span={3}>
+            <Text size="sm-display" overflowEllipsis>
+              Artist
+            </Text>
+          </Column>
 
-        <Column span={2}>
-          <Text size="sm-display" overflowEllipsis>
-            Artworks uploaded
-          </Text>
-        </Column>
+          <Column span={2}>
+            <Text size="sm-display" overflowEllipsis>
+              Artworks uploaded
+            </Text>
+          </Column>
 
-        <Column span={4}>
-          <Text size="sm-display" overflowEllipsis>
-            Share with the galleries during inquiries
-          </Text>
-        </Column>
+          <Column span={4} display="flex" gap={0.5} alignItems="center">
+            <Text size="sm-display" overflowEllipsis>
+              Share with the galleries during inquiries
+            </Text>
 
-        <Column span={2}>
-          <Text size="sm-display" overflowEllipsis>
-            Follow artist
-          </Text>
-        </Column>
+            <Tooltip content="Galleries are more likely to respond if they can see the artists you collect.">
+              <Box as="span" style={{ lineHeight: 0 }}>
+                <InfoIcon />
+              </Box>
+            </Tooltip>
+          </Column>
 
-        <Column span={1} display="flex" justifyContent="flex-end">
-          <Text size="sm-display" overflowEllipsis textAlign="right">
-            More
-          </Text>
-        </Column>
-      </GridColumns>
+          <Column span={2}>
+            <Text size="sm-display" overflowEllipsis>
+              Follow artist
+            </Text>
+          </Column>
+
+          <Column span={1} display="flex" justifyContent="flex-end">
+            <Text size="sm-display" overflowEllipsis textAlign="right">
+              More
+            </Text>
+          </Column>
+        </GridColumns>
+      </Media>
 
       {isMounted ? (
         <Suspense fallback={<CollectorProfileArtistsListPlaceholder />}>

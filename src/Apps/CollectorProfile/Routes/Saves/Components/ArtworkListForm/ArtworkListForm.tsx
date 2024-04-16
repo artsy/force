@@ -63,7 +63,7 @@ export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
 
       <Spacer y={4} />
 
-      {sharedListEnabled && mode === "create" && (
+      {sharedListEnabled && (
         <>
           <Text variant="sm">Shared list</Text>
           <Spacer y={1} />

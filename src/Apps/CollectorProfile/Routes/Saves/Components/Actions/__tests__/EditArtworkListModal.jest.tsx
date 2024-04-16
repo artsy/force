@@ -6,12 +6,20 @@ import {
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/EditArtworkListModal"
 import { useTracking } from "react-tracking"
 import { render } from "DevTools/renderWithMockBoot"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.mock("Utils/Hooks/useMutation")
+
+jest.mock("System/useFeatureFlag", () => {
+  return {
+    useFeatureFlag: jest.fn(),
+  }
+})
 
 const artworkList: EditArtworkListEntity = {
   internalID: "foobar",
   name: "Foo Bar",
+  shareableWithPartners: false,
 }
 
 const setup = () => {
@@ -23,6 +31,7 @@ const setup = () => {
 }
 
 describe("EditArtworkListModal", () => {
+  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
   const mockUseTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
 
@@ -39,6 +48,8 @@ describe("EditArtworkListModal", () => {
     mockUseTracking.mockImplementation(() => ({
       trackEvent,
     }))
+
+    mockUseFeatureFlag.mockImplementation(() => true)
   })
 
   it("renders the modal content", async () => {
@@ -50,6 +61,8 @@ describe("EditArtworkListModal", () => {
     )
 
     expect(screen.getByText("Edit your list")).toBeInTheDocument()
+    expect(screen.getByText("Shared list")).toBeInTheDocument()
+    expect(screen.getByRole("toggle")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /Cancel/ })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /Save/ })).toBeInTheDocument()
   })
@@ -91,6 +104,39 @@ describe("EditArtworkListModal", () => {
           input: {
             id: "foobar",
             name: "Foo Bar!",
+            shareableWithPartners: false,
+          },
+        },
+      })
+    )
+  })
+
+  it("updates list shareability", async () => {
+    render(
+      <EditArtworkListModal
+        artworkList={artworkList}
+        onClose={closeEditModal}
+      />
+    )
+    const { nameInputField, saveButton } = setup()
+
+    fireEvent.change(nameInputField, {
+      target: { value: "Foo Bar!" },
+    })
+
+    fireEvent.click(screen.getByRole("toggle"))
+
+    fireEvent.click(saveButton)
+
+    await waitFor(() => expect(submitMutation).toHaveBeenCalledTimes(1))
+
+    expect(submitMutation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        variables: {
+          input: {
+            id: "foobar",
+            name: "Foo Bar!",
+            shareableWithPartners: true,
           },
         },
       })
@@ -120,6 +166,7 @@ describe("EditArtworkListModal", () => {
           input: {
             id: "foobar",
             name: "Foo Bar",
+            shareableWithPartners: false,
           },
         },
       })
