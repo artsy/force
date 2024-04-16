@@ -42,7 +42,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   const partnerOfferVisibilityEnabled = useFeatureFlag(
     "emerald_partner-offers-to-artwork-page"
   )
-  const partnerIcon = artwork.partner?.profile?.icon?.resized
+  const partnerIcon = artwork.partner?.profile?.icon?.url
   const artworkListingHref =
     artwork.href + "?partner_offer_id=" + partnerOfferID
 
@@ -176,8 +176,12 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
             <Box>
               <Image
                 borderRadius={"50%"}
-                src={partnerIcon.src}
-                srcSet={partnerIcon.srcSet}
+                src={partnerIcon}
+                width={30}
+                height={30}
+                style={{
+                  border: `1px solid ${THEME.colors.black30}`,
+                }}
               />
             </Box>
           )}
@@ -209,10 +213,7 @@ const partnerOfferArtworkFragment = graphql`
     partner(shallow: true) {
       profile {
         icon {
-          resized(width: 30, height: 30, version: "square") {
-            src
-            srcSet
-          }
+          url(version: "square140")
         }
       }
     }

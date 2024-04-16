@@ -13,6 +13,7 @@ import {
   Spacer,
   Text,
   useToasts,
+  THEME,
 } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { FC, useCallback, useEffect, useState } from "react"
@@ -64,7 +65,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
 
   // Fall back to a definitely past value because the timer hook doesn't like nulls
   const partnerOfferTimer = useTimer(partnerOffer?.endAt || THE_PAST)
-  const partnerIcon = artwork.partner?.profile?.icon?.resized
+  const partnerIcon = artwork.partner?.profile?.icon?.url
 
   const activePartnerOffer =
     (!partnerOfferTimer.hasEnded && partnerOffer) || null
@@ -449,8 +450,12 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
               <Box>
                 <Image
                   borderRadius={"50%"}
-                  src={partnerIcon.src}
-                  srcSet={partnerIcon.srcSet}
+                  src={partnerIcon}
+                  width={30}
+                  height={30}
+                  style={{
+                    border: `1px solid ${THEME.colors.black30}`,
+                  }}
                 />
               </Box>
             )}
@@ -655,10 +660,7 @@ const ARTWORK_FRAGMENT = graphql`
     partner {
       profile {
         icon {
-          resized(width: 30, height: 30, version: "square") {
-            src
-            srcSet
-          }
+          url(version: "square140")
         }
       }
     }
