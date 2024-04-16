@@ -337,7 +337,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     makeOffer?: ResponsiveValue<"primaryBlack" | "secondaryBlack">
     contactGallery?: ResponsiveValue<"primaryBlack" | "secondaryBlack">
   } = {}
-  if (artwork.isAcquireable || activePartnerOffer) {
+  if (artwork.isAcquireable || activePartnerOffer?.isAvailable) {
     renderButtons.buyNow = "primaryBlack"
   }
   if (artwork.isOfferable && !(activePartnerOffer && artwork.isInquireable)) {
