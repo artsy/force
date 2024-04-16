@@ -1,23 +1,38 @@
 import { Flex, Join, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SaleAgreementsFilter_viewer$data } from "__generated__/SaleAgreementsFilter_viewer.graphql"
+import { graphql, useFragment } from "react-relay"
+import { SaleAgreementsFilter_viewer$key } from "__generated__/SaleAgreementsFilter_viewer.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { SaleAgreementsList } from "Apps/SaleAgreements/Components/SaleAgreementsList"
-import { saleAgreementSorter } from "Apps/SaleAgreements/Utils/SaleAgreementSorter"
 
 interface SaleAgreementsFilterProps {
-  viewer: SaleAgreementsFilter_viewer$data
+  viewer: SaleAgreementsFilter_viewer$key
 }
 
-const SaleAgreementsFilter: FC<SaleAgreementsFilterProps> = ({ viewer }) => {
-  const saleAgreements = extractNodes(viewer.saleAgreementsConnection)
-  const {
-    activeAuctions,
-    pastBenefitsAuctions,
-    pastArtsyAuctions,
-    pastCommercialAuctions,
-  } = saleAgreementSorter(saleAgreements)
+export const SaleAgreementsFilter: FC<SaleAgreementsFilterProps> = ({
+  viewer,
+}) => {
+  const data = useFragment(saleAgreementsFilterFragment, viewer)
+  const saleAgreements = extractNodes(data.saleAgreementsConnection)
+
+  const activeAuctions: typeof saleAgreements = []
+  const pastBenefitsAuctions: typeof saleAgreements = []
+  const pastArtsyAuctions: typeof saleAgreements = []
+  const pastCommercialAuctions: typeof saleAgreements = []
+
+  for (const saleAgreement of saleAgreements) {
+    const sale = saleAgreement.sale
+
+    if (saleAgreement.status === "CURRENT") {
+      activeAuctions.push(saleAgreement)
+    } else if (saleAgreement.status === "PAST" && sale.isBenefit) {
+      pastBenefitsAuctions.push(saleAgreement)
+    } else if (saleAgreement.status === "PAST" && sale.isArtsyLicensed) {
+      pastArtsyAuctions.push(saleAgreement)
+    } else if (saleAgreement.status === "PAST" && sale.isAuction) {
+      pastCommercialAuctions.push(saleAgreement)
+    }
+  }
 
   return (
     <Tabs fill>
@@ -56,31 +71,26 @@ const SaleAgreementsFilter: FC<SaleAgreementsFilterProps> = ({ viewer }) => {
   )
 }
 
-export const SaleAgreementsFilterFragmentContainer = createFragmentContainer(
-  SaleAgreementsFilter,
-  {
-    viewer: graphql`
-      fragment SaleAgreementsFilter_viewer on Viewer {
-        saleAgreementsConnection(first: 100) {
-          edges {
-            node {
-              internalID
-              content
-              displayStartAt(format: "MMM Do, YYYY")
-              displayEndAt(format: "MMM Do, YYYY")
-              published
-              status
-              sale {
-                internalID
-                name
-                isArtsyLicensed
-                isBenefit
-                isAuction
-              }
-            }
+const saleAgreementsFilterFragment = graphql`
+  fragment SaleAgreementsFilter_viewer on Viewer {
+    saleAgreementsConnection(first: 100) {
+      edges {
+        node {
+          internalID
+          content
+          displayStartAt(format: "MMM Do, YYYY")
+          displayEndAt(format: "MMM Do, YYYY")
+          published
+          status
+          sale @required(action: NONE) {
+            internalID
+            name
+            isArtsyLicensed
+            isBenefit
+            isAuction
           }
         }
       }
-    `,
+    }
   }
-)
+`

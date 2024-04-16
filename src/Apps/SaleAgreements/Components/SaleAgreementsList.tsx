@@ -1,9 +1,17 @@
 import { FC } from "react"
 import { SaleAgreementListItem } from "Apps/SaleAgreements/Components/SaleAgreementsListItem"
-import { SaleAgreements } from "Apps/SaleAgreements/types"
+import { SaleAgreementsFilter_viewer$data } from "__generated__/SaleAgreementsFilter_viewer.graphql"
 
-interface SaleAgreementsListProps {
-  saleAgreements: SaleAgreements
+export interface SaleAgreementsListProps {
+  saleAgreements: NonNullable<
+    NonNullable<
+      NonNullable<
+        NonNullable<
+          SaleAgreementsFilter_viewer$data
+        >["saleAgreementsConnection"]
+      >["edges"]
+    >[0]
+  >["node"][]
 }
 
 export const SaleAgreementsList: FC<SaleAgreementsListProps> = ({
@@ -11,12 +19,15 @@ export const SaleAgreementsList: FC<SaleAgreementsListProps> = ({
 }) => {
   return (
     <>
-      {saleAgreements.map(saleAgreement => (
-        <SaleAgreementListItem
-          key={saleAgreement.internalID}
-          saleAgreement={saleAgreement}
-        />
-      ))}
+      {saleAgreements.map(saleAgreement => {
+        if (!saleAgreement) return null
+        return (
+          <SaleAgreementListItem
+            key={saleAgreement.internalID}
+            saleAgreement={saleAgreement}
+          />
+        )
+      })}
     </>
   )
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9985e0ce5a2f2fbc55e9e472ce965532>>
+ * @generated SignedSource<<6aeb7dc1190bb775ff1d244ae499c8ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type SaleAgreementsFilter_viewer$data = {
           readonly isAuction: boolean | null | undefined;
           readonly isBenefit: boolean | null | undefined;
           readonly name: string | null | undefined;
-        } | null | undefined;
+        };
         readonly status: SaleAgreementStatus;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -126,44 +126,49 @@ return {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Sale",
-                  "kind": "LinkedField",
-                  "name": "sale",
-                  "plural": false,
-                  "selections": [
-                    (v0/*: any*/),
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "isArtsyLicensed",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "isBenefit",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "isAuction",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
+                  "kind": "RequiredField",
+                  "field": {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Sale",
+                    "kind": "LinkedField",
+                    "name": "sale",
+                    "plural": false,
+                    "selections": [
+                      (v0/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isArtsyLicensed",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isBenefit",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isAuction",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  "action": "NONE",
+                  "path": "saleAgreementsConnection.edges.node.sale"
                 }
               ],
               "storageKey": null
@@ -180,6 +185,6 @@ return {
 };
 })();
 
-(node as any).hash = "195b653e01cc695f0a3f6c3dad20c945";
+(node as any).hash = "c70c144c34813df06d9d89c2b8b5f44f";
 
 export default node;

@@ -1,15 +1,17 @@
 import { Box, Separator, Text } from "@artsy/palette"
-import { SaleAgreement } from "Apps/SaleAgreements/types"
+import { SaleAgreementsListProps } from "Apps/SaleAgreements/Components/SaleAgreementsList"
 import { FC } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 
 export interface SaleAgreementListItemProps {
-  saleAgreement: SaleAgreement
+  saleAgreement: SaleAgreementsListProps["saleAgreements"][0]
 }
 
 export const SaleAgreementListItem: FC<SaleAgreementListItemProps> = ({
   saleAgreement,
 }) => {
+  if (!saleAgreement) return null
+
   return (
     <Box>
       <RouterLink

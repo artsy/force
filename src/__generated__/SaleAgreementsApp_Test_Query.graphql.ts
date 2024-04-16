@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6dd167d1a900a0fec55532c1cf98f4d2>>
+ * @generated SignedSource<<f5757a0dbb2f4e02e9d5a9bb091e6a04>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SaleAgreementsApp_Test_Query$variables = Record<PropertyKey, never>;
 export type SaleAgreementsApp_Test_Query$data = {
   readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"SaleAgreementsFilter_viewer">;
+    readonly " $fragmentSpreads": FragmentRefs<"SaleAgreementsApp_viewer">;
   } | null | undefined;
 };
 export type SaleAgreementsApp_Test_Query = {
@@ -85,7 +85,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SaleAgreementsFilter_viewer"
+            "name": "SaleAgreementsApp_viewer"
           }
         ],
         "storageKey": null
@@ -231,7 +231,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9df14b7dc09995514be3bd0d2ace5356",
+    "cacheID": "33b65f7d43a7b8197933adb354e47592",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -291,11 +291,11 @@ return {
     },
     "name": "SaleAgreementsApp_Test_Query",
     "operationKind": "query",
-    "text": "query SaleAgreementsApp_Test_Query {\n  viewer {\n    ...SaleAgreementsFilter_viewer\n  }\n}\n\nfragment SaleAgreementsFilter_viewer on Viewer {\n  saleAgreementsConnection(first: 100) {\n    edges {\n      node {\n        internalID\n        content\n        displayStartAt(format: \"MMM Do, YYYY\")\n        displayEndAt(format: \"MMM Do, YYYY\")\n        published\n        status\n        sale {\n          internalID\n          name\n          isArtsyLicensed\n          isBenefit\n          isAuction\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SaleAgreementsApp_Test_Query {\n  viewer {\n    ...SaleAgreementsApp_viewer\n  }\n}\n\nfragment SaleAgreementsApp_viewer on Viewer {\n  ...SaleAgreementsFilter_viewer\n}\n\nfragment SaleAgreementsFilter_viewer on Viewer {\n  saleAgreementsConnection(first: 100) {\n    edges {\n      node {\n        internalID\n        content\n        displayStartAt(format: \"MMM Do, YYYY\")\n        displayEndAt(format: \"MMM Do, YYYY\")\n        published\n        status\n        sale {\n          internalID\n          name\n          isArtsyLicensed\n          isBenefit\n          isAuction\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fbac88778a9808b99bd8dd8393add193";
+(node as any).hash = "4b2f64958190975a8f493b1bd97643ec";
 
 export default node;

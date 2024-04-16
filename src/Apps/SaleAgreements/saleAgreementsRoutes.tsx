@@ -5,14 +5,15 @@ import { AppRouteConfig } from "System/Router/Route"
 const SaleAgreementsApp = loadable(
   () => import(/* webpackChunkName: "jobsBundle" */ "./SaleAgreementsApp"),
   {
-    resolveComponent: component => component.SaleAgreementsAppFragmentContainer,
+    resolveComponent: component => component.SaleAgreementsApp,
   }
 )
 
-const SaleAgreementApp = loadable(
-  () => import(/* webpackChunkName: "jobsBundle" */ "./SaleAgreementApp"),
+const SaleAgreementRoute = loadable(
+  () =>
+    import(/* webpackChunkName: "jobsBundle" */ "./Routes/SaleAgreementRoute"),
   {
-    resolveComponent: component => component.SaleAgreementAppFragmentContainer,
+    resolveComponent: component => component.SaleAgreementRoute,
   }
 )
 
@@ -33,14 +34,14 @@ export const saleAgreementsRoutes: AppRouteConfig[] = [
   },
   {
     path: "/supplemental-cos/:id",
-    getComponent: () => SaleAgreementApp,
+    getComponent: () => SaleAgreementRoute,
     onClientSideRender: () => {
-      SaleAgreementApp.preload()
+      SaleAgreementRoute.preload()
     },
     query: graphql`
       query saleAgreementsRoutes_SaleAgreementQuery($id: ID!) {
         saleAgreement(id: $id) {
-          ...SaleAgreementApp_saleAgreement
+          ...SaleAgreementRoute_saleAgreement
         }
       }
     `,

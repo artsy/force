@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6aa71bc34956acb8ee5a4735602ce529>>
+ * @generated SignedSource<<4ef06f08849f5e4bbf8917904c8ebcf7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,49 +10,40 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type saleAgreementsRoutes_SaleAgreementQuery$variables = {
-  id: string;
-};
-export type saleAgreementsRoutes_SaleAgreementQuery$data = {
+export type SaleAgreementRoute_Test_Query$variables = Record<PropertyKey, never>;
+export type SaleAgreementRoute_Test_Query$data = {
   readonly saleAgreement: {
     readonly " $fragmentSpreads": FragmentRefs<"SaleAgreementRoute_saleAgreement">;
   };
 };
-export type saleAgreementsRoutes_SaleAgreementQuery = {
-  response: saleAgreementsRoutes_SaleAgreementQuery$data;
-  variables: saleAgreementsRoutes_SaleAgreementQuery$variables;
+export type SaleAgreementRoute_Test_Query = {
+  response: SaleAgreementRoute_Test_Query$data;
+  variables: SaleAgreementRoute_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "id"
+    "value": "abc123"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v3 = [
+v2 = [
   {
     "kind": "Literal",
     "name": "format",
     "value": "MMM Do, YYYY"
   }
 ],
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -61,14 +52,14 @@ v4 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "saleAgreementsRoutes_SaleAgreementQuery",
+    "name": "SaleAgreementRoute_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "SaleAgreement",
         "kind": "LinkedField",
         "name": "saleAgreement",
@@ -80,7 +71,7 @@ return {
             "name": "SaleAgreementRoute_saleAgreement"
           }
         ],
-        "storageKey": null
+        "storageKey": "saleAgreement(id:\"abc123\")"
       }
     ],
     "type": "Query",
@@ -88,19 +79,19 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "saleAgreementsRoutes_SaleAgreementQuery",
+    "name": "SaleAgreementRoute_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "SaleAgreement",
         "kind": "LinkedField",
         "name": "saleAgreement",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          (v1/*: any*/),
           {
             "alias": null,
             "args": [
@@ -116,14 +107,14 @@ return {
           },
           {
             "alias": null,
-            "args": (v3/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "displayStartAt",
             "storageKey": "displayStartAt(format:\"MMM Do, YYYY\")"
           },
           {
             "alias": null,
-            "args": (v3/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "displayEndAt",
             "storageKey": "displayEndAt(format:\"MMM Do, YYYY\")"
@@ -136,7 +127,7 @@ return {
             "name": "sale",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -144,27 +135,27 @@ return {
                 "name": "name",
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "saleAgreement(id:\"abc123\")"
       }
     ]
   },
   "params": {
-    "cacheID": "3763e64883773f1e4c1f93ec13e4533a",
+    "cacheID": "51bc53cd0d3df1b6552fdbbd9b3965a3",
     "id": null,
     "metadata": {},
-    "name": "saleAgreementsRoutes_SaleAgreementQuery",
+    "name": "SaleAgreementRoute_Test_Query",
     "operationKind": "query",
-    "text": "query saleAgreementsRoutes_SaleAgreementQuery(\n  $id: ID!\n) {\n  saleAgreement(id: $id) {\n    ...SaleAgreementRoute_saleAgreement\n    id\n  }\n}\n\nfragment SaleAgreementRoute_saleAgreement on SaleAgreement {\n  internalID\n  content(format: HTML)\n  displayStartAt(format: \"MMM Do, YYYY\")\n  displayEndAt(format: \"MMM Do, YYYY\")\n  sale {\n    internalID\n    name\n    id\n  }\n}\n"
+    "text": "query SaleAgreementRoute_Test_Query {\n  saleAgreement(id: \"abc123\") {\n    ...SaleAgreementRoute_saleAgreement\n    id\n  }\n}\n\nfragment SaleAgreementRoute_saleAgreement on SaleAgreement {\n  internalID\n  content(format: HTML)\n  displayStartAt(format: \"MMM Do, YYYY\")\n  displayEndAt(format: \"MMM Do, YYYY\")\n  sale {\n    internalID\n    name\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5e8347463656847fd22f3e25b7b8cfc0";
+(node as any).hash = "678ddd307999dcc80ea2a79c213e4ba1";
 
 export default node;

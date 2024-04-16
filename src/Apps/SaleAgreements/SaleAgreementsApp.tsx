@@ -1,18 +1,19 @@
 import { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import { Join, Link, Spacer, Text } from "@artsy/palette"
-import { SaleAgreementsApp_viewer$data } from "__generated__/SaleAgreementsApp_viewer.graphql"
-import { SaleAgreementsFilterFragmentContainer } from "Apps/SaleAgreements/Components/SaleAgreementsFilter"
+import { SaleAgreementsApp_viewer$key } from "__generated__/SaleAgreementsApp_viewer.graphql"
+import { SaleAgreementsFilter } from "Apps/SaleAgreements/Components/SaleAgreementsFilter"
 import { getENV } from "Utils/getENV"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { HttpError } from "found"
 
 interface SaleAgreementsAppProps {
-  viewer: SaleAgreementsApp_viewer$data
+  viewer: SaleAgreementsApp_viewer$key
 }
 
-const SaleAgreementsApp: FC<SaleAgreementsAppProps> = ({ viewer }) => {
+export const SaleAgreementsApp: FC<SaleAgreementsAppProps> = ({ viewer }) => {
   const showSupplementalCosPage = useFeatureFlag("sapphire_supplemental-cos")
+  const data = useFragment(saleAgreementsAppFragment, viewer)
 
   if (!showSupplementalCosPage) {
     throw new HttpError(404)
@@ -32,18 +33,13 @@ const SaleAgreementsApp: FC<SaleAgreementsAppProps> = ({ viewer }) => {
         . To view an auction’s supplemental conditions of sale, please click on
         the auction name.
       </Text>
-      <SaleAgreementsFilterFragmentContainer viewer={viewer} />
+      <SaleAgreementsFilter viewer={data} />
     </Join>
   )
 }
 
-export const SaleAgreementsAppFragmentContainer = createFragmentContainer(
-  SaleAgreementsApp,
-  {
-    viewer: graphql`
-      fragment SaleAgreementsApp_viewer on Viewer {
-        ...SaleAgreementsFilter_viewer
-      }
-    `,
+const saleAgreementsAppFragment = graphql`
+  fragment SaleAgreementsApp_viewer on Viewer {
+    ...SaleAgreementsFilter_viewer
   }
-)
+`
