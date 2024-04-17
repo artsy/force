@@ -1858,6 +1858,9 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     partnerCategory: [String]
     representedBy: Boolean
   ): PartnerArtistConnection
+
+  # The most recent show for an artist
+  recentShow: String
   related: ArtistRelatedData
   sales(
     isAuction: Boolean
@@ -18957,6 +18960,7 @@ input UpdateArtistMutationInput {
   middle: String
   nationality: String
   public: Boolean
+  recentShow: String
   targetSupplyPriority: ArtistTargetSupplyPriority
   targetSupplyType: ArtistTargetSupplyType
   vanguardYear: String
