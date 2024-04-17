@@ -5,11 +5,6 @@ import { graphql } from "react-relay"
 import { PrivateArtworkMetadataQuery } from "__generated__/PrivateArtworkMetadataQuery.graphql"
 
 jest.unmock("react-relay")
-jest.mock("System/useFeatureFlag", () => {
-  return {
-    useFeatureFlag: jest.fn().mockReturnValue(true),
-  }
-})
 
 describe("PrivateArtworkMetadata", () => {
   const { renderWithRelay } = setupTestWrapperTL<PrivateArtworkMetadataQuery>({
@@ -30,7 +25,6 @@ describe("PrivateArtworkMetadata", () => {
           conditionDescription: {
             details: "Test Condition Description Details",
           },
-          visibilityLevel: "UNLISTED",
         }
       },
     })
@@ -46,7 +40,6 @@ describe("PrivateArtworkMetadata", () => {
           conditionDescription: {
             details: null,
           },
-          visibilityLevel: "UNLISTED",
         }
       },
     })
@@ -60,7 +53,6 @@ describe("PrivateArtworkMetadata", () => {
       Artwork: () => {
         return {
           provenance: "Test Provenance Details",
-          visibilityLevel: "UNLISTED",
         }
       },
     })
@@ -72,7 +64,6 @@ describe("PrivateArtworkMetadata", () => {
       Artwork: () => {
         return {
           provenance: null,
-          visibilityLevel: "UNLISTED",
         }
       },
     })
@@ -86,7 +77,6 @@ describe("PrivateArtworkMetadata", () => {
       Artwork: () => {
         return {
           exhibitionHistory: "Test Exhibition History Details",
-          visibilityLevel: "UNLISTED",
         }
       },
     })
@@ -100,7 +90,6 @@ describe("PrivateArtworkMetadata", () => {
       Artwork: () => {
         return {
           exhibitionHistory: null,
-          visibilityLevel: "UNLISTED",
         }
       },
     })

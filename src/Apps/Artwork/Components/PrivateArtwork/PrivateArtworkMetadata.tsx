@@ -2,14 +2,16 @@ import { graphql, useFragment } from "react-relay"
 import { PrivateArtworkMetadata_artwork$key } from "__generated__/PrivateArtworkMetadata_artwork.graphql"
 import {
   Box,
-  Column,
-  GridColumns,
+  Clickable,
+  Flex,
   HTML,
-  ReadMore,
+  Separator,
   Spacer,
   Text,
 } from "@artsy/palette"
-
+import { useState } from "react"
+import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
+import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 interface PrivateArtworkMetadataProps {
   artwork: PrivateArtworkMetadata_artwork$key
 }
@@ -23,54 +25,41 @@ export const PrivateArtworkMetadata: React.FC<PrivateArtworkMetadataProps> = ({
         conditionDescription {
           details
         }
-        provenance
-        exhibitionHistory
+        provenance(format: HTML)
+        exhibitionHistory(format: HTML)
       }
     `,
     artwork
   )
 
-  // TODO: remove (typechecker)
-  console.log(data)
-
   return (
-    <GridColumns>
-      <Column span={4}>
-        {data.conditionDescription?.details && (
+    <>
+      {data.conditionDescription?.details && (
+        <>
           <MetadataDetailItem title="Condition">
             <HTML variant="sm">{data.conditionDescription?.details}</HTML>
           </MetadataDetailItem>
-        )}
-      </Column>
 
-      <Column span={4}>
-        {data.provenance && (
+          <Separator my={2} />
+        </>
+      )}
+
+      {data.provenance && (
+        <>
           <MetadataDetailItem title="Provenance">
-            <HTML variant="sm">
-              <ReadMore
-                inlineReadMoreLink={false}
-                content={`${data.provenance}`}
-                maxChars={200}
-              />
-            </HTML>
+            <HTML variant="sm" html={data.provenance} />
           </MetadataDetailItem>
-        )}
-      </Column>
 
-      <Column span={4}>
-        {data.exhibitionHistory && (
-          <MetadataDetailItem title="Exhibition History">
-            <HTML variant="sm">
-              <ReadMore
-                inlineReadMoreLink={false}
-                content={`${data.exhibitionHistory}`}
-                maxChars={200}
-              />
-            </HTML>
-          </MetadataDetailItem>
-        )}
-      </Column>
-    </GridColumns>
+          <Separator my={2} />
+        </>
+      )}
+
+      {data.exhibitionHistory && (
+        <MetadataDetailItem title="Exhibition History">
+          <HTML variant="sm" html={data.exhibitionHistory} />
+        </MetadataDetailItem>
+      )}
+    </>
   )
 }
 
@@ -83,15 +72,29 @@ const MetadataDetailItem: React.FC<MetadataDetailItemProps> = ({
   title,
   children,
 }) => {
+  const [isExpanded, setIsExpanded] = useState(true)
+
   return (
     <Box>
-      <Text variant="sm" fontWeight="bold">
-        {title}
-      </Text>
+      <Clickable onClick={() => setIsExpanded(!isExpanded)} width="100%">
+        <Flex
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+          width="100%"
+        >
+          <Text variant="md">{title}</Text>
+          {isExpanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
+        </Flex>
+      </Clickable>
 
-      <Spacer y={2} />
+      {isExpanded && (
+        <>
+          <Spacer y={2} />
 
-      {children}
+          {children}
+        </>
+      )}
     </Box>
   )
 }
