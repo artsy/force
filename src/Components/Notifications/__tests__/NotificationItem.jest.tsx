@@ -32,12 +32,6 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
 })
 
 describe("NotificationItem", () => {
-  beforeAll(() => {
-    ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "onyx_new_notification_page"
-    )
-  })
-
   it("should render headline", () => {
     renderWithRelay({
       Notification: () => notification,

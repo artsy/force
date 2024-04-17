@@ -1,19 +1,18 @@
-import { Tab } from "@artsy/palette"
-import { NofiticationsTabs, NofiticationsTabsProps } from "./NotificationsTabs"
-import { NotificationsListQueryRenderer } from "./NotificationsList"
 import { NotificationPaginationType } from "./types"
 import { useEffect } from "react"
 import { DateTime } from "luxon"
 import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
 import { useSystemContext } from "System/useSystemContext"
 import createLogger from "Utils/logger"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { NotificationsWrapper } from "./NotificationsWrapper"
+import {
+  NotificationsWrapper,
+  NotificationsWrapperProps,
+} from "./NotificationsWrapper"
 import { NotificationsContextProvider } from "Components/Notifications/useNotificationsContext"
 
 const logger = createLogger("Notifications")
 
-interface NotificationsProps extends NofiticationsTabsProps {
+interface NotificationsProps extends NotificationsWrapperProps {
   paginationType?: NotificationPaginationType
 }
 
@@ -22,10 +21,6 @@ export const Notifications: React.FC<NotificationsProps> = ({
   ...rest
 }) => {
   const { relayEnvironment } = useSystemContext()
-
-  const enableActivityPanelPills = useFeatureFlag(
-    "onyx_activity_panel_filter_pills"
-  )
 
   const markAsSeen = async () => {
     if (!relayEnvironment) {
@@ -53,29 +48,8 @@ export const Notifications: React.FC<NotificationsProps> = ({
   }, [])
 
   return (
-    <>
-      {!enableActivityPanelPills ? (
-        <NofiticationsTabs {...rest}>
-          <Tab name="All">
-            <NotificationsListQueryRenderer
-              mode={rest.mode}
-              type="all"
-              paginationType={paginationType}
-            />
-          </Tab>
-          <Tab name="Alerts">
-            <NotificationsListQueryRenderer
-              mode={rest.mode}
-              type="alerts"
-              paginationType={paginationType}
-            />
-          </Tab>
-        </NofiticationsTabs>
-      ) : (
-        <NotificationsContextProvider>
-          <NotificationsWrapper {...rest} />
-        </NotificationsContextProvider>
-      )}
-    </>
+    <NotificationsContextProvider>
+      <NotificationsWrapper {...rest} />
+    </NotificationsContextProvider>
   )
 }

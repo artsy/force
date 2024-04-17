@@ -34,12 +34,6 @@ const { renderWithRelay } = setupTestWrapperTL<
 })
 
 describe("ViewingRoomPublishedNotification", () => {
-  beforeAll(() => {
-    ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "onyx_new_notification_page"
-    )
-  })
-
   it("renders viewing rooms", () => {
     renderWithRelay({
       Notification: () => notification,

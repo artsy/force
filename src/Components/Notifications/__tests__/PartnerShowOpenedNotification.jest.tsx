@@ -34,12 +34,6 @@ const { renderWithRelay } = setupTestWrapperTL<
 })
 
 describe("PartnerShowOpenedNotification", () => {
-  beforeAll(() => {
-    ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "onyx_new_notification_page"
-    )
-  })
-
   it("renders the notification", () => {
     renderWithRelay({
       Notification: () => notification,
