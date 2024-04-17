@@ -4,6 +4,8 @@ import { Footer } from "Components/Footer/Footer"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { fetchQuery } from "react-relay"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -13,7 +15,15 @@ jest.mock("System/Router/useRouter", () => ({
 
 jest.mock("System/useFeatureFlag")
 
+jest.mock("react-relay", () => ({
+  fetchQuery: jest.fn(() => ({
+    toPromise: jest.fn().mockResolvedValue(false),
+  })),
+}))
+
 describe("Footer", () => {
+  const mockFetchQuery = fetchQuery as jest.Mock
+
   const getWrapper = (breakpoint: Breakpoint) =>
     mount(
       <MockBoot breakpoint={breakpoint}>
@@ -75,6 +85,20 @@ describe("Footer", () => {
       }))
 
       const wrapper = getWrapper("lg")
+      expect(wrapper.text()).not.toContain("Meet your new art advisor.")
+    })
+
+    it("hides the app download banner if the artwork is unlisted", async () => {
+      mockFetchQuery.mockImplementation(() => {
+        return {
+          toPromise: jest
+            .fn()
+            .mockResolvedValue({ artwork: { isUnlisted: true } }),
+        }
+      })
+
+      const wrapper = getWrapper("lg")
+      await flushPromiseQueue()
       expect(wrapper.text()).not.toContain("Meet your new art advisor.")
     })
 

@@ -87,6 +87,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const { hasEnded } = useTimer(timerEndAt as string, startAt as string)
 
   const shouldHideDetailsCreateAlertCTA =
+    isUnlisted ||
     !isEligibleToCreateAlert ||
     (isInAuction && hasEnded) ||
     (isInAuction && lotIsClosed(sale, saleArtwork)) ||
@@ -111,42 +112,78 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       <ArtworkSidebarDetailsFragmentContainer artwork={artwork} />
 
-      {isUnlisted && (
+      {!isUnlisted && (
         <>
-          <ArtworkSidebarPrivateArtwork artwork={artwork} />
-          <Spacer y={2} />
+          {isInAuction ? (
+            <>
+              <Separator />
+
+              <Spacer y={2} />
+
+              <ArtworkSidebarEstimatedValueFragmentContainer
+                artwork={artwork}
+              />
+
+              <Join separator={<Spacer y={2} />}>
+                {hasEnded ? (
+                  <ArtworkSidebarBiddingClosedMessageFragmentContainer
+                    artwork={artwork}
+                  />
+                ) : (
+                  <ArtworkSidebarAuctionPollingRefetchContainer
+                    artwork={artwork}
+                    me={me}
+                  />
+                )}
+              </Join>
+
+              {!hasEnded && (
+                <ArtworkSidebarAuctionTimerFragmentContainer
+                  artwork={artwork}
+                />
+              )}
+
+              <Spacer y={2} />
+            </>
+          ) : (
+            <ArtworkSidebarCommercialButtons artwork={artwork} me={me} />
+          )}
         </>
       )}
 
-      {isInAuction ? (
+      {isUnlisted && (
         <>
-          <Separator />
+          <Spacer y={1} />
+
+          <ArtworkSidebarCommercialButtons
+            artwork={artwork}
+            me={me}
+            showPrice={true}
+            showButtonActions={false}
+          />
 
           <Spacer y={2} />
 
-          <ArtworkSidebarEstimatedValueFragmentContainer artwork={artwork} />
+          <ArtworkSidebarShippingInformationFragmentContainer
+            artwork={artwork}
+          />
 
-          <Join separator={<Spacer y={2} />}>
-            {hasEnded ? (
-              <ArtworkSidebarBiddingClosedMessageFragmentContainer
-                artwork={artwork}
-              />
-            ) : (
-              <ArtworkSidebarAuctionPollingRefetchContainer
-                artwork={artwork}
-                me={me}
-              />
-            )}
-          </Join>
+          <Separator borderWidth={1} my={4} />
 
-          {!hasEnded && (
-            <ArtworkSidebarAuctionTimerFragmentContainer artwork={artwork} />
-          )}
+          <ArtworkSidebarPrivateArtwork artwork={artwork} />
+          <Spacer y={2} />
+
+          <ArtworkSidebarCommercialButtons
+            artwork={artwork}
+            me={me}
+            showPrice={false}
+            showButtonActions={true}
+          />
+
+          <ArtworkSidebarArtsyGuarantee artwork={artwork} />
 
           <Spacer y={2} />
         </>
-      ) : (
-        <ArtworkSidebarCommercialButtons artwork={artwork} me={me} />
       )}
 
       {showTimedSaleTimer && (
@@ -156,7 +193,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         </>
       )}
 
-      {!isSold && artworkEcommerceAvailable && (
+      {!isUnlisted && !isSold && artworkEcommerceAvailable && (
         <>
           <SidebarExpandable
             label={t`artworkPage.sidebar.shippingAndTaxes.expandableLabel`}
@@ -170,12 +207,12 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         </>
       )}
 
-      {!!isEligibleForArtsyGuarantee && (
+      {!isUnlisted && !!isEligibleForArtsyGuarantee && (
         <>
           <SidebarExpandable
             label={t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}
           >
-            <ArtworkSidebarArtsyGuarantee />
+            <ArtworkSidebarArtsyGuarantee artwork={artwork} />
           </SidebarExpandable>
 
           <Spacer y={1} />
@@ -220,6 +257,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarAuctionTimer_artwork
         ...ArtworkSidebarAuctionInfoPolling_artwork
         ...ArtworkSidebarPrivateArtwork_artwork
+        ...ArtworkSidebarArtsyGuarantee_artwork
 
         slug
         isSold
