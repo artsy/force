@@ -1,4 +1,4 @@
-import { Box, Separator } from "@artsy/palette"
+import { Box, Spacer } from "@artsy/palette"
 import { PrivateArtworkDetails_artwork$key } from "__generated__/PrivateArtworkDetails_artwork.graphql"
 import { PrivateArtworkAboutArtist } from "./PrivateArtworkAboutArtist"
 import { PrivateArtworkAboutWork } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkAboutWork"
@@ -27,13 +27,13 @@ export const PrivateArtworkDetails: React.FC<PrivateArtworkDetailsProps> = ({
     <Box>
       <PrivateArtworkAboutWork artwork={data} />
 
-      <Separator mt={4} borderWidth={1} />
-
-      <PrivateArtworkAboutArtist artwork={data} />
-
-      <Separator mb={4} borderWidth={1} />
+      <Spacer y={4} />
 
       <PrivateArtworkMetadata artwork={data} />
+
+      <Spacer y={4} />
+
+      <PrivateArtworkAboutArtist artwork={data} />
     </Box>
   )
 }

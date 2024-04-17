@@ -19,7 +19,7 @@ import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useAuthDialog } from "Components/AuthDialog"
 
-interface FollowArtistButtonProps extends Omit<ButtonProps, "variant"> {
+interface FollowArtistButtonProps extends ButtonProps {
   artist: FollowArtistButton_artist$data
   children?: FollowButtonRenderProps
   contextModule?: AuthContextModule

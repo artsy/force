@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7732314a70adc653ae0d9a0d8b2f4467>>
+ * @generated SignedSource<<19cb02566dafbd7debf36d2dc309914c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,13 @@ var v0 = [
     "kind": "Literal",
     "name": "id",
     "value": "foo"
+  }
+],
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "HTML"
   }
 ];
 return {
@@ -90,17 +97,17 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": (v1/*: any*/),
             "kind": "ScalarField",
             "name": "provenance",
-            "storageKey": null
+            "storageKey": "provenance(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": null,
+            "args": (v1/*: any*/),
             "kind": "ScalarField",
             "name": "exhibitionHistory",
-            "storageKey": null
+            "storageKey": "exhibitionHistory(format:\"HTML\")"
           },
           {
             "alias": null,
@@ -115,12 +122,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0425c9a804a97ef7527bab6667b72550",
+    "cacheID": "c039c4d5c8dbd22e575ac400bb84ba5f",
     "id": null,
     "metadata": {},
     "name": "PrivateArtworkMetadataQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkMetadataQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkMetadata_artwork\n    id\n  }\n}\n\nfragment PrivateArtworkMetadata_artwork on Artwork {\n  conditionDescription {\n    details\n  }\n  provenance\n  exhibitionHistory\n}\n"
+    "text": "query PrivateArtworkMetadataQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkMetadata_artwork\n    id\n  }\n}\n\nfragment PrivateArtworkMetadata_artwork on Artwork {\n  conditionDescription {\n    details\n  }\n  provenance(format: HTML)\n  exhibitionHistory(format: HTML)\n}\n"
   }
 };
 })();

@@ -12,27 +12,30 @@ export const PrivateArtworkAboutWork: React.FC<PrivateArtworkAboutWorkProps> = (
   const data = useFragment(
     graphql`
       fragment PrivateArtworkAboutWork_artwork on Artwork {
-        additionalInformation
+        additionalInformationHTML: additionalInformation(format: HTML)
       }
     `,
     artwork
   )
 
-  // FIXME: Remove (typechecker)
+  if (!data.additionalInformationHTML) {
+    return null
+  }
 
   return (
-    <Box textAlign="center">
-      <Text variant="sm" textTransform="uppercase">
-        About this work
+    <Box>
+      <Text variant="md" color="black100">
+        About This Work
       </Text>
 
-      {data.additionalInformation && (
+      {data.additionalInformationHTML && (
         <>
           <Spacer y={2} />
+
           <HTML variant="lg">
             <ReadMore
               inlineReadMoreLink={false}
-              content={`${data.additionalInformation}`}
+              content={`${data.additionalInformationHTML}`}
               maxChars={200}
             />
           </HTML>

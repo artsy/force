@@ -1,6 +1,5 @@
 import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { extractNodes } from "Utils/extractNodes"
 import { NotificationItem_item$data } from "__generated__/NotificationItem_item.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import styled from "styled-components"
@@ -36,7 +35,6 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
   const {
     state: { currentNotificationId },
   } = useNotificationsContext()
-  const artworks = extractNodes(item.artworksConnection)
   const remainingArtworksCount = item.objectsCount - 4
   const shouldDisplayCounts =
     isArtworksBasedNotification(item.notificationType) &&
@@ -97,22 +95,22 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
     >
       {enableNewActivityPanel ? (
         <Flex flex={1} flexDirection="column">
-          {!!artworks.length && (
+          {!!item.previewImages.length && (
             <Flex flexDirection="row" alignItems="center" mb={0.5}>
               <Flex flex={1}>
                 <Join separator={<Spacer x={1} />}>
-                  {artworks.map(artwork => {
-                    const image = artwork.image?.thumb
+                  {item.previewImages.map(image => {
+                    if (!image.url) return null
 
                     return (
                       <Image
-                        key={artwork.internalID}
-                        src={image?.src}
-                        srcSet={image?.srcSet}
-                        alt={`Artwork image of ${artwork.title}`}
+                        key={image.url}
+                        src={image.url}
+                        alt={"Activity artwork image"}
                         width={58}
                         height={58}
                         lazyLoad
+                        placeHolderURL={image.blurhashDataURL ?? undefined}
                       />
                     )
                   })}
@@ -138,6 +136,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
             backgroundColor="blue10"
             px={0.5}
             alignSelf="flex-start"
+            borderRadius={3}
           >
             {getNotificationPrelude(item)}
           </Text>
@@ -182,15 +181,14 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
 
           <Flex flexDirection="row" alignItems="center">
             <Join separator={<Spacer x={1} />}>
-              {artworks.map(artwork => {
-                const image = artwork.image?.thumb
+              {item.previewImages.map(image => {
+                if (!image.url) return null
 
                 return (
                   <Image
-                    key={artwork.internalID}
-                    src={image?.src}
-                    srcSet={image?.srcSet}
-                    alt={`Artwork image of ${artwork.title}`}
+                    key={image.url}
+                    src={image.url}
+                    alt={`Activity artwork image`}
                     width={58}
                     height={58}
                     lazyLoad
@@ -246,20 +244,9 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
             expiresAt
           }
         }
-        artworksConnection(first: 4) {
-          totalCount
-          edges {
-            node {
-              internalID
-              title
-              image {
-                thumb: cropped(width: 58, height: 58) {
-                  src
-                  srcSet
-                }
-              }
-            }
-          }
+        previewImages(size: 4) {
+          blurhashDataURL
+          url(version: "thumbnail")
         }
         title
         ...NotificationTypeLabel_notification

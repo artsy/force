@@ -1,14 +1,21 @@
 import AddIcon from "@artsy/icons/AddIcon"
-import { AutocompleteInput, Button, Stack } from "@artsy/palette"
+import { Box, Button, Clickable, LabeledInput, Stack } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
-import { FC, useState } from "react"
+import { FC, useRef, useState } from "react"
 import { CollectorProfileArtistsList } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsList"
 import { CollectorProfileArtistsAddDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsAddDialog"
+import { CollectorProfileArtistsListHeader } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListHeader"
+import { CollectorProfileArtistsSearchResults } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsSearchResults"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import SearchIcon from "@artsy/icons/SearchIcon"
 
 interface CollectorProfileArtistsRouteProps {}
 
 export const CollectorProfileArtistsRoute: FC<CollectorProfileArtistsRouteProps> = props => {
   const [mode, setMode] = useState<"Idle" | "Add">("Idle")
+  const [term, setTerm] = useState("")
+
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleClose = () => {
     setMode("Idle")
@@ -16,6 +23,11 @@ export const CollectorProfileArtistsRoute: FC<CollectorProfileArtistsRouteProps>
 
   const handleAdd = () => {
     setMode("Add")
+  }
+
+  const handleClear = () => {
+    setTerm("")
+    inputRef.current?.focus()
   }
 
   return (
@@ -31,11 +43,29 @@ export const CollectorProfileArtistsRoute: FC<CollectorProfileArtistsRouteProps>
           flexDirection={["column", "row"]}
           alignItems={["flex-start", "center"]}
         >
-          <AutocompleteInput
-            placeholder="Search artists in your collection"
-            options={[]}
-            flex={1}
+          <LabeledInput
+            ref={inputRef}
+            placeholder="Search artists for artists on Artsy"
+            label={
+              term ? (
+                <Clickable
+                  onClick={handleClear}
+                  height="100%"
+                  display="flex"
+                  alignItems="center"
+                  aria-label="Clear input"
+                >
+                  <CloseIcon fill="black60" aria-hidden />
+                </Clickable>
+              ) : (
+                <SearchIcon fill="black60" aria-hidden />
+              )
+            }
+            value={term}
             width="100%"
+            onChange={({ currentTarget: { value } }) => {
+              setTerm(value)
+            }}
           />
 
           <Button variant="primaryBlack" Icon={AddIcon} onClick={handleAdd}>
@@ -43,7 +73,15 @@ export const CollectorProfileArtistsRoute: FC<CollectorProfileArtistsRouteProps>
           </Button>
         </Stack>
 
-        <CollectorProfileArtistsList />
+        <Box>
+          <CollectorProfileArtistsListHeader />
+
+          {term.length > 0 ? (
+            <CollectorProfileArtistsSearchResults term={term} />
+          ) : (
+            <CollectorProfileArtistsList />
+          )}
+        </Box>
       </Stack>
 
       {mode === "Add" && (
