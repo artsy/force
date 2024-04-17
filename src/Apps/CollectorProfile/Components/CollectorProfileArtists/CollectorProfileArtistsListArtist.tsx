@@ -39,7 +39,7 @@ export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListAr
 
   const userInterest = useFragment(FRAGMENT, userInterestEdge)
 
-  const { node: artist } = userInterest
+  const { node: artist } = userInterest || {}
 
   const { submitMutation } = useMutation<
     CollectorProfileArtistsListArtistUpdateMutation
