@@ -47,7 +47,13 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
   return (
     <Box>
       <Flex width="100%" justifyContent="space-between">
-        <Text variant="xs" color="blue100" backgroundColor="blue10" px={0.5}>
+        <Text
+          variant="xs"
+          color="blue100"
+          backgroundColor="blue10"
+          px={0.5}
+          borderRadius={3}
+        >
           Limited-Time Offer
         </Text>
         <RouterLink to={BASE_SAVES_PATH} data-testid="manage-saves-link">

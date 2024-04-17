@@ -136,6 +136,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
             backgroundColor="blue10"
             px={0.5}
             alignSelf="flex-start"
+            borderRadius={3}
           >
             {getNotificationPrelude(item)}
           </Text>

@@ -514,7 +514,13 @@ const OfferDisplay: React.FC<OfferDisplayProps> = ({
     <>
       <Spacer y={2} />
       <Flex>
-        <Text variant="xs" color="blue100" backgroundColor="blue10" px={0.5}>
+        <Text
+          variant="xs"
+          color="blue100"
+          backgroundColor="blue10"
+          px={0.5}
+          borderRadius={3}
+        >
           Limited-Time Offer
         </Text>
       </Flex>
