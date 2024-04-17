@@ -154,6 +154,7 @@ const PERMANENT_REDIRECTS = {
   "/log_in": "/login",
   "/sign_up": "/signup",
   "/meet-the-specialists": "/sell",
+  "/conditions-of-sale": "/supplemental-cos",
 }
 
 const router = express.Router()
