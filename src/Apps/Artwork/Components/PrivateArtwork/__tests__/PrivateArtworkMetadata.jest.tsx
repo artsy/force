@@ -48,10 +48,13 @@ describe("PrivateArtworkMetadata", () => {
     ).not.toBeInTheDocument()
   })
 
-  it("displays provenance info when provenance is present", async () => {
+  it("displays provenance info by default when provenance is present and conditionDescription is lacking", async () => {
     renderWithRelay({
       Artwork: () => {
         return {
+          conditionDescription: {
+            details: null,
+          },
           provenance: "Test Provenance Details",
         }
       },
@@ -72,10 +75,14 @@ describe("PrivateArtworkMetadata", () => {
     ).not.toBeInTheDocument()
   })
 
-  it("displays exhibition history when exhibition history is present", async () => {
+  it("displays exhibition history by default when exhibition history is present yet other options are null", async () => {
     renderWithRelay({
       Artwork: () => {
         return {
+          conditionDescription: {
+            details: null,
+          },
+          provenance: null,
           exhibitionHistory: "Test Exhibition History Details",
         }
       },

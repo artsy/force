@@ -1,12 +1,48 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
+import { ArtworkSidebarArtsyGuarantee_artwork$key } from "__generated__/ArtworkSidebarArtsyGuarantee_artwork.graphql"
 import { useTranslation } from "react-i18next"
 import { RouterLink } from "System/Router/RouterLink"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import MoneyBackIcon from "@artsy/icons/MoneyBackIcon"
+import { graphql, useFragment } from "react-relay"
 
-export const ArtworkSidebarArtsyGuarantee: React.FC = () => {
+interface ArtworkSidebarArtsyGuaranteeProps {
+  artwork: ArtworkSidebarArtsyGuarantee_artwork$key
+}
+
+export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuaranteeProps> = ({
+  artwork,
+}) => {
+  const data = useFragment(
+    graphql`
+      fragment ArtworkSidebarArtsyGuarantee_artwork on Artwork {
+        isUnlisted
+      }
+    `,
+    artwork
+  )
   const { t } = useTranslation()
+
+  if (data.isUnlisted) {
+    return (
+      <>
+        <Text variant="xs" color="black60">
+          {t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}{" "}
+          <RouterLink
+            inline
+            to="/buyer-guarantee"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Text variant="xs">
+              {t("artworkPage.sidebar.artsyGuarantee.learnMore")}
+            </Text>
+          </RouterLink>
+        </Text>
+      </>
+    )
+  }
 
   return (
     <>

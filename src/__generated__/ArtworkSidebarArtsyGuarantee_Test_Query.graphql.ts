@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9f01bce1c15db6f936646f8e84d197b>>
+ * @generated SignedSource<<dbe12bb3712eb338b820affe67eadb85>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarShippingInformation_Test_Query$variables = Record<PropertyKey, never>;
-export type ArtworkSidebarShippingInformation_Test_Query$data = {
+export type ArtworkSidebarArtsyGuarantee_Test_Query$variables = Record<PropertyKey, never>;
+export type ArtworkSidebarArtsyGuarantee_Test_Query$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarShippingInformation_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtsyGuarantee_artwork">;
   } | null | undefined;
 };
-export type ArtworkSidebarShippingInformation_Test_Query = {
-  response: ArtworkSidebarShippingInformation_Test_Query$data;
-  variables: ArtworkSidebarShippingInformation_Test_Query$variables;
+export type ArtworkSidebarArtsyGuarantee_Test_Query = {
+  response: ArtworkSidebarArtsyGuarantee_Test_Query$data;
+  variables: ArtworkSidebarArtsyGuarantee_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -28,19 +28,13 @@ var v0 = [
     "name": "id",
     "value": "josef-albers-homage-to-the-square-85"
   }
-],
-v1 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkSidebarShippingInformation_Test_Query",
+    "name": "ArtworkSidebarArtsyGuarantee_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -53,7 +47,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkSidebarShippingInformation_artwork"
+            "name": "ArtworkSidebarArtsyGuarantee_artwork"
           }
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
@@ -66,7 +60,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtworkSidebarShippingInformation_Test_Query",
+    "name": "ArtworkSidebarArtsyGuarantee_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -87,20 +81,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "shippingOrigin",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "shippingInfo",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -110,7 +90,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "422947915673267ae5b91e9bd7d4137c",
+    "cacheID": "e1713cf1b62b067824b736a356b20fb5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -131,18 +111,16 @@ return {
           "nullable": false,
           "plural": false,
           "type": "Boolean"
-        },
-        "artwork.shippingInfo": (v1/*: any*/),
-        "artwork.shippingOrigin": (v1/*: any*/)
+        }
       }
     },
-    "name": "ArtworkSidebarShippingInformation_Test_Query",
+    "name": "ArtworkSidebarArtsyGuarantee_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  isUnlisted\n  shippingOrigin\n  shippingInfo\n}\n"
+    "text": "query ArtworkSidebarArtsyGuarantee_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtsyGuarantee_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtsyGuarantee_artwork on Artwork {\n  isUnlisted\n}\n"
   }
 };
 })();
 
-(node as any).hash = "66d3c2c340a10b58af6f467fa5c69dc4";
+(node as any).hash = "6bc6884a47d18a75cd4c2e18ed820cdf";
 
 export default node;

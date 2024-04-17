@@ -44,11 +44,17 @@ import { ResponsiveValue } from "styled-system"
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
   me: ArtworkSidebarCommercialButtons_me$key
+  showPrice?: boolean
+  showButtonActions?: boolean
 }
 
 const THE_PAST = new Date(0).toISOString()
 
-export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialButtonsProps> = props => {
+export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialButtonsProps> = ({
+  showPrice = true,
+  showButtonActions = true,
+  ...props
+}) => {
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
 
@@ -352,17 +358,25 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const SaleMessageOrOfferDisplay: FC = () => {
-    return partnerOffer ? (
-      <OfferDisplay
-        originalPrice={artwork.priceListedDisplay}
-        offerPrice={partnerOffer.priceWithDiscount?.display}
-        endAt={partnerOffer.endAt}
-        isAvailable={partnerOffer.isAvailable}
-      />
-    ) : (
+    if (!showPrice) {
+      return null
+    }
+
+    return (
       <>
-        <SaleMessage saleMessage={artwork.saleMessage} />
-        {!!isCreateAlertAvailable && <Spacer y={1} />}
+        {partnerOffer ? (
+          <OfferDisplay
+            originalPrice={artwork.priceListedDisplay}
+            offerPrice={partnerOffer.priceWithDiscount?.display}
+            endAt={partnerOffer.endAt}
+            isAvailable={partnerOffer.isAvailable}
+          />
+        ) : (
+          <>
+            <SaleMessage saleMessage={artwork.saleMessage} />
+            {!!isCreateAlertAvailable && <Spacer y={1} />}
+          </>
+        )}
       </>
     )
   }
@@ -392,86 +406,90 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
         </>
       )}
 
-      {Object.keys(renderButtons).length > 0 && <Spacer y={2} />}
-
-      <Flex flexDirection={["column", "column", "column", "column", "row"]}>
-        <Join separator={<Spacer x={1} y={1} />}>
-          <AlertSwitch />
-          {renderButtons.buyNow && (
-            <Button
-              variant={renderButtons.buyNow}
-              width="100%"
-              size="large"
-              loading={isCommitingCreateOrderMutation}
-              onClick={
-                // TODO: make sure the timer will reset the active partner offer
-                activePartnerOffer
-                  ? handleCreatePartnerOfferOrder
-                  : handleCreateOrder
-              }
-            >
-              {t("artworkPage.sidebar.commercialButtons.buyNow")}
-            </Button>
-          )}
-          {renderButtons.makeOffer && (
-            <Button
-              variant={renderButtons.makeOffer}
-              width="100%"
-              size="large"
-              loading={isCommittingCreateOfferOrderMutation}
-              onClick={handleCreateOfferOrder}
-            >
-              {t("artworkPage.sidebar.commercialButtons.makeOffer")}
-            </Button>
-          )}
-          {renderButtons.contactGallery && (
-            <Button
-              variant={renderButtons.contactGallery}
-              width="100%"
-              size="large"
-              onClick={handleInquiry}
-            >
-              {t("artworkPage.sidebar.commercialButtons.contactGallery")}
-            </Button>
-          )}
-        </Join>
-      </Flex>
-      {partnerOffer?.note && (
+      {showButtonActions && (
         <>
-          <Spacer y={2} />
-          <Box
-            backgroundColor={"black5"}
-            padding={2}
-            width="100%"
-            display={"flex"}
-            gap={1}
-          >
-            {partnerIcon && (
-              <Box>
-                <Image
-                  borderRadius={"50%"}
-                  src={partnerIcon}
-                  width={30}
-                  height={30}
-                  style={{
-                    border: `1px solid ${THEME.colors.black30}`,
-                  }}
-                />
+          {Object.keys(renderButtons).length > 0 && <Spacer y={2} />}
+
+          <Flex flexDirection={["column", "column", "column", "column", "row"]}>
+            <Join separator={<Spacer x={1} y={1} />}>
+              <AlertSwitch />
+              {renderButtons.buyNow && (
+                <Button
+                  variant={renderButtons.buyNow}
+                  width="100%"
+                  size="large"
+                  loading={isCommitingCreateOrderMutation}
+                  onClick={
+                    // TODO: make sure the timer will reset the active partner offer
+                    activePartnerOffer
+                      ? handleCreatePartnerOfferOrder
+                      : handleCreateOrder
+                  }
+                >
+                  {t("artworkPage.sidebar.commercialButtons.buyNow")}
+                </Button>
+              )}
+              {renderButtons.makeOffer && (
+                <Button
+                  variant={renderButtons.makeOffer}
+                  width="100%"
+                  size="large"
+                  loading={isCommittingCreateOfferOrderMutation}
+                  onClick={handleCreateOfferOrder}
+                >
+                  {t("artworkPage.sidebar.commercialButtons.makeOffer")}
+                </Button>
+              )}
+              {renderButtons.contactGallery && (
+                <Button
+                  variant={renderButtons.contactGallery}
+                  width="100%"
+                  size="large"
+                  onClick={handleInquiry}
+                >
+                  {t("artworkPage.sidebar.commercialButtons.contactGallery")}
+                </Button>
+              )}
+            </Join>
+          </Flex>
+          {partnerOffer?.note && (
+            <>
+              <Spacer y={2} />
+              <Box
+                backgroundColor={"black5"}
+                padding={2}
+                width="100%"
+                display={"flex"}
+                gap={1}
+              >
+                {partnerIcon && (
+                  <Box>
+                    <Image
+                      borderRadius={"50%"}
+                      src={partnerIcon}
+                      width={30}
+                      height={30}
+                      style={{
+                        border: `1px solid ${THEME.colors.black30}`,
+                      }}
+                    />
+                  </Box>
+                )}
+                <Box flex={1}>
+                  <Text variant="sm" color="black100" fontWeight={"bold"}>
+                    Note from the gallery
+                  </Text>
+                  <Text variant="sm" color="black100">
+                    "{partnerOffer.note}"
+                  </Text>
+                </Box>
               </Box>
-            )}
-            <Box flex={1}>
-              <Text variant="sm" color="black100" fontWeight={"bold"}>
-                Note from the gallery
-              </Text>
-              <Text variant="sm" color="black100">
-                "{partnerOffer.note}"
-              </Text>
-            </Box>
-          </Box>
+            </>
+          )}
+          <Spacer y={4} />
         </>
       )}
 
-      <Spacer y={4} />
       <ErrorToast onClose={onCloseModal} show={isErrorModalVisible} />
     </>
   )

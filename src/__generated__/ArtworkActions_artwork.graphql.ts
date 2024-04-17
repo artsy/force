@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a03a144628f59c5bc311759c99e2d03>>
+ * @generated SignedSource<<f83872ea65a184325ec722d6568632c2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type ArtworkActions_artwork$data = {
   readonly downloadableImageUrl: string | null | undefined;
   readonly isDownloadable: boolean | null | undefined;
   readonly isHangable: boolean | null | undefined;
+  readonly isUnlisted: boolean;
   readonly partner: {
     readonly slug: string;
   } | null | undefined;
@@ -72,6 +73,13 @@ return {
       "kind": "FragmentSpread",
       "name": "ViewInRoom_artwork"
     },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isUnlisted",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -112,6 +120,6 @@ return {
 };
 })();
 
-(node as any).hash = "b8fc70913bd27a735d1b1e5ab6e2fdfe";
+(node as any).hash = "59762ef6b7e45003c00a90d0ba5d0ec0";
 
 export default node;
