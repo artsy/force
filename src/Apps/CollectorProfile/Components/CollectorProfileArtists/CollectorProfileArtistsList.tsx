@@ -1,13 +1,4 @@
-import {
-  Box,
-  Column,
-  GridColumns,
-  PaginationSkeleton,
-  Stack,
-  Text,
-  Tooltip,
-  useDidMount,
-} from "@artsy/palette"
+import { Box, PaginationSkeleton, Stack, useDidMount } from "@artsy/palette"
 import { FC, Suspense } from "react"
 import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
 import { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
@@ -19,64 +10,18 @@ import { compact } from "lodash"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { useRouter } from "System/Router/useRouter"
 import { CollectorProfileArtistsList_me$key } from "__generated__/CollectorProfileArtistsList_me.graphql"
-import InfoIcon from "@artsy/icons/InfoIcon"
-import { Media } from "Utils/Responsive"
 
 const PAGE_SIZE = 10
 
 interface CollectorProfileArtistsListProps {}
 
-export const CollectorProfileArtistsList: FC<CollectorProfileArtistsListProps> = () => {
+export const CollectorProfileArtistsList: FC<CollectorProfileArtistsListProps> = ({
+  children,
+}) => {
   const isMounted = useDidMount()
 
   return (
     <Stack gap={2}>
-      <Media greaterThan="xs">
-        <GridColumns
-          color="black60"
-          borderBottom="1px solid"
-          borderColor="black10"
-          pb={2}
-          gridColumnGap={1}
-        >
-          <Column span={3}>
-            <Text size="sm-display" overflowEllipsis>
-              Artist
-            </Text>
-          </Column>
-
-          <Column span={2}>
-            <Text size="sm-display" overflowEllipsis>
-              Artworks uploaded
-            </Text>
-          </Column>
-
-          <Column span={4} display="flex" gap={0.5} alignItems="center">
-            <Text size="sm-display" overflowEllipsis>
-              Share with the galleries during inquiries
-            </Text>
-
-            <Tooltip content="Galleries are more likely to respond if they can see the artists you collect.">
-              <Box as="span" style={{ lineHeight: 0 }}>
-                <InfoIcon />
-              </Box>
-            </Tooltip>
-          </Column>
-
-          <Column span={2}>
-            <Text size="sm-display" overflowEllipsis>
-              Follow artist
-            </Text>
-          </Column>
-
-          <Column span={1} display="flex" justifyContent="flex-end">
-            <Text size="sm-display" overflowEllipsis textAlign="right">
-              More
-            </Text>
-          </Column>
-        </GridColumns>
-      </Media>
-
       {isMounted ? (
         <Suspense fallback={<CollectorProfileArtistsListPlaceholder />}>
           <CollectorProfileArtistsListArtists />
@@ -91,9 +36,11 @@ export const CollectorProfileArtistsList: FC<CollectorProfileArtistsListProps> =
 const CollectorProfileArtistsListPlaceholder: FC = () => {
   return (
     <Stack gap={2}>
-      {new Array(PAGE_SIZE).fill(null).map((_, i) => {
-        return <CollectorProfileArtistsListArtistSkeleton key={i} />
-      })}
+      <Box>
+        {new Array(PAGE_SIZE).fill(null).map((_, i) => {
+          return <CollectorProfileArtistsListArtistSkeleton key={i} />
+        })}
+      </Box>
 
       <PaginationSkeleton />
     </Stack>
@@ -139,14 +86,16 @@ const CollectorProfileArtistsListArtists: FC = () => {
 
   return (
     <Stack gap={2}>
-      {userInterestEdges.map(userInterestEdge => {
-        return (
-          <CollectorProfileArtistsListArtist
-            key={userInterestEdge.internalID}
-            userInterestEdge={userInterestEdge}
-          />
-        )
-      })}
+      <Box>
+        {userInterestEdges.map(userInterestEdge => {
+          return (
+            <CollectorProfileArtistsListArtist
+              key={userInterestEdge.internalID}
+              userInterestEdge={userInterestEdge}
+            />
+          )
+        })}
+      </Box>
 
       <PaginationFragmentContainer
         hasNextPage={!!hasNextPage}
