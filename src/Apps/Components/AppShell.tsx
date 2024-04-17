@@ -10,6 +10,7 @@ import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 import { Layout } from "Apps/Components/Layouts"
 import { useSetupAuth } from "Utils/Hooks/useSetupAuth"
 import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -44,6 +45,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
     document.body.setAttribute("data-test", "AppReady")
   }, [])
 
+  useDarkModeToggle()
   useNetworkOfflineMonitor()
   useProductionEnvironmentWarning()
 
