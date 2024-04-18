@@ -3,7 +3,6 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("System/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
@@ -32,12 +31,6 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
 })
 
 describe("NotificationItem", () => {
-  beforeAll(() => {
-    ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "onyx_new_notification_page"
-    )
-  })
-
   it("should render headline", () => {
     renderWithRelay({
       Notification: () => notification,

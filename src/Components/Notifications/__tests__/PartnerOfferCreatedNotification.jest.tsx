@@ -36,9 +36,7 @@ const { renderWithRelay } = setupTestWrapperTL<
 describe("PartnerOfferCreatedNotification", () => {
   beforeAll(() => {
     ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName =>
-        featureName === "onyx_new_notification_page" ||
-        featureName === "emerald_partner-offers-to-artwork-page"
+      featureName => featureName === "emerald_partner-offers-to-artwork-page"
     )
   })
 

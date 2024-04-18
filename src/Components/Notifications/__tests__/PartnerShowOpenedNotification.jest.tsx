@@ -1,7 +1,6 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
 import { PartnerShowOpenedNotification_test_Query } from "__generated__/PartnerShowOpenedNotification_test_Query.graphql"
 
@@ -34,12 +33,6 @@ const { renderWithRelay } = setupTestWrapperTL<
 })
 
 describe("PartnerShowOpenedNotification", () => {
-  beforeAll(() => {
-    ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "onyx_new_notification_page"
-    )
-  })
-
   it("renders the notification", () => {
     renderWithRelay({
       Notification: () => notification,

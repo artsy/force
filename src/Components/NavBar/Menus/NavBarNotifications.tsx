@@ -28,7 +28,7 @@ export const NavBarNotifications: React.FC<NavBarNotificationsProps> = props => 
       onMouseEnter={lockScroll}
       onMouseLeave={unlockScroll}
     >
-      <Notifications mode="dropdown" paginationType="infinite" {...props} />
+      <Notifications mode="dropdown" {...props} />
     </Box>
   )
 }

@@ -13,21 +13,20 @@ import {
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import { useContext, useEffect, useState } from "react"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
-import { NotificationPaginationType, NotificationType } from "./types"
+import { NotificationType } from "./types"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
 import { shouldDisplayNotification } from "./util"
 import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
 import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
-import { NotificationListMode } from "Components/Notifications/NotificationsTabs"
 import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SystemContext } from "System/SystemContext"
 import { getENV } from "Utils/getENV"
+import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
 
 interface NotificationsListQueryRendererProps {
   mode: NotificationListMode
   type?: NotificationType
-  paginationType?: NotificationPaginationType
 }
 
 interface NotificationsListProps {
@@ -35,7 +34,6 @@ interface NotificationsListProps {
   relay: RelayPaginationProp
   mode: NotificationListMode
   type: NotificationType
-  paginationType?: NotificationPaginationType
 }
 
 export const NotificationsList: React.FC<NotificationsListProps> = ({
@@ -189,7 +187,6 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
 export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRendererProps> = ({
   mode,
   type,
-  paginationType,
 }) => {
   const { relayEnvironment } = useContext(SystemContext)
   const { state } = useNotificationsContext()
@@ -230,7 +227,6 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
           <NotificationsListFragmentContainer
             mode={mode}
             viewer={props.viewer}
-            paginationType={paginationType}
             type={notificationType}
           />
         )
