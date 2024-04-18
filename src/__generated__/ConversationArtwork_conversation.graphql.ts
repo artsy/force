@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c1097fe53bf018edc216e12ef1c77942>>
+ * @generated SignedSource<<3d2cc0266df44ccaa77adb422ef28a9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type ConversationArtwork_conversation$data = {
       readonly image: {
         readonly url: string | null | undefined;
       } | null | undefined;
+      readonly isUnlisted: boolean;
       readonly slug: string;
       readonly title: string | null | undefined;
     } | {
@@ -103,6 +104,13 @@ return {
                 {
                   "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "isUnlisted",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "Artist",
                   "kind": "LinkedField",
                   "name": "artist",
@@ -153,6 +161,6 @@ return {
 };
 })();
 
-(node as any).hash = "dd69d366f41fdb5c692852966f4100b4";
+(node as any).hash = "cde6587b766c434b2e7203c8c8b72e32";
 
 export default node;

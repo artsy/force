@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<418b2fddcc477067d2ef719cc3f3a6aa>>
+ * @generated SignedSource<<47928b73fec68db1ef987c0bc67afe73>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,15 @@ export type ArtworkApp_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkApp_me">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Variable",
+    "name": "artworkID",
+    "variableName": "artworkID"
+  }
+];
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -32,18 +40,12 @@ const node: ReaderFragment = {
   "name": "ArtworkApp_me",
   "selections": [
     {
-      "args": null,
+      "args": (v0/*: any*/),
       "kind": "FragmentSpread",
       "name": "ArtworkSidebar_me"
     },
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "artworkID",
-          "variableName": "artworkID"
-        }
-      ],
+      "args": (v0/*: any*/),
       "kind": "FragmentSpread",
       "name": "ArtworkPageBanner_me"
     }
@@ -51,7 +53,8 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "f4cd5f29ce1ba067ea880ea725b5949e";
+(node as any).hash = "e646f380ea65e1122c532261b0af267c";
 
 export default node;

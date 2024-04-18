@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0f807583bad7e6bf717611a427a679d1>>
+ * @generated SignedSource<<211c05b4de0105413e850dd805fe58a1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -71,11 +71,17 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
+            "alias": "additionalInformationHTML",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "HTML"
+              }
+            ],
             "kind": "ScalarField",
             "name": "additionalInformation",
-            "storageKey": null
+            "storageKey": "additionalInformation(format:\"HTML\")"
           },
           {
             "alias": null,
@@ -90,12 +96,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "092f0d764f16a95a0891f75cfd1baf35",
+    "cacheID": "33c4addf70176dba75996fbfc9f22b6d",
     "id": null,
     "metadata": {},
     "name": "PrivateArtworkAboutWorkQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkAboutWorkQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutWork_artwork\n    id\n  }\n}\n\nfragment PrivateArtworkAboutWork_artwork on Artwork {\n  additionalInformation\n}\n"
+    "text": "query PrivateArtworkAboutWorkQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutWork_artwork\n    id\n  }\n}\n\nfragment PrivateArtworkAboutWork_artwork on Artwork {\n  additionalInformationHTML: additionalInformation(format: HTML)\n}\n"
   }
 };
 })();

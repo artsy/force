@@ -5,6 +5,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { ArtworkSidebarLinks_artwork$data } from "__generated__/ArtworkSidebarLinks_artwork.graphql"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkSidebarLinksProps {
   artwork: ArtworkSidebarLinks_artwork$data
@@ -15,7 +16,9 @@ const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
 }) => {
   const { t } = useTranslation()
   const tracking = useTracking()
-  const { sale, isInAuction } = artwork
+  const { sale, isInAuction, isUnlisted } = artwork
+
+  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
 
   const isInOpenAuction = isInAuction && sale && !sale.isClosed
 
@@ -35,24 +38,33 @@ const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
     })
   }
 
+  if (isUnlisted) {
+    return null
+  }
+
   return (
     <>
       <Spacer y={2} />
+
       {isInOpenAuction && (
         <>
           <Text variant="xs" color="black60">
             {t("artworkPage.sidebar.conditionsOfSale")}{" "}
             <RouterLink
               inline
-              to="/conditions-of-sale"
+              to={showNewDisclaimer ? "/terms" : "/conditions-of-sale"}
               onClick={trackClickedConditionsOfSale}
             >
-              {t("artworkPage.sidebar.conditionsOfSaleLink")}
+              {showNewDisclaimer
+                ? t("artworkPage.sidebar.generalTermsAndConditionsOfSaleLink")
+                : t("artworkPage.sidebar.conditionsOfSaleLink")}
             </RouterLink>
           </Text>
+
           <Spacer y={1} />
         </>
       )}
+
       <Text variant="xs" color="black60">
         {t("artworkPage.sidebar.sellWithArtsy")}{" "}
         <RouterLink inline to="/sell" onClick={trackClickedSellWithArtsy}>
@@ -69,6 +81,7 @@ export const ArtworkSidebarLinksFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment ArtworkSidebarLinks_artwork on Artwork {
         isInAuction
+        isUnlisted
         sale {
           isClosed
         }

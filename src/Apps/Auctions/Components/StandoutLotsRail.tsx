@@ -26,7 +26,7 @@ const StandoutLotsRail: React.FC<StandoutLotsRailProps> = ({ viewer }) => {
   } else {
     return (
       <Rail
-        title="Current Highlights"
+        title="Curators’ Picks"
         subTitle="Works that Artsy curators love"
         getItems={() => {
           return artworks.map((artwork, index) => {
@@ -40,7 +40,7 @@ const StandoutLotsRail: React.FC<StandoutLotsRailProps> = ({ viewer }) => {
                   trackEvent(
                     trackHelpers.clickedArtworkGroup(
                       contextModule,
-                      contextPageOwnerType!,
+                      contextPageOwnerType,
                       artwork.internalID,
                       artwork.slug,
                       index

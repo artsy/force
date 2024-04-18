@@ -9,9 +9,33 @@ export interface ShippingInformationProps {
 }
 
 const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
-  artwork: { shippingOrigin, shippingInfo },
+  artwork: { shippingOrigin, shippingInfo, isUnlisted },
 }) => {
   const { t } = useTranslation()
+
+  if (isUnlisted) {
+    return (
+      <>
+        {shippingOrigin && (
+          <Text variant="sm" color="black60">
+            {t`artworkPage.sidebar.shippingAndTaxes.shipsFrom`} {shippingOrigin}
+          </Text>
+        )}
+
+        <Text variant="xs" color="black60">
+          Shipping and taxes may apply at checkout.{" "}
+          <RouterLink
+            inline
+            to="https://support.artsy.net/s/article/How-are-taxes-customs-VAT-and-import-fees-handled-on-works-listed-with-secure-checkout"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t`artworkPage.sidebar.shippingAndTaxes.taxInformationLearnMore`}
+          </RouterLink>
+        </Text>
+      </>
+    )
+  }
 
   return (
     <>
@@ -26,6 +50,7 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
           {t`artworkPage.sidebar.shippingAndTaxes.taxInformationLearnMore`}
         </RouterLink>
       </Text>
+
       {shippingOrigin && (
         <Text variant="sm" color="black60">
           {t`artworkPage.sidebar.shippingAndTaxes.shipsFrom`} {shippingOrigin}
@@ -46,6 +71,7 @@ export const ArtworkSidebarShippingInformationFragmentContainer = createFragment
   {
     artwork: graphql`
       fragment ArtworkSidebarShippingInformation_artwork on Artwork {
+        isUnlisted
         shippingOrigin
         shippingInfo
       }

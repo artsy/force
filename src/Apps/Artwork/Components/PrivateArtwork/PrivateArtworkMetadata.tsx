@@ -2,14 +2,16 @@ import { graphql, useFragment } from "react-relay"
 import { PrivateArtworkMetadata_artwork$key } from "__generated__/PrivateArtworkMetadata_artwork.graphql"
 import {
   Box,
-  Column,
-  GridColumns,
+  Clickable,
+  Flex,
   HTML,
-  ReadMore,
+  Separator,
   Spacer,
   Text,
 } from "@artsy/palette"
-
+import { useState } from "react"
+import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
+import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 interface PrivateArtworkMetadataProps {
   artwork: PrivateArtworkMetadata_artwork$key
 }
@@ -20,88 +22,105 @@ export const PrivateArtworkMetadata: React.FC<PrivateArtworkMetadataProps> = ({
   const data = useFragment(
     graphql`
       fragment PrivateArtworkMetadata_artwork on Artwork {
-        title
+        conditionDescription {
+          details
+        }
+        provenance(format: HTML)
+        exhibitionHistory(format: HTML)
       }
     `,
     artwork
   )
 
-  // TODO: remove (typechecker)
-  console.log(data)
+  const isFirstItemExpanded = Boolean(
+    data.conditionDescription?.details &&
+      data.provenance &&
+      data.exhibitionHistory
+  )
+
+  const isSecondItemExpanded = Boolean(
+    !data.conditionDescription?.details &&
+      data.provenance &&
+      data.exhibitionHistory
+  )
+
+  const isThirdItemExpanded = Boolean(
+    !data.conditionDescription?.details &&
+      !data.provenance &&
+      data.exhibitionHistory
+  )
 
   return (
-    <GridColumns>
-      <Column span={4}>
-        <MetadataDetailItem title="Condition">
-          <HTML variant="sm">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              lacinia elit non lacus vestibulum, eu imperdiet sapien maximus.
-              Cras vehicula nisl et mollis consequat.
-            </p>
+    <>
+      {data.conditionDescription?.details && (
+        <>
+          <MetadataDetailItem title="Condition" expanded={isFirstItemExpanded}>
+            <HTML variant="sm">{data.conditionDescription?.details}</HTML>
+          </MetadataDetailItem>
 
-            <p>
-              Phasellus arcu purus, faucibus eu urna ac, tempor interdum justo.
-              Interdum et malesuada fames ac ante ipsum primis in faucibus
-            </p>
-          </HTML>
-        </MetadataDetailItem>
-      </Column>
+          <Separator my={2} />
+        </>
+      )}
 
-      <Column span={4}>
-        <MetadataDetailItem title="Provenance">
-          <HTML variant="sm">
-            <ReadMore
-              inlineReadMoreLink={false}
-              content={`
-                  <p>Creation: Untitled_0258 was painted by Davide Balliano in 2021 while he was in Saint-Rémy-de-Provence, France.</p>
-                  <p>Initial Ownership: The painting became the property of his brother Theo Lorem Ipsum in 2022. Lorem Ipsum passed away shortly afterward.</p>
-                  <p>Legacy: Following the death of Lorem Ipsum, the painting changed hands within the family and eventually was owned by Lorem Ipsum’s widow</p>
-                  <p>This work was acquired directly from the artist by the present owner.</p>
-                `}
-              maxChars={200}
-            />
-          </HTML>
-        </MetadataDetailItem>
-      </Column>
+      {data.provenance && (
+        <>
+          <MetadataDetailItem
+            title="Provenance"
+            expanded={isSecondItemExpanded}
+          >
+            <HTML variant="sm" html={data.provenance} />
+          </MetadataDetailItem>
 
-      <Column span={4}>
-        <MetadataDetailItem title="Exhibition History">
-          <HTML variant="sm">
-            <ReadMore
-              inlineReadMoreLink={false}
-              content={`
-                <p>Genesis (2018): Untitled_0258 debuted in a local gallery, marking Balliano's exploration of physical and emotional journeys.</p>
-                <p>Urban Narratives (2019): Featured in a city exhibition, the artwork's blend of urban elements and human experiences drew attention from critics.</p>
-                <p>International Biennale (2020): Selected for a prestigious international biennale themed "Crossroads: Intersections of Culture and Change," earning global recognition.</p>
-              `}
-              maxChars={200}
-            />
-          </HTML>
+          <Separator my={2} />
+        </>
+      )}
+
+      {data.exhibitionHistory && (
+        <MetadataDetailItem
+          title="Exhibition History"
+          expanded={isThirdItemExpanded}
+        >
+          <HTML variant="sm" html={data.exhibitionHistory} />
         </MetadataDetailItem>
-      </Column>
-    </GridColumns>
+      )}
+    </>
   )
 }
 
 interface MetadataDetailItemProps {
   title: string
   children: React.ReactNode
+  expanded?: boolean
 }
 
 const MetadataDetailItem: React.FC<MetadataDetailItemProps> = ({
   title,
   children,
+  expanded = false,
 }) => {
+  const [isExpanded, setIsExpanded] = useState(expanded)
+
   return (
     <Box>
-      <Text variant="sm" fontWeight="bold">
-        {title}
-      </Text>
+      <Clickable onClick={() => setIsExpanded(!isExpanded)} width="100%">
+        <Flex
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+          width="100%"
+        >
+          <Text variant="md">{title}</Text>
+          {isExpanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
+        </Flex>
+      </Clickable>
 
-      <Spacer y={2} />
+      {isExpanded && (
+        <>
+          <Spacer y={2} />
 
-      {children}
+          {children}
+        </>
+      )}
     </Box>
   )
 }

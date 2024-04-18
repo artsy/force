@@ -36,7 +36,7 @@ const { renderWithRelay } = setupTestWrapperTL<
 describe("PartnerOfferCreatedNotification", () => {
   beforeAll(() => {
     ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "onyx_new_notification_page"
+      featureName => featureName === "emerald_partner-offers-to-artwork-page"
     )
   })
 
@@ -60,13 +60,20 @@ describe("PartnerOfferCreatedNotification", () => {
       "src",
       "undefined?quality=80&resize_to=width&src=artwork-image-one&width=600"
     )
-    expect(screen.getByText("US$900")).toBeInTheDocument()
-    expect(screen.getByText("(List price: US$1,000)")).toBeInTheDocument()
+    expect(screen.getByText("$900")).toBeInTheDocument()
+    expect(screen.getByText("(List price: $1,000)")).toBeInTheDocument()
 
     // Continue to purchase button
     expect(screen.getByTestId("partner-offer-artwork-button")).toHaveAttribute(
       "href",
       "/partner-offer/offer-id/checkout"
+    )
+    // View Work button
+    expect(
+      screen.getByTestId("partner-offer-view-artwork-button")
+    ).toHaveAttribute(
+      "href",
+      "/artwork/artwork-one?partner_offer_id=<PartnerOffer-mock-id-1>"
     )
   })
 
@@ -77,8 +84,8 @@ describe("PartnerOfferCreatedNotification", () => {
           notification("2099-01-01T00:00:00+00:00", true, "Please buy this!"),
       })
 
-      expect(screen.getByText("Note from the gallery:")).toBeInTheDocument()
-      expect(screen.getByText("Please buy this!")).toBeInTheDocument()
+      expect(screen.getByText("Note from the gallery")).toBeInTheDocument()
+      expect(screen.getByText('"Please buy this!"')).toBeInTheDocument()
     })
   })
 
@@ -124,8 +131,9 @@ const notification = (
         endAt: endAt,
         isAvailable: isAvailable,
         note: note,
-        priceListedMessage: "US$1,000",
-        priceWithDiscountMessage: "US$900",
+        priceWithDiscount: {
+          display: "$900",
+        },
       },
     },
     offerArtworksConnection: {
@@ -136,6 +144,7 @@ const notification = (
             href: "/artwork/artwork-one",
             title: "Artwork One",
             artistNames: "Artist One",
+            price: "$1,000",
             image: {
               src: "artwork-image-one",
               width: 6720,

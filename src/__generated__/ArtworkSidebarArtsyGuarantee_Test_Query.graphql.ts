@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1babd72a33aa0d0c42c7635a2ba39f0d>>
+ * @generated SignedSource<<dbe12bb3712eb338b820affe67eadb85>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UnlistedArtworkBanner_Test_Query$variables = Record<PropertyKey, never>;
-export type UnlistedArtworkBanner_Test_Query$data = {
-  readonly partner: {
-    readonly " $fragmentSpreads": FragmentRefs<"UnlistedArtworkBanner_partner">;
+export type ArtworkSidebarArtsyGuarantee_Test_Query$variables = Record<PropertyKey, never>;
+export type ArtworkSidebarArtsyGuarantee_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtsyGuarantee_artwork">;
   } | null | undefined;
 };
-export type UnlistedArtworkBanner_Test_Query = {
-  response: UnlistedArtworkBanner_Test_Query$data;
-  variables: UnlistedArtworkBanner_Test_Query$variables;
+export type ArtworkSidebarArtsyGuarantee_Test_Query = {
+  response: ArtworkSidebarArtsyGuarantee_Test_Query$data;
+  variables: ArtworkSidebarArtsyGuarantee_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -26,7 +26,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "example"
+    "value": "josef-albers-homage-to-the-square-85"
   }
 ];
 return {
@@ -34,23 +34,23 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "UnlistedArtworkBanner_Test_Query",
+    "name": "ArtworkSidebarArtsyGuarantee_Test_Query",
     "selections": [
       {
         "alias": null,
         "args": (v0/*: any*/),
-        "concreteType": "Partner",
+        "concreteType": "Artwork",
         "kind": "LinkedField",
-        "name": "partner",
+        "name": "artwork",
         "plural": false,
         "selections": [
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "UnlistedArtworkBanner_partner"
+            "name": "ArtworkSidebarArtsyGuarantee_artwork"
           }
         ],
-        "storageKey": "partner(id:\"example\")"
+        "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ],
     "type": "Query",
@@ -60,21 +60,21 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "UnlistedArtworkBanner_Test_Query",
+    "name": "ArtworkSidebarArtsyGuarantee_Test_Query",
     "selections": [
       {
         "alias": null,
         "args": (v0/*: any*/),
-        "concreteType": "Partner",
+        "concreteType": "Artwork",
         "kind": "LinkedField",
-        "name": "partner",
+        "name": "artwork",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
+            "name": "isUnlisted",
             "storageKey": null
           },
           {
@@ -85,42 +85,42 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "partner(id:\"example\")"
+        "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ]
   },
   "params": {
-    "cacheID": "fb5346259ccd5ba3498049b8a4ff515c",
+    "cacheID": "e1713cf1b62b067824b736a356b20fb5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "partner": {
+        "artwork": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "Partner"
+          "type": "Artwork"
         },
-        "partner.id": {
+        "artwork.id": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "ID"
         },
-        "partner.name": {
+        "artwork.isUnlisted": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
-          "type": "String"
+          "type": "Boolean"
         }
       }
     },
-    "name": "UnlistedArtworkBanner_Test_Query",
+    "name": "ArtworkSidebarArtsyGuarantee_Test_Query",
     "operationKind": "query",
-    "text": "query UnlistedArtworkBanner_Test_Query {\n  partner(id: \"example\") {\n    ...UnlistedArtworkBanner_partner\n    id\n  }\n}\n\nfragment UnlistedArtworkBanner_partner on Partner {\n  name\n}\n"
+    "text": "query ArtworkSidebarArtsyGuarantee_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtsyGuarantee_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtsyGuarantee_artwork on Artwork {\n  isUnlisted\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ac22b7bdd66f1ba167d45345ef06e762";
+(node as any).hash = "6bc6884a47d18a75cd4c2e18ed820cdf";
 
 export default node;

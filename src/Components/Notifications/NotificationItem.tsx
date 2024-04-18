@@ -1,6 +1,5 @@
 import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { extractNodes } from "Utils/extractNodes"
 import { NotificationItem_item$data } from "__generated__/NotificationItem_item.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import styled from "styled-components"
@@ -17,7 +16,6 @@ import {
   ExpiresInTimer,
   shouldDisplayExpiresInTimer,
 } from "Components/Notifications/ExpiresInTimer"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
 import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
 
@@ -30,13 +28,11 @@ interface NotificationItemProps {
 const UNREAD_INDICATOR_SIZE = 8
 
 const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
-  const enableNewActivityPanel = useFeatureFlag("onyx_new_notification_page")
   const { trackEvent } = useTracking()
   const { relayEnvironment } = useSystemContext()
   const {
     state: { currentNotificationId },
   } = useNotificationsContext()
-  const artworks = extractNodes(item.artworksConnection)
   const remainingArtworksCount = item.objectsCount - 4
   const shouldDisplayCounts =
     isArtworksBasedNotification(item.notificationType) &&
@@ -45,10 +41,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
   const markAsRead = async () => {
     // If the notification is opened as a page, we don't need to mark the notification as read
     // because it's already marked as read when the page is opened.
-    if (
-      enableNewActivityPanel &&
-      SUPPORTED_NOTIFICATION_TYPES.includes(item.notificationType)
-    ) {
+    if (SUPPORTED_NOTIFICATION_TYPES.includes(item.notificationType)) {
       return
     }
     if (!relayEnvironment) {
@@ -81,9 +74,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
     })
   }
 
-  const itemUrl = enableNewActivityPanel
-    ? getNotificationUrl(item)
-    : item.targetHref
+  const itemUrl = getNotificationUrl(item)
 
   const subTitle = getNotificationSubTitle(item)
 
@@ -95,103 +86,28 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
         currentNotificationId === item.internalID ? "black5" : "white100"
       }
     >
-      {enableNewActivityPanel ? (
-        <Flex flex={1} flexDirection="column">
-          {!!artworks.length && (
-            <Flex flexDirection="row" alignItems="center" mb={0.5}>
-              <Flex flex={1}>
-                <Join separator={<Spacer x={1} />}>
-                  {artworks.map(artwork => {
-                    const image = artwork.image?.thumb
+      <Flex flex={1} flexDirection="column">
+        {!!item.previewImages.length && (
+          <Flex flexDirection="row" alignItems="center" mb={0.5}>
+            <Flex flex={1}>
+              <Join separator={<Spacer x={1} />}>
+                {item.previewImages.map(image => {
+                  if (!image.url) return null
 
-                    return (
-                      <Image
-                        key={artwork.internalID}
-                        src={image?.src}
-                        srcSet={image?.srcSet}
-                        alt={`Artwork image of ${artwork.title}`}
-                        width={58}
-                        height={58}
-                        lazyLoad
-                      />
-                    )
-                  })}
-                </Join>
-              </Flex>
-
-              {shouldDisplayCounts && (
-                <Text
-                  variant="xs"
-                  color="black60"
-                  aria-label="Remaining artworks count"
-                  ml={1}
-                >
-                  + {remainingArtworksCount}
-                </Text>
-              )}
+                  return (
+                    <Image
+                      key={image.url}
+                      src={image.url}
+                      alt={"Activity artwork image"}
+                      width={58}
+                      height={58}
+                      lazyLoad
+                      placeHolderURL={image.blurhashDataURL ?? undefined}
+                    />
+                  )
+                })}
+              </Join>
             </Flex>
-          )}
-
-          <Text variant="xs" color="blue100">
-            {getNotificationPrelude(item)}
-          </Text>
-
-          <Text fontWeight="bold" variant="sm-display">
-            {item.headline}
-          </Text>
-
-          {!!subTitle && <Text variant="xs">{subTitle}</Text>}
-
-          <Flex flexDirection="row" gap={0.5}>
-            <NotificationTypeLabel item={item} />
-            {shouldDisplayExpiresInTimer(item) && (
-              <ExpiresInTimer
-                expiresAt={item.item?.expiresAt}
-                available={item.item?.available}
-              />
-            )}
-          </Flex>
-        </Flex>
-      ) : (
-        <Flex flex={1} flexDirection="column">
-          <NotificationTypeLabel item={item} />
-
-          <Text variant="sm-display" fontWeight="bold">
-            {item.title}
-          </Text>
-
-          <Flex flexDirection="row" gap={0.5}>
-            {item.notificationType !== "PARTNER_OFFER_CREATED" && (
-              <Text variant="sm-display">{item.message}</Text>
-            )}
-            {shouldDisplayExpiresInTimer(item) && (
-              <ExpiresInTimer
-                expiresAt={item.item?.expiresAt}
-                available={item.item?.available}
-              />
-            )}
-          </Flex>
-
-          <Spacer y={1} />
-
-          <Flex flexDirection="row" alignItems="center">
-            <Join separator={<Spacer x={1} />}>
-              {artworks.map(artwork => {
-                const image = artwork.image?.thumb
-
-                return (
-                  <Image
-                    key={artwork.internalID}
-                    src={image?.src}
-                    srcSet={image?.srcSet}
-                    alt={`Artwork image of ${artwork.title}`}
-                    width={58}
-                    height={58}
-                    lazyLoad
-                  />
-                )
-              })}
-            </Join>
 
             {shouldDisplayCounts && (
               <Text
@@ -204,8 +120,35 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
               </Text>
             )}
           </Flex>
+        )}
+
+        <Text
+          variant="xs"
+          color="blue100"
+          backgroundColor="blue10"
+          px={0.5}
+          alignSelf="flex-start"
+          borderRadius={3}
+        >
+          {getNotificationPrelude(item)}
+        </Text>
+
+        <Text fontWeight="bold" variant="sm-display">
+          {item.headline}
+        </Text>
+
+        {!!subTitle && <Text variant="xs">{subTitle}</Text>}
+
+        <Flex flexDirection="row" gap={0.5}>
+          <NotificationTypeLabel notification={item} />
+          {shouldDisplayExpiresInTimer(item) && (
+            <ExpiresInTimer
+              expiresAt={item.item?.expiresAt}
+              available={item.item?.available}
+            />
+          )}
         </Flex>
-      )}
+      </Flex>
 
       {item.isUnread && (
         <Flex
@@ -230,7 +173,6 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         internalID
         headline
         message
-        publishedAt(format: "RELATIVE")
         targetHref
         isUnread
         notificationType
@@ -241,22 +183,12 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
             expiresAt
           }
         }
-        artworksConnection(first: 4) {
-          totalCount
-          edges {
-            node {
-              internalID
-              title
-              image {
-                thumb: cropped(width: 58, height: 58) {
-                  src
-                  srcSet
-                }
-              }
-            }
-          }
+        previewImages(size: 4) {
+          blurhashDataURL
+          url(version: "thumbnail")
         }
         title
+        ...NotificationTypeLabel_notification
       }
     `,
   }
@@ -291,7 +223,7 @@ const getNotificationUrl = (notification: NotificationItem_item$data) => {
 const getNotificationPrelude = (item: NotificationItem_item$data) => {
   switch (item.notificationType) {
     case "PARTNER_OFFER_CREATED":
-      return "Limited Time Offer"
+      return "Limited-Time Offer"
     default:
       return null
   }

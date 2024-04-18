@@ -7,27 +7,23 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     .required(
       "Please select an artist from the list. Other artists cannot be submitted due to limited demand."
     ),
-  year: yup.string().required().trim(),
-  title: yup.string().required().trim(),
-  materials: yup.string().required().trim(),
+  year: yup.string().required("Please enter the year").trim(),
+  title: yup.string().required("Please enter the title").trim(),
+  materials: yup.string().required("Please enter materials").trim(),
   rarity: yup
     .string()
-    .required()
-    .test(
-      "isDefault",
-      "Rarity field not selected",
-      rarity => rarity !== "default"
-    ),
+    .required("Please select a rarity")
+    .test("isDefault", "", rarity => rarity !== "default"),
   editionNumber: yup.string().when("rarity", {
     is: "limited edition",
-    then: yup.string().required().trim(),
+    then: yup.string().required("Please enter the edition number").trim(),
   }),
   editionSize: yup.string().when("rarity", {
     is: "limited edition",
-    then: yup.string().required().trim(),
+    then: yup.string().required("Please enter the edition size").trim(),
   }),
-  height: yup.string().required().trim(),
-  width: yup.string().required().trim(),
+  height: yup.string().required("Please enter the height").trim(),
+  width: yup.string().required("Please enter the width").trim(),
   depth: yup
     .string()
     .transform((value, originalValue) =>
@@ -35,7 +31,7 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     )
     .trim(),
   units: yup.string().required(),
-  provenance: yup.string().required().trim(),
+  provenance: yup.string().required("Please enter the provenance").trim(),
   location: yup
     .object()
     .shape({
@@ -47,6 +43,10 @@ export const artworkDetailsValidationSchema = yup.object().shape({
       coordinates: yup.array(yup.number()),
     })
     .required(),
+  category: yup
+    .string()
+    .required("Please select a medium")
+    .test("isDefault", "", category => category !== "default"),
 })
 
 export const uploadPhotosValidationSchema = yup.object().shape({

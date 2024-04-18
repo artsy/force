@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<307da507afc65f4c57ed047ab82916f3>>
+ * @generated SignedSource<<8923fdd8119c3952b27a49d5f0a078b4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,35 +51,27 @@ v2 = {
   "name": "internalID",
   "storageKey": null
 },
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "totalCount",
-  "storageKey": null
-},
-v4 = [
-  (v3/*: any*/)
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "totalCount",
+    "storageKey": null
+  }
 ],
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
   "storageKey": null
 };
 return {
@@ -168,10 +160,10 @@ return {
                         "kind": "LinkedField",
                         "name": "artworksConnection",
                         "plural": false,
-                        "selections": (v4/*: any*/),
+                        "selections": (v3/*: any*/),
                         "storageKey": null
                       },
-                      (v5/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -185,19 +177,6 @@ return {
                         "kind": "ScalarField",
                         "name": "message",
                         "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "format",
-                            "value": "RELATIVE"
-                          }
-                        ],
-                        "kind": "ScalarField",
-                        "name": "publishedAt",
-                        "storageKey": "publishedAt(format:\"RELATIVE\")"
                       },
                       {
                         "alias": null,
@@ -228,7 +207,7 @@ return {
                         "name": "item",
                         "plural": false,
                         "selections": [
-                          (v6/*: any*/),
+                          (v5/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
@@ -266,7 +245,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "viewingRoomsConnection",
                                 "plural": false,
-                                "selections": (v4/*: any*/),
+                                "selections": (v3/*: any*/),
                                 "storageKey": "viewingRoomsConnection(first:1)"
                               }
                             ],
@@ -285,7 +264,7 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v2/*: any*/),
-                                  (v5/*: any*/)
+                                  (v4/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -301,93 +280,59 @@ return {
                         "args": [
                           {
                             "kind": "Literal",
-                            "name": "first",
+                            "name": "size",
                             "value": 4
                           }
                         ],
-                        "concreteType": "ArtworkConnection",
+                        "concreteType": "Image",
                         "kind": "LinkedField",
-                        "name": "artworksConnection",
-                        "plural": false,
+                        "name": "previewImages",
+                        "plural": true,
                         "selections": [
-                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
-                            "concreteType": "ArtworkEdge",
-                            "kind": "LinkedField",
-                            "name": "edges",
-                            "plural": true,
-                            "selections": [
+                            "kind": "ScalarField",
+                            "name": "blurhashDataURL",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": [
                               {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Artwork",
-                                "kind": "LinkedField",
-                                "name": "node",
-                                "plural": false,
-                                "selections": [
-                                  (v2/*: any*/),
-                                  (v7/*: any*/),
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "concreteType": "Image",
-                                    "kind": "LinkedField",
-                                    "name": "image",
-                                    "plural": false,
-                                    "selections": [
-                                      {
-                                        "alias": "thumb",
-                                        "args": [
-                                          {
-                                            "kind": "Literal",
-                                            "name": "height",
-                                            "value": 58
-                                          },
-                                          {
-                                            "kind": "Literal",
-                                            "name": "width",
-                                            "value": 58
-                                          }
-                                        ],
-                                        "concreteType": "CroppedImageUrl",
-                                        "kind": "LinkedField",
-                                        "name": "cropped",
-                                        "plural": false,
-                                        "selections": [
-                                          {
-                                            "alias": null,
-                                            "args": null,
-                                            "kind": "ScalarField",
-                                            "name": "src",
-                                            "storageKey": null
-                                          },
-                                          {
-                                            "alias": null,
-                                            "args": null,
-                                            "kind": "ScalarField",
-                                            "name": "srcSet",
-                                            "storageKey": null
-                                          }
-                                        ],
-                                        "storageKey": "cropped(height:58,width:58)"
-                                      }
-                                    ],
-                                    "storageKey": null
-                                  },
-                                  (v5/*: any*/)
-                                ],
-                                "storageKey": null
+                                "kind": "Literal",
+                                "name": "version",
+                                "value": "thumbnail"
                               }
                             ],
-                            "storageKey": null
+                            "kind": "ScalarField",
+                            "name": "url",
+                            "storageKey": "url(version:\"thumbnail\")"
                           }
                         ],
-                        "storageKey": "artworksConnection(first:4)"
+                        "storageKey": "previewImages(size:4)"
                       },
-                      (v7/*: any*/),
-                      (v6/*: any*/)
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "title",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "RELATIVE"
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"RELATIVE\")"
+                      },
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -444,12 +389,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "69ed2653e1281e58dbcd320d167733c5",
+    "cacheID": "517093fa5addc7338ca1f70992ff4270",
     "id": null,
     "metadata": {},
     "name": "NotificationsListQuery",
     "operationKind": "query",
-    "text": "query NotificationsListQuery(\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_1OKkmt\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  title\n}\n\nfragment NotificationsList_viewer_1OKkmt on Viewer {\n  notifications: notificationsConnection(first: 10, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        item {\n          __typename\n          ... on ViewingRoomPublishedNotificationItem {\n            viewingRoomsConnection(first: 1) {\n              totalCount\n            }\n          }\n          ... on ArticleFeaturedArtistNotificationItem {\n            article {\n              internalID\n              id\n            }\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsListQuery(\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_1OKkmt\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    blurhashDataURL\n    url(version: \"thumbnail\")\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment NotificationsList_viewer_1OKkmt on Viewer {\n  notifications: notificationsConnection(first: 10, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        item {\n          __typename\n          ... on ViewingRoomPublishedNotificationItem {\n            viewingRoomsConnection(first: 1) {\n              totalCount\n            }\n          }\n          ... on ArticleFeaturedArtistNotificationItem {\n            article {\n              internalID\n              id\n            }\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

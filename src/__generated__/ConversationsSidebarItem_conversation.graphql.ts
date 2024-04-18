@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3483b6ad38919481b6f18e7110cd1f0a>>
+ * @generated SignedSource<<6fc120e7dbd8b8459437e2689827b9db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,7 @@ export type ConversationsSidebarItem_conversation$data = {
       readonly image: {
         readonly url: string;
       };
+      readonly isUnlisted: boolean;
       readonly title: string;
     } | {
       // This will never be '%other', but we need some
@@ -249,6 +250,13 @@ return {
                     "storageKey": null
                   },
                   {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "isUnlisted",
+                    "storageKey": null
+                  },
+                  {
                     "kind": "RequiredField",
                     "field": {
                       "alias": null,
@@ -326,6 +334,6 @@ return {
 };
 })();
 
-(node as any).hash = "8f9a8564f9bbee0ccebf279596eecd6c";
+(node as any).hash = "b76da419554ef825d77d83bbb8b4d92f";
 
 export default node;

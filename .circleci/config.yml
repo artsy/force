@@ -5,13 +5,13 @@ orbs:
   aws-s3: circleci/aws-s3@2.0.0
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
-  slack: circleci/slack@4.13.1
+  slack: circleci/slack@4.13.2
   yarn: artsy/yarn@6.5.0
 
 jobs:
   validate_production_schema:
     docker:
-      - image: cimg/node:18.19.1
+      - image: cimg/node:18.20.2
     parameters:
       # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
       dev:
@@ -242,13 +242,17 @@ not_staging_or_release: &not_staging_or_release
         - release
 
 only_main: &only_main
-  context: hokusai
+  context:
+    - hokusai
+    - slack-orb
   filters:
     branches:
       only: main
 
 only_release: &only_release
-  context: hokusai
+  context:
+    - hokusai
+    - slack-orb
   filters:
     branches:
       only: release

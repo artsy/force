@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d0f788abc05da623f20eaa19339325b>>
+ * @generated SignedSource<<be6b3ff05cd7e2b6c1131cb0890677bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -353,7 +353,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3983c4ae986fba6e32451d7e8fe3c5ff",
+    "cacheID": "6c4fdf4bc4efbcb35676e8da0f6879b3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -456,7 +456,7 @@ return {
     },
     "name": "ViewingRoomPublishedNotification_test_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomPublishedNotification_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...ViewingRoomPublishedNotification_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationViewingRoom_viewingRoom on ViewingRoom {\n  title\n  href\n  introStatement\n  image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n\nfragment NotificationViewingRoomsList_viewingRoomsConnection on ViewingRoomsConnection {\n  edges {\n    node {\n      ...NotificationViewingRoom_viewingRoom\n      internalID\n    }\n  }\n}\n\nfragment ViewingRoomPublishedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ViewingRoomPublishedNotificationItem {\n      partner {\n        name\n        href\n        profile {\n          internalID\n          id\n        }\n        id\n      }\n      viewingRoomsConnection(first: 10) {\n        ...NotificationViewingRoomsList_viewingRoomsConnection\n      }\n    }\n  }\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n"
+    "text": "query ViewingRoomPublishedNotification_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...ViewingRoomPublishedNotification_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment NotificationViewingRoom_viewingRoom on ViewingRoom {\n  title\n  href\n  introStatement\n  image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n\nfragment NotificationViewingRoomsList_viewingRoomsConnection on ViewingRoomsConnection {\n  edges {\n    node {\n      ...NotificationViewingRoom_viewingRoom\n      internalID\n    }\n  }\n}\n\nfragment ViewingRoomPublishedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ViewingRoomPublishedNotificationItem {\n      partner {\n        name\n        href\n        profile {\n          internalID\n          id\n        }\n        id\n      }\n      viewingRoomsConnection(first: 10) {\n        ...NotificationViewingRoomsList_viewingRoomsConnection\n      }\n    }\n  }\n  notificationType\n  ...NotificationTypeLabel_notification\n}\n"
   }
 };
 })();

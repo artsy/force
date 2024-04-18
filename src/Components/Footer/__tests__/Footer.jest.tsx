@@ -3,6 +3,9 @@ import { mount } from "enzyme"
 import { Footer } from "Components/Footer/Footer"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
 import { useRouter } from "System/Router/useRouter"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { fetchQuery } from "react-relay"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -10,7 +13,17 @@ jest.mock("System/Router/useRouter", () => ({
   }),
 }))
 
+jest.mock("System/useFeatureFlag")
+
+jest.mock("react-relay", () => ({
+  fetchQuery: jest.fn(() => ({
+    toPromise: jest.fn().mockResolvedValue(false),
+  })),
+}))
+
 describe("Footer", () => {
+  const mockFetchQuery = fetchQuery as jest.Mock
+
   const getWrapper = (breakpoint: Breakpoint) =>
     mount(
       <MockBoot breakpoint={breakpoint}>
@@ -74,6 +87,75 @@ describe("Footer", () => {
       const wrapper = getWrapper("lg")
       expect(wrapper.text()).not.toContain("Meet your new art advisor.")
     })
+
+    it("hides the app download banner if the artwork is unlisted", async () => {
+      mockFetchQuery.mockImplementation(() => {
+        return {
+          toPromise: jest
+            .fn()
+            .mockResolvedValue({ artwork: { isUnlisted: true } }),
+        }
+      })
+
+      const wrapper = getWrapper("lg")
+      await flushPromiseQueue()
+      expect(wrapper.text()).not.toContain("Meet your new art advisor.")
+    })
+
+    it("renders footer links", () => {
+      const wrapper = getWrapper("lg")
+
+      expect(wrapper.text()).toContain("Terms of Use")
+      expect(wrapper.html()).toContain("/terms")
+
+      expect(wrapper.text()).toContain("Privacy Policy")
+      expect(wrapper.html()).toContain("/privacy")
+
+      expect(wrapper.text()).toContain("Security")
+      expect(wrapper.html()).toContain("/security")
+
+      expect(wrapper.text()).toContain("Conditions of Sale")
+      expect(wrapper.html()).toContain("/conditions-of-sale")
+
+      expect(wrapper.text()).toContain("ACA Seller’s Agreement")
+      expect(wrapper.html()).toContain(
+        "/page/artsy-curated-auctions-listing-agreement"
+      )
+
+      expect(wrapper.text()).toContain("Buyer Guarantee")
+      expect(wrapper.html()).toContain("/buyer-guarantee")
+    })
+
+    describe("when new footer links are enabled", () => {
+      beforeAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(
+          (f: string) => f === "diamond_new-terms-and-conditions"
+        )
+      })
+
+      afterAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockReset()
+      })
+
+      it("renders the new footer links", () => {
+        const wrapper = getWrapper("lg")
+
+        expect(wrapper.text()).toContain("Terms and Conditions")
+        expect(wrapper.html()).toContain("/terms")
+
+        expect(wrapper.text()).toContain("Auction Supplement")
+        expect(wrapper.html()).toContain("/supplemental-cos")
+
+        expect(wrapper.text()).toContain("Buyer Guarantee")
+        expect(wrapper.html()).toContain("/buyer-guarantee")
+
+        expect(wrapper.text()).toContain("Privacy Policy")
+        expect(wrapper.html()).toContain("/privacy")
+
+        expect(wrapper.text()).toContain("Security")
+        expect(wrapper.html()).toContain("/security")
+      })
+    })
   })
 
   describe("small screen size", () => {
@@ -85,6 +167,61 @@ describe("Footer", () => {
     it("renders the CCPA request button", () => {
       const wrapper = getWrapper("xs")
       expect(wrapper.find("button").length).toEqual(1)
+    })
+
+    it("renders footer links", () => {
+      const wrapper = getWrapper("xs")
+
+      expect(wrapper.text()).toContain("Terms of Use")
+      expect(wrapper.html()).toContain("/terms")
+
+      expect(wrapper.text()).toContain("Privacy Policy")
+      expect(wrapper.html()).toContain("/privacy")
+
+      expect(wrapper.text()).toContain("Security")
+      expect(wrapper.html()).toContain("/security")
+
+      expect(wrapper.text()).toContain("Conditions of Sale")
+      expect(wrapper.html()).toContain("/conditions-of-sale")
+
+      expect(wrapper.text()).toContain("ACA Seller’s Agreement")
+      expect(wrapper.html()).toContain(
+        "/page/artsy-curated-auctions-listing-agreement"
+      )
+
+      expect(wrapper.text()).toContain("Buyer Guarantee")
+      expect(wrapper.html()).toContain("/buyer-guarantee")
+    })
+
+    describe("when diamond_new-terms-and-conditions is enabled", () => {
+      beforeAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(
+          (f: string) => f === "diamond_new-terms-and-conditions"
+        )
+      })
+
+      afterAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockReset()
+      })
+
+      it("renders the new footer links", () => {
+        const wrapper = getWrapper("xs")
+
+        expect(wrapper.text()).toContain("Terms and Conditions")
+        expect(wrapper.html()).toContain("/terms")
+
+        expect(wrapper.text()).toContain("Auction Supplement")
+        expect(wrapper.html()).toContain("/supplemental-cos")
+
+        expect(wrapper.text()).toContain("Buyer Guarantee")
+        expect(wrapper.html()).toContain("/buyer-guarantee")
+
+        expect(wrapper.text()).toContain("Privacy Policy")
+        expect(wrapper.html()).toContain("/privacy")
+
+        expect(wrapper.text()).toContain("Security")
+        expect(wrapper.html()).toContain("/security")
+      })
     })
   })
 })

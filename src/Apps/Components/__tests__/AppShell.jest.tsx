@@ -18,6 +18,11 @@ jest.mock("react-tracking", () => ({
 }))
 
 jest.mock("Utils/Hooks/useAuthValidation")
+jest.mock("Utils/Hooks/useDarkModeToggle")
+
+jest.mock("Components/Footer/FooterDownloadAppBanner", () => ({
+  FooterDownloadAppBanner: () => "Meet your new art advisor.",
+}))
 
 describe("AppShell", () => {
   it("renders a Footer", async () => {

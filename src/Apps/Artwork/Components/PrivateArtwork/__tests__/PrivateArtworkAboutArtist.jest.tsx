@@ -5,11 +5,6 @@ import { graphql } from "react-relay"
 import { PrivateArtworkAboutArtistQuery } from "__generated__/PrivateArtworkAboutArtistQuery.graphql"
 
 jest.unmock("react-relay")
-jest.mock("System/useFeatureFlag", () => {
-  return {
-    useFeatureFlag: jest.fn().mockReturnValue(true),
-  }
-})
 
 describe("ArtworkSidebarPrivateArtwork", () => {
   const { renderWithRelay } = setupTestWrapperTL<
@@ -25,53 +20,20 @@ describe("ArtworkSidebarPrivateArtwork", () => {
     `,
   })
 
-  it("displays artist name", async () => {
+  it("renders correctly", () => {
     renderWithRelay({
       Artist: () => {
         return {
           name: "Test Artist Name",
-        }
-      },
-      Artwork: () => {
-        return {
-          visibilityLevel: "UNLISTED",
+          partnerBiographyBlurb: { text: "Test Artist Biography" },
+          formattedNationalityAndBirthday: "USA, 1990",
         }
       },
     })
-    expect(await screen.findByText("Test Artist Name")).toBeInTheDocument()
-  })
 
-  it("displays artist bio when artist bio is present", () => {
-    renderWithRelay({
-      Artist: () => {
-        return {
-          biographyBlurb: { text: "Test Artist Biography" },
-        }
-      },
-      Artwork: () => {
-        return {
-          visibilityLevel: "UNLISTED",
-        }
-      },
-    })
-    const biographyElement = screen.queryByText("Test Artist Biography")
-    expect(biographyElement).toBeInTheDocument()
-  })
-
-  it("does not display artist bio when artist bio is not present", async () => {
-    renderWithRelay({
-      Artist: () => {
-        return {
-          biographyBlurb: null,
-        }
-      },
-      Artwork: () => {
-        return {
-          visibilityLevel: "UNLISTED",
-        }
-      },
-    })
-    const biographyElement = screen.queryByText("Test Artist Biography")
-    expect(biographyElement).not.toBeInTheDocument()
+    expect(screen.getByText("Test Artist Name")).toBeInTheDocument()
+    expect(screen.getByText("USA, 1990")).toBeInTheDocument()
+    expect(screen.getByText("Follow")).toBeInTheDocument()
+    expect(screen.queryByText("Test Artist Biography")).toBeInTheDocument()
   })
 })

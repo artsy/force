@@ -269,12 +269,14 @@ export const Details: React.FC<DetailsProps> = ({
           </Join>
         </Flex>
       )}
+
       <Flex flexDirection="row" justifyContent="space-between">
         {!hideArtistName && (
           <ArtistLine showSaveButton={showSaveButton} {...rest} />
         )}
         {renderSaveButtonComponent()}
       </Flex>
+
       <Box position="relative">
         <TitleLine {...rest} />
         {showHighDemandInfo && <HighDemandInfo />}
@@ -283,6 +285,7 @@ export const Details: React.FC<DetailsProps> = ({
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
         )}
       </Box>
+
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
     </Box>
   )

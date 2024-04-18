@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f7cc0c384190587f14d454fb8b96c265>>
+ * @generated SignedSource<<0736dfcdc6e465f5f5cc75cf7358ec87>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,6 +28,7 @@ export type MyCollectionArtwork_artwork$data = {
     readonly displayText: string | null | undefined;
   } | null | undefined;
   readonly hasMarketPriceInsights: boolean | null | undefined;
+  readonly hasPriceEstimateRequest: boolean | null | undefined;
   readonly internalID: string;
   readonly slug: string;
   readonly submissionId: string | null | undefined;
@@ -105,6 +106,13 @@ return {
       "name": "comparableAuctionResults",
       "plural": false,
       "selections": (v0/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasPriceEstimateRequest",
       "storageKey": null
     },
     {
@@ -198,6 +206,6 @@ return {
 };
 })();
 
-(node as any).hash = "73403796b1dc17d77055621b071a2222";
+(node as any).hash = "ee1608da0017018b370ddc78a896a5be";
 
 export default node;

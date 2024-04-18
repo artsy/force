@@ -7,9 +7,12 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { FC } from "react"
 
 export const AuthDialogSignUpPlaceholder: FC = () => {
+  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
+
   return (
     <Skeleton>
       <Join separator={<Spacer y={2} />}>
@@ -42,10 +45,14 @@ export const AuthDialogSignUpPlaceholder: FC = () => {
           Already have an account? Log in.
         </SkeletonText>
 
-        <SkeletonText variant="xs" textAlign="center">
-          By clicking Sign Up or Continue with Apple, Google, or Facebook, you
-          agree to Artsy’s Terms of Use and Privacy Policy and to receiving
-          emails from Artsy.
+        <SkeletonText
+          variant="xs"
+          textAlign="center"
+          data-testid="skeleton-disclaimer"
+        >
+          {showNewDisclaimer
+            ? "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
+            : "By clicking Sign Up or Continue with Apple, Google, or Facebook, you agree to Artsy’s Terms of Use and Privacy Policy and to receiving emails from Artsy."}
         </SkeletonText>
 
         <SkeletonText variant="xs" textAlign="center">

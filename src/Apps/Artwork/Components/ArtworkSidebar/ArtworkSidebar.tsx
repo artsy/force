@@ -16,7 +16,7 @@ import { useState } from "react"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import { ArtworkSidebarLinksFragmentContainer } from "./ArtworkSidebarLinks"
-import { ArtworkSidebarCommercialButtonsFragmentContainer } from "./ArtworkSidebarCommercialButtons"
+import { ArtworkSidebarCommercialButtons } from "./ArtworkSidebarCommercialButtons"
 import { ArtworkSidebarEstimatedValueFragmentContainer } from "./ArtworkSidebarEstimatedValue"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuctionTimer"
@@ -67,8 +67,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
     "amber_artwork_visibility_unlisted"
   )
 
-  const isPrivateArtwork =
-    privateArtworksEnabled && artwork?.visibilityLevel == "UNLISTED"
+  const isUnlisted = privateArtworksEnabled && artwork?.isUnlisted
 
   const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
 
@@ -88,6 +87,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const { hasEnded } = useTimer(timerEndAt as string, startAt as string)
 
   const shouldHideDetailsCreateAlertCTA =
+    isUnlisted ||
     !isEligibleToCreateAlert ||
     (isInAuction && hasEnded) ||
     (isInAuction && lotIsClosed(sale, saleArtwork)) ||
@@ -112,37 +112,78 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       <ArtworkSidebarDetailsFragmentContainer artwork={artwork} />
 
-      {isPrivateArtwork && <ArtworkSidebarPrivateArtwork artwork={artwork} />}
-
-      {isInAuction ? (
+      {!isUnlisted && (
         <>
-          <Separator />
+          {isInAuction ? (
+            <>
+              <Separator />
+
+              <Spacer y={2} />
+
+              <ArtworkSidebarEstimatedValueFragmentContainer
+                artwork={artwork}
+              />
+
+              <Join separator={<Spacer y={2} />}>
+                {hasEnded ? (
+                  <ArtworkSidebarBiddingClosedMessageFragmentContainer
+                    artwork={artwork}
+                  />
+                ) : (
+                  <ArtworkSidebarAuctionPollingRefetchContainer
+                    artwork={artwork}
+                    me={me}
+                  />
+                )}
+              </Join>
+
+              {!hasEnded && (
+                <ArtworkSidebarAuctionTimerFragmentContainer
+                  artwork={artwork}
+                />
+              )}
+
+              <Spacer y={2} />
+            </>
+          ) : (
+            <ArtworkSidebarCommercialButtons artwork={artwork} me={me} />
+          )}
+        </>
+      )}
+
+      {isUnlisted && (
+        <>
+          <Spacer y={1} />
+
+          <ArtworkSidebarCommercialButtons
+            artwork={artwork}
+            me={me}
+            showPrice={true}
+            showButtonActions={false}
+          />
 
           <Spacer y={2} />
 
-          <ArtworkSidebarEstimatedValueFragmentContainer artwork={artwork} />
+          <ArtworkSidebarShippingInformationFragmentContainer
+            artwork={artwork}
+          />
 
-          <Join separator={<Spacer y={2} />}>
-            {hasEnded ? (
-              <ArtworkSidebarBiddingClosedMessageFragmentContainer
-                artwork={artwork}
-              />
-            ) : (
-              <ArtworkSidebarAuctionPollingRefetchContainer
-                artwork={artwork}
-                me={me}
-              />
-            )}
-          </Join>
+          <Separator borderWidth={1} my={4} />
 
-          {!hasEnded && (
-            <ArtworkSidebarAuctionTimerFragmentContainer artwork={artwork} />
-          )}
+          <ArtworkSidebarPrivateArtwork artwork={artwork} />
+          <Spacer y={2} />
+
+          <ArtworkSidebarCommercialButtons
+            artwork={artwork}
+            me={me}
+            showPrice={false}
+            showButtonActions={true}
+          />
+
+          <ArtworkSidebarArtsyGuarantee artwork={artwork} />
 
           <Spacer y={2} />
         </>
-      ) : (
-        <ArtworkSidebarCommercialButtonsFragmentContainer artwork={artwork} />
       )}
 
       {showTimedSaleTimer && (
@@ -152,7 +193,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         </>
       )}
 
-      {!isSold && artworkEcommerceAvailable && (
+      {!isUnlisted && !isSold && artworkEcommerceAvailable && (
         <>
           <SidebarExpandable
             label={t`artworkPage.sidebar.shippingAndTaxes.expandableLabel`}
@@ -166,12 +207,12 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         </>
       )}
 
-      {!!isEligibleForArtsyGuarantee && (
+      {!isUnlisted && !!isEligibleForArtsyGuarantee && (
         <>
           <SidebarExpandable
             label={t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}
           >
-            <ArtworkSidebarArtsyGuarantee />
+            <ArtworkSidebarArtsyGuarantee artwork={artwork} />
           </SidebarExpandable>
 
           <Spacer y={1} />
@@ -216,6 +257,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarAuctionTimer_artwork
         ...ArtworkSidebarAuctionInfoPolling_artwork
         ...ArtworkSidebarPrivateArtwork_artwork
+        ...ArtworkSidebarArtsyGuarantee_artwork
 
         slug
         isSold
@@ -245,12 +287,14 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         artists {
           internalID
         }
-        visibilityLevel
+        isUnlisted
       }
     `,
     me: graphql`
-      fragment ArtworkSidebar_me on Me {
+      fragment ArtworkSidebar_me on Me
+        @argumentDefinitions(artworkID: { type: "String!" }) {
         ...ArtworkSidebarAuctionInfoPolling_me
+        ...ArtworkSidebarCommercialButtons_me @arguments(artworkID: $artworkID)
       }
     `,
   }

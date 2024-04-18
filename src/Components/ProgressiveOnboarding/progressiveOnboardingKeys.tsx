@@ -12,6 +12,7 @@ export const PROGRESSIVE_ONBOARDING = {
   saveFind: "save-find",
   saveHighlight: "save-highlight",
   saveTitle: "save-title",
+  saveOfferSettings: "save-offer-settings",
 
   // Alerts
   alertCreate: "alert-create",
@@ -36,6 +37,7 @@ export const PROGRESSIVE_ONBOARDING_SAVE_CHAIN = [
   PROGRESSIVE_ONBOARDING.saveFind,
   PROGRESSIVE_ONBOARDING.saveHighlight,
   PROGRESSIVE_ONBOARDING.saveTitle,
+  PROGRESSIVE_ONBOARDING.saveOfferSettings,
 ] as const
 
 export const PROGRESSIVE_ONBOARDING_KEYS = Object.values(PROGRESSIVE_ONBOARDING)

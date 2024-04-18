@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd8a8da8d3abb740ea0bc84070cd0f97>>
+ * @generated SignedSource<<7d796811d43adb6324835c92a0a7326f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrivateArtworkAboutWork_artwork$data = {
-  readonly additionalInformation: string | null | undefined;
+  readonly additionalInformationHTML: string | null | undefined;
   readonly " $fragmentType": "PrivateArtworkAboutWork_artwork";
 };
 export type PrivateArtworkAboutWork_artwork$key = {
@@ -26,17 +26,23 @@ const node: ReaderFragment = {
   "name": "PrivateArtworkAboutWork_artwork",
   "selections": [
     {
-      "alias": null,
-      "args": null,
+      "alias": "additionalInformationHTML",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
       "kind": "ScalarField",
       "name": "additionalInformation",
-      "storageKey": null
+      "storageKey": "additionalInformation(format:\"HTML\")"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "5ac4a7655d5912c1ea8c18f452b762be";
+(node as any).hash = "e3532607652ba56989bc78f2e2e6d223";
 
 export default node;

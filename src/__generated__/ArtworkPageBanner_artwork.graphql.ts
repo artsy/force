@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3de40b46184d475a4df7f286d13837ac>>
+ * @generated SignedSource<<7606d7b9eef6f975af1c0b501d787a9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkPageBanner_artwork$data = {
-  readonly partner: {
-    readonly __typename: "Partner";
-    readonly " $fragmentSpreads": FragmentRefs<"UnlistedArtworkBanner_partner">;
-  } | null | undefined;
+  readonly isPurchasable: boolean | null | undefined;
   readonly published: boolean;
   readonly sale: {
     readonly __typename: "Sale";
@@ -29,15 +26,7 @@ export type ArtworkPageBanner_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkPageBanner_artwork">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -60,18 +49,8 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Partner",
-      "kind": "LinkedField",
-      "name": "partner",
-      "plural": false,
-      "selections": [
-        (v0/*: any*/),
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "UnlistedArtworkBanner_partner"
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "isPurchasable",
       "storageKey": null
     },
     {
@@ -82,7 +61,13 @@ return {
       "name": "sale",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        },
         {
           "args": null,
           "kind": "FragmentSpread",
@@ -95,8 +80,7 @@ return {
   "type": "Artwork",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "a6c0f1ff746a06381740e1fe70472ae0";
+(node as any).hash = "9697b56e2f0bc36b278313c4cb4f8c61";
 
 export default node;

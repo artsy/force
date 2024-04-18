@@ -21,21 +21,18 @@ interface ArtistArtworkFiltersProps {}
 
 export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props => {
   const { user } = useSystemContext()
-  const isArtistSeriesFilterEnabled = useFeatureFlag(
-    "onyx_enable-artist-series-filter"
-  )
   const isAvailabilityFilterEnabled = useFeatureFlag("onyx_availability-filter")
 
   return (
     <Join separator={<Spacer y={4} />}>
       <KeywordFilter />
-      {isAvailabilityFilterEnabled && <AvailabilityFilter />}
       <ArtistsFilter user={user} expanded />
       <AttributionClassFilter expanded />
       <MediumFilter expanded />
       <PriceRangeFilter expanded />
-      {isArtistSeriesFilterEnabled && <ArtistSeriesFilter expanded />}
+      <ArtistSeriesFilter expanded />
       <SizeFilter expanded />
+      {isAvailabilityFilterEnabled && <AvailabilityFilter />}
       <WaysToBuyFilter expanded />
       <MaterialsFilter />
       <ArtistNationalityFilter />

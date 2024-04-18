@@ -3,7 +3,6 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("System/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
@@ -32,12 +31,6 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
 })
 
 describe("NotificationItem", () => {
-  beforeAll(() => {
-    ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "onyx_new_notification_page"
-    )
-  })
-
   it("should render headline", () => {
     renderWithRelay({
       Notification: () => notification,
@@ -69,9 +62,6 @@ describe("NotificationItem", () => {
         Notification: () => ({
           ...notification,
           objectsCount: 10,
-          artworksConnection: {
-            ...notification.artworksConnection,
-          },
         }),
       })
 
@@ -154,57 +144,6 @@ describe("NotificationItem", () => {
   })
 })
 
-const artworks = [
-  {
-    node: {
-      internalID: "artwork-id-one",
-      title: "artwork one",
-      image: {
-        thumb: {
-          src: "artwork-image-one",
-          srcSet: "artwork-image-one",
-        },
-      },
-    },
-  },
-  {
-    node: {
-      internalID: "artwork-id-two",
-      title: "artwork two",
-      image: {
-        thumb: {
-          src: "artwork-image-two",
-          srcSet: "artwork-image-two",
-        },
-      },
-    },
-  },
-  {
-    node: {
-      internalID: "artwork-id-three",
-      title: "artwork three",
-      image: {
-        thumb: {
-          src: "artwork-image-three",
-          srcSet: "artwork-image-three",
-        },
-      },
-    },
-  },
-  {
-    node: {
-      internalID: "artwork-id-four",
-      title: "artwork four",
-      image: {
-        thumb: {
-          src: "artwork-image-four",
-          srcSet: "artwork-image-four",
-        },
-      },
-    },
-  },
-]
-
 const notification = {
   title: "Notification Title",
   message: "Notification Message",
@@ -213,7 +152,18 @@ const notification = {
   isUnread: false,
   notificationType: "ARTWORK_PUBLISHED",
   objectsCount: 0,
-  artworksConnection: {
-    edges: artworks,
-  },
+  previewImages: [
+    {
+      url: "artwork-image-one",
+    },
+    {
+      url: "artwork-image-two",
+    },
+    {
+      url: "artwork-image-three",
+    },
+    {
+      url: "artwork-image-four",
+    },
+  ],
 }

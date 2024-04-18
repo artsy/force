@@ -23,6 +23,8 @@ import {
   acceptOfferInsufficientInventoryFailure,
   acceptOfferWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { RouterLink } from "System/Router/RouterLink"
 
 jest.unmock("react-relay")
 
@@ -30,6 +32,7 @@ jest.mock("Utils/getCurrentTimeAsIsoString")
 jest.mock("react-tracking")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
+jest.mock("System/useFeatureFlag")
 
 jest.mock("@stripe/stripe-js", () => {
   let mock: ReturnType<typeof mockStripe> | null = null
@@ -166,6 +169,35 @@ describe("Accept seller offer", () => {
       expect(page.conditionsOfSaleDisclaimer.text()).toMatchInlineSnapshot(
         `"By clicking Submit, I agree to Artsy’s Conditions of Sale."`
       )
+      expect(
+        page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
+      ).toEqual("/conditions-of-sale")
+    })
+
+    describe("when the new disclaimer is enabled", () => {
+      beforeAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(
+          (f: string) => f === "diamond_new-terms-and-conditions"
+        )
+      })
+
+      afterAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockReset()
+      })
+
+      it("renders the new disclaimer", () => {
+        const { wrapper } = getWrapper({
+          CommerceOrder: () => testOrder,
+        })
+        const page = new OrderAppTestPage(wrapper)
+
+        expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
+          "By clicking Submit, I agree to Artsy’s General Terms and Conditions of Sale."
+        )
+        expect(
+          page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
+        ).toEqual("/terms")
+      })
     })
   })
 

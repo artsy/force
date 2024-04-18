@@ -213,6 +213,7 @@ export const settingsRoutes: AppRouteConfig[] = [
       {
         path: "alerts",
         getComponent: () => AlertsRoute,
+        layout: "NavOnly",
         onClientSideRender: () => {
           AlertsRoute.preload()
         },
@@ -228,6 +229,8 @@ export const settingsRoutes: AppRouteConfig[] = [
       {
         path: "alerts/:alertID/edit",
         getComponent: () => AlertsRoute,
+        layout: "NavOnly",
+
         onClientSideRender: () => {
           AlertsRoute.preload()
         },
@@ -242,6 +245,8 @@ export const settingsRoutes: AppRouteConfig[] = [
       },
       {
         path: "alerts/:alertID/artworks",
+        layout: "NavOnly",
+
         getComponent: () => AlertsRoute,
         onClientSideRender: () => {
           AlertsRoute.preload()

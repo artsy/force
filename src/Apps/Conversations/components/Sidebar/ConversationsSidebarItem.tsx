@@ -102,6 +102,12 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
 
               {item.date && `, ${item.date}`}
             </Text>
+
+            {item.isUnlisted && (
+              <Text display="inline" variant="xs">
+                Exclusive Access
+              </Text>
+            )}
           </Flex>
 
           <Flex flexDirection="column" alignSelf="flex-start">
@@ -153,6 +159,7 @@ const FRAGMENT = graphql`
           id
           title @required(action: NONE)
           date
+          isUnlisted
           artist @required(action: NONE) {
             name @required(action: NONE)
           }

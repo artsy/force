@@ -1,14 +1,14 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { HomeAuctionLotsRailFragmentContainer } from "Apps/Home/Components/HomeAuctionLotsRail"
-import { HomeAuctionLotsRail_Test_Query } from "__generated__/HomeAuctionLotsRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-const { getWrapper } = setupTestWrapper<HomeAuctionLotsRail_Test_Query>({
-  Component: props => {
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
     return <HomeAuctionLotsRailFragmentContainer viewer={props.viewer!} />
   },
   query: graphql`
@@ -32,7 +32,7 @@ afterEach(() => {
 
 describe("HomeAuctionLotsRail", () => {
   it("renders correctly", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Viewer: () => ({
         artworksConnection: {
           edges: [
@@ -47,15 +47,13 @@ describe("HomeAuctionLotsRail", () => {
       }),
     })
 
-    expect(wrapper.text()).toContain("Auction Lots")
-    expect(wrapper.text()).toContain("View All Auctions")
-    expect(wrapper.text()).toContain("Test Auction")
-    expect(wrapper.html()).toContain("test-href")
+    expect(screen.getByText("Test Auction")).toBeInTheDocument()
+    expect(screen.queryByTestId("ShelfArtwork")).toBeInTheDocument()
   })
 
   describe("tracking", () => {
-    it("tracks artwork click", () => {
-      const { wrapper } = getWrapper({
+    it("tracks artwork click", async () => {
+      renderWithRelay({
         Viewer: () => ({
           artworksConnection: {
             edges: [
@@ -72,43 +70,24 @@ describe("HomeAuctionLotsRail", () => {
         }),
       })
 
-      wrapper.find("Shelf").find("RouterLink").first().simulate("click")
+      const link = (await screen.findAllByRole("link"))[0]
+
+      fireEvent(
+        link,
+        new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true,
+        })
+      )
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtworkGroup",
-        context_module: "auctionLots",
+        context_module: "topAuctionLotsRail",
         context_page_owner_type: "home",
         destination_page_owner_id: "test-internal-id",
         destination_page_owner_slug: "test-href",
         destination_page_owner_type: "artwork",
         type: "thumbnail",
-      })
-    })
-
-    it("tracks view all", () => {
-      const { wrapper } = getWrapper({
-        Viewer: () => ({
-          artworksConnection: {
-            edges: [
-              {
-                node: {
-                  title: "Test Auction",
-                  href: "test-href",
-                },
-              },
-            ],
-          },
-        }),
-      })
-
-      wrapper.find("RouterLink").first().simulate("click")
-
-      expect(trackEvent).toBeCalledWith({
-        action: "clickedArtworkGroup",
-        context_module: "auctionLots",
-        context_page_owner_type: "home",
-        destination_page_owner_type: "auctions",
-        type: "viewAll",
       })
     })
   })

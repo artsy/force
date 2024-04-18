@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2040226162658d855289dd7bcf588a7>>
+ * @generated SignedSource<<ad56c51e93d7a12a665a80c69bea8715>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type updateCollectionInput = {
   clientMutationId?: string | null | undefined;
   id: string;
   name: string;
+  shareableWithPartners?: boolean | null | undefined;
 };
 export type useUpdateArtworkListMutation$variables = {
   input: updateCollectionInput;
@@ -32,6 +33,7 @@ export type useUpdateArtworkListMutation$data = {
       readonly artworkList: {
         readonly internalID: string;
         readonly name: string;
+        readonly shareableWithPartners: boolean;
       } | null | undefined;
     } | {
       // This will never be '%other', but we need some
@@ -82,6 +84,13 @@ v4 = {
   "storageKey": null
 },
 v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "shareableWithPartners",
+  "storageKey": null
+},
+v6 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -154,7 +163,8 @@ return {
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      (v4/*: any*/)
+                      (v4/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -162,7 +172,7 @@ return {
                 "type": "UpdateCollectionSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           }
@@ -209,6 +219,7 @@ return {
                     "selections": [
                       (v3/*: any*/),
                       (v4/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -223,7 +234,7 @@ return {
                 "type": "UpdateCollectionSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           }
@@ -233,16 +244,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4e58febdcef8e30dc56e02e9069a2d88",
+    "cacheID": "e1d3b1cbc09d5c4ec69b6db91d403301",
     "id": null,
     "metadata": {},
     "name": "useUpdateArtworkListMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateArtworkListMutation(\n  $input: updateCollectionInput!\n) {\n  updateCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on UpdateCollectionSuccess {\n        artworkList: collection {\n          internalID\n          name\n          id\n        }\n      }\n      ... on UpdateCollectionFailure {\n        mutationError {\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateArtworkListMutation(\n  $input: updateCollectionInput!\n) {\n  updateCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on UpdateCollectionSuccess {\n        artworkList: collection {\n          internalID\n          name\n          shareableWithPartners\n          id\n        }\n      }\n      ... on UpdateCollectionFailure {\n        mutationError {\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2d42b67ffb12c951ea2b9fd29ee5905c";
+(node as any).hash = "bd7ba4821b9ae3e5ef19ba0c50b95910";
 
 export default node;

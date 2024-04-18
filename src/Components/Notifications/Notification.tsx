@@ -22,15 +22,18 @@ import { useSystemContext } from "System/SystemContext"
 import createLogger from "Utils/logger"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
 
 const logger = createLogger("NotificationItem")
 
+export const NOTIFICATION_MAX_WIDTH = 600
 export const SUPPORTED_NOTIFICATION_TYPES = [
   "ARTWORK_ALERT",
   "ARTWORK_PUBLISHED",
   "ARTICLE_FEATURED_ARTIST",
   "PARTNER_OFFER_CREATED",
   "VIEWING_ROOM_PUBLISHED",
+  "PARTNER_SHOW_OPENED",
 ]
 
 interface NotificationProps {
@@ -118,6 +121,10 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
       return (
         <PartnerOfferCreatedNotification notification={data.me?.notification} />
       )
+    case "PARTNER_SHOW_OPENED":
+      return (
+        <PartnerShowOpenedNotification notification={data.me?.notification} />
+      )
     case "VIEWING_ROOM_PUBLISHED":
       return (
         <ViewingRoomPublishedNotification
@@ -156,6 +163,7 @@ const notificationQuery = graphql`
         ...ArtworkPublishedNotification_notification
         ...ArticleFeaturedArtistNotification_notification
         ...PartnerOfferCreatedNotification_notification
+        ...PartnerShowOpenedNotification_notification
         ...ViewingRoomPublishedNotification_notification
       }
     }

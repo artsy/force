@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c1c29e1eeb4a75346eb2afd94543cc3>>
+ * @generated SignedSource<<18fd05cb861445dfad8da5f4592b80da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,10 +15,12 @@ export type PartnerOfferCreatedNotification_notification$data = {
   readonly item: {
     readonly partnerOffer?: {
       readonly endAt: string | null | undefined;
+      readonly internalID: string;
       readonly isAvailable: boolean | null | undefined;
       readonly note: string | null | undefined;
-      readonly priceListedMessage: string | null | undefined;
-      readonly priceWithDiscountMessage: string | null | undefined;
+      readonly priceWithDiscount: {
+        readonly display: string | null | undefined;
+      } | null | undefined;
     } | null | undefined;
   } | null | undefined;
   readonly offerArtworksConnection: {
@@ -79,6 +81,13 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "endAt",
                   "storageKey": null
                 },
@@ -99,15 +108,19 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "priceListedMessage",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "priceWithDiscountMessage",
+                  "concreteType": "Money",
+                  "kind": "LinkedField",
+                  "name": "priceWithDiscount",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "display",
+                      "storageKey": null
+                    }
+                  ],
                   "storageKey": null
                 }
               ],
@@ -169,6 +182,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e7af6bb2d6895dfc9bd04d9f92518a26";
+(node as any).hash = "a5ed2e9500b3df4a4af38939ff3b22f7";
 
 export default node;

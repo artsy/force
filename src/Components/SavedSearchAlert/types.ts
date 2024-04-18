@@ -20,6 +20,7 @@ export interface SearchCriteriaAttributes {
   materialsTerms?: string[] | null
   priceRange?: string | null
   sizes?: string[] | null
+  forSale?: boolean | null
 }
 
 export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes

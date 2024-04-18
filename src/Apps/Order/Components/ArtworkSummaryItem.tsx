@@ -31,11 +31,11 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   },
   ...others
 }) => {
-  const firstLineItem = get({}, () => lineItems?.edges?.[0]?.node!)
-  const { artwork, artworkVersion } = firstLineItem!
+  const firstLineItem = get({}, () => lineItems?.edges?.[0]?.node)
+  const { artwork, artworkVersion } = firstLineItem || {}
 
   const { artistNames, title, image, date } = artworkVersion || {}
-  const { shippingOrigin } = artwork || {}
+  const { shippingOrigin, isUnlisted } = artwork || {}
 
   const imageURL =
     image &&
@@ -60,10 +60,10 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
       <Box height="auto">
         {imageURL &&
           (isPrivateSale ? (
-            <Image src={imageURL} alt={title!} width="55px" mr={1} />
+            <Image src={imageURL} alt={title || ""} width="55px" mr={1} />
           ) : (
             <Link href={`/artwork/${artwork?.slug}`} target="_blank">
-              <Image src={imageURL} alt={title!} width="55px" mr={1} />
+              <Image src={imageURL} alt={title || ""} width="55px" mr={1} />
             </Link>
           ))}
       </Box>
@@ -119,6 +119,11 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
         {!artworkPrice?.price && (
           <Text variant="sm">{`${priceLabel}`}: Not publicly listed</Text>
         )}
+        {isUnlisted && (
+          <Text variant="sm" color="black60">
+            Exclusive Access
+          </Text>
+        )}
       </Flex>
     </StackableBorderBox>
   )
@@ -152,6 +157,7 @@ export const ArtworkSummaryItemFragmentContainer = createFragmentContainer(
               artwork {
                 slug
                 shippingOrigin
+                isUnlisted
               }
               artworkVersion {
                 date

@@ -21,11 +21,13 @@ const MyCollectionArtworkComparables: React.FC<MyCollectionArtworkComparablesPro
     return null
   }
 
-  const titleString = `${artwork.artist?.name!} - Comparable Works on Artsy`
+  const titleString = `${artwork.artist?.name} - Comparable Works on Artsy`
 
   return (
     <>
       <MetaTags title={titleString} />
+
+      <Spacer y={2} />
 
       <Text variant={["sm-display", "md"]} textAlign="left">
         Comparable Works

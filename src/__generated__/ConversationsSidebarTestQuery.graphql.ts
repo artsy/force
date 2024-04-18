@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e6866d4f9d725bf88989cd22e4d2010c>>
+ * @generated SignedSource<<3905244edc2bd350c23615ba7e6f117a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -75,6 +75,12 @@ v6 = {
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -309,6 +315,13 @@ return {
                                   {
                                     "alias": null,
                                     "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "isUnlisted",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
                                     "concreteType": "Artist",
                                     "kind": "LinkedField",
                                     "name": "artist",
@@ -414,7 +427,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b09f635a1a49b8907b9f0103cd467f7f",
+    "cacheID": "95582c8518fcf2011af14da2a8fb28ec",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -505,6 +518,7 @@ return {
           "type": "Image"
         },
         "viewer.conversationsConnection.edges.node.items.item.image.url": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.isUnlisted": (v7/*: any*/),
         "viewer.conversationsConnection.edges.node.items.item.title": (v6/*: any*/),
         "viewer.conversationsConnection.edges.node.lastMessageAt": (v6/*: any*/),
         "viewer.conversationsConnection.edges.node.orderConnection": {
@@ -542,17 +556,12 @@ return {
           "type": "PageInfo"
         },
         "viewer.conversationsConnection.pageInfo.endCursor": (v6/*: any*/),
-        "viewer.conversationsConnection.pageInfo.hasNextPage": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
-        }
+        "viewer.conversationsConnection.pageInfo.hasNextPage": (v7/*: any*/)
       }
     },
     "name": "ConversationsSidebarTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

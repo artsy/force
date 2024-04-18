@@ -34,7 +34,7 @@ export const ArtworkPublishedNotification: FC<ArtworkPublishedNotificationProps>
 
       <Spacer y={1} />
 
-      <NotificationTypeLabel item={notificationData} />
+      <NotificationTypeLabel notification={notificationData} />
 
       <Spacer y={1} />
 
@@ -73,6 +73,6 @@ export const ArtworkPublishedNotificationFragment = graphql`
       }
     }
     notificationType
-    publishedAt(format: "RELATIVE")
+    ...NotificationTypeLabel_notification
   }
 `

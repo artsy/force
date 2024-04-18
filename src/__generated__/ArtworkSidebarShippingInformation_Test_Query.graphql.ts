@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b7286a012249eefa0f3b486eddeea076>>
+ * @generated SignedSource<<f9f01bce1c15db6f936646f8e84d197b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -80,6 +80,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "isUnlisted",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "shippingOrigin",
             "storageKey": null
           },
@@ -103,7 +110,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0eb8f84e549395ef41b921e25cdf3383",
+    "cacheID": "422947915673267ae5b91e9bd7d4137c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -119,13 +126,19 @@ return {
           "plural": false,
           "type": "ID"
         },
+        "artwork.isUnlisted": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
         "artwork.shippingInfo": (v1/*: any*/),
         "artwork.shippingOrigin": (v1/*: any*/)
       }
     },
     "name": "ArtworkSidebarShippingInformation_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  shippingOrigin\n  shippingInfo\n}\n"
+    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  isUnlisted\n  shippingOrigin\n  shippingInfo\n}\n"
   }
 };
 })();

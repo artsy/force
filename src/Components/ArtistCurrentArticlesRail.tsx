@@ -51,7 +51,7 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
             contextModule: ContextModule.relatedArticles,
             contextPageOwnerId,
             contextPageOwnerSlug,
-            contextPageOwnerType: contextPageOwnerType!,
+            contextPageOwnerType: contextPageOwnerType,
             destinationPageOwnerType: OwnerType.artist,
             destinationPageOwnerId: artist.internalID,
             destinationPageOwnerSlug: artist.slug,

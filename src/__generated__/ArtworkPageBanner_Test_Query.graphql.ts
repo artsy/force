@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3a3c0e714f3b87750859d4b3cd41ad4>>
+ * @generated SignedSource<<8d8d13825c4390ee5548eb4764238e62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,11 +23,7 @@ export type ArtworkPageBanner_Test_Query$data = {
 export type ArtworkPageBanner_Test_Query$rawResponse = {
   readonly artwork: {
     readonly id: string;
-    readonly partner: {
-      readonly __typename: "Partner";
-      readonly id: string;
-      readonly name: string | null | undefined;
-    } | null | undefined;
+    readonly isPurchasable: boolean | null | undefined;
     readonly published: boolean;
     readonly sale: {
       readonly __typename: "Sale";
@@ -69,13 +65,6 @@ v1 = {
   "value": "erik-s-mona-lisa"
 },
 v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -158,21 +147,8 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Partner",
-            "kind": "LinkedField",
-            "name": "partner",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              (v3/*: any*/)
-            ],
+            "kind": "ScalarField",
+            "name": "isPurchasable",
             "storageKey": null
           },
           {
@@ -183,7 +159,13 @@ return {
             "name": "sale",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -198,11 +180,11 @@ return {
                 "name": "extendedBiddingIntervalMinutes",
                 "storageKey": null
               },
-              (v3/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "artwork(id:\"erik-s-mona-lisa\")"
       },
@@ -252,7 +234,7 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      (v3/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -262,19 +244,19 @@ return {
             ],
             "storageKey": "partnerOffersConnection(artworkID:\"erik-s-mona-lisa\",first:1)"
           },
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "288cf00fa51053787755b868e7e16161",
+    "cacheID": "5f08e1dc248c2b5a1ce083f6fe266304",
     "id": null,
     "metadata": {},
     "name": "ArtworkPageBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkPageBanner_Test_Query {\n  artwork(id: \"erik-s-mona-lisa\") {\n    ...ArtworkPageBanner_artwork\n    id\n  }\n  me {\n    ...ArtworkPageBanner_me_4FqYAG\n    id\n  }\n}\n\nfragment ArtworkPageBanner_artwork on Artwork {\n  published\n  visibilityLevel\n  partner {\n    __typename\n    ...UnlistedArtworkBanner_partner\n    id\n  }\n  sale {\n    __typename\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment ArtworkPageBanner_me_4FqYAG on Me {\n  partnerOffersConnection(artworkID: \"erik-s-mona-lisa\", first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n\nfragment UnlistedArtworkBanner_partner on Partner {\n  name\n}\n"
+    "text": "query ArtworkPageBanner_Test_Query {\n  artwork(id: \"erik-s-mona-lisa\") {\n    ...ArtworkPageBanner_artwork\n    id\n  }\n  me {\n    ...ArtworkPageBanner_me_4FqYAG\n    id\n  }\n}\n\nfragment ArtworkPageBanner_artwork on Artwork {\n  published\n  visibilityLevel\n  isPurchasable\n  sale {\n    __typename\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment ArtworkPageBanner_me_4FqYAG on Me {\n  partnerOffersConnection(artworkID: \"erik-s-mona-lisa\", first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n"
   }
 };
 })();

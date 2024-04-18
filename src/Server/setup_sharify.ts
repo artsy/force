@@ -69,7 +69,6 @@ sharify.data = _.extend(
     "NETWORK_CACHE_TTL",
     "NODE_ENV",
     "NOTIFICATION_COUNT",
-    "ONETRUST_SCRIPT_ID",
     "POSITRON_URL",
     "PREDICTION_URL",
     "PUBLIC_GOOGLE_MAPS_API_KEY",

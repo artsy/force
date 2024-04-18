@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d1255845a1db747175f20bd14d1d803a>>
+ * @generated SignedSource<<e59254f2f314f59bbe46d4533505f669>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,6 +38,14 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
       readonly slug: string;
     } | null | undefined;
   } | null | undefined;
+  readonly partner: {
+    readonly profile: {
+      readonly icon: {
+        readonly url: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly priceListedDisplay: string | null | undefined;
   readonly saleMessage: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarEditionSets_artwork">;
@@ -156,6 +164,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "priceListedDisplay",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "listPrice",
@@ -220,6 +235,52 @@ return {
         (v3/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Partner",
+      "kind": "LinkedField",
+      "name": "partner",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Profile",
+          "kind": "LinkedField",
+          "name": "profile",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Image",
+              "kind": "LinkedField",
+              "name": "icon",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "version",
+                      "value": "square140"
+                    }
+                  ],
+                  "kind": "ScalarField",
+                  "name": "url",
+                  "storageKey": "url(version:\"square140\")"
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -227,6 +288,6 @@ return {
 };
 })();
 
-(node as any).hash = "3d3b1a0f3df16612b3df345758e4656a";
+(node as any).hash = "bfbffc86fec930ebd24c5032f5df3148";
 
 export default node;

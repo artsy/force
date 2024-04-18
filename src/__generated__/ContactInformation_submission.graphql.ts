@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<749a31ffa7dc4ed59cabbabcb6e90045>>
+ * @generated SignedSource<<9f3faff2d3a541f80722ebb2dc39ae72>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ContactInformation_submission$data = {
   readonly externalId: string;
+  readonly userEmail: string | null | undefined;
+  readonly userName: string | null | undefined;
+  readonly userPhone: string | null | undefined;
   readonly " $fragmentType": "ContactInformation_submission";
 };
 export type ContactInformation_submission$key = {
@@ -31,12 +34,33 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "externalId",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "userName",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "userEmail",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "userPhone",
+      "storageKey": null
     }
   ],
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
 
-(node as any).hash = "403f4a265149c820349eb773cd1f812d";
+(node as any).hash = "1a7d8a788118c645057a534e897770f6";
 
 export default node;

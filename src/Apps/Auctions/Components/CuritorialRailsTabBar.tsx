@@ -1,4 +1,4 @@
-import { Join, Spacer, Tab, Tabs } from "@artsy/palette"
+import { Join, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CuritorialRailsTabBar_viewer$data } from "__generated__/CuritorialRailsTabBar_viewer.graphql"
@@ -7,6 +7,8 @@ import { MyBidsFragmentContainer } from "./MyBids/MyBids"
 import { StandoutLotsRailFragmentContainer } from "./StandoutLotsRail"
 import { TrendingLotsRailFragmentContainer } from "./TrendingLotsRail"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./WorksByArtistsYouFollowRail"
+import { HomeAuctionLotsForYouRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsForYouRail"
+import { useSystemContext } from "System/SystemContext"
 
 interface CuritorialRailsTabBarProps {
   viewer: CuritorialRailsTabBar_viewer$data
@@ -16,19 +18,28 @@ export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
   viewer,
 }) => {
   const showWorksForYouTab = !!viewer.followedArtistsInAuction?.counts?.total
+  const { user } = useSystemContext()
 
   return (
     <Tabs mb={4}>
       {showWorksForYouTab && (
-        <Tab name="Works For You">
+        <Tab name="Works for You">
           <Join separator={<Spacer y={2} />}>
-            <MyBidsFragmentContainer me={viewer.me!} />
-
+            {viewer.me && <MyBidsFragmentContainer me={viewer.me} />}
             <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
           </Join>
         </Tab>
       )}
-      <Tab name="Current Highlights">
+      {!user ? null : (
+        <Tab name="Lots for You">
+          <Text variant="lg-display">Lots for You</Text>
+          <Text variant="lg-display" color="black60">
+            Works recommended for you
+          </Text>
+          <HomeAuctionLotsForYouRailQueryRenderer />
+        </Tab>
+      )}
+      <Tab name="Curators’ Picks">
         <StandoutLotsRailFragmentContainer viewer={viewer} />
       </Tab>
       <Tab name="Trending Lots">
