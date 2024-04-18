@@ -30,7 +30,10 @@ export const CriteriaPills: FC<CriteriaPillsProps> = ({ editable = true }) => {
 
         const key = `filter-label-${label?.field}-${label?.value}`
 
-        if (!editable || label?.field === "artistIDs") {
+        const isLastArtistCriteria =
+          label?.field === "artistIDs" && state.criteria.artistIDs?.length === 1
+
+        if (!editable || isLastArtistCriteria) {
           return (
             <Pill key={key} variant="filter" disabled>
               {label?.displayValue}
