@@ -56,19 +56,19 @@ const notifications = {
   edges: [
     {
       node: {
-        title: "Notification One",
+        headline: "Notification One",
         notificationType: "ARTWORK_ALERT",
       },
     },
     {
       node: {
-        title: "Notification Two",
+        headline: "Notification Two",
         notificationType: "ARTWORK_PUBLISHED",
       },
     },
     {
       node: {
-        title: "Notification Three",
+        headline: "Notification Three",
         notificationType: "PARTNER_OFFER_CREATED",
       },
     },
