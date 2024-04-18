@@ -1,4 +1,10 @@
-import { Box, PaginationSkeleton, Stack, useDidMount } from "@artsy/palette"
+import {
+  Box,
+  Message,
+  PaginationSkeleton,
+  Stack,
+  useDidMount,
+} from "@artsy/palette"
 import { FC, Suspense } from "react"
 import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
 import { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
@@ -86,16 +92,20 @@ const CollectorProfileArtistsListArtists: FC = () => {
 
   return (
     <Stack gap={2}>
-      <Box>
-        {userInterestEdges.map(userInterestEdge => {
-          return (
-            <CollectorProfileArtistsListArtist
-              key={userInterestEdge.internalID}
-              userInterestEdge={userInterestEdge}
-            />
-          )
-        })}
-      </Box>
+      {userInterestEdges.length === 0 ? (
+        <Message mt={2}>Nothing yet.</Message>
+      ) : (
+        <Box>
+          {userInterestEdges.map(userInterestEdge => {
+            return (
+              <CollectorProfileArtistsListArtist
+                key={userInterestEdge.internalID}
+                userInterestEdge={userInterestEdge}
+              />
+            )
+          })}
+        </Box>
+      )}
 
       <PaginationFragmentContainer
         hasNextPage={!!hasNextPage}
