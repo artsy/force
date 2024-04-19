@@ -1,4 +1,4 @@
-import { Separator, Spacer, Tab, Tabs, Text } from "@artsy/palette"
+import { Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CuritorialRailsTabBar_viewer$data } from "__generated__/CuritorialRailsTabBar_viewer.graphql"
