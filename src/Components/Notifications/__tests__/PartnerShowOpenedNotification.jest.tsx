@@ -48,9 +48,7 @@ describe("PartnerShowOpenedNotification", () => {
     // show
 
     expect(screen.getByText("THEO at ART OnO")).toBeInTheDocument()
-    expect(
-      screen.getByText("April 19 – 21, 2024 — Opening Soon")
-    ).toBeInTheDocument()
+    expect(screen.getByText("April 19 – 21, 2022 — Closed")).toBeInTheDocument()
     expect(screen.getByText("show description")).toBeInTheDocument()
   })
 
@@ -94,9 +92,9 @@ const notification = {
             location: {
               city: null,
             },
-            exhibitionPeriod: "April 19 – 21, 2024",
-            startAt: "2024-04-19T14:00:00+02:00",
-            endAt: "2024-04-21T14:00:00+02:00",
+            exhibitionPeriod: "April 19 – 21, 2022",
+            startAt: "2022-04-19T14:00:00+02:00",
+            endAt: "2022-04-21T14:00:00+02:00",
             name: "THEO  at ART OnO",
             description: "show description",
             href: "/show/theo-theo-at-art-ono",
