@@ -93,7 +93,7 @@ export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListAr
     return null
   }
 
-  const count = artist.counts?.artworks || 0
+  const count = artist.counts?.myCollectedArtworks || 0
 
   return (
     <>
@@ -122,6 +122,7 @@ export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListAr
             <FollowArtistButtonQueryRenderer
               id={artist.internalID}
               size="small"
+              disabled={!!artist.isPersonalArtist}
             />
           </Column>
 
@@ -185,6 +186,7 @@ export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListAr
         <CollectorProfileArtistsListArtistDialog
           userInterestEdge={userInterest}
           onClose={handleClose}
+          onToggle={handleToggle}
         />
       )}
 
@@ -264,8 +266,9 @@ const FRAGMENT = graphql`
         ...EntityHeaderArtist_artist
         internalID
         name
+        isPersonalArtist
         counts {
-          artworks
+          myCollectedArtworks
         }
       }
     }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31af7302839826e1568bdb80232a7d44>>
+ * @generated SignedSource<<8f3834eec5152ab3a7dbe645d00a2d7d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -251,6 +251,13 @@ return {
                             "kind": "ScalarField",
                             "name": "forSaleArtworks",
                             "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "myCollectedArtworks",
+                            "storageKey": null
                           }
                         ],
                         "storageKey": null
@@ -313,6 +320,13 @@ return {
                           (v2/*: any*/)
                         ],
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isPersonalArtist",
+                        "storageKey": null
                       }
                     ],
                     "type": "Artist",
@@ -351,12 +365,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "caadd171cd448bc9a7b1e00b480928fe",
+    "cacheID": "b978fd6eeec62db5f7740c0266295020",
     "id": null,
     "metadata": {},
     "name": "CollectorProfileArtistsListArtistUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation CollectorProfileArtistsListArtistUpdateMutation(\n  $input: UpdateUserInterestMutationInput!\n) {\n  updateUserInterest(input: $input) {\n    userInterestEdge {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      id\n      private\n    }\n    userInterestOrError {\n      __typename\n      ... on UpdateUserInterestFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtistDialog_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  ...CollectorProfileArtistsListArtistDialog_userInterestEdge\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "mutation CollectorProfileArtistsListArtistUpdateMutation(\n  $input: UpdateUserInterestMutationInput!\n) {\n  updateUserInterest(input: $input) {\n    userInterestEdge {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      id\n      private\n    }\n    userInterestOrError {\n      __typename\n      ... on UpdateUserInterestFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtistDialog_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      isPersonalArtist\n      counts {\n        myCollectedArtworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  ...CollectorProfileArtistsListArtistDialog_userInterestEdge\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      isPersonalArtist\n      counts {\n        myCollectedArtworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
