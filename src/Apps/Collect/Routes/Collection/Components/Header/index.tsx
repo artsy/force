@@ -28,13 +28,13 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
   artworks,
   collection,
 }) => {
-  const hasMultipleArtists =
-    artworks.merchandisableArtists && artworks.merchandisableArtists.length > 1
+  const merchandisableArtists = artworks.merchandisableArtists ?? []
+  const hasMultipleArtists = merchandisableArtists.length > 1
 
   const featuredArtists = getFeaturedArtists(
     12,
     collection,
-    artworks.merchandisableArtists
+    merchandisableArtists
   )
 
   return (
@@ -42,7 +42,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
       {collection.headerImage && (
         <FullBleedHeader
           src={collection.headerImage}
-          caption={collection.credit!}
+          caption={collection.credit as string}
         />
       )}
 
@@ -161,7 +161,9 @@ export const getFeaturedArtists = (
   if ((collection?.query?.artistIDs?.length ?? 0) > 0) {
     return compact(
       filter(merchandisableArtists, artist =>
-        (collection?.query?.artistIDs ?? []).includes(artist?.internalID!)
+        (collection?.query?.artistIDs ?? []).includes(
+          artist?.internalID as string
+        )
       )
     )
   }
@@ -170,7 +172,7 @@ export const getFeaturedArtists = (
     const filteredArtistsIds = compact(
       merchandisableArtists?.filter(artist => {
         return !collection?.featuredArtistExclusionIds?.includes(
-          artist?.internalID!
+          artist?.internalID as string
         )
       })
     )
