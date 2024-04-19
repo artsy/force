@@ -11,9 +11,10 @@ const TERMS_UPDATE_DIALOG_KEY = "terms-update-2024-dismissed"
 interface TermsUpdateDialogProps {}
 
 export const TermsUpdateDialog: FC<TermsUpdateDialogProps> = () => {
+  const { isEigen, user } = useSystemContext()
+
   const isIntegrity = getENV("USER_AGENT") === "ArtsyIntegrity"
   const isSmokeTest = getENV("USER_AGENT") === "ForceSmokeTest"
-  const { isEigen } = useSystemContext()
 
   const isTermsUpdateActive = useFeatureFlag("diamond_new-terms-and-conditions")
 
@@ -24,14 +25,19 @@ export const TermsUpdateDialog: FC<TermsUpdateDialogProps> = () => {
     Cookies.set(TERMS_UPDATE_DIALOG_KEY, 1, { expires: 31536000 })
   }
 
+  const isUserLoggedOut = !user
+  const canSkipDialog = isSmokeTest || isIntegrity || isEigen
+
   useEffect(() => {
-    if (isSmokeTest || isIntegrity || !isTermsUpdateActive || isEigen) return
+    if (!isTermsUpdateActive) return
+    if (isUserLoggedOut) return
+    if (canSkipDialog) return
 
     const isDismissed = Cookies.get(TERMS_UPDATE_DIALOG_KEY)
     if (isDismissed) return
 
     setIsDisplayable(true)
-  }, [isSmokeTest, isIntegrity, isTermsUpdateActive, isEigen])
+  }, [isUserLoggedOut, canSkipDialog, isTermsUpdateActive])
 
   if (!isDisplayable) {
     return null
