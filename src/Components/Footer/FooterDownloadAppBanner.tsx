@@ -36,6 +36,10 @@ export const FooterDownloadAppBanner = () => {
 
   useEffect(() => {
     const checkIfPrivateArtwork = async () => {
+      const artworkSlug = match?.params?.artworkID
+      if (!artworkSlug) {
+        return
+      }
       const data = await fetchQuery<FooterDownloadAppBannerQuery>(
         relayEnvironment,
         graphql`
@@ -46,7 +50,7 @@ export const FooterDownloadAppBanner = () => {
           }
         `,
         {
-          slug: match?.params?.artworkID,
+          slug: artworkSlug,
         }
       ).toPromise()
 
