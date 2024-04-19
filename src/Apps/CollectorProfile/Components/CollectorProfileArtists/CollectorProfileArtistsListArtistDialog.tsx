@@ -5,24 +5,23 @@ import {
   ModalDialog,
   Stack,
   Text,
-  useToasts,
 } from "@artsy/palette"
 import { FC, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { CollectorProfileArtistsListArtistDialog_userInterestEdge$key } from "__generated__/CollectorProfileArtistsListArtistDialog_userInterestEdge.graphql"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { CollectorProfileArtistsDeleteDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsDeleteDialog"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { CollectorProfileArtistsListArtistDialogUpdateMutation } from "__generated__/CollectorProfileArtistsListArtistDialogUpdateMutation.graphql"
 
 interface CollectorProfileArtistsListArtistDialogProps {
   userInterestEdge: CollectorProfileArtistsListArtistDialog_userInterestEdge$key
   onClose: () => void
+  onToggle: () => void
 }
 
 export const CollectorProfileArtistsListArtistDialog: FC<CollectorProfileArtistsListArtistDialogProps> = ({
   userInterestEdge,
   onClose,
+  onToggle,
 }) => {
   const [mode, setMode] = useState<"Idle" | "Delete">("Idle")
 
@@ -36,45 +35,6 @@ export const CollectorProfileArtistsListArtistDialog: FC<CollectorProfileArtists
 
   const handleDelete = () => {
     setMode("Delete")
-  }
-
-  const { sendToast } = useToasts()
-
-  const { submitMutation } = useMutation<
-    CollectorProfileArtistsListArtistDialogUpdateMutation
-  >({
-    mutation: MUTATION,
-    optimisticResponse: {
-      updateUserInterest: {
-        userInterestEdge: {
-          id: userInterest.id,
-          private: !userInterest.private,
-        } as any,
-      } as any,
-    },
-  })
-
-  const handleToggle = async () => {
-    try {
-      await submitMutation({
-        variables: {
-          input: {
-            id: userInterest.internalID,
-            private: !userInterest.private,
-          },
-        },
-        rejectIf: res => {
-          return res.updateUserInterest?.userInterestOrError?.mutationError
-            ?.message
-        },
-      })
-
-      sendToast({ message: "Updated artist", variant: "success" })
-    } catch (err) {
-      console.error(err)
-
-      sendToast({ message: err.message, variant: "error" })
-    }
   }
 
   if (!artist || artist.__typename !== "Artist") {
@@ -100,7 +60,7 @@ export const CollectorProfileArtistsListArtistDialog: FC<CollectorProfileArtists
             </Text>
           </EntityHeaderArtistFragmentContainer>
 
-          <Checkbox selected={!userInterest.private} onClick={handleToggle}>
+          <Checkbox selected={!userInterest.private} onClick={onToggle}>
             <Box>
               <Text variant="xs" color="black100">
                 Share this artist with galleries during inquiries.
@@ -147,27 +107,6 @@ const FRAGMENT = graphql`
         isPersonalArtist
         counts {
           myCollectedArtworks
-        }
-      }
-    }
-  }
-`
-
-const MUTATION = graphql`
-  mutation CollectorProfileArtistsListArtistDialogUpdateMutation(
-    $input: UpdateUserInterestMutationInput!
-  ) {
-    updateUserInterest(input: $input) {
-      userInterestEdge {
-        ...CollectorProfileArtistsListArtist_userInterestEdge
-        id
-        private
-      }
-      userInterestOrError {
-        ... on UpdateUserInterestFailure {
-          mutationError {
-            message
-          }
         }
       }
     }

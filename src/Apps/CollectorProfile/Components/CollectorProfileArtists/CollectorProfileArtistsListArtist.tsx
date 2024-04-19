@@ -186,6 +186,7 @@ export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListAr
         <CollectorProfileArtistsListArtistDialog
           userInterestEdge={userInterest}
           onClose={handleClose}
+          onToggle={handleToggle}
         />
       )}
 
