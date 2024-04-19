@@ -1,4 +1,4 @@
-import { Tab, Tabs, Text } from "@artsy/palette"
+import { Separator, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CuritorialRailsTabBar_viewer$data } from "__generated__/CuritorialRailsTabBar_viewer.graphql"
@@ -25,6 +25,7 @@ export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
           <Text variant="lg-display" color="black60">
             Works recommended for you
           </Text>
+          <Spacer y={4} />
           <HomeAuctionLotsForYouRailQueryRenderer />
         </Tab>
       )}
