@@ -122,6 +122,7 @@ export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListAr
             <FollowArtistButtonQueryRenderer
               id={artist.internalID}
               size="small"
+              disabled={!!artist.isPersonalArtist}
             />
           </Column>
 
@@ -264,6 +265,7 @@ const FRAGMENT = graphql`
         ...EntityHeaderArtist_artist
         internalID
         name
+        isPersonalArtist
         counts {
           myCollectedArtworks
         }

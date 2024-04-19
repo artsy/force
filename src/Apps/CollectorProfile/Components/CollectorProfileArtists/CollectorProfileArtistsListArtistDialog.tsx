@@ -81,6 +81,8 @@ export const CollectorProfileArtistsListArtistDialog: FC<CollectorProfileArtists
     return null
   }
 
+  const count = artist.counts?.myCollectedArtworks || 0
+
   return (
     <>
       <ModalDialog
@@ -89,7 +91,14 @@ export const CollectorProfileArtistsListArtistDialog: FC<CollectorProfileArtists
         onClose={onClose}
       >
         <Stack gap={4}>
-          <EntityHeaderArtistFragmentContainer artist={artist} />
+          <EntityHeaderArtistFragmentContainer
+            artist={artist}
+            displayFollowButton={!artist.isPersonalArtist}
+          >
+            <Text variant="xs" overflowEllipsis>
+              {count} artwork{count === 1 ? "" : "s"}
+            </Text>
+          </EntityHeaderArtistFragmentContainer>
 
           <Checkbox selected={!userInterest.private} onClick={handleToggle}>
             <Box>
@@ -135,8 +144,9 @@ const FRAGMENT = graphql`
         ...EntityHeaderArtist_artist
         internalID
         name
+        isPersonalArtist
         counts {
-          artworks
+          myCollectedArtworks
         }
       }
     }
