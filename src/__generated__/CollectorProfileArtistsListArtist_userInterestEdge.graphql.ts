@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3ef3a7cd236b842af9d2987ffe6b018>>
+ * @generated SignedSource<<785b6578c468b5c605166b72eda922f4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type CollectorProfileArtistsListArtist_userInterestEdge$data = {
   readonly node: {
     readonly __typename: "Artist";
     readonly counts: {
-      readonly artworks: any | null | undefined;
+      readonly myCollectedArtworks: number;
     } | null | undefined;
     readonly internalID: string;
     readonly name: string | null | undefined;
@@ -112,7 +112,7 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "artworks",
+                  "name": "myCollectedArtworks",
                   "storageKey": null
                 }
               ],
@@ -131,6 +131,6 @@ return {
 };
 })();
 
-(node as any).hash = "2c25cc76576c95e6428c6f5566919859";
+(node as any).hash = "685268be75dadb9e60c1b200f52383dc";
 
 export default node;

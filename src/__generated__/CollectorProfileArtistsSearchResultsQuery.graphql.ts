@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c4212a7f0ca5803714d126c6e806e47>>
+ * @generated SignedSource<<f5efc2a643bfc3b3aee4edde5e2f319a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -245,6 +245,13 @@ return {
                                 "kind": "ScalarField",
                                 "name": "forSaleArtworks",
                                 "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "myCollectedArtworks",
+                                "storageKey": null
                               }
                             ],
                             "storageKey": null
@@ -336,12 +343,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fd243d6502b9d963006fa05d22617691",
+    "cacheID": "9e89cc8016b72df388d2d740acd77b5b",
     "id": null,
     "metadata": {},
     "name": "CollectorProfileArtistsSearchResultsQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileArtistsSearchResultsQuery {\n  me {\n    userInterestsConnection(page: 1, size: 100, interestType: ARTIST) {\n      edges {\n        ...CollectorProfileArtistsListArtist_userInterestEdge\n        internalID\n        node {\n          __typename\n          ... on Artist {\n            name\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment CollectorProfileArtistsListArtistDialog_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  ...CollectorProfileArtistsListArtistDialog_userInterestEdge\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query CollectorProfileArtistsSearchResultsQuery {\n  me {\n    userInterestsConnection(page: 1, size: 100, interestType: ARTIST) {\n      edges {\n        ...CollectorProfileArtistsListArtist_userInterestEdge\n        internalID\n        node {\n          __typename\n          ... on Artist {\n            name\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment CollectorProfileArtistsListArtistDialog_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  ...CollectorProfileArtistsListArtistDialog_userInterestEdge\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        myCollectedArtworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

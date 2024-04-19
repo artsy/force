@@ -93,7 +93,7 @@ export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListAr
     return null
   }
 
-  const count = artist.counts?.artworks || 0
+  const count = artist.counts?.myCollectedArtworks || 0
 
   return (
     <>
@@ -265,7 +265,7 @@ const FRAGMENT = graphql`
         internalID
         name
         counts {
-          artworks
+          myCollectedArtworks
         }
       }
     }

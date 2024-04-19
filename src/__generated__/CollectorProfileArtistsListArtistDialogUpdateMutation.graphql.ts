@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<023adb738c482c6f472925e823bd2e58>>
+ * @generated SignedSource<<a72b64206fc3a306a4c04030d2ab2ccb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -251,6 +251,13 @@ return {
                             "kind": "ScalarField",
                             "name": "forSaleArtworks",
                             "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "myCollectedArtworks",
+                            "storageKey": null
                           }
                         ],
                         "storageKey": null
@@ -351,12 +358,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "914d9ba28e584ada56f50d640a30eb69",
+    "cacheID": "a6cb86cb428e3e13f472b31f8653c41f",
     "id": null,
     "metadata": {},
     "name": "CollectorProfileArtistsListArtistDialogUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation CollectorProfileArtistsListArtistDialogUpdateMutation(\n  $input: UpdateUserInterestMutationInput!\n) {\n  updateUserInterest(input: $input) {\n    userInterestEdge {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      id\n      private\n    }\n    userInterestOrError {\n      __typename\n      ... on UpdateUserInterestFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtistDialog_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  ...CollectorProfileArtistsListArtistDialog_userInterestEdge\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "mutation CollectorProfileArtistsListArtistDialogUpdateMutation(\n  $input: UpdateUserInterestMutationInput!\n) {\n  updateUserInterest(input: $input) {\n    userInterestEdge {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      id\n      private\n    }\n    userInterestOrError {\n      __typename\n      ... on UpdateUserInterestFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtistDialog_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        artworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  ...CollectorProfileArtistsListArtistDialog_userInterestEdge\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      counts {\n        myCollectedArtworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
