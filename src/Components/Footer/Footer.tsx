@@ -29,10 +29,13 @@ import SpotifyIcon from "@artsy/icons/SpotifyIcon"
 import { useSystemContext } from "System/useSystemContext"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
+  const isDarkModeEnabled = useFeatureFlag("diamond_dark-mode")
+
   const { isEigen } = useSystemContext()
 
   if (isEigen) {
@@ -169,6 +172,12 @@ export const Footer: React.FC<FooterProps> = props => {
           <Column span={12} display={["flex", "none"]} flexWrap="wrap">
             <PolicyLinks />
           </Column>
+
+          {isDarkModeEnabled && (
+            <Column span={12} display={["flex", "none"]}>
+              <DarkModeToggle />
+            </Column>
+          )}
         </GridColumns>
 
         <Separator />
@@ -192,8 +201,16 @@ export const Footer: React.FC<FooterProps> = props => {
                 <ArtsyMarkIcon title="Artsy" width={30} height={30} mr={2} />
               </Flex>
 
-              <Flex flexDirection="row">
+              <Flex flexDirection="row" flexGrow={1}>
                 <PolicyLinks />
+
+                {isDarkModeEnabled && (
+                  <>
+                    <Spacer x={1} />
+
+                    <DarkModeToggle />
+                  </>
+                )}
               </Flex>
             </Flex>
           </Media>
@@ -272,6 +289,26 @@ export const Footer: React.FC<FooterProps> = props => {
         </Flex>
       </Box>
     </Box>
+  )
+}
+
+const DarkModeToggle: React.FC = () => {
+  const { toggleDarkMode, isDarkModeActive } = useDarkModeToggle({
+    attachKeyListeners: false,
+  })
+
+  return (
+    <>
+      <Clickable onClick={toggleDarkMode}>
+        <Text
+          variant="xs"
+          color="black60"
+          style={{ textDecoration: "underline" }}
+        >
+          Dark Mode | {isDarkModeActive ? "On" : "Off"}
+        </Text>
+      </Clickable>
+    </>
   )
 }
 
