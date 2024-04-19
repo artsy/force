@@ -16,7 +16,7 @@ const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
 }) => {
   const { t } = useTranslation()
   const tracking = useTracking()
-  const { sale, isInAuction } = artwork
+  const { sale, isInAuction, isUnlisted } = artwork
 
   const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
 
@@ -38,9 +38,14 @@ const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
     })
   }
 
+  if (isUnlisted) {
+    return null
+  }
+
   return (
     <>
       <Spacer y={2} />
+
       {isInOpenAuction && (
         <>
           <Text variant="xs" color="black60">
@@ -55,9 +60,11 @@ const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
                 : t("artworkPage.sidebar.conditionsOfSaleLink")}
             </RouterLink>
           </Text>
+
           <Spacer y={1} />
         </>
       )}
+
       <Text variant="xs" color="black60">
         {t("artworkPage.sidebar.sellWithArtsy")}{" "}
         <RouterLink inline to="/sell" onClick={trackClickedSellWithArtsy}>
@@ -74,6 +81,7 @@ export const ArtworkSidebarLinksFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment ArtworkSidebarLinks_artwork on Artwork {
         isInAuction
+        isUnlisted
         sale {
           isClosed
         }

@@ -9,6 +9,7 @@ import {
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Router/RouterLink"
+import { FooterDownloadAppBannerQuery } from "__generated__/FooterDownloadAppBannerQuery.graphql"
 import {
   DOWNLOAD_APP_URLS,
   Device,
@@ -17,6 +18,9 @@ import {
 import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
+import { useEffect, useState } from "react"
+import { fetchQuery, graphql } from "react-relay"
+import { useSystemContext } from "System/SystemContext"
 
 const IGNORE_PATHS = ["/meet-your-new-art-advisor"]
 
@@ -24,11 +28,42 @@ const APP_BANNER_SRC =
   "https://files.artsy.net/images/universal-footer_april-14.jpg"
 
 export const FooterDownloadAppBanner = () => {
+  const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
+  const [isVisible, setIsVisible] = useState(true)
 
   const { device, downloadAppUrl } = useDeviceDetection()
 
+  useEffect(() => {
+    const checkIfPrivateArtwork = async () => {
+      const data = await fetchQuery<FooterDownloadAppBannerQuery>(
+        relayEnvironment,
+        graphql`
+          query FooterDownloadAppBannerQuery($slug: String!) {
+            artwork(id: $slug) {
+              isUnlisted
+            }
+          }
+        `,
+        {
+          slug: match?.params?.artworkID,
+        }
+      ).toPromise()
+
+      if (data?.artwork?.isUnlisted) {
+        setIsVisible(false)
+      }
+    }
+
+    checkIfPrivateArtwork()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   if (IGNORE_PATHS.includes(match.location.pathname)) {
+    return null
+  }
+
+  if (!isVisible) {
     return null
   }
 

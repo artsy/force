@@ -32,11 +32,29 @@ export const PrivateArtworkMetadata: React.FC<PrivateArtworkMetadataProps> = ({
     artwork
   )
 
+  const isFirstItemExpanded = Boolean(
+    data.conditionDescription?.details &&
+      data.provenance &&
+      data.exhibitionHistory
+  )
+
+  const isSecondItemExpanded = Boolean(
+    !data.conditionDescription?.details &&
+      data.provenance &&
+      data.exhibitionHistory
+  )
+
+  const isThirdItemExpanded = Boolean(
+    !data.conditionDescription?.details &&
+      !data.provenance &&
+      data.exhibitionHistory
+  )
+
   return (
     <>
       {data.conditionDescription?.details && (
         <>
-          <MetadataDetailItem title="Condition">
+          <MetadataDetailItem title="Condition" expanded={isFirstItemExpanded}>
             <HTML variant="sm">{data.conditionDescription?.details}</HTML>
           </MetadataDetailItem>
 
@@ -46,7 +64,10 @@ export const PrivateArtworkMetadata: React.FC<PrivateArtworkMetadataProps> = ({
 
       {data.provenance && (
         <>
-          <MetadataDetailItem title="Provenance">
+          <MetadataDetailItem
+            title="Provenance"
+            expanded={isSecondItemExpanded}
+          >
             <HTML variant="sm" html={data.provenance} />
           </MetadataDetailItem>
 
@@ -55,7 +76,10 @@ export const PrivateArtworkMetadata: React.FC<PrivateArtworkMetadataProps> = ({
       )}
 
       {data.exhibitionHistory && (
-        <MetadataDetailItem title="Exhibition History">
+        <MetadataDetailItem
+          title="Exhibition History"
+          expanded={isThirdItemExpanded}
+        >
           <HTML variant="sm" html={data.exhibitionHistory} />
         </MetadataDetailItem>
       )}
@@ -66,13 +90,15 @@ export const PrivateArtworkMetadata: React.FC<PrivateArtworkMetadataProps> = ({
 interface MetadataDetailItemProps {
   title: string
   children: React.ReactNode
+  expanded?: boolean
 }
 
 const MetadataDetailItem: React.FC<MetadataDetailItemProps> = ({
   title,
   children,
+  expanded = false,
 }) => {
-  const [isExpanded, setIsExpanded] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(expanded)
 
   return (
     <Box>

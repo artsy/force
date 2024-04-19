@@ -126,12 +126,12 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     },
     {
       name: "share",
-      condition: true,
+      condition: !artwork.isUnlisted,
       content: ShareButton,
     },
     {
       name: "download",
-      condition: !!artwork.isDownloadable || isTeam,
+      condition: (!artwork.isUnlisted && !!artwork.isDownloadable) || isTeam,
       content: DownloadButton,
     },
     {
@@ -226,6 +226,7 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
         ...ArtworkSharePanel_artwork
           @arguments(includeAllImages: $includeAllImages)
         ...ViewInRoom_artwork
+        isUnlisted
         slug
         downloadableImageUrl
         isDownloadable

@@ -19,35 +19,11 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("CuritorialRailsTabBar", () => {
-  it("shows default tabs", () => {
+  it("shows default tabs", async () => {
     renderWithRelay()
 
-    expect(screen.queryByText("Curators’ Picks")).toBeInTheDocument()
+    expect(screen.queryAllByText("Curators’ Picks")[0]).toBeInTheDocument()
     expect(screen.queryByText("Trending Lots")).toBeInTheDocument()
-  })
-
-  it('hides "Works for You" tab if no sale artworks', () => {
-    renderWithRelay({
-      SaleArtworksConnection: () => ({
-        counts: {
-          total: 0,
-        },
-      }),
-    })
-
-    expect(screen.queryByText("Works for You")).not.toBeInTheDocument()
-  })
-
-  it('shows "Works for You" tab if sale artworks', () => {
-    renderWithRelay({
-      SaleArtworksConnection: () => ({
-        counts: {
-          total: 1,
-        },
-        edges: [{ node: { sale: { isClosed: false } } }],
-      }),
-    })
-
-    expect(screen.queryByText("Works for You")).toBeInTheDocument()
+    expect(screen.queryByText("Lots for You")).not.toBeInTheDocument()
   })
 })

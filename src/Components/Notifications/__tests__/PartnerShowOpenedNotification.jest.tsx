@@ -1,7 +1,6 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
 import { PartnerShowOpenedNotification_test_Query } from "__generated__/PartnerShowOpenedNotification_test_Query.graphql"
 
@@ -34,12 +33,6 @@ const { renderWithRelay } = setupTestWrapperTL<
 })
 
 describe("PartnerShowOpenedNotification", () => {
-  beforeAll(() => {
-    ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "onyx_new_notification_page"
-    )
-  })
-
   it("renders the notification", () => {
     renderWithRelay({
       Notification: () => notification,
@@ -55,9 +48,7 @@ describe("PartnerShowOpenedNotification", () => {
     // show
 
     expect(screen.getByText("THEO at ART OnO")).toBeInTheDocument()
-    expect(
-      screen.getByText("April 19 – 21, 2024 — Opening Soon")
-    ).toBeInTheDocument()
+    expect(screen.getByText("April 19 – 21, 2022 — Closed")).toBeInTheDocument()
     expect(screen.getByText("show description")).toBeInTheDocument()
   })
 
@@ -101,9 +92,9 @@ const notification = {
             location: {
               city: null,
             },
-            exhibitionPeriod: "April 19 – 21, 2024",
-            startAt: "2024-04-19T14:00:00+02:00",
-            endAt: "2024-04-21T14:00:00+02:00",
+            exhibitionPeriod: "April 19 – 21, 2022",
+            startAt: "2022-04-19T14:00:00+02:00",
+            endAt: "2022-04-21T14:00:00+02:00",
             name: "THEO  at ART OnO",
             description: "show description",
             href: "/show/theo-theo-at-art-ono",
