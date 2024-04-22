@@ -144,6 +144,7 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
                   <Text
                     variant="xs"
                     color="white100"
+                    ml={0.5}
                     style={{ whiteSpace: "nowrap" }}
                   >
                     {followsCount} {followsCount > 1 ? "Followers" : "Follower"}
