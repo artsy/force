@@ -17,13 +17,6 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
     "amber_artwork_visibility_unlisted"
   )
   const { trackEvent } = useTracking()
-  const payload = {
-    action: "Click",
-    context_module: "Sidebar",
-    subject: "Gallery Name",
-    type: "Link",
-    flow: "Exclusive Access",
-  }
 
   const data = useFragment(
     graphql`
@@ -59,6 +52,14 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
         <RouterLink
           to={`/partner/${data.partner?.slug}`}
           onClick={() => {
+            const payload = {
+              action: "Click",
+              context_module: "Sidebar",
+              subject: "Gallery Name",
+              type: "Link",
+              flow: "Exclusive Access",
+            }
+
             trackEvent(payload)
           }}
         >
