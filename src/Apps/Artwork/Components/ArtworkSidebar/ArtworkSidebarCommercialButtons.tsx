@@ -381,6 +381,27 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     )
   }
 
+  const EditionSetPriceDisplay: FC = () => {
+    return (
+      <>
+        <Separator />
+        <ArtworkSidebarEditionSetFragmentContainer
+          artwork={artwork}
+          selectedEditionSet={selectedEditionSet as EditionSet}
+          onSelectEditionSet={setSelectedEditionSet}
+        />
+
+        {!!selectedEditionSet && (
+          <>
+            <Separator />
+            <Spacer y={4} />
+            <SaleMessage saleMessage={selectedEditionSet.saleMessage} />
+          </>
+        )}
+      </>
+    )
+  }
+
   const hasEditions = (artwork?.editionSets?.length ?? 0) > 1
 
   return (
@@ -390,22 +411,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       {!hasEditions ? (
         <SaleMessageOrOfferDisplay />
       ) : (
-        <>
-          <Separator />
-          <ArtworkSidebarEditionSetFragmentContainer
-            artwork={artwork}
-            selectedEditionSet={selectedEditionSet as EditionSet}
-            onSelectEditionSet={setSelectedEditionSet}
-          />
-
-          {!!selectedEditionSet && (
-            <>
-              <Separator />
-              <Spacer y={4} />
-              <SaleMessage saleMessage={selectedEditionSet.saleMessage} />
-            </>
-          )}
-        </>
+        <EditionSetPriceDisplay />
       )}
 
       {showButtonActions && (
