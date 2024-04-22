@@ -3,6 +3,8 @@ import { Text } from "@artsy/palette"
 import { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
 import { useTranslation } from "react-i18next"
 import { RouterLink } from "System/Router/RouterLink"
+import { useTracking } from "react-tracking"
+import { ActionType } from "@artsy/cohesion"
 
 export interface ShippingInformationProps {
   artwork: ArtworkSidebarShippingInformation_artwork$data
@@ -12,6 +14,14 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
   artwork: { shippingOrigin, shippingInfo, isUnlisted },
 }) => {
   const { t } = useTranslation()
+  const { trackEvent } = useTracking()
+  const payload = {
+    action: ActionType.clickedOnLearnMore,
+    context_module: "Sidebar",
+    subject: "Learn more",
+    type: "Link",
+    flow: "Shipping",
+  }
 
   if (isUnlisted) {
     return (
@@ -29,6 +39,9 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
             to="https://support.artsy.net/s/article/How-are-taxes-customs-VAT-and-import-fees-handled-on-works-listed-with-secure-checkout"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              trackEvent(payload)
+            }}
           >
             {t`artworkPage.sidebar.shippingAndTaxes.taxInformationLearnMore`}
           </RouterLink>
