@@ -7,7 +7,7 @@ import LockIcon from "@artsy/icons/LockIcon"
 import MoneyBackIcon from "@artsy/icons/MoneyBackIcon"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ActionType } from "@artsy/cohesion"
+import { ActionType, ClickedOnLearnMore } from "@artsy/cohesion"
 
 interface ArtworkSidebarArtsyGuaranteeProps {
   artwork: ArtworkSidebarArtsyGuarantee_artwork$key
@@ -26,13 +26,6 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuarantee
   )
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
-  const payload = {
-    action: ActionType.clickedOnLearnMore,
-    context_module: "Sidebar",
-    subject: "Learn more",
-    type: "Link",
-    flow: "Artsy Guarantee",
-  }
 
   if (data.isUnlisted) {
     return (
@@ -45,6 +38,14 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuarantee
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => {
+              const payload: ClickedOnLearnMore = {
+                action: ActionType.clickedOnLearnMore,
+                context_module: "Sidebar",
+                subject: "Learn more",
+                type: "Link",
+                flow: "Artsy Guarantee",
+              }
+
               trackEvent(payload)
             }}
           >
