@@ -125,7 +125,7 @@ const MetadataDetailItem: React.FC<MetadataDetailItemProps> = ({
           width="100%"
         >
           <Text variant="md">{title}</Text>
-          {isExpanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
+          {isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </Flex>
       </Clickable>
 
