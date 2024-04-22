@@ -408,11 +408,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     <>
       {inquiryComponent}
 
-      {!hasEditions ? (
-        <SaleMessageOrOfferDisplay />
-      ) : (
-        <EditionSetPriceDisplay />
-      )}
+      {hasEditions ? <EditionSetPriceDisplay /> : <SaleMessageOrOfferDisplay />}
 
       {showButtonActions && (
         <>
