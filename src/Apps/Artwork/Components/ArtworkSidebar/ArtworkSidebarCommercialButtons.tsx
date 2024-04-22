@@ -358,10 +358,6 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const SaleMessageOrOfferDisplay: FC = () => {
-    if (!showPrice) {
-      return null
-    }
-
     return (
       <>
         {partnerOffer ? (
@@ -408,7 +404,12 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     <>
       {inquiryComponent}
 
-      {hasEditions ? <EditionSetPriceDisplay /> : <SaleMessageOrOfferDisplay />}
+      {showPrice &&
+        (hasEditions ? (
+          <EditionSetPriceDisplay />
+        ) : (
+          <SaleMessageOrOfferDisplay />
+        ))}
 
       {showButtonActions && (
         <>
