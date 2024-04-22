@@ -1,11 +1,10 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Separator, Text } from "@artsy/palette"
-import { SystemContext } from "System/SystemContext"
+import { Box, Separator, Text } from "@artsy/palette"
+import { useSystemContext } from "System/SystemContext"
 import { logout } from "Utils/auth"
 import { getENV } from "Utils/getENV"
 import { userIsAdmin } from "Utils/user"
 import * as React from "react"
-import { useContext } from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
@@ -19,10 +18,18 @@ import GroupIcon from "@artsy/icons/GroupIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import LogoutIcon from "@artsy/icons/LogoutIcon"
 import SettingsIcon from "@artsy/icons/SettingsIcon"
+import LockIcon from "@artsy/icons/LockIcon"
+import BagIcon from "@artsy/icons/BagIcon"
+import {
+  NavBarUserMenuAvatar,
+  NavBarUserMenuAvatarSkeleton,
+} from "Components/NavBar/Menus/NavBarUserMenuAvatar"
+import { Suspense } from "react"
 
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
-  const { user } = useContext(SystemContext)
+
+  const { user } = useSystemContext()
 
   const trackClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const link = event.currentTarget
@@ -34,11 +41,10 @@ export const NavBarUserMenu: React.FC = () => {
 
     trackEvent({
       action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-      // @ts-ignore
       context_module:
         DeprecatedAnalyticsSchema.ContextModule.HeaderUserDropdown,
       subject: text,
-      destination_path: href!,
+      destination_path: href,
     })
   }
 
@@ -52,45 +58,64 @@ export const NavBarUserMenu: React.FC = () => {
 
   return (
     <Text variant="sm" py={1} width={230}>
-      {isAdmin && (
-        <NavBarMenuItemLink to={getENV("ADMIN_URL")} onClick={trackClick}>
-          Admin
+      {user && (
+        <NavBarMenuItemLink
+          aria-label="View your collected artworks"
+          to="/collector-profile/my-collection"
+          onClick={trackClick}
+          gap={1}
+        >
+          <Suspense fallback={<NavBarUserMenuAvatarSkeleton />}>
+            <NavBarUserMenuAvatar />
+          </Suspense>
+
+          <Box>
+            {user.name}
+
+            <Text
+              variant="xs"
+              color="black60"
+              style={{ textDecoration: "underline" }}
+            >
+              View Profile
+            </Text>
+          </Box>
         </NavBarMenuItemLink>
       )}
 
-      {(isAdmin || hasPartnerAccess) && (
-        <>
-          <NavBarMenuItemLink to={getENV("CMS_URL")} onClick={trackClick}>
-            CMS
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemLink
-            aria-label="View your purchases"
-            to="/settings/purchases"
-            onClick={trackClick}
-          >
-            Order History
-          </NavBarMenuItemLink>
-
-          <Separator as="hr" my={1} />
-        </>
-      )}
+      <Text variant="xxs" color="black60" px={2} pt={1} pb={0.5}>
+        My Collection
+      </Text>
 
       <NavBarMenuItemLink
-        aria-label="View your Collection"
+        aria-label="View your collected artworks"
         to="/collector-profile/my-collection"
         onClick={trackClick}
       >
-        <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
+        <ArtworkIcon mr={1} aria-hidden="true" /> Artworks
       </NavBarMenuItemLink>
 
       <NavBarMenuItemLink
-        aria-label="View your Collection's Insights"
+        aria-label="View your collected artists"
+        to="/collector-profile/artists"
+        onClick={trackClick}
+      >
+        <GroupIcon mr={1} aria-hidden="true" /> Artists
+      </NavBarMenuItemLink>
+
+      <NavBarMenuItemLink
+        aria-label="View your collection's insights"
         to="/collector-profile/insights"
         onClick={trackClick}
       >
         <GraphIcon mr={1} aria-hidden="true" /> Insights
       </NavBarMenuItemLink>
+
+      <Separator my={1} />
+
+      <Text variant="xxs" color="black60" px={2} pt={1} pb={0.5}>
+        Favorites
+      </Text>
 
       <ProgressiveOnboardingSaveHighlight
         position={{ top: "3.5px", left: "9.5px" }}
@@ -128,12 +153,37 @@ export const NavBarUserMenu: React.FC = () => {
         </NavBarMenuItemLink>
       </ProgressiveOnboardingAlertHighlight>
 
+      <Separator my={1} />
+
+      {isAdmin && (
+        <NavBarMenuItemLink to={getENV("ADMIN_URL")} onClick={trackClick}>
+          <LockIcon mr={1} aria-hidden="true" />
+          Admin
+        </NavBarMenuItemLink>
+      )}
+
+      {(isAdmin || hasPartnerAccess) && (
+        <NavBarMenuItemLink to={getENV("CMS_URL")} onClick={trackClick}>
+          <LockIcon mr={1} aria-hidden="true" />
+          CMS
+        </NavBarMenuItemLink>
+      )}
+
       <NavBarMenuItemLink
         aria-label="Edit your settings"
         to="/settings/edit-profile"
         onClick={trackClick}
       >
         <SettingsIcon mr={1} aria-hidden="true" /> Settings
+      </NavBarMenuItemLink>
+
+      <NavBarMenuItemLink
+        aria-label="View your purchases"
+        to="/settings/purchases"
+        onClick={trackClick}
+      >
+        <BagIcon mr={1} aria-hidden="true" />
+        Order History
       </NavBarMenuItemLink>
 
       <NavBarMenuItemButton
