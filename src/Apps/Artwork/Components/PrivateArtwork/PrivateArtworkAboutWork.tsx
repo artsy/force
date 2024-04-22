@@ -1,6 +1,8 @@
 import { Box, HTML, ReadMore, Spacer, Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
 import { PrivateArtworkAboutWork_artwork$key } from "__generated__/PrivateArtworkAboutWork_artwork.graphql"
+import { useTracking } from "react-tracking"
+import { ActionType } from "@artsy/cohesion"
 
 interface PrivateArtworkAboutWorkProps {
   artwork: PrivateArtworkAboutWork_artwork$key
@@ -17,6 +19,13 @@ export const PrivateArtworkAboutWork: React.FC<PrivateArtworkAboutWorkProps> = (
     `,
     artwork
   )
+  const { trackEvent } = useTracking()
+  const payload = {
+    action: ActionType.clickedOnReadMore,
+    context_module: "About the work",
+    subject: "Read more",
+    type: "Link",
+  }
 
   if (!data.additionalInformationHTML) {
     return null
@@ -37,6 +46,9 @@ export const PrivateArtworkAboutWork: React.FC<PrivateArtworkAboutWorkProps> = (
               inlineReadMoreLink={false}
               content={`${data.additionalInformationHTML}`}
               maxChars={200}
+              onReadMoreClicked={() => {
+                trackEvent(payload)
+              }}
             />
           </HTML>
         </>

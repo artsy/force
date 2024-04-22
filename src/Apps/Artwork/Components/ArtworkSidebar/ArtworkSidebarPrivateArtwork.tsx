@@ -4,6 +4,7 @@ import { ArtworkSidebarPrivateArtwork_artwork$key } from "__generated__/ArtworkS
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { RouterLink } from "System/Router/RouterLink"
 import { Box, Text } from "@artsy/palette"
+import { useTracking } from "react-tracking"
 
 interface ArtworkSidebarPrivateArtworkProps {
   artwork: ArtworkSidebarPrivateArtwork_artwork$key
@@ -15,6 +16,13 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
   const privateArtworksEnabled = useFeatureFlag(
     "amber_artwork_visibility_unlisted"
   )
+  const { trackEvent } = useTracking()
+  const payload = {
+    context_module: "Sidebar",
+    subject: "Gallery Name",
+    type: "Link",
+    flow: "Exclusive Access",
+  }
 
   const data = useFragment(
     graphql`
@@ -47,7 +55,12 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
     >
       <Text variant="sm">
         <b>Exclusive access.</b> This work was privately shared by{" "}
-        <RouterLink to={`/partner/${data.partner?.slug}`}>
+        <RouterLink
+          to={`/partner/${data.partner?.slug}`}
+          onClick={() => {
+            trackEvent(payload)
+          }}
+        >
           {data.partner?.name}
         </RouterLink>
       </Text>

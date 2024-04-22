@@ -13,6 +13,8 @@ import {
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { FollowButtonInlineCount } from "Components/FollowButton/Button"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
+import { useTracking } from "react-tracking"
+import { ActionType } from "@artsy/cohesion"
 
 interface PrivateArtworkAboutArtistProps {
   artwork: PrivateArtworkAboutArtist_artwork$key
@@ -72,6 +74,14 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
     data.artist?.partnerBiographyBlurb?.text ??
     data.artist?.biographyBlurb?.text ??
     ""
+
+  const { trackEvent } = useTracking()
+  const payload = {
+    action: ActionType.clickedOnReadMore,
+    context_module: "About the artist",
+    subject: "Read more",
+    type: "Link",
+  }
 
   return (
     <Box minHeight={275} width="100%" p={6} backgroundColor="black100">
@@ -153,6 +163,9 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
                     maxChars={190}
                     content={`${biographyBlurb}`}
                     inlineReadMoreLink={false}
+                    onReadMoreClicked={() => {
+                      trackEvent(payload)
+                    }}
                   />
                 </HTML>
               </>

@@ -6,6 +6,7 @@ import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import MoneyBackIcon from "@artsy/icons/MoneyBackIcon"
 import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtworkSidebarArtsyGuaranteeProps {
   artwork: ArtworkSidebarArtsyGuarantee_artwork$key
@@ -23,6 +24,13 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuarantee
     artwork
   )
   const { t } = useTranslation()
+  const { trackEvent } = useTracking()
+  const payload = {
+    context_module: "Sidebar",
+    subject: "Learn more",
+    type: "Link",
+    flow: "Artsy Guarantee",
+  }
 
   if (data.isUnlisted) {
     return (
@@ -34,6 +42,9 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuarantee
             to="/buyer-guarantee"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              trackEvent(payload)
+            }}
           >
             <Text variant="xs">
               {t("artworkPage.sidebar.artsyGuarantee.learnMore")}
