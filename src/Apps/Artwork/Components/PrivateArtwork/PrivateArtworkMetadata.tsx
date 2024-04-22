@@ -102,6 +102,7 @@ const MetadataDetailItem: React.FC<MetadataDetailItemProps> = ({
   const [isExpanded, setIsExpanded] = useState(expanded)
   const { trackEvent } = useTracking()
   const payload = {
+    action: "Click",
     context_module: "About the work",
     context_owner_type: "artwork",
     expand: !isExpanded,

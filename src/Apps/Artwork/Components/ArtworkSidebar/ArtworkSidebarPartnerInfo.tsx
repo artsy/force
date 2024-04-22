@@ -61,6 +61,7 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   const handlePartnerNameClick = () => {
     if (isUnlisted) {
       trackEvent({
+        action: "Click",
         context_module: "Sidebar",
         subject: "Gallery Name",
         type: "Link",

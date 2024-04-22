@@ -18,6 +18,7 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
   )
   const { trackEvent } = useTracking()
   const payload = {
+    action: "Click",
     context_module: "Sidebar",
     subject: "Gallery Name",
     type: "Link",

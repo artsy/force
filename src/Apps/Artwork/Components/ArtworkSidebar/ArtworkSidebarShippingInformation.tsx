@@ -4,6 +4,7 @@ import { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/Ar
 import { useTranslation } from "react-i18next"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTracking } from "react-tracking"
+import { ActionType } from "@artsy/cohesion"
 
 export interface ShippingInformationProps {
   artwork: ArtworkSidebarShippingInformation_artwork$data
@@ -15,6 +16,7 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
   const payload = {
+    action: ActionType.clickedOnLearnMore,
     context_module: "Sidebar",
     subject: "Learn more",
     type: "Link",
