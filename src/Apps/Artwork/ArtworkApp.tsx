@@ -260,13 +260,13 @@ export const ArtworkApp: React.FC<Props> = props => {
           <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
           {isPrivateArtwork ? (
-            <>
+            <Media greaterThanOrEqual="sm">
               <Spacer y={6} />
 
               <PrivateArtworkDetails artwork={artwork} />
 
               <Spacer y={6} />
-            </>
+            </Media>
           ) : (
             <Media greaterThanOrEqual="sm">
               <BelowTheFoldArtworkDetails
@@ -280,6 +280,15 @@ export const ArtworkApp: React.FC<Props> = props => {
           <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
         </Column>
       </GridColumns>
+      {isPrivateArtwork && (
+        <Media lessThan="sm">
+          <Spacer y={6} />
+
+          <PrivateArtworkDetails artwork={artwork} />
+
+          <Spacer y={6} />
+        </Media>
+      )}
       {!isPrivateArtwork && (
         <>
           <Media lessThan="sm">

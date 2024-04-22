@@ -11,7 +11,6 @@ import {
   Stack,
 } from "@artsy/palette"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { FollowButtonInlineCount } from "Components/FollowButton/Button"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import { useTracking } from "react-tracking"
 import { ActionType, ClickedOnReadMore } from "@artsy/cohesion"
@@ -78,7 +77,13 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
   const { trackEvent } = useTracking()
 
   return (
-    <Box minHeight={275} width="100%" p={6} backgroundColor="black100">
+    <Box
+      minHeight={275}
+      width="100%"
+      px={[2, 6]}
+      py={[4, 6]}
+      backgroundColor="black100"
+    >
       <Text variant="md" color="white100">
         About the Artist
       </Text>
@@ -124,22 +129,18 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
                     return (
                       <Stack gap={0.5} flexDirection="row" alignItems="center">
                         <Box color="white100">{label}</Box>
-
-                        {!!data.artist?.counts?.follows && (
-                          <FollowButtonInlineCount
-                            display={["block", "none"]}
-                            color="white100"
-                          >
-                            {formatFollowerCount(data.artist.counts.follows)}
-                          </FollowButtonInlineCount>
-                        )}
                       </Stack>
                     )
                   }}
                 </FollowArtistButtonQueryRenderer>
 
                 {followsCount > 0 && (
-                  <Text variant="xs" color="white100">
+                  <Text
+                    variant="xs"
+                    color="white100"
+                    ml={0.5}
+                    style={{ whiteSpace: "nowrap" }}
+                  >
                     {followsCount} {followsCount > 1 ? "Followers" : "Follower"}
                   </Text>
                 )}
@@ -150,9 +151,9 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
           <>
             {biographyBlurb && (
               <>
-                <Spacer y={2} />
+                <Spacer y={4} />
 
-                <HTML variant="lg" color="white100">
+                <HTML variant="md" color="white100">
                   <ReadMore
                     maxChars={190}
                     content={`${biographyBlurb}`}
