@@ -381,11 +381,13 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     )
   }
 
+  const hasEditions = (artwork?.editionSets?.length ?? 0) > 1
+
   return (
     <>
       {inquiryComponent}
 
-      {(artwork?.editionSets?.length ?? 0) < 2 ? (
+      {!hasEditions ? (
         <SaleMessageOrOfferDisplay />
       ) : (
         <>
