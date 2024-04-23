@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36b2dbba82ccd3cf8b3da3e9593db517>>
+ * @generated SignedSource<<61fb29412f2aba387a077895903d69f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -99,6 +99,25 @@ return {
                 "name": "slug",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Profile",
+                "kind": "LinkedField",
+                "name": "profile",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "isPubliclyVisible",
+                    "storageKey": null
+                  },
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              },
               (v1/*: any*/)
             ],
             "storageKey": null
@@ -124,12 +143,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b1b1c7a4511e767ff913827b52df48ed",
+    "cacheID": "fd8708252c2fc65ee53052bd3a8744b7",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarPrivateArtworkQuery",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPrivateArtworkQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkSidebarPrivateArtwork_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPrivateArtwork_artwork on Artwork {\n  partner {\n    name\n    slug\n    id\n  }\n  visibilityLevel\n  additionalInformation\n}\n"
+    "text": "query ArtworkSidebarPrivateArtworkQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkSidebarPrivateArtwork_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPrivateArtwork_artwork on Artwork {\n  partner {\n    name\n    slug\n    profile {\n      isPubliclyVisible\n      id\n    }\n    id\n  }\n  visibilityLevel\n  additionalInformation\n}\n"
   }
 };
 })();

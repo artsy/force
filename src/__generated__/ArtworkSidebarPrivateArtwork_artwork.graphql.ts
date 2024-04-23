@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ff3b27e80002ec2df5dd8b6de08f358>>
+ * @generated SignedSource<<e855a952e72994dd2a43a4245529a0e4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,9 @@ export type ArtworkSidebarPrivateArtwork_artwork$data = {
   readonly additionalInformation: string | null | undefined;
   readonly partner: {
     readonly name: string | null | undefined;
+    readonly profile: {
+      readonly isPubliclyVisible: boolean | null | undefined;
+    } | null | undefined;
     readonly slug: string;
   } | null | undefined;
   readonly visibilityLevel: Visibility | null | undefined;
@@ -52,6 +55,24 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "slug",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Profile",
+          "kind": "LinkedField",
+          "name": "profile",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isPubliclyVisible",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -75,6 +96,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "36a3d135f0df1038a6b1277192d349dc";
+(node as any).hash = "7b7dd48feab1906fdc66cd789cca2fe8";
 
 export default node;

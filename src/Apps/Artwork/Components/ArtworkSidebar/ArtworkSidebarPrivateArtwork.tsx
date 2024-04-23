@@ -24,6 +24,9 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
         partner {
           name
           slug
+          profile {
+            isPubliclyVisible
+          }
         }
         visibilityLevel
         additionalInformation
@@ -49,22 +52,26 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
     >
       <Text variant="sm">
         <b>Exclusive access.</b> This work was privately shared by{" "}
-        <RouterLink
-          to={`/partner/${data.partner?.slug}`}
-          onClick={() => {
-            const payload = {
-              action: "Click",
-              context_module: "Sidebar",
-              subject: "Gallery Name",
-              type: "Link",
-              flow: "Exclusive Access",
-            }
+        {data.partner?.profile?.isPubliclyVisible ? (
+          <RouterLink
+            to={`/partner/${data.partner?.slug}`}
+            onClick={() => {
+              const payload = {
+                action: "Click",
+                context_module: "Sidebar",
+                subject: "Gallery Name",
+                type: "Link",
+                flow: "Exclusive Access",
+              }
 
-            trackEvent(payload)
-          }}
-        >
-          {data.partner?.name}
-        </RouterLink>
+              trackEvent(payload)
+            }}
+          >
+            {data.partner?.name}
+          </RouterLink>
+        ) : (
+          data.partner?.name
+        )}
       </Text>
     </Box>
   )
