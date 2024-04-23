@@ -17,6 +17,7 @@ interface ArtworkSidebarPartnerInfoProps {
 interface PartnerNameProps {
   partner: ArtworkSidebarPartnerInfoProps["artwork"]["partner"]
   sale: ArtworkSidebarPartnerInfoProps["artwork"]["sale"]
+  handlePartnerNameClick: any
 }
 
 const PartnerContainer = styled(Box)`
@@ -34,7 +35,7 @@ const StyledPartnerLink = styled(RouterLink)`
 const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   artwork,
 }) => {
-  const { internalID, partner, sale, slug, isInquireable } = artwork
+  const { internalID, partner, sale, slug, isInquireable, isUnlisted } = artwork
 
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
@@ -57,6 +58,18 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
     showInquiry({ enableCreateAlert: true })
   }
 
+  const handlePartnerNameClick = () => {
+    if (isUnlisted) {
+      trackEvent({
+        action: "Click",
+        context_module: "Sidebar",
+        subject: "Gallery Name",
+        type: "Link",
+        flow: "Exclusive Access",
+      })
+    }
+  }
+
   const hasCities = partner?.cities && partner.cities.length > 0
 
   if (!partner) {
@@ -67,7 +80,11 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
     <>
       <Flex alignItems="center" justifyContent="space-between">
         <PartnerContainer>
-          <PartnerName partner={partner} sale={sale} />
+          <PartnerName
+            partner={partner}
+            sale={sale}
+            handlePartnerNameClick={handlePartnerNameClick}
+          />
           {hasCities && (
             <Text variant="xs" color="black60">
               {limitWithCount(partner.cities as string[], 2).join(", ")}
@@ -87,7 +104,11 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   )
 }
 
-const PartnerName: React.FC<PartnerNameProps> = ({ partner, sale }) => {
+const PartnerName: React.FC<PartnerNameProps> = ({
+  partner,
+  sale,
+  handlePartnerNameClick,
+}) => {
   if (sale) {
     return (
       <Text variant="sm-display">
@@ -104,7 +125,11 @@ const PartnerName: React.FC<PartnerNameProps> = ({ partner, sale }) => {
 
   return partner.href ? (
     <Text variant="sm-display">
-      <StyledPartnerLink textDecoration="none" to={partner.href}>
+      <StyledPartnerLink
+        textDecoration="none"
+        to={partner.href}
+        onClick={handlePartnerNameClick}
+      >
         {partner.name}
       </StyledPartnerLink>
     </Text>
@@ -121,6 +146,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
         internalID
         slug
         isInquireable
+        isUnlisted
         partner {
           name
           href

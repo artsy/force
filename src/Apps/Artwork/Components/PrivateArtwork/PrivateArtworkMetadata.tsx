@@ -12,6 +12,7 @@ import {
 import { useState } from "react"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
+import { useTracking } from "react-tracking"
 interface PrivateArtworkMetadataProps {
   artwork: PrivateArtworkMetadata_artwork$key
 }
@@ -99,10 +100,25 @@ const MetadataDetailItem: React.FC<MetadataDetailItemProps> = ({
   expanded = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState(expanded)
+  const { trackEvent } = useTracking()
 
   return (
     <Box>
-      <Clickable onClick={() => setIsExpanded(!isExpanded)} width="100%">
+      <Clickable
+        onClick={() => {
+          const payload = {
+            action: "Click",
+            context_module: "About the work",
+            context_owner_type: "artwork",
+            expand: !isExpanded,
+            subject: title,
+          }
+
+          trackEvent(payload)
+          setIsExpanded(!isExpanded)
+        }}
+        width="100%"
+      >
         <Flex
           flexDirection="row"
           justifyContent="space-between"
@@ -110,7 +126,7 @@ const MetadataDetailItem: React.FC<MetadataDetailItemProps> = ({
           width="100%"
         >
           <Text variant="md">{title}</Text>
-          {isExpanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
+          {isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </Flex>
       </Clickable>
 

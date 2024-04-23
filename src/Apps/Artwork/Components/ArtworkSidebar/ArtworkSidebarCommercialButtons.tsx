@@ -358,10 +358,6 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const SaleMessageOrOfferDisplay: FC = () => {
-    if (!showPrice) {
-      return null
-    }
-
     return (
       <>
         {partnerOffer ? (
@@ -381,30 +377,39 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     )
   }
 
+  const EditionSetPriceDisplay: FC = () => {
+    return (
+      <>
+        <Separator />
+        <ArtworkSidebarEditionSetFragmentContainer
+          artwork={artwork}
+          selectedEditionSet={selectedEditionSet as EditionSet}
+          onSelectEditionSet={setSelectedEditionSet}
+        />
+
+        {!!selectedEditionSet && (
+          <>
+            <Separator />
+            <Spacer y={4} />
+            <SaleMessage saleMessage={selectedEditionSet.saleMessage} />
+          </>
+        )}
+      </>
+    )
+  }
+
+  const hasEditions = (artwork?.editionSets?.length ?? 0) > 1
+
   return (
     <>
       {inquiryComponent}
 
-      {(artwork?.editionSets?.length ?? 0) < 2 ? (
-        <SaleMessageOrOfferDisplay />
-      ) : (
-        <>
-          <Separator />
-          <ArtworkSidebarEditionSetFragmentContainer
-            artwork={artwork}
-            selectedEditionSet={selectedEditionSet as EditionSet}
-            onSelectEditionSet={setSelectedEditionSet}
-          />
-
-          {!!selectedEditionSet && (
-            <>
-              <Separator />
-              <Spacer y={4} />
-              <SaleMessage saleMessage={selectedEditionSet.saleMessage} />
-            </>
-          )}
-        </>
-      )}
+      {showPrice &&
+        (hasEditions ? (
+          <EditionSetPriceDisplay />
+        ) : (
+          <SaleMessageOrOfferDisplay />
+        ))}
 
       {showButtonActions && (
         <>

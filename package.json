@@ -78,14 +78,14 @@
     "superagent": "3.8.3"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.172.0",
+    "@artsy/cohesion": "4.173.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/dismissible": "^0.3.2",
     "@artsy/eigen-web-association": "^1.6.0",
     "@artsy/express-reloadable": "^1.7.0",
     "@artsy/fresnel": "3.5.0",
-    "@artsy/icons": "3.17.0",
+    "@artsy/icons": "3.18.0",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "38.8.0",
