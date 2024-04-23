@@ -1,5 +1,5 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { Box, Flex, ResponsiveBox } from "@artsy/palette"
+import { Box, Flex, ResponsiveBox, Tooltip } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { MagnifyImage } from "Components/MagnifyImage"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -31,6 +31,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   to?: string | null
   savedListId?: string
   renderSaveButton?: (artworkId: string) => React.ReactNode
+  tooltipText?: string
 }
 
 export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
@@ -46,6 +47,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   to,
   savedListId,
   renderSaveButton,
+  tooltipText,
   ...rest
 }) => {
   const localImage = useLocalImage(artwork.image)
@@ -94,6 +96,18 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
             paddingBottom: imagePlaceholder,
           }}
         >
+          {!!tooltipText && (
+            <Tooltip
+              variant="defaultDark"
+              offset={10}
+              pointer
+              placement="top-start"
+              visible
+              content={tooltipText}
+            >
+              <div />
+            </Tooltip>
+          )}
           <LinkContainer
             artwork={artwork}
             disableRouterLinking={disableRouterLinking}
@@ -106,6 +120,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
               lazyLoad={lazyLoad}
               localImage={localImage}
             />
+            {/* </Tooltip> */}
           </LinkContainer>
           <ExclusiveAccessBadge artwork={artwork} />
           <Badge artwork={artwork} />

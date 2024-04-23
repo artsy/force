@@ -6,6 +6,7 @@ import {
   ResponsiveBox,
   SkeletonBox,
   Spacer,
+  Tooltip,
 } from "@artsy/palette"
 import { FlatGridItemFragmentContainer } from "Components/Artwork/FlatGridItem"
 import GridItem, {
@@ -151,6 +152,10 @@ export class ArtworkGridContainer extends React.Component<
     }
     const sections = []
 
+    const firstP1Artwork = extractNodes(this.props.artworks).find(
+      artwork => artwork?.artist?.targetSupply?.priority
+    )
+
     for (let column = 0; column < columnCount; column++) {
       const artworkComponents = []
       for (let row = 0; row < sectionedArtworks[column].length; row++) {
@@ -177,6 +182,11 @@ export class ArtworkGridContainer extends React.Component<
                 this.props.onBrickClick(artwork, artworkIndex)
               }
             }}
+            tooltipText={
+              firstP1Artwork?.id === artwork.id
+                ? "These statistics are based on the last 36 months of auction sale data from top commercial auction houses."
+                : undefined
+            }
             showHighDemandIcon={showHighDemandIcon}
             showHoverDetails={
               showHoverDetails === undefined ? true : showSaveButton
@@ -315,6 +325,12 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
       ) {
       edges {
         node {
+          artist {
+            targetSupply {
+              priority
+              isP1
+            }
+          }
           id
           slug
           href

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d70a3ee096bec95d3aabfdf25d06bad>>
+ * @generated SignedSource<<9aa2831f6577c93ce8ec13e11b671fef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,16 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkGrid_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
+      readonly artist: {
+        readonly targetSupply: {
+          readonly priority: ArtistTargetSupplyPriority | null | undefined;
+        };
+      } | null | undefined;
       readonly href: string | null | undefined;
       readonly id: string;
       readonly image: {
@@ -60,6 +66,35 @@ return {
           "name": "node",
           "plural": false,
           "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Artist",
+              "kind": "LinkedField",
+              "name": "artist",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "ArtistTargetSupply",
+                  "kind": "LinkedField",
+                  "name": "targetSupply",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "priority",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
             {
               "alias": null,
               "args": null,
@@ -134,6 +169,6 @@ return {
 };
 })();
 
-(node as any).hash = "90c729196de9afdcbd1c13676338c718";
+(node as any).hash = "f77a7ab0e79f697a29407b702abe7578";
 
 export default node;

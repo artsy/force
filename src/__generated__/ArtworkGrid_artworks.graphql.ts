@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b67f2a7af3e9e284fb7b4096d013618e>>
+ * @generated SignedSource<<aae507ef93e385c024210a3ad908517c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,17 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkGrid_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
+      readonly artist: {
+        readonly targetSupply: {
+          readonly isP1: boolean | null | undefined;
+          readonly priority: ArtistTargetSupplyPriority | null | undefined;
+        };
+      } | null | undefined;
       readonly href: string | null | undefined;
       readonly id: string;
       readonly image: {
@@ -58,6 +65,42 @@ const node: ReaderFragment = {
           "name": "node",
           "plural": false,
           "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Artist",
+              "kind": "LinkedField",
+              "name": "artist",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "ArtistTargetSupply",
+                  "kind": "LinkedField",
+                  "name": "targetSupply",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "priority",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isP1",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
             {
               "alias": null,
               "args": null,
@@ -131,6 +174,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isArtworkConnectionInterface"
 };
 
-(node as any).hash = "06779604fb6132105ed09f08851b1eba";
+(node as any).hash = "fe8ee985d84256ded0fb73c78e2b5c9f";
 
 export default node;

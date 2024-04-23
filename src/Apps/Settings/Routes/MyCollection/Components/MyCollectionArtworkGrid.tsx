@@ -6,6 +6,11 @@ export const MyCollectionArtworkGrid = createFragmentContainer(ArtworkGrid, {
     fragment MyCollectionArtworkGrid_artworks on MyCollectionConnection {
       edges {
         node {
+          artist {
+            targetSupply {
+              priority
+            }
+          }
           id
           slug
           href
