@@ -322,11 +322,10 @@ export const ArtworkApp: React.FC<Props> = props => {
           <Spacer y={6} />
 
           <RecentlyViewed />
-
-          {!!submittedOrderId && (
-            <SubmittedOrderModalQueryRenderer orderId={submittedOrderId} />
-          )}
         </>
+      )}
+      {!!submittedOrderId && (
+        <SubmittedOrderModalQueryRenderer orderId={submittedOrderId} />
       )}
     </>
   )
