@@ -1,38 +1,36 @@
 import { FC, useState } from "react"
 import { Button, Input, TextArea, Text, Spacer, Flex } from "@artsy/palette"
-import { ChatCompletionStream } from "openai/lib/ChatCompletionStream"
+import { useSystemContext } from "System/SystemContext"
 
 export const ArtAdvisorApp: FC = () => {
   const [userInput, setUserInput] = useState<string>("")
   const [messages, setMessages] = useState<string>("")
 
+  const { user } = useSystemContext()
+
   const onSubmit = async () => {
     const res = await fetch("http://localhost:3000", {
       method: "POST",
       body: userInput,
-      headers: { "Content-Type": "text/plain" },
+      headers: {
+        "Content-Type": "text/plain",
+        "X-ACCESS-TOKEN": user?.accessToken || "",
+      },
     })
 
-    setMessages(messages + `USER: ${userInput}` + "\n")
+    const parsedRespone = await res.text()
 
-    // @ts-expect-error ReadableStream on different environments can be strange
-    const runner = ChatCompletionStream.fromReadableStream(res.body)
-
-    runner.on("content", (delta, snapshot) => {
-      setMessages(
-        messages +
-          "USER: " +
-          userInput +
-          "\n" +
-          "\n" +
-          "ART ADVISOR: " +
-          snapshot +
-          "\n" +
-          "\n"
-      )
-    })
-
-    console.dir(await runner.finalChatCompletion(), { depth: null })
+    setMessages(
+      messages +
+        "USER: " +
+        userInput +
+        "\n" +
+        "\n" +
+        "ART ADVISOR: " +
+        parsedRespone +
+        "\n" +
+        "\n"
+    )
   }
 
   return (
