@@ -269,6 +269,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
       fragment GridItem_artwork on Artwork
         @argumentDefinitions(
           includeAllImages: { type: "Boolean", defaultValue: false }
+          includeBlurHash: { type: "Boolean", defaultValue: true }
         ) {
         internalID
         title
@@ -279,7 +280,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
           url(version: ["larger", "large"])
           aspectRatio
           versions
-          blurhashDataURL
+          blurhashDataURL @include(if: $includeBlurHash)
         }
         artistNames
         href

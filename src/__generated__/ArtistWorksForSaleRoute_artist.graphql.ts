@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95e37c81cbc31c37cdffd3b5e9bee9ec>>
+ * @generated SignedSource<<f48103eca2d0b7ed22725694dcc8013b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,6 +45,11 @@ const node: ReaderFragment = {
       "name": "aggregations"
     },
     {
+      "defaultValue": true,
+      "kind": "LocalArgument",
+      "name": "includeBlurHash"
+    },
+    {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "input"
@@ -56,6 +61,11 @@ const node: ReaderFragment = {
   "selections": [
     {
       "args": [
+        {
+          "kind": "Variable",
+          "name": "includeBlurHash",
+          "variableName": "includeBlurHash"
+        },
         {
           "kind": "Variable",
           "name": "input",
@@ -196,6 +206,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e4105285dbcb7340032c6766dabffed6";
+(node as any).hash = "8f7593a9492582383f44b6690d67dbfb";
 
 export default node;

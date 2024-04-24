@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1f8e220dd2d450efa54fa353b984a6ff>>
+ * @generated SignedSource<<10b84819e7571de7f7a08cf5fc0923ba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,7 +41,13 @@ var v0 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": true,
+      "kind": "LocalArgument",
+      "name": "includeBlurHash"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkFilterArtworkGrid_filtered_artworks",
@@ -112,7 +118,13 @@ return {
       "storageKey": null
     },
     {
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "includeBlurHash",
+          "variableName": "includeBlurHash"
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "ArtworkGrid_artworks"
     }
@@ -122,6 +134,6 @@ return {
 };
 })();
 
-(node as any).hash = "04cd49aefae4484840f678821ea905e1";
+(node as any).hash = "e6296fabcc752b9bb5de3add8435132d";
 
 export default node;
