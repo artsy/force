@@ -28,7 +28,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
   artworks,
   collection,
 }) => {
-  const merchandisableArtists = artworks.merchandisableArtists ?? []
+  const merchandisableArtists = artworks?.merchandisableArtists ?? []
   const hasMultipleArtists = merchandisableArtists.length > 1
 
   const featuredArtists = getFeaturedArtists(
