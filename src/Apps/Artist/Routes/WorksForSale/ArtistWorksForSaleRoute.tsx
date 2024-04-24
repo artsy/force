@@ -45,8 +45,10 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
         @argumentDefinitions(
           aggregations: { type: "[ArtworkAggregation]" }
           input: { type: "FilterArtworksInput" }
+          includeBlurHash: { type: "Boolean!", defaultValue: true }
         ) {
-        ...ArtistArtworkFilter_artist @arguments(input: $input)
+        ...ArtistArtworkFilter_artist
+          @arguments(input: $input, includeBlurHash: $includeBlurHash)
         ...ArtistWorksForSaleEmpty_artist
         meta(page: ARTWORKS) {
           description

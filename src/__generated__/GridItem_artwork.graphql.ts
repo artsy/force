@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c0da139f4d58c43a441be3318d58b645>>
+ * @generated SignedSource<<a77f4b839eacc17905666dda062783d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type GridItem_artwork$data = {
   readonly href: string | null | undefined;
   readonly image: {
     readonly aspectRatio: number;
-    readonly blurhashDataURL: string | null | undefined;
+    readonly blurhashDataURL?: string | null | undefined;
     readonly internalID: string | null | undefined;
     readonly placeholder: string | null | undefined;
     readonly url: string | null | undefined;
@@ -46,6 +46,11 @@ return {
       "defaultValue": false,
       "kind": "LocalArgument",
       "name": "includeAllImages"
+    },
+    {
+      "defaultValue": true,
+      "kind": "LocalArgument",
+      "name": "includeBlurHash"
     }
   ],
   "kind": "Fragment",
@@ -120,11 +125,18 @@ return {
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "blurhashDataURL",
-          "storageKey": null
+          "condition": "includeBlurHash",
+          "kind": "Condition",
+          "passingValue": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "blurhashDataURL",
+              "storageKey": null
+            }
+          ]
         }
       ],
       "storageKey": null
@@ -164,6 +176,6 @@ return {
 };
 })();
 
-(node as any).hash = "af16dfedac36ce36127a9f02c69734bc";
+(node as any).hash = "06eda6f11f96c259aef0f255552cdeff";
 
 export default node;
