@@ -23,28 +23,29 @@ describe("ArtworkMeta", () => {
     return { meta }
   }
 
-  const artwork: ArtworkMeta_artwork$data = {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    " $fragmentRef": null,
-    " $refType": null,
-    visibilityLevel: "UNLISTED",
-    href: "https://www.fun.com",
-    isShareable: true,
-    metaImage: {
-      resized: null,
-    },
-    meta: {
-      description: "The loveliest artwork",
-      longDescription: null,
-      title: "Fancy art",
-    },
-  }
-
   afterEach(() => {
     document.getElementsByTagName("html")[0].innerHTML = ""
   })
 
   describe("unlisted artworks", () => {
+    const artwork: ArtworkMeta_artwork$data = {
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      " $fragmentRef": null,
+      " $refType": null,
+      isUnlisted: true,
+      internalID: "662658cd2bfa240016cd95fe",
+      href: "https://staging.artsy.net/artwork/662658cd2bfa240016cd95fe",
+      isShareable: true,
+      metaImage: {
+        resized: null,
+      },
+      meta: {
+        description: "The loveliest artwork",
+        longDescription: null,
+        title: "Fancy art",
+      },
+    }
+
     it("renders a noindex meta tag for robots", () => {
       mount(
         <MockBoot>
@@ -67,8 +68,9 @@ describe("ArtworkMeta", () => {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       " $fragmentRef": null,
       " $refType": null,
-      visibilityLevel: "LISTED",
-      href: "https://www.fun.com",
+      isUnlisted: false,
+      internalID: "662658cd2bfa240016cd95fe",
+      href: "https://staging.artsy.net/artwork/artist-name-artwork-title",
       isShareable: true,
       metaImage: {
         resized: null,
@@ -90,6 +92,26 @@ describe("ArtworkMeta", () => {
       const tags = getTags()
 
       expect(tags.meta.find(tag => tag.name === "robots")).toEqual(undefined)
+    })
+
+    it("renders a noindex meta tag for robots when private artwork URL visited", () => {
+      const updated_artwork = Object.assign({}, artwork, {
+        href: "https://staging.artsy.net/artwork/662658cd2bfa240016cd95fe",
+      })
+
+      mount(
+        <MockBoot>
+          <ArtworkMeta artwork={updated_artwork} />
+        </MockBoot>
+      )
+
+      const tags = getTags()
+
+      expect(tags.meta.find(tag => tag.name === "robots")).toEqual({
+        name: "robots",
+        property: null,
+        content: "noindex, follow",
+      })
     })
   })
 })

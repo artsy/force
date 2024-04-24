@@ -38,7 +38,8 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
   render() {
     const { artwork } = this.props
     const imageURL = get(artwork, a => a.metaImage?.resized?.url)
-    const addNoIndex = artwork?.visibilityLevel == "UNLISTED"
+    const addNoIndex =
+      artwork?.isUnlisted || artwork?.href?.includes(artwork?.internalID) // a previously private artwork URL
 
     return (
       <>
@@ -85,8 +86,9 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
         ...SeoDataForArtwork_artwork
         ...ArtworkChatBubble_artwork
         href
+        internalID
         isShareable
-        visibilityLevel
+        isUnlisted
         metaImage: image {
           resized(
             width: 640
