@@ -55,6 +55,8 @@ interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
   to?: (artwork: Artwork) => string | null
   savedListId?: string
   renderSaveButton?: (artworkId: string) => React.ReactNode
+  popoverContent?: ReactNode | null
+  onPopoverDismiss?: () => void
 }
 
 export interface ArtworkGridContainerState {
@@ -150,6 +152,9 @@ export class ArtworkGridContainer extends React.Component<
       height: this.props.itemMargin,
     }
     const sections = []
+    const firstP1Artwork = extractNodes(this.props.artworks).find(
+      artwork => (artwork as any)?.artist?.targetSupply?.priority === "TRUE"
+    )
 
     for (let column = 0; column < columnCount; column++) {
       const artworkComponents = []
@@ -187,6 +192,12 @@ export class ArtworkGridContainer extends React.Component<
             to={to?.(artwork)}
             savedListId={this.props.savedListId}
             renderSaveButton={this.props.renderSaveButton}
+            popoverContent={
+              firstP1Artwork?.id == artwork.id
+                ? this.props.popoverContent
+                : null
+            }
+            onPopoverDismiss={this.props.onPopoverDismiss}
           />
         )
         // Setting a marginBottom on the artwork component didn’t work, so using a spacer view instead.

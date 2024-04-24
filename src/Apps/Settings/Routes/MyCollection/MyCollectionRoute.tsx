@@ -1,4 +1,12 @@
-import { Box, Button, Flex, FullBleed, useTheme } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Flex,
+  FullBleed,
+  Popover,
+  useTheme,
+  Text,
+} from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
@@ -15,6 +23,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { cleanLocalImages } from "Utils/localImageHelpers"
 import { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
+import { Z } from "Apps/Components/constants"
 
 export interface MyCollectionRouteProps {
   me: MyCollectionRoute_me$data
@@ -99,19 +108,36 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
             </Sticky>
           </Box>
 
-          <MyCollectionArtworkGrid
-            artworks={myCollectionConnection}
-            columnCount={[2, 3, 4, 4]}
-            showHoverDetails={false}
-            showArtworksWithoutImages
-            hideSaleInfo
-            to={artwork =>
-              `/collector-profile/my-collection/artwork/${artwork.internalID}`
+          <Popover
+            popover={
+              <Text variant="xs">
+                <strong>Interested in Selling This Work?</strong>
+                <br />
+                Let our experts find the best sales option for you.
+              </Text>
             }
-            showHighDemandIcon
-            showSaveButton={false}
-            onLoadMore={handleLoadMore}
-          />
+            width={250}
+            variant="defaultDark"
+            pointer
+            visible
+            ignoreClickOutside
+            zIndex={Z.popover}
+            manageFocus={false}
+            placement="top"
+            key={"key"}
+            onDismiss={() => {}}
+          >
+            {({ anchorRef }) => {
+              return (
+                <Box ref={anchorRef as any}>
+                  <MyCollectionArtworkGrid
+                    artworks={myCollectionConnection}
+                    onLoadMore={handleLoadMore}
+                  />
+                </Box>
+              )
+            }}
+          </Popover>
 
           {relay.hasMore() && (
             <Box textAlign="center" mt={4}>
@@ -141,6 +167,7 @@ export const MyCollectionRoutePaginationContainer = createPaginationContainer(
           first: $count
           after: $cursor
           sort: CREATED_AT_DESC
+          pushP1ArtworkToTheTop: $pushP1ArtworkToTheTop
         )
           @connection(
             key: "MyCollectionRoute_myCollectionConnection"
