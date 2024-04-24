@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbdf9fba2a51d91b25dceec68fe1bbba>>
+ * @generated SignedSource<<6d1940b0edfbbe8d006b9cbe576d9cf6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,12 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkMeta_artwork$data = {
   readonly href: string | null | undefined;
+  readonly internalID: string;
   readonly isShareable: boolean | null | undefined;
+  readonly isUnlisted: boolean;
   readonly meta: {
     readonly description: string | null | undefined;
     readonly longDescription: string | null | undefined;
@@ -26,7 +27,6 @@ export type ArtworkMeta_artwork$data = {
       readonly width: number | null | undefined;
     } | null | undefined;
   } | null | undefined;
-  readonly visibilityLevel: Visibility | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkChatBubble_artwork" | "SeoDataForArtwork_artwork">;
   readonly " $fragmentType": "ArtworkMeta_artwork";
 };
@@ -62,6 +62,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "isShareable",
       "storageKey": null
     },
@@ -69,7 +76,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "visibilityLevel",
+      "name": "isUnlisted",
       "storageKey": null
     },
     {
@@ -184,6 +191,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f13b62790cebb912dd6a4615657fbeb7";
+(node as any).hash = "ecc902103df8ffccc4d3afa722284fa5";
 
 export default node;

@@ -16,7 +16,7 @@ import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser/ArtworkImageBrowser"
-import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
+import { ArtworkMeta } from "./Components/ArtworkMeta"
 import { ArtworkRelatedArtistsQueryRenderer } from "./Components/ArtworkRelatedArtists"
 import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
@@ -247,7 +247,7 @@ export const ArtworkApp: React.FC<Props> = props => {
       <UseRecordArtworkView />
       <ArtworkPageBanner artwork={artwork} me={me} />
 
-      <ArtworkMetaFragmentContainer artwork={artwork} />
+      <ArtworkMeta artwork={artwork} />
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
       <ArtworkAuctionCreateAlertHeaderFragmentContainer artwork={artwork} />
       <GridColumns>
