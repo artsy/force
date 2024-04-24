@@ -1,5 +1,5 @@
 import { FC, useState } from "react"
-import { Button, Input, TextArea, Text } from "@artsy/palette"
+import { Button, Input, TextArea, Text, Spacer, Flex } from "@artsy/palette"
 import { ChatCompletionStream } from "openai/lib/ChatCompletionStream"
 
 export const ArtAdvisorApp: FC = () => {
@@ -7,17 +7,29 @@ export const ArtAdvisorApp: FC = () => {
   const [messages, setMessages] = useState<string>("")
 
   const onSubmit = async () => {
-    console.log("ABOUT TO SEND", userInput)
     const res = await fetch("http://localhost:3000", {
       method: "POST",
       body: userInput,
       headers: { "Content-Type": "text/plain" },
     })
+
+    setMessages(messages + `USER: ${userInput}` + "\n")
+
     // @ts-expect-error ReadableStream on different environments can be strange
     const runner = ChatCompletionStream.fromReadableStream(res.body)
 
     runner.on("content", (delta, snapshot) => {
-      setMessages(messages + snapshot + "\n")
+      setMessages(
+        messages +
+          "USER: " +
+          userInput +
+          "\n" +
+          "\n" +
+          "ART ADVISOR: " +
+          snapshot +
+          "\n" +
+          "\n"
+      )
     })
 
     console.dir(await runner.finalChatCompletion(), { depth: null })
@@ -25,18 +37,22 @@ export const ArtAdvisorApp: FC = () => {
 
   return (
     <>
-      <Text variant="lg-display" mb={4}>
-        Art Advisor
-      </Text>
+      <Spacer y={4} />
+      <Text variant="lg-display">Art Advisor Chat</Text>
+      <Spacer y={4} />
       <TextArea value={messages} />
-      <Input
-        name="userInput"
-        placeholder="Enter your message here"
-        onChange={e => setUserInput(e.target.value)}
-      />
-      <Button type="submit" onClick={onSubmit}>
-        Send Message
-      </Button>
+      <Spacer y={2} />
+      <Flex>
+        <Input
+          name="userInput"
+          placeholder="Enter your message here"
+          onChange={e => setUserInput(e.target.value)}
+        />
+        <Spacer x={2} />
+        <Button type="submit" onClick={onSubmit}>
+          Send Message
+        </Button>
+      </Flex>
     </>
   )
 }

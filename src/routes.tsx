@@ -61,11 +61,13 @@ import { alertRoutes } from "Apps/Alert/alertRoutes"
 import { partnerOfferRoutes } from "Apps/PartnerOffer/partnerOfferRoutes"
 import { conversationsRoutes } from "Apps/Conversations/conversationsRoutes"
 import { saleAgreementsRoutes } from "Apps/SaleAgreements/saleAgreementsRoutes"
+import { artAdvisorRoutes } from "Apps/ArtAdvisor/ArtAdvisorRoutes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([
     { routes: aboutRoutes },
     { routes: adminRoutes },
+    { routes: artAdvisorRoutes },
     { routes: artAppraisalsRoutes },
     { routes: articleRoutes },
     { routes: articlesRoutes },
