@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e4718f8286fdc4c0a2c5b740a18b14e>>
+ * @generated SignedSource<<b9876d7b0c0a2062ba282afaf3ef096f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,7 @@ export type ArtworkDetailsAdditionalInfo_artwork$data = {
   } | null | undefined;
   readonly image_rights: string | null | undefined;
   readonly internalID: string;
+  readonly isUnlisted: boolean;
   readonly manufacturer: string | null | undefined;
   readonly medium: string | null | undefined;
   readonly mediumType: {
@@ -123,6 +124,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isUnlisted",
       "storageKey": null
     },
     {
@@ -244,6 +252,6 @@ return {
 };
 })();
 
-(node as any).hash = "e8bb17f0c9153949744fb48ac6d97128";
+(node as any).hash = "da5f588990cf1f3456aede8cef2fe7b0";
 
 export default node;
