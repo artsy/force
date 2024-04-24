@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6290604d27cad2565d53cc4af2d8fcbf>>
+ * @generated SignedSource<<a2595c7b27fbceb83654c0a76690a2c3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,9 +33,6 @@ export type PrivateArtworkAboutArtist_artwork$data = {
     readonly initials: string | null | undefined;
     readonly internalID: string;
     readonly name: string | null | undefined;
-    readonly partnerArtists: ReadonlyArray<{
-      readonly biography: string | null | undefined;
-    } | null | undefined> | null | undefined;
     readonly partnerBiographyBlurb: {
       readonly text: string | null | undefined;
     } | null | undefined;
@@ -58,12 +55,7 @@ var v0 = {
   "name": "slug",
   "storageKey": null
 },
-v1 = {
-  "kind": "Literal",
-  "name": "format",
-  "value": "HTML"
-},
-v2 = [
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -221,42 +213,21 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "PartnerArtist",
+          "concreteType": "partnerBiographyBlurb",
           "kind": "LinkedField",
-          "name": "partnerArtists",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "biography",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": "partnerBiographyBlurb",
-          "args": [
-            (v1/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "partnerBio",
-              "value": true
-            }
-          ],
-          "concreteType": "ArtistBlurb",
-          "kind": "LinkedField",
-          "name": "biographyBlurb",
+          "name": "partnerBiographyBlurb",
           "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)"
+          "selections": (v1/*: any*/),
+          "storageKey": null
         },
         {
           "alias": null,
           "args": [
-            (v1/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "format",
+              "value": "HTML"
+            },
             {
               "kind": "Literal",
               "name": "partnerBio",
@@ -267,7 +238,7 @@ return {
           "kind": "LinkedField",
           "name": "biographyBlurb",
           "plural": false,
-          "selections": (v2/*: any*/),
+          "selections": (v1/*: any*/),
           "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
         }
       ],
@@ -279,6 +250,6 @@ return {
 };
 })();
 
-(node as any).hash = "f392c1ebdd4c8e41b5b49fe1bba60455";
+(node as any).hash = "8051b5e52845585558f06c940963293b";
 
 export default node;

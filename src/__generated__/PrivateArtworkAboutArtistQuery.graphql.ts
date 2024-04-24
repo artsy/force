@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f8710dea90ad7405237bedaa674fc2a5>>
+ * @generated SignedSource<<fb1eb9c6506291fc8142ed942f051f08>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,12 +43,7 @@ v2 = {
   "name": "id",
   "storageKey": null
 },
-v3 = {
-  "kind": "Literal",
-  "name": "format",
-  "value": "HTML"
-},
-v4 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -245,43 +240,21 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "PartnerArtist",
+                "concreteType": "partnerBiographyBlurb",
                 "kind": "LinkedField",
-                "name": "partnerArtists",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "biography",
-                    "storageKey": null
-                  },
-                  (v2/*: any*/)
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": "partnerBiographyBlurb",
-                "args": [
-                  (v3/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "partnerBio",
-                    "value": true
-                  }
-                ],
-                "concreteType": "ArtistBlurb",
-                "kind": "LinkedField",
-                "name": "biographyBlurb",
+                "name": "partnerBiographyBlurb",
                 "plural": false,
-                "selections": (v4/*: any*/),
-                "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)"
+                "selections": (v3/*: any*/),
+                "storageKey": null
               },
               {
                 "alias": null,
                 "args": [
-                  (v3/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "format",
+                    "value": "HTML"
+                  },
                   {
                     "kind": "Literal",
                     "name": "partnerBio",
@@ -292,7 +265,7 @@ return {
                 "kind": "LinkedField",
                 "name": "biographyBlurb",
                 "plural": false,
-                "selections": (v4/*: any*/),
+                "selections": (v3/*: any*/),
                 "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
               }
             ],
@@ -305,12 +278,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "85c99e2335203b44fb1ea982fcd7feb4",
+    "cacheID": "d78729f37c4becbef25cc57b2048b451",
     "id": null,
     "metadata": {},
     "name": "PrivateArtworkAboutArtistQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  slug\n  artist {\n    ...FollowArtistButton_artist\n    internalID\n    href\n    slug\n    name\n    initials\n    formattedNationalityAndBirthday\n    counts {\n      artworks\n      forSaleArtworks\n      follows\n    }\n    coverArtwork {\n      image {\n        cropped(width: 145, height: 145) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    partnerArtists {\n      biography\n      id\n    }\n    partnerBiographyBlurb: biographyBlurb(format: HTML, partnerBio: true) {\n      text\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
+    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  slug\n  artist {\n    ...FollowArtistButton_artist\n    internalID\n    href\n    slug\n    name\n    initials\n    formattedNationalityAndBirthday\n    counts {\n      artworks\n      forSaleArtworks\n      follows\n    }\n    coverArtwork {\n      image {\n        cropped(width: 145, height: 145) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    partnerBiographyBlurb {\n      text\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
   }
 };
 })();
