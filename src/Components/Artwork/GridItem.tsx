@@ -1,5 +1,5 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { Box, Flex, ResponsiveBox } from "@artsy/palette"
+import { Box, Flex, Popover, ResponsiveBox } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { MagnifyImage } from "Components/MagnifyImage"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -15,6 +15,7 @@ import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
+import { Z } from "Apps/Components/constants"
 
 export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
 
@@ -30,7 +31,9 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   showSaveButton?: boolean
   to?: string | null
   savedListId?: string
+  popoverContent?: React.ReactNode | null
   renderSaveButton?: (artworkId: string) => React.ReactNode
+  onPopoverDismiss?: () => void
 }
 
 export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
@@ -46,6 +49,8 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   to,
   savedListId,
   renderSaveButton,
+  popoverContent,
+  onPopoverDismiss,
   ...rest
 }) => {
   const localImage = useLocalImage(artwork.image)
@@ -77,7 +82,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     (artwork?.image?.url && artwork.image?.placeholder) ||
     undefined
 
-  return (
+  const item = (
     <ManageArtworkForSavesProvider savedListId={savedListId}>
       <div
         data-id={artwork.internalID}
@@ -125,6 +130,28 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         />
       </div>
     </ManageArtworkForSavesProvider>
+  )
+
+  if (!popoverContent) return item
+
+  return (
+    <Popover
+      popover={popoverContent}
+      width={250}
+      variant="defaultDark"
+      pointer
+      visible
+      ignoreClickOutside
+      zIndex={Z.popover}
+      manageFocus={false}
+      placement="top"
+      key={artwork.internalID}
+      onDismiss={onPopoverDismiss}
+    >
+      {({ anchorRef }) => {
+        return <Box ref={anchorRef as any}>{item}</Box>
+      }}
+    </Popover>
   )
 }
 
