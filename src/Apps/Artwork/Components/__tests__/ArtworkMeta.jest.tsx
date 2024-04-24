@@ -1,9 +1,11 @@
-import { mount } from "enzyme"
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkMeta } from "Apps/Artwork/Components/ArtworkMeta"
-import { ArtworkMeta_artwork$data } from "__generated__/ArtworkMeta_artwork.graphql"
 import { useRouter } from "System/Router/useRouter"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
+import { ArtworkMeta_Test_Query } from "__generated__/ArtworkMeta_Test_Query.graphql"
 
+jest.unmock("react-relay")
 jest.mock("System/Router/useRouter")
 
 jest.mock("Utils/getENV", () => ({
@@ -18,6 +20,21 @@ jest.mock("Utils/getENV", () => ({
 describe("ArtworkMeta", () => {
   const mockUseRouter = useRouter as jest.Mock
 
+  const { renderWithRelay } = setupTestWrapperTL<ArtworkMeta_Test_Query>({
+    Component: props => (
+      <MockBoot>
+        <ArtworkMeta artwork={props.artwork!} />
+      </MockBoot>
+    ),
+    query: graphql`
+      query ArtworkMeta_Test_Query {
+        artwork(id: "example") {
+          ...ArtworkMeta_artwork
+        }
+      }
+    `,
+  })
+
   const getTags = () => {
     const meta = [...document.getElementsByTagName("meta")].map(tag => ({
       name: tag.getAttribute("name"),
@@ -28,24 +45,10 @@ describe("ArtworkMeta", () => {
     return { meta }
   }
 
-  const artwork: ArtworkMeta_artwork$data = {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    " $fragmentRef": null,
-    " $refType": null,
-    isUnlisted: false,
-    internalID: "662658cd2bfa240016cd95fe",
-    href: "https://staging.artsy.net/artwork/artist-name-artwork-title",
-    isShareable: true,
-    metaImage: {
-      resized: null,
-    },
-    meta: {
-      description: "The loveliest artwork",
-      longDescription: null,
-      title: "Fancy art",
-    },
-  }
-  const artworkIdURL =
+  const listedArtworkID =
+    "https://staging.artsy.net/artwork/artist-name-artwork-title"
+
+  const unlistedArtworkID =
     "https://staging.artsy.net/artwork/662658cd2bfa240016cd95fe"
 
   afterEach(() => {
@@ -53,24 +56,44 @@ describe("ArtworkMeta", () => {
   })
 
   describe("unlisted artworks", () => {
-    const unlistedArtwork = Object.assign({}, artwork, {
-      isUnlisted: true,
-    })
-
     it("renders a noindex meta tag for robots", () => {
       mockUseRouter.mockReturnValue({
         match: {
           location: {
-            pathname: artworkIdURL,
+            pathname: unlistedArtworkID,
           },
         },
       })
 
-      mount(
-        <MockBoot>
-          <ArtworkMeta artwork={unlistedArtwork} />
-        </MockBoot>
-      )
+      renderWithRelay({
+        Artwork: () => ({
+          isUnlisted: true,
+        }),
+      })
+
+      const tags = getTags()
+
+      expect(tags.meta.find(tag => tag.name === "robots")).toEqual({
+        name: "robots",
+        property: null,
+        content: "noindex, follow",
+      })
+    })
+
+    it("renders a noindex meta tag for robots when private artwork URL visited", () => {
+      mockUseRouter.mockReturnValue({
+        match: {
+          location: {
+            pathname: unlistedArtworkID,
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => ({
+          internalID: "662658cd2bfa240016cd95fe",
+        }),
+      })
 
       const tags = getTags()
 
@@ -87,44 +110,21 @@ describe("ArtworkMeta", () => {
       mockUseRouter.mockReturnValue({
         match: {
           location: {
-            pathname: artwork.href,
+            pathname: listedArtworkID,
           },
         },
       })
 
-      mount(
-        <MockBoot>
-          <ArtworkMeta artwork={artwork} />
-        </MockBoot>
-      )
+      renderWithRelay({
+        Artwork: () => ({
+          href: listedArtworkID,
+          isUnlisted: false,
+        }),
+      })
 
       const tags = getTags()
 
       expect(tags.meta.find(tag => tag.name === "robots")).toEqual(undefined)
-    })
-
-    it("renders a noindex meta tag for robots when private artwork URL visited", () => {
-      mockUseRouter.mockReturnValue({
-        match: {
-          location: {
-            pathname: artworkIdURL,
-          },
-        },
-      })
-
-      mount(
-        <MockBoot>
-          <ArtworkMeta artwork={artwork} />
-        </MockBoot>
-      )
-
-      const tags = getTags()
-
-      expect(tags.meta.find(tag => tag.name === "robots")).toEqual({
-        name: "robots",
-        property: null,
-        content: "noindex, follow",
-      })
     })
   })
 })
