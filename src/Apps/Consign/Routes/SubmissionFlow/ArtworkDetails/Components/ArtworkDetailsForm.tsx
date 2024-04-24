@@ -243,7 +243,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.year}
-            required
             error={touched.year && errors.year}
           />
         </Column>
@@ -286,7 +285,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.materials}
-            required
             error={touched.materials && errors.materials}
           />
         </Column>
@@ -311,7 +309,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             onSelect={selected => setFieldValue("rarity", selected)}
-            required
             error={touched.rarity && errors.rarity}
           />
         </Column>
@@ -332,7 +329,6 @@ export const ArtworkDetailsForm: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionNumber}
-                required
                 error={touched.editionNumber && errors.editionNumber}
               />
               <Box px={[0.5, 2]} mt={2}>
@@ -346,7 +342,6 @@ export const ArtworkDetailsForm: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionSize}
-                required
                 error={touched.editionSize && errors.editionSize}
               />
             </Flex>
@@ -432,7 +427,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.provenance}
-            required
             error={touched.provenance && errors.provenance}
           />
         </Column>
@@ -450,7 +444,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onSelect={handleLocationSelect}
             onChange={handleLocationChange}
             onClick={handleLocationClick}
-            required
           />
         </Column>
       </GridColumns>

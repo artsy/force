@@ -63,11 +63,11 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   }
   if (myCollectionArtwork) {
     data = {
-      values: myCollectionArtwork!,
+      values: myCollectionArtwork,
       type: SubmissionType.myCollectionArtwork,
     }
   } else if (submission) {
-    data = { values: submission!, type: SubmissionType.submission }
+    data = { values: submission, type: SubmissionType.submission }
   }
 
   const initialValue = getArtworkDetailsFormInitialValues(data)
