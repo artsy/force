@@ -2,6 +2,9 @@ import { mount } from "enzyme"
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkMeta } from "Apps/Artwork/Components/ArtworkMeta"
 import { ArtworkMeta_artwork$data } from "__generated__/ArtworkMeta_artwork.graphql"
+import { useRouter } from "System/Router/useRouter"
+
+jest.mock("System/Router/useRouter")
 
 jest.mock("Utils/getENV", () => ({
   getENV: (name: string) => {
@@ -13,6 +16,8 @@ jest.mock("Utils/getENV", () => ({
 }))
 
 describe("ArtworkMeta", () => {
+  const mockUseRouter = useRouter as jest.Mock
+
   const getTags = () => {
     const meta = [...document.getElementsByTagName("meta")].map(tag => ({
       name: tag.getAttribute("name"),
@@ -53,9 +58,17 @@ describe("ArtworkMeta", () => {
     })
 
     it("renders a noindex meta tag for robots", () => {
+      mockUseRouter.mockReturnValue({
+        match: {
+          location: {
+            pathname: artworkIdURL,
+          },
+        },
+      })
+
       mount(
         <MockBoot>
-          <ArtworkMeta artwork={unlistedArtwork} pathname={artworkIdURL} />
+          <ArtworkMeta artwork={unlistedArtwork} />
         </MockBoot>
       )
 
@@ -71,9 +84,17 @@ describe("ArtworkMeta", () => {
 
   describe("listed artworks", () => {
     it("does not render robot meta tags", () => {
+      mockUseRouter.mockReturnValue({
+        match: {
+          location: {
+            pathname: artwork.href,
+          },
+        },
+      })
+
       mount(
         <MockBoot>
-          <ArtworkMeta artwork={artwork} pathname={artwork.href as string} />
+          <ArtworkMeta artwork={artwork} />
         </MockBoot>
       )
 
@@ -83,9 +104,17 @@ describe("ArtworkMeta", () => {
     })
 
     it("renders a noindex meta tag for robots when private artwork URL visited", () => {
+      mockUseRouter.mockReturnValue({
+        match: {
+          location: {
+            pathname: artworkIdURL,
+          },
+        },
+      })
+
       mount(
         <MockBoot>
-          <ArtworkMeta artwork={artwork} pathname={artworkIdURL} />
+          <ArtworkMeta artwork={artwork} />
         </MockBoot>
       )
 

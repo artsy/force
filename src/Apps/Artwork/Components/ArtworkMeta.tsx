@@ -4,16 +4,16 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
 import { ArtworkChatBubbleFragmentContainer } from "./ArtworkChatBubble"
 import { getENV } from "Utils/getENV"
+import { useRouter } from "System/Router/useRouter"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork$data
-  pathname: string
 }
 
-export const ArtworkMeta: React.FC<ArtworkMetaProps> = ({
-  artwork,
-  pathname,
-}) => {
+export const ArtworkMeta: React.FC<ArtworkMetaProps> = ({ artwork }) => {
+  const { match } = useRouter()
+
+  const pathname = match.location.pathname
   const imageURL = artwork?.metaImage?.resized?.url
 
   const addNoIndex =
