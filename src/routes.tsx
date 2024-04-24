@@ -8,6 +8,7 @@ import { articlesRoutes } from "Apps/Articles/articlesRoutes"
 import { artistRoutes } from "Apps/Artist/artistRoutes"
 import { artistSeriesRoutes } from "Apps/ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "Apps/Artists/artistsRoutes"
+import { artAdvisorRoutes } from "Apps/ArtAdvisor/ArtAdvisorRoutes"
 import { artQuizRoutes } from "./Apps/ArtQuiz/artQuizRoutes"
 import { artworkRoutes } from "Apps/Artwork/artworkRoutes"
 import { auctionRoutes } from "./Apps/Auction/auctionRoutes"
@@ -66,6 +67,7 @@ export const getAppRoutes = (): RouteProps[] => {
   return buildAppRoutes([
     aboutRoutes,
     adminRoutes,
+    artAdvisorRoutes,
     artAppraisalsRoutes,
     articleRoutes,
     articlesRoutes,
