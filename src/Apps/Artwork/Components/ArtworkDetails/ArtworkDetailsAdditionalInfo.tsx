@@ -1,6 +1,8 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Clickable,
+  Flex,
+  FlexProps,
   HTML,
   Join,
   ReadMore,
@@ -22,12 +24,13 @@ import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 
-export interface ArtworkDetailsAdditionalInfoProps {
+export interface ArtworkDetailsAdditionalInfoProps extends FlexProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork$data
 }
 
 export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfoProps> = ({
   artwork,
+  ...flexProps
 }) => {
   const {
     category,
@@ -183,12 +186,14 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
     return null
   }
 
+  const Container = artwork.isUnlisted ? Flex : StackableBorderBox
+
   return (
     <>
       {openConditionModal && (
         <ConditionInfoModal onClose={() => setOpenConditionModal(false)} />
       )}
-      <StackableBorderBox flexDirection="column">
+      <Container flexDirection="column" {...flexProps}>
         <Join separator={<Spacer y={1} />}>
           {displayItems.map(
             ({ title, value, onReadMoreClicked, onTitleClick }, index) => (
@@ -213,7 +218,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
             )
           )}
         </Join>
-      </StackableBorderBox>
+      </Container>
     </>
   )
 }
@@ -230,6 +235,7 @@ export const ArtworkDetailsAdditionalInfoFragmentContainer = createFragmentConta
         image_rights: imageRights
         canRequestLotConditionsReport
         internalID
+        isUnlisted
         framed {
           label
           details
