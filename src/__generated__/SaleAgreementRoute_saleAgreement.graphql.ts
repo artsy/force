@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ddb43237da4c4e27bac6cccce88498c8>>
+ * @generated SignedSource<<589dbbb54fe5e7987a6e44d0475c7601>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,6 +39,11 @@ v1 = [
     "kind": "Literal",
     "name": "format",
     "value": "MMM Do, YYYY"
+  },
+  {
+    "kind": "Literal",
+    "name": "timezone",
+    "value": "UTC"
   }
 ];
 return {
@@ -71,14 +76,14 @@ return {
       "args": (v1/*: any*/),
       "kind": "ScalarField",
       "name": "displayStartAt",
-      "storageKey": "displayStartAt(format:\"MMM Do, YYYY\")"
+      "storageKey": "displayStartAt(format:\"MMM Do, YYYY\",timezone:\"UTC\")"
     },
     {
       "alias": null,
       "args": (v1/*: any*/),
       "kind": "ScalarField",
       "name": "displayEndAt",
-      "storageKey": "displayEndAt(format:\"MMM Do, YYYY\")"
+      "storageKey": "displayEndAt(format:\"MMM Do, YYYY\",timezone:\"UTC\")"
     },
     {
       "kind": "RequiredField",
@@ -110,6 +115,6 @@ return {
 };
 })();
 
-(node as any).hash = "e1025c8dd087c02392317ca7d46fd144";
+(node as any).hash = "f4722283152ee23c76142fd1b8f403ec";
 
 export default node;

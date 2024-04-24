@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c66b52b38602716e3f36337a276b4ae>>
+ * @generated SignedSource<<7d305a1f5c394a16ec5cd97871b3c3c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,11 @@ v1 = [
     "kind": "Literal",
     "name": "format",
     "value": "MMM Do, YYYY"
+  },
+  {
+    "kind": "Literal",
+    "name": "timezone",
+    "value": "UTC"
   }
 ],
 v2 = {
@@ -127,14 +132,14 @@ return {
                         "args": (v1/*: any*/),
                         "kind": "ScalarField",
                         "name": "displayStartAt",
-                        "storageKey": "displayStartAt(format:\"MMM Do, YYYY\")"
+                        "storageKey": "displayStartAt(format:\"MMM Do, YYYY\",timezone:\"UTC\")"
                       },
                       {
                         "alias": null,
                         "args": (v1/*: any*/),
                         "kind": "ScalarField",
                         "name": "displayEndAt",
-                        "storageKey": "displayEndAt(format:\"MMM Do, YYYY\")"
+                        "storageKey": "displayEndAt(format:\"MMM Do, YYYY\",timezone:\"UTC\")"
                       },
                       {
                         "alias": null,
@@ -207,12 +212,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1dc48b5fbbbe8a0713a88bec2e1fea7c",
+    "cacheID": "42b1144b3daa6e3b35aaeed40157c8b6",
     "id": null,
     "metadata": {},
     "name": "saleAgreementsRoutes_SaleAgreementsAppQuery",
     "operationKind": "query",
-    "text": "query saleAgreementsRoutes_SaleAgreementsAppQuery {\n  viewer {\n    ...SaleAgreementsApp_viewer\n  }\n}\n\nfragment SaleAgreementsApp_viewer on Viewer {\n  ...SaleAgreementsFilter_viewer\n}\n\nfragment SaleAgreementsFilter_viewer on Viewer {\n  saleAgreementsConnection(first: 100) {\n    edges {\n      node {\n        internalID\n        content\n        displayStartAt(format: \"MMM Do, YYYY\")\n        displayEndAt(format: \"MMM Do, YYYY\")\n        published\n        status\n        sale {\n          internalID\n          name\n          isArtsyLicensed\n          isBenefit\n          isAuction\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query saleAgreementsRoutes_SaleAgreementsAppQuery {\n  viewer {\n    ...SaleAgreementsApp_viewer\n  }\n}\n\nfragment SaleAgreementsApp_viewer on Viewer {\n  ...SaleAgreementsFilter_viewer\n}\n\nfragment SaleAgreementsFilter_viewer on Viewer {\n  saleAgreementsConnection(first: 100) {\n    edges {\n      node {\n        internalID\n        content\n        displayStartAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n        displayEndAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n        published\n        status\n        sale {\n          internalID\n          name\n          isArtsyLicensed\n          isBenefit\n          isAuction\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
