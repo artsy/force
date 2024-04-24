@@ -97,7 +97,10 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
   ArtworkFilterArtworkGrid,
   {
     filtered_artworks: graphql`
-      fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {
+      fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection
+        @argumentDefinitions(
+          includeBlurHash: { type: "Boolean!", defaultValue: true }
+        ) {
         id
         pageInfo {
           hasNextPage
@@ -111,7 +114,7 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
             id
           }
         }
-        ...ArtworkGrid_artworks
+        ...ArtworkGrid_artworks @arguments(includeBlurHash: $includeBlurHash)
       }
     `,
   }
