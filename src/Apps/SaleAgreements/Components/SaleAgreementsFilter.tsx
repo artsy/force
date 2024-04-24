@@ -78,8 +78,8 @@ const saleAgreementsFilterFragment = graphql`
         node {
           internalID
           content
-          displayStartAt(format: "MMM Do, YYYY")
-          displayEndAt(format: "MMM Do, YYYY")
+          displayStartAt(format: "MMM Do, YYYY", timezone: "UTC")
+          displayEndAt(format: "MMM Do, YYYY", timezone: "UTC")
           published
           status
           sale @required(action: NONE) {

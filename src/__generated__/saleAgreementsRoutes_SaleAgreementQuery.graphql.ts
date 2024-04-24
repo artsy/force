@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6aa71bc34956acb8ee5a4735602ce529>>
+ * @generated SignedSource<<24e358ed91ee99fce0ff0ba54ed9c1cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,6 +50,11 @@ v3 = [
     "kind": "Literal",
     "name": "format",
     "value": "MMM Do, YYYY"
+  },
+  {
+    "kind": "Literal",
+    "name": "timezone",
+    "value": "UTC"
   }
 ],
 v4 = {
@@ -119,14 +124,14 @@ return {
             "args": (v3/*: any*/),
             "kind": "ScalarField",
             "name": "displayStartAt",
-            "storageKey": "displayStartAt(format:\"MMM Do, YYYY\")"
+            "storageKey": "displayStartAt(format:\"MMM Do, YYYY\",timezone:\"UTC\")"
           },
           {
             "alias": null,
             "args": (v3/*: any*/),
             "kind": "ScalarField",
             "name": "displayEndAt",
-            "storageKey": "displayEndAt(format:\"MMM Do, YYYY\")"
+            "storageKey": "displayEndAt(format:\"MMM Do, YYYY\",timezone:\"UTC\")"
           },
           {
             "alias": null,
@@ -155,12 +160,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3763e64883773f1e4c1f93ec13e4533a",
+    "cacheID": "a2ee8a32c62410950fa3fab096c1f49e",
     "id": null,
     "metadata": {},
     "name": "saleAgreementsRoutes_SaleAgreementQuery",
     "operationKind": "query",
-    "text": "query saleAgreementsRoutes_SaleAgreementQuery(\n  $id: ID!\n) {\n  saleAgreement(id: $id) {\n    ...SaleAgreementRoute_saleAgreement\n    id\n  }\n}\n\nfragment SaleAgreementRoute_saleAgreement on SaleAgreement {\n  internalID\n  content(format: HTML)\n  displayStartAt(format: \"MMM Do, YYYY\")\n  displayEndAt(format: \"MMM Do, YYYY\")\n  sale {\n    internalID\n    name\n    id\n  }\n}\n"
+    "text": "query saleAgreementsRoutes_SaleAgreementQuery(\n  $id: ID!\n) {\n  saleAgreement(id: $id) {\n    ...SaleAgreementRoute_saleAgreement\n    id\n  }\n}\n\nfragment SaleAgreementRoute_saleAgreement on SaleAgreement {\n  internalID\n  content(format: HTML)\n  displayStartAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n  displayEndAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n  sale {\n    internalID\n    name\n    id\n  }\n}\n"
   }
 };
 })();
