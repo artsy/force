@@ -247,7 +247,10 @@ export const ArtworkApp: React.FC<Props> = props => {
       <UseRecordArtworkView />
       <ArtworkPageBanner artwork={artwork} me={me} />
 
-      <ArtworkMetaFragmentContainer artwork={artwork} />
+      <ArtworkMetaFragmentContainer
+        artwork={artwork}
+        pathname={props.match.location.pathname}
+      />
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
       <ArtworkAuctionCreateAlertHeaderFragmentContainer artwork={artwork} />
       <GridColumns>

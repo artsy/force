@@ -10,6 +10,7 @@ import { ArtworkChatBubbleFragmentContainer } from "./ArtworkChatBubble"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork$data
+  pathname: string
 }
 
 export class ArtworkMeta extends Component<ArtworkMetaProps> {
@@ -36,10 +37,10 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
   }
 
   render() {
-    const { artwork } = this.props
+    const { artwork, pathname } = this.props
     const imageURL = get(artwork, a => a.metaImage?.resized?.url)
     const addNoIndex =
-      artwork?.isUnlisted || artwork?.href?.includes(artwork?.internalID) // a previously private artwork URL
+      artwork?.isUnlisted || pathname.includes(artwork?.internalID) // a previously private artwork URL
 
     return (
       <>

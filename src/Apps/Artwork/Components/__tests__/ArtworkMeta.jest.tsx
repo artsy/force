@@ -23,33 +23,39 @@ describe("ArtworkMeta", () => {
     return { meta }
   }
 
+  const artwork: ArtworkMeta_artwork$data = {
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    " $fragmentRef": null,
+    " $refType": null,
+    isUnlisted: false,
+    internalID: "662658cd2bfa240016cd95fe",
+    href: "https://staging.artsy.net/artwork/artist-name-artwork-title",
+    isShareable: true,
+    metaImage: {
+      resized: null,
+    },
+    meta: {
+      description: "The loveliest artwork",
+      longDescription: null,
+      title: "Fancy art",
+    },
+  }
+  const artworkIdURL =
+    "https://staging.artsy.net/artwork/662658cd2bfa240016cd95fe"
+
   afterEach(() => {
     document.getElementsByTagName("html")[0].innerHTML = ""
   })
 
   describe("unlisted artworks", () => {
-    const artwork: ArtworkMeta_artwork$data = {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      " $fragmentRef": null,
-      " $refType": null,
+    const unlistedArtwork = Object.assign({}, artwork, {
       isUnlisted: true,
-      internalID: "662658cd2bfa240016cd95fe",
-      href: "https://staging.artsy.net/artwork/662658cd2bfa240016cd95fe",
-      isShareable: true,
-      metaImage: {
-        resized: null,
-      },
-      meta: {
-        description: "The loveliest artwork",
-        longDescription: null,
-        title: "Fancy art",
-      },
-    }
+    })
 
     it("renders a noindex meta tag for robots", () => {
       mount(
         <MockBoot>
-          <ArtworkMeta artwork={artwork} />
+          <ArtworkMeta artwork={unlistedArtwork} pathname={artworkIdURL} />
         </MockBoot>
       )
 
@@ -64,28 +70,10 @@ describe("ArtworkMeta", () => {
   })
 
   describe("listed artworks", () => {
-    const artwork: ArtworkMeta_artwork$data = {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      " $fragmentRef": null,
-      " $refType": null,
-      isUnlisted: false,
-      internalID: "662658cd2bfa240016cd95fe",
-      href: "https://staging.artsy.net/artwork/artist-name-artwork-title",
-      isShareable: true,
-      metaImage: {
-        resized: null,
-      },
-      meta: {
-        description: "The loveliest artwork",
-        longDescription: null,
-        title: "Fancy art",
-      },
-    }
-
     it("does not render robot meta tags", () => {
       mount(
         <MockBoot>
-          <ArtworkMeta artwork={artwork} />
+          <ArtworkMeta artwork={artwork} pathname={artwork.href as string} />
         </MockBoot>
       )
 
@@ -95,13 +83,9 @@ describe("ArtworkMeta", () => {
     })
 
     it("renders a noindex meta tag for robots when private artwork URL visited", () => {
-      const updated_artwork = Object.assign({}, artwork, {
-        href: "https://staging.artsy.net/artwork/662658cd2bfa240016cd95fe",
-      })
-
       mount(
         <MockBoot>
-          <ArtworkMeta artwork={updated_artwork} />
+          <ArtworkMeta artwork={artwork} pathname={artworkIdURL} />
         </MockBoot>
       )
 
