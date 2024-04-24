@@ -30,35 +30,16 @@ export const SPECIALISTS: SpecialistsData[] = [
     imageUrl: "https://files.artsy.net/images/Jessica-Mobile.webp",
   },
   {
-    firstName: "Christine",
-    name: "Christine Aschwald",
-    email: "christine.aschwald@artsymail.com",
-    jobTitle: "Senior Director, Auctions and Private Sales",
+    firstName: "Erica",
+    name: "Erica Lyon",
+    email: "erica@artsymail.com",
+    jobTitle: "Director, Business Strategy & Operations",
     specialty: "auctions",
     bio:
-      "Christine advises top-tier private collectors, blue-chip secondary market galleries, and the fiduciary community on buying and selling opportunities. With 17 years of experience, she brings long-standing relationships with top collectors and institutional clients from her time as VP at Christie’s client advisory department. She graduated from Williams College with a degree in Art History and Political Science.",
-    imageUrl: "https://files.artsy.net/images/Christine-Mobile.webp",
+      "Erica has 13 years experience in scaling nascent business lines to profitability, and a particular interest in developing and executing philanthropic partnerships with leading museums, nonprofits and institutions. She holds a BA from Wesleyan University and an MA from New York University.",
+    imageUrl: "https://files.artsy.net/images/Erica-Mobile.webp",
   },
-  {
-    firstName: "Wendy",
-    name: "Wendy Wiberg",
-    email: "wendy.wiberg@artsymail.com",
-    jobTitle: "Associate Director, Collector Services",
-    specialty: "collectorServices",
-    bio:
-      "Wendy leads Artsy’s Collector Services team, helping collectors navigate buying and selling from Artsy’s global gallery, auction, and private sales networks. She joined Artsy in 2017 and holds a degree in art history and mathematics from Williams College.",
-    imageUrl: "https://files.artsy.net/images/Wendy-Mobile.webp",
-  },
-  {
-    firstName: "Daniela",
-    name: "Daniela Bianco-Duppen",
-    email: "daniela.bianco-duppen@artsymail.com",
-    jobTitle: "Senior Advisor",
-    specialty: "collectorServices",
-    bio:
-      "Daniela is fluent in French, Italian, and Spanish, and has over a decade of experience in the art industry including her own advisory practice based out of London, Milan & Brussels. Her expertise ranges from prints and multiples by pop artists such as Warhol and Haring to contemporary artists like Flora Yuknovick and Louis Fratino.",
-    imageUrl: "https://files.artsy.net/images/Daniela-Mobile.webp",
-  },
+
   {
     firstName: "Lauren",
     name: "Lauren Carpinelli",
@@ -88,16 +69,6 @@ export const SPECIALISTS: SpecialistsData[] = [
     bio:
       "George has over a decade of experience in luxury markets. He specializes in post-war and contemporary art, and has helped numerous clients build valuable art collections by identifying emerging artists and trends. His deep understanding of the art market and personalized service have made him a trusted advisor to many collectors.",
     imageUrl: "https://files.artsy.net/images/George-Mobile.webp",
-  },
-  {
-    firstName: "Erica",
-    name: "Erica Lyon",
-    email: "erica@artsymail.com",
-    jobTitle: "Director, Business Strategy & Operations",
-    specialty: "auctions",
-    bio:
-      "Erica has 13 years experience in scaling nascent business lines to profitability, and a particular interest in developing and executing philanthropic partnerships with leading museums, nonprofits and institutions. She holds a BA from Wesleyan University and an MA from New York University.",
-    imageUrl: "https://files.artsy.net/images/Erica-Mobile.webp",
   },
   {
     firstName: "Laura",
@@ -139,16 +110,6 @@ export const SPECIALISTS: SpecialistsData[] = [
     bio:
       "Dana facilitates and promotes sales between all channels at Artsy: private sales, galleries, and auctions. She has a master’s degree in modern and contemporary art: critical and curatorial studies from Columbia University, and has worked in museums, advisory, and academic settings.",
     imageUrl: "https://files.artsy.net/images/Dana-Mobile.webp",
-  },
-  {
-    firstName: "Isabel",
-    name: "Isabel Telonis",
-    email: "isabel.telonis@artsymail.com",
-    jobTitle: "Senior Manager, Collector Services",
-    specialty: "collectorServices",
-    bio:
-      "Isabel supports collectors with sourcing, negotiating on, and acquiring artworks from galleries, having worked closely with Artsy’s robust gallery partner network since 2018. She holds a master’s degree in art business from Sotheby’s Institute of Art, and has professional experience at galleries, fairs, and museums.",
-    imageUrl: "https://files.artsy.net/images/Isabel-Desktop.webp",
   },
   {
     firstName: "Alexssa",
