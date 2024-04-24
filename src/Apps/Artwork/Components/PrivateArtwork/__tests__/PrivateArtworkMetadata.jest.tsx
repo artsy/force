@@ -104,4 +104,15 @@ describe("PrivateArtworkMetadata", () => {
       screen.queryByText("Test Exhibition History Details")
     ).not.toBeInTheDocument()
   })
+
+  it("renders additional details section", async () => {
+    renderWithRelay({
+      Artwork: () => {
+        return {
+          exhibitionHistory: null,
+        }
+      },
+    })
+    expect(screen.getByText("Additional Details")).toBeInTheDocument()
+  })
 })

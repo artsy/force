@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * @generated SignedSource<<3e2f91804f38ee6f7076cc29a650e0f4>>
+=======
+ * @generated SignedSource<<e59a679ae340908f07153366d8273e24>>
+>>>>>>> main
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -791,31 +795,45 @@ v63 = {
   "name": "__typename",
   "storageKey": null
 },
-v64 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "details",
-    "storageKey": null
-  }
-],
+v64 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "details",
+  "storageKey": null
+},
 v65 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "editionOf",
+  "name": "label",
   "storageKey": null
 },
 v66 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "editionOf",
+  "storageKey": null
+},
+v67 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "saleMessage",
   "storageKey": null
 },
+<<<<<<< HEAD
 v67 = [
   (v23/*: any*/)
+=======
+v68 = [
+  (v22/*: any*/)
+],
+v69 = [
+  (v65/*: any*/),
+  (v64/*: any*/)
+>>>>>>> main
 ];
 return {
   "fragment": {
@@ -2172,10 +2190,13 @@ return {
                 "kind": "LinkedField",
                 "name": "framed",
                 "plural": false,
-                "selections": (v64/*: any*/),
+                "selections": [
+                  (v64/*: any*/),
+                  (v65/*: any*/)
+                ],
                 "storageKey": null
               },
-              (v65/*: any*/),
+              (v66/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -2195,12 +2216,12 @@ return {
                   (v19/*: any*/),
                   (v50/*: any*/),
                   (v49/*: any*/),
-                  (v66/*: any*/),
+                  (v67/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
                       (v48/*: any*/),
-                      (v65/*: any*/)
+                      (v66/*: any*/)
                     ],
                     "type": "Sellable",
                     "abstractKey": "__isSellable"
@@ -2224,7 +2245,8 @@ return {
                     "storageKey": null
                   },
                   (v19/*: any*/),
-                  (v8/*: any*/)
+                  (v8/*: any*/),
+                  (v9/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -2249,7 +2271,7 @@ return {
                 "name": "isEligibleToCreateAlert",
                 "storageKey": null
               },
-              (v66/*: any*/),
+              (v67/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -2284,6 +2306,15 @@ return {
                       (v19/*: any*/),
                       (v9/*: any*/)
                     ],
+                    "storageKey": null
+                  },
+                  (v4/*: any*/),
+                  (v9/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "longDescription",
                     "storageKey": null
                   }
                 ],
@@ -2509,10 +2540,55 @@ return {
               },
               {
                 "alias": "additionalInformationHTML",
-                "args": (v67/*: any*/),
+                "args": (v68/*: any*/),
                 "kind": "ScalarField",
                 "name": "additionalInformation",
                 "storageKey": "additionalInformation(format:\"HTML\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "series",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "publisher",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "manufacturer",
+                "storageKey": null
+              },
+              {
+                "alias": "image_rights",
+                "args": null,
+                "kind": "ScalarField",
+                "name": "imageRights",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "canRequestLotConditionsReport",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtworkInfoRow",
+                "kind": "LinkedField",
+                "name": "signatureInfo",
+                "plural": false,
+                "selections": (v69/*: any*/),
+                "storageKey": null
               },
               {
                 "alias": null,
@@ -2521,19 +2597,29 @@ return {
                 "kind": "LinkedField",
                 "name": "conditionDescription",
                 "plural": false,
-                "selections": (v64/*: any*/),
+                "selections": (v69/*: any*/),
                 "storageKey": null
               },
               {
                 "alias": null,
-                "args": (v67/*: any*/),
+                "args": null,
+                "concreteType": "ArtworkInfoRow",
+                "kind": "LinkedField",
+                "name": "certificateOfAuthenticity",
+                "plural": false,
+                "selections": (v69/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": (v68/*: any*/),
                 "kind": "ScalarField",
                 "name": "provenance",
                 "storageKey": "provenance(format:\"HTML\")"
               },
               {
                 "alias": null,
-                "args": (v67/*: any*/),
+                "args": (v68/*: any*/),
                 "kind": "ScalarField",
                 "name": "exhibitionHistory",
                 "storageKey": "exhibitionHistory(format:\"HTML\")"
