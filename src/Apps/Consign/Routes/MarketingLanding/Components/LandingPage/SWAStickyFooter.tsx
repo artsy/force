@@ -2,7 +2,7 @@ import { Flex, Button, Text, useTheme } from "@artsy/palette"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { RouterLink } from "System/Router/RouterLink"
 
-export const SWAFooterMobile = () => {
+export const SWAStickyFooter = () => {
   const {
     trackStartSellingClick,
     trackGetInTouchClick,
@@ -28,7 +28,7 @@ export const SWAFooterMobile = () => {
         width="100%"
         variant="primaryBlack"
         to="/sell/submission"
-        onClick={() => trackStartSellingClick("Footer")}
+        onClick={() => trackStartSellingClick("Header")}
         mb={[1, 0]}
         data-testid="start-selling-button"
       >

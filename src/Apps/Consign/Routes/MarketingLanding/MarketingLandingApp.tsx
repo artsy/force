@@ -15,7 +15,7 @@ import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMe
 import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
 import { Media } from "Utils/Responsive"
 import { MOBILE_NAV_AUTHENTICATION_HEIGHT } from "Components/NavBar/constants"
-import { SWAFooterMobile } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooterMobile"
+import { SWAStickyFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAStickyFooter"
 import { SWAFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
 import { Footer } from "Components/Footer/Footer"
 
@@ -77,7 +77,7 @@ export const MarketingLandingApp = () => {
             <Footer />
           </Box>
 
-          <SWAFooterMobile />
+          <SWAStickyFooter />
         </Flex>
       </Media>
 

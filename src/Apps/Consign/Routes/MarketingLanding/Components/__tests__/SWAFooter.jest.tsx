@@ -14,7 +14,7 @@ jest.mock("System/Analytics/AnalyticsContext", () => ({
 const trackEvent = useTracking as jest.Mock
 
 describe("SWAFooter", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -55,7 +55,7 @@ describe("SWAFooter", () => {
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
         action: "tappedConsign",
-        context_module: "SWAFooter",
+        context_module: "Footer",
         context_page_owner_type: "sell",
         label: "Start Selling",
         destination_path: "/sell/submission",
