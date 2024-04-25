@@ -22,6 +22,8 @@ interface PrivateArtworkAboutArtistProps {
 export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps> = ({
   artwork,
 }) => {
+  const { trackEvent } = useTracking()
+
   const data = useFragment(
     graphql`
       fragment PrivateArtworkAboutArtist_artwork on Artwork {
@@ -61,16 +63,17 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
     artwork
   )
 
+  if (!data.displayArtistBio) {
+    return null
+  }
+
   const followsCount =
     Number(formatFollowerCount(data.artist?.counts?.follows)) ?? 0
 
   const biographyBlurb =
-    data.displayArtistBio &&
-    (data.artist?.partnerBiographyBlurb?.text ??
-      data.artist?.biographyBlurb?.text ??
-      "")
-
-  const { trackEvent } = useTracking()
+    data.artist?.partnerBiographyBlurb?.text ??
+    data.artist?.biographyBlurb?.text ??
+    ""
 
   return (
     <Box
