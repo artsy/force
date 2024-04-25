@@ -1,14 +1,7 @@
 import { useEffect } from "react"
 import { useRouter } from "System/Router/useRouter"
 import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
-import {
-  Box,
-  Flex,
-  Join,
-  Spacer,
-  useSentinelVisibility,
-  useTheme,
-} from "@artsy/palette"
+import { Box, Flex, Join, Spacer } from "@artsy/palette"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
 import { Highlights } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Highlights"
 import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/WaysWeSell"
@@ -23,6 +16,7 @@ import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Compone
 import { Media } from "Utils/Responsive"
 import { MOBILE_NAV_AUTHENTICATION_HEIGHT } from "Components/NavBar/constants"
 import { SWAFooterMobile } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooterMobile"
+import { SWAFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
 import { Footer } from "Components/Footer/Footer"
 
 const MOBILE_HEIGHT = `calc(100vh - ${MOBILE_NAV_AUTHENTICATION_HEIGHT}px)`
@@ -33,13 +27,6 @@ export const MarketingLandingApp = () => {
       location: { query },
     },
   } = useRouter()
-
-  const {
-    sentinel: bottomSentinel,
-    isSentinelVisible: isAtBottom,
-  } = useSentinelVisibility()
-
-  const { theme } = useTheme()
 
   useEffect(() => {
     const utmParamsSessionData = sessionStorage.getItem("utmParams")
@@ -60,7 +47,7 @@ export const MarketingLandingApp = () => {
     <>
       <SellMeta />
 
-      <Media lessThan="md">
+      <Media lessThan="sm">
         <Flex
           flexDirection="column"
           maxHeight={MOBILE_HEIGHT}
@@ -87,37 +74,32 @@ export const MarketingLandingApp = () => {
               <FooterBanner />
             </Join>
 
-            {bottomSentinel}
+            <Footer />
           </Box>
 
-          <Flex
-            style={{
-              transition: "box-shadow 250ms",
-              boxShadow: isAtBottom ? theme.effects.dropShadow : undefined,
-            }}
-            zIndex={1}
-          >
-            <SWAFooterMobile />
-          </Flex>
+          <SWAFooterMobile />
         </Flex>
       </Media>
 
-      <Media greaterThanOrEqual="md">
-        <Join separator={<Spacer y={[6, 12]} />}>
-          <HeaderSWA />
-          <Highlights />
-          <WaysWeSell />
-          <HowItWorksSteps />
-          <SpeakToTheTeam />
-          <MeetTheSpecialists />
-          <CollectorsOverview />
-          <PreviouslySoldOnArtsyRailQueryRenderer />
-          {/* <Reviews /> */}
-          <FAQSWA />
+      <Media greaterThanOrEqual="sm">
+        <Box px={4}>
+          <Join separator={<Spacer y={[6, 12]} />}>
+            <HeaderSWA />
+            <Highlights />
+            <WaysWeSell />
+            <HowItWorksSteps />
+            <SpeakToTheTeam />
+            <MeetTheSpecialists />
+            <CollectorsOverview />
+            <PreviouslySoldOnArtsyRailQueryRenderer />
+            {/* <Reviews /> */}
+            <FAQSWA />
+            <SWAFooter />
+            <FooterBanner />
+          </Join>
+
           <Footer />
-          <FooterBanner />
-        </Join>
-        <Spacer y={-4} />
+        </Box>
       </Media>
     </>
   )

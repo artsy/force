@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/useSystemContext"
-import { Footer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Footer"
+import { SWAFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
 
 jest.mock("react-tracking")
 jest.mock("System/useSystemContext")
@@ -13,8 +13,8 @@ jest.mock("System/Analytics/AnalyticsContext", () => ({
 
 const trackEvent = useTracking as jest.Mock
 
-describe("Footer", () => {
-  beforeAll(() => {
+describe("SWAFooter", () => {
+  beforeEach(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -26,7 +26,7 @@ describe("Footer", () => {
   })
 
   it("renders correctly", () => {
-    render(<Footer />)
+    render(<SWAFooter />)
 
     expect(
       screen.getByText(
@@ -38,7 +38,7 @@ describe("Footer", () => {
 
   describe("Start Selling button", () => {
     it("links out to submission flow", () => {
-      render(<Footer />)
+      render(<SWAFooter />)
 
       const link = screen.getByTestId("start-selling-button")
 
@@ -48,14 +48,14 @@ describe("Footer", () => {
     })
 
     it("tracks click", () => {
-      render(<Footer />)
+      render(<SWAFooter />)
 
       fireEvent.click(screen.getByTestId("start-selling-button"))
 
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
         action: "tappedConsign",
-        context_module: "Footer",
+        context_module: "SWAFooter",
         context_page_owner_type: "sell",
         label: "Start Selling",
         destination_path: "/sell/submission",

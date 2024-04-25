@@ -50,7 +50,7 @@ export const HeaderSWA = () => {
                 width="100%"
                 variant="primaryBlack"
                 to="/sell/submission"
-                onClick={trackStartSellingClick}
+                onClick={() => trackStartSellingClick("Header")}
                 mb={[1, 0]}
                 data-testid="start-selling-button"
               >

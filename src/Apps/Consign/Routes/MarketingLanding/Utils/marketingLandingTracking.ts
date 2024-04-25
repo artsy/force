@@ -8,10 +8,10 @@ export const useMarketingLandingTracking = () => {
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
 
-  const trackStartSellingClick = () => {
+  const trackStartSellingClick = (contextModule: string) => {
     trackEvent({
       action: ActionType.tappedConsign,
-      context_module: "Header", // not importing the name from cohesion as a exeption, should NOT be done in other places
+      context_module: contextModule, // not importing the name from cohesion as a exeption, should NOT be done in other places
       // the reason is that in cohesion the modult is maned "header"
       // we use "Header" with capital letter for analyticks already and we do not want to intrpduce another name
       context_page_owner_type: contextPageOwnerType,
