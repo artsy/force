@@ -25,7 +25,7 @@ describe("ArtworkSidebarPrivateArtwork", () => {
       Artist: () => {
         return {
           name: "Test Artist Name",
-          partnerBiographyBlurb: { text: "Test Artist Biography" },
+          biographyBlurb: { text: "Test Artist Biography" },
           formattedNationalityAndBirthday: "USA, 1990",
         }
       },
@@ -45,12 +45,12 @@ describe("ArtworkSidebarPrivateArtwork", () => {
       Artist: () => {
         return {
           name: "Test Artist Name",
-          partnerBiographyBlurb: { text: "Test Artist Biography" },
+          biographyBlurb: { text: "Test Artist Biography" },
           formattedNationalityAndBirthday: "USA, 1990",
         }
       },
     })
 
-    expect(screen.queryByText("Test Artist Name")).not.toBeInTheDocument()
+    expect(screen.queryByText("Test Artist Biography")).not.toBeInTheDocument()
   })
 })

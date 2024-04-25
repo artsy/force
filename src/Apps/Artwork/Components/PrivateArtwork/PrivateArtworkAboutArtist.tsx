@@ -51,9 +51,6 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
             }
           }
           name
-          partnerBiographyBlurb(format: HTML) {
-            text
-          }
           biographyBlurb(format: HTML, partnerBio: false) {
             text
           }
@@ -63,17 +60,10 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
     artwork
   )
 
-  if (!data.displayArtistBio) {
-    return null
-  }
-
   const followsCount =
     Number(formatFollowerCount(data.artist?.counts?.follows)) ?? 0
 
-  const biographyBlurb =
-    data.artist?.partnerBiographyBlurb?.text ??
-    data.artist?.biographyBlurb?.text ??
-    ""
+  const biographyBlurb = data.artist?.biographyBlurb?.text ?? ""
 
   return (
     <Box
@@ -148,7 +138,7 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
           </Flex>
 
           <>
-            {biographyBlurb && (
+            {!!biographyBlurb && data.displayArtistBio && (
               <>
                 <Spacer y={4} />
 
