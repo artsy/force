@@ -14,6 +14,12 @@ const ArtAdvisorApp01 = loadable(
     resolveComponent: component => component.App,
   }
 )
+const ArtAdvisorApp02 = loadable(
+  () => import(/* webpackChunkName: "jobsBundle" */ "./02-Markdown/App"),
+  {
+    resolveComponent: component => component.App,
+  }
+)
 
 export const artAdvisorRoutes: AppRouteConfig[] = [
   {
@@ -28,6 +34,13 @@ export const artAdvisorRoutes: AppRouteConfig[] = [
     getComponent: () => ArtAdvisorApp01,
     onClientSideRender: () => {
       ArtAdvisorApp01.preload()
+    },
+  },
+  {
+    path: "/advisor/2",
+    getComponent: () => ArtAdvisorApp02,
+    onClientSideRender: () => {
+      ArtAdvisorApp02.preload()
     },
   },
 ]
