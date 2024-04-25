@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<69881ba56b5f0129f7ea482482aeae3a>>
+ * @generated SignedSource<<ddce84db9a42f42a3a778c45e7ae3dee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,6 +39,7 @@ export type PrivateArtworkAboutArtist_artwork$data = {
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
   } | null | undefined;
+  readonly displayArtistBio: boolean | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "PrivateArtworkAboutArtist_artwork";
 };
@@ -75,6 +76,13 @@ return {
   "metadata": null,
   "name": "PrivateArtworkAboutArtist_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "displayArtistBio",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -253,6 +261,6 @@ return {
 };
 })();
 
-(node as any).hash = "4a67e8c9efabcd921d95599de55feb7e";
+(node as any).hash = "ea4344a85ed19f878b86956f78a47038";
 
 export default node;
