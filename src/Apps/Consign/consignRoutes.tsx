@@ -182,6 +182,7 @@ export const consignRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "/",
+        layout: "FullBleed",
         getComponent: () => MarketingLandingApp,
         onClientSideRender: () => {
           MarketingLandingApp.preload()

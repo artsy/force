@@ -29,9 +29,11 @@ describe("SpeakToTheTeam", () => {
     render(<SpeakToTheTeam />)
 
     expect(
-      screen.getByText("Interested in selling multiple artworks?")
+      screen.getByText(
+        "Selling multiple artworks? Get in touch to connect with a specialist."
+      )
     ).toBeInTheDocument()
-    expect(screen.getByText("Speak with our team.")).toBeInTheDocument()
+    expect(screen.getByText("Get in Touch")).toBeInTheDocument()
   })
 
   describe("Get in Touch button", () => {
