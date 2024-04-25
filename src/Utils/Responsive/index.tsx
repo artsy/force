@@ -1,11 +1,8 @@
 export * from "./DeprecatedResponsive"
 import { createMedia } from "@artsy/fresnel"
 
-// TODO: We need this to be 0-based, whereas currently in palette xs is defined
-//       as 767. We should move this up to palette, but we need to give the
-//       migration path for users of the current Responsive component some
-//       serious thought.
-const newThemeBreakpoints = {
+// FIXME: Convert to Palette breakpoints
+export const BREAKPOINTS = {
   xs: 0,
   sm: 768,
   md: 900,
@@ -14,7 +11,7 @@ const newThemeBreakpoints = {
 }
 
 const ReactionMedia = createMedia({
-  breakpoints: newThemeBreakpoints,
+  breakpoints: BREAKPOINTS,
   interactions: {
     // TODO: These should go into palette
     hover: "(pointer: coarse), (-moz-touch-enabled: 1)",
