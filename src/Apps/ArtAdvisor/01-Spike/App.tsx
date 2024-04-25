@@ -2,16 +2,25 @@ import { FC, useState } from "react"
 import { Button, Input, TextArea, Text, Spacer, Flex } from "@artsy/palette"
 import { useSystemContext } from "System/SystemContext"
 
+type Message = {
+  role: string
+  content: string
+}
+
 export const App: FC = () => {
   const [userInput, setUserInput] = useState<string>("")
   const [messages, setMessages] = useState<string>("")
+  const [messageList, setMessageList] = useState<Message[]>([])
 
   const { user } = useSystemContext()
 
   const onSubmit = async () => {
     const res = await fetch("http://localhost:3000", {
       method: "POST",
-      body: userInput,
+      body: JSON.stringify([
+        ...messageList,
+        { role: "user", content: userInput },
+      ]),
       headers: {
         "Content-Type": "text/plain",
         "X-ACCESS-TOKEN": user?.accessToken || "",
@@ -19,6 +28,12 @@ export const App: FC = () => {
     })
 
     const parsedRespone = await res.text()
+
+    setMessageList([
+      ...messageList,
+      { role: "user", content: userInput },
+      { role: "assistant", content: parsedRespone },
+    ])
 
     setMessages(
       messages +
@@ -51,6 +66,7 @@ export const App: FC = () => {
           Send Message
         </Button>
       </Flex>
+      <pre>{JSON.stringify(messageList, null, 2)}</pre>
     </>
   )
 }
