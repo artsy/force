@@ -32,7 +32,7 @@ export const useFilterSelectResults = ({
     ?.counts.map(item => ({ label: item.name, ...item })) as FilterSelectItems
 
   const selectedItems = filtersByFaceName.map(selectedFacetName => {
-    return items.find(item => item.value === selectedFacetName)
+    return items?.find(item => item.value === selectedFacetName)
   }) as FilterSelectItems
 
   const handleFilterSelectChange = (state: FilterSelectChangeState) => {

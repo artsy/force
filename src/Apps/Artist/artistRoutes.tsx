@@ -37,7 +37,7 @@ const WorksForSaleRoute = loadable(
     ),
   {
     resolveComponent: component =>
-      component.ArtistWorksForSaleRouteFragmentContainer,
+      component.ArtistWorksForSaleRouteQueryRenderer,
   }
 )
 
@@ -134,24 +134,24 @@ export const artistRoutes: AppRouteConfig[] = [
           WorksForSaleRoute.preload()
         },
         prepareVariables: getWorksForSaleRouteVariables,
-        query: graphql`
-          query artistRoutes_WorksForSaleQuery(
-            $artistID: String!
-            $input: FilterArtworksInput
-            # TODO:(?) only request the artist series aggregation if user has the Unleash flag enabled?
-            $aggregations: [ArtworkAggregation]
-            $includeBlurHash: Boolean!
-          ) {
-            artist(id: $artistID) {
-              ...ArtistWorksForSaleRoute_artist
-                @arguments(
-                  input: $input
-                  aggregations: $aggregations
-                  includeBlurHash: $includeBlurHash
-                )
-            }
-          }
-        `,
+        // query: graphql`
+        //   query artistRoutes_WorksForSaleQuery(
+        //     $artistID: String!
+        //     $input: FilterArtworksInput
+        //     # TODO:(?) only request the artist series aggregation if user has the Unleash flag enabled?
+        //     $aggregations: [ArtworkAggregation]
+        //     $includeBlurHash: Boolean!
+        //   ) {
+        //     artist(id: $artistID) {
+        //       ...ArtistWorksForSaleRoute_artist
+        //         @arguments(
+        //           input: $input
+        //           aggregations: $aggregations
+        //           includeBlurHash: $includeBlurHash
+        //         )
+        //     }
+        //   }
+        // `,
       },
       {
         path: "auction-results",
