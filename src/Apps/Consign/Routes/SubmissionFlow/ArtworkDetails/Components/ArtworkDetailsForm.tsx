@@ -34,6 +34,7 @@ import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDe
 import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export enum SubmissionType {
   submission = "SUBMISSION",
@@ -162,6 +163,10 @@ export interface ArtworkDetailsFormModel {
 
 export const ArtworkDetailsForm: React.FC = () => {
   const { sendToast } = useToasts()
+
+  const isSellFlowRequiredField = useFeatureFlag(
+    "onyx_sell-flow-required-fields"
+  )
 
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
@@ -357,11 +362,11 @@ export const ArtworkDetailsForm: React.FC = () => {
               mr={2}
               maxLength={256}
               label={values.units}
-              name="height"
+              name={"height"}
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.height}
-              required
+              required={isSellFlowRequiredField ? false : true}
               error={touched.height && errors.height}
             />
 
@@ -370,11 +375,11 @@ export const ArtworkDetailsForm: React.FC = () => {
               width="50%"
               maxLength={256}
               label={values.units}
-              name="width"
+              name={"width"}
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.width}
-              required
+              required={isSellFlowRequiredField ? false : true}
               error={touched.width && errors.width}
             />
           </Flex>
