@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2595c7b27fbceb83654c0a76690a2c3>>
+ * @generated SignedSource<<69881ba56b5f0129f7ea482482aeae3a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -55,7 +55,12 @@ var v0 = {
   "name": "slug",
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "kind": "Literal",
+  "name": "format",
+  "value": "HTML"
+},
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -212,22 +217,20 @@ return {
         },
         {
           "alias": null,
-          "args": null,
+          "args": [
+            (v1/*: any*/)
+          ],
           "concreteType": "partnerBiographyBlurb",
           "kind": "LinkedField",
           "name": "partnerBiographyBlurb",
           "plural": false,
-          "selections": (v1/*: any*/),
-          "storageKey": null
+          "selections": (v2/*: any*/),
+          "storageKey": "partnerBiographyBlurb(format:\"HTML\")"
         },
         {
           "alias": null,
           "args": [
-            {
-              "kind": "Literal",
-              "name": "format",
-              "value": "HTML"
-            },
+            (v1/*: any*/),
             {
               "kind": "Literal",
               "name": "partnerBio",
@@ -238,7 +241,7 @@ return {
           "kind": "LinkedField",
           "name": "biographyBlurb",
           "plural": false,
-          "selections": (v1/*: any*/),
+          "selections": (v2/*: any*/),
           "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
         }
       ],
@@ -250,6 +253,6 @@ return {
 };
 })();
 
-(node as any).hash = "8051b5e52845585558f06c940963293b";
+(node as any).hash = "4a67e8c9efabcd921d95599de55feb7e";
 
 export default node;

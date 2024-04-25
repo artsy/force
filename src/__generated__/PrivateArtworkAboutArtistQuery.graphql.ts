@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb1eb9c6506291fc8142ed942f051f08>>
+ * @generated SignedSource<<bc40378ac4851016bb67820589f58fda>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,7 +43,12 @@ v2 = {
   "name": "id",
   "storageKey": null
 },
-v3 = [
+v3 = {
+  "kind": "Literal",
+  "name": "format",
+  "value": "HTML"
+},
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -239,22 +244,20 @@ return {
               },
               {
                 "alias": null,
-                "args": null,
+                "args": [
+                  (v3/*: any*/)
+                ],
                 "concreteType": "partnerBiographyBlurb",
                 "kind": "LinkedField",
                 "name": "partnerBiographyBlurb",
                 "plural": false,
-                "selections": (v3/*: any*/),
-                "storageKey": null
+                "selections": (v4/*: any*/),
+                "storageKey": "partnerBiographyBlurb(format:\"HTML\")"
               },
               {
                 "alias": null,
                 "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "HTML"
-                  },
+                  (v3/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "partnerBio",
@@ -265,7 +268,7 @@ return {
                 "kind": "LinkedField",
                 "name": "biographyBlurb",
                 "plural": false,
-                "selections": (v3/*: any*/),
+                "selections": (v4/*: any*/),
                 "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
               }
             ],
@@ -278,12 +281,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d78729f37c4becbef25cc57b2048b451",
+    "cacheID": "61bcd257349688c53e3558c832ba8b62",
     "id": null,
     "metadata": {},
     "name": "PrivateArtworkAboutArtistQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  slug\n  artist {\n    ...FollowArtistButton_artist\n    internalID\n    href\n    slug\n    name\n    initials\n    formattedNationalityAndBirthday\n    counts {\n      artworks\n      forSaleArtworks\n      follows\n    }\n    coverArtwork {\n      image {\n        cropped(width: 145, height: 145) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    partnerBiographyBlurb {\n      text\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
+    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  slug\n  artist {\n    ...FollowArtistButton_artist\n    internalID\n    href\n    slug\n    name\n    initials\n    formattedNationalityAndBirthday\n    counts {\n      artworks\n      forSaleArtworks\n      follows\n    }\n    coverArtwork {\n      image {\n        cropped(width: 145, height: 145) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    partnerBiographyBlurb(format: HTML) {\n      text\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
   }
 };
 })();
