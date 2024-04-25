@@ -2,7 +2,8 @@ import { BoxProps, Image, ResponsiveBox } from "@artsy/palette"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { FC } from "react"
 import { maxDimensionsByArea, resized } from "Utils/resized"
-import { Media } from "Utils/Responsive"
+import { BREAKPOINTS, Media } from "Utils/Responsive"
+import { Link } from "react-head"
 
 interface ArtistHeaderImageProps
   extends Omit<BoxProps, "maxHeight" | "maxWidth"> {
@@ -23,6 +24,21 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
 
   return (
     <>
+      <Link
+        rel="preload"
+        href={image.src}
+        as="image"
+        media={`(max-width: ${BREAKPOINTS.sm}px)`}
+      />
+
+      <Link
+        rel="preload"
+        href={desktop.src}
+        as="image"
+        imagesrcset={desktop.srcSet}
+        media={`(min-width: ${BREAKPOINTS.sm}px)`}
+      />
+
       <Media at="xs">
         <FullBleedHeader src={image.src} />
       </Media>
