@@ -26,6 +26,7 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
     graphql`
       fragment PrivateArtworkAboutArtist_artwork on Artwork {
         slug
+        displayArtistBio
         artist {
           ...FollowArtistButton_artist
           internalID
@@ -64,9 +65,10 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
     Number(formatFollowerCount(data.artist?.counts?.follows)) ?? 0
 
   const biographyBlurb =
-    data.artist?.partnerBiographyBlurb?.text ??
-    data.artist?.biographyBlurb?.text ??
-    ""
+    data.displayArtistBio &&
+    (data.artist?.partnerBiographyBlurb?.text ??
+      data.artist?.biographyBlurb?.text ??
+      "")
 
   const { trackEvent } = useTracking()
 
