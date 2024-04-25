@@ -127,6 +127,7 @@ export const consignFromMyCollectionRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "/",
+        layout: "FullBleed",
         getComponent: () => MarketingLandingApp,
         onClientSideRender: () => {
           MarketingLandingApp.preload()
