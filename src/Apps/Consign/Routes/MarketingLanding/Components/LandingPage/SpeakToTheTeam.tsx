@@ -33,11 +33,9 @@ export const SpeakToTheTeam: React.FC = () => {
     <TextAndImageLayout
       text={
         <>
-          <Text variant={["lg", "xl", "xxl"]} textColor="white100">
-            Interested in selling multiple artworks?
-          </Text>
-          <Text variant={["lg", "xl", "xxl"]} mb={4} textColor="white100">
-            Speak with our team.
+          <Text variant={["lg", "xl", "xxl"]} textColor="white100" mb={4}>
+            Selling multiple artworks? Get in touch to connect with a
+            specialist.
           </Text>
         </>
       }

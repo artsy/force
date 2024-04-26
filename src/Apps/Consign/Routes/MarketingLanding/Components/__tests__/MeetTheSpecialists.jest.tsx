@@ -82,12 +82,12 @@ describe("MeetTheSpecialists", () => {
     it("links out to email provider", () => {
       render(<MeetTheSpecialists />)
 
-      const link = screen.getByTestId("get-in-touch-button-Christine")
+      const link = screen.getByTestId("get-in-touch-button-Jessica") // here
 
       expect(link).toBeInTheDocument()
       expect(link).toHaveAttribute(
         "href",
-        "/sell/inquiry/christine.aschwald@artsymail.com"
+        "/sell/inquiry/jessica@artsymail.com"
       )
     })
   })

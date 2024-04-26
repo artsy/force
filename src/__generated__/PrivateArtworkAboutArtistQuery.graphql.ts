@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb1eb9c6506291fc8142ed942f051f08>>
+ * @generated SignedSource<<2e41a784105b455f3335a7abd6979c11>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,16 +42,7 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v3 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "text",
-    "storageKey": null
-  }
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -93,6 +84,13 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "displayArtistBio",
+            "storageKey": null
+          },
           (v1/*: any*/),
           {
             "alias": null,
@@ -239,16 +237,6 @@ return {
               },
               {
                 "alias": null,
-                "args": null,
-                "concreteType": "partnerBiographyBlurb",
-                "kind": "LinkedField",
-                "name": "partnerBiographyBlurb",
-                "plural": false,
-                "selections": (v3/*: any*/),
-                "storageKey": null
-              },
-              {
-                "alias": null,
                 "args": [
                   {
                     "kind": "Literal",
@@ -265,7 +253,15 @@ return {
                 "kind": "LinkedField",
                 "name": "biographyBlurb",
                 "plural": false,
-                "selections": (v3/*: any*/),
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "text",
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
               }
             ],
@@ -278,12 +274,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d78729f37c4becbef25cc57b2048b451",
+    "cacheID": "7556655022114cbb9f8b11408b8c3deb",
     "id": null,
     "metadata": {},
     "name": "PrivateArtworkAboutArtistQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  slug\n  artist {\n    ...FollowArtistButton_artist\n    internalID\n    href\n    slug\n    name\n    initials\n    formattedNationalityAndBirthday\n    counts {\n      artworks\n      forSaleArtworks\n      follows\n    }\n    coverArtwork {\n      image {\n        cropped(width: 145, height: 145) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    partnerBiographyBlurb {\n      text\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
+    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  displayArtistBio\n  slug\n  artist {\n    ...FollowArtistButton_artist\n    internalID\n    href\n    slug\n    name\n    initials\n    formattedNationalityAndBirthday\n    counts {\n      artworks\n      forSaleArtworks\n      follows\n    }\n    coverArtwork {\n      image {\n        cropped(width: 145, height: 145) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
   }
 };
 })();

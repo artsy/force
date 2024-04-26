@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2595c7b27fbceb83654c0a76690a2c3>>
+ * @generated SignedSource<<56299329cf5d02d94848d0aa9813f5ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,12 +33,10 @@ export type PrivateArtworkAboutArtist_artwork$data = {
     readonly initials: string | null | undefined;
     readonly internalID: string;
     readonly name: string | null | undefined;
-    readonly partnerBiographyBlurb: {
-      readonly text: string | null | undefined;
-    } | null | undefined;
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
   } | null | undefined;
+  readonly displayArtistBio: boolean | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "PrivateArtworkAboutArtist_artwork";
 };
@@ -54,22 +52,20 @@ var v0 = {
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
-},
-v1 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "text",
-    "storageKey": null
-  }
-];
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "PrivateArtworkAboutArtist_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "displayArtistBio",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -212,16 +208,6 @@ return {
         },
         {
           "alias": null,
-          "args": null,
-          "concreteType": "partnerBiographyBlurb",
-          "kind": "LinkedField",
-          "name": "partnerBiographyBlurb",
-          "plural": false,
-          "selections": (v1/*: any*/),
-          "storageKey": null
-        },
-        {
-          "alias": null,
           "args": [
             {
               "kind": "Literal",
@@ -238,7 +224,15 @@ return {
           "kind": "LinkedField",
           "name": "biographyBlurb",
           "plural": false,
-          "selections": (v1/*: any*/),
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "text",
+              "storageKey": null
+            }
+          ],
           "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
         }
       ],
@@ -250,6 +244,6 @@ return {
 };
 })();
 
-(node as any).hash = "8051b5e52845585558f06c940963293b";
+(node as any).hash = "9639e6efcb34309b9af08b5ed034e0ce";
 
 export default node;

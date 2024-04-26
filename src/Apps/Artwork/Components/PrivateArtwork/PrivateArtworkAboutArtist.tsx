@@ -22,9 +22,12 @@ interface PrivateArtworkAboutArtistProps {
 export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps> = ({
   artwork,
 }) => {
+  const { trackEvent } = useTracking()
+
   const data = useFragment(
     graphql`
       fragment PrivateArtworkAboutArtist_artwork on Artwork {
+        displayArtistBio
         slug
         artist {
           ...FollowArtistButton_artist
@@ -48,9 +51,6 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
             }
           }
           name
-          partnerBiographyBlurb {
-            text
-          }
           biographyBlurb(format: HTML, partnerBio: false) {
             text
           }
@@ -63,12 +63,7 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
   const followsCount =
     Number(formatFollowerCount(data.artist?.counts?.follows)) ?? 0
 
-  const biographyBlurb =
-    data.artist?.partnerBiographyBlurb?.text ??
-    data.artist?.biographyBlurb?.text ??
-    ""
-
-  const { trackEvent } = useTracking()
+  const biographyBlurb = data.artist?.biographyBlurb?.text ?? ""
 
   return (
     <Box
@@ -143,7 +138,7 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
           </Flex>
 
           <>
-            {biographyBlurb && (
+            {!!biographyBlurb && data.displayArtistBio && (
               <>
                 <Spacer y={4} />
 
