@@ -62,8 +62,13 @@ export const artworkRoutes: AppRouteConfig[] = [
         }
       }
     `,
-    cacheConfig: {
-      force: true,
+    getCacheConfig: ({ context }) => {
+      return {
+        force: true,
+
+        // TODO: In the future, we might want to only cache for logged out users
+        // force: !!context.user,
+      }
     },
   },
 ]

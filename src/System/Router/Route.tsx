@@ -1,5 +1,5 @@
 import { RouteSpinner } from "System/Relay/renderWithLoadProgress"
-import { HttpError, Match, RouteObjectBase } from "found"
+import { HttpError, Location, Match, RouteObjectBase } from "found"
 import BaseRoute from "found/Route"
 import * as React from "react"
 import { CacheConfig, GraphQLTaggedNode } from "relay-runtime"
@@ -7,9 +7,17 @@ import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { NextFunction } from "express"
 import { LayoutVariant } from "Apps/Components/Layouts"
 import { RemoveIndex } from "Utils/typeSupport"
+import { ClientContext } from "System/Router/buildClientAppContext"
 
 interface RouteConfigProps extends RouteObjectBase {
   cacheConfig?: CacheConfig
+  getCacheConfig?: (props: {
+    context: ClientContext
+    location: Location
+    params: {
+      [key: string]: string | undefined
+    }
+  }) => CacheConfig
   children?: AppRouteConfig[]
   fetchIndicator?: FetchIndicator
   ignoreScrollBehavior?: boolean
