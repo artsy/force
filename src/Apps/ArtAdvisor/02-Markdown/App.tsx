@@ -2,6 +2,7 @@ import { FC, useEffect, useRef, useState } from "react"
 import { Text, Box, Input, Button, Flex } from "@artsy/palette"
 import { ChatCompletionStream } from "openai/lib/ChatCompletionStream"
 import Markdown from "marked-react"
+import styled from "styled-components"
 
 export const App: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -14,12 +15,6 @@ export const App: FC = () => {
     if (inputRef.current) {
       inputRef.current.focus()
     }
-
-    // Setup: insert some CSS rules into the document's head
-    const styleElement = insertStyles()
-
-    // Cleanup: remove the style element when the component is unmounted
-    return () => removeStyles(styleElement)
   }, [])
 
   async function handleSubmit(e) {
@@ -67,7 +62,7 @@ export const App: FC = () => {
         Chat 1
       </Text>
 
-      <Box
+      <Conversation
         ref={conversationRef}
         style={{ fontSize: "1.2em" }}
         height={"30em"}
@@ -82,7 +77,7 @@ export const App: FC = () => {
         <div ref={scrollMeRef}>
           {/* invisible element that will be scrolled into view as `messages` gets updated */}
         </div>
-      </Box>
+      </Conversation>
 
       <form onSubmit={handleSubmit}>
         <Flex gap={1} mb={4}>
@@ -112,41 +107,27 @@ export const App: FC = () => {
   )
 }
 
-function insertStyles() {
-  // Create a new style element
-  const styleElement = document.createElement("style")
-  styleElement.type = "text/css"
-
-  // Insert the style element into the document's head
-  document.head.appendChild(styleElement)
-
-  // Add some CSS rules
-  if (styleElement.sheet) {
-    styleElement.sheet.insertRule(
-      "ul, ol { margin: 0 1em; padding: 0em; }",
-      styleElement.sheet.cssRules.length
-    )
-    styleElement.sheet.insertRule(
-      "ol li { list-style-type: number; margin-bottom: 1em; }",
-      styleElement.sheet.cssRules.length
-    )
-    styleElement.sheet.insertRule(
-      "ul li { list-style-type: disc; margin-bottom: 1em; }",
-      styleElement.sheet.cssRules.length
-    )
-    styleElement.sheet.insertRule(
-      "table { border: 1px solid gray; border-collapse: collapse; }",
-      styleElement.sheet.cssRules.length
-    )
-    styleElement.sheet.insertRule(
-      "td, th { border: 1px solid gray; padding: 0.5em; }",
-      styleElement.sheet.cssRules.length
-    )
+const Conversation = styled(Box)`
+  ul,
+  ol {
+    margin: 0 1em;
+    padding: 0em;
   }
-
-  return styleElement
-}
-
-function removeStyles(styleElement: HTMLStyleElement) {
-  document.head.removeChild(styleElement)
-}
+  ol li {
+    list-style-type: number;
+    margin-bottom: 1em;
+  }
+  ul li {
+    list-style-type: disc;
+    margin-bottom: 1em;
+  }
+  table {
+    border: 1px solid gray;
+    border-collapse: collapse;
+  }
+  td,
+  th {
+    border: 1px solid gray;
+    padding: 0.5em;
+  }
+`
