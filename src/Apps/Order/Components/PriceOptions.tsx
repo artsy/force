@@ -36,16 +36,17 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
-  const listPrice = parseFloat(
+  const listPrice = artwork?.listPrice
+  const orderPrice = parseFloat(
     order.lineItems?.edges?.[0]?.node?.listPrice || "0"
   )
-  const artworkData: PriceOptions_artwork$data["listPrice"] = {
-    major: listPrice,
+  const formattedOrderPrice: PriceOptions_artwork$data["listPrice"] = {
+    major: orderPrice,
   }
   const isPartnerOfferOrder = order.source === "partner_offer"
 
   const priceOptions = getOfferPriceOptions(
-    artworkData,
+    isPartnerOfferOrder ? formattedOrderPrice : listPrice,
     artwork?.isPriceRange,
     isPartnerOfferOrder
   )
