@@ -150,6 +150,7 @@
     "lodash": "^4.17.21",
     "luxon": "^3.2.1",
     "map-cursor-to-max": "^1.0.0",
+    "marked-react": "^2.0.0",
     "memoize-one": "^5.2.1",
     "mime": "2.4.0",
     "morgan": "1.10.0",

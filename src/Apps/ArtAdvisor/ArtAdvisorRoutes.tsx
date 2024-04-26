@@ -8,12 +8,39 @@ const ArtAdvisorApp = loadable(
   }
 )
 
+const ArtAdvisorApp01 = loadable(
+  () => import(/* webpackChunkName: "jobsBundle" */ "./01-Spike/App"),
+  {
+    resolveComponent: component => component.App,
+  }
+)
+const ArtAdvisorApp02 = loadable(
+  () => import(/* webpackChunkName: "jobsBundle" */ "./02-Markdown/App"),
+  {
+    resolveComponent: component => component.App,
+  }
+)
+
 export const artAdvisorRoutes: AppRouteConfig[] = [
   {
     path: "/advisor",
     getComponent: () => ArtAdvisorApp,
     onClientSideRender: () => {
       ArtAdvisorApp.preload()
+    },
+  },
+  {
+    path: "/advisor/1",
+    getComponent: () => ArtAdvisorApp01,
+    onClientSideRender: () => {
+      ArtAdvisorApp01.preload()
+    },
+  },
+  {
+    path: "/advisor/2",
+    getComponent: () => ArtAdvisorApp02,
+    onClientSideRender: () => {
+      ArtAdvisorApp02.preload()
     },
   },
 ]
