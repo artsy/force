@@ -20,8 +20,6 @@ declare module "found" {
     routeConfig: AppRouteConfig[]
   }
 
-  type HistoryOptions = HistoryEnhancerOptions
-
   interface RouteRenderArgs {
     resolving: boolean
   }
