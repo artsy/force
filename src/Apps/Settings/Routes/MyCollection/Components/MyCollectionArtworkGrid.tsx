@@ -1,15 +1,16 @@
 import { useDismissibleContext } from "@artsy/dismissible"
-import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
+import { ArtworkGridContainer } from "Components/ArtworkGrid/ArtworkGrid"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { _FragmentRefs } from "relay-runtime"
+import { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
 
 const POPOVER_KEY = PROGRESSIVE_ONBOARDING.startSelling
 
 interface MyCollectionArtworkGridProps {
-  artworks: _FragmentRefs<"MyCollectionArtworkGrid_artworks">
+  artworks: MyCollectionArtworkGrid_artworks$data
   onLoadMore: () => void
 }
 
@@ -22,7 +23,7 @@ const MyCollectionArtworksGrid: FC<MyCollectionArtworkGridProps> = ({
   const displayPopover = !isDismissed(POPOVER_KEY).status
 
   return (
-    <ArtworkGrid
+    <ArtworkGridContainer
       artworks={artworks}
       columnCount={[2, 3, 4, 4]}
       showHoverDetails={false}
