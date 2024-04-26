@@ -8,6 +8,11 @@ const AdminClearCacheApp = loadable(
   { resolveComponent: component => component.AdminClearCacheApp }
 )
 
+const NavigateToRoute = loadable(
+  () => import(/* webpackChunkName: "adminBundle" */ "./NavigateToRoute"),
+  { resolveComponent: component => component.NavigateToRoute }
+)
+
 export const adminRoutes: AppRouteConfig[] = [
   {
     path: "/admin",
@@ -22,6 +27,11 @@ export const adminRoutes: AppRouteConfig[] = [
             throw new HttpError(403)
           }
         },
+      },
+      {
+        path: "navigate-to-route",
+        Component: NavigateToRoute,
+        layout: "NavOnly",
       },
     ],
   },
