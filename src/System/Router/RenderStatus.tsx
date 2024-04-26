@@ -3,7 +3,6 @@ import StaticContainer from "found/StaticContainer"
 import { Box } from "@artsy/palette"
 import { useSystemContext } from "System/useSystemContext"
 import { ErrorPage } from "Components/ErrorPage"
-import ElementsRenderer from "found/ElementsRenderer"
 import createLogger from "Utils/logger"
 import { NetworkTimeout } from "./NetworkTimeout"
 import { PageLoader } from "./PageLoader"
@@ -11,15 +10,11 @@ import { AppShell } from "Apps/Components/AppShell"
 import { getENV } from "Utils/getENV"
 import { HttpError } from "found"
 
+import ElementsRenderer from "found/cjs/ElementsRenderer"
+
 const logger = createLogger("Artsy/Router/Utils/RenderStatus")
 
 export const RenderPending = () => {
-  const { isFetching } = useSystemContext()
-
-  if (!isFetching) {
-    return undefined
-  }
-
   return (
     <>
       <Renderer>{null}</Renderer>
@@ -43,12 +38,6 @@ export const RenderPending = () => {
 }
 
 export const RenderReady = ({ elements }: { elements: React.ReactNode }) => {
-  const { isFetching } = useSystemContext()
-
-  if (isFetching) {
-    return undefined
-  }
-
   return (
     <Renderer shouldUpdate>
       <ElementsRenderer elements={elements} />

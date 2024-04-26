@@ -1,11 +1,11 @@
-import { Link, LinkPropsSimple, RouterContext } from "found"
-import { useContext } from "react"
+import { Link, LinkPropsSimple } from "found"
 import * as React from "react"
 import { BoxProps, boxMixin } from "@artsy/palette"
 import styled from "styled-components"
 import { compose, ResponsiveValue, system } from "styled-system"
 import { useMemo } from "react"
 import { themeGet } from "@styled-system/theme-get"
+import { useRouter } from "System/Router/useRouter"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
@@ -27,7 +27,7 @@ export type RouterLinkProps = Omit<
 
 export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
   ({ inline, to, ...rest }, ref) => {
-    const context = useContext(RouterContext)
+    const context = useRouter()
     const routes = context?.router?.matcher?.routeConfig ?? []
     const matcher = context?.router?.matcher
     const isSupportedInRouter = useMemo(

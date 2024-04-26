@@ -1,5 +1,5 @@
 import { RouteSpinner } from "System/Relay/renderWithLoadProgress"
-import { RouteConfig, HttpError, Match } from "found"
+import { HttpError, Match, RouteObjectBase } from "found"
 import BaseRoute from "found/Route"
 import * as React from "react"
 import { CacheConfig, GraphQLTaggedNode } from "relay-runtime"
@@ -8,7 +8,7 @@ import { NextFunction } from "express"
 import { LayoutVariant } from "Apps/Components/Layouts"
 import { RemoveIndex } from "Utils/typeSupport"
 
-interface RouteConfigProps extends RouteConfig {
+interface RouteConfigProps extends RouteObjectBase {
   cacheConfig?: CacheConfig
   children?: AppRouteConfig[]
   fetchIndicator?: FetchIndicator

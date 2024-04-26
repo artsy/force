@@ -20,7 +20,7 @@ import {
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { RouteConfig, Router } from "found"
+import { Router } from "found"
 import { FC } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
@@ -41,6 +41,7 @@ import {
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
+import { AppRouteConfig } from "System/Router/Route"
 
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
@@ -48,7 +49,7 @@ export interface ReviewProps extends SystemContextProps {
   order: Review_order$data
   relay?: RelayProp
   router: Router
-  route: RouteConfig
+  route: AppRouteConfig
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
