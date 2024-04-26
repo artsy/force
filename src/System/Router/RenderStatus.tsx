@@ -1,5 +1,5 @@
 import * as React from "react"
-import StaticContainer from "react-static-container"
+import StaticContainer from "found/StaticContainer"
 import { Box } from "@artsy/palette"
 import { useSystemContext } from "System/useSystemContext"
 import { ErrorPage } from "Components/ErrorPage"
