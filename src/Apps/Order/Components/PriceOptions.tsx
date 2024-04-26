@@ -36,8 +36,19 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
-  const listPrice = artwork?.listPrice
-  const priceOptions = getOfferPriceOptions(listPrice, artwork?.isPriceRange)
+  const listPrice = parseFloat(
+    order.lineItems?.edges?.[0]?.node?.listPrice || "0"
+  )
+  const artworkData: PriceOptions_artwork$data["listPrice"] = {
+    major: listPrice,
+  }
+  const isPartnerOfferOrder = order.source === "partner_offer"
+
+  const priceOptions = getOfferPriceOptions(
+    artworkData,
+    artwork?.isPriceRange,
+    isPartnerOfferOrder
+  )
   const {
     lastOffer,
     selectedPriceOption,
@@ -194,6 +205,14 @@ export const PriceOptionsFragmentContainer = createFragmentContainer(
     order: graphql`
       fragment PriceOptions_order on CommerceOrder {
         internalID
+        source
+        lineItems {
+          edges {
+            node {
+              listPrice(format: "%v", thousand: "")
+            }
+          }
+        }
         ... on CommerceOfferOrder {
           myLastOffer {
             amountCents

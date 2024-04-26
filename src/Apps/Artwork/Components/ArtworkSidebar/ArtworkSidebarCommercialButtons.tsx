@@ -257,6 +257,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
             input: {
               artworkId: artwork.internalID,
               editionSetId: selectedEditionSet?.internalID,
+              partnerOfferId: activePartnerOffer?.internalID,
             },
           },
         })
@@ -442,7 +443,11 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
                   loading={isCommittingCreateOfferOrderMutation}
                   onClick={handleCreateOfferOrder}
                 >
-                  {t("artworkPage.sidebar.commercialButtons.makeOffer")}
+                  {activePartnerOffer
+                    ? t(
+                        "artworkPage.sidebar.commercialButtons.counterPartnerOffer"
+                      )
+                    : t("artworkPage.sidebar.commercialButtons.makeOffer")}
                 </Button>
               )}
               {renderButtons.contactGallery && (

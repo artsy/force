@@ -65,11 +65,12 @@ export const getInitialOfferState = (
 
 export const getOfferPriceOptions = (
   listPrice: ListPriceType,
-  isPriceRange?: boolean | null
+  isPriceRange?: boolean | null,
+  isPartnerOfferOrder?: boolean
 ) => {
-  return isPriceRange
+  return isPriceRange && !isPartnerOfferOrder
     ? getRangeOptions(listPrice)
-    : getPercentageOptions(listPrice)
+    : getPercentageOptions(listPrice, isPartnerOfferOrder)
 }
 
 const getRangeOptions = (listPrice: ListPriceType) => {
@@ -103,23 +104,29 @@ const getRangeOptions = (listPrice: ListPriceType) => {
   }))
 }
 
-const getPercentageOptions = (listPrice: ListPriceType) => {
+const getPercentageOptions = (
+  listPrice: ListPriceType,
+  isPartnerOfferOrder: boolean | undefined
+) => {
+  const priceLabel = isPartnerOfferOrder ? "gallery offer" : "list price"
+
   const percentageOptions = [
     {
       key: "max",
       percentage: 0,
-      description: "List price (high chance of acceptance)",
+      description: `${
+        priceLabel.charAt(0).toUpperCase() + priceLabel.slice(1)
+      } (high chance of acceptance)`,
     },
     {
       key: "mid",
       percentage: 0.1,
-      description: "10% below the list price (good chance of acceptance)",
+      description: `10% below the ${priceLabel} (good chance of acceptance)`,
     },
     {
       key: "min",
       percentage: 0.2,
-      description:
-        "20% below the list price (substantial reduction, lower chance of acceptance)",
+      description: `20% below the ${priceLabel} (substantial reduction, lower chance of acceptance)`,
     },
   ]
 
