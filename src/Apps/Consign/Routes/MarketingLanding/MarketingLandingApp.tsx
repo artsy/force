@@ -14,14 +14,18 @@ import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/
 import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
 import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
 import { Media } from "Utils/Responsive"
-import { MOBILE_NAV_AUTHENTICATION_HEIGHT } from "Components/NavBar/constants"
 import { SWAStickyFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAStickyFooter"
 import { SWAFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
 import { Footer } from "Components/Footer/Footer"
-
-const MOBILE_HEIGHT = `calc(100vh - ${MOBILE_NAV_AUTHENTICATION_HEIGHT}px)`
+import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 
 export const MarketingLandingApp = () => {
+  const {
+    height: [mobileNavBarHeight],
+  } = useNavBarHeight()
+
+  const mobileHeight = `calc(100vh - ${mobileNavBarHeight}px)`
+
   const {
     match: {
       location: { query },
@@ -48,11 +52,7 @@ export const MarketingLandingApp = () => {
       <SellMeta />
 
       <Media lessThan="sm">
-        <Flex
-          flexDirection="column"
-          maxHeight={MOBILE_HEIGHT}
-          overflow="hidden"
-        >
+        <Flex flexDirection="column" maxHeight={mobileHeight} overflow="hidden">
           <Box
             flex={1}
             overflow="auto"
