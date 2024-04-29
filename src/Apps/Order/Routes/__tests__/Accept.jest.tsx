@@ -92,7 +92,7 @@ describe("Accept seller offer", () => {
       <MockBoot>
         <AcceptFragmentContainer
           router={{ push: pushMock } as any}
-          route={{ onTransition: jest.fn }}
+          route={{ onTransition: jest.fn } as any}
           order={props.order}
           dialog={{} as any}
           isCommittingMutation={isCommittingMutation}
