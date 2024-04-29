@@ -360,7 +360,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   const SaleMessageOrOfferDisplay: FC = () => {
     return (
       <>
-        {partnerOffer ? (
+        {partnerOffer?.isAvailable ? (
           <OfferDisplay
             originalPrice={artwork.priceListedDisplay}
             offerPrice={partnerOffer.priceWithDiscount?.display}

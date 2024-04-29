@@ -2,13 +2,9 @@ import { ActionType, ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Button,
-  HorizontalOverflow,
   Image,
-  Join,
-  Pill,
   ReadMore,
   ResponsiveBox,
-  Spacer,
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
@@ -18,51 +14,19 @@ import {
   CARD_HEIGHT_MOBILE,
   CARD_WIDTH,
   SPECIALISTS,
-  Specialty,
 } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
 import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System/SystemContext"
 import { resized } from "Utils/resized"
-import { useState } from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
-
-interface PillData {
-  type: Specialty
-  title: string
-}
-
-const pills: PillData[] = [
-  {
-    type: "auctions",
-    title: "Auctions",
-  },
-  {
-    type: "priveteSalesAndAdvisory",
-    title: "Private Sales & Advisory",
-  },
-  {
-    type: "collectorServices",
-    title: "Collector Services",
-  },
-]
-
-const filteredPills = pills.filter(pill =>
-  SPECIALISTS.some(specialist => specialist.specialty === pill.type)
-) as PillData[]
 
 export const MeetTheSpecialists: React.FC = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
-
-  const [specialityFilter, setSpecialityFilter] = useState<Specialty | null>()
-
-  const specialistsTooDisplay = specialityFilter
-    ? SPECIALISTS.filter(i => i.specialty === specialityFilter)
-    : SPECIALISTS
 
   const trackContactTheSpecialistClick = () => {
     trackEvent({
@@ -97,27 +61,10 @@ export const MeetTheSpecialists: React.FC = () => {
       <Text mb={2} variant={["xs", "sm"]}>
         Our specialists span today’s most popular collecting categories.
       </Text>
-      <HorizontalOverflow>
-        <Join separator={<Spacer x={1} />}>
-          {filteredPills.map(pill => (
-            <Pill
-              key={`pill-${pill.type}`}
-              selected={specialityFilter === pill.type}
-              onClick={() => {
-                setSpecialityFilter(
-                  specialityFilter === pill.type ? null : pill.type
-                )
-              }}
-            >
-              {pill.title}
-            </Pill>
-          ))}
-        </Join>
-      </HorizontalOverflow>
       <Rail
         title=""
         getItems={() => {
-          return specialistsTooDisplay.map(i => (
+          return SPECIALISTS.map(i => (
             <ResponsiveBox
               aspectWidth={CARD_WIDTH}
               aspectHeight={CARD_HEIGHT}
@@ -187,7 +134,7 @@ export const MeetTheSpecialists: React.FC = () => {
         variant="primaryBlack"
         onClick={trackGetInTouchClick}
         data-testid="get-in-touch-button"
-        to={"/sell/inquiry"}
+        to="/sell/inquiry"
       >
         Get in Touch
       </Button>

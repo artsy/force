@@ -134,7 +134,13 @@ export const ArtworkApp: React.FC<Props> = props => {
     artwork?.partner
 
   const trackPageview = useCallback(() => {
-    const { listPrice, availability, isOfferable, isAcquireable } = artwork
+    const {
+      listPrice,
+      availability,
+      isOfferable,
+      isAcquireable,
+      visibilityLevel,
+    } = artwork
     const path = window.location.pathname
 
     if (typeof window.analytics !== "undefined") {
@@ -144,6 +150,7 @@ export const ArtworkApp: React.FC<Props> = props => {
         offerable: isOfferable,
         path,
         price_listed: !!listPrice,
+        visibility_level: visibilityLevel,
         url: getENV("APP_URL") + path,
       }
 
