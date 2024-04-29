@@ -44,9 +44,10 @@ export const App: FC = () => {
   return (
     <>
       <Spacer y={4} />
-      <Text variant="lg-display">Art Advisor Chat</Text>
+      <Text variant="lg-display">Profile Builder</Text>
       <Spacer y={4} />
       {messages.map((message, index) => {
+        // Guard against trying to rendering messages that are just for memory, sush as function tool messages.
         if (message.role === "tool" || message.content === null) {
           return null
         }
@@ -54,7 +55,7 @@ export const App: FC = () => {
         return (
           <StackableBorderBox key={index}>
             <Text color="black60">
-              {message.role === "user" ? "You" : "Art Advisor"}
+              {message.role === "user" ? "User" : "Assistant"}
             </Text>
             <Text>{message.content}</Text>
           </StackableBorderBox>
