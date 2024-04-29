@@ -27,13 +27,11 @@ export const App: FC = () => {
       },
     })
 
-    const parsedRespone = await res.text()
+    const parsedResponse = await res.json()
 
-    setMessageList([
-      ...messageList,
-      { role: "user", content: userInput },
-      { role: "assistant", content: parsedRespone },
-    ])
+    console.log(parsedResponse)
+
+    setMessageList(parsedResponse.messages)
 
     setMessages(
       messages +
@@ -42,7 +40,7 @@ export const App: FC = () => {
         "\n" +
         "\n" +
         "ART ADVISOR: " +
-        parsedRespone +
+        parsedResponse.message +
         "\n" +
         "\n"
     )
