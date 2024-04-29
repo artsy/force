@@ -20,6 +20,15 @@ const ArtAdvisorApp02 = loadable(
     resolveComponent: component => component.App,
   }
 )
+const ArtAdvisorApp03 = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "jobsBundle" */ "./03-Intruction-Experiments/App"
+    ),
+  {
+    resolveComponent: component => component.App,
+  }
+)
 
 export const artAdvisorRoutes: AppRouteConfig[] = [
   {
@@ -41,6 +50,13 @@ export const artAdvisorRoutes: AppRouteConfig[] = [
     getComponent: () => ArtAdvisorApp02,
     onClientSideRender: () => {
       ArtAdvisorApp02.preload()
+    },
+  },
+  {
+    path: "/advisor/3",
+    getComponent: () => ArtAdvisorApp03,
+    onClientSideRender: () => {
+      ArtAdvisorApp03.preload()
     },
   },
 ]
