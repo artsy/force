@@ -165,13 +165,14 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                     }}
                     noTitle
                   />
-                  {(!customValue || customValue < minPrice) && (
-                    <MinPriceWarning
-                      isPriceRange={!!artwork?.isPriceRange}
-                      minPrice={asCurrency(minPrice) as string}
-                      orderID={order.internalID}
-                    />
-                  )}
+                  {(!customValue || customValue < minPrice) &&
+                    !isPartnerOfferOrder && (
+                      <MinPriceWarning
+                        isPriceRange={!!artwork?.isPriceRange}
+                        minPrice={asCurrency(minPrice) as string}
+                        orderID={order.internalID}
+                      />
+                    )}
                 </Flex>
               </Jump>
             )}
