@@ -108,37 +108,41 @@ const getPercentageOptions = (
   listPrice: ListPriceType,
   isPartnerOfferOrder: boolean | undefined
 ) => {
-  const priceLabel = isPartnerOfferOrder ? "gallery offer" : "list price"
-
-  const percentageOptions = [
-    {
-      key: "max",
-      percentage: 0,
-      description: `${
-        priceLabel.charAt(0).toUpperCase() + priceLabel.slice(1)
-      }${isPartnerOfferOrder ? "" : " (high chance of acceptance)"}`,
-    },
-    {
-      key: "mid",
-      percentage: isPartnerOfferOrder ? 0.05 : 0.1,
-      description: `${
-        isPartnerOfferOrder ? "5%" : "10%"
-      } below the ${priceLabel}${
-        isPartnerOfferOrder ? "" : " (good chance of acceptance)"
-      }`,
-    },
-    {
-      key: "min",
-      percentage: isPartnerOfferOrder ? 0.1 : 0.2,
-      description: `${
-        isPartnerOfferOrder ? "10%" : "20%"
-      } below the ${priceLabel}${
-        isPartnerOfferOrder
-          ? ""
-          : " (substantial reduction, lower chance of acceptance)"
-      }`,
-    },
-  ]
+  let percentageOptions
+  if (isPartnerOfferOrder) {
+    percentageOptions = [
+      { key: "max", percentage: 0, description: "Gallery offer" },
+      {
+        key: "mid",
+        percentage: 0.05,
+        description: "5% below the gallery offer",
+      },
+      {
+        key: "min",
+        percentage: 0.1,
+        description: "10% below the gallery offer",
+      },
+    ]
+  } else {
+    percentageOptions = [
+      {
+        key: "max",
+        percentage: 0,
+        description: "List price (high chance of acceptance)",
+      },
+      {
+        key: "mid",
+        percentage: 0.1,
+        description: "10% below the list price (good chance of acceptance)",
+      },
+      {
+        key: "min",
+        percentage: 0.2,
+        description:
+          "20% below the list price (substantial reduction, lower chance of acceptance)",
+      },
+    ]
+  }
 
   return percentageOptions.map((option, idx) => {
     if (listPrice?.major) {
