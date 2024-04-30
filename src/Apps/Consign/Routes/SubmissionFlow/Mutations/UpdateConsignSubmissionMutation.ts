@@ -2,6 +2,7 @@ import {
   UpdateSubmissionMutationInput,
   UpdateConsignSubmissionMutation,
 } from "__generated__/UpdateConsignSubmissionMutation.graphql"
+import { isEmpty, omitBy } from "lodash"
 import { Environment, commitMutation, graphql } from "react-relay"
 
 export const updateConsignSubmissionMutation = (
@@ -22,7 +23,7 @@ export const updateConsignSubmissionMutation = (
         }
       `,
       variables: {
-        input,
+        input: omitBy(input, isEmpty),
       },
       onError: reject,
       onCompleted: async (res, errors) => {

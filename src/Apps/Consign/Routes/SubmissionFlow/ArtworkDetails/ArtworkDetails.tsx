@@ -170,6 +170,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         submission_id: submissionId,
         user_id: submission?.userId,
         user_email: submission?.userEmail,
+        fieldsProvided: [artworkDetailsForm.height, artworkDetailsForm.width],
       })
 
       router.replace(artworkId ? "/collector-profile/my-collection" : "/sell")
