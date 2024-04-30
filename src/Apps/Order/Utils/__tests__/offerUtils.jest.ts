@@ -74,6 +74,26 @@ describe("offer utils", () => {
       ])
     })
 
+    it("returns percentage options with different values and copy if partner offer", () => {
+      expect(getOfferPriceOptions({ major: 100 }, false, true)).toEqual([
+        {
+          key: "price-option-max",
+          value: 100,
+          description: "Gallery offer",
+        },
+        {
+          key: "price-option-mid",
+          value: 95,
+          description: "5% below the gallery offer",
+        },
+        {
+          key: "price-option-min",
+          value: 90,
+          description: "10% below the gallery offer",
+        },
+      ])
+    })
+
     it("returns range options if list price is range", () => {
       expect(
         getOfferPriceOptions(

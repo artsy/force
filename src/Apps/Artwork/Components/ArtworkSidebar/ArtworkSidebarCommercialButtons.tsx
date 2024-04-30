@@ -257,6 +257,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
             input: {
               artworkId: artwork.internalID,
               editionSetId: selectedEditionSet?.internalID,
+              partnerOfferId: activePartnerOffer?.internalID,
             },
           },
         })
