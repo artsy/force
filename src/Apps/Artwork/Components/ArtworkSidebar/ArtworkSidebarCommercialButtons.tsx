@@ -443,11 +443,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
                   loading={isCommittingCreateOfferOrderMutation}
                   onClick={handleCreateOfferOrder}
                 >
-                  {activePartnerOffer
-                    ? t(
-                        "artworkPage.sidebar.commercialButtons.counterPartnerOffer"
-                      )
-                    : t("artworkPage.sidebar.commercialButtons.makeOffer")}
+                  {t("artworkPage.sidebar.commercialButtons.makeOffer")}
                 </Button>
               )}
               {renderButtons.contactGallery && (

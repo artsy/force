@@ -116,17 +116,27 @@ const getPercentageOptions = (
       percentage: 0,
       description: `${
         priceLabel.charAt(0).toUpperCase() + priceLabel.slice(1)
-      } (high chance of acceptance)`,
+      }${isPartnerOfferOrder ? "" : " (high chance of acceptance)"}`,
     },
     {
       key: "mid",
-      percentage: 0.1,
-      description: `10% below the ${priceLabel} (good chance of acceptance)`,
+      percentage: isPartnerOfferOrder ? 0.05 : 0.1,
+      description: `${
+        isPartnerOfferOrder ? "5%" : "10%"
+      } below the ${priceLabel}${
+        isPartnerOfferOrder ? "" : " (good chance of acceptance)"
+      }`,
     },
     {
       key: "min",
-      percentage: 0.2,
-      description: `20% below the ${priceLabel} (substantial reduction, lower chance of acceptance)`,
+      percentage: isPartnerOfferOrder ? 0.1 : 0.2,
+      description: `${
+        isPartnerOfferOrder ? "10%" : "20%"
+      } below the ${priceLabel}${
+        isPartnerOfferOrder
+          ? ""
+          : " (substantial reduction, lower chance of acceptance)"
+      }`,
     },
   ]
 
