@@ -30,6 +30,7 @@ import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
 import { Sticky } from "Components/Sticky"
+import { useJump } from "Utils/Hooks/useJump"
 
 interface SavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -112,6 +113,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   onCompleted,
 }) => {
   const { state, goToFilters, dispatch, onComplete } = useAlertContext()
+  const { jumpTo } = useJump()
 
   const isMounted = useDidMount()
 
@@ -135,6 +137,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
         const transitionToFilters = () => {
           goToFilters()
+          jumpTo("SavedSearchAlertEditForm")
         }
 
         return (
