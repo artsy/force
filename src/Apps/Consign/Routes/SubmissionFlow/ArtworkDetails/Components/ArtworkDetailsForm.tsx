@@ -362,7 +362,7 @@ export const ArtworkDetailsForm: React.FC = () => {
               mr={2}
               maxLength={256}
               label={values.units}
-              name={"height"}
+              name="height"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.height}
@@ -375,7 +375,7 @@ export const ArtworkDetailsForm: React.FC = () => {
               width="50%"
               maxLength={256}
               label={values.units}
-              name={"width"}
+              name="width"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.width}
