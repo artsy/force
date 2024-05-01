@@ -35,7 +35,12 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
       [matcher, routes, to]
     )
 
-    if (isSupportedInRouter) {
+    const { target } = rest
+    // If displaying the linked URL in the same browsing context, e.g. browser tab.
+    const isSameBrowsingContext = !target || target === "_self"
+    const isRouterAware = isSupportedInRouter && isSameBrowsingContext
+
+    if (isRouterAware) {
       return <RouterAwareLink inline={inline} to={to ?? ""} {...rest} />
     }
 
