@@ -17,12 +17,13 @@ type Message = {
 export const App: FC = () => {
   const [userInput, setUserInput] = useState<string>("")
   const [messages, setMessageList] = useState<Message[]>([])
+  const [isGenerating, setIsGenerating] = useState<boolean>(false)
 
   const { user } = useSystemContext()
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
-
+    setIsGenerating(true)
     try {
       const res = await fetch("/api/advisor/3", {
         method: "POST",
@@ -40,6 +41,8 @@ export const App: FC = () => {
       setMessageList(parsedResponse)
     } catch (e) {
       console.error(e)
+    } finally {
+      setIsGenerating(false)
     }
   }
 
@@ -72,7 +75,9 @@ export const App: FC = () => {
             onChange={e => setUserInput(e.target.value)}
           />
           <Spacer x={4} />
-          <Button type="submit">Send</Button>
+          <Button type="submit" disabled={isGenerating}>
+            Send
+          </Button>
         </Flex>
       </form>
       <pre>{JSON.stringify(messages, null, 2)}</pre>
