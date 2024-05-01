@@ -1,4 +1,4 @@
-import { FC, FormEvent, useState } from "react"
+import { FC, FormEvent, useEffect, useRef, useState } from "react"
 import {
   Button,
   Input,
@@ -20,8 +20,13 @@ export const App: FC = () => {
   const [userInput, setUserInput] = useState<string>("")
   const [messages, setMessageList] = useState<Message[]>([])
   const [isGenerating, setIsGenerating] = useState<boolean>(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const { user } = useSystemContext()
+
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [])
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -41,6 +46,11 @@ export const App: FC = () => {
       const parsedResponse = await res.json()
 
       setMessageList(parsedResponse)
+
+      if (inputRef.current) {
+        inputRef.current.value = ""
+        inputRef.current.focus()
+      }
     } catch (e) {
       console.error(e)
     } finally {
@@ -74,6 +84,7 @@ export const App: FC = () => {
       <form onSubmit={onSubmit}>
         <Flex>
           <Input
+            ref={inputRef}
             name="userInput"
             placeholder="Enter your message here"
             onChange={e => setUserInput(e.target.value)}
