@@ -1,7 +1,6 @@
 import Cookies from "cookies-js"
 import { Button, ModalDialog, Stack, Text } from "@artsy/palette"
 import { FC, useEffect, useState } from "react"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { useSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
@@ -16,7 +15,7 @@ export const TermsUpdateDialog: FC<TermsUpdateDialogProps> = () => {
   const isIntegrity = getENV("USER_AGENT") === "ArtsyIntegrity"
   const isSmokeTest = getENV("USER_AGENT") === "ForceSmokeTest"
 
-  const isTermsUpdateActive = useFeatureFlag("diamond_new-terms-and-conditions")
+  const isTermsUpdateActive = false
 
   const [isDisplayable, setIsDisplayable] = useState(false)
 
