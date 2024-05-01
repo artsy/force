@@ -10,6 +10,7 @@ import {
   Spinner,
 } from "@artsy/palette"
 import { useSystemContext } from "System/SystemContext"
+import Markdown from "marked-react"
 
 type Message = {
   role: string
@@ -75,7 +76,7 @@ export const App: FC = () => {
               <Text color="black60">
                 {message.role === "user" ? "User" : "Assistant"}
               </Text>
-              <Text>{message.content}</Text>
+              <Markdown>{message.content}</Markdown>
             </StackableBorderBox>
           )
         })}
