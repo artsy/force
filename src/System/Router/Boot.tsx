@@ -38,7 +38,6 @@ import {
   AppPreferencesProvider,
   useAppPreferences,
 } from "Apps/AppPreferences/useAppPreferences"
-import { TermsUpdateDialog } from "Components/TermsUpdateDialog"
 
 export interface BootProps {
   children: React.ReactNode
@@ -105,8 +104,6 @@ export const Boot = track(undefined, {
                               <CookieConsentManager>
                                 <FocusVisible />
                                 <SiftContainer />
-
-                                <TermsUpdateDialog />
 
                                 {children}
                               </CookieConsentManager>
