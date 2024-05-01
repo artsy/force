@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC, FormEvent, useState } from "react"
 import {
   Button,
   Input,
@@ -20,7 +20,9 @@ export const App: FC = () => {
 
   const { user } = useSystemContext()
 
-  const onSubmit = async () => {
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+
     try {
       const res = await fetch("/api/advisor/3", {
         method: "POST",
@@ -62,17 +64,17 @@ export const App: FC = () => {
         )
       })}
       <Spacer y={2} />
-      <Flex>
-        <Input
-          name="userInput"
-          placeholder="Enter your message here"
-          onChange={e => setUserInput(e.target.value)}
-        />
-        <Spacer x={4} />
-        <Button type="submit" onClick={onSubmit}>
-          Send
-        </Button>
-      </Flex>
+      <form onSubmit={onSubmit}>
+        <Flex>
+          <Input
+            name="userInput"
+            placeholder="Enter your message here"
+            onChange={e => setUserInput(e.target.value)}
+          />
+          <Spacer x={4} />
+          <Button type="submit">Send</Button>
+        </Flex>
+      </form>
       <pre>{JSON.stringify(messages, null, 2)}</pre>
     </>
   )
