@@ -6,6 +6,7 @@ import {
   Spacer,
   Flex,
   StackableBorderBox,
+  Box,
 } from "@artsy/palette"
 import { useSystemContext } from "System/SystemContext"
 
@@ -51,21 +52,23 @@ export const App: FC = () => {
       <Spacer y={4} />
       <Text variant="lg-display">Profile Builder</Text>
       <Spacer y={4} />
-      {messages.map((message, index) => {
-        // Guard against trying to rendering messages that are just for memory, sush as function tool messages.
-        if (message.role === "tool" || message.content === null) {
-          return null
-        }
+      <Box>
+        {messages.map((message, index) => {
+          // Guard against trying to rendering messages that are just for memory, sush as function tool messages.
+          if (message.role === "tool" || message.content === null) {
+            return null
+          }
 
-        return (
-          <StackableBorderBox key={index}>
-            <Text color="black60">
-              {message.role === "user" ? "User" : "Assistant"}
-            </Text>
-            <Text>{message.content}</Text>
-          </StackableBorderBox>
-        )
-      })}
+          return (
+            <StackableBorderBox key={index}>
+              <Text color="black60">
+                {message.role === "user" ? "User" : "Assistant"}
+              </Text>
+              <Text>{message.content}</Text>
+            </StackableBorderBox>
+          )
+        })}
+      </Box>
       <Spacer y={2} />
       <form onSubmit={onSubmit}>
         <Flex>
