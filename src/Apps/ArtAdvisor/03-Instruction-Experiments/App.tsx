@@ -7,6 +7,7 @@ import {
   Flex,
   StackableBorderBox,
   Box,
+  Spinner,
 } from "@artsy/palette"
 import { useSystemContext } from "System/SystemContext"
 
@@ -77,13 +78,27 @@ export const App: FC = () => {
             placeholder="Enter your message here"
             onChange={e => setUserInput(e.target.value)}
           />
-          <Spacer x={4} />
-          <Button type="submit" disabled={isGenerating}>
-            Send
-          </Button>
+          <Spacer x={2} />
+          <SubmitButton isGenerating={isGenerating} />
         </Flex>
       </form>
       <pre>{JSON.stringify(messages, null, 2)}</pre>
     </>
+  )
+}
+
+const SubmitButton: React.FC<{ isGenerating: boolean }> = props => {
+  const { isGenerating } = props
+
+  return (
+    <Button type="submit" minWidth={"10em"} disabled={isGenerating}>
+      {isGenerating ? (
+        <Box position="relative">
+          <Spinner color="white100" />
+        </Box>
+      ) : (
+        "Send"
+      )}
+    </Button>
   )
 }
