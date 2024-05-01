@@ -1,6 +1,6 @@
 import { Button, Flex, Spacer } from "@artsy/palette"
 import { Accept_order$data } from "__generated__/Accept_order.graphql"
-import { RouteConfig, Router } from "found"
+import { Router } from "found"
 import { FC } from "react"
 import { Media } from "Utils/Responsive"
 import { counterofferFlowSteps } from "Apps/Order/Components/OrderStepper"
@@ -25,12 +25,13 @@ import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { Stripe, StripeElements } from "@stripe/stripe-js"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { useTracking } from "react-tracking"
+import { AppRouteConfig } from "System/Router/Route"
 
 interface AcceptProps {
   order: Accept_order$data
   relay?: RelayProp
   router: Router
-  route: RouteConfig
+  route: AppRouteConfig
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean

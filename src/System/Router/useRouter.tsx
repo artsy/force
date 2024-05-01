@@ -1,5 +1,6 @@
 import { useContext } from "react"
-import { Match, Router, RouterContext } from "found"
+import { Match, Router } from "found"
+import RouterContext from "found/RouterContext"
 import { AppRouteConfig } from "./Route"
 import { findCurrentRoute } from "./Utils/findCurrentRoute"
 
@@ -10,7 +11,12 @@ export function useRouter(): {
   silentPush: (path: string) => void
   silentReplace: (path: string) => void
 } {
-  const { match, router } = useContext(RouterContext) ?? {}
+  const { match, router } =
+    useContext<{
+      match: Match<any>
+      router: Router
+    }>(RouterContext) ?? {}
+
   const route = findCurrentRoute(match)
 
   const silentPush = (path: string) => {

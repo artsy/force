@@ -5,9 +5,7 @@ import {
   SkeletonText,
   SkeletonBox,
   Skeleton,
-  Box,
 } from "@artsy/palette"
-import { ALERTS_APP_DESKTOP_HEIGHT } from "Apps/Settings/Routes/SavedSearchAlerts/SavedSearchAlertsApp"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { CriteriaPillsPlaceholder } from "Components/Alert/Components/CriteriaPills"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
@@ -17,11 +15,7 @@ export const SavedSearchAlertEditFormPlaceholder: React.FC<{
   onCloseClick?: () => void
 }> = ({ onCloseClick }) => {
   return (
-    <Box
-      maxHeight={ALERTS_APP_DESKTOP_HEIGHT}
-      overflow="hidden"
-      flexDirection="column"
-    >
+    <>
       <Media greaterThanOrEqual="md">
         <Skeleton flex={1} p={4}>
           <SavedSearchAlertEditFormPlaceholderContext />
@@ -38,7 +32,7 @@ export const SavedSearchAlertEditFormPlaceholder: React.FC<{
           </Skeleton>
         </AlertProvider>
       </Media>
-    </Box>
+    </>
   )
 }
 

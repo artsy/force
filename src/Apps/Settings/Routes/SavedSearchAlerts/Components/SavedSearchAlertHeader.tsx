@@ -20,12 +20,9 @@ export const SavedSearchAlertHeader: FC<SavedSearchAlertHeaderProps> = ({
       flexDirection={["column", "row"]}
       alignItems={["stretch", "center"]}
       justifyContent="space-between"
-      mb={4}
-      mx={[2, 0]}
+      gap={[1, 2]}
     >
-      <Text variant={["md", "lg"]} mb={[4, 0]} mr={[0, 2]}>
-        Your Alerts
-      </Text>
+      <Text variant={["md", "lg"]}>Your Alerts</Text>
 
       <Select
         title="Sort"

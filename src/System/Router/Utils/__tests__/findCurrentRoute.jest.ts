@@ -2,7 +2,7 @@ import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { Location, Match, Router } from "found"
 
 describe("findCurrentRoute", () => {
-  const getMatch = (config: Partial<Match>): Match => ({
+  const getMatch = (config: Partial<Match>) => ({
     routes: [],
     router: ({} as unknown) as Router,
     context: {},

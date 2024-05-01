@@ -496,7 +496,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
-              {order.source === "partner_offer" && (
+              {order.source === "partner_offer" && order.mode === "BUY" && (
                 <>
                   <PartnerOfferTimerItem order={order} />
                   <Spacer y={2} />

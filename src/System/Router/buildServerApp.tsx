@@ -115,6 +115,7 @@ export function buildServerApp(
           stringify: qs.stringify,
         }),
       ]
+
       const resolver = new Resolver(relayEnvironment)
 
       const Render = createRender({

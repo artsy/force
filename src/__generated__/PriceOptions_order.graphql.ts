@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ef49e13b30a247ec5ab98546e7d22b1>>
+ * @generated SignedSource<<6b7962ad6ee759869b47e6652258e410>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,12 +9,21 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PriceOptions_order$data = {
   readonly internalID: string;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly listPrice: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly myLastOffer?: {
     readonly amountCents: number;
   } | null | undefined;
+  readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentType": "PriceOptions_order";
 };
 export type PriceOptions_order$key = {
@@ -33,6 +42,64 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CommerceLineItemConnection",
+      "kind": "LinkedField",
+      "name": "lineItems",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceLineItemEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "CommerceLineItem",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "format",
+                      "value": "%v"
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "thousand",
+                      "value": ""
+                    }
+                  ],
+                  "kind": "ScalarField",
+                  "name": "listPrice",
+                  "storageKey": "listPrice(format:\"%v\",thousand:\"\")"
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -65,6 +132,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "42eab762247c84117e227b168dda8d63";
+(node as any).hash = "e33535afd70d836216e63ed7e1e49226";
 
 export default node;
