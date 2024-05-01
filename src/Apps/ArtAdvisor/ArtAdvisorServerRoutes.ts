@@ -1,7 +1,7 @@
 import express from "express"
 import { router as router1 } from "./01-Spike/server"
 import { router as router2 } from "./02-Markdown/server"
-import { router as router3 } from "./03-Intruction-Experiments/server"
+import { router as router3 } from "./03-Instruction-Experiments/server"
 
 /*
  * Define API routes that can be colocated with each app experiment

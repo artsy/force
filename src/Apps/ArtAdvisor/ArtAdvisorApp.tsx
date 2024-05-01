@@ -25,10 +25,7 @@ export const ArtAdvisorApp: FC = () => {
 
       <Experiment href="/advisor/3">
         <Name>System instruction testing</Name>
-        <Description>
-          Builds on the user profile spike work. Designed as the client
-          implementation of "05-instruction-experiments" in quantum
-        </Description>
+        <Description>Builds on the user profile spike work.</Description>
       </Experiment>
     </Box>
   )
