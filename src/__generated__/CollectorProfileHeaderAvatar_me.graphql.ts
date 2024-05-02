@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3e73b41b6d5f46103aaad8424c22aa1>>
+ * @generated SignedSource<<68717a16407d6ccfa51d09f140f654ea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,11 +12,14 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileHeaderAvatar_me$data = {
   readonly icon: {
-    readonly resized: {
+    readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
     } | null | undefined;
+    readonly internalID: string | null | undefined;
+    readonly versions: ReadonlyArray<string | null | undefined> | null | undefined;
   } | null | undefined;
+  readonly initials: string | null | undefined;
   readonly " $fragmentType": "CollectorProfileHeaderAvatar_me";
 };
 export type CollectorProfileHeaderAvatar_me$key = {
@@ -33,6 +36,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "initials",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "icon",
@@ -40,26 +50,35 @@ const node: ReaderFragment = {
       "selections": [
         {
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "versions",
+          "storageKey": null
+        },
+        {
+          "alias": null,
           "args": [
             {
               "kind": "Literal",
               "name": "height",
-              "value": 200
-            },
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "large_square"
+              "value": 100
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 200
+              "value": 100
             }
           ],
-          "concreteType": "ResizedImageUrl",
+          "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
-          "name": "resized",
+          "name": "cropped",
           "plural": false,
           "selections": [
             {
@@ -77,7 +96,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "resized(height:200,version:\"large_square\",width:200)"
+          "storageKey": "cropped(height:100,width:100)"
         }
       ],
       "storageKey": null
@@ -87,6 +106,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "777de0a43fbb7dbe7144ed6ba8e56774";
+(node as any).hash = "92573ed69dacb50d71f11655c9365eaa";
 
 export default node;
