@@ -1,4 +1,4 @@
-import { Button, Join, Spacer } from "@artsy/palette"
+import { Button, Join, Message, Spacer, Text } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
@@ -47,6 +47,11 @@ export const AuthDialogSocial: FC = () => {
 
   return (
     <Join separator={<Spacer y={1} />}>
+      {/* TODO: remove the message and reenable the social login buttons before
+                merging the review app into main */}
+      <Message variant="info">
+        <Text>Social login not supported in this review app</Text>
+      </Message>
       <Button
         variant="secondaryBlack"
         width="100%"
@@ -56,6 +61,7 @@ export const AuthDialogSocial: FC = () => {
         href={`${applePath}?${query}`}
         onClick={handleClick("apple")}
         rel="nofollow"
+        disabled
       >
         Continue with Apple
       </Button>
@@ -69,6 +75,7 @@ export const AuthDialogSocial: FC = () => {
         href={`${googlePath}?${query}`}
         onClick={handleClick("google")}
         rel="nofollow"
+        disabled
       >
         Continue with Google
       </Button>
@@ -82,6 +89,7 @@ export const AuthDialogSocial: FC = () => {
         href={`${facebookPath}?${query}`}
         onClick={handleClick("facebook")}
         rel="nofollow"
+        disabled
       >
         Continue with Facebook
       </Button>
