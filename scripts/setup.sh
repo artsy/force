@@ -6,10 +6,11 @@
 # Exit if any subcommand fails
 set -e
 
-if [[ ! -z $NVM_DIR ]]; then # skip if nvm is not available
-  echo "Installing Node..."
-  source ~/.nvm/nvm.sh
-  nvm install
+if command -v asdf >/dev/null; then
+  echo "Installing language dependencies with asdf"
+  asdf install
+else
+  echo "Skipping language dependencies installation (asdf not found)"
 fi
 
 echo "Installing dependencies from Homebrew..."
@@ -38,4 +39,4 @@ fi
 
 echo "
 Setup complete!
-To run the project execute: nvm use && yarn start"
+To run the project execute: yarn start"
