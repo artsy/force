@@ -5,26 +5,6 @@ import { AppRouteConfig } from "System/Router/Route"
 import { getENV } from "Utils/getENV"
 import { getRedirect } from "./Routes/SubmissionFlow/Utils/redirects"
 
-const MarketingLandingApp = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/MarketingLanding/MarketingLandingApp"
-    ),
-  {
-    resolveComponent: component => component.MarketingLandingApp,
-  }
-)
-
-const FAQApp = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/FAQ/FAQApp"
-    ),
-  {
-    resolveComponent: component => component.FAQApp,
-  }
-)
-
 const SubmissionLayout = loadable(
   () =>
     import(
@@ -122,50 +102,6 @@ const preparePrefillSubmissionFromArtworkVariables = data => {
 }
 
 export const consignFromCollectorProfileMyCollectionRoutes: AppRouteConfig[] = [
-  {
-    path: "/sell",
-    children: [
-      {
-        path: "/",
-        layout: "FullBleed",
-        getComponent: () => MarketingLandingApp,
-        onClientSideRender: () => {
-          MarketingLandingApp.preload()
-        },
-      },
-      {
-        path: "faq",
-        layout: "NavOnly",
-        getComponent: () => FAQApp,
-        onClientSideRender: () => {
-          FAQApp.preload()
-        },
-      },
-    ],
-  },
-
-  {
-    path: "/consign",
-    children: [
-      {
-        path: ":splat*",
-        render: ({ match }) => {
-          throw new RedirectException(
-            `${match.location.pathname.replace("/consign", "/sell")}${
-              match.location.search
-            }`,
-            301
-          )
-        },
-      },
-      {
-        path: "/",
-        render: ({ match }) => {
-          throw new RedirectException("/sell", 301)
-        },
-      },
-    ],
-  },
   {
     path: "/collector-profile/my-collection/submission",
     getComponent: () => SubmissionLayout,
