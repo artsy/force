@@ -13,7 +13,8 @@ export const ArtAdvisorApp: FC = () => {
       <Experiment href="/advisor/1">
         <Name>User profile spike</Name>
         <Description>
-          Using Force UI, Quantum backend, function calling, memory
+          Using Force UI, Quantum backend, function calling, memory{" "}
+          <em>(Not wired up currently)</em>
         </Description>
       </Experiment>
 
