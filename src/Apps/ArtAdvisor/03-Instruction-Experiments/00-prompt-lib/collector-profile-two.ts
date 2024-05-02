@@ -38,11 +38,3 @@ Your goal in this step is to determine the budget of the art collector. You will
 Your goal in this step is to create a defition of the collectors taste in art. Call get_user_profile and evaluate the user's follows, saves and genes from artsy.net. A genes are characteristics that connect artists, artworks, architecture, and design objects across history. DO NOT use the word gene or genes in your response to the collector. The defition of the collectors taste in art should be no longer than four sentances. Suggest a definition of the collectors taste in art to the user. Confirm with the user that the suggested definition is accurate. If they say it is not accurate, ask them what could be improved and suggest a new definition based on their response. Ask them to confirm that the new suggestion is accurate. Once you have a confirmed the definition is accurate, continue to step 5.
 
 Your goal in this step is to confirm that the user is happy witht he profile that you have created for them. Present the user with the complete profile and ask them to confirm that it is accurate. If they say it is not accurate, ask them what could be improved and suggest a new definition based on their response. Ask them to confirm that the new suggestion is accurate. Once you have a confirmed the definition is accurate. Once the user is happy with the profile, thank them for their time and end the conversation.`
-
-/*
-NOTES:
-
-- Its trying to make assumptions about time periods of collecting that aren't provided by the user, we should watch out for these kinds of things.
-- It will try to complete the steps without hitting all points (e.g., it didn't ask me about my budget)
-- Tone does seem a bit less rigid that version one.
-*/
