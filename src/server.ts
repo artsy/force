@@ -13,6 +13,7 @@ import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
 import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
+import { artAdvisorServerRoutes } from "Apps/ArtAdvisor/ArtAdvisorServerRoutes"
 
 const app = express()
 const { routes, routePaths } = getRouteConfig()
@@ -52,6 +53,7 @@ app.get(
  */
 
 app
+  .use(artAdvisorServerRoutes)
   .use(appPreferencesServerRoutes)
   .use(cookieConsentManagerServerRoutes)
   .use(adminServerRoutes)

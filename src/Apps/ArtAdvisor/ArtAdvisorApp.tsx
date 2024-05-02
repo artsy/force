@@ -13,7 +13,8 @@ export const ArtAdvisorApp: FC = () => {
       <Experiment href="/advisor/1">
         <Name>User profile spike</Name>
         <Description>
-          Using Force UI, Quantum backend, function calling, memory
+          Using Force UI, Quantum backend, function calling, memory{" "}
+          <em>(Not wired up currently)</em>
         </Description>
       </Experiment>
 
@@ -24,10 +25,7 @@ export const ArtAdvisorApp: FC = () => {
 
       <Experiment href="/advisor/3">
         <Name>System instruction testing</Name>
-        <Description>
-          Builds on the user profile spike work. Designed as the client
-          implementation of "05-instruction-experiments" in quantum
-        </Description>
+        <Description>Builds on the user profile spike work.</Description>
       </Experiment>
     </Box>
   )
