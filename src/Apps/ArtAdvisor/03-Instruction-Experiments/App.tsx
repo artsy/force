@@ -22,14 +22,14 @@ export const App: FC = () => {
 
   const onSubmit = async () => {
     try {
-      const res = await fetch("http://localhost:3000", {
+      const res = await fetch("/api/advisor/3", {
         method: "POST",
         body: JSON.stringify([
           ...messages,
           { role: "user", content: userInput },
         ]),
         headers: {
-          "Content-Type": "text/plain",
+          "Content-Type": "application/json",
           "X-ACCESS-TOKEN": user?.accessToken || "",
         },
       })

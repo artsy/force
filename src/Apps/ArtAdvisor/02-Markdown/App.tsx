@@ -24,7 +24,7 @@ export const App: FC = () => {
       return
     }
 
-    const response = await fetch("http://localhost:3000", {
+    const response = await fetch("/api/advisor/2", {
       method: "POST",
       body: inputRef.current.value,
       headers: { "Content-Type": "text/plain" },

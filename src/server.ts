@@ -13,6 +13,7 @@ import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManage
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
 import { setupServerRouter } from "System/Router/serverRouter"
 import { getRoutes } from "System/Router/Utils/routeUtils"
+import { artAdvisorServerRoutes } from "Apps/ArtAdvisor/ArtAdvisorServerRoutes"
 
 const app = express()
 
@@ -50,6 +51,7 @@ app.get(
  */
 
 app
+  .use(artAdvisorServerRoutes)
   .use(appPreferencesServerRoutes)
   .use(cookieConsentManagerServerRoutes)
   .use(adminServerRoutes)
