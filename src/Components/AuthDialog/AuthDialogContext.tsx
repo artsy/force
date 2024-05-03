@@ -40,6 +40,7 @@ export type AuthDialogOptions = {
   title?: string | ((mode: AuthDialogMode) => string)
   onClose?: () => void
   onSuccess?: () => void
+  disableTapToClose?: boolean
 }
 
 export type AuthDialogAnalytics = {

@@ -25,6 +25,8 @@ import {
 } from "./Components/ContactInformationForm"
 import { TopContextBar } from "Components/TopContextBar"
 import { getContactInformationFormInitialValues } from "Apps/Consign/Routes/SubmissionFlow/Utils/formHelpers"
+import { useAuthDialog } from "Components/AuthDialog"
+import { useEffect } from "react"
 
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
@@ -41,6 +43,24 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
+  const { showAuthDialog } = useAuthDialog()
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      showAuthDialog({
+        mode: "Login",
+        options: {
+          title: () => "Log in to submit an artwork for sale",
+          disableTapToClose: true,
+        },
+        analytics: {
+          contextModule: ContextModule.consignSubmissionFlow,
+        },
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn])
+
   const initialValue = getContactInformationFormInitialValues(me, submission)
   const initialErrors = validate(
     initialValue,
