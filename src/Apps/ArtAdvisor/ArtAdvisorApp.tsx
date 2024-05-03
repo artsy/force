@@ -11,7 +11,7 @@ export const ArtAdvisorApp: FC = () => {
       </Text>
 
       <Experiment href="/advisor/1">
-        <Name>User profile spike</Name>
+        <Name>Initial profile spike</Name>
         <Description>
           Using Force UI, Quantum backend, function calling, memory{" "}
           <em>(Not wired up currently)</em>
@@ -20,12 +20,18 @@ export const ArtAdvisorApp: FC = () => {
 
       <Experiment href="/advisor/2">
         <Name>UI refinements</Name>
-        <Description>Markdown, auto-scrolling, etc</Description>
+        <Description>
+          Markdown, auto-scrolling, etc. (Note: streaming was supported with
+          Quantum backend, but not Force)
+        </Description>
       </Experiment>
 
       <Experiment href="/advisor/3">
-        <Name>System instruction testing</Name>
-        <Description>Builds on the user profile spike work.</Description>
+        <Name>Profile Builder</Name>
+        <Description>
+          Builds on the user profile spike work by expanding on the system
+          instruction
+        </Description>
       </Experiment>
     </Box>
   )
