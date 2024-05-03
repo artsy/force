@@ -1,30 +1,35 @@
-import { Avatar, Flex } from "@artsy/palette"
+import { Avatar, Box, BoxProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { CollectorProfileHeaderAvatar_me$data } from "__generated__/CollectorProfileHeaderAvatar_me.graphql"
-import PersonIcon from "@artsy/icons/PersonIcon"
 
-interface CollectorProfileHeaderAvatarProps {
+interface CollectorProfileHeaderAvatarProps extends BoxProps {
   me: CollectorProfileHeaderAvatar_me$data
 }
 
 const CollectorProfileHeaderAvatar: React.FC<CollectorProfileHeaderAvatarProps> = ({
   me,
+  ...rest
 }) => {
-  if (!me.icon?.resized?.src) {
-    return <NoAvatarComponent />
+  const image = (me.icon?.versions?.length ?? 0) > 0 ? me.icon?.cropped : null
+
+  const avatar = {
+    initials: me.initials ?? "U",
+    border: "1px solid",
+    borderColor: "black10",
+    ...(image ? { src: image.src, srcSet: image.srcSet } : {}),
   }
 
   return (
-    <>
+    <Box {...rest}>
       <Media lessThan="sm">
-        <Avatar size="xs" lazyLoad {...me.icon.resized} mr={[1, 2]} />
+        <Avatar size="xs" {...avatar} />
       </Media>
 
       <Media greaterThanOrEqual="sm">
-        <Avatar size="md" lazyLoad {...me.icon.resized} mr={[1, 2]} />
+        <Avatar size="md" {...avatar} />
       </Media>
-    </>
+    </Box>
   )
 }
 
@@ -33,8 +38,11 @@ export const CollectorProfileHeaderAvatarFragmentContainer = createFragmentConta
   {
     me: graphql`
       fragment CollectorProfileHeaderAvatar_me on Me {
+        initials
         icon {
-          resized(height: 200, width: 200, version: "large_square") {
+          internalID
+          versions
+          cropped(height: 100, width: 100) {
             src
             srcSet
           }
@@ -43,19 +51,3 @@ export const CollectorProfileHeaderAvatarFragmentContainer = createFragmentConta
     `,
   }
 )
-
-const NoAvatarComponent: React.FC = () => {
-  return (
-    <Flex
-      height={[45, 100]}
-      width={[45, 100]}
-      borderRadius="50%"
-      justifyContent="center"
-      alignItems="center"
-      backgroundColor="black10"
-      mr={[1, 2]}
-    >
-      <PersonIcon />
-    </Flex>
-  )
-}

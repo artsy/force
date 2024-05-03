@@ -1,13 +1,8 @@
 import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
 import { CollectorProfileHeaderAvatarFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/Components/CollectorProfileHeaderAvatar"
 import { CollectorProfileHeaderInfoFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/Components/CollectorProfileHeaderInfo"
-import { LocalImagePreview } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/Components/LocalImagePreview"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import {
-  PROFILE_IMAGE_KEY,
-  useLocalImageStorage,
-} from "Utils/localImageHelpers"
 import { Media } from "Utils/Responsive"
 import { CollectorProfileHeader_me$data } from "__generated__/CollectorProfileHeader_me.graphql"
 import SettingsIcon from "@artsy/icons/SettingsIcon"
@@ -19,7 +14,6 @@ interface CollectorProfileHeaderProps {
 const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
   me,
 }) => {
-  const localImage = useLocalImageStorage(PROFILE_IMAGE_KEY)
   const { name, createdAt, bio } = me
 
   return (
@@ -27,11 +21,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
       <Spacer y={[2, 4]} />
 
       <Flex>
-        {localImage ? (
-          <LocalImagePreview imageUrl={localImage.data} />
-        ) : (
-          <CollectorProfileHeaderAvatarFragmentContainer me={me} />
-        )}
+        <CollectorProfileHeaderAvatarFragmentContainer me={me} mr={[1, 2]} />
 
         <Flex flex={1} flexDirection="column" justifyContent="center">
           <Text variant={["md", "xl"]}>{name}</Text>

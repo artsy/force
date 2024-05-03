@@ -1,84 +1,87 @@
-import { Flex, Text } from "@artsy/palette"
-import { CollectorProfileHeaderAvatarFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/Components/CollectorProfileHeaderAvatar"
-import { EditProfileFormModel } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
-import { LocalImagePreview } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/Components/LocalImagePreview"
-import { useFormikContext } from "formik"
-import { ChangeEvent, forwardRef, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import {
-  PROFILE_IMAGE_KEY,
-  storeLocalImage,
-  useLocalImageStorage,
-} from "Utils/localImageHelpers"
+  Avatar,
+  Box,
+  Clickable,
+  Flex,
+  Spinner,
+  Text,
+  useToasts,
+} from "@artsy/palette"
+import { ChangeEvent, FC, useState } from "react"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import styled from "styled-components"
 import { SettingsEditProfileImage_me$data } from "__generated__/SettingsEditProfileImage_me.graphql"
+import { Media } from "Utils/Responsive"
+import {
+  normalizePhoto,
+  uploadPhotoToS3,
+} from "Components/PhotoUpload/Utils/fileUtils"
+import { useSystemContext } from "System/SystemContext"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { SettingsEditProfileImageMutation } from "__generated__/SettingsEditProfileImageMutation.graphql"
+import { usePoll } from "Utils/Hooks/usePoll"
 
 interface SettingsEditProfileImageProps {
   me: SettingsEditProfileImage_me$data
+  relay: RelayRefetchProp
 }
 
-export interface SettingsEditProfileImageRef {
-  storeImageLocally: () => Promise<void>
-}
+const SettingsEditProfileImage: FC<SettingsEditProfileImageProps> = ({
+  me,
+  relay,
+}) => {
+  const { sendToast } = useToasts()
 
-const SettingsEditProfileImage = forwardRef<
-  SettingsEditProfileImageRef,
-  SettingsEditProfileImageProps
->(({ me }, ref) => {
-  const { setFieldValue } = useFormikContext<EditProfileFormModel>()
-  const localImage = useLocalImageStorage(PROFILE_IMAGE_KEY)
+  const [mode, setMode] = useState<"Idle" | "Uploading">("Idle")
+  const [progress, setProgress] = useState(0)
 
-  const [localImageBase64, setLocalImageBase64] = useState<string | null>(null)
+  const { relayEnvironment } = useSystemContext()
 
-  const convertFileToBase64 = (file: File) => {
-    // convert file to base64
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onloadend = function () {
-      const base64data = reader.result
-      setLocalImageBase64(base64data as string)
-    }
-  }
+  const { submitMutation } = useMutation<SettingsEditProfileImageMutation>({
+    mutation: MUTATION,
+  })
 
   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) return
+    const file = event.target.files?.[0]
+    if (!file) return
 
-    const newImage = event.target.files[0]
+    setMode("Uploading")
 
-    // Convert file to base64 and save it to state to store it in local storage
-    convertFileToBase64(newImage)
-
-    setFieldValue("photo", newImage)
-  }
-
-  const handleImageLoad = (
-    image: React.SyntheticEvent<HTMLImageElement, Event>
-  ) => {
-    const {
-      naturalHeight: height,
-      naturalWidth: width,
-      currentSrc,
-    } = image.target as any
-
-    if (currentSrc.startsWith("data:image")) {
-      // Save the image dimensions as well as local path to the localImages array
-      storeLocalImage(PROFILE_IMAGE_KEY, { data: currentSrc, width, height })
-    }
-  }
-
-  const renderProfileImage = () => {
-    if (localImage || !!localImageBase64) {
-      return (
-        <LocalImagePreview
-          onLoad={handleImageLoad}
-          // the order here is important, localImageBase64 (local preview) should take precedence
-          imageUrl={localImageBase64 || localImage?.data!}
-        />
+    try {
+      const photo = normalizePhoto(file)
+      const uploadUrl = await uploadPhotoToS3(
+        relayEnvironment,
+        photo,
+        setProgress
       )
-    } else {
-      return <CollectorProfileHeaderAvatarFragmentContainer me={me} />
+
+      await submitMutation({ variables: { input: { iconUrl: uploadUrl } } })
+
+      sendToast({
+        message: "Profile image uploaded successfully",
+      })
+    } catch (error) {
+      console.error(error)
+
+      sendToast({
+        variant: "error",
+        message: "Failed to update profile image",
+      })
     }
+
+    setMode("Idle")
   }
+
+  const isProcessing = me.icon?.internalID && me.icon?.versions?.length === 0
+
+  usePoll({
+    key: me.icon?.internalID ?? "SettingsEditProfileImage",
+    intervalTime: 2000,
+    clearWhen: !isProcessing,
+    callback: () => {
+      relay.refetch({}, null, {}, { force: true })
+    },
+  })
 
   return (
     <>
@@ -86,37 +89,105 @@ const SettingsEditProfileImage = forwardRef<
         id="file"
         type="file"
         onChange={handleChange}
-        accept={"image/jpeg, image/png"}
+        accept="image/jpeg, image/png"
+        disabled={mode === "Uploading"}
       />
 
-      <Flex alignItems="center">
-        {renderProfileImage()}
+      <Clickable
+        as="label"
+        // @ts-ignore
+        htmlFor="file"
+      >
+        <Flex alignItems="center" gap={[1, 2]}>
+          {isProcessing ? (
+            <Box
+              position="relative"
+              display="flex"
+              border="1px solid"
+              borderColor="black10"
+              borderRadius="50%"
+              size={[70, 100]}
+            >
+              <Spinner />
+            </Box>
+          ) : (
+            <>
+              <Media greaterThan="xs">
+                <Avatar
+                  size="md"
+                  initials={me.initials ?? "U"}
+                  src={me.icon?.cropped?.src}
+                  srcSet={me.icon?.cropped?.srcSet}
+                  border="1px solid"
+                  borderColor="black10"
+                />
+              </Media>
 
-        <Text
-          as="label"
-          // @ts-ignore
-          htmlFor="file"
-          variant="sm"
-          color="black60"
-          ml={[1, 0]}
-          style={{ cursor: "pointer" }}
-        >
-          <u>Choose an Image</u>
-        </Text>
-      </Flex>
+              <Media at="xs">
+                <Avatar
+                  size="sm"
+                  initials={me.initials ?? "U"}
+                  src={me.icon?.cropped?.src}
+                  srcSet={me.icon?.cropped?.srcSet}
+                  border="1px solid"
+                  borderColor="black10"
+                />
+              </Media>
+            </>
+          )}
+
+          <Text variant="sm" color="black60">
+            {mode === "Idle" ? (
+              <u>Choose an Image</u>
+            ) : isProcessing ? (
+              "Processing"
+            ) : (
+              `Uploading %${Math.round(progress)}`
+            )}
+          </Text>
+        </Flex>
+      </Clickable>
     </>
   )
-})
+}
 
-export const SettingsEditProfileImageFragmentContainer = createFragmentContainer(
-  SettingsEditProfileImage,
-  {
-    me: graphql`
-      fragment SettingsEditProfileImage_me on Me {
-        ...CollectorProfileHeaderAvatar_me
+const FRAGMENT = graphql`
+  fragment SettingsEditProfileImage_me on Me {
+    ...CollectorProfileHeaderAvatar_me
+    initials
+    icon {
+      internalID
+      versions
+      cropped(height: 100, width: 100) {
+        src
+        srcSet
       }
-    `,
+    }
   }
+`
+
+const QUERY = graphql`
+  query SettingsEditProfileImageQuery {
+    me {
+      ...SettingsEditProfileImage_me
+    }
+  }
+`
+
+const MUTATION = graphql`
+  mutation SettingsEditProfileImageMutation($input: UpdateMyProfileInput!) {
+    updateMyUserProfile(input: $input) {
+      me {
+        ...SettingsEditProfileImage_me
+      }
+    }
+  }
+`
+
+export const SettingsEditProfileImageRefetchContainer = createRefetchContainer(
+  SettingsEditProfileImage,
+  { me: FRAGMENT },
+  QUERY
 )
 
 const FileInput = styled.input`
