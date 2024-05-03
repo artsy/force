@@ -1,6 +1,9 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { Flex, Button, Text, useTheme } from "@artsy/palette"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
+import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/SystemContext"
 
 export const SWAStickyFooter = () => {
   const {
@@ -8,6 +11,8 @@ export const SWAStickyFooter = () => {
     trackGetInTouchClick,
   } = useMarketingLandingTracking()
   const { theme } = useTheme()
+  const { isLoggedIn } = useSystemContext()
+  const { showAuthDialog } = useAuthDialog()
 
   const getInTouchRoute = "/sell/inquiry"
 
@@ -28,7 +33,27 @@ export const SWAStickyFooter = () => {
         width="100%"
         variant="primaryBlack"
         to="/sell/submission"
-        onClick={() => trackStartSellingClick("Header")}
+        onClick={event => {
+          if (!isLoggedIn) {
+            event.preventDefault()
+
+            showAuthDialog({
+              mode: "Login",
+              options: {
+                title: () => {
+                  return "Log in to submit an artwork for sale"
+                },
+              },
+              analytics: {
+                contextModule: ContextModule.sellStickyFooter,
+                intent: Intent.login,
+              },
+            })
+
+            return
+          }
+          trackStartSellingClick(ContextModule.sellStickyFooter)
+        }}
         mb={[1, 0]}
         data-testid="start-selling-button"
       >
