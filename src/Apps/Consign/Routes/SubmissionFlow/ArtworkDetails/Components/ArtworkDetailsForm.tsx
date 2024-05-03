@@ -68,7 +68,8 @@ export const getArtworkDetailsFormInitialValues = (
         title: props.values.title ?? "",
         materials: props.values.medium ?? "",
         rarity:
-          props.values.attributionClass?.replace("_", " ").toLowerCase() ?? "",
+          props.values.attributionClass?.replace("_", " ").toLowerCase() ??
+          null,
         editionNumber: props.values.editionNumber ?? "",
         editionSize: props.values.editionSize ?? undefined,
         height: props.values.height ?? "",
@@ -149,7 +150,7 @@ export interface ArtworkDetailsFormModel {
   year: string
   title: string
   materials: string
-  rarity: string
+  rarity: string | null
   editionNumber: string
   editionSize?: string
   height: string
@@ -310,7 +311,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             title="Rarity"
             name="rarity"
             options={rarityOptions}
-            selected={values.rarity}
+            selected={values.rarity ?? undefined}
             onBlur={handleBlur}
             onChange={handleChange}
             onSelect={selected => setFieldValue("rarity", selected)}

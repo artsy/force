@@ -1,3 +1,4 @@
+import { getFeatureVariant } from "System/useFeatureFlag"
 import { FormikErrors, yupToFormErrors } from "formik"
 import * as yup from "yup"
 
@@ -10,7 +11,10 @@ export const artworkDetailsValidationSchema = yup.object().shape({
   year: yup.string().trim(),
   title: yup.string().required("Please enter the title").trim(),
   materials: yup.string().trim(),
-  rarity: yup.string().test("isDefault", "", rarity => rarity !== "default"),
+  rarity: yup
+    .string()
+    .test("isDefault", "", rarity => rarity !== "default")
+    .nullable(),
   editionNumber: yup.string().when("rarity", {
     is: "limited edition",
     then: yup.string().trim(),
@@ -19,8 +23,12 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     is: "limited edition",
     then: yup.string().trim(),
   }),
-  height: yup.string().required("Please enter the height").trim(),
-  width: yup.string().required("Please enter the width").trim(),
+  height: getFeatureVariant("onyx_swa-dimensions-are-optional")
+    ? yup.string().trim()
+    : yup.string().required("Please enter the height").trim(),
+  width: getFeatureVariant("onyx_swa-dimensions-are-optional")
+    ? yup.string().trim()
+    : yup.string().required("Please enter the width").trim(),
   depth: yup
     .string()
     .transform((value, originalValue) =>
