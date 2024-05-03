@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0736dfcdc6e465f5f5cc75cf7358ec87>>
+ * @generated SignedSource<<0739b8159ba985fedbae6cf2b4feb984>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtwork_artwork$data = {
   readonly artist: {
@@ -25,7 +26,9 @@ export type MyCollectionArtwork_artwork$data = {
     readonly totalCount: number | null | undefined;
   } | null | undefined;
   readonly consignmentSubmission: {
-    readonly displayText: string | null | undefined;
+    readonly state: ArtworkConsignmentSubmissionState;
+    readonly stateHelpMessage: string | null | undefined;
+    readonly stateLabel: string | null | undefined;
   } | null | undefined;
   readonly hasMarketPriceInsights: boolean | null | undefined;
   readonly hasPriceEstimateRequest: boolean | null | undefined;
@@ -149,7 +152,21 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "displayText",
+          "name": "state",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "stateLabel",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "stateHelpMessage",
           "storageKey": null
         }
       ],
@@ -206,6 +223,6 @@ return {
 };
 })();
 
-(node as any).hash = "ee1608da0017018b370ddc78a896a5be";
+(node as any).hash = "59910fd2f0d422bef3640fbaec82e4f3";
 
 export default node;

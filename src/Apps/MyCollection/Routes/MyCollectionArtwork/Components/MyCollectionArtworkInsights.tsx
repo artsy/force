@@ -15,17 +15,17 @@ import { MyCollectionArtworkSWASectionMobileLayout } from "Apps/MyCollection/Rou
 interface MyCollectionArtworkInsightsProps {
   artwork: MyCollectionArtworkInsights_artwork$data
   isP1Artist?: boolean | null
-  displayText?: string | null
+  consignmentSubmission?: any
   onLearnMoreClick?: () => void
 }
 
 const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
   artwork,
   isP1Artist,
-  displayText,
+  consignmentSubmission,
   onLearnMoreClick,
 }) => {
-  const showSubmitForSaleCtaMobile = isP1Artist && !displayText
+  const showSubmitForSaleCtaMobile = isP1Artist && !consignmentSubmission
   const hasAuctionResults = artwork.auctionResults?.totalCount ?? 0 > 0
   const artistHasAuctionResults =
     artwork.artist?.auctionResultsCount?.totalCount ?? 0 > 0

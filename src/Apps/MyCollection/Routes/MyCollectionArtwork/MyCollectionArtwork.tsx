@@ -61,8 +61,8 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const slug = artwork?.artist?.slug ?? ""
   const id = artwork.internalID
-  const displayText = artwork.consignmentSubmission?.displayText
-  const submittedConsignment = !!displayText
+  const consignmentSubmission = artwork.consignmentSubmission
+  const submittedConsignment = !!consignmentSubmission
 
   const showComparables = !!artwork.comparables?.totalCount
 
@@ -109,11 +109,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             )}
 
             {isP1Artist &&
-              (!!displayText ? (
+              (!!consignmentSubmission ? (
                 <>
                   <Separator my={2} />
                   <MyCollectionArtworkSWASectionSubmitted
-                    displayText={displayText}
+                    consignmentSubmission={consignmentSubmission}
                   />
                 </>
               ) : (
@@ -130,7 +130,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 />
               ))}
 
-            {!artwork.hasPriceEstimateRequest && !displayText && (
+            {!artwork.hasPriceEstimateRequest && !consignmentSubmission && (
               <>
                 <Spacer y={2} />
                 <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
@@ -146,9 +146,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <MyCollectionArtworkSidebarTitleInfoFragmentContainer
               artwork={artwork}
             />
-            {isP1Artist && !!displayText && (
+            {isP1Artist && !!consignmentSubmission && (
               <MyCollectionArtworkSWASectionSubmitted
-                displayText={displayText}
+                consignmentSubmission={consignmentSubmission}
               />
             )}
             {hasInsights ? (
@@ -157,7 +157,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   <MyCollectionArtworkInsightsFragmentContainer
                     artwork={artwork}
                     isP1Artist={isP1Artist}
-                    displayText={displayText}
+                    consignmentSubmission={consignmentSubmission}
                     onLearnMoreClick={() => setShowHowItWorksModal(true)}
                   />
                 </Tab>
@@ -220,7 +220,9 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         internalID
         slug
         consignmentSubmission {
-          displayText
+          state
+          stateLabel
+          stateHelpMessage
         }
         artist {
           slug

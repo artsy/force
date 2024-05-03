@@ -144,7 +144,10 @@ const mockResolversWithInsights = {
     date: "2007",
     artistNames: "Banksy",
     consignmentSubmission: {
-      displayText: "submission in progress",
+      state: "SUBMITTED",
+      stateLabel: "In Progress",
+      stateHelpMessage:
+        "The artwork is being reviewed or is in the sale process.",
     },
     hasMarketPriceInsights: true,
     artist: {
@@ -193,7 +196,10 @@ const mockResolversNotP1 = {
     artistNames: "MAria",
     hasMarketPriceInsights: false,
     consignmentSubmission: {
-      displayText: "submission in progress",
+      state: "SUBMITTED",
+      stateLabel: "In Progress",
+      stateHelpMessage:
+        "The artwork is being reviewed or is in the sale process.",
     },
     artist: {
       targetSupply: {
