@@ -1,4 +1,37 @@
 ---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: force
+spec:
+  refreshInterval: "5m"
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: force
+    creationPolicy: Owner
+    deletionPolicy: Merge
+    template:
+      engineVersion: v2
+      templateFrom:
+      - target: Data
+        {% raw %}
+        literal: |
+          {{ range $key, $value := . }}
+          {{$key}}: {{$value | fromJson | values | first}}
+          {{ end }}
+        {% endraw %}
+  dataFrom:
+  - find:
+      name:
+        regexp: "kubernetes/apps/force/*"
+    rewrite:
+    - regexp:
+        source: "kubernetes/apps/force/(.*)"
+        target: "$1"
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -46,6 +79,8 @@ spec:
         envFrom:
         - configMapRef:
             name: force-environment
+        - secretRef:
+            name: force
         image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:production
         imagePullPolicy: Always
         ports:
@@ -135,6 +170,8 @@ spec:
         envFrom:
         - configMapRef:
             name: force-environment
+        - secretRef:
+            name: force
         image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:production
         imagePullPolicy: Always
         ports:

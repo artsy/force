@@ -11,24 +11,15 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
-import {
-  SettingsEditProfileImageFragmentContainer,
-  SettingsEditProfileImageRef,
-} from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/SettingsEditProfileImage"
+import { SettingsEditProfileImageRefetchContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/SettingsEditProfileImage"
 import { useEditProfileTracking } from "Apps/Settings/Routes/EditProfile/Hooks/useEditProfileTracking"
 import {
   LocationAutocompleteInput,
   normalizePlace,
   Place,
 } from "Components/LocationAutocompleteInput"
-import {
-  normalizePhoto,
-  uploadPhotoToS3,
-} from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
-import { useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditProfileFields_me.graphql"
 import { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
@@ -69,12 +60,10 @@ interface SettingsEditProfileFieldsProps {
 const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   me,
 }) => {
-  const imageContainerRef = useRef<SettingsEditProfileImageRef | null>(null)
   const { sendToast } = useToasts()
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
   const { submitMutation: submitVerifyIDMutation } = useVerifyID()
   const { submitMutation: submitVerifyEmailMutation } = useVerifyEmail()
-  const { relayEnvironment } = useSystemContext()
   const { editedUserProfile: trackEditProfile } = useEditProfileTracking()
   const { trackEvent } = useTracking()
 
@@ -99,25 +88,6 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
     photo: null,
   }
 
-  const updateUserProfileImage = async (photo: File) => {
-    try {
-      const normalizedPhoto = normalizePhoto(photo)
-      const iconUrl = await uploadPhotoToS3(
-        relayEnvironment,
-        normalizedPhoto,
-        () => {}
-      )
-      await submitUpdateMyUserProfile({ iconUrl })
-    } catch (error) {
-      console.error("Failed to update user profile image ", error)
-
-      sendToast({
-        variant: "error",
-        message: "Failed to update profile image",
-      })
-    }
-  }
-
   const onSubmit = async (values: EditProfileFormModel) => {
     try {
       const newLocation = { ...values.location }
@@ -131,13 +101,6 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
       }
 
       await submitUpdateMyUserProfile(payload)
-      if (values.photo) {
-        await updateUserProfileImage(values.photo)
-
-        if (imageContainerRef.current) {
-          await imageContainerRef.current.storeImageLocally()
-        }
-      }
 
       trackEditProfile()
 
@@ -166,10 +129,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
         {({ values, isSubmitting, isValid, setFieldValue, handleChange }) => (
           <Form>
             <Join separator={<Spacer y={4} />}>
-              <SettingsEditProfileImageFragmentContainer
-                ref={imageContainerRef}
-                me={me}
-              />
+              <SettingsEditProfileImageRefetchContainer me={me} />
 
               <Input
                 title="Full name"

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f56bf9876e220c94810086d728ffdb1d>>
+ * @generated SignedSource<<e57d4160d00561b95ccbf734791aab74>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,31 +10,23 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type collectorProfileRoutes_CollectorProfileQuery$variables = Record<PropertyKey, never>;
-export type collectorProfileRoutes_CollectorProfileQuery$data = {
+export type SettingsEditProfileImageQuery$variables = Record<PropertyKey, never>;
+export type SettingsEditProfileImageQuery$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileApp_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileImage_me">;
   } | null | undefined;
 };
-export type collectorProfileRoutes_CollectorProfileQuery = {
-  response: collectorProfileRoutes_CollectorProfileQuery$data;
-  variables: collectorProfileRoutes_CollectorProfileQuery$variables;
+export type SettingsEditProfileImageQuery = {
+  response: SettingsEditProfileImageQuery$data;
+  variables: SettingsEditProfileImageQuery$variables;
 };
 
-const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "collectorProfileRoutes_CollectorProfileQuery",
+    "name": "SettingsEditProfileImageQuery",
     "selections": [
       {
         "alias": null,
@@ -47,7 +39,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "CollectorProfileApp_me"
+            "name": "SettingsEditProfileImage_me"
           }
         ],
         "storageKey": null
@@ -60,7 +52,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "collectorProfileRoutes_CollectorProfileQuery",
+    "name": "SettingsEditProfileImageQuery",
     "selections": [
       {
         "alias": null,
@@ -141,74 +133,25 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "MyLocation",
-            "kind": "LinkedField",
-            "name": "location",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": null
-              },
-              (v0/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
-            "name": "profession",
+            "name": "id",
             "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "otherRelevantPositions",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "bio",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "createdAt",
-            "storageKey": null
-          },
-          (v0/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "8f85ba0b0dc73cfd858e23550e5b76e3",
+    "cacheID": "9d2ab7f69b8a80197d51082b7d13c00b",
     "id": null,
     "metadata": {},
-    "name": "collectorProfileRoutes_CollectorProfileQuery",
+    "name": "SettingsEditProfileImageQuery",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_CollectorProfileQuery {\n  me {\n    ...CollectorProfileApp_me\n    id\n  }\n}\n\nfragment CollectorProfileApp_me on Me {\n  ...CollectorProfileHeader_me\n  name\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeaderInfo_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  otherRelevantPositions\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  ...CollectorProfileHeaderInfo_me\n  name\n  bio\n  createdAt\n}\n"
+    "text": "query SettingsEditProfileImageQuery {\n  me {\n    ...SettingsEditProfileImage_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
-})();
 
-(node as any).hash = "a741e51fd09181fa3f4498d97579e413";
+(node as any).hash = "647d60297741b7586b38fee93bac01a7";
 
 export default node;

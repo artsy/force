@@ -1,56 +1,39 @@
 import { Button, Clickable, Flex, ModalDialog, Text } from "@artsy/palette"
-import { toTitleCase } from "@artsy/to-title-case"
+
+import { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__generated__/MyCollectionArtworkSWASectionSubmitted_submissionState.graphql"
 
 import { useState } from "react"
+import { graphql, useFragment } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 
-// TODO:- We are using displayText for Statuses for now. Consider changing the logic when proper statuses are made available on Metaphysics.
-// See https://artsyproduct.atlassian.net/browse/SWA-217
-// same as on Eigen
-const STATUSES: {
-  [key: string]: { color: string; text: string; description?: string }
-} = {
-  "submission in progress": {
-    color: "yellow150",
-    text: "In Progress",
-    description: "The artwork is being reviewed or is in the sale process.",
-  },
-  "submission evaluated": {
-    color: "orange150",
-    text: "Evaluation Complete",
-    description:
-      "Our specialists have reviewed this submission and determined that we do not currently have a market for it.",
-  },
-  sold: { color: "black100", text: "Artwork Sold" },
-}
-
 interface Props {
-  displayText: string
+  artwork: MyCollectionArtworkSWASectionSubmitted_submissionState$key
 }
 
 export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
-  displayText,
+  artwork,
 }) => {
   const [
     isSubmissionStatusModalOpen,
     setIsSubmissionStatusModalOpen,
   ] = useState(false)
 
-  if (!Boolean(displayText)) {
-    return null
-  }
+  const { consignmentSubmission } = useFragment(
+    submissionStateFragment,
+    artwork
+  )
+  if (!consignmentSubmission) return null
+
+  const { state, stateLabel, stateHelpMessage } = consignmentSubmission
+  if (!state) return null
+
+  let stateLabelColor = "yellow150"
+  if (["APPROVED", "REJECTED", "CLOSED", "PUBLISHED"].includes(state))
+    stateLabelColor = "orange150"
 
   const article =
     "https://support.artsy.net/s/topic/0TO3b000000UevOGAS/sell-with-artsy"
-
-  const approvedDisplayText = STATUSES[displayText.toLowerCase()]?.text
-  const statusDescription =
-    STATUSES[displayText.toLowerCase()]?.description || ""
-
-  if (!Boolean(approvedDisplayText)) {
-    return null
-  }
 
   return (
     <>
@@ -86,18 +69,15 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
         </Flex>
 
         <Flex flex={1} flexDirection="column">
-          <Text
-            variant="sm"
-            color={STATUSES[displayText.toLowerCase()]?.color ?? "black100"}
-          >
-            {toTitleCase(approvedDisplayText)}
+          <Text variant="sm" color={stateLabelColor}>
+            {stateLabel}
           </Text>
         </Flex>
       </Flex>
 
       <Media greaterThanOrEqual="sm">
         <Text mb={2} color="black60" variant="xs">
-          {statusDescription}
+          {stateHelpMessage}
         </Text>
 
         <Text mb={2} color="black60" variant="xs">
@@ -114,6 +94,16 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
     </>
   )
 }
+
+const submissionStateFragment = graphql`
+  fragment MyCollectionArtworkSWASectionSubmitted_submissionState on Artwork {
+    consignmentSubmission {
+      state
+      stateLabel
+      stateHelpMessage
+    }
+  }
+`
 
 interface SubmissionStatusModalProps {
   show: boolean

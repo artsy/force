@@ -101,15 +101,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
           <MyCollectionArtworkGrid
             artworks={myCollectionConnection}
-            columnCount={[2, 3, 4, 4]}
-            showHoverDetails={false}
-            showArtworksWithoutImages
-            hideSaleInfo
-            to={artwork =>
-              `/collector-profile/my-collection/artwork/${artwork.internalID}`
-            }
-            showHighDemandIcon
-            showSaveButton={false}
             onLoadMore={handleLoadMore}
           />
 
