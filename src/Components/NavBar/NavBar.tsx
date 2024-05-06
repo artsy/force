@@ -355,7 +355,7 @@ export const NavBar: React.FC = track(
               variant="sm"
               lineHeight={1}
             >
-              <Flex alignItems="stretch">
+              <Flex alignItems="stretch" minWidth={0}>
                 <Dropdown
                   zIndex={Z.dropdown}
                   keepInDOM
