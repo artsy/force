@@ -23,7 +23,7 @@ const ArtAdvisorApp02 = loadable(
 const ArtAdvisorApp03 = loadable(
   () =>
     import(
-      /* webpackChunkName: "jobsBundle" */ "./03-Intruction-Experiments/App"
+      /* webpackChunkName: "jobsBundle" */ "./03-Instruction-Experiments/App"
     ),
   {
     resolveComponent: component => component.App,
