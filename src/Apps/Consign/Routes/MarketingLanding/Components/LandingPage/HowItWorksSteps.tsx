@@ -81,7 +81,7 @@ export const HowItWorksSteps: React.FC = () => {
               mode: "Login",
               options: {
                 title: () => {
-                  return "Log in to submit an artwork for sale"
+                  return "Log in to submit an artwork for sell"
                 },
               },
               analytics: {
