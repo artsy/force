@@ -34,10 +34,6 @@ export const AuthDialog: FC<AuthDialogProps> = ({ onClose }) => {
   }, [title, track])
 
   const handleClose = () => {
-    if (options.disableTapToClose) {
-      return
-    }
-
     onClose()
     options.onClose?.()
   }

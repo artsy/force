@@ -3,30 +3,29 @@ import { Button, Spacer, Text, useToasts } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
 import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+import { getContactInformationFormInitialValues } from "Apps/Consign/Routes/SubmissionFlow/Utils/formHelpers"
 import {
   contactInformationValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
-import { COUNTRY_CODES } from "Utils/countries"
-import { Form, Formik } from "formik"
-import { LocationDescriptor } from "found"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/useSystemContext"
+import { TopContextBar } from "Components/TopContextBar"
 import { useRouter } from "System/Router/useRouter"
+import { useSystemContext } from "System/useSystemContext"
+import { COUNTRY_CODES } from "Utils/countries"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
-import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
+import { RecaptchaAction, recaptcha } from "Utils/recaptcha"
 import { ContactInformation_me$data } from "__generated__/ContactInformation_me.graphql"
 import { ContactInformation_submission$data } from "__generated__/ContactInformation_submission.graphql"
+import { Form, Formik } from "formik"
+import { LocationDescriptor } from "found"
+import { useEffect } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import {
   ContactInformationFormFragmentContainer,
   ContactInformationFormModel,
 } from "./Components/ContactInformationForm"
-import { TopContextBar } from "Components/TopContextBar"
-import { getContactInformationFormInitialValues } from "Apps/Consign/Routes/SubmissionFlow/Utils/formHelpers"
-import { useAuthDialog } from "Components/AuthDialog"
-import { useEffect } from "react"
 
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
@@ -43,23 +42,11 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
-  const { showAuthDialog } = useAuthDialog()
-
   useEffect(() => {
     if (!isLoggedIn) {
-      showAuthDialog({
-        mode: "Login",
-        options: {
-          title: () => "Log in to submit an artwork for sale",
-          disableTapToClose: true,
-        },
-        analytics: {
-          contextModule: ContextModule.consignSubmissionFlow,
-        },
-      })
+      router.replace("/sell")
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn])
+  }, [isLoggedIn, router])
 
   const initialValue = getContactInformationFormInitialValues(me, submission)
   const initialErrors = validate(
@@ -69,6 +56,11 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   const artworkId = match.params.artworkId
 
   const steps = useSubmissionFlowSteps()
+
+  if (!isLoggedIn) {
+    return null
+  }
+
   const stepIndex = Math.max(
     [...steps].indexOf("Contact Information"),
     [...steps].indexOf("Contact")
