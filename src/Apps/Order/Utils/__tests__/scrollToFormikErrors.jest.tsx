@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import { useFormikContext } from "formik"
-import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFormikErrors"
+import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFieldError"
 
 jest.mock("formik", () => ({
   ...jest.requireActual("formik"),

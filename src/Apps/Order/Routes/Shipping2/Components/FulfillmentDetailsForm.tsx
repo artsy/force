@@ -44,7 +44,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
-import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFormikErrors"
+import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFieldError"
 
 export interface FulfillmentDetailsFormProps
   extends FulfillmentDetailsFormLayoutProps {
