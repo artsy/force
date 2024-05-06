@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4746ea7ee7e6c47f6bb6c6294c36a66c>>
+ * @generated SignedSource<<f92a1ffbdb4df16a85def6b8d650970a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
-export type consignFromCollectorProfileMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$variables = {
+export type collectorProfileRoutes_artworkDetailsWithArtworkIdQuery$variables = {
   artworkId: string;
   externalId?: string | null | undefined;
   id?: string | null | undefined;
   sessionID?: string | null | undefined;
 };
-export type consignFromCollectorProfileMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$data = {
+export type collectorProfileRoutes_artworkDetailsWithArtworkIdQuery$data = {
   readonly myCollectionArtwork: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
   } | null | undefined;
@@ -56,9 +56,9 @@ export type consignFromCollectorProfileMyCollectionRoutes_artworkDetailsWithArtw
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_submission">;
   } | null | undefined;
 };
-export type consignFromCollectorProfileMyCollectionRoutes_artworkDetailsWithArtworkIdQuery = {
-  response: consignFromCollectorProfileMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$data;
-  variables: consignFromCollectorProfileMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$variables;
+export type collectorProfileRoutes_artworkDetailsWithArtworkIdQuery = {
+  response: collectorProfileRoutes_artworkDetailsWithArtworkIdQuery$data;
+  variables: collectorProfileRoutes_artworkDetailsWithArtworkIdQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -331,7 +331,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "consignFromCollectorProfileMyCollectionRoutes_artworkDetailsWithArtworkIdQuery",
+    "name": "collectorProfileRoutes_artworkDetailsWithArtworkIdQuery",
     "selections": [
       {
         "alias": null,
@@ -412,7 +412,7 @@ return {
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "consignFromCollectorProfileMyCollectionRoutes_artworkDetailsWithArtworkIdQuery",
+    "name": "collectorProfileRoutes_artworkDetailsWithArtworkIdQuery",
     "selections": [
       {
         "alias": null,
@@ -552,16 +552,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "01052eb4c74affa19426b71739e02692",
+    "cacheID": "31a2608241464ae97688e9fba30d62c5",
     "id": null,
     "metadata": {},
-    "name": "consignFromCollectorProfileMyCollectionRoutes_artworkDetailsWithArtworkIdQuery",
+    "name": "collectorProfileRoutes_artworkDetailsWithArtworkIdQuery",
     "operationKind": "query",
-    "text": "query consignFromCollectorProfileMyCollectionRoutes_artworkDetailsWithArtworkIdQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  mediumType {\n    name\n  }\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  category\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n  userId\n  userEmail\n}\n"
+    "text": "query collectorProfileRoutes_artworkDetailsWithArtworkIdQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  mediumType {\n    name\n  }\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  category\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n  userId\n  userEmail\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2c57bde108a3ca5511cc2dbe9a409b99";
+(node as any).hash = "eca709d83b99668bb3383e9e93a5a32a";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<abb2bda1482489d837e650106c85ba28>>
+ * @generated SignedSource<<24e4728cd6d6089ed4564584a55e02d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
-export type consignFromCollectorProfileMyCollectionRoutes_uploadArtworkPhotosQuery$variables = {
+export type collectorProfileRoutes_uploadArtworkPhotosQuery$variables = {
   artworkId: string;
   externalId?: string | null | undefined;
   id?: string | null | undefined;
   sessionID?: string | null | undefined;
 };
-export type consignFromCollectorProfileMyCollectionRoutes_uploadArtworkPhotosQuery$data = {
+export type collectorProfileRoutes_uploadArtworkPhotosQuery$data = {
   readonly myCollectionArtwork: {
     readonly " $fragmentSpreads": FragmentRefs<"UploadPhotos_myCollectionArtwork">;
   } | null | undefined;
@@ -56,9 +56,9 @@ export type consignFromCollectorProfileMyCollectionRoutes_uploadArtworkPhotosQue
     readonly " $fragmentSpreads": FragmentRefs<"UploadPhotos_submission">;
   } | null | undefined;
 };
-export type consignFromCollectorProfileMyCollectionRoutes_uploadArtworkPhotosQuery = {
-  response: consignFromCollectorProfileMyCollectionRoutes_uploadArtworkPhotosQuery$data;
-  variables: consignFromCollectorProfileMyCollectionRoutes_uploadArtworkPhotosQuery$variables;
+export type collectorProfileRoutes_uploadArtworkPhotosQuery = {
+  response: collectorProfileRoutes_uploadArtworkPhotosQuery$data;
+  variables: collectorProfileRoutes_uploadArtworkPhotosQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -317,7 +317,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "consignFromCollectorProfileMyCollectionRoutes_uploadArtworkPhotosQuery",
+    "name": "collectorProfileRoutes_uploadArtworkPhotosQuery",
     "selections": [
       {
         "alias": null,
@@ -398,7 +398,7 @@ return {
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "consignFromCollectorProfileMyCollectionRoutes_uploadArtworkPhotosQuery",
+    "name": "collectorProfileRoutes_uploadArtworkPhotosQuery",
     "selections": [
       {
         "alias": null,
@@ -487,16 +487,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6c454d460ed0ed5a24ccbd80adc4747f",
+    "cacheID": "5574ad5c90c92729f643f434a44e3e8e",
     "id": null,
     "metadata": {},
-    "name": "consignFromCollectorProfileMyCollectionRoutes_uploadArtworkPhotosQuery",
+    "name": "collectorProfileRoutes_uploadArtworkPhotosQuery",
     "operationKind": "query",
-    "text": "query consignFromCollectorProfileMyCollectionRoutes_uploadArtworkPhotosQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...UploadPhotos_myCollectionArtwork\n    id\n  }\n}\n\nfragment UploadPhotos_myCollectionArtwork on Artwork {\n  internalID\n  images {\n    url(version: \"large\")\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  userId\n  userEmail\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
+    "text": "query collectorProfileRoutes_uploadArtworkPhotosQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...UploadPhotos_myCollectionArtwork\n    id\n  }\n}\n\nfragment UploadPhotos_myCollectionArtwork on Artwork {\n  internalID\n  images {\n    url(version: \"large\")\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  userId\n  userEmail\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c17b3f65679862c250cde0d4c6edf50b";
+(node as any).hash = "ec939294fbfb3449d118dd4a718eb1eb";
 
 export default node;

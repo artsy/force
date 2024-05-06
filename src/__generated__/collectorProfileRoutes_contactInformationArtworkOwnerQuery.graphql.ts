@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<115b8dce754c9f08d1cafb4ea84f9d68>>
+ * @generated SignedSource<<1d989c53ed4228fe1b7ef76078392639>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
-export type consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery$variables = {
+export type collectorProfileRoutes_contactInformationArtworkOwnerQuery$variables = {
   externalId?: string | null | undefined;
   id?: string | null | undefined;
   sessionID?: string | null | undefined;
 };
-export type consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery$data = {
+export type collectorProfileRoutes_contactInformationArtworkOwnerQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
   } | null | undefined;
@@ -55,9 +55,9 @@ export type consignFromCollectorProfileMyCollectionRoutes_contactInformationArtw
     readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_submission">;
   } | null | undefined;
 };
-export type consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery = {
-  response: consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery$data;
-  variables: consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery$variables;
+export type collectorProfileRoutes_contactInformationArtworkOwnerQuery = {
+  response: collectorProfileRoutes_contactInformationArtworkOwnerQuery$data;
+  variables: collectorProfileRoutes_contactInformationArtworkOwnerQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -303,7 +303,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery",
+    "name": "collectorProfileRoutes_contactInformationArtworkOwnerQuery",
     "selections": [
       {
         "alias": null,
@@ -383,7 +383,7 @@ return {
       (v2/*: any*/)
     ],
     "kind": "Operation",
-    "name": "consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery",
+    "name": "collectorProfileRoutes_contactInformationArtworkOwnerQuery",
     "selections": [
       {
         "alias": null,
@@ -495,16 +495,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8fff79aa99ac96464f866165689b7907",
+    "cacheID": "3578f8d99ddfc38c874fe523a00eb5a6",
     "id": null,
     "metadata": {},
-    "name": "consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery",
+    "name": "collectorProfileRoutes_contactInformationArtworkOwnerQuery",
     "operationKind": "query",
-    "text": "query consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ContactInformation_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n  userName\n  userEmail\n  userPhone\n}\n"
+    "text": "query collectorProfileRoutes_contactInformationArtworkOwnerQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ContactInformation_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n  userName\n  userEmail\n  userPhone\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0ac99dd547ddb2a05c1a03962346cd47";
+(node as any).hash = "11dfd3db5f52b48adf89f595e6a5aec6";
 
 export default node;

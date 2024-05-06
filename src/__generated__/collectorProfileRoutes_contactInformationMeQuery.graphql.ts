@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c03a86d300f58a814773b780a47a02ec>>
+ * @generated SignedSource<<31b9c046c8c25779abbc17387f4e8a7d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type consignFromCollectorProfileMyCollectionRoutes_contactInformationMeQuery$variables = Record<PropertyKey, never>;
-export type consignFromCollectorProfileMyCollectionRoutes_contactInformationMeQuery$data = {
+export type collectorProfileRoutes_contactInformationMeQuery$variables = Record<PropertyKey, never>;
+export type collectorProfileRoutes_contactInformationMeQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
   } | null | undefined;
 };
-export type consignFromCollectorProfileMyCollectionRoutes_contactInformationMeQuery = {
-  response: consignFromCollectorProfileMyCollectionRoutes_contactInformationMeQuery$data;
-  variables: consignFromCollectorProfileMyCollectionRoutes_contactInformationMeQuery$variables;
+export type collectorProfileRoutes_contactInformationMeQuery = {
+  response: collectorProfileRoutes_contactInformationMeQuery$data;
+  variables: collectorProfileRoutes_contactInformationMeQuery$variables;
 };
 
 const node: ConcreteRequest = {
@@ -26,7 +26,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "consignFromCollectorProfileMyCollectionRoutes_contactInformationMeQuery",
+    "name": "collectorProfileRoutes_contactInformationMeQuery",
     "selections": [
       {
         "alias": null,
@@ -52,7 +52,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "consignFromCollectorProfileMyCollectionRoutes_contactInformationMeQuery",
+    "name": "collectorProfileRoutes_contactInformationMeQuery",
     "selections": [
       {
         "alias": null,
@@ -121,15 +121,15 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "554675241bff36ac7df3fa59f8fc93ad",
+    "cacheID": "74233cfdc92fc57a3d2d397b884d40e4",
     "id": null,
     "metadata": {},
-    "name": "consignFromCollectorProfileMyCollectionRoutes_contactInformationMeQuery",
+    "name": "collectorProfileRoutes_contactInformationMeQuery",
     "operationKind": "query",
-    "text": "query consignFromCollectorProfileMyCollectionRoutes_contactInformationMeQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n"
+    "text": "query collectorProfileRoutes_contactInformationMeQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n"
   }
 };
 
-(node as any).hash = "32f7fb4c7aeffad486822a102d9f6e96";
+(node as any).hash = "f963121fa91ff9e1a460b67a29e5c669";
 
 export default node;
