@@ -1,5 +1,4 @@
 import OpenAI from "openai"
-import dotenv from "dotenv"
 import express, { Request, Response } from "express"
 import { instructions } from "./00-prompt-lib/collector-profile-two"
 import chalk from "chalk"
@@ -7,8 +6,6 @@ import chalk from "chalk"
 /*
  * Setup express server, OpenAi client, and config.
  */
-
-dotenv.config()
 const openai = new OpenAI() // Client will look for OPENAI_API_KEY in your environment during instantiation
 
 /*
