@@ -1,5 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, Separator, Text } from "@artsy/palette"
+import { Box, BoxProps, Separator, Text } from "@artsy/palette"
 import { useSystemContext } from "System/SystemContext"
 import { logout } from "Utils/auth"
 import { getENV } from "Utils/getENV"
@@ -26,7 +26,9 @@ import {
 } from "Components/NavBar/Menus/NavBarUserMenuAvatar"
 import { Suspense } from "react"
 
-export const NavBarUserMenu: React.FC = () => {
+interface NavBarUserMenuProps extends BoxProps {}
+
+export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
   const { trackEvent } = useTracking()
 
   const { user } = useSystemContext()
@@ -57,7 +59,7 @@ export const NavBarUserMenu: React.FC = () => {
   }
 
   return (
-    <Text variant="sm" py={1} width={230}>
+    <Text variant="sm" py={1} {...props}>
       {user && (
         <NavBarMenuItemLink
           aria-label="View your collected artworks"
@@ -77,7 +79,7 @@ export const NavBarUserMenu: React.FC = () => {
               color="black60"
               style={{ textDecoration: "underline" }}
             >
-              View Profile
+              View profile
             </Text>
           </Box>
         </NavBarMenuItemLink>

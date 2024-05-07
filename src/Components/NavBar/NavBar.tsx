@@ -49,6 +49,7 @@ import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboardin
 import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { SearchBar } from "Components/Search/SearchBar"
+import { NavBarMobileMenuProfile } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuProfile"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -70,18 +71,25 @@ export const NavBar: React.FC = track(
   const { trackEvent } = useTracking()
   const { t } = useTranslation()
   const { router } = useRouter()
-  const [showMobileMenu, toggleMobileNav] = useState(false)
-  const [searchFocused, setSearchFocused] = useState(false)
+
+  const [mode, setMode] = useState<"Idle" | "Search" | "Profile" | "More">(
+    "Idle"
+  )
+
+  // const [showMobileMenu, toggleMobileNav] = useState(false)
+  // const [searchFocused, setSearchFocused] = useState(false)
+
   const xs = __internal__useMatchMedia(THEME.mediaQueries.xs)
   const sm = __internal__useMatchMedia(THEME.mediaQueries.sm)
+
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
-  const showNotificationCount = isLoggedIn && !showMobileMenu
+  const showNotificationCount = isLoggedIn && mode !== "More"
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
     if (!isMobile) {
-      toggleMobileNav(false)
+      setMode("Idle")
     }
   }, [isMobile])
 
@@ -95,7 +103,7 @@ export const NavBar: React.FC = track(
     // see if it's wrapped in a link.
     while (target !== event.currentTarget) {
       if (target instanceof HTMLAnchorElement) {
-        toggleMobileNav(false)
+        setMode("Idle")
         return
       }
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -128,7 +136,7 @@ export const NavBar: React.FC = track(
   }
 
   const handleMobileSearchBarClose = () => {
-    setSearchFocused(false)
+    setMode("Idle")
   }
 
   if (isEigen) {
@@ -189,18 +197,18 @@ export const NavBar: React.FC = track(
                 alignItems="center"
                 // Update only on mobile
                 position={[
-                  `${searchFocused ? "absolute" : "relative"}`,
+                  `${mode === "Search" ? "absolute" : "relative"}`,
                   "relative",
                 ]}
-                width={[`${searchFocused ? "90%" : "auto"}`, "auto"]}
+                width={[`${mode === "Search" ? "90%" : "auto"}`, "auto"]}
                 zIndex={9}
               >
                 <SearchBar onClose={handleMobileSearchBarClose} />
 
-                {searchFocused && (
+                {mode === "Search" && (
                   <Clickable
                     onClick={() => {
-                      setSearchFocused(false)
+                      setMode("Idle")
                     }}
                     // Show only on mobile
                     display={["flex", "none"]}
@@ -296,9 +304,9 @@ export const NavBar: React.FC = track(
                           alignItems="center"
                           justifyContent="center"
                           aria-label="My Collection"
-                          onClick={() =>
-                            router.push("/collector-profile/my-collection")
-                          }
+                          onClick={() => {
+                            setMode("Profile")
+                          }}
                         >
                           <PersonIcon
                             aria-hidden="true"
@@ -320,26 +328,21 @@ export const NavBar: React.FC = track(
                     alignItems="center"
                     justifyContent="center"
                     aria-label="Menu"
-                    aria-expanded={showMobileMenu}
+                    aria-expanded={mode === "More"}
                     onClick={event => {
                       event.preventDefault()
 
-                      toggleMobileNav(prevShowMenu => {
-                        if (!prevShowMenu) {
-                          trackEvent({
-                            action_type:
-                              DeprecatedAnalyticsSchema.ActionType.Click,
-                            subject:
-                              DeprecatedAnalyticsSchema.Subject
-                                .SmallScreenMenuSandwichIcon,
-                          })
-                        }
+                      setMode("More")
 
-                        return !prevShowMenu
+                      trackEvent({
+                        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+                        subject:
+                          DeprecatedAnalyticsSchema.Subject
+                            .SmallScreenMenuSandwichIcon,
                       })
                     }}
                   >
-                    <NavBarMobileMenuIcon open={showMobileMenu} />
+                    <NavBarMobileMenuIcon open={mode === "More"} />
                   </NavBarItemButton>
                 </ProgressiveOnboardingAlertFind>
               </Flex>
@@ -489,10 +492,17 @@ export const NavBar: React.FC = track(
         </AppContainer>
       </Box>
 
-      {showMobileMenu && (
+      {mode === "More" && (
         <NavBarMobileMenu
-          onClose={() => toggleMobileNav(false)}
-          isOpen={showMobileMenu}
+          onClose={() => setMode("Idle")}
+          isOpen
+          onNavButtonClick={handleMobileNavClick}
+        />
+      )}
+
+      {mode === "Profile" && (
+        <NavBarMobileMenuProfile
+          onClose={() => setMode("Idle")}
           onNavButtonClick={handleMobileNavClick}
         />
       )}
