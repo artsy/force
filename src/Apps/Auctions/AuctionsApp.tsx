@@ -9,6 +9,7 @@ import { RouteTabs, RouteTab } from "Components/RouteTabs"
 import { getENV } from "Utils/getENV"
 import { CuritorialRailsTabBarFragmentContainer } from "./Components/CuritorialRailsTabBar"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 
 export interface AuctionsAppProps {
   viewer: AuctionsApp_viewer$data
@@ -23,7 +24,6 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
   return (
     <>
       <AuctionsMeta />
-
       <GridColumns mt={4}>
         <Column span={6}>
           <Text variant="xl" as="h1">
@@ -56,6 +56,8 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
       </GridColumns>
 
       <Spacer y={4} />
+
+      <MyBidsQueryRenderer mb={12} />
 
       <CuritorialRailsTabBarFragmentContainer viewer={viewer} />
 
