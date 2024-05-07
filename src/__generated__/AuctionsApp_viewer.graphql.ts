@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e4e59fa178bd980d7ee97c5c3d3ba39>>
+ * @generated SignedSource<<c967ba9138307a7743ccf366bc8eb888>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionsApp_viewer$data = {
+  readonly me: {
+    readonly myBids: {
+      readonly active: ReadonlyArray<{
+        readonly sale: {
+          readonly slug: string;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"CuritorialRailsTabBar_viewer">;
   readonly " $fragmentType": "AuctionsApp_viewer";
 };
@@ -29,12 +38,63 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "CuritorialRailsTabBar_viewer"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Me",
+      "kind": "LinkedField",
+      "name": "me",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "MyBids",
+          "kind": "LinkedField",
+          "name": "myBids",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "MyBid",
+              "kind": "LinkedField",
+              "name": "active",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Sale",
+                  "kind": "LinkedField",
+                  "name": "sale",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "slug",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "a21e446dcd4d92f163c3a4cc47bb561a";
+(node as any).hash = "217a64755a9ca690fed91958c0f7a3ac";
 
 export default node;
