@@ -133,6 +133,7 @@ export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
 interface MyBidsQueryRendererProps extends BoxProps {}
 export const MyBidsQueryRenderer: React.FC<MyBidsQueryRendererProps> = ({
   mb = 0,
+  ...boxProps
 }) => {
   const { relayEnvironment, user } = useSystemContext()
 
@@ -141,7 +142,7 @@ export const MyBidsQueryRenderer: React.FC<MyBidsQueryRendererProps> = ({
   }
 
   return (
-    <Box mb={mb}>
+    <Box mb={mb} {...boxProps}>
       <SystemQueryRenderer<MyBidsQuery>
         lazyLoad
         environment={relayEnvironment}
