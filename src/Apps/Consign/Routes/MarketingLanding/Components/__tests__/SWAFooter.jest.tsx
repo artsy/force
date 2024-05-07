@@ -10,7 +10,12 @@ jest.mock("System/Analytics/AnalyticsContext", () => ({
     contextPageOwnerType: "sell",
   })),
 }))
-
+const mockShowAuthDialog = jest.fn()
+jest.mock("Components/AuthDialog", () => ({
+  useAuthDialog: jest.fn(() => ({
+    showAuthDialog: mockShowAuthDialog,
+  })),
+}))
 const trackEvent = useTracking as jest.Mock
 
 describe("SWAFooter", () => {
@@ -22,6 +27,7 @@ describe("SWAFooter", () => {
     })
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
+      isLoggedIn: true,
     }))
   })
 

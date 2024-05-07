@@ -34,10 +34,9 @@ const reasons = [
 ]
 
 export const HowItWorksSteps: React.FC = () => {
-  const { user } = useSystemContext()
+  const { user, isLoggedIn } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
-  const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
 
   const trackStartSellingClick = () => {
