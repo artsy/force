@@ -2,6 +2,7 @@ import { Box, Clickable, Flex, Spacer, Sup, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
+import { useJump } from "Utils/Hooks/useJump"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 
@@ -19,6 +20,8 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
   onViewArtworksClick,
 }) => {
   const matchingArtworksCount = item.artworksConnection?.counts?.total
+
+  const { jumpTo } = useJump()
 
   return (
     <Box
@@ -79,11 +82,14 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
             <Clickable
               textDecoration="underline"
               onClick={() => {
-                onEditAlertClick({
-                  id: item.internalID,
-                  name: item.settings?.name ?? undefined,
-                  artistIds: item.artistIDs as string[],
-                })
+                {
+                  onEditAlertClick({
+                    id: item.internalID,
+                    name: item.settings?.name ?? undefined,
+                    artistIds: item.artistIDs as string[],
+                  })
+                  jumpTo("Alerts")
+                }
               }}
             >
               Edit
@@ -98,13 +104,14 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
             ]}
           >
             <Clickable
-              onClick={() =>
+              onClick={() => {
                 onViewArtworksClick({
                   id: item.internalID,
                   name: item.settings?.name ?? undefined,
                   artistIds: item.artistIDs as string[],
                 })
-              }
+                jumpTo("Alerts")
+              }}
               textDecoration="underline"
             >
               View Artworks

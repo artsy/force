@@ -20,6 +20,7 @@ describe("MyCollectionArtwork", () => {
         query MyCollectionArtworkTestQuery @relay_test_operation {
           artwork(id: "foo") {
             ...MyCollectionArtwork_artwork
+            ...MyCollectionArtworkSWASectionSubmitted_submissionState
           }
         }
       `,
@@ -144,7 +145,8 @@ const mockResolversWithInsights = {
     date: "2007",
     artistNames: "Banksy",
     consignmentSubmission: {
-      displayText: "submission in progress",
+      state: "SUBMITTED",
+      stateLabel: "In Progress",
     },
     hasMarketPriceInsights: true,
     artist: {
@@ -193,7 +195,8 @@ const mockResolversNotP1 = {
     artistNames: "MAria",
     hasMarketPriceInsights: false,
     consignmentSubmission: {
-      displayText: "submission in progress",
+      state: "SUBMITTED",
+      stateLabel: "In Progress",
     },
     artist: {
       targetSupply: {

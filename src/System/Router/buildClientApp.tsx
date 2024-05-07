@@ -1,7 +1,10 @@
 import { ComponentType } from "react"
 
-import { Resolver } from "found-relay"
-import { ScrollManager } from "found-scroll"
+import {
+  ScrollManager,
+  ScrollManagerProps,
+  ScrollManagerRenderArgs,
+} from "found-scroll"
 import createInitialFarceRouter from "found/createInitialFarceRouter"
 import createRender from "found/createRender"
 
@@ -29,6 +32,8 @@ import { RenderError, RenderPending, RenderReady } from "./RenderStatus"
 import { shouldUpdateScroll } from "./Utils/shouldUpdateScroll"
 import { buildClientAppContext } from "System/Router/buildClientAppContext"
 import { loadingIndicatorMiddleware } from "System/Router/loadingIndicatorMiddleware"
+import { RenderArgs } from "found"
+import { Resolver } from "found-relay"
 
 interface Resolve {
   ClientApp: ComponentType<any>
@@ -82,9 +87,10 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
             excludeReferrers: ["/\\?(.*)onboarding=true(.*)"],
           }),
         ]
+
         const resolver = new Resolver(relayEnvironment)
 
-        const Renderer = createRender({
+        const renderer = createRender({
           renderError: RenderError,
           renderPending: RenderPending,
           renderReady: RenderReady,
@@ -95,13 +101,15 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
           historyOptions: history.options,
           historyProtocol: getHistoryProtocol(),
           matchContext: clientContext,
-          render: renderArgs => {
+          render: (renderArgs: RenderArgs) => {
             return (
               <ScrollManager
-                renderArgs={renderArgs}
-                shouldUpdateScroll={shouldUpdateScroll}
+                renderArgs={renderArgs as ScrollManagerRenderArgs}
+                shouldUpdateScroll={
+                  shouldUpdateScroll as ScrollManagerProps["shouldUpdateScroll"]
+                }
               >
-                <Renderer {...renderArgs} />
+                {renderer(renderArgs)}
               </ScrollManager>
             )
           },

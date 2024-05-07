@@ -62,6 +62,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const slug = artwork?.artist?.slug ?? ""
   const id = artwork.internalID
   const displayText = artwork.consignmentSubmission?.displayText
+
+  const displaySubmissionStateSection =
+    artwork.consignmentSubmission?.state &&
+    artwork.consignmentSubmission?.state != "DRAFT"
+
   const submittedConsignment = !!displayText
 
   const showComparables = !!artwork.comparables?.totalCount
@@ -109,12 +114,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             )}
 
             {isP1Artist &&
-              (!!displayText ? (
+              (displaySubmissionStateSection ? (
                 <>
                   <Separator my={2} />
-                  <MyCollectionArtworkSWASectionSubmitted
-                    displayText={displayText}
-                  />
+                  <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
                 </>
               ) : (
                 <MyCollectionArtworkSWASectionDesktopLayout
@@ -146,10 +149,8 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <MyCollectionArtworkSidebarTitleInfoFragmentContainer
               artwork={artwork}
             />
-            {isP1Artist && !!displayText && (
-              <MyCollectionArtworkSWASectionSubmitted
-                displayText={displayText}
-              />
+            {isP1Artist && displaySubmissionStateSection && (
+              <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
             )}
             {hasInsights ? (
               <Tabs fill mt={2}>
@@ -211,6 +212,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkComparables_artwork
         ...MyCollectionArtworkSidebarTitleInfo_artwork
         ...MyCollectionArtworkRequestPriceEstimateSection_artwork
+        ...MyCollectionArtworkSWASectionSubmitted_submissionState
         comparables: comparableAuctionResults {
           totalCount
         }
@@ -220,6 +222,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         internalID
         slug
         consignmentSubmission {
+          state
           displayText
         }
         artist {

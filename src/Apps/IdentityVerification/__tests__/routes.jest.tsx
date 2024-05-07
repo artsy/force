@@ -1,6 +1,5 @@
 import { IdentityVerificationAppQueryResponseFixture } from "Apps/IdentityVerification/__fixtures__/routes_IdentityVerificationAppQuery"
 import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
-import { Resolver } from "found-relay"
 import {
   FarceElementResult,
   FarceRedirectResult,
@@ -13,6 +12,7 @@ import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVe
 
 import { identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse } from "__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
 import { createRender } from "found"
+import { Resolver } from "found-relay"
 
 describe("IdentityVerification/routes", () => {
   const idvID =

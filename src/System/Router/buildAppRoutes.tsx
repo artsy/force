@@ -53,7 +53,7 @@ export function buildAppRoutes(routeList: RouteList[]): AppRouteConfig[] {
   ]
 }
 
-function getActiveRoutes(routeList) {
+function getActiveRoutes(routeList): AppRouteConfig[] {
   const routes = flatten(
     routeList.reduce((acc, route: RouteList) => {
       if (route.disabled) {

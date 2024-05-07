@@ -37,7 +37,19 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
   const listPrice = artwork?.listPrice
-  const priceOptions = getOfferPriceOptions(listPrice, artwork?.isPriceRange)
+  const orderPrice = parseFloat(
+    order.lineItems?.edges?.[0]?.node?.listPrice || "0"
+  )
+  const formattedOrderPrice: PriceOptions_artwork$data["listPrice"] = {
+    major: orderPrice,
+  }
+  const isPartnerOfferOrder = order.source === "partner_offer"
+
+  const priceOptions = getOfferPriceOptions(
+    isPartnerOfferOrder ? formattedOrderPrice : listPrice,
+    artwork?.isPriceRange,
+    isPartnerOfferOrder
+  )
   const {
     lastOffer,
     selectedPriceOption,
@@ -153,13 +165,14 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                     }}
                     noTitle
                   />
-                  {(!customValue || customValue < minPrice) && (
-                    <MinPriceWarning
-                      isPriceRange={!!artwork?.isPriceRange}
-                      minPrice={asCurrency(minPrice) as string}
-                      orderID={order.internalID}
-                    />
-                  )}
+                  {(!customValue || customValue < minPrice) &&
+                    !isPartnerOfferOrder && (
+                      <MinPriceWarning
+                        isPriceRange={!!artwork?.isPriceRange}
+                        minPrice={asCurrency(minPrice) as string}
+                        orderID={order.internalID}
+                      />
+                    )}
                 </Flex>
               </Jump>
             )}
@@ -194,6 +207,14 @@ export const PriceOptionsFragmentContainer = createFragmentContainer(
     order: graphql`
       fragment PriceOptions_order on CommerceOrder {
         internalID
+        source
+        lineItems {
+          edges {
+            node {
+              listPrice(format: "%v", thousand: "")
+            }
+          }
+        }
         ... on CommerceOfferOrder {
           myLastOffer {
             amountCents

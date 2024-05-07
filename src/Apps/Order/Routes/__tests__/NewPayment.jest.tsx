@@ -102,7 +102,7 @@ describe("Payment", () => {
         {/* @ts-ignore */}
         <NewPaymentFragmentContainer
           router={{ push: pushMock } as any}
-          route={{ onTransition: jest.fn() }}
+          route={{ onTransition: jest.fn() } as any}
           order={props.order}
           // @ts-ignore
           isCommittingMutation={isCommittingMutation}
