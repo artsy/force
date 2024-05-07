@@ -95,16 +95,16 @@ const UploadPhotosFragmentContainer = loadable(
   }
 )
 
-const ContactInformation = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ContactInformation/ContactInformation"
-    ),
-  {
-    resolveComponent: component =>
-      component.ContactInformationFragmentContainer,
-  }
-)
+// const ContactInformation = loadable(
+//   () =>
+//     import(
+//       /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ContactInformation/ContactInformation"
+//     ),
+//   {
+//     resolveComponent: component =>
+//       component.ContactInformationFragmentContainer,
+//   }
+// )
 
 const ThankYou = loadable(
   () =>
@@ -163,21 +163,21 @@ const prepareSubmissionFlowStepVariables = data => {
   }
 }
 
-const contactInformationQuery = graphql`
-  query consignRoutes_contactInformationQuery(
-    $id: ID
-    $externalId: ID
-    $sessionID: String
-  ) {
-    submission(id: $id, externalId: $externalId, sessionID: $sessionID) {
-      ...ContactInformation_submission
-      ...redirects_submission @relay(mask: false)
-    }
-    me {
-      ...ContactInformation_me
-    }
-  }
-`
+// const contactInformationQuery = graphql`
+//   query consignRoutes_contactInformationQuery(
+//     $id: ID
+//     $externalId: ID
+//     $sessionID: String
+//   ) {
+//     submission(id: $id, externalId: $externalId, sessionID: $sessionID) {
+//       # ...ContactInformation_submission
+//       ...redirects_submission @relay(mask: false)
+//     }
+//     me {
+//       ...ContactInformation_me
+//     }
+//   }
+// `
 
 const renderConsignmentInquiry = ({ Component, props }: RouteRenderArgs) => {
   if (!(Component && props)) {
@@ -302,39 +302,57 @@ export const consignRoutes: AppRouteConfig[] = [
     path: "/sell/submission",
     getComponent: () => SubmissionLayout,
     children: [
+      // {
+      //   // Default landing is the same as /contact-information
+      //   path: "",
+      //   layout: "ContainerOnly",
+      //   getComponent: () => ContactInformation,
+      //   onClientSideRender: () => {
+      //     ContactInformation.preload()
+      //   },
+      //   query: contactInformationQuery,
+      //   render: renderSubmissionFlowStep,
+      //   prepareVariables: prepareSubmissionFlowStepVariables,
+      // },
       {
-        // Default landing is the same as /contact-information
         path: "",
         layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
+        getComponent: () => ArtworkDetailsFragmentContainer,
         onClientSideRender: () => {
-          ContactInformation.preload()
+          ArtworkDetailsFragmentContainer.preload()
         },
-        query: contactInformationQuery,
-        render: renderSubmissionFlowStep,
+        query: graphql`
+          query consignRoutes_artworkDetailsQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...ArtworkDetails_submission
+              ...redirects_submission @relay(mask: false)
+            }
+          }
+        `,
         prepareVariables: prepareSubmissionFlowStepVariables,
-      },
-      {
-        path: "artwork-details",
-        layout: "ContainerOnly",
-        getComponent: () => ArtworkDetails,
-        onServerSideRender: ({ res }) => {
-          res.redirect("/sell/submission")
-        },
-      },
-      {
-        path: "contact-information",
-        layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
-        onClientSideRender: () => {
-          ContactInformation.preload()
-        },
-        query: contactInformationQuery,
         render: renderSubmissionFlowStep,
-        prepareVariables: prepareSubmissionFlowStepVariables,
       },
+      // {
+      //   path: "contact-information",
+      //   layout: "ContainerOnly",
+      //   getComponent: () => ContactInformation,
+      //   onClientSideRender: () => {
+      //     ContactInformation.preload()
+      //   },
+      //   query: contactInformationQuery,
+      //   render: renderSubmissionFlowStep,
+      //   prepareVariables: prepareSubmissionFlowStepVariables,
+      // },
       {
-        path: ":id/artwork-details",
+        path: "",
         layout: "ContainerOnly",
         getComponent: () => ArtworkDetailsFragmentContainer,
         onClientSideRender: () => {
@@ -385,17 +403,17 @@ export const consignRoutes: AppRouteConfig[] = [
         prepareVariables: prepareSubmissionFlowStepVariables,
         render: renderSubmissionFlowStep,
       },
-      {
-        path: ":id/contact-information",
-        layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
-        onClientSideRender: () => {
-          ContactInformation.preload()
-        },
-        query: contactInformationQuery,
-        render: renderSubmissionFlowStep,
-        prepareVariables: prepareSubmissionFlowStepVariables,
-      },
+      // {
+      //   path: ":id/contact-information",
+      //   layout: "ContainerOnly",
+      //   getComponent: () => ContactInformation,
+      //   onClientSideRender: () => {
+      //     ContactInformation.preload()
+      //   },
+      //   query: contactInformationQuery,
+      //   render: renderSubmissionFlowStep,
+      //   prepareVariables: prepareSubmissionFlowStepVariables,
+      // },
       {
         path: ":id/thank-you",
         layout: "ContainerOnly",

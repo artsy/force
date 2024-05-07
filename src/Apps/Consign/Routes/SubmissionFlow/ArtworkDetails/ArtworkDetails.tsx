@@ -185,9 +185,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       let nextRoute: LocationDescriptor = consignPath
       if (nextStepIndex !== null) {
         let nextStep = steps[nextStepIndex]
-        if (nextStep === "Contact" || nextStep === "Contact Information") {
-          nextRoute = `${consignPath}/${submissionId}/contact-information`
-        } else if (nextStep === "Artwork" || nextStep === "Artwork Details") {
+        if (nextStep === "Artwork" || nextStep === "Artwork Details") {
           nextRoute = `${consignPath}/${submissionId}/artwork-details/`
         } else if (nextStep === "Photos" || nextStep === "Upload Photos") {
           nextRoute = `${consignPath}/${submissionId}/upload-photos`
@@ -219,10 +217,6 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
     let prevStep = ""
     if (stepIndex > 0) {
       switch (steps[stepIndex - 1]) {
-        case "Contact":
-        case "Contact Information":
-          prevStep = "contact-information"
-          break
         case "Upload Photos":
         case "Photos":
           prevStep = "upload-photos"
