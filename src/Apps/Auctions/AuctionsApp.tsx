@@ -21,8 +21,6 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
   // FIXME: Remove once new filter launches
   const enableNewAuctionsFilter = getENV("ENABLE_NEW_AUCTIONS_FILTER")
 
-  const hasMyBids = viewer.me?.myBids?.active?.length
-
   return (
     <>
       <AuctionsMeta />
@@ -59,9 +57,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 
       <Spacer y={4} />
 
-      <MyBidsQueryRenderer />
-
-      {hasMyBids ? <Spacer y={12} /> : ""}
+      <MyBidsQueryRenderer mb={12} />
 
       <CuritorialRailsTabBarFragmentContainer viewer={viewer} />
 
@@ -95,15 +91,6 @@ export const AuctionsAppFragmentContainer = createFragmentContainer(
     viewer: graphql`
       fragment AuctionsApp_viewer on Viewer {
         ...CuritorialRailsTabBar_viewer
-        me {
-          myBids {
-            active {
-              sale {
-                slug
-              }
-            }
-          }
-        }
       }
     `,
   }
