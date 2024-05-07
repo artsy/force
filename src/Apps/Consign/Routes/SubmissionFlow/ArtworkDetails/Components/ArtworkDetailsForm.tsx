@@ -34,6 +34,7 @@ import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDe
 import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export enum SubmissionType {
   submission = "SUBMISSION",
@@ -67,7 +68,8 @@ export const getArtworkDetailsFormInitialValues = (
         title: props.values.title ?? "",
         materials: props.values.medium ?? "",
         rarity:
-          props.values.attributionClass?.replace("_", " ").toLowerCase() ?? "",
+          props.values.attributionClass?.replace("_", " ").toLowerCase() ??
+          null,
         editionNumber: props.values.editionNumber ?? "",
         editionSize: props.values.editionSize ?? undefined,
         height: props.values.height ?? "",
@@ -148,7 +150,7 @@ export interface ArtworkDetailsFormModel {
   year: string
   title: string
   materials: string
-  rarity: string
+  rarity: string | null
   editionNumber: string
   editionSize?: string
   height: string
@@ -162,6 +164,10 @@ export interface ArtworkDetailsFormModel {
 
 export const ArtworkDetailsForm: React.FC = () => {
   const { sendToast } = useToasts()
+
+  const isSellFlowRequiredField = useFeatureFlag(
+    "onyx_sell-flow-required-fields"
+  )
 
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
@@ -243,7 +249,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.year}
-            required
             error={touched.year && errors.year}
           />
         </Column>
@@ -286,7 +291,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.materials}
-            required
             error={touched.materials && errors.materials}
           />
         </Column>
@@ -307,11 +311,10 @@ export const ArtworkDetailsForm: React.FC = () => {
             title="Rarity"
             name="rarity"
             options={rarityOptions}
-            selected={values.rarity}
+            selected={values.rarity ?? undefined}
             onBlur={handleBlur}
             onChange={handleChange}
             onSelect={selected => setFieldValue("rarity", selected)}
-            required
             error={touched.rarity && errors.rarity}
           />
         </Column>
@@ -332,7 +335,6 @@ export const ArtworkDetailsForm: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionNumber}
-                required
                 error={touched.editionNumber && errors.editionNumber}
               />
               <Box px={[0.5, 2]} mt={2}>
@@ -346,7 +348,6 @@ export const ArtworkDetailsForm: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionSize}
-                required
                 error={touched.editionSize && errors.editionSize}
               />
             </Flex>
@@ -366,7 +367,7 @@ export const ArtworkDetailsForm: React.FC = () => {
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.height}
-              required
+              required={isSellFlowRequiredField ? false : true}
               error={touched.height && errors.height}
             />
 
@@ -379,7 +380,7 @@ export const ArtworkDetailsForm: React.FC = () => {
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.width}
-              required
+              required={isSellFlowRequiredField ? false : true}
               error={touched.width && errors.width}
             />
           </Flex>
@@ -432,7 +433,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.provenance}
-            required
             error={touched.provenance && errors.provenance}
           />
         </Column>
@@ -450,7 +450,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onSelect={handleLocationSelect}
             onChange={handleLocationChange}
             onClick={handleLocationClick}
-            required
           />
         </Column>
       </GridColumns>
