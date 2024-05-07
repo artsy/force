@@ -297,54 +297,54 @@ export const NavBar: React.FC = track(
                       )}
                     </NavBarItemButton>
 
-                    <ProgressiveOnboardingFollowFind>
-                      <ProgressiveOnboardingSaveFind>
-                        <NavBarItemButton
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                          aria-label="My Collection"
-                          onClick={() => {
-                            setMode("Profile")
-                          }}
-                        >
-                          <PersonIcon
-                            aria-hidden="true"
-                            height={22}
-                            width={22}
-                          />
-                        </NavBarItemButton>
-                      </ProgressiveOnboardingSaveFind>
-                    </ProgressiveOnboardingFollowFind>
+                    <ProgressiveOnboardingAlertFind>
+                      <ProgressiveOnboardingFollowFind>
+                        <ProgressiveOnboardingSaveFind>
+                          <NavBarItemButton
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                            aria-label="My Collection"
+                            onClick={() => {
+                              setMode("Profile")
+                            }}
+                          >
+                            <PersonIcon
+                              aria-hidden="true"
+                              height={22}
+                              width={22}
+                            />
+                          </NavBarItemButton>
+                        </ProgressiveOnboardingSaveFind>
+                      </ProgressiveOnboardingFollowFind>
+                    </ProgressiveOnboardingAlertFind>
                   </>
                 )}
 
-                <ProgressiveOnboardingAlertFind>
-                  <NavBarItemButton
-                    mr={-1}
-                    width={40}
-                    height={40}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    aria-label="Menu"
-                    aria-expanded={mode === "More"}
-                    onClick={event => {
-                      event.preventDefault()
+                <NavBarItemButton
+                  mr={-1}
+                  width={40}
+                  height={40}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  aria-label="Menu"
+                  aria-expanded={mode === "More"}
+                  onClick={event => {
+                    event.preventDefault()
 
-                      setMode("More")
+                    setMode("More")
 
-                      trackEvent({
-                        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-                        subject:
-                          DeprecatedAnalyticsSchema.Subject
-                            .SmallScreenMenuSandwichIcon,
-                      })
-                    }}
-                  >
-                    <NavBarMobileMenuIcon open={mode === "More"} />
-                  </NavBarItemButton>
-                </ProgressiveOnboardingAlertFind>
+                    trackEvent({
+                      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+                      subject:
+                        DeprecatedAnalyticsSchema.Subject
+                          .SmallScreenMenuSandwichIcon,
+                    })
+                  }}
+                >
+                  <NavBarMobileMenuIcon open={mode === "More"} />
+                </NavBarItemButton>
               </Flex>
             </Flex>
 

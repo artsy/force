@@ -6,19 +6,31 @@ import { NavBarUserMenuAvatarQuery } from "__generated__/NavBarUserMenuAvatarQue
 interface NavBarUserMenuAvatarProps {}
 
 export const NavBarUserMenuAvatar: FC<NavBarUserMenuAvatarProps> = () => {
-  const { me } = useLazyLoadQuery<NavBarUserMenuAvatarQuery>(QUERY, {})
+  const { me } = useLazyLoadQuery<NavBarUserMenuAvatarQuery>(
+    QUERY,
+    {},
+    { fetchPolicy: "store-and-network" }
+  )
 
   if (!me) return <Avatar size="xs" />
 
   const img = me.icon?.resized
 
-  return <Avatar size="xs" initials={me.initials ?? "U"} {...img} />
+  return (
+    <Avatar
+      size="xs"
+      initials={me.initials ?? "U"}
+      {...img}
+      border="1px solid"
+      borderColor="black10"
+    />
+  )
 }
 
 export const NavBarUserMenuAvatarSkeleton: FC = () => {
   return (
     <Skeleton>
-      <Avatar size="xs" bg="black10" />
+      <Avatar size="xs" bg="black10" border="1px solid" borderColor="black10" />
     </Skeleton>
   )
 }

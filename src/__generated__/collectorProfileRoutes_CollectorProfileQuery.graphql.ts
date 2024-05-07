@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f56bf9876e220c94810086d728ffdb1d>>
+ * @generated SignedSource<<2561f57903acda14f87a530fde0af19c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -141,6 +141,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "MyLocation",
             "kind": "LinkedField",
             "name": "location",
@@ -160,36 +167,27 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "profession",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "otherRelevantPositions",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "bio",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "createdAt",
+            "concreteType": "CollectorProfileType",
+            "kind": "LinkedField",
+            "name": "collectorProfile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isIdentityVerified",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "confirmedBuyerAt",
+                "storageKey": null
+              },
+              (v0/*: any*/)
+            ],
             "storageKey": null
           },
           (v0/*: any*/)
@@ -199,12 +197,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8f85ba0b0dc73cfd858e23550e5b76e3",
+    "cacheID": "2b8f3d79904c5975d2aa8744024e5274",
     "id": null,
     "metadata": {},
     "name": "collectorProfileRoutes_CollectorProfileQuery",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_CollectorProfileQuery {\n  me {\n    ...CollectorProfileApp_me\n    id\n  }\n}\n\nfragment CollectorProfileApp_me on Me {\n  ...CollectorProfileHeader_me\n  name\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeaderInfo_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  otherRelevantPositions\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  ...CollectorProfileHeaderInfo_me\n  name\n  bio\n  createdAt\n}\n"
+    "text": "query collectorProfileRoutes_CollectorProfileQuery {\n  me {\n    ...CollectorProfileApp_me\n    id\n  }\n}\n\nfragment CollectorProfileApp_me on Me {\n  ...CollectorProfileHeader_me\n  name\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  name\n  initials\n  icon {\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n  location {\n    display\n    id\n  }\n  collectorProfile {\n    isIdentityVerified\n    confirmedBuyerAt\n    id\n  }\n}\n"
   }
 };
 })();

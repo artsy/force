@@ -87,7 +87,7 @@ export const Boot = track(undefined, {
         <HeadProvider headTags={headTags}>
           <StateProvider>
             <SystemContextProvider {...contextProps}>
-              <RelayEnvironmentProvider environment={props.relayEnvironment}>
+              <EnvironmentProvider environment={props.relayEnvironment}>
                 <ErrorBoundary>
                   <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
                     <ResponsiveProvider
@@ -116,7 +116,7 @@ export const Boot = track(undefined, {
                     </ResponsiveProvider>
                   </MediaContextProvider>
                 </ErrorBoundary>
-              </RelayEnvironmentProvider>
+              </EnvironmentProvider>
             </SystemContextProvider>
           </StateProvider>
         </HeadProvider>
@@ -124,6 +124,19 @@ export const Boot = track(undefined, {
     </AppPreferencesProvider>
   )
 })
+
+const EnvironmentProvider: FC<{ environment: Environment }> = ({
+  children,
+  environment,
+}) => {
+  if (process.env.NODE_ENV === "test") return <>{children}</>
+
+  return (
+    <RelayEnvironmentProvider environment={environment}>
+      {children}
+    </RelayEnvironmentProvider>
+  )
+}
 
 const ThemeProvider: FC = ({ children }) => {
   const { preferences } = useAppPreferences()

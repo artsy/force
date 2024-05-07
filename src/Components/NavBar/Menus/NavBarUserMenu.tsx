@@ -25,6 +25,7 @@ import {
   NavBarUserMenuAvatarSkeleton,
 } from "Components/NavBar/Menus/NavBarUserMenuAvatar"
 import { Suspense } from "react"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 
 interface NavBarUserMenuProps extends BoxProps {}
 
@@ -136,10 +137,10 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
       >
         <NavBarMenuItemLink
           aria-label="View your Follows"
-          to="/collector-profile/follows"
+          to="/favorites/follows"
           onClick={trackClick}
         >
-          <GroupIcon mr={1} aria-hidden="true" /> Follows
+          <CheckmarkStrokeIcon mr={1} aria-hidden="true" /> Follows
         </NavBarMenuItemLink>
       </ProgressiveOnboardingFollowHighlight>
 
@@ -148,7 +149,7 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
       >
         <NavBarMenuItemLink
           aria-label="View your alerts"
-          to="/settings/alerts"
+          to="/favorites/alerts"
           onClick={trackClick}
         >
           <BellStrokeIcon mr={1} aria-hidden="true" /> Alerts

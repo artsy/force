@@ -5,6 +5,7 @@ import {
   Flex,
   Spinner,
   Text,
+  Tooltip,
   useToasts,
 } from "@artsy/palette"
 import { ChangeEvent, FC, useState } from "react"
@@ -100,16 +101,21 @@ const SettingsEditProfileImage: FC<SettingsEditProfileImageProps> = ({
       >
         <Flex alignItems="center" gap={[1, 2]}>
           {isProcessing ? (
-            <Box
-              position="relative"
-              display="flex"
-              border="1px solid"
-              borderColor="black10"
-              borderRadius="50%"
-              size={[70, 100]}
+            <Tooltip
+              content="Your image is being processed. It will be available shortly."
+              placement="right"
             >
-              <Spinner />
-            </Box>
+              <Box
+                position="relative"
+                display="flex"
+                border="1px solid"
+                borderColor="black10"
+                borderRadius="50%"
+                size={[70, 100]}
+              >
+                <Spinner />
+              </Box>
+            </Tooltip>
           ) : (
             <>
               <Media greaterThan="xs">

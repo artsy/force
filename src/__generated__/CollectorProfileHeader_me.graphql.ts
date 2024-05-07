@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<49dc472acf0ace3dfda3811b9d972b59>>
+ * @generated SignedSource<<15b76a8f6589c5b94612b60c082e2935>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,22 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileHeader_me$data = {
-  readonly bio: string | null | undefined;
-  readonly createdAt: string | null | undefined;
+  readonly collectorProfile: {
+    readonly confirmedBuyerAt: string | null | undefined;
+    readonly isIdentityVerified: boolean | null | undefined;
+  } | null | undefined;
+  readonly icon: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
+    } | null | undefined;
+  } | null | undefined;
+  readonly initials: string | null | undefined;
+  readonly location: {
+    readonly display: string | null | undefined;
+  } | null | undefined;
   readonly name: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileHeaderAvatar_me" | "CollectorProfileHeaderInfo_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileHeaderAvatar_me">;
   readonly " $fragmentType": "CollectorProfileHeader_me";
 };
 export type CollectorProfileHeader_me$key = {
@@ -34,11 +46,6 @@ const node: ReaderFragment = {
       "name": "CollectorProfileHeaderAvatar_me"
     },
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "CollectorProfileHeaderInfo_me"
-    },
-    {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
@@ -49,14 +56,97 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "bio",
+      "name": "initials",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "createdAt",
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "icon",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 100
+            },
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 100
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
+            }
+          ],
+          "storageKey": "cropped(height:100,width:100)"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "MyLocation",
+      "kind": "LinkedField",
+      "name": "location",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "display",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorProfileType",
+      "kind": "LinkedField",
+      "name": "collectorProfile",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isIdentityVerified",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "confirmedBuyerAt",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
@@ -64,6 +154,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "45baf50d768c31a324ff79b1737d15dc";
+(node as any).hash = "d6d20fc6c93d22ce1a5ee96fcfa63d91";
 
 export default node;

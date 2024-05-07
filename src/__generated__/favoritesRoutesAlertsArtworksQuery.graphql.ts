@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb0ce74a6c6044933965e34eaa63a5c5>>
+ * @generated SignedSource<<8100b6428a5f28d0d3e7292dfe2f2d88>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_SavedSearchAlertsArtworksQuery$variables = Record<PropertyKey, never>;
-export type settingsRoutes_SavedSearchAlertsArtworksQuery$data = {
+export type favoritesRoutesAlertsArtworksQuery$variables = Record<PropertyKey, never>;
+export type favoritesRoutesAlertsArtworksQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
   } | null | undefined;
 };
-export type settingsRoutes_SavedSearchAlertsArtworksQuery = {
-  response: settingsRoutes_SavedSearchAlertsArtworksQuery$data;
-  variables: settingsRoutes_SavedSearchAlertsArtworksQuery$variables;
+export type favoritesRoutesAlertsArtworksQuery = {
+  response: favoritesRoutesAlertsArtworksQuery$data;
+  variables: favoritesRoutesAlertsArtworksQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -50,7 +50,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "settingsRoutes_SavedSearchAlertsArtworksQuery",
+    "name": "favoritesRoutesAlertsArtworksQuery",
     "selections": [
       {
         "alias": null,
@@ -76,7 +76,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "settingsRoutes_SavedSearchAlertsArtworksQuery",
+    "name": "favoritesRoutesAlertsArtworksQuery",
     "selections": [
       {
         "alias": null,
@@ -281,16 +281,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bc38345fb7fe7c8f573cb4c9b8621819",
+    "cacheID": "dbddc17b80d8e5b722fc08f8b5b926d4",
     "id": null,
     "metadata": {},
-    "name": "settingsRoutes_SavedSearchAlertsArtworksQuery",
+    "name": "favoritesRoutesAlertsArtworksQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsArtworksQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  artistIDs\n  artistSeriesIDs\n  href\n  title: displayName(only: [artistIDs])\n  subtitle: displayName(except: [artistIDs])\n  artworksConnection(first: 10) {\n    counts {\n      total\n    }\n    id\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10, sort: ENABLED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        ...SavedSearchAlertListItem_item\n        title: displayName(only: [artistIDs])\n        subtitle: displayName(except: [artistIDs])\n        artworksConnection(first: 10) {\n          counts {\n            total\n          }\n          id\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query favoritesRoutesAlertsArtworksQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  artistIDs\n  artistSeriesIDs\n  href\n  title: displayName(only: [artistIDs])\n  subtitle: displayName(except: [artistIDs])\n  artworksConnection(first: 10) {\n    counts {\n      total\n    }\n    id\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10, sort: ENABLED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        ...SavedSearchAlertListItem_item\n        title: displayName(only: [artistIDs])\n        subtitle: displayName(except: [artistIDs])\n        artworksConnection(first: 10) {\n          counts {\n            total\n          }\n          id\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c7aad02fc425d278b76b653cd2f5a203";
+(node as any).hash = "24f1c3347e149f13aab1e93f91abf79e";
 
 export default node;

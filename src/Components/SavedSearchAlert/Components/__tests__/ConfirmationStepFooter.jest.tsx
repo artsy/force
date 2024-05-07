@@ -75,7 +75,7 @@ describe("ConfirmationStepFooter", () => {
       )
       expect(screen.getByTestId("manageYourAlertsButton")).toHaveAttribute(
         "href",
-        "/settings/alerts"
+        "/favorites/alerts"
       )
     })
   })

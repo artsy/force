@@ -5,12 +5,8 @@ import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { useSystemContext } from "System/useSystemContext"
 import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
-import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
 import styled from "styled-components"
 import { Spacer } from "@artsy/palette"
-import { useIsRouteActive } from "System/Router/useRouter"
-import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 
 interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data
@@ -21,9 +17,6 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   children,
 }) => {
   const { isLoggedIn } = useSystemContext()
-  const isSavesPathActive = useIsRouteActive(BASE_SAVES_PATH, {
-    exact: false,
-  })
 
   if (!isLoggedIn) {
     return (
@@ -39,34 +32,24 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
     <>
       <MetaTags title="Collector Profile | Artsy" />
 
+      <Spacer y={[4, 6]} />
+
       <CollectorProfileHeaderFragmentContainer me={me} />
 
-      <Spacer y={[0, 2]} />
+      <Spacer y={[4, 6]} />
 
-      <RouteTabs fill>
+      <RouteTabs>
         <Tab to="/collector-profile/my-collection" variant={["xs", "sm"]}>
-          My Collection
+          Artworks
+        </Tab>
+
+        <Tab to="/collector-profile/artists" variant={["xs", "sm"]}>
+          Artists
         </Tab>
 
         <Tab to="/collector-profile/insights" variant={["xs", "sm"]}>
           Insights
         </Tab>
-
-        <ProgressiveOnboardingSaveHighlight position="center">
-          <Tab
-            to={BASE_SAVES_PATH}
-            active={isSavesPathActive}
-            variant={["xs", "sm"]}
-          >
-            Saves
-          </Tab>
-        </ProgressiveOnboardingSaveHighlight>
-
-        <ProgressiveOnboardingFollowHighlight position="center">
-          <Tab to="/collector-profile/follows" variant={["xs", "sm"]}>
-            Follows
-          </Tab>
-        </ProgressiveOnboardingFollowHighlight>
       </RouteTabs>
 
       <Spacer y={[2, 4]} />
