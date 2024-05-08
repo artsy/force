@@ -30,6 +30,14 @@ const ArtAdvisorApp03 = loadable(
   }
 )
 
+const ArtAdvisorApp04 = loadable(
+  () =>
+    import(/* webpackChunkName: "jobsBundle" */ "./04-Bio-Follows-Alerts/App"),
+  {
+    resolveComponent: component => component.App,
+  }
+)
+
 export const artAdvisorRoutes: AppRouteConfig[] = [
   {
     path: "/advisor",
@@ -57,6 +65,13 @@ export const artAdvisorRoutes: AppRouteConfig[] = [
     getComponent: () => ArtAdvisorApp03,
     onClientSideRender: () => {
       ArtAdvisorApp03.preload()
+    },
+  },
+  {
+    path: "/advisor/4",
+    getComponent: () => ArtAdvisorApp04,
+    onClientSideRender: () => {
+      ArtAdvisorApp04.preload()
     },
   },
 ]
