@@ -86,7 +86,7 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
               {firstArticle.vertical}
             </Text>
 
-            <Text variant="xl" mt={0.5}>
+            <Text variant={["lg", "xl"]} mt={0.5}>
               {firstArticle.title}
             </Text>
 

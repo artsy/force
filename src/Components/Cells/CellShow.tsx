@@ -40,6 +40,7 @@ const CellShow: FC<CellShowProps> = ({
       to={show.href}
       display="block"
       textDecoration="none"
+      style={{ cursor: show.href ? "pointer" : "default" }}
       width={width}
       {...rest}
     >

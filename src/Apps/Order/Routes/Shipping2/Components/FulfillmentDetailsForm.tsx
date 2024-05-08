@@ -44,6 +44,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
+import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFieldError"
 
 export interface FulfillmentDetailsFormProps
   extends FulfillmentDetailsFormLayoutProps {
@@ -240,6 +241,7 @@ const FulfillmentDetailsFormLayout = (
 
   return (
     <Form data-testid="FulfillmentDetails_form">
+      <ScrollToFieldError />
       {props.verifyAddressNow && (
         <AddressVerificationFlowQueryRenderer
           data-testid="address-verification-flow"
@@ -315,7 +317,7 @@ const FulfillmentDetailsFormLayout = (
               <Column span={12}>
                 <Input
                   tabIndex={tabbableIf("new_address")}
-                  id="attributes.name"
+                  name="attributes.name"
                   placeholder="Full name"
                   title={"Full name"}
                   autoCorrect="off"
@@ -565,7 +567,7 @@ const FulfillmentDetailsFormLayout = (
           <>
             <Input
               tabIndex={tabbableIf("pickup")}
-              id="attributes.name"
+              name="attributes.name"
               placeholder="Full name"
               title={"Full name"}
               autoCorrect="off"

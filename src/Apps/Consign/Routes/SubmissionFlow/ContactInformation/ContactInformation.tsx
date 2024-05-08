@@ -25,6 +25,7 @@ import {
 } from "./Components/ContactInformationForm"
 import { TopContextBar } from "Components/TopContextBar"
 import { getContactInformationFormInitialValues } from "Apps/Consign/Routes/SubmissionFlow/Utils/formHelpers"
+import { useEffect } from "react"
 
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
@@ -41,6 +42,13 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.replace("/sell")
+    }
+  }, [isLoggedIn, router])
+
   const initialValue = getContactInformationFormInitialValues(me, submission)
   const initialErrors = validate(
     initialValue,

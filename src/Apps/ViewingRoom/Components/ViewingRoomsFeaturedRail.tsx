@@ -3,9 +3,10 @@ import { Card, Shelf } from "@artsy/palette"
 import { ViewingRoomsFeaturedRail_featuredViewingRooms$data } from "__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { cropped } from "Utils/resized"
-import { extractNodes } from "../../../Utils/extractNodes"
+import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
-import { getStatus } from "../Utils/getStatus"
+import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
+import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
 
 interface ViewingRoomsFeaturedRailProps {
   featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms$data
@@ -15,18 +16,23 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
   featuredViewingRooms,
 }) => {
   const viewingRooms = extractNodes(featuredViewingRooms)
+  const { shuffled } = useStableShuffle({ items: viewingRooms })
 
-  if (viewingRooms.length === 0) {
+  if (shuffled.length === 0) {
     return null
   }
 
   return (
     <Shelf>
-      {viewingRooms.map(viewingRoom => {
-        const image = cropped(viewingRoom.image?.imageURLs?.normalized!, {
-          width: 280,
-          height: 370,
-        })
+      {shuffled.map(viewingRoom => {
+        const imageURL = viewingRoom.image?.imageURLs?.normalized
+
+        const image = !!imageURL
+          ? cropped(imageURL, {
+              width: 280,
+              height: 370,
+            })
+          : undefined
 
         const status = getStatus({
           status: viewingRoom.status,
@@ -42,6 +48,8 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
           >
             <Card
               width={280}
+              // TODO: Fix Palette type so that `undefined` is valid for `image`
+              // @ts-ignore
               image={image}
               title={viewingRoom.title}
               subtitle={viewingRoom.partner?.name}

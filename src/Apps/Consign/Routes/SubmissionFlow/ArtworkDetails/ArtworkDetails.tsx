@@ -63,11 +63,11 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   }
   if (myCollectionArtwork) {
     data = {
-      values: myCollectionArtwork!,
+      values: myCollectionArtwork,
       type: SubmissionType.myCollectionArtwork,
     }
   } else if (submission) {
-    data = { values: submission!, type: SubmissionType.submission }
+    data = { values: submission, type: SubmissionType.submission }
   }
 
   const initialValue = getArtworkDetailsFormInitialValues(data)
@@ -110,8 +110,10 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         title: artworkDetailsForm.title,
         medium: artworkDetailsForm.materials,
         attributionClass: artworkDetailsForm.rarity
-          .replace(" ", "_")
-          .toUpperCase() as ConsignmentAttributionClass,
+          ? (artworkDetailsForm.rarity
+              .replace(" ", "_")
+              .toUpperCase() as ConsignmentAttributionClass)
+          : null,
         editionNumber: artworkDetailsForm.editionNumber,
         editionSizeFormatted: artworkDetailsForm.editionSize,
         height: artworkDetailsForm.height,
@@ -170,6 +172,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         submission_id: submissionId,
         user_id: submission?.userId,
         user_email: submission?.userEmail,
+        fieldsProvided: [artworkDetailsForm.height, artworkDetailsForm.width],
       })
 
       router.replace(artworkId ? "/collector-profile/my-collection" : "/sell")
@@ -276,23 +279,25 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         validationSchema={artworkDetailsValidationSchema}
         initialErrors={initialErrors}
       >
-        {({ isSubmitting, isValid }) => (
-          <Form>
-            <ArtworkDetailsForm />
-            <Button
-              mt={6}
-              width={["100%", "auto"]}
-              data-testid="save-button"
-              type="submit"
-              size="large"
-              variant="primaryBlack"
-              loading={isSubmitting}
-              disabled={!isValid}
-            >
-              {isLastStep ? "Submit Artwork" : "Save and Continue"}
-            </Button>
-          </Form>
-        )}
+        {({ isSubmitting, isValid }) => {
+          return (
+            <Form>
+              <ArtworkDetailsForm />
+              <Button
+                mt={6}
+                width={["100%", "auto"]}
+                data-testid="save-button"
+                type="submit"
+                size="large"
+                variant="primaryBlack"
+                loading={isSubmitting}
+                disabled={!isValid}
+              >
+                {isLastStep ? "Submit Artwork" : "Save and Continue"}
+              </Button>
+            </Form>
+          )
+        }}
       </Formik>
     </>
   )

@@ -1,3 +1,4 @@
+import { getFeatureVariant } from "System/useFeatureFlag"
 import { FormikErrors, yupToFormErrors } from "formik"
 import * as yup from "yup"
 
@@ -7,42 +8,43 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     .required(
       "Please select an artist from the list. Other artists cannot be submitted due to limited demand."
     ),
-  year: yup.string().required("Please enter the year").trim(),
+  year: yup.string().trim(),
   title: yup.string().required("Please enter the title").trim(),
-  materials: yup.string().required("Please enter materials").trim(),
+  materials: yup.string().trim(),
   rarity: yup
     .string()
-    .required("Please select a rarity")
-    .test("isDefault", "", rarity => rarity !== "default"),
+    .test("isDefault", "", rarity => rarity !== "default")
+    .nullable(),
   editionNumber: yup.string().when("rarity", {
     is: "limited edition",
-    then: yup.string().required("Please enter the edition number").trim(),
+    then: yup.string().trim(),
   }),
   editionSize: yup.string().when("rarity", {
     is: "limited edition",
-    then: yup.string().required("Please enter the edition size").trim(),
+    then: yup.string().trim(),
   }),
-  height: yup.string().required("Please enter the height").trim(),
-  width: yup.string().required("Please enter the width").trim(),
+  height: getFeatureVariant("onyx_swa-dimensions-are-optional")
+    ? yup.string().trim()
+    : yup.string().required("Please enter the height").trim(),
+  width: getFeatureVariant("onyx_swa-dimensions-are-optional")
+    ? yup.string().trim()
+    : yup.string().required("Please enter the width").trim(),
   depth: yup
     .string()
     .transform((value, originalValue) =>
       String(originalValue).trim() === "" ? undefined : value
     )
     .trim(),
-  units: yup.string().required(),
-  provenance: yup.string().required("Please enter the provenance").trim(),
-  location: yup
-    .object()
-    .shape({
-      city: yup.string().trim().required("Please select a city from the list"),
-      state: yup.string(),
-      stateCode: yup.string(),
-      postalCode: yup.string(),
-      country: yup.string(),
-      coordinates: yup.array(yup.number()),
-    })
-    .required(),
+  units: yup.string(),
+  provenance: yup.string().trim(),
+  location: yup.object().shape({
+    city: yup.string().trim(),
+    state: yup.string(),
+    stateCode: yup.string(),
+    postalCode: yup.string(),
+    country: yup.string(),
+    coordinates: yup.array(yup.number()),
+  }),
   category: yup
     .string()
     .required("Please select a medium")

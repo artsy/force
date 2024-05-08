@@ -40,6 +40,7 @@ jest.mock("react-tracking")
 
 const mockOnSubmit = jest.fn()
 const mockOnAddressVerificationComplete = jest.fn()
+const mockScrollIntoView = jest.fn()
 let testProps: DeepPartial<FulfillmentDetailsFormProps>
 let mockShippingContext: ShippingContextProps
 
@@ -106,6 +107,8 @@ beforeEach(() => {
       shippingFormMode: "saved_addresses",
     },
   } as unknown) as ShippingContextProps
+
+  HTMLElement.prototype.scrollIntoView = mockScrollIntoView
 })
 
 const addressFormErrors = {

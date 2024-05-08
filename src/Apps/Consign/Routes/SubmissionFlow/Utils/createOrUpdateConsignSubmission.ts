@@ -18,9 +18,14 @@ export const createOrUpdateConsignSubmission = async (
   let input = submission as UpdateSubmissionMutationInput
 
   if (input.externalId) {
+    const {
+      myCollectionArtworkID,
+      source,
+      ...updateInput
+    } = input as CreateSubmissionMutationInput
     submissionId = await updateConsignSubmissionMutation(
       relayEnvironment,
-      input
+      updateInput
     )
   } else {
     submissionId = await createConsignSubmissionMutation(relayEnvironment, {
