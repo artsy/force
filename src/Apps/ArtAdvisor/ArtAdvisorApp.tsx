@@ -33,6 +33,14 @@ export const ArtAdvisorApp: FC = () => {
           instruction
         </Description>
       </Experiment>
+
+      <Experiment href="/advisor/4">
+        <Name>Save Bio, Follows and Alerts</Name>
+        <Description>
+          Expands the Profile Builder work by adding the ability to follow an
+          artist or create alerts
+        </Description>
+      </Experiment>
     </Box>
   )
 }
