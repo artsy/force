@@ -41,11 +41,6 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
       parameters: {
         type: "object",
         properties: {
-          token: {
-            type: "string",
-            description:
-              "user's access token, which can be used to update user information in artsy.",
-          },
           bio: {
             type: "string",
             description:
@@ -63,15 +58,45 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
       parameters: {
         type: "object",
         properties: {
-          token: {
-            type: "string",
-            description:
-              "user's access token, which can be used to update user information in artsy.",
-          },
           artistID: {
             type: "string",
             description:
-              "The ID of the artist to follow. It is the same as the artsy.net slug",
+              "The ID of the artist to follow. It is the same as the artsy.net slug. This parameter is required.",
+          },
+          priceRange: {
+            type: "string",
+            description:
+              "The price range the user is interested in. It should follow the following format when there is a min and max price: minPrice-maxPrice. It should follow the following format when only a min price is provided: minPrice-*. It should follow the following format when only a max price is provided: *-maxPrice. If no price range is specified, omit this parameter.",
+          },
+          additionalGeneIds: {
+            type: "string",
+            description: "The medium the user is interested in.",
+            enum: [
+              "painting",
+              "photography",
+              "sculpture",
+              "prints",
+              "work-on-paper",
+              "nft",
+              "drawing",
+              "design",
+              "installation",
+              "film-slash-video",
+              "jewelry",
+              "performance-art",
+              "reproduction",
+              "ephemera-or-merchandise",
+            ],
+          },
+          rarity: {
+            type: "string",
+            description: "The rarity the user is interested in.",
+            enum: [
+              "unique",
+              "limited edition",
+              "open edition",
+              "unknown edition",
+            ],
           },
         },
       },
@@ -165,14 +190,14 @@ const handler = async (req: Request, res: Response) => {
 
       console.log(chalk.yellow("SECOND RESPONSE: "), secondResponse)
 
-      // itarate over the response choices and push the messages to the messages array
+      // iterate over the response choices and push the messages to the messages array
       secondResponse.choices.forEach(choice => messages.push(choice.message))
 
       res.write(JSON.stringify(messages))
     } else {
       // If the assistant does not require a tool call, then we can just format the response and send it back to the client
 
-      // itarate over the response choices and push the messages to the messages array
+      // iterate over the response choices and push the messages to the messages array
       response.choices.forEach(choice => messages.push(choice.message))
 
       res.write(JSON.stringify(messages))
@@ -304,7 +329,13 @@ async function followArtist(args: { artistID: string; token: string }) {
   return artist
 }
 
-async function createAlert(args: { artistID: string; token: string }) {
+async function createAlert(args: {
+  mediums: string
+  artistID: string
+  priceRange: string
+  rarity: string
+  token: string
+}) {
   const query = `mutation createSavedSearch($input: CreateSavedSearchInput!) {
     createSavedSearch(input: $input) {
       savedSearchOrErrors {
@@ -325,7 +356,12 @@ async function createAlert(args: { artistID: string; token: string }) {
         email: true,
         push: true,
       },
-      attributes: { artistIDs: [args.artistID] },
+      attributes: {
+        additionalGeneIds: args.mediums,
+        artistIDs: [args.artistID],
+        attributionClass: args.rarity,
+        priceRange: args.priceRange,
+      },
     },
   }
 
