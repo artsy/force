@@ -94,7 +94,7 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Jo Dennis",
-              href: "/artist/jo-dennis",
+              href: "/artist/jo-dennis-1",
             },
             {
               text: "Kira Maria Shewfelt",
