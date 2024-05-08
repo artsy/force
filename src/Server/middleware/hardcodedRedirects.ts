@@ -159,13 +159,26 @@ const PERMANENT_REDIRECTS = {
 
 const router = express.Router()
 
+export const getRedirectUrl = (
+  req: ArtsyRequest,
+  redirects: Record<string, string>
+) => {
+  const fromPath = req.route.path
+  const toPath = redirects[fromPath]
+
+  const queryString = url.parse(req.url).search || ""
+  const redirectUrl = toPath.replace(
+    /:(\w+)/g,
+    (_, key) => req.params[key] || ":unknown"
+  )
+
+  return redirectUrl + queryString
+}
+
 for (let from in PERMANENT_REDIRECTS) {
-  const path = PERMANENT_REDIRECTS[from]
-
-  router.get(from, (req: ArtsyRequest, res: ArtsyResponse) => {
-    const queryString = url.parse(req.url).search || ""
-
-    res.redirect(301, path + queryString)
+  router.get(from, (req, res) => {
+    const redirectUrl = getRedirectUrl(req, PERMANENT_REDIRECTS)
+    res.redirect(301, redirectUrl)
   })
 }
 
