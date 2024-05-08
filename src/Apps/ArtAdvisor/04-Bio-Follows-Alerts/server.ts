@@ -133,6 +133,7 @@ const handler = async (req: Request, res: Response) => {
           get_user_profile: getUserProfile,
           update_collector_profile: updateCollectorProfile,
           follow_artist: followArtist,
+          create_alert: createAlert,
         }
 
         const functionToCall = availableFunctions[functionName]
@@ -301,6 +302,49 @@ async function followArtist(args: { artistID: string; token: string }) {
   const artist = response.data.followArtist.artist
 
   return artist
+}
+
+async function createAlert(args: { artistID: string; token: string }) {
+  const query = `mutation createSavedSearch($input: CreateSavedSearchInput!) {
+    createSavedSearch(input: $input) {
+      savedSearchOrErrors {
+        ... on SearchCriteria {
+          internalID
+        }
+        ... on Errors {
+          errors {
+            message
+          }
+        }
+      }
+    }
+  }`
+  const variables = {
+    input: {
+      userAlertSettings: {
+        email: true,
+        push: true,
+      },
+      attributes: { artistIDs: [args.artistID] },
+    },
+  }
+
+  const headers = {
+    "X-ACCESS-TOKEN": args.token,
+    "Content-Type": "application/json",
+  }
+
+  const response = await metaphysics({ query, variables, headers })
+
+  console.log(
+    "Response from create alert: ",
+    variables,
+    response.data.createSavedSearch
+  )
+
+  const alert = response.data.createSavedSearch.savedSearchOrErrors
+
+  return alert
 }
 
 async function metaphysics(args: {
