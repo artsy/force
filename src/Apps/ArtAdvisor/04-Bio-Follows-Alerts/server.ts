@@ -33,6 +33,28 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
       },
     },
   },
+  {
+    type: "function",
+    function: {
+      name: "update_collector_profile",
+      description: `Update the user's collector profile on artsy.`,
+      parameters: {
+        type: "object",
+        properties: {
+          token: {
+            type: "string",
+            description:
+              "user's access token, which can be used to update user information in artsy.",
+          },
+          bio: {
+            type: "string",
+            description:
+              "The final version of the collector profile to be saved to the user's profile.",
+          },
+        },
+      },
+    },
+  },
 ]
 
 const handler = async (req: Request, res: Response) => {
@@ -87,6 +109,7 @@ const handler = async (req: Request, res: Response) => {
 
         const availableFunctions = {
           get_user_profile: getUserProfile,
+          update_collector_profile: updateCollectorProfile,
         }
 
         const functionToCall = availableFunctions[functionName]
@@ -186,6 +209,48 @@ async function getUserProfile(args: { size: number; token: string }) {
   const profile = response.data.me
 
   return profile
+}
+
+async function updateCollectorProfile(args: { bio: string; token: string }) {
+  const query = `mutation updateUserProfile($input: UpdateMyProfileInput!){
+    updateMyUserProfile(input: $input) {
+      __typename
+      me {
+        name
+      }
+      userOrError {
+        ... on UpdateMyProfileMutationSuccess {
+          user {
+            collectorProfile {
+              internalID
+              bio
+            }
+          }
+        }
+        ... on UpdateMyProfileMutationFailure {
+          mutationError {
+            message
+          }
+        }
+      }
+    }
+  }`
+
+  const variables = {
+    input: { bio: args.bio },
+  }
+
+  const headers = {
+    "X-ACCESS-TOKEN": args.token,
+    "Content-Type": "application/json",
+  }
+
+  const response = await metaphysics({ query, variables, headers })
+
+  console.log("Response from update BIO: ", response)
+  const updatedBio = response.data.updateMyUserProfile.userOrError
+
+  return updatedBio
 }
 
 async function metaphysics(args: {
