@@ -55,6 +55,28 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
       },
     },
   },
+  {
+    type: "function",
+    function: {
+      name: "follow_artist",
+      description: `Follow an artist on artsy on behalf of a user.`,
+      parameters: {
+        type: "object",
+        properties: {
+          token: {
+            type: "string",
+            description:
+              "user's access token, which can be used to update user information in artsy.",
+          },
+          artistID: {
+            type: "string",
+            description:
+              "The ID of the artist to follow. It is the same as the artsy.net slug",
+          },
+        },
+      },
+    },
+  },
 ]
 
 const handler = async (req: Request, res: Response) => {
@@ -110,6 +132,7 @@ const handler = async (req: Request, res: Response) => {
         const availableFunctions = {
           get_user_profile: getUserProfile,
           update_collector_profile: updateCollectorProfile,
+          follow_artist: followArtist,
         }
 
         const functionToCall = availableFunctions[functionName]
@@ -251,6 +274,33 @@ async function updateCollectorProfile(args: { bio: string; token: string }) {
   const updatedBio = response.data.updateMyUserProfile.userOrError
 
   return updatedBio
+}
+
+async function followArtist(args: { artistID: string; token: string }) {
+  const query = `mutation followArtist($input: FollowArtistInput!) {
+    followArtist(input: $input) {
+      artist {
+        internalID
+        name
+        slug
+      }
+    }
+  }`
+
+  const variables = {
+    input: { artistID: args.artistID },
+  }
+
+  const headers = {
+    "X-ACCESS-TOKEN": args.token,
+    "Content-Type": "application/json",
+  }
+
+  const response = await metaphysics({ query, variables, headers })
+
+  const artist = response.data.followArtist.artist
+
+  return artist
 }
 
 async function metaphysics(args: {
