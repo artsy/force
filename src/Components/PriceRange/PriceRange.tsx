@@ -23,6 +23,7 @@ export const PriceRange: FC<PriceRangeProps> = ({
   bars,
 }) => {
   const [localRange, setLocalRange] = useState(parsePriceRange(priceRange))
+  const [showErroMessage, setShowErrorMessage] = useState<boolean>(false)
 
   const previousPriceRange = usePrevious(priceRange)
 
@@ -40,6 +41,9 @@ export const PriceRange: FC<PriceRangeProps> = ({
 
   const handleDebouncedUpdate = useMemo(() => {
     return debounce((nextRange: CustomRange) => {
+      if (nextRange[0] > nextRange[1]) {
+        setShowErrorMessage(true)
+      } else setShowErrorMessage(false)
       onDebouncedUpdate?.(nextRange)
     }, 250)
   }, [onDebouncedUpdate])
@@ -106,34 +110,39 @@ export const PriceRange: FC<PriceRangeProps> = ({
 
       <Spacer y={2} />
 
-      <Flex>
-        <Box flex={1}>
-          <NumericInput
-            title="Min"
-            label="$USD"
-            name="price_min"
-            min="0"
-            step="100"
-            aria-label="Min price"
-            value={getPriceValue(minValue)}
-            onChange={handleInputValueChange(0)}
-          />
-        </Box>
+      <Flex flexDirection="column">
+        <Flex>
+          <Box flex={1}>
+            <NumericInput
+              title="Min"
+              label="$USD"
+              name="price_min"
+              min="0"
+              step="100"
+              aria-label="Min price"
+              value={getPriceValue(minValue)}
+              onChange={handleInputValueChange(0)}
+            />
+          </Box>
 
-        <Spacer x={2} />
+          <Spacer x={2} />
 
-        <Box flex={1}>
-          <NumericInput
-            title="Max"
-            label="$USD"
-            name="price_max"
-            min="0"
-            step="100"
-            aria-label="Max price"
-            value={getPriceValue(maxValue)}
-            onChange={handleInputValueChange(1)}
-          />
-        </Box>
+          <Box flex={1}>
+            <NumericInput
+              title="Max"
+              label="$USD"
+              name="price_max"
+              min="0"
+              step="100"
+              aria-label="Max price"
+              value={getPriceValue(maxValue)}
+              onChange={handleInputValueChange(1)}
+            />
+          </Box>
+        </Flex>
+        {showErroMessage && (
+          <Text color="red100">Min price must be less than max price</Text>
+        )}
       </Flex>
     </>
   )
