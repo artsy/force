@@ -1,15 +1,16 @@
+import { ContextModule } from "@artsy/cohesion"
+import { Box, Button, Flex, Image, Link, THEME, Text } from "@artsy/palette"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
+import Metadata from "Components/Artwork/Metadata"
+import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
+import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
+import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { useTimer } from "Utils/Hooks/useTimer"
+import { resized } from "Utils/resized"
+import { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwork_artwork.graphql"
 import { FC } from "react"
 import { graphql, useFragment } from "react-relay"
-import { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwork_artwork.graphql"
-import { resized } from "Utils/resized"
-import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
-import { RouterLink } from "System/Router/RouterLink"
-import { Box, Button, Flex, Image, Link, THEME, Text } from "@artsy/palette"
-import Metadata from "Components/Artwork/Metadata"
-import { ContextModule } from "@artsy/cohesion"
-import { useTimer } from "Utils/Hooks/useTimer"
-import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface PartnerOfferArtworkProps {
   artwork: PartnerOfferArtwork_artwork$key
@@ -30,6 +31,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   available = false,
   partnerOfferID,
 }) => {
+  const { tracking } = useNotificationsTracking()
   const { hasEnded } = useTimer(endAt || "")
   const fullyAvailable = !!(available && !hasEnded && priceWithDiscount)
 
@@ -145,6 +147,9 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           // @ts-ignore
           as={RouterLink}
           to={href}
+          onClick={() => {
+            tracking.clickBuyNow(artwork.internalID, artwork.slug)
+          }}
           data-testid="partner-offer-artwork-button"
           flex={partnerOfferVisibilityEnabled && fullyAvailable ? 1 : [1, 0.5]}
         >
@@ -155,11 +160,16 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
             // @ts-ignore
             as={RouterLink}
             to={artworkListingHref}
+            onClick={() => {
+              if (partnerOfferID) {
+                tracking.clickedViewWork(artwork.internalID, partnerOfferID)
+              }
+            }}
             data-testid="partner-offer-view-artwork-button"
             flex={1}
             variant={"secondaryBlack"}
           >
-            {"View Work"}
+            View Work
           </Button>
         )}
       </Box>
@@ -201,6 +211,8 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
 
 const partnerOfferArtworkFragment = graphql`
   fragment PartnerOfferArtwork_artwork on Artwork {
+    internalID
+    slug
     href
     title
     artistNames

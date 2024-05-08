@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<23c064c5e5e92cd71320f0a4a17801be>>
+ * @generated SignedSource<<8d834aa5c3c4f8834d2ff2bd3081de38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type PartnerOfferArtwork_artwork$data = {
     readonly src: string | null | undefined;
     readonly width: number | null | undefined;
   } | null | undefined;
+  readonly internalID: string;
   readonly partner: {
     readonly profile: {
       readonly icon: {
@@ -26,6 +27,7 @@ export type PartnerOfferArtwork_artwork$data = {
     } | null | undefined;
   } | null | undefined;
   readonly price: string | null | undefined;
+  readonly slug: string;
   readonly title: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
   readonly " $fragmentType": "PartnerOfferArtwork_artwork";
@@ -41,6 +43,20 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "PartnerOfferArtwork_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -172,6 +188,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "292015fa50c144181215a922e80c8385";
+(node as any).hash = "e8dbd6343625d864832be3b6f0b794dd";
 
 export default node;
