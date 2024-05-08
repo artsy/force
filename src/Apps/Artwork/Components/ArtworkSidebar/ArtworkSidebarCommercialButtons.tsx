@@ -26,8 +26,13 @@ import { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSid
 import { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
 import { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
 import { useTracking } from "react-tracking"
-import { ContextModule, Intent } from "@artsy/cohesion"
-import currency from "currency.js"
+import {
+  ActionType,
+  ClickedBuyNow,
+  ContextModule,
+  Intent,
+  OwnerType,
+} from "@artsy/cohesion"
 import { useTranslation } from "react-i18next"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useRouter } from "System/Router/useRouter"
@@ -128,6 +133,16 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const handleCreatePartnerOfferOrder = async () => {
+    const trackEvent: ClickedBuyNow = {
+      action: ActionType.clickedBuyNow,
+      context_owner_type: OwnerType.artwork,
+      context_owner_id: artwork.internalID,
+      context_owner_slug: artwork.slug,
+      flow: "Partner offer",
+    }
+
+    tracking.trackEvent(trackEvent)
+
     if (!activePartnerOffer?.internalID) {
       throw new ErrorWithMetadata(
         "handleCreatePartnerOfferOrder: no active partner offer"
@@ -173,20 +188,16 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const handleCreateOrder = async () => {
-    tracking.trackEvent({
-      action_type: DeprecatedSchema.ActionType.ClickedBuyNow,
-      flow: DeprecatedSchema.Flow.BuyNow,
-      type: DeprecatedSchema.Type.Button,
-      artwork_id: artwork.internalID,
-      artwork_slug: artwork.slug,
-      products: [
-        {
-          product_id: artwork.internalID,
-          quantity: 1,
-          price: currency(artwork?.listPrice?.display ?? "").value,
-        },
-      ],
-    })
+    const trackEvent: ClickedBuyNow = {
+      action: ActionType.clickedBuyNow,
+      context_owner_type: OwnerType.artwork,
+      context_owner_id: artwork.internalID,
+      context_owner_slug: artwork.slug,
+      flow: "Buy now",
+    }
+
+    tracking.trackEvent(trackEvent)
+
     if (!!user?.id) {
       try {
         setIsCommitingCreateOrderMutation(true)
