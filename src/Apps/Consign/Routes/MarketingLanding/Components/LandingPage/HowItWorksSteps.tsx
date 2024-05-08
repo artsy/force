@@ -3,7 +3,8 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
-import { ActionType, ContextModule } from "@artsy/cohesion"
+import { ActionType, ContextModule, Intent } from "@artsy/cohesion"
+import { useAuthDialog } from "Components/AuthDialog"
 
 const reasons = [
   {
@@ -33,9 +34,10 @@ const reasons = [
 ]
 
 export const HowItWorksSteps: React.FC = () => {
-  const { user } = useSystemContext()
+  const { user, isLoggedIn } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
+  const { showAuthDialog } = useAuthDialog()
 
   const trackStartSellingClick = () => {
     trackEvent({
@@ -55,7 +57,12 @@ export const HowItWorksSteps: React.FC = () => {
       </Text>
       <GridColumns gridColumnGap={[0, 2]} alignItems="flex-start">
         {reasons.map(i => (
-          <RowItem index={i.index} title={i.title} text={i.text} />
+          <RowItem
+            key={i.index}
+            index={i.index}
+            title={i.title}
+            text={i.text}
+          />
         ))}
       </GridColumns>
       <Button
@@ -65,7 +72,27 @@ export const HowItWorksSteps: React.FC = () => {
         width={["100%", 300]}
         variant="primaryBlack"
         to="/sell/submission"
-        onClick={trackStartSellingClick}
+        onClick={event => {
+          if (!isLoggedIn) {
+            event.preventDefault()
+
+            showAuthDialog({
+              mode: "Login",
+              options: {
+                title: () => {
+                  return "Log in to submit an artwork for sell"
+                },
+              },
+              analytics: {
+                contextModule: ContextModule.sellHowItWorks,
+                intent: Intent.login,
+              },
+            })
+
+            return
+          }
+          trackStartSellingClick()
+        }}
         data-testid="start-selling-button"
       >
         Get Started

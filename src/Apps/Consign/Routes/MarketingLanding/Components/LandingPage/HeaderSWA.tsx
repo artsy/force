@@ -1,3 +1,4 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Button,
   Column,
@@ -8,12 +9,16 @@ import {
   Text,
 } from "@artsy/palette"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
+import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/SystemContext"
 import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
 
 export const HeaderSWA = () => {
   const getInTouchRoute = "/sell/inquiry"
+  const { isLoggedIn } = useSystemContext()
+  const { showAuthDialog } = useAuthDialog()
 
   const {
     trackStartSellingClick,
@@ -50,7 +55,27 @@ export const HeaderSWA = () => {
                 width="100%"
                 variant="primaryBlack"
                 to="/sell/submission"
-                onClick={() => trackStartSellingClick("Header")}
+                onClick={event => {
+                  if (!isLoggedIn) {
+                    event.preventDefault()
+
+                    showAuthDialog({
+                      mode: "Login",
+                      options: {
+                        title: () => {
+                          return "Log in to submit an artwork for sell"
+                        },
+                      },
+                      analytics: {
+                        contextModule: ContextModule.sellHeader,
+                        intent: Intent.login,
+                      },
+                    })
+
+                    return
+                  }
+                  trackStartSellingClick("Header")
+                }}
                 mb={[1, 0]}
                 data-testid="start-selling-button"
               >

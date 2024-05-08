@@ -10,6 +10,12 @@ jest.mock("System/Analytics/AnalyticsContext", () => ({
     contextPageOwnerType: "sell",
   })),
 }))
+const mockShowAuthDialog = jest.fn()
+jest.mock("Components/AuthDialog", () => ({
+  useAuthDialog: jest.fn(() => ({
+    showAuthDialog: mockShowAuthDialog,
+  })),
+}))
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
     match: { params: { id: "1" } },
@@ -27,6 +33,7 @@ describe("HowItWorksSteps", () => {
     })
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
+      isLoggedIn: true,
     }))
   })
 
@@ -39,29 +46,57 @@ describe("HowItWorksSteps", () => {
   })
 
   describe("Start Selling button", () => {
-    it("links out to submission flow", () => {
-      render(<HowItWorksSteps />)
+    describe("when user is not logged in", () => {
+      beforeAll(() => {
+        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+          user: { id: "user-id", email: "user-email@artsy.net" },
+          isLoggedIn: false,
+        }))
+      })
 
-      const link = screen.getByTestId("start-selling-button")
+      it("links out to the auth flow when pressed", async () => {
+        render(<HowItWorksSteps />)
+        const link = screen.getByTestId("start-selling-button")
 
-      expect(link).toBeInTheDocument()
-      expect(link).toHaveTextContent("Get Started")
-      expect(link).toHaveAttribute("href", "/sell/submission")
+        expect(link).toBeInTheDocument()
+        expect(link).toHaveTextContent("Get Started")
+        fireEvent.click(link)
+
+        expect(mockShowAuthDialog).toHaveBeenCalled()
+      })
     })
 
-    it("tracks click", () => {
-      render(<HowItWorksSteps />)
+    describe("when user is logged in", () => {
+      beforeAll(() => {
+        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+          user: { id: "user-id", email: "user-email@artsy.net" },
+          isLoggedIn: true,
+        }))
+      })
 
-      fireEvent.click(screen.getByTestId("start-selling-button"))
+      it("links out to submission flow", () => {
+        render(<HowItWorksSteps />)
+        const link = screen.getByTestId("start-selling-button")
 
-      expect(trackEvent).toHaveBeenCalled()
-      expect(trackEvent).toHaveBeenCalledWith({
-        action: "tappedConsign",
-        context_module: "sellHowItWorks",
-        context_page_owner_type: "sell",
-        label: "Get Started",
-        destination_path: "/sell/submission",
-        user_id: "user-id",
+        expect(link).toBeInTheDocument()
+        expect(link).toHaveTextContent("Get Started")
+        expect(link).toHaveAttribute("href", "/sell/submission")
+      })
+
+      it("tracks click", () => {
+        render(<HowItWorksSteps />)
+
+        fireEvent.click(screen.getByTestId("start-selling-button"))
+
+        expect(trackEvent).toHaveBeenCalled()
+        expect(trackEvent).toHaveBeenCalledWith({
+          action: "tappedConsign",
+          context_module: "sellHowItWorks",
+          context_page_owner_type: "sell",
+          label: "Get Started",
+          destination_path: "/sell/submission",
+          user_id: "user-id",
+        })
       })
     })
   })
