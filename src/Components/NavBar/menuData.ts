@@ -89,24 +89,24 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "Trending Artists",
           links: [
             {
-              text: "Pat Steir",
-              href: "/artist/pat-steir",
+              text: "TJ Rinoski",
+              href: "/artist/tj-rinoski",
             },
             {
-              text: "Stanley Whitney",
-              href: "/artist/stanley-whitney",
+              text: "Jo Dennis",
+              href: "/artist/jo-dennis",
             },
             {
-              text: "Kikuo Saito",
-              href: "/artist/kikuo-saito",
+              text: "Kira Maria Shewfelt",
+              href: "/artist/kira-maria-shewfelt",
             },
             {
-              text: "Sayre Gomez",
-              href: "/artist/sayre-gomez",
+              text: "Hildur Ásgeirsdóttir Jónsson",
+              href: "/artist/hildur-asgeirsdottir-jonsson",
             },
             {
-              text: "Mickalene Thomas",
-              href: "/artist/mickalene-thomas",
+              text: "Masaomi Yasunaga",
+              href: "/artist/masaomi-yasunaga-1",
             },
           ],
         },
