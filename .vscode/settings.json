@@ -15,7 +15,6 @@
   },
   "debug.node.autoAttach": "off",
   "cSpell.ignoreWords": [],
-  "cSpell.diagnosticLevel": "Hint",
   "cSpell.ignorePaths": [
     "**/package-lock.json",
     "**/node_modules/**",
