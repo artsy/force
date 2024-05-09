@@ -1,6 +1,10 @@
 import chalk from "chalk"
 import { metaphysics } from "Apps/ArtAdvisor/04-Bio-Follows-Alerts/lib/metaphysics"
 
+/*
+ * Get the user's artsy profile as returned from the "me" query.
+ */
+
 export async function getUserProfile(args: { size: number; token: string }) {
   const query = `query getUserProfile {
     me {
@@ -43,15 +47,17 @@ export async function getUserProfile(args: { size: number; token: string }) {
 
   console.log(
     chalk.yellow("createAlert response: "),
-    JSON.stringify(response),
-    null,
-    2
+    JSON.stringify(response, null, 2)
   )
 
   const profile = response.data.me
 
   return profile
 }
+
+/*
+ * Update the bio field on the user's collector profile. The bio can be a max of 150 characters.
+ */
 
 export async function updateCollectorProfile(args: {
   bio: string
@@ -94,15 +100,17 @@ export async function updateCollectorProfile(args: {
 
   console.log(
     chalk.yellow("updateCollectorProfile response: "),
-    JSON.stringify(response),
-    null,
-    2
+    JSON.stringify(response, null, 2)
   )
 
   const updatedBio = response.data.updateMyUserProfile.userOrError
 
   return updatedBio
 }
+
+/*
+ * Follow an artist on behalf of the user.
+ */
 
 export async function followArtist(args: { artistID: string; token: string }) {
   const query = `mutation followArtist($input: FollowArtistInput!) {
@@ -126,12 +134,16 @@ export async function followArtist(args: { artistID: string; token: string }) {
 
   const response = await metaphysics({ query, variables, headers })
 
-  console.log("followArtist response: ", JSON.stringify(response), null, 2)
+  console.log("followArtist response: ", JSON.stringify(response, null, 2))
 
   const followedArtist = response.data.followArtist.artist
 
   return followedArtist
 }
+
+/*
+ * Create an alert for the user. Currently, we only supports a single artist, a single rarity, and a single medium.
+ */
 
 export async function createAlert(args: {
   mediums: string
@@ -156,13 +168,14 @@ export async function createAlert(args: {
   }`
   const variables = {
     input: {
+      // NOTE: hard coded for now
       userAlertSettings: {
         email: true,
         push: true,
       },
       attributes: {
         additionalGeneIds: args.mediums,
-        artistIDs: [args.artistID],
+        artistIDs: [args.artistID], // This is the only required attribute
         attributionClass: args.rarity,
         priceRange: args.priceRange,
       },
@@ -178,9 +191,7 @@ export async function createAlert(args: {
 
   console.log(
     chalk.yellow("createAlert response: "),
-    JSON.stringify(response),
-    null,
-    2
+    JSON.stringify(response, null, 2)
   )
 
   const createdAlert = response.data.createSavedSearch.savedSearchOrErrors
