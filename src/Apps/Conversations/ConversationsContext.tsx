@@ -87,7 +87,6 @@ const VIEWER_FRAGMENT = graphql`
       partnerOffersConnection(first: 20) {
         edges {
           node {
-            ...useConversationPurchaseButtonData_partnerOffer
             artworkId
             endAt
             internalID

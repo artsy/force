@@ -3,11 +3,9 @@ import {
   useConversationPurchaseButtonData_conversation$data,
   useConversationPurchaseButtonData_conversation$key,
 } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
-import { useConversationPurchaseButtonData_partnerOffer$key } from "__generated__/useConversationPurchaseButtonData_partnerOffer.graphql"
 
 export const useConversationPurchaseButtonData = (
-  conversation: useConversationPurchaseButtonData_conversation$key,
-  partnerOffer: useConversationPurchaseButtonData_partnerOffer$key | null
+  conversation: useConversationPurchaseButtonData_conversation$key
 ) => {
   const conversationData = useFragment(
     graphql`
@@ -32,20 +30,6 @@ export const useConversationPurchaseButtonData = (
     `,
     conversation
   )
-
-  const partnerOfferData =
-    useFragment(
-      graphql`
-        fragment useConversationPurchaseButtonData_partnerOffer on PartnerOfferToCollector {
-          internalID
-          endAt
-          priceWithDiscount {
-            display
-          }
-        }
-      `,
-      partnerOffer
-    ) ?? null
 
   if (!conversationData) {
     return null
@@ -74,7 +58,6 @@ export const useConversationPurchaseButtonData = (
 
   return {
     conversation: conversationData,
-    partnerOffer: partnerOfferData,
     artwork,
     isUniqueArtwork,
     isPurchaseButtonPresent,

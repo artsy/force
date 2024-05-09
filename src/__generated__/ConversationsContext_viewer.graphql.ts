@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<86c98b196adf459db13f8aab6aa71da8>>
+ * @generated SignedSource<<5431e8c6dddc9135ec22ae4dfe461d93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,7 +23,6 @@ export type ConversationsContext_viewer$data = {
           readonly priceWithDiscount: {
             readonly display: string | null | undefined;
           } | null | undefined;
-          readonly " $fragmentSpreads": FragmentRefs<"useConversationPurchaseButtonData_partnerOffer">;
         } | null | undefined;
       } | null | undefined> | null | undefined;
     } | null | undefined;
@@ -79,11 +78,6 @@ const node: ReaderFragment = {
                   "name": "node",
                   "plural": false,
                   "selections": [
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "useConversationPurchaseButtonData_partnerOffer"
-                    },
                     {
                       "alias": null,
                       "args": null,
@@ -154,6 +148,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8c97afc6d74163e2d41601b36dc3d9ff";
+(node as any).hash = "d602f618a7bc3e8b4cd4f28677447c24";
 
 export default node;

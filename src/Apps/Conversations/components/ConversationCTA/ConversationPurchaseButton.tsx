@@ -7,13 +7,12 @@ import { ActionType, OwnerType, TappedBuyNow } from "@artsy/cohesion"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { useConversationPurchaseButtonData } from "Apps/Conversations/components/ConversationCTA/useConversationPurchaseButtonData"
 import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
-import { useConversationPurchaseButtonData_partnerOffer$key } from "__generated__/useConversationPurchaseButtonData_partnerOffer.graphql"
 import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
 import { ErrorWithMetadata } from "Utils/errors"
 
 interface ConversationPurchaseButtonProps extends BoxProps {
   conversation: useConversationPurchaseButtonData_conversation$key
-  partnerOffer: useConversationPurchaseButtonData_partnerOffer$key | null
+  partnerOffer: { internalID: string } | null
 }
 
 export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProps> = ({
@@ -32,8 +31,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
     isConfirmModalVisible,
   } = useConversationsContext()
 
-  const data = useConversationPurchaseButtonData(conversation, partnerOffer)
-  const activePartnerOffer = data?.partnerOffer
+  const data = useConversationPurchaseButtonData(conversation)
 
   if (!data) {
     return null
@@ -52,7 +50,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
   }
 
   const handleCreatePartnerOfferOrder = async () => {
-    if (!activePartnerOffer?.internalID) {
+    if (!partnerOffer?.internalID) {
       throw new ErrorWithMetadata(
         "handleCreatePartnerOfferOrder (conversations): no active partner offer"
       )
@@ -61,7 +59,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
     const response = await partnerOfferCheckout.submitMutation({
       variables: {
         input: {
-          partnerOfferId: activePartnerOffer?.internalID,
+          partnerOfferId: partnerOffer?.internalID,
           editionSetId: data.artwork.editionSets?.[0]?.internalID,
           impulseConversationId: data.conversation.internalID, // # Requires schema update
         },

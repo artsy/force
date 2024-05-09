@@ -75,7 +75,11 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
         </Flex>
 
         <Box position="absolute">
-          <ConversationConfirmModal conversation={data} artwork={artwork} />
+          <ConversationConfirmModal
+            conversation={data}
+            artwork={artwork}
+            partnerOffer={activePartnerOffer}
+          />
         </Box>
 
         {showTransactionButtons && (

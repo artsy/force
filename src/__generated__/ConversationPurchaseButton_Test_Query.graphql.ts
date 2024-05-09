@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e18e496dcbcd6ba50e078493aa7752b0>>
+ * @generated SignedSource<<04451c661a287684e8d9e98bfc99a445>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,13 +16,6 @@ export type ConversationPurchaseButton_Test_Query$data = {
     readonly conversation: {
       readonly " $fragmentSpreads": FragmentRefs<"useConversationPurchaseButtonData_conversation">;
     } | null | undefined;
-    readonly partnerOffersConnection: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly " $fragmentSpreads": FragmentRefs<"useConversationPurchaseButtonData_partnerOffer">;
-        } | null | undefined;
-      } | null | undefined> | null | undefined;
-    } | null | undefined;
   } | null | undefined;
 };
 export type ConversationPurchaseButton_Test_Query = {
@@ -38,55 +31,37 @@ var v0 = [
     "value": "123"
   }
 ],
-v1 = [
-  {
-    "kind": "Literal",
-    "name": "artworkID",
-    "value": "123"
-  },
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 1
-  }
-],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v6 = {
+v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Boolean"
-},
-v7 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
 };
 return {
   "fragment": {
@@ -118,44 +93,6 @@ return {
               }
             ],
             "storageKey": "conversation(id:\"123\")"
-          },
-          {
-            "alias": null,
-            "args": (v1/*: any*/),
-            "concreteType": "PartnerOfferToCollectorConnection",
-            "kind": "LinkedField",
-            "name": "partnerOffersConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PartnerOfferToCollectorEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PartnerOfferToCollector",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "args": null,
-                        "kind": "FragmentSpread",
-                        "name": "useConversationPurchaseButtonData_partnerOffer"
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": "partnerOffersConnection(artworkID:\"123\",first:1)"
           }
         ],
         "storageKey": null
@@ -186,7 +123,7 @@ return {
             "name": "conversation",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -227,7 +164,7 @@ return {
                             "name": "isEdition",
                             "storageKey": null
                           },
-                          (v2/*: any*/),
+                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -243,8 +180,8 @@ return {
                             "name": "editionSets",
                             "plural": true,
                             "selections": [
-                              (v2/*: any*/),
-                              (v3/*: any*/)
+                              (v1/*: any*/),
+                              (v2/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -255,7 +192,7 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v3/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "type": "Node",
                         "abstractKey": "__isNode"
@@ -266,78 +203,18 @@ return {
                 ],
                 "storageKey": null
               },
-              (v3/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "conversation(id:\"123\")"
           },
-          {
-            "alias": null,
-            "args": (v1/*: any*/),
-            "concreteType": "PartnerOfferToCollectorConnection",
-            "kind": "LinkedField",
-            "name": "partnerOffersConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PartnerOfferToCollectorEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PartnerOfferToCollector",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v2/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "endAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Money",
-                        "kind": "LinkedField",
-                        "name": "priceWithDiscount",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "display",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      (v3/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": "partnerOffersConnection(artworkID:\"123\",first:1)"
-          },
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "8f55c58f6ae30bf474905fc39f566391",
+    "cacheID": "349d86e6f6f086ee72edd95e7bce55ad",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -353,7 +230,7 @@ return {
           "plural": false,
           "type": "Conversation"
         },
-        "me.conversation.id": (v4/*: any*/),
+        "me.conversation.id": (v3/*: any*/),
         "me.conversation.internalID": {
           "enumValues": null,
           "nullable": true,
@@ -372,59 +249,31 @@ return {
           "plural": false,
           "type": "ConversationItemType"
         },
-        "me.conversation.items.liveArtwork.__isNode": (v5/*: any*/),
-        "me.conversation.items.liveArtwork.__typename": (v5/*: any*/),
+        "me.conversation.items.liveArtwork.__isNode": (v4/*: any*/),
+        "me.conversation.items.liveArtwork.__typename": (v4/*: any*/),
         "me.conversation.items.liveArtwork.editionSets": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "EditionSet"
         },
-        "me.conversation.items.liveArtwork.editionSets.id": (v4/*: any*/),
-        "me.conversation.items.liveArtwork.editionSets.internalID": (v4/*: any*/),
-        "me.conversation.items.liveArtwork.id": (v4/*: any*/),
-        "me.conversation.items.liveArtwork.internalID": (v4/*: any*/),
-        "me.conversation.items.liveArtwork.isAcquireable": (v6/*: any*/),
-        "me.conversation.items.liveArtwork.isEdition": (v6/*: any*/),
-        "me.conversation.items.liveArtwork.slug": (v4/*: any*/),
-        "me.id": (v4/*: any*/),
-        "me.partnerOffersConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerOfferToCollectorConnection"
-        },
-        "me.partnerOffersConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "PartnerOfferToCollectorEdge"
-        },
-        "me.partnerOffersConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerOfferToCollector"
-        },
-        "me.partnerOffersConnection.edges.node.endAt": (v7/*: any*/),
-        "me.partnerOffersConnection.edges.node.id": (v4/*: any*/),
-        "me.partnerOffersConnection.edges.node.internalID": (v4/*: any*/),
-        "me.partnerOffersConnection.edges.node.priceWithDiscount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Money"
-        },
-        "me.partnerOffersConnection.edges.node.priceWithDiscount.display": (v7/*: any*/)
+        "me.conversation.items.liveArtwork.editionSets.id": (v3/*: any*/),
+        "me.conversation.items.liveArtwork.editionSets.internalID": (v3/*: any*/),
+        "me.conversation.items.liveArtwork.id": (v3/*: any*/),
+        "me.conversation.items.liveArtwork.internalID": (v3/*: any*/),
+        "me.conversation.items.liveArtwork.isAcquireable": (v5/*: any*/),
+        "me.conversation.items.liveArtwork.isEdition": (v5/*: any*/),
+        "me.conversation.items.liveArtwork.slug": (v3/*: any*/),
+        "me.id": (v3/*: any*/)
       }
     },
     "name": "ConversationPurchaseButton_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationPurchaseButton_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...useConversationPurchaseButtonData_conversation\n      id\n    }\n    partnerOffersConnection(artworkID: \"123\", first: 1) {\n      edges {\n        node {\n          ...useConversationPurchaseButtonData_partnerOffer\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment useConversationPurchaseButtonData_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isAcquireable\n        isEdition\n        internalID\n        slug\n        editionSets {\n          internalID\n          id\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment useConversationPurchaseButtonData_partnerOffer on PartnerOfferToCollector {\n  internalID\n  endAt\n  priceWithDiscount {\n    display\n  }\n}\n"
+    "text": "query ConversationPurchaseButton_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...useConversationPurchaseButtonData_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment useConversationPurchaseButtonData_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isAcquireable\n        isEdition\n        internalID\n        slug\n        editionSets {\n          internalID\n          id\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "61048b5ece7fad42726d7972be99797a";
+(node as any).hash = "964d37032e044183b37986475913493e";
 
 export default node;

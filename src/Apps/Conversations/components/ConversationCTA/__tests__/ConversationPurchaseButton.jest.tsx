@@ -33,12 +33,14 @@ jest.mock("Apps/Conversations/ConversationsContext", () => ({
   }),
 }))
 
+let partnerOfferProp: { internalID: string } | null = null
+
 describe("ConversationPurchaseOfferButton", () => {
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => {
       return (
         <ConversationPurchaseButton
-          partnerOffer={props.me?.partnerOffersConnection?.edges?.[0]?.node}
+          partnerOffer={partnerOfferProp}
           conversation={props.me.conversation}
         />
       )
@@ -48,13 +50,6 @@ describe("ConversationPurchaseOfferButton", () => {
         me {
           conversation(id: "123") {
             ...useConversationPurchaseButtonData_conversation
-          }
-          partnerOffersConnection(artworkID: "123", first: 1) {
-            edges {
-              node {
-                ...useConversationPurchaseButtonData_partnerOffer
-              }
-            }
           }
         }
       }
@@ -93,11 +88,7 @@ describe("ConversationPurchaseOfferButton", () => {
 
   describe("without a partner offer", () => {
     beforeEach(() => {
-      mockResolvers = {
-        PartnerOfferToCollectorConnection: () => ({
-          edges: [],
-        }),
-      }
+      partnerOfferProp = null
     })
     it("renders with Purchase CTA", async () => {
       renderWithRelay({
@@ -219,11 +210,7 @@ describe("ConversationPurchaseOfferButton", () => {
 
   describe("with a partner offer", () => {
     beforeEach(() => {
-      mockResolvers = {
-        PartnerOfferToCollectorConnection: () => ({
-          edges: [{ node: { internalID: "partner-offer-id" } }],
-        }),
-      }
+      partnerOfferProp = { internalID: "partner-offer-id" }
     })
 
     it("renders with Purchase CTA", async () => {
