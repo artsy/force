@@ -16,9 +16,7 @@ import {
 const openai = new OpenAI() // Client will look for OPENAI_API_KEY in your environment during instantiation
 
 /*
- * Define the tools that the assistant can use:
- *
- * 1. get_user_profile: The user's artsy profile as returned from th "me" query. Will look up user encoded in the x-access-token header.
+ * Define the tools that the assistant can use to make function calls.
  */
 
 const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
@@ -184,7 +182,7 @@ const handler = async (req: Request, res: Response) => {
         messages.push({
           tool_call_id: toolCall.id,
           role: "tool",
-          content: JSON.stringify(functionResponse),
+          content: JSON.stringify(functionResponse, null, 2),
         })
       }
 
@@ -214,7 +212,7 @@ const handler = async (req: Request, res: Response) => {
     res.end()
   } catch (e) {
     console.error(chalk.red("ERROR: "), e)
-    res.send("An error occurred")
+    res.status(500).send("An error occurred")
   }
 }
 

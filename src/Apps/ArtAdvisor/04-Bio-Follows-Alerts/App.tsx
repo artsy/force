@@ -25,6 +25,7 @@ export const App: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const { user } = useSystemContext()
+  const { sendToast } = useToasts()
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -45,6 +46,11 @@ export const App: FC = () => {
           "X-ACCESS-TOKEN": user?.accessToken || "",
         },
       })
+
+      if (!res.ok) {
+        throw new Error("Failed response")
+      }
+
       const parsedResponse = await res.json()
 
       setMessages(parsedResponse)
@@ -54,6 +60,11 @@ export const App: FC = () => {
         inputRef.current.focus()
       }
     } catch (e) {
+      sendToast({
+        variant: "error",
+        message:
+          "Something went wrong. Please try again. If you continue to see errors, message #product-ai-innovation-squad.",
+      })
       console.error(e)
     } finally {
       setIsGenerating(false)
