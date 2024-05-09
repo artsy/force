@@ -4,6 +4,7 @@ import { useTracking } from "react-tracking"
 import { useSystemContext as baseUseSystemContext } from "System/useSystemContext"
 import { screen, fireEvent, waitFor } from "@testing-library/react"
 import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
+import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -12,7 +13,9 @@ jest.mock("System/useSystemContext")
 describe("ConversationCTA", () => {
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
-      <ConversationCTA conversation={props.me.conversation} />
+      <ConversationsProvider viewer={props.viewer}>
+        <ConversationCTA conversation={props.me.conversation} />
+      </ConversationsProvider>
     ),
     query: graphql`
       query ConversationCTA_Test_Query @relay_test_operation {
@@ -20,6 +23,9 @@ describe("ConversationCTA", () => {
           conversation(id: "1234") {
             ...ConversationCTA_conversation
           }
+        }
+        viewer {
+          ...ConversationsContext_viewer
         }
       }
     `,
@@ -162,6 +168,66 @@ describe("ConversationCTA", () => {
     it("renders Purchase button on BN-only artworks", () => {
       renderWithRelay({
         Conversation: mockConversationWithArtwork({ isAcquireable: true }),
+      })
+
+      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+    })
+
+    it("does not purchase button on orders with an expired partner offer", () => {
+      const pastTime = new Date()
+      pastTime.setSeconds(pastTime.getSeconds() + 1)
+
+      renderWithRelay({
+        Conversation: mockConversationWithArtwork({
+          internalID: "artwork-id",
+          isAcquireable: false,
+        }),
+        Viewer: () => ({
+          me: {
+            partnerOffersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "partner-offer-id",
+                    artworkId: "artwork-id",
+                    endAt: pastTime.toISOString(),
+                  },
+                },
+              ],
+            },
+          },
+        }),
+      })
+      jest.advanceTimersByTime(1010)
+
+      expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+    })
+    it("renders purchase button on orders with an active partner offer", () => {
+      const futureTime = new Date()
+      futureTime.setHours(futureTime.getHours() + 1)
+
+      renderWithRelay({
+        Conversation: mockConversationWithArtwork({
+          internalID: "artwork-id",
+          isAcquireable: false,
+        }),
+        Viewer: () => ({
+          me: {
+            partnerOffersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "partner-offer-id",
+                    artworkId: "artwork-id",
+                    endAt: futureTime.toISOString(),
+                  },
+                },
+              ],
+            },
+          },
+        }),
       })
 
       expect(screen.queryByText("Purchase")).toBeInTheDocument()

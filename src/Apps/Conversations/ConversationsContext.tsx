@@ -1,8 +1,15 @@
 import { createContext, useContext, useState } from "react"
+import { graphql, useFragment } from "react-relay"
+import {
+  ConversationsContext_viewer$data,
+  ConversationsContext_viewer$key,
+} from "__generated__/ConversationsContext_viewer.graphql"
+import { extractNodes } from "Utils/extractNodes"
 
 interface ConversationsContextProps {
   isConfirmModalVisible: boolean
   isCreatingOfferOrder: boolean
+  findPartnerOffer: (artworkID: string) => PartnerOffer | null
   showSelectEditionSetModal: (props: { isCreatingOfferOrder: boolean }) => void
   hideSelectEditionSetModal: () => void
 }
@@ -12,9 +19,34 @@ const ConversationsContext = createContext<ConversationsContextProps>(({
   isCreatingOfferOrder: false,
 } as unknown) as ConversationsContextProps)
 
-export const ConversationsProvider: React.FC = ({ children }) => {
+interface ConversationsProviderProps {
+  viewer: ConversationsContext_viewer$key
+}
+
+type PartnerOffer = NonNullable<
+  NonNullable<
+    NonNullable<
+      NonNullable<
+        NonNullable<
+          ConversationsContext_viewer$data["me"]
+        >["partnerOffersConnection"]
+      >["edges"]
+    >[number]
+  >["node"]
+>
+
+export const ConversationsProvider: React.FC<ConversationsProviderProps> = ({
+  children,
+  viewer,
+}) => {
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false)
   const [isCreatingOfferOrder, setCreatingOfferOrder] = useState(false)
+  const { me } = useFragment(VIEWER_FRAGMENT, viewer)
+
+  const partnerOffers = extractNodes(me?.partnerOffersConnection)
+
+  const findPartnerOffer = (artworkID: string): PartnerOffer | null =>
+    partnerOffers.find(po => po.artworkId === artworkID) ?? null
 
   const showSelectEditionSetModal = ({ isCreatingOfferOrder }) => {
     setCreatingOfferOrder(isCreatingOfferOrder)
@@ -25,6 +57,7 @@ export const ConversationsProvider: React.FC = ({ children }) => {
   return (
     <ConversationsContext.Provider
       value={{
+        findPartnerOffer,
         isConfirmModalVisible,
         isCreatingOfferOrder,
         showSelectEditionSetModal,
@@ -47,3 +80,25 @@ export const useConversationsContext = () => {
 
   return context
 }
+
+const VIEWER_FRAGMENT = graphql`
+  fragment ConversationsContext_viewer on Viewer {
+    me {
+      partnerOffersConnection(first: 20) {
+        edges {
+          node {
+            ...useConversationPurchaseButtonData_partnerOffer
+            artworkId
+            endAt
+            internalID
+            isAvailable
+            note
+            priceWithDiscount {
+              display
+            }
+          }
+        }
+      }
+    }
+  }
+`

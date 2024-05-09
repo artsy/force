@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9141a463928c5b29d5e59934b7cccf11>>
+ * @generated SignedSource<<8d3ed6c15512241f002b5b1d5611edd5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,16 +23,22 @@ export type UsePartnerOfferCheckoutMutation$variables = {
 export type UsePartnerOfferCheckoutMutation$data = {
   readonly commerceCreatePartnerOfferOrder: {
     readonly orderOrError: {
-      readonly __typename: "CommerceOrderWithMutationSuccess";
-      readonly error?: {
+      readonly __typename: "CommerceOrderWithMutationFailure";
+      readonly error: {
         readonly code: string;
         readonly data: string | null | undefined;
         readonly type: string;
       };
-      readonly order?: {
+    } | {
+      readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly order: {
         readonly internalID: string;
         readonly mode: CommerceOrderModeEnum | null | undefined;
       };
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
     };
   } | null | undefined;
 };
@@ -139,10 +145,10 @@ return {
             "name": "orderOrError",
             "plural": false,
             "selections": [
+              (v2/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -232,16 +238,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "42f5f008a07e978a773aceca9c6257ca",
+    "cacheID": "3c74781e0122a7f18e370efa8db95d35",
     "id": null,
     "metadata": {},
     "name": "UsePartnerOfferCheckoutMutation",
     "operationKind": "mutation",
-    "text": "mutation UsePartnerOfferCheckoutMutation(\n  $input: CommerceCreatePartnerOfferOrderInput!\n) {\n  commerceCreatePartnerOfferOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          mode\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation UsePartnerOfferCheckoutMutation(\n  $input: CommerceCreatePartnerOfferOrderInput!\n) {\n  commerceCreatePartnerOfferOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          internalID\n          mode\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "472b0d619723a00ac4744a4dc3f8b7f5";
+(node as any).hash = "d67f7b690fe9acfe0df6d12551517652";
 
 export default node;
