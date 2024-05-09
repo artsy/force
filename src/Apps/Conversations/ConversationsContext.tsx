@@ -91,7 +91,7 @@ export const useConversationsContext = () => {
 const VIEWER_FRAGMENT = graphql`
   fragment ConversationsContext_viewer on Viewer {
     me {
-      partnerOffersConnection(first: 20) {
+      partnerOffersConnection(first: 100) {
         edges {
           node {
             artworkId
