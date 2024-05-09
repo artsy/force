@@ -43,10 +43,17 @@ export const ConversationsProvider: React.FC<ConversationsProviderProps> = ({
   const [isCreatingOfferOrder, setCreatingOfferOrder] = useState(false)
   const { me } = useFragment(VIEWER_FRAGMENT, viewer)
 
-  const partnerOffers = extractNodes(me?.partnerOffersConnection)
+  const partnerOfferMap: Record<string, PartnerOffer> = extractNodes(
+    me?.partnerOffersConnection
+  ).reduce((acc, offer) => {
+    if (offer.artworkId) {
+      acc[offer.artworkId] = offer
+    }
+    return acc
+  }, {})
 
   const findPartnerOffer = (artworkID: string): PartnerOffer | null =>
-    partnerOffers.find(po => po.artworkId === artworkID) ?? null
+    partnerOfferMap[artworkID] ?? null
 
   const showSelectEditionSetModal = ({ isCreatingOfferOrder }) => {
     setCreatingOfferOrder(isCreatingOfferOrder)
