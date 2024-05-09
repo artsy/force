@@ -66,8 +66,8 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
       },
       rejectIf: res => {
         return (
-          res.commerceCreatePartnerOfferOrder?.orderOrError.__typename ===
-          "CommerceOrderWithMutationFailure"
+          res.commerceCreatePartnerOfferOrder?.orderOrError.__typename !==
+          "CommerceOrderWithMutationSuccess"
         )
       },
     })

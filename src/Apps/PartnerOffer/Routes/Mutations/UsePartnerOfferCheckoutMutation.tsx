@@ -10,8 +10,8 @@ export const usePartnerOfferCheckoutMutation = () => {
       ) {
         commerceCreatePartnerOfferOrder(input: $input) {
           orderOrError {
-            __typename
             ... on CommerceOrderWithMutationSuccess {
+              __typename
               order {
                 internalID
                 mode
