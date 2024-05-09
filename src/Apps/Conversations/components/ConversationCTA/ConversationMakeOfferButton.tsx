@@ -26,7 +26,7 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
     isConfirmModalVisible,
   } = useConversationsContext()
 
-  const data = useConversationPurchaseButtonData(conversation)
+  const data = useConversationPurchaseButtonData(conversation, null)
 
   if (!data) {
     return null

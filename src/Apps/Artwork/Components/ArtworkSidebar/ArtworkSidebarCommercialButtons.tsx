@@ -162,7 +162,12 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       let redirectUrl = "/"
       let orderOrError = response.commerceCreatePartnerOfferOrder?.orderOrError
 
-      if (orderOrError?.error) {
+      if (!orderOrError) {
+        throw new ErrorWithMetadata(
+          "handleCreatePartnerOfferOrder: no order or error"
+        )
+      }
+      if (orderOrError?.__typename === "CommerceOrderWithMutationFailure") {
         const errorCode = orderOrError.error.code
         const errorData = JSON.parse(orderOrError.error.data?.toString() ?? "")
 
@@ -178,7 +183,11 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
             throw new ErrorWithMetadata(errorCode, orderOrError.error)
         }
       } else {
-        redirectUrl = `/orders/${orderOrError?.order?.internalID}`
+        const orderSuccess = orderOrError as Extract<
+          typeof orderOrError,
+          { __typename: "CommerceOrderWithMutationSuccess" }
+        >
+        redirectUrl = `/orders/${orderSuccess.order?.internalID}`
       }
       setIsCommitingCreateOrderMutation(false)
       router?.push(redirectUrl)
