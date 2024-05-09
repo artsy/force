@@ -50,9 +50,9 @@ export async function getUserProfile(args: { size: number; token: string }) {
     JSON.stringify(response, null, 2)
   )
 
-  const profile = response.data.me
+  const profileOrError = response.data.me || response.errors
 
-  return profile
+  return profileOrError
 }
 
 /*
@@ -103,9 +103,9 @@ export async function updateCollectorProfile(args: {
     JSON.stringify(response, null, 2)
   )
 
-  const updatedBio = response.data.updateMyUserProfile.userOrError
+  const updatedBioOrError = response.data.updateMyUserProfile.userOrError
 
-  return updatedBio
+  return updatedBioOrError
 }
 
 /*
@@ -136,9 +136,10 @@ export async function followArtist(args: { artistID: string; token: string }) {
 
   console.log("followArtist response: ", JSON.stringify(response, null, 2))
 
-  const followedArtist = response.data.followArtist.artist
+  const followedArtistOrError =
+    response.data.followArtist.artist || response.errors
 
-  return followedArtist
+  return followedArtistOrError
 }
 
 /*
@@ -194,7 +195,8 @@ export async function createAlert(args: {
     JSON.stringify(response, null, 2)
   )
 
-  const createdAlert = response.data.createSavedSearch.savedSearchOrErrors
+  const createdAlertOrError =
+    response.data.createSavedSearch.savedSearchOrErrors
 
-  return createdAlert
+  return createdAlertOrError
 }
