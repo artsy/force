@@ -182,7 +182,7 @@ const handler = async (req: Request, res: Response) => {
         messages.push({
           tool_call_id: toolCall.id,
           role: "tool",
-          content: JSON.stringify(functionResponse, null, 2),
+          content: JSON.stringify(functionResponse),
         })
       }
 
