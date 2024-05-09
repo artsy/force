@@ -1,7 +1,13 @@
 import OpenAI from "openai"
 import express, { Request, Response } from "express"
-import { instructions } from "./00-prompt-lib/collector-profile-one"
+import { instructions } from "Apps/ArtAdvisor/04-Bio-Follows-Alerts/lib/system-instructions"
 import chalk from "chalk"
+import {
+  createAlert,
+  followArtist,
+  getUserProfile,
+  updateCollectorProfile,
+} from "Apps/ArtAdvisor/04-Bio-Follows-Alerts/lib/functions"
 
 /*
  * Setup express server, OpenAi client, and config.
@@ -126,8 +132,8 @@ const handler = async (req: Request, res: Response) => {
     })
 
     console.log(
-      chalk.yellow("First response from model: "),
-      JSON.stringify(response)
+      chalk.yellow("First openai response: "),
+      JSON.stringify(response, null, 2)
     )
 
     const responseMessage = response.choices[0].message
@@ -171,7 +177,7 @@ const handler = async (req: Request, res: Response) => {
 
         console.log(
           chalk.yellow(`Function call response from ${functionName}: `),
-          functionResponse
+          JSON.stringify(functionResponse, null, 2)
         )
 
         // extend conversation with function response
@@ -188,7 +194,7 @@ const handler = async (req: Request, res: Response) => {
         messages: messages,
       })
 
-      console.log(chalk.yellow("SECOND RESPONSE: "), secondResponse)
+      console.log(chalk.yellow("Second openai response: "), secondResponse)
 
       // iterate over the response choices and push the messages to the messages array
       secondResponse.choices.forEach(choice => messages.push(choice.message))
@@ -204,202 +210,12 @@ const handler = async (req: Request, res: Response) => {
     }
 
     console.log(chalk.green("********* END OF REQUEST *********"))
+
     res.end()
   } catch (e) {
     console.error(chalk.red("ERROR: "), e)
-    res.send("An error occurred: ")
+    res.send("An error occurred")
   }
-}
-
-/*
- * Define the functions that can be called by the assitant.
- */
-
-async function getUserProfile(args: { size: number; token: string }) {
-  const query = `query getUserProfile {
-    me {
-      internalID
-      name
-      email
-      followsAndSaves {
-        artistsConnection(first: 10) {
-          edges {
-            node {
-              artist {
-                name
-              }
-            }
-          }
-        }
-        genesConnection(first: 10) {
-          edges {
-            node {
-              gene {
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  }`
-
-  const variables = {
-    size: args.size,
-  }
-
-  const headers = {
-    "X-ACCESS-TOKEN": args.token,
-    "Content-Type": "application/json",
-  }
-
-  const response = await metaphysics({ query, variables, headers })
-
-  const profile = response.data.me
-
-  return profile
-}
-
-async function updateCollectorProfile(args: { bio: string; token: string }) {
-  const query = `mutation updateUserProfile($input: UpdateMyProfileInput!){
-    updateMyUserProfile(input: $input) {
-      __typename
-      me {
-        name
-      }
-      userOrError {
-        ... on UpdateMyProfileMutationSuccess {
-          user {
-            collectorProfile {
-              internalID
-              bio
-            }
-          }
-        }
-        ... on UpdateMyProfileMutationFailure {
-          mutationError {
-            message
-          }
-        }
-      }
-    }
-  }`
-
-  const variables = {
-    input: { bio: args.bio },
-  }
-
-  const headers = {
-    "X-ACCESS-TOKEN": args.token,
-    "Content-Type": "application/json",
-  }
-
-  const response = await metaphysics({ query, variables, headers })
-
-  console.log("Response from update BIO: ", response)
-  const updatedBio = response.data.updateMyUserProfile.userOrError
-
-  return updatedBio
-}
-
-async function followArtist(args: { artistID: string; token: string }) {
-  const query = `mutation followArtist($input: FollowArtistInput!) {
-    followArtist(input: $input) {
-      artist {
-        internalID
-        name
-        slug
-      }
-    }
-  }`
-
-  const variables = {
-    input: { artistID: args.artistID },
-  }
-
-  const headers = {
-    "X-ACCESS-TOKEN": args.token,
-    "Content-Type": "application/json",
-  }
-
-  const response = await metaphysics({ query, variables, headers })
-
-  const artist = response.data.followArtist.artist
-
-  return artist
-}
-
-async function createAlert(args: {
-  mediums: string
-  artistID: string
-  priceRange: string
-  rarity: string
-  token: string
-}) {
-  const query = `mutation createSavedSearch($input: CreateSavedSearchInput!) {
-    createSavedSearch(input: $input) {
-      savedSearchOrErrors {
-        ... on SearchCriteria {
-          internalID
-        }
-        ... on Errors {
-          errors {
-            message
-          }
-        }
-      }
-    }
-  }`
-  const variables = {
-    input: {
-      userAlertSettings: {
-        email: true,
-        push: true,
-      },
-      attributes: {
-        additionalGeneIds: args.mediums,
-        artistIDs: [args.artistID],
-        attributionClass: args.rarity,
-        priceRange: args.priceRange,
-      },
-    },
-  }
-
-  const headers = {
-    "X-ACCESS-TOKEN": args.token,
-    "Content-Type": "application/json",
-  }
-
-  const response = await metaphysics({ query, variables, headers })
-
-  console.log(
-    "Response from create alert: ",
-    variables,
-    response.data.createSavedSearch
-  )
-
-  const alert = response.data.createSavedSearch.savedSearchOrErrors
-
-  return alert
-}
-
-async function metaphysics(args: {
-  query: string
-  variables: Record<string, unknown>
-  headers: Record<string, string>
-}) {
-  const { query, variables, headers } = args
-
-  const url =
-    `${process.env.METAPHYSICS_ENDPOINT}/v2` ||
-    "https://metaphysics-staging.artsy.net/v2"
-
-  const body = JSON.stringify({ query, variables })
-  const options = { method: "POST", headers, body }
-
-  const response = await fetch(url, options)
-  const json = await response.json()
-  return json
 }
 
 /*
