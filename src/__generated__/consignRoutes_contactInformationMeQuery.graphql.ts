@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<459842670c79bfb7474582f7609b0180>>
+ * @generated SignedSource<<cff72eee5f4a848c7f0e0fdb2e2a55c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type consignFromMyCollectionRoutes_contactInformationMeQuery$variables = Record<PropertyKey, never>;
-export type consignFromMyCollectionRoutes_contactInformationMeQuery$data = {
+export type consignRoutes_contactInformationMeQuery$variables = Record<PropertyKey, never>;
+export type consignRoutes_contactInformationMeQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
   } | null | undefined;
 };
-export type consignFromMyCollectionRoutes_contactInformationMeQuery = {
-  response: consignFromMyCollectionRoutes_contactInformationMeQuery$data;
-  variables: consignFromMyCollectionRoutes_contactInformationMeQuery$variables;
+export type consignRoutes_contactInformationMeQuery = {
+  response: consignRoutes_contactInformationMeQuery$data;
+  variables: consignRoutes_contactInformationMeQuery$variables;
 };
 
 const node: ConcreteRequest = {
@@ -26,7 +26,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "consignFromMyCollectionRoutes_contactInformationMeQuery",
+    "name": "consignRoutes_contactInformationMeQuery",
     "selections": [
       {
         "alias": null,
@@ -52,7 +52,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "consignFromMyCollectionRoutes_contactInformationMeQuery",
+    "name": "consignRoutes_contactInformationMeQuery",
     "selections": [
       {
         "alias": null,
@@ -121,15 +121,15 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "e830af00090111b550e6226fba77370b",
+    "cacheID": "095639f190902e5f739848c4c9fac26c",
     "id": null,
     "metadata": {},
-    "name": "consignFromMyCollectionRoutes_contactInformationMeQuery",
+    "name": "consignRoutes_contactInformationMeQuery",
     "operationKind": "query",
-    "text": "query consignFromMyCollectionRoutes_contactInformationMeQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n"
+    "text": "query consignRoutes_contactInformationMeQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n"
   }
 };
 
-(node as any).hash = "e80c14265ba5713a94f24d8a2d04987f";
+(node as any).hash = "28bc588bcc84c1dd2bfbdac657c0f31f";
 
 export default node;
