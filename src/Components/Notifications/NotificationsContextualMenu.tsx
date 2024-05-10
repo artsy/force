@@ -20,7 +20,7 @@ export const NotificationsContextualMenu: React.FC<NotificationsContextualMenuPr
       <ContextualMenuItem p={0}>
         <RouterLink
           onClick={onHide}
-          to={"/settings/alerts"}
+          to={"/favorites/alerts"}
           textDecoration="none"
           color="black100"
           display="block"
@@ -32,7 +32,7 @@ export const NotificationsContextualMenu: React.FC<NotificationsContextualMenuPr
       <ContextualMenuItem p={0}>
         <RouterLink
           onClick={onHide}
-          to="/collector-profile/follows"
+          to="/favorites/follows"
           textDecoration="none"
           color="black100"
           display="block"

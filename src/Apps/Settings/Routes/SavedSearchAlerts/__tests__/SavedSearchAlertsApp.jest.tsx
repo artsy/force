@@ -148,7 +148,7 @@ describe("SavedSearchAlertsApp", () => {
         await flushPromiseQueue()
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/settings/alerts/example-id-1/edit"
+          "/favorites/alerts/example-id-1/edit"
         )
 
         expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
@@ -183,7 +183,7 @@ describe("SavedSearchAlertsApp", () => {
         await flushPromiseQueue()
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/settings/alerts/example-id-1/edit"
+          "/favorites/alerts/example-id-1/edit"
         )
 
         expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
@@ -191,7 +191,7 @@ describe("SavedSearchAlertsApp", () => {
         fireEvent.click(screen.getAllByText("Edit")[1])
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/settings/alerts/example-id-2/edit"
+          "/favorites/alerts/example-id-2/edit"
         )
       })
     })
@@ -233,14 +233,14 @@ describe("SavedSearchAlertsApp", () => {
         fireEvent.click(screen.getAllByText("Edit")[0])
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/settings/alerts/example-id-1/edit"
+          "/favorites/alerts/example-id-1/edit"
         )
 
         expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
 
         fireEvent.click(screen.getByLabelText("Close"))
 
-        expect(mockSilentPush).toHaveBeenCalledWith("/settings/alerts")
+        expect(mockSilentPush).toHaveBeenCalledWith("/favorites/alerts")
       })
     })
   })
@@ -283,7 +283,7 @@ describe("SavedSearchAlertsApp", () => {
         fireEvent.click(screen.getAllByText("View Artworks")[0])
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/settings/alerts/example-id-1/artworks"
+          "/favorites/alerts/example-id-1/artworks"
         )
 
         expect(screen.getAllByText("View Artworks")[0]).toBeInTheDocument()
@@ -291,7 +291,7 @@ describe("SavedSearchAlertsApp", () => {
         fireEvent.click(screen.getAllByText("View Artworks")[1])
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/settings/alerts/example-id-2/artworks"
+          "/favorites/alerts/example-id-2/artworks"
         )
       })
     })
@@ -332,14 +332,14 @@ describe("SavedSearchAlertsApp", () => {
         fireEvent.click(screen.getAllByText("View Artworks")[0])
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/settings/alerts/example-id-1/artworks"
+          "/favorites/alerts/example-id-1/artworks"
         )
 
         expect(screen.getAllByText("View Artworks")[0]).toBeInTheDocument()
 
         fireEvent.click(screen.getByLabelText("Close"))
 
-        expect(mockSilentPush).toHaveBeenCalledWith("/settings/alerts")
+        expect(mockSilentPush).toHaveBeenCalledWith("/favorites/alerts")
       })
     })
   })

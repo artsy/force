@@ -64,14 +64,20 @@ const PERMANENT_REDIRECTS = {
   "/profile/edit": "/settings/edit-profile",
   "/user/edit": "/settings/edit-profile",
   "/user/delete": "/settings/delete",
-  "/user/saves": "/settings/saves",
+  "/user/saves": "/favorites/saves",
   "/user/auctions": "/settings/auctions",
   "/user/shipping": "/settings/shipping",
   "/user/purchases": "/settings/purchases",
   "/user/payments": "/settings/payments",
-  "/user/alerts": "/settings/alerts",
+  "/user/alerts": "/favorites/alerts",
+  "/settings/alerts": "/favorites/alerts",
+  "/alerts/:alertID/edit": "/favorites/alerts/:alertID/edit",
+  "/alerts/:alertID/artworks": "/favorites/alerts/:alertID/artworks",
   "/my-collection": "/collector-profile/my-collection",
   "/settings/my-collection": "/collector-profile/my-collection",
+  "/collector-profile/follows": "/favorites/follows",
+  "/collector-profile/saves": "/favorites/saves",
+  "/collector-profile/saves/:id": "/favorites/saves/:id",
   "/page/collector-faqs-selling-on-artsy": "/sell",
   "/apply/gallery": "http://apply.artsy.net/galleries",
   "/apply/institution": "http://apply.artsy.net/institutions",
@@ -159,13 +165,26 @@ const PERMANENT_REDIRECTS = {
 
 const router = express.Router()
 
+export const getRedirectUrl = (
+  req: ArtsyRequest,
+  redirects: Record<string, string>
+) => {
+  const fromPath = req.route.path
+  const toPath = redirects[fromPath]
+
+  const queryString = url.parse(req.url).search || ""
+  const redirectUrl = toPath.replace(
+    /:(\w+)/g,
+    (_, key) => req.params[key] || ":unknown"
+  )
+
+  return redirectUrl + queryString
+}
+
 for (let from in PERMANENT_REDIRECTS) {
-  const path = PERMANENT_REDIRECTS[from]
-
-  router.get(from, (req: ArtsyRequest, res: ArtsyResponse) => {
-    const queryString = url.parse(req.url).search || ""
-
-    res.redirect(301, path + queryString)
+  router.get(from, (req, res) => {
+    const redirectUrl = getRedirectUrl(req, PERMANENT_REDIRECTS)
+    res.redirect(301, redirectUrl)
   })
 }
 

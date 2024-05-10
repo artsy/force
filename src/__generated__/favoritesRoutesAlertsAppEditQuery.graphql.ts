@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6465fc6c5183b867c4777ca6e9a51eb5>>
+ * @generated SignedSource<<24d20f1b5843eb7498d8a8116a0e04d4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_SavedSearchAlertsAppQuery$variables = Record<PropertyKey, never>;
-export type settingsRoutes_SavedSearchAlertsAppQuery$data = {
+export type favoritesRoutesAlertsAppEditQuery$variables = Record<PropertyKey, never>;
+export type favoritesRoutesAlertsAppEditQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
   } | null | undefined;
 };
-export type settingsRoutes_SavedSearchAlertsAppQuery = {
-  response: settingsRoutes_SavedSearchAlertsAppQuery$data;
-  variables: settingsRoutes_SavedSearchAlertsAppQuery$variables;
+export type favoritesRoutesAlertsAppEditQuery = {
+  response: favoritesRoutesAlertsAppEditQuery$data;
+  variables: favoritesRoutesAlertsAppEditQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -50,7 +50,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "settingsRoutes_SavedSearchAlertsAppQuery",
+    "name": "favoritesRoutesAlertsAppEditQuery",
     "selections": [
       {
         "alias": null,
@@ -76,7 +76,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "settingsRoutes_SavedSearchAlertsAppQuery",
+    "name": "favoritesRoutesAlertsAppEditQuery",
     "selections": [
       {
         "alias": null,
@@ -281,16 +281,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a797ce6b14cafe012acac884d224b5e2",
+    "cacheID": "13352c7d57fd2ff9efd2787be9640506",
     "id": null,
     "metadata": {},
-    "name": "settingsRoutes_SavedSearchAlertsAppQuery",
+    "name": "favoritesRoutesAlertsAppEditQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsAppQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  artistIDs\n  artistSeriesIDs\n  href\n  title: displayName(only: [artistIDs])\n  subtitle: displayName(except: [artistIDs])\n  artworksConnection(first: 10) {\n    counts {\n      total\n    }\n    id\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10, sort: ENABLED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        ...SavedSearchAlertListItem_item\n        title: displayName(only: [artistIDs])\n        subtitle: displayName(except: [artistIDs])\n        artworksConnection(first: 10) {\n          counts {\n            total\n          }\n          id\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query favoritesRoutesAlertsAppEditQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  artistIDs\n  artistSeriesIDs\n  href\n  title: displayName(only: [artistIDs])\n  subtitle: displayName(except: [artistIDs])\n  artworksConnection(first: 10) {\n    counts {\n      total\n    }\n    id\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10, sort: ENABLED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        ...SavedSearchAlertListItem_item\n        title: displayName(only: [artistIDs])\n        subtitle: displayName(except: [artistIDs])\n        artworksConnection(first: 10) {\n          counts {\n            total\n          }\n          id\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "522ead1b955dc0ddfdd4624e8bfede63";
+(node as any).hash = "50852cf58548df1e8a846eb30d7f0658";
 
 export default node;

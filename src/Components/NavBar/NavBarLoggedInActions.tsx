@@ -120,7 +120,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
 
       <Dropdown
         zIndex={Z.dropdown}
-        dropdown={<NavBarUserMenu />}
+        dropdown={<NavBarUserMenu width={230} />}
         placement="bottom-end"
         offset={0}
         openDropdownByClick
