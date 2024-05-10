@@ -33,7 +33,7 @@ export const SWAFooter: React.FC = () => {
                 mode: "Login",
                 options: {
                   title: () => {
-                    return "Log in to submit an artwork for sell"
+                    return "Log in to submit an artwork for sale"
                   },
                 },
                 analytics: {
