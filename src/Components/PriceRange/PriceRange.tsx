@@ -13,6 +13,7 @@ interface PriceRangeProps {
   priceRange: string
   onUpdate?: (range: CustomRange) => void
   onDebouncedUpdate?: (range: CustomRange) => void
+  onHandleErrors: (range: CustomRange) => Promise<boolean>
   bars?: HistogramBarEntity[]
 }
 
@@ -20,10 +21,11 @@ export const PriceRange: FC<PriceRangeProps> = ({
   priceRange,
   onUpdate,
   onDebouncedUpdate,
+  onHandleErrors,
   bars,
 }) => {
   const [localRange, setLocalRange] = useState(parsePriceRange(priceRange))
-  const [showErroMessage, setShowErrorMessage] = useState<boolean>(false)
+  const [isFormValid, setIsFormValid] = useState<boolean>(true)
 
   const previousPriceRange = usePrevious(priceRange)
 
@@ -41,12 +43,10 @@ export const PriceRange: FC<PriceRangeProps> = ({
 
   const handleDebouncedUpdate = useMemo(() => {
     return debounce((nextRange: CustomRange) => {
-      if (nextRange[0] > nextRange[1]) {
-        setShowErrorMessage(true)
-      } else setShowErrorMessage(false)
+      onHandleErrors(nextRange).then(responce => setIsFormValid(responce))
       onDebouncedUpdate?.(nextRange)
     }, 250)
-  }, [onDebouncedUpdate])
+  }, [onDebouncedUpdate, onHandleErrors])
 
   const updateRange = (nextRange: CustomRange) => {
     setLocalRange(nextRange)
@@ -140,7 +140,7 @@ export const PriceRange: FC<PriceRangeProps> = ({
             />
           </Box>
         </Flex>
-        {showErroMessage && (
+        {!isFormValid && (
           <Text color="red100">Min price must be less than max price</Text>
         )}
       </Flex>

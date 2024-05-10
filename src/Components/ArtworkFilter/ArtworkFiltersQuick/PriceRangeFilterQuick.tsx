@@ -7,6 +7,7 @@ import {
   FilterQuickDropdownPanel,
 } from "Components/ArtworkFilter/ArtworkFiltersQuick/FilterQuick"
 import { usePriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { CustomRange } from "Components/PriceRange/constants"
 
 export interface PriceRangeFilterQuickProps
   extends Omit<DropdownProps, "dropdown" | "children"> {}
@@ -22,6 +23,12 @@ export const PriceRangeFilterQuick: FC<PriceRangeFilterQuickProps> = props => {
 
   const handleClear = () => {
     filters.setFilter("priceRange", initialArtworkFilterState.priceRange)
+  }
+
+  const handleErrors = async (nextRange: CustomRange): Promise<boolean> => {
+    if (nextRange[0] > nextRange[1] && nextRange[1] !== "*") {
+      return false
+    } else return true
   }
 
   return (
@@ -42,6 +49,7 @@ export const PriceRangeFilterQuick: FC<PriceRangeFilterQuickProps> = props => {
               priceRange={range.join("-")}
               bars={histogram}
               onDebouncedUpdate={onPriceRangeUpdate}
+              onHandleErrors={handleErrors}
             />
           </FilterQuickDropdownPanel>
         )

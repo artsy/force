@@ -81,6 +81,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     isAlertArtworksView,
     criteriaChanged: false,
     metric: metric ?? userPreferences?.metric ?? DEFAULT_METRIC,
+    formIsValid: true,
   }
 
   const [current, setCurrent] = useState<

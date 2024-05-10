@@ -30,6 +30,22 @@ export const Price: React.FC<PriceProps> = ({ artworksConnection }) => {
     })
   }
 
+  const handleErrors = async (nextRange: CustomRange): Promise<boolean> => {
+    if (nextRange[0] > nextRange[1] && nextRange[1] !== "*") {
+      dispatch({
+        type: "SET_FORM_VALIDITY",
+        payload: false,
+      })
+      return false
+    } else {
+      dispatch({
+        type: "SET_FORM_VALIDITY",
+        payload: true,
+      })
+      return true
+    }
+  }
+
   return (
     <>
       <Text variant="sm-display" mb={2}>
@@ -40,6 +56,7 @@ export const Price: React.FC<PriceProps> = ({ artworksConnection }) => {
         bars={bars}
         priceRange={state.criteria.priceRange || DEFAULT_PRICE_RANGE}
         onDebouncedUpdate={handlePriceRangeUpdate}
+        onHandleErrors={handleErrors}
       />
     </>
   )
@@ -66,6 +83,7 @@ export const PriceQueryRenderer = () => {
   const artistIDs = state.criteria.artistIDs
 
   if (!artistIDs?.length) return <Price />
+  // here
 
   return (
     <SystemQueryRenderer<PriceAggregationsQuery>

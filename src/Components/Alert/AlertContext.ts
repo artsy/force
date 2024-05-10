@@ -33,6 +33,7 @@ export type State = {
   criteriaChanged?: boolean
   metric?: Metric
   isSubmitting?: boolean
+  formIsValid: boolean
 }
 
 export const DEFAULT_STATE: State = {
@@ -47,6 +48,7 @@ export const DEFAULT_STATE: State = {
   visible: false,
   metric: DEFAULT_METRIC,
   criteriaChanged: false,
+  formIsValid: true,
 }
 
 type Action =
@@ -74,6 +76,7 @@ type Action =
   | { type: "SET_ALERT_ID"; payload: string }
   | { type: "SET_METRIC"; payload: Metric }
   | { type: "SET_IS_SUBMITTING"; payload: boolean }
+  | { type: "SET_FORM_VALIDITY"; payload: boolean }
 
 export const reducer = (onShow: (State) => State, onReset: () => State) => (
   state: State,
@@ -158,6 +161,12 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
       return {
         ...state,
         isSubmitting: action.payload,
+      }
+
+    case "SET_FORM_VALIDITY":
+      return {
+        ...state,
+        formIsValid: action.payload,
       }
 
     default:
