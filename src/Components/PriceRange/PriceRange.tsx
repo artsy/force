@@ -13,7 +13,7 @@ interface PriceRangeProps {
   priceRange: string
   onUpdate?: (range: CustomRange) => void
   onDebouncedUpdate?: (range: CustomRange) => void
-  onHandleErrors: (range: CustomRange) => Promise<boolean>
+  onHandleErrors?: (range: CustomRange) => Promise<boolean>
   bars?: HistogramBarEntity[]
 }
 
@@ -43,7 +43,7 @@ export const PriceRange: FC<PriceRangeProps> = ({
 
   const handleDebouncedUpdate = useMemo(() => {
     return debounce((nextRange: CustomRange) => {
-      onHandleErrors(nextRange).then(responce => setIsFormValid(responce))
+      onHandleErrors?.(nextRange).then(responce => setIsFormValid(responce))
       onDebouncedUpdate?.(nextRange)
     }, 250)
   }, [onDebouncedUpdate, onHandleErrors])
