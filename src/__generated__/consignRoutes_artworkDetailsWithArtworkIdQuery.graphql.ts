@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08188055bc8108f6fbbdc661cf071247>>
+ * @generated SignedSource<<4e708fdc0788be60d78f260abaebf009>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,15 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
-export type consignFromMyCollectionRoutes_uploadArtworkPhotosQuery$variables = {
+export type consignRoutes_artworkDetailsWithArtworkIdQuery$variables = {
   artworkId: string;
   externalId?: string | null | undefined;
   id?: string | null | undefined;
   sessionID?: string | null | undefined;
 };
-export type consignFromMyCollectionRoutes_uploadArtworkPhotosQuery$data = {
+export type consignRoutes_artworkDetailsWithArtworkIdQuery$data = {
   readonly myCollectionArtwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"UploadPhotos_myCollectionArtwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
   } | null | undefined;
   readonly submission: {
     readonly artist: {
@@ -53,12 +53,12 @@ export type consignFromMyCollectionRoutes_uploadArtworkPhotosQuery$data = {
     readonly userId: string;
     readonly width: string | null | undefined;
     readonly year: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"UploadPhotos_submission">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_submission">;
   } | null | undefined;
 };
-export type consignFromMyCollectionRoutes_uploadArtworkPhotosQuery = {
-  response: consignFromMyCollectionRoutes_uploadArtworkPhotosQuery$data;
-  variables: consignFromMyCollectionRoutes_uploadArtworkPhotosQuery$variables;
+export type consignRoutes_artworkDetailsWithArtworkIdQuery = {
+  response: consignRoutes_artworkDetailsWithArtworkIdQuery$data;
+  variables: consignRoutes_artworkDetailsWithArtworkIdQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -306,7 +306,21 @@ v29 = [
     "name": "id",
     "variableName": "artworkId"
   }
-];
+],
+v30 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Artist",
+  "kind": "LinkedField",
+  "name": "artist",
+  "plural": false,
+  "selections": [
+    (v6/*: any*/),
+    (v7/*: any*/),
+    (v27/*: any*/)
+  ],
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -317,7 +331,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "consignFromMyCollectionRoutes_uploadArtworkPhotosQuery",
+    "name": "consignRoutes_artworkDetailsWithArtworkIdQuery",
     "selections": [
       {
         "alias": null,
@@ -330,7 +344,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "UploadPhotos_submission"
+            "name": "ArtworkDetails_submission"
           },
           (v5/*: any*/),
           {
@@ -380,7 +394,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "UploadPhotos_myCollectionArtwork"
+            "name": "ArtworkDetails_myCollectionArtwork"
           }
         ],
         "storageKey": null
@@ -398,7 +412,7 @@ return {
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "consignFromMyCollectionRoutes_uploadArtworkPhotosQuery",
+    "name": "consignRoutes_artworkDetailsWithArtworkIdQuery",
     "selections": [
       {
         "alias": null,
@@ -409,23 +423,7 @@ return {
         "plural": false,
         "selections": [
           (v5/*: any*/),
-          (v25/*: any*/),
-          (v26/*: any*/),
-          (v28/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artist",
-            "plural": false,
-            "selections": [
-              (v6/*: any*/),
-              (v7/*: any*/),
-              (v27/*: any*/)
-            ],
-            "storageKey": null
-          },
+          (v30/*: any*/),
           (v8/*: any*/),
           (v9/*: any*/),
           (v10/*: any*/),
@@ -443,6 +441,9 @@ return {
           (v22/*: any*/),
           (v23/*: any*/),
           (v24/*: any*/),
+          (v25/*: any*/),
+          (v26/*: any*/),
+          (v28/*: any*/),
           (v27/*: any*/)
         ],
         "storageKey": null
@@ -456,30 +457,94 @@ return {
         "plural": false,
         "selections": [
           (v6/*: any*/),
+          (v30/*: any*/),
           {
             "alias": null,
             "args": null,
-            "concreteType": "Image",
+            "concreteType": "Location",
             "kind": "LinkedField",
-            "name": "images",
-            "plural": true,
+            "name": "location",
+            "plural": false,
             "selections": [
               {
                 "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "large"
-                  }
-                ],
+                "args": null,
                 "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"large\")"
-              }
+                "name": "city",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "country",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "state",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "postalCode",
+                "storageKey": null
+              },
+              (v27/*: any*/)
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "date",
+            "storageKey": null
+          },
+          (v15/*: any*/),
+          (v16/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworkMedium",
+            "kind": "LinkedField",
+            "name": "mediumType",
+            "plural": false,
+            "selections": [
+              (v7/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "AttributionClass",
+            "kind": "LinkedField",
+            "name": "attributionClass",
+            "plural": false,
+            "selections": [
+              (v7/*: any*/),
+              (v27/*: any*/)
+            ],
+            "storageKey": null
+          },
+          (v18/*: any*/),
+          (v19/*: any*/),
+          (v20/*: any*/),
+          (v21/*: any*/),
+          (v22/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "metric",
+            "storageKey": null
+          },
+          (v24/*: any*/),
           (v27/*: any*/)
         ],
         "storageKey": null
@@ -487,16 +552,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "75c06b66d024a65ba743ccfcf3957983",
+    "cacheID": "1b89d09455b568b91e53fc8eca572de4",
     "id": null,
     "metadata": {},
-    "name": "consignFromMyCollectionRoutes_uploadArtworkPhotosQuery",
+    "name": "consignRoutes_artworkDetailsWithArtworkIdQuery",
     "operationKind": "query",
-    "text": "query consignFromMyCollectionRoutes_uploadArtworkPhotosQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...UploadPhotos_myCollectionArtwork\n    id\n  }\n}\n\nfragment UploadPhotos_myCollectionArtwork on Artwork {\n  internalID\n  images {\n    url(version: \"large\")\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  userId\n  userEmail\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
+    "text": "query consignRoutes_artworkDetailsWithArtworkIdQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  mediumType {\n    name\n  }\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  category\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n  userId\n  userEmail\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f9f094a177457dadf3fb78cec944ce87";
+(node as any).hash = "f98b0a54a46dc066c754bb45dd093781";
 
 export default node;

@@ -116,6 +116,16 @@ const ThankYou = loadable(
   }
 )
 
+const ThankYouWhenFromMyCollection = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ThankYou/ThankYouWhenFromMyCollection"
+    ),
+  {
+    resolveComponent: component => component.ThankYouWhenFromMyCollection,
+  }
+)
+
 const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
   if (!(Component && props)) {
     return undefined
@@ -174,6 +184,13 @@ const renderConsignmentInquiry = ({ Component, props }: RouteRenderArgs) => {
     return undefined
   }
   return <Component {...props} />
+}
+
+const preparePrefillSubmissionFromArtworkVariables = data => {
+  return {
+    id: data.id,
+    ...data,
+  }
 }
 
 export const consignRoutes: AppRouteConfig[] = [
@@ -385,6 +402,129 @@ export const consignRoutes: AppRouteConfig[] = [
         getComponent: () => ThankYou,
         onClientSideRender: () => {
           ThankYou.preload()
+        },
+      },
+    ],
+  },
+  {
+    path: "/collector-profile/my-collection/submission",
+    getComponent: () => SubmissionLayout,
+    onServerSideRender: ({ res }) => {
+      res.redirect(
+        "/collector-profile/my-collection/submission/contact-information"
+      )
+    },
+    children: [
+      {
+        path: "artwork-details/:artworkId",
+        layout: "ContainerOnly",
+        getComponent: () => ArtworkDetailsFragmentContainer,
+        onClientSideRender: () => {
+          ArtworkDetailsFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_myCollectionArtworkQuery($artworkId: String!) {
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...ArtworkDetails_myCollectionArtwork
+            }
+          }
+        `,
+        prepareVariables: preparePrefillSubmissionFromArtworkVariables,
+      },
+      {
+        path: ":id/artwork-details/:artworkId",
+        layout: "ContainerOnly",
+        getComponent: () => ArtworkDetailsFragmentContainer,
+        onClientSideRender: () => {
+          ArtworkDetailsFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_artworkDetailsWithArtworkIdQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+            $artworkId: String!
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...ArtworkDetails_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...ArtworkDetails_myCollectionArtwork
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
+      },
+      {
+        path: ":id/upload-photos/:artworkId",
+        layout: "ContainerOnly",
+        getComponent: () => UploadPhotosFragmentContainer,
+        onClientSideRender: () => {
+          UploadPhotosFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_uploadArtworkPhotosQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+            $artworkId: String!
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...UploadPhotos_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...UploadPhotos_myCollectionArtwork
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
+      },
+      {
+        path: ":id/contact-information/:artworkId?",
+        layout: "ContainerOnly",
+        getComponent: () => ContactInformation,
+        onClientSideRender: () => {
+          ContactInformation.preload()
+        },
+        query: contactInformationQuery,
+        render: renderSubmissionFlowStep,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+      },
+      {
+        path: "/contact-information/:artworkId?",
+        layout: "ContainerOnly",
+        getComponent: () => ContactInformation,
+        onClientSideRender: () => {
+          ContactInformation.preload()
+        },
+        query: graphql`
+          query consignRoutes_contactInformationMeQuery {
+            me {
+              ...ContactInformation_me
+            }
+          }
+        `,
+        render: renderSubmissionFlowStep,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+      },
+      {
+        path: ":id/thank-you/:artworkId?",
+        layout: "ContainerOnly",
+        getComponent: () => ThankYouWhenFromMyCollection,
+        onClientSideRender: () => {
+          ThankYouWhenFromMyCollection.preload()
         },
       },
     ],

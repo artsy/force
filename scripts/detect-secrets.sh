@@ -22,10 +22,17 @@ hook() {
   echo "${GREEN}No secrets detected!${NO_COLOR}"
 }
 
-rebuild() {
-  echo 'Executing detect-secrets scan...'
+rescan() {
+  echo 'Executing detect-secrets scan to rescan the codebase...'
   detect-secrets scan --baseline .secrets.baseline
-  echo "${GREEN}Baseline re-generated!${NO_COLOR}"
+  echo "${GREEN}Codebase rescanned!${NO_COLOR}"
+}
+
+regen() {
+  echo 'Executing detect-secrets scan to regenerate the baseline...'
+  detect-secrets scan --exclude-files 'src/__generated__/.*\.ts$' --exclude-secrets '(foo|secret|reset|true|toggle|trackForgotClick|passwordNextButton|hook)' --exclude-secrets '^https://.*$' --exclude-secrets '^onPassword.*$' --exclude-secrets '[a-fA-F0-9]{24}' > .secrets.baseline
+  detect-secrets scan --baseline .secrets.baseline
+  echo "${GREEN}Baseline regenerated!${NO_COLOR}"
 }
 
 $1
