@@ -4835,6 +4835,9 @@ input CommerceCreatePartnerOfferOrderInput {
   # EditionSet Id
   editionSetId: String
 
+  # Impulse conversation id corresponding to an order.
+  impulseConversationId: String
+
   # PartnerOffer Id
   partnerOfferId: String!
 
@@ -15923,7 +15926,10 @@ type Query {
   ): CommerceBankAccountBalance
 
   # Buyer Activity Data for Collector Resume
-  commerceBuyerActivity(buyerId: String!): CommerceBuyerActivity
+  commerceBuyerActivity(
+    buyerId: String!
+    sellerId: String
+  ): CommerceBuyerActivity
 
   # Find list of competing orders
   commerceCompetingOrders(
