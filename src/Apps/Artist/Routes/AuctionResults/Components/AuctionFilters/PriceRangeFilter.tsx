@@ -25,6 +25,12 @@ export const PriceRangeFilter: FC = () => {
     setFilter?.("priceRange", updatedRange.join("-"))
   }
 
+  const handleErrors = async (nextRange: CustomRange): Promise<boolean> => {
+    if (nextRange[0] > nextRange[1] && nextRange[1] !== "*") {
+      return false
+    } else return true
+  }
+
   return (
     <Expandable label="Price" expanded>
       <Spacer y={2} />
@@ -32,6 +38,7 @@ export const PriceRangeFilter: FC = () => {
         bars={bars}
         priceRange={priceRange || DEFAULT_PRICE_RANGE}
         onDebouncedUpdate={handlePriceRangeUpdate}
+        onHandleErrors={handleErrors}
       />
       <Spacer y={2} />
       <Checkbox
