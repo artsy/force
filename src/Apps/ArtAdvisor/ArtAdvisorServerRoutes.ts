@@ -5,7 +5,7 @@ import { router as router3 } from "./03-Instruction-Experiments/server"
 import { router as router4 } from "./04-Bio-Follows-Alerts/server"
 
 /*
- * Define API routes that can be colocated with each app experiment
+ * Define API routes that can be collocated with each app experiment
  */
 
 export const artAdvisorServerRoutes = express.Router()

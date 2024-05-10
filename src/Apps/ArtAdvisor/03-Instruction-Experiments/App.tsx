@@ -66,7 +66,7 @@ export const App: FC = () => {
       <Spacer y={4} />
       <Box>
         {messages.map((message, index) => {
-          // Guard against trying to rendering messages that are just for memory, sush as function tool messages.
+          // Guard against trying to rendering messages that are just for memory, such as function tool messages.
           if (message.role === "tool" || message.content === null) {
             return null
           }

@@ -85,7 +85,7 @@ export const App: FC = () => {
             ref={inputRef}
             style={{ fontSize: "1.2em" }}
             placeholder="Chat with Artsy"
-            defaultValue="List the different printmaking techniques. For each provide the name of the technique in boldface, the definirion in italic, and a link to an example artwork for that technique on Artsy.net"
+            defaultValue="List the different printmaking techniques. For each provide the name of the technique in boldface, the definition in italic, and a link to an example artwork for that technique on Artsy.net"
           />
           <Button px={6} disabled={isGenerating}>
             Send
