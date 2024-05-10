@@ -2,20 +2,20 @@ import loadable from "@loadable/component"
 import { AppRouteConfig } from "System/Router/Route"
 
 const ArtAdvisorApp = loadable(
-  () => import(/* webpackChunkName: "jobsBundle" */ "./ArtAdvisorApp"),
+  () => import(/* webpackChunkName: "advisorBundle" */ "./ArtAdvisorApp"),
   {
     resolveComponent: component => component.ArtAdvisorApp,
   }
 )
 
 const ArtAdvisorApp01 = loadable(
-  () => import(/* webpackChunkName: "jobsBundle" */ "./01-Spike/App"),
+  () => import(/* webpackChunkName: "advisorBundle" */ "./01-Spike/App"),
   {
     resolveComponent: component => component.App,
   }
 )
 const ArtAdvisorApp02 = loadable(
-  () => import(/* webpackChunkName: "jobsBundle" */ "./02-Markdown/App"),
+  () => import(/* webpackChunkName: "advisorBundle" */ "./02-Markdown/App"),
   {
     resolveComponent: component => component.App,
   }
@@ -23,7 +23,7 @@ const ArtAdvisorApp02 = loadable(
 const ArtAdvisorApp03 = loadable(
   () =>
     import(
-      /* webpackChunkName: "jobsBundle" */ "./03-Instruction-Experiments/App"
+      /* webpackChunkName: "advisorBundle" */ "./03-Instruction-Experiments/App"
     ),
   {
     resolveComponent: component => component.App,
@@ -32,7 +32,9 @@ const ArtAdvisorApp03 = loadable(
 
 const ArtAdvisorApp04 = loadable(
   () =>
-    import(/* webpackChunkName: "jobsBundle" */ "./04-Bio-Follows-Alerts/App"),
+    import(
+      /* webpackChunkName: "advisorBundle" */ "./04-Bio-Follows-Alerts/App"
+    ),
   {
     resolveComponent: component => component.App,
   }
