@@ -5,9 +5,7 @@ export async function metaphysics(args: {
 }) {
   const { query, variables, headers } = args
 
-  const url =
-    `${process.env.METAPHYSICS_ENDPOINT}/v2` ||
-    "https://metaphysics-staging.artsy.net/v2"
+  const url = `${process.env.METAPHYSICS_ENDPOINT}/v2`
 
   const body = JSON.stringify({ query, variables })
   const options = { method: "POST", headers, body }
