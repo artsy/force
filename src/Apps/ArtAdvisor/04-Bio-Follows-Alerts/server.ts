@@ -65,6 +65,23 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
           artistID: {
             type: "string",
             description:
+              "The ID of the artist to follow. It is the same as the artsy.net slug",
+          },
+        },
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "create_alert",
+      description: `Create an alert for an user on artsy.`,
+      parameters: {
+        type: "object",
+        properties: {
+          artistID: {
+            type: "string",
+            description:
               "The ID of the artist to follow. It is the same as the artsy.net slug. This parameter is required.",
           },
           priceRange: {
