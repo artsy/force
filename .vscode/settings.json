@@ -15,7 +15,6 @@
   },
   "debug.node.autoAttach": "off",
   "cSpell.ignoreWords": [],
-  "cSpell.diagnosticLevel": "Hint",
   "cSpell.ignorePaths": [
     "**/package-lock.json",
     "**/node_modules/**",
@@ -28,5 +27,6 @@
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "typescript.preferences.importModuleSpecifier": "non-relative"
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "cSpell.words": ["openai"]
 }
