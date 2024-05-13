@@ -23,7 +23,7 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
   {
     type: "function",
     function: {
-      name: "get_user_profile",
+      name: "getUserProfile",
       description: `Get information associated with a user profile on artsy.`,
       parameters: {
         type: "object",
@@ -40,7 +40,7 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
   {
     type: "function",
     function: {
-      name: "update_collector_profile",
+      name: "updateCollectorProfile",
       description: `Update the user's collector profile on artsy.`,
       parameters: {
         type: "object",
@@ -57,7 +57,7 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
   {
     type: "function",
     function: {
-      name: "follow_artist",
+      name: "followArtist",
       description: `Follow an artist on artsy on behalf of a user.`,
       parameters: {
         type: "object",
@@ -74,7 +74,7 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
   {
     type: "function",
     function: {
-      name: "create_alert",
+      name: "createAlert",
       description: `Create an alert for an user on artsy.`,
       parameters: {
         type: "object",
@@ -176,10 +176,10 @@ const handler = async (req: Request, res: Response) => {
         const functionArgs = JSON.parse(toolCall.function.arguments)
 
         const availableFunctions = {
-          get_user_profile: getUserProfile,
-          update_collector_profile: updateCollectorProfile,
-          follow_artist: followArtist,
-          create_alert: createAlert,
+          getUserProfile,
+          updateCollectorProfile,
+          followArtist,
+          createAlert,
         }
 
         const functionToCall = availableFunctions[functionName]
