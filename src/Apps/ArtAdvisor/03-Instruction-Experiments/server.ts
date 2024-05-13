@@ -18,7 +18,7 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
   {
     type: "function",
     function: {
-      name: "get_user_profile",
+      name: "getUserProfile",
       description: `Get information associated with a user profile on artsy.`,
       parameters: {
         type: "object",
@@ -101,7 +101,6 @@ const handler = async (req: Request, res: Response) => {
         messages.push({
           tool_call_id: toolCall.id,
           role: "tool",
-          // name: functionName, // TODO: Check if this in required, and why the type error, if it is.
           content: JSON.stringify(functionResponse),
         })
       }
