@@ -1,15 +1,14 @@
-import { ActionType } from "@artsy/cohesion"
 import { Flex, Pill, Skeleton, SkeletonBox } from "@artsy/palette"
+import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
+import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
 import { NotificationType } from "Components/Notifications/types"
-import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
-import { graphql } from "react-relay"
-import { useTracking } from "react-tracking"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { NotificationsPillsQuery } from "__generated__/NotificationsPillsQuery.graphql"
 import { compact, times } from "lodash"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { graphql } from "react-relay"
 
 export const NotificationsPills: React.FC = () => {
-  const { trackEvent } = useTracking()
+  const { tracking } = useNotificationsTracking()
   const { setCurrentNotificationFilterType, state } = useNotificationsContext()
 
   const { data, loading } = useClientQuery<NotificationsPillsQuery>({
@@ -39,10 +38,7 @@ export const NotificationsPills: React.FC = () => {
             onClick={() => {
               setCurrentNotificationFilterType(pill.name as NotificationType)
 
-              trackEvent({
-                action: ActionType.clickedActivityPanelTab,
-                tab_name: pill.name,
-              })
+              tracking.clickedActivityPanelTab(pill.name)
             }}
           >
             {pill.value}
