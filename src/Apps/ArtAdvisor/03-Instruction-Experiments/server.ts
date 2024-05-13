@@ -18,7 +18,7 @@ const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
   {
     type: "function",
     function: {
-      name: "get_user_profile",
+      name: "getUserProfile",
       description: `Get information associated with a user profile on artsy.`,
       parameters: {
         type: "object",
@@ -101,7 +101,6 @@ const handler = async (req: Request, res: Response) => {
         messages.push({
           tool_call_id: toolCall.id,
           role: "tool",
-          // name: functionName, // TODO: Check if this in required, and why the type error, if it is.
           content: JSON.stringify(functionResponse),
         })
       }
@@ -114,14 +113,14 @@ const handler = async (req: Request, res: Response) => {
 
       console.log(chalk.yellow("SECOND RESPONSE: "), secondResponse)
 
-      // itarate over the response choices and push the messages to the messages array
+      // iterate over the response choices and push the messages to the messages array
       secondResponse.choices.forEach(choice => messages.push(choice.message))
 
       res.write(JSON.stringify(messages))
     } else {
       // If the assistant does not require a tool call, then we can just format the response and send it back to the client
 
-      // itarate over the response choices and push the messages to the messages array
+      // iterate over the response choices and push the messages to the messages array
       response.choices.forEach(choice => messages.push(choice.message))
 
       res.write(JSON.stringify(messages))
@@ -135,7 +134,7 @@ const handler = async (req: Request, res: Response) => {
 }
 
 /*
- * Define the functions that can be called by the asssitant.
+ * Define the functions that can be called by the assistant.
  */
 
 async function getUserProfile(args: { size: number; token: string }) {
