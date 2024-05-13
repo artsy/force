@@ -3,7 +3,7 @@ import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
 describe("Institutions", () => {
   it("/institutions", () => {
     visitWithStatusRetries("institutions")
-    cy.get("h1").should("contain", "Browse Institutions")
+    cy.get("h1").should("contain", "Browse Museums and Institutions")
     cy.title().should("eq", "Institutions | Artsy")
   })
 

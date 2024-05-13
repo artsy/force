@@ -10,17 +10,6 @@ const SettingsApp = loadable(
   }
 )
 
-const AlertsRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/SavedSearchAlerts/SavedSearchAlertsApp"
-    ),
-  {
-    resolveComponent: component =>
-      component.SavedSearchAlertsAppPaginationContainer,
-  }
-)
-
 const AuctionsRoute = loadable(
   () =>
     import(
@@ -192,7 +181,7 @@ export const settingsRoutes: AppRouteConfig[] = [
       {
         path: "saves",
         render: () => {
-          throw new RedirectException(`/collector-profile/saves`, 301)
+          throw new RedirectException(`/favorites/saves`, 301)
         },
       },
       {
@@ -206,56 +195,6 @@ export const settingsRoutes: AppRouteConfig[] = [
           query settingsRoutes_InsightsRouteQuery {
             me {
               ...InsightsRoute_me
-            }
-          }
-        `,
-      },
-      {
-        path: "alerts",
-        getComponent: () => AlertsRoute,
-        layout: "NavOnly",
-        onClientSideRender: () => {
-          AlertsRoute.preload()
-        },
-        onServerSideRender: handleServerSideRender,
-        query: graphql`
-          query settingsRoutes_SavedSearchAlertsAppQuery {
-            me {
-              ...SavedSearchAlertsApp_me
-            }
-          }
-        `,
-      },
-      {
-        path: "alerts/:alertID/edit",
-        getComponent: () => AlertsRoute,
-        layout: "NavOnly",
-
-        onClientSideRender: () => {
-          AlertsRoute.preload()
-        },
-        onServerSideRender: handleServerSideRender,
-        query: graphql`
-          query settingsRoutes_SavedSearchAlertsAppEditQuery {
-            me {
-              ...SavedSearchAlertsApp_me
-            }
-          }
-        `,
-      },
-      {
-        path: "alerts/:alertID/artworks",
-        layout: "NavOnly",
-
-        getComponent: () => AlertsRoute,
-        onClientSideRender: () => {
-          AlertsRoute.preload()
-        },
-        onServerSideRender: handleServerSideRender,
-        query: graphql`
-          query settingsRoutes_SavedSearchAlertsArtworksQuery {
-            me {
-              ...SavedSearchAlertsApp_me
             }
           }
         `,

@@ -31,7 +31,7 @@ export const NavBarMobileMenuLoggedIn: React.FC = () => {
       <ProgressiveOnboardingAlertHighlight
         position={{ top: "2.5px", left: "23px" }}
       >
-        <NavBarMobileMenuItemLink to="/settings/alerts">
+        <NavBarMobileMenuItemLink to="/favorites/alerts">
           Alerts
         </NavBarMobileMenuItemLink>
       </ProgressiveOnboardingAlertHighlight>

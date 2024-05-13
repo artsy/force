@@ -9,7 +9,7 @@ import { AppRouteConfig } from "System/Router/Route"
 import { FC, useEffect } from "react"
 import * as React from "react"
 import { HeadProvider } from "react-head"
-import { Environment } from "react-relay"
+import { Environment, RelayEnvironmentProvider } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 // eslint-disable-next-line no-restricted-imports
@@ -87,34 +87,36 @@ export const Boot = track(undefined, {
         <HeadProvider headTags={headTags}>
           <StateProvider>
             <SystemContextProvider {...contextProps}>
-              <ErrorBoundary>
-                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                  <ResponsiveProvider
-                    mediaQueries={THEME.mediaQueries}
-                    initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                  >
-                    <ToastsProvider>
-                      <StickyProvider>
-                        <AuthIntentProvider>
-                          <AuthDialogProvider>
-                            <DismissibleProvider
-                              userID={props.user?.id}
-                              keys={PROGRESSIVE_ONBOARDING_KEYS}
-                            >
-                              <CookieConsentManager>
-                                <FocusVisible />
-                                <SiftContainer />
+              <EnvironmentProvider environment={props.relayEnvironment}>
+                <ErrorBoundary>
+                  <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                    <ResponsiveProvider
+                      mediaQueries={THEME.mediaQueries}
+                      initialMatchingMediaQueries={onlyMatchMediaQueries as any}
+                    >
+                      <ToastsProvider>
+                        <StickyProvider>
+                          <AuthIntentProvider>
+                            <AuthDialogProvider>
+                              <DismissibleProvider
+                                userID={props.user?.id}
+                                keys={PROGRESSIVE_ONBOARDING_KEYS}
+                              >
+                                <CookieConsentManager>
+                                  <FocusVisible />
+                                  <SiftContainer />
 
-                                {children}
-                              </CookieConsentManager>
-                            </DismissibleProvider>
-                          </AuthDialogProvider>
-                        </AuthIntentProvider>
-                      </StickyProvider>
-                    </ToastsProvider>
-                  </ResponsiveProvider>
-                </MediaContextProvider>
-              </ErrorBoundary>
+                                  {children}
+                                </CookieConsentManager>
+                              </DismissibleProvider>
+                            </AuthDialogProvider>
+                          </AuthIntentProvider>
+                        </StickyProvider>
+                      </ToastsProvider>
+                    </ResponsiveProvider>
+                  </MediaContextProvider>
+                </ErrorBoundary>
+              </EnvironmentProvider>
             </SystemContextProvider>
           </StateProvider>
         </HeadProvider>
@@ -122,6 +124,19 @@ export const Boot = track(undefined, {
     </AppPreferencesProvider>
   )
 })
+
+const EnvironmentProvider: FC<{ environment: Environment }> = ({
+  children,
+  environment,
+}) => {
+  if (process.env.NODE_ENV === "test") return <>{children}</>
+
+  return (
+    <RelayEnvironmentProvider environment={environment}>
+      {children}
+    </RelayEnvironmentProvider>
+  )
+}
 
 const ThemeProvider: FC = ({ children }) => {
   const { preferences } = useAppPreferences()

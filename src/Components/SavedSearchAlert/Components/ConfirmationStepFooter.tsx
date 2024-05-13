@@ -46,7 +46,7 @@ export const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
         variant="secondaryBlack"
         // @ts-ignore
         as={RouterLink}
-        to={"/settings/alerts"}
+        to={"/favorites/alerts"}
         onClick={() => {
           onClose()
         }}

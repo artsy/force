@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc53ec2868ff4b6d8cdc443cd907c3bb>>
+ * @generated SignedSource<<351fd41d3db4e99b766446b2e8dd99d5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,13 +39,13 @@ v2 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "ID"
 },
 v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 };
 return {
   "fragment": {
@@ -159,6 +159,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "MyLocation",
             "kind": "LinkedField",
             "name": "location",
@@ -178,36 +185,27 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "profession",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "otherRelevantPositions",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "bio",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "createdAt",
+            "concreteType": "CollectorProfileType",
+            "kind": "LinkedField",
+            "name": "collectorProfile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isIdentityVerified",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "confirmedBuyerAt",
+                "storageKey": null
+              },
+              (v0/*: any*/)
+            ],
             "storageKey": null
           },
           (v0/*: any*/)
@@ -217,7 +215,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b7a686ff10473cb77879aaeee2daef5e",
+    "cacheID": "e4d9c2a5c6bce8c6b61164ee9565988e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -227,8 +225,20 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.bio": (v1/*: any*/),
-        "me.createdAt": (v1/*: any*/),
+        "me.collectorProfile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CollectorProfileType"
+        },
+        "me.collectorProfile.confirmedBuyerAt": (v1/*: any*/),
+        "me.collectorProfile.id": (v2/*: any*/),
+        "me.collectorProfile.isIdentityVerified": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
         "me.icon": {
           "enumValues": null,
           "nullable": true,
@@ -241,8 +251,8 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "me.icon.cropped.src": (v2/*: any*/),
-        "me.icon.cropped.srcSet": (v2/*: any*/),
+        "me.icon.cropped.src": (v3/*: any*/),
+        "me.icon.cropped.srcSet": (v3/*: any*/),
         "me.icon.internalID": {
           "enumValues": null,
           "nullable": true,
@@ -255,7 +265,7 @@ return {
           "plural": true,
           "type": "String"
         },
-        "me.id": (v3/*: any*/),
+        "me.id": (v2/*: any*/),
         "me.initials": (v1/*: any*/),
         "me.location": {
           "enumValues": null,
@@ -264,15 +274,13 @@ return {
           "type": "MyLocation"
         },
         "me.location.display": (v1/*: any*/),
-        "me.location.id": (v3/*: any*/),
-        "me.name": (v1/*: any*/),
-        "me.otherRelevantPositions": (v1/*: any*/),
-        "me.profession": (v1/*: any*/)
+        "me.location.id": (v2/*: any*/),
+        "me.name": (v1/*: any*/)
       }
     },
     "name": "CollectorProfileHeaderTestQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileHeaderTestQuery {\n  me {\n    ...CollectorProfileHeader_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeaderInfo_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  otherRelevantPositions\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  ...CollectorProfileHeaderInfo_me\n  name\n  bio\n  createdAt\n}\n"
+    "text": "query CollectorProfileHeaderTestQuery {\n  me {\n    ...CollectorProfileHeader_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  name\n  initials\n  icon {\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n  location {\n    display\n    id\n  }\n  collectorProfile {\n    isIdentityVerified\n    confirmedBuyerAt\n    id\n  }\n}\n"
   }
 };
 })();

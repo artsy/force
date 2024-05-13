@@ -31,7 +31,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
       internalID: artwork.internalID,
       id: artwork.id,
       slug: artwork.slug,
-      title: artwork.title!,
+      title: artwork.title ?? "",
       year: artwork.date,
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,

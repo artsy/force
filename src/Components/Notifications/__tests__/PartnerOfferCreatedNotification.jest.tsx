@@ -52,7 +52,7 @@ describe("PartnerOfferCreatedNotification", () => {
     ).toBeInTheDocument()
     expect(screen.getByTestId("manage-saves-link")).toHaveAttribute(
       "href",
-      "/collector-profile/saves"
+      "/favorites/saves"
     )
 
     // artwork

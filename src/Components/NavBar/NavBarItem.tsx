@@ -9,6 +9,8 @@ const navBarItemMixin = css<{ active?: boolean }>`
   align-items: center;
   color: ${themeGet("colors.black100")};
   text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
 
   ${props =>
     props.active &&

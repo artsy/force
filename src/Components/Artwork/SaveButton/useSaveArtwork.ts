@@ -35,8 +35,8 @@ export const useSaveArtwork = ({
           {
             saveArtwork: {
               artwork: {
-                id: artwork.id!,
-                slug: artwork.slug!,
+                id: artwork.id ?? "",
+                slug: artwork.slug ?? "",
                 isSaved: !isSaved,
               },
               /**

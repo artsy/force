@@ -22,10 +22,10 @@
   dependencies:
     tslib "~2.0.1"
 
-"@artsy/cohesion@^4.179.0":
-  version "4.179.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.179.0.tgz#f9e752dc14f54bace082e741e8ec2349c5f3bc0d"
-  integrity sha512-1uvf2n3/wLMDT6hkMhZAfLugHHw/781hXMlF24hqJPLAJwQZN3TSxGS8KeOvkOxwIan+cw6AYdq76fF44pLilA==
+"@artsy/cohesion@^4.182.0":
+  version "4.182.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.182.0.tgz#43a7d86d38c6955ad72c0a25c6ffecbd9e4b14f5"
+  integrity sha512-RJ2l1YKpJQooGjbp8Li3MudpkYEVxn+w6ugh+6vJWKXa/G4ZDDJcMcy835BJUMGzaeSGmlesk4PxDdYwTEM4lQ==
   dependencies:
     core-js "3"
 

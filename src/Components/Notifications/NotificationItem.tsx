@@ -1,23 +1,22 @@
 import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { NotificationItem_item$data } from "__generated__/NotificationItem_item.graphql"
-import { RouterLink } from "System/Router/RouterLink"
-import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-import { ActionType } from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/useSystemContext"
-import createLogger from "Utils/logger"
-import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
-import { isArtworksBasedNotification } from "./util"
-import { NotificationTypeLabel } from "./NotificationTypeLabel"
-import { FC } from "react"
 import {
   ExpiresInTimer,
   shouldDisplayExpiresInTimer,
 } from "Components/Notifications/ExpiresInTimer"
+import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
+import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
+import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
-import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
+import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/useSystemContext"
+import createLogger from "Utils/logger"
+import { NotificationItem_item$data } from "__generated__/NotificationItem_item.graphql"
+import { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
+import { NotificationTypeLabel } from "./NotificationTypeLabel"
+import { isArtworksBasedNotification } from "./util"
 
 const logger = createLogger("NotificationItem")
 
@@ -28,7 +27,7 @@ interface NotificationItemProps {
 const UNREAD_INDICATOR_SIZE = 8
 
 const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
-  const { trackEvent } = useTracking()
+  const { tracking } = useNotificationsTracking()
   const { relayEnvironment } = useSystemContext()
   const {
     state: { currentNotificationId },
@@ -68,10 +67,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
   const handlePress = () => {
     markAsRead()
 
-    trackEvent({
-      action: ActionType.clickedActivityPanelNotificationItem,
-      notification_type: item.notificationType,
-    })
+    tracking.clickedActivityPanelNotificationItem(item.notificationType)
   }
 
   const itemUrl = getNotificationUrl(item)

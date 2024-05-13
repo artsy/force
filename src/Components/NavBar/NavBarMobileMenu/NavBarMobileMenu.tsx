@@ -41,7 +41,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
   ) => {
     const node = event.currentTarget
     const text = node.textContent ?? ""
-    const href = node.getAttribute("href")!
+    const href = node.getAttribute("href")
 
     trackEvent({
       action_type: DeprecatedAnalyticsSchema.ActionType.Click,

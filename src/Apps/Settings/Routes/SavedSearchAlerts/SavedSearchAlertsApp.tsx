@@ -82,9 +82,9 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
         artistIds: alerts[0]?.artistIDs as string[],
       })
       // the two following lines update the right colump and url when
-      // "/settings/alerts" is called from the tab of side menu
+      // "/favorites/alerts" is called from the tab of side menu
       setViewOption("EDIT")
-      silentPush(`/settings/alerts/${alerts[0].internalID}/edit`)
+      silentPush(`/favorites/alerts/${alerts[0].internalID}/edit`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, match.params])
@@ -92,7 +92,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const closeModal = () => {
     setEditAlertEntity(null)
     setViewOption(null)
-    silentPush("/settings/alerts")
+    silentPush("/favorites/alerts")
   }
 
   const handleOpenEditForm = () => {
@@ -163,18 +163,18 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
         name: alerts[1].title ?? "",
         artistIds: alerts[1]?.artistIDs as string[],
       })
-      silentPush(`/settings/alerts/${alerts[1].internalID}/edit`)
+      silentPush(`/favorites/alerts/${alerts[1].internalID}/edit`)
     } else if (editAlertEntity?.id !== alerts[0].internalID) {
       setEditAlertEntity({
         id: alerts[0].internalID,
         name: alerts[0].title ?? "",
         artistIds: alerts[0]?.artistIDs as string[],
       })
-      silentPush(`/settings/alerts/${alerts[0].internalID}/edit`)
+      silentPush(`/favorites/alerts/${alerts[0].internalID}/edit`)
     } else {
       // if we deleted the last alert we display the screen's empty state
       setEditAlertEntity(null)
-      silentPush("/settings/alerts/")
+      silentPush("/favorites/alerts/")
     }
   }
 
@@ -241,10 +241,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
         if (path.includes("/artworks") || viewOption === "ARTWORKS") {
           setViewOption("ARTWORKS")
-          silentPush(`/settings/alerts/${alert.internalID}/artworks`)
+          silentPush(`/favorites/alerts/${alert.internalID}/artworks`)
         } else {
           setViewOption("EDIT")
-          silentPush(`/settings/alerts/${alert.internalID}/edit`)
+          silentPush(`/favorites/alerts/${alert.internalID}/edit`)
         }
       })
 
@@ -274,12 +274,12 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                 onEditAlertClick={entity => {
                   setEditAlertEntity(entity)
                   setViewOption("EDIT")
-                  silentPush(`/settings/alerts/${entity.id}/edit`)
+                  silentPush(`/favorites/alerts/${entity.id}/edit`)
                 }}
                 onViewArtworksClick={entity => {
                   setEditAlertEntity(entity)
                   setViewOption("ARTWORKS")
-                  silentPush(`/settings/alerts/${entity.id}/artworks`)
+                  silentPush(`/favorites/alerts/${entity.id}/artworks`)
                 }}
               />
             )
@@ -300,7 +300,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
   return (
     <>
-      <MetaTags title="Alerts | Artsy" pathname="/settings/alerts" />
+      <MetaTags title="Alerts | Artsy" pathname="/favorites/alerts" />
 
       {alerts.length === 0 ? (
         <SavedSearchAlertsEmptyResults />

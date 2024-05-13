@@ -11,6 +11,10 @@ jest.mock("react-tracking", () => ({
 
 jest.mock("Utils/auth", () => ({ logout: jest.fn() }))
 
+jest.mock("Components/NavBar/Menus/NavBarUserMenuAvatar", () => ({
+  NavBarUserMenuAvatar: () => <div />,
+}))
+
 describe("NavBarUserMenu", () => {
   const mockLogout = logout as jest.Mock
 
@@ -31,12 +35,15 @@ describe("NavBarUserMenu", () => {
     const links = wrapper.find("a")
 
     expect(links.map(a => [a.prop("href"), a.text().trim()])).toEqual([
-      ["/collector-profile/my-collection", "My Collection"],
+      ["/collector-profile/my-collection", "View profile"],
+      ["/collector-profile/my-collection", "Artworks"],
+      ["/collector-profile/artists", "Artists"],
       ["/collector-profile/insights", "Insights"],
-      ["/collector-profile/saves", "Saves"],
-      ["/collector-profile/follows", "Follows"],
-      ["/settings/alerts", "Alerts"],
+      ["/favorites/saves", "Saves"],
+      ["/favorites/follows", "Follows"],
+      ["/favorites/alerts", "Alerts"],
       ["/settings/edit-profile", "Settings"],
+      ["/settings/purchases", "Order History"],
     ])
 
     expect(wrapper.find("button").last().text()).toContain("Log out")

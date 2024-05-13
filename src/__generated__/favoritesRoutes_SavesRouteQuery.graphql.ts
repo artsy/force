@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b72c35b50b5289374449db58bfbe7dd0>>
+ * @generated SignedSource<<8267de7c64466d7807fa93ef6dccd75a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type collectorProfileRoutes_SavesRouteQuery$variables = Record<PropertyKey, never>;
-export type collectorProfileRoutes_SavesRouteQuery$data = {
+export type favoritesRoutes_SavesRouteQuery$variables = Record<PropertyKey, never>;
+export type favoritesRoutes_SavesRouteQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileSavesRoute_me">;
   } | null | undefined;
 };
-export type collectorProfileRoutes_SavesRouteQuery = {
-  response: collectorProfileRoutes_SavesRouteQuery$data;
-  variables: collectorProfileRoutes_SavesRouteQuery$variables;
+export type favoritesRoutes_SavesRouteQuery = {
+  response: favoritesRoutes_SavesRouteQuery$data;
+  variables: favoritesRoutes_SavesRouteQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -182,7 +182,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "collectorProfileRoutes_SavesRouteQuery",
+    "name": "favoritesRoutes_SavesRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -208,7 +208,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "collectorProfileRoutes_SavesRouteQuery",
+    "name": "favoritesRoutes_SavesRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -366,16 +366,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6b9346476b204494cd9eae76795a87e4",
+    "cacheID": "93dbdf14295bad5ee4b70e3968f297d6",
     "id": null,
     "metadata": {},
-    "name": "collectorProfileRoutes_SavesRouteQuery",
+    "name": "favoritesRoutes_SavesRouteQuery",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_SavesRouteQuery {\n  me {\n    ...CollectorProfileSavesRoute_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSavesRoute_me on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    shareableWithPartners\n    ...ArtworkListItem_item\n    ...OfferSettingsListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        shareableWithPartners\n        ...ArtworkListItem_item\n        ...OfferSettingsListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment OfferSettingsListItem_item on Collection {\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          resized(width: 200, version: [\"square\"]) {\n            src\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query favoritesRoutes_SavesRouteQuery {\n  me {\n    ...CollectorProfileSavesRoute_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSavesRoute_me on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    shareableWithPartners\n    ...ArtworkListItem_item\n    ...OfferSettingsListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        shareableWithPartners\n        ...ArtworkListItem_item\n        ...OfferSettingsListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment OfferSettingsListItem_item on Collection {\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          resized(width: 200, version: [\"square\"]) {\n            src\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7b673ddf183cb907fcc250a1a773e115";
+(node as any).hash = "8da633f95d484ad55532d130944db008";
 
 export default node;

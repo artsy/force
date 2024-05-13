@@ -11,7 +11,7 @@ export const HomePersonalizeMore: FC = () => {
           title="Never miss an artwork"
           subtitle="Saves and Follows help you keep track of the artworks and artists you love."
           label="Manage Saves and Follows"
-          href="/settings/saves"
+          href="/favorites/saves"
           height="100%"
         />
       </Column>

@@ -25,60 +25,30 @@ describe("CollectorProfileHeader", () => {
     })
   }
 
-  it("renders the name, bio, and member since", () => {
+  it("renders the name, location", () => {
     const { renderWithRelay } = getWrapper()
 
-    renderWithRelay(mockResolvers)
+    renderWithRelay({
+      Me: () => ({
+        name: "Darth Vader",
+        location: {
+          display: "New York",
+        },
+      }),
+    })
 
     expect(screen.getByText("Darth Vader")).toBeInTheDocument()
-    expect(screen.getByText("Member since 1987")).toBeInTheDocument()
-    expect(screen.getByText("I AM YOUR FATHER")).toBeInTheDocument()
+    expect(screen.getByText("New York")).toBeInTheDocument()
   })
 
   describe("the settings button", () => {
-    it("renders the settings button in Desktop", () => {
+    it("renders the settings and favorites links", () => {
       const { renderWithRelay } = getWrapper()
 
-      renderWithRelay(mockResolvers)
+      renderWithRelay()
 
       expect(screen.getByText("Settings")).toBeInTheDocument()
-    })
-
-    it("navigates when the settings button is pressed", () => {
-      const { renderWithRelay } = getWrapper()
-      renderWithRelay(mockResolvers)
-
-      expect(
-        screen
-          .getAllByRole("link")
-          .find(c => c.textContent?.includes("Settings"))
-      ).toHaveAttribute("href", `/settings/edit-profile`)
-    })
-
-    it("renders the settings icon in Mobile", () => {
-      const { renderWithRelay } = getWrapper("xs")
-
-      renderWithRelay(mockResolvers)
-
-      expect(screen.getByLabelText("Settings")).toBeInTheDocument()
-    })
-
-    it("navigates when the the settings icon in Mobile is pressed", () => {
-      const { renderWithRelay } = getWrapper("xs")
-      renderWithRelay(mockResolvers)
-
-      expect(screen.getByLabelText("Settings")).toHaveAttribute(
-        "href",
-        `/settings/edit-profile`
-      )
+      expect(screen.getByText("Favorites")).toBeInTheDocument()
     })
   })
 })
-
-const mockResolvers = {
-  Me: () => ({
-    name: "Darth Vader",
-    bio: "I AM YOUR FATHER",
-    createdAt: "1987-06-15T12:34:56+00:00",
-  }),
-}
