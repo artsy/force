@@ -121,6 +121,7 @@ describe("ConversationPurchaseOfferButton", () => {
           impulse_conversation_id: "internal-test-id",
           context_owner_id: "<Artwork-mock-id-1>",
           context_owner_slug: "<Artwork-mock-id-2>",
+          flow: "Buy now",
         })
         expect(createInquiryOrderMutationSpy).toHaveBeenCalledTimes(1)
       })
@@ -156,6 +157,7 @@ describe("ConversationPurchaseOfferButton", () => {
           action: "tappedBuyNow",
           context_owner_id: "<Artwork-mock-id-1>",
           context_owner_slug: "<Artwork-mock-id-2>",
+          flow: "Buy now",
         })
 
         expect(createInquiryOrderMutationSpy).toHaveBeenCalledTimes(1)
@@ -203,6 +205,7 @@ describe("ConversationPurchaseOfferButton", () => {
           action: "tappedBuyNow",
           context_owner_id: "<Artwork-mock-id-1>",
           context_owner_slug: "<Artwork-mock-id-2>",
+          flow: "Buy now",
         })
       })
     })
@@ -227,7 +230,7 @@ describe("ConversationPurchaseOfferButton", () => {
       })
     })
 
-    it("clicking the button on unique artworks creates an offer order", async () => {
+    it("clicking the button on unique artworks creates an order from the offer", async () => {
       renderWithRelay({
         ...mockResolvers,
         Conversation: () => ({
@@ -256,12 +259,13 @@ describe("ConversationPurchaseOfferButton", () => {
           impulse_conversation_id: "internal-test-id",
           context_owner_id: "<Artwork-mock-id-1>",
           context_owner_slug: "<Artwork-mock-id-2>",
+          flow: "Partner offer",
         })
         expect(createPartnerOfferOrderMutationSpy).toHaveBeenCalledTimes(1)
       })
     })
 
-    it("clicking the button on artworks with one edition set creates an offer", async () => {
+    it("clicking the button on artworks with one edition set creates an order from the offer", async () => {
       renderWithRelay({
         ...mockResolvers,
         Conversation: () => ({
@@ -302,54 +306,10 @@ describe("ConversationPurchaseOfferButton", () => {
           action: "tappedBuyNow",
           context_owner_id: "<Artwork-mock-id-1>",
           context_owner_slug: "<Artwork-mock-id-2>",
+          flow: "Partner offer",
         })
 
         expect(createPartnerOfferOrderMutationSpy).toHaveBeenCalledTimes(1)
-      })
-    })
-
-    it("clicking the button on non-unique artworks opens the confirmation modal", async () => {
-      const showModalSpy = jest.fn()
-
-      mockUseConversationsContext.mockReturnValue({
-        isConfirmModalVisible: false,
-        showSelectEditionSetModal: showModalSpy,
-      })
-
-      renderWithRelay({
-        ...mockResolvers,
-        Conversation: () => ({
-          internalID: "internal-test-id",
-          items: [
-            {
-              liveArtwork: {
-                __typename: "Artwork",
-                isEdition: true,
-                editionSets: [
-                  {
-                    internalID: "an-edition-set",
-                  },
-                  {
-                    internalID: "another-edition-set",
-                  },
-                ],
-              },
-            },
-          ],
-        }),
-      })
-
-      fireEvent.click(screen.getByText("Purchase"))
-
-      await waitFor(() => {
-        expect(showModalSpy).toHaveBeenCalledTimes(1)
-        expect(trackingSpy).toHaveBeenCalledWith({
-          context_owner_type: "conversation",
-          impulse_conversation_id: "internal-test-id",
-          action: "tappedBuyNow",
-          context_owner_id: "<Artwork-mock-id-1>",
-          context_owner_slug: "<Artwork-mock-id-2>",
-        })
       })
     })
   })
