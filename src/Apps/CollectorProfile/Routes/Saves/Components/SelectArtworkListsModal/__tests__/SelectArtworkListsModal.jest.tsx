@@ -15,6 +15,7 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 import { FC } from "react"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMutation")
@@ -34,19 +35,17 @@ const { renderWithRelay } = setupTestWrapperTL<
   SelectArtworkListsModal_Test_Query
 >({
   Component: props => {
-    if (!props.me) {
-      return null
-    }
-
     return (
-      <AnalyticsCombinedContextProvider
-        contextPageOwnerId="page-owner-id"
-        path="/artist/page-owner-slug"
-      >
-        <ManageArtworkForSavesProvider artwork={artwork}>
-          <TestComponent {...props} />
-        </ManageArtworkForSavesProvider>
-      </AnalyticsCombinedContextProvider>
+      <MockBoot>
+        <AnalyticsCombinedContextProvider
+          contextPageOwnerId="page-owner-id"
+          path="/artist/page-owner-slug"
+        >
+          <ManageArtworkForSavesProvider artwork={artwork}>
+            <TestComponent {...props} />
+          </ManageArtworkForSavesProvider>
+        </AnalyticsCombinedContextProvider>
+      </MockBoot>
     )
   },
   query: graphql`
@@ -58,21 +57,15 @@ const { renderWithRelay } = setupTestWrapperTL<
   `,
 })
 
-// FIXME:
-describe.skip("SelectArtworkListsModal", () => {
+describe("SelectArtworkListsModal", () => {
   const mockUseMutation = useMutation as jest.Mock
   const mockUseTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
   const submitMutation = jest.fn()
 
   beforeEach(() => {
-    mockUseMutation.mockImplementation(() => {
-      return { submitMutation }
-    })
-
-    mockUseTracking.mockImplementation(() => ({
-      trackEvent,
-    }))
+    mockUseMutation.mockImplementation(() => ({ submitMutation }))
+    mockUseTracking.mockImplementation(() => ({ trackEvent }))
   })
 
   it("should render artwork data", async () => {
