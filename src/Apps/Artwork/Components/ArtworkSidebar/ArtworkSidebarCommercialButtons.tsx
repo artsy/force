@@ -133,7 +133,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const handleCreatePartnerOfferOrder = async () => {
-    const trackEvent: ClickedBuyNow = {
+    const event: ClickedBuyNow = {
       action: ActionType.clickedBuyNow,
       context_owner_type: OwnerType.artwork,
       context_owner_id: artwork.internalID,
@@ -141,7 +141,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       flow: "Partner offer",
     }
 
-    tracking.trackEvent(trackEvent)
+    tracking.trackEvent(event)
 
     if (!activePartnerOffer?.internalID) {
       throw new ErrorWithMetadata(
@@ -188,7 +188,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const handleCreateOrder = async () => {
-    const trackEvent: ClickedBuyNow = {
+    const event: ClickedBuyNow = {
       action: ActionType.clickedBuyNow,
       context_owner_type: OwnerType.artwork,
       context_owner_id: artwork.internalID,
@@ -196,7 +196,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       flow: "Buy now",
     }
 
-    tracking.trackEvent(trackEvent)
+    tracking.trackEvent(event)
 
     if (!!user?.id) {
       try {
