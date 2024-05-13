@@ -37,13 +37,14 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
     return null
   }
 
-  const trackPurchaseEvent = () => {
+  const trackPurchaseEvent = (flow: "Partner offer" | "Buy now") => {
     const tappedPurchaseEvent: TappedBuyNow = {
       action: ActionType.tappedBuyNow,
       context_owner_type: OwnerType.conversation,
       context_owner_id: data.artwork.internalID,
       context_owner_slug: data.artwork.slug,
       impulse_conversation_id: data.conversation.internalID as string,
+      flow,
     }
 
     tracking.trackEvent(tappedPurchaseEvent)
@@ -76,7 +77,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
       response.commerceCreatePartnerOfferOrder?.orderOrError.__typename ===
       "CommerceOrderWithMutationSuccess"
     ) {
-      trackPurchaseEvent()
+      trackPurchaseEvent("Partner offer")
 
       router.push(
         `/orders/${response.commerceCreatePartnerOfferOrder.orderOrError.order?.internalID}/shipping?backToConversationId=${data.conversation.internalID}`
@@ -101,7 +102,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
       },
     })
 
-    trackPurchaseEvent()
+    trackPurchaseEvent("Buy now")
 
     if (
       response.createInquiryOrder?.orderOrError.__typename ===
@@ -139,7 +140,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
           size={["small", "large"]}
           width="100%"
           onClick={() => {
-            trackPurchaseEvent()
+            trackPurchaseEvent("Buy now")
 
             showSelectEditionSetModal({
               isCreatingOfferOrder: false,
