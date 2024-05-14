@@ -32,7 +32,12 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
   const partnerOffer = item?.partnerOffer
   const artwork = extractNodes(offerArtworksConnection)[0]
   const { hasEnded } = useTimer(partnerOffer?.endAt || "")
-  let subtitle = "Review the offer on your saved artwork"
+  const isOfferFromSaves = partnerOffer?.source === "SAVE"
+
+  let subtitle = isOfferFromSaves
+    ? "Review the offer on your saved artwork"
+    : "Review the offer before it expires"
+
   if (hasEnded)
     subtitle =
       "This offer has expired. View Work to make an offer, purchase or contact the gallery"
@@ -56,9 +61,11 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
         >
           Limited-Time Offer
         </Text>
-        <RouterLink to={BASE_SAVES_PATH} data-testid="manage-saves-link">
-          <Text variant="xs">Manage Saves</Text>
-        </RouterLink>
+        {isOfferFromSaves && (
+          <RouterLink to={BASE_SAVES_PATH} data-testid="manage-saves-link">
+            <Text variant="xs">Manage Saves</Text>
+          </RouterLink>
+        )}
       </Flex>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1}>
@@ -115,6 +122,7 @@ export const PartnerOfferCreatedNotificationFragment = graphql`
           endAt
           isAvailable
           note
+          source
           priceWithDiscount {
             display
           }
