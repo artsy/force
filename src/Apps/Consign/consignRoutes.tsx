@@ -439,34 +439,6 @@ export const consignRoutes: AppRouteConfig[] = [
         render: renderSubmissionFlowStep,
       },
       {
-        path: ":id/contact-information/:artworkId?",
-        layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
-        onClientSideRender: () => {
-          ContactInformation.preload()
-        },
-        query: contactInformationQuery,
-        render: renderSubmissionFlowStep,
-        prepareVariables: prepareSubmissionFlowStepVariables,
-      },
-      {
-        path: "/contact-information/:artworkId?",
-        layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
-        onClientSideRender: () => {
-          ContactInformation.preload()
-        },
-        query: graphql`
-          query consignRoutes_contactInformationMeQuery {
-            me {
-              ...ContactInformation_me
-            }
-          }
-        `,
-        render: renderSubmissionFlowStep,
-        prepareVariables: prepareSubmissionFlowStepVariables,
-      },
-      {
         path: ":id/thank-you/:artworkId?",
         layout: "ContainerOnly",
         getComponent: () => ThankYouWhenFromMyCollection,
