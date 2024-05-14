@@ -186,7 +186,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       if (nextStepIndex !== null) {
         let nextStep = steps[nextStepIndex]
         if (nextStep === "Artwork" || nextStep === "Artwork Details") {
-          nextRoute = `${consignPath}/${submissionId}/artwork-details/`
+          nextRoute = `${consignPath}/${submissionId}`
         } else if (nextStep === "Photos" || nextStep === "Upload Photos") {
           nextRoute = `${consignPath}/${submissionId}/upload-photos`
         }
@@ -207,13 +207,9 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   }
 
   const deriveBackLinkTo = () => {
-    const defaultBackLink = artworkId
-      ? "/collector-profile/my-collection"
-      : "/sell"
+    const defaultBackLink = "/sell"
     let backTo = defaultBackLink
-    if (isFirstStep && artworkId) {
-      return backTo + `/artwork/${artworkId}`
-    }
+
     let prevStep = ""
     if (stepIndex > 0) {
       switch (steps[stepIndex - 1]) {
@@ -239,11 +235,12 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
   return (
     <>
-      <TopContextBar displayBackArrow hideSeparator href={backTo}>
-        Back
-      </TopContextBar>
-
-      <Spacer y={6} />
+      {!isFirstStep && (
+        <TopContextBar displayBackArrow hideSeparator href={backTo}>
+          Back
+        </TopContextBar>
+      )}
+      <Spacer y={12} />
 
       <SubmissionStepper currentStep="Artwork Details" />
 

@@ -1,10 +1,6 @@
 import { ActionType } from "@artsy/cohesion"
 import { Button, Flex, Spacer, Text, useToasts } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
-import {
-  ContactInformationFormFragmentContainer,
-  ContactInformationFormModel,
-} from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/Components/ContactInformationForm"
 import { useRequestPriceEstimate } from "Apps/MyCollection/Routes/PriceEstimate/Mutations/useRequestPriceEstimate"
 import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
@@ -21,6 +17,10 @@ import {
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
+import {
+  ContactInformationFormFragmentContainer,
+  ContactInformationFormModel,
+} from "Apps/MyCollection/ContactInformation/ContactInformationForm"
 
 const getContactInformationFormInitialValues = (
   me: PriceEstimateContactInformation_me$data
