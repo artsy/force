@@ -2,7 +2,7 @@ import { Box, BoxProps, Button } from "@artsy/palette"
 import { useMakeInquiryOffer } from "Apps/Conversations/mutations/useMakeInquiryOfferMutation"
 import { useState } from "react"
 import { useRouter } from "System/Router/useRouter"
-import { ActionType, OwnerType, TappedMakeOffer } from "@artsy/cohesion"
+import { ActionType, OwnerType, ClickedMakeOffer } from "@artsy/cohesion"
 import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
 import { useConversationPurchaseButtonData } from "Apps/Conversations/components/ConversationCTA/useConversationPurchaseButtonData"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
@@ -33,13 +33,13 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
   }
 
   const trackMakeOfferEvent = () => {
-    const tappedMakeOfferEvent: TappedMakeOffer = {
-      action: ActionType.tappedMakeOffer,
+    const clickedMakeOfferEvent: ClickedMakeOffer = {
+      action: ActionType.clickedMakeOffer,
       context_owner_type: OwnerType.conversation,
       impulse_conversation_id: data.conversation.internalID as string,
     }
 
-    tracking.trackEvent(tappedMakeOfferEvent)
+    tracking.trackEvent(clickedMakeOfferEvent)
   }
 
   const variant = data.isPurchaseButtonPresent
