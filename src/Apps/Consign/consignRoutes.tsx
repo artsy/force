@@ -75,16 +75,6 @@ const ArtworkDetailsFragmentContainer = loadable(
   }
 )
 
-const ArtworkDetails = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ArtworkDetails/ArtworkDetails"
-    ),
-  {
-    resolveComponent: component => component.ArtworkDetails,
-  }
-)
-
 const UploadPhotosFragmentContainer = loadable(
   () =>
     import(
