@@ -3,7 +3,7 @@ import { useMakeInquiryOrder } from "Apps/Conversations/mutations/useMakeInquiry
 import { useState } from "react"
 import { useRouter } from "System/Router/useRouter"
 import { useTracking } from "react-tracking"
-import { ActionType, OwnerType, TappedBuyNow } from "@artsy/cohesion"
+import { ActionType, OwnerType, ClickedBuyNow } from "@artsy/cohesion"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { useConversationPurchaseButtonData } from "Apps/Conversations/components/ConversationCTA/useConversationPurchaseButtonData"
 import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
@@ -38,8 +38,8 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
   }
 
   const trackPurchaseEvent = (flow: "Partner offer" | "Buy now") => {
-    const tappedPurchaseEvent: TappedBuyNow = {
-      action: ActionType.tappedBuyNow,
+    const event: ClickedBuyNow = {
+      action: ActionType.clickedBuyNow,
       context_owner_type: OwnerType.conversation,
       context_owner_id: data.artwork.internalID,
       context_owner_slug: data.artwork.slug,
@@ -47,7 +47,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
       flow,
     }
 
-    tracking.trackEvent(tappedPurchaseEvent)
+    tracking.trackEvent(event)
   }
 
   const handleCreatePartnerOfferOrder = async () => {

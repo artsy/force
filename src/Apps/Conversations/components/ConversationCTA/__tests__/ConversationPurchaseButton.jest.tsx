@@ -116,7 +116,7 @@ describe("ConversationPurchaseOfferButton", () => {
 
       await waitFor(() => {
         expect(trackingSpy).toHaveBeenCalledWith({
-          action: "tappedBuyNow",
+          action: "clickedBuyNow",
           context_owner_type: "conversation",
           impulse_conversation_id: "internal-test-id",
           context_owner_id: "<Artwork-mock-id-1>",
@@ -154,7 +154,7 @@ describe("ConversationPurchaseOfferButton", () => {
         expect(trackingSpy).toHaveBeenCalledWith({
           context_owner_type: "conversation",
           impulse_conversation_id: "internal-test-id",
-          action: "tappedBuyNow",
+          action: "clickedBuyNow",
           context_owner_id: "<Artwork-mock-id-1>",
           context_owner_slug: "<Artwork-mock-id-2>",
           flow: "Buy now",
@@ -202,7 +202,7 @@ describe("ConversationPurchaseOfferButton", () => {
         expect(trackingSpy).toHaveBeenCalledWith({
           context_owner_type: "conversation",
           impulse_conversation_id: "internal-test-id",
-          action: "tappedBuyNow",
+          action: "clickedBuyNow",
           context_owner_id: "<Artwork-mock-id-1>",
           context_owner_slug: "<Artwork-mock-id-2>",
           flow: "Buy now",
@@ -254,7 +254,7 @@ describe("ConversationPurchaseOfferButton", () => {
 
       await waitFor(() => {
         expect(trackingSpy).toHaveBeenCalledWith({
-          action: "tappedBuyNow",
+          action: "clickedBuyNow",
           context_owner_type: "conversation",
           impulse_conversation_id: "internal-test-id",
           context_owner_id: "<Artwork-mock-id-1>",
@@ -303,7 +303,7 @@ describe("ConversationPurchaseOfferButton", () => {
         expect(trackingSpy).toHaveBeenCalledWith({
           context_owner_type: "conversation",
           impulse_conversation_id: "internal-test-id",
-          action: "tappedBuyNow",
+          action: "clickedBuyNow",
           context_owner_id: "<Artwork-mock-id-1>",
           context_owner_slug: "<Artwork-mock-id-2>",
           flow: "Partner offer",
