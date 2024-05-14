@@ -89,7 +89,7 @@ describe("ConversationMakeOfferButton", () => {
 
     await waitFor(() => {
       expect(trackingSpy).toHaveBeenCalledWith({
-        action: "clickedMakeOffer",
+        action: "tappedMakeOffer",
         context_owner_type: "conversation",
         impulse_conversation_id: "internal-test-id",
       })
@@ -127,7 +127,7 @@ describe("ConversationMakeOfferButton", () => {
 
     await waitFor(() => {
       expect(trackingSpy).toHaveBeenCalledWith({
-        action: "clickedMakeOffer",
+        action: "tappedMakeOffer",
         context_owner_type: "conversation",
         impulse_conversation_id: "internal-test-id",
       })
@@ -171,7 +171,7 @@ describe("ConversationMakeOfferButton", () => {
     await waitFor(() => {
       expect(showModalSpy).toHaveBeenCalledTimes(1)
       expect(trackingSpy).toHaveBeenCalledWith({
-        action: "clickedMakeOffer",
+        action: "tappedMakeOffer",
         context_owner_type: "conversation",
         impulse_conversation_id: "internal-test-id",
       })
