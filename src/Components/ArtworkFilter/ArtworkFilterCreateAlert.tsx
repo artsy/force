@@ -3,6 +3,7 @@ import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboardi
 import { isEmpty } from "lodash"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
+import styled from "styled-components"
 
 interface ArtworkFilterCreateAlertProps {
   renderButton: (props: { onClick: () => void }) => JSX.Element
@@ -20,22 +21,32 @@ export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
 
   return (
     <>
-      <CreateAlertButton
-        renderButton={({ onClick }) => (
-          <ProgressiveOnboardingAlertCreate>
-            {({ onSkip: createSkip }) =>
-              renderButton({
-                onClick: () => {
-                  createSkip()
-                  onClick()
-                },
-              })
-            }
-          </ProgressiveOnboardingAlertCreate>
-        )}
-      />
+      <Container>
+        <CreateAlertButton
+          renderButton={({ onClick }) => (
+            <ProgressiveOnboardingAlertCreate>
+              {({ onSkip: createSkip }) => {
+                return renderButton({
+                  onClick: () => {
+                    createSkip()
+                    onClick()
+                  },
+                })
+              }}
+            </ProgressiveOnboardingAlertCreate>
+          )}
+        />
+      </Container>
 
       {children}
     </>
   )
 }
+
+// ProgressiveOnboardingPopover introduces a wrapper div that needs to be flex
+// in some cases to avoid extraneous whitespace
+const Container = styled.div`
+  > div {
+    display: flex;
+  }
+`

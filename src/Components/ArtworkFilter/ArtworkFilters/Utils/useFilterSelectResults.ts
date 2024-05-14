@@ -6,7 +6,7 @@ import {
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { useFilterLabelCountByKey } from "../../Utils/useFilterLabelCountByKey"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 
 export interface UseFilterSelectResultsProps {
   facetName: keyof MultiSelectArtworkFilters
@@ -32,7 +32,7 @@ export const useFilterSelectResults = ({
     ?.counts.map(item => ({ label: item.name, ...item })) as FilterSelectItems
 
   const selectedItems = filtersByFaceName.map(selectedFacetName => {
-    return items.find(item => item.value === selectedFacetName)
+    return items?.find(item => item.value === selectedFacetName)
   }) as FilterSelectItems
 
   const handleFilterSelectChange = (state: FilterSelectChangeState) => {
