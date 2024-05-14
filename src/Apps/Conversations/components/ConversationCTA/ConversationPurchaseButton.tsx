@@ -7,19 +7,24 @@ import { ActionType, OwnerType, TappedBuyNow } from "@artsy/cohesion"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { useConversationPurchaseButtonData } from "Apps/Conversations/components/ConversationCTA/useConversationPurchaseButtonData"
 import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
+import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
+import { ErrorWithMetadata } from "Utils/errors"
 
 interface ConversationPurchaseButtonProps extends BoxProps {
   conversation: useConversationPurchaseButtonData_conversation$key
+  partnerOffer: { internalID: string } | null
 }
 
 export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProps> = ({
   conversation,
+  partnerOffer,
   ...boxProps
 }) => {
   const tracking = useTracking()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { router } = useRouter()
-  const { submitMutation } = useMakeInquiryOrder()
+  const makeInquiryOrder = useMakeInquiryOrder()
+  const partnerOfferCheckout = usePartnerOfferCheckoutMutation()
 
   const {
     showSelectEditionSetModal,
@@ -32,48 +37,92 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
     return null
   }
 
-  const trackPurchaseEvent = () => {
+  const trackPurchaseEvent = (flow: "Partner offer" | "Buy now") => {
     const tappedPurchaseEvent: TappedBuyNow = {
       action: ActionType.tappedBuyNow,
       context_owner_type: OwnerType.conversation,
       context_owner_id: data.artwork.internalID,
       context_owner_slug: data.artwork.slug,
       impulse_conversation_id: data.conversation.internalID as string,
+      flow,
     }
 
     tracking.trackEvent(tappedPurchaseEvent)
   }
 
+  const handleCreatePartnerOfferOrder = async () => {
+    if (!partnerOffer?.internalID) {
+      throw new ErrorWithMetadata(
+        "handleCreatePartnerOfferOrder (conversations): no active partner offer"
+      )
+    }
+
+    const response = await partnerOfferCheckout.submitMutation({
+      variables: {
+        input: {
+          partnerOfferId: partnerOffer?.internalID,
+          editionSetId: data.artwork.editionSets?.[0]?.internalID,
+          impulseConversationId: data.conversation.internalID, // # Requires schema update
+        },
+      },
+      rejectIf: res => {
+        return (
+          res.commerceCreatePartnerOfferOrder?.orderOrError.__typename !==
+          "CommerceOrderWithMutationSuccess"
+        )
+      },
+    })
+
+    if (
+      response.commerceCreatePartnerOfferOrder?.orderOrError.__typename ===
+      "CommerceOrderWithMutationSuccess"
+    ) {
+      trackPurchaseEvent("Partner offer")
+
+      router.push(
+        `/orders/${response.commerceCreatePartnerOfferOrder.orderOrError.order?.internalID}/shipping?backToConversationId=${data.conversation.internalID}`
+      )
+    }
+  }
+
+  const handleCreateInquiryOrder = async () => {
+    const response = await makeInquiryOrder.submitMutation({
+      variables: {
+        input: {
+          artworkId: data.artwork.internalID,
+          editionSetId: data.artwork.editionSets?.[0]?.internalID,
+          impulseConversationId: data.conversation.internalID as string,
+        },
+      },
+      rejectIf: res => {
+        return (
+          res.createInquiryOrder?.orderOrError.__typename ===
+          "CommerceOrderWithMutationFailure"
+        )
+      },
+    })
+
+    trackPurchaseEvent("Buy now")
+
+    if (
+      response.createInquiryOrder?.orderOrError.__typename ===
+      "CommerceOrderWithMutationSuccess"
+    ) {
+      router.push(
+        `/orders/${response.createInquiryOrder.orderOrError.order.internalID}/shipping?backToConversationId=${data.conversation.internalID}`
+      )
+    }
+  }
+
   const handleClick = async () => {
     setIsSubmitting(true)
 
+    const orderMutation = partnerOffer
+      ? handleCreatePartnerOfferOrder
+      : handleCreateInquiryOrder
+
     try {
-      const response = await submitMutation({
-        variables: {
-          input: {
-            artworkId: data.artwork.internalID,
-            editionSetId: data.artwork.editionSets?.[0]?.internalID,
-            impulseConversationId: data.conversation.internalID as string,
-          },
-        },
-        rejectIf: res => {
-          return (
-            res.createInquiryOrder?.orderOrError.__typename ===
-            "CommerceOrderWithMutationFailure"
-          )
-        },
-      })
-
-      trackPurchaseEvent()
-
-      if (
-        response.createInquiryOrder?.orderOrError.__typename ===
-        "CommerceOrderWithMutationSuccess"
-      ) {
-        router.push(
-          `/orders/${response.createInquiryOrder.orderOrError.order.internalID}/shipping?backToConversationId=${data.conversation.internalID}`
-        )
-      }
+      await orderMutation()
     } catch (error) {
       console.error("Error creating inquiry order", error)
     } finally {
@@ -91,7 +140,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
           size={["small", "large"]}
           width="100%"
           onClick={() => {
-            trackPurchaseEvent()
+            trackPurchaseEvent("Buy now")
 
             showSelectEditionSetModal({
               isCreatingOfferOrder: false,
