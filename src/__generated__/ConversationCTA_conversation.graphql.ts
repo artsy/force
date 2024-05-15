@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ceba4b979c9fa11dd27cc02b071a08c6>>
+ * @generated SignedSource<<d50adf955a225d5c322f24a29d00448b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,6 +43,7 @@ export type ConversationCTA_conversation$data = {
     } | null | undefined;
     readonly liveArtwork: {
       readonly __typename: "Artwork";
+      readonly internalID: string;
       readonly isAcquireable: boolean | null | undefined;
       readonly isOfferable: boolean | null | undefined;
       readonly isOfferableFromInquiry: boolean | null | undefined;
@@ -121,6 +122,7 @@ return {
                   "name": "ConversationConfirmModal_artwork"
                 },
                 (v1/*: any*/),
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -300,6 +302,6 @@ return {
 };
 })();
 
-(node as any).hash = "51741c03c63f809671000616b84871be";
+(node as any).hash = "884b0a37078fdecf8d6f3763d3b70208";
 
 export default node;

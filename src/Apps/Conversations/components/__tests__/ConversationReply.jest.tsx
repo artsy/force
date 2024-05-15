@@ -11,6 +11,15 @@ import { useToasts } from "@artsy/palette"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
+jest.mock(
+  "Apps/Conversations/components/ConversationCTA/ConversationCTA",
+  () => {
+    return {
+      ConversationCTA: () => <div>ConversationCTA</div>,
+    }
+  }
+)
+
 jest.mock("@artsy/palette", () => ({
   ...jest.requireActual("@artsy/palette"),
   useToasts: jest.fn().mockReturnValue({

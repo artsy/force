@@ -10,6 +10,8 @@ import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"
 import { ConversationReviewOfferCTA } from "Apps/Conversations/components/ConversationCTA/ConversationReviewOfferCTA"
 import { extractNodes } from "Utils/extractNodes"
+import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
+import { useTimer } from "Utils/Hooks/useTimer"
 
 interface ConversationCTAProps extends FlexProps {
   conversation: ConversationCTA_conversation$key
@@ -20,11 +22,21 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
   ...flexProps
 }) => {
   const data = useFragment(FRAGMENT, conversation)
+  const { findPartnerOffer } = useConversationsContext()
 
   const liveArtwork = data?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
+  const partnerOffer = artwork && findPartnerOffer(artwork.internalID)
+  const partnerOfferTimer = useTimer(
+    partnerOffer?.endAt ?? new Date(0).toISOString()
+  )
+
   const activeOrder = extractNodes(data.activeOrderCTA)[0]
+  const activePartnerOffer =
+    !activeOrder && partnerOffer && !partnerOfferTimer.hasEnded
+      ? partnerOffer
+      : null
 
   if (!artwork) {
     return null
@@ -36,11 +48,9 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
   )
 
   // Inactive order waiting for commercial actions
-  const showTransactionButtons =
-    !activeOrder &&
-    (artwork.isAcquireable ||
-      artwork.isOfferable ||
-      artwork.isOfferableFromInquiry)
+  const canPurchase = artwork.isAcquireable || !!activePartnerOffer
+  const canMakeOffer = artwork.isOfferable || artwork.isOfferableFromInquiry
+  const showTransactionButtons = !activeOrder && (canPurchase || canMakeOffer)
 
   return (
     <>
@@ -65,7 +75,11 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
         </Flex>
 
         <Box position="absolute">
-          <ConversationConfirmModal conversation={data} artwork={artwork} />
+          <ConversationConfirmModal
+            conversation={data}
+            artwork={artwork}
+            partnerOffer={activePartnerOffer}
+          />
         </Box>
 
         {showTransactionButtons && (
@@ -73,15 +87,16 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
             <Spacer y={1} />
 
             <Flex flexDirection="row" justifyContent="space-between">
-              {artwork.isAcquireable && (
+              {canPurchase && (
                 <ConversationPurchaseButton
+                  partnerOffer={activePartnerOffer}
                   conversation={data}
                   px={0.5}
                   width="100%"
                 />
               )}
 
-              {(artwork.isOfferable || artwork.isOfferableFromInquiry) && (
+              {canMakeOffer && (
                 <ConversationMakeOfferButton
                   conversation={data}
                   px={0.5}
@@ -107,6 +122,7 @@ const FRAGMENT = graphql`
         ... on Artwork {
           ...ConversationConfirmModal_artwork
           __typename
+          internalID
           isOfferableFromInquiry
           isAcquireable
           isOfferable

@@ -7,7 +7,7 @@ import {
 export const useConversationPurchaseButtonData = (
   conversation: useConversationPurchaseButtonData_conversation$key
 ) => {
-  const data = useFragment(
+  const conversationData = useFragment(
     graphql`
       fragment useConversationPurchaseButtonData_conversation on Conversation {
         internalID
@@ -31,14 +31,14 @@ export const useConversationPurchaseButtonData = (
     conversation
   )
 
-  if (!data) {
+  if (!conversationData) {
     return null
   }
-  if (data.items?.[0]?.liveArtwork?.__typename !== "Artwork") {
+  if (conversationData.items?.[0]?.liveArtwork?.__typename !== "Artwork") {
     return null
   }
 
-  const artwork = data.items?.[0]?.liveArtwork as Extract<
+  const artwork = conversationData.items?.[0]?.liveArtwork as Extract<
     NonNullable<
       NonNullable<
         useConversationPurchaseButtonData_conversation$data["items"]
@@ -57,7 +57,7 @@ export const useConversationPurchaseButtonData = (
   const isPurchaseButtonPresent = artwork.isAcquireable
 
   return {
-    conversation: data,
+    conversation: conversationData,
     artwork,
     isUniqueArtwork,
     isPurchaseButtonPresent,
