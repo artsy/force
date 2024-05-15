@@ -77,7 +77,7 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
       backgroundColor="black100"
     >
       <Text variant="md" color="white100">
-        About the Artist
+        About the Artist{data.artists && data.artists?.length > 1 ? "s" : ""}
       </Text>
 
       <Spacer y={2} />
