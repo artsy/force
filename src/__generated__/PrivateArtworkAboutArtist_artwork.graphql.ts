@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56299329cf5d02d94848d0aa9813f5ca>>
+ * @generated SignedSource<<fa05c2297f9d81ff94d1e5366d0644b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrivateArtworkAboutArtist_artwork$data = {
-  readonly artist: {
+  readonly artists: ReadonlyArray<{
     readonly biographyBlurb: {
       readonly text: string | null | undefined;
     } | null | undefined;
@@ -35,7 +35,7 @@ export type PrivateArtworkAboutArtist_artwork$data = {
     readonly name: string | null | undefined;
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
-  } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly displayArtistBio: boolean | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "PrivateArtworkAboutArtist_artwork";
@@ -72,8 +72,8 @@ return {
       "args": null,
       "concreteType": "Artist",
       "kind": "LinkedField",
-      "name": "artist",
-      "plural": false,
+      "name": "artists",
+      "plural": true,
       "selections": [
         {
           "args": null,
@@ -244,6 +244,6 @@ return {
 };
 })();
 
-(node as any).hash = "9639e6efcb34309b9af08b5ed034e0ce";
+(node as any).hash = "e80b892b9afca1198326fce527569b5c";
 
 export default node;
