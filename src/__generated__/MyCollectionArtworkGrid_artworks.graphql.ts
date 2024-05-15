@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9bf3ba92130dd5a359aed2e24abac7f1>>
+ * @generated SignedSource<<b4746f75f14aa5ff5704af0bb9628508>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
+export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkGrid_artworks$data = {
   readonly edges: ReadonlyArray<{
@@ -18,6 +19,9 @@ export type MyCollectionArtworkGrid_artworks$data = {
         readonly targetSupply: {
           readonly priority: ArtistTargetSupplyPriority | null | undefined;
         };
+      } | null | undefined;
+      readonly consignmentSubmission: {
+        readonly state: ArtworkConsignmentSubmissionState;
       } | null | undefined;
       readonly href: string | null | undefined;
       readonly id: string;
@@ -148,6 +152,24 @@ return {
               "storageKey": null
             },
             {
+              "alias": null,
+              "args": null,
+              "concreteType": "ArtworkConsignmentSubmission",
+              "kind": "LinkedField",
+              "name": "consignmentSubmission",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "state",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
               "args": (v0/*: any*/),
               "kind": "FragmentSpread",
               "name": "GridItem_artwork"
@@ -169,6 +191,6 @@ return {
 };
 })();
 
-(node as any).hash = "120892fd7d51ef6f946438ec99072ca8";
+(node as any).hash = "7af70d288b96fac16ee9cd2e65df57d8";
 
 export default node;
