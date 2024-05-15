@@ -29,7 +29,7 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
       fragment PrivateArtworkAboutArtist_artwork on Artwork {
         displayArtistBio
         slug
-        artist {
+        artists {
           ...FollowArtistButton_artist
           internalID
           href
@@ -60,10 +60,13 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
     artwork
   )
 
-  const followsCount =
-    Number(formatFollowerCount(data.artist?.counts?.follows)) ?? 0
+  const followCount = (artist): number => {
+    return Number(formatFollowerCount(artist.counts?.follows)) ?? 0
+  }
 
-  const biographyBlurb = data.artist?.biographyBlurb?.text ?? ""
+  const biographyBlurb = (artist): string => {
+    return artist.biographyBlurb?.text ?? ""
+  }
 
   return (
     <Box
@@ -79,90 +82,98 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
 
       <Spacer y={2} />
 
-      {data.artist && (
-        <>
-          <Flex flexDirection="row" alignItems="center">
-            <Box mr={2}>
-              <Avatar
-                size="md"
-                src={data.artist.coverArtwork?.image?.cropped?.src}
-              />
-            </Box>
-
-            <Box>
-              <Text variant="lg-display" color="white100" fontWeight="bold">
-                {data.artist.name}
-              </Text>
-
-              {data.artist.formattedNationalityAndBirthday && (
-                <Text variant="xs" color="white100">
-                  {data.artist.formattedNationalityAndBirthday}
-                </Text>
-              )}
-
-              <Spacer y={1} />
-
-              <Flex
-                flexDirection="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <FollowArtistButtonQueryRenderer
-                  id={data.artist.internalID}
-                  size={["large", "small"]}
-                  width={["100%", "fit-content"]}
-                  variant="secondaryWhite"
-                  mr={1}
-                >
-                  {label => {
-                    return (
-                      <Stack gap={0.5} flexDirection="row" alignItems="center">
-                        <Box color="white100">{label}</Box>
-                      </Stack>
-                    )
-                  }}
-                </FollowArtistButtonQueryRenderer>
-
-                {followsCount > 0 && (
-                  <Text
-                    variant="xs"
-                    color="white100"
-                    ml={0.5}
-                    style={{ whiteSpace: "nowrap" }}
-                  >
-                    {followsCount} {followsCount > 1 ? "Followers" : "Follower"}
-                  </Text>
-                )}
-              </Flex>
-            </Box>
-          </Flex>
-
-          <>
-            {!!biographyBlurb && data.displayArtistBio && (
-              <>
-                <Spacer y={4} />
-
-                <HTML variant="md" color="white100">
-                  <ReadMore
-                    maxChars={190}
-                    content={`${biographyBlurb}`}
-                    inlineReadMoreLink={false}
-                    onReadMoreClicked={() => {
-                      const payload: ClickedOnReadMore = {
-                        action: ActionType.clickedOnReadMore,
-                        context_module: "About the artist",
-                        subject: "Read more",
-                        type: "Link",
-                      }
-
-                      trackEvent(payload)
-                    }}
+      {data.artists?.map(
+        artist =>
+          artist && (
+            <>
+              <Flex flexDirection="row" alignItems="center" my={4}>
+                <Box mr={2}>
+                  <Avatar
+                    size="md"
+                    src={artist.coverArtwork?.image?.cropped?.src}
                   />
-                </HTML>
+                </Box>
+
+                <Box>
+                  <Text variant="lg-display" color="white100" fontWeight="bold">
+                    {artist.name}
+                  </Text>
+
+                  {artist.formattedNationalityAndBirthday && (
+                    <Text variant="xs" color="white100">
+                      {artist.formattedNationalityAndBirthday}
+                    </Text>
+                  )}
+
+                  <Spacer y={1} />
+
+                  <Flex
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <FollowArtistButtonQueryRenderer
+                      id={artist.internalID}
+                      size={["large", "small"]}
+                      width={["100%", "fit-content"]}
+                      variant="secondaryWhite"
+                      mr={1}
+                    >
+                      {label => {
+                        return (
+                          <Stack
+                            gap={0.5}
+                            flexDirection="row"
+                            alignItems="center"
+                          >
+                            <Box color="white100">{label}</Box>
+                          </Stack>
+                        )
+                      }}
+                    </FollowArtistButtonQueryRenderer>
+
+                    {followCount(artist) > 0 && (
+                      <Text
+                        variant="xs"
+                        color="white100"
+                        ml={0.5}
+                        style={{ whiteSpace: "nowrap" }}
+                      >
+                        {followCount(artist)}{" "}
+                        {followCount(artist) > 1 ? "Followers" : "Follower"}
+                      </Text>
+                    )}
+                  </Flex>
+                </Box>
+              </Flex>
+
+              <>
+                {!!biographyBlurb(artist) && data.displayArtistBio && (
+                  <>
+                    <Spacer y={4} />
+
+                    <HTML variant="md" color="white100">
+                      <ReadMore
+                        maxChars={190}
+                        content={`${biographyBlurb(artist)}`}
+                        inlineReadMoreLink={false}
+                        onReadMoreClicked={() => {
+                          const payload: ClickedOnReadMore = {
+                            action: ActionType.clickedOnReadMore,
+                            context_module: "About the artist",
+                            subject: "Read more",
+                            type: "Link",
+                          }
+
+                          trackEvent(payload)
+                        }}
+                      />
+                    </HTML>
+                  </>
+                )}
               </>
-            )}
-          </>
-        </>
+            </>
+          )
       )}
     </Box>
   )
