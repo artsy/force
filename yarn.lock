@@ -67,10 +67,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-3.5.0.tgz#a87ca1caca1f56d1c6d5b720581b9b6e3af1611b"
   integrity sha512-pqdQj4sbrgELlEKk+vR8vpmjgmSxk96PW7M+pWUT/UpHKD43YKCVTfe72z2WOqQru3ohobFvsnybQg/UbeSVtA==
 
-"@artsy/icons@3.18.0":
-  version "3.18.0"
-  resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.18.0.tgz#b356410809fbd71108e2408fa4e7e79d8eef5c15"
-  integrity sha512-P62NQ8+xoSGtiHGrqVdEuT86PcP4/WvVzFXA9sUN1max76Z7IoWHGh1EzTpO+CAtIe0w9E0i2IeY+MnAQAy0kQ==
+"@artsy/icons@3.19.0":
+  version "3.19.0"
+  resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.19.0.tgz#d568843ececac94897785c85c20d24af0812e7ec"
+  integrity sha512-14k1iArqSS9NqyfwrBwU+wCoFQ4SQdDxaGl0XlAL1OiAfW+nZRpzsV4T15/LAmfzNDB2B/ZMJUq/yutwBB22jA==
 
 "@artsy/icons@^3.2.2":
   version "3.8.1"
