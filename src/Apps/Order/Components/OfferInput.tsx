@@ -22,7 +22,7 @@ export const OfferInput: FC<OfferInputProps> = ({
 }) => {
   const formatValueForDisplay = (val: number | undefined) => {
     if (val !== undefined && val > 0) {
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      return val.toLocaleString("en-US")
     }
     return ""
   }
