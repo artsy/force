@@ -27,6 +27,7 @@ import {
 import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
+import { ArtworkDetails_me$data } from "__generated__/ArtworkDetails_me.graphql"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { LocationDescriptor } from "found"
 import { trackEvent } from "Server/analytics/helpers"
@@ -40,11 +41,13 @@ const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission$data
   myCollectionArtwork?: ArtworkDetails_myCollectionArtwork$data
+  me?: ArtworkDetails_me$data
 }
 
 export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   submission,
   myCollectionArtwork,
+  me,
 }) => {
   const { router, match } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
@@ -83,6 +86,9 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       ...values,
       editionNumber: isLimitedEditionRarity ? values.editionNumber : "",
       editionSize: isLimitedEditionRarity ? values.editionSize : "",
+      userName: me?.name,
+      userEmail: me?.email,
+      userPhone: me?.phoneNumber?.originalNumber,
     }
 
     for (let key in artworkDetailsForm) {
@@ -354,6 +360,16 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         depth
         metric
         provenance
+      }
+    `,
+    me: graphql`
+      fragment ArtworkDetails_me on Me {
+        name
+        email
+        phoneNumber {
+          isValid
+          originalNumber
+        }
       }
     `,
   }

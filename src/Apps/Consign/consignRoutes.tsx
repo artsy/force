@@ -286,6 +286,9 @@ export const consignRoutes: AppRouteConfig[] = [
               ...ArtworkDetails_submission
               ...redirects_submission @relay(mask: false)
             }
+            me {
+              ...ArtworkDetails_me
+            }
           }
         `,
         prepareVariables: prepareSubmissionFlowStepVariables,
