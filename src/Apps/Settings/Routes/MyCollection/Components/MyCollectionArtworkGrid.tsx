@@ -40,7 +40,8 @@ const MyCollectionArtworksGrid: FC<MyCollectionArtworkGridProps> = ({
           <Text variant="xs">
             <strong>Interested in Selling This Work?</strong>
             <br />
-            Let our experts find the best sales option for you.
+            Submit for sale and let our experts find the best selling option for
+            you.
           </Text>
         )
       }
@@ -67,6 +68,9 @@ export const MyCollectionArtworkGrid = createFragmentContainer(
               targetSupply {
                 priority
               }
+            }
+            consignmentSubmission {
+              state
             }
             ...GridItem_artwork @arguments(includeAllImages: true)
             ...FlatGridItem_artwork @arguments(includeAllImages: true)

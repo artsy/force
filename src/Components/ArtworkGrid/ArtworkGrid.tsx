@@ -155,7 +155,9 @@ export class ArtworkGridContainer extends React.Component<
 
     // applicable only for My Collection grid: we want to show the popover only for the first P1 artwork
     const firstP1Artwork = extractNodes(this.props.artworks).find(
-      artwork => (artwork as any)?.artist?.targetSupply?.priority === "TRUE"
+      artwork =>
+        (artwork as any)?.artist?.targetSupply?.priority === "TRUE" &&
+        !(artwork as any).consignmentSubmission
     )
 
     for (let column = 0; column < columnCount; column++) {

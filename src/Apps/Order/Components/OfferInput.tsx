@@ -22,7 +22,7 @@ export const OfferInput: FC<OfferInputProps> = ({
 }) => {
   const formatValueForDisplay = (val: number | undefined) => {
     if (val !== undefined && val > 0) {
-      return val.toLocaleString()
+      return val.toLocaleString("en-US")
     }
     return ""
   }
