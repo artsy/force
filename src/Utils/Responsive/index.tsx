@@ -1,5 +1,7 @@
-export * from "./DeprecatedResponsive"
 import { createMedia } from "@artsy/fresnel"
+import { breakpoints } from "@artsy/palette"
+
+export type Breakpoint = keyof typeof breakpoints
 
 // FIXME: Convert to Palette breakpoints
 export const BREAKPOINTS = {
