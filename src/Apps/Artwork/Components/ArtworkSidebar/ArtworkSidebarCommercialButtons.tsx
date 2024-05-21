@@ -45,6 +45,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { ResponsiveValue } from "styled-system"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
@@ -330,10 +331,19 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   const [selectedEditionSet, setSelectedEditionSet] = useState(
     firstAvailableEcommerceEditionSet()
   )
+  const {
+    selectedEditionSet: selectedEditionSetInContext,
+    setSelectedEditionSet: setSelectedEditionSetInContext,
+  } = useSelectedEditionSetContext()
 
   useEffect(() => {
+    setSelectedEditionSetInContext(firstAvailableEcommerceEditionSet())
     setSelectedEditionSet(firstAvailableEcommerceEditionSet())
-  }, [artwork.editionSets, firstAvailableEcommerceEditionSet])
+  }, [
+    artwork.editionSets,
+    firstAvailableEcommerceEditionSet,
+    setSelectedEditionSetInContext,
+  ])
 
   const isCreateAlertAvailable =
     artwork.isEligibleToCreateAlert && artwork.isSold
@@ -381,7 +391,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
             <Separator />
             <ArtworkSidebarEditionSetFragmentContainer
               artwork={artwork}
-              selectedEditionSet={selectedEditionSet as EditionSet}
+              selectedEditionSet={selectedEditionSet}
               onSelectEditionSet={setSelectedEditionSet}
             />
 
