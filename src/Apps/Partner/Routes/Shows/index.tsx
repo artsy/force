@@ -23,6 +23,9 @@ export const Shows: React.FC<PartnerShowsProps> = ({ partner }) => {
 
   const [firstFeaturedEvent] = extractNodes(featuredEvents)
 
+  let upcomingEventsList = extractNodes(upcomingEvents)
+  let currentEventsList = extractNodes(currentEvents)
+
   const filteredUpcomingEvents = extractNodes(upcomingEvents).filter(
     event => event?.internalID !== firstFeaturedEvent?.internalID
   )
@@ -31,6 +34,11 @@ export const Shows: React.FC<PartnerShowsProps> = ({ partner }) => {
     event => event?.internalID !== firstFeaturedEvent?.internalID
   )
 
+  if (firstFeaturedEvent?.isFeatured) {
+    upcomingEventsList = filteredUpcomingEvents
+    currentEventsList = filteredCurrentEvents
+  }
+
   return (
     <>
       <Join separator={<Spacer y={6} />}>
@@ -38,12 +46,12 @@ export const Shows: React.FC<PartnerShowsProps> = ({ partner }) => {
           <ShowBannerFragmentContainer my={4} show={firstFeaturedEvent!} />
         )}
 
-        {filteredCurrentEvents.length > 0 && (
+        {currentEventsList.length > 0 && (
           <>
             <Text variant="lg-display">Current Events</Text>
 
             <GridColumns gridRowGap={[2, 4]}>
-              {filteredCurrentEvents.map(show => {
+              {currentEventsList.map(show => {
                 return (
                   <Column key={show.internalID} span={[6, 6, 3, 3]}>
                     <CellShowFragmentContainer
@@ -59,12 +67,12 @@ export const Shows: React.FC<PartnerShowsProps> = ({ partner }) => {
           </>
         )}
 
-        {filteredUpcomingEvents.length > 0 && (
+        {upcomingEventsList.length > 0 && (
           <>
             <Text variant="lg-display">Upcoming Events</Text>
 
             <GridColumns gridRowGap={[2, 4]}>
-              {filteredUpcomingEvents.map(show => {
+              {upcomingEventsList.map(show => {
                 return (
                   <Column key={show.internalID} span={[6, 6, 3, 3]}>
                     <CellShowFragmentContainer
