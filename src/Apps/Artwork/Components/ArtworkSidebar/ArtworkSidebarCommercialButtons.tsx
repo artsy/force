@@ -391,7 +391,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
             <Separator />
             <ArtworkSidebarEditionSetFragmentContainer
               artwork={artwork}
-              selectedEditionSet={selectedEditionSet}
+              selectedEditionSet={selectedEditionSet as EditionSet}
               onSelectEditionSet={setSelectedEditionSet}
             />
 

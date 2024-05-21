@@ -56,8 +56,6 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
 
   const { selectedEditionSet } = useSelectedEditionSetContext()
 
-  console.log("WOOOO", selectedEditionSet)
-
   const { dimensionsLabel } = useArtworkDimensions(
     selectedEditionSet?.dimensions
   )

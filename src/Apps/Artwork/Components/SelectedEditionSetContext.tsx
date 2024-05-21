@@ -1,3 +1,4 @@
+import { EditionSet } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarEditionSets"
 import { createContext, useContext, useState } from "react"
 
 interface SelectedEditionSetContextType {
@@ -25,32 +26,3 @@ export const SelectedEditionSetProvider: React.FC = ({ children }) => {
 export const useSelectedEditionSetContext = () => {
   return useContext(SelectedEditionSetContext)
 }
-
-// import { EditionSet } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarEditionSets"
-// import { createContext, FC, useContext } from "react"
-
-// const SelectedEditionSetContextContext = createContext({
-//   selectedEditionSet: null,
-// })
-
-// interface SelectedEditionSetContextContextProviderProps {
-//   selectedEditionSet: EditionSet | null | undefined
-// }
-
-// export const SelectedEditionSetContextContextProvider: FC<SelectedEditionSetContextContextProviderProps> = ({
-//   selectedEditionSet,
-//   children,
-// }) => {
-
-//   const [value, setValue] = useState<string>("initial value")
-
-//   return (
-//     <SelectedEditionSetContextContext.Provider value={{ selectedEditionSet, setSelectedEditionSet }}>
-//       {children}
-//     </SelectedEditionSetContextContext.Provider>
-//   )
-// }
-
-// export const useSelectedEditionSetContextContext = () => {
-//   return useContext(SelectedEditionSetContextContext)
-// }

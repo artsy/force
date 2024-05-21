@@ -6,10 +6,13 @@ import { ArtworkDetailsAdditionalInfo_Test_Query } from "__generated__/ArtworkDe
 import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
 import { fireEvent, screen } from "@testing-library/react"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
 jest.unmock("react-relay")
 
 jest.mock("react-tracking")
+
+jest.mock("Apps/Artwork/Components/SelectedEditionSetContext")
 
 const { renderWithRelay } = setupTestWrapperTL<
   ArtworkDetailsAdditionalInfo_Test_Query
@@ -142,6 +145,24 @@ describe("ArtworkDetailsAdditionalInfo", () => {
       })
 
       expect(trackEvent).toBeCalledTimes(1)
+    })
+
+    it("shows dimensions from selected edition", () => {
+      ;(useSelectedEditionSetContext as jest.Mock).mockImplementation(() => ({
+        selectedEditionSet: {
+          dimensions: {
+            in: "10 × 15 in",
+            cm: "20 × 30 cm",
+          },
+        },
+      }))
+
+      renderWithRelay({
+        Artwork: () => ({
+          dimensions: { in: "1 × 2 in", cm: "2 × 5 cm" },
+        }),
+      })
+      expect(screen.queryByText("10 × 15 in | 20 × 30 cm")).toBeInTheDocument()
     })
   })
 })
