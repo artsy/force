@@ -46,6 +46,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { ResponsiveValue } from "styled-system"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { set } from "cookies"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
@@ -332,13 +333,14 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
     firstAvailableEcommerceEditionSet()
   )
   const {
-    selectedEditionSet: selectedEditionSetInContext,
     setSelectedEditionSet: setSelectedEditionSetInContext,
   } = useSelectedEditionSetContext()
 
   useEffect(() => {
-    setSelectedEditionSetInContext(firstAvailableEcommerceEditionSet())
     setSelectedEditionSet(firstAvailableEcommerceEditionSet())
+    setSelectedEditionSetInContext(
+      firstAvailableEcommerceEditionSet() as EditionSet
+    )
   }, [
     artwork.editionSets,
     firstAvailableEcommerceEditionSet,
@@ -695,6 +697,10 @@ const ARTWORK_FRAGMENT = graphql`
       isAcquireable
       isOfferable
       saleMessage
+      dimensions {
+        in
+        cm
+      }
     }
     partner {
       profile {

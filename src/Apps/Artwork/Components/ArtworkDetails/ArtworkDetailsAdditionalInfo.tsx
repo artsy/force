@@ -45,7 +45,6 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
     signatureInfo,
     conditionDescription,
     certificateOfAuthenticity,
-    dimensions,
     attributionClass,
     medium,
   } = artwork
