@@ -26,15 +26,15 @@ export const Shows: React.FC<PartnerShowsProps> = ({ partner }) => {
   let upcomingEventsList = extractNodes(upcomingEvents)
   let currentEventsList = extractNodes(currentEvents)
 
-  const filteredUpcomingEvents = extractNodes(upcomingEvents).filter(
-    event => event?.internalID !== firstFeaturedEvent?.internalID
-  )
-
-  const filteredCurrentEvents = extractNodes(currentEvents).filter(
-    event => event?.internalID !== firstFeaturedEvent?.internalID
-  )
-
   if (firstFeaturedEvent?.isFeatured) {
+    const filteredUpcomingEvents = extractNodes(upcomingEvents).filter(
+      event => event?.internalID !== firstFeaturedEvent?.internalID
+    )
+
+    const filteredCurrentEvents = extractNodes(currentEvents).filter(
+      event => event?.internalID !== firstFeaturedEvent?.internalID
+    )
+
     upcomingEventsList = filteredUpcomingEvents
     currentEventsList = filteredCurrentEvents
   }
