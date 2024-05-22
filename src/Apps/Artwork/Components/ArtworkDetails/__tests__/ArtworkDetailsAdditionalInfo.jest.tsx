@@ -50,6 +50,12 @@ describe("ArtworkDetailsAdditionalInfo", () => {
     trackEvent.mockClear()
   })
 
+  beforeEach(() => {
+    ;(useSelectedEditionSetContext as jest.Mock).mockImplementation(() => ({
+      selectedEditionSet: null,
+    }))
+  })
+
   it("renders correctly", () => {
     renderWithRelay({
       Artwork: () => ({ category: "Painting" }),
