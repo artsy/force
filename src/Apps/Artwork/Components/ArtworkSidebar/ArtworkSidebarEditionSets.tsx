@@ -12,6 +12,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarEditionSets_artwork$data } from "__generated__/ArtworkSidebarEditionSets_artwork.graphql"
 import React, { Dispatch, SetStateAction } from "react"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
 const Row: React.FC<FlexProps> = ({ children, ...others }) => (
   <Flex justifyContent="left" {...others}>
@@ -35,6 +36,8 @@ const ArtworkSidebarEditionSets: React.FC<ArtworkSidebarEditionSetsProps> = ({
   onSelectEditionSet,
 }) => {
   const { editionSets, isInquireable, isOfferable, isAcquireable } = artwork
+
+  const { setSelectedEditionSet } = useSelectedEditionSetContext()
 
   const renderEditionSet = (editionSet: EditionSet) => {
     const editionEcommerceAvailable =
@@ -62,6 +65,7 @@ const ArtworkSidebarEditionSets: React.FC<ArtworkSidebarEditionSetsProps> = ({
             flex={1}
             onSelect={() => {
               onSelectEditionSet?.(editionSet)
+              setSelectedEditionSet(editionSet)
             }}
             selected={selectedEditionSet?.id === editionSet?.id}
             disabled={!editionEcommerceAvailable}
@@ -102,6 +106,10 @@ export const ArtworkSidebarEditionSetFragmentContainer = createFragmentContainer
           isOfferable
           isAcquireable
           saleMessage
+          dimensions {
+            cm
+            in
+          }
           ...ArtworkSidebarSizeInfo_piece
         }
       }

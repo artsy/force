@@ -23,6 +23,7 @@ import { useTracking } from "react-tracking"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
 export interface ArtworkDetailsAdditionalInfoProps extends FlexProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork$data
@@ -53,7 +54,11 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
   const [openRarityModal, setOpenRarityModal] = useState(false)
   const [openConditionModal, setOpenConditionModal] = useState(false)
 
-  const { dimensionsLabel } = useArtworkDimensions(dimensions)
+  const { selectedEditionSet } = useSelectedEditionSetContext()
+
+  const { dimensionsLabel } = useArtworkDimensions(
+    selectedEditionSet ? selectedEditionSet?.dimensions : dimensions
+  )
 
   const { trackEvent } = useTracking()
   const {

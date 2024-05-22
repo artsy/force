@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce9146ddae6bb5217edd509a1cf3ebf5>>
+ * @generated SignedSource<<92d0f032ec007db1f8dde27f18183222>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarEditionSets_artwork$data = {
   readonly editionSets: ReadonlyArray<{
+    readonly dimensions: {
+      readonly cm: string | null | undefined;
+      readonly in: string | null | undefined;
+    } | null | undefined;
     readonly id: string;
     readonly internalID: string;
     readonly isAcquireable: boolean | null | undefined;
@@ -91,6 +95,31 @@ return {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "concreteType": "dimensions",
+          "kind": "LinkedField",
+          "name": "dimensions",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cm",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "in",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkSidebarSizeInfo_piece"
@@ -104,6 +133,6 @@ return {
 };
 })();
 
-(node as any).hash = "1c387cbaa234401f0b50a84cc6e0a3d3";
+(node as any).hash = "b293f123223aa31edb970a3c2cd5ca6c";
 
 export default node;
