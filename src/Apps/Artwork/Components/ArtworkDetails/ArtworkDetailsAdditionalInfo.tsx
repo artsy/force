@@ -45,6 +45,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
     signatureInfo,
     conditionDescription,
     certificateOfAuthenticity,
+    dimensions,
     attributionClass,
     medium,
   } = artwork
@@ -56,7 +57,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
   const { selectedEditionSet } = useSelectedEditionSetContext()
 
   const { dimensionsLabel } = useArtworkDimensions(
-    selectedEditionSet?.dimensions
+    selectedEditionSet ? selectedEditionSet?.dimensions : dimensions
   )
 
   const { trackEvent } = useTracking()
