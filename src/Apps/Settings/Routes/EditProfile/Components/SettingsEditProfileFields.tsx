@@ -90,11 +90,16 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
 
   const onSubmit = async (values: EditProfileFormModel) => {
     try {
-      const newLocation = { ...values.location }
-      delete newLocation.display
+      const location = {
+        city: values.location?.city || null,
+        state: values.location?.state || null,
+        country: values.location?.country || null,
+        countryCode: values.location?.countryCode || null,
+      }
+
       const payload = {
         name: values.name,
-        location: newLocation,
+        location,
         profession: values.profession,
         otherRelevantPositions: values.otherRelevantPositions,
         bio: values.bio,
@@ -152,8 +157,8 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
                 onSelect={(place?: Place) => {
                   setFieldValue("location", normalizePlace(place, false))
                 }}
-                onChange={() => {
-                  setFieldValue("location", {})
+                onChange={place => {
+                  setFieldValue("location", normalizePlace(place, false))
                 }}
               />
 
