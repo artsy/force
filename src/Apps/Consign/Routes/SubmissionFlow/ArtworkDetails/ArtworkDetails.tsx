@@ -1,40 +1,40 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Button, Spacer, Text, useToasts } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
-import { Form, Formik } from "formik"
+import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import {
-  ArtworkDetailsForm,
-  ArtworkDetailsFormModel,
-  getArtworkDetailsFormInitialValues,
-  getArtworkDetailsFormInitialValuesProps,
-  SubmissionType,
-} from "./Components/ArtworkDetailsForm"
-import { useRouter } from "System/Router/useRouter"
+  SubmissionInput,
+  createOrUpdateConsignSubmission,
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import {
   artworkDetailsValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
+import { TopContextBar } from "Components/TopContextBar"
+import { trackEvent } from "Server/analytics/helpers"
+import { RouterLink } from "System/Router/RouterLink"
+import { useRouter } from "System/Router/useRouter"
 import { useSystemContext } from "System/useSystemContext"
-import {
-  createOrUpdateConsignSubmission,
-  SubmissionInput,
-} from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-import { createFragmentContainer, graphql } from "react-relay"
-import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
-import {
-  ArtworkDetails_submission$data,
-  ConsignmentAttributionClass,
-} from "__generated__/ArtworkDetails_submission.graphql"
-import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { ArtworkDetails_me$data } from "__generated__/ArtworkDetails_me.graphql"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
+import {
+  ArtworkDetails_submission$data,
+  ConsignmentAttributionClass,
+} from "__generated__/ArtworkDetails_submission.graphql"
+import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import { Form, Formik } from "formik"
 import { LocationDescriptor } from "found"
-import { trackEvent } from "Server/analytics/helpers"
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
-import { TopContextBar } from "Components/TopContextBar"
-import { RouterLink } from "System/Router/RouterLink"
+import { createFragmentContainer, graphql } from "react-relay"
+import {
+  ArtworkDetailsForm,
+  ArtworkDetailsFormModel,
+  SubmissionType,
+  getArtworkDetailsFormInitialValues,
+  getArtworkDetailsFormInitialValuesProps,
+} from "./Components/ArtworkDetailsForm"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -127,7 +127,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         depth: artworkDetailsForm.depth,
         dimensionsMetric: artworkDetailsForm.units,
         provenance: artworkDetailsForm.provenance,
-        locationCity: artworkDetailsForm.location.city.trim(),
+        locationCity: artworkDetailsForm.location.city?.trim(),
         locationCountry: artworkDetailsForm.location.country?.trim(),
         locationState: artworkDetailsForm.location.state?.trim(),
         locationCountryCode: artworkDetailsForm.location.countryCode?.trim(),

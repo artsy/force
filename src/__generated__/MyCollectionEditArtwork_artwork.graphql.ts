@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<721616758c0ee9395666638e4f9fcc4b>>
+ * @generated SignedSource<<7b6b7df2dbaf0adf144c6de8b172c6b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,11 +30,16 @@ export type MyCollectionEditArtwork_artwork$data = {
     };
   } | null | undefined;
   readonly artistNames: string | null | undefined;
-  readonly artworkLocation: string | null | undefined;
   readonly attributionClass: {
     readonly name: string | null | undefined;
   } | null | undefined;
   readonly category: string | null | undefined;
+  readonly collectorLocation: {
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly countryCode: string | null | undefined;
+    readonly state: string | null | undefined;
+  } | null | undefined;
   readonly confidentialNotes: string | null | undefined;
   readonly consignmentSubmission: {
     readonly inProgress: boolean | null | undefined;
@@ -404,13 +409,6 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "artworkLocation",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "provenance",
       "storageKey": null
     },
@@ -437,6 +435,45 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "MyLocation",
+      "kind": "LinkedField",
+      "name": "collectorLocation",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "city",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "state",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "country",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "countryCode",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkFormMain_artwork"
@@ -447,6 +484,6 @@ return {
 };
 })();
 
-(node as any).hash = "203c396e79abcd0668b691bf8b8a0af4";
+(node as any).hash = "8af37a3034bbaf3fed88307722f0e76d";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4ad31b8fdc1bbc7d0e9246cf95362ed4>>
+ * @generated SignedSource<<278e73eba918108eafdad4d83acc35bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSidebarMetadata_artwork$data = {
-  readonly artworkLocation: string | null | undefined;
   readonly attributionClass: {
     readonly shortDescription: string | null | undefined;
   } | null | undefined;
   readonly category: string | null | undefined;
+  readonly collectorLocation: {
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly countryCode: string | null | undefined;
+    readonly state: string | null | undefined;
+  } | null | undefined;
   readonly confidentialNotes: string | null | undefined;
   readonly dimensions: {
     readonly cm: string | null | undefined;
@@ -147,8 +152,40 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "artworkLocation",
+      "concreteType": "MyLocation",
+      "kind": "LinkedField",
+      "name": "collectorLocation",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "city",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "state",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "country",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "countryCode",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
@@ -156,6 +193,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "87bf6119feaa4e15034713d8460079ab";
+(node as any).hash = "8b0ac5a7160cfe388c8afd44190007f2";
 
 export default node;

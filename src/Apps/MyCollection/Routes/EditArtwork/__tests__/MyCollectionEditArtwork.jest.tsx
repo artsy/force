@@ -155,9 +155,9 @@ describe("Edit artwork", () => {
       expect(
         screen.getByPlaceholderText("Describe how you acquired the work")
       ).toHaveValue("Fooo")
-      expect(
-        screen.getByPlaceholderText("City where artwork is located")
-      ).toHaveValue("Berlin")
+      expect(screen.getByTestId("autocomplete-location")).toHaveValue(
+        "Berlin, Berlin, Germany"
+      )
       expect(
         screen
           .getAllByRole("textbox")
@@ -261,7 +261,12 @@ describe("Edit artwork", () => {
             input: {
               artistIds: ["4d8b929e4eb68a1b2c0002f2"],
               artworkId: "62fc96c48d3ff8000b556c3a",
-              artworkLocation: "Berlin",
+              collectorLocation: {
+                city: "Berlin",
+                country: "Germany",
+                countryCode: "DE",
+                state: "Berlin",
+              },
               attributionClass: "LIMITED_EDITION",
               category: "Drawing, Collage or other Work on Paper",
               date: "1975",
@@ -524,7 +529,12 @@ const mockArtwork = {
   isEdition: true,
   medium: "Charcoal on paper",
   metric: "in",
-  artworkLocation: "Berlin",
+  collectorLocation: {
+    city: "Berlin",
+    state: "Berlin",
+    country: "Germany",
+    countryCode: "DE",
+  },
   provenance: "Fooo",
   slug: "62fc96c48d3ff8000b556c3a",
   title: "Untitled",
