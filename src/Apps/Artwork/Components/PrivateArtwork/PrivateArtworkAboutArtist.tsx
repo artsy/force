@@ -14,6 +14,8 @@ import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowA
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import { useTracking } from "react-tracking"
 import { ActionType, ClickedOnReadMore } from "@artsy/cohesion"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 interface PrivateArtworkAboutArtistProps {
   artwork: PrivateArtworkAboutArtist_artwork$key
@@ -152,23 +154,25 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
                   <>
                     <Spacer y={4} />
 
-                    <HTML variant="md" color="white100">
-                      <ReadMore
-                        maxChars={190}
-                        content={`${biographyBlurb(artist)}`}
-                        inlineReadMoreLink={false}
-                        onReadMoreClicked={() => {
-                          const payload: ClickedOnReadMore = {
-                            action: ActionType.clickedOnReadMore,
-                            context_module: "About the artist",
-                            subject: "Read more",
-                            type: "Link",
-                          }
+                    <TextWrapper>
+                      <HTML variant="md" color="white100">
+                        <ReadMore
+                          maxChars={190}
+                          content={`${biographyBlurb(artist)}`}
+                          inlineReadMoreLink={false}
+                          onReadMoreClicked={() => {
+                            const payload: ClickedOnReadMore = {
+                              action: ActionType.clickedOnReadMore,
+                              context_module: "About the artist",
+                              subject: "Read more",
+                              type: "Link",
+                            }
 
-                          trackEvent(payload)
-                        }}
-                      />
-                    </HTML>
+                            trackEvent(payload)
+                          }}
+                        />
+                      </HTML>
+                    </TextWrapper>
                   </>
                 )}
               </>
@@ -178,3 +182,9 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
     </Box>
   )
 }
+
+const TextWrapper = styled(Text)`
+  a:hover {
+    color: ${themeGet("colors.white100")};
+  }
+`
