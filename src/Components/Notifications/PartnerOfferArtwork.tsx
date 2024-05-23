@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, Button, Flex, Image, Link, THEME, Text } from "@artsy/palette"
+import { Box, Button, Flex, Image, Link, Text, useTheme } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import Metadata from "Components/Artwork/Metadata"
 import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
@@ -31,6 +31,8 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   available = false,
   partnerOfferID,
 }) => {
+  const { theme } = useTheme()
+
   const { tracking } = useNotificationsTracking()
   const { hasEnded } = useTimer(endAt || "")
   const fullyAvailable = !!(available && !hasEnded && priceWithDiscount)
@@ -97,7 +99,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
               height="100%"
               style={{
                 objectFit: "contain",
-                backgroundColor: THEME.colors.white100,
+                backgroundColor: theme.colors.white100,
               }}
               lazyLoad
               alt=""
@@ -190,7 +192,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
                 width={30}
                 height={30}
                 style={{
-                  border: `1px solid ${THEME.colors.black30}`,
+                  border: `1px solid ${theme.colors.black30}`,
                 }}
               />
             </Box>
