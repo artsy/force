@@ -1676,6 +1676,19 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   birthday: String
   blurb(format: Format): String
   cached: Int
+  careerHighlights(
+    # Filter by collected shows.
+    collected: Boolean
+
+    # Filter by group shows.
+    group: Boolean
+
+    # The slug or ID of the Partner
+    partnerId: String
+
+    # Filter by solo shows.
+    solo: Boolean
+  ): [CareerHighlight!]!
   carousel: ArtistCarousel
   collections: [String]
   contemporary(
@@ -3984,6 +3997,21 @@ type CaptureHoldPayload {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
   holdOrError: InventoryHoldOrErrorUnion!
+}
+
+type CareerHighlight implements Node {
+  artist: Artist!
+  collected: Boolean!
+  group: Boolean!
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID.
+  internalID: ID!
+  partner: Partner!
+  solo: Boolean!
+  venue: String!
 }
 
 type CausalityLotState {
@@ -7836,6 +7864,33 @@ type CreateBidderPayload {
   clientMutationId: String
 }
 
+type CreateCareerHighlightFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateCareerHighlightInput {
+  artistId: String!
+  clientMutationId: String
+  collected: Boolean
+  group: Boolean
+  partnerId: String!
+  solo: Boolean
+}
+
+type CreateCareerHighlightPayload {
+  # On success: the created Artist Career Highlight.
+  careerHighlightOrError: CreateCareerHighlightSuccessResponseOrError
+  clientMutationId: String
+}
+
+type CreateCareerHighlightSuccess {
+  careerHighlight: CareerHighlight
+}
+
+union CreateCareerHighlightSuccessResponseOrError =
+    CreateCareerHighlightFailure
+  | CreateCareerHighlightSuccess
+
 type CreateCollectionFailure {
   mutationError: GravityMutationError
 }
@@ -8724,6 +8779,29 @@ type DeleteBankAccountPayload {
   clientMutationId: String
   me: Me
 }
+
+type DeleteCareerHighlightFailure {
+  mutationError: GravityMutationError
+}
+
+input DeleteCareerHighlightInput {
+  clientMutationId: String
+  id: String!
+}
+
+type DeleteCareerHighlightPayload {
+  # On success: the deleted Artist Career Highlight is returned
+  careerHighlightOrError: DeleteCareerHighlightSuccessOrErrorType
+  clientMutationId: String
+}
+
+type DeleteCareerHighlightSuccess {
+  careerHighlight: CareerHighlight
+}
+
+union DeleteCareerHighlightSuccessOrErrorType =
+    DeleteCareerHighlightFailure
+  | DeleteCareerHighlightSuccess
 
 type DeleteCollectionFailure {
   mutationError: GravityMutationError
@@ -13135,6 +13213,11 @@ type Mutation {
   # Creates a bidder position
   createBidderPosition(input: BidderPositionInput!): BidderPositionPayload
 
+  # Creates Artist Career Highlight.
+  createCareerHighlight(
+    input: CreateCareerHighlightInput!
+  ): CreateCareerHighlightPayload
+
   # Create a collection
   createCollection(input: createCollectionInput!): createCollectionPayload
 
@@ -13257,6 +13340,11 @@ type Mutation {
 
   # Remove a bank account
   deleteBankAccount(input: DeleteBankAccountInput!): DeleteBankAccountPayload
+
+  # Delete an artist career highlight
+  deleteCareerHighlight(
+    input: DeleteCareerHighlightInput!
+  ): DeleteCareerHighlightPayload
 
   # Delete a collection
   deleteCollection(input: deleteCollectionInput!): deleteCollectionPayload
@@ -13485,6 +13573,11 @@ type Mutation {
   updateArtwork(
     input: UpdateArtworkMutationInput!
   ): UpdateArtworkMutationPayload
+
+  # Updates Artist Career Highlight.
+  updateCareerHighlight(
+    input: UpdateCareerHighlightInput!
+  ): UpdateCareerHighlightPayload
 
   # Updates the flags on a partner.
   updateCMSLastAccessTimestamp(
@@ -19045,6 +19138,32 @@ union updateArtworkResponseOrError = updateArtworkFailure | updateArtworkSuccess
 
 type updateArtworkSuccess {
   artwork: Artwork
+}
+
+type UpdateCareerHighlightFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateCareerHighlightInput {
+  clientMutationId: String
+  collected: Boolean
+  group: Boolean
+  id: String!
+  solo: Boolean
+}
+
+type UpdateCareerHighlightPayload {
+  # On success: updated Artist Career Highlight.
+  careerHighlightOrError: UpdateCareerHighlightsSuccessResponseOrError
+  clientMutationId: String
+}
+
+union UpdateCareerHighlightsSuccessResponseOrError =
+    UpdateCareerHighlightFailure
+  | UpdateCareerHighlightSuccess
+
+type UpdateCareerHighlightSuccess {
+  careerHighlight: CareerHighlight
 }
 
 type UpdateCMSLastAccessTimestampFailure {
