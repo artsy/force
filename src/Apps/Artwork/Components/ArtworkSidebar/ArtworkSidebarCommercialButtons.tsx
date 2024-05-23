@@ -13,7 +13,7 @@ import {
   Spacer,
   Text,
   useToasts,
-  THEME,
+  useTheme,
 } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { FC, useCallback, useEffect, useState } from "react"
@@ -61,6 +61,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   showButtonActions = true,
   ...props
 }) => {
+  const { theme } = useTheme()
+
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
 
@@ -486,7 +488,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
                       width={30}
                       height={30}
                       style={{
-                        border: `1px solid ${THEME.colors.black30}`,
+                        border: `1px solid ${theme.colors.black30}`,
                       }}
                     />
                   </Box>

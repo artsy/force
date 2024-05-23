@@ -112,7 +112,12 @@ describe("SettingsEditProfileFields", () => {
     await waitFor(() => {
       expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith({
         name: "Collector Name",
-        location: {},
+        location: {
+          city: "A",
+          country: null,
+          countryCode: null,
+          state: null,
+        },
         profession: "Artist and Collector",
         otherRelevantPositions: "Positions",
         bio: "I collect",

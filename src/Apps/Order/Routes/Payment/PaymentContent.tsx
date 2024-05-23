@@ -59,7 +59,7 @@ export const PaymentContent: FC<Props> = props => {
         subject: "click_payment_method",
         payment_method: selectedPaymentMethod,
         action: ActionType.clickedPaymentMethod,
-        flow: mode!,
+        flow: mode,
         context_page_owner_type: OwnerType.ordersPayment,
         order_id: internalID,
         amount: buyerTotal,

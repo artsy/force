@@ -6,7 +6,7 @@ import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 import { BankAccountPicker_order$data } from "__generated__/BankAccountPicker_order.graphql"
 import { Payment_order$data } from "__generated__/Payment_order.graphql"
-import { Box, Message, Spacer, Text, THEME } from "@artsy/palette"
+import { Box, Message, Spacer, Text, useTheme } from "@artsy/palette"
 import { LoadingArea } from "Components/LoadingArea"
 import { camelCase, upperFirst } from "lodash"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
@@ -81,61 +81,63 @@ export const BankDebitProvider: FC<Props> = ({ order, onError }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const { theme } = useTheme()
+
   const appearance: Appearance = {
     theme: "stripe",
     variables: {
-      colorPrimary: THEME.colors.black100,
-      colorBackground: THEME.colors.white100,
-      colorText: THEME.colors.black100,
-      colorIcon: THEME.colors.black60,
-      colorDanger: THEME.colors.red100,
-      fontFamily: THEME.fonts.sans,
+      colorPrimary: theme.colors.black100,
+      colorBackground: theme.colors.white100,
+      colorText: theme.colors.black100,
+      colorIcon: theme.colors.black60,
+      colorDanger: theme.colors.red100,
+      fontFamily: theme.fonts.sans,
       borderRadius: "3px",
     },
     rules: {
       ".Label": {
-        fontSize: THEME.textVariants.xs.fontSize, // "13px",
-        lineHeight: THEME.textVariants.xs.lineHeight, // "20px",
-        color: THEME.colors.black100,
+        fontSize: theme.textVariants.xs.fontSize, // "13px",
+        lineHeight: theme.textVariants.xs.lineHeight, // "20px",
+        color: theme.colors.black100,
       },
       ".Label--resting": {
-        color: THEME.colors.black60,
+        color: theme.colors.black60,
       },
       ".Label--floating": {
-        color: THEME.colors.black100,
+        color: theme.colors.black100,
       },
       ".Input": {
-        border: `1px solid ${THEME.colors.black30}`,
+        border: `1px solid ${theme.colors.black30}`,
         transition: "border-color 0.25s",
         boxShadow: "none",
         paddingTop: "12px",
-        lineHeight: THEME.textVariants["sm-display"].lineHeight, // "20px",
-        marginBottom: THEME.space["1"], // "10px"
-        color: THEME.colors.black100,
+        lineHeight: theme.textVariants["sm-display"].lineHeight, // "20px",
+        marginBottom: theme.space["1"], // "10px"
+        color: theme.colors.black100,
       },
       ".Input--empty": {
-        color: THEME.colors.black60,
+        color: theme.colors.black60,
       },
       ".Input:focus": {
         boxShadow: "none",
-        color: THEME.colors.black100,
-        borderColor: THEME.colors.blue100,
+        color: theme.colors.black100,
+        borderColor: theme.colors.blue100,
       },
       ".Input:hover": {
-        color: THEME.colors.black100,
-        borderColor: THEME.colors.black60,
+        color: theme.colors.black100,
+        borderColor: theme.colors.black60,
       },
       ".Input--invalid": {
-        border: `1px solid ${THEME.colors.red100}`,
-        color: THEME.colors.black100,
+        border: `1px solid ${theme.colors.red100}`,
+        color: theme.colors.black100,
         boxShadow: "none",
       },
       ".Input:autofill": {
-        backgroundColor: THEME.colors.white100,
+        backgroundColor: theme.colors.white100,
       },
       ".TermsText": {
-        fontSize: THEME.textVariants.xs.fontSize, // "13px",
-        lineHeight: THEME.textVariants.xs.lineHeight, // "20px",
+        fontSize: theme.textVariants.xs.fontSize, // "13px",
+        lineHeight: theme.textVariants.xs.lineHeight, // "20px",
       },
     },
   }

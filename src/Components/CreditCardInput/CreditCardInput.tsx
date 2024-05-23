@@ -6,8 +6,8 @@ import {
   GridColumns,
   Join,
   Spacer,
-  THEME,
   Text,
+  useTheme,
 } from "@artsy/palette"
 import {
   CardCvcElement,
@@ -34,20 +34,6 @@ interface CreditCardInputProps extends BoxProps {
   required?: boolean
 }
 
-const stripeBaseStyle: StripeElementStyleVariant = {
-  "::placeholder": { color: THEME.colors.black60 },
-  backgroundColor: THEME.colors.white100,
-  color: THEME.colors.black100,
-  fontFamily: THEME.fonts.sans,
-  fontSize: THEME.textVariants["sm-display"].fontSize,
-  fontSmoothing: "antialiased",
-  letterSpacing: THEME.textVariants["sm-display"].letterSpacing,
-  lineHeight: THEME.textVariants["sm-display"].lineHeight,
-  ":-webkit-autofill": {
-    backgroundColor: THEME.colors.white100,
-  },
-}
-
 /**
  * A Stripe credit card input that mimics style of V3 Palette Input.
  * Parent element must be wrapped with `CreditaCardInputProvider`.
@@ -58,6 +44,22 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = ({
   required,
   ...rest
 }) => {
+  const { theme } = useTheme()
+
+  const stripeBaseStyle: StripeElementStyleVariant = {
+    "::placeholder": { color: theme.colors.black60 },
+    backgroundColor: theme.colors.white100,
+    color: theme.colors.black100,
+    fontFamily: theme.fonts.sans,
+    fontSize: theme.textVariants["sm-display"].fontSize,
+    fontSmoothing: "antialiased",
+    letterSpacing: theme.textVariants["sm-display"].letterSpacing,
+    lineHeight: theme.textVariants["sm-display"].lineHeight,
+    ":-webkit-autofill": {
+      backgroundColor: theme.colors.white100,
+    },
+  }
+
   return (
     <Box data-test="creditCardInput" {...rest}>
       <GridColumns gridRowGap={2}>
