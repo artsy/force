@@ -46,6 +46,7 @@ import { PrivateArtworkDetails } from "Apps/Artwork/Components/PrivateArtwork/Pr
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 import { useAuthDialog } from "Components/AuthDialog"
 import { ContextModule } from "@artsy/cohesion"
+import { SelectedEditionSetProvider } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -250,7 +251,7 @@ export const ArtworkApp: React.FC<Props> = props => {
   }
 
   return (
-    <>
+    <SelectedEditionSetProvider>
       <UseRecordArtworkView />
       <ArtworkPageBanner artwork={artwork} me={me} />
 
@@ -334,7 +335,7 @@ export const ArtworkApp: React.FC<Props> = props => {
       {!!submittedOrderId && (
         <SubmittedOrderModalQueryRenderer orderId={submittedOrderId} />
       )}
-    </>
+    </SelectedEditionSetProvider>
   )
 }
 

@@ -1,8 +1,6 @@
 import { mount } from "enzyme"
 import * as React from "react"
-import { Responsive } from "Utils/Responsive"
-import { MockBoot } from "../MockBoot"
-import { renderUntil } from "../renderUntil"
+import { renderUntil } from "DevTools/renderUntil"
 
 class Component extends React.Component {
   state = {
@@ -70,20 +68,6 @@ describe("renderUntil", () => {
         <Component />
       )
       expect(tree.find("div").text()).toEqual("ohai")
-    })
-
-    it("plays well with the Responsive component", async () => {
-      const tree = await renderUntil(
-        wrapper => wrapper.find(Component).text() !== "Loading",
-        <MockBoot breakpoint="xs">
-          <Component>
-            <Responsive>
-              {({ xs }) => xs && <span>Such response</span>}
-            </Responsive>
-          </Component>
-        </MockBoot>
-      )
-      expect(tree.find("span").text()).toEqual("Such response")
     })
   })
 })

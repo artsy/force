@@ -1,5 +1,6 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import {
+  Breakpoint,
   Column,
   Flex,
   GridColumns,
@@ -22,7 +23,7 @@ import ReactDOM from "react-dom"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { extractNodes } from "Utils/extractNodes"
-import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
+import { Media } from "Utils/Responsive"
 import { ExtractNodeType } from "Utils/typeSupport"
 import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
 import { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
@@ -103,10 +104,18 @@ export class ArtworkGridContainer extends React.Component<
     }
   }
 
-  columnBreakpointProps = memoizeOnce(
-    (columnCount: number[]) => valuesWithBreakpointProps(columnCount),
-    isEqual
-  )
+  columnBreakpointProps = (
+    columnCount: number[]
+  ): [number, Record<string, Breakpoint>][] => {
+    // Given a column count; match it to the corresponding breakpoint expressed as props for Media
+    const columnBreakpointPropsMap = {
+      2: { lessThan: ["sm"] },
+      3: { between: ["sm", "md"] },
+      4: { greaterThanOrEqual: "md" },
+    }
+
+    return columnCount.map(count => [count, columnBreakpointPropsMap[count]])
+  }
 
   // TODO: This will still re-calculate column layout from scratch when new
   //       artworks are added (paginated). Ideally it would just continue

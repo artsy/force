@@ -71,6 +71,8 @@ const PERMANENT_REDIRECTS = {
   "/user/payments": "/settings/payments",
   "/user/alerts": "/favorites/alerts",
   "/settings/alerts": "/favorites/alerts",
+  "/settings/alerts/:alertID/edit": "/favorites/alerts/:alertID/edit",
+  "/settings/alerts/:alertID/artworks": "/favorites/alerts/:alertID/artworks",
   "/alerts/:alertID/edit": "/favorites/alerts/:alertID/edit",
   "/alerts/:alertID/artworks": "/favorites/alerts/:alertID/artworks",
   "/my-collection": "/collector-profile/my-collection",

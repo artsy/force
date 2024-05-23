@@ -1,9 +1,4 @@
-import {
-  Theme,
-  injectGlobalStyles,
-  THEME,
-  ToastsProvider,
-} from "@artsy/palette"
+import { Theme, injectGlobalStyles, ToastsProvider } from "@artsy/palette"
 import { SystemContextProvider } from "System/SystemContext"
 import { AppRouteConfig } from "System/Router/Route"
 import { FC, useEffect } from "react"
@@ -18,11 +13,7 @@ import Events from "Utils/Events"
 import { getENV } from "Utils/getENV"
 import { ErrorBoundary } from "./ErrorBoundary"
 import { FocusVisible } from "Components/FocusVisible"
-import {
-  MatchingMediaQueries,
-  MediaContextProvider,
-  ResponsiveProvider,
-} from "Utils/Responsive"
+import { MatchingMediaQueries, MediaContextProvider } from "Utils/Responsive"
 import { ClientContext } from "System/Router/buildClientAppContext"
 import { SiftContainer } from "Utils/SiftContainer"
 import { setupSentryClient } from "Server/setupSentryClient"
@@ -90,30 +81,25 @@ export const Boot = track(undefined, {
               <EnvironmentProvider environment={props.relayEnvironment}>
                 <ErrorBoundary>
                   <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                    <ResponsiveProvider
-                      mediaQueries={THEME.mediaQueries}
-                      initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                    >
-                      <ToastsProvider>
-                        <StickyProvider>
-                          <AuthIntentProvider>
-                            <AuthDialogProvider>
-                              <DismissibleProvider
-                                userID={props.user?.id}
-                                keys={PROGRESSIVE_ONBOARDING_KEYS}
-                              >
-                                <CookieConsentManager>
-                                  <FocusVisible />
-                                  <SiftContainer />
+                    <ToastsProvider>
+                      <StickyProvider>
+                        <AuthIntentProvider>
+                          <AuthDialogProvider>
+                            <DismissibleProvider
+                              userID={props.user?.id}
+                              keys={PROGRESSIVE_ONBOARDING_KEYS}
+                            >
+                              <CookieConsentManager>
+                                <FocusVisible />
+                                <SiftContainer />
 
-                                  {children}
-                                </CookieConsentManager>
-                              </DismissibleProvider>
-                            </AuthDialogProvider>
-                          </AuthIntentProvider>
-                        </StickyProvider>
-                      </ToastsProvider>
-                    </ResponsiveProvider>
+                                {children}
+                              </CookieConsentManager>
+                            </DismissibleProvider>
+                          </AuthDialogProvider>
+                        </AuthIntentProvider>
+                      </StickyProvider>
+                    </ToastsProvider>
                   </MediaContextProvider>
                 </ErrorBoundary>
               </EnvironmentProvider>
