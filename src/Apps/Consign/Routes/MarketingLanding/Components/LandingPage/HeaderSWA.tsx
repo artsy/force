@@ -44,7 +44,7 @@ export const HeaderSWA = () => {
           find the right buyer for your work.
         </Text>
 
-        <Media greaterThanOrEqual="md">
+        <Media greaterThanOrEqual="sm">
           <Spacer y={[2, 4]} />
 
           <GridColumns>
