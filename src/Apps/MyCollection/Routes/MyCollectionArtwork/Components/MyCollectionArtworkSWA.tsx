@@ -1,6 +1,6 @@
 import { Button, Clickable, Flex, ModalDialog, Text } from "@artsy/palette"
 
-import { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__generated__/MyCollectionArtworkSWASectionSubmitted_submissionState.graphql"
+import { MyCollectionArtworkSWA_submissionState$key } from "__generated__/MyCollectionArtworkSWA_submissionState.graphql"
 
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -8,18 +8,16 @@ import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 
 interface Props {
-  artwork: MyCollectionArtworkSWASectionSubmitted_submissionState$key
+  artwork: MyCollectionArtworkSWA_submissionState$key
 }
 
-export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
-  artwork,
-}) => {
+export const MyCollectionArtworkSWA: React.FC<Props> = ({ artwork }) => {
   const [
     isSubmissionStatusModalOpen,
     setIsSubmissionStatusModalOpen,
   ] = useState(false)
 
-  const { consignmentSubmission } = useFragment(
+  const { submissionId, consignmentSubmission } = useFragment(
     submissionStateFragment,
     artwork
   )
@@ -70,15 +68,29 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
 
         <Flex flex={1} flexDirection="column">
           <Text variant="sm" color={stateLabelColor}>
-            {stateLabel}
+            {state === "DRAFT" ? "Draft" : stateLabel}
           </Text>
         </Flex>
       </Flex>
 
+      <Button
+        // @ts-ignore
+        as={RouterLink}
+        variant="primaryBlack"
+        width="100%"
+        mb={2}
+        to={`/sell/submission/${submissionId}/artwork-details`}
+        alignSelf="flex-end"
+      >
+        Continue Submission
+      </Button>
+
       <Media greaterThanOrEqual="sm">
-        <Text mb={2} color="black60" variant="xs">
-          {stateHelpMessage}
-        </Text>
+        {state !== "DRAFT" && (
+          <Text mb={2} color="black60" variant="xs">
+            {stateHelpMessage}
+          </Text>
+        )}
 
         <Text mb={2} color="black60" variant="xs">
           Have a question? Visit our{" "}
@@ -96,8 +108,10 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
 }
 
 const submissionStateFragment = graphql`
-  fragment MyCollectionArtworkSWASectionSubmitted_submissionState on Artwork {
+  fragment MyCollectionArtworkSWA_submissionState on Artwork {
+    submissionId
     consignmentSubmission {
+      internalID
       state
       stateLabel
       stateHelpMessage

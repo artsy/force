@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<553734721e8d988041cefebf3719bee4>>
+ * @generated SignedSource<<e8a040be5a67799171ceba3e8d3da052>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,25 +11,34 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkSWASectionSubmitted_submissionState$data = {
+export type MyCollectionArtworkSWA_submissionState$data = {
   readonly consignmentSubmission: {
+    readonly internalID: string | null | undefined;
     readonly state: ArtworkConsignmentSubmissionState;
     readonly stateHelpMessage: string | null | undefined;
     readonly stateLabel: string | null | undefined;
   } | null | undefined;
-  readonly " $fragmentType": "MyCollectionArtworkSWASectionSubmitted_submissionState";
+  readonly submissionId: string | null | undefined;
+  readonly " $fragmentType": "MyCollectionArtworkSWA_submissionState";
 };
-export type MyCollectionArtworkSWASectionSubmitted_submissionState$key = {
-  readonly " $data"?: MyCollectionArtworkSWASectionSubmitted_submissionState$data;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkSWASectionSubmitted_submissionState">;
+export type MyCollectionArtworkSWA_submissionState$key = {
+  readonly " $data"?: MyCollectionArtworkSWA_submissionState$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkSWA_submissionState">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "MyCollectionArtworkSWASectionSubmitted_submissionState",
+  "name": "MyCollectionArtworkSWA_submissionState",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "submissionId",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -38,6 +47,13 @@ const node: ReaderFragment = {
       "name": "consignmentSubmission",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -67,6 +83,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "313d5e5d8baf7c5cbba15ec6ad2ee7a9";
+(node as any).hash = "2777dc37d1e7f2249fafbba9911a0416";
 
 export default node;

@@ -27,8 +27,9 @@ import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyColl
 import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
 import { MyCollectionArtworkSWAHowItWorksModal } from "./Components/MyCollectionArtworkSWAHowItWorksModal"
 import { MyCollectionArtworkSWASectionDesktopLayout } from "./Components/MyCollectionArtworkSWASection"
-import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
+import { MyCollectionArtworkSWA } from "./Components/MyCollectionArtworkSWA"
 import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtworkAboutTab"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
@@ -41,6 +42,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     editCollectedArtwork: trackEditCollectedArtwork,
   } = useMyCollectionTracking()
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
+  const isContinueDraftSubmissionFeatureFlagEnabled = !!useFeatureFlag(
+    "onyx_myc-artwork-continue-draft-submission"
+  )
 
   const EditArtworkButton = () => (
     <Button
@@ -65,7 +69,8 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const displaySubmissionStateSection =
     artwork.consignmentSubmission?.state &&
-    artwork.consignmentSubmission?.state != "DRAFT"
+    (isContinueDraftSubmissionFeatureFlagEnabled ||
+      artwork.consignmentSubmission?.state != "DRAFT")
 
   const submittedConsignment = !!displayText
 
@@ -117,7 +122,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
               (displaySubmissionStateSection ? (
                 <>
                   <Separator my={2} />
-                  <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
+                  <MyCollectionArtworkSWA artwork={artwork} />
                 </>
               ) : (
                 <MyCollectionArtworkSWASectionDesktopLayout
@@ -150,7 +155,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
               artwork={artwork}
             />
             {isP1Artist && displaySubmissionStateSection && (
-              <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
+              <MyCollectionArtworkSWA artwork={artwork} />
             )}
             {hasInsights ? (
               <Tabs fill mt={2}>
@@ -212,7 +217,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkComparables_artwork
         ...MyCollectionArtworkSidebarTitleInfo_artwork
         ...MyCollectionArtworkRequestPriceEstimateSection_artwork
-        ...MyCollectionArtworkSWASectionSubmitted_submissionState
+        ...MyCollectionArtworkSWA_submissionState
         comparables: comparableAuctionResults {
           totalCount
         }
