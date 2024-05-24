@@ -14,7 +14,7 @@ export interface MockBootProps {
 }
 
 export const MockBoot: React.FC<MockBootProps> = ({
-  breakpoint = "lg",
+  breakpoint = "xl" as Breakpoint,
   headTags,
   children,
   user = null,

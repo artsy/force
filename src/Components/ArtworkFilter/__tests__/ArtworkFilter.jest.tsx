@@ -272,6 +272,7 @@ describe("ArtworkFilter", () => {
         }),
       })
 
+      expect(screen.getAllByText("Andy Warhol")).toHaveLength(30)
       expect(screen.getAllByRole("button")[0]).toHaveTextContent("Filter")
     })
 
