@@ -40,7 +40,7 @@ export const RelatedWorks: React.FC<RelatedWorksProps> = ({ artwork }) => {
       <ArtworkGrid
         contextModule={ContextModule.relatedWorksRail}
         artworks={artworksConnection}
-        columnCount={[2, 3, 4, 4]}
+        columnCount={[2, 3, 4]}
         onBrickClick={() =>
           trackEvent({
             type: DeprecatedSchema.Type.ArtworkBrick,
@@ -60,7 +60,7 @@ const PLACEHOLDER = (
 
       <Spacer y={4} />
 
-      <ArtworkGridPlaceholder columnCount={[2, 3, 4, 4]} />
+      <ArtworkGridPlaceholder columnCount={[2, 3, 4]} />
     </Box>
   </Skeleton>
 )

@@ -49,11 +49,14 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
   const [fetching, setFetching] = useState(false)
   const previousFilters = usePrevious(filters)
 
-  const artworks = me.artworkList?.artworks!
+  const artworks = me.artworkList?.artworks
   const {
     pageCursors,
     pageInfo: { hasNextPage },
-  } = artworks
+  } = artworks || {
+    pageInfo: { hasNextPage: false },
+    pageCursors: null,
+  }
 
   /**
    * Load next page of artworks
@@ -97,10 +100,12 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
       const pageTrackingParams: ClickedChangePage = {
         action: ActionType.clickedChangePage,
         context_module: ContextModule.artworkGrid,
-        context_page_owner_type: contextPageOwnerType!,
+        context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
         context_page_owner_slug: contextPageOwnerSlug,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         page_current: prevFilterValue!,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         page_changed: currentFilterValue!,
       }
 
@@ -115,7 +120,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
       }),
       contextOwnerId: contextPageOwnerId,
       contextOwnerSlug: contextPageOwnerSlug,
-      contextOwnerType: contextPageOwnerType!,
+      contextOwnerType: contextPageOwnerType,
       current: JSON.stringify(onlyAllowedFilters),
     })
 
@@ -141,7 +146,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
     }
   }, [context.filters])
 
-  if (artworks.edges?.length === 0) {
+  if (artworks?.edges?.length === 0) {
     return <ArtworkListEmptyStateFragmentContainer me={me} />
   }
 
@@ -152,17 +157,18 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
       <Spacer y={2} />
       <LoadingArea isLoading={fetching}>
         <ArtworkGrid
-          artworks={artworks}
-          columnCount={[2, 2, 2, 3]}
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          artworks={artworks!}
+          columnCount={[2, 3]}
           contextModule={ContextModule.artworkGrid}
           itemMargin={40}
           emptyStateComponent={null}
-          savedListId={me.artworkList?.internalID!}
+          savedListId={me.artworkList?.internalID}
           onBrickClick={(artwork, artworkIndex) => {
             // TODO: Clarify moments about analytics
             trackEvent(
               clickedMainArtworkGrid({
-                contextPageOwnerType: contextPageOwnerType!,
+                contextPageOwnerType: contextPageOwnerType,
                 contextPageOwnerSlug,
                 contextPageOwnerId,
                 destinationPageOwnerId: artwork.internalID,
@@ -176,7 +182,8 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
 
         <Pagination
           hasNextPage={hasNextPage}
-          pageCursors={pageCursors}
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          pageCursors={pageCursors!}
           onClick={(_cursor, page) => loadPage(page)}
           onNext={() => loadNext()}
           scrollTo="artworksGrid"
