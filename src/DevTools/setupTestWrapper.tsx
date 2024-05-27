@@ -11,8 +11,8 @@ import {
 import { OperationDescriptor, OperationType } from "relay-runtime"
 import {
   createMockEnvironment,
-  MockPayloadGenerator,
   MockEnvironment,
+  MockPayloadGenerator,
 } from "relay-test-utils"
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 

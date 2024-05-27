@@ -1,8 +1,8 @@
 import loadable from "@loadable/component"
-import { RedirectException, RouteRenderArgs } from "found"
-import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
 import { getENV } from "Utils/getENV"
+import { RedirectException, RouteRenderArgs } from "found"
+import { graphql } from "react-relay"
 import { getRedirect } from "./Routes/SubmissionFlow/Utils/redirects"
 
 const ConsignmentInquiryApp = loadable(
@@ -126,6 +126,26 @@ const ThankYouWhenFromMyCollection = loadable(
   }
 )
 
+const ArtworkFormApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow2/ArtworkForm"
+    ),
+  {
+    resolveComponent: component => component.ArtworkForm,
+  }
+)
+
+const SubmitArtworkApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow2/SubmitArtwork"
+    ),
+  {
+    resolveComponent: component => component.SubmitArtwork,
+  }
+)
+
 const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
   if (!(Component && props)) {
     return undefined
@@ -211,6 +231,20 @@ export const consignRoutes: AppRouteConfig[] = [
         getComponent: () => FAQApp,
         onClientSideRender: () => {
           FAQApp.preload()
+        },
+      },
+      {
+        path: "submissions/consign",
+        getComponent: () => SubmitArtworkApp,
+        onClientSideRender: () => {
+          SubmitArtworkApp.preload()
+        },
+      },
+      {
+        path: "submissions/new",
+        getComponent: () => ArtworkFormApp,
+        onClientSideRender: () => {
+          ArtworkFormApp.preload()
         },
       },
     ],
