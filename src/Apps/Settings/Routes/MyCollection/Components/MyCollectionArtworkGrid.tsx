@@ -25,7 +25,7 @@ const MyCollectionArtworksGrid: FC<MyCollectionArtworkGridProps> = ({
   return (
     <ArtworkGridContainer
       artworks={artworks}
-      columnCount={[2, 3, 4, 4]}
+      columnCount={[2, 3, 4]}
       showHoverDetails={false}
       showArtworksWithoutImages
       hideSaleInfo

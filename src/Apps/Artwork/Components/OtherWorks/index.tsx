@@ -87,8 +87,8 @@ export const OtherWorks = track()(
 
               return (
                 <Box key={`Grid-${index}`} data-test={contextModule}>
-                  {grid.title && (
-                    <Header title={grid.title} buttonHref={grid.ctaHref!} />
+                  {grid.title && grid.ctaHref && (
+                    <Header title={grid.title} buttonHref={grid.ctaHref} />
                   )}
 
                   {grid.artworksConnection && (
@@ -97,7 +97,7 @@ export const OtherWorks = track()(
 
                       <ArtworkGrid
                         artworks={grid.artworksConnection}
-                        columnCount={[2, 3, 4, 4]}
+                        columnCount={[2, 3, 4]}
                         contextModule={contextModule}
                         onBrickClick={() =>
                           tracking.trackEvent({
@@ -174,7 +174,7 @@ const PLACEHOLDER = (
 
             <Spacer y={4} />
 
-            <ArtworkGridPlaceholder columnCount={[2, 3, 4, 4]} />
+            <ArtworkGridPlaceholder columnCount={[2, 3, 4]} />
           </Box>
         )
       })}

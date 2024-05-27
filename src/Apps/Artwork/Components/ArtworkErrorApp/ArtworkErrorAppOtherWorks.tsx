@@ -48,7 +48,7 @@ const PLACEHOLDER = (
 
             <Spacer y={4} />
 
-            <ArtworkGridPlaceholder columnCount={[2, 3, 4, 4]} />
+            <ArtworkGridPlaceholder columnCount={[2, 3, 4]} />
           </Box>
         )
       })}

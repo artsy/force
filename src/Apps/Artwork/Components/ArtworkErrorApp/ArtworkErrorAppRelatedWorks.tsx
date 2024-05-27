@@ -31,7 +31,7 @@ const RelatedWorks: React.FC<RelatedWorksProps> = ({ artwork }) => {
 
       <Spacer y={4} />
 
-      <ArtworkGrid artworks={artworksConnection} columnCount={[2, 3, 4, 4]} />
+      <ArtworkGrid artworks={artworksConnection} columnCount={[2, 3, 4]} />
     </>
   )
 }
@@ -61,7 +61,7 @@ const PLACEHOLDER = (
 
       <Spacer y={4} />
 
-      <ArtworkGridPlaceholder columnCount={[2, 3, 4, 4]} />
+      <ArtworkGridPlaceholder columnCount={[2, 3, 4]} />
     </Box>
   </Skeleton>
 )

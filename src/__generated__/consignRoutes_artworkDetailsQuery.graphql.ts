@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<15e5973bbcd056e3c7b42832a22ab571>>
+ * @generated SignedSource<<716a5ba13ec400817dc3937ce7565354>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,9 @@ export type consignRoutes_artworkDetailsQuery$variables = {
   sessionID?: string | null | undefined;
 };
 export type consignRoutes_artworkDetailsQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_me">;
+  } | null | undefined;
   readonly submission: {
     readonly artist: {
       readonly internalID: string;
@@ -351,6 +354,22 @@ return {
           (v27/*: any*/)
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ArtworkDetails_me"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -412,20 +431,65 @@ return {
           (v26/*: any*/)
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          (v6/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "email",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PhoneNumberType",
+            "kind": "LinkedField",
+            "name": "phoneNumber",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isValid",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "originalNumber",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          (v26/*: any*/)
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "f2279a402c2499a9a0a070084e446144",
+    "cacheID": "46bd528cba0e8565ff07f54e6867667f",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_artworkDetailsQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_artworkDetailsQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  category\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n  userId\n  userEmail\n}\n"
+    "text": "query consignRoutes_artworkDetailsQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  me {\n    ...ArtworkDetails_me\n    id\n  }\n}\n\nfragment ArtworkDetails_me on Me {\n  name\n  email\n  phoneNumber {\n    isValid\n    originalNumber\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  category\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n  userId\n  userEmail\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fab6620e7993a43b122008db1332e1c9";
+(node as any).hash = "0451ad8640dd20f38f8f17a66ac56d96";
 
 export default node;

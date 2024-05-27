@@ -66,8 +66,8 @@ export const getUploadPhotosFormInitialValues = (
       submission?.assets
         ?.filter(asset => !!asset)
         .map(asset => ({
-          id: asset!.id,
-          assetId: asset!.id,
+          id: asset?.id ?? "",
+          assetId: asset?.id ?? "",
           size: (asset?.size && parseInt(asset?.size, 10)) || 0,
           name: asset?.filename ?? "",
           geminiToken: asset?.geminiToken ?? undefined,
@@ -80,7 +80,7 @@ export const getUploadPhotosFormInitialValues = (
       myCollectionArtwork?.images
         ?.map(image => ({
           name: AUTOMATICALLY_ADDED_PHOTO_NAME,
-          externalUrl: image?.url!,
+          externalUrl: image?.url ?? "",
           type: "image/jpg",
         }))
         ?.map(file => normalizePhoto(file, undefined, file.externalUrl)) || []
@@ -160,10 +160,8 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
       let nextRoute: LocationDescriptor = consignPath
       if (nextStepIndex !== null) {
         let nextStep = steps[nextStepIndex]
-        if (nextStep === "Contact" || nextStep === "Contact Information") {
-          nextRoute = `${consignPath}/${submission.externalId}/contact-information`
-        } else if (nextStep === "Artwork" || nextStep === "Artwork Details") {
-          nextRoute = `${consignPath}/${submission.externalId}/artwork-details`
+        if (nextStep === "Artwork" || nextStep === "Artwork Details") {
+          nextRoute = `${consignPath}/${submission.externalId}`
         }
       }
 
@@ -193,10 +191,6 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
     let prevStep = ""
     if (stepIndex > 0) {
       switch (steps[stepIndex - 1]) {
-        case "Contact":
-        case "Contact Information":
-          prevStep = "contact-information"
-          break
         case "Artwork":
         case "Artwork Details":
           prevStep = "artwork-details"
@@ -277,7 +271,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
                   variables: {
                     input: {
                       assetType: "image",
-                      geminiToken: photo.geminiToken!,
+                      geminiToken: photo.geminiToken as string,
                       externalSubmissionId: submission.externalId,
                       sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
                       filename: photo.name,

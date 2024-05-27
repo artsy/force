@@ -27,7 +27,7 @@ const checkSubmissionExist = redirectToIf(
 )
 
 const checkArtworkDetailsFormValid = redirectToIf(
-  id => `/sell/submission/${id}/artwork-details`,
+  id => `/sell/submission/${id}`,
   submission =>
     !artworkDetailsValidationSchema.isValidSync(
       getArtworkDetailsFormInitialValues({
@@ -61,18 +61,6 @@ export const redirects = {
     {
       path: "/:id/upload-photos",
       rules: [checkSubmissionExist, checkArtworkDetailsFormValid],
-    },
-    {
-      path: "/:id/contact-information",
-      rules: [
-        checkSubmissionExist,
-        // TODO: Is this needed? A user should be able to edit their contact
-        // info independent of all else. With these rules enabled, the back
-        // button is broken.
-
-        // checkArtworkDetailsFormValid,
-        // checkUploadPhotosFormValid,
-      ],
     },
   ],
 }

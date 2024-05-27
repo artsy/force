@@ -1,13 +1,12 @@
-export * from "./DeprecatedResponsive"
 import { createMedia } from "@artsy/fresnel"
+import { unitlessBreakpoints } from "@artsy/palette"
+export { Breakpoint } from "@artsy/palette"
 
-// FIXME: Convert to Palette breakpoints
 export const BREAKPOINTS = {
   xs: 0,
-  sm: 768,
-  md: 900,
-  lg: 1024,
-  xl: 1192,
+  sm: unitlessBreakpoints.sm, // 768px
+  md: unitlessBreakpoints.md, // 1280px
+  lg: unitlessBreakpoints.lg, // 1920px
 }
 
 const ReactionMedia = createMedia({
