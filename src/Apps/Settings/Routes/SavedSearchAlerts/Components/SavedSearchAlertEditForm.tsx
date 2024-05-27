@@ -34,6 +34,7 @@ import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form
 import { useJump } from "Utils/Hooks/useJump"
 import { useEffect } from "react"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { FadeInBox } from "Components/FadeInBox"
 
 interface SavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -166,19 +167,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
         }
 
         return (
-          <Box
-            flex={1}
-            style={{
-              ...(isMounted
-                ? {
-                    opacity: 1,
-                    transition: "opacity 250ms",
-                  }
-                : {
-                    opacity: 0,
-                  }),
-            }}
-          >
+          <FadeInBox flex={1}>
             <Join separator={<Spacer y={4} />}>
               <Box>
                 <Text variant="sm-display" mb={1}>
@@ -254,7 +243,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                 </Button>
               </Media>
             </Join>
-          </Box>
+          </FadeInBox>
         )
       }}
     </Formik>
