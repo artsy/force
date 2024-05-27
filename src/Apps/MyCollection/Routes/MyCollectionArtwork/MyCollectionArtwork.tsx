@@ -121,7 +121,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 </>
               ) : (
                 <MyCollectionArtworkSWASectionDesktopLayout
-                  route={`/collector-profile/my-collection/submission/contact-information/${id}`}
+                  route={`/collector-profile/my-collection/submission/artwork-details/${id}`}
                   learnMore={() => setShowHowItWorksModal(true)}
                   slug={slug}
                   artworkId={artwork.internalID}

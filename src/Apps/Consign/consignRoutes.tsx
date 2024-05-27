@@ -360,9 +360,7 @@ export const consignRoutes: AppRouteConfig[] = [
     path: "/collector-profile/my-collection/submission",
     getComponent: () => SubmissionLayout,
     onServerSideRender: ({ res }) => {
-      res.redirect(
-        "/collector-profile/my-collection/submission/contact-information"
-      )
+      res.redirect("/collector-profile/my-collection/submission")
     },
     children: [
       {

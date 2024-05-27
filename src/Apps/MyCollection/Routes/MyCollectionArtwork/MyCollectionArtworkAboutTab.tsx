@@ -22,6 +22,7 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
 }) => {
   const isP1Artist = artwork.artist?.targetSupply?.isP1
   const showSubmitForSaleCtaMobile = isP1Artist && !submittedConsignment
+  const id = artwork.internalID
 
   return (
     <>
@@ -48,7 +49,7 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
           <>
             <Separator my={2} />
             <MyCollectionArtworkSWASectionMobileLayout
-              route={`/collector-profile/my-collection/submission/contact-information/${artwork.internalID}`}
+              route={`/collector-profile/my-collection/submission/artwork-details/${id}`}
               learnMore={() => {
                 onLearnMoreClick?.()
               }}
