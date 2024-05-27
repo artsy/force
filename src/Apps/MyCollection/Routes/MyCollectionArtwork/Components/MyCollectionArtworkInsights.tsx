@@ -29,6 +29,7 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
   const hasAuctionResults = artwork.auctionResults?.totalCount ?? 0 > 0
   const artistHasAuctionResults =
     artwork.artist?.auctionResultsCount?.totalCount ?? 0 > 0
+  const id = artwork.internalID
 
   return (
     <Join
@@ -60,7 +61,7 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
         {showSubmitForSaleCtaMobile && (
           <Media lessThan="sm">
             <MyCollectionArtworkSWASectionMobileLayout
-              route={`/collector-profile/my-collection/submission/contact-information/${artwork.internalID}`}
+              route={`/collector-profile/my-collection/submission/artwork-details/${id}`}
               learnMore={() => {
                 onLearnMoreClick?.()
               }}
