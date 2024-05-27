@@ -141,8 +141,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
       })
   }, [createAlertError, mWebView, sendToast])
 
-  const isMounted = useDidMount()
-
   const handleSubmit = () => {
     onComplete()
     onCompleted()
