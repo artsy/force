@@ -27,6 +27,7 @@ import {
 import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
+import { ArtworkDetails_me$data } from "__generated__/ArtworkDetails_me.graphql"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { LocationDescriptor } from "found"
 import { trackEvent } from "Server/analytics/helpers"
@@ -40,11 +41,13 @@ const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission$data
   myCollectionArtwork?: ArtworkDetails_myCollectionArtwork$data
+  me?: ArtworkDetails_me$data
 }
 
 export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   submission,
   myCollectionArtwork,
+  me,
 }) => {
   const { router, match } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
@@ -83,6 +86,9 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       ...values,
       editionNumber: isLimitedEditionRarity ? values.editionNumber : "",
       editionSize: isLimitedEditionRarity ? values.editionSize : "",
+      userName: me?.name,
+      userEmail: me?.email,
+      userPhone: me?.phoneNumber?.originalNumber,
     }
 
     for (let key in artworkDetailsForm) {
@@ -185,10 +191,8 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       let nextRoute: LocationDescriptor = consignPath
       if (nextStepIndex !== null) {
         let nextStep = steps[nextStepIndex]
-        if (nextStep === "Contact" || nextStep === "Contact Information") {
-          nextRoute = `${consignPath}/${submissionId}/contact-information`
-        } else if (nextStep === "Artwork" || nextStep === "Artwork Details") {
-          nextRoute = `${consignPath}/${submissionId}/artwork-details/`
+        if (nextStep === "Artwork" || nextStep === "Artwork Details") {
+          nextRoute = `${consignPath}/${submissionId}`
         } else if (nextStep === "Photos" || nextStep === "Upload Photos") {
           nextRoute = `${consignPath}/${submissionId}/upload-photos`
         }
@@ -209,20 +213,12 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   }
 
   const deriveBackLinkTo = () => {
-    const defaultBackLink = artworkId
-      ? "/collector-profile/my-collection"
-      : "/sell"
+    const defaultBackLink = "/sell"
     let backTo = defaultBackLink
-    if (isFirstStep && artworkId) {
-      return backTo + `/artwork/${artworkId}`
-    }
+
     let prevStep = ""
     if (stepIndex > 0) {
       switch (steps[stepIndex - 1]) {
-        case "Contact":
-        case "Contact Information":
-          prevStep = "contact-information"
-          break
         case "Upload Photos":
         case "Photos":
           prevStep = "upload-photos"
@@ -245,11 +241,12 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
   return (
     <>
-      <TopContextBar displayBackArrow hideSeparator href={backTo}>
-        Back
-      </TopContextBar>
-
-      <Spacer y={6} />
+      {!isFirstStep && (
+        <TopContextBar displayBackArrow hideSeparator href={backTo}>
+          Back
+        </TopContextBar>
+      )}
+      <Spacer y={12} />
 
       <SubmissionStepper currentStep="Artwork Details" />
 
@@ -363,6 +360,16 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         depth
         metric
         provenance
+      }
+    `,
+    me: graphql`
+      fragment ArtworkDetails_me on Me {
+        name
+        email
+        phoneNumber {
+          isValid
+          originalNumber
+        }
       }
     `,
   }

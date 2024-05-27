@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ca91c922374e2f3f4f2ed10f06d6b52c>>
+ * @generated SignedSource<<f7a3ee06e229b09337ab49025fcd8dcf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,35 +10,26 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ContactInformation_me$data = {
+export type ArtworkDetails_me$data = {
   readonly email: string | null | undefined;
-  readonly internalID: string;
   readonly name: string | null | undefined;
-  readonly phone: string | null | undefined;
   readonly phoneNumber: {
-    readonly regionCode: string | null | undefined;
+    readonly isValid: boolean | null | undefined;
+    readonly originalNumber: string | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ContactInformationForm_me">;
-  readonly " $fragmentType": "ContactInformation_me";
+  readonly " $fragmentType": "ArtworkDetails_me";
 };
-export type ContactInformation_me$key = {
-  readonly " $data"?: ContactInformation_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
+export type ArtworkDetails_me$key = {
+  readonly " $data"?: ArtworkDetails_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_me">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ContactInformation_me",
+  "name": "ArtworkDetails_me",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -56,13 +47,6 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "phone",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "PhoneNumberType",
       "kind": "LinkedField",
       "name": "phoneNumber",
@@ -72,22 +56,24 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "regionCode",
+          "name": "isValid",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "originalNumber",
           "storageKey": null
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ContactInformationForm_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "f9f59b7af2a2be16a9ce9cd2bc916fa5";
+(node as any).hash = "86f46eb735bad9ca4693f14475420570";
 
 export default node;

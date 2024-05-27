@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<475ba5143fedd96c027567de7bcf9020>>
+ * @generated SignedSource<<73827388d15f0e291058f35e5d1c7563>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,12 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
-export type consignRoutes_contactInformationQuery$variables = {
+export type consignRoutes_artworkEditDetailsQuery$variables = {
   externalId?: string | null | undefined;
   id?: string | null | undefined;
   sessionID?: string | null | undefined;
 };
-export type consignRoutes_contactInformationQuery$data = {
-  readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
-  } | null | undefined;
+export type consignRoutes_artworkEditDetailsQuery$data = {
   readonly submission: {
     readonly artist: {
       readonly internalID: string;
@@ -52,12 +49,12 @@ export type consignRoutes_contactInformationQuery$data = {
     readonly userId: string;
     readonly width: string | null | undefined;
     readonly year: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_submission">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_submission">;
   } | null | undefined;
 };
-export type consignRoutes_contactInformationQuery = {
-  response: consignRoutes_contactInformationQuery$data;
-  variables: consignRoutes_contactInformationQuery$variables;
+export type consignRoutes_artworkEditDetailsQuery = {
+  response: consignRoutes_artworkEditDetailsQuery$data;
+  variables: consignRoutes_artworkEditDetailsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -303,7 +300,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "consignRoutes_contactInformationQuery",
+    "name": "consignRoutes_artworkEditDetailsQuery",
     "selections": [
       {
         "alias": null,
@@ -316,7 +313,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ContactInformation_submission"
+            "name": "ArtworkDetails_submission"
           },
           (v4/*: any*/),
           {
@@ -354,22 +351,6 @@ return {
           (v27/*: any*/)
         ],
         "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ContactInformation_me"
-          }
-        ],
-        "storageKey": null
       }
     ],
     "type": "Query",
@@ -383,7 +364,7 @@ return {
       (v2/*: any*/)
     ],
     "kind": "Operation",
-    "name": "consignRoutes_contactInformationQuery",
+    "name": "consignRoutes_artworkEditDetailsQuery",
     "selections": [
       {
         "alias": null,
@@ -394,21 +375,6 @@ return {
         "plural": false,
         "selections": [
           (v4/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "userName",
-            "storageKey": null
-          },
-          (v25/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "userPhone",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -441,53 +407,8 @@ return {
           (v22/*: any*/),
           (v23/*: any*/),
           (v24/*: any*/),
+          (v25/*: any*/),
           (v27/*: any*/),
-          (v26/*: any*/)
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
-        "plural": false,
-        "selections": [
-          (v5/*: any*/),
-          (v6/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "email",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "phone",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "PhoneNumberType",
-            "kind": "LinkedField",
-            "name": "phoneNumber",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "regionCode",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
           (v26/*: any*/)
         ],
         "storageKey": null
@@ -495,16 +416,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5129d976f7dd4e4cd130e073b9026658",
+    "cacheID": "22b09b03feb44cbe2cad6c324ca002b2",
     "id": null,
     "metadata": {},
-    "name": "consignRoutes_contactInformationQuery",
+    "name": "consignRoutes_artworkEditDetailsQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_contactInformationQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ContactInformation_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n  userName\n  userEmail\n  userPhone\n}\n"
+    "text": "query consignRoutes_artworkEditDetailsQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  category\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n  userId\n  userEmail\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cece832b01b48268e3f2ff78c8afa2e6";
+(node as any).hash = "f9598e716885b0a1f1ca893960d57296";
 
 export default node;

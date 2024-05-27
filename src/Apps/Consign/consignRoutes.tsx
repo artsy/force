@@ -75,16 +75,6 @@ const ArtworkDetailsFragmentContainer = loadable(
   }
 )
 
-const ArtworkDetails = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ArtworkDetails/ArtworkDetails"
-    ),
-  {
-    resolveComponent: component => component.ArtworkDetails,
-  }
-)
-
 const UploadPhotosFragmentContainer = loadable(
   () =>
     import(
@@ -92,17 +82,6 @@ const UploadPhotosFragmentContainer = loadable(
     ),
   {
     resolveComponent: component => component.UploadPhotosFragmentContainer,
-  }
-)
-
-const ContactInformation = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ContactInformation/ContactInformation"
-    ),
-  {
-    resolveComponent: component =>
-      component.ContactInformationFragmentContainer,
   }
 )
 
@@ -162,22 +141,6 @@ const prepareSubmissionFlowStepVariables = data => {
     sessionID: getENV("SESSION_ID"),
   }
 }
-
-const contactInformationQuery = graphql`
-  query consignRoutes_contactInformationQuery(
-    $id: ID
-    $externalId: ID
-    $sessionID: String
-  ) {
-    submission(id: $id, externalId: $externalId, sessionID: $sessionID) {
-      ...ContactInformation_submission
-      ...redirects_submission @relay(mask: false)
-    }
-    me {
-      ...ContactInformation_me
-    }
-  }
-`
 
 const renderConsignmentInquiry = ({ Component, props }: RouteRenderArgs) => {
   if (!(Component && props)) {
@@ -303,35 +266,33 @@ export const consignRoutes: AppRouteConfig[] = [
     getComponent: () => SubmissionLayout,
     children: [
       {
-        // Default landing is the same as /contact-information
         path: "",
         layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
+        getComponent: () => ArtworkDetailsFragmentContainer,
         onClientSideRender: () => {
-          ContactInformation.preload()
+          ArtworkDetailsFragmentContainer.preload()
         },
-        query: contactInformationQuery,
-        render: renderSubmissionFlowStep,
+        query: graphql`
+          query consignRoutes_artworkDetailsQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...ArtworkDetails_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            me {
+              ...ArtworkDetails_me
+            }
+          }
+        `,
         prepareVariables: prepareSubmissionFlowStepVariables,
-      },
-      {
-        path: "artwork-details",
-        layout: "ContainerOnly",
-        getComponent: () => ArtworkDetails,
-        onServerSideRender: ({ res }) => {
-          res.redirect("/sell/submission")
-        },
-      },
-      {
-        path: "contact-information",
-        layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
-        onClientSideRender: () => {
-          ContactInformation.preload()
-        },
-        query: contactInformationQuery,
         render: renderSubmissionFlowStep,
-        prepareVariables: prepareSubmissionFlowStepVariables,
       },
       {
         path: ":id/artwork-details",
@@ -341,7 +302,7 @@ export const consignRoutes: AppRouteConfig[] = [
           ArtworkDetailsFragmentContainer.preload()
         },
         query: graphql`
-          query consignRoutes_artworkDetailsQuery(
+          query consignRoutes_artworkEditDetailsQuery(
             $id: ID
             $externalId: ID
             $sessionID: String
@@ -384,17 +345,6 @@ export const consignRoutes: AppRouteConfig[] = [
         `,
         prepareVariables: prepareSubmissionFlowStepVariables,
         render: renderSubmissionFlowStep,
-      },
-      {
-        path: ":id/contact-information",
-        layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
-        onClientSideRender: () => {
-          ContactInformation.preload()
-        },
-        query: contactInformationQuery,
-        render: renderSubmissionFlowStep,
-        prepareVariables: prepareSubmissionFlowStepVariables,
       },
       {
         path: ":id/thank-you",
@@ -490,34 +440,6 @@ export const consignRoutes: AppRouteConfig[] = [
         `,
         prepareVariables: prepareSubmissionFlowStepVariables,
         render: renderSubmissionFlowStep,
-      },
-      {
-        path: ":id/contact-information/:artworkId?",
-        layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
-        onClientSideRender: () => {
-          ContactInformation.preload()
-        },
-        query: contactInformationQuery,
-        render: renderSubmissionFlowStep,
-        prepareVariables: prepareSubmissionFlowStepVariables,
-      },
-      {
-        path: "/contact-information/:artworkId?",
-        layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
-        onClientSideRender: () => {
-          ContactInformation.preload()
-        },
-        query: graphql`
-          query consignRoutes_contactInformationMeQuery {
-            me {
-              ...ContactInformation_me
-            }
-          }
-        `,
-        render: renderSubmissionFlowStep,
-        prepareVariables: prepareSubmissionFlowStepVariables,
       },
       {
         path: ":id/thank-you/:artworkId?",
