@@ -27,7 +27,6 @@ const AuctionInfoSidebar: React.FC<AuctionInfoSidebarProps> = ({ sale }) => {
         <RouterLink inline to="mailto:specialist@artsy.net">
           <Text variant="sm">specialist@artsy.net</Text>
         </RouterLink>
-        <Text variant="sm">+1-845-582-3967</Text>
       </Box>
     </Join>
   )
