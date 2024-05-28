@@ -47,7 +47,7 @@ export const generateIcsCalendarUrl = ({
   const end = endDate
     ? formatCalendarDate(endDate)
     : formatCalendarDate(startDate, 1)
-  const formattedDescription = stripTags(description).replace(
+  const formattedDescription = stripTags(description || "").replace(
     /(\r\n|\n|\r)/gm,
     ""
   )
