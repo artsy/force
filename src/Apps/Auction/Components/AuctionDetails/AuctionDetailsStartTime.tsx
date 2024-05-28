@@ -17,9 +17,13 @@ const AuctionDetailsStartTime: FC<AuctionDetailsStartTimeProps> = ({
   sale,
   ...rest
 }) => {
+  if (!sale.cascadingEndTime) {
+    return null
+  }
+
   return (
-    <Text variant="xl" {...rest}>
-      {!!sale.cascadingEndTime && sale.cascadingEndTime?.formattedStartDateTime}
+    <Text variant={["lg-display", "xl"]} {...rest}>
+      {sale.cascadingEndTime.formattedStartDateTime}
     </Text>
   )
 }
@@ -39,7 +43,7 @@ const AuctionDetailsStartTimeFragmentContainer = createFragmentContainer(
 
 const AuctionDetailsStartTimePlaceholder: FC<TextProps> = props => {
   return (
-    <SkeletonText variant="xl" {...props}>
+    <SkeletonText variant={["lg-display", "xl"]} {...props}>
       Starts Jan 00 at 12:00pm UTC
     </SkeletonText>
   )

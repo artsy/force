@@ -2622,6 +2622,9 @@ type Artwork implements Node & Searchable & Sellable {
   metric: String
   myLotStanding(live: Boolean = null): [LotStanding!]
 
+  # Count of collectors with eligible offerable activities.
+  offerableActivity: OfferableActivity
+
   # Is this work only available for shipping domestically?
   onlyShipsDomestically: Boolean
   partner(
@@ -14039,6 +14042,11 @@ enum NotificationTypesEnum {
   PARTNER_OFFER_CREATED
   PARTNER_SHOW_OPENED
   VIEWING_ROOM_PUBLISHED
+}
+
+type OfferableActivity {
+  # Count of collectors with eligible offerable activities.
+  totalCount: Int
 }
 
 # Consignment Offer Response

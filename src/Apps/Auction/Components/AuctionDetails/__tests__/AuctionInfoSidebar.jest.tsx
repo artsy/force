@@ -25,6 +25,5 @@ describe("AuctionInfoSidebar", () => {
     expect(wrapper.text()).toContain("How to bid on Artsy?")
     expect(wrapper.html()).toContain("/how-auctions-work")
     expect(wrapper.html()).toContain("mailto:specialist@artsy.net")
-    expect(wrapper.text()).toContain("+1-845-582-3967")
   })
 })

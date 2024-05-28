@@ -7,9 +7,9 @@ import { NavBarMenuItemLink } from "Components/NavBar/Menus/NavBarMenuItem"
 export interface AddToCalendarProps {
   title: string
   startDate: string
-  endDate?: string
-  description?: string
-  address?: string
+  endDate?: string | null
+  description?: string | null
+  address?: string | null
   href: string
   liveAuctionUrl?: string
 }
