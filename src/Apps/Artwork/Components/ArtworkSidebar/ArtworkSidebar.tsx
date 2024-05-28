@@ -1,4 +1,4 @@
-import { Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
 import { ArtworkSidebar_artwork$data } from "__generated__/ArtworkSidebar_artwork.graphql"
@@ -24,6 +24,7 @@ import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAu
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPrivateArtwork"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork$data
@@ -153,6 +154,10 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       {isUnlisted && (
         <>
+          <PrivateArtworkAdditionalInfo artwork={artwork} />
+          {/* <Box height="200px" backgroundColor="yellow">
+            WOOOHOO
+          </Box> */}
           <Spacer y={1} />
 
           <ArtworkSidebarCommercialButtons
@@ -258,6 +263,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarAuctionInfoPolling_artwork
         ...ArtworkSidebarPrivateArtwork_artwork
         ...ArtworkSidebarArtsyGuarantee_artwork
+        ...PrivateArtworkAdditionalInfo_artwork
 
         slug
         isSold
