@@ -10,7 +10,7 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { PrivateArtworkAdditionalInfo_artwork$key } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
+import { PrivateArtworkAdditionalInfo_artwork$data } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 import { useState } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -25,7 +25,7 @@ import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/Condi
 import { RequestConditionReportQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
 
 export interface PrivateArtworkAdditionalInfoProps extends FlexProps {
-  artwork: PrivateArtworkAdditionalInfo_artwork$key
+  artwork: PrivateArtworkAdditionalInfo_artwork$data
 }
 
 export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfoProps> = ({
@@ -193,7 +193,7 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
       {openConditionModal && (
         <ConditionInfoModal onClose={() => setOpenConditionModal(false)} />
       )}
-      <Container backgroundColor="yellow" flexDirection="column" {...flexProps}>
+      <Container flexDirection="column" {...flexProps}>
         <Join separator={<Spacer y={1} />}>
           {displayItems.map(
             ({ title, value, onReadMoreClicked, onTitleClick }, index) => (
