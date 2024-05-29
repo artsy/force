@@ -17,10 +17,10 @@ import { graphql, useFragment } from "react-relay"
 import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { ContextModule } from "@artsy/cohesion"
-import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
 import { useTracking } from "react-tracking"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { RequestConditionReportQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
+import { PrivateArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkDefinitionList"
 
 // Number of items to display when read more is visible
 const COLLAPSED_COUNT = 3
@@ -172,7 +172,7 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
         <Join separator={<Spacer y={1} />}>
           {displayItems.map(
             ({ title, value, onReadMoreClicked, onTitleClick }, index) => (
-              <ArtworkDefinitionList
+              <PrivateArtworkDefinitionList
                 key={title + index}
                 term={title}
                 onTitleClick={onTitleClick}
@@ -189,7 +189,7 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
                     />
                   )}
                 </HTML>
-              </ArtworkDefinitionList>
+              </PrivateArtworkDefinitionList>
             )
           )}
         </Join>
