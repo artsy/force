@@ -13,17 +13,31 @@ export const ArtworkDefinitionList: React.FC<ArtworkDefinitionListProps> = ({
   ...rest
 }) => {
   return (
-    <Flex as="dl" flexDirection={["column", "row"]} {...rest}>
+    <Flex as="dl" flexDirection="row" {...rest}>
       {onTitleClick ? (
         <>
           <Clickable textDecoration="underline" onClick={onTitleClick}>
-            <Text as="dt" variant="xs" width={150} flexShrink={0} mr={2}>
+            <Text
+              as="dt"
+              variant="xs"
+              width={150}
+              flexShrink={0}
+              mr={2}
+              color="black60"
+            >
               {term}
             </Text>
           </Clickable>
         </>
       ) : (
-        <Text as="dt" variant="xs" width={150} flexShrink={0} mr={2}>
+        <Text
+          as="dt"
+          variant="xs"
+          width={150}
+          flexShrink={0}
+          mr={2}
+          color="black60"
+        >
           {term}
         </Text>
       )}

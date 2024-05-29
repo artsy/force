@@ -10,28 +10,28 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { PrivateArtworkAdditionalInfo_artwork$data } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
+import { PrivateArtworkAdditionalInfo_artwork$key } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 import { useState } from "react"
 import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
 import { useTracking } from "react-tracking"
-import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
-import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { RequestConditionReportQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
 
 export interface PrivateArtworkAdditionalInfoProps extends FlexProps {
-  artwork: PrivateArtworkAdditionalInfo_artwork$data
+  artwork: PrivateArtworkAdditionalInfo_artwork$key
 }
 
 export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfoProps> = ({
   artwork,
   ...flexProps
 }) => {
+  const data = useFragment(privateArtworkAdditionalInfoFragment, artwork)
+
   const {
     category,
     series,
@@ -40,20 +40,15 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
     image_rights,
     internalID,
     canRequestLotConditionsReport,
-    framed,
     signatureInfo,
     conditionDescription,
     certificateOfAuthenticity,
-    dimensions,
-    attributionClass,
-    medium,
-  } = artwork
+    mediumType,
+    isUnlisted,
+  } = data
 
   const [openMediumModal, setOpenMediumModal] = useState(false)
-  const [openRarityModal, setOpenRarityModal] = useState(false)
   const [openConditionModal, setOpenConditionModal] = useState(false)
-
-  const { dimensionsLabel } = useArtworkDimensions(dimensions)
 
   const { trackEvent } = useTracking()
   const {
@@ -64,50 +59,10 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
 
   const listItems = [
     {
-      title: "Materials",
-      value: medium,
-    },
-    {
-      title: "Size",
-      value: dimensionsLabel,
-    },
-    {
-      title: "Rarity",
-      value: attributionClass?.name && (
-        <>
-          <Clickable
-            onClick={() => {
-              setOpenRarityModal(true)
-
-              trackEvent({
-                action_type: "Click",
-                context_module: ContextModule.aboutTheWork,
-                type: DeprecatedAnalyticsSchema.Type.Link,
-                subject: "Rarity type info",
-                context_page_owner_type: contextPageOwnerType,
-                context_page_owner_id: contextPageOwnerId,
-                context_page_owner_slug: contextPageOwnerSlug,
-              })
-            }}
-            textDecoration="underline"
-            color="black60"
-          >
-            <Text variant="xs">{attributionClass?.name}</Text>
-          </Clickable>
-
-          <ArtworkSidebarClassificationsModalQueryRenderer
-            onClose={() => setOpenRarityModal(false)}
-            show={openRarityModal}
-            showDisclaimer={false}
-          />
-        </>
-      ),
-    },
-    {
       title: "Medium",
       value: category && (
         <>
-          {artwork.mediumType ? (
+          {mediumType ? (
             <>
               <Clickable
                 onClick={() => {
@@ -124,19 +79,19 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
                   })
                 }}
                 textDecoration="underline"
-                color="black60"
+                color="black100"
               >
                 <Text variant="xs">{category}</Text>
               </Clickable>
 
               <ArtworkDetailsMediumModalFragmentContainer
-                artwork={artwork}
+                artwork={data}
                 show={openMediumModal}
                 onClose={() => setOpenMediumModal(false)}
               />
             </>
           ) : (
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="black100">
               {category}
             </Text>
           )}
@@ -170,10 +125,6 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
       title: "Certificate of authenticity",
       value: certificateOfAuthenticity && certificateOfAuthenticity.details,
     },
-    {
-      title: "Frame",
-      value: framed && framed.details,
-    },
     { title: "Series", value: series },
     { title: "Publisher", value: publisher },
     { title: "Manufacturer", value: manufacturer },
@@ -186,7 +137,7 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
     return null
   }
 
-  const Container = artwork.isUnlisted ? Flex : StackableBorderBox
+  const Container = isUnlisted ? Flex : StackableBorderBox
 
   return (
     <>
@@ -202,7 +153,7 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
                 term={title}
                 onTitleClick={onTitleClick}
               >
-                <HTML variant="xs" color="black60">
+                <HTML variant="xs" color="black100">
                   {/* TODO: not sure why this check is here */}
                   {React.isValidElement(value) ? (
                     value
@@ -223,48 +174,43 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
   )
 }
 
-export const PrivateArtworkAdditionalInfoFragmentContainer = createFragmentContainer(
-  PrivateArtworkAdditionalInfo,
-  {
-    artwork: graphql`
-      fragment PrivateArtworkAdditionalInfo_artwork on Artwork {
-        category
-        series
-        publisher
-        manufacturer
-        image_rights: imageRights
-        canRequestLotConditionsReport
-        internalID
-        isUnlisted
-        framed {
-          label
-          details
-        }
-        signatureInfo {
-          label
-          details
-        }
-        conditionDescription {
-          label
-          details
-        }
-        certificateOfAuthenticity {
-          label
-          details
-        }
-        mediumType {
-          __typename
-        }
-        dimensions {
-          in
-          cm
-        }
-        attributionClass {
-          name
-        }
-        medium
-        ...ArtworkDetailsMediumModal_artwork
-      }
-    `,
+const privateArtworkAdditionalInfoFragment = graphql`
+  fragment PrivateArtworkAdditionalInfo_artwork on Artwork {
+    category
+    series
+    publisher
+    manufacturer
+    image_rights: imageRights
+    canRequestLotConditionsReport
+    internalID
+    isUnlisted
+    framed {
+      label
+      details
+    }
+    signatureInfo {
+      label
+      details
+    }
+    conditionDescription {
+      label
+      details
+    }
+    certificateOfAuthenticity {
+      label
+      details
+    }
+    mediumType {
+      __typename
+    }
+    dimensions {
+      in
+      cm
+    }
+    attributionClass {
+      name
+    }
+    medium
+    ...ArtworkDetailsMediumModal_artwork
   }
-)
+`
