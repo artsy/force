@@ -42,7 +42,7 @@ export const AuthenticityCertificate: FC<AuthenticityCertificateProps> = ({
         <Text variant="xs" color="black100">
           Includes a{" "}
           <Clickable onClick={handleClick} textDecoration="underline">
-            Certificate of Authenticity
+            Certificate of Authenticity wooo
           </Clickable>
           .
         </Text>

@@ -22,6 +22,9 @@ import { useTracking } from "react-tracking"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { RequestConditionReportQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
 
+// Number of items to display when read more is visible
+const COLLAPSED_COUNT = 3
+
 export interface PrivateArtworkAdditionalInfoProps extends FlexProps {
   artwork: PrivateArtworkAdditionalInfo_artwork$key
 }
@@ -131,10 +134,31 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
     { title: "Image rights", value: image_rights },
   ]
 
-  const displayItems = listItems.filter(i => i.value != null && i.value !== "")
+  const allDisplayItems = listItems.filter(
+    i => i.value != null && i.value !== ""
+  )
+
+  const [isCollapsed, setIsCollapsed] = React.useState(
+    allDisplayItems.length > COLLAPSED_COUNT
+  )
+
+  const displayItems = isCollapsed
+    ? allDisplayItems.slice(0, COLLAPSED_COUNT)
+    : allDisplayItems
 
   if (displayItems.length === 0) {
     return null
+  }
+
+  const handleReadMoreClick = () => {
+    const properties = {
+      action_type: "Click",
+      context_module: "artworkDetails",
+      subject: "Read more",
+      type: "Link",
+    }
+    trackEvent(properties)
+    setIsCollapsed(false)
   }
 
   const Container = isUnlisted ? Flex : StackableBorderBox
@@ -169,6 +193,22 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
             )
           )}
         </Join>
+        {!!isCollapsed && (
+          <Flex flexDirection="row" justifyContent="flex-start">
+            {/* <Box width={150}></Box> */}
+            <Spacer x={150} />
+            <Clickable
+              mt={1}
+              ml={2}
+              onClick={() => handleReadMoreClick()}
+              textDecoration="underline"
+            >
+              <Text variant="xs" color="black100" textAlign="left">
+                Read More
+              </Text>
+            </Clickable>
+          </Flex>
+        )}
       </Container>
     </>
   )
