@@ -1,4 +1,4 @@
-import { Box, Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
+import { Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
 import { ArtworkSidebar_artwork$data } from "__generated__/ArtworkSidebar_artwork.graphql"
@@ -149,10 +149,8 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
       {isUnlisted && (
         <>
           <PrivateArtworkAdditionalInfo artwork={artwork} />
-          {/* <Box height="200px" backgroundColor="yellow">
-            WOOOHOO
-          </Box> */}
-          <Spacer y={1} />
+
+          <Spacer y={4} />
 
           <ArtworkSidebarCommercialButtons
             artwork={artwork}

@@ -37,16 +37,14 @@ const ArtworkSidebarDetails: React.FC<ArtworkSidebarDetailsProps> = ({
       )}
       {!!editionOf && <Text variant="sm">{editionOf}</Text>}
 
-      <Spacer y={1} />
-
       {/* classification */}
-
       <ArtworkSidebarClassificationFragmentContainer artwork={artwork} />
-      <Spacer y={1} />
+
       {/* authenticity */}
       <ArtworkSidebarAuthenticityCertificateFragmentContainer
         artwork={artwork}
       />
+
       <Spacer y={2} />
     </Box>
   )

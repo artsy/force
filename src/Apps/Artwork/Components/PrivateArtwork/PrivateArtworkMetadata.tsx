@@ -13,7 +13,7 @@ import { useState } from "react"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import { useTracking } from "react-tracking"
-import { ArtworkDetailsAdditionalInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
+
 interface PrivateArtworkMetadataProps {
   artwork: PrivateArtworkMetadata_artwork$key
 }
@@ -90,10 +90,6 @@ export const PrivateArtworkMetadata: React.FC<PrivateArtworkMetadataProps> = ({
           <Separator my={2} />
         </>
       )}
-
-      <MetadataDetailItem title="Additional Details">
-        <ArtworkDetailsAdditionalInfoFragmentContainer artwork={data} />
-      </MetadataDetailItem>
     </>
   )
 }
