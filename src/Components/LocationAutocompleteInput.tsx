@@ -17,7 +17,7 @@ import {
   useMemo,
   useCallback,
 } from "react"
-import { debounce } from "lodash"
+import { compact, debounce } from "lodash"
 
 const DEBOUNCE_DELAY = 300
 
@@ -92,8 +92,8 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
       if (suggestions) {
         setSuggestions(
           suggestions.map(option => ({
-            text: option.description!,
-            value: option.place_id!,
+            text: option.description,
+            value: option.place_id,
           }))
         )
       }
@@ -146,7 +146,7 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
     <AutocompleteInput
       {...rest}
       loading={isLoading}
-      data-test-id="autocomplete-location"
+      data-testid="autocomplete-location"
       footer={
         <Flex px={2} py={0.5} bg="white100" justifyContent="flex-end">
           <PoweredByGoogleIcon />
@@ -166,12 +166,12 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
 export type Place = { city: string } | google.maps.GeocoderResult
 
 export type Location = {
-  city: string
-  state?: string
+  city?: string | null
+  state?: string | null
   stateCode?: string
   postalCode?: string
-  country?: string
-  countryCode?: string
+  country?: string | null
+  countryCode?: string | null
   coordinates?: number[]
 }
 
@@ -251,3 +251,8 @@ const PoweredByGoogleIcon: FC = () => {
     </svg>
   )
 }
+
+export const buildLocationDisplay = (
+  location: Location | null | undefined
+): string =>
+  compact([location?.city, location?.state, location?.country]).join(", ")

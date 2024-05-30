@@ -29,7 +29,7 @@ export const getMyCollectionArtworkFormInitialValues = (
     : "",
   pricePaidCurrency: artwork?.pricePaid?.currencyCode ?? "USD",
   provenance: artwork?.provenance ?? "",
-  artworkLocation: artwork?.artworkLocation ?? "",
+  collectorLocation: artwork?.collectorLocation,
   confidentialNotes: artwork?.confidentialNotes ?? "",
 })
 

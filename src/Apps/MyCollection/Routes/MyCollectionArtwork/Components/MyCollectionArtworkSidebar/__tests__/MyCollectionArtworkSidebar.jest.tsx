@@ -63,7 +63,7 @@ describe("MyCollectionArtworkSidebar", () => {
       expect(screen.getByText("Bought in a gallery")).toBeInTheDocument()
       expect(screen.getByText("Unique work")).toBeInTheDocument()
       expect(screen.getByText("€25,300")).toBeInTheDocument()
-      expect(screen.getByText("Berlin")).toBeInTheDocument()
+      expect(screen.getByText("Berlin, Berlin, Germany")).toBeInTheDocument()
     })
 
     it("includes Notes when notes are present", () => {
@@ -179,7 +179,11 @@ const mockResolversWithData = {
   pricePaid: {
     display: "€25,300",
   },
-  artworkLocation: "Berlin",
+  collectorLocation: {
+    city: "Berlin",
+    state: "Berlin",
+    country: "Germany",
+  },
 }
 
 const emptyMockResolvers = {
@@ -197,5 +201,5 @@ const emptyMockResolvers = {
   attributionClass: null,
   editionOf: null,
   pricePaid: null,
-  artworkLocation: null,
+  collectorLocation: null,
 }

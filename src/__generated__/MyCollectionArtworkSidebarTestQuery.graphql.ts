@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e816ebaeae62fe1a20239a25ccdff680>>
+ * @generated SignedSource<<8b2984adec3275113a106edc8b1848d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -248,8 +248,41 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "artworkLocation",
+            "concreteType": "MyLocation",
+            "kind": "LinkedField",
+            "name": "collectorLocation",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "city",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "state",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "country",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "countryCode",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
             "storageKey": null
           },
           (v1/*: any*/)
@@ -259,7 +292,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0ad78f5cba07e0d797e668229769e466",
+    "cacheID": "2b314eecd0306bcc82f7d5fc3d63e27c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -284,7 +317,6 @@ return {
           "type": "Boolean"
         },
         "artwork.artistNames": (v2/*: any*/),
-        "artwork.artworkLocation": (v2/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
           "nullable": true,
@@ -294,6 +326,17 @@ return {
         "artwork.attributionClass.id": (v3/*: any*/),
         "artwork.attributionClass.shortDescription": (v2/*: any*/),
         "artwork.category": (v2/*: any*/),
+        "artwork.collectorLocation": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MyLocation"
+        },
+        "artwork.collectorLocation.city": (v2/*: any*/),
+        "artwork.collectorLocation.country": (v2/*: any*/),
+        "artwork.collectorLocation.countryCode": (v2/*: any*/),
+        "artwork.collectorLocation.id": (v3/*: any*/),
+        "artwork.collectorLocation.state": (v2/*: any*/),
         "artwork.confidentialNotes": (v2/*: any*/),
         "artwork.date": (v2/*: any*/),
         "artwork.dimensions": {
@@ -321,7 +364,7 @@ return {
     },
     "name": "MyCollectionArtworkSidebarTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  confidentialNotes\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  editionOf\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    isPersonalArtist\n    id\n  }\n}\n"
+    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  confidentialNotes\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  editionOf\n  pricePaid {\n    display\n  }\n  collectorLocation {\n    city\n    state\n    country\n    countryCode\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    isPersonalArtist\n    id\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,6 @@
 import { Box, Clickable, ModalDialog, Text, THEME } from "@artsy/palette"
 import { MyCollectionArtworkSidebarMetadata_artwork$data } from "__generated__/MyCollectionArtworkSidebarMetadata_artwork.graphql"
+import { buildLocationDisplay } from "Components/LocationAutocompleteInput"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -13,9 +14,9 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
   artwork,
 }) => {
   const {
-    artworkLocation,
     attributionClass,
     category,
+    collectorLocation,
     confidentialNotes,
     dimensions,
     editionOf,
@@ -39,7 +40,10 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
         value={metric === "in" ? dimensions?.in : dimensions?.cm}
       />
 
-      <MetadataField label="Location" value={artworkLocation} />
+      <MetadataField
+        label="Location"
+        value={buildLocationDisplay(collectorLocation)}
+      />
       <MetadataField label="Provenance" value={provenance} />
       <MetadataField label="Price Paid" value={pricePaid?.display} />
       {confidentialNotes ? (
@@ -74,7 +78,12 @@ export const MyCollectionArtworkSidebarMetadataFragmentContainer = createFragmen
         pricePaid {
           display
         }
-        artworkLocation
+        collectorLocation {
+          city
+          state
+          country
+          countryCode
+        }
       }
     `,
   }

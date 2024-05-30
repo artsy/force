@@ -28,7 +28,7 @@ const setupGoogleMapsMock = () => {
 let defaultValue = "Minsk, Belarus"
 const mockOnChange = jest.fn()
 
-const inputSelector = "input[data-test-id='autocomplete-location']"
+const inputSelector = "input[data-testid='autocomplete-location']"
 const optionsSelector = "button[role='option']"
 
 const simulateTyping = async (wrapper: ReactWrapper, text: string) => {
