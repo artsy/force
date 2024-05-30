@@ -15,8 +15,8 @@ import {
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import {
-  acceptableCategoriesForSubmission,
   AcceptableCategoryValue,
+  acceptableCategoriesForSubmission,
   formatCategoryValueForSubmission,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/acceptableCategoriesForSubmission"
 import { ProvenanceModal } from "Apps/MyCollection/Routes/EditArtwork/Components/ProvenanceModal"
@@ -24,17 +24,17 @@ import { ATTRIBUTION_CLASS_OPTIONS } from "Components/ArtworkFilter/ArtworkFilte
 import {
   Location,
   LocationAutocompleteInput,
-  normalizePlace,
   Place,
+  buildLocationDisplay,
+  normalizePlace,
 } from "Components/LocationAutocompleteInput"
-import { useFormikContext } from "formik"
-import { compact } from "lodash"
-import { useMemo, useState } from "react"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
+import { useFormikContext } from "formik"
+import { useMemo, useState } from "react"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 export enum SubmissionType {
   submission = "SUBMISSION",
@@ -183,11 +183,6 @@ export const ArtworkDetailsForm: React.FC = () => {
   } = useFormikContext<ArtworkDetailsFormModel>()
 
   const limitedEditionRarity = values.rarity === "limited edition"
-  const defaultLocation = compact([
-    values.location.city,
-    values.location.state,
-    values.location.country,
-  ]).join(", ")
 
   const handleAutosuggestError = (isError: boolean) => {
     if (isError) {
@@ -444,7 +439,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             placeholder="Enter city where artwork is located"
             maxLength={256}
             spellCheck={false}
-            defaultValue={defaultLocation}
+            defaultValue={buildLocationDisplay(values.location)}
             error={touched.location && errors.location?.city}
             onClose={handleLocationClose}
             onSelect={handleLocationSelect}
