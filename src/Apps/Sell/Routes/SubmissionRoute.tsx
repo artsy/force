@@ -1,6 +1,6 @@
 import { FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { ArtworkFormContextProvider } from "Apps/Sell/ArtworkFormContext"
+import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
 import { SubmissionRoute_submission$key } from "__generated__/SubmissionRoute_submission.graphql"
 import { HttpError } from "found"
 import { graphql, useFragment } from "react-relay"
@@ -17,7 +17,7 @@ interface SubmissionRouteProps {
   children: React.ReactNode
 }
 
-export const SubmissionRoute: React.FC<SubmissionRouteProps> = (props) => {
+export const SubmissionRoute: React.FC<SubmissionRouteProps> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
 
   if (!submission?.externalId) throw new HttpError(404)
@@ -25,11 +25,10 @@ export const SubmissionRoute: React.FC<SubmissionRouteProps> = (props) => {
   return (
     <FullBleed>
       <AppContainer>
-        <ArtworkFormContextProvider submissionID={submission.externalId}>
+        <SellFlowContextProvider submissionID={submission.externalId}>
           {props.children}
-        </ArtworkFormContextProvider>
+        </SellFlowContextProvider>
       </AppContainer>
     </FullBleed>
   )
 }
-

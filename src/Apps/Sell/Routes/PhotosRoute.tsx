@@ -32,13 +32,6 @@ interface FormValues {
   assets: Asset[]
 }
 
-const InnerForm: React.FC = props => {
-  return (
-    <>
-    </>
-  )
-}
-
 interface PhotosRouteProps {
   submission: PhotosRoute_submission$key
 }
@@ -62,12 +55,13 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
       validationSchema={Schema}
     >
       <SubmissionLayout>
-        <Text mb={2} variant="xl">Upload photos of your artwork</Text>
+        <Text mb={2} variant="xl">
+          Upload photos of your artwork
+        </Text>
         <Text mb={2} variant="sm">
           Make your work stand out and get your submission evaluated faster by
-          uploading high-quality photos of the work's front and back. 
+          uploading high-quality photos of the work's front and back.
         </Text>
-        <InnerForm />
         <DevDebug />
       </SubmissionLayout>
     </Formik>

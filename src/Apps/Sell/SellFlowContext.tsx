@@ -1,8 +1,8 @@
-import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql";
-import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission";
-import { createContext, useContext, useEffect, useState } from "react";
-import { useRouter } from "System/Router/useRouter";
-import { useSystemContext } from "System/SystemContext";
+import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+import { createContext, useContext, useEffect, useState } from "react"
+import { useRouter } from "System/Router/useRouter"
+import { useSystemContext } from "System/SystemContext"
 
 interface Actions {
   goToPreviousStep: () => void
@@ -11,37 +11,42 @@ interface Actions {
 }
 
 interface State {
-  atFirstStep: boolean
-  atLastStep: boolean
+  isFirstStep: boolean
+  isLastStep: boolean
   currentStep: string
   submissionID: string | undefined
 }
-interface ArtworkFormContextProps {
+interface SellFlowContextProps {
   actions: Actions
   state: State
 }
 
-export const ArtworkFormContext = createContext<ArtworkFormContextProps>({} as any)
+export const SellFlowContext = createContext<SellFlowContextProps>({} as any)
 
 export const STEPS = [
   "title",
   "photos",
   "details",
   "purchase-history",
-  "dimensions"
+  "dimensions",
 ]
 
-interface ArtworkFormContextProviderProps {
+interface SellFlowContextProviderProps {
   children: React.ReactNode
   submissionID?: string
 }
 
-export const ArtworkFormContextProvider: React.FC<ArtworkFormContextProviderProps> = ({ children, submissionID }) => {
+export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = ({
+  children,
+  submissionID,
+}) => {
   const { match, router } = useRouter()
   const { relayEnvironment } = useSystemContext()
-  const [currentStep, setCurrentStep] = useState<string>(match.location.pathname.split("/").pop() ?? "")
-  const [atFirstStep, setAtFirstStep] = useState<boolean>(false)
-  const [atLastStep, setAtLastStep] = useState<boolean>(false)
+  const [currentStep, setCurrentStep] = useState<string>(
+    match.location.pathname.split("/").pop() ?? ""
+  )
+  const [isFirstStep, setAtFirstStep] = useState<boolean>(false)
+  const [isLastStep, setAtLastStep] = useState<boolean>(false)
 
   useEffect(() => {
     const step = match.location.pathname.split("/").pop() ?? ""
@@ -59,7 +64,6 @@ export const ArtworkFormContextProvider: React.FC<ArtworkFormContextProviderProp
       navigateToStep(previousStep)
     }
   }
-
 
   const goToNextStep = () => {
     if (!currentStep) return
@@ -80,7 +84,7 @@ export const ArtworkFormContextProvider: React.FC<ArtworkFormContextProviderProp
   const updateSubmission = (values: UpdateSubmissionMutationInput) => {
     return createOrUpdateConsignSubmission(relayEnvironment, {
       externalId: submissionID,
-      ...values
+      ...values,
     })
   }
 
@@ -91,19 +95,19 @@ export const ArtworkFormContextProvider: React.FC<ArtworkFormContextProviderProp
   }
 
   const state = {
-    atFirstStep,
-    atLastStep,
+    isFirstStep,
+    isLastStep,
     currentStep,
-    submissionID
+    submissionID,
   }
 
   return (
-    <ArtworkFormContext.Provider value={{ actions, state }}>
+    <SellFlowContext.Provider value={{ actions, state }}>
       {children}
-    </ArtworkFormContext.Provider>
+    </SellFlowContext.Provider>
   )
 }
 
-export const useArtworkFormContext = () => {
-  return useContext(ArtworkFormContext)
+export const useSellFlowContext = () => {
+  return useContext(SellFlowContext)
 }

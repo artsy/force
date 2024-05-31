@@ -1,9 +1,9 @@
 import { Box } from "@artsy/palette"
-import { useArtworkFormContext } from "Apps/Sell/ArtworkFormContext"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useFormikContext } from "formik"
 
 export const DevDebug: React.FC = () => {
-  const { state } = useArtworkFormContext()
+  const { state } = useSellFlowContext()
   const { values } = useFormikContext()
 
   if (state.currentStep === "thank-you") return null

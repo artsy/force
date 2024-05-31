@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as Yup from "yup"
 import { Box, Text, Flex } from "@artsy/palette"
-import { ArtworkFormContextProvider } from "Apps/Sell/ArtworkFormContext"
+import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
 import { Formik } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -23,7 +23,7 @@ export const NewFromMyCollectionRoute: React.FC = () => {
   return (
     <AppContainer>
       <SubmissionHeader />
-      <ArtworkFormContextProvider>
+      <SellFlowContextProvider>
         <Flex py={4} flexDirection="column" alignItems="center">
           <Formik<FormValues>
             initialValues={initialValues}
@@ -32,13 +32,15 @@ export const NewFromMyCollectionRoute: React.FC = () => {
             validationSchema={Schema}
           >
             <Box minWidth={800}>
-              <Text mb={2} variant="lg-display">Start from My Collection</Text>
+              <Text mb={2} variant="lg-display">
+                Start from My Collection
+              </Text>
               <Text variant="sm">--- TODO: My Collection Artwork Grid ---</Text>
               <DevDebug />
             </Box>
           </Formik>
         </Flex>
-      </ArtworkFormContextProvider>
+      </SellFlowContextProvider>
     </AppContainer>
   )
 }

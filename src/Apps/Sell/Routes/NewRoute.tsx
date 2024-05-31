@@ -5,7 +5,7 @@ import {
   AutocompleteArtist,
 } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 import { Box, Text, Flex, Spacer } from "@artsy/palette"
-import { ArtworkFormContextProvider } from "Apps/Sell/ArtworkFormContext"
+import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
 import { Formik } from "formik"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import { useSystemContext } from "System/SystemContext"
@@ -23,37 +23,20 @@ const Schema = Yup.object().shape({
 interface FormValues {
   artistId: string
 }
-const IneligibleArtistMessage: React.FC = () => {
-  return (
-    <>
-      <Text variant="lg">
-        This artist isn't currently eligible to sell on our platform
-      </Text>
-      <Text mt={2} variant="sm">
-        Try again with another artist or add your artwork to My Collection, your
-        personal space to manage your collection, track demand for your artwork
-        and see updates about the artist. If you'd like to know more, you can&nbsp;
-        <RouterLink to="#">
-          contact an advisor&nbsp;
-        </RouterLink>
-         or read about&nbsp;
-        <RouterLink to="#">
-          what our specialists are looking for
-        </RouterLink>
-        . After adding to My Collection, an Artsy Advisor will be in touch if
-        there is an opportunity to sell your work in the future. 
-      </Text>
-    </>
-  )
-}
 
-const InnerForm: React.FC = () => {
-  const { router } = useRouter()
+export const NewRoute: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
+  const { router } = useRouter()
   const [
     showIneligibleArtistMessage,
     setShowIneligibleArtistMessage,
   ] = useState(false)
+
+  const onSubmit = async (values: FormValues) => {
+    return createOrUpdateConsignSubmission(relayEnvironment, {
+      artistID: values.artistId,
+    })
+  }
 
   const onSelect = async (artist: AutocompleteArtist) => {
     if (artist) {
@@ -72,33 +55,6 @@ const InnerForm: React.FC = () => {
     }
   }
 
-  return (
-    <>
-      <ArtistAutoComplete
-        onSelect={onSelect}
-        onError={() => console.error("something happened")}
-        title="Artist"
-      />
-      {showIneligibleArtistMessage && (
-        <>
-          <Spacer y={2} />
-          <IneligibleArtistMessage />
-        </>
-      )}
-      <DevDebug />
-    </>
-  )
-}
-
-export const NewRoute: React.FC = () => {
-  const { relayEnvironment } = useSystemContext()
-
-  const onSubmit = async (values: FormValues) => {
-    return createOrUpdateConsignSubmission(relayEnvironment, {
-      artistID: values.artistId,
-    })
-  }
-
   const initialValues: FormValues = {
     artistId: "",
   }
@@ -106,7 +62,7 @@ export const NewRoute: React.FC = () => {
   return (
     <AppContainer>
       <SubmissionHeader />
-      <ArtworkFormContextProvider>
+      <SellFlowContextProvider>
         <Flex py={4} flexDirection="column" alignItems="center">
           <Formik<FormValues>
             initialValues={initialValues}
@@ -115,12 +71,41 @@ export const NewRoute: React.FC = () => {
             validationSchema={Schema}
           >
             <Box width={800}>
-              <Text mb={2} variant="lg-display">Add artist name</Text>
-              <InnerForm />
+              <Text mb={2} variant="lg-display">
+                Add artist name
+              </Text>
+              <ArtistAutoComplete
+                onSelect={onSelect}
+                onError={() => console.error("something happened")}
+                title="Artist"
+              />
+              {showIneligibleArtistMessage && (
+                <>
+                  <Spacer y={2} />
+                  <Text variant="lg">
+                    This artist isn't currently eligible to sell on our platform
+                  </Text>
+                  <Text mt={2} variant="sm">
+                    Try again with another artist or add your artwork to My
+                    Collection, your personal space to manage your collection,
+                    track demand for your artwork and see updates about the
+                    artist. If you'd like to know more, you can&nbsp;
+                    <RouterLink to="#">contact an advisor&nbsp;</RouterLink>
+                    or read about&nbsp;
+                    <RouterLink to="#">
+                      what our specialists are looking for
+                    </RouterLink>
+                    . After adding to My Collection, an Artsy Advisor will be in
+                    touch if there is an opportunity to sell your work in the
+                    future.
+                  </Text>
+                </>
+              )}
+              <DevDebug />
             </Box>
           </Formik>
         </Flex>
-      </ArtworkFormContextProvider>
+      </SellFlowContextProvider>
     </AppContainer>
   )
 }
