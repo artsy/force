@@ -76,7 +76,7 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
 
   if (orderSource !== "private_sale") {
     return (
-      <Flex p={2} my={1} backgroundColor="black10">
+      <Flex p={2} my={1} backgroundColor="black5">
         <CheckmarkFillIcon mr={1} />
         <Flex flexDirection="column">
           <Text fontWeight="bold" variant="sm-display">
