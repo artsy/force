@@ -5,7 +5,7 @@ import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 import { Formik } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { BottomFormNavigation } from "Apps/Sell/Components/BottomFormNavigation"
+import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 
 const FRAGMENT = graphql`
   fragment PhotosRoute_submission on ConsignmentSubmission {
@@ -55,24 +55,21 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
   }
 
   return (
-    <>
-      <Text mb={2} variant="xl">Upload photos of your artwork</Text>
-      <Text mb={2} variant="sm">
-        Make your work stand out and get your submission evaluated faster by
-        uploading high-quality photos of the work's front and back. 
-      </Text>
-      <Formik<FormValues>
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validateOnMount
-        validationSchema={Schema}
-      >
-        <>
-          <InnerForm />
-          <BottomFormNavigation />
-          <DevDebug />
-        </>
-      </Formik>
-    </>
+    <Formik<FormValues>
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validateOnMount
+      validationSchema={Schema}
+    >
+      <SubmissionLayout>
+        <Text mb={2} variant="xl">Upload photos of your artwork</Text>
+        <Text mb={2} variant="sm">
+          Make your work stand out and get your submission evaluated faster by
+          uploading high-quality photos of the work's front and back. 
+        </Text>
+        <InnerForm />
+        <DevDebug />
+      </SubmissionLayout>
+    </Formik>
   )
 }

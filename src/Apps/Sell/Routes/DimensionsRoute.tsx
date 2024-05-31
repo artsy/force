@@ -12,8 +12,8 @@ import {
 import { graphql, useFragment } from "react-relay"
 import { Formik, useFormikContext } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { BottomFormNavigation } from "Apps/Sell/Components/BottomFormNavigation"
 import { useArtworkFormContext } from "Apps/Sell/ArtworkFormContext"
+import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 
 const FRAGMENT = graphql`
   fragment DimensionsRoute_submission on ConsignmentSubmission {
@@ -95,20 +95,17 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
   }
 
   return (
-    <>
-      <Text mb={2} variant="xl">Artwork dimensions</Text>
-      <Formik<FormValues>
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validateOnMount
-        validationSchema={Schema}
-      >
-        <>
-          <InnerForm />
-          <BottomFormNavigation />
-          <DevDebug />
-        </>
-      </Formik>
-    </>
+    <Formik<FormValues>
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validateOnMount
+      validationSchema={Schema}
+    >
+      <SubmissionLayout>
+        <Text mb={2} variant="xl">Artwork dimensions</Text>
+        <InnerForm />
+        <DevDebug />
+      </SubmissionLayout>
+    </Formik>
   )
 }

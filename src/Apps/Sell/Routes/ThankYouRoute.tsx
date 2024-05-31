@@ -2,6 +2,7 @@ import * as React from "react"
 import { Message, Spacer, Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
 import { ThankYouRoute_submission$key } from "__generated__/ThankYouRoute_submission.graphql"
+import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 
 const FRAGMENT = graphql`
   fragment ThankYouRoute_submission on ConsignmentSubmission {
@@ -17,7 +18,7 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps>= (props) => {
   const submission = useFragment(FRAGMENT, props.submission)
 
   return (
-    <>
+    <SubmissionLayout>
       <Text variant="lg-display">Thank you for submitting your artwork </Text>
       <Spacer y={2}/>
       <Text variant="xs">ID: {submission.externalId}</Text>
@@ -35,6 +36,6 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps>= (props) => {
           requested.
         </Text>
       </Message>
-    </>
+    </SubmissionLayout>
   )
 }

@@ -5,8 +5,8 @@ import { TitleRoute_submission$key } from "__generated__/TitleRoute_submission.g
 import { graphql, useFragment } from "react-relay"
 import { Formik, useFormikContext } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { BottomFormNavigation } from "Apps/Sell/Components/BottomFormNavigation"
 import { useArtworkFormContext } from "Apps/Sell/ArtworkFormContext"
+import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 
 const FRAGMENT = graphql`
   fragment TitleRoute_submission on ConsignmentSubmission {
@@ -55,20 +55,17 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
   }
 
   return (
-    <>
-      <Text mb={2} variant="xl">Add artwork title</Text>
-      <Formik<FormValues>
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validateOnMount
-        validationSchema={Schema}
-      >
-        <>
-          <InnerForm />
-          <DevDebug />
-          <BottomFormNavigation />
-        </>
-      </Formik>
-    </>
+    <Formik<FormValues>
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validateOnMount
+      validationSchema={Schema}
+    >
+      <SubmissionLayout>
+        <Text mb={2} variant="xl">Add artwork title</Text>
+        <InnerForm />
+        <DevDebug />
+      </SubmissionLayout>
+    </Formik>
   )
 }
