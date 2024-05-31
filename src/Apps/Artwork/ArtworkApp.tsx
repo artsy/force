@@ -41,7 +41,6 @@ import { compact } from "lodash"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkResult.graphql"
 import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorApp"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { PrivateArtworkDetails } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkDetails"
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 import { useAuthDialog } from "Components/AuthDialog"
@@ -94,10 +93,6 @@ export const ArtworkApp: React.FC<Props> = props => {
   const { match, silentPush, silentReplace } = useRouter()
   const { showAuthDialog } = useAuthDialog()
 
-  const privateArtworksEnabled = useFeatureFlag(
-    "amber_artwork_visibility_unlisted"
-  )
-
   // If the user is expecting a partner offer, require login and remove
   // the query param from the URL after login.
   useEffect(() => {
@@ -130,9 +125,7 @@ export const ArtworkApp: React.FC<Props> = props => {
   }, [])
 
   const isPrivateArtwork =
-    privateArtworksEnabled &&
-    artwork?.visibilityLevel == "UNLISTED" &&
-    artwork?.partner
+    artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
 
   const trackPageview = useCallback(() => {
     const {

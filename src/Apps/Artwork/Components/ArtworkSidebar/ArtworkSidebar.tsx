@@ -23,7 +23,6 @@ import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuc
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPrivateArtwork"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork$data
@@ -62,12 +61,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const lotLabel = saleArtwork?.lotLabel
   const extendedBiddingEndAt = saleArtwork?.extendedBiddingEndAt
   const biddingEndAt = extendedBiddingEndAt ?? endAt
-
-  const privateArtworksEnabled = useFeatureFlag(
-    "amber_artwork_visibility_unlisted"
-  )
-
-  const isUnlisted = privateArtworksEnabled && artwork?.isUnlisted
+  const isUnlisted = artwork?.isUnlisted
 
   const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
 
