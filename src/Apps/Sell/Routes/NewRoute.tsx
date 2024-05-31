@@ -4,123 +4,100 @@ import {
   ArtistAutoComplete,
   AutocompleteArtist,
 } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
-import { Box, Text, Flex, Spacer } from "@artsy/palette"
-import { ArtworkFormContextProvider } from "Apps/Sell/ArtworkFormContext"
-import { Formik } from "formik"
-import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-import { useSystemContext } from "System/SystemContext"
+import { Text, Spacer, FullBleed } from "@artsy/palette"
+import { Formik, FormikProps } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { useRouter } from "found"
-import { useState } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { SubmissionHeader } from "Apps/Sell/Components/SubmissionHeader"
+import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
+import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 
 const Schema = Yup.object().shape({
-  artistId: Yup.string().required().trim(),
+  artistId: Yup.string().required(),
+  isTargetSupply: Yup.boolean().isTrue(),
 })
 
 interface FormValues {
   artistId: string
-}
-const IneligibleArtistMessage: React.FC = () => {
-  return (
-    <>
-      <Text variant="lg">
-        This artist isn't currently eligible to sell on our platform
-      </Text>
-      <Text mt={2} variant="sm">
-        Try again with another artist or add your artwork to My Collection, your
-        personal space to manage your collection, track demand for your artwork
-        and see updates about the artist. If you'd like to know more, you can&nbsp;
-        <RouterLink to="#">
-          contact an advisor&nbsp;
-        </RouterLink>
-         or read about&nbsp;
-        <RouterLink to="#">
-          what our specialists are looking for
-        </RouterLink>
-        . After adding to My Collection, an Artsy Advisor will be in touch if
-        there is an opportunity to sell your work in the future. 
-      </Text>
-    </>
-  )
-}
-
-const InnerForm: React.FC = () => {
-  const { router } = useRouter()
-  const { relayEnvironment } = useSystemContext()
-  const [
-    showIneligibleArtistMessage,
-    setShowIneligibleArtistMessage,
-  ] = useState(false)
-
-  const onSelect = async (artist: AutocompleteArtist) => {
-    if (artist) {
-      if (artist.targetSupply?.isTargetSupply) {
-        const externalID = await createOrUpdateConsignSubmission(
-          relayEnvironment,
-          {
-            artistID: artist?.internalID,
-          }
-        )
-
-        router.push(`/sell2/submissions/${externalID}/title`)
-      } else {
-        setShowIneligibleArtistMessage(true)
-      }
-    }
-  }
-
-  return (
-    <>
-      <ArtistAutoComplete
-        onSelect={onSelect}
-        onError={() => console.error("something happened")}
-        title="Artist"
-      />
-      {showIneligibleArtistMessage && (
-        <>
-          <Spacer y={2} />
-          <IneligibleArtistMessage />
-        </>
-      )}
-      <DevDebug />
-    </>
-  )
+  isTargetSupply: boolean
 }
 
 export const NewRoute: React.FC = () => {
-  const { relayEnvironment } = useSystemContext()
+  const { router } = useRouter()
+  const { submitMutation: submitCreateSubmissionMutation } = useCreateSubmission()
 
   const onSubmit = async (values: FormValues) => {
-    return createOrUpdateConsignSubmission(relayEnvironment, {
-      artistID: values.artistId,
-    })
+  }
+
+  const onSelect = async (artist: AutocompleteArtist, formik: FormikProps<FormValues>) => {
+    const isTargetSupply = artist?.targetSupply?.isTargetSupply
+    formik.setFieldValue("isTargetSupply", isTargetSupply)
+
+    if (artist?.internalID && isTargetSupply) {
+      const response = await submitCreateSubmissionMutation({
+        variables: {
+          input: { artistID: artist.internalID }, 
+        }
+      })
+
+      const submissionID = response.createConsignmentSubmission?.consignmentSubmission?.externalId
+
+      router.push(`/sell2/submissions/${submissionID}/title`)
+    }
   }
 
   const initialValues: FormValues = {
     artistId: "",
+    isTargetSupply: false,
   }
 
   return (
-    <AppContainer>
-      <SubmissionHeader />
-      <ArtworkFormContextProvider>
-        <Flex py={4} flexDirection="column" alignItems="center">
+    <FullBleed>
+      <AppContainer>
           <Formik<FormValues>
             initialValues={initialValues}
             onSubmit={onSubmit}
             validateOnMount
             validationSchema={Schema}
           >
-            <Box width={800}>
-              <Text mb={2} variant="lg-display">Add artist name</Text>
-              <InnerForm />
-            </Box>
+            {formik => (
+              <SubmissionLayout hideNavigation>
+                <Text mb={2} variant="lg-display">
+                  Add artist name
+                </Text>
+                <ArtistAutoComplete
+                  onSelect={(artist) => { onSelect(artist, formik) }}
+                  onError={() => console.error("something happened")}
+                  title="Artist"
+                />
+                {formik.values.artistId && !formik.values.isTargetSupply && (
+                  <>
+                    <Spacer y={2} />
+                    <Text variant="lg">
+                      This artist isn't currently eligible to sell on our platform
+                    </Text>
+                    <Text mt={2} variant="sm">
+                      Try again with another artist or add your artwork to My
+                      Collection, your personal space to manage your collection,
+                      track demand for your artwork and see updates about the
+                      artist. If you'd like to know more, you can&nbsp;
+                      <RouterLink to="#">contact an advisor&nbsp;</RouterLink>
+                      or read about&nbsp;
+                      <RouterLink to="#">
+                        what our specialists are looking for
+                      </RouterLink>
+                      . After adding to My Collection, an Artsy Advisor will be in
+                      touch if there is an opportunity to sell your work in the
+                      future.
+                    </Text>
+                  </>
+                )}
+                <DevDebug />
+              </SubmissionLayout>
+            )}
           </Formik>
-        </Flex>
-      </ArtworkFormContextProvider>
-    </AppContainer>
+      </AppContainer>
+    </FullBleed>
   )
 }

@@ -1,11 +1,10 @@
 import * as React from "react"
 import * as Yup from "yup"
-import { Box, Text, Flex } from "@artsy/palette"
-import { ArtworkFormContextProvider } from "Apps/Sell/ArtworkFormContext"
+import { Text, FullBleed } from "@artsy/palette"
 import { Formik } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { SubmissionHeader } from "Apps/Sell/Components/SubmissionHeader"
+import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 
 const Schema = Yup.object().shape({
   myCollectionArtworkID: Yup.string().required().trim(),
@@ -20,25 +19,30 @@ export const NewFromMyCollectionRoute: React.FC = () => {
     myCollectionArtworkID: "",
   }
 
+  const onSubmit = async (values: FormValues) => {
+    // TODO: Create a new submission from the selected artwork
+  }
+
   return (
-    <AppContainer>
-      <SubmissionHeader />
-      <ArtworkFormContextProvider>
-        <Flex py={4} flexDirection="column" alignItems="center">
+    <FullBleed>
+      <AppContainer>
           <Formik<FormValues>
             initialValues={initialValues}
-            onSubmit={() => {}}
+            onSubmit={onSubmit}
             validateOnMount
             validationSchema={Schema}
           >
-            <Box minWidth={800}>
-              <Text mb={2} variant="lg-display">Start from My Collection</Text>
-              <Text variant="sm">--- TODO: My Collection Artwork Grid ---</Text>
-              <DevDebug />
-            </Box>
-          </Formik>
-        </Flex>
-      </ArtworkFormContextProvider>
-    </AppContainer>
+            {formik => (
+              <SubmissionLayout hideNavigation>
+                <Text mb={2} variant="lg-display">
+                  Start from My Collection
+                </Text>
+                <Text variant="sm">--- TODO: My Collection Artwork Grid ---</Text>
+                <DevDebug />
+              </SubmissionLayout>
+            )}
+        </Formik>
+      </AppContainer>
+    </FullBleed>
   )
 }

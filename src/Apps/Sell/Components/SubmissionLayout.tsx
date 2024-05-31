@@ -3,7 +3,11 @@ import { BottomFormNavigation } from "Apps/Sell/Components/BottomFormNavigation"
 import { StepsNavigation } from "Apps/Sell/Components/StepsNavigation"
 import { SubmissionHeader } from "Apps/Sell/Components/SubmissionHeader"
 
-export const SubmissionLayout: React.FC = (props) => {
+interface SubmissionLayoutProps {
+  hideNavigation?: boolean
+}
+
+export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({ children, hideNavigation = false }) => {
   return (
     <Flex height="100vh" flexDirection="column">
       <SubmissionHeader />
@@ -11,18 +15,18 @@ export const SubmissionLayout: React.FC = (props) => {
       <Flex flex={1} p={2} overflowY="auto">
         <GridColumns>
           <Column span={[4]}>
-            <StepsNavigation />
+            {!hideNavigation && <StepsNavigation />}
           </Column>
 
           <Column span={[8]}>
             <Box width={800}>
-              {props.children}
+              {children}
             </Box>
           </Column>
         </GridColumns>
       </Flex>
 
-      <BottomFormNavigation />
+      {!hideNavigation && <BottomFormNavigation />}
     </Flex>
   )
 }

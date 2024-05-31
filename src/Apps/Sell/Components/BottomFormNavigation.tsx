@@ -1,16 +1,13 @@
 import { Flex, Button } from "@artsy/palette"
-import { useArtworkFormContext } from "Apps/Sell/ArtworkFormContext"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { useRouter } from "System/Router/useRouter"
 import { useFormikContext } from "formik"
-import { useRouter } from "found"
 
 export const BottomFormNavigation = () => {
+  const { isValid, isSubmitting, submitForm } = useFormikContext()
   const { router } = useRouter()
-  const { actions, state } = useArtworkFormContext()
-  const formik = useFormikContext()
-  if (!formik) return null
-  const { isValid, isSubmitting, submitForm } = formik
+  const { actions, state: { isFirstStep, isLastStep, submissionID } } = useSellFlowContext()
 
-  if (state.currentStep === "thank-you") return null
 
   const onContinue = async () => {
     await submitForm()
@@ -21,7 +18,7 @@ export const BottomFormNavigation = () => {
   const onSubmit = async () => {
     await submitForm()
 
-    router.push(`/sell2/submissions/${state.submissionID}/thank-you`)
+    router.push(`/sell2/submissions/${submissionID}/thank-you`)
   }
 
   return (
@@ -33,13 +30,13 @@ export const BottomFormNavigation = () => {
         justifyContent="space-between"
       >
         <Button
-          disabled={state.atFirstStep}
+          disabled={isFirstStep}
           variant="secondaryBlack"
           onClick={actions.goToPreviousStep}
         >
           Back
         </Button>
-        {state.atLastStep ? (
+        {isLastStep ? (
           <Button
             variant="primaryBlack"
             loading={isSubmitting}

@@ -18,7 +18,7 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps>= (props) => {
   const submission = useFragment(FRAGMENT, props.submission)
 
   return (
-    <SubmissionLayout>
+    <SubmissionLayout hideNavigation>
       <Text variant="lg-display">Thank you for submitting your artwork </Text>
       <Spacer y={2}/>
       <Text variant="xs">ID: {submission.externalId}</Text>
