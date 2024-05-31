@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c73dae87a1070b6b09524c6764a56746>>
+ * @generated SignedSource<<31a07cca10689e8c63c54972374f9321>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,8 +28,13 @@ export type MyCollectionUpdateArtworkInput = {
   editionNumber?: string | null | undefined;
   editionSize?: string | null | undefined;
   externalImageUrls?: ReadonlyArray<string | null | undefined> | null | undefined;
+  framedDepth?: string | null | undefined;
+  framedHeight?: string | null | undefined;
+  framedMetric?: string | null | undefined;
+  framedWidth?: string | null | undefined;
   height?: string | null | undefined;
   isEdition?: boolean | null | undefined;
+  isFramed?: boolean | null | undefined;
   medium?: string | null | undefined;
   metric?: string | null | undefined;
   pricePaidCents?: any | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0fe28c219fcd49bc426c6f9ccf13e04>>
+ * @generated SignedSource<<40ff0ba593e79fec1645f50d77d0f3f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,9 +29,14 @@ export type MyCollectionCreateArtworkInput = {
   editionNumber?: string | null | undefined;
   editionSize?: string | null | undefined;
   externalImageUrls?: ReadonlyArray<string | null | undefined> | null | undefined;
+  framedDepth?: string | null | undefined;
+  framedHeight?: string | null | undefined;
+  framedMetric?: string | null | undefined;
+  framedWidth?: string | null | undefined;
   height?: string | null | undefined;
   importSource?: ArtworkImportSource | null | undefined;
   isEdition?: boolean | null | undefined;
+  isFramed?: boolean | null | undefined;
   medium?: string | null | undefined;
   metric?: string | null | undefined;
   pricePaidCents?: any | null | undefined;
