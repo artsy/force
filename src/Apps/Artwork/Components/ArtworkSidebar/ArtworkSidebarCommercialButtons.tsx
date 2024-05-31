@@ -16,7 +16,7 @@ import {
   useTheme,
 } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { FC, useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
@@ -351,18 +351,6 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   const isCreateAlertAvailable =
     artwork.isEligibleToCreateAlert && artwork.isSold
 
-  const AlertSwitch: FC = () => {
-    if (!isCreateAlertAvailable) {
-      return null
-    }
-
-    return (
-      <ProgressiveOnboardingAlertCreateSimple>
-        <CreateAlertButton width="100%" size="large" />
-      </ProgressiveOnboardingAlertCreateSimple>
-    )
-  }
-
   const renderButtons: {
     buyNow?: ResponsiveValue<"primaryBlack" | "secondaryBlack">
     makeOffer?: ResponsiveValue<"primaryBlack" | "secondaryBlack">
@@ -430,7 +418,12 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
 
           <Flex flexDirection={["column", "column", "column", "column", "row"]}>
             <Join separator={<Spacer x={1} y={1} />}>
-              <AlertSwitch />
+              {isCreateAlertAvailable && (
+                <ProgressiveOnboardingAlertCreateSimple>
+                  <CreateAlertButton width="100%" size="large" />
+                </ProgressiveOnboardingAlertCreateSimple>
+              )}
+
               {renderButtons.buyNow && (
                 <Button
                   variant={renderButtons.buyNow}
