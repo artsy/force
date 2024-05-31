@@ -67,6 +67,7 @@ module.exports = {
     "react/prop-types": 0,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
+    "react/no-unstable-nested-components": ["error", { allowAsProps: false }],
 
     // FIXME: Investigate / reenable these rules. Disabled to introduce eslint
     // into codebase.
