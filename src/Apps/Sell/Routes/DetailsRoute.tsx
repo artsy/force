@@ -11,10 +11,10 @@ import {
 import { acceptableCategoriesForSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/acceptableCategoriesForSubmission"
 import { graphql, useFragment } from "react-relay"
 import { Formik, useFormikContext } from "formik"
-import { BottomFormNavigation } from "Apps/Sell/Components/BottomFormNavigation"
 import { ConsignmentSubmissionCategoryAggregation } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { useArtworkFormContext } from "Apps/Sell/ArtworkFormContext"
+import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 
 const FRAGMENT = graphql`
   fragment DetailsRoute_submission on ConsignmentSubmission {
@@ -90,20 +90,17 @@ export const DetailsRoute: React.FC<DetailsRouteProps> = props => {
   }
 
   return (
-    <>
-      <Text mb={2} variant="xl">Artwork details</Text>
-      <Formik<FormValues>
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validateOnMount
-        validationSchema={Schema}
-      >
-        <>
-          <InnerForm />
-          <BottomFormNavigation />
-          <DevDebug />
-        </>
-      </Formik>
-    </>
+    <Formik<FormValues>
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validateOnMount
+      validationSchema={Schema}
+    >
+      <SubmissionLayout>
+        <Text mb={2} variant="xl">Artwork details</Text>
+        <InnerForm />
+        <DevDebug />
+      </SubmissionLayout>
+    </Formik>
   )
 }

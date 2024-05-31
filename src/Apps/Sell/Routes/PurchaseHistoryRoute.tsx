@@ -6,8 +6,8 @@ import { PurchaseHistoryRoute_submission$key } from "__generated__/PurchaseHisto
 import { graphql, useFragment } from "react-relay"
 import { Formik, useFormikContext } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { BottomFormNavigation } from "Apps/Sell/Components/BottomFormNavigation"
 import { useArtworkFormContext } from "Apps/Sell/ArtworkFormContext"
+import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 
 const FRAGMENT = graphql`
   fragment PurchaseHistoryRoute_submission on ConsignmentSubmission {
@@ -55,25 +55,22 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
   }
 
   return (
-    <>
-      <Text mb={2} variant="xl">Purchase history</Text>
-      <Text mb={2} variant="sm">
-        The documented history of an artwork's ownership and
-        authenticity. Please add any documentation you have that
-        proves your artwork's provenance.
-      </Text>
-      <Formik<FormValues>
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validateOnMount
-        validationSchema={Schema}
-      >
-        <>
-          <InnerForm />
-          <BottomFormNavigation />
-          <DevDebug />
-        </>
-      </Formik>
-    </>
+    <Formik<FormValues>
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validateOnMount
+      validationSchema={Schema}
+    >
+      <SubmissionLayout>
+        <Text mb={2} variant="xl">Purchase history</Text>
+        <Text mb={2} variant="sm">
+          The documented history of an artwork's ownership and
+          authenticity. Please add any documentation you have that
+          proves your artwork's provenance.
+        </Text>
+        <InnerForm />
+        <DevDebug />
+      </SubmissionLayout>
+    </Formik>
   )
 }
