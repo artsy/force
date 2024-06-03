@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<40ff0ba593e79fec1645f50d77d0f3f9>>
+ * @generated SignedSource<<ee24f0febf5ea910e708114a953fc90e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "
 export type ArtworkImportSource = "CONVECTION" | "MY_COLLECTION" | "%future added value";
 export type ArtworkSignatureTypeEnum = "HAND_SIGNED_BY_ARTIST" | "NOT_SIGNED" | "OTHER" | "SIGNED_IN_PLATE" | "STAMPED_BY_ARTIST_ESTATE" | "STICKER_LABEL" | "%future added value";
 export type MyCollectionCreateArtworkInput = {
+  additionalInformation?: string | null | undefined;
   artistIds?: ReadonlyArray<string | null | undefined> | null | undefined;
   artists?: ReadonlyArray<MyCollectionArtistInput | null | undefined> | null | undefined;
   artworkLocation?: string | null | undefined;

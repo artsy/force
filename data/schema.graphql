@@ -13812,6 +13812,7 @@ type MyCollectionConnection {
 }
 
 input MyCollectionCreateArtworkInput {
+  additionalInformation: String
   artistIds: [String]
   artists: [MyCollectionArtistInput]
   artworkLocation: String
@@ -13908,6 +13909,7 @@ type MyCollectionInfo {
 }
 
 input MyCollectionUpdateArtworkInput {
+  additionalInformation: String
   artistIds: [String]
   artworkId: String!
   artworkLocation: String
