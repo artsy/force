@@ -2,7 +2,6 @@ import { screen } from "@testing-library/react"
 import { PartnerOfferCreatedNotification } from "Components/Notifications/PartnerOfferCreatedNotification"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { PartnerOfferCreatedNotification_test_Query } from "__generated__/PartnerOfferCreatedNotification_test_Query.graphql"
 
 jest.unmock("react-relay")
@@ -34,12 +33,6 @@ const { renderWithRelay } = setupTestWrapperTL<
 })
 
 describe("PartnerOfferCreatedNotification", () => {
-  beforeAll(() => {
-    ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "emerald_partner-offers-to-artwork-page"
-    )
-  })
-
   it("renders page", () => {
     renderWithRelay({
       Notification: () => notification(),
@@ -101,7 +94,9 @@ describe("PartnerOfferCreatedNotification", () => {
           ),
       })
 
-      expect(screen.getByText("Review the offer before it expires")).toBeInTheDocument()
+      expect(
+        screen.getByText("Review the offer before it expires")
+      ).toBeInTheDocument()
     })
   })
 

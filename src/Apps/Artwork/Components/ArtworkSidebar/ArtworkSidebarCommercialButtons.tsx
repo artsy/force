@@ -41,7 +41,6 @@ import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton
 import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTimer } from "Utils/Hooks/useTimer"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { ResponsiveValue } from "styled-system"
@@ -66,14 +65,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
 
-  const partnerOfferVisibilityEnabled = useFeatureFlag(
-    "emerald_partner-offers-to-artwork-page"
-  )
-
   // Get the first not-ended partner offer, if available
   const partnerOffer =
-    (partnerOfferVisibilityEnabled &&
-      me?.partnerOffersConnection &&
+    (me?.partnerOffersConnection &&
       extractNodes(me.partnerOffersConnection)[0]) ||
     null
 
