@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7ae32e6ca811132202cda8b15318cb05>>
+ * @generated SignedSource<<0d24f8446adfe4218d598cdf78c4132d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type MyCollectionUpdateArtworkInput = {
   category?: string | null | undefined;
   clientMutationId?: string | null | undefined;
   collectorLocation?: EditableLocation | null | undefined;
+  conditionDescription?: string | null | undefined;
   confidentialNotes?: string | null | undefined;
   costCurrencyCode?: string | null | undefined;
   costMajor?: number | null | undefined;
