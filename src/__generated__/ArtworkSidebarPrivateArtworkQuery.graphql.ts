@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61fb29412f2aba387a077895903d69f7>>
+ * @generated SignedSource<<984b5acd7efaa06256caf51f43dc5b32>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -126,7 +126,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "visibilityLevel",
+            "name": "isUnlisted",
             "storageKey": null
           },
           {
@@ -143,12 +143,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fd8708252c2fc65ee53052bd3a8744b7",
+    "cacheID": "77ccdb15d9ce6340f5b5abdcaef0a8cc",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarPrivateArtworkQuery",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPrivateArtworkQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkSidebarPrivateArtwork_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPrivateArtwork_artwork on Artwork {\n  partner {\n    name\n    slug\n    profile {\n      isPubliclyVisible\n      id\n    }\n    id\n  }\n  visibilityLevel\n  additionalInformation\n}\n"
+    "text": "query ArtworkSidebarPrivateArtworkQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkSidebarPrivateArtwork_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPrivateArtwork_artwork on Artwork {\n  partner {\n    name\n    slug\n    profile {\n      isPubliclyVisible\n      id\n    }\n    id\n  }\n  isUnlisted\n  additionalInformation\n}\n"
   }
 };
 })();
