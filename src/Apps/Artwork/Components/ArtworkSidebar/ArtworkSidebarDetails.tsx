@@ -20,7 +20,7 @@ const ArtworkSidebarDetails: React.FC<ArtworkSidebarDetailsProps> = ({
 
   const getFrameString = (frameDetails?: string | null) => {
     if (frameDetails !== "Included") {
-      return
+      return "Frame not included"
     }
 
     return `${t`artworkPage.sidebar.details.frame`} ${frameDetails.toLowerCase()}`
