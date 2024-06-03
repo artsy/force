@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0fe28c219fcd49bc426c6f9ccf13e04>>
+ * @generated SignedSource<<8d1234fe42b16edb99590b4f3ec7d125>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "
 export type ArtworkImportSource = "CONVECTION" | "MY_COLLECTION" | "%future added value";
 export type ArtworkSignatureTypeEnum = "HAND_SIGNED_BY_ARTIST" | "NOT_SIGNED" | "OTHER" | "SIGNED_IN_PLATE" | "STAMPED_BY_ARTIST_ESTATE" | "STICKER_LABEL" | "%future added value";
 export type MyCollectionCreateArtworkInput = {
+  additionalInformation?: string | null | undefined;
   artistIds?: ReadonlyArray<string | null | undefined> | null | undefined;
   artists?: ReadonlyArray<MyCollectionArtistInput | null | undefined> | null | undefined;
   artworkLocation?: string | null | undefined;
@@ -20,6 +21,7 @@ export type MyCollectionCreateArtworkInput = {
   category?: string | null | undefined;
   clientMutationId?: string | null | undefined;
   collectorLocation?: EditableLocation | null | undefined;
+  conditionDescription?: string | null | undefined;
   confidentialNotes?: string | null | undefined;
   costCurrencyCode?: string | null | undefined;
   costMajor?: number | null | undefined;
@@ -29,9 +31,14 @@ export type MyCollectionCreateArtworkInput = {
   editionNumber?: string | null | undefined;
   editionSize?: string | null | undefined;
   externalImageUrls?: ReadonlyArray<string | null | undefined> | null | undefined;
+  framedDepth?: string | null | undefined;
+  framedHeight?: string | null | undefined;
+  framedMetric?: string | null | undefined;
+  framedWidth?: string | null | undefined;
   height?: string | null | undefined;
   importSource?: ArtworkImportSource | null | undefined;
   isEdition?: boolean | null | undefined;
+  isFramed?: boolean | null | undefined;
   medium?: string | null | undefined;
   metric?: string | null | undefined;
   pricePaidCents?: any | null | undefined;
