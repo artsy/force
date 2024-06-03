@@ -124,8 +124,7 @@ export const ArtworkApp: React.FC<Props> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const isPrivateArtwork =
-    artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
+  const isPrivateArtwork = artwork?.isUnlisted && artwork?.partner
 
   const trackPageview = useCallback(() => {
     const {
@@ -416,6 +415,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
           }
         }
         visibilityLevel
+        isUnlisted
         # FIXME: The props in the component need to update to reflect
         # the new structure for price.
         listPrice {

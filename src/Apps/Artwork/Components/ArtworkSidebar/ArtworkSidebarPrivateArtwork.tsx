@@ -24,14 +24,14 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
             isPubliclyVisible
           }
         }
-        visibilityLevel
+        isUnlisted
         additionalInformation
       }
     `,
     artwork
   )
 
-  const isPrivateArtwork = data.visibilityLevel === "UNLISTED"
+  const isPrivateArtwork = data.isUnlisted
 
   if (!isPrivateArtwork) {
     return null

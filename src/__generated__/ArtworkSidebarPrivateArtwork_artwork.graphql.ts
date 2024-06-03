@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e855a952e72994dd2a43a4245529a0e4>>
+ * @generated SignedSource<<d89da0b7728563a90de16bc22d9fbdf3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,10 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPrivateArtwork_artwork$data = {
   readonly additionalInformation: string | null | undefined;
+  readonly isUnlisted: boolean;
   readonly partner: {
     readonly name: string | null | undefined;
     readonly profile: {
@@ -20,7 +20,6 @@ export type ArtworkSidebarPrivateArtwork_artwork$data = {
     } | null | undefined;
     readonly slug: string;
   } | null | undefined;
-  readonly visibilityLevel: Visibility | null | undefined;
   readonly " $fragmentType": "ArtworkSidebarPrivateArtwork_artwork";
 };
 export type ArtworkSidebarPrivateArtwork_artwork$key = {
@@ -81,7 +80,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "visibilityLevel",
+      "name": "isUnlisted",
       "storageKey": null
     },
     {
@@ -96,6 +95,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "7b7dd48feab1906fdc66cd789cca2fe8";
+(node as any).hash = "b6f1139cf123a6d49a6d058ac6d93728";
 
 export default node;
