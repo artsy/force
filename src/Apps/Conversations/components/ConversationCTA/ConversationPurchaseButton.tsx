@@ -1,4 +1,4 @@
-import { Box, BoxProps, Button } from "@artsy/palette"
+import { Box, BoxProps, Button, useToasts } from "@artsy/palette"
 import { useMakeInquiryOrder } from "Apps/Conversations/mutations/useMakeInquiryOrderMutation"
 import { useState } from "react"
 import { useRouter } from "System/Router/useRouter"
@@ -25,6 +25,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
   const { router } = useRouter()
   const makeInquiryOrder = useMakeInquiryOrder()
   const partnerOfferCheckout = usePartnerOfferCheckoutMutation()
+  const { sendToast } = useToasts()
 
   const {
     showSelectEditionSetModal,
@@ -124,6 +125,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
     try {
       await orderMutation()
     } catch (error) {
+      sendToast({ message: "Error", variant: "error" })
       console.error("Error creating inquiry order", error)
     } finally {
       setIsSubmitting(false)
