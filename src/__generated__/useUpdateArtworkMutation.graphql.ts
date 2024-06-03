@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31a07cca10689e8c63c54972374f9321>>
+ * @generated SignedSource<<7ae32e6ca811132202cda8b15318cb05>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type ArtworkSignatureTypeEnum = "HAND_SIGNED_BY_ARTIST" | "NOT_SIGNED" | "OTHER" | "SIGNED_IN_PLATE" | "STAMPED_BY_ARTIST_ESTATE" | "STICKER_LABEL" | "%future added value";
 export type MyCollectionUpdateArtworkInput = {
+  additionalInformation?: string | null | undefined;
   artistIds?: ReadonlyArray<string | null | undefined> | null | undefined;
   artworkId: string;
   artworkLocation?: string | null | undefined;
