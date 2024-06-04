@@ -1,5 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Flex, Button, Text, useTheme } from "@artsy/palette"
+import { Button, Text, useTheme, Box } from "@artsy/palette"
+import { Z } from "Apps/Components/constants"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Router/RouterLink"
@@ -17,7 +18,7 @@ export const SWAStickyFooter = () => {
   const getInTouchRoute = "/sell/inquiry"
 
   return (
-    <Flex
+    <Box
       flexDirection="column"
       width="100%"
       p={2}
@@ -25,7 +26,12 @@ export const SWAStickyFooter = () => {
         transition: "box-shadow 250ms",
         boxShadow: theme.effects.dropShadow,
       }}
-      zIndex={1}
+      zIndex={Z.globalNav}
+      position="fixed"
+      right={0}
+      bottom={0}
+      left={0}
+      bg="white100"
     >
       <Button
         // @ts-ignore
@@ -70,6 +76,6 @@ export const SWAStickyFooter = () => {
           Speak to an advisor
         </RouterLink>
       </Text>
-    </Flex>
+    </Box>
   )
 }

@@ -17,15 +17,8 @@ import { Media } from "Utils/Responsive"
 import { SWAStickyFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAStickyFooter"
 import { SWAFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
 import { Footer } from "Components/Footer/Footer"
-import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 
 export const MarketingLandingApp = () => {
-  const {
-    height: [mobileNavBarHeight],
-  } = useNavBarHeight()
-
-  const mobileHeight = `calc(100vh - ${mobileNavBarHeight}px)`
-
   const {
     match: {
       location: { query },
@@ -52,7 +45,7 @@ export const MarketingLandingApp = () => {
       <SellMeta />
 
       <Media lessThan="sm">
-        <Flex flexDirection="column" maxHeight={mobileHeight} overflow="hidden">
+        <Flex flexDirection="column">
           <Box
             flex={1}
             overflow="auto"
