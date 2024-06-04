@@ -5,7 +5,6 @@ import Metadata from "Components/Artwork/Metadata"
 import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { resized } from "Utils/resized"
 import { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwork_artwork.graphql"
@@ -43,9 +42,6 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
   const label =
     (artwork.title ?? "Artwork") +
     (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
-  const partnerOfferVisibilityEnabled = useFeatureFlag(
-    "emerald_partner-offers-to-artwork-page"
-  )
   const partnerIcon = artwork.partner?.profile?.icon?.url
   const artworkListingHref =
     artwork.href + "?partner_offer_id=" + partnerOfferID
@@ -85,13 +81,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           }}
           maxHeight={"35vh"}
         >
-          <Link
-            href={
-              partnerOfferVisibilityEnabled && fullyAvailable
-                ? artworkListingHref
-                : href
-            }
-          >
+          <Link href={fullyAvailable ? artworkListingHref : href}>
             <Image
               src={image.src}
               srcSet={image.srcSet}
@@ -113,11 +103,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           showSaveButton
           hideSaleInfo
           maxWidth="100%"
-          to={
-            partnerOfferVisibilityEnabled && fullyAvailable
-              ? artworkListingHref
-              : href
-          }
+          to={fullyAvailable ? artworkListingHref : href}
         />
 
         {fullyAvailable && (
@@ -153,11 +139,11 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
             tracking.clickBuyNow(artwork.internalID, artwork.slug)
           }}
           data-testid="partner-offer-artwork-button"
-          flex={partnerOfferVisibilityEnabled && fullyAvailable ? 1 : [1, 0.5]}
+          flex={fullyAvailable ? 1 : [1, 0.5]}
         >
           {buttonText}
         </Button>
-        {partnerOfferVisibilityEnabled && fullyAvailable && (
+        {fullyAvailable && (
           <Button
             // @ts-ignore
             as={RouterLink}

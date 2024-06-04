@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ca57402dc722c8c20799dbd0e845ac4>>
+ * @generated SignedSource<<1a257da30dfbdd8f15ccced255785659>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,6 +29,7 @@ export type ArtworkApp_artwork$data = {
   readonly isAcquireable: boolean | null | undefined;
   readonly isInAuction: boolean | null | undefined;
   readonly isOfferable: boolean | null | undefined;
+  readonly isUnlisted: boolean;
   readonly listPrice: {
     readonly display?: string | null | undefined;
   } | null | undefined;
@@ -206,6 +207,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "isUnlisted",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "listPrice",
@@ -310,6 +318,6 @@ return {
 };
 })();
 
-(node as any).hash = "979c6803b59273922016cde5a6b47176";
+(node as any).hash = "91b12fe3a473a21075b3782616769884";
 
 export default node;

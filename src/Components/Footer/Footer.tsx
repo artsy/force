@@ -224,7 +224,12 @@ export const Footer: React.FC<FooterProps> = props => {
                     width={100}
                     height={100}
                     alt="Artsy WeChat QR code"
-                    style={{ display: "block" }}
+                    style={{
+                      display: "block",
+                      // We are intentionally setting non-themed white background
+                      // to provide contrast for the QR code
+                      backgroundColor: "white",
+                    }}
                     m={1}
                   />
                 }

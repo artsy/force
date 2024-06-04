@@ -82,7 +82,12 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
         currentNotificationId === item.internalID ? "black5" : "white100"
       }
     >
-      <Flex flex={1} flexDirection="column">
+      <Flex
+        flex={1}
+        flexDirection={
+          item.notificationType === "PARTNER_OFFER_CREATED" ? "row" : "column"
+        }
+      >
         {!!item.previewImages.length && (
           <Flex flexDirection="row" alignItems="center" mb={0.5}>
             <Flex flex={1}>
@@ -103,6 +108,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
                   )
                 })}
               </Join>
+              <Spacer x={1} />
             </Flex>
 
             {shouldDisplayCounts && (
@@ -118,31 +124,33 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
           </Flex>
         )}
 
-        <Text
-          variant="xs"
-          color="blue100"
-          backgroundColor="blue10"
-          px={0.5}
-          alignSelf="flex-start"
-          borderRadius={3}
-        >
-          {getNotificationPrelude(item)}
-        </Text>
+        <Flex flexDirection="column">
+          <Text
+            variant="xs"
+            color="blue100"
+            backgroundColor="blue10"
+            px={0.5}
+            alignSelf="flex-start"
+            borderRadius={3}
+          >
+            {getNotificationPrelude(item)}
+          </Text>
 
-        <Text fontWeight="bold" variant="sm-display">
-          {item.headline}
-        </Text>
+          <Text fontWeight="bold" variant="sm-display">
+            {item.headline}
+          </Text>
 
-        {!!subTitle && <Text variant="xs">{subTitle}</Text>}
+          {!!subTitle && <Text variant="xs">{subTitle}</Text>}
 
-        <Flex flexDirection="row" gap={0.5}>
-          <NotificationTypeLabel notification={item} />
-          {shouldDisplayExpiresInTimer(item) && (
-            <ExpiresInTimer
-              expiresAt={item.item?.expiresAt}
-              available={item.item?.available}
-            />
-          )}
+          <Flex flexDirection="row" gap={0.5}>
+            <NotificationTypeLabel notification={item} />
+            {shouldDisplayExpiresInTimer(item) && (
+              <ExpiresInTimer
+                expiresAt={item.item?.expiresAt}
+                available={item.item?.available}
+              />
+            )}
+          </Flex>
         </Flex>
       </Flex>
 

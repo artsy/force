@@ -57,6 +57,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
     <StackableBorderBox
       flexDirection="column"
       backgroundColor={isHighlighted ? "black5" : "white100"}
+      p={0}
       style={{ borderLeft: 0, borderRight: 0, ...borderTop }}
       ref={scrollRef as any}
     >
@@ -66,7 +67,9 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
             ? `sidebarTotal=${getSidebarTotal()}`
             : ""
         }`}
-        textDecoration={"none"}
+        display="block"
+        p={2}
+        textDecoration="none"
         onClick={() => {
           trackEvent({
             action: "Click",

@@ -1,7 +1,6 @@
 import React from "react"
 import { graphql, useFragment } from "react-relay"
 import { ArtworkSidebarPrivateArtwork_artwork$key } from "__generated__/ArtworkSidebarPrivateArtwork_artwork.graphql"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { RouterLink } from "System/Router/RouterLink"
 import { Box, Text } from "@artsy/palette"
 import { useTracking } from "react-tracking"
@@ -13,9 +12,6 @@ interface ArtworkSidebarPrivateArtworkProps {
 export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtworkProps> = ({
   artwork,
 }) => {
-  const privateArtworksEnabled = useFeatureFlag(
-    "amber_artwork_visibility_unlisted"
-  )
   const { trackEvent } = useTracking()
 
   const data = useFragment(
@@ -28,15 +24,14 @@ export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtwork
             isPubliclyVisible
           }
         }
-        visibilityLevel
+        isUnlisted
         additionalInformation
       }
     `,
     artwork
   )
 
-  const isPrivateArtwork =
-    privateArtworksEnabled && data.visibilityLevel === "UNLISTED"
+  const isPrivateArtwork = data.isUnlisted
 
   if (!isPrivateArtwork) {
     return null
