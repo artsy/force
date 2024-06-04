@@ -21,6 +21,7 @@ import { useTracking } from "react-tracking"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { RequestConditionReportQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
 import { PrivateArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkDefinitionList"
+import { useArtworkDetailsAdditionalInfoFields } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
 
 // Number of items to display when read more is visible
 const COLLAPSED_COUNT = 3
@@ -34,6 +35,12 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
   ...flexProps
 }) => {
   const data = useFragment(privateArtworkAdditionalInfoFragment, artwork)
+
+  const {
+    listItems,
+    openConditionModal,
+    setOpenConditionModal,
+  } = useArtworkDetailsAdditionalInfoFields({ artwork: data })
 
   const {
     category,
@@ -51,7 +58,6 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
   } = data
 
   const [openMediumModal, setOpenMediumModal] = useState(false)
-  const [openConditionModal, setOpenConditionModal] = useState(false)
 
   const { trackEvent } = useTracking()
   const {
