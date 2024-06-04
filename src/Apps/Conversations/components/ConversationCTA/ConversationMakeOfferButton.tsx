@@ -78,7 +78,7 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
         )
       }
     } catch (error) {
-      sendToast({ message: "Error", variant: "error" })
+      sendToast({ message: "Error. Please try again.", variant: "error" })
       console.error("Error creating inquiry order", error)
     } finally {
       setIsSubmitting(false)

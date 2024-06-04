@@ -125,7 +125,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
     try {
       await orderMutation()
     } catch (error) {
-      sendToast({ message: "Error", variant: "error" })
+      sendToast({ message: "Error. Please try again.", variant: "error" })
       console.error("Error creating inquiry order", error)
     } finally {
       setIsSubmitting(false)
