@@ -23,6 +23,7 @@ import { useTracking } from "react-tracking"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
+import { PrivateArtworkAdditionalInfo_artwork$data } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 
 export interface ArtworkDetailsAdditionalInfoProps extends FlexProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork$data
@@ -82,7 +83,9 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
 }
 
 interface UseArtworkDetailsAdditionInfoFieldsProps {
-  artwork: ArtworkDetailsAdditionalInfo_artwork$data
+  artwork:
+    | ArtworkDetailsAdditionalInfo_artwork$data
+    | PrivateArtworkAdditionalInfo_artwork$data
 }
 
 export const useArtworkDetailsAdditionalInfoFields = ({

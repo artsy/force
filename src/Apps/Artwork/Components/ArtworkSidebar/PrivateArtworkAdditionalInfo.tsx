@@ -1,4 +1,3 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Clickable,
   Flex,
@@ -11,15 +10,10 @@ import {
   Text,
 } from "@artsy/palette"
 import { PrivateArtworkAdditionalInfo_artwork$key } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
-import { useState } from "react"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { ContextModule } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
-import { RequestConditionReportQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
 import { PrivateArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkDefinitionList"
 import { useArtworkDetailsAdditionalInfoFields } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
 
@@ -42,105 +36,15 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
     setOpenConditionModal,
   } = useArtworkDetailsAdditionalInfoFields({ artwork: data })
 
-  const {
-    category,
-    series,
-    publisher,
-    manufacturer,
-    image_rights,
-    internalID,
-    canRequestLotConditionsReport,
-    signatureInfo,
-    conditionDescription,
-    certificateOfAuthenticity,
-    mediumType,
-    isUnlisted,
-  } = data
+  const itemsToRemove = ["Materials", "Size", "Rarity", "Frame"]
 
-  const [openMediumModal, setOpenMediumModal] = useState(false)
+  const privateListItems = listItems.filter(item => {
+    return !itemsToRemove.includes(item.title)
+  })
 
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
 
-  const listItems = [
-    {
-      title: "Medium",
-      value: category && (
-        <>
-          {mediumType ? (
-            <>
-              <Clickable
-                onClick={() => {
-                  setOpenMediumModal(true)
-
-                  trackEvent({
-                    action_type: "Click",
-                    context_module: ContextModule.aboutTheWork,
-                    type: DeprecatedAnalyticsSchema.Type.Link,
-                    subject: "Medium type info",
-                    context_page_owner_type: contextPageOwnerType,
-                    context_page_owner_id: contextPageOwnerId,
-                    context_page_owner_slug: contextPageOwnerSlug,
-                  })
-                }}
-                textDecoration="underline"
-                color="black100"
-              >
-                <Text variant="xs">{category}</Text>
-              </Clickable>
-
-              <ArtworkDetailsMediumModalFragmentContainer
-                artwork={data}
-                show={openMediumModal}
-                onClose={() => setOpenMediumModal(false)}
-              />
-            </>
-          ) : (
-            <Text variant="xs" color="black100">
-              {category}
-            </Text>
-          )}
-        </>
-      ),
-    },
-    {
-      title: "Condition",
-      value: canRequestLotConditionsReport ? (
-        <RequestConditionReportQueryRenderer artworkID={internalID} />
-      ) : (
-        conditionDescription && conditionDescription.details
-      ),
-      onReadMoreClicked: () => {
-        trackEvent({
-          action_type: "Click",
-          context_module: "Condition",
-          subject: "Read more",
-        })
-      },
-      onTitleClick: () => {
-        setOpenConditionModal(true)
-      },
-    },
-
-    {
-      title: "Signature",
-      value: signatureInfo && signatureInfo.details,
-    },
-    {
-      title: "Certificate of authenticity",
-      value: certificateOfAuthenticity && certificateOfAuthenticity.details,
-    },
-    { title: "Series", value: series },
-    { title: "Publisher", value: publisher },
-    { title: "Manufacturer", value: manufacturer },
-    { title: "Image rights", value: image_rights },
-  ]
-
-  const allDisplayItems = listItems.filter(
+  const allDisplayItems = privateListItems.filter(
     i => i.value != null && i.value !== ""
   )
 
@@ -167,7 +71,7 @@ export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfo
     setIsCollapsed(false)
   }
 
-  const Container = isUnlisted ? Flex : StackableBorderBox
+  const Container = data.isUnlisted ? Flex : StackableBorderBox
 
   return (
     <>
