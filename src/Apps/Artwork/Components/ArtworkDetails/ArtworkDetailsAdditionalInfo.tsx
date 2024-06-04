@@ -33,152 +33,10 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
   ...flexProps
 }) => {
   const {
-    category,
-    series,
-    publisher,
-    manufacturer,
-    image_rights,
-    internalID,
-    canRequestLotConditionsReport,
-    framed,
-    signatureInfo,
-    conditionDescription,
-    certificateOfAuthenticity,
-    dimensions,
-    attributionClass,
-    medium,
-  } = artwork
-
-  const [openMediumModal, setOpenMediumModal] = useState(false)
-  const [openRarityModal, setOpenRarityModal] = useState(false)
-  const [openConditionModal, setOpenConditionModal] = useState(false)
-
-  const { dimensionsLabel } = useArtworkDimensions(dimensions)
-
-  const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
-
-  const listItems = [
-    {
-      title: "Materials",
-      value: medium,
-    },
-    {
-      title: "Size",
-      value: dimensionsLabel,
-    },
-    {
-      title: "Rarity",
-      value: attributionClass?.name && (
-        <>
-          <Clickable
-            onClick={() => {
-              setOpenRarityModal(true)
-
-              trackEvent({
-                action_type: "Click",
-                context_module: ContextModule.aboutTheWork,
-                type: DeprecatedAnalyticsSchema.Type.Link,
-                subject: "Rarity type info",
-                context_page_owner_type: contextPageOwnerType,
-                context_page_owner_id: contextPageOwnerId,
-                context_page_owner_slug: contextPageOwnerSlug,
-              })
-            }}
-            textDecoration="underline"
-            color="black60"
-          >
-            <Text variant="xs">{attributionClass?.name}</Text>
-          </Clickable>
-
-          <ArtworkSidebarClassificationsModalQueryRenderer
-            onClose={() => setOpenRarityModal(false)}
-            show={openRarityModal}
-            showDisclaimer={false}
-          />
-        </>
-      ),
-    },
-    {
-      title: "Medium",
-      value: category && (
-        <>
-          {artwork.mediumType ? (
-            <>
-              <Clickable
-                onClick={() => {
-                  setOpenMediumModal(true)
-
-                  trackEvent({
-                    action_type: "Click",
-                    context_module: ContextModule.aboutTheWork,
-                    type: DeprecatedAnalyticsSchema.Type.Link,
-                    subject: "Medium type info",
-                    context_page_owner_type: contextPageOwnerType,
-                    context_page_owner_id: contextPageOwnerId,
-                    context_page_owner_slug: contextPageOwnerSlug,
-                  })
-                }}
-                textDecoration="underline"
-                color="black60"
-              >
-                <Text variant="xs">{category}</Text>
-              </Clickable>
-
-              <ArtworkDetailsMediumModalFragmentContainer
-                artwork={artwork}
-                show={openMediumModal}
-                onClose={() => setOpenMediumModal(false)}
-              />
-            </>
-          ) : (
-            <Text variant="xs" color="black60">
-              {category}
-            </Text>
-          )}
-        </>
-      ),
-    },
-    {
-      title: "Condition",
-      value: canRequestLotConditionsReport ? (
-        <RequestConditionReportQueryRenderer artworkID={internalID} />
-      ) : (
-        conditionDescription && conditionDescription.details
-      ),
-      onReadMoreClicked: () => {
-        trackEvent({
-          action_type: "Click",
-          context_module: "Condition",
-          subject: "Read more",
-        })
-      },
-      onTitleClick: () => {
-        setOpenConditionModal(true)
-      },
-    },
-
-    {
-      title: "Signature",
-      value: signatureInfo && signatureInfo.details,
-    },
-    {
-      title: "Certificate of authenticity",
-      value: certificateOfAuthenticity && certificateOfAuthenticity.details,
-    },
-    {
-      title: "Frame",
-      value: framed && framed.details,
-    },
-    { title: "Series", value: series },
-    { title: "Publisher", value: publisher },
-    { title: "Manufacturer", value: manufacturer },
-    { title: "Image rights", value: image_rights },
-  ]
+    listItems,
+    openConditionModal,
+    setOpenConditionModal,
+  } = useArtworkDetailsAdditionalInfoFields({ artwork })
 
   const displayItems = listItems.filter(i => i.value != null && i.value !== "")
 
@@ -223,7 +81,13 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
   )
 }
 
-export const useArtworkDetailsAdditionalInfoFields = ({ artwork }) => {
+interface UseArtworkDetailsAdditionInfoFieldsProps {
+  artwork: ArtworkDetailsAdditionalInfo_artwork$data
+}
+
+export const useArtworkDetailsAdditionalInfoFields = ({
+  artwork,
+}: UseArtworkDetailsAdditionInfoFieldsProps) => {
   const {
     category,
     series,
@@ -240,6 +104,19 @@ export const useArtworkDetailsAdditionalInfoFields = ({ artwork }) => {
     attributionClass,
     medium,
   } = artwork
+
+  const { dimensionsLabel } = useArtworkDimensions(dimensions)
+
+  const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
+  const [openMediumModal, setOpenMediumModal] = useState(false)
+  const [openRarityModal, setOpenRarityModal] = useState(false)
+  const [openConditionModal, setOpenConditionModal] = useState(false)
 
   const listItems = [
     {
@@ -358,6 +235,12 @@ export const useArtworkDetailsAdditionalInfoFields = ({ artwork }) => {
     { title: "Manufacturer", value: manufacturer },
     { title: "Image rights", value: image_rights },
   ]
+
+  return {
+    listItems,
+    openConditionModal,
+    setOpenConditionModal,
+  }
 }
 
 export const ArtworkDetailsAdditionalInfoFragmentContainer = createFragmentContainer(
