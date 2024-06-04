@@ -25,7 +25,7 @@ import { useSystemContext } from "System/SystemContext"
 const IGNORE_PATHS = ["/meet-your-new-art-advisor"]
 
 const APP_BANNER_SRC =
-  "https://files.artsy.net/images/universal-footer_april-14.jpg"
+  "https://files.artsy.net/images/universal-footer_april-14_cropped.jpg"
 
 export const FooterDownloadAppBanner = () => {
   const { relayEnvironment } = useSystemContext()
