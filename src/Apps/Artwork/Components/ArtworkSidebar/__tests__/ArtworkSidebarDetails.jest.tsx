@@ -41,7 +41,7 @@ describe("ArtworkSidebarDetails", () => {
     expect(
       screen.queryByText("10 × 10 in | 25.4 × 25.4 cm")
     ).toBeInTheDocument()
-    expect(screen.queryByText(/included/)).toBeInTheDocument()
+    expect(screen.queryByText(/Frame included/)).toBeInTheDocument()
     expect(screen.queryByText("Edition of 10")).toBeInTheDocument()
   })
 
@@ -63,7 +63,7 @@ describe("ArtworkSidebarDetails", () => {
     expect(
       screen.queryByText("Painting on a piece of wall")
     ).toBeInTheDocument()
-    expect(screen.queryByText(/included/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Frame not included/)).toBeInTheDocument()
     expect(screen.queryByText(/edition/)).not.toBeInTheDocument()
   })
 
@@ -147,7 +147,7 @@ describe("ArtworkSidebarDetails", () => {
       })
 
       expect(screen.queryByText(/cm/)).toBeInTheDocument()
-      expect(screen.queryByText(/in/)).toBeInTheDocument()
+      expect(screen.queryByText(/10 × 10 in/)).toBeInTheDocument()
     })
   })
   describe("with edition set size > 1", () => {
@@ -170,7 +170,7 @@ describe("ArtworkSidebarDetails", () => {
       })
 
       expect(screen.queryByText(/cm/)).not.toBeInTheDocument()
-      expect(screen.queryByText(/in/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/10 × 10 in/)).not.toBeInTheDocument()
     })
   })
 })
