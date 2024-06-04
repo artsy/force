@@ -46,8 +46,8 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
       validateOnMount
       validationSchema={Schema}
     >
-      {({ handleChange, values }) => {
-        ;<SubmissionLayout>
+      {({ handleChange, values }) => (
+        <SubmissionLayout>
           <Text mb={2} variant="xl">
             Add artwork title
           </Text>
@@ -60,7 +60,7 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
           />
           <DevDebug />
         </SubmissionLayout>
-      }}
+      )}
     </Formik>
   )
 }

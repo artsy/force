@@ -3,19 +3,25 @@ import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useFormikContext } from "formik"
 
 export const DevDebug: React.FC = () => {
-  const { state } = useSellFlowContext()
-  const { values } = useFormikContext()
-
-  if (state.currentStep === "thank-you") return null
+  const context = useSellFlowContext()
+  const formik = useFormikContext()
 
   return (
     <>
-      <Box border="1px solid" p={2} my={2}>
-        <pre>{JSON.stringify(state, null, 2)}</pre>
-      </Box>
-      <Box border="1px solid" p={2} my={2}>
-        <pre>{JSON.stringify(values, null, 2)}</pre>
-      </Box>
+      {context?.state && (
+        <Box border="1px solid" p={2} my={2}>
+          <pre>{JSON.stringify(context.state, null, 2)}</pre>
+        </Box>
+      )}
+      {formik && (
+        <Box border="1px solid" p={2} my={2}>
+          <pre>{JSON.stringify({
+            errors: formik.errors, values: formik.values, isValid: formik.isValid,
+            isSubmitting: formik.isSubmitting, isValidating: formik.isValidating,
+            dirty: formik.dirty
+          } , null, 2)}</pre>
+        </Box>
+      )}
     </>
   )
 }

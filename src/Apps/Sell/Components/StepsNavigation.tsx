@@ -1,24 +1,27 @@
-import { Box, Join, Spacer } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
-import { useRouter } from "found"
-
-import { STEPS, useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import React from "react"
+import { Join, Spacer } from "@artsy/palette"
+import { RouterLink } from "System/Router/RouterLink"
+import { STEPS, useSellFlowContext } from "Apps/Sell/SellFlowContext"
 
 export const StepsNavigation: React.FC = () => {
   const { state } = useSellFlowContext()
-  const { match } = useRouter()
+
+  const pathForStep = (step: string) => {
+    return `/sell2/submissions/${state.submissionID}/${step}`
+  }
+
+  const steps = STEPS.filter(step => step !== "thank-you")
 
   return (
     <Join separator={<Spacer />}>
-      {STEPS.map((step, index) => (
-        <RouterLink
-          key={`${step}-${index}`}
-          to={`/sell2/submissions/${match.params.id}/${step}`}
-        >
-          {state.currentStep === step ? " > " : null}
-          {step}
-        </RouterLink>
+      {steps.map((step, index) => (
+          <RouterLink
+            key={`${step}-${index}`}
+            to={pathForStep(step)}
+          >
+            {state.step === step ? " > " : null}
+            {step}
+          </RouterLink>
       ))}
     </Join>
   )
