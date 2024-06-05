@@ -50,7 +50,8 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
   // Inactive order waiting for commercial actions
   const canPurchase = artwork.isAcquireable || !!activePartnerOffer
   const canMakeOffer = artwork.isOfferable || artwork.isOfferableFromInquiry
-  const showTransactionButtons = !activeOrder && (canPurchase || canMakeOffer)
+  const showTransactionButtons =
+    !activeOrder && artwork.published && (canPurchase || canMakeOffer)
 
   return (
     <>
@@ -126,6 +127,7 @@ const FRAGMENT = graphql`
           isOfferableFromInquiry
           isAcquireable
           isOfferable
+          published
         }
       }
       item {

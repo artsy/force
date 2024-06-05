@@ -90,19 +90,25 @@ export const MeetTheSpecialists: React.FC = () => {
                   lazyLoad
                   alt={`specialist ${i.firstName}`}
                 />
-                <LinearGradient />
 
-                <Box position="absolute" width="100%">
+                <Info position="absolute" width="100%" pt={12}>
                   <Box pl={2} pr={2} zIndex={10}>
                     <Text variant={["lg-display", "xl"]} color="white100">
                       {i.name}
                     </Text>
+
                     <Text mb={1} variant={["xs", "xs"]} color="white100">
                       {i.jobTitle}
                     </Text>
-                    <Text mb={2} variant={["xs", "sm"]} color="white100">
+
+                    <Text
+                      mb={2}
+                      variant={["xs", "sm-display"]}
+                      color="white100"
+                    >
                       <ReadMore content={i.bio} maxChars={88} />
                     </Text>
+
                     <Button
                       // @ts-ignore
                       as={RouterLink}
@@ -116,7 +122,7 @@ export const MeetTheSpecialists: React.FC = () => {
                       Contact {i.firstName}
                     </Button>
                   </Box>
-                </Box>
+                </Info>
               </Box>
             </ResponsiveBox>
           ))
@@ -142,13 +148,7 @@ export const MeetTheSpecialists: React.FC = () => {
   )
 }
 
-const LinearGradient = styled(Box)`
-  position: "absolute";
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  position: absolute;
-  transition: background-color 200ms;
+const Info = styled(Box)`
   background: ${themeGet("effects.overlayGradient")};
+  text-shadow: ${themeGet("effects.textShadow")};
 `

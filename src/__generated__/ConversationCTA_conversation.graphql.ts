@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d50adf955a225d5c322f24a29d00448b>>
+ * @generated SignedSource<<eb08f5f23937bcd73256c0b0a4a1bb36>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,6 +47,7 @@ export type ConversationCTA_conversation$data = {
       readonly isAcquireable: boolean | null | undefined;
       readonly isOfferable: boolean | null | undefined;
       readonly isOfferableFromInquiry: boolean | null | undefined;
+      readonly published: boolean;
       readonly " $fragmentSpreads": FragmentRefs<"ConversationConfirmModal_artwork">;
     } | {
       // This will never be '%other', but we need some
@@ -142,6 +143,13 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "isOfferable",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "published",
                   "storageKey": null
                 }
               ],
@@ -302,6 +310,6 @@ return {
 };
 })();
 
-(node as any).hash = "884b0a37078fdecf8d6f3763d3b70208";
+(node as any).hash = "d6908cebbd5ab73c78ee55b3b08e836b";
 
 export default node;

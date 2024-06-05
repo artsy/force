@@ -54,6 +54,7 @@ import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { saleAgreementsRoutes } from "Apps/SaleAgreements/saleAgreementsRoutes"
 import { saleRoutes } from "./Apps/Sale/saleRoutes"
 import { searchRoutes } from "Apps/Search/searchRoutes"
+import { sellRoutes } from "Apps/Sell/sellRoutes"
 import { settingsRoutes } from "Apps/Settings/settingsRoutes"
 import { showRoutes } from "Apps/Show/showRoutes"
 import { showsRoutes } from "Apps/Shows/showsRoutes"
@@ -115,6 +116,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: saleRoutes },
     { routes: saleAgreementsRoutes },
     { routes: searchRoutes },
+    { routes: sellRoutes },
     { routes: settingsRoutes },
     { routes: showRoutes },
     { routes: showsRoutes },

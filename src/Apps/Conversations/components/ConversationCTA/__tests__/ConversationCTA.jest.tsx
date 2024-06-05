@@ -152,7 +152,9 @@ describe("ConversationCTA", () => {
     const mockConversationWithArtwork = artwork => () => ({
       internalID: "internal-test-id",
       activeOrderCTA: null,
-      items: [{ liveArtwork: { __typename: "Artwork", ...artwork } }],
+      items: [
+        { liveArtwork: { __typename: "Artwork", ...artwork, published: true } },
+      ],
     })
 
     it("renders a message about buyer guarantee", () => {
