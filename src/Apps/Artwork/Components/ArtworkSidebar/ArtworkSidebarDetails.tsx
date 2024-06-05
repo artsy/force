@@ -12,15 +12,29 @@ interface ArtworkSidebarDetailsProps {
 const ArtworkSidebarDetails: React.FC<ArtworkSidebarDetailsProps> = ({
   artwork,
 }) => {
-  const { medium, dimensions, framed, editionOf, editionSets } = artwork
+  const {
+    medium,
+    dimensions,
+    framed,
+    editionOf,
+    editionSets,
+    isUnlisted,
+  } = artwork
   const { t } = useTranslation()
 
   const dimensionsPresent = dimensions =>
     /\d/.test(dimensions?.in) || /\d/.test(dimensions?.cm)
 
-  const getFrameString = (frameDetails?: string | null) => {
+  const getFrameString = (
+    frameDetails?: string | null,
+    isUnlisted?: boolean
+  ) => {
     if (frameDetails !== "Included") {
-      return "Frame not included"
+      if (isUnlisted) {
+        return "Frame not included"
+      } else {
+        return
+      }
     }
 
     return `${t`artworkPage.sidebar.details.frame`} ${frameDetails.toLowerCase()}`
@@ -33,7 +47,7 @@ const ArtworkSidebarDetails: React.FC<ArtworkSidebarDetailsProps> = ({
         <Text variant="sm">{`${dimensions?.in} | ${dimensions?.cm}`}</Text>
       )}
       {!!getFrameString(framed?.details) && (
-        <Text variant="sm">{getFrameString(framed?.details)}</Text>
+        <Text variant="sm">{getFrameString(framed?.details, isUnlisted)}</Text>
       )}
       {!!editionOf && <Text variant="sm">{editionOf}</Text>}
 
@@ -55,6 +69,7 @@ export const ArtworkSidebarDetailsFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkSidebarDetails_artwork on Artwork {
+        isUnlisted
         medium
         dimensions {
           in
