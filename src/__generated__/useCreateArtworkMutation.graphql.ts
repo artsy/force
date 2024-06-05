@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d1234fe42b16edb99590b4f3ec7d125>>
+ * @generated SignedSource<<a5203137875bdbb9e3556dd681ee2e9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,8 @@ export type MyCollectionCreateArtworkInput = {
   attributionClass?: ArtworkAttributionClassType | null | undefined;
   category?: string | null | undefined;
   clientMutationId?: string | null | undefined;
+  coaByAuthenticatingBody?: boolean | null | undefined;
+  coaByGallery?: boolean | null | undefined;
   collectorLocation?: EditableLocation | null | undefined;
   conditionDescription?: string | null | undefined;
   confidentialNotes?: string | null | undefined;
@@ -35,6 +37,7 @@ export type MyCollectionCreateArtworkInput = {
   framedHeight?: string | null | undefined;
   framedMetric?: string | null | undefined;
   framedWidth?: string | null | undefined;
+  hasCertificateOfAuthenticity?: boolean | null | undefined;
   height?: string | null | undefined;
   importSource?: ArtworkImportSource | null | undefined;
   isEdition?: boolean | null | undefined;
