@@ -46,7 +46,7 @@ const ArtworkSidebarDetails: React.FC<ArtworkSidebarDetailsProps> = ({
       {!!dimensionsPresent(dimensions) && (editionSets?.length ?? 0) < 2 && (
         <Text variant="sm">{`${dimensions?.in} | ${dimensions?.cm}`}</Text>
       )}
-      {!!getFrameString(framed?.details) && (
+      {!!getFrameString(framed?.details, isUnlisted) && (
         <Text variant="sm">{getFrameString(framed?.details, isUnlisted)}</Text>
       )}
       {!!editionOf && <Text variant="sm">{editionOf}</Text>}
