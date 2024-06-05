@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<252e3122d4dd2c6e258cfe0b0036f349>>
+ * @generated SignedSource<<574a79cae275e0ff59a8db37a6d62879>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,7 +40,7 @@ export type ArtworkSidebar_artwork$data = {
   } | null | undefined;
   readonly saleMessage: string | null | undefined;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarArtsyGuarantee_artwork" | "ArtworkSidebarArtworkTitle_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercialButtons_artwork" | "ArtworkSidebarCreateAlert_artwork" | "ArtworkSidebarDetails_artwork" | "ArtworkSidebarEstimatedValue_artwork" | "ArtworkSidebarLinks_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarPrivateArtwork_artwork" | "ArtworkSidebarShippingInformation_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarArtsyGuarantee_artwork" | "ArtworkSidebarArtworkTitle_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercialButtons_artwork" | "ArtworkSidebarCreateAlert_artwork" | "ArtworkSidebarDetails_artwork" | "ArtworkSidebarEstimatedValue_artwork" | "ArtworkSidebarLinks_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarPrivateArtwork_artwork" | "ArtworkSidebarShippingInformation_artwork" | "PrivateArtworkAdditionalInfo_artwork">;
   readonly " $fragmentType": "ArtworkSidebar_artwork";
 };
 export type ArtworkSidebar_artwork$key = {
@@ -140,6 +140,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebarArtsyGuarantee_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "PrivateArtworkAdditionalInfo_artwork"
     },
     {
       "alias": null,
@@ -310,6 +315,6 @@ return {
 };
 })();
 
-(node as any).hash = "100cd7f9d09e9be6c8ff1a5f42305800";
+(node as any).hash = "975d8eac1b5f029a070e69ec7ed564f2";
 
 export default node;

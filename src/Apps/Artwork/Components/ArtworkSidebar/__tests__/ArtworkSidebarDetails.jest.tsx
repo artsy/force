@@ -41,7 +41,7 @@ describe("ArtworkSidebarDetails", () => {
     expect(
       screen.queryByText("10 × 10 in | 25.4 × 25.4 cm")
     ).toBeInTheDocument()
-    expect(screen.queryByText(/included/)).toBeInTheDocument()
+    expect(screen.queryByText(/Frame included/)).toBeInTheDocument()
     expect(screen.queryByText("Edition of 10")).toBeInTheDocument()
   })
 
@@ -63,7 +63,7 @@ describe("ArtworkSidebarDetails", () => {
     expect(
       screen.queryByText("Painting on a piece of wall")
     ).toBeInTheDocument()
-    expect(screen.queryByText(/included/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Frame not included/)).not.toBeInTheDocument()
     expect(screen.queryByText(/edition/)).not.toBeInTheDocument()
   })
 
@@ -171,6 +171,39 @@ describe("ArtworkSidebarDetails", () => {
 
       expect(screen.queryByText(/cm/)).not.toBeInTheDocument()
       expect(screen.queryByText(/in/)).not.toBeInTheDocument()
+    })
+  })
+
+  describe("with a private work", () => {
+    it("renders Frame not included text when frame is not included", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isUnlisted: true,
+          dimensions: {
+            in: "10 × 10 in",
+            cm: "25.4 × 25.4 cm",
+          },
+        }),
+      })
+
+      expect(screen.queryByText(/Frame not included/)).toBeInTheDocument()
+    })
+
+    it("renders Frame included text when frame is included", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isUnlisted: true,
+          dimensions: {
+            in: "10 × 10 in",
+            cm: "25.4 × 25.4 cm",
+          },
+          framed: {
+            details: "Included",
+          },
+        }),
+      })
+
+      expect(screen.queryByText(/Frame included/)).toBeInTheDocument()
     })
   })
 })

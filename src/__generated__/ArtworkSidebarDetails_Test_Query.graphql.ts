@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d23686fd56f10a22d689626cda63973a>>
+ * @generated SignedSource<<afe067093dcf18b3ba2fe106feec86b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -95,6 +95,13 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isUnlisted",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -218,7 +225,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8836ecd929b0e2c20691cb8a7d379210",
+    "cacheID": "1666489ea16f25803ce37ead083a3bc5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -269,12 +276,18 @@ return {
         "artwork.id": (v2/*: any*/),
         "artwork.isBiddable": (v4/*: any*/),
         "artwork.isEdition": (v4/*: any*/),
+        "artwork.isUnlisted": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
         "artwork.medium": (v3/*: any*/)
       }
     },
     "name": "ArtworkSidebarDetails_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarDetails_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarDetails_artwork on Artwork {\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  isEdition\n  editionSets {\n    internalID\n    id\n  }\n  ...ArtworkSidebarClassification_artwork\n  ...ArtworkSidebarAuthenticityCertificate_artwork\n}\n"
+    "text": "query ArtworkSidebarDetails_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarDetails_artwork on Artwork {\n  isUnlisted\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  isEdition\n  editionSets {\n    internalID\n    id\n  }\n  ...ArtworkSidebarClassification_artwork\n  ...ArtworkSidebarAuthenticityCertificate_artwork\n}\n"
   }
 };
 })();
