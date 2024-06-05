@@ -23,6 +23,7 @@ import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuc
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPrivateArtwork"
+import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork$data
@@ -147,7 +148,9 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       {isUnlisted && (
         <>
-          <Spacer y={1} />
+          <PrivateArtworkAdditionalInfo artwork={artwork} />
+
+          <Spacer y={4} />
 
           <ArtworkSidebarCommercialButtons
             artwork={artwork}
@@ -252,6 +255,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarAuctionInfoPolling_artwork
         ...ArtworkSidebarPrivateArtwork_artwork
         ...ArtworkSidebarArtsyGuarantee_artwork
+        ...PrivateArtworkAdditionalInfo_artwork
 
         slug
         isSold
