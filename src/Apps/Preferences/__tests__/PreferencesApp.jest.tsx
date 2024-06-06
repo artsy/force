@@ -1,42 +1,53 @@
-import { render, screen, fireEvent } from "@testing-library/react"
-import { HeadProvider } from "react-head"
-import { parseTokenFromRouter, PreferencesApp } from "../PreferencesApp"
+import { fireEvent, screen } from "@testing-library/react"
+import {
+  PreferencesAppFragmentContainer,
+  parseTokenFromRouter,
+} from "Apps/Preferences/PreferencesApp"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { PreferencesAppTestQuery } from "__generated__/PreferencesAppTestQuery.graphql"
+import { graphql } from "react-relay"
+
+jest.unmock("react-relay")
 
 describe("PreferencesApp", () => {
-  it.skip("renders the preference center", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
+  const { renderWithRelay } = setupTestWrapperTL<PreferencesAppTestQuery>({
+    Component: props => <PreferencesAppFragmentContainer {...(props as any)} />,
+    query: graphql`
+      query PreferencesAppTestQuery @relay_test_operation {
+        viewer {
+          ...PreferencesApp_viewer
+        }
+      }
+    `,
+  })
+
+  it("renders the preference center", () => {
+    renderWithRelay({
+      Viewer: () => ({ notificationPreferences: mockPreferences }),
+    })
 
     expect(screen.getByText("Email Preference Center")).toBeInTheDocument()
     expect(
-      screen.getByText("Please sign in to update your email preferences")
+      screen.queryByText("Please sign in to update your email preferences")
     ).not.toBeInTheDocument()
   })
 
   it("prompts users to sign in when no token and signed out", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
+    renderWithRelay({
+      Viewer: () => ({ notificationPreferences: null }),
+    })
 
     expect(
       screen.getByText("Please sign in to update your email preferences")
     ).toBeInTheDocument()
   })
 
-  it.skip("has disabled buttons until a change is made", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
+  it("has disabled buttons until a change is made", () => {
+    renderWithRelay({
+      Viewer: () => ({ notificationPreferences: mockPreferences }),
+    })
 
-    // eslint-disable-next-line testing-library/no-node-access
-    let saveButton = screen.getByText("Save").closest("button")
+    let saveButton = screen.getByRole("button", { name: "Save" })
     let checkboxes = screen.getAllByRole("checkbox")
 
     expect(saveButton).toBeDisabled()
@@ -46,12 +57,10 @@ describe("PreferencesApp", () => {
     expect(saveButton).toBeEnabled()
   })
 
-  it.skip("allows user to uncheck all boxes with unsubscribe from all", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
+  it("allows user to uncheck all boxes with unsubscribe from all", () => {
+    renderWithRelay({
+      Viewer: () => ({ notificationPreferences: mockPreferences }),
+    })
 
     expect(screen.getByText("Subscribe to all")).toBeInTheDocument()
 
@@ -70,12 +79,10 @@ describe("PreferencesApp", () => {
     })
   })
 
-  it.skip("unchecks unsubscribe/subscribe all when other checkboxes are checked", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
+  it("unchecks unsubscribe/subscribe all when other checkboxes are checked", () => {
+    renderWithRelay({
+      Viewer: () => ({ notificationPreferences: mockPreferences }),
+    })
 
     expect(screen.getByText("Unsubscribe from all")).toBeInTheDocument()
 
@@ -89,12 +96,10 @@ describe("PreferencesApp", () => {
     expect(unsubscribeFromAllCheckbox).not.toBeChecked()
   })
 
-  it.skip("allows user to check all boxes with subscribe to all", () => {
-    render(
-      <HeadProvider>
-        <PreferencesApp></PreferencesApp>
-      </HeadProvider>
-    )
+  it("allows user to check all boxes with subscribe to all", () => {
+    renderWithRelay({
+      Viewer: () => ({ notificationPreferences: mockPreferences }),
+    })
 
     expect(screen.getByText("Unsubscribe from all")).toBeInTheDocument()
 
@@ -143,3 +148,12 @@ describe("parseTokenFromRouter", () => {
     expect(authenticationToken).toEqual(token)
   })
 })
+
+const mockPreferences = [
+  { name: "custom_alerts", status: "SUBSCRIBED" },
+  { name: "partner_offers_on_saves", status: "SUBSCRIBED" },
+  { name: "product_updates", status: "SUBSCRIBED" },
+  { name: "art_world_insights", status: "UNSUBSCRIBED" },
+  { name: "guidance_on_collecting", status: "UNSUBSCRIBED" },
+  { name: "recommended_by_artsy", status: "UNSUBSCRIBED" },
+]
