@@ -104,7 +104,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
             <Box display="inline-block" width={60} color="black60">
               From
             </Box>
-            {user.name} ({user.email})
+            {user.name}
           </Text>
 
           <Separator my={2} />
@@ -153,9 +153,10 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
       <Spacer y={1} />
 
       <Text variant="xs">
-        By clicking send, you accept our{" "}
-        <RouterLink inline to="/privacy" target="_blank">
-          Privacy Policy.
+        By clicking send, we will share your profile with{" "}
+        {artwork.partner?.name}. Update your profile at any time in{" "}
+        <RouterLink inline to="/settings/edit-profile" target="_blank">
+          Settings.
         </RouterLink>
       </Text>
 
@@ -223,7 +224,7 @@ export const InquiryInquiryPlaceholder: React.FC = () => {
         <Box display="inline-block" width={60}>
           From
         </Box>
-        Example Example (example@example.com)
+        Example
       </SkeletonText>
 
       <Separator my={2} />
