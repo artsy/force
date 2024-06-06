@@ -24,10 +24,10 @@ export const DEFAULT_PREFERENCES: AppPreferences = {
 
 const AppPreferencesContext = createContext<{
   preferences: AppPreferences
-  updatePreferences: (newPreferences: Partial<AppPreferences>) => void
+  updatePreferences: (nextPreferences: Partial<AppPreferences>) => Promise<any>
 }>({
   preferences: DEFAULT_PREFERENCES,
-  updatePreferences: () => {},
+  updatePreferences: () => Promise.resolve(),
 })
 
 interface AppPreferencesProviderProps {
@@ -46,42 +46,52 @@ export const AppPreferencesProvider: FC<AppPreferencesProviderProps> = ({
     initialPreferences
   )
 
-  const restoredPreferences = useRef(preferences)
-  const isUpdating = useRef(false)
+  const isProcessing = useRef(false)
+  const queue = useRef<(() => Promise<any>)[]>([])
+
+  const processQueue = useCallback(() => {
+    if (queue.current.length === 0) return
+    const next = queue.current.shift()
+    if (!next) return
+    return next().then(processQueue)
+  }, [])
 
   const updatePreferences = useCallback(
-    (newPreferences: Partial<AppPreferences>) => {
-      if (isUpdating.current) {
-        return
-      }
+    (nextPreferences: Partial<AppPreferences>): Promise<any> => {
+      return new Promise((resolve, reject) => {
+        // Optimistically update preferences
+        setPreferences(prevPreferences => ({
+          ...prevPreferences,
+          ...nextPreferences,
+        }))
 
-      isUpdating.current = true
+        const operation = async () => {
+          try {
+            const response = await fetch("/api/app-preferences", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(nextPreferences),
+            })
 
-      // Optimistically update preferences
-      setPreferences(prevPreferences => ({
-        ...prevPreferences,
-        ...newPreferences,
-      }))
+            resolve(await response.json())
+          } catch (err) {
+            reject(err)
+          }
+        }
 
-      fetch("/api/app-preferences", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newPreferences),
+        // Add the update operation to the queue
+        queue.current.push(operation)
+
+        // If we're not already processing the queue, start now
+        if (!isProcessing.current) {
+          isProcessing.current = true
+          processQueue().finally(() => {
+            isProcessing.current = false
+          })
+        }
       })
-        .then(response => response.json())
-        .then(data => {
-          restoredPreferences.current = data
-        })
-        .finally(() => {
-          isUpdating.current = false
-        })
-        .catch(error => {
-          console.error(error)
-          // Rollback to previous preferences on error
-          setPreferences(restoredPreferences.current)
-        })
     },
-    []
+    [processQueue]
   )
 
   return (
