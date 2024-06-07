@@ -185,9 +185,7 @@ describe("FulfillmentDetailsForm", () => {
       await flushPromiseQueue()
 
       await waitFor(() => {
-        ;["Phone number is required"].forEach(error => {
-          expect(screen.getByText(error)).toBeInTheDocument()
-        })
+        expect(screen.getByText("Phone number is required")).toBeInTheDocument()
       })
 
       expect(mockOnSubmit).not.toHaveBeenCalled()
