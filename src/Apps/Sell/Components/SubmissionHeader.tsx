@@ -1,23 +1,21 @@
-import { Flex, FullBleed, Separator, useTheme } from "@artsy/palette"
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
+import { Flex, FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Router/RouterLink"
-import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 export const SubmissionHeader: React.FC = () => {
-  const { theme } = useTheme()
+  const context = useSellFlowContext()
+
+  const submissionID = context?.state?.submissionID
 
   return (
     <Sticky withoutHeaderOffset>
-      {({ stuck }) => {
+      {() => {
         return (
-          <FullBleed
-            backgroundColor="white100"
-            style={
-              stuck ? { boxShadow: theme.effects.dropShadow } : undefined
-            }
-          >
+          <FullBleed backgroundColor="white100">
             <AppContainer>
               <HorizontalPadding>
                 <Flex
@@ -26,16 +24,22 @@ export const SubmissionHeader: React.FC = () => {
                   minHeight={[70, 90]}
                   alignItems="center"
                 >
-                  <RouterLink
-                    to={"/sell"}
-                    display="block"
-                  >
+                  <RouterLink to={"/sell"} display="block">
                     <ArtsyLogoIcon display="block" />
                   </RouterLink>
+
+                  {submissionID ? (
+                    <RouterLink to={"/sell"} display="block">
+                      Save & Exit
+                    </RouterLink>
+                  ) : (
+                    <RouterLink to={"/sell"} display="block">
+                      Exit
+                    </RouterLink>
+                  )}
                 </Flex>
               </HorizontalPadding>
             </AppContainer>
-            <Separator />
           </FullBleed>
         )
       }}

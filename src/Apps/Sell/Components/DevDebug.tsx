@@ -6,6 +6,8 @@ export const DevDebug: React.FC = () => {
   const context = useSellFlowContext()
   const formik = useFormikContext()
 
+  if (!context?.state?.devMode) return null
+
   return (
     <>
       {context?.state && (
@@ -15,11 +17,20 @@ export const DevDebug: React.FC = () => {
       )}
       {formik && (
         <Box border="1px solid" p={2} my={2}>
-          <pre>{JSON.stringify({
-            errors: formik.errors, values: formik.values, isValid: formik.isValid,
-            isSubmitting: formik.isSubmitting, isValidating: formik.isValidating,
-            dirty: formik.dirty
-          } , null, 2)}</pre>
+          <pre>
+            {JSON.stringify(
+              {
+                errors: formik.errors,
+                values: formik.values,
+                isValid: formik.isValid,
+                isSubmitting: formik.isSubmitting,
+                isValidating: formik.isValidating,
+                dirty: formik.dirty,
+              },
+              null,
+              2
+            )}
+          </pre>
         </Box>
       )}
     </>

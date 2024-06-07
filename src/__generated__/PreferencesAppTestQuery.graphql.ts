@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5369f2340b50ca4b61cf2b15661f3268>>
+ * @generated SignedSource<<724a54a6495567db1d2612f95c3bacc0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,15 +21,7 @@ export type PreferencesAppTestQuery = {
   variables: PreferencesAppTestQuery$variables;
 };
 
-const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "kind": "Literal",
-    "name": "authenticationToken",
-    "value": "123"
-  }
-];
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -45,7 +37,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": (v0/*: any*/),
+            "args": null,
             "kind": "FragmentSpread",
             "name": "PreferencesApp_viewer"
           }
@@ -72,7 +64,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v0/*: any*/),
+            "args": null,
             "concreteType": "NotificationPreference",
             "kind": "LinkedField",
             "name": "notificationPreferences",
@@ -93,7 +85,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "notificationPreferences(authenticationToken:\"123\")"
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -101,16 +93,45 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9e502959c4441f0cdce67b766bbc6f2a",
+    "cacheID": "1a18f0845044c123c015049ea2a69573",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "viewer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Viewer"
+        },
+        "viewer.notificationPreferences": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "NotificationPreference"
+        },
+        "viewer.notificationPreferences.name": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "viewer.notificationPreferences.status": {
+          "enumValues": [
+            "SUBSCRIBED",
+            "UNSUBSCRIBED"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "SubGroupStatus"
+        }
+      }
+    },
     "name": "PreferencesAppTestQuery",
     "operationKind": "query",
-    "text": "query PreferencesAppTestQuery {\n  viewer {\n    ...PreferencesApp_viewer_1hTG6C\n  }\n}\n\nfragment PreferencesApp_viewer_1hTG6C on Viewer {\n  notificationPreferences(authenticationToken: \"123\") {\n    name\n    status\n  }\n}\n"
+    "text": "query PreferencesAppTestQuery {\n  viewer {\n    ...PreferencesApp_viewer\n  }\n}\n\nfragment PreferencesApp_viewer on Viewer {\n  notificationPreferences {\n    name\n    status\n  }\n}\n"
   }
 };
-})();
 
-(node as any).hash = "2b3d5ff860b9ce102cde04d52e242790";
+(node as any).hash = "643af9897cedd91a59e33cc6ce08fe50";
 
 export default node;
