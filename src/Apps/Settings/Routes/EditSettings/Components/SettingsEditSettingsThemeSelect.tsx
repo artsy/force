@@ -1,4 +1,4 @@
-import { Button, Text } from "@artsy/palette"
+import { Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { useAppPreferences } from "Apps/AppPreferences/useAppPreferences"
 import { FC } from "react"
 
@@ -13,15 +13,18 @@ export const SettingsEditSettingsThemeSelect: FC<SettingsEditSettingsThemeSelect
         Theme
       </Text>
 
-      <Button
-        onClick={() => {
-          updatePreferences({
-            theme: preferences.theme === "light" ? "dark" : "light",
-          })
+      <RadioGroup
+        onSelect={(theme: "light" | "dark") => {
+          updatePreferences({ theme })
         }}
+        defaultValue={preferences.theme}
       >
-        Dark mode: {preferences.theme === "light" ? "Off" : "On"}
-      </Button>
+        <Radio value="light">Default</Radio>
+
+        <Spacer y={1} />
+
+        <Radio value="dark">Dark</Radio>
+      </RadioGroup>
     </>
   )
 }

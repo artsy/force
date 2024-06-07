@@ -30,6 +30,9 @@ import { useSystemContext } from "System/useSystemContext"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
+import { themeGet } from "@styled-system/theme-get"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 
 interface FooterProps extends BoxProps {}
 
@@ -175,7 +178,7 @@ export const Footer: React.FC<FooterProps> = props => {
 
           {isDarkModeEnabled && (
             <Column span={12} display={["flex", "none"]}>
-              <DarkModeToggle />
+              <ThemeSelect />
             </Column>
           )}
         </GridColumns>
@@ -208,7 +211,7 @@ export const Footer: React.FC<FooterProps> = props => {
                   <>
                     <Spacer x={1} />
 
-                    <DarkModeToggle />
+                    <ThemeSelect />
                   </>
                 )}
               </Flex>
@@ -297,25 +300,82 @@ export const Footer: React.FC<FooterProps> = props => {
   )
 }
 
-const DarkModeToggle: React.FC = () => {
-  const { toggleDarkMode, isDarkModeActive } = useDarkModeToggle({
+const ThemeSelect: React.FC = () => {
+  const { preferences, updatePreferences } = useDarkModeToggle({
     attachKeyListeners: false,
   })
 
   return (
     <>
-      <Clickable onClick={toggleDarkMode}>
-        <Text
-          variant="xs"
-          color="black60"
-          style={{ textDecoration: "underline" }}
-        >
-          Dark Mode | {isDarkModeActive ? "On" : "Off"}
-        </Text>
-      </Clickable>
+      <Dropdown
+        openDropdownByClick
+        // eslint-disable-next-line react/no-unstable-nested-components
+        dropdown={({ onHide }) => {
+          return (
+            <>
+              <ThemeSelectOption
+                as={Clickable}
+                onClick={() => {
+                  updatePreferences({ theme: "light" })
+                  onHide()
+                }}
+              >
+                {preferences.theme === "light" ? (
+                  <CheckmarkStrokeIcon />
+                ) : (
+                  <EmptyCheckCircleIcon />
+                )}
+                Default
+              </ThemeSelectOption>
+
+              <ThemeSelectOption
+                as={Clickable}
+                onClick={() => {
+                  updatePreferences({ theme: "dark" })
+                  onHide()
+                }}
+              >
+                {preferences.theme === "dark" ? (
+                  <CheckmarkStrokeIcon />
+                ) : (
+                  <EmptyCheckCircleIcon />
+                )}
+                Dark
+              </ThemeSelectOption>
+            </>
+          )
+        }}
+      >
+        {({ anchorRef, anchorProps }) => {
+          return (
+            <Clickable ref={anchorRef as any} {...anchorProps}>
+              <Text variant="xs" color="black60">
+                Theme
+              </Text>
+            </Clickable>
+          )
+        }}
+      </Dropdown>
     </>
   )
 }
+
+const ThemeSelectOption = styled(Text).attrs({
+  variant: "xs",
+  pl: 1,
+  pr: 1,
+  py: 0.5,
+  gap: 0.5,
+})`
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: 100%;
+
+  &:hover {
+    background-color: ${themeGet("colors.black5")};
+  }
+`
 
 const PolicyLinks = () => {
   const { CCPARequestComponent, showCCPARequest } = useCCPARequest()

@@ -28,6 +28,7 @@ interface State {
   index: number
   step: string
   submissionID: string | undefined
+  devMode: boolean
 }
 interface SellFlowContextProps {
   actions: Actions
@@ -39,11 +40,13 @@ export const SellFlowContext = createContext<SellFlowContextProps>({} as any)
 interface SellFlowContextProviderProps {
   children: React.ReactNode
   submissionID?: string
+  devMode?: boolean
 }
 
 export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = ({
   children,
   submissionID,
+  devMode = false,
 }) => {
   const {
     match,
@@ -63,6 +66,8 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   })
 
   useEffect(() => {
+    if (!submissionID) return
+
     push(`/sell2/submissions/${submissionID}/${STEPS[index]}`)
   }, [push, submissionID, index])
 
@@ -100,6 +105,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     index,
     step: STEPS[index],
     submissionID,
+    devMode,
   }
 
   return (

@@ -567,18 +567,6 @@ const FulfillmentDetailsFormLayout = (
           <>
             <Input
               tabIndex={tabbableIf("pickup")}
-              name="attributes.name"
-              placeholder="Full name"
-              title={"Full name"}
-              autoCorrect="off"
-              value={values.attributes.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.attributes?.name && errors.attributes?.name}
-              data-testid="AddressForm_name"
-            />
-            <Input
-              tabIndex={tabbableIf("pickup")}
               name="attributes.phoneNumber"
               title="Phone number"
               type="tel"
@@ -634,10 +622,13 @@ const VALIDATION_SCHEMA = Yup.object().shape({
       phoneNumber: Yup.string()
         .required("Phone number is required")
         .matches(/^[+\-\d]+$/, "Phone number is required"),
-      name: Yup.string().required("Full name is required"),
     })
     .when("fulfillmentType", {
       is: FulfillmentType.SHIP,
-      then: schema => schema.shape(ADDRESS_VALIDATION_SHAPE),
+      then: schema =>
+        schema.shape({
+          ...ADDRESS_VALIDATION_SHAPE,
+          name: Yup.string().required("Full name is required"),
+        }),
     }),
 })
