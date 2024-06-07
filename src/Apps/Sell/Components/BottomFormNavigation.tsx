@@ -30,7 +30,7 @@ export const BottomFormNavigation = () => {
         p={[2, 4]}
         flexDirection="row"
         justifyContent="space-between"
-        alignItems={"center"}
+        alignItems="center"
       >
         <Link onClick={actions.goToPreviousStep}>Back</Link>
 
