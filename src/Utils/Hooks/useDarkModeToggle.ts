@@ -40,5 +40,7 @@ export const useDarkModeToggle = ({
   return {
     toggleDarkMode,
     isDarkModeActive,
+    updatePreferences,
+    preferences,
   }
 }
