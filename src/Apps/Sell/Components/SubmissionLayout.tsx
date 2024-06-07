@@ -4,7 +4,7 @@ import { StepsNavigation } from "Apps/Sell/Components/StepsNavigation"
 import { SubmissionHeader } from "Apps/Sell/Components/SubmissionHeader"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 
-const CONTENT_WIDTH = 600
+const CONTENT_WIDTH = 640
 
 interface SubmissionLayoutProps {
   hideNavigation?: boolean
@@ -20,7 +20,7 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
     <Flex height="100vh" flexDirection="column">
       <SubmissionHeader />
 
-      <Flex flex={1} p={2} overflowY="auto" mx="auto">
+      <Flex flex={1} overflowY="auto" mx="auto">
         {!!context?.state?.devMode && !hideNavigation ? (
           <GridColumns>
             <Column span={[4]}>
@@ -28,13 +28,13 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
             </Column>
 
             <Column span={[8]}>
-              <Box width="60vw" maxWidth={CONTENT_WIDTH} mt={4}>
+              <Box maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={4}>
                 {children}
               </Box>
             </Column>
           </GridColumns>
         ) : (
-          <Box width="80vw" maxWidth={CONTENT_WIDTH} mt={4}>
+          <Box maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={4}>
             {children}
           </Box>
         )}
