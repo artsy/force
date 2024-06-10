@@ -40,6 +40,16 @@ const ArtAdvisorApp04 = loadable(
   }
 )
 
+const ArtAdvisorApp05 = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "advisorBundle" */ "./05-Curated-Discovery/App"
+    ),
+  {
+    resolveComponent: component => component.App,
+  }
+)
+
 export const artAdvisorRoutes: AppRouteConfig[] = [
   {
     path: "/advisor",
@@ -74,6 +84,13 @@ export const artAdvisorRoutes: AppRouteConfig[] = [
     getComponent: () => ArtAdvisorApp04,
     onClientSideRender: () => {
       ArtAdvisorApp04.preload()
+    },
+  },
+  {
+    path: "/advisor/5",
+    getComponent: () => ArtAdvisorApp05,
+    onClientSideRender: () => {
+      ArtAdvisorApp05.preload()
     },
   },
 ]
