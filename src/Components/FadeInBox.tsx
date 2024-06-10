@@ -1,23 +1,17 @@
 import { Box, BoxProps, useDidMount } from "@artsy/palette"
 import styled from "styled-components"
 
-interface FadeInProps extends BoxProps {
-  duration?: number
-  initialOpacity?: number
+interface FadeInBoxProps extends BoxProps {
+  opacity?: number
 }
 
-export const FadeInBox: React.FC<FadeInProps> = ({ children, duration }) => {
+export const FadeInBox: React.FC<FadeInBoxProps> = ({ children }) => {
   const isMounted = useDidMount()
-  const initialOpacity = isMounted ? 0 : 1
 
-  return (
-    <Wrapper duration={duration} initialOpacity={initialOpacity}>
-      {children}
-    </Wrapper>
-  )
+  return <FadeInWrapper opacity={isMounted ? 1 : 0}>{children}</FadeInWrapper>
 }
 
-const Wrapper = styled(Box)<FadeInProps>`
-  opacity: 1;
-  transition: opacity ${props => props.duration ?? "250ms"};
+const FadeInWrapper = styled(Box)<FadeInBoxProps>`
+  opacity: ${props => props.opacity};
+  transition: opacity 250ms;
 `

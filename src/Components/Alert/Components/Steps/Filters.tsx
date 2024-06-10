@@ -13,8 +13,8 @@ export const Filters: FC = () => {
   const { state } = useAlertContext()
 
   return (
-    <FadeInBox minWidth={[null, state.isEditMode ? null : 700]} p={2}>
-      <Flex flexDirection="column" width="auto">
+    <FadeInBox minWidth={[null, state.isEditMode ? null : 700]}>
+      <Flex flexDirection="column" width="auto" p={2}>
         <Text variant="lg">Filters</Text>
 
         <Separator my={2} />
