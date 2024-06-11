@@ -17,12 +17,14 @@ export async function getClient() {
 export async function getArtworksForUser({
   userId,
   limit,
+  concepts,
 }: {
   userId: string
   limit: number
+  concepts?: string[]
 }) {
   const client = await getClient()
-  const concepts = await getConceptsForUser(userId)
+  concepts = concepts || (await getConceptsForUser(userId))
   const { data } = await client.graphql
     .get()
     .withClassName("DiscoveryArtworks")
@@ -35,5 +37,5 @@ export async function getArtworksForUser({
 }
 
 export async function getConceptsForUser(userId: string) {
-  return ["street art", "graffiti"]
+  return ["random"]
 }

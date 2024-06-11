@@ -1,5 +1,14 @@
 import { FC, useEffect, useState } from "react"
-import { Box, Image, Text, Flex, Skeleton } from "@artsy/palette"
+import {
+  Box,
+  Image,
+  Text,
+  Flex,
+  Skeleton,
+  TextArea,
+  Button,
+  Spacer,
+} from "@artsy/palette"
 import { Rail } from "Components/Rail/Rail"
 import { crop } from "Utils/resizer"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
@@ -7,16 +16,24 @@ import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 
 export const App: FC = () => {
   const [artworks, setArtworks] = useState<any[]>([])
+  const [concepts, setConcepts] = useState<string>("")
+  const [conceptList, setConceptList] = useState<string[]>([])
 
   useEffect(() => {
-    async function fetchArtworks() {
-      const res = await fetch("/api/advisor/6/artworks")
+    async function fetchArtworks(concepts: string[]) {
+      const params = new URLSearchParams()
+      concepts.forEach(concept => {
+        params.append("concepts", concept)
+      })
+
+      const url = `/api/advisor/6/artworks?${params.toString()}`
+      const res = await fetch(url)
       const data = await res.json()
       return data
     }
 
-    fetchArtworks().then(setArtworks)
-  }, [])
+    fetchArtworks(conceptList).then(setArtworks)
+  }, [conceptList])
 
   return (
     <Box py={4}>
@@ -32,6 +49,31 @@ export const App: FC = () => {
       ) : (
         RAIL_PLACEHOLDER
       )}
+
+      <Box py={2}>
+        <Text variant={"lg-display"}>Concepts</Text>
+        <Spacer y={1} />
+
+        <Text>Enter one or more "user concepts", one concept per line:</Text>
+        <Spacer y={1} />
+
+        <TextArea
+          placeholder="street art, e.g."
+          value={concepts}
+          rows={5}
+          onChange={({ value }) => setConcepts(value)}
+        ></TextArea>
+        <Spacer y={1} />
+
+        <Button
+          onClick={e => {
+            setConceptList((concepts || "").split("\n"))
+            console.log("ROOP", concepts, conceptList)
+          }}
+        >
+          Update
+        </Button>
+      </Box>
 
       {/* <hr />
         <pre>{JSON.stringify(artworks, null, 2)}</pre> */}

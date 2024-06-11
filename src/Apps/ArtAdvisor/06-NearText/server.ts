@@ -2,7 +2,13 @@ import { getArtworksForUser } from "Apps/ArtAdvisor/06-NearText/lib/weaviate"
 import express, { Request, Response } from "express"
 
 const getArtworks = async (req: Request, res: Response) => {
-  const artworks = await getArtworksForUser({ userId: "TKTK", limit: 10 })
+  console.log("ROOP", req.query)
+  const { concepts } = req.query
+  const artworks = await getArtworksForUser({
+    userId: "TKTK",
+    concepts,
+    limit: 10,
+  })
   res.json(artworks)
 }
 
