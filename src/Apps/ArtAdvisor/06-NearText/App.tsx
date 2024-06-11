@@ -8,13 +8,19 @@ import {
   TextArea,
   Button,
   Spacer,
+  Radio,
+  RadioGroup,
 } from "@artsy/palette"
 import { Rail } from "Components/Rail/Rail"
 import { crop } from "Utils/resizer"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import CloseFillIcon from "@artsy/icons/CloseFillIcon"
+import { WeaviateArtworkClass } from "Apps/ArtAdvisor/06-NearText/lib/weaviate"
 
 export const App: FC = () => {
+  const [artworkClass, setArtworkClass] = useState<WeaviateArtworkClass>(
+    "DiscoveryArtworks"
+  )
   const [artworks, setArtworks] = useState<any[]>([])
   const [concepts, setConcepts] = useState<string>("")
   const [conceptList, setConceptList] = useState<string[]>([])
@@ -25,6 +31,7 @@ export const App: FC = () => {
       concepts.forEach(concept => {
         params.append("concepts", concept)
       })
+      params.append("artworkClass", artworkClass)
 
       const url = `/api/advisor/6/artworks?${params.toString()}`
       const res = await fetch(url)
@@ -33,7 +40,7 @@ export const App: FC = () => {
     }
 
     fetchArtworks(conceptList).then(setArtworks)
-  }, [conceptList])
+  }, [conceptList, artworkClass])
 
   return (
     <Box py={4}>
@@ -73,6 +80,23 @@ export const App: FC = () => {
         >
           Update
         </Button>
+      </Box>
+
+      <Spacer y={2} />
+
+      <Box>
+        <Text variant={"lg-display"}>Artwork collection</Text>
+        <Spacer y={1} />
+
+        <RadioGroup
+          defaultValue={"DiscoveryArtworks"}
+          onSelect={value => setArtworkClass(value as WeaviateArtworkClass)}
+          flexDirection="column"
+          gap={1}
+        >
+          <Radio value="DiscoveryArtworks" label="DiscoveryArtworks" />
+          <Radio value="DiscoveryArtworksCV" label="DiscoveryArtworksCV" />
+        </RadioGroup>
       </Box>
 
       {/* <hr />

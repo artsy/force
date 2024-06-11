@@ -1,3 +1,4 @@
+import _ from "lodash"
 import weaviate, { WeaviateClient } from "weaviate-ts-client"
 
 let weaviateClient: WeaviateClient
@@ -14,28 +15,49 @@ export async function getClient() {
   return weaviateClient
 }
 
-export async function getArtworksForUser({
-  userId,
-  limit,
-  concepts,
-}: {
-  userId: string
+export type WeaviateArtworkClass =
+  | "DiscoveryArtworks"
+  | "DiscoveryArtworksCV"
+  | "DiscoveryArtworksV2"
+
+type GetArtworksForUserOptions = {
   limit: number
   concepts?: string[]
-}) {
+  artworkClass: WeaviateArtworkClass
+}
+
+export async function getArtworksForUser(options?: GetArtworksForUserOptions) {
   const client = await getClient()
-  concepts = concepts || (await getConceptsForUser(userId))
+
+  const DEFAULTS: GetArtworksForUserOptions = {
+    limit: 10,
+    artworkClass: "DiscoveryArtworks",
+  }
+
+  let { limit, concepts, artworkClass } = _.defaults(
+    options || {},
+    DEFAULTS
+  ) as GetArtworksForUserOptions
+
+  // to avoid Weaviate errors for nearText(concepts: […]) queries,
+  // ensure concepts is a nonempty array of nonempty strings
+  concepts = _.reject(_.castArray(concepts), _.isEmpty)
+  if (_.isEmpty(concepts)) concepts.push("random") // TODO: better default
+
+  console.log(
+    `Querying ${limit} artworks from ${artworkClass} near ${JSON.stringify(
+      concepts
+    )}`,
+    options
+  )
+
   const { data } = await client.graphql
     .get()
-    .withClassName("DiscoveryArtworks")
+    .withClassName(artworkClass)
     .withNearText({ concepts })
     .withLimit(limit)
     .withFields("internalID slug title date rarity medium materials imageUrl")
     .do()
 
-  return data.Get.DiscoveryArtworks
-}
-
-export async function getConceptsForUser(userId: string) {
-  return ["random"]
+  return data.Get[artworkClass]
 }
