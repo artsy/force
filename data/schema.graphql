@@ -6975,6 +6975,8 @@ type ConsignmentSubmission {
   locationState: String
   medium: String
   minimumPriceDollars: Int
+  myCollectionArtwork: Artwork
+  myCollectionArtworkID: String
   offers(gravityPartnerId: ID!): [ConsignmentOffer!]!
   primaryImage: ConsignmentSubmissionCategoryAsset
   provenance: String
@@ -13706,6 +13708,11 @@ type Mutation {
   # Updates a page.
   updatePage(input: UpdatePageMutationInput!): UpdatePageMutationPayload
 
+  # Updates a partner artist.
+  updatePartnerShow(
+    input: UpdatePartnerShowMutationInput!
+  ): UpdatePartnerShowMutationPayload
+
   # Update a quiz artwork interacted_with flag
   updateQuiz(input: updateQuizMutationInput!): updateQuizMutationPayload
 
@@ -14400,6 +14407,9 @@ type Partner implements Node {
     displayOnPartnerProfile: Boolean
     first: Int
     hasPublishedArtworks: Boolean
+
+    # Include additional fields on artists, requires authentication
+    includeAllFields: Boolean
     last: Int
     representedBy: Boolean
     sort: ArtistSorts
@@ -14724,6 +14734,11 @@ type PartnerArtistCounts {
     label: String
   ): FormattedNumber
   managedArtworks(
+    # Returns a `String` when format is specified. e.g.`'0,0.0000''`
+    format: String
+    label: String
+  ): FormattedNumber
+  unlistedArtworks(
     # Returns a `String` when format is specified. e.g.`'0,0.0000''`
     format: String
     label: String
@@ -19897,6 +19912,38 @@ union UpdatePageResponseOrError = UpdatePageFailure | UpdatePageSuccess
 
 type UpdatePageSuccess {
   page: Page
+}
+
+type UpdatePartnerShowFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdatePartnerShowMutationInput {
+  clientMutationId: String
+
+  # Is
+  featured: Boolean
+
+  # The id of the partner to update.
+  partnerId: String!
+
+  # The id of the artist to update.
+  showId: String!
+}
+
+type UpdatePartnerShowMutationPayload {
+  clientMutationId: String
+
+  # On success: the updated partner. On error: the error that occurred.
+  showOrError: UpdatePartnerShowResponseOrError
+}
+
+union UpdatePartnerShowResponseOrError =
+    UpdatePartnerShowFailure
+  | UpdatePartnerShowSuccess
+
+type UpdatePartnerShowSuccess {
+  show: Show
 }
 
 input updateQuizMutationInput {
