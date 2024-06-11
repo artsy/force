@@ -17,8 +17,13 @@ import { crop } from "Utils/resizer"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import { WeaviateArtworkClass } from "Apps/ArtAdvisor/06-NearText/lib/weaviate"
+import { useSystemContext } from "System/SystemContext"
+import { useRouter } from "System/Router/useRouter"
 
 export const App: FC = () => {
+  const { isLoggedIn } = useSystemContext()
+  const { router } = useRouter()
+
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [artworkClass, setArtworkClass] = useState<WeaviateArtworkClass>(
     "DiscoveryArtworks"
@@ -45,6 +50,10 @@ export const App: FC = () => {
 
     fetchArtworks(conceptList).then(setArtworks)
   }, [conceptList, artworkClass])
+
+  if (!isLoggedIn) {
+    router.replace("/login?redirectTo=/advisor/6")
+  }
 
   return (
     <Box py={4}>

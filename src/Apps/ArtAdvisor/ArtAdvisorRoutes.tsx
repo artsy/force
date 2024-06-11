@@ -47,6 +47,20 @@ const ArtAdvisorApp06 = loadable(
   }
 )
 
+/**
+ * Helper factory function returns a route middleware to require a logged in user.
+ * If no user found the middleware will force a login and redirect to a specific page.
+ *
+ * This works on server-side navigation; client-side navigation is handled by the client.
+ */
+function requireUser({ redirectTo }: { redirectTo: string }) {
+  return ({ req, res }) => {
+    if (!req.user) {
+      res.redirect(`/login?redirectTo=${redirectTo}`)
+    }
+  }
+}
+
 export const artAdvisorRoutes: AppRouteConfig[] = [
   {
     path: "/advisor",
@@ -86,6 +100,7 @@ export const artAdvisorRoutes: AppRouteConfig[] = [
   {
     path: "/advisor/6",
     getComponent: () => ArtAdvisorApp06,
+    onServerSideRender: requireUser({ redirectTo: "/advisor/6" }),
     onClientSideRender: () => {
       ArtAdvisorApp06.preload()
     },
