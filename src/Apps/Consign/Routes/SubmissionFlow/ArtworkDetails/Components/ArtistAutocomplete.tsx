@@ -1,3 +1,4 @@
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   AutocompleteInput,
   AutocompleteInputOptionType,
@@ -6,16 +7,16 @@ import {
   Image,
   Text,
 } from "@artsy/palette"
-import { useFormikContext } from "formik"
-import { debounce } from "lodash"
-import { useEffect, useMemo, useState } from "react"
-import { Environment, fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ArtistAutocomplete_SearchConnection_Query,
   ArtistAutocomplete_SearchConnection_Query$data,
 } from "__generated__/ArtistAutocomplete_SearchConnection_Query.graphql"
+import { useFormikContext } from "formik"
+import { debounce } from "lodash"
+import { useEffect, useMemo, useState } from "react"
+import { Environment, fetchQuery, graphql } from "react-relay"
 import { ArtworkDetailsFormModel } from "./ArtworkDetailsForm"
 
 const DEBOUNCE_DELAY = 300
@@ -43,6 +44,7 @@ export const ArtistAutoComplete: React.FC<{
   onChange?: (value: string) => void
   onSelect: (artist: AutocompleteArtist | null) => void
   placeholder?: string
+  showChevronIcon?: boolean
   required?: boolean
   title?: string
 }> = ({
@@ -51,6 +53,7 @@ export const ArtistAutoComplete: React.FC<{
   onChange,
   onSelect,
   placeholder = "Enter full name",
+  showChevronIcon = true,
   required,
   title,
 }) => {
@@ -156,25 +159,29 @@ export const ArtistAutoComplete: React.FC<{
     const image = option.option?.image
 
     return (
-      <Flex alignItems="center" p={1} width="100%">
-        {option.option?.image ? (
-          <Image
-            src={image?.cropped?.src}
-            srcSet={image?.cropped?.srcSet}
-            width={image?.cropped?.width}
-            height={image?.cropped?.height}
-          />
-        ) : (
-          <Box width={44} height={44} backgroundColor="black10" />
-        )}
-        <Flex flexDirection={"column"}>
-          <Text ml={1} variant="sm-display">
-            {option.text}
-          </Text>
-          <Text ml={1} lineHeight={1.5} variant="sm-display" color="black60">
-            {option.option?.formattedNationalityAndBirthday}
-          </Text>
+      <Flex justifyContent="space-between">
+        <Flex alignItems="center" p={1} width="100%">
+          {option.option?.image ? (
+            <Image
+              src={image?.cropped?.src}
+              srcSet={image?.cropped?.srcSet}
+              width={image?.cropped?.width}
+              height={image?.cropped?.height}
+            />
+          ) : (
+            <Box width={44} height={44} backgroundColor="black10" />
+          )}
+          <Flex flexDirection={"column"}>
+            <Text ml={1} variant="sm-display">
+              {option.text}
+            </Text>
+            <Text ml={1} lineHeight={1.5} variant="sm-display" color="black60">
+              {option.option?.formattedNationalityAndBirthday}
+            </Text>
+          </Flex>
         </Flex>
+
+        {!!showChevronIcon && <ChevronRightIcon m="auto" mr={1} />}
       </Flex>
     )
   }

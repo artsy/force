@@ -1,4 +1,4 @@
-import { Button, Flex, Link } from "@artsy/palette"
+import { Box, Button, Flex, Link } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useRouter } from "System/Router/useRouter"
 import { useFormikContext } from "formik"
@@ -8,7 +8,7 @@ export const BottomFormNavigation = () => {
   const { router } = useRouter()
   const {
     actions,
-    state: { isLastStep, submissionID },
+    state: { isFirstStep, isLastStep, submissionID },
   } = useSellFlowContext()
 
   const onContinue = async () => {
@@ -32,7 +32,11 @@ export const BottomFormNavigation = () => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Link onClick={actions.goToPreviousStep}>Back</Link>
+        {isFirstStep ? (
+          <Box />
+        ) : (
+          <Link onClick={actions.goToPreviousStep}>Back</Link>
+        )}
 
         {isLastStep ? (
           <Button
