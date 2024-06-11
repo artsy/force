@@ -1,9 +1,9 @@
-import { getArtworksForUser } from "Apps/ArtAdvisor/06-NearText/lib/weaviate"
+import { getArtworksForConcepts } from "Apps/ArtAdvisor/06-NearText/lib/weaviate"
 import express, { Request, Response } from "express"
 
 const getArtworks = async (req: Request, res: Response) => {
   const { concepts, artworkClass } = req.query
-  const artworks = await getArtworksForUser({
+  const artworks = await getArtworksForConcepts({
     artworkClass,
     concepts,
     limit: 10,

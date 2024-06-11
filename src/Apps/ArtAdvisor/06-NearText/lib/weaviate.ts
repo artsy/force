@@ -20,24 +20,27 @@ export type WeaviateArtworkClass =
   | "DiscoveryArtworksCV"
   | "DiscoveryArtworksV2"
 
-type GetArtworksForUserOptions = {
+type GetArtworksForConceptsOptions = {
   limit: number
   concepts?: string[]
   artworkClass: WeaviateArtworkClass
 }
 
-export async function getArtworksForUser(options?: GetArtworksForUserOptions) {
+export async function getArtworksForConcepts(
+  options?: GetArtworksForConceptsOptions
+) {
   const client = await getClient()
 
-  const DEFAULTS: GetArtworksForUserOptions = {
+  const DEFAULTS: GetArtworksForConceptsOptions = {
     limit: 10,
+    concepts: [],
     artworkClass: "DiscoveryArtworks",
   }
 
   let { limit, concepts, artworkClass } = _.defaults(
     options || {},
     DEFAULTS
-  ) as GetArtworksForUserOptions
+  ) as GetArtworksForConceptsOptions
 
   // to avoid Weaviate errors for nearText(concepts: […]) queries,
   // ensure concepts is a nonempty array of nonempty strings
