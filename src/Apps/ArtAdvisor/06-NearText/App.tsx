@@ -10,6 +10,7 @@ import {
   Spacer,
   Radio,
   RadioGroup,
+  Clickable,
 } from "@artsy/palette"
 import { Rail } from "Components/Rail/Rail"
 import { crop } from "Utils/resizer"
@@ -111,7 +112,7 @@ export const App: FC = () => {
 }
 
 const ArtworkCard: React.FC<{ artwork: any }> = ({ artwork }) => {
-  const { title, date } = artwork
+  const { internalID, title, date } = artwork
 
   const cropped = crop(artwork.imageUrl, { width: 200, height: 200 })
 
@@ -130,12 +131,12 @@ const ArtworkCard: React.FC<{ artwork: any }> = ({ artwork }) => {
         {date && `, ${date}`}
       </Text>
       <Flex py={1} gap={1} justifyContent={"center"}>
-        <div style={{ cursor: "not-allowed" }}>
+        <Clickable onClick={e => alert(`aye ${internalID}`)}>
           <CheckmarkFillIcon fill={"black60"} size={30} />
-        </div>
-        <div style={{ cursor: "not-allowed" }}>
+        </Clickable>
+        <Clickable onClick={e => alert(`nay ${internalID}`)}>
           <CloseFillIcon fill={"black60"} size={30} />
-        </div>
+        </Clickable>
       </Flex>
     </Box>
   )
