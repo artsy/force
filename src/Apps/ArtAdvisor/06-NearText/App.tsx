@@ -18,6 +18,7 @@ import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import { WeaviateArtworkClass } from "Apps/ArtAdvisor/06-NearText/lib/weaviate"
 
 export const App: FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [artworkClass, setArtworkClass] = useState<WeaviateArtworkClass>(
     "DiscoveryArtworks"
   )
@@ -27,6 +28,7 @@ export const App: FC = () => {
 
   useEffect(() => {
     async function fetchArtworks(concepts: string[]) {
+      setIsLoading(true)
       const params = new URLSearchParams()
       concepts.forEach(concept => {
         params.append("concepts", concept)
@@ -36,6 +38,7 @@ export const App: FC = () => {
       const url = `/api/advisor/6/artworks?${params.toString()}`
       const res = await fetch(url)
       const data = await res.json()
+      setIsLoading(false)
       return data
     }
 
@@ -49,7 +52,9 @@ export const App: FC = () => {
           title="Recommended Works"
           getItems={() => {
             return artworks.map(artwork => (
-              <ArtworkCard key={artwork.internalID} artwork={artwork} />
+              <Box key={artwork.internalID} opacity={isLoading ? 0.1 : 1}>
+                <ArtworkCard artwork={artwork} />
+              </Box>
             ))
           }}
         />
