@@ -41,6 +41,13 @@ export const ArtAdvisorApp: FC = () => {
           collector profile as your bio, follow an artist and/or create alerts
         </Description>
       </Experiment>
+
+      <Experiment href="/advisor/6">
+        <Name>Discovery (nearText)</Name>
+        <Description>
+          The nearText variant of the Artwork Discovery experiment
+        </Description>
+      </Experiment>
     </Box>
   )
 }

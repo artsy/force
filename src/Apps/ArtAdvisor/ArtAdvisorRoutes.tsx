@@ -40,6 +40,13 @@ const ArtAdvisorApp04 = loadable(
   }
 )
 
+const ArtAdvisorApp06 = loadable(
+  () => import(/* webpackChunkName: "advisorBundle" */ "./06-NearText/App"),
+  {
+    resolveComponent: component => component.App,
+  }
+)
+
 export const artAdvisorRoutes: AppRouteConfig[] = [
   {
     path: "/advisor",
@@ -74,6 +81,13 @@ export const artAdvisorRoutes: AppRouteConfig[] = [
     getComponent: () => ArtAdvisorApp04,
     onClientSideRender: () => {
       ArtAdvisorApp04.preload()
+    },
+  },
+  {
+    path: "/advisor/6",
+    getComponent: () => ArtAdvisorApp06,
+    onClientSideRender: () => {
+      ArtAdvisorApp06.preload()
     },
   },
 ]
