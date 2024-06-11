@@ -46,6 +46,6 @@ router.post("/artworks/:artwork_id/likes", createArtworkLike)
 router.delete("/artworks/:artwork_id/likes/:id", deleteArtworkLike)
 
 // dislikes
-router.get("/artworks/:artwork_id/likes", getArtworkDislikes)
-router.post("/artworks/:artwork_id/likes", createArtworkDislike)
-router.delete("/artworks/:artwork_id/likes/:id", deleteArtworkDislike)
+router.get("/artworks/:artwork_id/dislikes", getArtworkDislikes)
+router.post("/artworks/:artwork_id/dislikes", createArtworkDislike)
+router.delete("/artworks/:artwork_id/dislikes/:id", deleteArtworkDislike)
