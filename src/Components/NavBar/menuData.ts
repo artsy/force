@@ -26,27 +26,63 @@ export interface MenuLinkData {
   dividerBelow?: boolean
 }
 
-export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
-  text: "Artists",
+export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
+  text: "What’s New",
   menu: {
-    title: "Artists",
+    title: "What’s New",
     links: [
       {
-        text: "New from Galleries",
+        text: "Start Here",
         menu: {
-          title: "New from Galleries",
+          title: "Start Here",
           links: [
             {
-              text: "New from Leading Galleries",
-              href: "/collection/new-from-leading-galleries",
+              text: "New This Week",
+              href: "/collection/new-this-week?metric=in",
             },
             {
-              text: "New from Tastemaking Galleries",
-              href: "/collection/new-from-tastemaking-galleries",
+              text: "Trending Now",
+              href: "/collection/trending-now",
             },
             {
-              text: "New from Small Galleries",
-              href: "/collection/new-from-small-galleries",
+              text: "Top Auction Lots",
+              href: "/collection/top-auction-lots",
+            },
+            {
+              text: "New Abstract Art",
+              href: "/collection/new-abstract-art",
+            },
+            {
+              text: "New Figurative Art",
+              href: "/collection/new-figurative-art",
+            },
+          ],
+        },
+      },
+      {
+        text: "By Price",
+        menu: {
+          title: "By Price",
+          links: [
+            {
+              text: "Art under $500",
+              href: "/collection/art-under-500-dollars?metric=in",
+            },
+            {
+              text: "Art under $1,000",
+              href: "/collection/art-under-1000-dollars?metric=in",
+            },
+            {
+              text: "Art under $2,500",
+              href: "/collection/art-under-2500-dollars?metric=in",
+            },
+            {
+              text: "Art under $5,000",
+              href: "/collection/art-under-5000-dollars?metric=in",
+            },
+            {
+              text: "Art under $10,000",
+              href: "/collection/art-under-10000-dollars?metric=in",
             },
           ],
         },
@@ -57,56 +93,161 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "Curators’ Picks",
           links: [
             {
-              text: "Curators’ Picks: Emerging",
-              href: "/collection/curators-picks-emerging",
+              text: "Curators’ Picks: Emerging Artists",
+              href: "/collection/curators-picks-emerging-artists?metric=in",
             },
             {
-              text: "Curators’ Picks: Blue Chip",
-              href: "/collection/curators-picks-blue-chip",
-            },
-          ],
-        },
-      },
-      {
-        text: "New on Artsy",
-        menu: {
-          title: "New on Artsy",
-          links: [
-            {
-              text: "New This Week",
-              href: "/collection/new-this-week",
+              text: "Curators’ Picks: Blue-Chip Artists",
+              href: "/collection/curators-picks-blue-chip-artists?metric=in",
             },
             {
-              text: "Trending Now",
-              href: "/collection/trending-now",
+              text: "The Artsy Vanguard Artists",
+              href: "/collection/artsy-vanguard-artists",
             },
           ],
         },
       },
       {
-        text: "Trending Artists",
+        text: "By Seller",
         menu: {
-          title: "Trending Artists",
+          title: "By Seller",
           links: [
             {
-              text: "TJ Rinoski",
-              href: "/artist/tj-rinoski",
+              text: "New from Leading Galleries",
+              href: "/collection/new-from-leading-galleries?metric=in",
             },
             {
-              text: "Jo Dennis",
-              href: "/artist/jo-dennis-1",
+              text: "New from Tastemaking Galleries",
+              href: "/collection/new-from-tastemaking-galleries?metric=in",
             },
             {
-              text: "Kira Maria Shewfelt",
-              href: "/artist/kira-maria-shewfelt",
+              text: "New from Small Galleries",
+              href: "/collection/new-from-small-galleries?metric=in",
             },
             {
-              text: "Hildur Ásgeirsdóttir Jónsson",
-              href: "/artist/hildur-asgeirsdottir-jonsson",
+              text: "New from Nonprofits",
+              href: "/collection/new-from-nonprofits?metric=in",
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+
+export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
+  text: "Artists",
+  menu: {
+    title: "Artists",
+    links: [
+      {
+        text: "Blue-Chip Artists",
+        menu: {
+          title: "Blue-Chip Artists",
+          links: [
+            {
+              text: "Yayoi Kusama",
+              href: "/artist/yayoi-kusama?metric=in",
             },
             {
-              text: "Masaomi Yasunaga",
-              href: "/artist/masaomi-yasunaga-1",
+              text: "Stanley Whitney",
+              href: "/artist/stanley-whitney",
+            },
+            {
+              text: "Tracey Emin",
+              href: "/artist/tracey-emin",
+            },
+            {
+              text: "KAWS",
+              href: "/artist/kaws?metric=in",
+            },
+            {
+              text: "Pablo Picasso",
+              href: "/artist/pablo-picasso",
+            },
+          ],
+        },
+      },
+      {
+        text: "Trending on Artsy",
+        menu: {
+          title: "Trending on Artsy",
+          links: [
+            {
+              text: "Etel Adnan",
+              href: "/artist/etel-adnan",
+            },
+            {
+              text: "Tesfaye Urgessa",
+              href: "/artist/tesfaye-urgessa?metric=in",
+            },
+            {
+              text: "Faith Ringgold",
+              href: "/artist/faith-ringgold?metric=in",
+            },
+            {
+              text: "Carla Accardi",
+              href: "/artist/carla-accardi",
+            },
+            {
+              text: "Günther Förg",
+              href: "/artist/gunther-forg",
+            },
+          ],
+        },
+      },
+      {
+        text: "Recent Auction Records",
+        menu: {
+          title: "Recent Auction Records",
+          links: [
+            {
+              text: "Felix Gonzalez-Torres",
+              href: "/artist/felix-gonzalez-torres",
+            },
+            {
+              text: "Ana Mendieta",
+              href: "/artist/ana-mendieta?metric=in",
+            },
+            {
+              text: "Chloe Wise",
+              href: "/artist/chloe-wise",
+            },
+            {
+              text: "Martin Wong",
+              href: "/artist/martin-wong?metric=in",
+            },
+            {
+              text: "Leonora Carrington",
+              href: "/artist/leonora-carrington?metric=in",
+            },
+          ],
+        },
+      },
+      {
+        text: "New Representation",
+        menu: {
+          title: "New Representation",
+          links: [
+            {
+              text: "Walter Price",
+              href: "/artist/walter-price",
+            },
+            {
+              text: "Hannah Levy",
+              href: "/artist/hannah-levy?metric=in",
+            },
+            {
+              text: "Pélagie Gbaguidi",
+              href: "/artist/pelagie-gbaguidi?metric=in",
+            },
+            {
+              text: "Oren Pinhassi",
+              href: "/artist/oren-pinhassi?metric=in",
+            },
+            {
+              text: "Pierre Knop",
+              href: "/artist/pierre-knop",
             },
           ],
         },
@@ -126,49 +267,53 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
     title: "Artworks",
     links: [
       {
-        text: "Price",
+        text: "By Size",
         menu: {
-          title: "Price",
+          title: "By Size",
           links: [
             {
-              text: "Finds Under $1,000",
-              href: "/collection/finds-under-1000-dollars",
+              text: "Art for Small Spaces",
+              href: "/collection/art-for-small-spaces",
             },
             {
-              text: "Finds Under $5,000",
-              href: "/collection/finds-under-5000-dollars",
+              text: "Art for Large Spaces",
+              href: "/collection/art-for-large-spaces",
             },
             {
-              text: "Finds Under $10,000",
-              href: "/collection/finds-under-10000-dollars",
+              text: "Tabletop Sculpture",
+              href: "/collection/tabletop-sculpture",
             },
           ],
         },
       },
       {
-        text: "Curators’ Picks",
+        text: "By Color",
         menu: {
-          title: "Curators’ Picks",
+          title: "By Color",
           links: [
             {
-              text: "Contemporary Abstraction",
-              href: "/collection/contemporary-abstraction",
+              text: "Cool-Toned Artworks",
+              href: "/collection/cool-toned-artworks?metric=in",
             },
             {
-              text: "Top Auction Lots",
-              href: "/collection/top-auction-lots",
+              text: "Warm-Toned Artworks",
+              href: "/collection/warm-toned-artworks?metric=in",
             },
             {
-              text: "Best of Prints & Editions",
-              href: "/collection/best-of-prints-and-editions",
+              text: "Neutral Artworks",
+              href: "/collection/neutral-artworks",
+            },
+            {
+              text: "Black-and-White Artworks",
+              href: "/collection/black-and-white-artworks",
             },
           ],
         },
       },
       {
-        text: "Categories",
+        text: "Movements",
         menu: {
-          title: "Categories",
+          title: "Movements",
           links: [
             {
               text: "Contemporary Art",
@@ -176,27 +321,31 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Emerging Art",
-              href: "/collection/emerging-art",
+              href: "/collection/emerging-art?metric=in",
             },
             {
-              text: "Street Art",
-              href: "/collection/street-art",
+              text: "Post-War Art",
+              href: "/collection/post-war",
             },
             {
               text: "Abstract Art",
-              href: "/collection/abstract-art",
+              href: "/collection/abstract-art?metric=in",
+            },
+            {
+              text: "Minimalist Art",
+              href: "/collection/minimalism",
             },
             {
               text: "Pop Art",
               href: "/collection/pop-art",
             },
             {
-              text: "Minimalism",
-              href: "/collection/minimalism",
+              text: "Impressionist and Modern Art",
+              href: "/collection/impressionist-and-modern?metric=in",
             },
             {
-              text: "Impressionist and Modern Art",
-              href: "/collection/impressionist-and-modern",
+              text: "Street Art",
+              href: "/collection/street-art",
             },
           ],
         },
@@ -212,31 +361,31 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Prints",
-              href: "/collection/prints",
+              href: "/collection/prints?metric=in",
             },
             {
               text: "Works on Paper",
-              href: "/collection/works-on-paper",
+              href: "/collection/works-on-paper?metric=in",
             },
             {
               text: "Photography",
-              href: "/collection/photography",
+              href: "/collection/photography?metric=in",
             },
             {
               text: "Sculpture",
-              href: "/collection/sculpture",
+              href: "/collection/sculpture?metric=in",
             },
             {
               text: "Ceramics",
               href: "/collection/ceramics",
             },
             {
-              text: "Design",
-              href: "/collection/design",
+              text: "Textile Art",
+              href: "/collection/textile-art?metric=in",
             },
             {
-              text: "NFTs",
-              href: "/collect?additional_gene_ids%5B0%5D=nft",
+              text: "Design Objects and Furniture",
+              href: "/collection/design?metric=in",
             },
           ],
         },
