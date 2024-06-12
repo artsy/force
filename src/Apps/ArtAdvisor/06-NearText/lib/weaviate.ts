@@ -1,5 +1,5 @@
 import _ from "lodash"
-import weaviate, { WeaviateClient } from "weaviate-ts-client"
+import weaviate, { WeaviateClient, generateUuid5 } from "weaviate-ts-client"
 
 let weaviateClient: WeaviateClient
 
@@ -63,4 +63,53 @@ export async function getArtworksForConcepts(
     .do()
 
   return data.Get[artworkClass]
+}
+
+type CreateUserArtworkCrossReferenceOptions = {
+  userId: string
+  artworkId: string
+  referenceProperty: "likedArtworks" | "dislikedArtworks"
+  artworkClass?: WeaviateArtworkClass
+}
+
+export async function createUserArtworkCrossReference(
+  options: CreateUserArtworkCrossReferenceOptions
+) {
+  const client = await getClient()
+
+  const { userId, artworkId, referenceProperty } = options
+  const artworkClass = options.artworkClass || "DiscoveryArtworks"
+
+  const response = await client.data
+    .referenceCreator()
+    .withClassName("DiscoveryUsers")
+    .withId(userId)
+    .withReferenceProperty(referenceProperty)
+    .withReference(
+      client.data
+        .referencePayloadBuilder()
+        .withClassName(artworkClass)
+        .withId(generateUuid5(artworkId))
+        .payload()
+    )
+    .do()
+
+  console.log("ROOP createUserArtworkCrossReference", { response })
+  return response
+}
+
+type DiscoveryUser = {
+  name: string
+  likedArtworks: string[]
+  dislikedArtworks: string[]
+}
+
+export async function getUser(userId) {
+  const client = await getClient()
+  const response = await client.data
+    .getterById()
+    .withClassName("DiscoveryUsers")
+    .withId(userId)
+    .do()
+  return response.properties as DiscoveryUser
 }

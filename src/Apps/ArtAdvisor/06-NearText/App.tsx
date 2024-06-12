@@ -31,6 +31,17 @@ export const App: FC = () => {
   const [artworks, setArtworks] = useState<any[]>([])
   const [concepts, setConcepts] = useState<string>("")
   const [conceptList, setConceptList] = useState<string[]>([])
+  const [test, setTest] = useState<any>()
+
+  useEffect(() => {
+    async function fetchTest() {
+      const res = await fetch("/api/advisor/6/test")
+      const data = await res.json()
+      return data
+    }
+
+    fetchTest().then(setTest)
+  }, [])
 
   useEffect(() => {
     async function fetchArtworks(concepts: string[]) {
@@ -57,6 +68,7 @@ export const App: FC = () => {
 
   return (
     <Box py={4}>
+      <pre>{JSON.stringify(test, null, 2)}</pre>
       {artworks.length > 0 ? (
         <Rail
           title="Recommended Works"
