@@ -25,7 +25,7 @@ import {
   AlertProviderPreviewQuery,
   PreviewSavedSearchAttributes,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
-import { Banner, useToasts } from "@artsy/palette"
+import { useToasts } from "@artsy/palette"
 import { t } from "i18next"
 import createLogger from "Utils/logger"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
@@ -135,10 +135,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     } catch (error) {
       dispatch({ type: "SET_IS_SUBMITTING", payload: false })
 
-      sendToast({
-        variant: "error",
-        message: t("common.errors.somethingWentWrong"),
-      })
+      setCreateAlertError(t("common.errors.somethingWentWrong"))
 
       console.error("Alert/useAlertContext", error)
       logger.error(error)
@@ -312,11 +309,6 @@ export const AlertProvider: FC<AlertProviderProps> = ({
             }}
           >
             <Steps />
-            {!!createAlertError && (
-              <Banner variant="error" dismissable>
-                {createAlertError}
-              </Banner>
-            )}
           </Modal>
         </>
       )}
