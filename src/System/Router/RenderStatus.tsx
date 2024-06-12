@@ -5,32 +5,24 @@ import { useSystemContext } from "System/useSystemContext"
 import { ErrorPage } from "Components/ErrorPage"
 import createLogger from "Utils/logger"
 import { NetworkTimeout } from "./NetworkTimeout"
-import { PageLoader } from "./PageLoader"
 import { AppShell } from "Apps/Components/AppShell"
 import { getENV } from "Utils/getENV"
 import { HttpError } from "found"
 
 import ElementsRenderer from "found/cjs/ElementsRenderer"
+import { PageLoadingBar } from "System/Router/PageLoadingBar"
 
 const logger = createLogger("Artsy/Router/Utils/RenderStatus")
+
+let isInitialized = false
 
 export const RenderPending = () => {
   return (
     <>
       <Renderer>{null}</Renderer>
 
-      <PageLoader
-        className="reactionPageLoader" // positional styling comes from Force body.styl
-        showBackground={false}
-        step={10} // speed of progress bar, randomized between 1/x to simulate variable progress
-        style={{
-          borderTop: "1px solid white",
-          position: "fixed",
-          left: 0,
-          top: -5,
-          zIndex: 1000,
-        }}
-      />
+      {/* Don't show loader on first SSR pass */}
+      {isInitialized && <PageLoadingBar loadingState="loading" key="loading" />}
 
       <NetworkTimeout />
     </>
@@ -38,10 +30,22 @@ export const RenderPending = () => {
 }
 
 export const RenderReady = ({ elements }: { elements: React.ReactNode }) => {
+  if (!isInitialized) {
+    setTimeout(() => {
+      isInitialized = true
+    }, 0)
+  }
+
   return (
-    <Renderer shouldUpdate>
-      <ElementsRenderer elements={elements} />
-    </Renderer>
+    <>
+      <Renderer shouldUpdate>
+        <ElementsRenderer elements={elements} />
+      </Renderer>
+
+      {isInitialized && (
+        <PageLoadingBar loadingState="complete" key="complete" />
+      )}
+    </>
   )
 }
 

@@ -2121,6 +2121,8 @@ type ArtistPartnerEdge {
 
   # A globally unique ID.
   id: ID!
+  image: Image
+  imageUrl: String
 
   # A type-specific ID.
   internalID: ID!
@@ -12559,6 +12561,9 @@ type Me implements Node {
     # Exclude artworks that have been purchased on Artsy and automatically added to the collection.
     excludePurchasedArtworks: Boolean = false
     first: Int
+
+    # Show only artworks from target supply artists
+    includeOnlyTargetSupply: Boolean = false
     last: Int
     page: Int
     size: Int
@@ -14692,6 +14697,8 @@ type PartnerArtist {
 
   # A globally unique ID.
   id: ID!
+  image: Image
+  imageUrl: String
 
   # A type-specific ID.
   internalID: ID!
@@ -14784,6 +14791,8 @@ type PartnerArtistEdge {
 
   # A globally unique ID.
   id: ID!
+  image: Image
+  imageUrl: String
 
   # A type-specific ID.
   internalID: ID!
