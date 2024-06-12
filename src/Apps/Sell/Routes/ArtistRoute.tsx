@@ -7,12 +7,12 @@ import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { RouterLink } from "System/Router/RouterLink"
+import { useRouter } from "System/Router/useRouter"
 import {
   ArtistRoute_submission$data,
   ArtistRoute_submission$key,
 } from "__generated__/ArtistRoute_submission.graphql"
 import { Formik, FormikProps } from "formik"
-import { useRouter } from "found"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
@@ -60,7 +60,7 @@ export const ArtistRoute: React.FC<{
 
   const isNewSubmission = !submission?.internalID
 
-  const onSubmit = async (values: FormValues) => {}
+  const onSubmit = async () => {}
 
   const createSubmission = async (artist: AutocompleteArtist) => {
     if (!artist?.internalID) return

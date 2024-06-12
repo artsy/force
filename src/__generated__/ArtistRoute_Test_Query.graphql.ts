@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ea665ef4b9e6c21a89b77535eaa408bc>>
+ * @generated SignedSource<<6cb9245d5474663f1217a8dd9a546cbe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,7 +41,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "example"
+    "value": "submission-id"
   }
 ],
 v1 = {
@@ -79,7 +79,7 @@ return {
             "name": "ArtistRoute_submission"
           }
         ],
-        "storageKey": "submission(id:\"example\")"
+        "storageKey": "submission(id:\"submission-id\")"
       }
     ],
     "type": "Query",
@@ -140,21 +140,21 @@ return {
           },
           (v2/*: any*/)
         ],
-        "storageKey": "submission(id:\"example\")"
+        "storageKey": "submission(id:\"submission-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "015429ae5b5dc1e2325217076eb15209",
+    "cacheID": "02f33048eaad2ecc9b66d4105804f148",
     "id": null,
     "metadata": {},
     "name": "ArtistRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistRoute_Test_Query {\n  submission(id: \"example\") {\n    ...ArtistRoute_submission\n    id\n  }\n}\n\nfragment ArtistRoute_submission on ConsignmentSubmission {\n  internalID\n  artist {\n    internalID\n    targetSupply {\n      isTargetSupply\n    }\n    name\n    id\n  }\n}\n"
+    "text": "query ArtistRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ArtistRoute_submission\n    id\n  }\n}\n\nfragment ArtistRoute_submission on ConsignmentSubmission {\n  internalID\n  artist {\n    internalID\n    targetSupply {\n      isTargetSupply\n    }\n    name\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e29ccfe5ac54835327285ebe91fb9213";
+(node as any).hash = "4dfa674c44131bf1825354211b1d8642";
 
 export default node;
