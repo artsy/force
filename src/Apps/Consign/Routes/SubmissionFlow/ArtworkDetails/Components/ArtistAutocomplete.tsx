@@ -171,11 +171,9 @@ export const ArtistAutoComplete: React.FC<{
           ) : (
             <Box width={44} height={44} backgroundColor="black10" />
           )}
-          <Flex flexDirection={"column"}>
-            <Text ml={1} variant="sm-display">
-              {option.text}
-            </Text>
-            <Text ml={1} lineHeight={1.5} variant="sm-display" color="black60">
+          <Flex ml={1} flexDirection="column">
+            <Text variant="sm-display">{option.text}</Text>
+            <Text lineHeight={1.5} variant="sm-display" color="black60">
               {option.option?.formattedNationalityAndBirthday}
             </Text>
           </Flex>
