@@ -1,6 +1,7 @@
 import styled, { keyframes, css } from "styled-components"
 import { useState, useEffect, useRef } from "react"
 import { Box } from "@artsy/palette"
+import { isServer } from "Server/isServer"
 
 interface PageLoadingBarProps {
   loadingState: "resting" | "loading" | "complete"
@@ -23,6 +24,10 @@ export const PageLoadingBar: React.FC<PageLoadingBarProps> = ({
       setLoading(loadingState)
     }
   }, [loadingState])
+
+  if (isServer) {
+    return null
+  }
 
   return (
     <LoadingBar
