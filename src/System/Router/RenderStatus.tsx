@@ -14,12 +14,15 @@ import { PageLoadingBar } from "System/Router/PageLoadingBar"
 
 const logger = createLogger("Artsy/Router/Utils/RenderStatus")
 
+let isInitialized = false
+
 export const RenderPending = () => {
   return (
     <>
       <Renderer>{null}</Renderer>
 
-      <PageLoadingBar loadingState="loading" key="loading" />
+      {/* Don't show loader on first SSR pass */}
+      {isInitialized && <PageLoadingBar loadingState="loading" key="loading" />}
 
       <NetworkTimeout />
     </>
@@ -27,13 +30,21 @@ export const RenderPending = () => {
 }
 
 export const RenderReady = ({ elements }: { elements: React.ReactNode }) => {
+  if (!isInitialized) {
+    setTimeout(() => {
+      isInitialized = true
+    }, 0)
+  }
+
   return (
     <>
       <Renderer shouldUpdate>
         <ElementsRenderer elements={elements} />
       </Renderer>
 
-      <PageLoadingBar loadingState="complete" key="complete" />
+      {isInitialized && (
+        <PageLoadingBar loadingState="complete" key="complete" />
+      )}
     </>
   )
 }

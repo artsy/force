@@ -64,7 +64,7 @@ const LoadingBar = styled(Box)<{ loading: string; isComplete: boolean }>`
   ${({ loading }) =>
     loading === "loading" &&
     css`
-      animation: ${loadingAnimation} 1s ${easeOutExpo} forwards;
+      animation: ${loadingAnimation} 0.7s ${easeOutExpo} forwards;
     `}
   ${({ isComplete }) =>
     isComplete &&
@@ -72,5 +72,5 @@ const LoadingBar = styled(Box)<{ loading: string; isComplete: boolean }>`
       animation: ${completeAnimation} 1s ${easeOutExpo} forwards;
     `}
   opacity: ${({ isComplete }) => (isComplete ? 0 : 1)};
-  transition: opacity 0.4s;
+  transition: opacity .8s;
 `
