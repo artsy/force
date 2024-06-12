@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<def3125fd74c9eba5e3a849ddda1969c>>
+ * @generated SignedSource<<44006e480731cee99b725b0e2f1a3ffc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -278,6 +278,13 @@ return {
                                 "kind": "ScalarField",
                                 "name": "isP1",
                                 "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "isTargetSupply",
+                                "storageKey": null
                               }
                             ],
                             "storageKey": null
@@ -302,12 +309,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6654ef47b6eaedd447f319be410b23bc",
+    "cacheID": "1d8fbe98ce640277f0dc20c7d942ef52",
     "id": null,
     "metadata": {},
     "name": "MyCollectionCreateArtworkTest_Query",
     "operationKind": "query",
-    "text": "query MyCollectionCreateArtworkTest_Query {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100, includePersonalArtists: true) {\n      edges {\n        node {\n          ...EntityHeaderArtist_artist\n          counts {\n            artworks\n          }\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          targetSupply {\n            isP1\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
+    "text": "query MyCollectionCreateArtworkTest_Query {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100, includePersonalArtists: true) {\n      edges {\n        node {\n          ...EntityHeaderArtist_artist\n          counts {\n            artworks\n          }\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          targetSupply {\n            isP1\n            isTargetSupply\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
   }
 };
 })();

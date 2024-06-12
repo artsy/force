@@ -13,10 +13,10 @@ import {
   Spacer,
   Text,
   useToasts,
-  THEME,
+  useTheme,
 } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { FC, useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
@@ -26,8 +26,13 @@ import { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSid
 import { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
 import { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
 import { useTracking } from "react-tracking"
-import { ContextModule, Intent } from "@artsy/cohesion"
-import currency from "currency.js"
+import {
+  ActionType,
+  ClickedBuyNow,
+  ContextModule,
+  Intent,
+  OwnerType,
+} from "@artsy/cohesion"
 import { useTranslation } from "react-i18next"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useRouter } from "System/Router/useRouter"
@@ -36,10 +41,10 @@ import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton
 import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTimer } from "Utils/Hooks/useTimer"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { ResponsiveValue } from "styled-system"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
@@ -55,17 +60,14 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   showButtonActions = true,
   ...props
 }) => {
+  const { theme } = useTheme()
+
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
 
-  const partnerOfferVisibilityEnabled = useFeatureFlag(
-    "emerald_partner-offers-to-artwork-page"
-  )
-
   // Get the first not-ended partner offer, if available
   const partnerOffer =
-    (partnerOfferVisibilityEnabled &&
-      me?.partnerOffersConnection &&
+    (me?.partnerOffersConnection &&
       extractNodes(me.partnerOffersConnection)[0]) ||
     null
 
@@ -128,6 +130,16 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const handleCreatePartnerOfferOrder = async () => {
+    const event: ClickedBuyNow = {
+      action: ActionType.clickedBuyNow,
+      context_owner_type: OwnerType.artwork,
+      context_owner_id: artwork.internalID,
+      context_owner_slug: artwork.slug,
+      flow: "Partner offer",
+    }
+
+    tracking.trackEvent(event)
+
     if (!activePartnerOffer?.internalID) {
       throw new ErrorWithMetadata(
         "handleCreatePartnerOfferOrder: no active partner offer"
@@ -173,20 +185,16 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const handleCreateOrder = async () => {
-    tracking.trackEvent({
-      action_type: DeprecatedSchema.ActionType.ClickedBuyNow,
-      flow: DeprecatedSchema.Flow.BuyNow,
-      type: DeprecatedSchema.Type.Button,
-      artwork_id: artwork.internalID,
-      artwork_slug: artwork.slug,
-      products: [
-        {
-          product_id: artwork.internalID,
-          quantity: 1,
-          price: currency(artwork?.listPrice?.display ?? "").value,
-        },
-      ],
-    })
+    const event: ClickedBuyNow = {
+      action: ActionType.clickedBuyNow,
+      context_owner_type: OwnerType.artwork,
+      context_owner_id: artwork.internalID,
+      context_owner_slug: artwork.slug,
+      flow: "Buy now",
+    }
+
+    tracking.trackEvent(event)
+
     if (!!user?.id) {
       try {
         setIsCommitingCreateOrderMutation(true)
@@ -257,6 +265,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
             input: {
               artworkId: artwork.internalID,
               editionSetId: selectedEditionSet?.internalID,
+              partnerOfferId: activePartnerOffer?.internalID,
             },
           },
         })
@@ -318,25 +327,23 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   const [selectedEditionSet, setSelectedEditionSet] = useState(
     firstAvailableEcommerceEditionSet()
   )
+  const {
+    setSelectedEditionSet: setSelectedEditionSetInContext,
+  } = useSelectedEditionSetContext()
 
   useEffect(() => {
     setSelectedEditionSet(firstAvailableEcommerceEditionSet())
-  }, [artwork.editionSets, firstAvailableEcommerceEditionSet])
+    setSelectedEditionSetInContext(
+      firstAvailableEcommerceEditionSet() as EditionSet
+    )
+  }, [
+    artwork.editionSets,
+    firstAvailableEcommerceEditionSet,
+    setSelectedEditionSetInContext,
+  ])
 
   const isCreateAlertAvailable =
     artwork.isEligibleToCreateAlert && artwork.isSold
-
-  const AlertSwitch: FC = () => {
-    if (!isCreateAlertAvailable) {
-      return null
-    }
-
-    return (
-      <ProgressiveOnboardingAlertCreateSimple>
-        <CreateAlertButton width="100%" size="large" />
-      </ProgressiveOnboardingAlertCreateSimple>
-    )
-  }
 
   const renderButtons: {
     buyNow?: ResponsiveValue<"primaryBlack" | "secondaryBlack">
@@ -357,54 +364,47 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
         : "primaryBlack"
   }
 
-  const SaleMessageOrOfferDisplay: FC = () => {
-    if (!showPrice) {
-      return null
-    }
-
-    return (
-      <>
-        {partnerOffer ? (
-          <OfferDisplay
-            originalPrice={artwork.priceListedDisplay}
-            offerPrice={partnerOffer.priceWithDiscount?.display}
-            endAt={partnerOffer.endAt}
-            isAvailable={partnerOffer.isAvailable}
-          />
-        ) : (
-          <>
-            <SaleMessage saleMessage={artwork.saleMessage} />
-            {!!isCreateAlertAvailable && <Spacer y={1} />}
-          </>
-        )}
-      </>
-    )
-  }
+  const hasEditions = (artwork?.editionSets?.length ?? 0) > 1
 
   return (
     <>
       {inquiryComponent}
 
-      {(artwork?.editionSets?.length ?? 0) < 2 ? (
-        <SaleMessageOrOfferDisplay />
-      ) : (
-        <>
-          <Separator />
-          <ArtworkSidebarEditionSetFragmentContainer
-            artwork={artwork}
-            selectedEditionSet={selectedEditionSet as EditionSet}
-            onSelectEditionSet={setSelectedEditionSet}
-          />
+      {showPrice &&
+        (hasEditions ? (
+          <>
+            <Separator />
+            <ArtworkSidebarEditionSetFragmentContainer
+              artwork={artwork}
+              selectedEditionSet={selectedEditionSet as EditionSet}
+              onSelectEditionSet={setSelectedEditionSet}
+            />
 
-          {!!selectedEditionSet && (
-            <>
-              <Separator />
-              <Spacer y={4} />
-              <SaleMessage saleMessage={selectedEditionSet.saleMessage} />
-            </>
-          )}
-        </>
-      )}
+            {!!selectedEditionSet && (
+              <>
+                <Separator />
+                <Spacer y={4} />
+                <SaleMessage saleMessage={selectedEditionSet.saleMessage} />
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {partnerOffer?.isAvailable ? (
+              <OfferDisplay
+                originalPrice={artwork.priceListedDisplay}
+                offerPrice={partnerOffer.priceWithDiscount?.display}
+                endAt={partnerOffer.endAt}
+                isAvailable={partnerOffer.isAvailable}
+              />
+            ) : (
+              <>
+                <SaleMessage saleMessage={artwork.saleMessage} />
+                {!!isCreateAlertAvailable && <Spacer y={1} />}
+              </>
+            )}
+          </>
+        ))}
 
       {showButtonActions && (
         <>
@@ -412,7 +412,12 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
 
           <Flex flexDirection={["column", "column", "column", "column", "row"]}>
             <Join separator={<Spacer x={1} y={1} />}>
-              <AlertSwitch />
+              {isCreateAlertAvailable && (
+                <ProgressiveOnboardingAlertCreateSimple>
+                  <CreateAlertButton width="100%" size="large" />
+                </ProgressiveOnboardingAlertCreateSimple>
+              )}
+
               {renderButtons.buyNow && (
                 <Button
                   variant={renderButtons.buyNow}
@@ -470,7 +475,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
                       width={30}
                       height={30}
                       style={{
-                        border: `1px solid ${THEME.colors.black30}`,
+                        border: `1px solid ${theme.colors.black30}`,
                       }}
                     />
                   </Box>
@@ -680,6 +685,10 @@ const ARTWORK_FRAGMENT = graphql`
       isAcquireable
       isOfferable
       saleMessage
+      dimensions {
+        in
+        cm
+      }
     }
     partner {
       profile {

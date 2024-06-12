@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6764862559290b0441c6130869201979>>
+ * @generated SignedSource<<2561f57903acda14f87a530fde0af19c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -73,6 +73,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "initials",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "icon",
@@ -80,26 +87,35 @@ return {
             "selections": [
               {
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "versions",
+                "storageKey": null
+              },
+              {
+                "alias": null,
                 "args": [
                   {
                     "kind": "Literal",
                     "name": "height",
-                    "value": 200
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "large_square"
+                    "value": 100
                   },
                   {
                     "kind": "Literal",
                     "name": "width",
-                    "value": 200
+                    "value": 100
                   }
                 ],
-                "concreteType": "ResizedImageUrl",
+                "concreteType": "CroppedImageUrl",
                 "kind": "LinkedField",
-                "name": "resized",
+                "name": "cropped",
                 "plural": false,
                 "selections": [
                   {
@@ -117,9 +133,16 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "resized(height:200,version:\"large_square\",width:200)"
+                "storageKey": "cropped(height:100,width:100)"
               }
             ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
             "storageKey": null
           },
           {
@@ -144,36 +167,27 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "profession",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "otherRelevantPositions",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "bio",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "createdAt",
+            "concreteType": "CollectorProfileType",
+            "kind": "LinkedField",
+            "name": "collectorProfile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isIdentityVerified",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "confirmedBuyerAt",
+                "storageKey": null
+              },
+              (v0/*: any*/)
+            ],
             "storageKey": null
           },
           (v0/*: any*/)
@@ -183,12 +197,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "297b97d004b7f53bd845e3cf95688b90",
+    "cacheID": "2b8f3d79904c5975d2aa8744024e5274",
     "id": null,
     "metadata": {},
     "name": "collectorProfileRoutes_CollectorProfileQuery",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_CollectorProfileQuery {\n  me {\n    ...CollectorProfileApp_me\n    id\n  }\n}\n\nfragment CollectorProfileApp_me on Me {\n  ...CollectorProfileHeader_me\n  name\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeaderInfo_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  otherRelevantPositions\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  ...CollectorProfileHeaderInfo_me\n  name\n  bio\n  createdAt\n}\n"
+    "text": "query collectorProfileRoutes_CollectorProfileQuery {\n  me {\n    ...CollectorProfileApp_me\n    id\n  }\n}\n\nfragment CollectorProfileApp_me on Me {\n  ...CollectorProfileHeader_me\n  name\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  name\n  initials\n  icon {\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n  location {\n    display\n    id\n  }\n  collectorProfile {\n    isIdentityVerified\n    confirmedBuyerAt\n    id\n  }\n}\n"
   }
 };
 })();

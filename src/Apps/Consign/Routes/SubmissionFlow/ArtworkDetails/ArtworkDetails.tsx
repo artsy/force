@@ -1,50 +1,53 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Button, Spacer, Text, useToasts } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
-import { Form, Formik } from "formik"
+import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import {
-  ArtworkDetailsForm,
-  ArtworkDetailsFormModel,
-  getArtworkDetailsFormInitialValues,
-  getArtworkDetailsFormInitialValuesProps,
-  SubmissionType,
-} from "./Components/ArtworkDetailsForm"
-import { useRouter } from "System/Router/useRouter"
+  SubmissionInput,
+  createOrUpdateConsignSubmission,
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import {
   artworkDetailsValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
+import { TopContextBar } from "Components/TopContextBar"
+import { trackEvent } from "Server/analytics/helpers"
+import { RouterLink } from "System/Router/RouterLink"
+import { useRouter } from "System/Router/useRouter"
 import { useSystemContext } from "System/useSystemContext"
-import {
-  createOrUpdateConsignSubmission,
-  SubmissionInput,
-} from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-import { createFragmentContainer, graphql } from "react-relay"
-import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import { getENV } from "Utils/getENV"
+import createLogger from "Utils/logger"
+import { ArtworkDetails_me$data } from "__generated__/ArtworkDetails_me.graphql"
+import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import {
   ArtworkDetails_submission$data,
   ConsignmentAttributionClass,
 } from "__generated__/ArtworkDetails_submission.graphql"
-import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
-import { getENV } from "Utils/getENV"
-import createLogger from "Utils/logger"
-import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
+import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import { Form, Formik } from "formik"
 import { LocationDescriptor } from "found"
-import { trackEvent } from "Server/analytics/helpers"
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
-import { TopContextBar } from "Components/TopContextBar"
-import { RouterLink } from "System/Router/RouterLink"
+import { createFragmentContainer, graphql } from "react-relay"
+import {
+  ArtworkDetailsForm,
+  ArtworkDetailsFormModel,
+  SubmissionType,
+  getArtworkDetailsFormInitialValues,
+  getArtworkDetailsFormInitialValuesProps,
+} from "./Components/ArtworkDetailsForm"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission$data
   myCollectionArtwork?: ArtworkDetails_myCollectionArtwork$data
+  me?: ArtworkDetails_me$data
 }
 
 export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   submission,
   myCollectionArtwork,
+  me,
 }) => {
   const { router, match } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
@@ -63,11 +66,11 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   }
   if (myCollectionArtwork) {
     data = {
-      values: myCollectionArtwork!,
+      values: myCollectionArtwork,
       type: SubmissionType.myCollectionArtwork,
     }
   } else if (submission) {
-    data = { values: submission!, type: SubmissionType.submission }
+    data = { values: submission, type: SubmissionType.submission }
   }
 
   const initialValue = getArtworkDetailsFormInitialValues(data)
@@ -83,6 +86,9 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       ...values,
       editionNumber: isLimitedEditionRarity ? values.editionNumber : "",
       editionSize: isLimitedEditionRarity ? values.editionSize : "",
+      userName: me?.name,
+      userEmail: me?.email,
+      userPhone: me?.phoneNumber?.originalNumber,
     }
 
     for (let key in artworkDetailsForm) {
@@ -110,8 +116,10 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         title: artworkDetailsForm.title,
         medium: artworkDetailsForm.materials,
         attributionClass: artworkDetailsForm.rarity
-          .replace(" ", "_")
-          .toUpperCase() as ConsignmentAttributionClass,
+          ? (artworkDetailsForm.rarity
+              .replace(" ", "_")
+              .toUpperCase() as ConsignmentAttributionClass)
+          : null,
         editionNumber: artworkDetailsForm.editionNumber,
         editionSizeFormatted: artworkDetailsForm.editionSize,
         height: artworkDetailsForm.height,
@@ -119,7 +127,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         depth: artworkDetailsForm.depth,
         dimensionsMetric: artworkDetailsForm.units,
         provenance: artworkDetailsForm.provenance,
-        locationCity: artworkDetailsForm.location.city.trim(),
+        locationCity: artworkDetailsForm.location.city?.trim(),
         locationCountry: artworkDetailsForm.location.country?.trim(),
         locationState: artworkDetailsForm.location.state?.trim(),
         locationCountryCode: artworkDetailsForm.location.countryCode?.trim(),
@@ -170,6 +178,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         submission_id: submissionId,
         user_id: submission?.userId,
         user_email: submission?.userEmail,
+        fieldsProvided: [artworkDetailsForm.height, artworkDetailsForm.width],
       })
 
       router.replace(artworkId ? "/collector-profile/my-collection" : "/sell")
@@ -182,10 +191,8 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       let nextRoute: LocationDescriptor = consignPath
       if (nextStepIndex !== null) {
         let nextStep = steps[nextStepIndex]
-        if (nextStep === "Contact" || nextStep === "Contact Information") {
-          nextRoute = `${consignPath}/${submissionId}/contact-information`
-        } else if (nextStep === "Artwork" || nextStep === "Artwork Details") {
-          nextRoute = `${consignPath}/${submissionId}/artwork-details/`
+        if (nextStep === "Artwork" || nextStep === "Artwork Details") {
+          nextRoute = `${consignPath}/${submissionId}`
         } else if (nextStep === "Photos" || nextStep === "Upload Photos") {
           nextRoute = `${consignPath}/${submissionId}/upload-photos`
         }
@@ -206,20 +213,12 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   }
 
   const deriveBackLinkTo = () => {
-    const defaultBackLink = artworkId
-      ? "/collector-profile/my-collection"
-      : "/sell"
+    const defaultBackLink = "/sell"
     let backTo = defaultBackLink
-    if (isFirstStep && artworkId) {
-      return backTo + `/artwork/${artworkId}`
-    }
+
     let prevStep = ""
     if (stepIndex > 0) {
       switch (steps[stepIndex - 1]) {
-        case "Contact":
-        case "Contact Information":
-          prevStep = "contact-information"
-          break
         case "Upload Photos":
         case "Photos":
           prevStep = "upload-photos"
@@ -242,11 +241,12 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
   return (
     <>
-      <TopContextBar displayBackArrow hideSeparator href={backTo}>
-        Back
-      </TopContextBar>
-
-      <Spacer y={6} />
+      {!isFirstStep && (
+        <TopContextBar displayBackArrow hideSeparator href={backTo}>
+          Back
+        </TopContextBar>
+      )}
+      <Spacer y={12} />
 
       <SubmissionStepper currentStep="Artwork Details" />
 
@@ -276,23 +276,25 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         validationSchema={artworkDetailsValidationSchema}
         initialErrors={initialErrors}
       >
-        {({ isSubmitting, isValid }) => (
-          <Form>
-            <ArtworkDetailsForm />
-            <Button
-              mt={6}
-              width={["100%", "auto"]}
-              data-testid="save-button"
-              type="submit"
-              size="large"
-              variant="primaryBlack"
-              loading={isSubmitting}
-              disabled={!isValid}
-            >
-              {isLastStep ? "Submit Artwork" : "Save and Continue"}
-            </Button>
-          </Form>
-        )}
+        {({ isSubmitting, isValid }) => {
+          return (
+            <Form>
+              <ArtworkDetailsForm />
+              <Button
+                mt={6}
+                width={["100%", "auto"]}
+                data-testid="save-button"
+                type="submit"
+                size="large"
+                variant="primaryBlack"
+                loading={isSubmitting}
+                disabled={!isValid}
+              >
+                {isLastStep ? "Submit Artwork" : "Save and Continue"}
+              </Button>
+            </Form>
+          )
+        }}
       </Formik>
     </>
   )
@@ -358,6 +360,16 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         depth
         metric
         provenance
+      }
+    `,
+    me: graphql`
+      fragment ArtworkDetails_me on Me {
+        name
+        email
+        phoneNumber {
+          isValid
+          originalNumber
+        }
       }
     `,
   }

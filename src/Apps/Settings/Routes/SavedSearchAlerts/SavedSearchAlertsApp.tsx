@@ -5,8 +5,10 @@ import {
   Box,
   Join,
   useToasts,
+  Button,
   Flex,
-  Spinner,
+  FullBleed,
+  Stack,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -15,7 +17,7 @@ import {
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { SavedSearchAlertsApp_me$data } from "__generated__/SavedSearchAlertsApp_me.graphql"
 import { Media } from "Utils/Responsive"
 import { EditAlertEntity } from "./types"
@@ -36,14 +38,8 @@ import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlert
 import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { getENV } from "Utils/getENV"
-import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
-import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
-
-const SETTINGS_NAVIGATION_BAR_HEIGHT = 300
-export const ALERTS_APP_DESKTOP_HEIGHT = `calc(100vh - ${
-  DESKTOP_NAV_BAR_HEIGHT + SETTINGS_NAVIGATION_BAR_HEIGHT
-}px)`
+import { Jump } from "Utils/Hooks/useJump"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -64,6 +60,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const { match, silentPush } = useRouter()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [sort, setSort] = useState("ENABLED_AT_DESC")
+  const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.alertsConnection)
   const isMobile = getENV("IS_MOBILE")
 
@@ -85,9 +82,9 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
         artistIds: alerts[0]?.artistIDs as string[],
       })
       // the two following lines update the right colump and url when
-      // "/settings/alerts" is called from the tab of side menu
+      // "/favorites/alerts" is called from the tab of side menu
       setViewOption("EDIT")
-      silentPush(`/settings/alerts/${alerts[0].internalID}/edit`)
+      silentPush(`/favorites/alerts/${alerts[0].internalID}/edit`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, match.params])
@@ -95,7 +92,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const closeModal = () => {
     setEditAlertEntity(null)
     setViewOption(null)
-    silentPush("/settings/alerts")
+    silentPush("/favorites/alerts")
   }
 
   const handleOpenEditForm = () => {
@@ -162,32 +159,36 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
         name: alerts[1].title ?? "",
         artistIds: alerts[1]?.artistIDs as string[],
       })
-      silentPush(`/settings/alerts/${alerts[1].internalID}/edit`)
+      silentPush(`/favorites/alerts/${alerts[1].internalID}/edit`)
     } else if (editAlertEntity?.id !== alerts[0].internalID) {
       setEditAlertEntity({
         id: alerts[0].internalID,
         name: alerts[0].title ?? "",
         artistIds: alerts[0]?.artistIDs as string[],
       })
-      silentPush(`/settings/alerts/${alerts[0].internalID}/edit`)
+      silentPush(`/favorites/alerts/${alerts[0].internalID}/edit`)
     } else {
       // if we deleted the last alert we display the screen's empty state
       setEditAlertEntity(null)
-      silentPush("/settings/alerts/")
+      silentPush("/favorites/alerts/")
     }
   }
 
-  const handleLoadMore = () => {
+  const handleLoadMore = useCallback(() => {
     if (!relay.hasMore() || relay.isLoading()) {
       return
     }
+
+    setLoading(true)
 
     relay.loadMore(10, err => {
       if (err) {
         console.error(err)
       }
+
+      setLoading(false)
     })
-  }
+  }, [relay])
 
   const handleSortSelect = (value: string) => {
     setSort(value)
@@ -236,97 +237,86 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
         if (path.includes("/artworks") || viewOption === "ARTWORKS") {
           setViewOption("ARTWORKS")
-          silentPush(`/settings/alerts/${alert.internalID}/artworks`)
+          silentPush(`/favorites/alerts/${alert.internalID}/artworks`)
         } else {
           setViewOption("EDIT")
-          silentPush(`/settings/alerts/${alert.internalID}/edit`)
+          silentPush(`/favorites/alerts/${alert.internalID}/edit`)
         }
       })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alertID, relayEnvironment])
 
-  const list = (
-    <Box
-      overflow="scroll"
-      // The notification list needs a maximum height to be independently scrollable.
-      maxHeight={[null, ALERTS_APP_DESKTOP_HEIGHT]}
-      pb={2}
-    >
-      <Join separator={<Separator borderColor="black5" />}>
-        {alerts.map(node => {
-          const isCurrentEdgeSelected = editAlertEntity?.id === node.internalID
-          let variant: SavedSearchAlertListItemVariant | undefined
+  const list = useMemo(
+    () => (
+      <>
+        <Join separator={<Separator borderColor="black5" />}>
+          {alerts.map(node => {
+            const isCurrentEdgeSelected =
+              editAlertEntity?.id === node.internalID
+            let variant: SavedSearchAlertListItemVariant | undefined
 
-          if (isCurrentEdgeSelected) {
-            variant = "active"
-          } else if (!!editAlertEntity) {
-            variant = "inactive"
-          }
+            if (isCurrentEdgeSelected) {
+              variant = "active"
+            } else if (!!editAlertEntity) {
+              variant = "inactive"
+            }
 
-          return (
-            <SavedSearchAlertListItemFragmentContainer
-              key={node.internalID}
-              item={node}
-              variant={variant}
-              onEditAlertClick={entity => {
-                setEditAlertEntity(entity)
-                setViewOption("EDIT")
-                silentPush(`/settings/alerts/${entity.id}/edit`)
-              }}
-              onViewArtworksClick={entity => {
-                setEditAlertEntity(entity)
-                setViewOption("ARTWORKS")
-                silentPush(`/settings/alerts/${entity.id}/artworks`)
-              }}
-            />
-          )
-        })}
-      </Join>
+            return (
+              <SavedSearchAlertListItemFragmentContainer
+                key={node.internalID}
+                item={node}
+                variant={variant}
+                onEditAlertClick={entity => {
+                  setEditAlertEntity(entity)
+                  setViewOption("EDIT")
+                  silentPush(`/favorites/alerts/${entity.id}/edit`)
+                }}
+                onViewArtworksClick={entity => {
+                  setEditAlertEntity(entity)
+                  setViewOption("ARTWORKS")
+                  silentPush(`/favorites/alerts/${entity.id}/artworks`)
+                }}
+              />
+            )
+          })}
+        </Join>
 
-      {relay.hasMore() && (
-        <>
-          <InfiniteScrollSentinel onNext={handleLoadMore} once={false} />
-
-          <Flex width="100%" my={4} alignItems="center">
-            <Spinner position="relative" />
-          </Flex>
-        </>
-      )}
-    </Box>
+        {relay.hasMore() && (
+          <Box textAlign="center" mt={4}>
+            <Button onClick={handleLoadMore} loading={loading}>
+              Show More
+            </Button>
+          </Box>
+        )}
+      </>
+    ),
+    [alerts, editAlertEntity, handleLoadMore, loading, relay, silentPush]
   )
 
   return (
     <>
-      <MetaTags title="Alerts | Artsy" pathname="/settings/alerts" />
+      <MetaTags title="Alerts | Artsy" pathname="/favorites/alerts" />
 
-      <Box mx={[-2, 0]}>
-        {alerts.length === 0 ? (
-          <SavedSearchAlertsEmptyResults />
-        ) : (
-          <>
+      {alerts.length === 0 ? (
+        <SavedSearchAlertsEmptyResults />
+      ) : (
+        <>
+          <Stack gap={2}>
             <SavedSearchAlertHeader
               selected={sort}
               onSortSelect={handleSortSelect}
             />
-            <Box mx={-4}>
+
+            <FullBleed>
+              <Jump id="Alerts" />
+
               <Separator color="black15" />
 
               <Media greaterThanOrEqual="md">
                 <GridColumns gridColumnGap={0}>
-                  <Column span={6}>
-                    <Flex
-                      height={ALERTS_APP_DESKTOP_HEIGHT}
-                      flexDirection="column"
-                    >
-                      <Flex
-                        overflow="hidden"
-                        maxHeight={ALERTS_APP_DESKTOP_HEIGHT}
-                        flexDirection="column"
-                      >
-                        {list}
-                      </Flex>
-                    </Flex>
+                  <Column span={6} pb={4}>
+                    {list}
                   </Column>
 
                   <Column
@@ -334,11 +324,9 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                     borderLeft="1px solid"
                     borderLeftColor="black15"
                     borderRightColor="black15"
-                    minHeight={ALERTS_APP_DESKTOP_HEIGHT}
                   >
                     <Flex
                       flexDirection="column"
-                      height={ALERTS_APP_DESKTOP_HEIGHT}
                       overflow="auto"
                       paddingBottom={2}
                     >
@@ -349,6 +337,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                           onDeleteClick={handleDeleteClick}
                         />
                       )}
+
                       {viewOption === "ARTWORKS" && editAlertEntity && (
                         <SavedSearchAlertsArtworksQueryRenderer
                           editAlertEntity={editAlertEntity}
@@ -358,39 +347,40 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                     </Flex>
                   </Column>
                 </GridColumns>
-
-                <Box id="content-end" />
               </Media>
-            </Box>
-            <Media lessThan="md">
-              {list}
-              {viewOption === "EDIT" && editAlertEntity && (
-                <SavedSearchAlertEditFormQueryRenderer
-                  editAlertEntity={editAlertEntity}
-                  onCloseClick={closeModal}
-                  onCompleted={handleCompleted}
-                  onDeleteClick={handleDeleteClick}
-                />
-              )}
-              {viewOption === "ARTWORKS" && editAlertEntity && (
-                <SavedSearchAlertsArtworksQueryRenderer
-                  editAlertEntity={editAlertEntity}
-                  onCloseClick={closeModal}
-                  onEditAlertClick={handleOpenEditForm}
-                />
-              )}
-            </Media>
 
-            {showDeleteModal && editAlertEntity && (
-              <SavedSearchAlertDeleteModal
-                id={editAlertEntity.id}
-                onCloseClick={closeDeleteModal}
-                onDeleted={handleDeleted}
-              />
-            )}
-          </>
-        )}
-      </Box>
+              <Media lessThan="md">
+                <Box pb={4}>{list}</Box>
+
+                {viewOption === "EDIT" && editAlertEntity && (
+                  <SavedSearchAlertEditFormQueryRenderer
+                    editAlertEntity={editAlertEntity}
+                    onCloseClick={closeModal}
+                    onCompleted={handleCompleted}
+                    onDeleteClick={handleDeleteClick}
+                  />
+                )}
+
+                {viewOption === "ARTWORKS" && editAlertEntity && (
+                  <SavedSearchAlertsArtworksQueryRenderer
+                    editAlertEntity={editAlertEntity}
+                    onCloseClick={closeModal}
+                    onEditAlertClick={handleOpenEditForm}
+                  />
+                )}
+              </Media>
+            </FullBleed>
+          </Stack>
+
+          {showDeleteModal && editAlertEntity && (
+            <SavedSearchAlertDeleteModal
+              id={editAlertEntity.id}
+              onCloseClick={closeDeleteModal}
+              onDeleted={handleDeleted}
+            />
+          )}
+        </>
+      )}
     </>
   )
 }

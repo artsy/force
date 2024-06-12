@@ -5,7 +5,6 @@ import { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_a
 import { ArtworkPageBanner_me$key } from "__generated__/ArtworkPageBanner_me.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 
@@ -18,13 +17,9 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
   const me = useFragment(ME_FRAGMENT, props.me)
   const { match } = useRouter()
 
-  const partnerOfferVisibilityEnabled = useFeatureFlag(
-    "emerald_partner-offers-to-artwork-page"
-  )
-
-  const expectedPartnerOfferID = partnerOfferVisibilityEnabled
-    ? (match?.location?.query?.partner_offer_id as string | undefined)
-    : undefined
+  const expectedPartnerOfferID = match?.location?.query?.partner_offer_id as
+    | string
+    | undefined
 
   const partnerOffer = expectedPartnerOfferID
     ? extractNodes(me?.partnerOffersConnection)[0]

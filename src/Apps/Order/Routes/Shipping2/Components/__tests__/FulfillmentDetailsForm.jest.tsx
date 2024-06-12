@@ -40,6 +40,7 @@ jest.mock("react-tracking")
 
 const mockOnSubmit = jest.fn()
 const mockOnAddressVerificationComplete = jest.fn()
+const mockScrollIntoView = jest.fn()
 let testProps: DeepPartial<FulfillmentDetailsFormProps>
 let mockShippingContext: ShippingContextProps
 
@@ -106,6 +107,8 @@ beforeEach(() => {
       shippingFormMode: "saved_addresses",
     },
   } as unknown) as ShippingContextProps
+
+  HTMLElement.prototype.scrollIntoView = mockScrollIntoView
 })
 
 const addressFormErrors = {
@@ -147,19 +150,17 @@ describe("FulfillmentDetailsForm", () => {
       ).toBeVisible()
     })
 
-    it("has name and phone number fields", async () => {
+    it("has phone number field", async () => {
       renderTree(testProps)
 
       await userEvent.click(
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
 
-      const fullNameField = await screen.findByPlaceholderText("Full name")
       const phoneNumberField = await screen.findByPlaceholderText(
         "Add phone number including country code"
       )
 
-      expect(fullNameField).toBeVisible()
       expect(phoneNumberField).toBeVisible()
       expect(
         screen.getByText("Required for pickup logistics")
@@ -184,11 +185,7 @@ describe("FulfillmentDetailsForm", () => {
       await flushPromiseQueue()
 
       await waitFor(() => {
-        ;["Full name is required", "Phone number is required"].forEach(
-          error => {
-            expect(screen.getByText(error)).toBeInTheDocument()
-          }
-        )
+        expect(screen.getByText("Phone number is required")).toBeInTheDocument()
       })
 
       expect(mockOnSubmit).not.toHaveBeenCalled()
@@ -199,12 +196,10 @@ describe("FulfillmentDetailsForm", () => {
       await userEvent.click(
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
-      const fullNameField = await screen.findByPlaceholderText("Full name")
       const phoneNumberField = await screen.findByPlaceholderText(
         "Add phone number including country code"
       )
 
-      await userEvent.type(fullNameField, "John Doe")
       await userEvent.type(phoneNumberField, "1234567890")
 
       // we have to submit the form manually because its submit button is on the shipping route main screen
@@ -214,7 +209,7 @@ describe("FulfillmentDetailsForm", () => {
           {
             fulfillmentType: "PICKUP",
             attributes: {
-              name: "John Doe",
+              name: "",
               phoneNumber: "1234567890",
               city: "",
               region: "",
@@ -238,7 +233,6 @@ describe("FulfillmentDetailsForm", () => {
 
       // we have to submit the form manually because its submit button is on the shipping route main screen
       await submitForm()
-      await screen.findByText("Full name is required")
       await screen.findByText("Phone number is required")
       expect(mockOnSubmit).not.toHaveBeenCalled()
     })

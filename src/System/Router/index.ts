@@ -1,8 +1,8 @@
-import { FarceCreateRouterArgs } from "found"
 import { SystemContextProps } from "System/SystemContext"
 import { AppRouteConfig } from "./Route"
 import { FeatureFlags } from "Server/featureFlags/featureFlagService"
 import { Environment } from "react-relay"
+import { HistoryEnhancerOptions } from "farce"
 
 /**
  * Configuration used when creating a new Router app
@@ -22,7 +22,7 @@ export interface RouterConfig {
      */
     protocol?: "browser" | "hash" | "memory"
 
-    options?: FarceCreateRouterArgs["historyOptions"]
+    options?: HistoryEnhancerOptions
   }
 
   /**

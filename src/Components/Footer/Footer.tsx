@@ -29,10 +29,16 @@ import SpotifyIcon from "@artsy/icons/SpotifyIcon"
 import { useSystemContext } from "System/useSystemContext"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
+import { themeGet } from "@styled-system/theme-get"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
+  const isDarkModeEnabled = useFeatureFlag("diamond_dark-mode")
+
   const { isEigen } = useSystemContext()
 
   if (isEigen) {
@@ -169,6 +175,12 @@ export const Footer: React.FC<FooterProps> = props => {
           <Column span={12} display={["flex", "none"]} flexWrap="wrap">
             <PolicyLinks />
           </Column>
+
+          {isDarkModeEnabled && (
+            <Column span={12} display={["flex", "none"]}>
+              <ThemeSelect />
+            </Column>
+          )}
         </GridColumns>
 
         <Separator />
@@ -192,8 +204,16 @@ export const Footer: React.FC<FooterProps> = props => {
                 <ArtsyMarkIcon title="Artsy" width={30} height={30} mr={2} />
               </Flex>
 
-              <Flex flexDirection="row">
+              <Flex flexDirection="row" flexGrow={1}>
                 <PolicyLinks />
+
+                {isDarkModeEnabled && (
+                  <>
+                    <Spacer x={1} />
+
+                    <ThemeSelect />
+                  </>
+                )}
               </Flex>
             </Flex>
           </Media>
@@ -207,7 +227,12 @@ export const Footer: React.FC<FooterProps> = props => {
                     width={100}
                     height={100}
                     alt="Artsy WeChat QR code"
-                    style={{ display: "block" }}
+                    style={{
+                      display: "block",
+                      // We are intentionally setting non-themed white background
+                      // to provide contrast for the QR code
+                      backgroundColor: "white",
+                    }}
                     m={1}
                   />
                 }
@@ -274,6 +299,83 @@ export const Footer: React.FC<FooterProps> = props => {
     </Box>
   )
 }
+
+const ThemeSelect: React.FC = () => {
+  const { preferences, updatePreferences } = useDarkModeToggle({
+    attachKeyListeners: false,
+  })
+
+  return (
+    <>
+      <Dropdown
+        openDropdownByClick
+        // eslint-disable-next-line react/no-unstable-nested-components
+        dropdown={({ onHide }) => {
+          return (
+            <>
+              <ThemeSelectOption
+                as={Clickable}
+                onClick={() => {
+                  updatePreferences({ theme: "light" })
+                  onHide()
+                }}
+              >
+                {preferences.theme === "light" ? (
+                  <CheckmarkStrokeIcon />
+                ) : (
+                  <EmptyCheckCircleIcon />
+                )}
+                Default
+              </ThemeSelectOption>
+
+              <ThemeSelectOption
+                as={Clickable}
+                onClick={() => {
+                  updatePreferences({ theme: "dark" })
+                  onHide()
+                }}
+              >
+                {preferences.theme === "dark" ? (
+                  <CheckmarkStrokeIcon />
+                ) : (
+                  <EmptyCheckCircleIcon />
+                )}
+                Dark
+              </ThemeSelectOption>
+            </>
+          )
+        }}
+      >
+        {({ anchorRef, anchorProps }) => {
+          return (
+            <Clickable ref={anchorRef as any} {...anchorProps}>
+              <Text variant="xs" color="black60">
+                Theme
+              </Text>
+            </Clickable>
+          )
+        }}
+      </Dropdown>
+    </>
+  )
+}
+
+const ThemeSelectOption = styled(Text).attrs({
+  variant: "xs",
+  pl: 1,
+  pr: 1,
+  py: 0.5,
+  gap: 0.5,
+})`
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: 100%;
+
+  &:hover {
+    background-color: ${themeGet("colors.black5")};
+  }
+`
 
 const PolicyLinks = () => {
   const { CCPARequestComponent, showCCPARequest } = useCCPARequest()

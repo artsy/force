@@ -125,6 +125,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment FlatGridItem_artwork on Artwork
         @argumentDefinitions(
+          includeBlurHash: { type: "Boolean", defaultValue: true }
           includeAllImages: { type: "Boolean", defaultValue: false }
         ) {
         ...Metadata_artwork
@@ -150,7 +151,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
             width
             height
           }
-          blurhashDataURL
+          blurhashDataURL @include(if: $includeBlurHash)
         }
         artistNames
         href

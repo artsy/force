@@ -5,9 +5,15 @@ import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
 import { useRecordArtworkViewMutation } from "__generated__/useRecordArtworkViewMutation.graphql"
 import { commitMutation } from "react-relay"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 
 export const useRecordArtworkView = () => {
-  const { relayEnvironment, isLoggedIn } = useSystemContext()
+  const { user, isLoggedIn } = useSystemContext()
+
+  // We instantiate a new Relay environment so that we can ensure client side
+  // cache is preserved. Since clicking artworks is so common, we don't want to
+  // blow away visit cache.
+  const relayEnvironment = createRelaySSREnvironment({ user })
 
   const {
     match: {

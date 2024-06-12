@@ -26,11 +26,13 @@ import { useConversationPurchaseButtonData_conversation$key } from "__generated_
 interface ConversationConfirmModalProps {
   artwork: ConversationConfirmModal_artwork$key
   conversation: useConversationPurchaseButtonData_conversation$key
+  partnerOffer: { internalID: string } | null
 }
 
 export const ConversationConfirmModal: React.FC<ConversationConfirmModalProps> = ({
   artwork,
   conversation,
+  partnerOffer,
 }) => {
   const data = useFragment(FRAGMENT, artwork)
 
@@ -85,7 +87,10 @@ export const ConversationConfirmModal: React.FC<ConversationConfirmModalProps> =
           {isCreatingOfferOrder ? (
             <ConversationMakeOfferButton conversation={conversation} />
           ) : (
-            <ConversationPurchaseButton conversation={conversation} />
+            <ConversationPurchaseButton
+              conversation={conversation}
+              partnerOffer={partnerOffer}
+            />
           )}
         </Flex>
       }

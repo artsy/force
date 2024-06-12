@@ -16,7 +16,7 @@ import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser/ArtworkImageBrowser"
-import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
+import { ArtworkMeta } from "./Components/ArtworkMeta"
 import { ArtworkRelatedArtistsQueryRenderer } from "./Components/ArtworkRelatedArtists"
 import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
@@ -41,11 +41,11 @@ import { compact } from "lodash"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkResult.graphql"
 import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorApp"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { PrivateArtworkDetails } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkDetails"
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 import { useAuthDialog } from "Components/AuthDialog"
 import { ContextModule } from "@artsy/cohesion"
+import { SelectedEditionSetProvider } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -93,10 +93,6 @@ export const ArtworkApp: React.FC<Props> = props => {
   const { match, silentPush, silentReplace } = useRouter()
   const { showAuthDialog } = useAuthDialog()
 
-  const privateArtworksEnabled = useFeatureFlag(
-    "amber_artwork_visibility_unlisted"
-  )
-
   // If the user is expecting a partner offer, require login and remove
   // the query param from the URL after login.
   useEffect(() => {
@@ -128,13 +124,16 @@ export const ArtworkApp: React.FC<Props> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const isPrivateArtwork =
-    privateArtworksEnabled &&
-    artwork?.visibilityLevel == "UNLISTED" &&
-    artwork?.partner
+  const isPrivateArtwork = artwork?.isUnlisted && artwork?.partner
 
   const trackPageview = useCallback(() => {
-    const { listPrice, availability, isOfferable, isAcquireable } = artwork
+    const {
+      listPrice,
+      availability,
+      isOfferable,
+      isAcquireable,
+      visibilityLevel,
+    } = artwork
     const path = window.location.pathname
 
     if (typeof window.analytics !== "undefined") {
@@ -144,6 +143,7 @@ export const ArtworkApp: React.FC<Props> = props => {
         offerable: isOfferable,
         path,
         price_listed: !!listPrice,
+        visibility_level: visibilityLevel,
         url: getENV("APP_URL") + path,
       }
 
@@ -243,11 +243,11 @@ export const ArtworkApp: React.FC<Props> = props => {
   }
 
   return (
-    <>
+    <SelectedEditionSetProvider>
       <UseRecordArtworkView />
       <ArtworkPageBanner artwork={artwork} me={me} />
 
-      <ArtworkMetaFragmentContainer artwork={artwork} />
+      <ArtworkMeta artwork={artwork} />
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
       <ArtworkAuctionCreateAlertHeaderFragmentContainer artwork={artwork} />
       <GridColumns>
@@ -260,13 +260,13 @@ export const ArtworkApp: React.FC<Props> = props => {
           <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
           {isPrivateArtwork ? (
-            <>
+            <Media greaterThanOrEqual="sm">
               <Spacer y={6} />
 
               <PrivateArtworkDetails artwork={artwork} />
 
               <Spacer y={6} />
-            </>
+            </Media>
           ) : (
             <Media greaterThanOrEqual="sm">
               <BelowTheFoldArtworkDetails
@@ -280,6 +280,15 @@ export const ArtworkApp: React.FC<Props> = props => {
           <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
         </Column>
       </GridColumns>
+      {isPrivateArtwork && (
+        <Media lessThan="sm">
+          <Spacer y={6} />
+
+          <PrivateArtworkDetails artwork={artwork} />
+
+          <Spacer y={6} />
+        </Media>
+      )}
       {!isPrivateArtwork && (
         <>
           <Media lessThan="sm">
@@ -313,13 +322,12 @@ export const ArtworkApp: React.FC<Props> = props => {
           <Spacer y={6} />
 
           <RecentlyViewed />
-
-          {!!submittedOrderId && (
-            <SubmittedOrderModalQueryRenderer orderId={submittedOrderId} />
-          )}
         </>
       )}
-    </>
+      {!!submittedOrderId && (
+        <SubmittedOrderModalQueryRenderer orderId={submittedOrderId} />
+      )}
+    </SelectedEditionSetProvider>
   )
 }
 
@@ -407,6 +415,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
           }
         }
         visibilityLevel
+        isUnlisted
         # FIXME: The props in the component need to update to reflect
         # the new structure for price.
         listPrice {

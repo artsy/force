@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34e47c2d25b407bd706f60847b1dc37e>>
+ * @generated SignedSource<<76c98dbbe5016b7c03c171eb857ea729>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,19 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
+export type ArtworkSignatureTypeEnum = "HAND_SIGNED_BY_ARTIST" | "NOT_SIGNED" | "OTHER" | "SIGNED_IN_PLATE" | "STAMPED_BY_ARTIST_ESTATE" | "STICKER_LABEL" | "%future added value";
 export type MyCollectionUpdateArtworkInput = {
+  additionalInformation?: string | null | undefined;
   artistIds?: ReadonlyArray<string | null | undefined> | null | undefined;
   artworkId: string;
   artworkLocation?: string | null | undefined;
   attributionClass?: ArtworkAttributionClassType | null | undefined;
   category?: string | null | undefined;
   clientMutationId?: string | null | undefined;
+  coaByAuthenticatingBody?: boolean | null | undefined;
+  coaByGallery?: boolean | null | undefined;
   collectorLocation?: EditableLocation | null | undefined;
+  conditionDescription?: string | null | undefined;
   confidentialNotes?: string | null | undefined;
   costCurrencyCode?: string | null | undefined;
   costMajor?: number | null | undefined;
@@ -27,13 +32,21 @@ export type MyCollectionUpdateArtworkInput = {
   editionNumber?: string | null | undefined;
   editionSize?: string | null | undefined;
   externalImageUrls?: ReadonlyArray<string | null | undefined> | null | undefined;
+  framedDepth?: string | null | undefined;
+  framedHeight?: string | null | undefined;
+  framedMetric?: string | null | undefined;
+  framedWidth?: string | null | undefined;
+  hasCertificateOfAuthenticity?: boolean | null | undefined;
   height?: string | null | undefined;
   isEdition?: boolean | null | undefined;
+  isFramed?: boolean | null | undefined;
   medium?: string | null | undefined;
   metric?: string | null | undefined;
   pricePaidCents?: any | null | undefined;
   pricePaidCurrency?: string | null | undefined;
   provenance?: string | null | undefined;
+  signatureDetails?: string | null | undefined;
+  signatureTypes?: ReadonlyArray<ArtworkSignatureTypeEnum | null | undefined> | null | undefined;
   submissionId?: string | null | undefined;
   title?: string | null | undefined;
   width?: string | null | undefined;

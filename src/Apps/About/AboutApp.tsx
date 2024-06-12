@@ -14,10 +14,7 @@ import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
-import {
-  FullBleedHeader,
-  FullBleedHeaderOverlay,
-} from "Components/FullBleedHeader/FullBleedHeader"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 
 export const AboutApp: React.FC = () => {
   return (
@@ -33,10 +30,16 @@ export const AboutApp: React.FC = () => {
         caption="Detail of Cassi Namoda, A Strange Song, 2022. Detail of Alex Katz,
             Day Lily 1, 1969."
       >
-        <FullBleedHeaderOverlay
+        <Flex
+          position="absolute"
+          top={0}
+          left={0}
+          width="100%"
+          height="100%"
           alignItems="center"
           justifyContent={["center", "flex-start"]}
           p={4}
+          zIndex={1}
         >
           <Text
             variant={["xl", "xxl"]}
@@ -46,7 +49,7 @@ export const AboutApp: React.FC = () => {
           >
             The Future of Art Collecting
           </Text>
-        </FullBleedHeaderOverlay>
+        </Flex>
       </FullBleedHeader>
 
       <Spacer y={4} />

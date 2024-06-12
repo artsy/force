@@ -144,7 +144,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
                 Icon={BellStrokeIcon}
                 // @ts-ignore
                 as={RouterLink}
-                to={"/settings/alerts"}
+                to={"/favorites/alerts"}
               >
                 Manage your alerts
               </Button>

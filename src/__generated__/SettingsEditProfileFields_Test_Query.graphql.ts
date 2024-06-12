@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a9416afb9dffe7750192516be1f9eb53>>
+ * @generated SignedSource<<f9586149ea5c07175336763178870e9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,28 +26,35 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v2 = {
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Boolean"
 },
-v3 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v4 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -97,33 +104,43 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "initials",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "icon",
             "plural": false,
             "selections": [
+              (v0/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "versions",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": [
                   {
                     "kind": "Literal",
                     "name": "height",
-                    "value": 200
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "large_square"
+                    "value": 100
                   },
                   {
                     "kind": "Literal",
                     "name": "width",
-                    "value": 200
+                    "value": 100
                   }
                 ],
-                "concreteType": "ResizedImageUrl",
+                "concreteType": "CroppedImageUrl",
                 "kind": "LinkedField",
-                "name": "resized",
+                "name": "cropped",
                 "plural": false,
                 "selections": [
                   {
@@ -141,18 +158,12 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "resized(height:200,version:\"large_square\",width:200)"
+                "storageKey": "cropped(height:100,width:100)"
               }
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
+          (v0/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -217,7 +228,7 @@ return {
                 "name": "country",
                 "storageKey": null
               },
-              (v0/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
@@ -249,14 +260,14 @@ return {
             "name": "canRequestEmailConfirmation",
             "storageKey": null
           },
-          (v0/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "71d1213182a242e5d8f0c65768ca586d",
+    "cacheID": "4d423fc30179a8b07e550b7c43fbaac8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -266,26 +277,39 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.bio": (v1/*: any*/),
-        "me.canRequestEmailConfirmation": (v2/*: any*/),
-        "me.email": (v1/*: any*/),
+        "me.bio": (v2/*: any*/),
+        "me.canRequestEmailConfirmation": (v3/*: any*/),
+        "me.email": (v2/*: any*/),
         "me.icon": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Image"
         },
-        "me.icon.resized": {
+        "me.icon.cropped": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ResizedImageUrl"
+          "type": "CroppedImageUrl"
         },
-        "me.icon.resized.src": (v3/*: any*/),
-        "me.icon.resized.srcSet": (v3/*: any*/),
-        "me.id": (v4/*: any*/),
-        "me.internalID": (v4/*: any*/),
-        "me.isEmailConfirmed": (v2/*: any*/),
+        "me.icon.cropped.src": (v4/*: any*/),
+        "me.icon.cropped.srcSet": (v4/*: any*/),
+        "me.icon.internalID": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ID"
+        },
+        "me.icon.versions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "String"
+        },
+        "me.id": (v5/*: any*/),
+        "me.initials": (v2/*: any*/),
+        "me.internalID": (v5/*: any*/),
+        "me.isEmailConfirmed": (v3/*: any*/),
         "me.isIdentityVerified": {
           "enumValues": null,
           "nullable": true,
@@ -298,19 +322,19 @@ return {
           "plural": false,
           "type": "MyLocation"
         },
-        "me.location.city": (v1/*: any*/),
-        "me.location.country": (v1/*: any*/),
-        "me.location.display": (v1/*: any*/),
-        "me.location.id": (v4/*: any*/),
-        "me.location.state": (v1/*: any*/),
-        "me.name": (v1/*: any*/),
-        "me.otherRelevantPositions": (v1/*: any*/),
-        "me.profession": (v1/*: any*/)
+        "me.location.city": (v2/*: any*/),
+        "me.location.country": (v2/*: any*/),
+        "me.location.display": (v2/*: any*/),
+        "me.location.id": (v5/*: any*/),
+        "me.location.state": (v2/*: any*/),
+        "me.name": (v2/*: any*/),
+        "me.otherRelevantPositions": (v2/*: any*/),
+        "me.profession": (v2/*: any*/)
       }
     },
     "name": "SettingsEditProfileFields_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  internalID\n  name\n  profession\n  otherRelevantPositions\n  bio\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n}\n"
+    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  internalID\n  name\n  profession\n  otherRelevantPositions\n  bio\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

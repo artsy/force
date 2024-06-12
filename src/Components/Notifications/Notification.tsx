@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import { graphql } from "react-relay"
 import { NotificationQuery } from "__generated__/NotificationQuery.graphql"
-import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
+import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
 import { useEffect } from "react"
 import { ArtworkPublishedNotification } from "Components/Notifications/ArtworkPublishedNotification"
 import { AlertNotification } from "Components/Notifications/AlertNotification"

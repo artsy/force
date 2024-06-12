@@ -29,7 +29,7 @@ const ConversationApp: React.FC<ConversationRouteProps> = ({
   }
 
   return (
-    <ConversationsProvider>
+    <ConversationsProvider viewer={viewer}>
       <MetaTags title="Inbox | Artsy" />
 
       <ConversationsLayout
@@ -69,6 +69,7 @@ export const ConversationAppFragmentContainer = createFragmentContainer(
       fragment ConversationApp_viewer on Viewer
         @argumentDefinitions(first: { type: "Int", defaultValue: 10 }) {
         ...ConversationsSidebar_viewer @arguments(first: $first)
+        ...ConversationsContext_viewer
       }
     `,
     conversation: graphql`

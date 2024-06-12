@@ -19,10 +19,15 @@ import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDe
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
 import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
+import {
+  LocationAutocompleteInput,
+  buildLocationDisplay,
+  normalizePlace,
+} from "Components/LocationAutocompleteInput"
+import { NumericInput } from "Components/NumericInput"
 import { useFormikContext } from "formik"
 import { useState } from "react"
 import { ProvenanceModal } from "./ProvenanceModal"
-import { NumericInput } from "Components/NumericInput"
 
 export const MyCollectionArtworkFormDetails: React.FC = () => {
   const { sendToast } = useToasts()
@@ -30,9 +35,13 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
-  const { values, handleChange, setFieldValue, handleBlur } = useFormikContext<
-    ArtworkModel
-  >()
+  const {
+    values,
+    handleChange,
+    setFieldValue,
+    setFieldTouched,
+    handleBlur,
+  } = useFormikContext<ArtworkModel>()
 
   const isLimitedEdition = values.attributionClass === "LIMITED_EDITION"
 
@@ -70,7 +79,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
               name={values.artist.name || ""}
               meta={values.artist.formattedNationalityAndBirthday || ""}
               initials={values.artist.initials || ""}
-              image={values.artist.image?.cropped!}
+              image={values.artist.image?.cropped || {}}
             />
           </Column>
         ) : (
@@ -315,14 +324,21 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
           />
         </Column>
         <Column alignItems="flex-end" display="flex" span={6} mt={[4, 0]}>
-          <Input
+          <LocationAutocompleteInput
+            name="collectorLocation"
             title="City"
-            name="artworkLocation"
-            placeholder="City where artwork is located"
+            placeholder="Enter city where artwork is located"
             maxLength={256}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.artworkLocation}
+            spellCheck={false}
+            defaultValue={buildLocationDisplay(values.collectorLocation)}
+            onClick={() => setFieldTouched("location", false)}
+            onClose={() => setFieldTouched("location")}
+            onSelect={place => {
+              setFieldValue("collectorLocation", normalizePlace(place))
+            }}
+            onChange={place => {
+              setFieldValue("collectorLocation", normalizePlace(place))
+            }}
           />
         </Column>
       </GridColumns>

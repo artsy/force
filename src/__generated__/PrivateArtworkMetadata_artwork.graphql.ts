@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a9e7951a591bcedb6fdfca2774d5794>>
+ * @generated SignedSource<<5b7f98833468af7b212a0d010e007bf7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type PrivateArtworkMetadata_artwork$data = {
   } | null | undefined;
   readonly exhibitionHistory: string | null | undefined;
   readonly provenance: string | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsAdditionalInfo_artwork">;
   readonly " $fragmentType": "PrivateArtworkMetadata_artwork";
 };
 export type PrivateArtworkMetadata_artwork$key = {
@@ -37,6 +38,11 @@ return {
   "metadata": null,
   "name": "PrivateArtworkMetadata_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkDetailsAdditionalInfo_artwork"
+    },
     {
       "alias": null,
       "args": null,
@@ -75,6 +81,6 @@ return {
 };
 })();
 
-(node as any).hash = "36ee7b3f157ea9312cd5947abc2fc82e";
+(node as any).hash = "8f721696b336e3c23cb7bd654dd07d3e";
 
 export default node;

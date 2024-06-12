@@ -13,6 +13,7 @@ import {
 } from "Components/Artwork/ShelfArtwork"
 import {
   ActionType,
+  AuthContextModule,
   ClickedArtworkGroup,
   ContextModule,
   OwnerType,
@@ -26,6 +27,7 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
   viewer,
 }) => {
   const { trackEvent } = useTracking()
+  const contextModule = ContextModule.topAuctionLotsRail as AuthContextModule
 
   const artworks = extractNodes(viewer.artworksConnection)
 
@@ -41,6 +43,7 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
             artwork={artwork}
             key={artwork.slug}
             lazyLoad
+            contextModule={contextModule}
             onClick={() => {
               const trackingEvent: ClickedArtworkGroup = {
                 action: ActionType.clickedArtworkGroup,

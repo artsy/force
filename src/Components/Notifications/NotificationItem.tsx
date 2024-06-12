@@ -1,23 +1,22 @@
 import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { NotificationItem_item$data } from "__generated__/NotificationItem_item.graphql"
-import { RouterLink } from "System/Router/RouterLink"
-import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-import { ActionType } from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/useSystemContext"
-import createLogger from "Utils/logger"
-import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
-import { isArtworksBasedNotification } from "./util"
-import { NotificationTypeLabel } from "./NotificationTypeLabel"
-import { FC } from "react"
 import {
   ExpiresInTimer,
   shouldDisplayExpiresInTimer,
 } from "Components/Notifications/ExpiresInTimer"
+import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
+import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
+import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
-import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
+import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/useSystemContext"
+import createLogger from "Utils/logger"
+import { NotificationItem_item$data } from "__generated__/NotificationItem_item.graphql"
+import { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
+import { NotificationTypeLabel } from "./NotificationTypeLabel"
+import { isArtworksBasedNotification } from "./util"
 
 const logger = createLogger("NotificationItem")
 
@@ -28,7 +27,7 @@ interface NotificationItemProps {
 const UNREAD_INDICATOR_SIZE = 8
 
 const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
-  const { trackEvent } = useTracking()
+  const { tracking } = useNotificationsTracking()
   const { relayEnvironment } = useSystemContext()
   const {
     state: { currentNotificationId },
@@ -68,10 +67,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
   const handlePress = () => {
     markAsRead()
 
-    trackEvent({
-      action: ActionType.clickedActivityPanelNotificationItem,
-      notification_type: item.notificationType,
-    })
+    tracking.clickedActivityPanelNotificationItem(item.notificationType)
   }
 
   const itemUrl = getNotificationUrl(item)
@@ -86,7 +82,12 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
         currentNotificationId === item.internalID ? "black5" : "white100"
       }
     >
-      <Flex flex={1} flexDirection="column">
+      <Flex
+        flex={1}
+        flexDirection={
+          item.notificationType === "PARTNER_OFFER_CREATED" ? "row" : "column"
+        }
+      >
         {!!item.previewImages.length && (
           <Flex flexDirection="row" alignItems="center" mb={0.5}>
             <Flex flex={1}>
@@ -107,6 +108,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
                   )
                 })}
               </Join>
+              <Spacer x={1} />
             </Flex>
 
             {shouldDisplayCounts && (
@@ -122,31 +124,33 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
           </Flex>
         )}
 
-        <Text
-          variant="xs"
-          color="blue100"
-          backgroundColor="blue10"
-          px={0.5}
-          alignSelf="flex-start"
-          borderRadius={3}
-        >
-          {getNotificationPrelude(item)}
-        </Text>
+        <Flex flexDirection="column">
+          <Text
+            variant="xs"
+            color="blue100"
+            backgroundColor="blue10"
+            px={0.5}
+            alignSelf="flex-start"
+            borderRadius={3}
+          >
+            {getNotificationPrelude(item)}
+          </Text>
 
-        <Text fontWeight="bold" variant="sm-display">
-          {item.headline}
-        </Text>
+          <Text fontWeight="bold" variant="sm-display">
+            {item.headline}
+          </Text>
 
-        {!!subTitle && <Text variant="xs">{subTitle}</Text>}
+          {!!subTitle && <Text variant="xs">{subTitle}</Text>}
 
-        <Flex flexDirection="row" gap={0.5}>
-          <NotificationTypeLabel notification={item} />
-          {shouldDisplayExpiresInTimer(item) && (
-            <ExpiresInTimer
-              expiresAt={item.item?.expiresAt}
-              available={item.item?.available}
-            />
-          )}
+          <Flex flexDirection="row" gap={0.5}>
+            <NotificationTypeLabel notification={item} />
+            {shouldDisplayExpiresInTimer(item) && (
+              <ExpiresInTimer
+                expiresAt={item.item?.expiresAt}
+                available={item.item?.available}
+              />
+            )}
+          </Flex>
         </Flex>
       </Flex>
 

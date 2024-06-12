@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0736dfcdc6e465f5f5cc75cf7358ec87>>
+ * @generated SignedSource<<f96f82fc5373257e1821c7ef227eb08a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtwork_artwork$data = {
   readonly artist: {
@@ -26,13 +27,14 @@ export type MyCollectionArtwork_artwork$data = {
   } | null | undefined;
   readonly consignmentSubmission: {
     readonly displayText: string | null | undefined;
+    readonly state: ArtworkConsignmentSubmissionState;
   } | null | undefined;
   readonly hasMarketPriceInsights: boolean | null | undefined;
   readonly hasPriceEstimateRequest: boolean | null | undefined;
   readonly internalID: string;
   readonly slug: string;
   readonly submissionId: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkRequestPriceEstimateSection_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebar_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkRequestPriceEstimateSection_artwork" | "MyCollectionArtworkSWASectionSubmitted_submissionState" | "MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebar_artwork">;
   readonly " $fragmentType": "MyCollectionArtwork_artwork";
 };
 export type MyCollectionArtwork_artwork$key = {
@@ -99,6 +101,11 @@ return {
       "name": "MyCollectionArtworkRequestPriceEstimateSection_artwork"
     },
     {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkSWASectionSubmitted_submissionState"
+    },
+    {
       "alias": "comparables",
       "args": null,
       "concreteType": "AuctionResultConnection",
@@ -145,6 +152,13 @@ return {
       "name": "consignmentSubmission",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "state",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -206,6 +220,6 @@ return {
 };
 })();
 
-(node as any).hash = "ee1608da0017018b370ddc78a896a5be";
+(node as any).hash = "9df52da1127ba58820b3c0178d085479";
 
 export default node;

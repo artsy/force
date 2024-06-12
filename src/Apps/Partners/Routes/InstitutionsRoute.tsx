@@ -43,7 +43,7 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
 
         <Flex justifyContent="space-between" alignItems="center">
           <Text variant="xl" as="h1">
-            Browse Institutions
+            Browse Museums and Institutions
           </Text>
 
           <Text

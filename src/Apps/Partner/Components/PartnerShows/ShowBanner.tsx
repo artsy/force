@@ -106,19 +106,20 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
               </Text>
             )}
           </RouterLink>
-
-          <GridColumns mt={[2, 4]}>
-            <Column span={6}>
-              <Button
-                width="100%"
-                // @ts-ignore
-                as={RouterLink}
-                to={href}
-              >
-                View More
-              </Button>
-            </Column>
-          </GridColumns>
+          {href && (
+            <GridColumns mt={[2, 4]}>
+              <Column span={6}>
+                <Button
+                  width="100%"
+                  // @ts-ignore
+                  as={RouterLink}
+                  to={href}
+                >
+                  View More
+                </Button>
+              </Column>
+            </GridColumns>
+          )}
         </FadeBox>
       </Column>
 

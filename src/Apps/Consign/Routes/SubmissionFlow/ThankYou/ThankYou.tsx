@@ -21,7 +21,7 @@ export const ThankYou: React.FC = () => {
 
   const submitAnotherWork = () => {
     trackSubmitAnotherWorkClick()
-    router.push("/sell/submission/contact-information")
+    router.push("/sell/submission")
   }
 
   const trackSubmitAnotherWorkClick = () =>

@@ -43,7 +43,7 @@ const ArtworkSidebarClassification: React.FC<ArtworkSidebarClassificationProps> 
       />
       <Flex alignItems="center" data-testid="artwork-classification">
         <ArtworkIcon mr={1} />
-        <Text variant="sm-display" color="black60">
+        <Text variant="sm" color="black60">
           {shortArrayDescription![0]}{" "}
           <Clickable onClick={openModal} textDecoration="underline">
             {shortArrayDescription![1]}

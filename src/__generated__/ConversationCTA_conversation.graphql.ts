@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ceba4b979c9fa11dd27cc02b071a08c6>>
+ * @generated SignedSource<<eb08f5f23937bcd73256c0b0a4a1bb36>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,9 +43,11 @@ export type ConversationCTA_conversation$data = {
     } | null | undefined;
     readonly liveArtwork: {
       readonly __typename: "Artwork";
+      readonly internalID: string;
       readonly isAcquireable: boolean | null | undefined;
       readonly isOfferable: boolean | null | undefined;
       readonly isOfferableFromInquiry: boolean | null | undefined;
+      readonly published: boolean;
       readonly " $fragmentSpreads": FragmentRefs<"ConversationConfirmModal_artwork">;
     } | {
       // This will never be '%other', but we need some
@@ -121,6 +123,7 @@ return {
                   "name": "ConversationConfirmModal_artwork"
                 },
                 (v1/*: any*/),
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -140,6 +143,13 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "isOfferable",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "published",
                   "storageKey": null
                 }
               ],
@@ -300,6 +310,6 @@ return {
 };
 })();
 
-(node as any).hash = "51741c03c63f809671000616b84871be";
+(node as any).hash = "d6908cebbd5ab73c78ee55b3b08e836b";
 
 export default node;

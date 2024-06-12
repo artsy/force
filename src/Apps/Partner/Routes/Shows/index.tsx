@@ -23,13 +23,21 @@ export const Shows: React.FC<PartnerShowsProps> = ({ partner }) => {
 
   const [firstFeaturedEvent] = extractNodes(featuredEvents)
 
-  const filteredUpcomingEvents = extractNodes(upcomingEvents).filter(
-    event => event?.internalID !== firstFeaturedEvent?.internalID
-  )
+  let upcomingEventsList = extractNodes(upcomingEvents)
+  let currentEventsList = extractNodes(currentEvents)
 
-  const filteredCurrentEvents = extractNodes(currentEvents).filter(
-    event => event?.internalID !== firstFeaturedEvent?.internalID
-  )
+  if (firstFeaturedEvent?.isFeatured) {
+    const filteredUpcomingEvents = extractNodes(upcomingEvents).filter(
+      event => event?.internalID !== firstFeaturedEvent?.internalID
+    )
+
+    const filteredCurrentEvents = extractNodes(currentEvents).filter(
+      event => event?.internalID !== firstFeaturedEvent?.internalID
+    )
+
+    upcomingEventsList = filteredUpcomingEvents
+    currentEventsList = filteredCurrentEvents
+  }
 
   return (
     <>
@@ -38,12 +46,12 @@ export const Shows: React.FC<PartnerShowsProps> = ({ partner }) => {
           <ShowBannerFragmentContainer my={4} show={firstFeaturedEvent!} />
         )}
 
-        {filteredCurrentEvents.length > 0 && (
+        {currentEventsList.length > 0 && (
           <>
             <Text variant="lg-display">Current Events</Text>
 
             <GridColumns gridRowGap={[2, 4]}>
-              {filteredCurrentEvents.map(show => {
+              {currentEventsList.map(show => {
                 return (
                   <Column key={show.internalID} span={[6, 6, 3, 3]}>
                     <CellShowFragmentContainer
@@ -59,12 +67,12 @@ export const Shows: React.FC<PartnerShowsProps> = ({ partner }) => {
           </>
         )}
 
-        {filteredUpcomingEvents.length > 0 && (
+        {upcomingEventsList.length > 0 && (
           <>
             <Text variant="lg-display">Upcoming Events</Text>
 
             <GridColumns gridRowGap={[2, 4]}>
-              {filteredUpcomingEvents.map(show => {
+              {upcomingEventsList.map(show => {
                 return (
                   <Column key={show.internalID} span={[6, 6, 3, 3]}>
                     <CellShowFragmentContainer

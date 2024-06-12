@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db444a687f0298c5520affff71c36749>>
+ * @generated SignedSource<<33d459f16f9ee4cc166c25d2702ca18c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type CommerceCreateOfferOrderWithArtworkInput = {
   clientMutationId?: string | null | undefined;
   editionSetId?: string | null | undefined;
   findActiveOrCreate?: boolean | null | undefined;
+  partnerOfferId?: string | null | undefined;
   quantity?: number | null | undefined;
 };
 export type AuthIntentCreateOfferOrderMutation$variables = {

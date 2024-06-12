@@ -11,8 +11,11 @@ import {
   Stack,
 } from "@artsy/palette"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { FollowButtonInlineCount } from "Components/FollowButton/Button"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
+import { useTracking } from "react-tracking"
+import { ActionType, ClickedOnReadMore } from "@artsy/cohesion"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 interface PrivateArtworkAboutArtistProps {
   artwork: PrivateArtworkAboutArtist_artwork$key
@@ -21,11 +24,14 @@ interface PrivateArtworkAboutArtistProps {
 export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps> = ({
   artwork,
 }) => {
+  const { trackEvent } = useTracking()
+
   const data = useFragment(
     graphql`
       fragment PrivateArtworkAboutArtist_artwork on Artwork {
+        displayArtistBio
         slug
-        artist {
+        artists {
           ...FollowArtistButton_artist
           internalID
           href
@@ -47,15 +53,6 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
             }
           }
           name
-          partnerArtists {
-            biography
-          }
-          partnerBiographyBlurb: biographyBlurb(
-            format: HTML
-            partnerBio: true
-          ) {
-            text
-          }
           biographyBlurb(format: HTML, partnerBio: false) {
             text
           }
@@ -65,101 +62,129 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
     artwork
   )
 
-  const followsCount =
-    Number(formatFollowerCount(data.artist?.counts?.follows)) ?? 0
+  const followCount = (artist): number => {
+    return Number(formatFollowerCount(artist.counts?.follows)) ?? 0
+  }
 
-  const biographyBlurb =
-    data.artist?.partnerBiographyBlurb?.text ??
-    data.artist?.biographyBlurb?.text ??
-    ""
+  const biographyBlurb = (artist): string => {
+    return artist.biographyBlurb?.text ?? ""
+  }
 
   return (
-    <Box minHeight={275} width="100%" p={6} backgroundColor="black100">
+    <Box
+      minHeight={275}
+      width="100%"
+      px={[2, 6]}
+      py={[4, 6]}
+      backgroundColor="black100"
+    >
       <Text variant="md" color="white100">
-        About the Artist
+        About the Artist{data.artists && data.artists?.length > 1 ? "s" : ""}
       </Text>
 
       <Spacer y={2} />
 
-      {data.artist && (
-        <>
-          <Flex flexDirection="row" alignItems="center">
-            <Box mr={2}>
-              <Avatar
-                size="md"
-                src={data.artist.coverArtwork?.image?.cropped?.src}
-              />
-            </Box>
-
-            <Box>
-              <Text variant="lg-display" color="white100" fontWeight="bold">
-                {data.artist.name}
-              </Text>
-
-              {data.artist.formattedNationalityAndBirthday && (
-                <Text variant="xs" color="white100">
-                  {data.artist.formattedNationalityAndBirthday}
-                </Text>
-              )}
-
-              <Spacer y={1} />
-
-              <Flex
-                flexDirection="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <FollowArtistButtonQueryRenderer
-                  id={data.artist.internalID}
-                  size={["large", "small"]}
-                  width={["100%", "fit-content"]}
-                  variant="secondaryWhite"
-                  mr={1}
-                >
-                  {label => {
-                    return (
-                      <Stack gap={0.5} flexDirection="row" alignItems="center">
-                        <Box color="white100">{label}</Box>
-
-                        {!!data.artist?.counts?.follows && (
-                          <FollowButtonInlineCount
-                            display={["block", "none"]}
-                            color="white100"
-                          >
-                            {formatFollowerCount(data.artist.counts.follows)}
-                          </FollowButtonInlineCount>
-                        )}
-                      </Stack>
-                    )
-                  }}
-                </FollowArtistButtonQueryRenderer>
-
-                {followsCount > 0 && (
-                  <Text variant="xs" color="white100">
-                    {followsCount} {followsCount > 1 ? "Followers" : "Follower"}
-                  </Text>
-                )}
-              </Flex>
-            </Box>
-          </Flex>
-
-          <>
-            {biographyBlurb && (
-              <>
-                <Spacer y={2} />
-
-                <HTML variant="lg" color="white100">
-                  <ReadMore
-                    maxChars={190}
-                    content={`${biographyBlurb}`}
-                    inlineReadMoreLink={false}
+      {data.artists?.map(
+        artist =>
+          artist && (
+            <>
+              <Flex flexDirection="row" alignItems="center" my={4}>
+                <Box mr={2}>
+                  <Avatar
+                    size="md"
+                    src={artist.coverArtwork?.image?.cropped?.src}
                   />
-                </HTML>
+                </Box>
+
+                <Box>
+                  <Text variant="lg-display" color="white100" fontWeight="bold">
+                    {artist.name}
+                  </Text>
+
+                  {artist.formattedNationalityAndBirthday && (
+                    <Text variant="xs" color="white100">
+                      {artist.formattedNationalityAndBirthday}
+                    </Text>
+                  )}
+
+                  <Spacer y={1} />
+
+                  <Flex
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <FollowArtistButtonQueryRenderer
+                      id={artist.internalID}
+                      size={["large", "small"]}
+                      width={["100%", "fit-content"]}
+                      variant="secondaryWhite"
+                      mr={1}
+                    >
+                      {label => {
+                        return (
+                          <Stack
+                            gap={0.5}
+                            flexDirection="row"
+                            alignItems="center"
+                          >
+                            <Box color="white100">{label}</Box>
+                          </Stack>
+                        )
+                      }}
+                    </FollowArtistButtonQueryRenderer>
+
+                    {followCount(artist) > 0 && (
+                      <Text
+                        variant="xs"
+                        color="white100"
+                        ml={0.5}
+                        style={{ whiteSpace: "nowrap" }}
+                      >
+                        {followCount(artist)}{" "}
+                        {followCount(artist) > 1 ? "Followers" : "Follower"}
+                      </Text>
+                    )}
+                  </Flex>
+                </Box>
+              </Flex>
+
+              <>
+                {!!biographyBlurb(artist) && data.displayArtistBio && (
+                  <>
+                    <Spacer y={4} />
+
+                    <TextWrapper>
+                      <HTML variant="md" color="white100">
+                        <ReadMore
+                          maxChars={190}
+                          content={`${biographyBlurb(artist)}`}
+                          inlineReadMoreLink={false}
+                          onReadMoreClicked={() => {
+                            const payload: ClickedOnReadMore = {
+                              action: ActionType.clickedOnReadMore,
+                              context_module: "About the artist",
+                              subject: "Read more",
+                              type: "Link",
+                            }
+
+                            trackEvent(payload)
+                          }}
+                        />
+                      </HTML>
+                    </TextWrapper>
+                  </>
+                )}
               </>
-            )}
-          </>
-        </>
+            </>
+          )
       )}
     </Box>
   )
 }
+
+const TextWrapper = styled(Text)`
+  a:hover {
+    color: ${themeGet("colors.white100")};
+  }
+`

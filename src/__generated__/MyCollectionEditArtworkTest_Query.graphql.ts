@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e832f38fcf76320ff08c2660562cfc2a>>
+ * @generated SignedSource<<fa8a29d22cac7f2207c51baa4b4772b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -402,13 +402,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "artworkLocation",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "provenance",
             "storageKey": null
           },
@@ -433,6 +426,46 @@ return {
             "kind": "ScalarField",
             "name": "confidentialNotes",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "MyLocation",
+            "kind": "LinkedField",
+            "name": "collectorLocation",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "city",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "state",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "country",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "countryCode",
+                "storageKey": null
+              },
+              (v6/*: any*/)
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -440,12 +473,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fc733eab48420f2de73843af3f82f403",
+    "cacheID": "f0d8da4be5dda5df003d80a8f8fe0ab4",
     "id": null,
     "metadata": {},
     "name": "MyCollectionEditArtworkTest_Query",
     "operationKind": "query",
-    "text": "query MyCollectionEditArtworkTest_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionEditArtwork_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormMain_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment MyCollectionEditArtwork_artwork on Artwork {\n  artist {\n    internalID\n    initials\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    isPersonalArtist\n    image {\n      cropped(width: 44, height: 44) {\n        height\n        src\n        srcSet\n        width\n      }\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  artworkLocation\n  provenance\n  slug\n  title\n  width\n  confidentialNotes\n  ...MyCollectionArtworkFormMain_artwork\n}\n"
+    "text": "query MyCollectionEditArtworkTest_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionEditArtwork_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormMain_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment MyCollectionEditArtwork_artwork on Artwork {\n  artist {\n    internalID\n    initials\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    isPersonalArtist\n    image {\n      cropped(width: 44, height: 44) {\n        height\n        src\n        srcSet\n        width\n      }\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  provenance\n  slug\n  title\n  width\n  confidentialNotes\n  collectorLocation {\n    city\n    state\n    country\n    countryCode\n    id\n  }\n  ...MyCollectionArtworkFormMain_artwork\n}\n"
   }
 };
 })();

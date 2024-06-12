@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18fd05cb861445dfad8da5f4592b80da>>
+ * @generated SignedSource<<116f4581b9441a2f979cfcece02a6be7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type PartnerOfferSourceEnum = "ABANDONED_ORDER" | "SAVE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerOfferCreatedNotification_notification$data = {
   readonly headline: string;
@@ -21,6 +22,7 @@ export type PartnerOfferCreatedNotification_notification$data = {
       readonly priceWithDiscount: {
         readonly display: string | null | undefined;
       } | null | undefined;
+      readonly source: PartnerOfferSourceEnum | null | undefined;
     } | null | undefined;
   } | null | undefined;
   readonly offerArtworksConnection: {
@@ -108,6 +110,13 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "source",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "Money",
                   "kind": "LinkedField",
                   "name": "priceWithDiscount",
@@ -182,6 +191,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a5ed2e9500b3df4a4af38939ff3b22f7";
+(node as any).hash = "8047d7c885938276e95212efcb413cc4";
 
 export default node;

@@ -140,10 +140,15 @@ export const artistRoutes: AppRouteConfig[] = [
             $input: FilterArtworksInput
             # TODO:(?) only request the artist series aggregation if user has the Unleash flag enabled?
             $aggregations: [ArtworkAggregation]
+            $includeBlurHash: Boolean!
           ) {
             artist(id: $artistID) {
               ...ArtistWorksForSaleRoute_artist
-                @arguments(input: $input, aggregations: $aggregations)
+                @arguments(
+                  input: $input
+                  aggregations: $aggregations
+                  includeBlurHash: $includeBlurHash
+                )
             }
           }
         `,

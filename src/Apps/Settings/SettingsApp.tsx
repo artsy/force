@@ -1,4 +1,4 @@
-import { Spacer, useToasts } from "@artsy/palette"
+import { Spacer, Text, useToasts } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import React, { useEffect } from "react"
@@ -6,9 +6,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 import { TopContextBar } from "Components/TopContextBar"
-import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
-
-export const SETTINGS_ROUTE_TABS_MARGIN = [2, 4]
 
 interface SettingsAppProps {
   me: SettingsApp_me$data
@@ -38,23 +35,23 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
       <MetaTags title="Settings | Artsy" />
 
       <TopContextBar displayBackArrow href="/collector-profile/my-collection">
-        Collector Profile
+        Profile
       </TopContextBar>
 
-      <Spacer y={[4, 6]} />
+      <Spacer y={[2, 4]} />
 
-      <RouteTabs fill my={SETTINGS_ROUTE_TABS_MARGIN}>
+      <Text variant={["lg-display", "xxl"]}>Settings</Text>
+
+      <Spacer y={[2, 6]} />
+
+      <RouteTabs my={[2, 4]}>
         <RouteTab to="/settings/edit-profile">Edit Profile</RouteTab>
-
-        <ProgressiveOnboardingAlertHighlight position="center">
-          <RouteTab to="/settings/alerts">Alerts</RouteTab>
-        </ProgressiveOnboardingAlertHighlight>
 
         <RouteTab to="/settings/edit-settings">Account Settings</RouteTab>
 
-        <RouteTab to="/settings/purchases">Order History</RouteTab>
-
         <RouteTab to="/settings/auctions">Bids</RouteTab>
+
+        <RouteTab to="/settings/purchases">Order History</RouteTab>
 
         <RouteTab to="/settings/payments">Payments</RouteTab>
 

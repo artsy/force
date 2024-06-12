@@ -59,8 +59,8 @@ const saleAgreementFragment = graphql`
   fragment SaleAgreementRoute_saleAgreement on SaleAgreement {
     internalID
     content(format: HTML) @required(action: NONE)
-    displayStartAt(format: "MMM Do, YYYY")
-    displayEndAt(format: "MMM Do, YYYY")
+    displayStartAt(format: "MMM Do, YYYY", timezone: "UTC")
+    displayEndAt(format: "MMM Do, YYYY", timezone: "UTC")
     sale @required(action: NONE) {
       internalID
       name

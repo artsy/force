@@ -12,6 +12,8 @@ import {
 import { useState } from "react"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
+import { useTracking } from "react-tracking"
+
 interface PrivateArtworkMetadataProps {
   artwork: PrivateArtworkMetadata_artwork$key
 }
@@ -22,6 +24,7 @@ export const PrivateArtworkMetadata: React.FC<PrivateArtworkMetadataProps> = ({
   const data = useFragment(
     graphql`
       fragment PrivateArtworkMetadata_artwork on Artwork {
+        ...ArtworkDetailsAdditionalInfo_artwork
         conditionDescription {
           details
         }
@@ -76,12 +79,16 @@ export const PrivateArtworkMetadata: React.FC<PrivateArtworkMetadataProps> = ({
       )}
 
       {data.exhibitionHistory && (
-        <MetadataDetailItem
-          title="Exhibition History"
-          expanded={isThirdItemExpanded}
-        >
-          <HTML variant="sm" html={data.exhibitionHistory} />
-        </MetadataDetailItem>
+        <>
+          <MetadataDetailItem
+            title="Exhibition History"
+            expanded={isThirdItemExpanded}
+          >
+            <HTML variant="sm" html={data.exhibitionHistory} />
+          </MetadataDetailItem>
+
+          <Separator my={2} />
+        </>
       )}
     </>
   )
@@ -99,10 +106,25 @@ const MetadataDetailItem: React.FC<MetadataDetailItemProps> = ({
   expanded = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState(expanded)
+  const { trackEvent } = useTracking()
 
   return (
     <Box>
-      <Clickable onClick={() => setIsExpanded(!isExpanded)} width="100%">
+      <Clickable
+        onClick={() => {
+          const payload = {
+            action: "Click",
+            context_module: "About the work",
+            context_owner_type: "artwork",
+            expand: !isExpanded,
+            subject: title,
+          }
+
+          trackEvent(payload)
+          setIsExpanded(!isExpanded)
+        }}
+        width="100%"
+      >
         <Flex
           flexDirection="row"
           justifyContent="space-between"
@@ -110,7 +132,7 @@ const MetadataDetailItem: React.FC<MetadataDetailItemProps> = ({
           width="100%"
         >
           <Text variant="md">{title}</Text>
-          {isExpanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
+          {isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </Flex>
       </Clickable>
 

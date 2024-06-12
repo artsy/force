@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c137f2ac26e0fa9ee018a47483ab7d9>>
+ * @generated SignedSource<<110f7835d3490c7773b9c810a7f8fe6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,10 @@ export type CollectorProfileArtistsListArtistDialog_userInterestEdge$data = {
   readonly node: {
     readonly __typename: "Artist";
     readonly counts: {
-      readonly artworks: any | null | undefined;
+      readonly myCollectedArtworks: number;
     } | null | undefined;
     readonly internalID: string;
+    readonly isPersonalArtist: boolean | null | undefined;
     readonly name: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
   } | {
@@ -97,6 +98,13 @@ return {
             {
               "alias": null,
               "args": null,
+              "kind": "ScalarField",
+              "name": "isPersonalArtist",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
               "concreteType": "ArtistCounts",
               "kind": "LinkedField",
               "name": "counts",
@@ -106,7 +114,7 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "artworks",
+                  "name": "myCollectedArtworks",
                   "storageKey": null
                 }
               ],
@@ -125,6 +133,6 @@ return {
 };
 })();
 
-(node as any).hash = "6d2eb7d999e7c4db69b52c42d687280c";
+(node as any).hash = "8f9cdc980474484665c7e8741a4ac2f5";
 
 export default node;

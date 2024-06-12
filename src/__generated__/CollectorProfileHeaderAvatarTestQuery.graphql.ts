@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f8bc81598662dfaf4861d91c0f162f2>>
+ * @generated SignedSource<<0fc35a528e7ef24568df2b334de4a9f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -72,6 +72,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "initials",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "icon",
@@ -79,26 +86,35 @@ return {
             "selections": [
               {
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "versions",
+                "storageKey": null
+              },
+              {
+                "alias": null,
                 "args": [
                   {
                     "kind": "Literal",
                     "name": "height",
-                    "value": 200
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "large_square"
+                    "value": 100
                   },
                   {
                     "kind": "Literal",
                     "name": "width",
-                    "value": 200
+                    "value": 100
                   }
                 ],
-                "concreteType": "ResizedImageUrl",
+                "concreteType": "CroppedImageUrl",
                 "kind": "LinkedField",
-                "name": "resized",
+                "name": "cropped",
                 "plural": false,
                 "selections": [
                   {
@@ -116,7 +132,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "resized(height:200,version:\"large_square\",width:200)"
+                "storageKey": "cropped(height:100,width:100)"
               }
             ],
             "storageKey": null
@@ -134,7 +150,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6591e4f6d49ce78568810efaf6b562b9",
+    "cacheID": "92bff54218bc0a8e43436f3f57b52859",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -150,25 +166,43 @@ return {
           "plural": false,
           "type": "Image"
         },
-        "me.icon.resized": {
+        "me.icon.cropped": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ResizedImageUrl"
+          "type": "CroppedImageUrl"
         },
-        "me.icon.resized.src": (v0/*: any*/),
-        "me.icon.resized.srcSet": (v0/*: any*/),
+        "me.icon.cropped.src": (v0/*: any*/),
+        "me.icon.cropped.srcSet": (v0/*: any*/),
+        "me.icon.internalID": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ID"
+        },
+        "me.icon.versions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "String"
+        },
         "me.id": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "ID"
+        },
+        "me.initials": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
         }
       }
     },
     "name": "CollectorProfileHeaderAvatarTestQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileHeaderAvatarTestQuery {\n  me {\n    ...CollectorProfileHeaderAvatar_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CollectorProfileHeaderAvatarTestQuery {\n  me {\n    ...CollectorProfileHeaderAvatar_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

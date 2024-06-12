@@ -49,12 +49,14 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
 
       await Promise.all(
         removedPhotos.map(async photo => {
+          if (!artwork?.internalID || !photo.internalID) return
+
           try {
             await deleteArtworkImage({
               variables: {
                 input: {
-                  artworkID: artwork?.internalID!,
-                  imageID: photo.internalID!,
+                  artworkID: artwork?.internalID,
+                  imageID: photo.internalID,
                 },
               },
             })
@@ -75,9 +77,11 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
       const reversedImages = reverse([...(updatedArtwork?.images ?? [])])
 
       reverse(localImages).forEach((image, index) => {
-        if (!reversedImages[index]?.internalID) return
+        const imageID = reversedImages[index]?.internalID
 
-        storeLocalImage(reversedImages[index]?.internalID!, image)
+        if (!imageID) return
+
+        storeLocalImage(imageID, image)
       })
 
       router.replace({
@@ -185,12 +189,17 @@ export const MyCollectionEditArtworkFragmentContainer = createFragmentContainer(
         isEdition
         medium
         metric
-        artworkLocation
         provenance
         slug
         title
         width
         confidentialNotes
+        collectorLocation {
+          city
+          state
+          country
+          countryCode
+        }
         ...MyCollectionArtworkFormMain_artwork
       }
     `,

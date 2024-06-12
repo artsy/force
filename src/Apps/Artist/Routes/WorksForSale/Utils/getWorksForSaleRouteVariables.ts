@@ -1,4 +1,5 @@
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
+import { getFeatureFlag } from "System/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 
 export function getWorksForSaleRouteVariables({ artistID }, { location }) {
@@ -25,10 +26,13 @@ export function getWorksForSaleRouteVariables({ artistID }, { location }) {
     aggregations.push("ARTIST_SERIES")
   }
 
+  const includeBlurHash = !!getFeatureFlag("diamond_blurhash-on-artist-pages")
+
   return {
     input: filterParams,
     aggregations,
     artistID,
+    includeBlurHash,
   }
 }
 

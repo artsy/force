@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbdedfed486da7a5a2942733b5674a7f>>
+ * @generated SignedSource<<9141a463928c5b29d5e59934b7cccf11>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceCreatePartnerOfferOrderInput = {
   clientMutationId?: string | null | undefined;
   editionSetId?: string | null | undefined;
+  impulseConversationId?: string | null | undefined;
   partnerOfferId: string;
   quantity?: number | null | undefined;
 };

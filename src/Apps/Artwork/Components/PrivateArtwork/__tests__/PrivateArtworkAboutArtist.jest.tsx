@@ -25,7 +25,7 @@ describe("ArtworkSidebarPrivateArtwork", () => {
       Artist: () => {
         return {
           name: "Test Artist Name",
-          partnerBiographyBlurb: { text: "Test Artist Biography" },
+          biographyBlurb: { text: "Test Artist Biography" },
           formattedNationalityAndBirthday: "USA, 1990",
         }
       },
@@ -35,5 +35,22 @@ describe("ArtworkSidebarPrivateArtwork", () => {
     expect(screen.getByText("USA, 1990")).toBeInTheDocument()
     expect(screen.getByText("Follow")).toBeInTheDocument()
     expect(screen.queryByText("Test Artist Biography")).toBeInTheDocument()
+  })
+
+  it("does not render if displayArtistBio is false", () => {
+    renderWithRelay({
+      Artwork: () => ({
+        displayArtistBio: false,
+      }),
+      Artist: () => {
+        return {
+          name: "Test Artist Name",
+          biographyBlurb: { text: "Test Artist Biography" },
+          formattedNationalityAndBirthday: "USA, 1990",
+        }
+      },
+    })
+
+    expect(screen.queryByText("Test Artist Biography")).not.toBeInTheDocument()
   })
 })

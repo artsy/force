@@ -1,6 +1,8 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Clickable,
+  Flex,
+  FlexProps,
   HTML,
   Join,
   ReadMore,
@@ -21,14 +23,75 @@ import { useTracking } from "react-tracking"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { PrivateArtworkAdditionalInfo_artwork$data } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 
-export interface ArtworkDetailsAdditionalInfoProps {
+export interface ArtworkDetailsAdditionalInfoProps extends FlexProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork$data
 }
 
 export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfoProps> = ({
   artwork,
+  ...flexProps
 }) => {
+  const {
+    listItems,
+    openConditionModal,
+    setOpenConditionModal,
+  } = useArtworkDetailsAdditionalInfoFields({ artwork })
+
+  const displayItems = listItems.filter(i => i.value != null && i.value !== "")
+
+  if (displayItems.length === 0) {
+    return null
+  }
+
+  const Container = artwork.isUnlisted ? Flex : StackableBorderBox
+
+  return (
+    <>
+      {openConditionModal && (
+        <ConditionInfoModal onClose={() => setOpenConditionModal(false)} />
+      )}
+      <Container flexDirection="column" {...flexProps}>
+        <Join separator={<Spacer y={1} />}>
+          {displayItems.map(
+            ({ title, value, onReadMoreClicked, onTitleClick }, index) => (
+              <ArtworkDefinitionList
+                key={title + index}
+                term={title}
+                onTitleClick={onTitleClick}
+              >
+                <HTML variant="xs" color="black60">
+                  {/* TODO: not sure why this check is here */}
+                  {React.isValidElement(value) ? (
+                    value
+                  ) : (
+                    <ReadMore
+                      onReadMoreClicked={onReadMoreClicked}
+                      maxChars={140}
+                      content={value as string}
+                    />
+                  )}
+                </HTML>
+              </ArtworkDefinitionList>
+            )
+          )}
+        </Join>
+      </Container>
+    </>
+  )
+}
+
+interface UseArtworkDetailsAdditionInfoFieldsProps {
+  artwork:
+    | ArtworkDetailsAdditionalInfo_artwork$data
+    | PrivateArtworkAdditionalInfo_artwork$data
+}
+
+export const useArtworkDetailsAdditionalInfoFields = ({
+  artwork,
+}: UseArtworkDetailsAdditionInfoFieldsProps) => {
   const {
     category,
     series,
@@ -46,11 +109,11 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
     medium,
   } = artwork
 
-  const [openMediumModal, setOpenMediumModal] = useState(false)
-  const [openRarityModal, setOpenRarityModal] = useState(false)
-  const [openConditionModal, setOpenConditionModal] = useState(false)
+  const { selectedEditionSet } = useSelectedEditionSetContext()
 
-  const { dimensionsLabel } = useArtworkDimensions(dimensions)
+  const { dimensionsLabel } = useArtworkDimensions(
+    selectedEditionSet ? selectedEditionSet?.dimensions : dimensions
+  )
 
   const { trackEvent } = useTracking()
   const {
@@ -58,6 +121,10 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
+
+  const [openMediumModal, setOpenMediumModal] = useState(false)
+  const [openRarityModal, setOpenRarityModal] = useState(false)
+  const [openConditionModal, setOpenConditionModal] = useState(false)
 
   const listItems = [
     {
@@ -177,45 +244,11 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
     { title: "Image rights", value: image_rights },
   ]
 
-  const displayItems = listItems.filter(i => i.value != null && i.value !== "")
-
-  if (displayItems.length === 0) {
-    return null
+  return {
+    listItems,
+    openConditionModal,
+    setOpenConditionModal,
   }
-
-  return (
-    <>
-      {openConditionModal && (
-        <ConditionInfoModal onClose={() => setOpenConditionModal(false)} />
-      )}
-      <StackableBorderBox flexDirection="column">
-        <Join separator={<Spacer y={1} />}>
-          {displayItems.map(
-            ({ title, value, onReadMoreClicked, onTitleClick }, index) => (
-              <ArtworkDefinitionList
-                key={title + index}
-                term={title}
-                onTitleClick={onTitleClick}
-              >
-                <HTML variant="xs" color="black60">
-                  {/* TODO: not sure why this check is here */}
-                  {React.isValidElement(value) ? (
-                    value
-                  ) : (
-                    <ReadMore
-                      onReadMoreClicked={onReadMoreClicked}
-                      maxChars={140}
-                      content={value as string}
-                    />
-                  )}
-                </HTML>
-              </ArtworkDefinitionList>
-            )
-          )}
-        </Join>
-      </StackableBorderBox>
-    </>
-  )
 }
 
 export const ArtworkDetailsAdditionalInfoFragmentContainer = createFragmentContainer(
@@ -230,6 +263,7 @@ export const ArtworkDetailsAdditionalInfoFragmentContainer = createFragmentConta
         image_rights: imageRights
         canRequestLotConditionsReport
         internalID
+        isUnlisted
         framed {
           label
           details

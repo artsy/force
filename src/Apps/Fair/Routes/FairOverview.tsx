@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { FC, useEffect, useRef } from "react"
 import { BoxProps, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairCollectionsFragmentContainer } from "Apps/Fair/Components/FairCollections/FairCollections"
@@ -22,16 +22,16 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
 
   const { focused_booths: focusedBooths } = match.location.query
 
+  const scrolledTo = useRef(false)
+
   useEffect(() => {
-    if (!focusedBooths) return
+    if (!focusedBooths || scrolledTo.current) return
 
-    const timeout = setTimeout(() => {
+    requestAnimationFrame(() => {
       jumpTo("BoothsSection")
-    }, 0)
+    })
 
-    return () => {
-      clearTimeout(timeout)
-    }
+    scrolledTo.current = true
   }, [focusedBooths, jumpTo])
 
   const hasArticles = (fair.articlesConnection?.edges?.length ?? 0) > 0

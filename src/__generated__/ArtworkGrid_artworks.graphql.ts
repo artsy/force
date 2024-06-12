@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b67f2a7af3e9e284fb7b4096d013618e>>
+ * @generated SignedSource<<3c6c474636128d5e18009ff7bde94e03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,12 +30,25 @@ export type ArtworkGrid_artworks$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Variable",
+    "name": "includeBlurHash",
+    "variableName": "includeBlurHash"
+  }
+];
+return {
   "argumentDefinitions": [
     {
       "defaultValue": false,
       "kind": "LocalArgument",
       "name": "includeAllImages"
+    },
+    {
+      "defaultValue": true,
+      "kind": "LocalArgument",
+      "name": "includeBlurHash"
     }
   ],
   "kind": "Fragment",
@@ -111,12 +124,12 @@ const node: ReaderFragment = {
               "storageKey": null
             },
             {
-              "args": null,
+              "args": (v0/*: any*/),
               "kind": "FragmentSpread",
               "name": "GridItem_artwork"
             },
             {
-              "args": null,
+              "args": (v0/*: any*/),
               "kind": "FragmentSpread",
               "name": "FlatGridItem_artwork"
             }
@@ -130,7 +143,8 @@ const node: ReaderFragment = {
   "type": "ArtworkConnectionInterface",
   "abstractKey": "__isArtworkConnectionInterface"
 };
+})();
 
-(node as any).hash = "06779604fb6132105ed09f08851b1eba";
+(node as any).hash = "97bb4e1cb64ddf22804fb50fbb66cff0";
 
 export default node;

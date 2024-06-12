@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 // Expiration time is 5 minutes
 const EXPIRATION_TIME = 5 * 60 * 1000
 const IMAGE_KEY_PREFIX = "IMAGES"
-export const PROFILE_IMAGE_KEY = "PROFILE_IMAGE"
 const DEFAULT_IMAGE_VERSION = "large"
 
 export interface LocalImage {

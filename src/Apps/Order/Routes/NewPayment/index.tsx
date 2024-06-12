@@ -4,7 +4,7 @@ import { NewPaymentRouteSetOrderPaymentMutation } from "__generated__/NewPayment
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { CountdownTimer } from "Components/CountdownTimer"
-import { RouteConfig, Router } from "found"
+import { Router } from "found"
 import { createRef, useState, FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
@@ -27,6 +27,7 @@ import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { useTracking } from "react-tracking"
 import { getErrorDialogCopy } from "Apps/Order/Utils/getErrorDialogCopy"
+import { AppRouteConfig } from "System/Router/Route"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
@@ -43,7 +44,7 @@ export interface NewPaymentProps {
   order: NewPayment_order$data
   me: NewPayment_me$data
   router: Router
-  route: RouteConfig
+  route: AppRouteConfig
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean

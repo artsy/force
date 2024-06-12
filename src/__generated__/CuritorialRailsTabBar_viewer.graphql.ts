@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ddbbb72078dbe099b5935c8af59622fb>>
+ * @generated SignedSource<<39c73ad3ae19d2e84b3efa6064425553>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CuritorialRailsTabBar_viewer$data = {
-  readonly followedArtistsInAuction: {
-    readonly counts: {
-      readonly total: any | null | undefined;
-    } | null | undefined;
-  } | null | undefined;
-  readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"MyBids_me">;
-  } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"StandoutLotsRail_viewer" | "TrendingLotsRail_viewer" | "WorksByArtistsYouFollowRail_viewer">;
+  readonly " $fragmentSpreads": FragmentRefs<"StandoutLotsRail_viewer" | "TrendingLotsRail_viewer">;
   readonly " $fragmentType": "CuritorialRailsTabBar_viewer";
 };
 export type CuritorialRailsTabBar_viewer$key = {
@@ -36,89 +28,18 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "WorksByArtistsYouFollowRail_viewer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
       "name": "TrendingLotsRail_viewer"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
       "name": "StandoutLotsRail_viewer"
-    },
-    {
-      "alias": "followedArtistsInAuction",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 1
-        },
-        {
-          "kind": "Literal",
-          "name": "includeArtworksByFollowedArtists",
-          "value": true
-        },
-        {
-          "kind": "Literal",
-          "name": "isAuction",
-          "value": true
-        },
-        {
-          "kind": "Literal",
-          "name": "liveSale",
-          "value": true
-        }
-      ],
-      "concreteType": "SaleArtworksConnection",
-      "kind": "LinkedField",
-      "name": "saleArtworksConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "FilterSaleArtworksCounts",
-          "kind": "LinkedField",
-          "name": "counts",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "total",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "saleArtworksConnection(first:1,includeArtworksByFollowedArtists:true,isAuction:true,liveSale:true)"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Me",
-      "kind": "LinkedField",
-      "name": "me",
-      "plural": false,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "MyBids_me"
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "dec059894c8e871c01abce1b469a5827";
+(node as any).hash = "2f39ad7859740cdc958625503b9c6870";
 
 export default node;

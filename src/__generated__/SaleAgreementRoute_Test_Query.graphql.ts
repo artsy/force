@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4ef06f08849f5e4bbf8917904c8ebcf7>>
+ * @generated SignedSource<<504b6e9070b23ab04e118f0810e8e6e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,6 +41,11 @@ v2 = [
     "kind": "Literal",
     "name": "format",
     "value": "MMM Do, YYYY"
+  },
+  {
+    "kind": "Literal",
+    "name": "timezone",
+    "value": "UTC"
   }
 ],
 v3 = {
@@ -110,14 +115,14 @@ return {
             "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "displayStartAt",
-            "storageKey": "displayStartAt(format:\"MMM Do, YYYY\")"
+            "storageKey": "displayStartAt(format:\"MMM Do, YYYY\",timezone:\"UTC\")"
           },
           {
             "alias": null,
             "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "displayEndAt",
-            "storageKey": "displayEndAt(format:\"MMM Do, YYYY\")"
+            "storageKey": "displayEndAt(format:\"MMM Do, YYYY\",timezone:\"UTC\")"
           },
           {
             "alias": null,
@@ -146,12 +151,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "51bc53cd0d3df1b6552fdbbd9b3965a3",
+    "cacheID": "fc119b3e6e67e3ca5d7ff1574fc123d3",
     "id": null,
     "metadata": {},
     "name": "SaleAgreementRoute_Test_Query",
     "operationKind": "query",
-    "text": "query SaleAgreementRoute_Test_Query {\n  saleAgreement(id: \"abc123\") {\n    ...SaleAgreementRoute_saleAgreement\n    id\n  }\n}\n\nfragment SaleAgreementRoute_saleAgreement on SaleAgreement {\n  internalID\n  content(format: HTML)\n  displayStartAt(format: \"MMM Do, YYYY\")\n  displayEndAt(format: \"MMM Do, YYYY\")\n  sale {\n    internalID\n    name\n    id\n  }\n}\n"
+    "text": "query SaleAgreementRoute_Test_Query {\n  saleAgreement(id: \"abc123\") {\n    ...SaleAgreementRoute_saleAgreement\n    id\n  }\n}\n\nfragment SaleAgreementRoute_saleAgreement on SaleAgreement {\n  internalID\n  content(format: HTML)\n  displayStartAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n  displayEndAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n  sale {\n    internalID\n    name\n    id\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d70a3ee096bec95d3aabfdf25d06bad>>
+ * @generated SignedSource<<b4746f75f14aa5ff5704af0bb9628508>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,20 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
+export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkGrid_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
+      readonly artist: {
+        readonly targetSupply: {
+          readonly priority: ArtistTargetSupplyPriority | null | undefined;
+        };
+      } | null | undefined;
+      readonly consignmentSubmission: {
+        readonly state: ArtworkConsignmentSubmissionState;
+      } | null | undefined;
       readonly href: string | null | undefined;
       readonly id: string;
       readonly image: {
@@ -113,6 +123,53 @@ return {
               "storageKey": "image(includeAll:true)"
             },
             {
+              "alias": null,
+              "args": null,
+              "concreteType": "Artist",
+              "kind": "LinkedField",
+              "name": "artist",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "ArtistTargetSupply",
+                  "kind": "LinkedField",
+                  "name": "targetSupply",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "priority",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "ArtworkConsignmentSubmission",
+              "kind": "LinkedField",
+              "name": "consignmentSubmission",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "state",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
               "args": (v0/*: any*/),
               "kind": "FragmentSpread",
               "name": "GridItem_artwork"
@@ -134,6 +191,6 @@ return {
 };
 })();
 
-(node as any).hash = "90c729196de9afdcbd1c13676338c718";
+(node as any).hash = "7af70d288b96fac16ee9cd2e65df57d8";
 
 export default node;

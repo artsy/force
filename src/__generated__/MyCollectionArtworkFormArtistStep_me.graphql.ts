@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f737ad3f0ad75c3f59bf9690cfb65a84>>
+ * @generated SignedSource<<b20893dc0dd70b7e5642ac880bed8152>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,6 +33,7 @@ export type MyCollectionArtworkFormArtistStep_me$data = {
           readonly slug: string;
           readonly targetSupply: {
             readonly isP1: boolean | null | undefined;
+            readonly isTargetSupply: boolean | null | undefined;
           };
           readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
         } | null | undefined;
@@ -228,6 +229,13 @@ const node: ReaderFragment = {
                           "kind": "ScalarField",
                           "name": "isP1",
                           "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "isTargetSupply",
+                          "storageKey": null
                         }
                       ],
                       "storageKey": null
@@ -249,6 +257,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "68f3932e5f0218e2d93b6fa0bd67aea1";
+(node as any).hash = "de74a264b97ed3b8f327dbe40eaeba60";
 
 export default node;

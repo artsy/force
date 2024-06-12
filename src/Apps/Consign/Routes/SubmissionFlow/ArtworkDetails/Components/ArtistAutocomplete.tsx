@@ -240,6 +240,7 @@ const fetchSuggestions = async (
                 }
                 targetSupply {
                   isP1
+                  isTargetSupply
                 }
               }
             }

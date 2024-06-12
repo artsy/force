@@ -25,7 +25,7 @@ import { useSystemContext } from "System/SystemContext"
 const IGNORE_PATHS = ["/meet-your-new-art-advisor"]
 
 const APP_BANNER_SRC =
-  "https://files.artsy.net/images/universal-footer_april-14.jpg"
+  "https://files.artsy.net/images/universal-footer_april-14_cropped.jpg"
 
 export const FooterDownloadAppBanner = () => {
   const { relayEnvironment } = useSystemContext()
@@ -36,6 +36,10 @@ export const FooterDownloadAppBanner = () => {
 
   useEffect(() => {
     const checkIfPrivateArtwork = async () => {
+      const artworkSlug = match?.params?.artworkID
+      if (!artworkSlug) {
+        return
+      }
       const data = await fetchQuery<FooterDownloadAppBannerQuery>(
         relayEnvironment,
         graphql`
@@ -46,7 +50,7 @@ export const FooterDownloadAppBanner = () => {
           }
         `,
         {
-          slug: match?.params?.artworkID,
+          slug: artworkSlug,
         }
       ).toPromise()
 

@@ -45,7 +45,7 @@ export const CollectorProfileArtistsRoute: FC<CollectorProfileArtistsRouteProps>
         >
           <LabeledInput
             ref={inputRef}
-            placeholder="Search artists for artists on Artsy"
+            placeholder="Search artists in My Collection"
             label={
               term ? (
                 <Clickable

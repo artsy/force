@@ -10,9 +10,10 @@ import { Device } from "Utils/Hooks/useDeviceDetection"
 // - Avoids adding ~15kb to every page load
 // - Can be cached
 // - Can be lazyloaded
-const DOWNLOAD_IOS_APP_BADGE = "https://files.artsy.net/images/download-ios.svg"
+const DOWNLOAD_IOS_APP_BADGE =
+  "https://files.artsy.net/images/download-ios_cropped_optimized.svg"
 const DOWNLOAD_ANDROID_APP_BADGE =
-  "https://files.artsy.net/images/download-google-play.svg"
+  "https://files.artsy.net/images/download-google-play_cropped_optimized.svg"
 
 interface DownloadAppBadgeProps extends LinkProps {
   contextModule: ContextModule
@@ -38,7 +39,7 @@ export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = ({
     const clickedAppDownload: ClickedAppDownload = {
       action: ActionType.clickedAppDownload,
       context_module: contextModule,
-      context_page_owner_type: contextPageOwnerType!,
+      context_page_owner_type: contextPageOwnerType,
       context_page_owner_slug: contextPageOwnerSlug,
       context_page_owner_id: contextPageOwnerId,
       destination_path: downloadAppUrl,
@@ -75,7 +76,7 @@ export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = ({
       {device === Device.Android && (
         <img
           src={DOWNLOAD_ANDROID_APP_BADGE}
-          width={136}
+          width={131}
           height={40}
           alt="Get it on Google Play"
           loading="lazy"

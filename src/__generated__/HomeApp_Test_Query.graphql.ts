@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<27fce53f6425b9b07e8047f76d6feeaa>>
+ * @generated SignedSource<<61154854c32c1aeba16f3b910a95b7bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -226,13 +226,13 @@ return {
                           {
                             "kind": "Literal",
                             "name": "height",
-                            "value": 63
+                            "value": 80
                           },
                           (v3/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
-                            "value": 95
+                            "value": 80
                           }
                         ],
                         "concreteType": "CroppedImageUrl",
@@ -257,7 +257,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "storageKey": "cropped(height:63,version:[\"main\",\"wide\",\"large_rectangle\"],width:95)"
+                        "storageKey": "cropped(height:80,version:[\"main\",\"wide\",\"large_rectangle\"],width:80)"
                       },
                       {
                         "alias": "large",
@@ -413,7 +413,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e913e48788a1b3e34c8c6e5a6f5bac23",
+    "cacheID": "539513fa29bafd1ad9175b04a5589e38",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -483,7 +483,7 @@ return {
     },
     "name": "HomeApp_Test_Query",
     "operationKind": "query",
-    "text": "query HomeApp_Test_Query {\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n  heroUnitsConnection(first: 10) {\n    ...HomeApp_heroUnitsConnection\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_heroUnitsConnection on HeroUnitConnection {\n  ...HomeHeroUnits_heroUnits\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HeroUnit {\n  body\n  credit\n  image {\n    imageURL\n  }\n  label\n  link {\n    text\n    url\n  }\n  title\n}\n\nfragment HomeHeroUnits_heroUnits on HeroUnitConnection {\n  edges {\n    node {\n      ...HomeHeroUnit_heroUnit\n      id\n    }\n  }\n}\n"
+    "text": "query HomeApp_Test_Query {\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n  heroUnitsConnection(first: 10) {\n    ...HomeApp_heroUnitsConnection\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_heroUnitsConnection on HeroUnitConnection {\n  ...HomeHeroUnits_heroUnits\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 80, height: 80, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HeroUnit {\n  body\n  credit\n  image {\n    imageURL\n  }\n  label\n  link {\n    text\n    url\n  }\n  title\n}\n\nfragment HomeHeroUnits_heroUnits on HeroUnitConnection {\n  edges {\n    node {\n      ...HomeHeroUnit_heroUnit\n      id\n    }\n  }\n}\n"
   }
 };
 })();

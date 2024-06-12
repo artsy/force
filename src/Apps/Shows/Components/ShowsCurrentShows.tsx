@@ -93,6 +93,7 @@ const ShowsCurrentShowsPaginationContainer = createPaginationContainer(
           atAFair: false
           sort: END_AT_ASC
           status: CURRENT
+          hasLocation: true
         ) @connection(key: "ShowsCurrentShowsQuery_showsConnection") {
           pageInfo {
             hasNextPage

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6290604d27cad2565d53cc4af2d8fcbf>>
+ * @generated SignedSource<<fa05c2297f9d81ff94d1e5366d0644b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrivateArtworkAboutArtist_artwork$data = {
-  readonly artist: {
+  readonly artists: ReadonlyArray<{
     readonly biographyBlurb: {
       readonly text: string | null | undefined;
     } | null | undefined;
@@ -33,15 +33,10 @@ export type PrivateArtworkAboutArtist_artwork$data = {
     readonly initials: string | null | undefined;
     readonly internalID: string;
     readonly name: string | null | undefined;
-    readonly partnerArtists: ReadonlyArray<{
-      readonly biography: string | null | undefined;
-    } | null | undefined> | null | undefined;
-    readonly partnerBiographyBlurb: {
-      readonly text: string | null | undefined;
-    } | null | undefined;
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
-  } | null | undefined;
+  } | null | undefined> | null | undefined;
+  readonly displayArtistBio: boolean | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "PrivateArtworkAboutArtist_artwork";
 };
@@ -57,35 +52,28 @@ var v0 = {
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
-},
-v1 = {
-  "kind": "Literal",
-  "name": "format",
-  "value": "HTML"
-},
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "text",
-    "storageKey": null
-  }
-];
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "PrivateArtworkAboutArtist_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "displayArtistBio",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "concreteType": "Artist",
       "kind": "LinkedField",
-      "name": "artist",
-      "plural": false,
+      "name": "artists",
+      "plural": true,
       "selections": [
         {
           "args": null,
@@ -220,43 +208,12 @@ return {
         },
         {
           "alias": null,
-          "args": null,
-          "concreteType": "PartnerArtist",
-          "kind": "LinkedField",
-          "name": "partnerArtists",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "biography",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": "partnerBiographyBlurb",
           "args": [
-            (v1/*: any*/),
             {
               "kind": "Literal",
-              "name": "partnerBio",
-              "value": true
-            }
-          ],
-          "concreteType": "ArtistBlurb",
-          "kind": "LinkedField",
-          "name": "biographyBlurb",
-          "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)"
-        },
-        {
-          "alias": null,
-          "args": [
-            (v1/*: any*/),
+              "name": "format",
+              "value": "HTML"
+            },
             {
               "kind": "Literal",
               "name": "partnerBio",
@@ -267,7 +224,15 @@ return {
           "kind": "LinkedField",
           "name": "biographyBlurb",
           "plural": false,
-          "selections": (v2/*: any*/),
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "text",
+              "storageKey": null
+            }
+          ],
           "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
         }
       ],
@@ -279,6 +244,6 @@ return {
 };
 })();
 
-(node as any).hash = "f392c1ebdd4c8e41b5b49fe1bba60455";
+(node as any).hash = "e80b892b9afca1198326fce527569b5c";
 
 export default node;

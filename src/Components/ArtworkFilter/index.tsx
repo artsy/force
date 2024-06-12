@@ -325,7 +325,7 @@ export const BaseArtworkFilter: React.FC<
           filtered_artworks={viewer.filtered_artworks}
           isLoading={isLoading}
           offset={offset}
-          columnCount={[2, 2, 2, 3]}
+          columnCount={[2, 3]}
         />
       </Media>
 
@@ -422,7 +422,7 @@ export const BaseArtworkFilter: React.FC<
             filtered_artworks={viewer.filtered_artworks}
             isLoading={isLoading}
             offset={offset}
-            columnCount={[2, 3, 3, 4]}
+            columnCount={[2, 3, 4]}
           />
         )}
       </Media>

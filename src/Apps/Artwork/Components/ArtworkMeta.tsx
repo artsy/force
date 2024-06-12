@@ -1,32 +1,37 @@
-import { ArtworkMeta_artwork$data } from "__generated__/ArtworkMeta_artwork.graphql"
-import { Component } from "react"
+import { ArtworkMeta_artwork$key } from "__generated__/ArtworkMeta_artwork.graphql"
 import { Link, Meta, Title } from "react-head"
-import { createFragmentContainer, graphql } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
-import { data as sd } from "sharify"
-import { get } from "Utils/get"
+import { graphql, useFragment } from "react-relay"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
 import { ArtworkChatBubbleFragmentContainer } from "./ArtworkChatBubble"
+import { getENV } from "Utils/getENV"
+import { useRouter } from "System/Router/useRouter"
 
 interface ArtworkMetaProps {
-  artwork: ArtworkMeta_artwork$data
+  artwork: ArtworkMeta_artwork$key
 }
 
-export class ArtworkMeta extends Component<ArtworkMetaProps> {
-  renderImageMetaTags() {
-    const { artwork } = this.props
-    const { metaImage, isShareable } = artwork
-    const imageURL = get(metaImage, img => img?.resized?.url)
+export const ArtworkMeta: React.FC<ArtworkMetaProps> = ({ artwork }) => {
+  const { match } = useRouter()
+  const data = useFragment(artworkMetaFragment, artwork)
 
-    if (isShareable && imageURL) {
+  const pathname = match.location.pathname
+  const imageURL = data.metaImage?.resized?.url
+
+  const addNoIndex = data.isUnlisted || pathname.includes(data?.internalID) // a previously private artwork URL
+
+  const renderImageMetaTags = () => {
+    if (data.isShareable && imageURL) {
       return (
         <>
           <Meta property="twitter:card" content="summary_large_image" />
           <Meta property="og:image" content={imageURL} />
-          <Meta property="og:image:width" content={metaImage?.resized?.width} />
+          <Meta
+            property="og:image:width"
+            content={data.metaImage?.resized?.width}
+          />
           <Meta
             property="og:image:height"
-            content={metaImage?.resized?.height}
+            content={data.metaImage?.resized?.height}
           />
         </>
       )
@@ -35,75 +40,50 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
     return <Meta property="twitter:card" content="summary" />
   }
 
-  render() {
-    const { artwork } = this.props
-    const imageURL = get(artwork, a => a.metaImage?.resized?.url)
-    const addNoIndex = artwork?.visibilityLevel == "UNLISTED"
-
-    return (
-      <>
-        <Title>{artwork.meta?.title}</Title>
-
-        <Meta name="description" content={artwork.meta?.description} />
-
-        {imageURL && <Meta name="thumbnail" content={imageURL} />}
-
-        <Link rel="canonical" href={`${sd.APP_URL}${artwork.href}`} />
-
-        <Meta
-          property="twitter:description"
-          content={artwork.meta?.longDescription}
-        />
-
-        <Meta property="og:title" content={artwork.meta?.title} />
-
-        <Meta property="og:description" content={artwork.meta?.description} />
-
-        <Meta property="og:url" content={`${sd.APP_URL}${artwork.href}`} />
-
-        <Meta
-          property="og:type"
-          content={`${sd.FACEBOOK_APP_NAMESPACE}:artwork`}
-        />
-
-        <SeoDataForArtwork artwork={artwork} />
-
-        {this.renderImageMetaTags()}
-        {addNoIndex && <Meta name="robots" content="noindex, follow" />}
-
-        <ArtworkChatBubbleFragmentContainer artwork={artwork} />
-      </>
-    )
-  }
+  return (
+    <>
+      <Title>{data.meta?.title}</Title>
+      <Meta name="description" content={data.meta?.description} />
+      {imageURL && <Meta name="thumbnail" content={imageURL} />}
+      <Link rel="canonical" href={`${getENV("APP_URL")}${data.href}`} />
+      <Meta
+        property="twitter:description"
+        content={data.meta?.longDescription}
+      />
+      <Meta property="og:title" content={data.meta?.title} />
+      <Meta property="og:description" content={data.meta?.description} />
+      <Meta property="og:url" content={`${getENV("APP_URL")}${data.href}`} />
+      <Meta
+        property="og:type"
+        content={`${getENV("FACEBOOK_APP_NAMESPACE")}:artwork`}
+      />
+      <SeoDataForArtwork artwork={data} />
+      {renderImageMetaTags()}
+      {addNoIndex && <Meta name="robots" content="noindex, follow" />}
+      <ArtworkChatBubbleFragmentContainer artwork={data} />
+    </>
+  )
 }
 
-export const ArtworkMetaFragmentContainer = createFragmentContainer(
-  ArtworkMeta,
-  {
-    artwork: graphql`
-      fragment ArtworkMeta_artwork on Artwork {
-        ...SeoDataForArtwork_artwork
-        ...ArtworkChatBubble_artwork
-        href
-        isShareable
-        visibilityLevel
-        metaImage: image {
-          resized(
-            width: 640
-            height: 640
-            version: ["large", "medium", "tall"]
-          ) {
-            width
-            height
-            url
-          }
-        }
-        meta {
-          title
-          description(limit: 155)
-          longDescription: description(limit: 200)
-        }
+const artworkMetaFragment = graphql`
+  fragment ArtworkMeta_artwork on Artwork {
+    ...SeoDataForArtwork_artwork
+    ...ArtworkChatBubble_artwork
+    href
+    internalID
+    isShareable
+    isUnlisted
+    metaImage: image {
+      resized(width: 640, height: 640, version: ["large", "medium", "tall"]) {
+        width
+        height
+        url
       }
-    `,
+    }
+    meta {
+      title
+      description(limit: 155)
+      longDescription: description(limit: 200)
+    }
   }
-)
+`

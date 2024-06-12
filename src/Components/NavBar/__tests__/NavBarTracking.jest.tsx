@@ -14,6 +14,10 @@ jest.mock("Server/isServer", () => ({
   isServer: true,
 }))
 
+jest.mock("Components/NavBar/Menus/NavBarUserMenuAvatar", () => ({
+  NavBarUserMenuAvatar: () => <div />,
+}))
+
 describe("NavBarTracking", () => {
   const trackEvent = jest.fn()
 

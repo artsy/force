@@ -29,7 +29,7 @@ import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
-import { Sticky } from "Components/Sticky"
+import { useJump } from "Utils/Hooks/useJump"
 
 interface SavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -66,24 +66,27 @@ const SavedSearchAlertEditSteps: React.FC<SavedSearchAlertEditStepsProps> = ({
     <>
       <Media greaterThanOrEqual="md">
         {current === "ALERT_DETAILS" && (
-          <Sticky bottomBoundary="#content-end">
-            <Box p={4}>
-              <Flex justifyContent="space-between">
-                <ModalHeader />
-              </Flex>
-              <Spacer y={4} />
-              <SavedSearchAlertEditForm
-                viewer={viewer}
-                onDeleteClick={onDeleteClick}
-                onCompleted={onCompleted}
-              />
-            </Box>
-          </Sticky>
+          <Box p={4}>
+            <Flex justifyContent="space-between">
+              <ModalHeader />
+            </Flex>
+
+            <Spacer y={4} />
+
+            <SavedSearchAlertEditForm
+              viewer={viewer}
+              onDeleteClick={onDeleteClick}
+              onCompleted={onCompleted}
+            />
+          </Box>
         )}
+
         {current === "ALERT_FILTERS" && (
           <Box flex={1} px={2} pt={4}>
             <ModalHeader />
+
             <Filters />
+
             <FiltersFooter />
           </Box>
         )}
@@ -99,6 +102,7 @@ const SavedSearchAlertEditSteps: React.FC<SavedSearchAlertEditStepsProps> = ({
                 onCompleted={onCompleted}
               />
             )}
+
             {current === "ALERT_FILTERS" && <Filters />}
           </Flex>
         </Modal>
@@ -112,6 +116,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   onCompleted,
 }) => {
   const { state, goToFilters, dispatch, onComplete } = useAlertContext()
+  const { jumpTo } = useJump()
 
   const isMounted = useDidMount()
 
@@ -135,6 +140,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
         const transitionToFilters = () => {
           goToFilters()
+          jumpTo("Alerts")
         }
 
         return (

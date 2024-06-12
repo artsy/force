@@ -1,19 +1,19 @@
 import { getAppRoutes } from "routes"
 import { compact, uniq } from "lodash"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "System/Router/Route"
 
 export function getRouteConfig(): {
-  routes: RouteConfig[]
+  routes: AppRouteConfig[]
   routePaths: string[]
-  flatRoutes: RouteConfig[]
+  flatRoutes: AppRouteConfig[]
 } {
   const routes = getAppRoutes()
 
   // Store all routes, including `children` routes, in a flat array. Useful for
   // lookup and other forms of introspection.
-  const flatRoutes: RouteConfig[] = []
+  const flatRoutes: AppRouteConfig[] = []
 
-  const getRoutes = (acc, route: RouteConfig, basePath = "") => {
+  const getRoutes = (acc, route: AppRouteConfig, basePath = "") => {
     const path = compact([basePath, route.path]).join("/")
 
     const INVALID_PATHS = ["/", "*"]

@@ -4,21 +4,22 @@ import {
   createMockNetworkLayer,
   createMockNetworkLayer2,
 } from "DevTools/createMockNetworkLayer"
-import { FarceCreateRouterArgs, RouteConfig } from "found"
 import { IMocks } from "graphql-tools/dist/Interfaces"
 import React, { useEffect, useState } from "react"
 import { getUser } from "Utils/user"
 import { AppShell } from "Apps/Components/AppShell"
 import { Environment } from "react-relay"
+import { AppRouteConfig } from "System/Router/Route"
+import { HistoryEnhancerOptions } from "farce"
 
 interface MockRouterProps {
   context?: RouterConfig["context"]
-  historyOptions?: FarceCreateRouterArgs["historyOptions"]
+  historyOptions?: HistoryEnhancerOptions
   initialRoute?: string
   mockData?: object
   mockMutationResults?: object
   mockResolvers?: IMocks
-  routes: RouteConfig[]
+  routes: AppRouteConfig[]
 }
 
 export const MockRouter: React.FC<MockRouterProps> = ({

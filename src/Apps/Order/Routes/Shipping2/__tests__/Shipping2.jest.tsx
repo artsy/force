@@ -271,6 +271,7 @@ describe.skip("Shipping", () => {
   const mockPush = jest.fn()
 
   beforeEach(() => {
+    HTMLElement.prototype.scrollIntoView = jest.fn()
     mockTrackEvent = jest.fn()
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: mockTrackEvent,
@@ -2312,10 +2313,6 @@ describe.skip("Shipping", () => {
           "Add phone number including country code"
         )[0],
         "2813308004"
-      )
-      await userEvent.paste(
-        screen.getByPlaceholderText("Full name"),
-        "Joelle Van Dyne"
       )
 
       await flushPromiseQueue()

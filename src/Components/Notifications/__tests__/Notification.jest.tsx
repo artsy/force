@@ -1,6 +1,6 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { NotificationQueryRenderer } from "Components/Notifications/Notification"
-import { NotificationsContextProvider } from "Components/Notifications/useNotificationsContext"
+import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 const mockRouterReplace = jest.fn()

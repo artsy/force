@@ -24,8 +24,6 @@ Execute the setup script:
 ./scripts/setup.sh
 ```
 
-> NOTE: for nvm users, after setup finishes: `nvm use`
-
 Start the server:
 
 ```sh

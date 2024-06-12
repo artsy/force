@@ -63,6 +63,13 @@ const formValuesToMutationInput = (
     values.newPhotos.flatMap(photo => photo.url || null)
   )
 
+  const collectorLocation = {
+    city: values.collectorLocation?.city || null,
+    state: values.collectorLocation?.state || null,
+    country: values.collectorLocation?.country || null,
+    countryCode: values.collectorLocation?.countryCode || null,
+  }
+
   return {
     artworkId: artwork?.internalID,
     artistIds: [values.artistId],
@@ -90,7 +97,7 @@ const formValuesToMutationInput = (
         : Number(values.pricePaidDollars) * 100,
     pricePaidCurrency: values.pricePaidCurrency,
     provenance: values.provenance,
-    artworkLocation: values.artworkLocation,
+    collectorLocation,
     confidentialNotes: values.confidentialNotes,
   }
 }

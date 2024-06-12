@@ -1,15 +1,10 @@
-import {
-  Theme,
-  injectGlobalStyles,
-  THEME,
-  ToastsProvider,
-} from "@artsy/palette"
+import { Theme, injectGlobalStyles, ToastsProvider } from "@artsy/palette"
 import { SystemContextProvider } from "System/SystemContext"
 import { AppRouteConfig } from "System/Router/Route"
 import { FC, useEffect } from "react"
 import * as React from "react"
 import { HeadProvider } from "react-head"
-import { Environment } from "react-relay"
+import { Environment, RelayEnvironmentProvider } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 // eslint-disable-next-line no-restricted-imports
@@ -18,11 +13,7 @@ import Events from "Utils/Events"
 import { getENV } from "Utils/getENV"
 import { ErrorBoundary } from "./ErrorBoundary"
 import { FocusVisible } from "Components/FocusVisible"
-import {
-  MatchingMediaQueries,
-  MediaContextProvider,
-  ResponsiveProvider,
-} from "Utils/Responsive"
+import { MatchingMediaQueries, MediaContextProvider } from "Utils/Responsive"
 import { ClientContext } from "System/Router/buildClientAppContext"
 import { SiftContainer } from "Utils/SiftContainer"
 import { setupSentryClient } from "Server/setupSentryClient"
@@ -38,7 +29,6 @@ import {
   AppPreferencesProvider,
   useAppPreferences,
 } from "Apps/AppPreferences/useAppPreferences"
-import { TermsUpdateDialog } from "Components/TermsUpdateDialog"
 
 export interface BootProps {
   children: React.ReactNode
@@ -88,12 +78,9 @@ export const Boot = track(undefined, {
         <HeadProvider headTags={headTags}>
           <StateProvider>
             <SystemContextProvider {...contextProps}>
-              <ErrorBoundary>
-                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                  <ResponsiveProvider
-                    mediaQueries={THEME.mediaQueries}
-                    initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                  >
+              <EnvironmentProvider environment={props.relayEnvironment}>
+                <ErrorBoundary>
+                  <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
                     <ToastsProvider>
                       <StickyProvider>
                         <AuthIntentProvider>
@@ -106,8 +93,6 @@ export const Boot = track(undefined, {
                                 <FocusVisible />
                                 <SiftContainer />
 
-                                <TermsUpdateDialog />
-
                                 {children}
                               </CookieConsentManager>
                             </DismissibleProvider>
@@ -115,9 +100,9 @@ export const Boot = track(undefined, {
                         </AuthIntentProvider>
                       </StickyProvider>
                     </ToastsProvider>
-                  </ResponsiveProvider>
-                </MediaContextProvider>
-              </ErrorBoundary>
+                  </MediaContextProvider>
+                </ErrorBoundary>
+              </EnvironmentProvider>
             </SystemContextProvider>
           </StateProvider>
         </HeadProvider>
@@ -125,6 +110,19 @@ export const Boot = track(undefined, {
     </AppPreferencesProvider>
   )
 })
+
+const EnvironmentProvider: FC<{ environment: Environment }> = ({
+  children,
+  environment,
+}) => {
+  if (process.env.NODE_ENV === "test") return <>{children}</>
+
+  return (
+    <RelayEnvironmentProvider environment={environment}>
+      {children}
+    </RelayEnvironmentProvider>
+  )
+}
 
 const ThemeProvider: FC = ({ children }) => {
   const { preferences } = useAppPreferences()

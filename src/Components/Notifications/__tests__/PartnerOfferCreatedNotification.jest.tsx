@@ -2,7 +2,6 @@ import { screen } from "@testing-library/react"
 import { PartnerOfferCreatedNotification } from "Components/Notifications/PartnerOfferCreatedNotification"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { PartnerOfferCreatedNotification_test_Query } from "__generated__/PartnerOfferCreatedNotification_test_Query.graphql"
 
 jest.unmock("react-relay")
@@ -34,12 +33,6 @@ const { renderWithRelay } = setupTestWrapperTL<
 })
 
 describe("PartnerOfferCreatedNotification", () => {
-  beforeAll(() => {
-    ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "emerald_partner-offers-to-artwork-page"
-    )
-  })
-
   it("renders page", () => {
     renderWithRelay({
       Notification: () => notification(),
@@ -52,7 +45,7 @@ describe("PartnerOfferCreatedNotification", () => {
     ).toBeInTheDocument()
     expect(screen.getByTestId("manage-saves-link")).toHaveAttribute(
       "href",
-      "/collector-profile/saves"
+      "/favorites/saves"
     )
 
     // artwork
@@ -89,6 +82,24 @@ describe("PartnerOfferCreatedNotification", () => {
     })
   })
 
+  describe("when offer comes from an abandoned order", () => {
+    it("renders an appropriate subtitle", () => {
+      renderWithRelay({
+        Notification: () =>
+          notification(
+            "2099-01-01T00:00:00+00:00",
+            true,
+            "Please buy this!",
+            "ABANDONED_ORDER"
+          ),
+      })
+
+      expect(
+        screen.getByText("Review the offer before it expires")
+      ).toBeInTheDocument()
+    })
+  })
+
   describe("button states", () => {
     describe("when offer is expired", () => {
       it("renders View Work button", () => {
@@ -121,7 +132,8 @@ describe("PartnerOfferCreatedNotification", () => {
 const notification = (
   endAt = "2099-01-01T00:00:00+00:00",
   isAvailable = true,
-  note = ""
+  note = "",
+  source = "SAVE"
 ) => {
   return {
     headline: "Saved work by Damon Zucconi",
@@ -131,6 +143,7 @@ const notification = (
         endAt: endAt,
         isAvailable: isAvailable,
         note: note,
+        source: source,
         priceWithDiscount: {
           display: "$900",
         },

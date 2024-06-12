@@ -230,15 +230,6 @@ type AdminUpdateFeatureFlagPayload {
   ): [FeatureFlag]
 }
 
-type AdvisoryOpportunity {
-  # A globally unique ID.
-  id: ID!
-
-  # A type-specific ID.
-  internalID: ID!
-  message: String
-}
-
 # One item in an aggregation
 type AggregationCount {
   count: Int!
@@ -1685,6 +1676,19 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   birthday: String
   blurb(format: Format): String
   cached: Int
+  careerHighlights(
+    # Filter by collected shows.
+    collected: Boolean
+
+    # Filter by group shows.
+    group: Boolean
+
+    # The slug or ID of the Partner
+    partnerId: String
+
+    # Filter by solo shows.
+    solo: Boolean
+  ): [CareerHighlight!]!
   carousel: ArtistCarousel
   collections: [String]
   contemporary(
@@ -1850,6 +1854,10 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     # The number of PartnerArtists to return
     size: Int
   ): [PartnerArtist]
+
+  # The Partner's provided biography for the artist
+  partnerBiographyBlurb(format: Format): partnerBiographyBlurb
+    @deprecated(reason: "This field is deprecated. No longer in use")
   partnersConnection(
     after: String
     before: String
@@ -2113,10 +2121,13 @@ type ArtistPartnerEdge {
 
   # A globally unique ID.
   id: ID!
+  image: Image
+  imageUrl: String
 
   # A type-specific ID.
   internalID: ID!
   isDisplayOnPartnerProfile: Boolean
+  isHiddenInPresentationMode: Boolean
   isUseDefaultBiography: Boolean
 
   # The item at the end of the edge
@@ -2372,6 +2383,7 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Returns the display label and detail when artwork has a certificate of authenticity
   certificateOfAuthenticity: ArtworkInfoRow
+  certificateOfAuthenticityDetails: CertificateOfAuthenticityDetails
   collectingInstitution: String
   collectionsConnection(
     after: String
@@ -2455,6 +2467,11 @@ type Artwork implements Node & Searchable & Sellable {
   # Formatted artwork metadata, including artist, title, date and partner; e.g., 'Andy Warhol, Truck, 1980, Westward Gallery'.
   formattedMetadata: String
   framed: ArtworkInfoRow
+    @deprecated(reason: "Consider using isFramed field (boolean) instead")
+  framedDepth: String
+  framedHeight: String
+  framedMetric: String
+  framedWidth: String
 
   # Returns true when artwork has a certificate of authenticity
   hasCertificateOfAuthenticity: Boolean
@@ -2530,6 +2547,7 @@ type Artwork implements Node & Searchable & Sellable {
   isEligibleToCreateAlert: Boolean!
   isEmbeddableVideo: Boolean
   isForSale: Boolean
+  isFramed: Boolean
   isHangable: Boolean
 
   # Is this artwork part of an auction?
@@ -2567,6 +2585,14 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Artwork is marked as "unlisted" (or private) by the partner
   isUnlisted: Boolean!
+  lastOfferableActivityAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
   lastSavedAt(
     format: String
 
@@ -2605,6 +2631,9 @@ type Artwork implements Node & Searchable & Sellable {
   # The unit of length of the artwork, expressed in `in` or `cm`
   metric: String
   myLotStanding(live: Boolean = null): [LotStanding!]
+
+  # Count of collectors with eligible offerable activities.
+  offerableActivity: OfferableActivity
 
   # Is this work only available for shipping domestically?
   onlyShipsDomestically: Boolean
@@ -2647,6 +2676,9 @@ type Artwork implements Node & Searchable & Sellable {
   realizedPrice: String
   realizedToEstimate: String
 
+  # Count of abandoned orders, in the last 30 days.
+  recentAbandonedOrdersCount: Int
+
   # Count of collected artworks, in saves collections, in the last 30 days
   recentSavesCount: Int
   related(size: Int): [Artwork]
@@ -2675,6 +2707,7 @@ type Artwork implements Node & Searchable & Sellable {
   show(active: Boolean, atAFair: Boolean, sort: ShowSorts): Show
   shows(active: Boolean, atAFair: Boolean, size: Int, sort: ShowSorts): [Show]
   signature(format: Format): String
+  signatureDetails: String
   signatureInfo: ArtworkInfoRow
 
   # size bucket assigned to an artwork based on its dimensions
@@ -2756,10 +2789,29 @@ interface ArtworkConnectionInterface {
 }
 
 type ArtworkConsignmentSubmission {
-  displayText: String
+  displayText: String @deprecated(reason: "Prefer `stateLabel` field.")
   inProgress: Boolean
   internalID: String
   isSold: Boolean
+
+  # Submission state.
+  state: ArtworkConsignmentSubmissionState!
+
+  # More information about the submission state.
+  stateHelpMessage: String
+
+  # Submission state label visible to the user.
+  stateLabel: String
+}
+
+enum ArtworkConsignmentSubmissionState {
+  APPROVED
+  CLOSED
+  DRAFT
+  HOLD
+  PUBLISHED
+  REJECTED
+  SUBMITTED
 }
 
 union ArtworkContext = Fair | Sale | Show
@@ -3000,6 +3052,26 @@ type ArtworksCollectionsBatchUpdateSuccess {
   removedFromCollections: [Collection]
 }
 
+enum ArtworkSignatureTypeEnum {
+  # The artwork is hand signed by the artist
+  HAND_SIGNED_BY_ARTIST
+
+  # The artwork is not signed
+  NOT_SIGNED
+
+  # The artwork has another type of signature
+  OTHER
+
+  # The artwork is signed in the plate
+  SIGNED_IN_PLATE
+
+  # The artwork is stamped by the artist's estate
+  STAMPED_BY_ARTIST_ESTATE
+
+  # The artwork has a sticker label
+  STICKER_LABEL
+}
+
 enum ArtworkSizes {
   LARGE
   MEDIUM
@@ -3013,6 +3085,7 @@ enum ArtworkSorts {
   DELETED_AT_ASC
   DELETED_AT_DESC
   ICONICITY_DESC
+  LAST_OFFERABLE_ACTIVITY_AT_DESC
   LAST_SAVED_AT_DESC
   MERCHANDISABILITY_DESC
   PARTNER_UPDATED_AT_DESC
@@ -3960,6 +4033,21 @@ type CaptureHoldPayload {
   holdOrError: InventoryHoldOrErrorUnion!
 }
 
+type CareerHighlight implements Node {
+  artist: Artist!
+  collected: Boolean!
+  group: Boolean!
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID.
+  internalID: ID!
+  partner: Partner!
+  solo: Boolean!
+  venue: String!
+}
+
 type CausalityLotState {
   bidCount: Int
   floorSellingPrice: Money
@@ -3972,6 +4060,11 @@ type CausalityLotState {
   sellingPrice: Money
   sellingPriceCents: Int
   soldStatus: String
+}
+
+type CertificateOfAuthenticityDetails {
+  coaByAuthenticatingBody: Boolean
+  coaByGallery: Boolean
 }
 
 type Channel {
@@ -4065,8 +4158,15 @@ type Collection {
     after: String
     before: String
     first: Int
+    forSale: Boolean
     last: Int
     page: Int
+
+    # In USD Dollars
+    priceMax: Int
+
+    # In USD Dollars
+    priceMin: Int
     sort: CollectionArtworkSorts
   ): ArtworkConnection
 
@@ -4203,6 +4303,12 @@ type CollectorProfileType implements Node {
 
   # User ID of the collector profile's owner
   ownerID: ID!
+
+  # Holds information about the engagement a collector profile has with a given partner
+  partnerEngagement(
+    # The ID of the partner to check for engagement
+    partnerID: ID!
+  ): PartnerEngagement
   privacy: String
   profession: String
   professionalBuyerAppliedAt(
@@ -4223,6 +4329,12 @@ type CollectorProfileType implements Node {
   ): String
   savedArtworksCount: Int!
   selfReportedPurchases: String
+
+  # An artwork-specific paragraph describing the collector.
+  summaryParagraph(
+    # This can be specified, and is injected in a conversation context for convenience.
+    artworkID: String
+  ): String
   totalBidsCount: Int!
   userInterests: [UserInterest]!
     @deprecated(reason: "Use \"owner#interestsConnection\" field instead.")
@@ -4489,6 +4601,7 @@ type CommerceBuyOrder implements CommerceOrder {
     timezone: String
   ): String
   lastTransactionFailed: Boolean
+  lastTransactionFailureCode: String
   lineItems(
     # Returns the elements in the list that come after the specified cursor.
     after: String
@@ -4752,6 +4865,9 @@ input CommerceCreateOfferOrderWithArtworkInput {
   # submitted orders on same artwork/edition with same quantity, we will return that
   findActiveOrCreate: Boolean = true
 
+  # PartnerOffer Id
+  partnerOfferId: String
+
   # Number of items in the line item, default is 1
   quantity: Int
 }
@@ -4798,6 +4914,9 @@ input CommerceCreatePartnerOfferOrderInput {
 
   # EditionSet Id
   editionSetId: String
+
+  # Impulse conversation id corresponding to an order.
+  impulseConversationId: String
 
   # PartnerOffer Id
   partnerOfferId: String!
@@ -5255,6 +5374,7 @@ type CommerceOfferOrder implements CommerceOrder {
     timezone: String
   ): String
   lastTransactionFailed: Boolean
+  lastTransactionFailureCode: String
   lineItems(
     # Returns the elements in the list that come after the specified cursor.
     after: String
@@ -5488,6 +5608,7 @@ interface CommerceOrder {
     timezone: String
   ): String
   lastTransactionFailed: Boolean
+  lastTransactionFailureCode: String
   lineItems(
     # Returns the elements in the list that come after the specified cursor.
     after: String
@@ -5894,9 +6015,6 @@ type CommerceSellerAcceptOfferPayload {
 input CommerceSellerAcceptProvisionalOfferInput {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
-
-  # If location was set in the accept offer step
-  locationFilledOnOrder: Boolean
   offerId: ID!
 
   # Shipping info belonging to this specific order. It overrides the defined shipping costs of the artwork.
@@ -5918,9 +6036,6 @@ input CommerceSellerCounterOfferInput {
 
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
-
-  # If location was set in the counter offer step
-  locationFilledOnOrder: Boolean
   note: String
   offerId: ID!
   shippingContact: CommerceShippingContactAttributes
@@ -6862,6 +6977,8 @@ type ConsignmentSubmission {
   locationState: String
   medium: String
   minimumPriceDollars: Int
+  myCollectionArtwork: Artwork
+  myCollectionArtworkID: String
   offers(gravityPartnerId: ID!): [ConsignmentOffer!]!
   primaryImage: ConsignmentSubmissionCategoryAsset
   provenance: String
@@ -6869,6 +6986,7 @@ type ConsignmentSubmission {
   rejectionReason: String
   saleState: String
   signature: Boolean
+  source: ConsignmentSubmissionSource
 
   # If this artwork exists in Gravity, its ID
   sourceArtworkID: String
@@ -7544,6 +7662,7 @@ type ConversationConnection {
 
   # Information to aid in pagination.
   pageInfo: PageInfo!
+  totalCount: Int
   totalUnreadCount: Int
 }
 
@@ -7663,32 +7782,6 @@ type CreateAccountRequestMutationSuccess {
 union CreateAccountRequestMutationType =
     CreateAccountRequestMutationFailure
   | CreateAccountRequestMutationSuccess
-
-type createAdvisoryOpportunityFailure {
-  mutationError: GravityMutationError
-}
-
-input createAdvisoryOpportunityMutationInput {
-  clientMutationId: String
-  message: String
-  phoneCountryCode: String
-  phoneNumber: String
-  searchCriteriaID: String!
-}
-
-type createAdvisoryOpportunityMutationPayload {
-  # On success: the advisory opportunity
-  advisoryOpportunityOrError: createAdvisoryOpportunityResponseOrError
-  clientMutationId: String
-}
-
-union createAdvisoryOpportunityResponseOrError =
-    createAdvisoryOpportunityFailure
-  | createAdvisoryOpportunitySuccess
-
-type createAdvisoryOpportunitySuccess {
-  advisoryOpportunity: AdvisoryOpportunity!
-}
 
 type CreateAlertFailure {
   mutationError: GravityMutationError
@@ -7825,6 +7918,33 @@ type CreateBidderPayload {
   bidder: Bidder
   clientMutationId: String
 }
+
+type CreateCareerHighlightFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateCareerHighlightInput {
+  artistId: String!
+  clientMutationId: String
+  collected: Boolean
+  group: Boolean
+  partnerId: String!
+  solo: Boolean
+}
+
+type CreateCareerHighlightPayload {
+  # On success: the created Artist Career Highlight.
+  careerHighlightOrError: CreateCareerHighlightSuccessResponseOrError
+  clientMutationId: String
+}
+
+type CreateCareerHighlightSuccess {
+  careerHighlight: CareerHighlight
+}
+
+union CreateCareerHighlightSuccessResponseOrError =
+    CreateCareerHighlightFailure
+  | CreateCareerHighlightSuccess
 
 type CreateCollectionFailure {
   mutationError: GravityMutationError
@@ -8714,6 +8834,29 @@ type DeleteBankAccountPayload {
   clientMutationId: String
   me: Me
 }
+
+type DeleteCareerHighlightFailure {
+  mutationError: GravityMutationError
+}
+
+input DeleteCareerHighlightInput {
+  clientMutationId: String
+  id: String!
+}
+
+type DeleteCareerHighlightPayload {
+  # On success: the deleted Artist Career Highlight is returned
+  careerHighlightOrError: DeleteCareerHighlightSuccessOrErrorType
+  clientMutationId: String
+}
+
+type DeleteCareerHighlightSuccess {
+  careerHighlight: CareerHighlight
+}
+
+union DeleteCareerHighlightSuccessOrErrorType =
+    DeleteCareerHighlightFailure
+  | DeleteCareerHighlightSuccess
 
 type DeleteCollectionFailure {
   mutationError: GravityMutationError
@@ -11403,6 +11546,12 @@ type InquirerCollectorProfile {
 
   # User ID of the collector profile's owner
   ownerID: ID!
+
+  # Holds information about the engagement a collector profile has with a given partner
+  partnerEngagement(
+    # The ID of the partner to check for engagement
+    partnerID: ID!
+  ): PartnerEngagement
   privacy: String
   profession: String
   professionalBuyerAppliedAt(
@@ -11423,6 +11572,12 @@ type InquirerCollectorProfile {
   ): String
   savedArtworksCount: Int!
   selfReportedPurchases: String
+
+  # An artwork-specific paragraph describing the collector.
+  summaryParagraph(
+    # This can be specified, and is injected in a conversation context for convenience.
+    artworkID: String
+  ): String
   totalBidsCount: Int!
   userInterests: [UserInterest]!
     @deprecated(reason: "Use \"owner#interestsConnection\" field instead.")
@@ -13092,11 +13247,6 @@ type Mutation {
     input: CreateAccountRequestMutationInput!
   ): CreateAccountRequestMutationPayload
 
-  # Create an advisory opportunity
-  createAdvisoryOpportunity(
-    input: createAdvisoryOpportunityMutationInput!
-  ): createAdvisoryOpportunityMutationPayload
-
   # Create an alert
   createAlert(input: createAlertInput!): createAlertPayload
   createAndSendBackupSecondFactor(
@@ -13120,6 +13270,11 @@ type Mutation {
 
   # Creates a bidder position
   createBidderPosition(input: BidderPositionInput!): BidderPositionPayload
+
+  # Creates Artist Career Highlight.
+  createCareerHighlight(
+    input: CreateCareerHighlightInput!
+  ): CreateCareerHighlightPayload
 
   # Create a collection
   createCollection(input: createCollectionInput!): createCollectionPayload
@@ -13243,6 +13398,11 @@ type Mutation {
 
   # Remove a bank account
   deleteBankAccount(input: DeleteBankAccountInput!): DeleteBankAccountPayload
+
+  # Delete an artist career highlight
+  deleteCareerHighlight(
+    input: DeleteCareerHighlightInput!
+  ): DeleteCareerHighlightPayload
 
   # Delete a collection
   deleteCollection(input: deleteCollectionInput!): deleteCollectionPayload
@@ -13472,6 +13632,11 @@ type Mutation {
     input: UpdateArtworkMutationInput!
   ): UpdateArtworkMutationPayload
 
+  # Updates Artist Career Highlight.
+  updateCareerHighlight(
+    input: UpdateCareerHighlightInput!
+  ): UpdateCareerHighlightPayload
+
   # Updates the flags on a partner.
   updateCMSLastAccessTimestamp(
     input: UpdateCMSLastAccessTimestampMutationInput!
@@ -13544,6 +13709,11 @@ type Mutation {
 
   # Updates a page.
   updatePage(input: UpdatePageMutationInput!): UpdatePageMutationPayload
+
+  # Updates a partner artist.
+  updatePartnerShow(
+    input: UpdatePartnerShowMutationInput!
+  ): UpdatePartnerShowMutationPayload
 
   # Update a quiz artwork interacted_with flag
   updateQuiz(input: updateQuizMutationInput!): updateQuizMutationPayload
@@ -13668,15 +13838,19 @@ type MyCollectionConnection {
 }
 
 input MyCollectionCreateArtworkInput {
+  additionalInformation: String
   artistIds: [String]
   artists: [MyCollectionArtistInput]
   artworkLocation: String
   attributionClass: ArtworkAttributionClassType
   category: String
   clientMutationId: String
+  coaByAuthenticatingBody: Boolean
+  coaByGallery: Boolean
 
   # The given location of the user as structured data
   collectorLocation: EditableLocation
+  conditionDescription: String
   confidentialNotes: String
   costCurrencyCode: String
   costMajor: Int
@@ -13686,9 +13860,15 @@ input MyCollectionCreateArtworkInput {
   editionNumber: String
   editionSize: String
   externalImageUrls: [String]
+  framedDepth: String
+  framedHeight: String
+  framedMetric: String
+  framedWidth: String
+  hasCertificateOfAuthenticity: Boolean
   height: String
   importSource: ArtworkImportSource
   isEdition: Boolean
+  isFramed: Boolean
   medium: String
   metric: String
 
@@ -13696,6 +13876,8 @@ input MyCollectionCreateArtworkInput {
   pricePaidCents: Long
   pricePaidCurrency: String
   provenance: String
+  signatureDetails: String
+  signatureTypes: [ArtworkSignatureTypeEnum]
   submissionId: String
   title: String!
   width: String
@@ -13757,15 +13939,19 @@ type MyCollectionInfo {
 }
 
 input MyCollectionUpdateArtworkInput {
+  additionalInformation: String
   artistIds: [String]
   artworkId: String!
   artworkLocation: String
   attributionClass: ArtworkAttributionClassType
   category: String
   clientMutationId: String
+  coaByAuthenticatingBody: Boolean
+  coaByGallery: Boolean
 
   # The given location of the user as structured data
   collectorLocation: EditableLocation
+  conditionDescription: String
   confidentialNotes: String
   costCurrencyCode: String
   costMajor: Int
@@ -13775,13 +13961,21 @@ input MyCollectionUpdateArtworkInput {
   editionNumber: String
   editionSize: String
   externalImageUrls: [String]
+  framedDepth: String
+  framedHeight: String
+  framedMetric: String
+  framedWidth: String
+  hasCertificateOfAuthenticity: Boolean
   height: String
   isEdition: Boolean
+  isFramed: Boolean
   medium: String
   metric: String
   pricePaidCents: Long
   pricePaidCurrency: String
   provenance: String
+  signatureDetails: String
+  signatureTypes: [ArtworkSignatureTypeEnum]
   submissionId: String
   title: String
   width: String
@@ -13931,6 +14125,11 @@ enum NotificationTypesEnum {
   PARTNER_OFFER_CREATED
   PARTNER_SHOW_OPENED
   VIEWING_ROOM_PUBLISHED
+}
+
+type OfferableActivity {
+  # Count of collectors with eligible offerable activities.
+  totalCount: Int
 }
 
 # Consignment Offer Response
@@ -14210,6 +14409,9 @@ type Partner implements Node {
     displayOnPartnerProfile: Boolean
     first: Int
     hasPublishedArtworks: Boolean
+
+    # Include additional fields on artists, requires authentication
+    includeAllFields: Boolean
     last: Int
     representedBy: Boolean
     sort: ArtistSorts
@@ -14256,6 +14458,9 @@ type Partner implements Node {
     # properties on an artwork, when true or not present fetch artwork :short properties
     shallow: Boolean
     sort: ArtworkSorts
+
+    # Return artworks according to visibility levels. Defaults to ['listed'].
+    visibilityLevels: [Visibility]
   ): ArtworkConnection
   artworksSearchConnection(
     after: String
@@ -14489,10 +14694,13 @@ type PartnerArtist {
 
   # A globally unique ID.
   id: ID!
+  image: Image
+  imageUrl: String
 
   # A type-specific ID.
   internalID: ID!
   isDisplayOnPartnerProfile: Boolean
+  isHiddenInPresentationMode: Boolean
   isUseDefaultBiography: Boolean
   partner: Partner
   representedBy: Boolean
@@ -14530,6 +14738,11 @@ type PartnerArtistCounts {
     label: String
   ): FormattedNumber
   managedArtworks(
+    # Returns a `String` when format is specified. e.g.`'0,0.0000''`
+    format: String
+    label: String
+  ): FormattedNumber
+  unlistedArtworks(
     # Returns a `String` when format is specified. e.g.`'0,0.0000''`
     format: String
     label: String
@@ -14575,10 +14788,13 @@ type PartnerArtistEdge {
 
   # A globally unique ID.
   id: ID!
+  image: Image
+  imageUrl: String
 
   # A type-specific ID.
   internalID: ID!
   isDisplayOnPartnerProfile: Boolean
+  isHiddenInPresentationMode: Boolean
   isUseDefaultBiography: Boolean
 
   # The item at the end of the edge
@@ -14598,6 +14814,10 @@ type PartnerArtworkGrid implements ArtworkContextGrid {
   ctaHref: String
   ctaTitle: String
   title: String
+}
+
+type partnerBiographyBlurb {
+  text: String
 }
 
 type PartnerCategory {
@@ -14787,6 +15007,21 @@ type PartnerEdge {
   node: Partner
 }
 
+type PartnerEngagement {
+  counts: PartnerEngagementCounts
+}
+
+# Counts relating to a collector's interest in the gallery program
+type PartnerEngagementCounts {
+  alerts: Int!
+  artworkInquiries(
+    # When present, returns the inquiry count for the artist (across partners).
+    artistID: String
+  ): Int!
+  followedArtists: Int!
+  savedArtworks: Int!
+}
+
 type PartnerInquiryRequest {
   collectorProfile: InquirerCollectorProfile
 
@@ -14856,6 +15091,7 @@ type PartnerOffer implements Node {
     @deprecated(
       reason: "This field is deprecated. Use 'priceWithDiscount' instead."
     )
+  source: PartnerOfferSourceEnum
   userIds: [String]
 }
 
@@ -14909,6 +15145,11 @@ enum PartnerOfferSorts {
   END_AT_DESC
 }
 
+enum PartnerOfferSourceEnum {
+  ABANDONED_ORDER
+  SAVE
+}
+
 type PartnerOfferToCollector implements Node {
   artworkId: String
   createdAt(
@@ -14937,6 +15178,7 @@ type PartnerOfferToCollector implements Node {
   note: String
   partnerId: String
   priceWithDiscount: Money
+  source: PartnerOfferSourceEnum
 }
 
 # A connection to a list of items.
@@ -15676,7 +15918,7 @@ type Query {
 
     #
     #         Only return artists matching specified slugs.
-    #         Accepts list of slugs. (e.g. 'andy-warhol', 'banksy')
+    #         Accepts list of slugs (e.g. 'andy-warhol', 'banksy').
     #
     slugs: [String]
     sort: ArtistSorts
@@ -15809,6 +16051,7 @@ type Query {
   artworksForUser(
     after: String
     before: String
+    excludeArtworkIds: [String] = []
     excludeDislikedArtworks: Boolean = false
     first: Int
     includeBackfill: Boolean!
@@ -15882,6 +16125,27 @@ type Query {
     term: String
   ): CollectorProfileTypeConnection
 
+  # Find list of abandoned orders
+  commerceAbandonedOrders(
+    # Returns the elements in the list that come after the specified cursor.
+    after: String
+    artworkId: ID!
+
+    # Returns the elements in the list that come before the specified cursor.
+    before: String
+
+    # Ignored for the time being, future iterations will support this.
+    excludeFailedPayments: Boolean
+
+    # Returns the first _n_ elements from the list.
+    first: Int
+    from: CommerceDateTime!
+
+    # Returns the last _n_ elements from the list.
+    last: Int
+    sellerId: String!
+  ): CommerceOrderConnectionWithTotalCount
+
   # Find balance of an account associated with a setup intent
   commerceBankAccountBalance(
     bankAccountId: ID
@@ -15889,7 +16153,10 @@ type Query {
   ): CommerceBankAccountBalance
 
   # Buyer Activity Data for Collector Resume
-  commerceBuyerActivity(buyerId: String!): CommerceBuyerActivity
+  commerceBuyerActivity(
+    buyerId: String!
+    sellerId: String
+  ): CommerceBuyerActivity
 
   # Find list of competing orders
   commerceCompetingOrders(
@@ -18513,7 +18780,6 @@ type SpecialistBio {
   image: Image
   jobTitle: String
   name: String
-  specialty: String
 }
 
 type StartIdentityVerificationFailure {
@@ -19005,6 +19271,32 @@ type updateArtworkSuccess {
   artwork: Artwork
 }
 
+type UpdateCareerHighlightFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateCareerHighlightInput {
+  clientMutationId: String
+  collected: Boolean
+  group: Boolean
+  id: String!
+  solo: Boolean
+}
+
+type UpdateCareerHighlightPayload {
+  # On success: updated Artist Career Highlight.
+  careerHighlightOrError: UpdateCareerHighlightsSuccessResponseOrError
+  clientMutationId: String
+}
+
+union UpdateCareerHighlightsSuccessResponseOrError =
+    UpdateCareerHighlightFailure
+  | UpdateCareerHighlightSuccess
+
+type UpdateCareerHighlightSuccess {
+  careerHighlight: CareerHighlight
+}
+
 type UpdateCMSLastAccessTimestampFailure {
   mutationError: GravityMutationError
 }
@@ -19151,6 +19443,12 @@ type UpdateCollectorProfilePayload {
 
   # User ID of the collector profile's owner
   ownerID: ID!
+
+  # Holds information about the engagement a collector profile has with a given partner
+  partnerEngagement(
+    # The ID of the partner to check for engagement
+    partnerID: ID!
+  ): PartnerEngagement
   privacy: String
   profession: String
   professionalBuyerAppliedAt(
@@ -19171,6 +19469,12 @@ type UpdateCollectorProfilePayload {
   ): String
   savedArtworksCount: Int!
   selfReportedPurchases: String
+
+  # An artwork-specific paragraph describing the collector.
+  summaryParagraph(
+    # This can be specified, and is injected in a conversation context for convenience.
+    artworkID: String
+  ): String
   totalBidsCount: Int!
   userInterests: [UserInterest]!
     @deprecated(reason: "Use \"owner#interestsConnection\" field instead.")
@@ -19614,6 +19918,38 @@ union UpdatePageResponseOrError = UpdatePageFailure | UpdatePageSuccess
 
 type UpdatePageSuccess {
   page: Page
+}
+
+type UpdatePartnerShowFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdatePartnerShowMutationInput {
+  clientMutationId: String
+
+  # Is
+  featured: Boolean
+
+  # The id of the partner to update.
+  partnerId: String!
+
+  # The id of the artist to update.
+  showId: String!
+}
+
+type UpdatePartnerShowMutationPayload {
+  clientMutationId: String
+
+  # On success: the updated partner. On error: the error that occurred.
+  showOrError: UpdatePartnerShowResponseOrError
+}
+
+union UpdatePartnerShowResponseOrError =
+    UpdatePartnerShowFailure
+  | UpdatePartnerShowSuccess
+
+type UpdatePartnerShowSuccess {
+  show: Show
 }
 
 input updateQuizMutationInput {
@@ -20687,7 +21023,7 @@ type Viewer {
 
     #
     #         Only return artists matching specified slugs.
-    #         Accepts list of slugs. (e.g. 'andy-warhol', 'banksy')
+    #         Accepts list of slugs (e.g. 'andy-warhol', 'banksy').
     #
     slugs: [String]
     sort: ArtistSorts
@@ -20793,6 +21129,7 @@ type Viewer {
   artworksForUser(
     after: String
     before: String
+    excludeArtworkIds: [String] = []
     excludeDislikedArtworks: Boolean = false
     first: Int
     includeBackfill: Boolean!
@@ -20851,6 +21188,28 @@ type Viewer {
     # Term used for searching collector profiles
     term: String
   ): CollectorProfileTypeConnection
+  commerceOrders(
+    # Returns the elements in the list that come after the specified cursor.
+    after: String
+
+    # Returns the elements in the list that come before the specified cursor.
+    before: String
+    buyerId: String
+    buyerType: String
+
+    # Returns the first _n_ elements from the list.
+    first: Int
+    impulseConversationId: String
+
+    # Returns the last _n_ elements from the list.
+    last: Int
+    mode: CommerceOrderModeEnum
+    sellerId: String
+    sellerType: String
+    sort: CommerceOrderConnectionSortEnum
+    state: CommerceOrderStateEnum
+    states: [CommerceOrderStateEnum!]
+  ): CommerceOrderConnectionWithTotalCount
 
   # A conversation, usually between a user and a partner
   conversation(

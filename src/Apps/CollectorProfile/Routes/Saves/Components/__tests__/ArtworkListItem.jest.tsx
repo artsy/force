@@ -83,7 +83,7 @@ describe("ArtworkListItem", () => {
     })
 
     const link = screen.getByRole("link")
-    const href = "/collector-profile/saves/collection-id"
+    const href = "/favorites/saves/collection-id"
 
     expect(link).toHaveAttribute("href", href)
   })
@@ -103,7 +103,7 @@ describe("ArtworkListItem", () => {
     })
 
     const link = screen.getByRole("link")
-    const href = "/collector-profile/saves"
+    const href = "/favorites/saves"
 
     expect(link).toHaveAttribute("href", href)
   })

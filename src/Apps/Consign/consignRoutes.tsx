@@ -75,16 +75,6 @@ const ArtworkDetailsFragmentContainer = loadable(
   }
 )
 
-const ArtworkDetails = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ArtworkDetails/ArtworkDetails"
-    ),
-  {
-    resolveComponent: component => component.ArtworkDetails,
-  }
-)
-
 const UploadPhotosFragmentContainer = loadable(
   () =>
     import(
@@ -95,17 +85,6 @@ const UploadPhotosFragmentContainer = loadable(
   }
 )
 
-const ContactInformation = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ContactInformation/ContactInformation"
-    ),
-  {
-    resolveComponent: component =>
-      component.ContactInformationFragmentContainer,
-  }
-)
-
 const ThankYou = loadable(
   () =>
     import(
@@ -113,6 +92,16 @@ const ThankYou = loadable(
     ),
   {
     resolveComponent: component => component.ThankYou,
+  }
+)
+
+const ThankYouWhenFromMyCollection = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ThankYou/ThankYouWhenFromMyCollection"
+    ),
+  {
+    resolveComponent: component => component.ThankYouWhenFromMyCollection,
   }
 )
 
@@ -153,27 +142,18 @@ const prepareSubmissionFlowStepVariables = data => {
   }
 }
 
-const contactInformationQuery = graphql`
-  query consignRoutes_contactInformationQuery(
-    $id: ID
-    $externalId: ID
-    $sessionID: String
-  ) {
-    submission(id: $id, externalId: $externalId, sessionID: $sessionID) {
-      ...ContactInformation_submission
-      ...redirects_submission @relay(mask: false)
-    }
-    me {
-      ...ContactInformation_me
-    }
-  }
-`
-
 const renderConsignmentInquiry = ({ Component, props }: RouteRenderArgs) => {
   if (!(Component && props)) {
     return undefined
   }
   return <Component {...props} />
+}
+
+const preparePrefillSubmissionFromArtworkVariables = data => {
+  return {
+    id: data.id,
+    ...data,
+  }
 }
 
 export const consignRoutes: AppRouteConfig[] = [
@@ -182,6 +162,7 @@ export const consignRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "/",
+        layout: "FullBleed",
         getComponent: () => MarketingLandingApp,
         onClientSideRender: () => {
           MarketingLandingApp.preload()
@@ -285,35 +266,33 @@ export const consignRoutes: AppRouteConfig[] = [
     getComponent: () => SubmissionLayout,
     children: [
       {
-        // Default landing is the same as /contact-information
         path: "",
         layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
+        getComponent: () => ArtworkDetailsFragmentContainer,
         onClientSideRender: () => {
-          ContactInformation.preload()
+          ArtworkDetailsFragmentContainer.preload()
         },
-        query: contactInformationQuery,
-        render: renderSubmissionFlowStep,
+        query: graphql`
+          query consignRoutes_artworkDetailsQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...ArtworkDetails_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            me {
+              ...ArtworkDetails_me
+            }
+          }
+        `,
         prepareVariables: prepareSubmissionFlowStepVariables,
-      },
-      {
-        path: "artwork-details",
-        layout: "ContainerOnly",
-        getComponent: () => ArtworkDetails,
-        onServerSideRender: ({ res }) => {
-          res.redirect("/sell/submission")
-        },
-      },
-      {
-        path: "contact-information",
-        layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
-        onClientSideRender: () => {
-          ContactInformation.preload()
-        },
-        query: contactInformationQuery,
         render: renderSubmissionFlowStep,
-        prepareVariables: prepareSubmissionFlowStepVariables,
       },
       {
         path: ":id/artwork-details",
@@ -323,7 +302,7 @@ export const consignRoutes: AppRouteConfig[] = [
           ArtworkDetailsFragmentContainer.preload()
         },
         query: graphql`
-          query consignRoutes_artworkDetailsQuery(
+          query consignRoutes_artworkEditDetailsQuery(
             $id: ID
             $externalId: ID
             $sessionID: String
@@ -368,22 +347,104 @@ export const consignRoutes: AppRouteConfig[] = [
         render: renderSubmissionFlowStep,
       },
       {
-        path: ":id/contact-information",
-        layout: "ContainerOnly",
-        getComponent: () => ContactInformation,
-        onClientSideRender: () => {
-          ContactInformation.preload()
-        },
-        query: contactInformationQuery,
-        render: renderSubmissionFlowStep,
-        prepareVariables: prepareSubmissionFlowStepVariables,
-      },
-      {
         path: ":id/thank-you",
         layout: "ContainerOnly",
         getComponent: () => ThankYou,
         onClientSideRender: () => {
           ThankYou.preload()
+        },
+      },
+    ],
+  },
+  {
+    path: "/collector-profile/my-collection/submission",
+    getComponent: () => SubmissionLayout,
+    onServerSideRender: ({ res }) => {
+      res.redirect("/collector-profile/my-collection/submission")
+    },
+    children: [
+      {
+        path: "artwork-details/:artworkId",
+        layout: "ContainerOnly",
+        getComponent: () => ArtworkDetailsFragmentContainer,
+        onClientSideRender: () => {
+          ArtworkDetailsFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_myCollectionArtworkQuery($artworkId: String!) {
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...ArtworkDetails_myCollectionArtwork
+            }
+          }
+        `,
+        prepareVariables: preparePrefillSubmissionFromArtworkVariables,
+      },
+      {
+        path: ":id/artwork-details/:artworkId",
+        layout: "ContainerOnly",
+        getComponent: () => ArtworkDetailsFragmentContainer,
+        onClientSideRender: () => {
+          ArtworkDetailsFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_artworkDetailsWithArtworkIdQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+            $artworkId: String!
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...ArtworkDetails_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...ArtworkDetails_myCollectionArtwork
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
+      },
+      {
+        path: ":id/upload-photos/:artworkId",
+        layout: "ContainerOnly",
+        getComponent: () => UploadPhotosFragmentContainer,
+        onClientSideRender: () => {
+          UploadPhotosFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_uploadArtworkPhotosQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+            $artworkId: String!
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...UploadPhotos_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...UploadPhotos_myCollectionArtwork
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
+      },
+      {
+        path: ":id/thank-you/:artworkId?",
+        layout: "ContainerOnly",
+        getComponent: () => ThankYouWhenFromMyCollection,
+        onClientSideRender: () => {
+          ThankYouWhenFromMyCollection.preload()
         },
       },
     ],

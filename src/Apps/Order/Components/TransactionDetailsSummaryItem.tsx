@@ -1,8 +1,7 @@
 import { TransactionDetailsSummaryItem_order$data } from "__generated__/TransactionDetailsSummaryItem_order.graphql"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-
-import { Flex, Text, Spacer, Column, Sup } from "@artsy/palette"
+import { Flex, Text, Spacer, Sup, Message, Stack } from "@artsy/palette"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -155,7 +154,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
   }
 
   const amountPlaceholder = () => {
-    return ["shipping", "offer"].includes(transactionStep!)
+    return transactionStep && ["shipping", "offer"].includes(transactionStep)
       ? "Calculated in next steps"
       : "Waiting for final costs"
   }
@@ -298,40 +297,32 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
       </Text>
       {showOfferNote && order.mode === "OFFER" && renderNoteEntry()}
       {showCongratulationMessage && (
-        <Column
-          span={4}
-          display="flex"
-          alignItems="center"
-          flexWrap="wrap"
-          backgroundColor="blue10"
-          justifyContent="center"
-          order={[2, 1]}
-          p={2}
-          mt={2}
-        >
-          <Flex flexDirection="column" mr="auto">
-            <Text variant="sm" color="blue100">
-              Congratulations! This artwork will be added to your Collection
-              once the gallery confirms the order.
-            </Text>
-            <Text variant="sm">
-              View and manage all artworks in your Collection{" "}
-              {!isEigen ? "on the Artsy app." : "through your "}
-              {isEigen && (
+        <>
+          <Spacer y={1} />
+
+          <Message
+            variant="info"
+            title="Congratulations! This artwork will be added to your Collection
+              once the gallery confirms the order."
+          >
+            {isEigen ? (
+              <>
+                View and manage all artworks in your Collection through your{" "}
                 <RouterLink inline to={"/my-profile"}>
                   profile.
                 </RouterLink>
-              )}
-            </Text>
-          </Flex>
-          <Flex pt={1}>
-            {!isEigen && (
-              <DownloadAppBadges
-                contextModule={ContextModule.ordersSubmitted}
-              />
+              </>
+            ) : (
+              <Stack gap={1}>
+                View and manage all artworks in your Collection on the Artsy
+                app.
+                <DownloadAppBadges
+                  contextModule={ContextModule.ordersSubmitted}
+                />
+              </Stack>
             )}
-          </Flex>
-        </Column>
+          </Message>
+        </>
       )}
     </StepSummaryItem>
   )
@@ -378,7 +369,7 @@ const SecondaryEntry: React.FC<SecondaryEntryProps> = ({ label, value }) => (
 )
 
 const getLabelColor = (final?: boolean, source?: string) => {
-  let color;
+  let color
   if (source === "partner_offer") {
     color = "blue100"
   } else if (final) {
@@ -387,8 +378,7 @@ const getLabelColor = (final?: boolean, source?: string) => {
     color = "black60"
   }
   return color
- }
-
+}
 
 graphql`
   fragment TransactionDetailsSummaryItemOfferProperties on CommerceOffer {

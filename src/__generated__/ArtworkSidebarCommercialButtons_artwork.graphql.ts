@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e59254f2f314f59bbe46d4533505f669>>
+ * @generated SignedSource<<2b12e4cdaf2d89de9ac9d0cfcbe8ff20>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,10 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
     readonly internalID: string;
   } | null | undefined;
   readonly editionSets: ReadonlyArray<{
+    readonly dimensions: {
+      readonly cm: string | null | undefined;
+      readonly in: string | null | undefined;
+    } | null | undefined;
     readonly id: string;
     readonly internalID: string;
     readonly isAcquireable: boolean | null | undefined;
@@ -232,7 +236,32 @@ return {
         (v0/*: any*/),
         (v4/*: any*/),
         (v5/*: any*/),
-        (v3/*: any*/)
+        (v3/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "dimensions",
+          "kind": "LinkedField",
+          "name": "dimensions",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "in",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cm",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
       ],
       "storageKey": null
     },
@@ -288,6 +317,6 @@ return {
 };
 })();
 
-(node as any).hash = "bfbffc86fec930ebd24c5032f5df3148";
+(node as any).hash = "56f07625bc892159701ee61bd68fc827";
 
 export default node;

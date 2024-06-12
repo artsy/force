@@ -1,10 +1,10 @@
 import {
-  Box,
   Column,
   Flex,
   GridColumns,
   HTML,
   Spacer,
+  Stack,
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -26,11 +26,12 @@ interface AuctionDetailsProps {
 const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
   const liveAuctionUrl = `${getENV("PREDICTION_URL")}/${sale.slug}`
 
+  const startDate = sale.liveStartAt || sale.startAt
   const endDate = sale.liveStartAt
     ? formatIsoDateNoZoneOffset(sale.liveStartAt, 4)
     : sale.endAt
 
-  const showCascadingEndTimeIntervalMessage: boolean =
+  const showCascadingEndTimeIntervalMessage =
     !!sale.cascadingEndTimeIntervalMinutes && !sale.isClosed
 
   return (
@@ -41,41 +42,46 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
             {sale.name}
           </Text>
         </Column>
+
         <Column span={3}>
           <RegisterButtonFragmentContainer sale={sale} me={me} />
         </Column>
       </GridColumns>
-      <Spacer y={4} />
-      <Flex alignItems="center" justifyContent="space-between">
-        {!!sale.cascadingEndTimeIntervalMinutes && (
-          <>
-            <SaleDetailTimerFragmentContainer sale={sale} />
-            <Spacer y={2} />
-          </>
-        )}
-      </Flex>
-      <Flex alignItems="center">
-        <AuctionDetailsStartTimeQueryRenderer id={sale.internalID} pr={2} />
 
-        {!sale.isClosed && (
-          <Box mt={0.5}>
+      <Spacer y={4} />
+
+      <Stack gap={[1, 0]}>
+        {!!sale.cascadingEndTimeIntervalMinutes && (
+          <SaleDetailTimerFragmentContainer sale={sale} />
+        )}
+
+        <Flex
+          alignItems={["flex-start", "center"]}
+          flexDirection={["column", "row"]}
+          gap={[1, 2]}
+        >
+          <AuctionDetailsStartTimeQueryRenderer id={sale.internalID} />
+
+          {!sale.isClosed && sale.name && startDate && (
             <AddToCalendar
-              startDate={sale.liveStartAt || sale.startAt!}
-              endDate={endDate!}
-              title={sale.name!}
-              description={sale.description!}
-              href={`${getENV("APP_URL")}${sale.href!}`}
+              startDate={startDate}
+              endDate={endDate}
+              title={sale.name}
+              description={sale.description}
+              href={`${getENV("APP_URL")}${sale.href}`}
               liveAuctionUrl={liveAuctionUrl}
             />
-          </Box>
-        )}
-      </Flex>
+          )}
+        </Flex>
+      </Stack>
 
       {showCascadingEndTimeIntervalMessage && (
         <>
           <Spacer y={2} />
-          <Text variant="sm-display" pr={2}>
-            {`Lots close at ${sale.cascadingEndTimeIntervalMinutes!}-minute intervals`}
+
+          <Text variant="sm-display">
+            Lots close at {sale.cascadingEndTimeIntervalMinutes}-minute
+            intervals
           </Text>
         </>
       )}
@@ -83,9 +89,12 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
       <Spacer y={2} />
 
       <GridColumns>
-        <Column span={9}>
-          <HTML html={sale.description!} />
-        </Column>
+        {sale.description && (
+          <Column span={9}>
+            <HTML html={sale.description} />
+          </Column>
+        )}
+
         <Column span={3}>
           <AuctionInfoSidebarFragmentContainer sale={sale} />
         </Column>

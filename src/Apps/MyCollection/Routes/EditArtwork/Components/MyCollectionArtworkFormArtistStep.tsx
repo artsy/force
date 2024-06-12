@@ -210,6 +210,7 @@ const MyCollectionArtworkFormArtistStepFragment = graphql`
             slug
             targetSupply {
               isP1
+              isTargetSupply
             }
           }
         }

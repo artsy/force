@@ -23,6 +23,7 @@ jest.mock("react-relay", () => ({
 
 describe("Footer", () => {
   const mockFetchQuery = fetchQuery as jest.Mock
+  const mockUseRouter = useRouter as jest.Mock
 
   const getWrapper = (breakpoint: Breakpoint) =>
     mount(
@@ -80,7 +81,7 @@ describe("Footer", () => {
     })
 
     it("hides the app download banner if we are on an ignored route", () => {
-      ;(useRouter as jest.Mock).mockImplementationOnce(() => ({
+      mockUseRouter.mockImplementationOnce(() => ({
         match: { location: { pathname: "/meet-your-new-art-advisor" } },
       }))
 
@@ -89,6 +90,10 @@ describe("Footer", () => {
     })
 
     it("hides the app download banner if the artwork is unlisted", async () => {
+      mockUseRouter.mockImplementationOnce(() => ({
+        match: { params: { artworkID: "foo" } },
+      }))
+
       mockFetchQuery.mockImplementation(() => {
         return {
           toPromise: jest

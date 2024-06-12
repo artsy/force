@@ -12,6 +12,9 @@ jest.mock("System/Router/useRouter", () => ({
     match: {},
   }),
 }))
+jest.mock("Utils/Hooks/useStableShuffle", () => ({
+  useStableShuffle: ({ items }) => ({ shuffled: items }),
+}))
 
 describe("ViewingRoomsApp", () => {
   describe("with viewing rooms", () => {

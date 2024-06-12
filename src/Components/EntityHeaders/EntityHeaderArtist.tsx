@@ -1,6 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Avatar, BoxProps, Flex, Text } from "@artsy/palette"
-import { FC } from "react"
+import { FC, ReactNode } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { EntityHeaderArtist_artist$data } from "__generated__/EntityHeaderArtist_artist.graphql"
@@ -8,6 +8,7 @@ import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowA
 
 export interface EntityHeaderArtistProps extends BoxProps {
   artist: EntityHeaderArtist_artist$data
+  children?: ReactNode
   displayAvatar?: boolean
   displayCounts?: boolean
   displayFollowButton?: boolean
@@ -26,6 +27,7 @@ const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
   FollowButton,
   onClick,
   onFollow,
+  children,
   ...rest
 }) => {
   const initials = artist.initials ?? artist.name?.[0]
@@ -69,6 +71,8 @@ const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
                 )}
             </Text>
           )}
+
+          {children}
         </Flex>
       </Flex>
 

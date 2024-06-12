@@ -1,5 +1,12 @@
 import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 
+export interface Location {
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  countryCode?: string | null
+}
+
 export interface ArtworkModel {
   artist?: Artist | null | undefined
   artistName: string
@@ -9,6 +16,7 @@ export interface ArtworkModel {
   title: string
   medium: string
   attributionClass: string | undefined
+  collectorLocation?: Location | null
   editionNumber?: string
   editionSize?: string
   height: string
@@ -20,7 +28,6 @@ export interface ArtworkModel {
   pricePaidDollars: string
   pricePaidCurrency: string
   provenance: string
-  artworkLocation: string
   postalCode?: string
   confidentialNotes: string
 }

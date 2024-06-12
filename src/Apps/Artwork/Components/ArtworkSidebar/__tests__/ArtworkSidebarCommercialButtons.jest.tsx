@@ -429,6 +429,37 @@ describe("ArtworkSidebarCommercialButtons", () => {
     expect(screen.queryByText("(List price: $5,000)")).toBeInTheDocument()
   })
 
+  it("does not displays offer details when viewed by user without an active partner offer on the artwork", async () => {
+    mockUseFeatureFlag.mockImplementation(() => true)
+    meMock.partnerOffersConnection.edges.push({
+      node: {
+        internalID: "partner-offer-id",
+        isAvailable: false,
+        priceWithDiscount: {
+          display: "$3,350.00",
+        },
+      },
+    })
+
+    renderWithRelay(
+      {
+        Query: () => ({ me: meMock }),
+        Artwork: () => ({
+          priceListedDisplay: "$5,000",
+          saleMessage: "Sold",
+          isSold: true,
+        }),
+      },
+      null,
+      mockEnvironment
+    )
+
+    expect(screen.queryByText("Limited-Time Offer")).not.toBeInTheDocument()
+    expect(screen.queryByText("$3,350.00")).not.toBeInTheDocument()
+    expect(screen.queryByText("(List price: $5,000)")).not.toBeInTheDocument()
+    expect(screen.queryByText("Sold")).toBeInTheDocument()
+  })
+
   it("displays partner offer note if present", () => {
     mockUseFeatureFlag.mockImplementation(() => true)
     const futureDate = new Date()

@@ -11,7 +11,7 @@ import {
   GridColumns,
   Column,
   ResponsiveBox,
-  Flex,
+  Stack,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
 import * as React from "react"
@@ -66,26 +66,30 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
                 }}
               >
                 <Media lessThan="sm">
-                  <Flex>
-                    {image?.small ? (
-                      <Image
-                        src={image.small.src}
-                        srcSet={image.small.srcSet}
-                        width={image.small.width}
-                        height={image.small.height}
-                        alt=""
-                        lazyLoad
-                      />
-                    ) : (
-                      <Box bg="black10" width={95} height={63} />
-                    )}
+                  <Stack gap={2} flexDirection="row">
+                    <Box flexShrink={0}>
+                      {image?.small ? (
+                        <Image
+                          src={image.small.src}
+                          srcSet={image.small.srcSet}
+                          width={image.small.width}
+                          height={image.small.height}
+                          alt=""
+                          lazyLoad
+                        />
+                      ) : (
+                        <Box bg="black10" width={80} height={80} />
+                      )}
+                    </Box>
 
-                    <Box ml={2}>
+                    <Box>
                       <Text variant="xs">{event.title}</Text>
 
-                      <Text variant="lg-display">{event.subtitle}</Text>
+                      <Text variant="lg-display" lineClamp={2}>
+                        {event.subtitle}
+                      </Text>
                     </Box>
-                  </Flex>
+                  </Stack>
                 </Media>
 
                 <Media greaterThanOrEqual="sm">
@@ -137,8 +141,8 @@ export const HomeFeaturedEventsRailFragmentContainer = createFragmentContainer(
             href
             image {
               small: cropped(
-                width: 95
-                height: 63
+                width: 80
+                height: 80
                 version: ["main", "wide", "large_rectangle"]
               ) {
                 src

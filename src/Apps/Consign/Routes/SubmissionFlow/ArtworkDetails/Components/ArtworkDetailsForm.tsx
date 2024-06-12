@@ -15,8 +15,8 @@ import {
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import {
-  acceptableCategoriesForSubmission,
   AcceptableCategoryValue,
+  acceptableCategoriesForSubmission,
   formatCategoryValueForSubmission,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/acceptableCategoriesForSubmission"
 import { ProvenanceModal } from "Apps/MyCollection/Routes/EditArtwork/Components/ProvenanceModal"
@@ -24,15 +24,16 @@ import { ATTRIBUTION_CLASS_OPTIONS } from "Components/ArtworkFilter/ArtworkFilte
 import {
   Location,
   LocationAutocompleteInput,
-  normalizePlace,
   Place,
+  buildLocationDisplay,
+  normalizePlace,
 } from "Components/LocationAutocompleteInput"
-import { useFormikContext } from "formik"
-import { compact } from "lodash"
-import { useMemo, useState } from "react"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
+import { useFormikContext } from "formik"
+import { useMemo, useState } from "react"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 
 export enum SubmissionType {
@@ -67,7 +68,8 @@ export const getArtworkDetailsFormInitialValues = (
         title: props.values.title ?? "",
         materials: props.values.medium ?? "",
         rarity:
-          props.values.attributionClass?.replace("_", " ").toLowerCase() ?? "",
+          props.values.attributionClass?.replace("_", " ").toLowerCase() ??
+          null,
         editionNumber: props.values.editionNumber ?? "",
         editionSize: props.values.editionSize ?? undefined,
         height: props.values.height ?? "",
@@ -148,7 +150,7 @@ export interface ArtworkDetailsFormModel {
   year: string
   title: string
   materials: string
-  rarity: string
+  rarity: string | null
   editionNumber: string
   editionSize?: string
   height: string
@@ -162,6 +164,10 @@ export interface ArtworkDetailsFormModel {
 
 export const ArtworkDetailsForm: React.FC = () => {
   const { sendToast } = useToasts()
+
+  const isSellFlowRequiredField = useFeatureFlag(
+    "onyx_sell-flow-required-fields"
+  )
 
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
@@ -177,11 +183,6 @@ export const ArtworkDetailsForm: React.FC = () => {
   } = useFormikContext<ArtworkDetailsFormModel>()
 
   const limitedEditionRarity = values.rarity === "limited edition"
-  const defaultLocation = compact([
-    values.location.city,
-    values.location.state,
-    values.location.country,
-  ]).join(", ")
 
   const handleAutosuggestError = (isError: boolean) => {
     if (isError) {
@@ -243,7 +244,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.year}
-            required
             error={touched.year && errors.year}
           />
         </Column>
@@ -286,7 +286,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.materials}
-            required
             error={touched.materials && errors.materials}
           />
         </Column>
@@ -307,11 +306,10 @@ export const ArtworkDetailsForm: React.FC = () => {
             title="Rarity"
             name="rarity"
             options={rarityOptions}
-            selected={values.rarity}
+            selected={values.rarity ?? undefined}
             onBlur={handleBlur}
             onChange={handleChange}
             onSelect={selected => setFieldValue("rarity", selected)}
-            required
             error={touched.rarity && errors.rarity}
           />
         </Column>
@@ -332,7 +330,6 @@ export const ArtworkDetailsForm: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionNumber}
-                required
                 error={touched.editionNumber && errors.editionNumber}
               />
               <Box px={[0.5, 2]} mt={2}>
@@ -346,7 +343,6 @@ export const ArtworkDetailsForm: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionSize}
-                required
                 error={touched.editionSize && errors.editionSize}
               />
             </Flex>
@@ -366,7 +362,7 @@ export const ArtworkDetailsForm: React.FC = () => {
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.height}
-              required
+              required={isSellFlowRequiredField ? false : true}
               error={touched.height && errors.height}
             />
 
@@ -379,7 +375,7 @@ export const ArtworkDetailsForm: React.FC = () => {
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.width}
-              required
+              required={isSellFlowRequiredField ? false : true}
               error={touched.width && errors.width}
             />
           </Flex>
@@ -432,7 +428,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.provenance}
-            required
             error={touched.provenance && errors.provenance}
           />
         </Column>
@@ -444,13 +439,12 @@ export const ArtworkDetailsForm: React.FC = () => {
             placeholder="Enter city where artwork is located"
             maxLength={256}
             spellCheck={false}
-            defaultValue={defaultLocation}
+            defaultValue={buildLocationDisplay(values.location)}
             error={touched.location && errors.location?.city}
             onClose={handleLocationClose}
             onSelect={handleLocationSelect}
             onChange={handleLocationChange}
             onClick={handleLocationClick}
-            required
           />
         </Column>
       </GridColumns>

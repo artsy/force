@@ -5,6 +5,7 @@ import { MyBidsBidHeaderFragmentContainer } from "./MyBidsBidHeader"
 import { MyBidsBidItemFragmentContainer } from "./MyBidsBidItem"
 import {
   Box,
+  BoxProps,
   Button,
   Join,
   Separator,
@@ -129,7 +130,11 @@ export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
   `,
 })
 
-export const MyBidsQueryRenderer: React.FC = () => {
+interface MyBidsQueryRendererProps extends BoxProps {}
+export const MyBidsQueryRenderer: React.FC<MyBidsQueryRendererProps> = ({
+  mb = 0,
+  ...boxProps
+}) => {
   const { relayEnvironment, user } = useSystemContext()
 
   if (!user) {
@@ -137,30 +142,32 @@ export const MyBidsQueryRenderer: React.FC = () => {
   }
 
   return (
-    <SystemQueryRenderer<MyBidsQuery>
-      lazyLoad
-      environment={relayEnvironment}
-      query={graphql`
-        query MyBidsQuery {
-          me {
-            ...MyBids_me
+    <Box mb={mb} {...boxProps}>
+      <SystemQueryRenderer<MyBidsQuery>
+        lazyLoad
+        environment={relayEnvironment}
+        query={graphql`
+          query MyBidsQuery {
+            me {
+              ...MyBids_me
+            }
           }
-        }
-      `}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
+        `}
+        render={({ error, props }) => {
+          if (error) {
+            console.error(error)
+            return null
+          }
 
-        if (!props) {
-          return null
-        }
+          if (!props) {
+            return null
+          }
 
-        if (props.me) {
-          return <MyBidsFragmentContainer me={props.me} />
-        }
-      }}
-    />
+          if (props.me) {
+            return <MyBidsFragmentContainer me={props.me} />
+          }
+        }}
+      />
+    </Box>
   )
 }

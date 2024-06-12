@@ -1,7 +1,12 @@
-import { mount } from "enzyme"
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkMeta } from "Apps/Artwork/Components/ArtworkMeta"
-import { ArtworkMeta_artwork$data } from "__generated__/ArtworkMeta_artwork.graphql"
+import { useRouter } from "System/Router/useRouter"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
+import { ArtworkMeta_Test_Query } from "__generated__/ArtworkMeta_Test_Query.graphql"
+
+jest.unmock("react-relay")
+jest.mock("System/Router/useRouter")
 
 jest.mock("Utils/getENV", () => ({
   getENV: (name: string) => {
@@ -13,6 +18,23 @@ jest.mock("Utils/getENV", () => ({
 }))
 
 describe("ArtworkMeta", () => {
+  const mockUseRouter = useRouter as jest.Mock
+
+  const { renderWithRelay } = setupTestWrapperTL<ArtworkMeta_Test_Query>({
+    Component: props => (
+      <MockBoot>
+        <ArtworkMeta artwork={props.artwork!} />
+      </MockBoot>
+    ),
+    query: graphql`
+      query ArtworkMeta_Test_Query {
+        artwork(id: "example") {
+          ...ArtworkMeta_artwork
+        }
+      }
+    `,
+  })
+
   const getTags = () => {
     const meta = [...document.getElementsByTagName("meta")].map(tag => ({
       name: tag.getAttribute("name"),
@@ -23,22 +45,11 @@ describe("ArtworkMeta", () => {
     return { meta }
   }
 
-  const artwork: ArtworkMeta_artwork$data = {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    " $fragmentRef": null,
-    " $refType": null,
-    visibilityLevel: "UNLISTED",
-    href: "https://www.fun.com",
-    isShareable: true,
-    metaImage: {
-      resized: null,
-    },
-    meta: {
-      description: "The loveliest artwork",
-      longDescription: null,
-      title: "Fancy art",
-    },
-  }
+  const listedArtworkID =
+    "https://staging.artsy.net/artwork/artist-name-artwork-title"
+
+  const unlistedArtworkID =
+    "https://staging.artsy.net/artwork/662658cd2bfa240016cd95fe"
 
   afterEach(() => {
     document.getElementsByTagName("html")[0].innerHTML = ""
@@ -46,11 +57,43 @@ describe("ArtworkMeta", () => {
 
   describe("unlisted artworks", () => {
     it("renders a noindex meta tag for robots", () => {
-      mount(
-        <MockBoot>
-          <ArtworkMeta artwork={artwork} />
-        </MockBoot>
-      )
+      mockUseRouter.mockReturnValue({
+        match: {
+          location: {
+            pathname: unlistedArtworkID,
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => ({
+          isUnlisted: true,
+        }),
+      })
+
+      const tags = getTags()
+
+      expect(tags.meta.find(tag => tag.name === "robots")).toEqual({
+        name: "robots",
+        property: null,
+        content: "noindex, follow",
+      })
+    })
+
+    it("renders a noindex meta tag for robots when private artwork URL visited", () => {
+      mockUseRouter.mockReturnValue({
+        match: {
+          location: {
+            pathname: unlistedArtworkID,
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => ({
+          internalID: "662658cd2bfa240016cd95fe",
+        }),
+      })
 
       const tags = getTags()
 
@@ -63,29 +106,21 @@ describe("ArtworkMeta", () => {
   })
 
   describe("listed artworks", () => {
-    const artwork: ArtworkMeta_artwork$data = {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      " $fragmentRef": null,
-      " $refType": null,
-      visibilityLevel: "LISTED",
-      href: "https://www.fun.com",
-      isShareable: true,
-      metaImage: {
-        resized: null,
-      },
-      meta: {
-        description: "The loveliest artwork",
-        longDescription: null,
-        title: "Fancy art",
-      },
-    }
-
     it("does not render robot meta tags", () => {
-      mount(
-        <MockBoot>
-          <ArtworkMeta artwork={artwork} />
-        </MockBoot>
-      )
+      mockUseRouter.mockReturnValue({
+        match: {
+          location: {
+            pathname: listedArtworkID,
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => ({
+          href: listedArtworkID,
+          isUnlisted: false,
+        }),
+      })
 
       const tags = getTags()
 

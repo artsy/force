@@ -43,8 +43,7 @@ const HomeNewWorksForYouRail: React.FC<HomeNewWorksForYouRailProps> = ({
           <ShelfArtworkFragmentContainer
             artwork={artwork}
             key={index}
-            // TODO: Add home type to cohesion once we have tracking
-            contextModule={null as any}
+            contextModule={ContextModule.newWorksForYouRail}
             lazyLoad
             onClick={() => {
               const trackingEvent: ClickedArtworkGroup = {

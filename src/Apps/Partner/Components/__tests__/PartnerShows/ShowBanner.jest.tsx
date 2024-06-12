@@ -69,6 +69,31 @@ describe("ShowBanner", () => {
     expect(text).toContain("Description")
   })
 
+  it("does not render 'View More' button if show href is null", () => {
+    const { wrapper } = getWrapper({
+      Show: () => ({
+        name: "Ellen Altfest | Nature",
+        href: null,
+        isFairBooth: false,
+        exhibitionPeriod: "April 16 – May 30",
+        status: "running",
+        description: "Description",
+        location: {
+          city: "London",
+        },
+        coverImage: {
+          medium: {
+            src: "https://d7hftxdivxxvm.cloudfront.net?example-1.jpg",
+            srcSet: "https://d7hftxdivxxvm.cloudfront.net?example-2.jpg",
+          },
+        },
+      }),
+    })
+
+    expect(wrapper.find("Button")).toHaveLength(0)
+    expect(wrapper.text()).not.toContain("View More")
+  })
+
   it.each([
     [true, "running", "current fair booth"],
     [true, "upcoming", "upcoming fair booth"],

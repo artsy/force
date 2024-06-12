@@ -4,12 +4,12 @@ const USER_REQUIRED_ROUTES = [
   "/notifications",
   "/orders(.*)",
   "/my-collection/artworks(.*)",
-  "/settings/alerts",
+  "/favorites/alerts",
   "/settings/payments",
   "/settings/purchases(.*)",
   "/settings/shipping",
   "/user/conversations(.*)",
-  "/collector-profile/saves(.*)",
+  "/favorites/saves(.*)",
   "/auction-result(.*)",
 ]
 

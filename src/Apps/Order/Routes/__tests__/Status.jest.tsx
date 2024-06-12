@@ -96,11 +96,11 @@ describe("Status", () => {
         expect(page.text()).not.toContain(
           "Negotiation with the gallery will continue in the Inbox."
         )
-        expect(page.getMessageLength()).toBe(1)
+        expect(page.getMessageLength()).toBe(2)
         expect(page.text()).toContain("Kathryn Markel Fine Arts")
         expect(page.text()).toContain("List price")
         expect(page.text()).toContain("Your noteAnother note!")
-        expect(page.getMessageLength()).toBe(1)
+        expect(page.getMessageLength()).toBe(2)
       })
 
       it("should say order submitted and have message to continue to inbox on Eigen", async () => {
@@ -158,11 +158,11 @@ describe("Status", () => {
         expect(page.text()).not.toContain(
           "Negotiation with the gallery will continue in the Inbox."
         )
-        expect(page.getMessageLength()).toBe(1)
+        expect(page.getMessageLength()).toBe(2)
         expect(page.text()).toContain("Kathryn Markel Fine Arts")
         expect(page.text()).toContain("List price")
         expect(page.text()).toContain("Your noteAnother note!")
-        expect(page.getMessageLength()).toBe(1)
+        expect(page.getMessageLength()).toBe(2)
       })
 
       it("should say order submitted and have message to continue to inbox on Eigen", async () => {
@@ -556,7 +556,7 @@ describe("Status", () => {
         expect(page.text()).toContain(
           "You will receive a confirmation email by Jan 15"
         )
-        expect(page.getMessageLength()).toBe(1)
+        expect(page.getMessageLength()).toBe(2)
       })
     })
 

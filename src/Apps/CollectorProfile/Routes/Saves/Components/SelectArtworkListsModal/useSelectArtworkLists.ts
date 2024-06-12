@@ -71,8 +71,11 @@ export const useSelectArtworkLists = (artworkID: string) => {
         artwork.setValue(false, "isSaved")
       }
 
-      // Update `isSavedToList` field to reflect if artwork was saved to any list
-      const hasBeenSavedToList = addedCounts.custom - removedCounts.custom > 0
+      // Update `isSavedToList` field to reflect if artwork was saved to any list or it was already saved
+      const hasBeenSavedToList =
+        addedCounts.custom - removedCounts.custom > 0 ||
+        (removedCounts.custom === 0 && artwork.getValue("isSavedToList"))
+
       artwork.setValue(hasBeenSavedToList, "isSavedToList")
     },
   })
