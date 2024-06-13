@@ -82,7 +82,7 @@ export const DetailsRoute: React.FC<DetailsRouteProps> = props => {
 
           <Join separator={<Spacer y={4} />}>
             <GridColumns>
-              <Column span={4}>
+              <Column span={[6, 4]}>
                 <Input
                   onChange={handleChange}
                   name="year"
