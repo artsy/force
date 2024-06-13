@@ -61,33 +61,39 @@ export class WeaviateDB {
       throw new Error("Missing id")
     }
 
-    const response = await this.client.data
-      .getterById()
+    const response = await this.client.graphql
+      .get()
       .withClassName(this.userClass)
-      .withId(id)
+      .withWhere({
+        path: ["id"],
+        operator: "Equal",
+        valueString: id,
+      })
+      .withFields(
+        `
+        name
+        likedArtworks {
+          ... on DiscoveryArtworks { internalID }
+        }
+        dislikedArtworks {
+          ... on DiscoveryArtworks { internalID }
+        }
+        `
+      )
       .do()
 
     const {
-      internalID: _internalID,
       name,
       likedArtworks,
       dislikedArtworks,
-    } = response.properties as any
-
-    const likedArtworkUuids = likedArtworks.map(a =>
-      getUUIDFromBeacon(a.beacon)
-    )
-
-    const dislikedArtworkUuids = dislikedArtworks.map(a =>
-      getUUIDFromBeacon(a.beacon)
-    )
+    } = response.data.Get.DiscoveryUsers[0]
 
     return {
       id,
-      internalID: _internalID,
+      // internalID, // TODO: once we create real Gravity users
       name,
-      likedArtworkUuids,
-      dislikedArtworkUuids,
+      likedArtworkIds: likedArtworks.map(w => w.internalID),
+      dislikedArtworkIds: dislikedArtworks.map(w => w.internalID),
     } as DiscoveryUser
   }
 
@@ -116,12 +122,12 @@ export class WeaviateDB {
     // bail if user already liked or disliked artwork
 
     const user = await this.getUser({ id: userId })
-    const artworkId = generateUuid5(artworkInternalID)
-
-    if (user.likedArtworkUuids.includes(artworkId)) return false
-    if (user.dislikedArtworkUuids.includes(artworkId)) return false
+    if (user.likedArtworkIds.includes(artworkInternalID)) return false
+    if (user.dislikedArtworkIds.includes(artworkInternalID)) return false
 
     // else go ahead and create
+
+    const artworkId = generateUuid5(artworkInternalID)
 
     const referenceProperty = {
       like: "likedArtworks",
@@ -157,10 +163,10 @@ export class WeaviateDB {
   }: {
     /** List of concepts for semantic search */
     concepts: string[]
-    /** List of liked artwork UUIDs */
-    likedArtworkIds?: UUID[]
-    /** List of liked artwork UUIDs */
-    dislikedArtworkIds?: UUID[]
+    /** List of liked artwork Mongo ids */
+    likedArtworkIds?: MongoID[]
+    /** List of liked artwork Mongo ids */
+    dislikedArtworkIds?: MongoID[]
     /** Max number of artworks to return */
     limit?: number
   }) {
@@ -205,14 +211,6 @@ export class WeaviateDB {
   }
 }
 
-function getUUIDFromBeacon(beacon: string) {
-  const parts = beacon.split("/")
-  const uuid = parts[parts.length - 1]
-  if (uuid.length !== 36) throw new Error("Invalid UUID")
-
-  return uuid
-}
-
 /**
  * Ensure that the concepts are valid for nearText(concepts: […])
  * queries, to avoid Weaviate errors.
@@ -231,12 +229,12 @@ function ensureValidConcepts(concepts: string[]) {
 }
 
 /**
- * Format a list of Weaviate object UUIDs for moveTo/moveAwayFrom
+ * Format a list of Mongo IDs for moveTo/moveAwayFrom
  *
- * @param ids list of object UUIDs
+ * @param ids list of Mongo IDs
  * @param force weight of the move
  */
-function getMoveObjects(ids: UUID[], force = 1) {
-  const objects = ids.map(id => ({ id }))
+function getMoveObjects(ids: MongoID[], force = 1) {
+  const objects = ids.map(id => ({ id: generateUuid5(id), force }))
   return { objects, force }
 }

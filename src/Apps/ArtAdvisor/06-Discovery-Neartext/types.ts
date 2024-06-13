@@ -6,9 +6,8 @@ export type DiscoveryUser = {
   internalID: MongoID
   // properties
   name: string
-  // references
-  likedArtworkUuids: UUID[]
-  dislikedArtworkUuids: UUID[]
+  likedArtworkIds: MongoID[]
+  dislikedArtworkIds: MongoID[]
 }
 
 export type DiscoveryArtwork = {

@@ -41,8 +41,8 @@ router.get("/test", async (req: ArtsyRequest, res: ArtsyResponse) => {
 
   const artworks = await w.getArtworksNearConcepts({
     concepts: ["flower"],
-    likedArtworkIds: user.likedArtworkUuids,
-    dislikedArtworkIds: user.dislikedArtworkUuids,
+    likedArtworkIds: user.likedArtworkIds,
+    dislikedArtworkIds: user.dislikedArtworkIds,
     limit: 3,
   })
 
