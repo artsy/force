@@ -1,14 +1,13 @@
-import React from "react"
-import { waitFor } from "@testing-library/react"
 import { screen } from "@testing-library/dom"
+import { waitFor } from "@testing-library/react"
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
-import { graphql } from "react-relay"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ArtworkPageBanner_Test_Query$rawResponse } from "__generated__/ArtworkPageBanner_Test_Query.graphql"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { DeepPartial } from "Utils/typeSupport"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { ArtworkPageBanner_Test_Query$rawResponse } from "__generated__/ArtworkPageBanner_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockUseFeatureFlag = useFeatureFlag as jest.Mock

@@ -1,12 +1,16 @@
 import { useToasts } from "@artsy/palette"
+import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
+import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
+import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
 import { createContext, useContext, useEffect } from "react"
 import { useRouter } from "System/Router/useRouter"
 import { useCursor } from "use-cursor"
 
 export const STEPS = [
+  "artist",
   "title",
   "photos",
   "details",
@@ -17,6 +21,9 @@ export const STEPS = [
 interface Actions {
   goToPreviousStep: () => void
   goToNextStep: () => void
+  createSubmission: (
+    values: CreateSubmissionMutationInput
+  ) => Promise<useCreateSubmissionMutation$data>
   updateSubmission: (
     values: UpdateSubmissionMutationInput
   ) => Promise<useUpdateSubmissionMutation$data>
@@ -55,6 +62,9 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const {
     submitMutation: submitUpdateSubmissionMutation,
   } = useUpdateSubmission()
+  const {
+    submitMutation: submitCreateSubmissionMutation,
+  } = useCreateSubmission()
   const { sendToast } = useToasts()
 
   const stepFromURL = match.location.pathname.split("/").pop()
@@ -65,11 +75,36 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     initialCursor: initialIndex,
   })
 
+  const goToNextStep = async () => {
+    handleNext()
+  }
+
+  const goToPreviousStep = () => {
+    handlePrev()
+  }
+
   useEffect(() => {
     if (!submissionID) return
 
     push(`/sell2/submissions/${submissionID}/${STEPS[index]}`)
   }, [push, submissionID, index])
+
+  const createSubmission = (values: CreateSubmissionMutationInput) => {
+    const response = submitCreateSubmissionMutation({
+      variables: {
+        input: values,
+      },
+    })
+
+    response.catch(err => {
+      sendToast({
+        variant: "error",
+        message: err.message ?? "Something went wrong.",
+      })
+    })
+
+    return response
+  }
 
   const updateSubmission = (
     values: UpdateSubmissionMutationInput
@@ -94,8 +129,9 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   }
 
   const actions = {
-    goToPreviousStep: handlePrev,
-    goToNextStep: handleNext,
+    goToPreviousStep,
+    goToNextStep,
+    createSubmission,
     updateSubmission,
   }
 
