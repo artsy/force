@@ -16,6 +16,7 @@ import { Formik } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { useSystemContext } from "System/useSystemContext"
 
 const FRAGMENT = graphql`
   fragment DimensionsRoute_submission on ConsignmentSubmission {
@@ -27,10 +28,10 @@ const FRAGMENT = graphql`
 `
 
 const Schema = Yup.object().shape({
-  width: Yup.string().trim(),
-  height: Yup.string().trim(),
+  width: Yup.string().required().trim(),
+  height: Yup.string().required().trim(),
   depth: Yup.string().trim(),
-  dimensionsMetric: Yup.string().trim(),
+  dimensionsMetric: Yup.string().required().trim(),
 })
 
 interface FormValues {
@@ -47,6 +48,8 @@ interface DimensionsRouteProps {
 export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
   const { actions } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
+  const { userPreferences } = useSystemContext()
+  const userPreferredMetric = userPreferences?.metric
 
   const onSubmit = async (values: FormValues) => {
     return actions.updateSubmission(values)
@@ -56,7 +59,8 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
     height: submission.height ?? "",
     width: submission.width ?? "",
     depth: submission.depth ?? "",
-    dimensionsMetric: submission.dimensionsMetric ?? "in",
+    dimensionsMetric:
+      submission.dimensionsMetric ?? userPreferredMetric ?? "in",
   }
 
   return (
@@ -78,7 +82,8 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
                   flexDirection="row"
                   onSelect={option => setFieldValue("dimensionsMetric", option)}
                   defaultValue={values.dimensionsMetric}
-                  justifyContent={"space-between"}
+                  justifyContent="space-between"
+                  data-testid="dimensionsMetric-radio"
                 >
                   <Radio value="cm" label="cm" />
                   <Spacer x={2} />
@@ -94,7 +99,6 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
                   name="width"
                   title="Width"
                   defaultValue={values.width || ""}
-                  required
                   data-testid="width-input"
                 />
               </Column>
@@ -105,7 +109,6 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
                   name="height"
                   title="Height"
                   defaultValue={values.height || ""}
-                  required
                   data-testid="height-input"
                 />
               </Column>
