@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import { getAppRoutes } from "routes"
 import { loadableReady } from "@loadable/component"
 import { setupAnalytics } from "Server/analytics/helpers"
-import { setupClientRouter } from "System/Router2/clientRouter"
+import { setupClientRouter } from "System/Router/clientRouter"
 
 setupAnalytics()
 

@@ -1,7 +1,7 @@
 import { AppShell } from "Apps/Components/AppShell"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { AppRouteConfig, RouteConfigProps } from "System/Router2/Route"
-import { interceptLinks } from "System/Router2/Utils/interceptLinks"
+import { AppRouteConfig, RouteConfigProps } from "System/Router/Route"
+import { interceptLinks } from "System/Router/Utils/interceptLinks"
 import { Match, Router, withRouter } from "found"
 import { useEffect } from "react"
 

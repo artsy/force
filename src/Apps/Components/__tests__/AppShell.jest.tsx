@@ -1,7 +1,7 @@
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { render, screen } from "@testing-library/react"
-import { setupClientRouter } from "System/Router2/clientRouter"
-import { buildAppRoutes } from "System/Router2/Utils/buildAppRoutes"
+import { setupClientRouter } from "System/Router/clientRouter"
+import { buildAppRoutes } from "System/Router/Utils/buildAppRoutes"
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,

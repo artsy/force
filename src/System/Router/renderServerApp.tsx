@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server"
 import loadAssetManifest from "Server/manifest"
 import path from "path"
 import { getENV } from "Utils/getENV"
-import { ServerAppResults } from "System/Router2/serverRouter"
+import { ServerAppResults } from "System/Router/serverRouter"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.

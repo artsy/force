@@ -1,4 +1,4 @@
-import { queryStringParsing } from "System/Router2/Utils/queryStringParsing"
+import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
 
 interface ParsedQuery {
   acquireable: any

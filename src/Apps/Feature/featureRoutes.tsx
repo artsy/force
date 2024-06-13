@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router2/Route"
+import { AppRouteConfig } from "System/Router/Route"
 
 const FeatureApp = loadable(
   () => import(/* webpackChunkName: "featureBundle" */ "./FeatureApp"),

@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
-import { AppRouteConfig } from "System/Router2/Route"
+import { AppRouteConfig } from "System/Router/Route"
 import { getMerchandisingPartnerSlugs } from "./Utils/getMerchandisingPartnerSlugs"
 
 const PartnerApp = loadable(

@@ -4,7 +4,7 @@ import { RedirectException } from "found"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { AppRouteConfig } from "System/Router2/Route"
+import { AppRouteConfig } from "System/Router/Route"
 import { redirectGeneToCollection } from "./Server/redirectGeneToCollection"
 
 const GeneApp = loadable(

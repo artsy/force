@@ -1,5 +1,5 @@
 import { useNetworkOfflineMonitor } from "Utils/Hooks/useNetworkOfflineMonitor"
-import { findCurrentRoute } from "System/Router2/Utils/findCurrentRoute"
+import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { Match } from "found"
 import { isFunction } from "lodash"
 import { useEffect } from "react"

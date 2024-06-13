@@ -1,4 +1,4 @@
-import { getServerAppContext } from "System/Router2/Utils/serverAppContext"
+import { getServerAppContext } from "System/Router/Utils/serverAppContext"
 
 describe("buildServerAppContext", () => {
   let req, res

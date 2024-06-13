@@ -1,5 +1,5 @@
 import { Theme, injectGlobalStyles, ToastsProvider } from "@artsy/palette"
-import { AppRouteConfig } from "System/Router2/Route"
+import { AppRouteConfig } from "System/Router/Route"
 import { FC, useEffect } from "react"
 import * as React from "react"
 import { HeadProvider } from "react-head"
@@ -26,7 +26,7 @@ import {
   AppPreferencesProvider,
   useAppPreferences,
 } from "Apps/AppPreferences/useAppPreferences"
-import { ClientContext } from "System/Router2/Utils/clientAppContext"
+import { ClientContext } from "System/Router/Utils/clientAppContext"
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 

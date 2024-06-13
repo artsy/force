@@ -14,8 +14,8 @@ import { useTracking } from "react-tracking"
 import {
   __TEST_INTERNAL_SERVER_APP__,
   setupServerRouter,
-} from "System/Router2/serverRouter"
-import { findRoutesByPath } from "System/Router2/Utils/findRoutesByPath"
+} from "System/Router/serverRouter"
+import { findRoutesByPath } from "System/Router/Utils/findRoutesByPath"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
 
 jest.unmock("react-relay")

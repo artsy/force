@@ -4,7 +4,7 @@ import { createMockEnvironment } from "relay-test-utils"
 import {
   ClientContext,
   getClientAppContext,
-} from "System/Router2/Utils/clientAppContext"
+} from "System/Router/Utils/clientAppContext"
 import { Boot } from "System/Boot"
 
 export interface MockBootProps {

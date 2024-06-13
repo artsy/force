@@ -25,7 +25,7 @@ import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { Stripe, StripeElements } from "@stripe/stripe-js"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { useTracking } from "react-tracking"
-import { AppRouteConfig } from "System/Router2/Route"
+import { AppRouteConfig } from "System/Router/Route"
 
 interface AcceptProps {
   order: Accept_order$data

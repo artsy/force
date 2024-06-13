@@ -2,7 +2,7 @@ import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import { render, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
 import * as relaySystem from "System/Relay/createRelaySSREnvironment"
-import { setupClientRouter } from "System/Router2/clientRouter"
+import { setupClientRouter } from "System/Router/clientRouter"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
 
 jest.mock("Components/NavBar/NavBar", () => ({

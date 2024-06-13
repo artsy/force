@@ -1,6 +1,6 @@
 import { LayoutVariant } from "Apps/Components/Layouts"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
-import { ClientContext } from "System/Router2/Utils/clientAppContext"
+import { ClientContext } from "System/Router/Utils/clientAppContext"
 import { RemoveIndex } from "Utils/typeSupport"
 import { NextFunction } from "express"
 import { Location, Match, RouteObjectBase } from "found"

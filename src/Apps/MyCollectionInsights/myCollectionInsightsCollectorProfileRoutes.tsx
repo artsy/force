@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router2/Route"
+import { AppRouteConfig } from "System/Router/Route"
 
 // TODO: when cleanning up collector-profile ff,
 // change the file name to myCollectionInsightsRoutes

@@ -1,4 +1,4 @@
-import { renderServerApp } from "System/Router2/renderServerApp"
+import { renderServerApp } from "System/Router/renderServerApp"
 import express from "express"
 import type {
   ArtsyRequest,
@@ -11,8 +11,8 @@ import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
 import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
-import { setupServerRouter } from "System/Router2/serverRouter"
-import { getRouteConfig } from "System/Router2/Utils/getRouteConfig"
+import { setupServerRouter } from "System/Router/serverRouter"
+import { getRouteConfig } from "System/Router/Utils/getRouteConfig"
 
 const app = express()
 

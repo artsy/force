@@ -1,7 +1,7 @@
 import { aboutRoutes } from "Apps/About/aboutRoutes"
 import { adminRoutes } from "Apps/Admin/adminRoutes"
 import { alertRoutes } from "Apps/Alert/alertRoutes"
-import { AppRouteConfig } from "System/Router2/Route"
+import { AppRouteConfig } from "System/Router/Route"
 import { artAppraisalsRoutes } from "Apps/ArtAppraisals/artAppraisalsRoutes"
 import { articleRoutes } from "Apps/Article/articleRoutes"
 import { articlesRoutes } from "Apps/Articles/articlesRoutes"
@@ -60,7 +60,7 @@ import { showsRoutes } from "Apps/Shows/showsRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { viewingRoomRoutes } from "Apps/ViewingRoom/viewingRoomRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
-import { buildAppRoutes } from "System/Router2/Utils/buildAppRoutes"
+import { buildAppRoutes } from "System/Router/Utils/buildAppRoutes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([

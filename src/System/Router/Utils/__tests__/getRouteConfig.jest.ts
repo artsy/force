@@ -1,4 +1,4 @@
-import { getRouteConfig } from "System/Router2/Utils/getRouteConfig"
+import { getRouteConfig } from "System/Router/Utils/getRouteConfig"
 import { getAppRoutes } from "routes"
 
 jest.mock("routes", () => ({ getAppRoutes: jest.fn() }))

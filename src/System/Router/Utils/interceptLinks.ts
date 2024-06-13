@@ -1,6 +1,6 @@
 import { Router } from "found"
-import { AppRouteConfig } from "System/Router2/Route"
-import { catchLinks } from "System/Router2/Utils/catchLinks"
+import { AppRouteConfig } from "System/Router/Route"
+import { catchLinks } from "System/Router/Utils/catchLinks"
 
 interface InterceptLinksProps {
   router: Router

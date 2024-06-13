@@ -7,9 +7,9 @@ import React, { useEffect, useState } from "react"
 import { getUser } from "Utils/user"
 import { AppShell } from "Apps/Components/AppShell"
 import { Environment } from "react-relay"
-import { AppRouteConfig } from "System/Router2/Route"
+import { AppRouteConfig } from "System/Router/Route"
 import { HistoryEnhancerOptions } from "farce"
-import { RouterConfig, setupClientRouter } from "System/Router2/clientRouter"
+import { RouterConfig, setupClientRouter } from "System/Router/clientRouter"
 
 interface MockRouterProps {
   context?: RouterConfig["context"]

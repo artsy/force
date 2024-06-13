@@ -1,6 +1,6 @@
 import { getAppRoutes } from "routes"
 import { compact, uniq } from "lodash"
-import { AppRouteConfig } from "System/Router2/Route"
+import { AppRouteConfig } from "System/Router/Route"
 
 export function getRouteConfig(): {
   routes: AppRouteConfig[]

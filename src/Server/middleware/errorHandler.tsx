@@ -31,7 +31,7 @@ import { ServerStyleSheet } from "styled-components"
 import { injectGlobalStyles, Theme } from "@artsy/palette"
 import createLogger from "Utils/logger"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
-import { renderServerApp } from "System/Router2/renderServerApp"
+import { renderServerApp } from "System/Router/renderServerApp"
 
 const { GlobalStyles } = injectGlobalStyles()
 const logger = createLogger("Server/middleware/errorHandlerMiddleware")

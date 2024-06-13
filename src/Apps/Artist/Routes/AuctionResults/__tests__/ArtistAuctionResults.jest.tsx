@@ -13,7 +13,7 @@ import { useAuthDialog } from "Components/AuthDialog"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Components/Pagination/useComputeHref")
-jest.mock("System/Router2/Utils/catchLinks", () => ({
+jest.mock("System/Router/Utils/catchLinks", () => ({
   userIsForcingNavigation: () => false,
 }))
 jest.mock("System/Hooks/useSystemContext")

@@ -1,4 +1,4 @@
-import { findCurrentRoute } from "System/Router2/Utils/findCurrentRoute"
+import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { Location, Match, Router } from "found"
 
 describe("findCurrentRoute", () => {

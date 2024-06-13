@@ -1,4 +1,4 @@
-import { AppRouteConfig } from "System/Router2/Route"
+import { AppRouteConfig } from "System/Router/Route"
 import { Environment } from "react-relay"
 
 /**

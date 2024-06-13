@@ -1,4 +1,4 @@
-import { findRoutesByPath } from "System/Router2/Utils/findRoutesByPath"
+import { findRoutesByPath } from "System/Router/Utils/findRoutesByPath"
 
 export const executeRouteHooks = async (req, res, next) => {
   const matchedRoutes = findRoutesByPath({
