@@ -204,6 +204,7 @@
     "use-deep-compare-effect": "^1.2.0",
     "uuid": "3.3.2",
     "waypoints": "4.0.0",
+    "weaviate-ts-client": "^2.2.0",
     "yargs": "11.0.0",
     "yup": "0.32.6"
   },
