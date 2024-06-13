@@ -187,6 +187,13 @@ export class WeaviateDB {
     /** Max number of artworks to return */
     limit?: number
   }) {
+    console.log("[WeaviateDB] getArtworksNearConcepts", {
+      concepts,
+      likedArtworkIds,
+      dislikedArtworkIds,
+      limit,
+    })
+
     const conceptArray = ensureValidConcepts(concepts)
 
     const response = await this.client.graphql
