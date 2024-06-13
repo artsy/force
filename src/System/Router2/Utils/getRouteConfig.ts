@@ -15,7 +15,6 @@ export function getRouteConfig(): {
 
   const getRoutes = (acc, route: AppRouteConfig, basePath = "") => {
     const path = compact([basePath, route.path]).join("/")
-    console.log(route)
 
     const INVALID_PATHS = ["/", "*"]
 

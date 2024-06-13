@@ -58,7 +58,7 @@ export const setupServerRouter = async ({
   routes,
   context,
   ...config
-}: ServerRouterConfig) => {
+}: ServerRouterConfig): Promise<ServerAppResults> => {
   await executeRouteHooks(req, res, next)
 
   const matchContext = getServerAppContext(req, res, context)
@@ -109,11 +109,11 @@ export const setupServerRouter = async ({
 
   const matchingMediaQueries = matchingMediaQueriesForUserAgent(userAgent)
 
-  const ServerRouter: React.FC<{ tags: JSX.Element[] }> = ({ tags }) => {
+  const ServerRouter: React.FC = () => {
     return (
       <Boot
         context={matchContext}
-        headTags={tags}
+        headTags={headTags}
         relayEnvironment={relayEnvironment}
         routes={routes}
         user={user}
@@ -129,7 +129,7 @@ export const setupServerRouter = async ({
     relayEnvironment,
   })
 
-  return {
+  const result = {
     headTags,
     html,
     redirect,
@@ -137,6 +137,14 @@ export const setupServerRouter = async ({
     status,
     styleTags,
   }
+
+  if (__TEST_INTERNAL_SERVER_APP__) {
+    Object.defineProperty(result, __TEST_INTERNAL_SERVER_APP__, {
+      value: ServerRouter,
+    })
+  }
+
+  return result
 }
 
 const isRedirect = (
@@ -144,3 +152,6 @@ const isRedirect = (
 ): farceResult is FarceRedirectResult => {
   return farceResult.hasOwnProperty("redirect")
 }
+
+export const __TEST_INTERNAL_SERVER_APP__ =
+  typeof jest !== "undefined" ? Symbol() : null

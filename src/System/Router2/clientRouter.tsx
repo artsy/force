@@ -1,6 +1,8 @@
 import {
   BrowserProtocol,
+  HashProtocol,
   HistoryEnhancerOptions,
+  MemoryProtocol,
   createQueryMiddleware,
 } from "farce"
 import { Resolver } from "found-relay"
@@ -47,7 +49,7 @@ export const setupClientRouter = (config: RouterConfig) => {
 
   const render = createRender(renderStates)
 
-  const middleware = [
+  const historyMiddlewares = [
     loadingIndicatorMiddleware(),
     createQueryMiddleware({
       parse: queryStringParsing,
@@ -67,9 +69,22 @@ export const setupClientRouter = (config: RouterConfig) => {
     }),
   ]
 
+  const historyProtocol = (() => {
+    switch (config.history?.protocol) {
+      case "browser":
+        return new BrowserProtocol()
+      case "hash":
+        return new HashProtocol()
+      case "memory":
+        return new MemoryProtocol(config.initialRoute ?? "")
+      default:
+        return new BrowserProtocol()
+    }
+  })()
+
   const Router = createFarceRouter({
-    historyProtocol: new BrowserProtocol(),
-    historyMiddlewares: middleware,
+    historyProtocol,
+    historyMiddlewares,
     routeConfig: config.routes,
     render: renderArgs => {
       return (
