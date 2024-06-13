@@ -1,5 +1,4 @@
 import "Server/webpackPublicPath"
-
 import ReactDOM from "react-dom"
 import { getAppRoutes } from "routes"
 import { loadableReady } from "@loadable/component"

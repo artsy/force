@@ -13,6 +13,7 @@ import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
 import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
+import { setupServerRouter } from "System/Router2/serverRouter"
 
 const app = express()
 const { routes, routePaths } = getRouteConfig()
@@ -24,7 +25,7 @@ app.get(
   routePaths,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
     try {
-      const { status, redirect, ...rest } = await buildServerApp({
+      const { status, redirect, ...rest } = await setupServerRouter({
         assetsPath: "/assets",
         loadableFile: "loadable-stats.json",
         loadablePath: "public/assets",
