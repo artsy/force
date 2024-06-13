@@ -27,6 +27,7 @@ import {
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { logger } from "Components/Inquiry/util"
 import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 type Mode = "Pending" | "Confirm" | "Sending" | "Error" | "Success"
 
@@ -42,6 +43,10 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const [mode, setMode] = useState<Mode>("Pending")
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
+
+  const isCollectorSummaryEnabled = !!useFeatureFlag(
+    "diamond_collector-summary"
+  )
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
     if (mode === "Confirm" && value !== DEFAULT_MESSAGE) {
@@ -104,7 +109,9 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
             <Box display="inline-block" width={60} color="black60">
               From
             </Box>
-            {user.name}
+            {isCollectorSummaryEnabled
+              ? user.name
+              : `${user.name} (${user.email})`}
           </Text>
 
           <Separator my={2} />
@@ -152,13 +159,27 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
 
       <Spacer y={1} />
 
-      <Text variant="xs">
-        By clicking send, we will share your profile with{" "}
-        {artwork.partner?.name}. Update your profile at any time in{" "}
-        <RouterLink inline to="/settings/edit-profile" target="_blank">
-          Settings.
-        </RouterLink>
-      </Text>
+      {isCollectorSummaryEnabled ? (
+        <Text variant="xs">
+          By clicking send, we will share your profile with{" "}
+          {artwork.partner?.name}. Update your profile at any time in{" "}
+          <RouterLink
+            inline
+            to="/settings/edit-profile"
+            target="_blank"
+            color="blue100"
+          >
+            Settings.
+          </RouterLink>
+        </Text>
+      ) : (
+        <Text variant="xs">
+          By clicking send, you accept our{" "}
+          <RouterLink inline to="/privacy" target="_blank">
+            Privacy Policy.
+          </RouterLink>
+        </Text>
+      )}
 
       <Spacer y={1} />
 
