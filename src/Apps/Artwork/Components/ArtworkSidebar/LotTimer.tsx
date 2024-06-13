@@ -5,7 +5,7 @@ import { Text, Spacer, Box } from "@artsy/palette"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { ArtworkSidebarAuctionProgressBar } from "./ArtworkSidebarAuctionProgressBar"
-import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
+import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 
 export interface LotTimerProps {
   saleArtwork: LotTimer_saleArtwork$data

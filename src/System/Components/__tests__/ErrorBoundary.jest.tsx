@@ -1,5 +1,5 @@
+import { ErrorBoundary } from "System/Components/ErrorBoundary"
 import { mount } from "enzyme"
-import { ErrorBoundary } from "System/Router/ErrorBoundary"
 
 jest.mock("Utils/getENV", () => ({
   getENV: () => "development",

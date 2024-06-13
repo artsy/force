@@ -45,10 +45,6 @@ export interface ServerRouterConfig extends RouterConfig {
     injectedData?: any
     relayEnvironment: Environment
   }
-  /* For loadable-components bundle splitting */
-  loadableFile?: string
-  loadablePath?: string
-  assetsPath?: string
 }
 
 export const setupServerRouter = async ({

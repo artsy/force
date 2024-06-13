@@ -45,7 +45,7 @@ export const MockRouter: React.FC<MockRouterProps> = ({
           ? createMockNetworkLayer2({ mockData, mockMutationResults })
           : null
 
-        const { ClientRouter } = await setupClientRouter({
+        const { ClientRouter } = setupClientRouter({
           routes: [
             {
               path: "/",

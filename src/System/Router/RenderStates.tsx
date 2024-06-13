@@ -69,6 +69,7 @@ export const renderStates = {
 }
 
 const RenderReady = ({ elements }) => {
+  // No access to hooks at this level of the stack
   if (!isInitialized) {
     setTimeout(() => {
       isInitialized = true

@@ -26,9 +26,6 @@ app.get(
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
     try {
       const { status, redirect, ...rest } = await setupServerRouter({
-        assetsPath: "/assets",
-        loadableFile: "loadable-stats.json",
-        loadablePath: "public/assets",
         next,
         req,
         res,

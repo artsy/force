@@ -46,7 +46,7 @@ describe("buildClientRouter", () => {
   })
 
   it("accepts an initial route", async () => {
-    const { ClientRouter } = await setupClientRouter({
+    const { ClientRouter } = setupClientRouter({
       history: {
         protocol: "memory",
       },

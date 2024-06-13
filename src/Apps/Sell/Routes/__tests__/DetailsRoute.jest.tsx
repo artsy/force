@@ -14,7 +14,7 @@ const mockReplace = jest.fn()
 let submitMutation: jest.Mock
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 jest.mock("Utils/Hooks/useMutation")

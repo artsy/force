@@ -2,10 +2,10 @@ import { MockRouter } from "DevTools/MockRouter"
 import { mount } from "enzyme"
 import { render, screen } from "@testing-library/react"
 import { Link } from "found"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
-jest.mock("../Utils/shouldUpdateScroll", () => ({
+jest.mock("System/Router/Utils/shouldUpdateScroll", () => ({
   shouldUpdateScroll: () => true,
 }))
 

@@ -6,7 +6,7 @@ const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { location: { query: {} } } })),
 }))
 jest.unmock("react-relay")

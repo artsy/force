@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react-hooks"
-import { useAuctionWebsocket } from "../useAuctionWebsocket"
+import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 
-jest.mock("System/WebsocketContext", () => ({
+jest.mock("System/Contexts/WebsocketContext", () => ({
   useWebsocketContext: () => {
     return {
       data: {

@@ -100,7 +100,7 @@ export const setupClientRouter = (config: RouterConfig) => {
     },
   })
 
-  const ClientRouter = () => {
+  const ClientRouter: React.FC = () => {
     return (
       <Boot
         context={matchContext}

@@ -1,5 +1,5 @@
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { render, screen } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import { setupClientRouter } from "System/Router/clientRouter"
 import { buildAppRoutes } from "System/Router/Utils/buildAppRoutes"
 
@@ -25,20 +25,18 @@ jest.mock("Components/Footer/FooterDownloadAppBanner", () => ({
 
 describe("AppShell", () => {
   it("renders a Footer", async () => {
-    const { ClientRouter } = await setupClientRouter({
+    const { ClientRouter } = setupClientRouter({
       history: {
         protocol: "memory",
       },
       initialRoute: "/foo",
       routes: buildAppRoutes([
-        {
-          routes: [
-            {
-              path: "/foo",
-              Component: () => <div />,
-            },
-          ],
-        },
+        [
+          {
+            path: "/foo",
+            Component: () => <div />,
+          },
+        ],
       ]),
     })
 
@@ -48,29 +46,29 @@ describe("AppShell", () => {
       </SystemContextProvider>
     )
 
-    expect(screen.getByText("Meet your new art advisor.")).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText("Meet your new art advisor.")).toBeInTheDocument()
+    })
   })
 
   it("calls the matched routes `prepare` function if found", async () => {
     const onClientSideRender = jest.fn()
-    const { ClientRouter } = await setupClientRouter({
+    const { ClientRouter } = setupClientRouter({
       history: {
         protocol: "memory",
       },
       initialRoute: "/foo",
       routes: buildAppRoutes([
-        {
-          routes: [
-            {
-              path: "/foo",
-              Component: () => <div />,
-              onClientSideRender: ({ match }) => {
-                expect(match.location.pathname).toBe("/foo")
-                onClientSideRender()
-              },
+        [
+          {
+            path: "/foo",
+            Component: () => <div />,
+            onClientSideRender: ({ match }) => {
+              expect(match.location.pathname).toBe("/foo")
+              onClientSideRender()
             },
-          ],
-        },
+          },
+        ],
       ]),
     })
 
@@ -80,6 +78,8 @@ describe("AppShell", () => {
       </SystemContextProvider>
     )
 
-    expect(onClientSideRender).toHaveBeenCalledTimes(1)
+    await waitFor(() => {
+      expect(onClientSideRender).toHaveBeenCalledTimes(1)
+    })
   })
 })
