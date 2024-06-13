@@ -109,8 +109,8 @@ export class WeaviateDB {
       id,
       // internalID, // TODO: once we create real Gravity users
       name,
-      likedArtworkIds: likedArtworks.map(w => w.internalID),
-      dislikedArtworkIds: dislikedArtworks.map(w => w.internalID),
+      likedArtworkIds: (likedArtworks || []).map(w => w.internalID),
+      dislikedArtworkIds: (dislikedArtworks || []).map(w => w.internalID),
     } as DiscoveryUser
   }
 
@@ -252,6 +252,6 @@ function ensureValidConcepts(concepts: string[]) {
  * @param force weight of the move
  */
 function getMoveObjects(ids: MongoID[], force = 1) {
-  const objects = ids.map(id => ({ id: generateUuid5(id), force }))
+  const objects = _.castArray(ids).map(id => ({ id: generateUuid5(id), force }))
   return { objects, force }
 }
