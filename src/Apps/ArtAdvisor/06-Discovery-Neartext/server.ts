@@ -76,10 +76,13 @@ router.get("/test", async (req: ArtsyRequest, res: ArtsyResponse) => {
     limit: 3,
   })
 
+  const users = await w.getUsers()
+
   res.json({
     like,
     dislike,
     user,
     artworks,
+    users,
   })
 })

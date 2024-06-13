@@ -39,6 +39,23 @@ export class WeaviateDB {
     this.userClass = options.userClass || DEFAULT_USERS_CLASS
   }
 
+  async getUsers() {
+    const response = await this.client.graphql
+      .get()
+      .withClassName(this.userClass)
+      .withFields("name _additional { id }")
+      .do()
+
+    const users = response.data.Get.DiscoveryUsers.map(user => {
+      return {
+        id: user._additional.id,
+        name: user.name,
+      }
+    })
+
+    return users
+  }
+
   /**
    * Fetch a user
    */
