@@ -7,15 +7,36 @@ import {
 import _ from "lodash"
 import weaviate, { WeaviateClient, generateUuid5 } from "weaviate-ts-client"
 
+const DEFAULT_ARTWORKS_CLASS = "DiscoveryArtworks"
+const DEFAULT_USERS_CLASS = "DiscoveryUsers"
+
 export class WeaviateDB {
   private client: WeaviateClient
+  private artworkClass: string
+  private userClass: string
 
-  constructor() {
-    if (!process.env.WEAVIATE_URL) throw new Error("WEAVIATE_URL is not set")
+  constructor(
+    options: {
+      /** Weaviate host url */
+      url?: string
+      /** Name of artwork class to use.
+       * Be sure this class maps to the likes/dislikes of the
+       * user class that is being supplied here.
+       */
+      artworkClass?: string
+      /** Name of user class to use.
+       * Be sure this class's likes/dislikes are mapped to the
+       * same artwork class that is being supplied here.
+       */
+      userClass?: string
+    } = {}
+  ) {
+    const url = options.url || process.env.WEAVIATE_URL
+    if (!url) throw new Error("Please provide url or set WEAVIATE_URL")
 
-    this.client = weaviate.client({
-      host: process.env.WEAVIATE_URL,
-    })
+    this.client = weaviate.client({ host: url })
+    this.artworkClass = options.artworkClass || DEFAULT_ARTWORKS_CLASS
+    this.userClass = options.userClass || DEFAULT_USERS_CLASS
   }
 
   /**
@@ -42,7 +63,7 @@ export class WeaviateDB {
 
     const response = await this.client.data
       .getterById()
-      .withClassName("DiscoveryUsers")
+      .withClassName(this.userClass)
       .withId(id)
       .do()
 
@@ -109,13 +130,13 @@ export class WeaviateDB {
 
     await this.client.data
       .referenceCreator()
-      .withClassName("DiscoveryUsers")
+      .withClassName(this.userClass)
       .withId(userId)
       .withReferenceProperty(referenceProperty)
       .withReference(
         this.client.data
           .referencePayloadBuilder()
-          .withClassName("DiscoveryArtworks")
+          .withClassName(this.artworkClass)
           .withId(artworkId)
           .payload()
       )
@@ -147,7 +168,7 @@ export class WeaviateDB {
 
     const response = await this.client.graphql
       .get()
-      .withClassName("DiscoveryArtworks")
+      .withClassName(this.artworkClass)
       .withNearText({
         concepts: conceptArray,
         moveTo: getMoveObjects(likedArtworkIds),

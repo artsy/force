@@ -5,6 +5,8 @@ import { WeaviateDB } from "./weaviate-db"
 
 const ROOP_TESTER_ID = "64724d9a-920f-4814-bf3f-bf1c45e02725"
 
+const w = new WeaviateDB()
+
 const getArtworks = async (req: ArtsyRequest, res: ArtsyResponse) => {
   res.json({ hello: "world " })
 }
@@ -24,8 +26,6 @@ router.post("/artworks/likes", createArtworkLike)
 router.post("/artworks/dislikes", createArtworkDislike)
 
 router.get("/test", async (req: ArtsyRequest, res: ArtsyResponse) => {
-  const w = new WeaviateDB()
-
   const like = await w.reactToArtwork({
     artworkInternalID: "662fa0a76db981000e0725ff",
     userId: ROOP_TESTER_ID,
