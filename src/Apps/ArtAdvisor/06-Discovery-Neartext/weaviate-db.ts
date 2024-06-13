@@ -1,4 +1,5 @@
 import {
+  DiscoveryArtwork,
   DiscoveryUser,
   MongoID,
   UUID,
@@ -122,6 +123,65 @@ export class WeaviateDB {
 
     return true
   }
+
+  /**
+   * Fetch artworks by semantic search on an array of concepts,
+   * optionally with liked and disliked artworks to move to/away from.
+   */
+  async getArtworksNearConcepts({
+    concepts,
+    likedArtworkIds = [],
+    dislikedArtworkIds = [],
+    limit = 10,
+  }: {
+    /** List of concepts for semantic search */
+    concepts: string[]
+    /** List of liked artwork UUIDs */
+    likedArtworkIds?: UUID[]
+    /** List of liked artwork UUIDs */
+    dislikedArtworkIds?: UUID[]
+    /** Max number of artworks to return */
+    limit?: number
+  }) {
+    const conceptArray = ensureValidConcepts(concepts)
+
+    const response = await this.client.graphql
+      .get()
+      .withClassName("DiscoveryArtworks")
+      .withNearText({
+        concepts: conceptArray,
+        moveTo: getMoveObjects(likedArtworkIds),
+        moveAwayFrom: getMoveObjects(dislikedArtworkIds),
+      })
+      .withLimit(limit)
+      .withFields(
+        "internalID slug title date rarity medium materials price dimensions imageUrl _additional { id distance }"
+      )
+      .do()
+
+    const result = response.data.Get.DiscoveryArtworks.map(artwork => {
+      const properties = _.pick(artwork, [
+        "internalID",
+        "slug",
+        "title",
+        "date",
+        "rarity",
+        "medium",
+        "materials",
+        "price",
+        "dimensions",
+        "imageUrl",
+      ])
+
+      return {
+        id: artwork._additional.id,
+        ...properties,
+        distance: artwork._additional.distance,
+      }
+    })
+
+    return result as DiscoveryArtwork[]
+  }
 }
 
 function getUUIDFromBeacon(beacon: string) {
@@ -130,4 +190,32 @@ function getUUIDFromBeacon(beacon: string) {
   if (uuid.length !== 36) throw new Error("Invalid UUID")
 
   return uuid
+}
+
+/**
+ * Ensure that the concepts are valid for nearText(concepts: […])
+ * queries, to avoid Weaviate errors.
+ *
+ * @returns a non-empty array of non-empty strings
+ */
+function ensureValidConcepts(concepts: string[]) {
+  let conceptsArray = _.castArray(concepts)
+  conceptsArray = _.reject(conceptsArray, _.isEmpty)
+
+  if (_.isEmpty(conceptsArray)) {
+    conceptsArray.push("art") // TODO: better default?
+  }
+
+  return conceptsArray
+}
+
+/**
+ * Format a list of Weaviate object UUIDs for moveTo/moveAwayFrom
+ *
+ * @param ids list of object UUIDs
+ * @param force weight of the move
+ */
+function getMoveObjects(ids: UUID[], force = 1) {
+  const objects = ids.map(id => ({ id }))
+  return { objects, force }
 }
