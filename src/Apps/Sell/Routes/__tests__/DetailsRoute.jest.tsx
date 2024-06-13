@@ -4,17 +4,20 @@ import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Router/useRouter"
+import { useMutation } from "Utils/Hooks/useMutation"
 import { DetailsRoute_Test_Query$rawResponse } from "__generated__/DetailsRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
+let submitMutation: jest.Mock
 
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(),
 }))
+jest.mock("Utils/Hooks/useMutation")
 
 const submissionMock: Partial<
   DetailsRoute_Test_Query$rawResponse["submission"]
@@ -30,6 +33,11 @@ beforeEach(() => {
     },
     match: { location: { pathname: "submissions/submission-id/details" } },
   }))
+
+  submitMutation = jest.fn(() => ({ catch: () => {} }))
+  ;(useMutation as jest.Mock).mockImplementation(() => {
+    return { submitMutation }
+  })
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -89,11 +97,22 @@ describe("DetailsRoute", () => {
         '/sell2/submissions/<mock-value-for-field-"externalId">/details'
       )
 
-      // TODO: Test that the submission was saved
+      expect(submitMutation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              externalId: '<mock-value-for-field-"externalId">',
+              year: '<mock-value-for-field-"year">',
+              category: "PAINTING",
+              medium: '<mock-value-for-field-"medium">',
+            },
+          },
+        })
+      )
     })
   })
 
-  it("saves the submission & navigates to the previous step when the back button is clicked", async () => {
+  it("does not save the submission & navigates to the previous step when the back button is clicked", async () => {
     renderWithRelay({
       ConsignmentSubmission: () => submissionMock,
     })
@@ -105,7 +124,18 @@ describe("DetailsRoute", () => {
         '/sell2/submissions/<mock-value-for-field-"externalId">/photos'
       )
 
-      // TODO: Test that the submission was saved
+      expect(submitMutation).not.toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              externalId: '<mock-value-for-field-"externalId">',
+              year: '<mock-value-for-field-"year">',
+              category: "PAINTING",
+              medium: '<mock-value-for-field-"medium">',
+            },
+          },
+        })
+      )
     })
   })
 
@@ -125,11 +155,7 @@ describe("DetailsRoute", () => {
       await flushPromiseQueue()
 
       await waitFor(() => {
-        expect(mockPush).not.toHaveBeenCalledWith(
-          '/sell2/submissions/<mock-value-for-field-"externalId">/purchase-history'
-        )
-
-        // TODO: Test that the submission was saved
+        expect(submitMutation).not.toHaveBeenCalled()
       })
     })
   })
