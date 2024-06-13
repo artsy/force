@@ -1,9 +1,8 @@
-import { screen } from "@testing-library/react"
-import { fireEvent, waitFor } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { ArtistRoute } from "Apps/Sell/Routes/ArtistRoute"
+import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Router/useRouter"
-import { DeepPartial } from "Utils/typeSupport"
 import { ArtistRoute_Test_Query$rawResponse } from "__generated__/ArtistRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -12,7 +11,7 @@ const mockPush = jest.fn()
 const mockReplace = jest.fn()
 
 jest.mock("System/Router/useRouter", () => ({
-  useRouter: jest.fn(() => ({ match: { location: { query: {} } } })),
+  useRouter: jest.fn(),
 }))
 jest.unmock("react-relay")
 
@@ -21,11 +20,12 @@ jest.mock("react-relay", () => ({
   fetchQuery: jest.fn(),
 }))
 
-const submissionMock: DeepPartial<
-  ArtistRoute_Test_Query$rawResponse["submission"]
-> = {
-  internalID: "example",
+const submissionMock: ArtistRoute_Test_Query$rawResponse["submission"] = {
+  id: "submission-id",
+  internalID: "submission-id",
+  externalId: "submission-id",
   artist: {
+    id: "example-id",
     internalID: "example-id",
     targetSupply: {
       isTargetSupply: true,
@@ -40,16 +40,22 @@ beforeEach(() => {
       push: mockPush,
       replace: mockReplace,
     },
+    match: { location: { pathname: "submissions/submission-id/details" } },
   }))
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
-    return <ArtistRoute submission={props.submission} />
+    return (
+      <SubmissionRoute submission={props.submission}>
+        <ArtistRoute submission={props.submission} />
+      </SubmissionRoute>
+    )
   },
   query: graphql`
     query ArtistRoute_Test_Query @raw_response_type {
       submission(id: "submission-id") {
+        ...SubmissionRoute_submission
         ...ArtistRoute_submission
       }
     }
@@ -57,43 +63,55 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArtistRoute", () => {
-  it("renders the artist step", async () => {
+  it("renders the artist step", () => {
     renderWithRelay({
-      submission: () => submissionMock,
+      Submission: () => submissionMock,
     })
 
-    await waitFor(() => {
-      expect(screen.getByText("Add artist name")).toBeInTheDocument()
-    })
+    expect(screen.getByText("Add artist name")).toBeInTheDocument()
   })
 
   describe("artist input", () => {
-    it("is required", async () => {
+    it("is required", () => {
       renderWithRelay({
-        submission: () => submissionMock,
+        Submission: () => submissionMock,
       })
 
-      await waitFor(async () => {
-        const artistInput = screen.getByPlaceholderText("Enter full name")
+      const artistInput = screen.getByPlaceholderText("Enter full name")
 
-        fireEvent.change(artistInput, { target: { value: "Banksy" } })
+      fireEvent.change(artistInput, { target: { value: "Banksy" } })
 
-        expect(artistInput).toBeInTheDocument()
+      expect(artistInput).toBeInTheDocument()
 
-        expect(artistInput).toHaveValue("Banksy")
-      })
+      expect(artistInput).toHaveValue("Banksy")
     })
   })
 
   describe("Learn more link", () => {
     it("navigates to the artist not eligible page if the artist is not eligible", async () => {
       renderWithRelay({
-        submission: () => submissionMock,
+        Submission: () => submissionMock,
       })
 
       expect(screen.getByText("Learn more.").attributes["href"].value).toBe(
         "https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
       )
     })
+  })
+
+  it("Continue button isn't visible", () => {
+    renderWithRelay({
+      Submission: () => submissionMock,
+    })
+
+    expect(screen.queryByText("Continue")).not.toBeInTheDocument()
+  })
+
+  it("Back button isn't visible", () => {
+    renderWithRelay({
+      Submission: () => submissionMock,
+    })
+
+    expect(screen.queryByText("Back")).not.toBeInTheDocument()
   })
 })

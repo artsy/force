@@ -1,14 +1,23 @@
-import * as React from "react"
-import * as Yup from "yup"
-import { DetailsRoute_submission$key } from "__generated__/DetailsRoute_submission.graphql"
-import { Input, Join, Select, Spacer, Text } from "@artsy/palette"
+import {
+  Column,
+  GridColumns,
+  Input,
+  Join,
+  Select,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { acceptableCategoriesForSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/acceptableCategoriesForSubmission"
-import { graphql, useFragment } from "react-relay"
-import { Formik } from "formik"
-import { ConsignmentSubmissionCategoryAggregation } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { DetailsRoute_submission$key } from "__generated__/DetailsRoute_submission.graphql"
+import { ConsignmentSubmissionCategoryAggregation } from "__generated__/UpdateConsignSubmissionMutation.graphql"
+import { Formik } from "formik"
+import * as React from "react"
+import { useEffect } from "react"
+import { graphql, useFragment } from "react-relay"
+import * as Yup from "yup"
 
 const FRAGMENT = graphql`
   fragment DetailsRoute_submission on ConsignmentSubmission {
@@ -52,6 +61,12 @@ export const DetailsRoute: React.FC<DetailsRouteProps> = props => {
     medium: submission.medium ?? "",
   }
 
+  const yearInputRef = React.useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    yearInputRef.current?.focus()
+  }, [])
+
   return (
     <Formik<FormValues>
       initialValues={initialValues}
@@ -64,27 +79,38 @@ export const DetailsRoute: React.FC<DetailsRouteProps> = props => {
           <Text mb={2} variant="xl">
             Artwork details
           </Text>
-          <Join separator={<Spacer y={2} />}>
-            <Input
-              onChange={handleChange}
-              name="year"
-              title="Year"
-              defaultValue={values.year || ""}
-            ></Input>
+
+          <Join separator={<Spacer y={4} />}>
+            <GridColumns>
+              <Column span={4}>
+                <Input
+                  onChange={handleChange}
+                  name="year"
+                  title="Year"
+                  defaultValue={values.year || ""}
+                  ref={yearInputRef}
+                  data-testid="year-input"
+                />
+              </Column>
+            </GridColumns>
+
             <Select
               title="Medium"
               name="category"
               options={acceptableCategoriesForSubmission()}
-              defaultValue={values.category?.toUpperCase() ?? undefined}
+              selected={values.category}
               onChange={handleChange}
               required
+              data-testid="category-input"
             />
+
             <Input
               onChange={handleChange}
               name="medium"
               title="Materials"
               defaultValue={values.medium || ""}
-            ></Input>
+              data-testid="medium-input"
+            />
           </Join>
           <DevDebug />
         </SubmissionLayout>
