@@ -9,7 +9,7 @@ import { userIsAdmin } from "Utils/user"
 jest.unmock("react-relay")
 jest.mock("found")
 jest.mock("Utils/user")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({ match: { params: { id: "example" } } }),
 }))
 jest.mock("Components/MetaTags", () => ({

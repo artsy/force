@@ -25,13 +25,13 @@ import type { NextFunction } from "express"
 import { argv } from "yargs"
 import { IpDeniedError } from "express-ipfilter"
 import { NODE_ENV, VERBOSE_LOGGING } from "Server/config"
-import { renderServerApp } from "System/Router/renderServerApp"
 import { ErrorPage } from "Components/ErrorPage"
 import { renderToString } from "react-dom/server"
 import { ServerStyleSheet } from "styled-components"
 import { injectGlobalStyles, Theme } from "@artsy/palette"
 import createLogger from "Utils/logger"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
+import { renderServerApp } from "System/Router2/renderServerApp"
 
 const { GlobalStyles } = injectGlobalStyles()
 const logger = createLogger("Server/middleware/errorHandlerMiddleware")
@@ -76,7 +76,7 @@ Time: ${new Date().toUTCString()}`
   try {
     const sheet = new ServerStyleSheet()
 
-    const bodyHTML = renderToString(
+    const html = renderToString(
       sheet.collectStyles(
         <Theme>
           <GlobalStyles />
@@ -98,7 +98,7 @@ Time: ${new Date().toUTCString()}`
       req,
       res,
       code,
-      bodyHTML,
+      html,
       styleTags,
       mount: false, // Does not mount the client-side
     })

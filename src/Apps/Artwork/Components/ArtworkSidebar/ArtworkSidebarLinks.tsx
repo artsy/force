@@ -3,9 +3,9 @@ import { useTranslation } from "react-i18next"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { ArtworkSidebarLinks_artwork$data } from "__generated__/ArtworkSidebarLinks_artwork.graphql"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface ArtworkSidebarLinksProps {
   artwork: ArtworkSidebarLinks_artwork$data

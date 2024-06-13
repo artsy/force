@@ -7,7 +7,7 @@ import { HeadProvider } from "react-head"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       params: {

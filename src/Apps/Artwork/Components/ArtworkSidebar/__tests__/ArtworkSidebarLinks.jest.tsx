@@ -4,11 +4,11 @@ import { ArtworkSidebarLinksFragmentContainer } from "Apps/Artwork/Components/Ar
 import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkSidebarLinks_Test_Query } from "__generated__/ArtworkSidebarLinks_Test_Query.graphql"
 import { useTracking } from "react-tracking"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
-jest.mock("System/useFeatureFlag")
+jest.mock("System/Hooks/useFeatureFlag")
 
 const mockUseTracking = useTracking as jest.Mock
 const trackEvent = jest.fn()

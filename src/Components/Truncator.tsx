@@ -1,4 +1,4 @@
-import { ErrorBoundary } from "System/Router/ErrorBoundary"
+import { ErrorBoundary } from "System/Components/ErrorBoundary"
 import * as React from "react"
 import ReactDOM from "react-dom/server"
 
@@ -33,13 +33,7 @@ export const Truncator: React.SFC<Props> = ({
     const responsiveHOC = require("react-lines-ellipsis/lib/responsiveHOC")
     HTMLEllipsis = responsiveHOC()(require("react-lines-ellipsis/lib/html"))
   } else {
-    HTMLEllipsis = ({ unsafeHTML }) => (
-      <div
-        dangerouslySetInnerHTML={{
-          __html: unsafeHTML,
-        }}
-      />
-    )
+    HTMLEllipsis = TruncatorWrapper
   }
 
   return (
@@ -51,5 +45,15 @@ export const Truncator: React.SFC<Props> = ({
         ellipsisHTML={readMoreHTML}
       />
     </ErrorBoundary>
+  )
+}
+
+const TruncatorWrapper: React.FC<{ unsafeHTML: string }> = ({ unsafeHTML }) => {
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: unsafeHTML,
+      }}
+    />
   )
 }

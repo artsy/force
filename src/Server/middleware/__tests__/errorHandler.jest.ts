@@ -1,8 +1,8 @@
 import { IpDeniedError } from "express-ipfilter"
-import { renderServerApp } from "System/Router/renderServerApp"
+import { renderServerApp } from "System/Router2/renderServerApp"
 import { errorHandlerMiddleware } from "Server/middleware/errorHandler"
 
-jest.mock("System/Router/renderServerApp")
+jest.mock("System/Router2/renderServerApp")
 jest.mock("Server/config", () => {
   return {
     NODE_ENV: "unknown",

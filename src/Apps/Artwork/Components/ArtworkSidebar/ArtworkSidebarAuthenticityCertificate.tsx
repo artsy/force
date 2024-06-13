@@ -10,7 +10,7 @@ import { ArtworkSidebarAuthenticityCertificate_artwork$data } from "__generated_
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTranslation } from "react-i18next"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import CertificateIcon from "@artsy/icons/CertificateIcon"
 
 interface ArtworkSidebarAuthenticityCertificateProps {

@@ -2,9 +2,9 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { renderHook } from "@testing-library/react-hooks"
 import { useAuthDialogOptions } from "Apps/Authentication/Hooks/useAuthDialogOptions"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn().mockImplementation(() => {
     return { match: { location: { query: {} } } }
   }),

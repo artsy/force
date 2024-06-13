@@ -11,7 +11,7 @@ import { SaveArtworkToListsButton_Test_Query } from "__generated__/SaveArtworkTo
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
-jest.mock("System/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
+jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
 describe("SaveArtworkToListsButton", () => {
   const mockSaveArtwork = SaveArtwork as jest.Mock

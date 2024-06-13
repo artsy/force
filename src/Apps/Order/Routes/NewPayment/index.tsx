@@ -27,7 +27,7 @@ import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { useTracking } from "react-tracking"
 import { getErrorDialogCopy } from "Apps/Order/Utils/getErrorDialogCopy"
-import { AppRouteConfig } from "System/Router/Route"
+import { AppRouteConfig } from "System/Router2/Route"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>

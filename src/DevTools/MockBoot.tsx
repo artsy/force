@@ -1,9 +1,11 @@
-import { Boot } from "System/Router/Boot"
 import * as React from "react"
 import { Breakpoint } from "Utils/Responsive"
-import { buildClientAppContext } from "System/Router/buildClientAppContext"
-import { ClientContext } from "System/Router/buildClientAppContext"
 import { createMockEnvironment } from "relay-test-utils"
+import {
+  ClientContext,
+  getClientAppContext,
+} from "System/Router2/Utils/clientAppContext"
+import { Boot } from "System/Boot"
 
 export interface MockBootProps {
   breakpoint?: Breakpoint | undefined
@@ -21,7 +23,7 @@ export const MockBoot: React.FC<MockBootProps> = ({
   context = {},
   relayEnvironment,
 }) => {
-  const mockContext = buildClientAppContext(context)
+  const mockContext = getClientAppContext(context)
 
   return (
     <Boot

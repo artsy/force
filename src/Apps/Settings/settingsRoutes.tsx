@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { AppRouteConfig } from "System/Router2/Route"
 
 const SettingsApp = loadable(
   () => import(/* webpackChunkName: "settingsBundle" */ "./SettingsApp"),

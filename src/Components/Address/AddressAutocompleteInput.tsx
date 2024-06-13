@@ -6,7 +6,7 @@ import {
   usePrevious,
 } from "@artsy/palette"
 import { Address } from "Components/Address/AddressForm"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { throttle, uniqBy } from "lodash"

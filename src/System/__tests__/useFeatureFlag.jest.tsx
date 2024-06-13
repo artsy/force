@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   useFeatureFlag,
   useFeatureVariant,
   useTrackFeatureVariant,
   getFeatureVariant,
-} from "System/useFeatureFlag"
-import { useSystemContext } from "System/useSystemContext"
+} from "System/Hooks/useFeatureFlag"
 import { useEffect } from "react"
 
 const FEATURE_FLAGS = {
@@ -29,8 +29,8 @@ const FEATURE_FLAGS = {
   },
 }
 
-jest.mock("System/useSystemContext")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useSystemContext")
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

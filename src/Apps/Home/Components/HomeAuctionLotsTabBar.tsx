@@ -2,8 +2,8 @@ import * as React from "react"
 import { Flex, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { HomeAuctionLotsForYouRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsForYouRail"
 import { HomeAuctionLotsRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsRail"
-import { useSystemContext } from "System/useSystemContext"
-import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { RouterLink } from "System/Components/RouterLink"
 import {
   ActionType,
   ClickedArtworkGroup,

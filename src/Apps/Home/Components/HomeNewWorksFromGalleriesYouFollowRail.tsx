@@ -1,7 +1,7 @@
 import { Skeleton } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data } from "__generated__/HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection.graphql"

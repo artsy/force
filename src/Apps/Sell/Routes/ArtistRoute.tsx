@@ -6,8 +6,8 @@ import {
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import { RouterLink } from "System/Router/RouterLink"
-import { useRouter } from "System/Router/useRouter"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
 import {
   ArtistRoute_submission$data,
   ArtistRoute_submission$key,

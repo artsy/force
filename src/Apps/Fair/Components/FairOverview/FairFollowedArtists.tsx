@@ -8,7 +8,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Box, BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"

@@ -4,11 +4,11 @@ import { graphql } from "react-relay"
 import { DetailsFragmentContainer } from "Components/Artwork/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("Utils/getCurrentTimeAsIsoString")
 jest.mock("Components/AuthDialog/useAuthDialog")
 

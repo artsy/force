@@ -1,5 +1,5 @@
 import { Text, GridColumns, Column } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const ArtistOverviewEmpty: React.FC = () => {
   return (

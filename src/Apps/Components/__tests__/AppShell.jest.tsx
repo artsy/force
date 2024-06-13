@@ -1,13 +1,13 @@
-import { SystemContextProvider } from "System/SystemContext"
-import { buildAppRoutes } from "System/Router/buildAppRoutes"
-import { buildClientApp } from "System/Router/buildClientApp"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { render, screen } from "@testing-library/react"
+import { setupClientRouter } from "System/Router2/clientRouter"
+import { buildAppRoutes } from "System/Router2/Utils/buildAppRoutes"
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
 }))
 
-jest.mock("System/Router/Boot", () => ({
+jest.mock("System/Boot", () => ({
   Boot: ({ children }) => children,
 }))
 
@@ -25,7 +25,7 @@ jest.mock("Components/Footer/FooterDownloadAppBanner", () => ({
 
 describe("AppShell", () => {
   it("renders a Footer", async () => {
-    const { ClientApp } = await buildClientApp({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },
@@ -44,7 +44,7 @@ describe("AppShell", () => {
 
     render(
       <SystemContextProvider>
-        <ClientApp />
+        <ClientRouter />
       </SystemContextProvider>
     )
 
@@ -53,7 +53,7 @@ describe("AppShell", () => {
 
   it("calls the matched routes `prepare` function if found", async () => {
     const onClientSideRender = jest.fn()
-    const { ClientApp } = await buildClientApp({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },
@@ -76,7 +76,7 @@ describe("AppShell", () => {
 
     render(
       <SystemContextProvider>
-        <ClientApp />
+        <ClientRouter />
       </SystemContextProvider>
     )
 

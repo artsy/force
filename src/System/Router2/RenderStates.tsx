@@ -2,10 +2,10 @@ import StaticContainer from "found/StaticContainer"
 import ElementsRenderer from "found/cjs/ElementsRenderer"
 import { Box } from "@artsy/palette"
 import { HttpError } from "found"
-import { PageLoadingBar } from "System/Router/PageLoadingBar"
 import { getENV } from "Utils/getENV"
 import { AppShell } from "Apps/Components/AppShell"
 import { ErrorPage } from "Components/ErrorPage"
+import { PageLoadingBar } from "System/Components/PageLoadingBar"
 
 let isInitialized = false
 

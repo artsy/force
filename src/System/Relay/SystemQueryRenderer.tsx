@@ -2,7 +2,7 @@ import * as React from "react"
 import { Environment, QueryRenderer } from "react-relay"
 import { OperationType } from "relay-runtime"
 import { useDidMount } from "Utils/Hooks/useDidMount"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import {

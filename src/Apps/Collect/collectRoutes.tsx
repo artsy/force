@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { AppRouteConfig } from "System/Router2/Route"
 import { graphql } from "react-relay"
 import { redirectCollectionToArtistSeries } from "./Server/redirectCollectionToArtistSeries"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"

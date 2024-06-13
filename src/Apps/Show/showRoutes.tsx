@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException } from "found"
-import { AppRouteConfig } from "System/Router/Route"
+import { AppRouteConfig } from "System/Router2/Route"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 
 const ShowApp = loadable(

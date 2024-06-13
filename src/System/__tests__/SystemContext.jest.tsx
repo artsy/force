@@ -1,5 +1,9 @@
-import { SystemContextProps } from "System/SystemContext"
-import * as Artsy from "System/SystemContext"
+import {
+  SystemContextConsumer,
+  SystemContextProps,
+  SystemContextProvider,
+  withSystemContext,
+} from "System/Contexts/SystemContext"
 import { render } from "enzyme"
 import * as React from "react"
 
@@ -23,13 +27,13 @@ const ShowCurrentUser: React.SFC<
   return <div>{text}</div>
 }
 // This HOC adds the context to the component.
-const WithCurrentUser = Artsy.withSystemContext(ShowCurrentUser)
+const WithCurrentUser = withSystemContext(ShowCurrentUser)
 
 const ShowRelayEnvironment: React.SFC<SystemContextProps> = props => {
   const mockedEnv: any = props.relayEnvironment
   return <div>{mockedEnv.description}</div>
 }
-const WithRelayEnvironment = Artsy.withSystemContext(ShowRelayEnvironment)
+const WithRelayEnvironment = withSystemContext(ShowRelayEnvironment)
 
 describe("Artsy context", () => {
   const user = {
@@ -40,8 +44,8 @@ describe("Artsy context", () => {
   // eslint-disable-next-line jest/no-done-callback
   it("injects default renderProps", done => {
     render(
-      <Artsy.SystemContextProvider>
-        <Artsy.SystemContextConsumer>
+      <SystemContextProvider>
+        <SystemContextConsumer>
           {props => {
             expect(Object.keys(props).sort()).toEqual([
               "isEigen",
@@ -57,8 +61,8 @@ describe("Artsy context", () => {
             setTimeout(done, 0)
             return <div />
           }}
-        </Artsy.SystemContextConsumer>
-      </Artsy.SystemContextProvider>
+        </SystemContextConsumer>
+      </SystemContextProvider>
     )
   })
 
@@ -68,14 +72,14 @@ describe("Artsy context", () => {
         data: { EIGEN: false },
       }))
       render(
-        <Artsy.SystemContextProvider isEigen={true}>
-          <Artsy.SystemContextConsumer>
+        <SystemContextProvider isEigen={true}>
+          <SystemContextConsumer>
             {props => {
               expect(props.isEigen).toBe(true)
               return null
             }}
-          </Artsy.SystemContextConsumer>
-        </Artsy.SystemContextProvider>
+          </SystemContextConsumer>
+        </SystemContextProvider>
       )
       expect.assertions(1)
     })
@@ -98,27 +102,27 @@ describe("Artsy context", () => {
 
     it("exposes the currently signed-in user", () => {
       const wrapper = render(
-        <Artsy.SystemContextProvider user={user}>
+        <SystemContextProvider user={user}>
           <WithCurrentUser />
-        </Artsy.SystemContextProvider>
+        </SystemContextProvider>
       )
       expect(wrapper.text()).toEqual("andy-warhol")
     })
 
     it("defaults to environment variables if available", () => {
       const wrapper = render(
-        <Artsy.SystemContextProvider>
+        <SystemContextProvider>
           <WithCurrentUser />
-        </Artsy.SystemContextProvider>
+        </SystemContextProvider>
       )
       expect(wrapper.text()).toEqual("user-id-from-env")
     })
 
     it("does not default to environment variables when explicitly passing null", () => {
       const wrapper = render(
-        <Artsy.SystemContextProvider user={null}>
+        <SystemContextProvider user={null}>
           <WithCurrentUser />
-        </Artsy.SystemContextProvider>
+        </SystemContextProvider>
       )
       expect(wrapper.text()).toEqual("no-current-user")
     })
@@ -126,9 +130,9 @@ describe("Artsy context", () => {
 
   it("creates and exposes a Relay environment", () => {
     const wrapper = render(
-      <Artsy.SystemContextProvider user={user}>
+      <SystemContextProvider user={user}>
         <WithRelayEnvironment />
-      </Artsy.SystemContextProvider>
+      </SystemContextProvider>
     )
     expect(wrapper.text()).toEqual("A mocked env for andy-warhol")
   })
@@ -136,18 +140,18 @@ describe("Artsy context", () => {
   it("exposes a passed in Relay environment", () => {
     const mockedEnv: any = { description: "A passed in mocked env" }
     const wrapper = render(
-      <Artsy.SystemContextProvider user={user} relayEnvironment={mockedEnv}>
+      <SystemContextProvider user={user} relayEnvironment={mockedEnv}>
         <WithRelayEnvironment />
-      </Artsy.SystemContextProvider>
+      </SystemContextProvider>
     )
     expect(wrapper.text()).toEqual("A passed in mocked env")
   })
 
   it("passes other props on", () => {
     const wrapper = render(
-      <Artsy.SystemContextProvider user={user}>
+      <SystemContextProvider user={user}>
         <WithCurrentUser additionalProp="friends" />
-      </Artsy.SystemContextProvider>
+      </SystemContextProvider>
     )
     expect(wrapper.text()).toEqual("andy-warhol & friends")
   })

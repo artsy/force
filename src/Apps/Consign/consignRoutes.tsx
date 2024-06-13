@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { RedirectException, RouteRenderArgs } from "found"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { AppRouteConfig } from "System/Router2/Route"
 import { getENV } from "Utils/getENV"
 import { getRedirect } from "./Routes/SubmissionFlow/Utils/redirects"
 

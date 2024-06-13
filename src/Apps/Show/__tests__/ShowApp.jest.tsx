@@ -18,7 +18,7 @@ jest.mock("Apps/Show/Components/ShowInstallShots", () => ({
   ShowInstallShotsFragmentContainer: () => null,
 }))
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

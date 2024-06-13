@@ -6,7 +6,7 @@ import { ConversationOrderInformation } from "Apps/Conversations/components/Deta
 
 jest.unmock("react-relay")
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

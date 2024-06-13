@@ -2,7 +2,7 @@ import { Image } from "@artsy/palette"
 import { DefaultHeaderArtwork_artwork$data } from "__generated__/DefaultHeaderArtwork_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

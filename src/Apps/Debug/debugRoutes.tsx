@@ -2,8 +2,8 @@ import { Clickable, Text } from "@artsy/palette"
 import loadable from "@loadable/component"
 import { HttpError } from "found"
 import { useState } from "react"
-import { AppRouteConfig } from "System/Router/Route"
-import { RouterLink } from "System/Router/RouterLink"
+import { AppRouteConfig } from "System/Router2/Route"
+import { RouterLink } from "System/Components/RouterLink"
 
 const DebugApp = loadable(
   () => import(/* webpackChunkName: "debugBundle" */ "./DebugApp"),

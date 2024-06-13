@@ -3,7 +3,7 @@ import { AuctionCard_sale$data } from "__generated__/AuctionCard_sale.graphql"
 import { DateTime } from "luxon"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const relativeTime = (timeIn, now) => {
   const time = DateTime.fromISO(timeIn)

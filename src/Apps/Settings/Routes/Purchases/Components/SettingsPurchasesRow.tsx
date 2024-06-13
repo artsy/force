@@ -14,7 +14,7 @@ import {
 import { DateTime } from "luxon"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { SettingsPurchasesRow_order$data } from "__generated__/SettingsPurchasesRow_order.graphql"
 import { LocaleOptions } from "luxon"
 import { extractNodes } from "Utils/extractNodes"

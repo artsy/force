@@ -1,7 +1,7 @@
 import * as React from "react"
 import { BoxProps, Text, boxMixin, TextProps } from "@artsy/palette"
 import { StyledLink } from "./StyledLink"
-import { RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLinkProps } from "System/Components/RouterLink"
 import styled from "styled-components"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 

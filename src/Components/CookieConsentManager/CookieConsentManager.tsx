@@ -17,7 +17,7 @@ import { CookieConsentManagerProvider } from "Components/CookieConsentManager/Co
 import { CookieConsentManagerSetter } from "Components/CookieConsentManager/CookieConsentManagerSetter"
 import { SavedCookieConsentPreferences } from "@artsy/cohesion/dist/Schema/Events/CookieConsent"
 import { ActionType } from "@artsy/cohesion"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const COOKIE_CONSENT_MANAGER_COOKIE_NAME = "tracking-preferences"
 

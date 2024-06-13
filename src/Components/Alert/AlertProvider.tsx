@@ -19,7 +19,7 @@ import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 import {
   AlertProviderPreviewQuery,

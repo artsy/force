@@ -1,4 +1,4 @@
-import { AppRouteConfig } from "System/Router/Route"
+import { AppRouteConfig } from "System/Router2/Route"
 import { omit } from "lodash"
 import { graphql } from "react-relay"
 import loadable from "@loadable/component"

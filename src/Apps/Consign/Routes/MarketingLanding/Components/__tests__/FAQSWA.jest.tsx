@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
 
 jest.mock("react-tracking")
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 
 describe("FAQSWA", () => {
   beforeAll(() => {

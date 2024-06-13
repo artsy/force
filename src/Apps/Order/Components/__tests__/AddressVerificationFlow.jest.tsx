@@ -5,7 +5,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 const mockOnChosenAddress = jest.fn()
 const mockOnClose = jest.fn()
@@ -23,7 +23,7 @@ const componentProps = {
   onChosenAddress: mockOnChosenAddress,
 }
 
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerId: "example-order-id",

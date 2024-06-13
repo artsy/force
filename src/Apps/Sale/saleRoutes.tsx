@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { getArtworkFilterInputArgs } from "Apps/Sale/Components/SaleArtworks"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { AppRouteConfig } from "System/Router/Route"
+import { AppRouteConfig } from "System/Router2/Route"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 

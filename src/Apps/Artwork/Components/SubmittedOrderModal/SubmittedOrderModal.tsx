@@ -5,7 +5,7 @@ import {
   getStatusCopy,
   continueToInboxText,
 } from "Apps/Order/Utils/getStatusCopy"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { SubmittedOrderModal_submittedOrder$data } from "__generated__/SubmittedOrderModal_submittedOrder.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SubmittedOrderModalQuery } from "__generated__/SubmittedOrderModalQuery.graphql"

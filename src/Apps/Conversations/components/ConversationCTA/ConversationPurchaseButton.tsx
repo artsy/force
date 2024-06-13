@@ -1,7 +1,7 @@
 import { Box, BoxProps, Button, useToasts } from "@artsy/palette"
 import { useMakeInquiryOrder } from "Apps/Conversations/mutations/useMakeInquiryOrderMutation"
 import { useState } from "react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType, ClickedBuyNow } from "@artsy/cohesion"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"

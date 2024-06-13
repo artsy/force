@@ -11,7 +11,7 @@ import { AddressForm } from "Components/Address/AddressForm"
 import { graphql } from "react-relay"
 import { PaymentFragmentContainer } from "Apps/Order/Routes/Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { CreditCardPickerFragmentContainer } from "Apps/Order/Components/CreditCardPicker"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
@@ -71,7 +71,7 @@ jest.mock(
     return jest.requireActual("../../Components/__mocks__/BankDebitProvider")
   }
 )
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-tracking")
 jest.mock("../Payment/PaymentContext/OrderPaymentContext")
 

@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { FollowButton, FollowButtonRenderProps } from "./Button"
 import { FollowProfileButton_profile$data } from "__generated__/FollowProfileButton_profile.graphql"
 import { FollowProfileButton_me$data } from "__generated__/FollowProfileButton_me.graphql"

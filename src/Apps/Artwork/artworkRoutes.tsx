@@ -2,8 +2,8 @@ import loadable from "@loadable/component"
 import { HttpError } from "found"
 import { graphql } from "react-relay"
 import { updateContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
-import { AppRouteConfig } from "System/Router/Route"
-import { getFeatureFlag } from "System/useFeatureFlag"
+import { AppRouteConfig } from "System/Router2/Route"
+import { getFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const ArtworkApp = loadable(
   () => import(/* webpackChunkName: "artworkBundle" */ "./ArtworkApp"),

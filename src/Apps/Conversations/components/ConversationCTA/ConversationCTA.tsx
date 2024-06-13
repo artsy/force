@@ -4,7 +4,7 @@ import { ConversationMakeOfferButton } from "Apps/Conversations/components/Conve
 import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { ConversationCTA_conversation$key } from "__generated__/ConversationCTA_conversation.graphql"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"

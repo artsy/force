@@ -6,20 +6,20 @@ import {
 import { Resolver } from "found-relay"
 import { createFarceRouter, createRender } from "found"
 import { ScrollManager, ScrollManagerProps } from "found-scroll"
-import { SystemContextProps } from "System/SystemContext"
 import { renderStates } from "System/Router2/RenderStates"
-import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
-import { loadingIndicatorMiddleware } from "System/Router/loadingIndicatorMiddleware"
 import { trackingMiddleware } from "System/Analytics/trackingMiddleware"
-import qs from "qs"
-import { shouldUpdateScroll } from "System/Router/Utils/shouldUpdateScroll"
 import { Environment } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
-import { FeatureFlags } from "System/useFeatureFlag"
-import { buildClientAppContext } from "System/Router/buildClientAppContext"
+import { AppRouteConfig } from "System/Router2/Route"
+import { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import { getUser } from "Utils/user"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { Boot } from "System/Router/Boot"
+import qs from "qs"
+import { getClientAppContext } from "System/Router2/Utils/clientAppContext"
+import { loadingIndicatorMiddleware } from "System/Router2/Utils/loadingIndicatorMiddleware"
+import { queryStringParsing } from "System/Router2/Utils/queryStringParsing"
+import { shouldUpdateScroll } from "System/Router2/Utils/shouldUpdateScroll"
+import { Boot } from "System/Boot"
+import { SystemContextProps } from "System/Contexts/SystemContext"
 
 export interface RouterConfig {
   context?: SystemContextProps & { relayEnvironment?: Environment }
@@ -34,7 +34,7 @@ export interface RouterConfig {
 }
 
 export const setupClientRouter = (config: RouterConfig) => {
-  const matchContext = buildClientAppContext(config.context)
+  const matchContext = getClientAppContext(config.context)
 
   const user = getUser(matchContext.user)
 

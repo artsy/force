@@ -2,10 +2,10 @@ import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtistAppFragmentContainer } from "Apps/Artist/ArtistApp"
 import { ArtistApp_Test_Query } from "__generated__/ArtistApp_Test_Query.graphql"
-import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
+import { findCurrentRoute } from "System/Router2/Utils/findCurrentRoute"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/Utils/findCurrentRoute")
+jest.mock("System/Router2/Utils/findCurrentRoute")
 
 jest.mock("Apps/Artist/Components/ArtistMeta/ArtistMeta", () => ({
   ArtistMetaFragmentContainer: () => null,

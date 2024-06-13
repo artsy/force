@@ -13,7 +13,7 @@ import { FollowArtistButton_me$data } from "__generated__/FollowArtistButton_me.
 import { FollowArtistButtonQuery } from "__generated__/FollowArtistButtonQuery.graphql"
 import { FollowButton, FollowButtonRenderProps } from "./Button"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { useMutation } from "Utils/Hooks/useMutation"

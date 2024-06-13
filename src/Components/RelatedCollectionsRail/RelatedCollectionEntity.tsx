@@ -6,7 +6,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
 import { extractNodes } from "Utils/extractNodes"
 

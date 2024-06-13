@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { HttpError } from "found"
-import { AppRouteConfig } from "System/Router/Route"
+import { AppRouteConfig } from "System/Router2/Route"
 import { getUser } from "Utils/user"
 
 const AdminClearCacheApp = loadable(

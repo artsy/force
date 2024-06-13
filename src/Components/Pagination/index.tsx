@@ -8,7 +8,7 @@ import {
   BoxProps,
 } from "@artsy/palette"
 import { useComputeHref } from "./useComputeHref"
-import { userIsForcingNavigation } from "System/Router/Utils/catchLinks"
+import { userIsForcingNavigation } from "System/Router2/Utils/catchLinks"
 import { useJump } from "Utils/Hooks/useJump"
 
 export interface PaginationProps

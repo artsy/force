@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { Redirect } from "found"
 import { graphql } from "react-relay"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { AppRouteConfig } from "System/Router/Route"
+import { AppRouteConfig } from "System/Router2/Route"
 import { getArtworkFilterInputArgs } from "./Components/AuctionArtworkFilter"
 
 const AuctionApp = loadable(

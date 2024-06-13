@@ -6,7 +6,7 @@ import {
 import { ArtistArtworkFilters } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilters"
 import { ArtworkFilterContextProvider } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ReactElement } from "react"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const render = (ui: ReactElement, options: RenderOptions = {}) =>
   originalRender(ui, { wrapper: Wrapper, ...options })
@@ -40,7 +40,7 @@ const Wrapper: React.FC = ({ children }) => {
   )
 }
 
-jest.mock("System/useFeatureFlag", () => ({
+jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
 }))
 

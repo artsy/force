@@ -3,7 +3,7 @@ import { createArtworkFilterTestRenderer } from "Components/ArtworkFilter/Artwor
 import { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtistSeriesFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/ArtistSeriesFilterQuick"
 
-jest.mock("System/useFeatureFlag", () => ({
+jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
 }))
 

@@ -10,8 +10,8 @@ import {
 } from "@artsy/palette"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { useAuthDialog } from "Components/AuthDialog"
-import { RouterLink } from "System/Router/RouterLink"
-import { useSystemContext } from "System/SystemContext"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
 

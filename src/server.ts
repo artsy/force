@@ -1,6 +1,4 @@
-import { buildServerApp } from "System/Router/buildServerApp"
-import { getRouteConfig } from "System/Router/getRouteConfig"
-import { renderServerApp } from "System/Router/renderServerApp"
+import { renderServerApp } from "System/Router2/renderServerApp"
 import express from "express"
 import type {
   ArtsyRequest,
@@ -14,8 +12,10 @@ import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
 import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
 import { setupServerRouter } from "System/Router2/serverRouter"
+import { getRouteConfig } from "System/Router2/Utils/getRouteConfig"
 
 const app = express()
+
 const { routes, routePaths } = getRouteConfig()
 
 /**

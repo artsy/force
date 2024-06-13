@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { NewRoute } from "Apps/Sell/Routes/NewRoute"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()

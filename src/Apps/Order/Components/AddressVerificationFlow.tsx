@@ -14,7 +14,7 @@ import {
 } from "@artsy/palette"
 import { useCallback, useEffect, useState } from "react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   ActionType,
   ClickedCloseValidationAddressModal,

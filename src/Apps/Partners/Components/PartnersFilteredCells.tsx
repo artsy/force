@@ -10,7 +10,7 @@ import {
 } from "Components/Cells/CellPartner"
 import { PartnersFilteredCells_viewer$data } from "__generated__/PartnersFilteredCells_viewer.graphql"
 import { PartnersFilteredCellsQuery } from "__generated__/PartnersFilteredCellsQuery.graphql"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   Box,

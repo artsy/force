@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react-hooks"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { useBidderPosition } from "Apps/Auction/Queries/useBidderPosition"
 import { useCreateBidderPosition } from "Apps/Auction/Queries/useCreateBidderPosition"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import {
   useSubmitBid,
   UseSubmitBidProps,
@@ -15,7 +15,7 @@ jest.mock("Apps/Auction/Hooks/useAuctionTracking")
 jest.mock("Apps/Auction/Hooks/useCreateTokenAndSubmit")
 jest.mock("Apps/Auction/Queries/useCreateBidderPosition")
 jest.mock("Apps/Auction/Queries/useBidderPosition")
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 jest.mock("Apps/Auction/Components/Form/Utils/errorMessages", () => ({
   errorMessageForBidding: x => x,
 }))

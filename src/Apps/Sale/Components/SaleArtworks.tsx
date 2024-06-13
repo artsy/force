@@ -1,4 +1,4 @@
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
@@ -6,7 +6,7 @@ import {
   ArtworkFilterContextProvider,
   Counts,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { SaleArtworksFilter_viewer$data } from "__generated__/SaleArtworksFilter_viewer.graphql"
 

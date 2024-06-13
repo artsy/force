@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 import { ViewingRoomContentNotAccessible_viewingRoom$data } from "__generated__/ViewingRoomContentNotAccessible_viewingRoom.graphql"
 

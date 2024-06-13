@@ -9,7 +9,7 @@ import { ViewingRoomStatementRouteFragmentContainer } from "Apps/ViewingRoom/Rou
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       params: {

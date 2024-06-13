@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { AppRouteConfig } from "System/Router2/Route"
 
 const AlertApp = loadable(
   () => import(/* webpackChunkName: "AlertBundle" */ "./AlertApp"),
