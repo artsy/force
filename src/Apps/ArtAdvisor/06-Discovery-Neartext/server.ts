@@ -2,21 +2,51 @@ import express from "express"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import _ from "lodash"
 import { WeaviateDB } from "./weaviate-db"
+import { generateUuid5 } from "weaviate-ts-client"
 
 const ROOP_TESTER_ID = "64724d9a-920f-4814-bf3f-bf1c45e02725"
 
 const w = new WeaviateDB()
 
 const getArtworks = async (req: ArtsyRequest, res: ArtsyResponse) => {
-  res.json({ hello: "world " })
+  const { concepts, likedArtworkIds, dislikedArtworkIds, limit } = req.query
+  const artworks = await w.getArtworksNearConcepts({
+    concepts: concepts as string[],
+    likedArtworkIds: likedArtworkIds as string[],
+    dislikedArtworkIds: dislikedArtworkIds as string[],
+    limit: limit as number,
+  })
+  res.json(artworks)
 }
 
 const createArtworkLike = async (req: ArtsyRequest, res: ArtsyResponse) => {
-  res.json({ hello: "world " })
+  let { userId, userInternalID, artworkId } = req.body
+  if (userInternalID) {
+    userId = generateUuid5(userInternalID)
+  }
+  if (!userId) throw new Error("Provide either userId (UUID) or userInternalID")
+
+  const result = await w.reactToArtwork({
+    userId,
+    artworkInternalID: artworkId,
+    reaction: "like",
+  })
+  res.json(result)
 }
 
 const createArtworkDislike = async (req: ArtsyRequest, res: ArtsyResponse) => {
-  res.json({ hello: "world " })
+  let { userId, userInternalID, artworkId } = req.body
+  if (userInternalID) {
+    userId = generateUuid5(userInternalID)
+  }
+  if (!userId) throw new Error("Provide either userId (UUID) or userInternalID")
+
+  const result = await w.reactToArtwork({
+    userId,
+    artworkInternalID: artworkId,
+    reaction: "dislike",
+  })
+  res.json(result)
 }
 
 export const router = express.Router()
