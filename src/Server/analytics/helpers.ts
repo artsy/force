@@ -6,6 +6,7 @@ import { data as sd } from "sharify"
 import { trackTimeOnPage } from "./timeOnPageListener"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
 import { subscribeToInAppMessagesByPath } from "Server/analytics/brazeMessagingIntegration"
+import { getClientParam } from "Utils/getClientParam"
 const Events = require("../../Utils/Events").default
 
 /**
@@ -54,6 +55,16 @@ export const beforeAnalyticsReady = () => {
 export const onAnalyticsReady = () => {
   identify()
   subscribeToInAppMessagesByPath()
+}
+
+export const setupAnalytics = () => {
+  if (getClientParam("disableAnalytics") !== "true") {
+    beforeAnalyticsReady()
+
+    window.analytics?.ready(() => {
+      onAnalyticsReady()
+    })
+  }
 }
 
 /**

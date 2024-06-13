@@ -11,7 +11,7 @@ export interface ClientContext {
 
 export const buildClientAppContext = (
   context: { injectedData?: object } = {}
-): ClientContext | undefined => {
+): ClientContext => {
   return {
     user: sd.CURRENT_USER,
     featureFlags: sd.FEATURE_FLAGS,
