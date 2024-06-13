@@ -1,6 +1,10 @@
-import { DiscoveryUser } from "Apps/ArtAdvisor/06-Discovery-Neartext/types"
+import {
+  DiscoveryUser,
+  MongoID,
+  UUID,
+} from "Apps/ArtAdvisor/06-Discovery-Neartext/types"
 import _ from "lodash"
-import weaviate, { WeaviateClient } from "weaviate-ts-client"
+import weaviate, { WeaviateClient, generateUuid5 } from "weaviate-ts-client"
 
 export class WeaviateDB {
   private client: WeaviateClient
@@ -63,6 +67,60 @@ export class WeaviateDB {
       likedArtworkUuids,
       dislikedArtworkUuids,
     } as DiscoveryUser
+  }
+
+  /**
+   * Create a liked or disliked artwork for a user
+   *
+   * @returns true on success, false if user already liked or disliked artwork
+   */
+  async reactToArtwork({
+    userId,
+    userInternalID,
+    artworkInternalID,
+    reaction,
+  }: {
+    userId?: UUID
+    userInternalID?: MongoID
+    artworkInternalID: MongoID
+    reaction: "like" | "dislike"
+  }) {
+    if (userInternalID) {
+      userId = generateUuid5(userInternalID)
+    }
+    if (!userId)
+      throw new Error("Provide either userId (UUID) or userInternalID")
+
+    // bail if user already liked or disliked artwork
+
+    const user = await this.getUser({ id: userId })
+    const artworkId = generateUuid5(artworkInternalID)
+
+    if (user.likedArtworkUuids.includes(artworkId)) return false
+    if (user.dislikedArtworkUuids.includes(artworkId)) return false
+
+    // else go ahead and create
+
+    const referenceProperty = {
+      like: "likedArtworks",
+      dislike: "dislikedArtworks",
+    }[reaction]
+
+    await this.client.data
+      .referenceCreator()
+      .withClassName("DiscoveryUsers")
+      .withId(userId)
+      .withReferenceProperty(referenceProperty)
+      .withReference(
+        this.client.data
+          .referencePayloadBuilder()
+          .withClassName("DiscoveryArtworks")
+          .withId(artworkId)
+          .payload()
+      )
+      .do()
+
+    return true
   }
 }
 

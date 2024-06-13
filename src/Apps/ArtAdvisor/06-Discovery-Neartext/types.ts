@@ -1,5 +1,5 @@
-type MongoID = string
-type UUID = string
+export type MongoID = string
+export type UUID = string
 
 export type DiscoveryUser = {
   id: UUID
