@@ -41,6 +41,15 @@ export const ArtAdvisorApp: FC = () => {
           collector profile as your bio, follow an artist and/or create alerts
         </Description>
       </Experiment>
+
+      <Experiment href="/advisor/5">
+        <Name>Near Object Search Rail</Name>
+        <Description>
+          A artwork rail that demonstrates near object search functionality. It
+          provides real time personalization based on user actions (liking or
+          disliking an artwork)
+        </Description>
+      </Experiment>
     </Box>
   )
 }
