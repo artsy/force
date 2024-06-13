@@ -19,6 +19,11 @@ const getArtworks = async (req: ArtsyRequest, res: ArtsyResponse) => {
   res.json(artworks)
 }
 
+const getUsers = async (req: ArtsyRequest, res: ArtsyResponse) => {
+  const users = await w.getUsers()
+  res.json(users)
+}
+
 const createArtworkLike = async (req: ArtsyRequest, res: ArtsyResponse) => {
   let { userId, userInternalID, artworkId } = req.body
   if (userInternalID) {
@@ -51,6 +56,7 @@ const createArtworkDislike = async (req: ArtsyRequest, res: ArtsyResponse) => {
 
 export const router = express.Router()
 
+router.get("/users", getUsers)
 router.get("/artworks", getArtworks)
 router.post("/artworks/likes", createArtworkLike)
 router.post("/artworks/dislikes", createArtworkDislike)
