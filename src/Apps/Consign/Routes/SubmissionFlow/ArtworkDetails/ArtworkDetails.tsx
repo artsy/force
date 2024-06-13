@@ -74,7 +74,6 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   }
 
   const initialValue = getArtworkDetailsFormInitialValues(data)
-  console.log({ initialValue })
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
 
   const artworkId = myCollectionArtwork?.internalID
