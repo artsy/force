@@ -107,9 +107,7 @@ export const getArtworkDetailsFormInitialValues = (
         depth: props.values.depth ?? "",
         units: props.values.metric ?? "in",
         provenance: props.values.provenance ?? "",
-        location: {
-          city: "",
-        },
+        location: props.values.collectorLocation ?? { city: "" },
         postalCode: undefined,
       } as ArtworkDetailsFormModel
     default:
