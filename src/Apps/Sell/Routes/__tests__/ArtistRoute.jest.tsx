@@ -3,7 +3,6 @@ import { ArtistRoute } from "Apps/Sell/Routes/ArtistRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Router/useRouter"
-import { ArtistRoute_Test_Query$rawResponse } from "__generated__/ArtistRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
@@ -19,20 +18,6 @@ jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
   fetchQuery: jest.fn(),
 }))
-
-const submissionMock: ArtistRoute_Test_Query$rawResponse["submission"] = {
-  id: "submission-id",
-  internalID: "submission-id",
-  externalId: "submission-id",
-  artist: {
-    id: "example-id",
-    internalID: "example-id",
-    targetSupply: {
-      isTargetSupply: true,
-    },
-    name: "Example Artist",
-  },
-}
 
 beforeEach(() => {
   mockUseRouter.mockImplementation(() => ({
@@ -64,18 +49,14 @@ const { renderWithRelay } = setupTestWrapperTL({
 
 describe("ArtistRoute", () => {
   it("renders the artist step", () => {
-    renderWithRelay({
-      Submission: () => submissionMock,
-    })
+    renderWithRelay({})
 
     expect(screen.getByText("Add artist name")).toBeInTheDocument()
   })
 
   describe("artist input", () => {
     it("is required", () => {
-      renderWithRelay({
-        Submission: () => submissionMock,
-      })
+      renderWithRelay({})
 
       const artistInput = screen.getByPlaceholderText("Enter full name")
 
@@ -89,9 +70,7 @@ describe("ArtistRoute", () => {
 
   describe("Learn more link", () => {
     it("navigates to the artist not eligible page if the artist is not eligible", async () => {
-      renderWithRelay({
-        Submission: () => submissionMock,
-      })
+      renderWithRelay({})
 
       expect(screen.getByText("Learn more.").attributes["href"].value).toBe(
         "https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
@@ -100,17 +79,13 @@ describe("ArtistRoute", () => {
   })
 
   it("Continue button isn't visible", () => {
-    renderWithRelay({
-      Submission: () => submissionMock,
-    })
+    renderWithRelay({})
 
     expect(screen.queryByText("Continue")).not.toBeInTheDocument()
   })
 
   it("Back button isn't visible", () => {
-    renderWithRelay({
-      Submission: () => submissionMock,
-    })
+    renderWithRelay({})
 
     expect(screen.queryByText("Back")).not.toBeInTheDocument()
   })

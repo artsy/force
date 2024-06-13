@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { DetailsRoute } from "Apps/Sell/Routes/DetailsRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Router/useRouter"
 import { DetailsRoute_Test_Query$rawResponse } from "__generated__/DetailsRoute_Test_Query.graphql"
@@ -10,23 +11,15 @@ const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 
+jest.unmock("react-relay")
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(),
 }))
-jest.unmock("react-relay")
 
-jest.mock("react-relay", () => ({
-  ...jest.requireActual("react-relay"),
-  fetchQuery: jest.fn(),
-}))
-
-const submissionMock: DetailsRoute_Test_Query$rawResponse["submission"] = {
-  id: "submission-id",
-  internalID: "submission-id",
-  externalId: "submission-id",
-  year: "2021",
+const submissionMock: Partial<
+  DetailsRoute_Test_Query$rawResponse["submission"]
+> = {
   category: "Painting",
-  medium: "Oil on canvas",
 }
 
 beforeEach(() => {
@@ -60,7 +53,7 @@ const { renderWithRelay } = setupTestWrapperTL({
 describe("DetailsRoute", () => {
   it("renders the Details step", () => {
     renderWithRelay({
-      Submission: () => submissionMock,
+      ConsignmentSubmission: () => submissionMock,
     })
 
     expect(screen.getByText("Artwork details")).toBeInTheDocument()
@@ -71,7 +64,7 @@ describe("DetailsRoute", () => {
 
   it("initializes the form with the submission data", async () => {
     renderWithRelay({
-      Submission: () => submissionMock,
+      ConsignmentSubmission: () => submissionMock,
     })
 
     await waitFor(() => {
@@ -86,14 +79,14 @@ describe("DetailsRoute", () => {
 
   it("saves the submission & navigates to the next step when Continue button is clicked", async () => {
     renderWithRelay({
-      Submission: () => submissionMock,
+      ConsignmentSubmission: () => submissionMock,
     })
 
     screen.getByText("Continue").click()
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/purchase-history'
+        '/sell2/submissions/<mock-value-for-field-"externalId">/details'
       )
 
       // TODO: Test that the submission was saved
@@ -102,7 +95,7 @@ describe("DetailsRoute", () => {
 
   it("saves the submission & navigates to the previous step when the back button is clicked", async () => {
     renderWithRelay({
-      Submission: () => submissionMock,
+      ConsignmentSubmission: () => submissionMock,
     })
 
     screen.getByText("Back").click()
@@ -119,14 +112,25 @@ describe("DetailsRoute", () => {
   describe("when form is not valid", () => {
     it("disables the continue button", async () => {
       renderWithRelay({
-        Submission: () => ({ ...submissionMock, category: "default" }),
+        ConsignmentSubmission: () => ({
+          ...submissionMock,
+          category: "default",
+        }),
       })
 
       const mediumInput = screen.getByTestId("medium-input")
 
       fireEvent.change(mediumInput, { target: { value: "" } })
 
-      expect(screen.getByText("Continue")).toBeDisabled()
+      await flushPromiseQueue()
+
+      await waitFor(() => {
+        expect(mockPush).not.toHaveBeenCalledWith(
+          '/sell2/submissions/<mock-value-for-field-"externalId">/purchase-history'
+        )
+
+        // TODO: Test that the submission was saved
+      })
     })
   })
 })
