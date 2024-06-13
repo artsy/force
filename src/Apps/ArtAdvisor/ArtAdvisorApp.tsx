@@ -50,6 +50,15 @@ export const ArtAdvisorApp: FC = () => {
           disliking an artwork)
         </Description>
       </Experiment>
+
+      <Experiment href="/advisor/6">
+        <Name>Near Concept Search Rail</Name>
+        <Description>
+          A artwork rail that demonstrates neartext search functionality. It
+          retrieves artwork recommendations based on a list of concepts, as well
+          as by moving toward/away from the user's liked/disliked artworks.
+        </Description>
+      </Experiment>
     </Box>
   )
 }
