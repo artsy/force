@@ -116,9 +116,7 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
             <Form>
               <Join separator={<Spacer y={2} />}>
                 {needsIdentityVerification ? (
-                  <IdentityVerificationWarning
-                    additionalText={additionalText}
-                  />
+                  <IdentityVerificationWarning />
                 ) : (
                   <ConditionsOfSaleMessage additionalText={additionalText} />
                 )}
