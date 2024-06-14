@@ -59,53 +59,18 @@ describe("InquirySignUp", () => {
     expect(wrapper.html()).toContain("Sign up to send your message")
   })
 
-  it("renders a disclaimer", () => {
+  it("renders the new disclaimer", () => {
     render(<InquirySignUp />)
 
     expect(screen.getByTestId("disclaimer")).toHaveTextContent(
-      "By signing up, you agree to our Terms of Use, Privacy Policy, Conditions of Sale and to receiving emails from Artsy."
+      "By signing up, you agree to Artsy's Terms and Conditions, Privacy Policy and to receiving emails from Artsy."
     )
-    expect(screen.getByRole("link", { name: "Terms of Use" })).toHaveAttribute(
-      "href",
-      "/terms"
-    )
+    expect(
+      screen.getByRole("link", { name: "Terms and Conditions" })
+    ).toHaveAttribute("href", "/terms")
     expect(
       screen.getByRole("link", { name: "Privacy Policy" })
     ).toHaveAttribute("href", "/privacy")
-    expect(
-      screen.getByRole("link", { name: "Conditions of Sale" })
-    ).toHaveAttribute("href", "/conditions-of-sale")
-  })
-
-  describe("when the new disclaimer is enabled", () => {
-    beforeAll(() => {
-      ;(useFeatureFlag as jest.Mock).mockImplementation(
-        (f: string) => f === "diamond_new-terms-and-conditions"
-      )
-    })
-
-    afterAll(() => {
-      ;(useFeatureFlag as jest.Mock).mockReset()
-    })
-
-    it("renders the new disclaimer", () => {
-      render(<InquirySignUp />)
-
-      expect(screen.getByTestId("disclaimer")).toHaveTextContent(
-        "By signing up, you agree to Artsy's Terms and Conditions, Privacy Policy and to receiving emails from Artsy."
-      )
-      expect(
-        screen.getByRole("link", { name: "Terms and Conditions" })
-      ).toHaveAttribute("href", "/terms")
-      expect(
-        screen.getByRole("link", { name: "Privacy Policy" })
-      ).toHaveAttribute("href", "/privacy")
-
-      // TODO: remove this assertion when deprecating diamond_new-terms-and-conditions
-      expect(
-        screen.queryByRole("link", { name: "Conditions of Sale" })
-      ).not.toBeInTheDocument()
-    })
   })
 
   describe("success", () => {

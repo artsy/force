@@ -60,8 +60,6 @@ export const InquirySignUp: React.FC = () => {
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
-  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
-
   const [state, setState] = useState<InquirySignUpState>({
     name: "",
     email: inquiry.email ?? "",
@@ -203,22 +201,14 @@ export const InquirySignUp: React.FC = () => {
         <Spacer y={2} />
 
         <Text variant="xs" color="black60" data-testid="disclaimer">
-          By signing up, you agree to {showNewDisclaimer ? "Artsy's" : "our"}{" "}
+          By signing up, you agree to Artsy's{" "}
           <RouterLink inline to="/terms" target="_blank">
-            {showNewDisclaimer ? "Terms and Conditions" : "Terms of Use"}
+            Terms and Conditions
           </RouterLink>
           ,{" "}
           <RouterLink inline to="/privacy" target="_blank">
-            Privacy Policy
+            Privacy Policy{" "}
           </RouterLink>
-          {!showNewDisclaimer && (
-            <>
-              {", "}
-              <RouterLink inline to="/conditions-of-sale" target="_blank">
-                Conditions of Sale
-              </RouterLink>
-            </>
-          )}{" "}
           and to receiving emails from Artsy.
         </Text>
 

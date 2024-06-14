@@ -1,7 +1,6 @@
 import { Text, TextProps } from "@artsy/palette"
 import * as React from "react"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface Props {
   textProps?: Partial<TextProps>
@@ -12,8 +11,6 @@ export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
   textProps,
   orderSource,
 }) => {
-  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
-
   if (orderSource === "private_sale") {
     return (
       <Text variant="sm" color="black60" {...textProps}>
@@ -34,18 +31,11 @@ export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
     )
   }
 
-  return showNewDisclaimer ? (
+  return (
     <Text variant="xs" color="black60" {...textProps}>
       By clicking Submit, I agree to Artsy’s{" "}
       <RouterLink inline to="/terms" target="_blank">
         General Terms and Conditions of Sale.
-      </RouterLink>
-    </Text>
-  ) : (
-    <Text variant="xs" color="black60" {...textProps}>
-      By clicking Submit, I agree to Artsy’s{" "}
-      <RouterLink inline to="/conditions-of-sale" target="_blank">
-        Conditions of Sale.
       </RouterLink>
     </Text>
   )

@@ -29,42 +29,17 @@ describe("ConditionsOfSaleCheckbox", () => {
     })
   })
 
-  it("renders a disclaimer", () => {
+  it("renders the disclaimer", () => {
     render(<ConditionsOfSaleCheckbox />)
 
     expect(screen.getByTestId("disclaimer")).toHaveTextContent(
-      "I agree to the Conditions of Sale. I understand that all bids are binding and may not be retracted."
+      "I agree to Artsy's General Terms and Conditions of Sale. I understand that all bids are binding and may not be retracted."
     )
     expect(
       screen.getByRole("link", {
-        name: "Conditions of Sale",
+        name: "General Terms and Conditions of Sale",
       })
-    ).toHaveAttribute("href", "/conditions-of-sale")
-  })
-
-  describe("when the new disclaimer is enabled", () => {
-    beforeAll(() => {
-      ;(useFeatureFlag as jest.Mock).mockImplementation(
-        (f: string) => f === "diamond_new-terms-and-conditions"
-      )
-    })
-
-    afterAll(() => {
-      ;(useFeatureFlag as jest.Mock).mockReset()
-    })
-
-    it("renders the new disclaimer", () => {
-      render(<ConditionsOfSaleCheckbox />)
-
-      expect(screen.getByTestId("disclaimer")).toHaveTextContent(
-        "I agree to Artsy's General Terms and Conditions of Sale. I understand that all bids are binding and may not be retracted."
-      )
-      expect(
-        screen.getByRole("link", {
-          name: "General Terms and Conditions of Sale",
-        })
-      ).toHaveAttribute("href", "/terms")
-    })
+    ).toHaveAttribute("href", "/terms")
   })
 
   it("shows error message if error", () => {

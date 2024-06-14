@@ -78,28 +78,7 @@ describe("ArtworkSidebarLinks", () => {
         })
       })
 
-      it("shows conditions of sale link", () => {
-        expect(
-          screen.queryByText("By placing your bid you agree to Artsy's")
-        ).toBeInTheDocument()
-        expect(
-          screen.getByRole("link", {
-            name: "Conditions of Sale",
-          })
-        ).toHaveAttribute("href", "/conditions-of-sale")
-      })
-
       describe("new disclaimer is shown", () => {
-        beforeAll(() => {
-          ;(useFeatureFlag as jest.Mock).mockImplementation(
-            (f: string) => f === "diamond_new-terms-and-conditions"
-          )
-        })
-
-        afterAll(() => {
-          ;(useFeatureFlag as jest.Mock).mockReset()
-        })
-
         it("shows general terms and conditions of sale link", () => {
           expect(
             screen.getByRole("link", {

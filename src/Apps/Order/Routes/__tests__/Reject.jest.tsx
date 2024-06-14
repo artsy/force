@@ -116,38 +116,20 @@ describe("Buyer rejects seller offer", () => {
       expect(page.find(StepSummaryItem).text()).toContain(
         "Declining an offer permanently ends the negotiation process."
       )
+    })
+
+    it("renders the disclaimer", () => {
+      const { wrapper } = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new OrderAppTestPage(wrapper)
+
       expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
-        "By clicking Submit, I agree to Artsy’s Conditions of Sale."
+        "By clicking Submit, I agree to Artsy’s General Terms and Conditions of Sale."
       )
       expect(
         page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
-      ).toEqual("/conditions-of-sale")
-    })
-
-    describe("when new disclaimers are enabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          (f: string) => f === "diamond_new-terms-and-conditions"
-        )
-      })
-
-      afterAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockReset()
-      })
-
-      it("renders the new disclaimer", () => {
-        const { wrapper } = getWrapper({
-          CommerceOrder: () => testOrder,
-        })
-        const page = new OrderAppTestPage(wrapper)
-
-        expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
-          "By clicking Submit, I agree to Artsy’s General Terms and Conditions of Sale."
-        )
-        expect(
-          page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
-        ).toEqual("/terms")
-      })
+      ).toEqual("/terms")
     })
 
     it("Shows a change link that takes the user back to the respond page", () => {
