@@ -4,7 +4,7 @@ import { mount } from "enzyme"
 import "jest-styled-components"
 import { OtherCollectionsRail } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/OtherCollectionsRail/index"
 import { paginateCarousel } from "@artsy/palette"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("@artsy/palette", () => {

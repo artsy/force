@@ -5,7 +5,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { cropped } from "Utils/resized"
 
 export interface CollectionProps {

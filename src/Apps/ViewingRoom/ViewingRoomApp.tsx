@@ -11,7 +11,7 @@ import { SystemContext } from "System/Contexts/SystemContext"
 import { userHasAccessToPartner } from "Utils/user"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import HideIcon from "@artsy/icons/HideIcon"
-import { Analytics } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 
 interface ViewingRoomAppProps {
   children: React.ReactNode

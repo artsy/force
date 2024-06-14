@@ -4,7 +4,7 @@ import {
   CreateNewListModalContainerProps,
 } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModal"
 import { render } from "DevTools/renderWithMockBoot"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTracking } from "react-tracking"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"

@@ -4,7 +4,7 @@ import { FairCollectionFragmentContainer } from "Apps/Fair/Components/FairCollec
 import { FairCollection_Query$rawResponse } from "__generated__/FairCollection_Query.graphql"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

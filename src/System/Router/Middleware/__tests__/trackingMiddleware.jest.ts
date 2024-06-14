@@ -1,5 +1,5 @@
+import { trackingMiddleware } from "System/Router/Middleware/trackingMiddleware"
 import { ActionTypes } from "farce"
-import { trackingMiddleware } from "../trackingMiddleware"
 
 declare const global: any
 

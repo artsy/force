@@ -1,4 +1,4 @@
-import { useWebsocketContext } from "System/Contexts/WebsocketContext"
+import { useWebsocketContext } from "System/Hooks/useWebsocketContext"
 import { useEffect } from "react"
 
 interface AuctionWebsocketData {

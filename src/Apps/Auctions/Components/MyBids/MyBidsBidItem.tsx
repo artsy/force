@@ -4,7 +4,7 @@ import { MyBidsBidItem_saleArtwork$data } from "__generated__/MyBidsBidItem_sale
 import { Box, Flex, Image, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
