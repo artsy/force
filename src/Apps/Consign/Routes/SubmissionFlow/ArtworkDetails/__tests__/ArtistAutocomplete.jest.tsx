@@ -22,12 +22,14 @@ const results = {
           displayLabel: "Banksy",
           internalID: "111",
           formattedNationalityAndBirthday: "British, b. 1974",
-          image: {
-            cropped: {
-              height: 44,
-              src: "some-img",
-              srcSet: "some-img",
-              width: 44,
+          coverArtwork: {
+            image: {
+              cropped: {
+                height: 44,
+                src: "some-img",
+                srcSet: "some-img",
+                width: 44,
+              },
             },
           },
         },
