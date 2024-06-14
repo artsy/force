@@ -170,7 +170,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
               inline
               to="/settings/edit-profile"
               target="_blank"
-              color="blue100"
+              color="black100"
             >
               Settings.
             </RouterLink>
