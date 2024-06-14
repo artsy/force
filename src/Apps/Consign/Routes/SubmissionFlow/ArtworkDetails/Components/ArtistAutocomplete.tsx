@@ -156,12 +156,12 @@ export const ArtistAutoComplete: React.FC<{
   }
 
   const renderOption = (option: ArtistAutocompleteOption) => {
-    const image = option.option?.image
+    const image = option.option?.coverArtwork?.image
 
     return (
       <Flex justifyContent="space-between">
         <Flex alignItems="center" p={1} width="100%">
-          {option.option?.image ? (
+          {image ? (
             <Image
               src={image?.cropped?.src}
               srcSet={image?.cropped?.srcSet}
@@ -235,12 +235,14 @@ const fetchSuggestions = async (
                 initials
                 internalID
                 isPersonalArtist
-                image {
-                  cropped(width: 50, height: 50) {
-                    height
-                    src
-                    srcSet
-                    width
+                coverArtwork {
+                  image {
+                    cropped(width: 50, height: 50) {
+                      height
+                      width
+                      src
+                      srcSet
+                    }
                   }
                 }
                 targetSupply {
