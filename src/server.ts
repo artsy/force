@@ -12,11 +12,11 @@ import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
 import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
 import { setupServerRouter } from "System/Router/serverRouter"
-import { getRouteConfig } from "System/Router/Utils/getRouteConfig"
+import { getRoutes } from "System/Router/Utils/routeUtils"
 
 const app = express()
 
-const { routes, routePaths } = getRouteConfig()
+const { routes, routePaths } = getRoutes()
 
 /**
  * Mount routes that will connect to global SSR router

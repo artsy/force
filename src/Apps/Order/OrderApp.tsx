@@ -2,7 +2,6 @@ import { FC, useEffect, useRef } from "react"
 import { Box } from "@artsy/palette"
 import { OrderApp_order$data } from "__generated__/OrderApp_order.graphql"
 import { StickyFooterWithInquiry } from "Apps/Order/Components/StickyFooter"
-import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "Components/ErrorPage"
 import { RouterState } from "found"
 import { Meta, Title } from "react-head"
@@ -19,6 +18,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { OrderPaymentContextProvider } from "./Routes/Payment/PaymentContext/OrderPaymentContext"
 import { SalesforceWrapper } from "Components/SalesforceWrapper"
 import { Media } from "Utils/Responsive"
+import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 
 export interface OrderAppProps extends RouterState {
   params: {

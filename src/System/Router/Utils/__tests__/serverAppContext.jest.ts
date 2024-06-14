@@ -1,6 +1,6 @@
 import { getServerAppContext } from "System/Router/Utils/serverAppContext"
 
-describe("buildServerAppContext", () => {
+describe("serverAppContext", () => {
   let req, res
   let headers = {}
   beforeEach(() => {

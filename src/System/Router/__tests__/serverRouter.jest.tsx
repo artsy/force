@@ -15,7 +15,7 @@ import {
   __TEST_INTERNAL_SERVER_APP__,
   setupServerRouter,
 } from "System/Router/serverRouter"
-import { findRoutesByPath } from "System/Router/Utils/findRoutesByPath"
+import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
 
 jest.unmock("react-relay")
@@ -23,7 +23,8 @@ jest.unmock("react-relay")
 // FIXME: Not sure why this fails test since all code here is server-side. Need
 // to investigate where this dep intersects
 jest.mock("found-scroll", () => {})
-jest.mock("../Utils/findRoutesByPath", () => ({
+jest.mock("System/Router/Utils/routeUtils", () => ({
+  ...jest.requireActual("System/Router/Utils/routeUtils"),
   findRoutesByPath: jest.fn(),
 }))
 
@@ -39,7 +40,7 @@ jest.mock("react-tracking")
 
 const defaultComponent = () => <div>hi!</div>
 
-describe("buildServerApp", () => {
+describe("serverRouter", () => {
   let mockFindRoutesByPath = findRoutesByPath as jest.Mock
   let res: ArtsyResponse
   let req: Request

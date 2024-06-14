@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { Match, Router } from "found"
 import RouterContext from "found/RouterContext"
 import { AppRouteConfig } from "System/Router/Route"
-import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
+import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 
 export function useRouter(): {
   match: Match

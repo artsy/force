@@ -20,7 +20,7 @@ jest.mock("Utils/Hooks/useOnboardingModal", () => ({
   useOnboardingModal: jest.fn(),
 }))
 
-describe("buildClientRouter", () => {
+describe("clientRouter", () => {
   it("resolves with a <ClientRouter /> component", async () => {
     const { ClientRouter } = setupClientRouter({
       history: {

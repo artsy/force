@@ -1,7 +1,6 @@
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { AppRouteConfig } from "System/Router/Route"
-import { createRouteConfig } from "System/Router/Utils/createRouteConfig"
 import { matchingMediaQueriesForUserAgent } from "System/Router/Utils/matchingMediaQueriesForUserAgent"
 import { renderStates } from "System/Router/RenderStates"
 import { RouterConfig } from "System/Router/clientRouter"
@@ -76,7 +75,7 @@ export const setupServerRouter = async ({
 
   const render = createRender(renderStates)
 
-  const routeConfig = createRouteConfig(routes)
+  const routeConfig = routes
 
   const farceResult = (await getFarceResult({
     url: req.url,

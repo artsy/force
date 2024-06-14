@@ -1,5 +1,4 @@
 import { useNetworkOfflineMonitor } from "Utils/Hooks/useNetworkOfflineMonitor"
-import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { Match } from "found"
 import { isFunction } from "lodash"
 import { useEffect } from "react"
@@ -11,6 +10,7 @@ import { Layout } from "Apps/Components/Layouts"
 import { useSetupAuth } from "Utils/Hooks/useSetupAuth"
 import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
+import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {

@@ -3,14 +3,6 @@ import type {
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
 
-/**
- * Builds initial context for Reaction components from server load. Put commonly
- * required context here.
- *
- * @param req Request passed to Express callback.
- * @param res Response passed to Express callback.
- * @param context Custom data to be added to context (optionally).
- */
 export const getServerAppContext = (
   req: ArtsyRequest,
   res: ArtsyResponse,
