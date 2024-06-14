@@ -2,9 +2,9 @@ import { screen } from "@testing-library/react"
 import { fireEvent, waitFor } from "@testing-library/react"
 import { TitleRoute } from "Apps/Sell/Routes/TitleRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { useRouter } from "System/Router/useRouter"
 import { graphql } from "react-relay"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
+import { useRouter } from "System/Hooks/useRouter"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
