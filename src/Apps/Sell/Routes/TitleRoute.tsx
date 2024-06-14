@@ -1,6 +1,6 @@
 import * as React from "react"
 import * as Yup from "yup"
-import { Input, Text } from "@artsy/palette"
+import { Avatar, Box, Flex, Input, Join, Spacer, Text } from "@artsy/palette"
 import { TitleRoute_submission$key } from "__generated__/TitleRoute_submission.graphql"
 import { graphql, useFragment } from "react-relay"
 import { Formik } from "formik"
@@ -11,6 +11,18 @@ import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 const FRAGMENT = graphql`
   fragment TitleRoute_submission on ConsignmentSubmission {
     title
+    artist {
+      name
+      formattedNationalityAndBirthday
+      avatar: image {
+        cropped(width: 38, height: 38) {
+          src
+          srcSet
+          height
+          width
+        }
+      }
+    }
   }
 `
 
@@ -39,6 +51,8 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
     title: submission.title ?? "",
   }
 
+  const artistAvatar = submission.artist?.avatar?.cropped
+
   return (
     <Formik<FormValues>
       initialValues={initialValues}
@@ -48,16 +62,39 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
     >
       {({ handleChange, values }) => (
         <SubmissionLayout>
-          <Text mb={2} variant="xl">
-            Add artwork title
-          </Text>
-          <Input
-            onChange={handleChange}
-            required
-            name="title"
-            title="Title"
-            defaultValue={values.title}
-          />
+          <Join separator={<Spacer y={2} />}>
+            <Text variant="xl">Add artwork title</Text>
+            <Flex justifyContent="space-between">
+              <Flex alignItems="center" p={1} width="100%">
+                {artistAvatar ? (
+                  <Avatar
+                    src={artistAvatar?.src}
+                    srcSet={artistAvatar?.srcSet}
+                    width={artistAvatar?.width}
+                    height={artistAvatar?.height}
+                    alt="artist avatar"
+                  />
+                ) : (
+                  <Box width={38} height={38} backgroundColor="black10" />
+                )}
+                <Flex ml={1} flexDirection="column">
+                  <Text variant="sm-display">{submission.artist?.name}</Text>
+                  <Text lineHeight={1.5} variant="sm-display" color="black60">
+                    {submission?.artist?.formattedNationalityAndBirthday}
+                  </Text>
+                </Flex>
+              </Flex>
+            </Flex>
+            <Input
+              onChange={handleChange}
+              name="title"
+              placeholder="Artwork Title"
+              defaultValue={values.title} // This is your GraphQL fragment
+            />
+            <Text variant="sm" color="black60">
+              Add ‘Unknown’ if unsure
+            </Text>
+          </Join>
           <DevDebug />
         </SubmissionLayout>
       )}
