@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const ArtAppraisalsApp = loadable(
   () =>
@@ -9,7 +9,7 @@ const ArtAppraisalsApp = loadable(
   }
 )
 
-export const artAppraisalsRoutes: AppRouteConfig[] = [
+export const artAppraisalsRoutes: RouteProps[] = [
   {
     path: "/art-appraisals",
     getComponent: () => ArtAppraisalsApp,

@@ -40,7 +40,7 @@ import {
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import {
   SystemContextProps,
   withSystemContext,
@@ -52,7 +52,7 @@ export interface ReviewProps extends SystemContextProps {
   order: Review_order$data
   relay?: RelayProp
   router: Router
-  route: AppRouteConfig
+  route: RouteProps
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean

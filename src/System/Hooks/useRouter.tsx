@@ -1,13 +1,13 @@
 import { useContext } from "react"
 import { Match, Router } from "found"
 import RouterContext from "found/RouterContext"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 
 export function useRouter(): {
   match: Match
   router: Router
-  route: AppRouteConfig
+  route: RouteProps
   silentPush: (path: string) => void
   silentReplace: (path: string) => void
 } {

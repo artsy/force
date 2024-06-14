@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 import { redirectCollectionToArtistSeries } from "./Server/redirectCollectionToArtistSeries"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
@@ -23,7 +23,7 @@ const CollectionApp = loadable(
   }
 )
 
-export const collectRoutes: AppRouteConfig[] = [
+export const collectRoutes: RouteProps[] = [
   {
     path: "/collect/:medium?",
     getComponent: () => CollectApp,

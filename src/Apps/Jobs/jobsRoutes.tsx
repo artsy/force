@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const JobsApp = loadable(
   () => import(/* webpackChunkName: "jobsBundle" */ "./JobsApp"),
@@ -12,7 +12,7 @@ const JobApp = loadable(
   { resolveComponent: component => component.JobAppFragmentContainer }
 )
 
-export const jobsRoutes: AppRouteConfig[] = [
+export const jobsRoutes: RouteProps[] = [
   {
     path: "/jobs",
     getComponent: () => JobsApp,

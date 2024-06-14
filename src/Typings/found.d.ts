@@ -1,4 +1,4 @@
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { Environment } from "react-relay"
 
 /**
@@ -17,7 +17,7 @@ declare module "found-relay" {
 declare module "found" {
   interface Matcher {
     matchRoutes: (routes: any, to: string | null | undefined) => any
-    routeConfig: AppRouteConfig[]
+    routeConfig: RouteProps[]
   }
 
   interface RouteRenderArgs {
@@ -26,30 +26,6 @@ declare module "found" {
 
   interface InitialFarceRouterOptions {
     resolver: FoundRelayResolver
-  }
-
-  interface MatcherResult {
-    elements: any[] | undefined | null
-    context: RouterMatchContext
-  }
-
-  function useRouter<TContext = RouterMatchContext>(): RouterState<TContext>
-
-  interface ForceRouteObject extends RouteObjectBase {
-    children?: RouteConfig | Record<string, RouteConfig>
-  }
-
-  interface ForceRouteObjectBase extends RouteObjectBase {
-    render?: VoltRouteRenderMethod
-  }
-
-  interface ForceRouteRenderMethod {
-    (args: VoltRouteRenderArgs): ResolvedElement | undefined
-  }
-
-  interface ForceRouteRenderArgs extends RouteRenderArgs {
-    match: Match<RouterMatchContext>
-    error: any
   }
 }
 

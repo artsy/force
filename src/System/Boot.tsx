@@ -1,5 +1,5 @@
 import { Theme, injectGlobalStyles, ToastsProvider } from "@artsy/palette"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { FC, useEffect } from "react"
 import * as React from "react"
 import { HeadProvider } from "react-head"
@@ -36,7 +36,7 @@ export interface BootProps {
   headTags?: JSX.Element[]
   onlyMatchMediaQueries?: MatchingMediaQueries
   relayEnvironment: Environment
-  routes: AppRouteConfig[]
+  routes: RouteProps[]
   user: User | null
 }
 

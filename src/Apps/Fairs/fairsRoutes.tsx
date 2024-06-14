@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const FairsApp = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./FairsApp"),
@@ -16,7 +16,7 @@ const FairsIndexRoute = loadable(
   }
 )
 
-export const fairsRoutes: AppRouteConfig[] = [
+export const fairsRoutes: RouteProps[] = [
   {
     path: "/art-fairs",
     getComponent: () => FairsApp,

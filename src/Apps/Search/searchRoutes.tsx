@@ -1,4 +1,4 @@
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { omit } from "lodash"
 import { graphql } from "react-relay"
 import loadable from "@loadable/component"
@@ -100,7 +100,7 @@ const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
   }
 })
 
-export const searchRoutes: AppRouteConfig[] = [
+export const searchRoutes: RouteProps[] = [
   {
     path: "/search",
     getComponent: () => SearchApp,
