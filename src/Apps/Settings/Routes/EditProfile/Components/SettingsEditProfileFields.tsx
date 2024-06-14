@@ -137,8 +137,8 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
               <SettingsEditProfileImageRefetchContainer me={me} />
 
               <Input
-                title="Full name"
-                placeholder="Full name"
+                title="Name"
+                placeholder="Name"
                 name="name"
                 required
                 maxLength={256}
