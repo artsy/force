@@ -33,7 +33,6 @@ import { NotificationPreferencesQueryRenderer } from "Components/Alert/Component
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
 import { useJump } from "Utils/Hooks/useJump"
 import { useEffect } from "react"
-import { t } from "i18next"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 interface SavedSearchAlertEditFormQueryRendererProps {
@@ -137,7 +136,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
       !mWebView &&
       sendToast({
         variant: "error",
-        message: t("common.errors.somethingWentWrong"),
+        message: "Something went wrong. Please try again.",
       })
   }, [createAlertError, mWebView, sendToast])
 

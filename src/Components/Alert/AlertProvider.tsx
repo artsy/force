@@ -26,7 +26,6 @@ import {
   PreviewSavedSearchAttributes,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
 import { useToasts } from "@artsy/palette"
-import { t } from "i18next"
 import createLogger from "Utils/logger"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
 
@@ -108,7 +107,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     if (!alertID) {
       return sendToast({
         variant: "error",
-        message: t("common.errors.somethingWentWrong"),
+        message: "Something went wrong. Please try again.",
       })
     }
     try {
@@ -135,7 +134,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     } catch (error) {
       dispatch({ type: "SET_IS_SUBMITTING", payload: false })
 
-      setCreateAlertError(t("common.errors.somethingWentWrong"))
+      setCreateAlertError("Something went wrong. Please try again.")
 
       console.error("Alert/useAlertContext", error)
       logger.error(error)
@@ -182,7 +181,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     } catch (error) {
       dispatch({ type: "SET_IS_SUBMITTING", payload: false })
 
-      setCreateAlertError(t("common.errors.somethingWentWrong"))
+      setCreateAlertError("Something went wrong. Please try again.")
 
       console.error("Alert/useAlertContext", error)
       logger.error(error)
