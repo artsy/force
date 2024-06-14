@@ -1,27 +1,53 @@
-import { Box, Button, Flex, Link } from "@artsy/palette"
+import { Box, Button, Flex } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useFormikContext } from "formik"
+import { useState } from "react"
 
 export const BottomFormNavigation = () => {
-  const { isValid, isSubmitting, submitForm } = useFormikContext()
+  const { isValid, submitForm } = useFormikContext()
   const { router } = useRouter()
   const {
     actions,
     state: { isFirstStep, isLastStep, submissionID },
   } = useSellFlowContext()
 
-  const onContinue = async () => {
-    await submitForm()
+  const [isLoadingBack, setIsLoadingBack] = useState(false)
+  const [isLoadingContinue, setIsLoadingContinue] = useState(false)
 
-    actions.goToNextStep()
+  const onBack = async () => {
+    setIsLoadingBack(true)
+
+    try {
+      await submitForm()
+
+      actions.goToPreviousStep()
+    } catch (error) {
+      console.error("Error submitting form", error)
+    } finally {
+      setIsLoadingBack(false)
+    }
   }
 
-  const onSubmit = async () => {
-    await submitForm()
+  const onNext = (navigationAction: Function) => async () => {
+    setIsLoadingContinue(true)
 
+    try {
+      await submitForm()
+
+      navigationAction()
+    } catch (error) {
+      console.error("Error submitting form", error)
+    } finally {
+      setIsLoadingContinue(false)
+    }
+  }
+
+  const onContinue = onNext(actions.goToNextStep)
+
+  const onSubmit = onNext(() =>
     router.push(`/sell2/submissions/${submissionID}/thank-you`)
-  }
+  )
 
   return (
     <>
@@ -35,14 +61,16 @@ export const BottomFormNavigation = () => {
         {isFirstStep ? (
           <Box />
         ) : (
-          <Link onClick={actions.goToPreviousStep}>Back</Link>
+          <Button loading={isLoadingBack} onClick={onBack} variant="tertiary">
+            Back
+          </Button>
         )}
 
         {isLastStep ? (
           <Button
             variant="primaryBlack"
             disabled={!isValid}
-            loading={isSubmitting}
+            loading={isLoadingContinue}
             onClick={onSubmit}
           >
             Submit
@@ -51,7 +79,7 @@ export const BottomFormNavigation = () => {
           <Button
             variant="primaryBlack"
             disabled={!isValid}
-            loading={isSubmitting}
+            loading={isLoadingContinue}
             onClick={onContinue}
           >
             Continue
