@@ -4,7 +4,7 @@ import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 
 jest.mock("react-tracking")
 
-jest.mock("System/Contexts/AnalyticsContext", () => ({
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerId: "contextPageOwnerID",
     contextPageOwnerSlug: "contextPageOwnerSlug",

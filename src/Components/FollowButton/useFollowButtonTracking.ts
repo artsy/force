@@ -17,7 +17,7 @@ import {
 } from "@artsy/cohesion"
 import { useCallback } from "react"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface UseFollowButtonTracking {
   ownerType: OwnerType

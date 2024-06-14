@@ -10,7 +10,7 @@ import {
   ClickedArtistSeriesGroup,
   ActionType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
 import { cropped } from "Utils/resized"
 

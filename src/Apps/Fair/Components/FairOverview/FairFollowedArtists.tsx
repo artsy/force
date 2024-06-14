@@ -10,7 +10,7 @@ import {
 import { Box, BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 

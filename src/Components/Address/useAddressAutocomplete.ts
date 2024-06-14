@@ -11,7 +11,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 const THROTTLE_DELAY = 500
 

@@ -22,7 +22,7 @@ import {
   OwnerType,
   SelectedItemFromAddressAutoCompletion,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 const ENABLE_SECONDARY_SUGGESTIONS = false
 

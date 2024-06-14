@@ -6,7 +6,7 @@ import { useCreateCollection } from "Apps/CollectorProfile/Routes/Saves/Componen
 import { FC } from "react"
 import { useTracking } from "react-tracking"
 import { ActionType, CreatedArtworkList } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ArtworkListForm,
   ArtworkListFormikValues,

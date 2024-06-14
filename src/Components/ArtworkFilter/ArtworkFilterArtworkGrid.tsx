@@ -7,7 +7,7 @@ import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import { ContextModule, clickedMainArtworkGrid } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
 
 interface ArtworkFilterArtworkGridProps {

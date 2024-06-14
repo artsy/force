@@ -13,7 +13,7 @@ jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useSystemContext")
 
-jest.mock("System/Contexts/AnalyticsContext", () => ({
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerId: Artwork.internalID,
     contextPageOwnerSlug: Artwork.slug,

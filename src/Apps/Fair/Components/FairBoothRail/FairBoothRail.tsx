@@ -13,7 +13,7 @@ import {
   OwnerType,
   PageOwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   initialBoothFilterState,
   useBoothsFilterContext,

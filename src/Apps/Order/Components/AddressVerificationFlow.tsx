@@ -23,7 +23,7 @@ import {
   OwnerType,
   ValidationAddressViewed,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 type VerifyAddressSuccessType = Extract<
   AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],
