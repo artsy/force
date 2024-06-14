@@ -1,11 +1,11 @@
 import { AppShell } from "Apps/Components/AppShell"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { AppRouteConfig, RouteConfigProps } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { interceptLinks } from "System/Router/Utils/interceptLinks"
 import { Match, Router, withRouter } from "found"
 import { useEffect } from "react"
 
-export function buildAppRoutes(routes: RouteConfigProps[]): AppRouteConfig[] {
+export function buildAppRoutes(routes: RouteProps[][]): RouteProps[] {
   const children = routes.flat()
 
   const Component: React.FC<{

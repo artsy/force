@@ -7,9 +7,7 @@ import { Location, Match, RouteObjectBase } from "found"
 import { GraphQLTaggedNode } from "react-relay"
 import { CacheConfig } from "relay-runtime"
 
-export type AppRouteConfig = RemoveIndex<RouteConfigProps>
-
-export interface RouteConfigProps extends RouteObjectBase {
+interface Route extends RouteObjectBase {
   cacheConfig?: CacheConfig
   getCacheConfig?: (props: {
     context: ClientContext
@@ -18,7 +16,7 @@ export interface RouteConfigProps extends RouteObjectBase {
       [key: string]: string | undefined
     }
   }) => CacheConfig
-  children?: AppRouteConfig[]
+  children?: RouteProps[]
   ignoreScrollBehavior?: boolean
   ignoreScrollBehaviorBetweenChildren?: boolean
   layout?: LayoutVariant
@@ -27,10 +25,12 @@ export interface RouteConfigProps extends RouteObjectBase {
     req: ArtsyRequest
     res: ArtsyResponse
     next: NextFunction
-    route: AppRouteConfig
+    route: RouteProps
   }) => void
   prepareVariables?: (params: any, props: any) => object
   query?: GraphQLTaggedNode
   scrollToTop?: boolean
   shouldWarnBeforeLeaving?: boolean
 }
+
+export type RouteProps = RemoveIndex<Route>

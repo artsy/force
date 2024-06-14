@@ -1,6 +1,6 @@
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { matchingMediaQueriesForUserAgent } from "System/Router/Utils/matchingMediaQueriesForUserAgent"
 import { renderStates } from "System/Router/RenderStates"
 import { RouterConfig } from "System/Router/clientRouter"
@@ -39,7 +39,7 @@ export interface ServerRouterConfig extends RouterConfig {
   req: ArtsyRequest
   res: ArtsyResponse
   next: NextFunction
-  routes: AppRouteConfig[]
+  routes: RouteProps[]
   context?: {
     injectedData?: any
     relayEnvironment: Environment

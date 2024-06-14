@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { getArtworkFilterInputArgs } from "Apps/Sale/Components/SaleArtworks"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -12,7 +12,7 @@ const SaleApp = loadable(
   }
 )
 
-export const saleRoutes: AppRouteConfig[] = [
+export const saleRoutes: RouteProps[] = [
   {
     path: "/sale/:slug",
     getComponent: () => SaleApp,

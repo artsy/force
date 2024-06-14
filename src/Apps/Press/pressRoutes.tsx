@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const PressApp = loadable(
   () => import(/* webpackChunkName: "pressBundle" */ "./PressApp"),
@@ -9,7 +9,7 @@ const PressApp = loadable(
   }
 )
 
-export const pressRoutes: AppRouteConfig[] = [
+export const pressRoutes: RouteProps[] = [
   {
     path: "/press/in-the-media",
 

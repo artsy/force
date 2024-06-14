@@ -1,20 +1,20 @@
 import { compact, uniq } from "lodash"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { match } from "path-to-regexp"
 
 export function getRoutes(): {
-  routes: AppRouteConfig[]
+  routes: RouteProps[]
   routePaths: string[]
-  flatRoutes: AppRouteConfig[]
+  flatRoutes: RouteProps[]
 } {
   // Avoid circular dep
   const routes = require("routes").getAppRoutes()
 
   // Store all routes, including `children` routes, in a flat array. Useful for
   // lookup and other forms of introspection.
-  const flatRoutes: AppRouteConfig[] = []
+  const flatRoutes: RouteProps[] = []
 
-  const filterRoutes = (acc, route: AppRouteConfig, basePath = "") => {
+  const filterRoutes = (acc, route: RouteProps, basePath = "") => {
     const path = compact([basePath, route.path]).join("/")
 
     const INVALID_PATHS = ["/", "*"]
@@ -50,7 +50,7 @@ export function getRoutes(): {
   }
 }
 
-export const findCurrentRoute = (match): AppRouteConfig => {
+export const findCurrentRoute = (match): RouteProps => {
   if (!match) {
     return {}
   }
@@ -74,7 +74,7 @@ export const findCurrentRoute = (match): AppRouteConfig => {
   return route
 }
 
-export function findRoutesByPath({ path }): AppRouteConfig[] {
+export function findRoutesByPath({ path }): RouteProps[] {
   const { flatRoutes = [] } = getRoutes()
 
   const foundRoutes = flatRoutes.filter(route => {

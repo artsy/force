@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const PageApp = loadable(
   () => import(/* webpackChunkName: "pageBundle" */ "./PageApp"),
@@ -48,7 +48,7 @@ const PAGE_ROUTE_CONFIG = {
   `,
 }
 
-export const pageRoutes: AppRouteConfig[] = [
+export const pageRoutes: RouteProps[] = [
   {
     path: `/:id(${TOP_LEVEL_PAGE_SLUG_ALLOWLIST.join("|")})`,
     ...PAGE_ROUTE_CONFIG,

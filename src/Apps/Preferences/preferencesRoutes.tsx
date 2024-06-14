@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const PreferencesApp = loadable(
   () => import(/* webpackChunkName: "preferencesBundle" */ "./PreferencesApp"),
@@ -9,7 +9,7 @@ const PreferencesApp = loadable(
   }
 )
 
-export const preferencesRoutes: AppRouteConfig[] = [
+export const preferencesRoutes: RouteProps[] = [
   {
     path: "/unsubscribe",
     getComponent: () => PreferencesApp,

@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react"
 import { getUser } from "Utils/user"
 import { AppShell } from "Apps/Components/AppShell"
 import { Environment } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { HistoryEnhancerOptions } from "farce"
 import { RouterConfig, setupClientRouter } from "System/Router/clientRouter"
 
@@ -18,7 +18,7 @@ interface MockRouterProps {
   mockData?: object
   mockMutationResults?: object
   mockResolvers?: IMocks
-  routes: AppRouteConfig[]
+  routes: RouteProps[]
 }
 
 export const MockRouter: React.FC<MockRouterProps> = ({

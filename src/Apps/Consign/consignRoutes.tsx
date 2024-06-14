@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { RedirectException, RouteRenderArgs } from "found"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { getENV } from "Utils/getENV"
 import { getRedirect } from "./Routes/SubmissionFlow/Utils/redirects"
 
@@ -156,7 +156,7 @@ const preparePrefillSubmissionFromArtworkVariables = data => {
   }
 }
 
-export const consignRoutes: AppRouteConfig[] = [
+export const consignRoutes: RouteProps[] = [
   {
     path: "/sell",
     children: [

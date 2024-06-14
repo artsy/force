@@ -1,4 +1,4 @@
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 import loadable from "@loadable/component"
 
@@ -10,7 +10,7 @@ const NewWorksFromGalleriesYouFollowApp = loadable(
   }
 )
 
-export const newWorksFromGalleriesYouFollowRoutes: AppRouteConfig[] = [
+export const newWorksFromGalleriesYouFollowRoutes: RouteProps[] = [
   {
     path: "/new-works-from-galleries-you-follow",
     getComponent: () => NewWorksFromGalleriesYouFollowApp,

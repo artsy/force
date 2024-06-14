@@ -11,7 +11,7 @@ import { ScrollManager, ScrollManagerProps } from "found-scroll"
 import { renderStates } from "System/Router/RenderStates"
 import { trackingMiddleware } from "System/Analytics/trackingMiddleware"
 import { Environment } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import { getUser } from "Utils/user"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
@@ -31,7 +31,7 @@ export interface RouterConfig {
     options?: HistoryEnhancerOptions
   }
   initialRoute?: string
-  routes: AppRouteConfig[]
+  routes: RouteProps[]
   url?: string
 }
 

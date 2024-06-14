@@ -19,7 +19,7 @@ jest.mock("react-tracking", () => ({
 }))
 
 jest.mock("Apps/Components/AppShell", () => ({
-  AppShell: () => "AppShell",
+  AppShell: ({ children }) => <>AppShell {children}</>,
 }))
 
 describe("buildAppRoutes", () => {
@@ -86,14 +86,12 @@ describe("buildAppRoutes", () => {
       },
       initialRoute: "/foo",
       routes: buildAppRoutes([
-        {
-          routes: [
-            {
-              path: "/foo",
-              Component: () => <div />,
-            },
-          ],
-        },
+        [
+          {
+            path: "/foo",
+            Component: () => <div>foo route</div>,
+          },
+        ],
       ]),
     })
 
@@ -105,6 +103,7 @@ describe("buildAppRoutes", () => {
 
     await waitFor(() => {
       expect(screen.getByText("AppShell")).toBeInTheDocument()
+      expect(screen.getByText("foo route")).toBeInTheDocument()
     })
   })
 })
