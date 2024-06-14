@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2fe4a1d84a9a58832208c95866ed9a1f>>
+ * @generated SignedSource<<3dd8ac53ea797d93b73d6272fbb851f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,18 +18,18 @@ export type ArtworkDetails_myCollectionArtwork$data = {
   readonly attributionClass: {
     readonly name: string | null | undefined;
   } | null | undefined;
+  readonly collectorLocation: {
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly postalCode: string | null | undefined;
+    readonly state: string | null | undefined;
+  } | null | undefined;
   readonly date: string | null | undefined;
   readonly depth: string | null | undefined;
   readonly editionNumber: string | null | undefined;
   readonly editionSize: string | null | undefined;
   readonly height: string | null | undefined;
   readonly internalID: string;
-  readonly location: {
-    readonly city: string | null | undefined;
-    readonly country: string | null | undefined;
-    readonly postalCode: string | null | undefined;
-    readonly state: string | null | undefined;
-  } | null | undefined;
   readonly medium: string | null | undefined;
   readonly mediumType: {
     readonly name: string | null | undefined;
@@ -86,9 +86,9 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Location",
+      "concreteType": "MyLocation",
       "kind": "LinkedField",
-      "name": "location",
+      "name": "collectorLocation",
       "plural": false,
       "selections": [
         {
@@ -218,6 +218,6 @@ return {
 };
 })();
 
-(node as any).hash = "af886e120dbdc155b8f9e65bd9a14578";
+(node as any).hash = "f9f3a55f53a9fa72d6847dcf28e6c2a0";
 
 export default node;

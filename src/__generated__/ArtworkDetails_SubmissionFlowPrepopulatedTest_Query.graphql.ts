@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f211578c255070b24592814b2035153a>>
+ * @generated SignedSource<<ae65b7d375caaac083ca0f32bd157e56>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -130,9 +130,9 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Location",
+            "concreteType": "MyLocation",
             "kind": "LinkedField",
-            "name": "location",
+            "name": "collectorLocation",
             "plural": false,
             "selections": [
               {
@@ -269,7 +269,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b363bc632eb389e171ae30e06299571d",
+    "cacheID": "8785c1ed93a7ae24a2d7e6a7c55e829a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -296,6 +296,17 @@ return {
         },
         "myCollectionArtwork.attributionClass.id": (v5/*: any*/),
         "myCollectionArtwork.attributionClass.name": (v6/*: any*/),
+        "myCollectionArtwork.collectorLocation": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MyLocation"
+        },
+        "myCollectionArtwork.collectorLocation.city": (v6/*: any*/),
+        "myCollectionArtwork.collectorLocation.country": (v6/*: any*/),
+        "myCollectionArtwork.collectorLocation.id": (v5/*: any*/),
+        "myCollectionArtwork.collectorLocation.postalCode": (v6/*: any*/),
+        "myCollectionArtwork.collectorLocation.state": (v6/*: any*/),
         "myCollectionArtwork.date": (v6/*: any*/),
         "myCollectionArtwork.depth": (v6/*: any*/),
         "myCollectionArtwork.editionNumber": (v6/*: any*/),
@@ -303,17 +314,6 @@ return {
         "myCollectionArtwork.height": (v6/*: any*/),
         "myCollectionArtwork.id": (v5/*: any*/),
         "myCollectionArtwork.internalID": (v5/*: any*/),
-        "myCollectionArtwork.location": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Location"
-        },
-        "myCollectionArtwork.location.city": (v6/*: any*/),
-        "myCollectionArtwork.location.country": (v6/*: any*/),
-        "myCollectionArtwork.location.id": (v5/*: any*/),
-        "myCollectionArtwork.location.postalCode": (v6/*: any*/),
-        "myCollectionArtwork.location.state": (v6/*: any*/),
         "myCollectionArtwork.medium": (v6/*: any*/),
         "myCollectionArtwork.mediumType": {
           "enumValues": null,
@@ -330,7 +330,7 @@ return {
     },
     "name": "ArtworkDetails_SubmissionFlowPrepopulatedTest_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  mediumType {\n    name\n  }\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
+    "text": "query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  collectorLocation {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  mediumType {\n    name\n  }\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
   }
 };
 })();
