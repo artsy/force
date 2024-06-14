@@ -338,7 +338,7 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
           internalID
           name
         }
-        location {
+        collectorLocation {
           city
           country
           state

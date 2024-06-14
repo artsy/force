@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9044dd45e047e25233b4459421d01ec3>>
+ * @generated SignedSource<<c07ce6897410417bcfa1edfb509c445f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -118,9 +118,9 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Location",
+            "concreteType": "MyLocation",
             "kind": "LinkedField",
-            "name": "location",
+            "name": "collectorLocation",
             "plural": false,
             "selections": [
               {
@@ -257,12 +257,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "40b89a4fa081075a42a2652927224145",
+    "cacheID": "37bc72ebe461f9a444332482bd10b1f4",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_myCollectionArtworkQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_myCollectionArtworkQuery(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  mediumType {\n    name\n  }\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
+    "text": "query consignRoutes_myCollectionArtworkQuery(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  collectorLocation {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  mediumType {\n    name\n  }\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
   }
 };
 })();
