@@ -72,7 +72,11 @@ describe("Footer", () => {
 
     it("renders the CCPA request button", () => {
       const wrapper = getWrapper("xs")
-      expect(wrapper.find("button").length).toEqual(1)
+      expect(
+        wrapper.find("button").map(button => {
+          return button.text()
+        })
+      ).toContain("Do not sell my personal information")
     })
 
     it("renders the app download banner", () => {
@@ -171,7 +175,11 @@ describe("Footer", () => {
 
     it("renders the CCPA request button", () => {
       const wrapper = getWrapper("xs")
-      expect(wrapper.find("button").length).toEqual(1)
+      expect(
+        wrapper.find("button").map(button => {
+          return button.text()
+        })
+      ).toContain("Do not sell my personal information")
     })
 
     it("renders footer links", () => {
