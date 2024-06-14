@@ -28,8 +28,8 @@ const FRAGMENT = graphql`
 `
 
 const Schema = Yup.object().shape({
-  width: Yup.string().required().trim(),
-  height: Yup.string().required().trim(),
+  width: Yup.string().trim(),
+  height: Yup.string().trim(),
   depth: Yup.string().trim(),
   dimensionsMetric: Yup.string().required().trim(),
 })
@@ -75,6 +75,7 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
           <Text mb={2} variant="xl">
             Artwork dimensions
           </Text>
+
           <Join separator={<Spacer y={4} />}>
             <GridColumns>
               <Column span={[4, 3]}>
@@ -124,6 +125,7 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
               </Column>
             </GridColumns>
           </Join>
+
           <DevDebug />
         </SubmissionLayout>
       )}
