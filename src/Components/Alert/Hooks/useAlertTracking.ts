@@ -11,7 +11,7 @@ import {
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
 
 export const useAlertTracking = () => {
   const { trackEvent } = useTracking()

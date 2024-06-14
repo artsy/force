@@ -19,7 +19,7 @@ import {
   useManageArtworkForSavesContext,
 } from "Components/Artwork/ManageArtworkForSaves"
 import { ActionType, AddedArtworkToArtworkList } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
 import { useTracking } from "react-tracking"
 
 const logger = createLogger("SelectArtworkListsModal")

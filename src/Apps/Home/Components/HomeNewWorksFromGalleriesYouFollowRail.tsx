@@ -19,7 +19,7 @@ import {
   clickedEntityGroup,
 } from "@artsy/cohesion"
 import { Rail } from "Components/Rail/Rail"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
 
 interface HomeNewWorksFromGalleriesYouFollowRailProps {
   newWorksFromGalleriesYouFollowConnection: HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data

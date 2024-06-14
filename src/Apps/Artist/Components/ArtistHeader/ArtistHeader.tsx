@@ -28,7 +28,7 @@ import {
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { FollowButtonInlineCount } from "Components/FollowButton/Button"

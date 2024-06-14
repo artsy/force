@@ -1,7 +1,7 @@
 import { ActionType, ContextModule } from "@artsy/cohesion"
 import { Box, Button, Image, Text } from "@artsy/palette"
 import { TextAndImageLayout } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/TextAndImageLayout"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { resized } from "Utils/resized"

@@ -12,7 +12,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
 
 const CARD_WIDTH = 263
 const CARD_LARGE_IMAGE_SIZE = 170

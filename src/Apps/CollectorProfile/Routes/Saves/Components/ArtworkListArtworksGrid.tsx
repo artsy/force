@@ -10,7 +10,7 @@ import {
   ActionType,
   commercialFilterParamsChanged,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FC, useState } from "react"

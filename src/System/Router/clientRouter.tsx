@@ -9,7 +9,6 @@ import { Resolver } from "found-relay"
 import { createFarceRouter, createRender } from "found"
 import { ScrollManager, ScrollManagerProps } from "found-scroll"
 import { renderStates } from "System/Router/RenderStates"
-import { trackingMiddleware } from "System/Analytics/trackingMiddleware"
 import { Environment } from "react-relay"
 import { RouteProps } from "System/Router/Route"
 import { FeatureFlags } from "System/Hooks/useFeatureFlag"
@@ -17,11 +16,12 @@ import { getUser } from "Utils/user"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import qs from "qs"
 import { getClientAppContext } from "System/Router/Utils/clientAppContext"
-import { loadingIndicatorMiddleware } from "System/Router/Utils/loadingIndicatorMiddleware"
 import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
 import { shouldUpdateScroll } from "System/Router/Utils/shouldUpdateScroll"
 import { Boot } from "System/Boot"
 import { SystemContextProps } from "System/Contexts/SystemContext"
+import { loadingIndicatorMiddleware } from "System/Router/Middleware/loadingIndicatorMiddleware"
+import { trackingMiddleware } from "System/Router/Middleware/trackingMiddleware"
 
 export interface RouterConfig {
   context?: SystemContextProps & { relayEnvironment?: Environment }
@@ -51,10 +51,6 @@ export const setupClientRouter = (config: RouterConfig) => {
 
   const historyMiddlewares = [
     loadingIndicatorMiddleware(),
-    createQueryMiddleware({
-      parse: queryStringParsing,
-      stringify: qs.stringify,
-    }),
     trackingMiddleware({
       excludePaths: [
         // Due to special needs, this page has its own page-view tracking implementation.

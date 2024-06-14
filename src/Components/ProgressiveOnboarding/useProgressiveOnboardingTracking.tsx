@@ -1,7 +1,7 @@
 import { ActionType, TooltipViewed } from "@artsy/cohesion"
 import { useEffect } from "react"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
 
 interface UseProgressiveOnboardingTracking {
   name: string

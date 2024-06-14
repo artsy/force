@@ -20,7 +20,7 @@ jest.mock("System/Contexts/SystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({ user: {} }),
 }))
 
-jest.mock("System/Analytics/AnalyticsContext", () => ({
+jest.mock("System/Contexts/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerId: "contextPageOwnerID",
   })),

@@ -6,7 +6,7 @@ import { useTracking } from "react-tracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
 import { fireEvent, screen } from "@testing-library/react"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 
 const mockJumpTo = jest.fn()
 

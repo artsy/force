@@ -17,7 +17,7 @@ import {
 } from "Components/Cells/CellArtistSeries"
 import { FC } from "react"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Contexts/AnalyticsContext"
 
 interface ArtistSeriesProps {
   artist: ArtistSeriesRail_artist$data
