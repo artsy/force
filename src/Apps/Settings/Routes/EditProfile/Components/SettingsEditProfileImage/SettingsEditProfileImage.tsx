@@ -17,7 +17,7 @@ import {
   normalizePhoto,
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { SettingsEditProfileImageMutation } from "__generated__/SettingsEditProfileImageMutation.graphql"
 import { usePoll } from "Utils/Hooks/usePoll"

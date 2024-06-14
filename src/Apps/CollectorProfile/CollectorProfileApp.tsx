@@ -2,7 +2,7 @@ import { CollectorProfileHeaderFragmentContainer } from "Apps/CollectorProfile/C
 import { EmptyMyCollectionPage } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"

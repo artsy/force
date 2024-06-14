@@ -1,7 +1,7 @@
 import { ContextualMenu, ContextualMenuItem } from "Components/ContextualMenu"
 import { MarkAllAsReadPanel } from "Components/Notifications/MarkAllAsReadPanel"
 import { Z } from "Apps/Components/constants"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface NotificationsContextualMenuProps {
   onHide?: () => void

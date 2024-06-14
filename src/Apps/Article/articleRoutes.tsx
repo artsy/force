@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { RedirectException, RouteRenderArgs } from "found"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const ArticleApp = loadable(
   () => import(/* webpackChunkName: "articleBundle" */ "./ArticleApp"),
@@ -18,7 +18,7 @@ const redirectToArticle = ({
   throw new RedirectException(`/article/${id}`, 301)
 }
 
-export const articleRoutes: AppRouteConfig[] = [
+export const articleRoutes: RouteProps[] = [
   {
     path: "/article/:id",
     Component: ArticleApp,

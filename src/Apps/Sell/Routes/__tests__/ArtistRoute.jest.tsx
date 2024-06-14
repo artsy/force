@@ -2,14 +2,14 @@ import { fireEvent, screen } from "@testing-library/react"
 import { ArtistRoute } from "Apps/Sell/Routes/ArtistRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 jest.unmock("react-relay")

@@ -1,6 +1,6 @@
 import { renderRelayTree } from "DevTools/renderRelayTree"
 import { MockBoot } from "DevTools/MockBoot"
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { ViewingRoomAppFragmentContainer } from "Apps/ViewingRoom/ViewingRoomApp"
 import { graphql } from "react-relay"
 import { ViewingRoomApp_DraftTest_Query$rawResponse } from "__generated__/ViewingRoomApp_DraftTest_Query.graphql"
@@ -12,7 +12,7 @@ import { Breakpoint } from "@artsy/palette"
 import { mockLocation } from "DevTools/mockLocation"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useIsRouteActive: () => false,
   useRouter: () => ({
     match: {

@@ -3,7 +3,7 @@ import { DimensionsRoute } from "Apps/Sell/Routes/DimensionsRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
 import { DimensionsRoute_Test_Query$rawResponse } from "__generated__/DimensionsRoute_Test_Query.graphql"
@@ -14,7 +14,7 @@ const mockReplace = jest.fn()
 let submitMutation: jest.Mock
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 jest.mock("Utils/Hooks/useMutation")

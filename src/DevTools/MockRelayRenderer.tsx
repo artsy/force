@@ -1,6 +1,4 @@
 /* eslint-disable jest/no-commented-out-tests */
-import { SystemContextProvider } from "System/SystemContext"
-import { SystemContextConsumer } from "System/SystemContext"
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { IMocks } from "graphql-tools/dist/Interfaces"
@@ -18,6 +16,10 @@ import {
   createMockNetworkLayer,
   createMockNetworkLayer2,
 } from "./createMockNetworkLayer"
+import {
+  SystemContextConsumer,
+  SystemContextProvider,
+} from "System/Contexts/SystemContext"
 
 export interface MockRelayRendererProps<T extends OperationType> {
   Component: React.ComponentType<any>

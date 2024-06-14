@@ -1,7 +1,7 @@
 import { Box, Clickable, HTML, Tab, Tabs, Text, useTheme } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { AuctionFAQsDialog_viewer$data } from "__generated__/AuctionFAQsDialog_viewer.graphql"
 import CloseIcon from "@artsy/icons/CloseIcon"
 

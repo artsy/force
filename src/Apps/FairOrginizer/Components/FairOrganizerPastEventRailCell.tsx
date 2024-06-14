@@ -1,7 +1,7 @@
 import { Box, Image, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { FairOrganizerPastEventRailCell_fair$data } from "__generated__/FairOrganizerPastEventRailCell_fair.graphql"
 
 interface FairOrganizerPastEventRailCellProps {

@@ -1,4 +1,4 @@
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import {
@@ -9,7 +9,7 @@ import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFi
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { Join, Spacer } from "@artsy/palette"

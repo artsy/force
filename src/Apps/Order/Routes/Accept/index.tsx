@@ -25,13 +25,13 @@ import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { Stripe, StripeElements } from "@stripe/stripe-js"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { useTracking } from "react-tracking"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 interface AcceptProps {
   order: Accept_order$data
   relay?: RelayProp
   router: Router
-  route: AppRouteConfig
+  route: RouteProps
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean

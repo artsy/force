@@ -12,7 +12,7 @@ import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrent
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkBackButton"

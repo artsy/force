@@ -15,14 +15,14 @@ import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Component
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
 import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
 import { DisableFactorConfirmation } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/DisableFactorConfirmation"
 import { OnCompleteRedirectModal, SmsSecondFactorModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { isArtsyEmail } from "Utils/isArtsyEmail"
 
 interface SmsSecondFactorProps {

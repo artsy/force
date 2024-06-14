@@ -1,7 +1,7 @@
 import { Banner, BannerProps, Flex, Text } from "@artsy/palette"
 import { errorMessageForBidding } from "Apps/Auction/Components/Form/Utils/errorMessages"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const ErrorStatus = () => {
   const { status } = useFormContext()

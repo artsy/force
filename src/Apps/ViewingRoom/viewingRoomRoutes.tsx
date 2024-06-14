@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const StatementRoute = loadable(
   () =>
@@ -36,7 +36,7 @@ const ViewingRoomsApp = loadable(
   }
 )
 
-export const viewingRoomRoutes: AppRouteConfig[] = [
+export const viewingRoomRoutes: RouteProps[] = [
   {
     path: "/viewing-rooms",
     getComponent: () => ViewingRoomsApp,

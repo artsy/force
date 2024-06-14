@@ -1,7 +1,7 @@
 import { ComponentType } from "react"
 import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { withProgressiveOnboardingCountsQuery } from "__generated__/withProgressiveOnboardingCountsQuery.graphql"
 
 export interface WithProgressiveOnboardingCountsProps {

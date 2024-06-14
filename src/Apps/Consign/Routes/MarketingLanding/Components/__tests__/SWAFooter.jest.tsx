@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SWAFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
 
 jest.mock("react-tracking")
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerType: "sell",

@@ -3,7 +3,7 @@ import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { Box, Button, Flex, Join, Spacer, Text } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { useTranslation } from "react-i18next"
 
 interface InfoSectionProps {

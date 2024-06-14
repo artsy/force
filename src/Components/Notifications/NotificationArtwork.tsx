@@ -1,6 +1,6 @@
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { NotificationArtwork_artwork$key } from "__generated__/NotificationArtwork_artwork.graphql"
 import Metadata from "Components/Artwork/Metadata"
 import { AuthContextModule } from "@artsy/cohesion"

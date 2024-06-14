@@ -5,9 +5,9 @@ import {
   withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { pathToRegexp } from "path-to-regexp"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDismissibleContext } from "@artsy/dismissible"
 import {
   PROGRESSIVE_ONBOARDING,

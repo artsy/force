@@ -1,7 +1,7 @@
 import { flow } from "lodash"
 import { stringify } from "qs"
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { checkForRedirect } from "Apps/Authentication/Middleware/checkForRedirect"
 import { setReferer } from "Apps/Authentication/Middleware/setReferer"
 import { redirectIfLoggedIn } from "Apps/Authentication/Middleware/redirectIfLoggedIn"
@@ -41,7 +41,7 @@ const SignupRoute = loadable(
 
 const runAuthMiddleware = flow(checkForRedirect, setReferer)
 
-export const authenticationRoutes: AppRouteConfig[] = [
+export const authenticationRoutes: RouteProps[] = [
   {
     path: "/forgot",
     layout: "ContainerOnly",

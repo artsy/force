@@ -6,7 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionFAQRoute_viewer$data } from "__generated__/AuctionFAQRoute_viewer.graphql"
 import { MetaTags } from "Components/MetaTags"
 import { toStyle } from "Utils/toStyle"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface AuctionFAQRouteProps {
   viewer: AuctionFAQRoute_viewer$data

@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 // TODO: when cleanning up collector-profile ff,
 // change the file name to myCollectionInsightsRoutes
@@ -17,7 +17,7 @@ const MyCollectionInsightsMedianSalePriceAtAuction = loadable(
   }
 )
 
-export const myCollectionInsightsCollectorProfileRoutes: AppRouteConfig[] = [
+export const myCollectionInsightsCollectorProfileRoutes: RouteProps[] = [
   {
     path:
       "/collector-profile/my-collection/median-sale-price-at-auction/:artistID",

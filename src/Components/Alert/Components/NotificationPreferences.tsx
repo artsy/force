@@ -8,7 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NotificationPreferences_viewer$data } from "__generated__/NotificationPreferences_viewer.graphql"

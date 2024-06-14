@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   artsy-remote-docker: artsy/remote-docker@volatile
-  aws-s3: circleci/aws-s3@2.0.0
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.13.3
@@ -189,15 +188,6 @@ jobs:
           path: cypress/videos
       - store_artifacts:
           path: cypress/screenshots
-
-  upload-docs:
-    docker:
-      - image: "cimg/python:3.12"
-    steps:
-      - aws-s3/sync:
-          arguments: --acl public-read
-          from: storybook-static
-          to: "s3://artsy-static-sites/artsy-force-storybook"
 
   detect-secrets:
     docker:
@@ -421,22 +411,3 @@ workflows:
           pre-steps:
             - run:
                 command: echo 'export DOCKER_BUILDKIT=1; export BUILDKIT_PROGRESS=plain; export COMPOSE_DOCKER_CLI_BUILD=1;' >> $BASH_ENV
-
-      # Docs / Storybooks
-      - yarn/run:
-          <<: *only_main
-          name: build-docs
-          script: "build-storybook"
-          post-steps:
-            - persist_to_workspace:
-                root: .
-                paths:
-                  - storybook-static
-      - upload-docs:
-          <<: *only_main
-          context: static-sites-uploader
-          requires:
-            - build-docs
-          pre-steps:
-            - attach_workspace:
-                at: .

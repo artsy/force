@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { signUp } from "Utils/auth"
 
 jest.mock("Utils/getENV", () => ({
@@ -30,7 +30,7 @@ jest.mock("Utils/device", () => ({
 }))
 
 jest.mock("Components/AuthDialog/Hooks/useCountryCode")
-jest.mock("System/useFeatureFlag")
+jest.mock("System/Hooks/useFeatureFlag")
 
 describe("AuthDialogSignUp", () => {
   beforeAll(() => {

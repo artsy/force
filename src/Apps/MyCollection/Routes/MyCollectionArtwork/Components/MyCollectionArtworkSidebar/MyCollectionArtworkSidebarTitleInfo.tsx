@@ -1,6 +1,6 @@
 import { Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { MyCollectionArtworkSidebarTitleInfo_artwork$data } from "__generated__/MyCollectionArtworkSidebarTitleInfo_artwork.graphql"
 
 interface MyCollectionArtworkSidebarTitleInfoProps {

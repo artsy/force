@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { Text } from "@artsy/palette"
 import { JobLink_job$data } from "__generated__/JobLink_job.graphql"
 import { LEADGEN_LOCATION } from "Apps/Jobs/Components/JobsFilter"

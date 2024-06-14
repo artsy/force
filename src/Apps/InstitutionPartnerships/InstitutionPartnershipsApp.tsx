@@ -13,7 +13,7 @@ import {
 } from "@artsy/palette"
 import { FC } from "react"
 import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { cropped, resized } from "Utils/resized"
 import { InstitutionPartnershipsHero } from "./Components/InstitutionPartnershipsHero"
 import { InstitutionPartnershipsProfilesQueryRenderer } from "./Components/InstitutionPartnershipsProfiles"

@@ -14,7 +14,7 @@ const mockSessionUtmParams = {
   utmSource: "SessionSource",
   utmTerm: "SessionTerm",
 }
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     match: { location: { query: mockQueryUtmParams } },
   })),

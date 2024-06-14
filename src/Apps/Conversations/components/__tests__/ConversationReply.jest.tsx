@@ -27,7 +27,7 @@ jest.mock("@artsy/palette", () => ({
   }),
 }))
 
-jest.mock("System/useSystemContext", () => ({
+jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: () => ({
     user: {
       email: "partner@mail.com",
@@ -36,7 +36,7 @@ jest.mock("System/useSystemContext", () => ({
   }),
 }))
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

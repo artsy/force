@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const OnboardingApp = loadable(
   () => import(/* webpackChunkName: "onboardingBundle" */ "./OnboardingApp"),
@@ -8,7 +8,7 @@ const OnboardingApp = loadable(
   }
 )
 
-export const onboardingRoutes: AppRouteConfig[] = [
+export const onboardingRoutes: RouteProps[] = [
   {
     path: "/onboarding2",
     getComponent: () => OnboardingApp,

@@ -1,6 +1,6 @@
 import { Text, Flex, Button } from "@artsy/palette"
 import React, { ReactElement } from "react"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const ConfirmationScreenComponent: React.FC<{
   title: string

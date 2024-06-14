@@ -1,6 +1,6 @@
 import * as React from "react"
 import { RecentlyViewedQueryRenderer } from "./RecentlyViewed"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const RecentlyViewed: React.FC = () => {
   const { user } = useSystemContext()

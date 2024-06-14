@@ -10,7 +10,7 @@ import {
 import { Formik } from "formik"
 import React from "react"
 import { MetaTags } from "Components/MetaTags"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { resetPassword } from "Utils/auth"
 import { getENV } from "Utils/getENV"
 import { useMode } from "Utils/Hooks/useMode"

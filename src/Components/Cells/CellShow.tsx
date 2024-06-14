@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { CellShow_show$data } from "__generated__/CellShow_show.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"

@@ -35,10 +35,13 @@ import {
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import { CreditCardDetails } from "./CreditCardDetails"
-import { SystemContextConsumer, SystemContextProps } from "System/SystemContext"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { isNull, mergeWith } from "lodash"
 import track from "react-tracking"
+import {
+  SystemContextConsumer,
+  SystemContextProps,
+} from "System/Contexts/SystemContext"
 
 export interface StripeProps {
   stripe: Stripe
@@ -249,6 +252,7 @@ export class CreditCardPicker extends React.Component<
 
     const orderCard = this.props.order.creditCard
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const creditCardsArray = creditCards?.edges?.map(e => e?.node)!
 
     // only add the unsaved card to the cards array if it exists and is not already there
@@ -284,7 +288,7 @@ export class CreditCardPicker extends React.Component<
             >
               {creditCardsArray
                 .map(e => {
-                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+                  // @ts-ignore
                   const { internalID, ...creditCardProps } = e
                   return (
                     <BorderedRadio value={internalID} key={internalID}>
@@ -320,7 +324,7 @@ export class CreditCardPicker extends React.Component<
             <CreditCardInput
               error={stripeError?.message}
               onChange={response => {
-                this.setState({ stripeError: response.error! })
+                this.setState({ stripeError: response.error as StripeError })
               }}
               required
             />

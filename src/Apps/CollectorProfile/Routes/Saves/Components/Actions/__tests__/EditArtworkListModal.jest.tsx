@@ -6,11 +6,11 @@ import {
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/EditArtworkListModal"
 import { useTracking } from "react-tracking"
 import { render } from "DevTools/renderWithMockBoot"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.mock("Utils/Hooks/useMutation")
 
-jest.mock("System/useFeatureFlag", () => {
+jest.mock("System/Hooks/useFeatureFlag", () => {
   return {
     useFeatureFlag: jest.fn(),
   }

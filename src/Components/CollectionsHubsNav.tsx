@@ -4,7 +4,7 @@ import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { cropped } from "Utils/resized"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
 
 interface CollectionsHubsNavProps {

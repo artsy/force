@@ -7,7 +7,7 @@ import {
   Image,
   Button,
 } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { FC } from "react"
 import { useFragment, graphql } from "react-relay"
 import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"

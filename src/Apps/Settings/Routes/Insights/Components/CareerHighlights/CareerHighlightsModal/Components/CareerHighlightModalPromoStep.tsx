@@ -6,7 +6,7 @@ import {
   ResponsiveBox,
   Image,
 } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"

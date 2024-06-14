@@ -3,7 +3,7 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { JobsApp_viewer$data } from "__generated__/JobsApp_viewer.graphql"
 import { JobsFilterFragmentContainer } from "./Components/JobsFilter"
 

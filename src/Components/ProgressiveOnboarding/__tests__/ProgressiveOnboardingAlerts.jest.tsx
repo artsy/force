@@ -13,7 +13,7 @@ jest.mock("Components/ArtworkFilter/ArtworkFilterContext", () => ({
 
 jest.mock("Components/ProgressiveOnboarding/withProgressiveOnboardingCounts")
 
-jest.mock("System/SystemContext", () => ({
+jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: () => ({ isLoggedIn: true }),
 }))
 

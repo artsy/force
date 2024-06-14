@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import {
@@ -9,7 +9,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { GeneArtworkFilter_gene$data } from "__generated__/GeneArtworkFilter_gene.graphql"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 interface GeneArtworkFilterProps {
   gene: GeneArtworkFilter_gene$data

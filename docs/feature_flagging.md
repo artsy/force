@@ -9,7 +9,7 @@ Create your feature toggle at https://tools.artsy.net/feature-flags and enable i
 To use feature flagging, simply import the useFeatureFlag method and pass in the name of the feature toggle you created in step 1. This will enable you to conditionally render your new feature.
 
 ```tsx
-import { useFeatureFlag } from 'System/useFeatureFlag'
+import { useFeatureFlag } from 'System/Hooks/useFeatureFlag'
 
 
 function MyComponent({ props }) {

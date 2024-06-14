@@ -1,6 +1,6 @@
 import { Box, Clickable, Text } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import { markAllNotificationsAsRead } from "./Mutations/markAllNotificationsAsRead"
 

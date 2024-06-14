@@ -7,7 +7,7 @@ import {
   ConfirmationStepFooterQuery$data,
 } from "__generated__/ConfirmationStepFooterQuery.graphql"
 import { useTranslation } from "react-i18next"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { NUMBER_OF_ARTWORKS_TO_SHOW } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
 
 interface ConfirmationStepFooterProps {

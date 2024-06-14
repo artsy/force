@@ -24,7 +24,7 @@ import { ArtworkFilterExpandableSort } from "Components/ArtworkFilter/ArtworkFil
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"

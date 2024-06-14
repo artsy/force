@@ -6,7 +6,7 @@ import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({ router: { push: () => {} } }),
 }))
 

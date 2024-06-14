@@ -17,7 +17,7 @@ jest.mock("react-relay", () => ({
 }))
 
 jest.mock("react-tracking")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

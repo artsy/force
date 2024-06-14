@@ -7,7 +7,7 @@ import {
   useAuthDialogContext,
 } from "Components/AuthDialog/AuthDialogContext"
 import { useEffect } from "react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
 /**

@@ -1,6 +1,6 @@
 import { Button, Text, Spacer, Message } from "@artsy/palette"
 import * as React from "react"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const CompletePassed: React.FC = () => {
   return (

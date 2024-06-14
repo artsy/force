@@ -4,7 +4,7 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippin
 import { useSelectShippingQuote } from "Apps/Order/Routes/Shipping2/Mutations/useSelectShippingQuote"
 import { FulfillmentType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { ArtaErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import { SaveAndContinueButton_order$data } from "__generated__/SaveAndContinueButton_order.graphql"
 

@@ -3,7 +3,7 @@ import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { AuctionBidRouteFragmentContainer } from "Apps/Auction/Routes/Bid/AuctionBidRoute"
 import { AuctionBidRouteTestQuery } from "__generated__/AuctionBidRouteTestQuery.graphql"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSubmitBid } from "Apps/Auction/Routes/Bid/useSubmitBid"
 import { Formik } from "formik"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
@@ -11,7 +11,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 jest.unmock("react-relay")
 
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 jest.mock("Apps/Auction/Routes/Bid/useSubmitBid", () => ({
   useSubmitBid: jest.fn(),
 }))

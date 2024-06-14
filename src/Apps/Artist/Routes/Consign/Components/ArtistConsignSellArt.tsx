@@ -4,7 +4,7 @@ import { ArtistConsignSellArt_artist$data } from "__generated__/ArtistConsignSel
 import { Button, Spacer, Text } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { SectionContainer } from "./SectionContainer"
 import { getConsignSubmissionUrl } from "./Utils/getConsignSubmissionUrl"
 

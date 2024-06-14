@@ -4,8 +4,10 @@ import {
   Flex,
   Join,
   Spacer,
+  THEME,
   Text,
   useDidMount,
+  useToasts,
 } from "@artsy/palette"
 import { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEditFormQuery.graphql"
 import { SavedSearchAlertEditForm_viewer$data } from "__generated__/SavedSearchAlertEditForm_viewer.graphql"
@@ -30,6 +32,8 @@ import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
 import { useJump } from "Utils/Hooks/useJump"
+import { useEffect } from "react"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 interface SavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -115,8 +119,26 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   onDeleteClick,
   onCompleted,
 }) => {
-  const { state, goToFilters, dispatch, onComplete } = useAlertContext()
+  const {
+    state,
+    goToFilters,
+    dispatch,
+    onComplete,
+    createAlertError,
+  } = useAlertContext()
   const { jumpTo } = useJump()
+  const { sendToast } = useToasts()
+
+  const mWebView = __internal__useMatchMedia(THEME.mediaQueries.xs)
+
+  useEffect(() => {
+    createAlertError &&
+      !mWebView &&
+      sendToast({
+        variant: "error",
+        message: "Something went wrong. Please try again.",
+      })
+  }, [createAlertError, mWebView, sendToast])
 
   const isMounted = useDidMount()
 
@@ -203,7 +225,11 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
               <Media lessThan="md">
                 <Spacer y={4} />
-
+                {!!createAlertError && (
+                  <Text mb={1} color="red100" variant="xs">
+                    {createAlertError}
+                  </Text>
+                )}
                 <Button
                   loading={state.isSubmitting}
                   width="100%"

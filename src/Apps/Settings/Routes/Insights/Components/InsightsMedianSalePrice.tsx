@@ -2,13 +2,13 @@ import { Box, Flex, Text, Clickable, Spacer, Join } from "@artsy/palette"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { groupBy } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { InsightsMedianSalePrice_me$data } from "__generated__/InsightsMedianSalePrice_me.graphql"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { Fragment } from "react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 interface InsightsMedianSalePriceProps {
   me: InsightsMedianSalePrice_me$data

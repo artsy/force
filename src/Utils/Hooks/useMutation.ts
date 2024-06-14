@@ -1,6 +1,6 @@
 import { commitMutation, GraphQLTaggedNode } from "react-relay"
 import { MutationParameters, MutationConfig } from "relay-runtime"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const useMutation = <T extends MutationParameters>({
   mutation,

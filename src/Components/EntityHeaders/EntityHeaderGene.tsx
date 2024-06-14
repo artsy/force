@@ -1,7 +1,7 @@
 import { BoxProps, Flex, Text, Avatar } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { EntityHeaderGene_gene$data } from "__generated__/EntityHeaderGene_gene.graphql"
 import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
 

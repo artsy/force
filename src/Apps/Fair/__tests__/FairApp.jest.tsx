@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { FairApp_Test_Query } from "__generated__/FairApp_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { fireEvent, screen } from "@testing-library/react"
 import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 
@@ -15,7 +15,7 @@ jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
   useIsRouteActive: () => false,
 }))

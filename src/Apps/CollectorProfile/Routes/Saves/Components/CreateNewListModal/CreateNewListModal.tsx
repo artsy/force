@@ -16,7 +16,7 @@ import {
   ArtworkModalHeaderInfo,
   ArtworkModalHeaderInfoEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkModalHeaderInfo"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export interface ArtworkList {
   internalID: string

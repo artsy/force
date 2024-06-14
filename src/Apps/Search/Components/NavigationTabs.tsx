@@ -2,8 +2,8 @@ import { Pill, Stack } from "@artsy/palette"
 import { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
-import { useIsRouteActive } from "System/Router/useRouter"
+import { RouterLink } from "System/Components/RouterLink"
+import { useIsRouteActive } from "System/Hooks/useRouter"
 import {
   ActionType,
   ClickedNavigationTab,

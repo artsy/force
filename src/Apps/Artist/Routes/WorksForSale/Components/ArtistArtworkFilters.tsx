@@ -11,10 +11,10 @@ import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/Materia
 import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Join, Spacer } from "@artsy/palette"
 import { ArtistSeriesFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistSeriesFilter"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 
 interface ArtistArtworkFiltersProps {}

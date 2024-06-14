@@ -6,13 +6,13 @@ import {
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fetchQuery, graphql } from "react-relay"
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 
 jest.unmock("react-relay")
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
-jest.mock("System/Router/useRouter", () => {
+jest.mock("System/Hooks/useRouter", () => {
   return {
     useRouter: jest.fn(() => {
       return {

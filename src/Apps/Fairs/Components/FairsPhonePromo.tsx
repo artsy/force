@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Box, BoxProps, Image, Text } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 
 export const FairsPhonePromo: React.FC<BoxProps> = props => {

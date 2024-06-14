@@ -7,7 +7,7 @@ import { useAuthDialogOptions } from "Apps/Authentication/Hooks/useAuthDialogOpt
 import { MetaTags } from "Components/MetaTags"
 import { AuthenticationInlineDialogProvider } from "Apps/Authentication/Components/AuthenticationInlineDialogProvider"
 import { AuthDialogMode } from "Components/AuthDialog/AuthDialogContext"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 const AuthenticationInlineDialogContents: FC = () => {
   useRecaptcha()

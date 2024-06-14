@@ -10,7 +10,7 @@ import { ArtistConsignHeader_artist$data } from "__generated__/ArtistConsignHead
 import { SectionContainer } from "Apps/Artist/Routes/Consign/Components/SectionContainer"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getConsignSubmissionUrl } from "Apps/Artist/Routes/Consign/Components/Utils/getConsignSubmissionUrl"

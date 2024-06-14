@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const GalleriesRoute = loadable(
   () =>
@@ -18,7 +18,7 @@ const InstitutionsRoute = loadable(
   }
 )
 
-export const partnersRoutes: AppRouteConfig[] = [
+export const partnersRoutes: RouteProps[] = [
   {
     path: "/galleries",
     getComponent: () => GalleriesRoute,

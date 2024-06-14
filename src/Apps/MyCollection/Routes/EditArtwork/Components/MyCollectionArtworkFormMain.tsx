@@ -22,7 +22,7 @@ import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCol
 import { Form, useFormikContext } from "formik"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkFormMain_artwork$data } from "__generated__/MyCollectionArtworkFormMain_artwork.graphql"

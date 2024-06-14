@@ -10,7 +10,7 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 
 export interface CellArticleProps extends Omit<RouterLinkProps, "to"> {

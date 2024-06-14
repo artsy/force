@@ -7,7 +7,7 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { FC } from "react"
 
 export const AuthDialogSignUpPlaceholder: FC = () => {

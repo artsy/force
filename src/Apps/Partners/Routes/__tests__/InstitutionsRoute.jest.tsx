@@ -5,10 +5,10 @@ import { InstitutionsRouteFragmentContainer_Test_Query } from "__generated__/Ins
 import { MockBoot } from "DevTools/MockBoot"
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 jest.mock("Components/FollowButton/FollowProfileButton", () => ({
   FollowProfileButtonQueryRenderer: () => null,
 }))

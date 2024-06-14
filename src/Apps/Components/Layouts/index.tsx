@@ -5,7 +5,7 @@ import { LayoutDefault } from "Apps/Components/Layouts/LayoutDefault"
 import { LayoutFullBleed } from "Apps/Components/Layouts/LayoutFullBleed"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { LayoutNavOnly } from "Apps/Components/Layouts/LayoutNavOnly"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { FC, ReactNode } from "react"
 
 export interface BaseLayoutProps {

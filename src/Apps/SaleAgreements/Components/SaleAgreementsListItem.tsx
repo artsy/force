@@ -1,7 +1,7 @@
 import { Box, Separator, Text } from "@artsy/palette"
 import { SaleAgreementsListProps } from "Apps/SaleAgreements/Components/SaleAgreementsList"
 import { FC } from "react"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export interface SaleAgreementListItemProps {
   saleAgreement: SaleAgreementsListProps["saleAgreements"][0]

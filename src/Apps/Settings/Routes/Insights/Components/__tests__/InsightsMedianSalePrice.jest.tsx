@@ -2,15 +2,15 @@ import { screen, fireEvent } from "@testing-library/react"
 import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { InsightsMedianSalePriceTestQuery } from "__generated__/InsightsMedianSalePriceTestQuery.graphql"
 
 jest.unmock("react-relay")
 
 const mockPush = jest.fn()
 
-jest.mock("System/useSystemContext")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useSystemContext")
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     router: {
       push: mockPush,

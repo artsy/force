@@ -1,7 +1,7 @@
 import { Box, Image, ResponsiveBox, SkeletonBox, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { CellPartner_partner$data } from "__generated__/CellPartner_partner.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"

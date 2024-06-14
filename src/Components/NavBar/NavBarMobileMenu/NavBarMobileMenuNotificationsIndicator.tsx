@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { graphql } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicatorQuery } from "__generated__/NavBarMobileMenuNotificationsIndicatorQuery.graphql"
-import { SystemContext } from "System/SystemContext"
+import { SystemContext } from "System/Contexts/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"

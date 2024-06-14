@@ -9,7 +9,7 @@ import {
   useTheme,
 } from "@artsy/palette"
 import { FC } from "react"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleSeriesItem_article$data } from "__generated__/ArticleSeriesItem_article.graphql"

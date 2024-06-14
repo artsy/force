@@ -1,6 +1,6 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { mount } from "enzyme"
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { useTracking } from "react-tracking"
 import { NavBarUserMenu } from "Components/NavBar/Menus"
 import { NavBar } from "Components/NavBar/NavBar"

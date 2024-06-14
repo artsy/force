@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Link } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useFormikContext } from "formik"
 
 export const BottomFormNavigation = () => {

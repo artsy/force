@@ -8,7 +8,7 @@ import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
 import { getConsignSubmissionUrl } from "./Utils/getConsignSubmissionUrl"
 import { Masonry } from "Components/Masonry"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface ArtistConsignFAQProps {
   artist: ArtistConsignFAQ_artist$data

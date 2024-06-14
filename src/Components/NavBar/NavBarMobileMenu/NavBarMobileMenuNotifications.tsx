@@ -1,7 +1,7 @@
 import { Box } from "@artsy/palette"
 import { isServer } from "Server/isServer"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { SystemContext } from "System/SystemContext"
+import { SystemContext } from "System/Contexts/SystemContext"
 import { NavBarMobileMenuNotificationsQuery } from "__generated__/NavBarMobileMenuNotificationsQuery.graphql"
 import { NavBarMobileMenuNotifications_me$data } from "__generated__/NavBarMobileMenuNotifications_me.graphql"
 import { useContext } from "react"

@@ -11,7 +11,7 @@ import { fetchFollowedArtists } from "Components/ArtworkFilter/Utils/fetchFollow
 import { FilterExpandable } from "./FilterExpandable"
 import { ShowMore } from "./ShowMore"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export interface ArtistsFilterProps {
   expanded?: boolean

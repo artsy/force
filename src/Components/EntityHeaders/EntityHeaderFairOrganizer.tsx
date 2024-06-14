@@ -2,7 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { Text, BoxProps, Flex, Avatar } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { EntityHeaderFairOrganizer_fairOrganizer$data } from "__generated__/EntityHeaderFairOrganizer_fairOrganizer.graphql"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 

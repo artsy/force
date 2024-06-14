@@ -1,7 +1,7 @@
 import { aboutRoutes } from "Apps/About/aboutRoutes"
 import { adminRoutes } from "Apps/Admin/adminRoutes"
 import { alertRoutes } from "Apps/Alert/alertRoutes"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { artAppraisalsRoutes } from "Apps/ArtAppraisals/artAppraisalsRoutes"
 import { articleRoutes } from "Apps/Article/articleRoutes"
 import { articlesRoutes } from "Apps/Articles/articlesRoutes"
@@ -13,7 +13,6 @@ import { artworkRoutes } from "Apps/Artwork/artworkRoutes"
 import { auctionRoutes } from "./Apps/Auction/auctionRoutes"
 import { auctionsRoutes } from "Apps/Auctions/auctionsRoutes"
 import { authenticationRoutes } from "Apps/Authentication/authenticationRoutes"
-import { buildAppRoutes } from "System/Router/buildAppRoutes"
 import { buyerGuaranteeRoutes } from "Apps/BuyerGuarantee/buyerGuaranteeRoutes"
 import { categoriesRoutes } from "./Apps/Categories/categoriesRoutes"
 import { collectorProfileRoutes } from "Apps/CollectorProfile/collectorProfileRoutes"
@@ -61,81 +60,80 @@ import { showsRoutes } from "Apps/Shows/showsRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { viewingRoomRoutes } from "Apps/ViewingRoom/viewingRoomRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
+import { buildAppRoutes } from "System/Router/Utils/buildAppRoutes"
 
-export const getAppRoutes = (): AppRouteConfig[] => {
+export const getAppRoutes = (): RouteProps[] => {
   return buildAppRoutes([
-    { routes: aboutRoutes },
-    { routes: adminRoutes },
-    { routes: artAppraisalsRoutes },
-    { routes: articleRoutes },
-    { routes: articlesRoutes },
-    { routes: artistRoutes },
-    { routes: artistSeriesRoutes },
-    { routes: artistsRoutes },
-    { routes: artQuizRoutes },
-    { routes: alertRoutes },
-    { routes: artworkRoutes },
-    { routes: auctionRoutes },
-    { routes: auctionsRoutes },
-    { routes: authenticationRoutes },
-    { routes: buyerGuaranteeRoutes },
-    { routes: categoriesRoutes },
-    { routes: collectRoutes },
-    { routes: collectorProfileRoutes },
-    { routes: consignRoutes },
-    { routes: contactRoutes },
-    { routes: conversationsRoutes },
-    { routes: exampleRoutes },
-    { routes: endingSoonAuctionsRoutes },
-    { routes: fairOrganizerRoutes },
-    { routes: fairRoutes },
-    { routes: fairsRoutes },
-    { routes: favoritesRoutes },
-    { routes: featureRoutes },
-    { routes: geneRoutes },
-    { routes: homeRoutes },
-    { routes: identityVerificationRoutes },
-    { routes: institutionPartnershipsRoutes },
-    { routes: jobsRoutes },
-    { routes: marketingRoutes },
-    { routes: myCollectionRoutes },
-    { routes: myCollectionInsightsRoutes },
-    { routes: myCollectionInsightsCollectorProfileRoutes },
-    { routes: newForYouRoutes },
-    { routes: newWorksFromGalleriesYouFollowRoutes },
-    { routes: notificationsRoutes },
-    { routes: onboardingRoutes },
-    { routes: orderRoutes },
-    { routes: pageRoutes },
-    { routes: partnerRoutes },
-    { routes: partnerOfferRoutes },
-    { routes: partnersRoutes },
-    { routes: preferencesRoutes },
-    { routes: pressRoutes },
-    { routes: priceDatabaseRoutes },
-    { routes: saleRoutes },
-    { routes: saleAgreementsRoutes },
-    { routes: searchRoutes },
-    { routes: sellRoutes },
-    { routes: settingsRoutes },
-    { routes: showRoutes },
-    { routes: showsRoutes },
-    { routes: tagRoutes },
-    { routes: viewingRoomRoutes },
-    { routes: worksForYouRoutes },
+    aboutRoutes,
+    adminRoutes,
+    artAppraisalsRoutes,
+    articleRoutes,
+    articlesRoutes,
+    artistRoutes,
+    artistSeriesRoutes,
+    artistsRoutes,
+    artQuizRoutes,
+    alertRoutes,
+    artworkRoutes,
+    auctionRoutes,
+    auctionsRoutes,
+    authenticationRoutes,
+    buyerGuaranteeRoutes,
+    categoriesRoutes,
+    collectRoutes,
+    collectorProfileRoutes,
+    consignRoutes,
+    contactRoutes,
+    conversationsRoutes,
+    exampleRoutes,
+    endingSoonAuctionsRoutes,
+    fairOrganizerRoutes,
+    fairRoutes,
+    fairsRoutes,
+    favoritesRoutes,
+    featureRoutes,
+    geneRoutes,
+    homeRoutes,
+    identityVerificationRoutes,
+    institutionPartnershipsRoutes,
+    jobsRoutes,
+    marketingRoutes,
+    myCollectionRoutes,
+    myCollectionInsightsRoutes,
+    myCollectionInsightsCollectorProfileRoutes,
+    newForYouRoutes,
+    newWorksFromGalleriesYouFollowRoutes,
+    notificationsRoutes,
+    onboardingRoutes,
+    orderRoutes,
+    pageRoutes,
+    partnerRoutes,
+    partnerOfferRoutes,
+    partnersRoutes,
+    preferencesRoutes,
+    pressRoutes,
+    priceDatabaseRoutes,
+    saleRoutes,
+    saleAgreementsRoutes,
+    searchRoutes,
+    sellRoutes,
+    settingsRoutes,
+    showRoutes,
+    showsRoutes,
+    tagRoutes,
+    viewingRoomRoutes,
+    worksForYouRoutes,
 
     // For debugging baseline app shell stuff
-    { routes: debugRoutes },
+    debugRoutes,
 
-    {
-      routes: [
-        {
-          path: "/oembed",
-          render: () => {
-            throw new HttpError(404)
-          },
+    [
+      {
+        path: "/oembed",
+        render: () => {
+          throw new HttpError(404)
         },
-      ],
-    },
+      },
+    ],
   ])
 }

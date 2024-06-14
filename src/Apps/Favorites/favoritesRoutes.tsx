@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const FavoritesApp = loadable(
   () =>
@@ -34,7 +34,7 @@ const Alerts = loadable(
   }
 )
 
-export const favoritesRoutes: AppRouteConfig[] = [
+export const favoritesRoutes: RouteProps[] = [
   {
     path: "/favorites",
     getComponent: () => FavoritesApp,

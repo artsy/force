@@ -10,7 +10,7 @@ To add a new app to force we can leverage our React-based SSR router.
 
 ```tsx
 // routes.tsx
-export const routes: AppRouteConfig[] = [
+export const routes: RouteProps[] = [
   {
     path: "/new-app",
     Component: props => {
@@ -100,10 +100,10 @@ const routes = [
 ]
 ```
 
-### Testing Gotchas 
+### Testing Gotchas
 
 When testing the top level route of your new app with React Testing Library make sure to `jest.mock("v2/Components/MetaTags")` or wrap your component tree in `<MockBoot>`, otherwise things wont render in jest. On first glance RTL seems to break when it encounters `react-head` (how we handle meta tags and the like). Mocking will replace the component in the tree; using `<MockBoot>` will wrap things in the required React context.
 
-### Learn More 
+### Learn More
 
-See the [best practices docs](/docs/best_practices.md) or [Example App](/src/Apps/Example) for more info. 
+See the [best practices docs](/docs/best_practices.md) or [Example App](/src/Apps/Example) for more info.

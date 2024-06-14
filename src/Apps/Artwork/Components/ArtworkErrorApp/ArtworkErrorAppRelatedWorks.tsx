@@ -7,7 +7,7 @@ import ArtworkGrid, {
   ArtworkGridPlaceholder,
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { ArtworkErrorAppRelatedWorksQuery } from "__generated__/ArtworkErrorAppRelatedWorksQuery.graphql"
 import { graphql, useFragment } from "react-relay"
 import { ArtworkErrorAppRelatedWorks_artwork$key } from "__generated__/ArtworkErrorAppRelatedWorks_artwork.graphql"

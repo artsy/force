@@ -29,7 +29,7 @@ import {
 } from "__generated__/Shipping2TestQuery.graphql"
 import { screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import {
   clickSaveAddress,
   fillAddressForm,
@@ -41,7 +41,7 @@ import { queryByAttribute } from "@testing-library/dom"
 import { ErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
 import { within } from "@testing-library/dom"
 import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 jest.setTimeout(10000)
 
@@ -67,11 +67,11 @@ jest.mock("@artsy/palette", () => {
   }
 })
 
-jest.mock("System/useFeatureFlag", () => ({
+jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
 }))
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn().mockReturnValue({
     router: jest.fn(),
   }),

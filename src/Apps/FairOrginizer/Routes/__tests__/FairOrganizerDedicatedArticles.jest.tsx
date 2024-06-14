@@ -4,7 +4,7 @@ import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { FairOrganizerDedicatedArticlesFragmentContainer } from "Apps/FairOrginizer/Routes/FairOrganizerDedicatedArticles"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

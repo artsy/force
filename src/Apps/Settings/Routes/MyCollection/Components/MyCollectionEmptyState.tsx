@@ -12,8 +12,8 @@ import {
 } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { useAuthDialog } from "Components/AuthDialog"
-import { RouterLink } from "System/Router/RouterLink"
-import { useSystemContext } from "System/SystemContext"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { resized } from "Utils/resized"
 
 export const MyCollectionEmptyState: React.FC = () => {

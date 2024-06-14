@@ -1,12 +1,12 @@
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkMeta } from "Apps/Artwork/Components/ArtworkMeta"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ArtworkMeta_Test_Query } from "__generated__/ArtworkMeta_Test_Query.graphql"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 
 jest.mock("Utils/getENV", () => ({
   getENV: (name: string) => {

@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairCollection_collection$data } from "__generated__/FairCollection_collection.graphql"
 import { TriptychCard } from "@artsy/palette"
 import { crop } from "Utils/resizer"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { compact } from "lodash"
 import { useTracking } from "react-tracking"
 import {

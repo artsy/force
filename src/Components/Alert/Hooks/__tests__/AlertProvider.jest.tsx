@@ -7,7 +7,7 @@ import { AlertProvider } from "Components/Alert/AlertProvider"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 import { useAuthDialog } from "Components/AuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.unmock("react-relay")
@@ -17,11 +17,11 @@ jest.mock("Components/AuthDialog/useAuthDialog")
 jest.mock("Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
-jest.mock("System/useFeatureFlag", () => ({
+jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
 }))
 
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 
 describe("AlertProvider", () => {
   let relayEnv: MockEnvironment = createMockEnvironment()

@@ -5,7 +5,7 @@ import { Box, Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
 import {
   RouterLink as BaseRouteLink,
   RouterLinkProps,
-} from "System/Router/RouterLink"
+} from "System/Components/RouterLink"
 import { ExampleAppMeta } from "./Components/ExampleAppMeta"
 import styled from "styled-components"
 

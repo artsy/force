@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import * as React from "react"
 import { NavBarUserMenu } from "./Menus"
-import { SystemContext } from "System/SystemContext"
+import { SystemContext } from "System/Contexts/SystemContext"
 import { Dropdown, Flex } from "@artsy/palette"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"

@@ -18,7 +18,7 @@ staging data dump.
 GET /artwork/fernando-botero-seated-woman-13 401 764.685 ms - -
 Artsy/Router/Utils/RenderStatus | undefined
 
-Artsy/Router/buildServerApp.tsx | HttpError { isFoundHttpError: true, status: 401, data: undefined }
+Artsy/Router/serverRouter.tsx | HttpError { isFoundHttpError: true, status: 401, data: undefined }
 
 HttpError { isFoundHttpError: true, status: 401, data: undefined }
 undefined

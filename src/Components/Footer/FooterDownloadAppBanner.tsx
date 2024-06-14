@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { FooterDownloadAppBannerQuery } from "__generated__/FooterDownloadAppBannerQuery.graphql"
 import {
   DOWNLOAD_APP_URLS,
@@ -17,10 +17,10 @@ import {
 } from "Utils/Hooks/useDeviceDetection"
 import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useEffect, useState } from "react"
 import { fetchQuery, graphql } from "react-relay"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 const IGNORE_PATHS = ["/meet-your-new-art-advisor"]
 

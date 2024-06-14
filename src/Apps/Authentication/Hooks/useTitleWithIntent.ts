@@ -1,6 +1,6 @@
 import { Intent } from "@artsy/cohesion"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 export const useTitleWithIntent = () => {
   const {

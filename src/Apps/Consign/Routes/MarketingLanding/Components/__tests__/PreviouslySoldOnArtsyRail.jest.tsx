@@ -2,12 +2,12 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fireEvent, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { PreviouslySoldOnArtsyRailFragmentContainer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviouslySoldOnArtsyRail"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 const trackEvent = useTracking as jest.Mock
 
 const { renderWithRelay } = setupTestWrapperTL({

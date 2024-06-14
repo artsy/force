@@ -1,5 +1,5 @@
 import { Button, Flex, ModalDialog, Spacer, Text } from "@artsy/palette"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 export const ConsignmentInquiryFormAbandonEditModal: React.FC<{
   onClose: () => void

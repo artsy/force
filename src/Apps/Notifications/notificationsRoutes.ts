@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const NotificationsApp = loadable(
   () =>
@@ -10,7 +10,7 @@ const NotificationsApp = loadable(
   }
 )
 
-export const notificationsRoutes: AppRouteConfig[] = [
+export const notificationsRoutes: RouteProps[] = [
   {
     path: "/notifications",
     layout: "FullBleed",

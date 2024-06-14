@@ -1,6 +1,6 @@
 import { Button, Text, Image, Box } from "@artsy/palette"
 import { TextAndImageLayout } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/TextAndImageLayout"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 
 export const FAQSWA: React.FC = () => {

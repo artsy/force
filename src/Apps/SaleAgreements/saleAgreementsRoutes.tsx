@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const SaleAgreementsApp = loadable(
   () => import(/* webpackChunkName: "jobsBundle" */ "./SaleAgreementsApp"),
@@ -17,7 +17,7 @@ const SaleAgreementRoute = loadable(
   }
 )
 
-export const saleAgreementsRoutes: AppRouteConfig[] = [
+export const saleAgreementsRoutes: RouteProps[] = [
   {
     path: "/supplemental-cos",
     getComponent: () => SaleAgreementsApp,

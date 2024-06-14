@@ -11,13 +11,13 @@ import { RejectFragmentContainer } from "Apps/Order/Routes/Reject"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { RouterLink } from "System/Components/RouterLink"
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
-jest.mock("System/useFeatureFlag")
+jest.mock("System/Hooks/useFeatureFlag")
 
 jest.mock("@artsy/palette", () => {
   return {

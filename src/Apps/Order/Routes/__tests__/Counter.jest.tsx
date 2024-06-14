@@ -16,15 +16,15 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { RouterLink } from "System/Components/RouterLink"
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("System/useFeatureFlag")
+jest.mock("System/Hooks/useFeatureFlag")
 
 const mockShowErrorDialog = jest.fn()
 jest.mock("Apps/Order/Dialogs", () => ({

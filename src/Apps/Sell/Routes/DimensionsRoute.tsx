@@ -16,7 +16,7 @@ import { Formik } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 const FRAGMENT = graphql`
   fragment DimensionsRoute_submission on ConsignmentSubmission {

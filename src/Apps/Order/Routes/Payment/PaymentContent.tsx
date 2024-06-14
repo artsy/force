@@ -25,7 +25,7 @@ import {
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import UnknownCardIcon from "@artsy/icons/UnknownCardIcon"

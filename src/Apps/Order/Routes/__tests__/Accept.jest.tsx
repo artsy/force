@@ -23,8 +23,8 @@ import {
   acceptOfferInsufficientInventoryFailure,
   acceptOfferWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { RouterLink } from "System/Components/RouterLink"
 
 jest.unmock("react-relay")
 
@@ -32,7 +32,7 @@ jest.mock("Utils/getCurrentTimeAsIsoString")
 jest.mock("react-tracking")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
-jest.mock("System/useFeatureFlag")
+jest.mock("System/Hooks/useFeatureFlag")
 
 jest.mock("@stripe/stripe-js", () => {
   let mock: ReturnType<typeof mockStripe> | null = null

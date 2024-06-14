@@ -32,8 +32,8 @@ import { MetaTags } from "Components/MetaTags"
 import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmptyResults"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
-import { useRouter } from "System/Router/useRouter"
-import { useSystemContext } from "System/SystemContext"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
 import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
@@ -126,10 +126,6 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     if (isMobile) {
       closeModalAndRefetch()
     } else refresh()
-
-    sendToast({
-      message: "Your Alert has been updated.",
-    })
   }
 
   const handleDeleteClick = () => {

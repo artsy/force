@@ -7,7 +7,7 @@ import { PriceDatabase } from "./../PriceDatabase"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
 
-jest.mock("System/Router/useRouter", () => {
+jest.mock("System/Hooks/useRouter", () => {
   return {
     useRouter: jest.fn(() => {
       return { router: { push: mockRouterPush } }

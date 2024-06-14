@@ -3,7 +3,7 @@ import * as Yup from "yup"
 import { useTranslation } from "react-i18next"
 import { Input, Spacer, Text, Flex, Button, Toggle } from "@artsy/palette"
 import i18n from "System/i18n/i18n"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export interface ArtworkListFormikValues {
   name: string

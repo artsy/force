@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const CategoriesApp = loadable(
   () => import(/* webpackChunkName: "categoriesBundle" */ "./CategoriesApp"),
@@ -9,7 +9,7 @@ const CategoriesApp = loadable(
   }
 )
 
-export const categoriesRoutes: AppRouteConfig[] = [
+export const categoriesRoutes: RouteProps[] = [
   {
     path: "/categories",
     getComponent: () => CategoriesApp,

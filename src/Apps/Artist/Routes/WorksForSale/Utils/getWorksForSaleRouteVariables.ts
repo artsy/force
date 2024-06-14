@@ -1,5 +1,5 @@
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { getFeatureFlag } from "System/useFeatureFlag"
+import { getFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 
 export function getWorksForSaleRouteVariables({ artistID }, { location }) {

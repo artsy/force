@@ -9,9 +9,9 @@ import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { BoxProps } from "@artsy/palette"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { omit } from "lodash"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show$data

@@ -1,10 +1,10 @@
 import { renderHook } from "@testing-library/react-hooks"
 import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntentMutation"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 jest.mock("Apps/Order/Mutations/useSetPaymentByStripeIntentMutation")
 
 describe("useStripePaymentBySetupIntentId", () => {

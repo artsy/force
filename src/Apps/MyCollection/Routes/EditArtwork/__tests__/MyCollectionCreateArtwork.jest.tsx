@@ -11,7 +11,7 @@ import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCre
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     router: {
       push: mockRouterPush,

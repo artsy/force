@@ -8,7 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { CellSale_sale$data } from "__generated__/CellSale_sale.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { FC } from "react"

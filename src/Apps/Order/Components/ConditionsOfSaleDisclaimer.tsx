@@ -1,7 +1,7 @@
 import { Text, TextProps } from "@artsy/palette"
 import * as React from "react"
-import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface Props {
   textProps?: Partial<TextProps>

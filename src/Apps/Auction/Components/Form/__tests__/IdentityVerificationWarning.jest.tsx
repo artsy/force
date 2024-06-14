@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react"
 import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/IdentityVerificationWarning"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
-jest.mock("System/useFeatureFlag")
+jest.mock("System/Hooks/useFeatureFlag")
 
 describe("IdentityVerificationWarning", () => {
   it("renders correct components", () => {

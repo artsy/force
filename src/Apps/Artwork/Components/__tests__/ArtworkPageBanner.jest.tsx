@@ -1,10 +1,9 @@
-import { screen } from "@testing-library/dom"
-import { waitFor } from "@testing-library/react"
+import { waitFor, screen } from "@testing-library/react"
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { DeepPartial } from "Utils/typeSupport"
 import { ArtworkPageBanner_Test_Query$rawResponse } from "__generated__/ArtworkPageBanner_Test_Query.graphql"
 import { graphql } from "react-relay"
@@ -12,11 +11,11 @@ import { graphql } from "react-relay"
 const mockUseRouter = useRouter as jest.Mock
 const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { location: { query: {} } } })),
 }))
 
-jest.mock("System/useFeatureFlag", () => ({
+jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
 }))
 

@@ -1,6 +1,6 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, BoxProps, Separator, Text } from "@artsy/palette"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { logout } from "Utils/auth"
 import { getENV } from "Utils/getENV"
 import { userIsAdmin } from "Utils/user"

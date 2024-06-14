@@ -10,7 +10,7 @@ import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Component } from "react"
 import Events from "Utils/Events"
 import track from "react-tracking"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import HelpIcon from "@artsy/icons/HelpIcon"
 
 interface State {

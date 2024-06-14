@@ -22,7 +22,7 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { BackToFairBannerFragmentContainer as BackToFairBanner } from "./Components/BackToFairBanner"
 
 interface ShowAppProps {

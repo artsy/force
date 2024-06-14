@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
@@ -12,7 +12,7 @@ const TagApp = loadable(
   }
 )
 
-export const tagRoutes: AppRouteConfig[] = [
+export const tagRoutes: RouteProps[] = [
   {
     path: "/tag/:slug",
     getComponent: () => TagApp,

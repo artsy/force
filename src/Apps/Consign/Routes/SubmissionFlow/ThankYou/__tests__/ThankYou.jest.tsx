@@ -1,16 +1,16 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { mount } from "enzyme"
 import { ThankYou } from "Apps/Consign/Routes/SubmissionFlow/ThankYou/ThankYou"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 
 jest.mock("../../SoldRecentlyOnArtsy", () => ({
   SoldRecentlyOnArtsyQueryRenderer: () => <div />,

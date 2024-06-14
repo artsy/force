@@ -2,16 +2,16 @@ import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { NewWorksFromGalleriesYouFollowAppPaginationContainer } from "Apps/NewWorksFromGalleriesYouFollow/NewWorksFromGalleriesYouFollowApp"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 jest.unmock("react-relay")
 jest.mock("Components/MetaTags", () => ({
   MetaTags: () => "MetaTags",
 }))
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn().mockReturnValue({ route: { path: "/new-for-you" } }),
 }))
-jest.mock("System/useSystemContext", () => ({
+jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: jest.fn(),
 }))
 

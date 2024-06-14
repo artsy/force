@@ -1,13 +1,13 @@
 import { FlashBannerFragmentContainer } from "Components/FlashBanner"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen, fireEvent, act } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: FlashBannerFragmentContainer,

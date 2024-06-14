@@ -3,10 +3,10 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
 import { PartnersFeaturedCarousel_Test_Query } from "__generated__/PartnersFeaturedCarousel_Test_Query.graphql"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 jest.mock("Utils/Hooks/useStableShuffle", () => ({
   useStableShuffle: ({ items }) => ({ shuffled: items }),
 }))

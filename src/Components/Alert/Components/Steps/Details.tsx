@@ -28,7 +28,13 @@ export interface AlertFormikValues {
 export const Details: FC = () => {
   const { clickedAddFilters } = useAlertTracking()
 
-  const { onComplete, dispatch, goToFilters, state } = useAlertContext()
+  const {
+    onComplete,
+    dispatch,
+    goToFilters,
+    state,
+    createAlertError,
+  } = useAlertContext()
 
   const isMounted = useDidMount()
 
@@ -76,7 +82,12 @@ export const Details: FC = () => {
               </Join>
             </Flex>
 
-            <Box position="sticky" bottom={0} bg={"white100"} p={2}>
+            <Box position="sticky" bottom={0} bg="white100" p={2}>
+              {!!createAlertError && (
+                <Text mb={1} color="red100" variant="xs">
+                  {createAlertError}
+                </Text>
+              )}
               <Button
                 data-testid="submitCreateAlert"
                 loading={isSubmitting}

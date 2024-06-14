@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const MyCollectionInsightsMedianSalePriceAtAuction = loadable(
   () =>
@@ -13,7 +13,7 @@ const MyCollectionInsightsMedianSalePriceAtAuction = loadable(
   }
 )
 
-export const myCollectionInsightsRoutes: AppRouteConfig[] = [
+export const myCollectionInsightsRoutes: RouteProps[] = [
   {
     path: "/my-collection/median-sale-price-at-auction/:artistID",
     getComponent: () => MyCollectionInsightsMedianSalePriceAtAuction,

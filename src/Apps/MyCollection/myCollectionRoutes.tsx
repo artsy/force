@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const MyCollectionArtwork = loadable(
   () =>
@@ -56,7 +56,7 @@ const MyCollectionEditArtwork = loadable(
   }
 )
 
-export const myCollectionRoutes: AppRouteConfig[] = [
+export const myCollectionRoutes: RouteProps[] = [
   {
     path: "/my-collection/artwork/:artworkID",
     getComponent: () => MyCollectionArtwork,

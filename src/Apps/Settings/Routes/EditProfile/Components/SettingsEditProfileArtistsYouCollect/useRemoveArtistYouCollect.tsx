@@ -1,5 +1,5 @@
 import { commitMutation, graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRemoveArtistYouCollectMutation } from "__generated__/useRemoveArtistYouCollectMutation.graphql"
 
 export const useRemoveArtistYouCollect = () => {

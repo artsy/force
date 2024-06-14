@@ -8,7 +8,7 @@ import { AuctionArtworkFilterTestQuery } from "__generated__/AuctionArtworkFilte
 
 jest.unmock("react-relay")
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       params: {

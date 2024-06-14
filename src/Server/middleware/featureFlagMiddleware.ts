@@ -4,7 +4,7 @@ import {
   createFeatureFlagService,
   FeatureFlagService,
 } from "Server/featureFlags/featureFlagService"
-import { FeatureFlags } from "System/useFeatureFlag"
+import { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import { updateSharifyAndContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 
 export function featureFlagMiddleware(serviceType: symbol) {

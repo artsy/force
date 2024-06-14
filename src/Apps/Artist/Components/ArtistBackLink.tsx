@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ArtistBackLink_artist$data } from "__generated__/ArtistBackLink_artist.graphql"
 import { TopContextBar } from "Components/TopContextBar"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { sanitizeURL } from "Utils/sanitizeURL"
 
 interface ArtistBackLinkProps {

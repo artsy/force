@@ -1,6 +1,6 @@
 import React from "react"
 import { Join, Spacer } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { STEPS, useSellFlowContext } from "Apps/Sell/SellFlowContext"
 
 export const StepsNavigation: React.FC = () => {

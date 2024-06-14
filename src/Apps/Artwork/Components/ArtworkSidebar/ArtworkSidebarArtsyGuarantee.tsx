@@ -1,7 +1,7 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
 import { ArtworkSidebarArtsyGuarantee_artwork$key } from "__generated__/ArtworkSidebarArtsyGuarantee_artwork.graphql"
 import { useTranslation } from "react-i18next"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import MoneyBackIcon from "@artsy/icons/MoneyBackIcon"

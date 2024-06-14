@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react"
 import { BuyOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
 import { BankDebitForm } from "Components/BankDebitForm/BankDebitForm"
@@ -25,7 +25,7 @@ jest.mock("@stripe/react-stripe-js", () => {
     },
   }
 })
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-tracking")
 jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
 

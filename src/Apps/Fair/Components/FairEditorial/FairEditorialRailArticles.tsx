@@ -12,7 +12,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export interface FairBoothRailArtworksProps {
   fair: FairEditorialRailArticles_fair$data

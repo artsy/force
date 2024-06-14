@@ -1,4 +1,4 @@
-import { getFeatureVariant } from "System/useFeatureFlag"
+import { getFeatureVariant } from "System/Hooks/useFeatureFlag"
 import { FormikErrors, yupToFormErrors } from "formik"
 import * as yup from "yup"
 

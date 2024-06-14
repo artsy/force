@@ -5,7 +5,7 @@ import {
   EntityTooltip,
   EntityTooltipHighlight,
 } from "Components/EntityTooltip"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export { isEntity as isSupportedArticleTooltip } from "Components/EntityTooltip"
 

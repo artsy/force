@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react"
 import { NotificationsEmptyStateByType } from "Components/Notifications/NotificationsEmptyStateByType"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
-jest.mock("System/useFeatureFlag", () => ({
+jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
 }))
 

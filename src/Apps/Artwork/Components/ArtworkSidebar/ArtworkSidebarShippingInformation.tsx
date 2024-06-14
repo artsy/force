@@ -2,7 +2,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
 import { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
 import { useTranslation } from "react-i18next"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
 import { ActionType, ClickedOnLearnMore } from "@artsy/cohesion"
 

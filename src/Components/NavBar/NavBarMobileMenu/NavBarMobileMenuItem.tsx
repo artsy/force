@@ -1,7 +1,7 @@
 import { Clickable } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import styled, { css } from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 const navBarMobileMenuItemMixin = css`
   align-items: center;

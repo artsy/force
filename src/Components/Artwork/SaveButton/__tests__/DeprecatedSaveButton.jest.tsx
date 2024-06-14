@@ -3,7 +3,7 @@ import { DeprecatedSaveButtonFragmentContainer } from "Components/Artwork/SaveBu
 import { graphql } from "react-relay"
 import { mockLocation } from "DevTools/mockLocation"
 import { ContextModule } from "@artsy/cohesion"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
@@ -11,7 +11,7 @@ import { MockBoot } from "DevTools/MockBoot"
 import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-tracking")
 jest.mock("../SaveArtworkMutation")
 jest.mock("Components/AuthDialog/useAuthDialog")

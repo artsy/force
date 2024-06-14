@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException } from "found"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 
 const ShowApp = loadable(
@@ -23,7 +23,7 @@ const ShowInfoRoute = loadable(
   }
 )
 
-export const showRoutes: AppRouteConfig[] = [
+export const showRoutes: RouteProps[] = [
   {
     getComponent: () => ShowApp,
     path: "/show/:slug",

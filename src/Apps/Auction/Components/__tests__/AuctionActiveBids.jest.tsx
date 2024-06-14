@@ -5,7 +5,7 @@ import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { AuctionActiveBidsRefetchContainer } from "Apps/Auction/Components/AuctionActiveBids"
 import { AuctionActiveBidsTestQuery } from "__generated__/AuctionActiveBidsTestQuery.graphql"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 jest.unmock("react-relay")
 
@@ -14,7 +14,7 @@ jest.mock("Apps/Auction/Routes/Bid/Components/AuctionLotInfo", () => ({
   AuctionLotInfoFragmentContainer: () => null,
 }))
 
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 
 describe("AuctionActiveBids", () => {
   const mockUseRouter = useRouter as jest.Mock

@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect } from "react"
 import { usePartnerOfferCheckoutMutation } from "./Mutations/UsePartnerOfferCheckoutMutation"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { LoadingArea } from "Components/LoadingArea"
 import { Box } from "@artsy/palette"
 

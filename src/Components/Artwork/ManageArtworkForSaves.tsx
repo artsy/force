@@ -12,7 +12,7 @@ import {
   useState,
 } from "react"
 import { useTranslation } from "react-i18next"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 export enum ModalKey {
   SelectListsForArtwork,

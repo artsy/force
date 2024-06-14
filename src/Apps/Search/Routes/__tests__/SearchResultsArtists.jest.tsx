@@ -1,5 +1,5 @@
 import { ZeroState } from "Apps/Search/Components/ZeroState"
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"

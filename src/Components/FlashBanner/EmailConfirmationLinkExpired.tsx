@@ -1,7 +1,7 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import * as React from "react"
 import { Button } from "@artsy/palette"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { requestEmailConfirmation } from "./requestEmailConfirmationMutation"
 import createLogger from "Utils/logger"
 import { useTracking } from "react-tracking"

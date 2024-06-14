@@ -1,7 +1,7 @@
 import { Formik } from "formik"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { AuctionConfirmRegistrationRouteFragmentContainer } from "Apps/Auction/Routes/AuctionConfirmRegistrationRoute"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
@@ -13,7 +13,7 @@ jest.unmock("react-relay")
 
 jest.mock("Apps/Auction/Queries/useCreateBidder")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 jest.mock("Apps/Auction/Routes/AuctionRegistrationRoute")
 
 jest.mock("Apps/Auction/Components/Form/ConditionsOfSaleCheckbox", () => ({

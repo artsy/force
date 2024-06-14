@@ -4,7 +4,7 @@ import { COUNTRY_CODES } from "Utils/countries"
 import { Form, Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
 import {
@@ -23,7 +23,7 @@ import { ConsignmentInquiryFormAbandonEditModal } from "Apps/Consign/Routes/Cons
 import { useState } from "react"
 import { TopContextBar } from "Components/TopContextBar"
 import { SPECIALISTS } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 const logger = createLogger("ConsignmentInquiry/ConsignmentInquiry.tsx")
 

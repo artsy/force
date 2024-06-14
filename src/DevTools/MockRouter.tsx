@@ -1,5 +1,3 @@
-import { RouterConfig } from "System/Router"
-import { buildClientApp } from "System/Router/buildClientApp"
 import {
   createMockNetworkLayer,
   createMockNetworkLayer2,
@@ -9,8 +7,9 @@ import React, { useEffect, useState } from "react"
 import { getUser } from "Utils/user"
 import { AppShell } from "Apps/Components/AppShell"
 import { Environment } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { HistoryEnhancerOptions } from "farce"
+import { RouterConfig, setupClientRouter } from "System/Router/clientRouter"
 
 interface MockRouterProps {
   context?: RouterConfig["context"]
@@ -19,7 +18,7 @@ interface MockRouterProps {
   mockData?: object
   mockMutationResults?: object
   mockResolvers?: IMocks
-  routes: AppRouteConfig[]
+  routes: RouteProps[]
 }
 
 export const MockRouter: React.FC<MockRouterProps> = ({
@@ -46,14 +45,12 @@ export const MockRouter: React.FC<MockRouterProps> = ({
           ? createMockNetworkLayer2({ mockData, mockMutationResults })
           : null
 
-        const { ClientApp } = await buildClientApp({
+        const { ClientRouter } = setupClientRouter({
           routes: [
             {
               path: "/",
               children: routes,
-              Component: ({ children, ...props }) => {
-                return <AppShell {...props}>{children}</AppShell>
-              },
+              Component: MockRouterAppShell,
             },
           ],
           initialRoute,
@@ -68,7 +65,7 @@ export const MockRouter: React.FC<MockRouterProps> = ({
           },
         })
 
-        setMockRouterApp((<ClientApp />) as any)
+        setMockRouterApp((<ClientRouter />) as any)
       } catch (error) {
         console.error("[DevTools/MockRouter] Error rendering router:", error)
       }
@@ -83,4 +80,11 @@ export const MockRouter: React.FC<MockRouterProps> = ({
   }
 
   return MockRouterApp
+}
+
+const MockRouterAppShell: React.FC<MockRouterProps> = ({
+  children,
+  ...props
+}) => {
+  return <AppShell {...props}>{children}</AppShell>
 }

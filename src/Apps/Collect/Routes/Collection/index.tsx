@@ -3,7 +3,6 @@ import { Collection_collection$data } from "__generated__/Collection_collection.
 import { SeoProductsForArtworks } from "Apps/Collect/Components/SeoProductsForArtworks"
 import { SeoProductsForCollections } from "Apps/Collect/Components/SeoProductsForCollections"
 import { CollectionFilterFragmentContainer as CollectionHeader } from "Apps/Collect/Routes/Collection/Components/Header"
-import { SystemContextProps, withSystemContext } from "System/SystemContext"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
@@ -21,6 +20,10 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { MetaTags } from "Components/MetaTags"
 import { getENV } from "Utils/getENV"
+import {
+  SystemContextProps,
+  withSystemContext,
+} from "System/Contexts/SystemContext"
 
 interface CollectionAppProps extends SystemContextProps {
   collection: Collection_collection$data

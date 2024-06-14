@@ -1,5 +1,5 @@
 import { Flex, Text } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 

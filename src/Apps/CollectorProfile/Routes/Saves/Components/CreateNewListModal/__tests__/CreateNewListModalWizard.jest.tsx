@@ -4,10 +4,10 @@ import {
 } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModalWizard"
 import { fireEvent, screen } from "@testing-library/react"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { render } from "DevTools/renderWithMockBoot"
 
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("Utils/Hooks/useMutation")
 
 const onCloseMock = jest.fn()

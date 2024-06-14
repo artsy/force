@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { ArtsyResponse } from "Server/middleware/artsyExpress"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const LOGIN_COPY = "Log in to take the art quiz."
 const REDIRECT_URL = `/login?redirectTo=/art-quiz&copy=${LOGIN_COPY}`
@@ -29,7 +29,7 @@ const ArtQuizResults = loadable(() => import("./Routes/ArtQuizResults"), {
   resolveComponent: component => component.ArtQuizResultsFragmentContainer,
 })
 
-export const artQuizRoutes: AppRouteConfig[] = [
+export const artQuizRoutes: RouteProps[] = [
   {
     path: "/art-quiz",
     onServerSideRender: ({ res }) => {

@@ -14,7 +14,7 @@ import {
 } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtist"
 import { compact } from "lodash"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { CollectorProfileArtistsList_me$key } from "__generated__/CollectorProfileArtistsList_me.graphql"
 
 const PAGE_SIZE = 10

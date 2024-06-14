@@ -176,6 +176,7 @@ export interface AlertContextProps {
   goToDetails(): void
   onComplete(): void
   state: State
+  createAlertError: string
 }
 
 export const AlertContext = createContext<AlertContextProps>(

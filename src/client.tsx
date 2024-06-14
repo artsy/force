@@ -1,42 +1,19 @@
 import "Server/webpackPublicPath"
-
 import ReactDOM from "react-dom"
 import { getAppRoutes } from "routes"
 import { loadableReady } from "@loadable/component"
-import {
-  beforeAnalyticsReady,
-  onAnalyticsReady,
-} from "Server/analytics/helpers"
-import { getClientParam } from "Utils/getClientParam"
-import { buildClientApp } from "System/Router/buildClientApp"
+import { setupAnalytics } from "Server/analytics/helpers"
+import { setupClientRouter } from "System/Router/clientRouter"
 
-async function setupClient() {
-  // Attach analytics
-  if (getClientParam("disableAnalytics") !== "true") {
-    beforeAnalyticsReady()
-    window.analytics?.ready(() => {
-      onAnalyticsReady()
-    })
-  }
+setupAnalytics()
 
-  const { ClientApp } = await buildClientApp({
-    routes: getAppRoutes(),
-  })
+const { ClientRouter } = setupClientRouter({
+  routes: getAppRoutes(),
+})
 
-  // Rehydrate
-  await loadableReady(() => {
-    ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
-  })
-}
-
-// Initialze client
-;(async () => {
-  try {
-    await setupClient()
-  } catch (error) {
-    console.error("[v2/client.tsx] Error loading client:", error)
-  }
-})()
+loadableReady().then(() => {
+  ReactDOM.hydrate(<ClientRouter />, document.getElementById("react-root"))
+})
 
 // Enable hot-reloading if available.
 if (module.hot) {

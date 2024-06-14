@@ -5,7 +5,7 @@ import {
   HeaderImage,
   PartnerHeaderFragmentContainer as PartnerHeader,
 } from "Apps/Partner/Components/PartnerHeader"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { PartnerHeaderAddress } from "Apps/Partner/Components/PartnerHeader/PartnerHeaderAddress"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 

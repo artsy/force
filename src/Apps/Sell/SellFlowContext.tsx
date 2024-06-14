@@ -6,7 +6,7 @@ import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmiss
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
 import { createContext, useContext, useEffect } from "react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useCursor } from "use-cursor"
 
 export const STEPS = [

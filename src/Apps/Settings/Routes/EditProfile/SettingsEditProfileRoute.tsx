@@ -4,7 +4,7 @@ import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes
 import { SettingsEditProfileRoute_me$data } from "__generated__/SettingsEditProfileRoute_me.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface SettingsEditProfileRouteProps {
   me: SettingsEditProfileRoute_me$data

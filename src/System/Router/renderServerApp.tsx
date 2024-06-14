@@ -1,10 +1,10 @@
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { getServerParam } from "Utils/getServerParam"
 import { renderToString } from "react-dom/server"
-import { ServerAppResolve } from "./buildServerApp"
 import loadAssetManifest from "Server/manifest"
 import path from "path"
 import { getENV } from "Utils/getENV"
+import { ServerAppResults } from "System/Router/serverRouter"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -18,7 +18,7 @@ if (!MANIFEST) {
   throw new Error("manifest.json not found")
 }
 
-interface RenderServerAppProps extends ServerAppResolve {
+interface RenderServerAppProps extends ServerAppResults {
   /** HTTP status code */
   code?: number
   /** Should we mount the client? Defaults to `true`. */
@@ -28,7 +28,7 @@ interface RenderServerAppProps extends ServerAppResolve {
 }
 
 export const renderServerApp = ({
-  bodyHTML,
+  html,
   code = 200,
   headTags,
   mount = true,
@@ -46,7 +46,7 @@ export const renderServerApp = ({
   const options = {
     cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
     content: {
-      body: bodyHTML,
+      body: html,
       data: sharify.script(),
       head: headTagsString,
       scripts,
@@ -79,5 +79,6 @@ export const renderServerApp = ({
   }
 
   const statusCode = getENV("statusCode") ?? code
+
   res.status(statusCode).render(`${PUBLIC_DIR}/html.ejs`, options)
 }

@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const AboutApp = loadable(
   () => import(/* webpackChunkName: "aboutBundle" */ "./AboutApp"),
@@ -8,7 +8,7 @@ const AboutApp = loadable(
   }
 )
 
-export const aboutRoutes: AppRouteConfig[] = [
+export const aboutRoutes: RouteProps[] = [
   {
     path: "/about",
     getComponent: () => AboutApp,

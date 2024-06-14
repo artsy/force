@@ -11,7 +11,7 @@ import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/
 import { ConversationsSidebar_viewer$data } from "__generated__/ConversationsSidebar_viewer.graphql"
 import { Sentinel } from "Components/Sentinal"
 import { useEffect, useState } from "react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 

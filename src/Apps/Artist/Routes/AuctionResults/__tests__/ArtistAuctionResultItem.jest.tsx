@@ -3,10 +3,10 @@ import { ArtistAuctionResultItemTestQuery } from "__generated__/ArtistAuctionRes
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 jest.unmock("react-relay")
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 
 describe("ArtistAuctionResultItem", () => {
   const { renderWithRelay } = setupTestWrapperTL<

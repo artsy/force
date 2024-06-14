@@ -5,7 +5,7 @@ import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { PressApp_page$data } from "__generated__/PressApp_page.graphql"
 import { PageHTML } from "Apps/Page/Components/PageHTML"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface PressAppProps {
   page: PressApp_page$data

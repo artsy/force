@@ -3,12 +3,12 @@ import { AuctionsAppFragmentContainer } from "Apps/Auctions/AuctionsApp"
 import { graphql } from "react-relay"
 import { AuctionsApp_Test_Query } from "__generated__/AuctionsApp_Test_Query.graphql"
 import { useTracking as baseUseTracking } from "react-tracking"
-import { useSystemContext as baseUseSystemContext } from "System/useSystemContext"
+import { useSystemContext as baseUseSystemContext } from "System/Hooks/useSystemContext"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 
 describe("AuctionsApp", () => {
   const { getWrapper } = setupTestWrapper<AuctionsApp_Test_Query>({

@@ -15,7 +15,7 @@ import {
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { cropped, resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const ArtAppraisalsApp: React.FC = () => {
   return (

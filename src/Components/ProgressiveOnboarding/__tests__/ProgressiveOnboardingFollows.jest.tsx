@@ -11,7 +11,7 @@ import {
   PROGRESSIVE_ONBOARDING,
 } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
-jest.mock("System/useSystemContext", () => ({
+jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({ isLoggedIn: true }),
 }))
 
@@ -29,7 +29,7 @@ jest.mock(
 
 jest.mock("Components/ProgressiveOnboarding/withProgressiveOnboardingCounts")
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

@@ -13,8 +13,8 @@ import {
 } from "@artsy/palette"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
-import { useSystemContext } from "System/useSystemContext"
-import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { RouterLink } from "System/Components/RouterLink"
 import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlaceholder"
 import { PartnerArtistArtworksFragmentContainer } from "./PartnerArtistArtworksRail"
 

@@ -4,7 +4,7 @@ import { mount } from "enzyme"
 import { OtherCollectionEntity } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/OtherCollectionsRail/OtherCollectionEntity"
 import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 import { Image } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 jest.mock("react-tracking")
 jest.mock("found", () => ({

@@ -8,7 +8,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves/Components/SavesEntityImage"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import HideIcon from "@artsy/icons/HideIcon"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const ICON_SIZE = 24
 

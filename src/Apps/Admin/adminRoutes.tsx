@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { HttpError } from "found"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { getUser } from "Utils/user"
 
 const AdminClearCacheApp = loadable(
@@ -13,7 +13,7 @@ const NavigateToRoute = loadable(
   { resolveComponent: component => component.NavigateToRoute }
 )
 
-export const adminRoutes: AppRouteConfig[] = [
+export const adminRoutes: RouteProps[] = [
   {
     path: "/admin",
     Component: ({ children }) => children,

@@ -1,7 +1,7 @@
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { Banner } from "@artsy/palette"
 import { useEffect, useState } from "react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 export const ArtsyGuaranteeMessage: React.FC = () => {
   const { match } = useRouter()

@@ -4,7 +4,7 @@ import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
 import { SearchResultsEntityRoute as SearchResultsEntity } from "Apps/Search/Routes/SearchResultsEntity"
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

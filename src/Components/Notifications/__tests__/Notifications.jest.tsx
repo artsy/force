@@ -5,7 +5,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { render } from "DevTools/renderWithMockBoot"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: { params: { notificationId: "test-notification-id" } },
   }),

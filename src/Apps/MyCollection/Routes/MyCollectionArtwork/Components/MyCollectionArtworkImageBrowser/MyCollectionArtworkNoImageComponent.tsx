@@ -1,5 +1,5 @@
 import { Button, Flex } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import AddStrokeIcon from "@artsy/icons/AddStrokeIcon"
 
 interface MyCollectionArtworkNoImageComponentProps {

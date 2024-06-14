@@ -1,6 +1,6 @@
 import { Button, Spacer } from "@artsy/palette"
 import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 export const ConsignmentInquiryConfirmation: React.FC = () => {
   const { router } = useRouter()

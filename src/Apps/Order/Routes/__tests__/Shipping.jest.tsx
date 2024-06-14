@@ -28,7 +28,7 @@ import {
 import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import {
   fillAddressForm,
   validAddress,
@@ -67,7 +67,7 @@ jest.mock("@artsy/palette", () => {
   }
 })
 
-jest.mock("System/useFeatureFlag", () => ({
+jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
 }))
 

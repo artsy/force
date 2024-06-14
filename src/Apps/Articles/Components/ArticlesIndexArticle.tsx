@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
 import { ArticlesIndexArticle_article$data } from "__generated__/ArticlesIndexArticle_article.graphql"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { ArticleShare } from "Components/ArticleShare"
 
 interface ArticlesIndexArticleProps {

@@ -2,7 +2,7 @@ import { Button, Text, Image, Flex, Spacer, Separator } from "@artsy/palette"
 import { useTracking } from "react-tracking"
 import { graphql, useFragment } from "react-relay"
 import { ConversationArtwork_conversation$key } from "__generated__/ConversationArtwork_conversation.graphql"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface ConversationArtworkProps {
   conversation: ConversationArtwork_conversation$key

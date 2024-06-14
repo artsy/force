@@ -1,5 +1,5 @@
 import { Pill, PillProps } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { FC } from "react"
 import {
   ActionType,

@@ -3,10 +3,10 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { PartnersLocationAutocompleteFragmentContainer } from "Apps/Partners/Components/PartnersLocationAutocomplete"
 import { PartnersLocationAutocomplete_Test_Query } from "__generated__/PartnersLocationAutocomplete_Test_Query.graphql"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 
 const { renderWithRelay } = setupTestWrapperTL<
   PartnersLocationAutocomplete_Test_Query

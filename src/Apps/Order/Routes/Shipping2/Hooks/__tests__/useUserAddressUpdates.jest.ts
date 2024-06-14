@@ -20,7 +20,7 @@ let values: FulfillmentValues
 let mockShippingContext: ShippingContextProps
 
 jest.unmock("react-relay")
-jest.mock("System/useSystemContext", () => ({
+jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: () => ({ relayEnvironment: mockRelayEnv }),
 }))
 jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => ({

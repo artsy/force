@@ -8,7 +8,7 @@ import { FairOrganizerHeader_fairOrganizer$data } from "__generated__/FairOrgani
 import { extractNodes } from "Utils/extractNodes"
 import { Timer } from "Components/Timer"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { HeaderIcon } from "Components/HeaderIcon"
 
 interface FairOrganizerHeaderProps {

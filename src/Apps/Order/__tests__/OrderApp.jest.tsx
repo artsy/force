@@ -1,5 +1,5 @@
 import { orderRoutes } from "Apps/Order/orderRoutes"
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { ErrorPage } from "Components/ErrorPage"
 import { mount } from "enzyme"
 import { Resolver } from "found-relay"

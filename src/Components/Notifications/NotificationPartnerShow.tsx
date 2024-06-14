@@ -1,6 +1,6 @@
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Button, Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import { NotificationPartnerShow_show$key } from "__generated__/NotificationPartnerShow_show.graphql"

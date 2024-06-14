@@ -1,5 +1,5 @@
 import { ResponsiveBox, Image, Spacer, Text } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
 import { FC } from "react"
 

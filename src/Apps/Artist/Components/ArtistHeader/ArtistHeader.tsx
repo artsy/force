@@ -21,7 +21,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import styled from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import {
   ArtistHeaderImage,
   isValidImage,

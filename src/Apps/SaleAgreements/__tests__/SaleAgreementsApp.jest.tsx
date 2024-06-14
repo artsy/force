@@ -5,14 +5,14 @@ import { fireEvent, screen } from "@testing-library/react"
 import { SaleAgreementsApp } from "Apps/SaleAgreements/SaleAgreementsApp"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({ match: { params: { id: "example" } } }),
 }))
 jest.mock("Components/MetaTags", () => ({
   MetaTags: () => null,
 }))
 
-jest.mock("System/useFeatureFlag", () => ({
+jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => true,
 }))
 

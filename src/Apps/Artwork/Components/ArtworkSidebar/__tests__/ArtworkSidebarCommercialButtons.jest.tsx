@@ -7,15 +7,15 @@ import { createMockEnvironment } from "relay-test-utils"
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkSidebarCommercialButtons } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercialButtons"
 import { useAuthDialog } from "Components/AuthDialog"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import userEvent from "@testing-library/user-event"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.unmock("react-relay")
 
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 
-jest.mock("System/useFeatureFlag", () => {
+jest.mock("System/Hooks/useFeatureFlag", () => {
   return {
     useFeatureFlag: jest.fn(),
   }

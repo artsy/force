@@ -57,7 +57,7 @@ NOTE: `stickiness` needs to be set to `sessionID` on both the strategy and the v
 Use the `useFeatureVariant` hook in the component that you want to run the experiment.
 
 ```tsx
-import { useFeatureVariant } from "System/useFeatureFlag"
+import { useFeatureVariant } from "System/Hooks/useFeatureFlag"
 
 const variant = useFeatureVariant("my-awesome-experiment")
 ```
@@ -98,7 +98,7 @@ function MyComponent() {
 In the component that you added the experiment you just need to add the following:
 
 ```tsx
-import { useFeatureVariant } from "System/useFeatureFlag"
+import { useFeatureVariant } from "System/Hooks/useFeatureFlag"
 
 function MyComponent() {
   const { trackFeatureVariant } = useTrackFeatureVariant({

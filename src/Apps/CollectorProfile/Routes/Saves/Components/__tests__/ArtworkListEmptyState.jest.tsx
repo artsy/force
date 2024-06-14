@@ -5,7 +5,7 @@ import { ArtworkListEmptyState_Test_Query } from "__generated__/ArtworkListEmpty
 import { ArtworkListEmptyStateFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListEmptyState"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     match: {
       location: {

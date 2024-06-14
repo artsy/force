@@ -12,7 +12,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({ sm: true }),
 }))
 jest.mock("react-tracking")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: { query: {}, pathname: "" },

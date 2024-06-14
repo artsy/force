@@ -3,8 +3,8 @@ import { Button, Text, useTheme, Box } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { useAuthDialog } from "Components/AuthDialog"
-import { RouterLink } from "System/Router/RouterLink"
-import { useSystemContext } from "System/SystemContext"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const SWAStickyFooter = () => {
   const {

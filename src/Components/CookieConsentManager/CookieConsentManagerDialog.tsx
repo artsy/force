@@ -23,7 +23,7 @@ import {
   CATEGORIES,
   REJECT_ALL_PREFERENCES,
 } from "Components/CookieConsentManager/categories"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { useMode } from "Utils/Hooks/useMode"
 import { FC } from "react"
 import { useTracking } from "react-tracking"

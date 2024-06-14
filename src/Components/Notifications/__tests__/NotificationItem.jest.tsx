@@ -5,7 +5,7 @@ import { NotificationItem_test_Query } from "__generated__/NotificationItem_test
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 
 jest.unmock("react-relay")
-jest.mock("System/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
+jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
 const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
   Component: props => {

@@ -4,7 +4,7 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { Sticky } from "Components/Sticky"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const SubmissionHeader: React.FC = () => {
   const context = useSellFlowContext()

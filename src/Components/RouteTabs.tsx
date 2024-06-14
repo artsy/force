@@ -1,7 +1,7 @@
 import * as React from "react"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { BaseTab, BaseTabs, BaseTabProps, BaseTabsProps } from "@artsy/palette"
-import { useIsRouteActive } from "System/Router/useRouter"
+import { useIsRouteActive } from "System/Hooks/useRouter"
 import { useTracking } from "react-tracking"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 

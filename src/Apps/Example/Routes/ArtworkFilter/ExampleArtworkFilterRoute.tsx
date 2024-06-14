@@ -2,7 +2,7 @@ import { Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkFilter } from "Components/ArtworkFilter"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { ExampleArtworkFilterRoute_viewer$data } from "__generated__/ExampleArtworkFilterRoute_viewer.graphql"
 
 interface ExampleArtworkFilterProps {

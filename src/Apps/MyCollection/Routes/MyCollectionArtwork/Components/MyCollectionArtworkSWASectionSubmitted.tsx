@@ -4,7 +4,7 @@ import { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__ge
 
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 
 interface Props {

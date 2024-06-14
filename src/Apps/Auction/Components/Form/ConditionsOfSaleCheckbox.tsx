@@ -1,7 +1,7 @@
 import { Checkbox, Spacer, Text } from "@artsy/palette"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
-import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export const ConditionsOfSaleCheckbox: React.FC = () => {
   const {

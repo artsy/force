@@ -8,14 +8,14 @@ import {
   createMockEnvironment,
 } from "relay-test-utils/lib/RelayModernMockEnvironment"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { mockLocation } from "DevTools/mockLocation"
 
 let mockRelayEnv: RelayMockEnvironment
 let mockShowAuthDialog: jest.Mock
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 jest.mock("Components/AuthDialog", () => {

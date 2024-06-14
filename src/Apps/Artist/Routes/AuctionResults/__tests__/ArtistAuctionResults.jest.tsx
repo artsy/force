@@ -6,8 +6,8 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql"
 import { MockPayloadGenerator } from "relay-test-utils"
-import { useSystemContext } from "System/useSystemContext"
-import { useRouter } from "System/Router/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useRouter } from "System/Hooks/useRouter"
 import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
@@ -16,11 +16,11 @@ jest.mock("Components/Pagination/useComputeHref")
 jest.mock("System/Router/Utils/catchLinks", () => ({
   userIsForcingNavigation: () => false,
 }))
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 jest.mock("Components/AuthDialog/useAuthDialog", () => ({

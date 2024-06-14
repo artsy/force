@@ -1,14 +1,14 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useTracking } from "react-tracking"
-import { useSystemContext as baseUseSystemContext } from "System/useSystemContext"
+import { useSystemContext as baseUseSystemContext } from "System/Hooks/useSystemContext"
 import { screen, fireEvent, waitFor } from "@testing-library/react"
 import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
 import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 
 describe("ConversationCTA", () => {
   const { renderWithRelay } = setupTestWrapperTL({

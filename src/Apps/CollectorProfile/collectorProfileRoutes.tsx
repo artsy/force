@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const CollectorProfileApp = loadable(
   () =>
@@ -104,7 +104,7 @@ const handleServerSideRender = () => {
   // TODO: Redirect to the logged out experience once released
 }
 
-export const collectorProfileRoutes: AppRouteConfig[] = [
+export const collectorProfileRoutes: RouteProps[] = [
   {
     path: "/collector-profile",
     getComponent: () => CollectorProfileApp,

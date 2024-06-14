@@ -1,4 +1,4 @@
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 import loadable from "@loadable/component"
 
@@ -8,7 +8,7 @@ const NewForYouApp = loadable(() => import("./NewForYouApp"), {
 
 export const DEFAULT_NWFY_RECS_MODEL = "C"
 
-export const newForYouRoutes: AppRouteConfig[] = [
+export const newForYouRoutes: RouteProps[] = [
   {
     path: "/new-for-you",
     getComponent: () => NewForYouApp,

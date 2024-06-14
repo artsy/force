@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException } from "found"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 
 const FairApp = loadable(
@@ -41,7 +41,7 @@ const FairArticlesRoute = loadable(
   }
 )
 
-export const fairRoutes: AppRouteConfig[] = [
+export const fairRoutes: RouteProps[] = [
   {
     path: "/fair/:slug",
     ignoreScrollBehaviorBetweenChildren: true,

@@ -11,12 +11,12 @@ import {
   mediumAggregation,
 } from "Apps/__tests__/Fixtures/aggregations"
 import { fireEvent, screen, within } from "@testing-library/react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))

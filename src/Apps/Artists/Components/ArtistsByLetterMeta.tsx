@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Link, Meta, Title } from "react-head"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 
 const TITLE = "Modern and Contemporary Artists"

@@ -9,7 +9,7 @@ import {
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { ShowsFeaturedShow_show$data } from "__generated__/ShowsFeaturedShow_show.graphql"
 import { ShowsShowDatesFragmentContainer } from "./ShowsShowDates"
 

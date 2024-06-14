@@ -5,7 +5,7 @@ import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
 import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CollectionsCategoryFragmentContainer } from "./Components/CollectionsCategory"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { getENV } from "Utils/getENV"
 
 interface CollectionsAppProps {
