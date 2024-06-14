@@ -3,6 +3,7 @@ import {
   MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
   MyCollectionPriceEstimateSentSection,
 } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimateSection"
+import { MyCollectionArtworkSWASection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASection"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkInsights_artwork$data } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -10,7 +11,6 @@ import { MyCollectionArtworkArtistMarketFragmentContainer } from "./MyCollection
 import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkComparablesFragmentContainer } from "./MyCollectionArtworkComparables"
 import { MyCollectionArtworkDemandIndexFragmentContainer } from "./MyCollectionArtworkDemandIndex"
-import { MyCollectionArtworkSWASectionMobileLayout } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASection"
 
 interface MyCollectionArtworkInsightsProps {
   artwork: MyCollectionArtworkInsights_artwork$data
@@ -60,13 +60,11 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
 
         {showSubmitForSaleCtaMobile && (
           <Media lessThan="sm">
-            <MyCollectionArtworkSWASectionMobileLayout
-              route={`/collector-profile/my-collection/submission/artwork-details/${id}`}
+            <MyCollectionArtworkSWASection
+              artwork={artwork}
               learnMore={() => {
                 onLearnMoreClick?.()
               }}
-              slug={artwork?.artist?.slug ?? ""}
-              artworkId={artwork.internalID}
             />
           </Media>
         )}
@@ -128,6 +126,7 @@ export const MyCollectionArtworkInsightsFragmentContainer = createFragmentContai
           ...MyCollectionArtworkArtistMarket_marketPriceInsights
           ...MyCollectionArtworkDemandIndex_marketPriceInsights
         }
+        ...MyCollectionArtworkSWASection_artwork
       }
     `,
   }
