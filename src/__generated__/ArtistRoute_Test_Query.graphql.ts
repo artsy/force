@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6cb9245d5474663f1217a8dd9a546cbe>>
+ * @generated SignedSource<<035b91874930fc71e90d2c802e321f1f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type ArtistRoute_Test_Query$data = {
   readonly submission: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistRoute_submission">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistRoute_submission" | "SubmissionRoute_submission">;
   } | null | undefined;
 };
 export type ArtistRoute_Test_Query$rawResponse = {
@@ -26,6 +26,7 @@ export type ArtistRoute_Test_Query$rawResponse = {
         readonly isTargetSupply: boolean | null | undefined;
       };
     } | null | undefined;
+    readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
   } | null | undefined;
@@ -76,6 +77,11 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
+            "name": "SubmissionRoute_submission"
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
             "name": "ArtistRoute_submission"
           }
         ],
@@ -100,6 +106,13 @@ return {
         "plural": false,
         "selections": [
           (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "externalId",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -145,16 +158,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "02f33048eaad2ecc9b66d4105804f148",
+    "cacheID": "9a4de83cc9a2be0661f8728708474f98",
     "id": null,
     "metadata": {},
     "name": "ArtistRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ArtistRoute_submission\n    id\n  }\n}\n\nfragment ArtistRoute_submission on ConsignmentSubmission {\n  internalID\n  artist {\n    internalID\n    targetSupply {\n      isTargetSupply\n    }\n    name\n    id\n  }\n}\n"
+    "text": "query ArtistRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...ArtistRoute_submission\n    id\n  }\n}\n\nfragment ArtistRoute_submission on ConsignmentSubmission {\n  internalID\n  artist {\n    internalID\n    targetSupply {\n      isTargetSupply\n    }\n    name\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4dfa674c44131bf1825354211b1d8642";
+(node as any).hash = "88fd30c654857c69dcd09df8073ec7d7";
 
 export default node;
