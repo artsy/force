@@ -9,15 +9,12 @@ import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "./Component
 import { SettingsEditSettingsEmailPreferences } from "./Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
 import { SettingsEditSettingsInformationFragmentContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsInformation"
 import { SettingsEditSettingsThemeSelect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsThemeSelect"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface SettingsEditRouteProps {
   me: SettingsEditSettingsRoute_me$data
 }
 
 const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
-  const isDarkModeEnabled = useFeatureFlag("diamond_dark-mode")
-
   return (
     <GridColumns>
       <Column span={8}>
@@ -32,7 +29,7 @@ const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
 
           <SettingsEditSettingsEmailPreferences />
 
-          {isDarkModeEnabled && <SettingsEditSettingsThemeSelect />}
+          <SettingsEditSettingsThemeSelect />
 
           <SettingsEditSettingsDeleteAccount />
         </Join>
