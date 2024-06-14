@@ -28,6 +28,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { logger } from "Components/Inquiry/util"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import InfoIcon from "@artsy/icons/InfoIcon"
 
 type Mode = "Pending" | "Confirm" | "Sending" | "Error" | "Success"
 
@@ -160,17 +161,20 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
       <Spacer y={1} />
 
       {isCollectorSummaryEnabled ? (
-        <Text variant="xs">
-          By clicking send, we will share your profile with{" "}
-          {artwork.partner?.name}. Update your profile at any time in{" "}
-          <RouterLink
-            inline
-            to="/settings/edit-profile"
-            target="_blank"
-            color="blue100"
-          >
-            Settings.
-          </RouterLink>
+        <Text variant="xs" display="flex" gap={0.5} color="black60">
+          <InfoIcon flexShrink={0} />
+          <div>
+            By clicking send, we will share your profile with{" "}
+            {artwork.partner?.name}. Update your profile at any time in{" "}
+            <RouterLink
+              inline
+              to="/settings/edit-profile"
+              target="_blank"
+              color="blue100"
+            >
+              Settings.
+            </RouterLink>
+          </div>
         </Text>
       ) : (
         <Text variant="xs">
