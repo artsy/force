@@ -4,7 +4,8 @@ import { FC, ReactNode } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { EntityHeaderArtist_artist$data } from "__generated__/EntityHeaderArtist_artist.graphql"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { FC, ReactNode } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface EntityHeaderArtistProps extends BoxProps {
   artist: EntityHeaderArtist_artist$data
