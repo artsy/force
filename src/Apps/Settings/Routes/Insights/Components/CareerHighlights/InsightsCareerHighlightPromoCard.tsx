@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 

@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface ErrorPageProps extends BoxProps {
   code: number | string

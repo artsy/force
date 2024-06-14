@@ -16,8 +16,8 @@ describe("errorHandler", () => {
   const renderServerAppMock = renderServerApp as jest.Mock
 
   beforeEach(() => {
-    renderServerAppMock.mockImplementation(({ res, code, bodyHTML }) => {
-      res.status(code).send(bodyHTML)
+    renderServerAppMock.mockImplementation(({ res, code, html }) => {
+      res.status(code).send(html)
     })
 
     testContext = {

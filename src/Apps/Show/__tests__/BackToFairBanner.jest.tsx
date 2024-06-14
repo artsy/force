@@ -3,10 +3,10 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { BackToFairBannerFragmentContainer } from "Apps/Show/Components/BackToFairBanner"
 import { screen } from "@testing-library/react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useRouter")
 
 const { renderWithRelay } = setupTestWrapperTL<BackToFairBanner_Test_Query>({
   Component: BackToFairBannerFragmentContainer,

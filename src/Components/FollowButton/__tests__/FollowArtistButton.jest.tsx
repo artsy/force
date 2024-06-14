@@ -1,4 +1,4 @@
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import "jest-styled-components"
 import { graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer } from "Components/FollowButton/FollowArtistButton"
@@ -12,7 +12,7 @@ import { useAuthDialog } from "Components/AuthDialog"
 jest.unmock("react-relay")
 
 jest.mock("Utils/Hooks/useMutation")
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("../useFollowButtonTracking")
 jest.mock("Components/AuthDialog/useAuthDialog")
 

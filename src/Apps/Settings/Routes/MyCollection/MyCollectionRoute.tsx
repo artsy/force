@@ -11,7 +11,7 @@ import {
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { cleanLocalImages } from "Utils/localImageHelpers"
 import { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"

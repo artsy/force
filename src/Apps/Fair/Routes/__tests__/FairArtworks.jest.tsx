@@ -6,7 +6,7 @@ import { useTracking } from "react-tracking"
 import { FairArtworks_Query$rawResponse } from "__generated__/FairArtworks_Query.graphql"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: { query: {} },

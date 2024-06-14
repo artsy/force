@@ -2,13 +2,13 @@ import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { WorksForYouAppFragmentContainer } from "Apps/WorksForYou/WorksForYouApp"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 jest.unmock("react-relay")
 jest.mock("Components/MetaTags", () => ({
   MetaTags: () => "MetaTags",
 }))
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 

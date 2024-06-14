@@ -15,8 +15,8 @@ import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAsso
 import { useEffect } from "react"
 import { useAuctionTracking } from "./Hooks/useAuctionTracking"
 import { AuctionCurrentAuctionsRailFragmentContainer } from "./Components/AuctionCurrentAuctionsRail"
-import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
+import { WebsocketContextProvider } from "System/Contexts/WebsocketContext"
 
 export interface AuctionAppProps {
   me: AuctionApp_me$data

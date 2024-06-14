@@ -1,5 +1,3 @@
-import { buildServerApp } from "System/Router/buildServerApp"
-import { getRouteConfig } from "System/Router/getRouteConfig"
 import { renderServerApp } from "System/Router/renderServerApp"
 import express from "express"
 import type {
@@ -13,9 +11,12 @@ import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
 import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
+import { setupServerRouter } from "System/Router/serverRouter"
+import { getRoutes } from "System/Router/Utils/routeUtils"
 
 const app = express()
-const { routes, routePaths } = getRouteConfig()
+
+const { routes, routePaths } = getRoutes()
 
 /**
  * Mount routes that will connect to global SSR router
@@ -24,10 +25,7 @@ app.get(
   routePaths,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
     try {
-      const { status, redirect, ...rest } = await buildServerApp({
-        assetsPath: "/assets",
-        loadableFile: "loadable-stats.json",
-        loadablePath: "public/assets",
+      const { status, redirect, ...rest } = await setupServerRouter({
         next,
         req,
         res,

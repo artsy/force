@@ -7,12 +7,12 @@ import {
 } from "Components/Inquiry/Hooks/useInquiryContext"
 import { fill } from "Components/Inquiry/__tests__/util"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("Utils/wait", () => ({ wait: () => Promise.resolve() }))
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 
 describe("InquirySpecialist", () => {
   const next = jest.fn()

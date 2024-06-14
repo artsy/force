@@ -2,7 +2,7 @@ import { ShowMore, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { ArtworkSidebarArtists_artwork$data } from "__generated__/ArtworkSidebarArtists_artwork.graphql"
 
 const ARTISTS_TO_DISPLAY = 4

@@ -6,7 +6,7 @@ import {
   OperationType,
 } from "relay-runtime"
 import { useUpdateEffect } from "@artsy/palette"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const useClientQuery = <T extends OperationType>({
   environment,

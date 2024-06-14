@@ -5,7 +5,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomHeader_viewingRoom$data } from "__generated__/ViewingRoomHeader_viewingRoom.graphql"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { resized } from "Utils/resized"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
 
 interface ViewingRoomHeaderProps {

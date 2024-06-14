@@ -23,7 +23,7 @@ import { OnboardingCuratedArtworks } from "Components/Onboarding/Views/Onboardin
 import { OnboardingArtistsOnTheRise } from "Components/Onboarding/Views/OnboardingArtistsOnTheRise"
 import { OnboardingFollowGalleries } from "Components/Onboarding/Views/OnboardingFollowGalleries"
 import { OnboardingThankYou } from "Components/Onboarding/Views/OnboardingThankYou"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 
 interface OnboardingStepsProps {}

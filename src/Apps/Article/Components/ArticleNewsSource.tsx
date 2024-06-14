@@ -2,7 +2,7 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { ArticleNewsSource_article$data } from "__generated__/ArticleNewsSource_article.graphql"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface ArticleNewsSourceProps {
   article: ArticleNewsSource_article$data

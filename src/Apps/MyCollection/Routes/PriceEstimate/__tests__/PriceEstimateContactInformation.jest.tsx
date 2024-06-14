@@ -5,7 +5,7 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -36,7 +36,7 @@ const mockArtwork = {
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     router: { push: mockRouterPush, replace: mockRouterReplace },
   })),

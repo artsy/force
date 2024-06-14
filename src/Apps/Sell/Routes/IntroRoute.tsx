@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Box, Button, Flex, SkeletonBox, Spacer, Text } from "@artsy/palette"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { SubmissionHeader } from "Apps/Sell/Components/SubmissionHeader"
 

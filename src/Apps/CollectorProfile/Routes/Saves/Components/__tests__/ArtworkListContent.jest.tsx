@@ -5,7 +5,7 @@ import { ArtworkListContent_Test_Query } from "__generated__/ArtworkListContent_
 import { ArtworkListContentRefetchContainer } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListContent"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     match: {
       location: {
@@ -14,7 +14,7 @@ jest.mock("System/Router/useRouter", () => ({
     },
   })),
 }))
-jest.mock("System/useFeatureFlag", () => ({
+jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
 }))
 

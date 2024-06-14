@@ -22,7 +22,7 @@ import createLogger from "Utils/logger"
 import { CompleteFailed } from "./CompleteFailed"
 import { CompletePassed } from "./CompletePassed"
 import { CompleteWatchlistHit } from "./CompleteWatchlistHit"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { MetaTags } from "Components/MetaTags"
 import { HttpError } from "found"
 

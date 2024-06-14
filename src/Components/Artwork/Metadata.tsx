@@ -7,7 +7,7 @@ import {
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { Metadata_artwork$data } from "__generated__/Metadata_artwork.graphql"
 
 export interface MetadataProps

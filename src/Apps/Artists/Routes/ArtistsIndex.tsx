@@ -12,7 +12,7 @@ import {
 } from "@artsy/palette"
 import { ArtistsIndex_featuredArtists$data } from "__generated__/ArtistsIndex_featuredArtists.graphql"
 import { ArtistsIndex_featuredGenes$data } from "__generated__/ArtistsIndex_featuredGenes.graphql"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { ArtistsIndexMeta } from "Apps/Artists/Components/ArtistsIndexMeta"
 import { ArtistsCarouselCellFragmentContainer } from "Apps/Artists/Components/ArtistsCarouselCell"
 import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"

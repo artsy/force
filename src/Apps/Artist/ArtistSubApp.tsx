@@ -6,7 +6,7 @@ import { Analytics } from "System/Analytics/AnalyticsContext"
 import { ArtistBackLinkFragmentContainer } from "./Components/ArtistBackLink"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 interface ArtistSubAppProps {
   artist: ArtistSubApp_artist$data

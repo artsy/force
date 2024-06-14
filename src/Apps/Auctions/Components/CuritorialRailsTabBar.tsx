@@ -6,7 +6,7 @@ import { AuctionsZeroState } from "./AuctionsZeroState"
 import { StandoutLotsRailFragmentContainer } from "./StandoutLotsRail"
 import { TrendingLotsRailFragmentContainer } from "./TrendingLotsRail"
 import { HomeAuctionLotsForYouRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsForYouRail"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 interface CuritorialRailsTabBarProps {
   viewer: CuritorialRailsTabBar_viewer$data

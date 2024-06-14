@@ -3,7 +3,7 @@ import { SearchBarInputQueryRenderer } from "./SearchBarInput"
 import { Media } from "Utils/Responsive"
 import { MobileSearchBarQueryRenderer } from "./Mobile/MobileSearchBar"
 import { FC } from "react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 interface SearchBarProps {
   onClose: () => void

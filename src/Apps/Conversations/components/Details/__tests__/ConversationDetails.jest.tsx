@@ -9,7 +9,7 @@ import { MediaContextProvider } from "Utils/Responsive"
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

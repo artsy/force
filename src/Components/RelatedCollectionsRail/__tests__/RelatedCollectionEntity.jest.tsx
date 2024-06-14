@@ -3,7 +3,7 @@ import { mount } from "enzyme"
 import { RelatedCollectionEntity } from "Components/RelatedCollectionsRail/RelatedCollectionEntity"
 import { useTracking } from "react-tracking"
 import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 jest.mock("react-tracking")
 

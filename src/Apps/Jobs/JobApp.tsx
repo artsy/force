@@ -12,7 +12,7 @@ import { MetaTags } from "Components/MetaTags"
 import { TopContextBar } from "Components/TopContextBar"
 import { JobApp_job$data } from "__generated__/JobApp_job.graphql"
 import { PageHTML } from "Apps/Page/Components/PageHTML"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface JobAppProps {
   job: JobApp_job$data

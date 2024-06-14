@@ -1,4 +1,4 @@
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import React from "react"
 
 const SUPPORT_EMAIL = "orders@artsy.net"

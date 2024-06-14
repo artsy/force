@@ -3,7 +3,7 @@ import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import React, { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 import { TopContextBar } from "Components/TopContextBar"
 

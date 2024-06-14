@@ -4,7 +4,7 @@ import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkF
 import Metadata from "Components/Artwork/Metadata"
 import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { resized } from "Utils/resized"
 import { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwork_artwork.graphql"

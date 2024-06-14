@@ -2,7 +2,7 @@ import { Box, BoxProps, Flex, Image, Text } from "@artsy/palette"
 import { AuctionLotInfo_saleArtwork$data } from "__generated__/AuctionLotInfo_saleArtwork.graphql"
 import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface AuctionLotInfoProps extends BoxProps {
   hideLotInfo?: boolean

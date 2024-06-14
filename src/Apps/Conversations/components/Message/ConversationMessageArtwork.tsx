@@ -2,7 +2,7 @@ import * as React from "react"
 import { ConversationMessageArtwork_item$key } from "__generated__/ConversationMessageArtwork_item.graphql"
 import { graphql, useFragment } from "react-relay"
 import { FlexProps, Flex, Image, Text } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 const MAX_IMAGE_WIDTH = 335
 

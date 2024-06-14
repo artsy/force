@@ -18,11 +18,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import Events from "Utils/Events"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtistInfoQuery } from "__generated__/ArtistInfoQuery.graphql"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import track from "react-tracking"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { compact } from "lodash"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface ArtistInfoProps {
   artist: ArtistInfo_artist$data

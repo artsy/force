@@ -6,7 +6,7 @@ import { MenuData } from "Components/NavBar/menuData"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface NavBarSubMenuProps {
   menu: MenuData

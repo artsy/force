@@ -1,6 +1,6 @@
 import { Button, Input, Join, ModalDialog, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { AuctionConfirmRegistrationRoute_me$data } from "__generated__/AuctionConfirmRegistrationRoute_me.graphql"
 import { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"

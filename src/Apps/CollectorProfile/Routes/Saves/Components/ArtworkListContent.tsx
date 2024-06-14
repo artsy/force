@@ -11,7 +11,7 @@ import {
 import { SortOptions } from "Components/SortFilter"
 import { FC, useEffect } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Clickable, Flex, Join, Spacer, Text, Tooltip } from "@artsy/palette"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
@@ -21,7 +21,7 @@ import { useJump } from "Utils/Hooks/useJump"
 import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
 import { ARTWORK_LIST_SCROLL_TARGET_ID } from "Apps/CollectorProfile/Routes/Saves/CollectorProfileSavesRoute"
 import HideIcon from "@artsy/icons/HideIcon"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useTranslation } from "react-i18next"
 
 interface ArtworkListContentQueryRendererProps {

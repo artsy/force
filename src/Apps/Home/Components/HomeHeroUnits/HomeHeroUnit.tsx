@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "@artsy/palette"
 import { cropped } from "Utils/resized"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { HomeHeroUnitCredit } from "./HomeHeroUnitCredit"
 import { createFragmentContainer, graphql } from "react-relay"

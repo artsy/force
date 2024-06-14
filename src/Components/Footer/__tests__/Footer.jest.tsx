@@ -2,18 +2,18 @@ import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
 import { Footer } from "Components/Footer/Footer"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
-import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { fetchQuery } from "react-relay"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn().mockReturnValue({
     match: { location: { pathname: "/" } },
   }),
 }))
 
-jest.mock("System/useFeatureFlag")
+jest.mock("System/Hooks/useFeatureFlag")
 
 jest.mock("react-relay", () => ({
   fetchQuery: jest.fn(() => ({

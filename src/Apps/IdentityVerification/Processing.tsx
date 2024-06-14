@@ -6,7 +6,7 @@ import {
   GridColumns,
   Column,
 } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import * as React from "react"
 import { MetaTags } from "Components/MetaTags"
 

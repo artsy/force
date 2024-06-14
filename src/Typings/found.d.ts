@@ -27,6 +27,30 @@ declare module "found" {
   interface InitialFarceRouterOptions {
     resolver: FoundRelayResolver
   }
+
+  interface MatcherResult {
+    elements: any[] | undefined | null
+    context: RouterMatchContext
+  }
+
+  function useRouter<TContext = RouterMatchContext>(): RouterState<TContext>
+
+  interface ForceRouteObject extends RouteObjectBase {
+    children?: RouteConfig | Record<string, RouteConfig>
+  }
+
+  interface ForceRouteObjectBase extends RouteObjectBase {
+    render?: VoltRouteRenderMethod
+  }
+
+  interface ForceRouteRenderMethod {
+    (args: VoltRouteRenderArgs): ResolvedElement | undefined
+  }
+
+  interface ForceRouteRenderArgs extends RouteRenderArgs {
+    match: Match<RouterMatchContext>
+    error: any
+  }
 }
 
 // This is needed to conform to the module format, which requires to export something.

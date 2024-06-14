@@ -27,7 +27,7 @@ import {
   UserInterestInterestType,
 } from "__generated__/CollectorProfileArtistsAddDialogCreateUserInterestsMutation.graphql"
 import { CollectorProfileArtistsAddNewDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsAddNewDialog"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 interface CollectorProfileArtistsAddDialogProps {
   onClose: () => void

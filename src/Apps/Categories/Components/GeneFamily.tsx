@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { GeneFamily_geneFamily$data } from "__generated__/GeneFamily_geneFamily.graphql"
 import { sortBy } from "lodash"
 import { Masonry } from "Components/Masonry"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { Jump } from "Utils/Hooks/useJump"
 
 interface GeneFamilyProps {

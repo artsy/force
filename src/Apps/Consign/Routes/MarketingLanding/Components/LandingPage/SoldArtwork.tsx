@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { SoldArtwork_artwork$data } from "__generated__/SoldArtwork_artwork.graphql"
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image } from "@artsy/palette"

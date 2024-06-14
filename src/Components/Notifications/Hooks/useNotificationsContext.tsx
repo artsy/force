@@ -1,5 +1,5 @@
 import { NotificationType } from "Components/Notifications/types"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { createContext, FC, useState, useContext, useEffect } from "react"
 
 export type State = {

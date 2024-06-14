@@ -1,11 +1,11 @@
 import { Column, GridColumns, Spacer } from "@artsy/palette"
 import { FC, useMemo, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { ContextModule } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
 import { MetaTags } from "Components/MetaTags"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { PageApp_page$data } from "__generated__/PageApp_page.graphql"
 import { PageHTML } from "./Components/PageHTML"
 import {

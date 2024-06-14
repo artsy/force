@@ -19,7 +19,7 @@ import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/save
 import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
 import { Media } from "Utils/Responsive"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"

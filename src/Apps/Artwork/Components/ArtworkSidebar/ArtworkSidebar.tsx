@@ -14,7 +14,7 @@ import { ArtworkSidebarCreateAlertFragmentContainer } from "./ArtworkSidebarCrea
 import { useTimer } from "Utils/Hooks/useTimer"
 import { useState } from "react"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
-import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
+import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { ArtworkSidebarLinksFragmentContainer } from "./ArtworkSidebarLinks"
 import { ArtworkSidebarCommercialButtons } from "./ArtworkSidebarCommercialButtons"
 import { ArtworkSidebarEstimatedValueFragmentContainer } from "./ArtworkSidebarEstimatedValue"

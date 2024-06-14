@@ -2,7 +2,7 @@ import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import * as React from "react"
 import styled from "styled-components"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 
 export const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
 

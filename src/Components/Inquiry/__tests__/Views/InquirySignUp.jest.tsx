@@ -7,14 +7,14 @@ import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { fill } from "Components/Inquiry/__tests__/util"
 import { useTracking } from "react-tracking"
 import { render, screen } from "@testing-library/react"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.mock("Utils/auth")
 jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("Utils/wait", () => ({ wait: () => Promise.resolve() }))
 jest.mock("react-tracking")
-jest.mock("System/useFeatureFlag")
+jest.mock("System/Hooks/useFeatureFlag")
 
 describe("InquirySignUp", () => {
   const next = jest.fn()
