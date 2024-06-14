@@ -23,7 +23,6 @@ import {
   acceptOfferInsufficientInventoryFailure,
   acceptOfferWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { RouterLink } from "System/Router/RouterLink"
 
 jest.unmock("react-relay")

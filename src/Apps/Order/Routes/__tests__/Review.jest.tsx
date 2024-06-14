@@ -48,7 +48,6 @@ import {
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { RouterLink } from "System/Router/RouterLink"
 
 jest.unmock("react-relay")

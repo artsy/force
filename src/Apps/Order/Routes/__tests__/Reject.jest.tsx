@@ -11,7 +11,6 @@ import { RejectFragmentContainer } from "Apps/Order/Routes/Reject"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { RouterLink } from "System/Router/RouterLink"
 
 jest.mock("Utils/getCurrentTimeAsIsoString")

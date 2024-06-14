@@ -3,7 +3,6 @@ import { mount } from "enzyme"
 import { Footer } from "Components/Footer/Footer"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
 import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { fetchQuery } from "react-relay"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 

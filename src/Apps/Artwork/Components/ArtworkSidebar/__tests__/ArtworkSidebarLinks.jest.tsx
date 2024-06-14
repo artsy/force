@@ -4,7 +4,6 @@ import { ArtworkSidebarLinksFragmentContainer } from "Apps/Artwork/Components/Ar
 import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkSidebarLinks_Test_Query } from "__generated__/ArtworkSidebarLinks_Test_Query.graphql"
 import { useTracking } from "react-tracking"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")

@@ -7,7 +7,6 @@ import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { fill } from "Components/Inquiry/__tests__/util"
 import { useTracking } from "react-tracking"
 import { render, screen } from "@testing-library/react"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.mock("Utils/auth")
 jest.mock("../../Hooks/useArtworkInquiryRequest")

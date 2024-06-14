@@ -1,7 +1,6 @@
 import { mount } from "enzyme"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { render, screen } from "@testing-library/react"
 
 jest.mock("Apps/Auction/Hooks/useFormContext")
