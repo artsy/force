@@ -4,6 +4,7 @@ import {
   Flex,
   Join,
   Spacer,
+  THEME,
   Text,
   useDidMount,
   useToasts,
@@ -33,6 +34,7 @@ import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form
 import { useJump } from "Utils/Hooks/useJump"
 import { useEffect } from "react"
 import { t } from "i18next"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 interface SavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -128,7 +130,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   const { jumpTo } = useJump()
   const { sendToast } = useToasts()
 
-  const mWebView = window.innerWidth < 1280
+  const mWebView = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   useEffect(() => {
     createAlertError &&
