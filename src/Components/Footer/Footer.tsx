@@ -37,8 +37,6 @@ import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
-  const isDarkModeEnabled = useFeatureFlag("diamond_dark-mode")
-
   const { isEigen } = useSystemContext()
 
   if (isEigen) {
@@ -175,12 +173,6 @@ export const Footer: React.FC<FooterProps> = props => {
           <Column span={12} display={["flex", "none"]} flexWrap="wrap">
             <PolicyLinks />
           </Column>
-
-          {isDarkModeEnabled && (
-            <Column span={12} display={["flex", "none"]}>
-              <ThemeSelect />
-            </Column>
-          )}
         </GridColumns>
 
         <Separator />
@@ -206,14 +198,6 @@ export const Footer: React.FC<FooterProps> = props => {
 
               <Flex flexDirection="row" flexGrow={1}>
                 <PolicyLinks />
-
-                {isDarkModeEnabled && (
-                  <>
-                    <Spacer x={1} />
-
-                    <ThemeSelect />
-                  </>
-                )}
               </Flex>
             </Flex>
           </Media>
@@ -448,9 +432,11 @@ const PolicyLinks = () => {
           </>
         )}
 
-        <Clickable onClick={showCCPARequest}>
+        <Clickable onClick={showCCPARequest} mr={1}>
           Do not sell my personal information
         </Clickable>
+
+        <ThemeSelect />
       </Text>
     </>
   )
