@@ -2,6 +2,8 @@ import styled, { keyframes, css } from "styled-components"
 import { useState, useEffect, useRef } from "react"
 import { Box } from "@artsy/palette"
 import { isServer } from "Server/isServer"
+import { useDidMount } from "Utils/Hooks/useDidMount"
+import { Z } from "Apps/Components/constants"
 
 interface PageLoadingBarProps {
   loadingState: "resting" | "loading" | "complete"
@@ -12,7 +14,7 @@ export const PageLoadingBar: React.FC<PageLoadingBarProps> = ({
 }) => {
   const [isComplete, setIsComplete] = useState(false)
   const [loading, setLoading] = useState(loadingState)
-
+  const isMounted = useDidMount()
   const barRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -25,26 +27,43 @@ export const PageLoadingBar: React.FC<PageLoadingBarProps> = ({
     }
   }, [loadingState])
 
-  if (isServer) {
+  if (isServer || !isMounted) {
     return null
   }
 
   return (
-    <LoadingBar
-      ref={barRef as any}
-      loading={loading}
-      isComplete={isComplete}
-      backgroundColor="brand"
-      height={2}
-      top="1px"
-      left={0}
-      zIndex={100}
-      overflow="hidden"
+    <Box
       position="fixed"
-    />
+      top={0}
+      left={0}
+      zIndex={Z.pageLoadingBar}
+      width="100%"
+      height={3}
+    >
+      <LoadingBar
+        ref={barRef as any}
+        loading={loading}
+        isComplete={isComplete}
+        backgroundColor="brand"
+        height={2}
+        top="1px"
+        left={0}
+        width={isComplete ? barRef.current?.clientWidth : 0}
+        zIndex={100}
+        overflow="hidden"
+        position="fixed"
+        onAnimationEnd={() => {
+          if (isComplete) {
+            setLoading("resting")
+            setIsComplete(false)
+          }
+        }}
+      />
+    </Box>
   )
 }
 
+const startEase = "cubic-bezier(0.000, 0.925, 0.000, 0.940)"
 const easeOutExpo = "cubic-bezier(0.19, 1, 0.22, 1)"
 
 const loadingAnimation = keyframes`
@@ -57,19 +76,16 @@ const loadingAnimation = keyframes`
 `
 
 const completeAnimation = keyframes`
-  from {
-    width: 30%;
-  }
   to {
     width: 100%;
   }
 `
 
-const LoadingBar = styled(Box)<{ loading: string; isComplete: boolean }>`
+const LoadingBar = styled(Box)<{ loading: string; isComplete: boolean; width }>`
   ${({ loading }) =>
     loading === "loading" &&
     css`
-      animation: ${loadingAnimation} 0.7s ${easeOutExpo} forwards;
+      animation: ${loadingAnimation} 12s ${startEase} forwards;
     `}
   ${({ isComplete }) =>
     isComplete &&
@@ -77,5 +93,6 @@ const LoadingBar = styled(Box)<{ loading: string; isComplete: boolean }>`
       animation: ${completeAnimation} 1s ${easeOutExpo} forwards;
     `}
   opacity: ${({ isComplete }) => (isComplete ? 0 : 1)};
-  transition: opacity .8s;
+  transition: opacity .7s;
+  width: ${({ width }) => width}px;
 `
