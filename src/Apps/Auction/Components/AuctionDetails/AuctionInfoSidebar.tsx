@@ -41,10 +41,10 @@ const AuctionInfoSidebar: React.FC<AuctionInfoSidebarProps> = ({ sale }) => {
       </Box>
 
       <Box>
-        <Text variant="sm">Have a work you want to sell?</Text>
-
-        <Text>
-          Submit to our team{' '}
+        <Text variant="sm">
+          Have a work you want to sell?
+          <br />
+          Submit to our team{" "}
           <RouterLink inline to="/sell" target="_blank">
             here
           </RouterLink>
