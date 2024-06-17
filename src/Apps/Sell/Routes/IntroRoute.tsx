@@ -19,21 +19,21 @@ export const introData = [
     title: "Tell us about your work",
     description:
       "Start by adding an artist from our list of high demand artists. Include information such as year, medium, dimensions and materials.",
-    image: "https://files.artsy.net/images/warhol-banner.jpg",
+    image: "https://files.artsy.net/images/01_submission_artwork.png",
   },
   {
     number: "2",
     title: "Upload artwork images",
     description:
       "Improve your chances of selling by including photographs of the front, back, frame, signature, and other details.",
-    image: "https://files.artsy.net/images/warhol-banner.jpg",
+    image: "https://files.artsy.net/images/02_submission_upload.png",
   },
   {
     number: "3",
     title: "Complete submission",
     description:
       "Your work will be submitted to an Artsy advisor who will assess whether your work is eligible and help guide you on next steps.",
-    image: "https://files.artsy.net/images/warhol-banner.jpg",
+    image: "https://files.artsy.net/images/03_submission_advisor.png",
   },
 ]
 
