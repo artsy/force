@@ -5,8 +5,8 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { graphql } from "react-relay"
 import { DimensionsRoute_Test_Query$rawResponse } from "__generated__/DimensionsRoute_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
@@ -127,7 +127,7 @@ describe("DimensionsRoute", () => {
         '/sell2/submissions/<mock-value-for-field-"externalId">/purchase-history'
       )
 
-      expect(submitMutation).not.toHaveBeenCalledWith(
+      expect(submitMutation).toHaveBeenCalledWith(
         expect.objectContaining({
           variables: {
             input: {

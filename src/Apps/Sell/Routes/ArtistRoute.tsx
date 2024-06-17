@@ -1,4 +1,4 @@
-import { Spacer, Text } from "@artsy/palette"
+import { Spacer, Text, useToasts } from "@artsy/palette"
 import {
   ArtistAutoComplete,
   AutocompleteArtist,
@@ -57,6 +57,7 @@ export const ArtistRoute: React.FC<{
 }> = ({ submission }) => {
   const { router } = useRouter()
   const { actions } = useSellFlowContext()
+  const { sendToast } = useToasts()
 
   const isNewSubmission = !submission?.internalID
 
@@ -72,14 +73,27 @@ export const ArtistRoute: React.FC<{
       return
     }
 
-    const response = await actions.createSubmission({
-      artistID: artist.internalID,
-    })
-    const submissionID =
-      response?.createConsignmentSubmission?.consignmentSubmission?.externalId
+    try {
+      const response = await actions.createSubmission({
+        artistID: artist.internalID,
+      })
 
-    router.replace(`/sell2/submissions/${submissionID}/artist`)
-    router.push(`/sell2/submissions/${submissionID}/title`)
+      const submissionID =
+        response?.createConsignmentSubmission?.consignmentSubmission?.externalId
+
+      if (!submissionID) {
+        sendToast({
+          variant: "error",
+          message: "Something went wrong.",
+        })
+        throw new Error("Submission ID not found.")
+      }
+
+      router.replace(`/sell2/submissions/${submissionID}/artist`)
+      router.push(`/sell2/submissions/${submissionID}/title`)
+    } catch (error) {
+      console.error("Error creating submission.", error)
+    }
   }
 
   const updateSubmission = async (artist: AutocompleteArtist) => {
@@ -90,15 +104,26 @@ export const ArtistRoute: React.FC<{
       return
     }
 
-    await actions.updateSubmission({ artistID: artist.internalID })
-    actions.goToNextStep()
+    try {
+      await actions.updateSubmission({ artistID: artist.internalID })
+
+      actions.goToNextStep()
+    } catch (error) {
+      console.error("Error submitting form", error)
+    }
   }
 
   const onSelect = async (
     artist: AutocompleteArtist,
     formik: FormikProps<FormValues>
   ) => {
-    if (!artist?.internalID) return
+    if (!artist?.internalID) {
+      sendToast({
+        variant: "error",
+        message: "Something went wrong.",
+      })
+      throw new Error("Artist not found.")
+    }
 
     const isTargetSupply = artist?.targetSupply?.isTargetSupply
     formik.setFieldValue("isTargetSupply", isTargetSupply)
