@@ -167,6 +167,9 @@ const SaleMessage: React.FC<DetailsProps> = ({
     return <>Price on request</>
   }
 
+  if (sale_message?.toLowerCase() === "inquire about availability") {
+    return <>{NBSP}</>
+  }
   // NBSP is used to prevent un-aligned carousels
   return <>{sale_message ?? NBSP}</>
 }

@@ -144,6 +144,21 @@ describe("Details", () => {
       expect(html).toContain("Price on request")
     })
 
+    it("does not show sale message if sale_message is for inquire", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        sale_message: "Inquire about availability",
+        sale: {
+          ...artworkInAuction?.sale,
+          is_auction: false,
+        },
+      }
+
+      const wrapper = await getWrapper(data)
+      const html = wrapper.html()
+      expect(html).not.toContain("Inquire about availability")
+    })
+
     it("shows sale message if sale open and no bids", async () => {
       const data: any = {
         ...artworkInAuction,
