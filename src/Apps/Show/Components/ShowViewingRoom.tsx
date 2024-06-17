@@ -5,7 +5,7 @@ import { ShowViewingRoom_show$data } from "__generated__/ShowViewingRoom_show.gr
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   ClickedViewingRoomCard,

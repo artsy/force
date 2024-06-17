@@ -5,7 +5,7 @@ import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/Landi
 
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useSystemContext")
-jest.mock("System/Analytics/AnalyticsContext", () => ({
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerType: "sell",
   })),

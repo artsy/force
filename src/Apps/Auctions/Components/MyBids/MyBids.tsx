@@ -16,7 +16,7 @@ import {
 } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"

@@ -1,6 +1,6 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTracking } from "react-tracking"
 import {
   ActionType,

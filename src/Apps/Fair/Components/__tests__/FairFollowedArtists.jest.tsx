@@ -1,6 +1,6 @@
 import { FairFollowedArtists } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
 import { useTracking } from "react-tracking"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { mount } from "enzyme"
 
 jest.mock("react-tracking")

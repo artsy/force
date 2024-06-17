@@ -2,7 +2,7 @@ import { CollectionsHubLinkedCollections } from "Apps/__tests__/Fixtures/Collect
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { ArtistSeriesEntity } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/ArtistSeriesRail/ArtistSeriesEntity"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { Image } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 

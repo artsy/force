@@ -23,7 +23,7 @@ import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawe
 import { ArtworkFilterExpandableSort } from "Components/ArtworkFilter/ArtworkFilters/ArtworkFilterExpandableSort"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Sticky } from "Components/Sticky"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"

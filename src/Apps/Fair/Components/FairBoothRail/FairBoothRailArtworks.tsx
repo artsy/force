@@ -11,7 +11,7 @@ import {
   PageOwnerType,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Shelf } from "@artsy/palette"
 import {
   ShelfArtworkFragmentContainer,

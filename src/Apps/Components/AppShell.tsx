@@ -8,7 +8,7 @@ import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnviro
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 import { Layout } from "Apps/Components/Layouts"
 import { useSetupAuth } from "Utils/Hooks/useSetupAuth"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "System/Contexts/AnalyticsContext"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 

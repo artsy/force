@@ -20,10 +20,13 @@ jest.mock("System/Contexts/SystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({ user: {} }),
 }))
 
-jest.mock("System/Analytics/AnalyticsContext", () => ({
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerId: "contextPageOwnerID",
   })),
+}))
+
+jest.mock("System/Contexts/AnalyticsContext", () => ({
   track: jest.fn().mockReturnValue(jest.fn),
   useTracking: jest.fn().mockReturnValue({ trackEvent: jest.fn() }),
 }))

@@ -17,7 +17,7 @@ import { limitWithCount } from "Apps/Artwork/Utils/limitWithCount"
 import { filterLocations } from "Apps/Artwork/Utils/filterLocations"
 import { cropped } from "Utils/resized"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   ClickedFairCard,

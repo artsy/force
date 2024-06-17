@@ -1,11 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { getENV } from "Utils/getENV"
 
 interface ReceivedData {
   [key: string]: string
 }
 
-interface WebsocketContextProps {
+export interface WebsocketContextProps {
   data: ReceivedData
 }
 
@@ -21,7 +21,9 @@ const initialValues = {
   data: {} as ReceivedData,
 }
 
-const WebsocketContext = createContext<WebsocketContextProps>(initialValues)
+export const WebsocketContext = createContext<WebsocketContextProps>(
+  initialValues
+)
 
 export const WebsocketContextProvider: React.FC<WebsocketContextProviderProps> = ({
   channelInfo,
@@ -52,9 +54,4 @@ export const WebsocketContextProvider: React.FC<WebsocketContextProviderProps> =
       {children}
     </WebsocketContext.Provider>
   )
-}
-
-export const useWebsocketContext = () => {
-  const websocketContext = useContext(WebsocketContext) ?? {}
-  return websocketContext
 }

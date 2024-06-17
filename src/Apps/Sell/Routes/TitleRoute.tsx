@@ -1,16 +1,20 @@
-import * as React from "react"
-import * as Yup from "yup"
-import { Input, Text } from "@artsy/palette"
-import { TitleRoute_submission$key } from "__generated__/TitleRoute_submission.graphql"
-import { graphql, useFragment } from "react-relay"
-import { Formik } from "formik"
+import { Input, Join, Spacer, Text } from "@artsy/palette"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { TitleRoute_submission$key } from "__generated__/TitleRoute_submission.graphql"
+import { Formik } from "formik"
+import * as React from "react"
+import { graphql, useFragment } from "react-relay"
+import * as Yup from "yup"
 
 const FRAGMENT = graphql`
   fragment TitleRoute_submission on ConsignmentSubmission {
     title
+    artist {
+      ...EntityHeaderArtist_artist
+    }
   }
 `
 
@@ -31,7 +35,6 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
   const { actions } = useSellFlowContext()
 
   const onSubmit = async (values: FormValues) => {
-    // return createOrUpdateConsignSubmission(relayEnvironment, values)
     return actions.updateSubmission(values)
   }
 
@@ -48,16 +51,26 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
     >
       {({ handleChange, values }) => (
         <SubmissionLayout>
-          <Text mb={2} variant="xl">
-            Add artwork title
-          </Text>
-          <Input
-            onChange={handleChange}
-            required
-            name="title"
-            title="Title"
-            defaultValue={values.title}
-          />
+          <Join separator={<Spacer y={2} />}>
+            <Text variant="xl">Add artwork title</Text>
+
+            {!!submission.artist && (
+              <EntityHeaderArtistFragmentContainer
+                artist={submission.artist}
+                displayFollowButton={false}
+              />
+            )}
+
+            <Input
+              onChange={handleChange}
+              name="title"
+              placeholder="Artwork Title"
+              defaultValue={values.title}
+            />
+            <Text variant="sm" color="black60">
+              Add ‘Unknown’ if unsure
+            </Text>
+          </Join>
           <DevDebug />
         </SubmissionLayout>
       )}

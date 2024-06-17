@@ -1,33 +1,20 @@
-import { FC, ReactNode, createContext, useContext, useMemo } from "react"
+import { FC, ReactNode, createContext, useMemo } from "react"
 import { OwnerType, PageOwnerType } from "@artsy/cohesion"
 import { camelCase } from "lodash"
 import { getENV } from "Utils/getENV"
 
 const SHOW_ANALYTICS_CALLS = getENV("SHOW_ANALYTICS_CALLS")
 
-const AnalyticsContext = createContext<{
+export const AnalyticsContext = createContext<{
   contextPageOwnerId?: string
 }>({})
 
-const AnalyticsInferredContext = createContext<{
+export const AnalyticsInferredContext = createContext<{
   contextPageOwnerType: PageOwnerType
   contextPageOwnerSlug?: string
 }>({
   contextPageOwnerType: (undefined as any) as PageOwnerType,
 })
-
-/**
- * Pull out the contextPageOwner props for use in shared components
- */
-export const useAnalyticsContext = () => {
-  const context = useContext(AnalyticsContext)
-  const inferredContext = useContext(AnalyticsInferredContext)
-
-  return {
-    ...context,
-    ...inferredContext,
-  }
-}
 
 interface AnalyticsProps {
   children: ReactNode

@@ -1,7 +1,7 @@
 import { Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graphql"
-import { Analytics } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"

@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { FairBoothRail_Test_Query } from "__generated__/FairBoothRail_Test_Query.graphql"
 import { BoothFilterContextProvider } from "Apps/Fair/Components/BoothFilterContext"
 import { fireEvent, screen } from "@testing-library/react"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { useTracking } from "react-tracking"
 import { useRouter } from "System/Hooks/useRouter"
 

@@ -3,7 +3,7 @@ import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "Apps/Show/C
 import { ShowViewingRoom_Test_Query } from "__generated__/ShowViewingRoom_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")

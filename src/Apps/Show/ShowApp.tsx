@@ -16,7 +16,7 @@ import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "./Component
 import { ShowApp_show$data } from "__generated__/ShowApp_show.graphql"
 import { ShowArtworksRefetchContainer as ShowArtworksFilter } from "./Components/ShowArtworks"
 import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
-import { Analytics } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
 import {
   Counts,

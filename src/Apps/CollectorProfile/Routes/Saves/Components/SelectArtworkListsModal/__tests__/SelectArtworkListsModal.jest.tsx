@@ -12,7 +12,7 @@ import {
 } from "Components/Artwork/ManageArtworkForSaves"
 import { useTracking } from "react-tracking"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { FC } from "react"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { MockBoot } from "DevTools/MockBoot"

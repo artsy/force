@@ -95,7 +95,7 @@ import {
   AddressVerificationFlowQueryRenderer,
   AddressVerifiedBy,
 } from "Apps/Order/Components/AddressVerificationFlow"
-import { Analytics } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 import {
   ErrorDialogs,
   getErrorDialogCopy,

@@ -1,7 +1,7 @@
 import { ShowContextCardFragmentContainer } from "Apps/Show/Components/ShowContextCard"
 import { graphql } from "react-relay"
 import { ShowContextCard_Test_Query } from "__generated__/ShowContextCard_Test_Query.graphql"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { useTracking } from "react-tracking"
 

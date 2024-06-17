@@ -3,7 +3,7 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
 import { PrivateArtworkAdditionalInfo_Test_Query } from "__generated__/PrivateArtworkAdditionalInfo_Test_Query.graphql"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { fireEvent, screen } from "@testing-library/react"
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
 

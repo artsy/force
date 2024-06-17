@@ -8,7 +8,7 @@ import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Com
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoadingContext"
 import { HttpError } from "found"
-import { Analytics } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner$data
