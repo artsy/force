@@ -1,6 +1,9 @@
 import { Box, Button, Flex } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
+
+const logger = createLogger("BottomFormNavigation.tsx")
 
 export const BottomFormNavigation = () => {
   return (
@@ -30,7 +33,7 @@ const BottomFormBackButton = () => {
 
       actions.goToPreviousStep()
     } catch (error) {
-      console.error("Error submitting form", error)
+      logger.error("Error submitting form", error)
     }
   }
 
@@ -58,7 +61,7 @@ const BottomFormNextButton = () => {
 
       isLastStep ? actions.finishFlow() : actions.goToNextStep()
     } catch (error) {
-      console.error("Error submitting form", error)
+      logger.error("Error submitting form", error)
     }
   }
 

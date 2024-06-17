@@ -81,11 +81,21 @@ const completeAnimation = keyframes`
   }
 `
 
+const fadeInAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
+
 const LoadingBar = styled(Box)<{ loading: string; isComplete: boolean; width }>`
   ${({ loading }) =>
     loading === "loading" &&
     css`
-      animation: ${loadingAnimation} 12s ${startEase} forwards;
+      animation: ${loadingAnimation} 12s ${startEase} forwards,
+        ${fadeInAnimation} 0.2s linear;
     `}
   ${({ isComplete }) =>
     isComplete &&
@@ -93,6 +103,6 @@ const LoadingBar = styled(Box)<{ loading: string; isComplete: boolean; width }>`
       animation: ${completeAnimation} 1s ${easeOutExpo} forwards;
     `}
   opacity: ${({ isComplete }) => (isComplete ? 0 : 1)};
-  transition: opacity .7s;
+  transition: opacity 0.7s;
   width: ${({ width }) => width}px;
 `

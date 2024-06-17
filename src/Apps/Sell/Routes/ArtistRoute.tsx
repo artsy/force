@@ -8,6 +8,7 @@ import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
+import createLogger from "Utils/logger"
 import {
   ArtistRoute_submission$data,
   ArtistRoute_submission$key,
@@ -16,6 +17,8 @@ import { Formik, FormikProps } from "formik"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
+
+const logger = createLogger("ArtistRoute.tsx")
 
 const FRAGMENT = graphql`
   fragment ArtistRoute_submission on ConsignmentSubmission {
@@ -92,7 +95,7 @@ export const ArtistRoute: React.FC<{
       router.replace(`/sell2/submissions/${submissionID}/artist`)
       router.push(`/sell2/submissions/${submissionID}/title`)
     } catch (error) {
-      console.error("Error creating submission.", error)
+      logger.error("Error creating submission.", error)
     }
   }
 
@@ -109,7 +112,7 @@ export const ArtistRoute: React.FC<{
 
       actions.goToNextStep()
     } catch (error) {
-      console.error("Error submitting form", error)
+      logger.error("Error submitting form", error)
     }
   }
 
@@ -158,7 +161,9 @@ export const ArtistRoute: React.FC<{
             onSelect={artist => {
               onSelect(artist, formik)
             }}
-            onError={() => console.error("something happened")}
+            onError={() =>
+              logger.error("Something went wrong while fetching artists.")
+            }
             showChevronIcon
             title="Artist"
           />
