@@ -16,7 +16,6 @@ import { PurchaseHistoryRoute_submission$key } from "__generated__/PurchaseHisto
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { graphql, useFragment } from "react-relay"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 const FRAGMENT = graphql`
   fragment PurchaseHistoryRoute_submission on ConsignmentSubmission {
