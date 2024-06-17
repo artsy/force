@@ -8,6 +8,9 @@ import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
 import { createContext, useContext, useEffect } from "react"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCursor } from "use-cursor"
+import createLogger from "Utils/logger"
+
+const logger = createLogger("SellFlowContext.tsx")
 
 export const STEPS = [
   "artist",
@@ -102,7 +105,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     })
 
     response.catch(err => {
-      console.error("Error creating submission.", err)
+      logger.error("Error creating submission.", err)
       sendToast({
         variant: "error",
         message: "Something went wrong.",
@@ -126,7 +129,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     })
 
     response.catch(err => {
-      console.error("Error updating submission.", err)
+      logger.error("Error updating submission.", err)
       sendToast({
         variant: "error",
         message: "Something went wrong.",
