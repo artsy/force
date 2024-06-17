@@ -10,7 +10,7 @@ interface AuctionInfoSidebarProps {
 
 const AuctionInfoSidebar: React.FC<AuctionInfoSidebarProps> = ({ sale }) => {
   return (
-    <Join separator={<Spacer y={1} />}>
+    <Join separator={<Spacer y={2} />}>
       <LiveAuctionToolTip show={!!sale.liveStartAt} />
 
       <Box>
@@ -38,6 +38,17 @@ const AuctionInfoSidebar: React.FC<AuctionInfoSidebarProps> = ({ sale }) => {
         <RouterLink inline to="/supplemental-cos" target="_blank">
           <Text variant="sm">Supplemental Conditions of Sale</Text>
         </RouterLink>
+      </Box>
+
+      <Box>
+        <Text variant="sm">
+          Have a work you want to sell?
+          <br />
+          Submit to our team{" "}
+          <RouterLink inline to="/sell" target="_blank">
+            here
+          </RouterLink>
+        </Text>
       </Box>
     </Join>
   )
