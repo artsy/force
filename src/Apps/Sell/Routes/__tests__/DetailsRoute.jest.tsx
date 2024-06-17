@@ -124,7 +124,7 @@ describe("DetailsRoute", () => {
         '/sell2/submissions/<mock-value-for-field-"externalId">/photos'
       )
 
-      expect(submitMutation).not.toHaveBeenCalledWith(
+      expect(submitMutation).toHaveBeenCalledWith(
         expect.objectContaining({
           variables: {
             input: {

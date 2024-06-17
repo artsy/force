@@ -20,6 +20,10 @@ declare module "found" {
     routeConfig: RouteProps[]
   }
 
+  interface MatcherResult {
+    elements: any[] | undefined | null
+  }
+
   interface RouteRenderArgs {
     resolving: boolean
   }

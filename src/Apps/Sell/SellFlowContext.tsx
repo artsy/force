@@ -21,6 +21,7 @@ export const STEPS = [
 interface Actions {
   goToPreviousStep: () => void
   goToNextStep: () => void
+  finishFlow: () => void
   createSubmission: (
     values: CreateSubmissionMutationInput
   ) => Promise<useCreateSubmissionMutation$data>
@@ -83,6 +84,10 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     handlePrev()
   }
 
+  const finishFlow = () => {
+    push(`/sell2/submissions/${submissionID}/thank-you`)
+  }
+
   useEffect(() => {
     if (!submissionID) return
 
@@ -97,10 +102,12 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     })
 
     response.catch(err => {
+      console.error("Error creating submission.", err)
       sendToast({
         variant: "error",
-        message: err.message ?? "Something went wrong.",
+        message: "Something went wrong.",
       })
+      throw err
     })
 
     return response
@@ -119,10 +126,12 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     })
 
     response.catch(err => {
+      console.error("Error updating submission.", err)
       sendToast({
         variant: "error",
-        message: err.message ?? "Something went wrong.",
+        message: "Something went wrong.",
       })
+      throw err
     })
 
     return response
@@ -131,6 +140,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const actions = {
     goToPreviousStep,
     goToNextStep,
+    finishFlow,
     createSubmission,
     updateSubmission,
   }

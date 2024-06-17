@@ -5,9 +5,6 @@ import { HttpError } from "found"
 import { getENV } from "Utils/getENV"
 import { AppShell } from "Apps/Components/AppShell"
 import { ErrorPage } from "Components/ErrorPage"
-import { PageLoadingBar } from "System/Components/PageLoadingBar"
-
-let isInitialized = false
 
 export const renderStates = {
   /**
@@ -18,11 +15,6 @@ export const renderStates = {
     return (
       <>
         <Renderer>{null}</Renderer>
-
-        {/* Don't show loader on first SSR pass */}
-        {isInitialized && (
-          <PageLoadingBar loadingState="loading" key="loading" />
-        )}
       </>
     )
   },
@@ -30,17 +22,13 @@ export const renderStates = {
   /**
    * Once request is complete, render the page
    */
-  renderReady: ({ elements, location }) => {
+  renderReady: ({ elements }) => {
     return (
-      <>
-        <Renderer shouldUpdate>
-          <RenderReady elements={elements} />
-        </Renderer>
-
-        {isInitialized && (
-          <PageLoadingBar loadingState="complete" key="complete" />
-        )}
-      </>
+      <Renderer shouldUpdate>
+        <Box width="100%">
+          <ElementsRenderer elements={elements} />
+        </Box>
+      </Renderer>
     )
   },
 
@@ -66,21 +54,6 @@ export const renderStates = {
       </AppShell>
     )
   },
-}
-
-const RenderReady = ({ elements }) => {
-  // No access to hooks at this level of the stack
-  if (!isInitialized) {
-    setTimeout(() => {
-      isInitialized = true
-    }, 0)
-  }
-
-  return (
-    <Box width="100%">
-      <ElementsRenderer elements={elements} />
-    </Box>
-  )
 }
 
 const Renderer = ({ children, ...props }) => {
