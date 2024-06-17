@@ -21,6 +21,7 @@ export const STEPS = [
 interface Actions {
   goToPreviousStep: () => void
   goToNextStep: () => void
+  finishFlow: () => void
   createSubmission: (
     values: CreateSubmissionMutationInput
   ) => Promise<useCreateSubmissionMutation$data>
@@ -83,6 +84,10 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     handlePrev()
   }
 
+  const finishFlow = () => {
+    push(`/sell2/submissions/${submissionID}/thank-you`)
+  }
+
   useEffect(() => {
     if (!submissionID) return
 
@@ -135,6 +140,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const actions = {
     goToPreviousStep,
     goToNextStep,
+    finishFlow,
     createSubmission,
     updateSubmission,
   }
