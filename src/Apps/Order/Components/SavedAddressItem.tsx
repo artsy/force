@@ -19,7 +19,7 @@ interface SavedAddressItemProps {
 
 export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
   props
-): React.ReactElement<RadioProps> => {
+): React.ReactElement<RadioProps<string>> => {
   const handleClickEdit = props?.handleClickEdit
   const index = props?.index
   const address = props?.address

@@ -189,9 +189,9 @@ export const PaymentContent: FC<Props> = props => {
  */
 const getAvailablePaymentMethods = (
   availablePaymentMethods: readonly CommercePaymentMethodEnum[]
-): ReactElement<RadioProps>[] => {
+): ReactElement<RadioProps<string>>[] => {
   let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
-  const paymentMethods: Array<ReactElement<RadioProps>> = []
+  const paymentMethods: Array<ReactElement<RadioProps<string>>> = []
 
   if (availablePaymentMethods.includes("CREDIT_CARD")) {
     paymentMethods.push(
