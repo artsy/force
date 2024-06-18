@@ -26,7 +26,7 @@ const FRAGMENT = graphql`
 
 const Schema = Yup.object().shape({
   provenance: Yup.string().trim(),
-  signature: Yup.boolean(),
+  signature: Yup.boolean().nullable(),
 })
 
 export const PROVENANCE_LIST = [
@@ -43,7 +43,7 @@ export const PROVENANCE_LIST = [
 
 interface FormValues {
   provenance: string
-  signature: boolean | undefined
+  signature: boolean | null
 }
 
 interface PurchaseHistoryRouteProps {
@@ -60,7 +60,7 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
 
   const initialValues: FormValues = {
     provenance: submission.provenance || "",
-    signature: submission.signature ?? undefined,
+    signature: submission.signature ?? null,
   }
 
   return (

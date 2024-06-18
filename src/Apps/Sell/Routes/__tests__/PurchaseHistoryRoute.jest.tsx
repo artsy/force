@@ -131,7 +131,7 @@ describe("PurchaseHistoryRoute", () => {
     })
   })
 
-  it("does not save the submission & navigates to the previous step when the back button is clicked", async () => {
+  it("saves the submission & navigates to the previous step when the back button is clicked", async () => {
     renderWithRelay({
       ConsignmentSubmission: () => submissionMock,
     })
@@ -143,7 +143,7 @@ describe("PurchaseHistoryRoute", () => {
         '/sell2/submissions/<mock-value-for-field-"externalId">/details'
       )
 
-      expect(submitMutation).not.toHaveBeenCalledWith(
+      expect(submitMutation).toHaveBeenCalledWith(
         expect.objectContaining({
           variables: {
             input: {
