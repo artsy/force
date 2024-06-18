@@ -11,7 +11,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"

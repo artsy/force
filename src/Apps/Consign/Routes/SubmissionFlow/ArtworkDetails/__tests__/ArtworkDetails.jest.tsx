@@ -1,16 +1,16 @@
-import { MockBoot } from "DevTools/MockBoot"
-import { Breakpoint } from "Utils/Responsive"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
-import { ArtworkDetailsFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/ArtworkDetails"
-import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
-import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import {
   submissionFlowSteps,
   submissionFlowStepsMobile,
 } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
+import { ArtworkDetailsFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/ArtworkDetails"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+import { MockBoot } from "DevTools/MockBoot"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { Breakpoint } from "Utils/Responsive"
+import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
+import { graphql } from "react-relay"
 
 const validForm = {
   externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
@@ -67,7 +67,7 @@ const utmParams = { utmMedium: "Medium", utmSource: "Source", utmTerm: "Term" }
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     router: { push: mockRouterPush, replace: mockRouterReplace },
   })),
@@ -180,7 +180,9 @@ describe("ArtworkDetails", () => {
 
       expect(
         screen.getByPlaceholderText("Enter city where artwork is located")
-      ).toHaveValue("")
+      ).toHaveValue(
+        '<mock-value-for-field-"city">, <mock-value-for-field-"state">, <mock-value-for-field-"country">'
+      )
     })
   })
 

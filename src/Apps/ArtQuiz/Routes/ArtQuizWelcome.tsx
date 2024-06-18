@@ -1,7 +1,7 @@
 import { Flex, Text, Spacer, Button, FullBleed, Box } from "@artsy/palette"
 import { SplitLayout } from "Components/SplitLayout"
 import { FC } from "react"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { useTranslation } from "react-i18next"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"

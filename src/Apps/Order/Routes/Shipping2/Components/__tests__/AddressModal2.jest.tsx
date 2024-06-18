@@ -3,7 +3,7 @@ import {
   AddressModalProps,
 } from "Apps/Order/Routes/Shipping2/Components/AddressModal2"
 import { validAddress } from "Components/__tests__/Utils/addressForm2"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SavedAddressType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { createMockEnvironment } from "relay-test-utils"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
@@ -20,7 +20,7 @@ on the first flushPromiseQueue call.
 jest.setTimeout(10000)
 
 jest.unmock("react-relay")
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 const mockUseSystemContext = useSystemContext as jest.Mock
 
 const errorBoxQuery = "Banner[data-testid='form-banner-error']"

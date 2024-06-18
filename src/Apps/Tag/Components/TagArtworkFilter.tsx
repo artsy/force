@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -9,7 +9,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { TagArtworkFilter_tag$data } from "__generated__/TagArtworkFilter_tag.graphql"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 interface TagArtworkFilterProps {
   tag: TagArtworkFilter_tag$data

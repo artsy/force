@@ -4,7 +4,7 @@ import { Text } from "@artsy/palette"
 import { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_artwork.graphql"
 import { ArtworkPageBanner_me$key } from "__generated__/ArtworkPageBanner_me.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 

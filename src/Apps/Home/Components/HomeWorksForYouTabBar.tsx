@@ -1,6 +1,6 @@
 import { Tab, Tabs } from "@artsy/palette"
 import * as React from "react"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { HomeNewWorksForYouRailQueryRenderer } from "./HomeNewWorksForYouRail"
 import { HomeRecentlyViewedRailQueryRenderer } from "./HomeRecentlyViewedRail"
 import { HomeWorksByArtistsYouFollowRailQueryRenderer } from "./HomeWorksByArtistsYouFollowRail"

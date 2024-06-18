@@ -12,8 +12,8 @@ import {
   OwnerType,
   PageOwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { useSystemContext } from "System/SystemContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Rail } from "Components/Rail/Rail"
 import { extractNodes } from "Utils/extractNodes"
 import {

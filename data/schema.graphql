@@ -12561,6 +12561,9 @@ type Me implements Node {
     # Exclude artworks that have been purchased on Artsy and automatically added to the collection.
     excludePurchasedArtworks: Boolean = false
     first: Int
+
+    # Show only artworks from target supply artists
+    includeOnlyTargetSupply: Boolean = false
     last: Int
     page: Int
     size: Int
@@ -14122,6 +14125,7 @@ enum NotificationTypesEnum {
   ARTICLE_FEATURED_ARTIST
   ARTWORK_ALERT
   ARTWORK_PUBLISHED
+  COLLECTOR_PROFILE_UPDATE_PROMPT
   PARTNER_OFFER_CREATED
   PARTNER_SHOW_OPENED
   VIEWING_ROOM_PUBLISHED

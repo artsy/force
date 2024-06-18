@@ -3,7 +3,7 @@ import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerMeta_partner$data } from "__generated__/PartnerMeta_partner.graphql"
 import { getENV } from "Utils/getENV"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { LocalBusiness } from "Components/Seo/LocalBusiness"
 import { extractNodes } from "Utils/extractNodes"
 

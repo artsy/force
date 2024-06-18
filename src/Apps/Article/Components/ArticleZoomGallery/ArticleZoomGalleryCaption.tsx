@@ -2,7 +2,7 @@ import { Box, Button, Flex, HTML, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import Metadata from "Components/Artwork/Metadata"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { ArticleZoomGalleryCaption_figure$data } from "__generated__/ArticleZoomGalleryCaption_figure.graphql"
 
 interface ArticleZoomGalleryCaptionProps {

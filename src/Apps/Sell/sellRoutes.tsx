@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 
 const IntroRoute = loadable(
@@ -20,6 +20,13 @@ const NewRoute = loadable(
   () => import(/* webpackChunkName: "sellBundle" */ "./Routes/NewRoute"),
   {
     resolveComponent: component => component.NewRoute,
+  }
+)
+
+const ArtistRoute = loadable(
+  () => import(/* webpackChunkName: "sellBundle" */ "./Routes/ArtistRoute"),
+  {
+    resolveComponent: component => component.ArtistRouteFragmentContainer,
   }
 )
 
@@ -78,14 +85,14 @@ const ThankYouRoute = loadable(
   }
 )
 
-export const sellRoutes: AppRouteConfig[] = [
+export const sellRoutes: RouteProps[] = [
   {
     path: "/sell2",
     children: [
       {
         path: "intro",
         layout: "ContainerOnly",
-        Component : IntroRoute,
+        Component: IntroRoute,
         onClientSideRender: () => {
           IntroRoute.preload()
         },
@@ -141,6 +148,24 @@ export const sellRoutes: AppRouteConfig[] = [
           return { id }
         },
         children: [
+          {
+            path: "artist",
+            layout: "ContainerOnly",
+            Component: ArtistRoute,
+            onClientSideRender: () => {
+              ArtistRoute.preload()
+            },
+            query: graphql`
+              query sellRoutes_ArtistRouteQuery($id: ID!) {
+                submission(id: $id) @principalField {
+                  ...ArtistRoute_submission
+                }
+              }
+            `,
+            prepareVariables: ({ id }) => {
+              return { id }
+            },
+          },
           {
             path: "title",
             layout: "ContainerOnly",

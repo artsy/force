@@ -1,4 +1,4 @@
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { NavBar } from "Components/NavBar/NavBar"

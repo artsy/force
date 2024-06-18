@@ -1,7 +1,7 @@
 import { Box, Join, Message, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
-import { Analytics } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 import { AuctionApp_me$data } from "__generated__/AuctionApp_me.graphql"
 import { AuctionApp_sale$data } from "__generated__/AuctionApp_sale.graphql"
 import { AuctionApp_viewer$data } from "__generated__/AuctionApp_viewer.graphql"
@@ -15,8 +15,8 @@ import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAsso
 import { useEffect } from "react"
 import { useAuctionTracking } from "./Hooks/useAuctionTracking"
 import { AuctionCurrentAuctionsRailFragmentContainer } from "./Components/AuctionCurrentAuctionsRail"
-import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
+import { WebsocketContextProvider } from "System/Contexts/WebsocketContext"
 
 export interface AuctionAppProps {
   me: AuctionApp_me$data

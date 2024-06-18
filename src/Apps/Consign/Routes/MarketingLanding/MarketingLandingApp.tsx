@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { Box, Flex, Join, Spacer } from "@artsy/palette"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"

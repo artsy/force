@@ -3,10 +3,10 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { HomeAppFragmentContainer } from "Apps/Home/HomeApp"
 import { HomeApp_Test_Query } from "__generated__/HomeApp_Test_Query.graphql"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 

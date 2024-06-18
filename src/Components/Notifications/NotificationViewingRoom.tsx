@@ -1,6 +1,6 @@
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { NotificationViewingRoom_viewingRoom$key } from "__generated__/NotificationViewingRoom_viewingRoom.graphql"
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Button, Image, Spacer, Text } from "@artsy/palette"

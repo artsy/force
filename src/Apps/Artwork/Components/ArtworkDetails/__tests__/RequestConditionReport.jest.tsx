@@ -4,7 +4,7 @@ import { RequestConditionReportFragmentContainer } from "Apps/Artwork/Components
 import { RequestConditionReportTestPage } from "./Utils/RequestConditionReportTestPage"
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   createMockEnvironment,
   MockPayloadGenerator,
@@ -14,7 +14,7 @@ import { useTracking } from "react-tracking"
 import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-tracking")
 jest.mock("Utils/Events", () => ({
   postEvent: jest.fn(),

@@ -1,4 +1,4 @@
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { HTML, Text } from "@artsy/palette"
 import { ArtistBio_bio$data } from "__generated__/ArtistBio_bio.graphql"
 import * as React from "react"

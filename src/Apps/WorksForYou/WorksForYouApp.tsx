@@ -15,12 +15,12 @@ import {
   Text,
 } from "@artsy/palette"
 import { WorksForYouArtistFeedPaginationContainer } from "./Components/WorksForYouArtistFeed"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { LogInPrompt } from "Apps/Components/LogInPrompt"
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 interface WorksForYouProps {
   viewerArtist: WorksForYouApp_viewerArtist$data

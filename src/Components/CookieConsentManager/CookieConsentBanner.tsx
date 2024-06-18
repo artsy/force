@@ -11,7 +11,7 @@ import {
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { Z } from "Apps/Components/constants"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { FC } from "react"
 
 interface CookieConsentBannerProps {

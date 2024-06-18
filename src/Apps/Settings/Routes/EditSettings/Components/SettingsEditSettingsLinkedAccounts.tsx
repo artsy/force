@@ -1,7 +1,7 @@
 import { Button, Join, Spacer, Text, useToasts } from "@artsy/palette"
 import { FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 import { useMode } from "Utils/Hooks/useMode"
 import {

@@ -2,7 +2,7 @@ import { ActionType, ContextModule } from "@artsy/cohesion"
 import { Flex, Text, StackableBorderBox, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 
 export const BUYER_GUARANTEE_URL =

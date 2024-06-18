@@ -10,7 +10,7 @@ import { GridColumns, Column, Flex, FullBleed } from "@artsy/palette"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useEffect } from "react"
 
 const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`

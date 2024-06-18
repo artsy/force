@@ -3,7 +3,7 @@ import { InsightsCareerHighlightRailFragmentContainer } from "Apps/Settings/Rout
 import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { InsightsRoute_me$data } from "__generated__/InsightsRoute_me.graphql"
 import { InsightsAuctionResultsFragmentContainer } from "./Components/InsightsAuctionResults"

@@ -5,7 +5,7 @@ import { SaleAgreementRoute_saleAgreement$key } from "__generated__/SaleAgreemen
 import { PageHTML } from "Apps/Page/Components/PageHTML"
 import { TopContextBar } from "Components/TopContextBar"
 import { HttpError } from "found"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface SaleAgreementRouteProps {
   saleAgreement: SaleAgreementRoute_saleAgreement$key

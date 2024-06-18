@@ -19,16 +19,16 @@ import {
 } from "@artsy/palette"
 import { useCCPARequest } from "Components/CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import XIcon from "@artsy/icons/XIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import WeChatIcon from "@artsy/icons/WeChatIcon"
 import InstagramIcon from "@artsy/icons/InstagramIcon"
 import TikTokIcon from "@artsy/icons/TikTokIcon"
 import SpotifyIcon from "@artsy/icons/SpotifyIcon"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 import { themeGet } from "@styled-system/theme-get"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
@@ -37,8 +37,6 @@ import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
-  const isDarkModeEnabled = useFeatureFlag("diamond_dark-mode")
-
   const { isEigen } = useSystemContext()
 
   if (isEigen) {
@@ -175,12 +173,6 @@ export const Footer: React.FC<FooterProps> = props => {
           <Column span={12} display={["flex", "none"]} flexWrap="wrap">
             <PolicyLinks />
           </Column>
-
-          {isDarkModeEnabled && (
-            <Column span={12} display={["flex", "none"]}>
-              <ThemeSelect />
-            </Column>
-          )}
         </GridColumns>
 
         <Separator />
@@ -206,14 +198,6 @@ export const Footer: React.FC<FooterProps> = props => {
 
               <Flex flexDirection="row" flexGrow={1}>
                 <PolicyLinks />
-
-                {isDarkModeEnabled && (
-                  <>
-                    <Spacer x={1} />
-
-                    <ThemeSelect />
-                  </>
-                )}
               </Flex>
             </Flex>
           </Media>
@@ -448,9 +432,11 @@ const PolicyLinks = () => {
           </>
         )}
 
-        <Clickable onClick={showCCPARequest}>
+        <Clickable onClick={showCCPARequest} mr={1}>
           Do not sell my personal information
         </Clickable>
+
+        <ThemeSelect />
       </Text>
     </>
   )

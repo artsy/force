@@ -16,9 +16,9 @@ import {
   SPECIALISTS,
 } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
 import { Rail } from "Components/Rail/Rail"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { RouterLink } from "System/Router/RouterLink"
-import { useSystemContext } from "System/SystemContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { resized } from "Utils/resized"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"

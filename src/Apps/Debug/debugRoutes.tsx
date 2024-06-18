@@ -2,8 +2,8 @@ import { Clickable, Text } from "@artsy/palette"
 import loadable from "@loadable/component"
 import { HttpError } from "found"
 import { useState } from "react"
-import { AppRouteConfig } from "System/Router/Route"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouteProps } from "System/Router/Route"
+import { RouterLink } from "System/Components/RouterLink"
 
 const DebugApp = loadable(
   () => import(/* webpackChunkName: "debugBundle" */ "./DebugApp"),
@@ -20,7 +20,7 @@ const DebugAuth = loadable(
  * Calibre, assets loaded on page, and other debugging things that might
  * impact global performance.
  */
-export const debugRoutes: AppRouteConfig[] = [
+export const debugRoutes: RouteProps[] = [
   {
     path: "/debug",
     children: [

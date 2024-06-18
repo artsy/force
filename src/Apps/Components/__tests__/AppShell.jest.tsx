@@ -1,13 +1,13 @@
-import { SystemContextProvider } from "System/SystemContext"
-import { buildAppRoutes } from "System/Router/buildAppRoutes"
-import { buildClientApp } from "System/Router/buildClientApp"
-import { render, screen } from "@testing-library/react"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
+import { render, screen, waitFor } from "@testing-library/react"
+import { setupClientRouter } from "System/Router/clientRouter"
+import { buildAppRoutes } from "System/Router/Utils/buildAppRoutes"
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
 }))
 
-jest.mock("System/Router/Boot", () => ({
+jest.mock("System/Boot", () => ({
   Boot: ({ children }) => children,
 }))
 
@@ -18,7 +18,6 @@ jest.mock("react-tracking", () => ({
 }))
 
 jest.mock("Utils/Hooks/useAuthValidation")
-jest.mock("Utils/Hooks/useDarkModeToggle")
 
 jest.mock("Components/Footer/FooterDownloadAppBanner", () => ({
   FooterDownloadAppBanner: () => "Meet your new art advisor.",
@@ -26,61 +25,61 @@ jest.mock("Components/Footer/FooterDownloadAppBanner", () => ({
 
 describe("AppShell", () => {
   it("renders a Footer", async () => {
-    const { ClientApp } = await buildClientApp({
+    const { ClientRouter } = setupClientRouter({
       history: {
         protocol: "memory",
       },
       initialRoute: "/foo",
       routes: buildAppRoutes([
-        {
-          routes: [
-            {
-              path: "/foo",
-              Component: () => <div />,
-            },
-          ],
-        },
+        [
+          {
+            path: "/foo",
+            Component: () => <div />,
+          },
+        ],
       ]),
     })
 
     render(
       <SystemContextProvider>
-        <ClientApp />
+        <ClientRouter />
       </SystemContextProvider>
     )
 
-    expect(screen.getByText("Meet your new art advisor.")).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText("Meet your new art advisor.")).toBeInTheDocument()
+    })
   })
 
   it("calls the matched routes `prepare` function if found", async () => {
     const onClientSideRender = jest.fn()
-    const { ClientApp } = await buildClientApp({
+    const { ClientRouter } = setupClientRouter({
       history: {
         protocol: "memory",
       },
       initialRoute: "/foo",
       routes: buildAppRoutes([
-        {
-          routes: [
-            {
-              path: "/foo",
-              Component: () => <div />,
-              onClientSideRender: ({ match }) => {
-                expect(match.location.pathname).toBe("/foo")
-                onClientSideRender()
-              },
+        [
+          {
+            path: "/foo",
+            Component: () => <div />,
+            onClientSideRender: ({ match }) => {
+              expect(match.location.pathname).toBe("/foo")
+              onClientSideRender()
             },
-          ],
-        },
+          },
+        ],
       ]),
     })
 
     render(
       <SystemContextProvider>
-        <ClientApp />
+        <ClientRouter />
       </SystemContextProvider>
     )
 
-    expect(onClientSideRender).toHaveBeenCalledTimes(1)
+    await waitFor(() => {
+      expect(onClientSideRender).toHaveBeenCalledTimes(1)
+    })
   })
 })

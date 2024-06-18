@@ -22,8 +22,8 @@ import { isTouch } from "Utils/device"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
-import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export const AuthDialogSignUp: FC = () => {
   const {

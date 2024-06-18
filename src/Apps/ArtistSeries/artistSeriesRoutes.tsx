@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 
 const ArtistSeriesApp = loadable(
@@ -10,7 +10,7 @@ const ArtistSeriesApp = loadable(
   }
 )
 
-export const artistSeriesRoutes: AppRouteConfig[] = [
+export const artistSeriesRoutes: RouteProps[] = [
   {
     path: "/artist-series/:slug",
     getComponent: () => ArtistSeriesApp,

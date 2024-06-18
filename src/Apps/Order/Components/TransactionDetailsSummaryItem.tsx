@@ -12,8 +12,8 @@ import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadge
 import { ContextModule } from "@artsy/cohesion"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { shippingQuoteDisplayNames } from "Apps/Order/Components/ShippingQuotes"
-import { withSystemContext } from "System/SystemContext"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
+import { withSystemContext } from "System/Contexts/SystemContext"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {

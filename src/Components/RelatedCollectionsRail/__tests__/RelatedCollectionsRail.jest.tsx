@@ -8,7 +8,7 @@ import { RelatedCollectionEntity } from "Components/RelatedCollectionsRail/Relat
 import { RelatedCollectionsRail } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { paginateCarousel } from "@artsy/palette"
 import { useTracking } from "react-tracking"
-import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 
 jest.mock("react-tracking")
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")

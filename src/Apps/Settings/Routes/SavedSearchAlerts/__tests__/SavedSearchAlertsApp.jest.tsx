@@ -5,7 +5,7 @@ import { SavedSearchAlertsAppPaginationContainer } from "Apps/Settings/Routes/Sa
 import { SavedSearchAlertsApp_Test_Query } from "__generated__/SavedSearchAlertsApp_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { MediaContextProvider } from "Utils/Responsive"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
@@ -14,12 +14,12 @@ jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
-jest.mock("System/useSystemContext")
-jest.mock("System/Router/useRouter")
+jest.mock("System/Hooks/useSystemContext")
+jest.mock("System/Hooks/useRouter")
 
 const mockSilentPush = jest.fn()
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     silentPush: mockSilentPush,
     match: {

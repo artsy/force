@@ -11,7 +11,7 @@ import { MarketingAlternatingStack } from "Apps/Marketing/Components/MarketingAl
 import { MarketingHeader } from "Apps/Marketing/Components/MarketingHeader"
 import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 import { MetaTags } from "Components/MetaTags"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { FC } from "react"
 
 export const MarketingMeetArtAdvisorRoute: FC = () => {

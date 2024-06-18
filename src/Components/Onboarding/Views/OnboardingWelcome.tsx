@@ -1,6 +1,6 @@
 import { Flex, Text, Spacer, Button, Box } from "@artsy/palette"
-import { useSystemContext } from "System/useSystemContext"
-import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { RouterLink } from "System/Components/RouterLink"
 import { OnboardingWelcomeAnimatedPanel } from "Components/Onboarding/Components/OnboardingWelcomeAnimatedPanel"
 import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"

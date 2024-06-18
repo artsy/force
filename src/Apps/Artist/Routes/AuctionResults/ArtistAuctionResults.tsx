@@ -17,8 +17,8 @@ import {
 import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
-import { useRouter } from "System/Router/useRouter"
-import { SystemContext, useSystemContext } from "System/SystemContext"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
@@ -49,6 +49,7 @@ import { TableSidebar } from "./Components/TableSidebar"
 import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResultsEmptyState"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
+import { SystemContext } from "System/Contexts/SystemContext"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 

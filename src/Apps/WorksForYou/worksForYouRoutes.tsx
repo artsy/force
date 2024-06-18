@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const WorksForYouApp = loadable(
   () => import(/* webpackChunkName: "worksForYouBundle" */ "./WorksForYouApp"),
@@ -9,7 +9,7 @@ const WorksForYouApp = loadable(
   }
 )
 
-export const worksForYouRoutes: AppRouteConfig[] = [
+export const worksForYouRoutes: RouteProps[] = [
   {
     path: "/works-for-you/:artistSlug?",
     getComponent: () => WorksForYouApp,

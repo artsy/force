@@ -4,7 +4,7 @@ import {
 } from "__generated__/useBidderPositionQuery.graphql"
 import { graphql } from "react-relay"
 import { fetchQuery } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const useBidderPosition = () => {
   const { relayEnvironment } = useSystemContext()

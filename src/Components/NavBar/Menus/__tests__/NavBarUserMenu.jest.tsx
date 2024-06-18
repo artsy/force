@@ -1,5 +1,5 @@
 import { NavBarUserMenu } from "Components/NavBar/Menus/NavBarUserMenu"
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { logout } from "Utils/auth"
 import { mount } from "enzyme"
 

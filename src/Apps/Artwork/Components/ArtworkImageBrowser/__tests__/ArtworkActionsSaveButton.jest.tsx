@@ -11,7 +11,7 @@ import { wait } from "Utils/wait"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
-jest.mock("System/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
+jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
 jest.mock("Utils/getENV", () => ({
   getENV: () => "test",

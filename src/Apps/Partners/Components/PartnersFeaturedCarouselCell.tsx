@@ -3,7 +3,7 @@ import { Box, Flex, Image, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { PartnersFeaturedCarouselCell_profile$data } from "__generated__/PartnersFeaturedCarouselCell_profile.graphql"
 
 interface PartnersFeaturedCarouselCellProps {

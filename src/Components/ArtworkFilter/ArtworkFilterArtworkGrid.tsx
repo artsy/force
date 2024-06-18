@@ -1,13 +1,13 @@
 import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { ArtworkFilterArtworkGrid_filtered_artworks$data } from "__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import { ContextModule, clickedMainArtworkGrid } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
 
 interface ArtworkFilterArtworkGridProps {

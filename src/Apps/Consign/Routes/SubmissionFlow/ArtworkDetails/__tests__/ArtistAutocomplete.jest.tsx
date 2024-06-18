@@ -2,7 +2,7 @@ import { Input } from "@artsy/palette"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { mount, ReactWrapper } from "enzyme"
 import { Form, Formik } from "formik"
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 import {
   ArtworkDetailsFormModel,
@@ -10,7 +10,7 @@ import {
   SubmissionType,
 } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtworkDetailsForm"
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { params: { id: null } } })),
 }))
 
@@ -22,12 +22,14 @@ const results = {
           displayLabel: "Banksy",
           internalID: "111",
           formattedNationalityAndBirthday: "British, b. 1974",
-          image: {
-            cropped: {
-              height: 44,
-              src: "some-img",
-              srcSet: "some-img",
-              width: 44,
+          coverArtwork: {
+            image: {
+              cropped: {
+                height: 44,
+                src: "some-img",
+                srcSet: "some-img",
+                width: 44,
+              },
             },
           },
         },

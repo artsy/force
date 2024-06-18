@@ -1,6 +1,6 @@
 import { Router } from "found"
 import { useRef } from "react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import { useBidderPosition } from "Apps/Auction/Queries/useBidderPosition"
 import { useCreateBidderPosition } from "Apps/Auction/Queries/useCreateBidderPosition"

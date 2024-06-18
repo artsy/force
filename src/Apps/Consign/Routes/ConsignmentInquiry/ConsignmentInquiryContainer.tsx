@@ -3,8 +3,8 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { MetaTags } from "Components/MetaTags"
 import { EnableRecaptcha } from "Utils/EnableRecaptcha"
 import { Spacer } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
-import { useRouter } from "System/Router/useRouter"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 export const ConsignmentInquiryContainer: React.FC = ({ children }) => {

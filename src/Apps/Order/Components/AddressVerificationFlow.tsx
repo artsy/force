@@ -14,7 +14,7 @@ import {
 } from "@artsy/palette"
 import { useCallback, useEffect, useState } from "react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   ActionType,
   ClickedCloseValidationAddressModal,
@@ -23,7 +23,7 @@ import {
   OwnerType,
   ValidationAddressViewed,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 type VerifyAddressSuccessType = Extract<
   AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],

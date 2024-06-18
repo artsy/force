@@ -18,11 +18,11 @@ import {
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { DeepPartial } from "Utils/typeSupport"
 import { useTracking } from "react-tracking"
 
-jest.mock("System/useFeatureFlag", () => ({
+jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
 }))
 

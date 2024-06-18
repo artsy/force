@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const MarketingMeetArtAdvisorRoute = loadable(
   () =>
@@ -17,7 +17,7 @@ const MarketingFindArtYouLoveRoute = loadable(
   { resolveComponent: component => component.MarketingFindArtYouLoveRoute }
 )
 
-export const marketingRoutes: AppRouteConfig[] = [
+export const marketingRoutes: RouteProps[] = [
   {
     path: "/meet-your-new-art-advisor",
     getComponent: () => MarketingMeetArtAdvisorRoute,

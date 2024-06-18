@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const InstitutionPartnershipsApp = loadable(
   () =>
@@ -9,7 +9,7 @@ const InstitutionPartnershipsApp = loadable(
   { resolveComponent: component => component.InstitutionPartnershipsApp }
 )
 
-export const institutionPartnershipsRoutes: AppRouteConfig[] = [
+export const institutionPartnershipsRoutes: RouteProps[] = [
   {
     path: "/institution-partnerships",
     getComponent: () => InstitutionPartnershipsApp,

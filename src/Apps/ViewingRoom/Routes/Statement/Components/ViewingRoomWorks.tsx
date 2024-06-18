@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Column, GridColumns } from "@artsy/palette"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomWorks_viewingRoom$data } from "__generated__/ViewingRoomWorks_viewingRoom.graphql"
 import { ViewWorksButton } from "./ViewWorksButton"

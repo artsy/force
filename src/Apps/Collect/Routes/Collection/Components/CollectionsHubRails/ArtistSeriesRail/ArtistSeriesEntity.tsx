@@ -1,7 +1,7 @@
 import { Box, Flex, Text, Image } from "@artsy/palette"
 import { ArtistSeriesEntity_member$data } from "__generated__/ArtistSeriesEntity_member.graphql"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import currency from "currency.js"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -10,7 +10,7 @@ import {
   ClickedArtistSeriesGroup,
   ActionType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
 import { cropped } from "Utils/resized"
 

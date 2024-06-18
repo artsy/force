@@ -2,18 +2,18 @@ import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
 import { Footer } from "Components/Footer/Footer"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
-import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { fetchQuery } from "react-relay"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn().mockReturnValue({
     match: { location: { pathname: "/" } },
   }),
 }))
 
-jest.mock("System/useFeatureFlag")
+jest.mock("System/Hooks/useFeatureFlag")
 
 jest.mock("react-relay", () => ({
   fetchQuery: jest.fn(() => ({
@@ -72,7 +72,11 @@ describe("Footer", () => {
 
     it("renders the CCPA request button", () => {
       const wrapper = getWrapper("xs")
-      expect(wrapper.find("button").length).toEqual(1)
+      expect(
+        wrapper.find("button").map(button => {
+          return button.text()
+        })
+      ).toContain("Do not sell my personal information")
     })
 
     it("renders the app download banner", () => {
@@ -171,7 +175,11 @@ describe("Footer", () => {
 
     it("renders the CCPA request button", () => {
       const wrapper = getWrapper("xs")
-      expect(wrapper.find("button").length).toEqual(1)
+      expect(
+        wrapper.find("button").map(button => {
+          return button.text()
+        })
+      ).toContain("Do not sell my personal information")
     })
 
     it("renders footer links", () => {

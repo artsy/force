@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const BuyerGuaranteeApp = loadable(
   () => import(/* webpackChunkName: "buyerBundle" */ "./BuyerGuaranteeApp"),
@@ -18,7 +18,7 @@ const BuyerGuaranteeIndexRoute = loadable(
   }
 )
 
-export const buyerGuaranteeRoutes: AppRouteConfig[] = [
+export const buyerGuaranteeRoutes: RouteProps[] = [
   {
     path: "/buyer-guarantee",
     getComponent: () => BuyerGuaranteeApp,

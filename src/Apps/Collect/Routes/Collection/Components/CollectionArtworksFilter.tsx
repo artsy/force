@@ -8,7 +8,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { usePathnameComplete } from "Utils/Hooks/usePathnameComplete"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { CollectionArtworksFilter_collection$data } from "__generated__/CollectionArtworksFilter_collection.graphql"
 import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
@@ -23,7 +23,7 @@ import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/Materia
 import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Join, Spacer } from "@artsy/palette"
 
 interface CollectionArtworksFilterProps {

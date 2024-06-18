@@ -1,5 +1,4 @@
 import { useNetworkOfflineMonitor } from "Utils/Hooks/useNetworkOfflineMonitor"
-import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { Match } from "found"
 import { isFunction } from "lodash"
 import { useEffect } from "react"
@@ -9,8 +8,10 @@ import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnviro
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 import { Layout } from "Apps/Components/Layouts"
 import { useSetupAuth } from "Utils/Hooks/useSetupAuth"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "System/Contexts/AnalyticsContext"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
+import { findCurrentRoute } from "System/Router/Utils/routeUtils"
+import { PageLoadingBar } from "System/Components/PageLoadingBar"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -25,6 +26,8 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   const { children, match } = props
   const routeConfig = match ? findCurrentRoute(match) : null
+
+  const showLoader = !match?.elements
 
   // Check to see if a route has a onServerSideRender key; if so call it. Used
   // typically to preload bundle-split components (import()) while the route is
@@ -50,10 +53,14 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useProductionEnvironmentWarning()
 
   return (
-    <AnalyticsContextProvider path={match?.location?.pathname}>
-      <Layout variant={routeConfig?.layout}>{children}</Layout>
+    <>
+      <PageLoadingBar loadingState={showLoader ? "loading" : "complete"} />
 
-      {onboardingComponent}
-    </AnalyticsContextProvider>
+      <AnalyticsContextProvider path={match?.location?.pathname}>
+        <Layout variant={routeConfig?.layout}>{children}</Layout>
+
+        {onboardingComponent}
+      </AnalyticsContextProvider>
+    </>
   )
 }

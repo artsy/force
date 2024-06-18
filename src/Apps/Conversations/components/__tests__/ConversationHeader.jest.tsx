@@ -16,7 +16,7 @@ jest.mock("Apps/Conversations/hooks/useMobileLayoutActions", () => ({
   }),
 }))
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

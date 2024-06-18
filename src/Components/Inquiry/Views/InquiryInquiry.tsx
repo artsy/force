@@ -12,7 +12,7 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -26,7 +26,9 @@ import {
 } from "Components/Inquiry/Hooks/useInquiryContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { logger } from "Components/Inquiry/util"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import InfoIcon from "@artsy/icons/InfoIcon"
 
 type Mode = "Pending" | "Confirm" | "Sending" | "Error" | "Success"
 
@@ -42,6 +44,10 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const [mode, setMode] = useState<Mode>("Pending")
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
+
+  const isCollectorSummaryEnabled = !!useFeatureFlag(
+    "diamond_collector-summary"
+  )
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
     if (mode === "Confirm" && value !== DEFAULT_MESSAGE) {
@@ -104,7 +110,9 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
             <Box display="inline-block" width={60} color="black60">
               From
             </Box>
-            {user.name} ({user.email})
+            {isCollectorSummaryEnabled
+              ? user.name
+              : `${user.name} (${user.email})`}
           </Text>
 
           <Separator my={2} />
@@ -152,12 +160,30 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
 
       <Spacer y={1} />
 
-      <Text variant="xs">
-        By clicking send, you accept our{" "}
-        <RouterLink inline to="/privacy" target="_blank">
-          Privacy Policy.
-        </RouterLink>
-      </Text>
+      {isCollectorSummaryEnabled ? (
+        <Text variant="xs" display="flex" gap={0.5} color="black60">
+          <InfoIcon flexShrink={0} />
+          <div>
+            By clicking send, we will share your profile with{" "}
+            {artwork.partner?.name}. Update your profile at any time in{" "}
+            <RouterLink
+              inline
+              to="/settings/edit-profile"
+              target="_blank"
+              color="black100"
+            >
+              Settings.
+            </RouterLink>
+          </div>
+        </Text>
+      ) : (
+        <Text variant="xs">
+          By clicking send, you accept our{" "}
+          <RouterLink inline to="/privacy" target="_blank">
+            Privacy Policy.
+          </RouterLink>
+        </Text>
+      )}
 
       <Spacer y={1} />
 
@@ -223,7 +249,7 @@ export const InquiryInquiryPlaceholder: React.FC = () => {
         <Box display="inline-block" width={60}>
           From
         </Box>
-        Example Example (example@example.com)
+        Example
       </SkeletonText>
 
       <Separator my={2} />

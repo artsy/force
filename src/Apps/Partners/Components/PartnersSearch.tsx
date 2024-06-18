@@ -6,9 +6,9 @@ import {
 import { compact } from "lodash"
 import React, { FC, useState } from "react"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { PartnersSearchQuery } from "__generated__/PartnersSearchQuery.graphql"
 
 const TYPES = {

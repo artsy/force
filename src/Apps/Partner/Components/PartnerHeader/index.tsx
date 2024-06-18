@@ -13,7 +13,7 @@ import { PartnerHeaderAddress } from "./PartnerHeaderAddress"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { ContextModule } from "@artsy/cohesion"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
 import { themeGet } from "@styled-system/theme-get"
 import { Jump } from "Utils/Hooks/useJump"
@@ -85,7 +85,12 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
 
         {canFollow && (
           <Column span={[12, 2]}>
-            <Stack gap={0.5} flexDirection="row" alignItems="center">
+            <FollowButtonContainer
+              gap={0.5}
+              flexDirection="row"
+              alignItems="center"
+              flexGrow={1}
+            >
               <ProgressiveOnboardingFollowPartner>
                 <FollowProfileButtonQueryRenderer
                   id={partner.profile.internalID}
@@ -100,7 +105,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
                     formatFollowerCount(partner.profile.counts.follows)}
                 </FollowButtonInlineCount>
               )}
-            </Stack>
+            </FollowButtonContainer>
 
             {hasFollows && (
               <Text
@@ -155,3 +160,9 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const FollowButtonContainer = styled(Stack)`
+  > div {
+    width: 100%;
+  }
+`

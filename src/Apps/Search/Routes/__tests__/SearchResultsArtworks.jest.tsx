@@ -15,7 +15,7 @@ import {
 } from "Apps/__tests__/Fixtures/aggregations"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: { query: {}, pathname: "" },

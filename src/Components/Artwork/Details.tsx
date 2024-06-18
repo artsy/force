@@ -4,13 +4,13 @@ import { themeGet } from "@styled-system/theme-get"
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
+import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { isFunction } from "lodash"
 import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
@@ -167,6 +167,9 @@ const SaleMessage: React.FC<DetailsProps> = ({
     return <>Price on request</>
   }
 
+  if (sale_message?.toLowerCase() === "inquire about availability") {
+    return <>{NBSP}</>
+  }
   // NBSP is used to prevent un-aligned carousels
   return <>{sale_message ?? NBSP}</>
 }

@@ -1,12 +1,19 @@
 import { useToasts } from "@artsy/palette"
+import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
+import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
+import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
 import { createContext, useContext, useEffect } from "react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useCursor } from "use-cursor"
+import createLogger from "Utils/logger"
+
+const logger = createLogger("SellFlowContext.tsx")
 
 export const STEPS = [
+  "artist",
   "title",
   "photos",
   "details",
@@ -17,6 +24,10 @@ export const STEPS = [
 interface Actions {
   goToPreviousStep: () => void
   goToNextStep: () => void
+  finishFlow: () => void
+  createSubmission: (
+    values: CreateSubmissionMutationInput
+  ) => Promise<useCreateSubmissionMutation$data>
   updateSubmission: (
     values: UpdateSubmissionMutationInput
   ) => Promise<useUpdateSubmissionMutation$data>
@@ -55,6 +66,9 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const {
     submitMutation: submitUpdateSubmissionMutation,
   } = useUpdateSubmission()
+  const {
+    submitMutation: submitCreateSubmissionMutation,
+  } = useCreateSubmission()
   const { sendToast } = useToasts()
 
   const stepFromURL = match.location.pathname.split("/").pop()
@@ -65,11 +79,42 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     initialCursor: initialIndex,
   })
 
+  const goToNextStep = async () => {
+    handleNext()
+  }
+
+  const goToPreviousStep = () => {
+    handlePrev()
+  }
+
+  const finishFlow = () => {
+    push(`/sell2/submissions/${submissionID}/thank-you`)
+  }
+
   useEffect(() => {
     if (!submissionID) return
 
     push(`/sell2/submissions/${submissionID}/${STEPS[index]}`)
   }, [push, submissionID, index])
+
+  const createSubmission = (values: CreateSubmissionMutationInput) => {
+    const response = submitCreateSubmissionMutation({
+      variables: {
+        input: values,
+      },
+    })
+
+    response.catch(err => {
+      logger.error("Error creating submission.", err)
+      sendToast({
+        variant: "error",
+        message: "Something went wrong.",
+      })
+      throw err
+    })
+
+    return response
+  }
 
   const updateSubmission = (
     values: UpdateSubmissionMutationInput
@@ -84,18 +129,22 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     })
 
     response.catch(err => {
+      logger.error("Error updating submission.", err)
       sendToast({
         variant: "error",
-        message: err.message ?? "Something went wrong.",
+        message: "Something went wrong.",
       })
+      throw err
     })
 
     return response
   }
 
   const actions = {
-    goToPreviousStep: handlePrev,
-    goToNextStep: handleNext,
+    goToPreviousStep,
+    goToNextStep,
+    finishFlow,
+    createSubmission,
     updateSubmission,
   }
 

@@ -2,13 +2,13 @@ import Cookies from "cookies-js"
 import { renderHook } from "@testing-library/react-hooks"
 import { useSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn().mockImplementation(() => ({ match: { location: {} } })),
 }))
 
-jest.mock("System/useSystemContext", () => ({
+jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: () => ({ user: { id: "example" } }),
 }))
 

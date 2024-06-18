@@ -14,11 +14,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EntityTooltipArtistQuery } from "__generated__/EntityTooltipArtistQuery.graphql"
 import { EntityTooltipArtist_artist$data } from "__generated__/EntityTooltipArtist_artist.graphql"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useTracking } from "react-tracking"
 import { ActionType, ClickedTooltip } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface EntityTooltipArtistProps {
   artist: EntityTooltipArtist_artist$data

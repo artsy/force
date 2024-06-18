@@ -8,7 +8,7 @@ const mockUseMutation = useMutation as jest.Mock
 const submitMutation = jest.fn()
 const mockRouterPush = jest.fn()
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: { params: { partnerOfferID: "123" } },
     router: {

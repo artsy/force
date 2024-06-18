@@ -1,4 +1,4 @@
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { Environment } from "react-relay"
 
 /**
@@ -17,7 +17,11 @@ declare module "found-relay" {
 declare module "found" {
   interface Matcher {
     matchRoutes: (routes: any, to: string | null | undefined) => any
-    routeConfig: AppRouteConfig[]
+    routeConfig: RouteProps[]
+  }
+
+  interface MatcherResult {
+    elements: any[] | undefined | null
   }
 
   interface RouteRenderArgs {

@@ -6,7 +6,7 @@ import { useCreateCollection } from "Apps/CollectorProfile/Routes/Saves/Componen
 import { FC } from "react"
 import { useTracking } from "react-tracking"
 import { ActionType, CreatedArtworkList } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ArtworkListForm,
   ArtworkListFormikValues,
@@ -16,7 +16,7 @@ import {
   ArtworkModalHeaderInfo,
   ArtworkModalHeaderInfoEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkModalHeaderInfo"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export interface ArtworkList {
   internalID: string

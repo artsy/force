@@ -17,7 +17,7 @@ import {
   SubGroupStatus,
 } from "__generated__/PreferencesApp_viewer.graphql"
 import { useEditNotificationPreferences } from "./useEditNotificationPreferences"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { MetaTags } from "Components/MetaTags"
 
 export const parseTokenFromRouter = (router): string => {

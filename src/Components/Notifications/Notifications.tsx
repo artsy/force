@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { DateTime } from "luxon"
 import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import { NotificationsWrapperProps } from "./NotificationsWrapper"
 import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
