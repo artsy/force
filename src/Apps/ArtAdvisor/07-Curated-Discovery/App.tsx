@@ -5,8 +5,8 @@ import { Interests } from "./Components/Interests"
 import { Goals } from "./Components/Goals"
 
 export type State = {
-  goals: string[]
-  goalsFreeText: string
+  goal: string
+  goalFreeText: string
   interests: string[]
   interestsFreeText: string
   artists: string[]
@@ -14,8 +14,8 @@ export type State = {
 }
 
 const initialState: State = {
-  goals: [],
-  goalsFreeText: "",
+  goal: "",
+  goalFreeText: "",
   interests: [],
   interestsFreeText: "",
   artists: [],
@@ -24,10 +24,10 @@ const initialState: State = {
 
 export type Action =
   | { type: "RESET" }
-  // goals
-  | { type: "TOGGLE_GOAL"; goal: string }
-  | { type: "CLEAR_GOALS" }
-  | { type: "SET_FREETEXT_GOALS"; text: string }
+  // goal
+  | { type: "SET_GOAL"; goal: string }
+  | { type: "CLEAR_GOAL" }
+  | { type: "SET_FREETEXT_GOAL"; text: string }
   // interests
   | { type: "TOGGLE_INTEREST"; interest: string }
   | { type: "CLEAR_INTERESTS" }
@@ -42,15 +42,12 @@ function reducer(state: State, action: Action): State {
     case "RESET":
       return initialState
 
-    case "TOGGLE_GOAL":
-      const goals = state.goals.includes(action.goal)
-        ? state.goals.filter(goal => goal !== action.goal)
-        : [...state.goals, action.goal]
-      return { ...state, goals }
-    case "CLEAR_GOALS":
-      return { ...state, goals: [] }
-    case "SET_FREETEXT_GOALS":
-      return { ...state, goalsFreeText: action.text }
+    case "SET_GOAL":
+      return { ...state, goal: action.goal }
+    case "CLEAR_GOAL":
+      return { ...state, goal: "" }
+    case "SET_FREETEXT_GOAL":
+      return { ...state, goalFreeText: action.text }
 
     case "TOGGLE_INTEREST":
       const interests = state.interests.includes(action.interest)

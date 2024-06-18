@@ -32,14 +32,14 @@ export const Goals: FC<GoalsProps> = props => {
           <SuggestionPill
             key={suggestion}
             suggestion={suggestion}
-            selected={state.goals.includes(suggestion)}
-            onClick={() => dispatch({ type: "TOGGLE_GOAL", goal: suggestion })}
+            selected={state.goal === suggestion}
+            onClick={() => dispatch({ type: "SET_GOAL", goal: suggestion })}
           />
         ))}
         <SuggestionPill
           suggestion={"Not sure"}
-          selected={state.goals.includes("Not sure")}
-          onClick={() => dispatch({ type: "CLEAR_GOALS" })}
+          selected={state.goal.includes("Not sure")}
+          onClick={() => dispatch({ type: "CLEAR_GOAL" })}
         />
       </Flex>
 
@@ -49,7 +49,7 @@ export const Goals: FC<GoalsProps> = props => {
         placeholder="Choose from above, or tell us more…"
         onChange={e => {
           const text = e.value
-          dispatch({ type: "SET_FREETEXT_GOALS", text })
+          dispatch({ type: "SET_FREETEXT_GOAL", text })
         }}
       />
     </Box>
