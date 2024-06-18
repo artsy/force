@@ -133,6 +133,7 @@ export const ArtworkApp: React.FC<Props> = props => {
       isOfferable,
       isAcquireable,
       visibilityLevel,
+      saleMessage,
     } = artwork
     const path = window.location.pathname
 
@@ -144,6 +145,7 @@ export const ArtworkApp: React.FC<Props> = props => {
         path,
         price_listed: !!listPrice,
         visibility_level: visibilityLevel,
+        price_display: saleMessage,
         url: getENV("APP_URL") + path,
       }
 
@@ -435,6 +437,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
           slug
           extendedBiddingIntervalMinutes
         }
+        saleMessage
         artists {
           id
           internalID
