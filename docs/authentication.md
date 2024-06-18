@@ -93,38 +93,65 @@ Alternatively, you can try using [a Review
 App](https://github.com/artsy/force/blob/main/docs/creating_review_app.md#accessing-the-review-app),
 but that approach seems to offer mixed results.
 
-Here's how to make Google auth work with local Force app:
+Here are the steps on how to make Google auth work with your local Force app using either ngrok or Tunnelmole:
 
-- Set up an Internet-facing URL for local Force app.
-  As mentioned, you can use ngrok.
-  Sign up for a free ngrok account. And create an auth token.
-  Launch local Force which listens on port 5000.
-  Run ngrok:
+- Set up an Internet-facing URL for your local Force app.
 
-  ```
-  brew install ngrok
-  ngrok config add-authtoken <your-ngrok-auth-token>
-  ngrok http 5000
-  ```
+  As previously mentioned, you can use [ngrok](https://ngrok.com/), a popular closed source tunnelling tool. Alternatively, you can use [Tunnelmole](https://github.com/robbie-cahill/tunnelmole-client), an open source tunneling tool.
 
-  You will see an ngrok url like this one:
+  For ngrok:
+  1. Sign up for a free ngrok account and create an auth token.
+  2. Launch your local Force app, which listens on port 5000.
+  3. Install and run ngrok using the below commands:
 
-  ```
-  https://4dfe-71-247-23-28.ngrok.io -> http://localhost:5000
-  ```
+     ```bash
+     brew install ngrok
+     ngrok config add-authtoken <your-ngrok-auth-token>
+     ngrok http 5000
+     ```
 
-  Visiting that public URL should load your local Force app.
+     You will see an ngrok URL like this:
 
-- Register your ngrok URL on Google Cloud Platform as callback
+     ```
+     https://4dfe-71-247-23-28.ngrok.io -> http://localhost:5000
+     ```
+
+     Visiting that public URL should load your local Force app.
+
+  For Tunnelmole:
+  1. Install Tunnelmole with one of the following options depending on your OS:
+
+     - NPM:  `npm install -g tunnelmole`
+     - Linux: `curl -s https://tunnelmole.com/sh/install-linux.sh | sudo bash`
+     - Mac:  `curl -s https://tunnelmole.com/sh/install-mac.sh --output install-mac.sh && sudo bash install-mac.sh`
+     - Windows: Install with NPM, or if you do not have NodeJS installed, download the `exe` file for Windows [here](https://tunnelmole.com/downloads/tmole.exe) and put it somewhere in your PATH.
+
+  2. Launch your local Force app, which listens on port 5000.
+  3. Run Tunnelmole:
+
+     ```
+     tmole 5000
+     ```
+
+     You will see a Tunnelmole URL like this:
+
+     ```
+     http://bvdo5f-ip-49-183-170-144.tunnelmole.net -> http://localhost:5000
+     https://bvdo5f-ip-49-183-170-144.tunnelmole.net -> http://localhost:5000
+     ```
+
+     Visiting that public URL should load your local Force app.
+
+- Register your ngrok or Tunnelmole URL on Google Cloud Platform as callback
   - Log into Google Cloud Platform using the creds in 1Pass `GMail` card.
-  - In GCP `Console`, select `API Project` from upper left.
-  - Click the "Hamburger" at upper left, which shows left sidebar.
+  - In GCP `Console`, select `API Project` from the top left.
+  - Click the "Hamburger" at the top left, which shows the left sidebar.
   - Click `API & Services > Credentials`
   - Under `OAuth 2.0 Client IDs`, click edit for `Force Staging`
-  - Add the ngrok URL under `Authorized JavaScript origins`
-  - Add the ngrok URL under `Authorized redirect URIs`, with `/users/auth/google/callback` appended
+  - Add the ngrok or Tunnelmole URL under `Authorized JavaScript origins`
+  - Add the ngrok or Tunnelmole URL under `Authorized redirect URIs`, with `/users/auth/google/callback` appended
   - Save
-- Override your local `APP_URL` var to be the ngrok URL. Restart Force. `GOOGLE_CLIENT_ID` and `GOOGLE_SECRET` are also required but they should already be in shared env.
+- Override your local `APP_URL` var to be the ngrok or Tunnelmole URL. Restart Force. `GOOGLE_CLIENT_ID` and `GOOGLE_SECRET` are also required but they should already be in shared env.
 
 ## Adding a New Provider
 
