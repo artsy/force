@@ -16,6 +16,7 @@ import { PurchaseHistoryRoute_submission$key } from "__generated__/PurchaseHisto
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { graphql, useFragment } from "react-relay"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { PROVENANCE_LIST } from "Apps/Sell/Utils/formUtils"
 
 const FRAGMENT = graphql`
   fragment PurchaseHistoryRoute_submission on ConsignmentSubmission {
@@ -28,18 +29,6 @@ const Schema = Yup.object().shape({
   provenance: Yup.string().trim(),
   signature: Yup.boolean().nullable(),
 })
-
-export const PROVENANCE_LIST = [
-  "Purchased directly from gallery",
-  "Purchased directly from artist",
-  "Purchased at auction",
-  "Gift from the artist",
-  "Other",
-  "I don’t know",
-].map(provenance => ({
-  value: provenance,
-  text: provenance,
-}))
 
 interface FormValues {
   provenance: string
