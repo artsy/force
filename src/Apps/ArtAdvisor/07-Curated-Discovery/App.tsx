@@ -2,10 +2,12 @@ import { Box, Button, Join, Spacer, Text } from "@artsy/palette"
 import { FC, useReducer } from "react"
 import { Interests } from "./Components/Interests"
 import { Goals } from "./Components/Goals"
+import { Budget } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Budget"
 
 export type State = {
   goal: string
   goalFreeText: string
+  budget: string
   interests: string[]
   interestsFreeText: string
 }
@@ -13,6 +15,7 @@ export type State = {
 const initialState: State = {
   goal: "",
   goalFreeText: "",
+  budget: "",
   interests: [],
   interestsFreeText: "",
 }
@@ -23,6 +26,8 @@ export type Action =
   | { type: "SET_GOAL"; goal: string }
   | { type: "CLEAR_GOAL" }
   | { type: "SET_FREETEXT_GOAL"; text: string }
+  // budget
+  | { type: "SET_BUDGET"; text: string }
   // interests
   | { type: "TOGGLE_INTEREST"; interest: string }
   | { type: "CLEAR_INTERESTS" }
@@ -72,6 +77,7 @@ export const App: FC = () => {
 
       <Join separator={<Spacer y={2} />}>
         <Goals state={state} dispatch={dispatch} />
+        <Budget state={state} dispatch={dispatch} />
         <Interests state={state} dispatch={dispatch} />
 
         <Button
