@@ -4,11 +4,37 @@ import { State, Action } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
 import { SuggestionPill } from "./SuggestionPill"
 
 export const INTERESTS = [
+  // movements
+  "Contemporary Art",
+  "Emerging Art",
+  "Post-War Art",
   "Abstract Art",
-  "Minimalist Art",
   "Figurative Art",
+  "Minimalist Art",
   "Pop Art",
+  "Impressionist and Modern Art",
   "Street Art",
+  // mediums
+  "Painting",
+  "Prints",
+  "Works on Paper",
+  "Photography",
+  "Sculpture",
+  "Ceramics",
+  "Textile Art",
+  "Design Objects and Furniture",
+  // artist segments
+  "Emerging artists",
+  "Critically acclaimed",
+  "Blue chip",
+  "New & Noteworthy",
+  "Trending Emerging",
+  "Street & urban artists",
+  "Ultra-high demand",
+  // passions
+  "Social issues",
+  "Supporting local galleries",
+  "Investment",
 ]
 
 interface InterestsProps {
@@ -38,11 +64,6 @@ export const Interests: FC<InterestsProps> = props => {
             }
           />
         ))}
-        <SuggestionPill
-          suggestion={"Not sure"}
-          selected={state.interests.includes("Not sure")}
-          onClick={() => dispatch({ type: "CLEAR_INTERESTS" })}
-        />
       </Flex>
 
       <Spacer y={1} />
