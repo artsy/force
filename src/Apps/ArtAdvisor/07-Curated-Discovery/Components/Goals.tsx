@@ -1,4 +1,4 @@
-import { Box, Flex, Spacer, Text, TextArea } from "@artsy/palette"
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 import { State, Action } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
 import { SuggestionPill } from "./SuggestionPill"
@@ -9,6 +9,7 @@ export const GOALS = [
   "Expand my collection",
   "Buy some art",
   "Explore",
+  "I’m not sure",
 ]
 
 interface GoalsProps {
@@ -36,22 +37,7 @@ export const Goals: FC<GoalsProps> = props => {
             onClick={() => dispatch({ type: "SET_GOAL", goal: suggestion })}
           />
         ))}
-        <SuggestionPill
-          suggestion={"Not sure"}
-          selected={state.goal.includes("Not sure")}
-          onClick={() => dispatch({ type: "CLEAR_GOAL" })}
-        />
       </Flex>
-
-      <Spacer y={1} />
-
-      <TextArea
-        placeholder="Choose from above, or tell us more…"
-        onChange={e => {
-          const text = e.value
-          dispatch({ type: "SET_FREETEXT_GOAL", text })
-        }}
-      />
     </Box>
   )
 }

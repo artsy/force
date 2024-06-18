@@ -24,8 +24,6 @@ export type Action =
   | { type: "RESET" }
   // goal
   | { type: "SET_GOAL"; goal: string }
-  | { type: "CLEAR_GOAL" }
-  | { type: "SET_FREETEXT_GOAL"; text: string }
   // budget
   | { type: "SET_BUDGET"; text: string }
   // interests
@@ -40,10 +38,9 @@ function reducer(state: State, action: Action): State {
 
     case "SET_GOAL":
       return { ...state, goal: action.goal }
-    case "CLEAR_GOAL":
-      return { ...state, goal: "" }
-    case "SET_FREETEXT_GOAL":
-      return { ...state, goalFreeText: action.text }
+
+    case "SET_BUDGET":
+      return { ...state, budget: action.text }
 
     case "TOGGLE_INTEREST":
       const interests = state.interests.includes(action.interest)
