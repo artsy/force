@@ -13,7 +13,7 @@ import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResult
 import { categoryMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"
 import { sizeMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter"
 import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { filterSearchFilters } from "Apps/PriceDatabase/Utils/filterSearchFilters"
 import { PriceDatabaseArtistAutosuggest } from "./PriceDatabaseArtistAutosuggest"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"

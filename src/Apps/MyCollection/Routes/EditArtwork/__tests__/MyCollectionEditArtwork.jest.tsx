@@ -7,12 +7,12 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { createMockEnvironment } from "relay-test-utils"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Breakpoint } from "Utils/Responsive"
 import { CleanRelayFragment } from "Utils/typeSupport"
 import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 
-jest.mock("System/useSystemContext")
+jest.mock("System/Hooks/useSystemContext")
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
@@ -27,7 +27,7 @@ const mockDeleteArtwork = jest.fn().mockResolvedValue({
   },
 })
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     router: {
       push: mockRouterPush,

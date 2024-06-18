@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Join, media, Spacer, Text } from "@artsy/palette"
 import { compact } from "lodash"
 import styled from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export interface PartnerArtistListProps {
   partner: PartnerArtistList_partner$data

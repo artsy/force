@@ -2,10 +2,10 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MyBidsBidHeader_sale$data } from "__generated__/MyBidsBidHeader_sale.graphql"
 import { Box, Image, Text, Spacer } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
 import { ContextModule, clickedEntityGroup, OwnerType } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface MyBidsBidHeaderProps {
   sale: MyBidsBidHeader_sale$data

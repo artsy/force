@@ -13,9 +13,9 @@ import {
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { TopContextBar } from "Components/TopContextBar"
 import { trackEvent } from "Server/analytics/helpers"
-import { RouterLink } from "System/Router/RouterLink"
-import { useRouter } from "System/Router/useRouter"
-import { useSystemContext } from "System/useSystemContext"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { ArtworkDetails_me$data } from "__generated__/ArtworkDetails_me.graphql"
@@ -338,7 +338,7 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
           internalID
           name
         }
-        location {
+        collectorLocation {
           city
           country
           state

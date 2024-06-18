@@ -5,7 +5,7 @@ import { graphql } from "react-relay"
 import { ArtworkSidebarPrivateArtworkQuery } from "__generated__/ArtworkSidebarPrivateArtworkQuery.graphql"
 
 jest.unmock("react-relay")
-jest.mock("System/useFeatureFlag", () => {
+jest.mock("System/Hooks/useFeatureFlag", () => {
   return {
     useFeatureFlag: jest.fn().mockReturnValue(true),
   }
@@ -55,7 +55,7 @@ describe("ArtworkSidebarPrivateArtwork", () => {
         return {
           visibilityLevel: "UNLISTED",
         }
-      }
+      },
     })
 
     const link = screen.getByRole("link", { name: /Commerce Test Partner/i })

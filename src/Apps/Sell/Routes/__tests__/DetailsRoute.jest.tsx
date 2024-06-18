@@ -3,7 +3,7 @@ import { DetailsRoute } from "Apps/Sell/Routes/DetailsRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { DetailsRoute_Test_Query$rawResponse } from "__generated__/DetailsRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
@@ -14,7 +14,7 @@ const mockReplace = jest.fn()
 let submitMutation: jest.Mock
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 jest.mock("Utils/Hooks/useMutation")
@@ -124,7 +124,7 @@ describe("DetailsRoute", () => {
         '/sell2/submissions/<mock-value-for-field-"externalId">/photos'
       )
 
-      expect(submitMutation).not.toHaveBeenCalledWith(
+      expect(submitMutation).toHaveBeenCalledWith(
         expect.objectContaining({
           variables: {
             input: {

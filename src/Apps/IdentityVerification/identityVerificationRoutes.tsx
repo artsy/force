@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 
 const IdentityVerificationApp = loadable(
@@ -26,7 +26,7 @@ const Error = loadable(
   }
 )
 
-export const identityVerificationRoutes: AppRouteConfig[] = [
+export const identityVerificationRoutes: RouteProps[] = [
   {
     path: "/identity-verification/processing",
     getComponent: () => Processing,

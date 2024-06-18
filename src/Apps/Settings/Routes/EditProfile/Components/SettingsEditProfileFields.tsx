@@ -23,7 +23,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditProfileFields_me.graphql"
 import { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
 import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
 import createLogger from "Utils/logger"
@@ -137,8 +137,8 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
               <SettingsEditProfileImageRefetchContainer me={me} />
 
               <Input
-                title="Full name"
-                placeholder="Full name"
+                title="Name"
+                placeholder="Name"
                 name="name"
                 required
                 maxLength={256}

@@ -1,6 +1,6 @@
 import { Box } from "@artsy/palette"
 import { FullBleedBanner } from "Components/FullBleedBanner"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const FooterBanner: React.FC = () => {
   return (

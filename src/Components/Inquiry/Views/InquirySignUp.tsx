@@ -26,13 +26,13 @@ import {
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useMode } from "Utils/Hooks/useMode"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import {
   Screen,
   useInquiryAccountContext,
 } from "Components/Inquiry/Views/InquiryAccount"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 type Mode = "Pending" | "Loading" | "Error" | "Done" | "Success"
 

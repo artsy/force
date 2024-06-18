@@ -3,14 +3,14 @@ import {
   AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { waitFor } from "@testing-library/react"
 import { throttle } from "lodash"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
-jest.mock("System/useFeatureFlag")
+jest.mock("System/Hooks/useFeatureFlag")
 jest.mock("Utils/getENV")
 jest.mock("lodash/throttle", () => jest.fn(fn => fn))
 

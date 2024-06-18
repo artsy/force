@@ -15,7 +15,7 @@ import GridItem from "Components/Artwork/GridItem"
 import { extractNodes } from "Utils/extractNodes"
 import { ShowsCurrentShow_show$data } from "__generated__/ShowsCurrentShow_show.graphql"
 import { Masonry } from "Components/Masonry"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface ShowsCurrentShowProps {
   show: ShowsCurrentShow_show$data

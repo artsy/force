@@ -2,11 +2,11 @@ import { Box, Text, GridColumns, Column, Spacer } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 import * as React from "react"
-import { MenuData, SimpleLinkData } from "Components/NavBar/menuData"
+import { MenuData } from "Components/NavBar/menuData"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface NavBarSubMenuProps {
   menu: MenuData
@@ -44,7 +44,9 @@ export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
     DeprecatedAnalyticsSchema.ContextModule.HeaderArtistsDropdown
 
   const lastMenuLinkIndex = menu.links.length - 1
-  const lastMenuItem = menu.links[lastMenuLinkIndex] as SimpleLinkData
+  const lastMenuItem = menu.links[lastMenuLinkIndex]
+  const viewAllMenuItem =
+    !("links" in lastMenuItem) && "href" in lastMenuItem ? lastMenuItem : null
 
   return (
     <Text width="100vw" variant={["xs", "xs", "sm"]} onClick={onClick}>
@@ -107,9 +109,11 @@ export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
                   })}
                 </Box>
 
-                <NavBarMenuItemLink to={lastMenuItem.href}>
-                  {lastMenuItem.text}
-                </NavBarMenuItemLink>
+                {viewAllMenuItem && (
+                  <NavBarMenuItemLink to={viewAllMenuItem.href}>
+                    {viewAllMenuItem.text}
+                  </NavBarMenuItemLink>
+                )}
               </Column>
 
               {isArtistsDropdown && (

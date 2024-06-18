@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
@@ -107,7 +107,7 @@ const AuctionResultRoute = loadable(
   { resolveComponent: component => component.AuctionResultFragmentContainer }
 )
 
-export const artistRoutes: AppRouteConfig[] = [
+export const artistRoutes: RouteProps[] = [
   {
     path: "/artist/:artistID",
     ignoreScrollBehaviorBetweenChildren: true,

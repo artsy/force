@@ -11,7 +11,7 @@ import {
 import CloseIcon from "@artsy/icons/CloseIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { NavBarSubMenu } from "./Menus"
@@ -20,6 +20,7 @@ import {
   NavBarMobileMenuIcon,
 } from "./NavBarMobileMenu/NavBarMobileMenu"
 import {
+  WHATS_NEW_SUBMENU_DATA,
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
@@ -29,8 +30,8 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { Z } from "Apps/Components/constants"
 import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
-import { RouterLink } from "System/Router/RouterLink"
-import { useRouter } from "System/Router/useRouter"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
 import Events from "Utils/Events"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useTranslation } from "react-i18next"
@@ -50,6 +51,7 @@ import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { SearchBar } from "Components/Search/SearchBar"
 import { NavBarMobileMenuProfile } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuProfile"
+import styled from "styled-components"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -75,9 +77,6 @@ export const NavBar: React.FC = track(
   const [mode, setMode] = useState<"Idle" | "Search" | "Profile" | "More">(
     "Idle"
   )
-
-  // const [showMobileMenu, toggleMobileNav] = useState(false)
-  // const [searchFocused, setSearchFocused] = useState(false)
 
   const xs = __internal__useMatchMedia(THEME.mediaQueries.xs)
   const sm = __internal__useMatchMedia(THEME.mediaQueries.sm)
@@ -366,6 +365,47 @@ export const NavBar: React.FC = track(
                   offset={0}
                   dropdown={({ setVisible }) => (
                     <NavBarSubMenu
+                      menu={WHATS_NEW_SUBMENU_DATA.menu}
+                      contextModule={
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderWhatsNewDropdown
+                      }
+                      onClick={() => setVisible(false)}
+                    />
+                  )}
+                >
+                  {({ anchorRef, anchorProps, visible, setVisible }) => (
+                    <NavBarItemButton
+                      ref={anchorRef as any}
+                      px={0}
+                      pr={1}
+                      active={visible}
+                      {...anchorProps}
+                    >
+                      <NavBarItemUnfocusableAnchor
+                        href="/collection/new-this-week"
+                        onClick={event => {
+                          handleClick(event)
+
+                          // Small timeout to avoid transition race condition
+                          setTimeout(() => {
+                            setVisible(false)
+                          }, 100)
+                        }}
+                        data-label={WHATS_NEW_SUBMENU_DATA.text}
+                      />
+                      {WHATS_NEW_SUBMENU_DATA.text}
+                    </NavBarItemButton>
+                  )}
+                </Dropdown>
+
+                <Dropdown
+                  zIndex={Z.dropdown}
+                  keepInDOM
+                  placement="bottom"
+                  offset={0}
+                  dropdown={({ setVisible }) => (
+                    <NavBarSubMenu
                       menu={ARTISTS_SUBMENU_DATA.menu}
                       contextModule={
                         DeprecatedAnalyticsSchema.ContextModule
@@ -378,8 +418,6 @@ export const NavBar: React.FC = track(
                   {({ anchorRef, anchorProps, visible, setVisible }) => (
                     <NavBarItemButton
                       ref={anchorRef as any}
-                      px={0}
-                      pr={1}
                       active={visible}
                       {...anchorProps}
                     >
@@ -479,13 +517,13 @@ export const NavBar: React.FC = track(
                   {t`navbar.shows`}
                 </NavBarItemLink>
 
-                <NavBarItemLink
+                <NavBarItemInstitutionsLink
                   href="/institutions"
                   onClick={handleClick}
                   data-label="Institutions"
                 >
                   {t`navbar.museums`}
-                </NavBarItemLink>
+                </NavBarItemInstitutionsLink>
               </Flex>
             </Text>
           </HorizontalPadding>
@@ -509,3 +547,10 @@ export const NavBar: React.FC = track(
     </>
   )
 })
+
+const NavBarItemInstitutionsLink = styled(NavBarItemLink)`
+  // Can no longer fit on screen @ 900px
+  @media (max-width: 900px) {
+    display: none;
+  }
+`

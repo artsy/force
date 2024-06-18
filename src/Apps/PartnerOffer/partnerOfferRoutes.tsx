@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const PartnerOfferCheckoutRoute = loadable(
   () =>
@@ -11,7 +11,7 @@ const PartnerOfferCheckoutRoute = loadable(
   }
 )
 
-export const partnerOfferRoutes: AppRouteConfig[] = [
+export const partnerOfferRoutes: RouteProps[] = [
   {
     path: "/partner-offer/:partnerOfferID/checkout",
     getComponent: () => PartnerOfferCheckoutRoute,

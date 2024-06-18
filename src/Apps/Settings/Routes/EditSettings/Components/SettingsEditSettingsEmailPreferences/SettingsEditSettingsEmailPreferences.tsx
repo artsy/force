@@ -1,6 +1,6 @@
 import { Button, Text } from "@artsy/palette"
 import { FC } from "react"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const SettingsEditSettingsEmailPreferences: FC = () => {
   return (

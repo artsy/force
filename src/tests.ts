@@ -37,6 +37,10 @@ jest.mock("Components/CookieConsentManager/CookieConsentManager", () => ({
   CookieConsentManager: ({ children }) => children,
 }))
 
+jest.mock("routes", () => ({
+  getAppRoutes: () => [],
+}))
+
 /**
  * We want each test to have assertions, otherwise it’s too easy to write async
  * tests that never end up making any, leading to false positives.

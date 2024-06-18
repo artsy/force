@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const CurrentAuctionsPaginationContainer = loadable(
   () =>
@@ -49,7 +49,7 @@ const ArtworksRoute = loadable(
   }
 )
 
-export const auctionsRoutes: AppRouteConfig[] = [
+export const auctionsRoutes: RouteProps[] = [
   {
     path: "/auctions",
     ignoreScrollBehaviorBetweenChildren: true,

@@ -2,9 +2,11 @@ import * as React from "react"
 import * as Yup from "yup"
 import { DimensionsRoute_submission$key } from "__generated__/DimensionsRoute_submission.graphql"
 import {
-  BorderedRadio,
+  Column,
+  GridColumns,
   Input,
   Join,
+  Radio,
   RadioGroup,
   Spacer,
   Text,
@@ -14,6 +16,7 @@ import { Formik } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 const FRAGMENT = graphql`
   fragment DimensionsRoute_submission on ConsignmentSubmission {
@@ -28,7 +31,7 @@ const Schema = Yup.object().shape({
   width: Yup.string().trim(),
   height: Yup.string().trim(),
   depth: Yup.string().trim(),
-  dimensionsMetric: Yup.string().trim(),
+  dimensionsMetric: Yup.string().required().trim(),
 })
 
 interface FormValues {
@@ -45,6 +48,8 @@ interface DimensionsRouteProps {
 export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
   const { actions } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
+  const { userPreferences } = useSystemContext()
+  const userPreferredMetric = userPreferences?.metric
 
   const onSubmit = async (values: FormValues) => {
     return actions.updateSubmission(values)
@@ -54,7 +59,8 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
     height: submission.height ?? "",
     width: submission.width ?? "",
     depth: submission.depth ?? "",
-    dimensionsMetric: submission.dimensionsMetric ?? "in",
+    dimensionsMetric:
+      submission.dimensionsMetric ?? userPreferredMetric ?? "in",
   }
 
   return (
@@ -69,34 +75,57 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
           <Text mb={2} variant="xl">
             Artwork dimensions
           </Text>
-          <RadioGroup
-            onSelect={option => setFieldValue("dimensionsMetric", option)}
-            defaultValue={values.dimensionsMetric}
-          >
-            <BorderedRadio value="in" label="in" />
-            <BorderedRadio value="cm" label="cm" />
-          </RadioGroup>
-          <Spacer y={2} />
-          <Join separator={<Spacer y={2} />}>
-            <Input
-              onChange={handleChange}
-              name="width"
-              title="Width"
-              defaultValue={values.width}
-            ></Input>
-            <Input
-              onChange={handleChange}
-              name="height"
-              title="Height"
-              defaultValue={values.height}
-            ></Input>
-            <Input
-              onChange={handleChange}
-              name="depth"
-              title="Depth"
-              defaultValue={values.depth}
-            ></Input>
+
+          <Join separator={<Spacer y={4} />}>
+            <GridColumns>
+              <Column span={[4, 3]}>
+                <RadioGroup
+                  flexDirection="row"
+                  onSelect={option => setFieldValue("dimensionsMetric", option)}
+                  defaultValue={values.dimensionsMetric}
+                  justifyContent="space-between"
+                  data-testid="dimensionsMetric-radio"
+                >
+                  <Radio value="cm" label="cm" />
+                  <Spacer x={2} />
+                  <Radio value="in" label="in" />
+                </RadioGroup>
+              </Column>
+            </GridColumns>
+
+            <GridColumns>
+              <Column span={[6, 6]}>
+                <Input
+                  onChange={handleChange}
+                  name="width"
+                  title="Width"
+                  defaultValue={values.width || ""}
+                  data-testid="width-input"
+                />
+              </Column>
+
+              <Column span={[6, 6]}>
+                <Input
+                  onChange={handleChange}
+                  name="height"
+                  title="Height"
+                  defaultValue={values.height || ""}
+                  data-testid="height-input"
+                />
+              </Column>
+
+              <Column span={[6, 6]}>
+                <Input
+                  onChange={handleChange}
+                  name="depth"
+                  title="Depth"
+                  defaultValue={values.depth || ""}
+                  data-testid="depth-input"
+                />
+              </Column>
+            </GridColumns>
           </Join>
+
           <DevDebug />
         </SubmissionLayout>
       )}

@@ -4,7 +4,7 @@ import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairBoothRail_show$data } from "__generated__/FairBoothRail_show.graphql"
 import { FairBoothRailArtworksQueryRenderer as FairBoothRailArtworks } from "./FairBoothRailArtworks"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
@@ -13,7 +13,7 @@ import {
   OwnerType,
   PageOwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   initialBoothFilterState,
   useBoothsFilterContext,
@@ -23,7 +23,7 @@ import {
   removeDefaultValues,
 } from "Components/ArtworkFilter/Utils/urlBuilder"
 import qs from "qs"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 interface FairBoothRailProps extends BoxProps {
   show: FairBoothRail_show$data

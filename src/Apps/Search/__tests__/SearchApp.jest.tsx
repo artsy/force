@@ -1,4 +1,4 @@
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { MockBoot } from "DevTools/MockBoot"
 import { SearchApp_Test_Query } from "__generated__/SearchApp_Test_Query.graphql"
 import { SearchAppFragmentContainer as SearchApp } from "Apps/Search/SearchApp"
@@ -7,7 +7,7 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

@@ -4,8 +4,8 @@ import { redirects } from "Apps/Order/redirects"
 import { ErrorPage } from "Components/ErrorPage"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { RouteProps } from "System/Router/Route"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const RespondRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Respond"),
@@ -102,7 +102,7 @@ const OrderApp = loadable(
 
 // FIXME:
 // * `render` functions requires casting
-export const orderRoutes: AppRouteConfig[] = [
+export const orderRoutes: RouteProps[] = [
   {
     // TODO: Still need order2?
     path: "/order(2|s)/:orderID",

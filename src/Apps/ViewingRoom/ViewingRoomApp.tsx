@@ -7,11 +7,11 @@ import { ViewingRoomTabBar } from "./Components/ViewingRoomTabBar"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomApp_viewingRoom$data } from "__generated__/ViewingRoomApp_viewingRoom.graphql"
 import { ViewingRoomMetaFragmentContainer as ViewingRoomMeta } from "./Components/ViewingRoomMeta"
-import { SystemContext } from "System/SystemContext"
+import { SystemContext } from "System/Contexts/SystemContext"
 import { userHasAccessToPartner } from "Utils/user"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import HideIcon from "@artsy/icons/HideIcon"
-import { Analytics } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 
 interface ViewingRoomAppProps {
   children: React.ReactNode

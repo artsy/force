@@ -27,7 +27,7 @@ import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { useTracking } from "react-tracking"
 import { getErrorDialogCopy } from "Apps/Order/Utils/getErrorDialogCopy"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
@@ -44,7 +44,7 @@ export interface NewPaymentProps {
   order: NewPayment_order$data
   me: NewPayment_me$data
   router: Router
-  route: AppRouteConfig
+  route: RouteProps
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean

@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
 import { RedirectException } from "found"
@@ -14,7 +14,7 @@ const ConversationApp = loadable(
   }
 )
 
-export const conversationsRoutes: AppRouteConfig[] = [
+export const conversationsRoutes: RouteProps[] = [
   {
     path: "/user/conversations", // Serves only as a redirect route
     layout: "FullBleed",

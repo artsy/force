@@ -9,7 +9,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { FC } from "react"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
 
 interface HomePersonalizeMoreCardProps extends BoxProps {

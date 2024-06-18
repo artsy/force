@@ -1,6 +1,6 @@
 import { Spacer, Text } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export const IdentityVerificationWarning: React.FC<{
   additionalText?: string

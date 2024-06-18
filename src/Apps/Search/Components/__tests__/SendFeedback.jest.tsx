@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { SendFeedback } from "Apps/Search/Components/SendFeedback"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("Utils/getENV", () => ({
@@ -14,7 +14,7 @@ jest.mock("Utils/getENV", () => ({
     return envs[name]
   },
 }))
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

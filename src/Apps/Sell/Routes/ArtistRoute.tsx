@@ -1,4 +1,4 @@
-import { Spacer, Text } from "@artsy/palette"
+import { Spacer, Text, useToasts } from "@artsy/palette"
 import {
   ArtistAutoComplete,
   AutocompleteArtist,
@@ -6,8 +6,9 @@ import {
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import { RouterLink } from "System/Router/RouterLink"
-import { useRouter } from "System/Router/useRouter"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import createLogger from "Utils/logger"
 import {
   ArtistRoute_submission$data,
   ArtistRoute_submission$key,
@@ -16,6 +17,8 @@ import { Formik, FormikProps } from "formik"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
+
+const logger = createLogger("ArtistRoute.tsx")
 
 const FRAGMENT = graphql`
   fragment ArtistRoute_submission on ConsignmentSubmission {
@@ -57,6 +60,7 @@ export const ArtistRoute: React.FC<{
 }> = ({ submission }) => {
   const { router } = useRouter()
   const { actions } = useSellFlowContext()
+  const { sendToast } = useToasts()
 
   const isNewSubmission = !submission?.internalID
 
@@ -72,14 +76,27 @@ export const ArtistRoute: React.FC<{
       return
     }
 
-    const response = await actions.createSubmission({
-      artistID: artist.internalID,
-    })
-    const submissionID =
-      response?.createConsignmentSubmission?.consignmentSubmission?.externalId
+    try {
+      const response = await actions.createSubmission({
+        artistID: artist.internalID,
+      })
 
-    router.replace(`/sell2/submissions/${submissionID}/artist`)
-    router.push(`/sell2/submissions/${submissionID}/title`)
+      const submissionID =
+        response?.createConsignmentSubmission?.consignmentSubmission?.externalId
+
+      if (!submissionID) {
+        sendToast({
+          variant: "error",
+          message: "Something went wrong.",
+        })
+        throw new Error("Submission ID not found.")
+      }
+
+      router.replace(`/sell2/submissions/${submissionID}/artist`)
+      router.push(`/sell2/submissions/${submissionID}/title`)
+    } catch (error) {
+      logger.error("Error creating submission.", error)
+    }
   }
 
   const updateSubmission = async (artist: AutocompleteArtist) => {
@@ -90,15 +107,26 @@ export const ArtistRoute: React.FC<{
       return
     }
 
-    await actions.updateSubmission({ artistID: artist.internalID })
-    actions.goToNextStep()
+    try {
+      await actions.updateSubmission({ artistID: artist.internalID })
+
+      actions.goToNextStep()
+    } catch (error) {
+      logger.error("Error submitting form", error)
+    }
   }
 
   const onSelect = async (
     artist: AutocompleteArtist,
     formik: FormikProps<FormValues>
   ) => {
-    if (!artist?.internalID) return
+    if (!artist?.internalID) {
+      sendToast({
+        variant: "error",
+        message: "Something went wrong.",
+      })
+      throw new Error("Artist not found.")
+    }
 
     const isTargetSupply = artist?.targetSupply?.isTargetSupply
     formik.setFieldValue("isTargetSupply", isTargetSupply)
@@ -133,7 +161,9 @@ export const ArtistRoute: React.FC<{
             onSelect={artist => {
               onSelect(artist, formik)
             }}
-            onError={() => console.error("something happened")}
+            onError={() =>
+              logger.error("Something went wrong while fetching artists.")
+            }
             showChevronIcon
             title="Artist"
           />

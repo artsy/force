@@ -8,10 +8,10 @@ import {
   Image,
   Clickable,
 } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { sanitizeURL } from "Utils/sanitizeURL"
+import { RouterLink } from "System/Components/RouterLink"
 
 export interface TopContextBarProps {
   displayBackArrow?: boolean

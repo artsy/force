@@ -14,8 +14,8 @@ import { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteS
 
 // utils, hooks, mutations and system tools
 import { extractNodes } from "Utils/extractNodes"
-import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import createLogger from "Utils/logger"
 import {
   CommitMutation,

@@ -20,7 +20,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { FragmentRefs } from "relay-runtime"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { Jump, useJump } from "Utils/Hooks/useJump"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 interface ShowsCityProps {
   viewer: ShowsCity_viewer$data

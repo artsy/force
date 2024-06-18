@@ -22,8 +22,10 @@ describe("AuctionInfoSidebar", () => {
   it("renders correct components", () => {
     const { wrapper } = getWrapper()
     expect(wrapper.find("LiveAuctionToolTip")).toHaveLength(1)
-    expect(wrapper.text()).toContain("How to bid on Artsy?")
+    expect(wrapper.text()).toContain("How to bid on Artsy")
     expect(wrapper.html()).toContain("/how-auctions-work")
     expect(wrapper.html()).toContain("mailto:specialist@artsy.net")
+    expect(wrapper.html()).toContain("/terms")
+    expect(wrapper.html()).toContain("/supplemental-cos")
   })
 })

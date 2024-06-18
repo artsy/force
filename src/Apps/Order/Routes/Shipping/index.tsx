@@ -8,8 +8,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useSystemContext } from "System/useSystemContext"
-import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { RouterLink } from "System/Components/RouterLink"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
 import {
   CommerceOrderFulfillmentTypeEnum,
@@ -90,12 +90,12 @@ import {
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import {
   AddressVerificationFlowQueryRenderer,
   AddressVerifiedBy,
 } from "Apps/Order/Components/AddressVerificationFlow"
-import { Analytics } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 import {
   ErrorDialogs,
   getErrorDialogCopy,

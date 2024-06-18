@@ -9,7 +9,7 @@ import {
   useToasts,
 } from "@artsy/palette"
 import * as React from "react"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { wait } from "Utils/wait"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import {
@@ -18,7 +18,7 @@ import {
 } from "Components/Inquiry/Hooks/useInquiryContext"
 import { logger } from "Components/Inquiry/util"
 import { useMode } from "Utils/Hooks/useMode"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 type Mode = "Pending" | "Sending" | "Error" | "Success"
 

@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 import { PriceDatabase } from "./PriceDatabase"
 
 const PriceDatabaseApp = loadable(
@@ -9,7 +9,7 @@ const PriceDatabaseApp = loadable(
   }
 )
 
-export const priceDatabaseRoutes: AppRouteConfig[] = [
+export const priceDatabaseRoutes: RouteProps[] = [
   {
     path: "/price-database",
     getComponent: () => PriceDatabase,

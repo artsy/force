@@ -5,7 +5,7 @@ import { NotificationTypeLabel } from "Components/Notifications/NotificationType
 import { PartnerShowOpenedNotification_notification$key } from "__generated__/PartnerShowOpenedNotification_notification.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { NotificationPartnerShow } from "Components/Notifications/NotificationPartnerShow"
 import { ContextModule } from "@artsy/cohesion"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"

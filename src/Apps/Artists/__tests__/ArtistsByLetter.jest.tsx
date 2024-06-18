@@ -7,7 +7,7 @@ import { graphql } from "react-relay"
 jest.unmock("react-relay")
 jest.mock("Components/Pagination/useComputeHref")
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({ match: { params: { letter: "a" } } }),
 }))
 

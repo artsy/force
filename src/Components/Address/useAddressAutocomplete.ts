@@ -1,6 +1,6 @@
 import { AutocompleteInputOptionType } from "@artsy/palette"
 import { Address } from "Components/Address/AddressForm"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { throttle, uniqBy } from "lodash"
@@ -11,7 +11,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 const THROTTLE_DELAY = 500
 

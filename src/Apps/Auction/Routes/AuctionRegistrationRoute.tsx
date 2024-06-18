@@ -4,7 +4,7 @@ import { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrat
 import { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
 import { Form, Formik } from "formik"
 import { CreditCardInputProvider } from "Components/CreditCardInput"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { useEffect } from "react"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"

@@ -1,8 +1,8 @@
 import { omit } from "lodash"
 import { useEffect, useRef } from "react"
 import { useOnboarding } from "Components/Onboarding"
-import { useSystemContext } from "System/useSystemContext"
-import { useRouter } from "System/Router/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useRouter } from "System/Hooks/useRouter"
 
 export const useOnboardingModal = () => {
   const { isLoggedIn } = useSystemContext()

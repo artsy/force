@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Stack, Text, Tooltip } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { CollectorProfileHeader_me$data } from "__generated__/CollectorProfileHeader_me.graphql"
 import MapPinIcon from "@artsy/icons/MapPinIcon"
 import ShieldIcon from "@artsy/icons/ShieldIcon"

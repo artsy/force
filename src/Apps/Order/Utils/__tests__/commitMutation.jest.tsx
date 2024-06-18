@@ -1,5 +1,5 @@
 import { commitMutationTest1Mutation } from "__generated__/commitMutationTest1Mutation.graphql"
-import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 import { mount } from "enzyme"
 import { graphql } from "react-relay"

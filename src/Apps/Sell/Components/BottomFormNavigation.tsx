@@ -1,63 +1,78 @@
-import { Box, Button, Flex, Link } from "@artsy/palette"
+import { Box, Button, Flex } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import { useRouter } from "System/Router/useRouter"
+import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
 
+const logger = createLogger("BottomFormNavigation.tsx")
+
 export const BottomFormNavigation = () => {
-  const { isValid, isSubmitting, submitForm } = useFormikContext()
-  const { router } = useRouter()
+  return (
+    <Flex
+      width="100%"
+      p={[2, 4]}
+      flexDirection="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <BottomFormBackButton />
+      <BottomFormNextButton />
+    </Flex>
+  )
+}
+
+const BottomFormBackButton = () => {
+  const { isSubmitting, submitForm } = useFormikContext()
   const {
     actions,
-    state: { isFirstStep, isLastStep, submissionID },
+    state: { isFirstStep },
   } = useSellFlowContext()
 
-  const onContinue = async () => {
-    await submitForm()
+  const onBack = async () => {
+    try {
+      await submitForm()
 
-    actions.goToNextStep()
+      actions.goToPreviousStep()
+    } catch (error) {
+      logger.error("Error submitting form", error)
+    }
   }
 
-  const onSubmit = async () => {
-    await submitForm()
-
-    router.push(`/sell2/submissions/${submissionID}/thank-you`)
+  if (isFirstStep) {
+    return <Box />
   }
 
   return (
-    <>
-      <Flex
-        width="100%"
-        p={[2, 4]}
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        {isFirstStep ? (
-          <Box />
-        ) : (
-          <Link onClick={actions.goToPreviousStep}>Back</Link>
-        )}
+    <Button loading={isSubmitting} onClick={onBack} variant="tertiary">
+      Back
+    </Button>
+  )
+}
 
-        {isLastStep ? (
-          <Button
-            variant="primaryBlack"
-            disabled={!isValid}
-            loading={isSubmitting}
-            onClick={onSubmit}
-          >
-            Submit
-          </Button>
-        ) : (
-          <Button
-            variant="primaryBlack"
-            disabled={!isValid}
-            loading={isSubmitting}
-            onClick={onContinue}
-          >
-            Continue
-          </Button>
-        )}
-      </Flex>
-    </>
+const BottomFormNextButton = () => {
+  const { isValid, isSubmitting, submitForm } = useFormikContext()
+  const {
+    actions,
+    state: { isLastStep },
+  } = useSellFlowContext()
+
+  const onNext = async () => {
+    try {
+      await submitForm()
+
+      isLastStep ? actions.finishFlow() : actions.goToNextStep()
+    } catch (error) {
+      logger.error("Error submitting form", error)
+    }
+  }
+
+  return (
+    <Button
+      variant="primaryBlack"
+      disabled={!isValid}
+      loading={isSubmitting}
+      onClick={onNext}
+    >
+      {isLastStep ? "Submit" : "Continue"}
+    </Button>
   )
 }

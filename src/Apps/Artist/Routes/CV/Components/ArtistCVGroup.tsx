@@ -1,5 +1,5 @@
 import { groupBy } from "lodash"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistCVGroup_artist$data } from "__generated__/ArtistCVGroup_artist.graphql"
 import { Text, Box, GridColumns, Column, Button } from "@artsy/palette"

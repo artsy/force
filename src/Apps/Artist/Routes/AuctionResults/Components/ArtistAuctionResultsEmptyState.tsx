@@ -1,5 +1,5 @@
 import { Text, Button, GridColumns, Column } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const ArtistAuctionResultsEmptyState: React.FC = () => {
   return (

@@ -8,7 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useEffect, useRef } from "react"
 
 export const NavigateToRoute: React.FC = () => {

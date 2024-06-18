@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { HomeWorksForYouTabBar } from "../Components/HomeWorksForYouTabBar"
+import { HomeWorksForYouTabBar } from "Apps/Home/Components/HomeWorksForYouTabBar"
 
 jest.mock("Apps/Home/Components/HomeNewWorksForYouRail", () => ({
   HomeNewWorksForYouRailQueryRenderer: () => null,
@@ -10,7 +10,7 @@ jest.mock("Apps/Home/Components/HomeRecentlyViewedRail", () => ({
 jest.mock("Apps/Home/Components/HomeWorksByArtistsYouFollowRail", () => ({
   HomeWorksByArtistsYouFollowRailQueryRenderer: () => null,
 }))
-jest.mock("System/useSystemContext", () => ({
+jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({ user: true }),
 }))
 

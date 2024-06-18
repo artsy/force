@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const ArticlesApp = loadable(
   () => import(/* webpackChunkName: "articlesBundle" */ "./ArticlesApp"),
@@ -16,7 +16,7 @@ const ChannelApp = loadable(
   { resolveComponent: component => component.ChannelAppFragmentContainer }
 )
 
-export const articlesRoutes: AppRouteConfig[] = [
+export const articlesRoutes: RouteProps[] = [
   {
     path: "/articles",
     Component: ArticlesApp,

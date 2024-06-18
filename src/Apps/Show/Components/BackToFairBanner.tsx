@@ -2,7 +2,7 @@ import { BoxProps } from "@artsy/palette"
 import { BackToFairBanner_show$data } from "__generated__/BackToFairBanner_show.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { TopContextBar } from "Components/TopContextBar"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { sanitizeURL } from "Utils/sanitizeURL"
 
 interface BackToFairBannerProps {

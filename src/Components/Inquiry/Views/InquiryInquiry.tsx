@@ -12,7 +12,7 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -26,8 +26,8 @@ import {
 } from "Components/Inquiry/Hooks/useInquiryContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { logger } from "Components/Inquiry/util"
-import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import InfoIcon from "@artsy/icons/InfoIcon"
 
 type Mode = "Pending" | "Confirm" | "Sending" | "Error" | "Success"
@@ -170,7 +170,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
               inline
               to="/settings/edit-profile"
               target="_blank"
-              color="blue100"
+              color="black100"
             >
               Settings.
             </RouterLink>

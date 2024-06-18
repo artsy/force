@@ -16,7 +16,7 @@ import { PartnersFilters } from "Apps/Partners/Components/PartnersFilters"
 import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
 import { PartnersFilteredCellsQueryRenderer } from "Apps/Partners/Components/PartnersFilteredCells"
 import { PartnersRailsQueryRenderer } from "Apps/Partners/Components/PartnersRails"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 
 interface GalleriesRouteProps {
   viewer: GalleriesRoute_viewer$data

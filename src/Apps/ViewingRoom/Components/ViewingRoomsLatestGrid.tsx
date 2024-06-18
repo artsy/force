@@ -7,7 +7,7 @@ import {
   graphql,
 } from "react-relay"
 import { ViewingRoomsLatestGrid_viewingRooms$data } from "__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
 import { extractNodes } from "Utils/extractNodes"
 import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"

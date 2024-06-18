@@ -1,5 +1,5 @@
 import { ModalDialog, Button, Text } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
   onClose: () => void

@@ -1,6 +1,6 @@
 import HelpIcon from "@artsy/icons/HelpIcon"
 import { Flex, Text } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const ConversationSupport = () => {
   return (

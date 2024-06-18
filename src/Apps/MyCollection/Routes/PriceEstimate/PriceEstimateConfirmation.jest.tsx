@@ -1,7 +1,7 @@
 import { mount } from "enzyme"
 import { PriceEstimateConfirmation } from "./PriceEstimateConfirmation"
 
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       params: {

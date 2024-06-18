@@ -6,8 +6,11 @@ import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmiss
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
 import { createContext, useContext, useEffect } from "react"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { useCursor } from "use-cursor"
+import createLogger from "Utils/logger"
+
+const logger = createLogger("SellFlowContext.tsx")
 
 export const STEPS = [
   "artist",
@@ -21,6 +24,7 @@ export const STEPS = [
 interface Actions {
   goToPreviousStep: () => void
   goToNextStep: () => void
+  finishFlow: () => void
   createSubmission: (
     values: CreateSubmissionMutationInput
   ) => Promise<useCreateSubmissionMutation$data>
@@ -83,6 +87,10 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     handlePrev()
   }
 
+  const finishFlow = () => {
+    push(`/sell2/submissions/${submissionID}/thank-you`)
+  }
+
   useEffect(() => {
     if (!submissionID) return
 
@@ -97,10 +105,12 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     })
 
     response.catch(err => {
+      logger.error("Error creating submission.", err)
       sendToast({
         variant: "error",
-        message: err.message ?? "Something went wrong.",
+        message: "Something went wrong.",
       })
+      throw err
     })
 
     return response
@@ -119,10 +129,12 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     })
 
     response.catch(err => {
+      logger.error("Error updating submission.", err)
       sendToast({
         variant: "error",
-        message: err.message ?? "Something went wrong.",
+        message: "Something went wrong.",
       })
+      throw err
     })
 
     return response
@@ -131,6 +143,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const actions = {
     goToPreviousStep,
     goToNextStep,
+    finishFlow,
     createSubmission,
     updateSubmission,
   }

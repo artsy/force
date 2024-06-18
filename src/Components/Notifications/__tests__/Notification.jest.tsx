@@ -6,7 +6,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 const mockRouterReplace = jest.fn()
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     match: { params: { notificationId: "test-id" } },
     router: { replace: mockRouterReplace },

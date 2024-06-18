@@ -8,7 +8,7 @@ import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
 } from "Components/FullBleedHeader/FullBleedHeader"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { ChannelArticlesPaginationContainer } from "./Components/ChannelArticles"
 
 interface ChannelAppProps {

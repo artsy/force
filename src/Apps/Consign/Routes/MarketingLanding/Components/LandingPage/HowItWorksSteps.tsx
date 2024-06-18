@@ -1,8 +1,8 @@
 import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { useSystemContext } from "System/SystemContext"
-import { RouterLink } from "System/Router/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { RouterLink } from "System/Components/RouterLink"
 import { ActionType, ContextModule, Intent } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
 

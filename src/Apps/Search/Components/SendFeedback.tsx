@@ -8,13 +8,13 @@ import {
   TextArea,
   useToasts,
 } from "@artsy/palette"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
 import { SendFeedbackSearchResultsMutation } from "__generated__/SendFeedbackSearchResultsMutation.graphql"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 
 export const SendFeedback: FC = () => {

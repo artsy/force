@@ -22,10 +22,10 @@
   dependencies:
     tslib "~2.0.1"
 
-"@artsy/cohesion@^4.183.0":
-  version "4.183.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.183.0.tgz#46683d192d8210584b2d56efd53f74cfc4c289ca"
-  integrity sha512-Kqc7AzSU3lgzXl8xQrIyl3e9P3ZyrGCABg5YiUJ0PVtwhAATXCsBHUIzdhjFvglCSK9MZPEbPv8FsZnlrE4sPg==
+"@artsy/cohesion@4.189.0":
+  version "4.189.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.189.0.tgz#08f217eb87e5b1568fafdb6cfe5fe1c867c61be8"
+  integrity sha512-x+cqPqMYNWn6Iqa/qEU9gv/91s9k/AwhapQTU0wlg9JTby4fvkV//OQrlD/eMobifXvIVAJBb6yfG/rKc40TXg==
   dependencies:
     core-js "3"
 
@@ -109,6 +109,24 @@
   integrity sha512-Iuq3hjvx6O2d1glmuoo1kFnMLOBJFW2OuQ4Q5fXS1Q/DMAvjwrBmmzZE6HVzwR5BwX5Xy6knRiD8FuPrldeo0Q==
 
 "@artsy/palette@38.13.1", "@artsy/palette@^38.13.1":
+  version "38.13.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-38.13.1.tgz#b3cc2903a3d532769b3505b2e717ccd37fb27912"
+  integrity sha512-Xlp3fJy3A3B3E2NiRu7m0xTTeYZiDniWhb5g0KkOAX/r4KzGE5qQ95yefaDpgY7CPTKdJJ/5/HkxatxSOyjh4w==
+  dependencies:
+    "@artsy/icons" "^3.2.2"
+    "@artsy/palette-tokens" "^6.0.3"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
+    lodash "^4.17.21"
+    proportional-scale "^4.0.0"
+    react-focus-on "^3.7.0"
+    react-lazy-load-image-component "1.5.5"
+    styled-system "^5.1.5"
+    trunc-html "^1.1.2"
+    use-cursor "^1.2.3"
+    use-keyboard-list-navigation "2.4.2"
+
+"@artsy/palette@^38.13.1":
   version "38.13.1"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-38.13.1.tgz#b3cc2903a3d532769b3505b2e717ccd37fb27912"
   integrity sha512-Xlp3fJy3A3B3E2NiRu7m0xTTeYZiDniWhb5g0KkOAX/r4KzGE5qQ95yefaDpgY7CPTKdJJ/5/HkxatxSOyjh4w==

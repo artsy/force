@@ -1,5 +1,5 @@
 import { useTracking } from "react-tracking"
-import { Analytics } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 import { fireEvent, screen, within } from "@testing-library/react"
 import {
   SavedAddresses2,

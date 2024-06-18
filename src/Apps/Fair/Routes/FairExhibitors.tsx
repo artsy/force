@@ -4,7 +4,7 @@ import { graphql, createFragmentContainer } from "react-relay"
 import { FairExhibitors_fair$data } from "__generated__/FairExhibitors_fair.graphql"
 import { FairExhibitorsGroupFragmentContainer } from "Apps/Fair/Components/FairExhibitors/FairExhibitorsGroup"
 import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
-import { useRouter } from "System/Router/useRouter"
+import { useRouter } from "System/Hooks/useRouter"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 
 interface FairExhibitorsProps {

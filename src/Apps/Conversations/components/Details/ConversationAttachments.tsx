@@ -1,7 +1,7 @@
 import { extractNodes } from "Utils/extractNodes"
 import { graphql, useFragment } from "react-relay"
 import { ConversationAttachments_conversation$key } from "__generated__/ConversationAttachments_conversation.graphql"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 import { Flex, Separator, Text } from "@artsy/palette"
 import DocumentIcon from "@artsy/icons/DocumentIcon"
 

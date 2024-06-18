@@ -48,8 +48,8 @@ import {
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { RouterLink } from "System/Components/RouterLink"
 
 jest.unmock("react-relay")
 
@@ -70,7 +70,7 @@ jest.mock("@stripe/stripe-js", () => {
   }
 })
 const { loadStripe, _mockStripe } = require("@stripe/stripe-js")
-jest.mock("System/useFeatureFlag")
+jest.mock("System/Hooks/useFeatureFlag")
 
 const mockShowErrorDialog = jest.fn()
 jest.mock("Apps/Order/Dialogs", () => ({

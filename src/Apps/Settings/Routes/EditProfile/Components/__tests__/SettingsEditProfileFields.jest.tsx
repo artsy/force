@@ -70,7 +70,7 @@ describe("SettingsEditProfileFields", () => {
   it("renders the form", () => {
     renderWithRelay()
 
-    expect(screen.getByText("Full name")).toBeInTheDocument()
+    expect(screen.getByText("Name")).toBeInTheDocument()
     expect(screen.getByText("Primary Location")).toBeInTheDocument()
     expect(screen.getByText("Profession")).toBeInTheDocument()
     expect(screen.getByText("Other relevant positions")).toBeInTheDocument()
@@ -86,7 +86,7 @@ describe("SettingsEditProfileFields", () => {
 
     renderWithRelay()
 
-    fireEvent.change(screen.getByPlaceholderText("Full name"), {
+    fireEvent.change(screen.getByPlaceholderText("Name"), {
       target: { name: "name", value: "Collector Name" },
     })
     fireEvent.change(screen.getByPlaceholderText("City name"), {

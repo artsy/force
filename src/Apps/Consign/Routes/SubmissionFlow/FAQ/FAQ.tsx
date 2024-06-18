@@ -2,7 +2,7 @@ import { Expandable, Join, Spacer, Text } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink } from "System/Components/RouterLink"
 
 export interface FAQProps {
   shouldTrackClickEvent?: boolean

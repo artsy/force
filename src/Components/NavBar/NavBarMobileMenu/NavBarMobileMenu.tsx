@@ -1,10 +1,11 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { ModalBase, Separator, Text } from "@artsy/palette"
 import {
+  WHATS_NEW_SUBMENU_DATA,
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { logout } from "Utils/auth"
 import * as React from "react"
@@ -90,6 +91,10 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
             >
               Buy
             </NavBarMobileMenuItemLink>
+
+            <NavBarMobileSubMenu menu={WHATS_NEW_SUBMENU_DATA.menu}>
+              {WHATS_NEW_SUBMENU_DATA.text}
+            </NavBarMobileSubMenu>
 
             <NavBarMobileSubMenu menu={ARTISTS_SUBMENU_DATA.menu}>
               {ARTISTS_SUBMENU_DATA.menu.title}

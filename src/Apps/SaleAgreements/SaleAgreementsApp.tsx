@@ -4,7 +4,7 @@ import { Join, Link, Spacer, Text } from "@artsy/palette"
 import { SaleAgreementsApp_viewer$key } from "__generated__/SaleAgreementsApp_viewer.graphql"
 import { SaleAgreementsFilter } from "Apps/SaleAgreements/Components/SaleAgreementsFilter"
 import { getENV } from "Utils/getENV"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { HttpError } from "found"
 
 interface SaleAgreementsAppProps {
