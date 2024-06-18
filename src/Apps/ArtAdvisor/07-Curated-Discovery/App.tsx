@@ -1,6 +1,5 @@
 import { Box, Button, Join, Spacer, Text } from "@artsy/palette"
 import { FC, useReducer } from "react"
-import { Artists } from "./Components/Artists"
 import { Interests } from "./Components/Interests"
 import { Goals } from "./Components/Goals"
 
@@ -9,8 +8,6 @@ export type State = {
   goalFreeText: string
   interests: string[]
   interestsFreeText: string
-  artists: string[]
-  artistsFreeText: string
 }
 
 const initialState: State = {
@@ -18,8 +15,6 @@ const initialState: State = {
   goalFreeText: "",
   interests: [],
   interestsFreeText: "",
-  artists: [],
-  artistsFreeText: "",
 }
 
 export type Action =
@@ -32,10 +27,6 @@ export type Action =
   | { type: "TOGGLE_INTEREST"; interest: string }
   | { type: "CLEAR_INTERESTS" }
   | { type: "SET_FREETEXT_INTEREST"; text: string }
-  // artists
-  | { type: "TOGGLE_ARTIST"; artist: string }
-  | { type: "CLEAR_ARTISTS" }
-  | { type: "SET_FREETEXT_ARTISTS"; text: string }
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -58,16 +49,6 @@ function reducer(state: State, action: Action): State {
       return { ...state, interests: [] }
     case "SET_FREETEXT_INTEREST":
       return { ...state, interestsFreeText: action.text }
-
-    case "TOGGLE_ARTIST":
-      const artists = state.artists.includes(action.artist)
-        ? state.artists.filter(artist => artist !== action.artist)
-        : [...state.artists, action.artist]
-      return { ...state, artists }
-    case "CLEAR_ARTISTS":
-      return { ...state, artists: [] }
-    case "SET_FREETEXT_ARTISTS":
-      return { ...state, artistsFreeText: action.text }
 
     default:
       return state
@@ -92,7 +73,6 @@ export const App: FC = () => {
       <Join separator={<Spacer y={2} />}>
         <Goals state={state} dispatch={dispatch} />
         <Interests state={state} dispatch={dispatch} />
-        <Artists state={state} dispatch={dispatch} />
 
         <Button
           variant={"secondaryBlack"}
