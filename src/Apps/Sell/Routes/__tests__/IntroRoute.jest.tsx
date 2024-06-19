@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import { IntroRoute } from "Apps/Sell/Routes/IntroRoute"
 import { useRouter } from "System/Hooks/useRouter"
 
@@ -52,13 +52,15 @@ describe("IntroRoute", () => {
     })
   })
 
-  it("calls router.push when Start New Submission button is clicked", async () => {
+  it("renders the Start New Submission button and route", async () => {
     render(<IntroRoute />)
 
-    fireEvent.click(screen.getByText("Start New Submission"))
+    const startNewSubmissionButton = screen.getByTestId("start-new-submission")
 
-    await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith("/sell2/submissions/new")
-    })
+    expect(startNewSubmissionButton).toBeInTheDocument()
+    expect(startNewSubmissionButton).toHaveAttribute(
+      "href",
+      "/sell2/submissions/new"
+    )
   })
 })

@@ -85,6 +85,7 @@ export const IntroRoute: React.FC = () => {
               as={RouterLink}
               to="/sell2/submissions/new"
               width="100%"
+              data-testid="start-new-submission"
             >
               Start New Submission
             </Button>
