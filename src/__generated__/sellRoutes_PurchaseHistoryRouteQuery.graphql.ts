@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af84de7a6bd4b0d57fa2e87f796d3236>>
+ * @generated SignedSource<<b9de60fd0170279b0924c0f269e037f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -90,6 +90,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "signature",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -99,12 +106,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "14eb58bd305b0922b2cbf11b50159c50",
+    "cacheID": "99e2f40b36070661f43fbf3a33a5ccbe",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_PurchaseHistoryRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_PurchaseHistoryRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...PurchaseHistoryRoute_submission\n    id\n  }\n}\n\nfragment PurchaseHistoryRoute_submission on ConsignmentSubmission {\n  provenance\n}\n"
+    "text": "query sellRoutes_PurchaseHistoryRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...PurchaseHistoryRoute_submission\n    id\n  }\n}\n\nfragment PurchaseHistoryRoute_submission on ConsignmentSubmission {\n  provenance\n  signature\n}\n"
   }
 };
 })();

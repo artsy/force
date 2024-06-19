@@ -23,6 +23,15 @@ export const SPECIALISTS: SpecialistsData[] = [
     imageUrl: "https://files.artsy.net/images/Jessica-Mobile.webp",
   },
   {
+    firstName: "Rachel",
+    name: "Rachel Hagopian",
+    email: "rachel.hagopian@artsy.net",
+    jobTitle: "Senior Director of Collector Sales",
+    bio:
+      "Rachel leads Artsy’s Collector Sales team, bringing a passion for both art and tech. She is dedicated to driving strategic growth in the secondary market, and has cultivated a wealth of expertise across the industry, with over 12 years of experience as a leader in the art and luxury sector.",
+    imageUrl: "https://files.artsy.net/images/Rachel-Mobile-1.webp",
+  },
+  {
     firstName: "Erica",
     name: "Erica Lyon",
     email: "erica@artsymail.com",
@@ -31,7 +40,15 @@ export const SPECIALISTS: SpecialistsData[] = [
       "Erica has 13 years experience in scaling nascent business lines to profitability, and a particular interest in developing and executing philanthropic partnerships with leading museums, nonprofits and institutions. She holds a BA from Wesleyan University and an MA from New York University.",
     imageUrl: "https://files.artsy.net/images/Erica-Mobile.webp",
   },
-
+  {
+    firstName: "Gabrielle",
+    name: "Gabrielle Dawley",
+    email: "gabrielle.dawley@artsy.net",
+    jobTitle: "Collector Sales Specialist",
+    bio:
+      "Gabrielle has nearly a decade of experience in the art market, which she uses to assist collectors through auctions and private sales. Her expertise ranges from 20th-century photographs to contemporary art. Gabrielle previously worked in digital private sales at LiveArt, and at several auction houses, including Heritage Auctions. She holds a bachelor’s of science in art conservation from the University of Delaware.",
+    imageUrl: "https://files.artsy.net/images/Gabrielle-Mobile-1.webp",
+  },
   {
     firstName: "Lauren",
     name: "Lauren Carpinelli",
@@ -95,6 +112,15 @@ export const SPECIALISTS: SpecialistsData[] = [
     bio:
       "Dana facilitates and promotes sales between all channels at Artsy: private sales, galleries, and auctions. She has a master’s degree in modern and contemporary art: critical and curatorial studies from Columbia University, and has worked in museums, advisory, and academic settings.",
     imageUrl: "https://files.artsy.net/images/Dana-Mobile.webp",
+  },
+  {
+    firstName: "Emma",
+    name: "Emma Seery",
+    email: "emma.seery@artsy.net",
+    jobTitle: "Collector Services Manager, New York",
+    bio:
+      "Emma facilitates and promotes sales across all channels at Artsy: private sales, galleries, and auctions. With over half a decade of experience in the art and luxury markets — including two years with Artsy’s galleries team — she brings a wealth of knowledge to her role, connecting collectors with unique opportunities.",
+    imageUrl: "https://files.artsy.net/images/Emma-Mobile-1.webp",
   },
   {
     firstName: "Alexssa",

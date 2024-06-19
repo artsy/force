@@ -18,7 +18,7 @@ interface SavedAddressItemProps extends BoxProps {
 
 export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
   props
-): React.ReactElement<RadioProps> => {
+): React.ReactElement<RadioProps<string>> => {
   const handleClickEdit = props.handleClickEdit
   const address = props?.address
   const addressLine1 = address?.addressLine1
