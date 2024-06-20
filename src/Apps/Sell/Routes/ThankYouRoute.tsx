@@ -4,11 +4,7 @@ import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { RouterLink } from "System/Components/RouterLink"
 import { AppContainer } from "Apps/Components/AppContainer"
 
-interface ThankYouRouteProps {
-  children: React.ReactNode
-}
-
-export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
+export const ThankYouRoute: React.FC = () => {
   return (
     <FullBleed>
       <AppContainer>
