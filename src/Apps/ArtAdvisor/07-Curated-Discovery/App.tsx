@@ -1,31 +1,41 @@
-import { Box, Button, Join, Spacer, Text } from "@artsy/palette"
 import { FC, useReducer } from "react"
-import { Interests } from "./Components/Interests"
-import { Goals } from "./Components/Goals"
-import { Budget } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Budget"
+import { Form } from "./Components/Form/Form"
+import { Result } from "./Components/Result/Result"
+
+type Step = "form" | "result"
+
+export type BudgetIntent = {
+  amount: number
+}
 
 export type State = {
+  currentStep: Step
   goal: string
   goalFreeText: string
   budget: string
+  budgetIntent: BudgetIntent | undefined
   interests: string[]
   interestsFreeText: string
 }
 
 const initialState: State = {
+  currentStep: "form",
   goal: "",
   goalFreeText: "",
   budget: "",
+  budgetIntent: undefined,
   interests: [],
   interestsFreeText: "",
 }
 
 export type Action =
   | { type: "RESET" }
+  | { type: "SET_STEP"; step: Step }
   // goal
   | { type: "SET_GOAL"; goal: string }
   // budget
   | { type: "SET_BUDGET"; text: string }
+  | { type: "SET_BUDGET_INTENT"; intent: BudgetIntent }
   // interests
   | { type: "TOGGLE_INTEREST"; interest: string }
   | { type: "CLEAR_INTERESTS" }
@@ -36,11 +46,16 @@ function reducer(state: State, action: Action): State {
     case "RESET":
       return initialState
 
+    case "SET_STEP":
+      return { ...state, currentStep: action.step }
+
     case "SET_GOAL":
       return { ...state, goal: action.goal }
 
     case "SET_BUDGET":
       return { ...state, budget: action.text }
+    case "SET_BUDGET_INTENT":
+      return { ...state, budgetIntent: action.intent }
 
     case "TOGGLE_INTEREST":
       const interests = state.interests.includes(action.interest)
@@ -59,54 +74,15 @@ function reducer(state: State, action: Action): State {
 
 export const App: FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const { currentStep } = state
 
-  return (
-    <Box>
-      <PreviewState state={state} />
+  if (currentStep === "form") {
+    return <Form state={state} dispatch={dispatch} />
+  }
 
-      <Spacer y={4} />
+  if (currentStep === "result") {
+    return <Result state={state} dispatch={dispatch} />
+  }
 
-      <Text as="h1" variant={"xl"}>
-        Discover Blah
-      </Text>
-
-      <Spacer y={2} />
-
-      <Join separator={<Spacer y={2} />}>
-        <Goals state={state} dispatch={dispatch} />
-        <Budget state={state} dispatch={dispatch} />
-        <Interests state={state} dispatch={dispatch} />
-
-        <Button
-          variant={"secondaryBlack"}
-          onClick={() => dispatch({ type: "RESET" })}
-        >
-          Reset
-        </Button>
-      </Join>
-    </Box>
-  )
-}
-
-const PreviewState: FC<{
-  state: State
-}> = props => {
-  const { state } = props
-  return (
-    <pre
-      style={{
-        background: "#eeee",
-        padding: "1em",
-        border: "solid 1px #ccc",
-        position: "fixed",
-        width: "24em",
-        top: "6rem",
-        right: "1rem",
-        zIndex: 1000,
-        whiteSpace: "pre-wrap",
-      }}
-    >
-      {JSON.stringify(state, null, 2)}
-    </pre>
-  )
+  return null
 }
