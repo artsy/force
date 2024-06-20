@@ -59,6 +59,15 @@ export const ArtAdvisorApp: FC = () => {
           as by moving toward/away from the user's liked/disliked artworks.
         </Description>
       </Experiment>
+
+      <Experiment href="/advisor/7">
+        <Name>Curated Discovery</Name>
+        <Description>
+          Provide a user with immediate recommendations for artworks,
+          collections, etc based on a short questionnaire and segmentation
+          process
+        </Description>
+      </Experiment>
     </Box>
   )
 }
