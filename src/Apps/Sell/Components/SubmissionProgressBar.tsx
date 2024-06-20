@@ -18,7 +18,8 @@ export const SubmissionProgressBar: React.FC = ({}) => {
 
   const { step, isLastStep } = state
 
-  const progress = ((STEPS.indexOf(step) + 1) / STEPS.length) * 100
+  const percentComplete = ((STEPS.indexOf(step) + 1) / STEPS.length) * 100
+  const highlight = isLastStep ? "green100" : "blue100"
 
   return (
     <AppContainer>
@@ -26,8 +27,8 @@ export const SubmissionProgressBar: React.FC = ({}) => {
         <Flex height={PROGRESS_BAR_CONTAINER_HEIGHT}>
           <Flex flex={1} justifyContent="center" m="auto">
             <ProgressBar
-              highlight={isLastStep ? "green100" : "blue100"}
-              percentComplete={progress}
+              highlight={highlight}
+              percentComplete={percentComplete}
               backgroundColor="black5"
               width="100%"
               height={PROGRESS_BAR_HEIGHT}
