@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Flex,
+  FullBleed,
   Image,
   Join,
   Separator,
@@ -9,7 +10,6 @@ import {
   THEME,
   Text,
 } from "@artsy/palette"
-import { AppContainer } from "Apps/Components/AppContainer"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { RouterLink } from "System/Components/RouterLink"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
@@ -20,14 +20,14 @@ export const IntroRoute: React.FC = () => {
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   return (
-    <AppContainer>
+    <FullBleed>
       <SubmissionLayout hideNavigation>
         <Flex
           height={isMobile ? "100%" : undefined}
           flexDirection="column"
           overflowY="auto"
         >
-          <Flex flex={1} overflowY="auto" mx="auto" flexDirection="column">
+          <Flex flex={1} overflowY="auto" flexDirection="column">
             <Text variant={["lg-display", "xl"]}>
               It’s easy to sell on Artsy
             </Text>
@@ -84,7 +84,7 @@ export const IntroRoute: React.FC = () => {
           </Flex>
         </Flex>
       </SubmissionLayout>
-    </AppContainer>
+    </FullBleed>
   )
 }
 
