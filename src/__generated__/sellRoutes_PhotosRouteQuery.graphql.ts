@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<abc99ff32af60fa5ded1bfbd5d46782e>>
+ * @generated SignedSource<<dd4ea8be1b4359b209ebc4fa1678710f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -89,12 +89,40 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "externalId",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "ConsignmentSubmissionCategoryAsset",
             "kind": "LinkedField",
             "name": "assets",
             "plural": true,
             "selections": [
               (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "size",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "filename",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "geminiToken",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -112,12 +140,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "06816d0a50dee9f52bbd3747dd48da3b",
+    "cacheID": "a6abb3894e6e2b8e4ff88a8a0144ebdd",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_PhotosRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_PhotosRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  assets {\n    id\n    imageUrls\n  }\n}\n"
+    "text": "query sellRoutes_PhotosRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n"
   }
 };
 })();
