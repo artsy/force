@@ -4,11 +4,16 @@ import { Result } from "./Components/Result/Result"
 
 type Step = "form" | "result"
 
+export type BudgetIntent = {
+  amount: number
+}
+
 export type State = {
   currentStep: Step
   goal: string
   goalFreeText: string
   budget: string
+  budgetIntent: BudgetIntent | undefined
   interests: string[]
   interestsFreeText: string
 }
@@ -18,6 +23,7 @@ const initialState: State = {
   goal: "",
   goalFreeText: "",
   budget: "",
+  budgetIntent: undefined,
   interests: [],
   interestsFreeText: "",
 }
@@ -29,6 +35,7 @@ export type Action =
   | { type: "SET_GOAL"; goal: string }
   // budget
   | { type: "SET_BUDGET"; text: string }
+  | { type: "SET_BUDGET_INTENT"; intent: BudgetIntent }
   // interests
   | { type: "TOGGLE_INTEREST"; interest: string }
   | { type: "CLEAR_INTERESTS" }
@@ -47,6 +54,8 @@ function reducer(state: State, action: Action): State {
 
     case "SET_BUDGET":
       return { ...state, budget: action.text }
+    case "SET_BUDGET_INTENT":
+      return { ...state, budgetIntent: action.intent }
 
     case "TOGGLE_INTEREST":
       const interests = state.interests.includes(action.interest)
