@@ -1,8 +1,22 @@
-import { Box, Button, Flex, Join, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Flex,
+  Join,
+  Spacer,
+  Spinner,
+  Text,
+  useToasts,
+} from "@artsy/palette"
 import { Interests } from "./Interests"
 import { Goals } from "./Goals"
 import { Budget } from "./Budget"
-import { Action, State } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
+import {
+  Action,
+  BudgetIntent,
+  State,
+} from "Apps/ArtAdvisor/07-Curated-Discovery/App"
+import { useState } from "react"
 
 interface FormProps {
   state: State
@@ -10,7 +24,46 @@ interface FormProps {
 }
 
 export const Form: React.FC<FormProps> = props => {
+  const [isLoading, setIsLoading] = useState(false)
   const { state, dispatch } = props
+  const { sendToast } = useToasts()
+
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true)
+      const budgetIntent = await fetch("/api/advisor/7/budget/intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          budget: state.budget,
+        }),
+      })
+
+      if (budgetIntent.ok) {
+        const intent = (await budgetIntent.json()) as BudgetIntent
+        dispatch({ type: "SET_BUDGET_INTENT", intent })
+        dispatch({ type: "SET_STEP", step: "result" })
+      } else {
+        sendToast({
+          variant: "error",
+          message: `Could not infer budget: ${
+            budgetIntent.statusText
+          } (Input: ${state.budget || "missing"})`,
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      sendToast({
+        variant: "error",
+        message: JSON.stringify(error),
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <Box>
       <Spacer y={4} />
@@ -35,12 +88,8 @@ export const Form: React.FC<FormProps> = props => {
           Reset
         </Button>
 
-        <Button
-          onClick={() => {
-            dispatch({ type: "SET_STEP", step: "result" })
-          }}
-        >
-          Show me things
+        <Button onClick={handleSubmit} minWidth={"13em"}>
+          {isLoading ? <Spinner color={"white"} /> : "Show me things"}
         </Button>
       </Flex>
     </Box>
