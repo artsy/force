@@ -85,6 +85,16 @@ const ThankYouRoute = loadable(
   }
 )
 
+const ArtistNotEligibleRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "sellBundle" */ "./Routes/ArtistNotEligibleRoute"
+    ),
+  {
+    resolveComponent: component => component.ArtistNotEligibleRoute,
+  }
+)
+
 export const sellRoutes: RouteProps[] = [
   {
     path: "/sell2",
@@ -103,6 +113,24 @@ export const sellRoutes: RouteProps[] = [
         Component: NewRoute,
         onClientSideRender: () => {
           NewRoute.preload()
+        },
+      },
+      {
+        path: "artist-not-eligible/:artistID",
+        layout: "ContainerOnly",
+        Component: ArtistNotEligibleRoute,
+        onClientSideRender: () => {
+          ArtistNotEligibleRoute.preload()
+        },
+        query: graphql`
+          query sellRoutes_ArtistNotEligibleRouteQuery($id: String!) {
+            artist(id: $id) @principalField {
+              ...ArtistNotEligibleRoute_artist
+            }
+          }
+        `,
+        prepareVariables: ({ artistID }) => {
+          return { id: artistID }
         },
       },
       {

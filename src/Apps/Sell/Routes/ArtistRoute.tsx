@@ -1,8 +1,9 @@
-import { Spacer, Text, useToasts } from "@artsy/palette"
+import { Box, Text, useToasts } from "@artsy/palette"
 import {
   ArtistAutoComplete,
   AutocompleteArtist,
 } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
+import { ArtistNotEligiblText } from "Apps/Sell/Components/ArtistNotEligibleText"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
@@ -34,8 +35,8 @@ const FRAGMENT = graphql`
 `
 
 const Schema = Yup.object().shape({
-  artistName: Yup.string().required(),
-  artistId: Yup.string().required(),
+  artistName: Yup.string().required("Artist is required"),
+  artistId: Yup.string().required("Artist is required"),
   isTargetSupply: Yup.boolean().isTrue(),
 })
 
@@ -121,17 +122,19 @@ export const ArtistRoute: React.FC<{
     formik: FormikProps<FormValues>
   ) => {
     if (!artist?.internalID) {
-      sendToast({
-        variant: "error",
-        message: "Something went wrong.",
-      })
-      throw new Error("Artist not found.")
+      return
     }
 
     const isTargetSupply = artist?.targetSupply?.isTargetSupply
+
     formik.setFieldValue("isTargetSupply", isTargetSupply)
 
     if (isNewSubmission) {
+      if (!isTargetSupply) {
+        router.push(`/sell2/artist-not-eligible/${artist.internalID}`)
+        return
+      }
+
       createSubmission(artist)
     } else {
       updateSubmission(artist)
@@ -178,26 +181,13 @@ export const ArtistRoute: React.FC<{
           {!isNewSubmission &&
             formik.values.artistId &&
             !formik.values.isTargetSupply && (
-              <>
-                <Spacer y={2} />
+              <Box my={2}>
                 <Text variant="lg">
                   This artist isn't currently eligible to sell on our platform
                 </Text>
-                <Text mt={2} variant="sm">
-                  Try again with another artist or add your artwork to My
-                  Collection, your personal space to manage your collection,
-                  track demand for your artwork and see updates about the
-                  artist. If you'd like to know more, you can&nbsp;
-                  <RouterLink to="#">contact an advisor&nbsp;</RouterLink>
-                  or read about&nbsp;
-                  <RouterLink to="#">
-                    what our specialists are looking for
-                  </RouterLink>
-                  . After adding to My Collection, an Artsy Advisor will be in
-                  touch if there is an opportunity to sell your work in the
-                  future.
-                </Text>
-              </>
+
+                <ArtistNotEligiblText />
+              </Box>
             )}
 
           <DevDebug />
