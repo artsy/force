@@ -19,6 +19,7 @@ export const STEPS = [
   "details",
   "purchase-history",
   "dimensions",
+  "thank-you",
 ]
 
 interface Actions {

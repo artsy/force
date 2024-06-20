@@ -141,24 +141,7 @@ export const sellRoutes: RouteProps[] = [
           NewFromMyCollectionRoute.preload()
         },
       },
-      {
-        path: "submissions/:id/thank-you",
-        layout: "ContainerOnly",
-        Component: ThankYouRoute,
-        onClientSideRender: () => {
-          ThankYouRoute.preload()
-        },
-        query: graphql`
-          query sellRoutes_ThankYouRouteQuery($id: ID!) {
-            submission(id: $id) @principalField {
-              ...ThankYouRoute_submission
-            }
-          }
-        `,
-        prepareVariables: ({ id }) => {
-          return { id }
-        },
-      },
+
       {
         path: "submissions/:id",
         Component: SubmissionRoute,
@@ -277,6 +260,24 @@ export const sellRoutes: RouteProps[] = [
               query sellRoutes_DimensionsRouteQuery($id: ID!) {
                 submission(id: $id) @principalField {
                   ...DimensionsRoute_submission
+                }
+              }
+            `,
+            prepareVariables: ({ id }) => {
+              return { id }
+            },
+          },
+          {
+            path: "thank-you",
+            layout: "ContainerOnly",
+            Component: ThankYouRoute,
+            onClientSideRender: () => {
+              ThankYouRoute.preload()
+            },
+            query: graphql`
+              query sellRoutes_ThankYouRouteQuery($id: ID!) {
+                submission(id: $id) @principalField {
+                  ...ThankYouRoute_submission
                 }
               }
             `,
