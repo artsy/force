@@ -1,41 +1,61 @@
 import * as React from "react"
-import { Message, Spacer, Text } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import { ThankYouRoute_submission$key } from "__generated__/ThankYouRoute_submission.graphql"
+import { Button, FullBleed, Join, Message, Spacer, Text } from "@artsy/palette"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { RouterLink } from "System/Components/RouterLink"
+import { AppContainer } from "Apps/Components/AppContainer"
 
-const FRAGMENT = graphql`
-  fragment ThankYouRoute_submission on ConsignmentSubmission {
-    externalId
-  }
-`
 interface ThankYouRouteProps {
-  submission: ThankYouRoute_submission$key
   children: React.ReactNode
 }
 
-export const ThankYouRoute: React.FC<ThankYouRouteProps>= (props) => {
-  const submission = useFragment(FRAGMENT, props.submission)
-
+export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
   return (
-    <SubmissionLayout hideNavigation>
-      <Text variant="lg-display">Thank you for submitting your artwork </Text>
-      <Spacer y={2}/>
-      <Text variant="xs">ID: {submission.externalId}</Text>
-      <Spacer y={2}/>
-      <Text variant="xs">
-        An Artsy Advisor will email you within 3-5 days to review your submission
-        and discuss next steps. In the meantime your submission will appear in the
-        feature, My Collection.
-      </Text>
-      <Spacer y={2}/>
-      <Message variant="info" title="What happens next?">
-        <Text variant="xs">
-          If your artwork is accepted, we will send you a sales offer and guide
-          you in selecting the best selling option. Additional information may be
-          requested.
-        </Text>
-      </Message>
-    </SubmissionLayout>
+    <FullBleed>
+      <AppContainer>
+        <SubmissionLayout hideNavigation>
+          <Join separator={<Spacer y={4} />}>
+            <Join separator={<Spacer y={2} />}>
+              <Text variant="lg-display">
+                Thank you for submitting your artwork
+              </Text>
+
+              <Text variant="xs">
+                An Artsy Advisor will email you within 3-5 days to review your
+                submission and discuss next steps. In the meantime your
+                submission will appear in the feature, My Collection.
+              </Text>
+
+              <Message variant="success" title="What happens next?">
+                <Text variant="xs">
+                  If your artwork is accepted, we will guide you in selecting
+                  the best selling option. Additional information may be
+                  requested.
+                </Text>
+              </Message>
+            </Join>
+
+            <Join separator={<Spacer y={2} />}>
+              <Button // @ts-ignore
+                as={RouterLink}
+                to="/sell2/submissions/new"
+                width="100%"
+              >
+                Submit Another Work
+              </Button>
+
+              <Button
+                // @ts-ignore
+                as={RouterLink}
+                to="/collector-profile/my-collection"
+                variant="secondaryBlack"
+                width="100%"
+              >
+                View Artwork in My Collections
+              </Button>
+            </Join>
+          </Join>
+        </SubmissionLayout>
+      </AppContainer>
+    </FullBleed>
   )
 }
