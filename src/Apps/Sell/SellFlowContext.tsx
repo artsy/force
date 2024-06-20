@@ -101,10 +101,17 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     push(`/sell2/submissions/${submissionID}/${STEPS[index]}`)
   }, [push, submissionID, index])
 
+  const getSubmissionState = () => {
+    return state.isSubmitStep ? "SUBMITTED" : "DRAFT"
+  }
+
   const createSubmission = (values: CreateSubmissionMutationInput) => {
     const response = submitCreateSubmissionMutation({
       variables: {
-        input: values,
+        input: {
+          ...values,
+          state: getSubmissionState(),
+        },
       },
     })
 
@@ -128,6 +135,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
         input: {
           externalId: submissionID,
           ...values,
+          state: getSubmissionState(),
         } as UpdateSubmissionMutationInput,
       },
     })

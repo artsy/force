@@ -105,6 +105,7 @@ describe("DetailsRoute", () => {
               year: '<mock-value-for-field-"year">',
               category: "PAINTING",
               medium: '<mock-value-for-field-"medium">',
+              state: "DRAFT",
             },
           },
         })
@@ -132,6 +133,7 @@ describe("DetailsRoute", () => {
               year: '<mock-value-for-field-"year">',
               category: "PAINTING",
               medium: '<mock-value-for-field-"medium">',
+              state: "DRAFT",
             },
           },
         })

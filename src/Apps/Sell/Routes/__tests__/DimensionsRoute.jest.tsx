@@ -109,6 +109,7 @@ describe("DimensionsRoute", () => {
               width: '<mock-value-for-field-"width">',
               depth: '<mock-value-for-field-"depth">',
               dimensionsMetric: "in",
+              state: "SUBMITTED",
             },
           },
         })
@@ -136,6 +137,7 @@ describe("DimensionsRoute", () => {
               width: '<mock-value-for-field-"width">',
               depth: '<mock-value-for-field-"depth">',
               dimensionsMetric: "in",
+              state: "SUBMITTED",
             },
           },
         })
