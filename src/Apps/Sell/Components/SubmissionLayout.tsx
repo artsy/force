@@ -2,6 +2,7 @@ import { Box, Column, Flex, GridColumns } from "@artsy/palette"
 import { BottomFormNavigation } from "Apps/Sell/Components/BottomFormNavigation"
 import { StepsNavigation } from "Apps/Sell/Components/StepsNavigation"
 import { SubmissionHeader } from "Apps/Sell/Components/SubmissionHeader"
+import { SubmissionProgressBar } from "Apps/Sell/Components/SubmissionProgressBar"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 
 const CONTENT_WIDTH = 640
@@ -19,6 +20,8 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
   return (
     <Flex height="100vh" flexDirection="column">
       <SubmissionHeader />
+
+      <SubmissionProgressBar />
 
       <Flex flex={1} overflowY="auto" mx="auto">
         {!!context?.state?.devMode && !hideNavigation ? (

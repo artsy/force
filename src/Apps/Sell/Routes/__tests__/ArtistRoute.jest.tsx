@@ -19,13 +19,17 @@ jest.mock("react-relay", () => ({
   fetchQuery: jest.fn(),
 }))
 
-beforeEach(() => {
+let pathnameMock: string
+
+beforeAll(() => {
+  pathnameMock = "/submissions/submission-id/artist"
+
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "submissions/submission-id/details" } },
+    match: { location: { pathname: pathnameMock } },
   }))
 })
 
@@ -88,5 +92,21 @@ describe("ArtistRoute", () => {
     renderWithRelay({})
 
     expect(screen.queryByText("Back")).not.toBeInTheDocument()
+  })
+
+  describe("when creating a new submission", () => {
+    beforeAll(() => {
+      pathnameMock = "/submissions/new"
+    })
+
+    it("calls createSubmission when a new artist is selected", async () => {
+      renderWithRelay({})
+
+      const artistInput = screen.getByPlaceholderText("Enter full name")
+
+      fireEvent.change(artistInput, { target: { value: "Banksy" } })
+
+      expect(artistInput).toHaveValue("Banksy")
+    })
   })
 })

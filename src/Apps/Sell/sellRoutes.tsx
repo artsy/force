@@ -85,6 +85,16 @@ const ThankYouRoute = loadable(
   }
 )
 
+const ArtistNotEligibleRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "sellBundle" */ "./Routes/ArtistNotEligibleRoute"
+    ),
+  {
+    resolveComponent: component => component.ArtistNotEligibleRoute,
+  }
+)
+
 export const sellRoutes: RouteProps[] = [
   {
     path: "/sell2",
@@ -106,6 +116,24 @@ export const sellRoutes: RouteProps[] = [
         },
       },
       {
+        path: "artist-not-eligible/:artistID",
+        layout: "ContainerOnly",
+        Component: ArtistNotEligibleRoute,
+        onClientSideRender: () => {
+          ArtistNotEligibleRoute.preload()
+        },
+        query: graphql`
+          query sellRoutes_ArtistNotEligibleRouteQuery($id: String!) {
+            artist(id: $id) @principalField {
+              ...ArtistNotEligibleRoute_artist
+            }
+          }
+        `,
+        prepareVariables: ({ artistID }) => {
+          return { id: artistID }
+        },
+      },
+      {
         path: "submissions/new/collection",
         layout: "ContainerOnly",
         Component: NewFromMyCollectionRoute,
@@ -113,24 +141,7 @@ export const sellRoutes: RouteProps[] = [
           NewFromMyCollectionRoute.preload()
         },
       },
-      {
-        path: "submissions/:id/thank-you",
-        layout: "ContainerOnly",
-        Component: ThankYouRoute,
-        onClientSideRender: () => {
-          ThankYouRoute.preload()
-        },
-        query: graphql`
-          query sellRoutes_ThankYouRouteQuery($id: ID!) {
-            submission(id: $id) @principalField {
-              ...ThankYouRoute_submission
-            }
-          }
-        `,
-        prepareVariables: ({ id }) => {
-          return { id }
-        },
-      },
+
       {
         path: "submissions/:id",
         Component: SubmissionRoute,
@@ -249,6 +260,24 @@ export const sellRoutes: RouteProps[] = [
               query sellRoutes_DimensionsRouteQuery($id: ID!) {
                 submission(id: $id) @principalField {
                   ...DimensionsRoute_submission
+                }
+              }
+            `,
+            prepareVariables: ({ id }) => {
+              return { id }
+            },
+          },
+          {
+            path: "thank-you",
+            layout: "ContainerOnly",
+            Component: ThankYouRoute,
+            onClientSideRender: () => {
+              ThankYouRoute.preload()
+            },
+            query: graphql`
+              query sellRoutes_ThankYouRouteQuery($id: ID!) {
+                submission(id: $id) @principalField {
+                  ...ThankYouRoute_submission
                 }
               }
             `,
