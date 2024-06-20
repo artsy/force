@@ -124,7 +124,6 @@ describe("PurchaseHistoryRoute", () => {
               externalId: '<mock-value-for-field-"externalId">',
               provenance: "Other",
               signature: false,
-              state: "DRAFT",
             },
           },
         })
@@ -151,7 +150,6 @@ describe("PurchaseHistoryRoute", () => {
               externalId: '<mock-value-for-field-"externalId">',
               provenance: "Other",
               signature: false,
-              state: "DRAFT",
             },
           },
         })
