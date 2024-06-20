@@ -1,7 +1,11 @@
 import { FC, useReducer } from "react"
 import { Form } from "./Components/Form/Form"
+import { Result } from "./Components/Result/Result"
+
+type Step = "form" | "result"
 
 export type State = {
+  currentStep: Step
   goal: string
   goalFreeText: string
   budget: string
@@ -10,6 +14,7 @@ export type State = {
 }
 
 const initialState: State = {
+  currentStep: "form",
   goal: "",
   goalFreeText: "",
   budget: "",
@@ -19,6 +24,7 @@ const initialState: State = {
 
 export type Action =
   | { type: "RESET" }
+  | { type: "SET_STEP"; step: Step }
   // goal
   | { type: "SET_GOAL"; goal: string }
   // budget
@@ -32,6 +38,9 @@ function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "RESET":
       return initialState
+
+    case "SET_STEP":
+      return { ...state, currentStep: action.step }
 
     case "SET_GOAL":
       return { ...state, goal: action.goal }
@@ -56,6 +65,15 @@ function reducer(state: State, action: Action): State {
 
 export const App: FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const { currentStep } = state
 
-  return <Form state={state} dispatch={dispatch} />
+  if (currentStep === "form") {
+    return <Form state={state} dispatch={dispatch} />
+  }
+
+  if (currentStep === "result") {
+    return <Result state={state} dispatch={dispatch} />
+  }
+
+  return null
 }
