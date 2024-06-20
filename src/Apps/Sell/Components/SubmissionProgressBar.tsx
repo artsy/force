@@ -11,16 +11,14 @@ const ICON_SIZE = 22
 export const SubmissionProgressBar: React.FC = ({}) => {
   const { state } = useSellFlowContext()
 
-  if (!state) return null
+  if (!state?.step) {
+    // Render an empty progress bar if we don't have a step
+    return <Flex height={PROGRESS_BAR_CONTAINER_HEIGHT} />
+  }
 
   const { step, isLastStep } = state
 
   const progress = ((STEPS.indexOf(step) + 1) / STEPS.length) * 100
-
-  if (!step) {
-    // Returning a Flex with the same height as the progress bar to keep the layout consistent
-    return <Flex height={PROGRESS_BAR_CONTAINER_HEIGHT} />
-  }
 
   return (
     <AppContainer>
