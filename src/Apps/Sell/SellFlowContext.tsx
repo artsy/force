@@ -19,7 +19,10 @@ export const STEPS = [
   "details",
   "purchase-history",
   "dimensions",
+  "thank-you",
 ]
+
+const SUBMIT_STEP = "dimensions"
 
 interface Actions {
   goToPreviousStep: () => void
@@ -36,6 +39,7 @@ interface Actions {
 interface State {
   isFirstStep: boolean
   isLastStep: boolean
+  isSubmitStep: boolean
   index: number
   step: string
   submissionID: string | undefined
@@ -124,6 +128,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
         input: {
           externalId: submissionID,
           ...values,
+          state: state.isSubmitStep ? "SUBMITTED" : undefined,
         } as UpdateSubmissionMutationInput,
       },
     })
@@ -151,6 +156,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const state = {
     isFirstStep: index === 0,
     isLastStep: index === STEPS.length - 1,
+    isSubmitStep: index === STEPS.indexOf(SUBMIT_STEP),
     index,
     step: STEPS[index],
     submissionID,

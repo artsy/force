@@ -1,4 +1,4 @@
-import { Button, Flex, Spacer, Text } from "@artsy/palette"
+import { Button, Flex, FullBleed, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { ArtistNotEligiblText } from "Apps/Sell/Components/ArtistNotEligibleText"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
@@ -21,42 +21,46 @@ export const ArtistNotEligibleRoute: React.FC<ArtistNotEligibleRouteProps> = pro
   const artist = useFragment(FRAGMENT, props.artist)
 
   return (
-    <AppContainer>
-      <SubmissionLayout hideNavigation>
-        <Text variant="xl" mb={2}>
-          This artist isn’t currently eligible to sell on our platform
-        </Text>
+    <FullBleed>
+      <AppContainer>
+        <SubmissionLayout hideNavigation>
+          <Text variant="xl" mb={2}>
+            This artist isn’t currently eligible to sell on our platform
+          </Text>
 
-        {!!artist && (
-          <EntityHeaderArtistFragmentContainer
-            artist={artist}
-            displayFollowButton={false}
-          />
-        )}
+          {!!artist && (
+            <EntityHeaderArtistFragmentContainer
+              artist={artist}
+              displayFollowButton={false}
+            />
+          )}
 
-        <ArtistNotEligiblText />
+          <ArtistNotEligiblText />
 
-        <Spacer y={4} />
+          <Spacer y={4} />
 
-        <Flex flexDirection="column" justifyContent="space-between" gap={2}>
-          <Button
-            // @ts-ignore
-            as={RouterLink}
-            to="/collector-profile/my-collection/artworks/new"
-          >
-            Add to My Collection
-          </Button>
+          <Flex flexDirection="column" justifyContent="space-between" pb={2}>
+            <Button
+              // @ts-ignore
+              as={RouterLink}
+              to="/collector-profile/my-collection/artworks/new"
+            >
+              Add to My Collection
+            </Button>
 
-          <Button
-            // @ts-ignore
-            as={RouterLink}
-            to="/sell2/submissions/new"
-            variant="secondaryBlack"
-          >
-            Add Another Artist
-          </Button>
-        </Flex>
-      </SubmissionLayout>
-    </AppContainer>
+            <Spacer y={2} />
+
+            <Button
+              // @ts-ignore
+              as={RouterLink}
+              to="/sell2/submissions/new"
+              variant="secondaryBlack"
+            >
+              Add Another Artist
+            </Button>
+          </Flex>
+        </SubmissionLayout>
+      </AppContainer>
+    </FullBleed>
   )
 }

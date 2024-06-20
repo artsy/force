@@ -52,14 +52,14 @@ const BottomFormNextButton = () => {
   const { isValid, isSubmitting, submitForm } = useFormikContext()
   const {
     actions,
-    state: { isLastStep },
+    state: { isSubmitStep },
   } = useSellFlowContext()
 
   const onNext = async () => {
     try {
       await submitForm()
 
-      isLastStep ? actions.finishFlow() : actions.goToNextStep()
+      isSubmitStep ? actions.finishFlow() : actions.goToNextStep()
     } catch (error) {
       logger.error("Error submitting form", error)
     }
@@ -72,7 +72,7 @@ const BottomFormNextButton = () => {
       loading={isSubmitting}
       onClick={onNext}
     >
-      {isLastStep ? "Submit" : "Continue"}
+      {isSubmitStep ? "Submit" : "Continue"}
     </Button>
   )
 }
