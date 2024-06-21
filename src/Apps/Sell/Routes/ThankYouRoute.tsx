@@ -22,11 +22,8 @@ export const ThankYouRoute: React.FC = () => {
               </Text>
 
               <Message variant="success" title="What happens next?">
-                <Text variant="xs">
-                  If your artwork is accepted, we will guide you in selecting
-                  the best selling option. Additional information may be
-                  requested.
-                </Text>
+                If your artwork is accepted, we will guide you in selecting the
+                best selling option. Additional information may be requested.
               </Message>
             </Join>
 
