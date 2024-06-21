@@ -25,7 +25,7 @@ export const MarketingCollectionsRail: FC<MarketingCollectionsRailProps> = ({
 
   useEffect(() => {
     const params = new URLSearchParams()
-    params.append("concept", state.goal) //TODO: improve use of goal
+    params.append("concepts", state.goal) //TODO: improve use of goal
     state.interests.forEach(concept => {
       params.append("concepts", concept)
     })
