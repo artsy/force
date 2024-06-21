@@ -1,4 +1,4 @@
-import { Box, Image } from "@artsy/palette"
+import { Box, Flex, Image } from "@artsy/palette"
 import { DiscoveryMarketingCollections } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollectionsRail"
 import { FC } from "react"
 
@@ -12,9 +12,11 @@ export const MarketingCollection: FC<MarketingCollectionProps> = ({
   return (
     <Box>
       <Image src={marketingCollection.imageUrl} height={300} />
-      <a href={`/collection/${marketingCollection.slug}`} target="_blank">
-        {marketingCollection.title}
-      </a>
+      <Flex justifyContent="center">
+        <a href={`/collection/${marketingCollection.slug}`} target="_blank">
+          {marketingCollection.title}
+        </a>
+      </Flex>
     </Box>
   )
 }
