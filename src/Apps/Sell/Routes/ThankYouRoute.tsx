@@ -33,6 +33,7 @@ export const ThankYouRoute: React.FC = () => {
                 as={RouterLink}
                 to="/sell2/submissions/new"
                 width="100%"
+                data-testid="submit-another-work"
               >
                 Submit Another Work
               </Button>
@@ -43,6 +44,7 @@ export const ThankYouRoute: React.FC = () => {
                 to="/collector-profile/my-collection"
                 variant="secondaryBlack"
                 width="100%"
+                data-testid="view-collection"
               >
                 View Artwork in My Collection
               </Button>

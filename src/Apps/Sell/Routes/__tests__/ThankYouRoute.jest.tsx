@@ -64,14 +64,14 @@ describe("ThankYouRoute", () => {
       screen.getByText("View Artwork in My Collection")
     ).toBeInTheDocument()
 
-    /*  expect(screen.getByText("Submit Another Work")).toHaveAttribute(
+    expect(screen.getByTestId("submit-another-work")).toHaveAttribute(
       "href",
       "/sell2/submissions/new"
     )
 
-    expect(screen.getByText("View Artwork in My Collection")).toHaveAttribute(
+    expect(screen.getByTestId("view-collection")).toHaveAttribute(
       "href",
       "/collector-profile/my-collection"
-    ) */
+    )
   })
 })
