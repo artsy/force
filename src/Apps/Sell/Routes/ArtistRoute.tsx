@@ -156,7 +156,7 @@ export const ArtistRoute: React.FC<{
     >
       {formik => (
         <SubmissionLayout hideNavigation={isNewSubmission}>
-          <Text mb={2} variant="xl">
+          <Text mb={2} variant={["lg-display", "xl"]}>
             Add artist name
           </Text>
 

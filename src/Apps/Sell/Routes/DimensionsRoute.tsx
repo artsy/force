@@ -1,6 +1,3 @@
-import * as React from "react"
-import * as Yup from "yup"
-import { DimensionsRoute_submission$key } from "__generated__/DimensionsRoute_submission.graphql"
 import {
   Column,
   GridColumns,
@@ -11,12 +8,15 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import { Formik } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { DimensionsRoute_submission$key } from "__generated__/DimensionsRoute_submission.graphql"
+import { Formik } from "formik"
+import * as React from "react"
+import { graphql, useFragment } from "react-relay"
+import * as Yup from "yup"
 
 const FRAGMENT = graphql`
   fragment DimensionsRoute_submission on ConsignmentSubmission {
@@ -72,7 +72,7 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
     >
       {({ handleChange, setFieldValue, values }) => (
         <SubmissionLayout>
-          <Text mb={2} variant="xl">
+          <Text mb={2} variant={["lg-display", "xl"]}>
             Artwork dimensions
           </Text>
 

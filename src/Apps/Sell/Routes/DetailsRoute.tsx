@@ -76,7 +76,7 @@ export const DetailsRoute: React.FC<DetailsRouteProps> = props => {
     >
       {({ handleChange, values }) => (
         <SubmissionLayout>
-          <Text mb={2} variant="xl">
+          <Text mb={2} variant={["lg-display", "xl"]}>
             Artwork details
           </Text>
 

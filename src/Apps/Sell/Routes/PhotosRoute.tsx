@@ -1,11 +1,11 @@
-import * as React from "react"
-import { PhotosRoute_submission$key } from "__generated__/PhotosRoute_submission.graphql"
 import { Text } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import * as Yup from "yup"
-import { Formik } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { PhotosRoute_submission$key } from "__generated__/PhotosRoute_submission.graphql"
+import { Formik } from "formik"
+import * as React from "react"
+import { graphql, useFragment } from "react-relay"
+import * as Yup from "yup"
 
 const FRAGMENT = graphql`
   fragment PhotosRoute_submission on ConsignmentSubmission {
@@ -55,9 +55,10 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
       validationSchema={Schema}
     >
       <SubmissionLayout>
-        <Text mb={2} variant="xl">
+        <Text mb={2} variant={["lg-display", "xl"]}>
           Upload photos of your artwork
         </Text>
+
         <Text mb={2} variant="sm">
           Make your work stand out and get your submission evaluated faster by
           uploading high-quality photos of the work's front and back.

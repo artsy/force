@@ -51,9 +51,11 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
     >
       {({ handleChange, values }) => (
         <SubmissionLayout>
-          <Join separator={<Spacer y={2} />}>
-            <Text variant="xl">Add artwork title</Text>
+          <Text mb={2} variant={["lg-display", "xl"]}>
+            Add artwork title
+          </Text>
 
+          <Join separator={<Spacer y={2} />}>
             {!!submission.artist && (
               <EntityHeaderArtistFragmentContainer
                 artist={submission.artist}
