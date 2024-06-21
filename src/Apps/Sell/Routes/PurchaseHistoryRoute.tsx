@@ -62,7 +62,9 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
     >
       {({ handleChange, setFieldValue, values }) => (
         <SubmissionLayout>
-          <SubmissionStepTitle title="Where did you purchase the artwork?" />
+          <SubmissionStepTitle>
+            Where did you purchase the artwork?
+          </SubmissionStepTitle>
 
           <Join separator={<Spacer y={4} />}>
             <Select

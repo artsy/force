@@ -72,7 +72,7 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
     >
       {({ handleChange, setFieldValue, values }) => (
         <SubmissionLayout>
-          <SubmissionStepTitle title="Artwork dimensions" />
+          <SubmissionStepTitle>Artwork dimensions</SubmissionStepTitle>
 
           <Join separator={<Spacer y={4} />}>
             <GridColumns>

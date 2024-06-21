@@ -56,7 +56,7 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
       validationSchema={Schema}
     >
       <SubmissionLayout>
-        <SubmissionStepTitle title="Upload photos of your artwork" />
+        <SubmissionStepTitle>Upload photos of your artwork</SubmissionStepTitle>
 
         <Text mb={2} variant="sm">
           Make your work stand out and get your submission evaluated faster by

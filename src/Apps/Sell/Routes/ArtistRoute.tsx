@@ -157,7 +157,7 @@ export const ArtistRoute: React.FC<{
     >
       {formik => (
         <SubmissionLayout hideNavigation={isNewSubmission}>
-          <SubmissionStepTitle title="Add artist name" />
+          <SubmissionStepTitle>Add artist name</SubmissionStepTitle>
 
           <ArtistAutoComplete
             onSelect={artist => {

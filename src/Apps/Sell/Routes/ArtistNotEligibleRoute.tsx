@@ -25,7 +25,9 @@ export const ArtistNotEligibleRoute: React.FC<ArtistNotEligibleRouteProps> = pro
     <FullBleed>
       <AppContainer>
         <SubmissionLayout hideNavigation>
-          <SubmissionStepTitle title="This artist isn’t currently eligible to sell on our platform" />
+          <SubmissionStepTitle>
+            This artist isn’t currently eligible to sell on our platform
+          </SubmissionStepTitle>
 
           {!!artist && (
             <EntityHeaderArtistFragmentContainer

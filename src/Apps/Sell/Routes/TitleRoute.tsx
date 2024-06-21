@@ -52,7 +52,7 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
     >
       {({ handleChange, values }) => (
         <SubmissionLayout>
-          <SubmissionStepTitle title="Add artwork title" />
+          <SubmissionStepTitle>Add artwork title</SubmissionStepTitle>
 
           <Join separator={<Spacer y={2} />}>
             {!!submission.artist && (

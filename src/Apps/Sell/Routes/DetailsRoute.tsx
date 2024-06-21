@@ -76,7 +76,7 @@ export const DetailsRoute: React.FC<DetailsRouteProps> = props => {
     >
       {({ handleChange, values }) => (
         <SubmissionLayout>
-          <SubmissionStepTitle title="Artwork details" />
+          <SubmissionStepTitle>Artwork details</SubmissionStepTitle>
 
           <Join separator={<Spacer y={4} />}>
             <GridColumns>
