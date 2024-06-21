@@ -397,12 +397,17 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
                     event.preventDefault()
 
                     showAuthDialog({
-                      mode: "Login",
+                      mode: "SignUp",
                       options: {
                         title: mode =>
                           mode === "Login"
                             ? "Log in to submit for sale"
                             : "Sign up to submit for sale",
+                        afterAuthAction: {
+                          action: "associateSubmission",
+                          kind: "submission",
+                          objectId: submission?.externalId as string,
+                        },
                       },
                       analytics: {
                         contextModule: ContextModule.uploadPhotos as AuthContextModule,
