@@ -7,7 +7,8 @@ export const UploadMoreMessage: React.FC = () => {
     values: { photos },
   } = useFormikContext<PhotosFormValues>()
 
-  if (photos.length !== 1) return null
+  const photosCount = photos.length || 0
+  if (photosCount != 1 && photosCount != 2) return null
 
   return (
     <Message variant="success" title="Increase your chance of selling" mt={2}>

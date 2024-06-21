@@ -7,13 +7,18 @@ import {
   ProgressBar,
   Clickable,
 } from "@artsy/palette"
+import { Z } from "Apps/Components/constants"
 import { useRemoveAssetFromConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
 import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
 import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
+import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
 import { useEffect, useState } from "react"
+
+const logger = createLogger("Sell/ImagePreviewItem.tsx")
+const BOX_SIZE = 140
 
 interface ImagePreviewItemProps {
   photo: Photo
@@ -62,7 +67,7 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
           },
         },
       }).catch(error => {
-        // logger.error("Remove asset error", error)
+        logger.error("Remove asset error", error)
       })
     }
 
@@ -73,9 +78,18 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   const isProcessing = photo.geminiToken && !photoSrc
 
   return (
-    <Flex minWidth="140px" minHeight="140px" position="relative">
-      <Box opacity={photo.loading ? 0.3 : 1} position="relative">
-        {photoSrc && <Image src={photoSrc} width="140px" height="140px" />}
+    <Flex minWidth={BOX_SIZE} minHeight={BOX_SIZE} position="relative">
+      <Box
+        position="relative"
+        backgroundColor="black5"
+        width={BOX_SIZE}
+        height={BOX_SIZE}
+      >
+        {photoSrc && (
+          <Box opacity={photo.loading ? 0.3 : 1}>
+            <Image src={photoSrc} width={BOX_SIZE} height={BOX_SIZE} />
+          </Box>
+        )}
 
         {isProcessing && (
           <Box display="flex" alignItems="center" justifyContent="center">
@@ -84,7 +98,7 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
         )}
 
         {!photoSrc && (
-          <Box backgroundColor="black5" width="140px" height="140px" />
+          <Box backgroundColor="black5" width={BOX_SIZE} height={BOX_SIZE} />
         )}
 
         {photo.loading && photo.progress && (
@@ -92,11 +106,11 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
             position="absolute"
             bottom={0}
             left={0}
-            zIndex={1000}
+            zIndex={Z.popover}
             justifyContent="center"
             alignItems="center"
             width="100%"
-            marginBottom={-0.5}
+            marginBottom={-1}
           >
             <ProgressBar
               width="100%"
@@ -128,7 +142,8 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
             height="16px"
             aria-label="Cancel"
             title="Cancel"
-            fill="black100" // TODO: reverse color
+            backgroundColor="black100"
+            fill="white100"
           />
         </Flex>
       </Clickable>

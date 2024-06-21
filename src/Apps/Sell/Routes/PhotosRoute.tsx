@@ -11,6 +11,7 @@ import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { UploadMoreMessage } from "Apps/Sell/Components/UploadMoreMessage"
 import { ImagePreviewsGrid } from "Apps/Sell/Components/ImagePreviewsGrid"
 import { UploadPhotosForm } from "Apps/Sell/Components/UploadPhotosForm"
+import { Asset, photoFromAsset } from "Apps/Sell/Utils/photoFromAsset"
 
 const FRAGMENT = graphql`
   fragment PhotosRoute_submission on ConsignmentSubmission {
@@ -35,14 +36,6 @@ const Schema = Yup.object().shape({
     ),
 })
 
-interface Asset {
-  id?: string
-  size?: string
-  filename?: string
-  geminiToken?: string
-  imageUrls: string[]
-}
-
 export interface PhotosFormValues {
   submissionId: string
   photos: Photo[]
@@ -55,17 +48,9 @@ interface PhotosRouteProps {
 export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
 
-  const photos: Photo[] = (submission.assets as Asset[]).map(asset => ({
-    id: asset?.id ?? "",
-    assetId: asset?.id ?? "",
-    size: (asset?.size && parseInt(asset?.size, 10)) || 0,
-    name: asset?.filename ?? "",
-    geminiToken: asset?.geminiToken ?? undefined,
-    url:
-      (asset?.imageUrls as any)?.thumbnail || (asset?.imageUrls as any)?.square,
-    removed: false,
-    loading: false,
-  }))
+  const photos: Photo[] = (submission.assets as Asset[]).map(asset =>
+    photoFromAsset(asset)
+  )
 
   const initialValues: PhotosFormValues = {
     submissionId: submission.externalId,
@@ -107,6 +92,7 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
             <UploadPhotosForm />
             <UploadMoreMessage />
             <ImagePreviewsGrid />
+
             <DevDebug />
           </SubmissionLayout>
         )
