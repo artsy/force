@@ -31,7 +31,8 @@ export const ThankYouRoute: React.FC = () => {
             </Join>
 
             <Join separator={<Spacer y={2} />}>
-              <Button // @ts-ignore
+              <Button
+                // @ts-ignore
                 as={RouterLink}
                 to="/sell2/submissions/new"
                 width="100%"
@@ -46,7 +47,7 @@ export const ThankYouRoute: React.FC = () => {
                 variant="secondaryBlack"
                 width="100%"
               >
-                View Artwork in My Collections
+                View Artwork in My Collection
               </Button>
             </Join>
           </Join>
