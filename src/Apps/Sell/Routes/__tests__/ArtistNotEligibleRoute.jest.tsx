@@ -58,5 +58,15 @@ describe("ArtistNotEligibleRoute", () => {
     expect(screen.getByText("Add to My Collection")).toBeInTheDocument()
 
     expect(screen.getByText("Add Another Artist")).toBeInTheDocument()
+
+    expect(screen.getByTestId("add-to-collection")).toHaveAttribute(
+      "href",
+      "/collector-profile/my-collection/artworks/new"
+    )
+
+    expect(screen.getByTestId("view-collection")).toHaveAttribute(
+      "href",
+      "/sell2/submissions/new"
+    )
   })
 })

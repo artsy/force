@@ -44,6 +44,7 @@ export const ArtistNotEligibleRoute: React.FC<ArtistNotEligibleRouteProps> = pro
               // @ts-ignore
               as={RouterLink}
               to="/collector-profile/my-collection/artworks/new"
+              data-testid="add-to-collection"
             >
               Add to My Collection
             </Button>
@@ -55,6 +56,7 @@ export const ArtistNotEligibleRoute: React.FC<ArtistNotEligibleRouteProps> = pro
               as={RouterLink}
               to="/sell2/submissions/new"
               variant="secondaryBlack"
+              data-testid="view-collection"
             >
               Add Another Artist
             </Button>
