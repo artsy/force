@@ -3,6 +3,7 @@ import { Button, FullBleed, Join, Message, Spacer, Text } from "@artsy/palette"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { RouterLink } from "System/Components/RouterLink"
 import { AppContainer } from "Apps/Components/AppContainer"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 
 export const ThankYouRoute: React.FC = () => {
   return (
@@ -11,9 +12,9 @@ export const ThankYouRoute: React.FC = () => {
         <SubmissionLayout hideNavigation>
           <Join separator={<Spacer y={4} />}>
             <Join separator={<Spacer y={2} />}>
-              <Text variant="lg-display">
+              <SubmissionStepTitle>
                 Thank you for submitting your artwork
-              </Text>
+              </SubmissionStepTitle>
 
               <Text variant="xs">
                 An Artsy Advisor will email you within 3-5 days to review your
