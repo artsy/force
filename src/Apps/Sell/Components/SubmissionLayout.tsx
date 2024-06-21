@@ -8,11 +8,13 @@ const CONTENT_WIDTH = 640
 
 interface SubmissionLayoutProps {
   hideNavigation?: boolean
+  loading?: boolean
 }
 
 export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
   children,
   hideNavigation = false,
+  loading = false,
 }) => {
   const context = useSellFlowContext()
 
@@ -40,7 +42,7 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
         )}
       </Flex>
 
-      {!hideNavigation && <BottomFormNavigation />}
+      {!hideNavigation && <BottomFormNavigation loading={loading} />}
     </Flex>
   )
 }

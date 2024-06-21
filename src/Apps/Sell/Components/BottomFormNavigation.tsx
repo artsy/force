@@ -2,10 +2,17 @@ import { Box, Button, Flex } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
+import { FC } from "react"
 
 const logger = createLogger("BottomFormNavigation.tsx")
 
-export const BottomFormNavigation = () => {
+interface BottomFormNavigationProps {
+  loading?: boolean
+}
+
+export const BottomFormNavigation: FC<BottomFormNavigationProps> = ({
+  loading,
+}) => {
   return (
     <Flex
       width="100%"
@@ -15,7 +22,7 @@ export const BottomFormNavigation = () => {
       alignItems="center"
     >
       <BottomFormBackButton />
-      <BottomFormNextButton />
+      <BottomFormNextButton loading={loading} />
     </Flex>
   )
 }
@@ -48,7 +55,13 @@ const BottomFormBackButton = () => {
   )
 }
 
-const BottomFormNextButton = () => {
+interface BottomFormNextButtonProps {
+  loading?: boolean
+}
+
+const BottomFormNextButton: FC<BottomFormNextButtonProps> = ({
+  loading = false,
+}) => {
   const { isValid, isSubmitting, submitForm } = useFormikContext()
   const {
     actions,
@@ -69,7 +82,7 @@ const BottomFormNextButton = () => {
     <Button
       variant="primaryBlack"
       disabled={!isValid}
-      loading={isSubmitting}
+      loading={isSubmitting || loading}
       onClick={onNext}
     >
       {isLastStep ? "Submit" : "Continue"}
