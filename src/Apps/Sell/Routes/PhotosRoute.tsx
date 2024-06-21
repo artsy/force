@@ -71,11 +71,11 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
 
         return (
           <SubmissionLayout loading={isAnyPhotoLoading}>
-            <Text mb={2} variant="xl">
+            <Text mb={2} variant={["xl", "lg"]}>
               Upload photos of your artwork
             </Text>
 
-            <Text mb={2} variant="sm">
+            <Text mb={2} variant={["xs", "sm"]}>
               Make your work stand out and get your submission evaluated faster
               by uploading high-quality photos of the work's front and back.{" "}
               <RouterLink

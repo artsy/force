@@ -18,7 +18,7 @@ import { useFormikContext } from "formik"
 import { useEffect, useState } from "react"
 
 const logger = createLogger("Sell/ImagePreviewItem.tsx")
-const BOX_SIZE = 140
+const IMAGE_SIZES = [100, 140]
 
 interface ImagePreviewItemProps {
   photo: Photo
@@ -78,16 +78,16 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   const isProcessing = photo.geminiToken && !photoSrc
 
   return (
-    <Flex minWidth={BOX_SIZE} minHeight={BOX_SIZE} position="relative">
+    <Flex minWidth={IMAGE_SIZES} minHeight={IMAGE_SIZES} position="relative">
       <Box
         position="relative"
         backgroundColor="black5"
-        width={BOX_SIZE}
-        height={BOX_SIZE}
+        width={IMAGE_SIZES}
+        height={IMAGE_SIZES}
       >
         {photoSrc && (
           <Box opacity={photo.loading ? 0.3 : 1}>
-            <Image src={photoSrc} width={BOX_SIZE} height={BOX_SIZE} />
+            <Image src={photoSrc} width={IMAGE_SIZES} height={IMAGE_SIZES} />
           </Box>
         )}
 
@@ -98,7 +98,11 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
         )}
 
         {!photoSrc && (
-          <Box backgroundColor="black5" width={BOX_SIZE} height={BOX_SIZE} />
+          <Box
+            backgroundColor="black5"
+            width={IMAGE_SIZES}
+            height={IMAGE_SIZES}
+          />
         )}
 
         {photo.loading && photo.progress && (
