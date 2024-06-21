@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "System/Router/Route"
+import { RouteProps } from "System/Router/Route"
 
 const ArtAdvisorApp = loadable(
   () => import(/* webpackChunkName: "advisorBundle" */ "./ArtAdvisorApp"),
@@ -68,7 +68,7 @@ const ArtAdvisorApp07 = loadable(
   }
 )
 
-export const artAdvisorRoutes: AppRouteConfig[] = [
+export const artAdvisorRoutes: RouteProps[] = [
   {
     path: "/advisor",
     getComponent: () => ArtAdvisorApp,

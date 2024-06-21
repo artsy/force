@@ -1,6 +1,6 @@
 import { FC, useState } from "react"
 import { Button, Input, TextArea, Text, Spacer, Flex } from "@artsy/palette"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 type Message = {
   role: string

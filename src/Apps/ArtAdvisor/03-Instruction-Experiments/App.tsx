@@ -9,7 +9,7 @@ import {
   Box,
   Spinner,
 } from "@artsy/palette"
-import { useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import Markdown from "marked-react"
 
 type Message = {
