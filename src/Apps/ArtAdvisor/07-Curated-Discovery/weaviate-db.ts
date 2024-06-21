@@ -25,8 +25,7 @@ export class WeaviateDB {
   }
 
   /**
-   * Fetch artworks by semantic search on an array of concepts,
-   * optionally with liked and disliked artworks to move to/away from.
+   * Fetch marketing collections by semantic search on an array of concepts.
    */
   async getNearMarketingCollections({
     concepts,
@@ -35,9 +34,9 @@ export class WeaviateDB {
   }: {
     /** List of concepts for semantic search */
     concepts: string[]
-    /** Budget on which to filter */
+    /** Budget on which to filter collections */
     budget?: number
-    /** List of liked artwork Mongo ids */
+    /** Max number of collections to return */
     limit?: number
   }) {
     console.log("[WeaviateDB] getNearCollections", {
