@@ -81,7 +81,7 @@ afterEach(() => {
 
 // FIXME: CI Timeouts
 // eslint-disable-next-line jest/no-disabled-tests
-describe.skip("AddressModal", () => {
+describe("AddressModal", () => {
   beforeEach(() => {
     mockRelayEnv = createMockEnvironment()
     mockUseSystemContext.mockImplementation(() => {

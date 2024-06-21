@@ -128,11 +128,8 @@ const FulfillmentDetailsFormLayout = (
   const withBackToFulfillmentDetails = <F extends (...args: any[]) => void>(
     cb: F
   ) => (...args: Parameters<F>) => {
-    if (
-      addressFormMode === "new_address" &&
-      shippingContext.state.stage !== "fulfillment_details"
-    ) {
-      shippingContext.actions.setStage("fulfillment_details")
+    if (addressFormMode === "new_address") {
+      shippingContext.actions.goBackToFulfillmentDetails()
     }
     cb(...args)
   }
@@ -266,6 +263,9 @@ const FulfillmentDetailsFormLayout = (
             data-testid="shipping-options"
             onSelect={withBackToFulfillmentDetails(value => {
               setFieldValue("fulfillmentType", value)
+              if (value === FulfillmentType.PICKUP) {
+                shippingContext.actions.goBackToFulfillmentDetails
+              }
             })}
             defaultValue={values.fulfillmentType}
           >
@@ -400,6 +400,7 @@ const FulfillmentDetailsFormLayout = (
                       },
                     })
                     setHasAutocompletedAddress(true)
+                    shippingContext.actions.goBackToFulfillmentDetails()
 
                     autocompleteTracking.selectedAutocompletedAddress(
                       option,
