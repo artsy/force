@@ -17,6 +17,7 @@ import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { graphql, useFragment } from "react-relay"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { PROVENANCE_LIST } from "Apps/Sell/Utils/formUtils"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 
 const FRAGMENT = graphql`
   fragment PurchaseHistoryRoute_submission on ConsignmentSubmission {
@@ -61,9 +62,7 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
     >
       {({ handleChange, setFieldValue, values }) => (
         <SubmissionLayout>
-          <Text mb={2} variant="xl">
-            Where did you purchase the artwork?
-          </Text>
+          <SubmissionStepTitle title="Where did you purchase the artwork?" />
 
           <Join separator={<Spacer y={4} />}>
             <Select

@@ -9,7 +9,6 @@ import {
   Radio,
   RadioGroup,
   Spacer,
-  Text,
 } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
 import { Formik } from "formik"
@@ -17,6 +16,7 @@ import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 
 const FRAGMENT = graphql`
   fragment DimensionsRoute_submission on ConsignmentSubmission {
@@ -72,9 +72,7 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
     >
       {({ handleChange, setFieldValue, values }) => (
         <SubmissionLayout>
-          <Text mb={2} variant="xl">
-            Artwork dimensions
-          </Text>
+          <SubmissionStepTitle title="Artwork dimensions" />
 
           <Join separator={<Spacer y={4} />}>
             <GridColumns>
