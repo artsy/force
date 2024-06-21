@@ -41,7 +41,7 @@ export const ThankYouRoute: React.FC = () => {
               <Button
                 // @ts-ignore
                 as={RouterLink}
-                to="/collector-profile/my-collection"
+                to="/my-collection"
                 variant="secondaryBlack"
                 width="100%"
                 data-testid="view-collection"

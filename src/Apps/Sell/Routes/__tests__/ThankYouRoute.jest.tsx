@@ -71,7 +71,7 @@ describe("ThankYouRoute", () => {
 
     expect(screen.getByTestId("view-collection")).toHaveAttribute(
       "href",
-      "/collector-profile/my-collection"
+      "/my-collection"
     )
   })
 })
