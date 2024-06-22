@@ -79,6 +79,8 @@
     "superagent": "3.8.3"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^0.0.23",
+    "@ai-sdk/openai": "^0.0.33",
     "@artsy/cohesion": "4.189.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
@@ -106,6 +108,7 @@
     "@stripe/stripe-js": "^1.34.0",
     "@styled-system/theme-get": "5.1.2",
     "actioncable": "^5.2.7-1",
+    "ai": "^3.2.5",
     "analytics-node": "2.4.1",
     "async": "^3.2.4",
     "autosuggest-highlight": "3.1.1",
@@ -206,7 +209,8 @@
     "waypoints": "4.0.0",
     "weaviate-ts-client": "^2.2.0",
     "yargs": "11.0.0",
-    "yup": "0.32.6"
+    "yup": "0.32.6",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@babel/cli": "7.13.10",
