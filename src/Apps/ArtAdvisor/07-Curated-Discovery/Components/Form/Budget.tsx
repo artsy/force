@@ -8,7 +8,7 @@ interface BudgetProps {
 }
 
 export const Budget: FC<BudgetProps> = props => {
-  const { dispatch } = props
+  const { state, dispatch } = props
 
   return (
     <Box>
@@ -22,6 +22,7 @@ export const Budget: FC<BudgetProps> = props => {
         placeholder={
           "For example, “I will spend $500–$1,000 on this artwork,” or “I’d spend up to $100,000 this year on my collection.”"
         }
+        defaultValue={state.budget}
         rows={2}
         onChange={e => {
           const text = e.value
