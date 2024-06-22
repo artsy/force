@@ -1,12 +1,12 @@
 import { FC, useReducer } from "react"
+import { z } from "zod"
 import { Form } from "./Components/Form/Form"
 import { Result } from "./Components/Result/Result"
+import { schema as budgetIntentSchema } from "Apps/ArtAdvisor/07-Curated-Discovery/llm/extractBudgetIntent"
 
 type Step = "form" | "result"
 
-export type BudgetIntent = {
-  amount: number
-}
+export type BudgetIntent = z.infer<typeof budgetIntentSchema>
 
 export type State = {
   currentStep: Step

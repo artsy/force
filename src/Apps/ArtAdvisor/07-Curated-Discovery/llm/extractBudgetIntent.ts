@@ -33,7 +33,7 @@ const prompt = (statement: string) => dedent`
 
   BUDGET STATEMENT: ${statement}
 `
-const schema = z.object({
+export const schema = z.object({
   budget: z
     .object({
       currency: z
