@@ -11,7 +11,6 @@ export type BudgetIntent = {
 export type State = {
   currentStep: Step
   goal: string
-  goalFreeText: string
   budget: string
   budgetIntent: BudgetIntent | undefined
   interests: string[]
@@ -21,7 +20,6 @@ export type State = {
 const initialState: State = {
   currentStep: "form",
   goal: "",
-  goalFreeText: "",
   budget: "",
   budgetIntent: undefined,
   interests: [],
