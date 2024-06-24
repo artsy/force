@@ -31,15 +31,11 @@ export const Form: React.FC<FormProps> = props => {
   const handleSubmit = async () => {
     try {
       setIsLoading(true)
-      const budgetIntent = await fetch("/api/advisor/7/budget/intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          budget: state.budget,
-        }),
-      })
+      const params = new URLSearchParams({ budget: state.budget })
+      const url = `/api/advisor/7/budget/intent?${params.toString()}`
+      const headers = { "Content-Type": "application/json" }
+      const options = { headers }
+      const budgetIntent = await fetch(url, options)
 
       if (budgetIntent.ok) {
         const intent = (await budgetIntent.json()) as BudgetIntent

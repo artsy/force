@@ -2,11 +2,14 @@ import express from "express"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import _ from "lodash"
 import { WeaviateDB } from "./weaviate-db"
+import { extractBudgetIntent } from "./llm/extractBudgetIntent"
 
 const weaviateDB = new WeaviateDB()
 
-const inferBudgetIntent = async (req: ArtsyRequest, res: ArtsyResponse) => {
-  res.json({ amount: 42 })
+const getBudgetIntent = async (req: ArtsyRequest, res: ArtsyResponse) => {
+  const { budget } = req.query
+  const intent = await extractBudgetIntent(budget)
+  res.json(intent)
 }
 
 const getMarketingCollections = async (
@@ -27,5 +30,5 @@ const getMarketingCollections = async (
 
 export const router = express.Router()
 
-router.post("/budget/intent", inferBudgetIntent)
+router.get("/budget/intent", getBudgetIntent)
 router.get("/marketing_collections", getMarketingCollections)
