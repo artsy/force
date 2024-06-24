@@ -1,6 +1,6 @@
 import {
-  CreateSubmissionMutationInput,
   CreateConsignSubmissionMutation,
+  CreateSubmissionMutationInput,
 } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import { Environment, commitMutation, graphql } from "react-relay"
 

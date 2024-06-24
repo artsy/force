@@ -274,16 +274,6 @@ export const sellRoutes: RouteProps[] = [
             onClientSideRender: () => {
               ThankYouRoute.preload()
             },
-            query: graphql`
-              query sellRoutes_ThankYouRouteQuery($id: ID!) {
-                submission(id: $id) @principalField {
-                  ...ThankYouRoute_submission
-                }
-              }
-            `,
-            prepareVariables: ({ id }) => {
-              return { id }
-            },
           },
         ],
       },

@@ -49,7 +49,10 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
       return <ArtworkUnavailableBanner />
     }
 
-    if (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID) {
+    if (
+      me &&
+      (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID)
+    ) {
       return <ExpiredOfferBanner />
     }
   }

@@ -1,5 +1,6 @@
+import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
+import { ThankYouRoute } from "Apps/Sell/Routes/ThankYouRoute"
 import { screen } from "@testing-library/react"
-import { ArtistNotEligibleRoute } from "Apps/Sell/Routes/ArtistNotEligibleRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
 import { graphql } from "react-relay"
@@ -18,55 +19,59 @@ jest.mock("react-relay", () => ({
   fetchQuery: jest.fn(),
 }))
 
-let pathnameMock: string
-
-beforeAll(() => {
-  pathnameMock = "/artists/artist-id/artist"
-
+beforeEach(() => {
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: pathnameMock } },
+    match: {
+      location: { pathname: "submissions/submission-id/thank-you" },
+    },
   }))
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
-    return <ArtistNotEligibleRoute artist={props.artist} />
+    return (
+      <SubmissionRoute submission={props.submission}>
+        <ThankYouRoute />
+      </SubmissionRoute>
+    )
   },
   query: graphql`
-    query ArtistNotEligibleRoute_Test_Query @raw_response_type {
-      artist(id: "artist-id") {
-        ...ArtistNotEligibleRoute_artist
+    query ThankYouRoute_Test_Query @raw_response_type {
+      submission(id: "submission-id") {
+        ...SubmissionRoute_submission
       }
     }
   `,
 })
 
-describe("ArtistNotEligibleRoute", () => {
+describe("ThankYouRoute", () => {
   it("renders text and links", () => {
     renderWithRelay({})
 
+    expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
+
     expect(
-      screen.getByText(
-        "This artist isn’t currently eligible to sell on our platform"
-      )
+      screen.getByText("Thank you for submitting your artwork")
     ).toBeInTheDocument()
 
-    expect(screen.getByText("Add to My Collection")).toBeInTheDocument()
+    expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
 
-    expect(screen.getByText("Add Another Artist")).toBeInTheDocument()
+    expect(
+      screen.getByText("View Artwork in My Collection")
+    ).toBeInTheDocument()
 
-    expect(screen.getByTestId("add-to-collection")).toHaveAttribute(
+    expect(screen.getByTestId("submit-another-work")).toHaveAttribute(
       "href",
-      "/collector-profile/my-collection/artworks/new"
+      "/sell2/submissions/new"
     )
 
     expect(screen.getByTestId("view-collection")).toHaveAttribute(
       "href",
-      "/sell2/submissions/new"
+      "/my-collection"
     )
   })
 })

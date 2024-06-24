@@ -1,9 +1,9 @@
-import { Join, Separator, Spacer } from "@artsy/palette"
+import { Box, Join, Separator, Spacer } from "@artsy/palette"
 import {
   MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
   MyCollectionPriceEstimateSentSection,
 } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimateSection"
-import { MyCollectionArtworkSWASectionMobileLayout } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASection"
+import { MyCollectionArtworkSWASection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASection"
 import { MyCollectionArtworkSidebarFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSidebar"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
 import { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
@@ -22,7 +22,6 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
 }) => {
   const isP1Artist = artwork.artist?.targetSupply?.isP1
   const showSubmitForSaleCtaMobile = isP1Artist && !submittedConsignment
-  const id = artwork.internalID
 
   return (
     <>
@@ -46,17 +45,14 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
         )}
 
         {showSubmitForSaleCtaMobile && (
-          <>
-            <Separator my={2} />
-            <MyCollectionArtworkSWASectionMobileLayout
-              route={`/collector-profile/my-collection/submission/artwork-details/${id}`}
+          <Box mt={2}>
+            <MyCollectionArtworkSWASection
+              artwork={artwork}
               learnMore={() => {
                 onLearnMoreClick?.()
               }}
-              slug={artwork?.artist?.slug ?? ""}
-              artworkId={artwork.internalID}
             />
-          </>
+          </Box>
         )}
 
         {!artwork.hasPriceEstimateRequest && (

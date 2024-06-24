@@ -16,7 +16,6 @@ import { graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { CollectorProfileArtistsAddDialogQuery } from "__generated__/CollectorProfileArtistsAddDialogQuery.graphql"
-import { CollectorProfileArtistsAddResult } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsAddResult"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
@@ -26,18 +25,24 @@ import {
   UserInterestCategory,
   UserInterestInterestType,
 } from "__generated__/CollectorProfileArtistsAddDialogCreateUserInterestsMutation.graphql"
-import { CollectorProfileArtistsAddNewDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsAddNewDialog"
-import { useRouter } from "System/Hooks/useRouter"
+import { CollectorProfileArtistsAddResult } from "Components/CollectorProfile/CollectorProfileArtistsAddResult"
+import { CollectorProfileArtistsAddNewDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddNewDialog"
 
 interface CollectorProfileArtistsAddDialogProps {
+  description?: string
+  isCancellable?: boolean
   onClose: () => void
+  onSuccess?: () => void
+  title: string
 }
 
 export const CollectorProfileArtistsAddDialog: FC<CollectorProfileArtistsAddDialogProps> = ({
+  description,
+  isCancellable = false,
   onClose,
+  onSuccess,
+  title,
 }) => {
-  const { router } = useRouter()
-
   const [query, setQuery] = useState("")
 
   const { debouncedValue: debouncedQuery } = useDebouncedValue({
@@ -94,11 +99,7 @@ export const CollectorProfileArtistsAddDialog: FC<CollectorProfileArtistsAddDial
         } to your collection.`,
       })
 
-      router.push({
-        pathname: "/collector-profile/artists",
-        query: { page: 1 },
-      })
-
+      onSuccess?.()
       onClose()
     } catch (err) {
       console.error(err)
@@ -112,22 +113,36 @@ export const CollectorProfileArtistsAddDialog: FC<CollectorProfileArtistsAddDial
   return (
     <>
       <ModalDialog
-        title="Select an artist"
+        title={title}
         onClose={onClose}
         dialogProps={{ height: 700, width: 650 }}
         footer={
-          <Button
-            disabled={selected.length === 0 || mode === "Adding"}
-            width="100%"
-            onClick={handleAdd}
-          >
-            Add{mode === "Adding" ? "ing" : ""} selected artist
-            {selected.length === 1 ? "" : "s"}
-            {selected.length > 0 && <>• {selected.length}</>}
-          </Button>
+          <Stack gap={1}>
+            <Button
+              disabled={selected.length === 0 || mode === "Adding"}
+              width="100%"
+              onClick={handleAdd}
+            >
+              Add{mode === "Adding" ? "ing" : ""} selected artist
+              {selected.length === 1 ? "" : "s"}
+              {selected.length > 0 && <>• {selected.length}</>}
+            </Button>
+
+            {isCancellable && (
+              <Button variant="tertiary" onClick={onClose}>
+                I haven’t started a collection yet
+              </Button>
+            )}
+          </Stack>
         }
       >
         <Stack gap={2}>
+          {description && (
+            <Text variant="sm-display" color="black60">
+              {description}
+            </Text>
+          )}
+
           <LabeledInput
             ref={inputRef}
             placeholder="Search artists for artists on Artsy"

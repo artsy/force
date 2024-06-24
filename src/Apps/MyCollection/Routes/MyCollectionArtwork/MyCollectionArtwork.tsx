@@ -8,13 +8,14 @@ import {
   Tab,
   Tabs,
 } from "@artsy/palette"
-import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
-import { useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtworkAboutTab"
+import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
+import { useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkBackButton"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
@@ -23,12 +24,11 @@ import {
   MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
   MyCollectionPriceEstimateSentSection,
 } from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
+import { MyCollectionArtworkSWAHowItWorksModal } from "./Components/MyCollectionArtworkSWAHowItWorksModal"
+import { MyCollectionArtworkSWASection } from "./Components/MyCollectionArtworkSWASection"
+import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
-import { MyCollectionArtworkSWAHowItWorksModal } from "./Components/MyCollectionArtworkSWAHowItWorksModal"
-import { MyCollectionArtworkSWASectionDesktopLayout } from "./Components/MyCollectionArtworkSWASection"
-import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
-import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtworkAboutTab"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
@@ -42,25 +42,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   } = useMyCollectionTracking()
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
-  const EditArtworkButton = () => (
-    <Button
-      // @ts-ignore
-      as={RouterLink}
-      variant="secondaryNeutral"
-      size="small"
-      to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
-      onClick={() =>
-        trackEditCollectedArtwork(artwork.internalID, artwork.slug)
-      }
-      alignSelf="flex-end"
-    >
-      <Media greaterThanOrEqual="sm">Edit Artwork Details</Media>
-      <Media lessThan="sm">Edit</Media>
-    </Button>
-  )
-
   const slug = artwork?.artist?.slug ?? ""
-  const id = artwork.internalID
   const displayText = artwork.consignmentSubmission?.displayText
 
   const displaySubmissionStateSection =
@@ -94,7 +76,20 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       <Flex py={[2, 1]} justifyContent="space-between" alignItems="center">
         <MyCollectionArtworkBackButton />
 
-        <EditArtworkButton />
+        <Button
+          // @ts-ignore
+          as={RouterLink}
+          variant="secondaryNeutral"
+          size="small"
+          to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
+          onClick={() =>
+            trackEditCollectedArtwork(artwork.internalID, artwork.slug)
+          }
+          alignSelf="flex-end"
+        >
+          <Media greaterThanOrEqual="sm">Edit Artwork Details</Media>
+          <Media lessThan="sm">Edit</Media>
+        </Button>
       </Flex>
 
       <GridColumns gridRowGap={[2, null]} mb={[0, 4]}>
@@ -120,11 +115,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
                 </>
               ) : (
-                <MyCollectionArtworkSWASectionDesktopLayout
-                  route={`/collector-profile/my-collection/submission/artwork-details/${id}`}
+                <MyCollectionArtworkSWASection
+                  artwork={artwork}
                   learnMore={() => setShowHowItWorksModal(true)}
-                  slug={slug}
-                  artworkId={artwork.internalID}
                   ctaColor={
                     artwork.hasPriceEstimateRequest
                       ? "secondaryNeutral"
@@ -213,6 +206,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkSidebarTitleInfo_artwork
         ...MyCollectionArtworkRequestPriceEstimateSection_artwork
         ...MyCollectionArtworkSWASectionSubmitted_submissionState
+        ...MyCollectionArtworkSWASection_artwork
         comparables: comparableAuctionResults {
           totalCount
         }
