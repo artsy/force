@@ -3,6 +3,7 @@ import { Action, State } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
 import { FC } from "react"
 import { MarketingCollectionsRail } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollectionsRail"
 import { Links } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/Links"
+import { ArticlesRail } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArticlesRail"
 
 interface ResultProps {
   state: State
@@ -20,6 +21,7 @@ export const Result: FC<ResultProps> = props => {
           <pre>{JSON.stringify(state, null, 2)}</pre>
         </Box>
         <MarketingCollectionsRail state={state} />
+        <ArticlesRail state={state} />
       </Join>
     </>
   )
