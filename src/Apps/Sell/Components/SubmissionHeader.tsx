@@ -49,6 +49,7 @@ export const SubmissionHeader: React.FC = () => {
                       to={"/sell"}
                       display="block"
                       textDecoration={["none", "underline"]}
+                      data-testid="exit-link"
                     >
                       <Media at="xs">
                         {isSubmissionCompleted && "Exit"}
