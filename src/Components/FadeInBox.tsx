@@ -6,13 +6,13 @@ interface FadeInBoxProps extends BoxProps {
 
 export const FadeInBox: React.FC<FadeInBoxProps> = ({
   children,
-  isLoading,
+  isLoading = false,
 }) => {
   const isMounted = useDidMount()
 
   return (
     <Box
-      opacity={isMounted && isLoading ? 1 : 0}
+      opacity={isMounted || isLoading ? 1 : 0}
       style={{
         transition: "opacity 250ms",
       }}
