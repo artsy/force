@@ -23,7 +23,7 @@ export const STEPS = [
   "thank-you",
 ]
 
-const SUBMIT_STEP = "dimensions"
+const SUBMIT_STEP = "phone-number"
 
 interface Actions {
   goToPreviousStep: () => void
