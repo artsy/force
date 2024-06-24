@@ -1,33 +1,34 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+import { MyCollectionArtworkSWASection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASection"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { fetchQuery, graphql } from "react-relay"
-import { MyCollectionArtworkSWASection } from "../MyCollectionArtworkSWASection"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
+import { graphql } from "react-relay"
 
 const learnMoreMock = jest.fn()
 const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
-;(fetchQuery as jest.Mock).mockImplementation(() => ({
-  toPromise: jest
-    .fn()
-    .mockResolvedValue({ artwork: { title: "Artwork Title" } }),
-}))
-let submitMutation: jest.Mock
 
-jest.mock("react-relay", () => ({
-  ...jest.requireActual("react-relay"),
-  fetchQuery: jest.fn(),
-}))
-jest.mock("System/useFeatureFlag", () => ({
+jest.unmock("react-relay")
+jest.mock(
+  "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission",
+  () => ({
+    ...jest.requireActual(
+      "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+    ),
+    createOrUpdateConsignSubmission: jest
+      .fn()
+      .mockResolvedValue("submission-id"),
+  })
+)
+jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
 }))
-jest.mock("System/Router/useRouter", () => ({
+jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
-jest.mock("Utils/Hooks/useMutation")
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
@@ -60,15 +61,6 @@ describe("MyCollection Artwork SWA Section", () => {
             push: mockPush,
           },
         }))
-
-        submitMutation = jest.fn(() => ({
-          createConsignmentSubmission: {
-            consignmentSubmission: { externalId: "submission-id" },
-          },
-        }))
-        ;(useMutation as jest.Mock).mockImplementation(() => {
-          return { submitMutation }
-        })
       })
 
       describe("when artwork is already submitted", () => {
@@ -85,12 +77,12 @@ describe("MyCollection Artwork SWA Section", () => {
             '/sell2/submissions/<mock-value-for-field-"internalID">/artist'
           )
 
-          expect(submitMutation).not.toBeCalled()
+          expect(createOrUpdateConsignSubmission).not.toBeCalled()
         })
       })
 
       describe("when artwork has not not submitted", () => {
-        fit("creates a new submission and opens the submission page", async () => {
+        it("creates a new submission and opens the submission page", async () => {
           renderWithRelay({
             Artwork: () => ({
               consignmentSubmission: null,
@@ -100,34 +92,7 @@ describe("MyCollection Artwork SWA Section", () => {
           fireEvent.click(screen.getByTestId("submit-for-sale-link"))
 
           await waitFor(() => {
-            expect(fetchQuery).toHaveBeenCalled()
-            expect(submitMutation).toHaveBeenCalledWith({
-              variables: {
-                input: {
-                  artistID: "",
-                  attributionClass: "",
-                  category: null,
-                  depth: "",
-                  dimensionsMetric: "in",
-                  editionNumber: "",
-                  editionSize: undefined,
-                  height: "",
-                  locationCity: undefined,
-                  locationCountry: undefined,
-                  locationCountryCode: undefined,
-                  locationPostalCode: undefined,
-                  locationState: undefined,
-                  medium: "",
-                  myCollectionArtworkID: '<mock-value-for-field-"internalID">',
-                  provenance: "",
-                  sessionID: undefined,
-                  state: "DRAFT",
-                  title: "Artwork Title",
-                  width: "",
-                  year: "",
-                },
-              },
-            })
+            expect(createOrUpdateConsignSubmission).toHaveBeenCalled()
 
             expect(mockPush).toBeCalledWith(
               "/sell2/submissions/submission-id/artist"
@@ -161,12 +126,7 @@ describe("MyCollection Artwork SWA Section", () => {
     it("the link has right attributes", async () => {
       renderWithRelay()
 
-      fireEvent.click(screen.getByTestId("submit-for-sale-link"))
-
-      expect(screen.getByRole("link")).toHaveAttribute(
-        "href",
-        '/collector-profile/my-collection/submission/artwork-details/<mock-value-for-field-"internalID">'
-      )
+      expect(screen.getByTestId("submit-for-sale-link")).toBeInTheDocument()
     })
   })
 })

@@ -22,7 +22,6 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
 }) => {
   const isP1Artist = artwork.artist?.targetSupply?.isP1
   const showSubmitForSaleCtaMobile = isP1Artist && !submittedConsignment
-  const id = artwork.internalID
 
   return (
     <>

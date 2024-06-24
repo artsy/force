@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fec2f04fec144448e53c194e23351d03>>
+ * @generated SignedSource<<871b0e01969adf31363b44ec360b9f1e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type MyCollectionArtworkSWASection_Test_Query$rawResponse = {
   readonly artwork: {
     readonly artist: {
       readonly id: string;
+      readonly internalID: string;
       readonly slug: string;
     } | null | undefined;
     readonly consignmentSubmission: {
@@ -107,6 +108,7 @@ return {
             "name": "artist",
             "plural": false,
             "selections": [
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -137,12 +139,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "16e74f00baeb477fafe1febe5d36b026",
+    "cacheID": "6790b277252c4de5378a94f04a174c5b",
     "id": null,
     "metadata": {},
     "name": "MyCollectionArtworkSWASection_Test_Query",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSWASection_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASection_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASection_artwork on Artwork {\n  internalID\n  artist {\n    slug\n    id\n  }\n  consignmentSubmission {\n    internalID\n  }\n}\n"
+    "text": "query MyCollectionArtworkSWASection_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASection_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASection_artwork on Artwork {\n  internalID\n  artist {\n    internalID\n    slug\n    id\n  }\n  consignmentSubmission {\n    internalID\n  }\n}\n"
   }
 };
 })();

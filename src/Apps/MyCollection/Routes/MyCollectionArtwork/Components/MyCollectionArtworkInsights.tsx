@@ -29,16 +29,9 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
   const hasAuctionResults = artwork.auctionResults?.totalCount ?? 0 > 0
   const artistHasAuctionResults =
     artwork.artist?.auctionResultsCount?.totalCount ?? 0 > 0
-  const id = artwork.internalID
 
   return (
-    <Join
-      separator={
-        <>
-          <Spacer y={[4, 6]} />
-        </>
-      }
-    >
+    <Join separator={<Spacer y={[4, 6]} />}>
       <Join
         separator={
           <Media lessThan="sm">

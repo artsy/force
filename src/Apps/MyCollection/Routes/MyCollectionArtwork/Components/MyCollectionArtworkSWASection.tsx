@@ -1,9 +1,11 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, Button, Clickable, Separator, Text } from "@artsy/palette"
-import { useCreateSubmissionFromArtwork } from "Apps/Sell/Mutations/useCreateSubmissionFromArtwork"
+import { Box, Button, Clickable, Text } from "@artsy/palette"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { getENV } from "Utils/getENV"
 import { MyCollectionArtworkSWASection_artwork$key } from "__generated__/MyCollectionArtworkSWASection_artwork.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -26,7 +28,7 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
 
   const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
   const tracking = useTracking()
-  const { createSubmissionFromArtwork } = useCreateSubmissionFromArtwork()
+  const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { router } = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -46,9 +48,17 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
     setIsLoading(true)
 
     try {
-      const submissionID =
-        artwork.consignmentSubmission?.internalID ||
-        (await createSubmissionFromArtwork(artwork.internalID))
+      let submissionID = artwork.consignmentSubmission?.internalID
+
+      if (!submissionID) {
+        submissionID = await createOrUpdateConsignSubmission(relayEnvironment, {
+          sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+          artistID: artwork.artist?.internalID,
+          myCollectionArtworkID: artwork.internalID,
+          // Source is necessary in order to link this to a mycollection artwork
+          source: "MY_COLLECTION",
+        })
+      }
 
       router.push(`/sell2/submissions/${submissionID}/artist`)
     } catch (error) {
@@ -59,9 +69,7 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
   }
 
   return (
-    <Box>
-      <Separator my={2} />
-
+    <Box my={2}>
       <Text mb={0.5} variant="sm-display">
         Interested in Selling This Work?
       </Text>
@@ -108,8 +116,6 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
           selling with Artsy.
         </Clickable>
       </Text>
-
-      <Separator my={2} />
     </Box>
   )
 }
@@ -118,6 +124,7 @@ const MyCollectionArtworkSWASectionFragment = graphql`
   fragment MyCollectionArtworkSWASection_artwork on Artwork {
     internalID
     artist {
+      internalID
       slug
     }
     consignmentSubmission {

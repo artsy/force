@@ -42,25 +42,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   } = useMyCollectionTracking()
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
-  const EditArtworkButton = () => (
-    <Button
-      // @ts-ignore
-      as={RouterLink}
-      variant="secondaryNeutral"
-      size="small"
-      to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
-      onClick={() =>
-        trackEditCollectedArtwork(artwork.internalID, artwork.slug)
-      }
-      alignSelf="flex-end"
-    >
-      <Media greaterThanOrEqual="sm">Edit Artwork Details</Media>
-      <Media lessThan="sm">Edit</Media>
-    </Button>
-  )
-
   const slug = artwork?.artist?.slug ?? ""
-  const id = artwork.internalID
   const displayText = artwork.consignmentSubmission?.displayText
 
   const displaySubmissionStateSection =
@@ -94,7 +76,20 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       <Flex py={[2, 1]} justifyContent="space-between" alignItems="center">
         <MyCollectionArtworkBackButton />
 
-        <EditArtworkButton />
+        <Button
+          // @ts-ignore
+          as={RouterLink}
+          variant="secondaryNeutral"
+          size="small"
+          to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
+          onClick={() =>
+            trackEditCollectedArtwork(artwork.internalID, artwork.slug)
+          }
+          alignSelf="flex-end"
+        >
+          <Media greaterThanOrEqual="sm">Edit Artwork Details</Media>
+          <Media lessThan="sm">Edit</Media>
+        </Button>
       </Flex>
 
       <GridColumns gridRowGap={[2, null]} mb={[0, 4]}>

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<693bb3ce0551374f2342b4c04225fefb>>
+ * @generated SignedSource<<d3a43d41efd8f3b4b4ff2f061f8813c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSWASection_artwork$data = {
   readonly artist: {
+    readonly internalID: string;
     readonly slug: string;
   } | null | undefined;
   readonly consignmentSubmission: {
@@ -48,6 +49,7 @@ return {
       "name": "artist",
       "plural": false,
       "selections": [
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -76,6 +78,6 @@ return {
 };
 })();
 
-(node as any).hash = "c94e4d0016b07617f1e5201a991b4279";
+(node as any).hash = "4a5d740d7d262e2ed44b34df794ee9d1";
 
 export default node;
