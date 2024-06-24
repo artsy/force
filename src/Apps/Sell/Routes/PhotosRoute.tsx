@@ -12,6 +12,7 @@ import { UploadMoreMessage } from "Apps/Sell/Components/UploadMoreMessage"
 import { ImagePreviewsGrid } from "Apps/Sell/Components/ImagePreviewsGrid"
 import { UploadPhotosForm } from "Apps/Sell/Components/UploadPhotosForm"
 import { Asset, photoFromAsset } from "Apps/Sell/Utils/photoFromAsset"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 
 const FRAGMENT = graphql`
   fragment PhotosRoute_submission on ConsignmentSubmission {
@@ -71,9 +72,9 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
 
         return (
           <SubmissionLayout loading={isAnyPhotoLoading}>
-            <Text mb={2} variant={["xl", "lg"]}>
+            <SubmissionStepTitle>
               Upload photos of your artwork
-            </Text>
+            </SubmissionStepTitle>
 
             <Text mb={2} variant={["xs", "sm"]}>
               Make your work stand out and get your submission evaluated faster

@@ -66,14 +66,14 @@ const BottomFormNextButton: FC<BottomFormNextButtonProps> = ({
 
   const {
     actions,
-    state: { isLastStep },
+    state: { isSubmitStep },
   } = useSellFlowContext()
 
   const onNext = async () => {
     try {
       await submitForm()
 
-      isLastStep ? actions.finishFlow() : actions.goToNextStep()
+      isSubmitStep ? actions.finishFlow() : actions.goToNextStep()
     } catch (error) {
       logger.error("Error submitting form", error)
     }
@@ -87,7 +87,7 @@ const BottomFormNextButton: FC<BottomFormNextButtonProps> = ({
       onClick={onNext}
       data-testid="bottom-form-next-button"
     >
-      {isLastStep ? "Submit" : "Continue"}
+      {isSubmitStep ? "Submit" : "Continue"}
     </Button>
   )
 }

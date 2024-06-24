@@ -1,6 +1,7 @@
 import { Input, Join, Spacer, Text } from "@artsy/palette"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { TitleRoute_submission$key } from "__generated__/TitleRoute_submission.graphql"
@@ -51,9 +52,9 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
     >
       {({ handleChange, values }) => (
         <SubmissionLayout>
-          <Join separator={<Spacer y={2} />}>
-            <Text variant="xl">Add artwork title</Text>
+          <SubmissionStepTitle>Add artwork title</SubmissionStepTitle>
 
+          <Join separator={<Spacer y={2} />}>
             {!!submission.artist && (
               <EntityHeaderArtistFragmentContainer
                 artist={submission.artist}
