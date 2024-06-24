@@ -1,12 +1,15 @@
+import { ArticleType } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArticlesRail"
 import { DiscoveryMarketingCollections } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollectionsRail"
 import _ from "lodash"
 import weaviate, { WeaviateClient } from "weaviate-ts-client"
 
 const DEFAULT_MARKETING_COLLECTIONS_CLASS = "DiscoveryMarketingCollections"
+const DEFAULT_ARTICLES_CLASS = "DiscoveryArticles"
 
 export class WeaviateDB {
   private client: WeaviateClient
   private marketingCollectionClass: string
+  private articlesClass: string
 
   constructor(
     options: {
@@ -14,6 +17,8 @@ export class WeaviateDB {
       url?: string
       /** Name of marketingCollection class to use. */
       marketingCollectionClass?: string
+      /** Name of articles class to use. */
+      articlesClass?: string
     } = {}
   ) {
     const url = options.url || process.env.WEAVIATE_URL
@@ -22,6 +27,7 @@ export class WeaviateDB {
     this.client = weaviate.client({ host: url })
     this.marketingCollectionClass =
       options.marketingCollectionClass || DEFAULT_MARKETING_COLLECTIONS_CLASS
+    this.articlesClass = options.articlesClass || DEFAULT_ARTICLES_CLASS
   }
 
   /**
@@ -59,6 +65,51 @@ export class WeaviateDB {
     const result = response.data.Get.DiscoveryMarketingCollections
 
     return result as DiscoveryMarketingCollections[]
+  }
+
+  /**
+   * Fetch articles by semantic search on an array of concepts.
+   */
+  async getNearArticles({
+    concepts,
+    limit = 10,
+  }: {
+    /** List of concepts for semantic search */
+    concepts: string[]
+    /** Max number of articles to return */
+    limit?: number
+  }) {
+    console.log("[WeaviateDB] getNearArticles", {
+      concepts,
+      limit,
+    })
+
+    const conceptArray = ensureValidConcepts(concepts)
+
+    const response = await this.client.graphql
+      .get()
+      .withClassName(this.articlesClass)
+      .withNearText({
+        concepts: conceptArray,
+      })
+      .withLimit(limit)
+      .withFields(
+        "internalID title articleDescription href imageUrl _additional { id distance }"
+      )
+      .do()
+
+    const result: ArticleType[] = response.data.Get[DEFAULT_ARTICLES_CLASS]
+
+    /**
+     * Note: Because we return article sections, a single article can appear
+     * multiple times in the results. This removes duplicates based on the
+     * internalID. Order is preserved and the first occurrence is kept.
+     *
+     * TODO: handle better?
+     */
+    const dedupedResults = _.uniqBy(result, "internalID")
+
+    return dedupedResults
   }
 }
 
