@@ -6,7 +6,6 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Components/RouterLink"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { Media } from "Utils/Responsive"
 
 export const SubmissionHeader: React.FC = () => {
