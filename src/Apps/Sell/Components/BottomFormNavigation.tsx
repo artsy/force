@@ -63,6 +63,7 @@ const BottomFormNextButton: FC<BottomFormNextButtonProps> = ({
   loading = false,
 }) => {
   const { isValid, isSubmitting, submitForm } = useFormikContext()
+
   const {
     actions,
     state: { isLastStep },
@@ -84,6 +85,7 @@ const BottomFormNextButton: FC<BottomFormNextButtonProps> = ({
       disabled={!isValid}
       loading={isSubmitting || loading}
       onClick={onNext}
+      data-testid="bottom-form-next-button"
     >
       {isLastStep ? "Submit" : "Continue"}
     </Button>

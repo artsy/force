@@ -8,6 +8,7 @@ export const UploadMoreMessage: React.FC = () => {
   } = useFormikContext<PhotosFormValues>()
 
   const photosCount = photos.length || 0
+
   if (photosCount != 1 && photosCount != 2) return null
 
   return (

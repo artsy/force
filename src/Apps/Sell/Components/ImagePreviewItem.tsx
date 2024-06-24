@@ -78,7 +78,12 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   const isProcessing = photo.geminiToken && !photoSrc
 
   return (
-    <Flex minWidth={IMAGE_SIZES} minHeight={IMAGE_SIZES} position="relative">
+    <Flex
+      minWidth={IMAGE_SIZES}
+      minHeight={IMAGE_SIZES}
+      position="relative"
+      data-testid="image-preview-item"
+    >
       <Box
         position="relative"
         backgroundColor="black5"
