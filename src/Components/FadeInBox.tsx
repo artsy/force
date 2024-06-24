@@ -1,21 +1,20 @@
 import { Box, BoxProps, useDidMount } from "@artsy/palette"
 
-interface FadeInBoxProps extends BoxProps {
-  isLoading?: boolean
-}
+interface FadeInBoxProps extends BoxProps {}
 
 export const FadeInBox: React.FC<FadeInBoxProps> = ({
   children,
-  isLoading = false,
+  ...boxProps
 }) => {
   const isMounted = useDidMount()
 
   return (
     <Box
-      opacity={isMounted || isLoading ? 1 : 0}
+      opacity={isMounted ? 1 : 0}
       style={{
         transition: "opacity 250ms",
       }}
+      {...boxProps}
     >
       {children}
     </Box>
