@@ -11,6 +11,7 @@ import {
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
@@ -29,6 +30,8 @@ export const HeaderSWA = () => {
     "https://files.artsy.net/images/content-card-swa-landing-page.jpg",
     { width: 1104, height: 833 }
   )
+
+  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
 
   return (
     <GridColumns gridRowGap={[2, 4]} alignItems="center">
@@ -54,7 +57,11 @@ export const HeaderSWA = () => {
                 as={RouterLink}
                 width="100%"
                 variant="primaryBlack"
-                to="/sell/submission"
+                to={
+                  enableNewSubmissionFlow
+                    ? "sell2/submissions/new"
+                    : "/sell/submission"
+                }
                 onClick={event => {
                   if (!isLoggedIn) {
                     event.preventDefault()
