@@ -15084,6 +15084,7 @@ type PartnerOffer implements Node {
 
   # A type-specific ID.
   internalID: ID!
+  isActive: Boolean
   isAvailable: Boolean
   note: String
   partnerId: String
@@ -15178,6 +15179,7 @@ type PartnerOfferToCollector implements Node {
 
   # A type-specific ID.
   internalID: ID!
+  isActive: Boolean
   isAvailable: Boolean
   note: String
   partnerId: String
