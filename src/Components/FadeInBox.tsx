@@ -2,10 +2,7 @@ import { Box, BoxProps, useDidMount } from "@artsy/palette"
 
 interface FadeInBoxProps extends BoxProps {}
 
-export const FadeInBox: React.FC<FadeInBoxProps> = ({
-  children,
-  ...boxProps
-}) => {
+export const FadeInBox: React.FC<FadeInBoxProps> = ({ children, ...rest }) => {
   const isMounted = useDidMount()
 
   return (
@@ -14,7 +11,7 @@ export const FadeInBox: React.FC<FadeInBoxProps> = ({
       style={{
         transition: "opacity 250ms",
       }}
-      {...boxProps}
+      {...rest}
     >
       {children}
     </Box>
