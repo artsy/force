@@ -172,13 +172,20 @@ describe("ArtworkPageBanner", () => {
       })
     })
 
-    it("shows the partner offer banner if the user doesn't have a matching partner offer", async () => {
+    it("shows the partner offer expired banner if the partner offer is expired", async () => {
       renderWithRelay({
         Artwork: () => artworkMock,
         Me: () => ({
           ...meMock,
           partnerOffersConnection: {
-            edges: [],
+            edges: [
+              {
+                node: {
+                  internalID: "123",
+                  isAvailable: false,
+                },
+              },
+            ],
           },
         }),
       })

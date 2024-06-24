@@ -49,7 +49,11 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
       return <ArtworkUnavailableBanner />
     }
 
-    if (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID) {
+    if (
+      partnerOffer &&
+      partnerOffer.internalID == expectedPartnerOfferID &&
+      !partnerOffer.isAvailable
+    ) {
       return <ExpiredOfferBanner />
     }
   }
@@ -88,6 +92,7 @@ const ME_FRAGMENT = graphql`
       edges {
         node {
           internalID
+          isAvailable
         }
       }
     }

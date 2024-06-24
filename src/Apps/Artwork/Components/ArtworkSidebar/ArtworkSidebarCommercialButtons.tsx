@@ -65,7 +65,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
 
-  // Get the first not-ended partner offer, if available
+  // Get the first partner offer
   const partnerOffer =
     (me?.partnerOffersConnection &&
       extractNodes(me.partnerOffersConnection)[0]) ||
@@ -390,7 +390,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
           </>
         ) : (
           <>
-            {partnerOffer?.isAvailable ? (
+            {activePartnerOffer && partnerOffer?.isAvailable ? (
               <OfferDisplay
                 originalPrice={artwork.priceListedDisplay}
                 offerPrice={partnerOffer.priceWithDiscount?.display}
@@ -457,7 +457,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
               )}
             </Join>
           </Flex>
-          {partnerOffer?.note && (
+          {activePartnerOffer && partnerOffer?.note && (
             <>
               <Spacer y={2} />
               <Box
