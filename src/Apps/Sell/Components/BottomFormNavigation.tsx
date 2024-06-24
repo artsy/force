@@ -1,5 +1,8 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Button, Flex } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { useAuthDialog } from "Components/AuthDialog"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
 import { useState } from "react"
@@ -56,13 +59,34 @@ const BottomFormBackButton = () => {
 const BottomFormNextButton = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { isValid, submitForm } = useFormikContext()
+  const { isLoggedIn } = useSystemContext()
+  const { showAuthDialog } = useAuthDialog()
+
   const {
     actions,
     state: { isSubmitStep },
   } = useSellFlowContext()
 
   const onNext = async () => {
+    if (!isLoggedIn) {
+      showAuthDialog({
+        mode: "Login",
+        options: {
+          title: () => {
+            return "Log in to submit an artwork for sale"
+          },
+        },
+        analytics: {
+          contextModule: ContextModule.consignSubmissionFlow,
+          intent: Intent.login,
+        },
+      })
+
+      return
+    }
+
     setIsSubmitting(true)
+
     try {
       await submitForm()
 
