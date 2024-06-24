@@ -28,7 +28,20 @@ const getMarketingCollections = async (
   res.json(result)
 }
 
+const getNearArticles = async (req: ArtsyRequest, res: ArtsyResponse) => {
+  let { concepts } = req.query
+
+  if (!concepts) throw new Error("Provide a concepts query string parameter")
+
+  const result = await weaviateDB.getNearArticles({
+    concepts: concepts as string[],
+  })
+
+  res.json(result)
+}
+
 export const router = express.Router()
 
+router.get("/articles", getNearArticles)
 router.get("/budget/intent", getBudgetIntent)
 router.get("/marketing_collections", getMarketingCollections)
