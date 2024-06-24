@@ -1,15 +1,19 @@
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
-import { Flex, FullBleed } from "@artsy/palette"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import { Flex, FullBleed, THEME } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Components/RouterLink"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 export const SubmissionHeader: React.FC = () => {
   const context = useSellFlowContext()
-
+  const isLastStep = context?.state?.step
   const submissionID = context?.state?.submissionID
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
+  const saveAndExitMobile = submissionID && isMobile
 
   return (
     <Sticky withoutHeaderOffset>
@@ -20,21 +24,26 @@ export const SubmissionHeader: React.FC = () => {
               <HorizontalPadding>
                 <Flex
                   flexDirection="row"
-                  justifyContent="space-between"
-                  minHeight={[70, 90]}
-                  alignItems="center"
+                  justifyContent={saveAndExitMobile ? "end" : "space-between"}
+                  alignItems={"center"}
+                  py={isMobile ? 1 : 4}
                 >
-                  <RouterLink to={"/sell"} display="block">
-                    <ArtsyLogoIcon display="block" />
-                  </RouterLink>
-
-                  {submissionID ? (
+                  {!isMobile && (
                     <RouterLink to={"/sell"} display="block">
+                      <ArtsyLogoIcon display="block" />
+                    </RouterLink>
+                  )}
+                  {submissionID ? (
+                    <RouterLink
+                      to={"/sell"}
+                      display="block"
+                      textDecoration={isMobile ? "none" : "underline"}
+                    >
                       Save & Exit
                     </RouterLink>
                   ) : (
                     <RouterLink to={"/sell"} display="block">
-                      Exit
+                      {isMobile && !!isLastStep ? <CloseIcon /> : "Exit"}
                     </RouterLink>
                   )}
                 </Flex>
