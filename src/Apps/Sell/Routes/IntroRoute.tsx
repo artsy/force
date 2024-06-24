@@ -11,12 +11,14 @@ import {
   Text,
 } from "@artsy/palette"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { useSubmitArtworkTracking } from "Apps/Sell/Hooks/useSubmitArtworkTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { cropped } from "Utils/resized"
 import * as React from "react"
 
 export const IntroRoute: React.FC = () => {
+  const { trackTappedNewSubmission } = useSubmitArtworkTracking()
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   return (
@@ -64,6 +66,9 @@ export const IntroRoute: React.FC = () => {
             <Button
               // @ts-ignore
               as={RouterLink}
+              onClick={() => {
+                trackTappedNewSubmission()
+              }}
               to="/sell2/submissions/new"
               width="100%"
               data-testid="start-new-submission"
@@ -75,6 +80,9 @@ export const IntroRoute: React.FC = () => {
             {/* <Button
                   // @ts-ignore
                   as={RouterLink}
+                  onClick={() => {
+                    // trackTappedStartMyCollection()
+                  }
                   to="/sell2/submissions/new/collection"
                   width="100%"
                 >

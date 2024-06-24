@@ -39,7 +39,7 @@ const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
     return (
       <SubmissionRoute submission={props.submission}>
-        <ThankYouRoute />
+        <ThankYouRoute submission={props.submission} />
       </SubmissionRoute>
     )
   },
@@ -47,6 +47,7 @@ const { renderWithRelay } = setupTestWrapperTL({
     query ThankYouRoute_Test_Query @raw_response_type {
       submission(id: "submission-id") {
         ...SubmissionRoute_submission
+        ...ThankYouRoute_submission
       }
     }
   `,

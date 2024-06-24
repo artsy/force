@@ -34,6 +34,7 @@ const BottomFormBackButton = () => {
 
   const onBack = async () => {
     setIsSubmitting(true)
+
     try {
       await submitForm()
 

@@ -3,6 +3,7 @@ import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmis
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
+import { useSubmitArtworkTracking } from "Apps/Sell/Hooks/useSubmitArtworkTracking"
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
 import { createContext, useContext, useEffect, useState } from "react"
@@ -23,7 +24,9 @@ export const STEPS = [
 ]
 
 const INITIAL_STEP = "artist"
-const SUBMIT_STEP = "dimensions"
+const SUBMIT_STEP: SellFlowStep = "dimensions"
+
+export type SellFlowStep = typeof STEPS[number]
 
 interface Actions {
   goToPreviousStep: () => void
@@ -71,6 +74,10 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   devMode = false,
 }) => {
   const {
+    trackConsignmentSubmitted,
+    trackTappedSubmissionBack,
+  } = useSubmitArtworkTracking()
+  const {
     match,
     router: { push },
   } = useRouter()
@@ -101,10 +108,14 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   }
 
   const goToPreviousStep = () => {
+    trackTappedSubmissionBack(submissionID, state.step)
+
     handlePrev()
   }
 
   const finishFlow = () => {
+    trackConsignmentSubmitted(submissionID)
+
     push(`/sell2/submissions/${submissionID}/thank-you`)
   }
 
