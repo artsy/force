@@ -6,7 +6,6 @@ import {
   Spacer,
   THEME,
   Text,
-  useDidMount,
   useToasts,
 } from "@artsy/palette"
 import { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEditFormQuery.graphql"
