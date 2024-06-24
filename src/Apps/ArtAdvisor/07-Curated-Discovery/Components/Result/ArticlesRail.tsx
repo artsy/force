@@ -22,7 +22,7 @@ export const ArticlesRail: FC<ArticlesRailProps> = ({ state }) => {
 
   useEffect(() => {
     const params = new URLSearchParams()
-    params.append("limit", "100")
+    params.append("limit", "25")
     params.append("concepts", state.goal) //TODO: improve use of goal
     state.interests.forEach(concept => {
       params.append("concepts", concept)
