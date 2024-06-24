@@ -4360,6 +4360,10 @@ type CollectorProfileTypeEdge {
   node: CollectorProfileType
 }
 
+type CollectorProfileUpdatePromptNotificationItem {
+  collectorProfile: CollectorProfileType!
+}
+
 type CollectorResume {
   buyerActivity: CommerceBuyerActivity
   collectorProfile: CollectorProfileType!
@@ -14102,6 +14106,7 @@ union NotificationItem =
     AlertNotificationItem
   | ArticleFeaturedArtistNotificationItem
   | ArtworkPublishedNotificationItem
+  | CollectorProfileUpdatePromptNotificationItem
   | PartnerOfferCreatedNotificationItem
   | ShowOpenedNotificationItem
   | ViewingRoomPublishedNotificationItem
