@@ -18,6 +18,7 @@ import {
 import { SavedAddresses2 } from "Apps/Order/Routes/Shipping2/Components/SavedAddresses2"
 import {
   ADDRESS_VALIDATION_SHAPE,
+  BASIC_PHONE_VALIDATION_SHAPE,
   FulfillmentType,
   FulfillmentValues,
   ShipValues,
@@ -617,18 +618,9 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     FulfillmentType.SHIP,
   ]),
 
-  attributes: Yup.object()
-    .shape({
-      phoneNumber: Yup.string()
-        .required("Phone number is required")
-        .matches(/^[+\-\d]+$/, "Phone number is required"),
-    })
-    .when("fulfillmentType", {
-      is: FulfillmentType.SHIP,
-      then: schema =>
-        schema.shape({
-          ...ADDRESS_VALIDATION_SHAPE,
-          name: Yup.string().required("Full name is required"),
-        }),
-    }),
+  attributes: Yup.object().when("fulfillmentType", {
+    is: FulfillmentType.SHIP,
+    then: schema => schema.shape(ADDRESS_VALIDATION_SHAPE),
+    otherwise: schema => schema.shape(BASIC_PHONE_VALIDATION_SHAPE),
+  }),
 })

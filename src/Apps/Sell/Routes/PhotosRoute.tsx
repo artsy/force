@@ -6,6 +6,7 @@ import * as Yup from "yup"
 import { Formik } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 
 const FRAGMENT = graphql`
   fragment PhotosRoute_submission on ConsignmentSubmission {
@@ -55,9 +56,8 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
       validationSchema={Schema}
     >
       <SubmissionLayout>
-        <Text mb={2} variant="xl">
-          Upload photos of your artwork
-        </Text>
+        <SubmissionStepTitle>Upload photos of your artwork</SubmissionStepTitle>
+
         <Text mb={2} variant="sm">
           Make your work stand out and get your submission evaluated faster by
           uploading high-quality photos of the work's front and back.

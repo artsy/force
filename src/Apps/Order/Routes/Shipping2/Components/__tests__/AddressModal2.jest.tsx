@@ -79,7 +79,7 @@ afterEach(() => {
   globalWrapper?.unmount()
 })
 
-// FIXME: CI Timeouts likely due to fillAddressForm() duration
+// FIXME: CI Timeouts
 // eslint-disable-next-line jest/no-disabled-tests
 describe.skip("AddressModal", () => {
   beforeEach(() => {

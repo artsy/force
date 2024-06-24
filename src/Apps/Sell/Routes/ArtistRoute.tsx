@@ -6,6 +6,7 @@ import {
 import { ArtistNotEligiblText } from "Apps/Sell/Components/ArtistNotEligibleText"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
@@ -156,9 +157,7 @@ export const ArtistRoute: React.FC<{
     >
       {formik => (
         <SubmissionLayout hideNavigation={isNewSubmission}>
-          <Text mb={2} variant="xl">
-            Add artist name
-          </Text>
+          <SubmissionStepTitle>Add artist name</SubmissionStepTitle>
 
           <ArtistAutoComplete
             onSelect={artist => {
