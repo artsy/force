@@ -10,7 +10,7 @@ import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 export const SubmissionHeader: React.FC = () => {
   const context = useSellFlowContext()
-  const isLastStep = context?.state?.step
+  const isLastStep = context?.state?.isLastStep
   const submissionID = context?.state?.submissionID
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
   const saveAndExitMobile = submissionID && isMobile
@@ -25,8 +25,8 @@ export const SubmissionHeader: React.FC = () => {
                 <Flex
                   flexDirection="row"
                   justifyContent={saveAndExitMobile ? "end" : "space-between"}
-                  alignItems={"center"}
-                  py={isMobile ? 1 : 4}
+                  alignItems="center"
+                  py={[1, 4]}
                 >
                   {!isMobile && (
                     <RouterLink to={"/sell"} display="block">
@@ -37,12 +37,16 @@ export const SubmissionHeader: React.FC = () => {
                     <RouterLink
                       to={"/sell"}
                       display="block"
-                      textDecoration={isMobile ? "none" : "underline"}
+                      textDecoration={["none", "underline"]}
                     >
                       Save & Exit
                     </RouterLink>
                   ) : (
-                    <RouterLink to={"/sell"} display="block">
+                    <RouterLink
+                      to={"/sell"}
+                      display="block"
+                      textDecoration={["none", "underline"]}
+                    >
                       {isMobile && !!isLastStep ? <CloseIcon /> : "Exit"}
                     </RouterLink>
                   )}
