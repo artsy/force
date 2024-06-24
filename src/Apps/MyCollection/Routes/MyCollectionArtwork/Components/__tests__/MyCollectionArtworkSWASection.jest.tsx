@@ -1,67 +1,132 @@
-import { screen, fireEvent, render } from "@testing-library/react"
-import {
-  MyCollectionArtworkSWASectionDesktopLayout,
-  MyCollectionArtworkSWASectionMobileLayout,
-} from "../MyCollectionArtworkSWASection"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+import { MyCollectionArtworkSWASection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASection"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
+import { graphql } from "react-relay"
+
+const learnMoreMock = jest.fn()
+const mockUseFeatureFlag = useFeatureFlag as jest.Mock
+const mockUseRouter = useRouter as jest.Mock
+const mockPush = jest.fn()
 
 jest.unmock("react-relay")
-const learnMore = jest.fn()
+jest.mock(
+  "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission",
+  () => ({
+    ...jest.requireActual(
+      "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+    ),
+    createOrUpdateConsignSubmission: jest
+      .fn()
+      .mockResolvedValue("submission-id"),
+  })
+)
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
+jest.mock("System/Hooks/useRouter", () => ({
+  useRouter: jest.fn(),
+}))
 
-// TODO: add more tests when the main functionality is in place
-describe("MyCollection Artwork SWA Section - mobile layout", () => {
-  const getWrapper = () => {
-    render(
-      <MyCollectionArtworkSWASectionMobileLayout
-        route={"/my-collection/submission/artwork-details/artwork-id"}
-        learnMore={learnMore}
-        slug={"slug"}
-        artworkId={"artwork-id"}
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
+    return (
+      <MyCollectionArtworkSWASection
+        artwork={props.artwork}
+        learnMore={learnMoreMock}
       />
     )
-  }
-
-  it("opens Modal when Learn More is pressed", async () => {
-    getWrapper()
-    fireEvent.click(screen.getByTestId("learn-more"))
-    expect(learnMore).toBeCalled()
-  })
-
-  it("the link has right attributes", async () => {
-    getWrapper()
-
-    fireEvent.click(screen.getByTestId("submit-for-sale"))
-    expect(screen.getByRole("link")).toHaveAttribute(
-      "href",
-      "/my-collection/submission/artwork-details/artwork-id"
-    )
-  })
+  },
+  query: graphql`
+    query MyCollectionArtworkSWASection_Test_Query @raw_response_type {
+      artwork(id: "artwork-id") {
+        ...MyCollectionArtworkSWASection_artwork
+      }
+    }
+  `,
 })
 
-describe("MyCollection Artwork SWA Section - desktop layout", () => {
-  const getWrapper = () => {
-    render(
-      <MyCollectionArtworkSWASectionDesktopLayout
-        route={`/my-collection/submission/artwork-details/artwork-id`}
-        learnMore={learnMore}
-        slug={"slug"}
-        artworkId={"artwork-id"}
-      />
-    )
-  }
+describe("MyCollection Artwork SWA Section", () => {
+  describe("when onyx_new_submission_flow feature flag is enabled", () => {
+    beforeEach(() => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+    })
 
-  it("opens Modal when Learn More is pressed", async () => {
-    getWrapper()
-    fireEvent.click(screen.getByTestId("learn-more-desktop"))
-    expect(learnMore).toBeCalled()
+    describe("submit for sale", () => {
+      beforeEach(() => {
+        mockUseRouter.mockImplementation(() => ({
+          router: {
+            push: mockPush,
+          },
+        }))
+      })
+
+      describe("when artwork is already submitted", () => {
+        it("opens the submission page and does not create a new submission", async () => {
+          renderWithRelay({
+            Artwork: () => ({
+              consignmentSubmission: { submissionId: "submission-id" },
+            }),
+          })
+
+          fireEvent.click(screen.getByTestId("submit-for-sale-link"))
+
+          expect(mockPush).toBeCalledWith(
+            '/sell2/submissions/<mock-value-for-field-"internalID">/artist'
+          )
+
+          expect(createOrUpdateConsignSubmission).not.toBeCalled()
+        })
+      })
+
+      describe("when artwork has not not submitted", () => {
+        it("creates a new submission and opens the submission page", async () => {
+          renderWithRelay({
+            Artwork: () => ({
+              consignmentSubmission: null,
+            }),
+          })
+
+          fireEvent.click(screen.getByTestId("submit-for-sale-link"))
+
+          await waitFor(() => {
+            expect(createOrUpdateConsignSubmission).toHaveBeenCalled()
+
+            expect(mockPush).toBeCalledWith(
+              "/sell2/submissions/submission-id/artist"
+            )
+          })
+        })
+      })
+    })
+
+    it("opens Modal when Learn More is pressed", async () => {
+      renderWithRelay()
+
+      fireEvent.click(screen.getByTestId("learn-more"))
+
+      expect(learnMoreMock).toBeCalled()
+    })
   })
 
-  it("the link has right attributes", async () => {
-    getWrapper()
+  describe("when onyx_new_submission_flow feature flag is disabled", () => {
+    beforeEach(() => {
+      mockUseFeatureFlag.mockImplementation(() => false)
+    })
 
-    fireEvent.click(screen.getByTestId("submit-for-sale-desktop"))
-    expect(screen.getByRole("link")).toHaveAttribute(
-      "href",
-      "/my-collection/submission/artwork-details/artwork-id"
-    )
+    it("opens Modal when Learn More is pressed", async () => {
+      renderWithRelay()
+
+      fireEvent.click(screen.getByTestId("learn-more"))
+      expect(learnMoreMock).toBeCalled()
+    })
+
+    it("the link has right attributes", async () => {
+      renderWithRelay()
+
+      expect(screen.getByTestId("submit-for-sale-link")).toBeInTheDocument()
+    })
   })
 })
