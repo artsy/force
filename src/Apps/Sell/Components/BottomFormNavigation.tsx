@@ -105,7 +105,7 @@ const BottomFormNextButton = () => {
       loading={isSubmitting}
       onClick={onNext}
     >
-      {isSubmitStep ? "Submit" : "Continue"}
+      {isSubmitStep ? "Submit Artwork" : "Continue"}
     </Button>
   )
 }

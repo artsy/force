@@ -72,7 +72,7 @@ describe("DimensionsRoute", () => {
 
     expect(screen.getByText("Artwork dimensions")).toBeInTheDocument()
     expect(screen.getByText("Back")).toBeInTheDocument()
-    expect(screen.getByText("Submit")).toBeInTheDocument()
+    expect(screen.getByText("Submit Artwork")).toBeInTheDocument()
     expect(screen.getByText("Save & Exit")).toBeInTheDocument()
   })
 
@@ -99,7 +99,7 @@ describe("DimensionsRoute", () => {
       ConsignmentSubmission: () => submissionMock,
     })
 
-    screen.getByText("Submit").click()
+    screen.getByText("Submit Artwork").click()
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(
