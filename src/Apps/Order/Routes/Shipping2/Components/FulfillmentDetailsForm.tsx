@@ -264,7 +264,7 @@ const FulfillmentDetailsFormLayout = (
             onSelect={withBackToFulfillmentDetails(value => {
               setFieldValue("fulfillmentType", value)
               if (value === FulfillmentType.PICKUP) {
-                shippingContext.actions.goBackToFulfillmentDetails
+                shippingContext.actions.goBackToFulfillmentDetails()
               }
             })}
             defaultValue={values.fulfillmentType}

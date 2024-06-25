@@ -68,6 +68,7 @@ const submitForm = async () => {
 
 beforeEach(() => {
   mockOnSubmit.mockReset()
+  mockTrackEvent.mockReset()
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: mockTrackEvent,
   }))
@@ -541,6 +542,7 @@ describe("FulfillmentDetailsForm", () => {
       await flushPromiseQueue()
 
       expect(mockTrackEvent).toHaveBeenCalledTimes(2)
+
       expect(mockTrackEvent).toHaveBeenNthCalledWith(1, {
         action: "addressAutoCompletionResult",
         context_module: "ordersShipping",
@@ -557,7 +559,6 @@ describe("FulfillmentDetailsForm", () => {
         input: "401 Broadway",
         item: "401 Broadway, New York NY 10013",
       })
-      mockTrackEvent.mockClear()
 
       // Make 2 edits to the address; track the 1st
       const line2Input = screen.getByPlaceholderText("Apt, floor, suite, etc.")
@@ -567,8 +568,8 @@ describe("FulfillmentDetailsForm", () => {
       await userEvent.type(postalCode, "-4456")
 
       await flushPromiseQueue()
-      expect(mockTrackEvent).toHaveBeenCalledTimes(1)
-      expect(mockTrackEvent).toHaveBeenCalledWith({
+      expect(mockTrackEvent).toHaveBeenCalledTimes(3)
+      expect(mockTrackEvent).toHaveBeenNthCalledWith(3, {
         action: "editedAutocompletedAddress",
         context_module: "ordersShipping",
         context_owner_id: "",
