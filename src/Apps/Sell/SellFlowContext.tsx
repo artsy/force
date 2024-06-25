@@ -90,8 +90,6 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
 
   const initialIndex = STEPS.indexOf(stepFromURL || STEPS[0])
 
-  console.log({ initialIndex })
-
   const { index, handleNext, handlePrev } = useCursor({
     max: STEPS.length,
     initialCursor: initialIndex,
@@ -113,7 +111,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     if (isNewSubmission) return
 
     push(`/sell2/submissions/${submissionID}/${STEPS[index]}`)
-  }, [push, submissionID, index, isNewSubmission])
+  }, [push, index, isNewSubmission, submissionID])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
     const response = submitCreateSubmissionMutation({
@@ -137,7 +135,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const updateSubmission = (
     values: UpdateSubmissionMutationInput
   ): Promise<useUpdateSubmissionMutation$data> => {
-    // If submission is already submitted, do not allow updating
+    // We don't allow updating a submission that has already been submitted.
     if (submissionState === "SUBMITTED") {
       logger.error("Cannot update already submitted submission.")
       sendToast({

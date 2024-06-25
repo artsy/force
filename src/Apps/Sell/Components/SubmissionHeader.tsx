@@ -35,6 +35,7 @@ export const SubmissionHeader: React.FC = () => {
                       <ArtsyLogoIcon display="block" />
                     </RouterLink>
                   </Media>
+
                   {submissionID && !isLastStep ? (
                     <RouterLink
                       to={"/sell"}
