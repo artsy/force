@@ -16,7 +16,9 @@ import {
   BudgetIntent,
   State,
 } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { AuthDialog } from "Components/AuthDialog/AuthDialog"
 
 interface FormProps {
   state: State
@@ -27,6 +29,37 @@ export const Form: React.FC<FormProps> = props => {
   const [isLoading, setIsLoading] = useState(false)
   const { state, dispatch } = props
   const { sendToast } = useToasts()
+  const { user } = useSystemContext()
+
+  useEffect(() => {
+    if (!user) {
+      return
+    }
+
+    const createWeaviateUser = () => {
+      const headers = { "Content-Type": "application/json" }
+      const body = JSON.stringify({ userId: user.id, name: user.name })
+      const options = { method: "POST", headers, body }
+      return fetch(`/api/advisor/7/users`, options)
+    }
+
+    const getWeaviateUser = () => {
+      return fetch(`/api/advisor/7/users/${user.id}`)
+    }
+
+    getWeaviateUser().then(response => {
+      if (response.status === 404) {
+        console.log("Creating user in Weaviate", response)
+        createWeaviateUser()
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          `Error checking for weaviate user: ${response.statusText}`
+        )
+      }
+    })
+  }, [user])
 
   const handleSubmit = async () => {
     try {
@@ -62,6 +95,14 @@ export const Form: React.FC<FormProps> = props => {
 
   return (
     <Box>
+      {!user && (
+        <AuthDialog
+          onClose={() => {
+            /** noop */
+          }}
+        />
+      )}
+
       <Spacer y={4} />
 
       <Text as="h1" variant={"xl"}>
