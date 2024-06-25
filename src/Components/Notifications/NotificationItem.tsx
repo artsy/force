@@ -156,13 +156,13 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
   }
 )
 
-interface NotificationItemLinkProps {
+interface NotificationItemWrapperProps {
   item: NotificationItem_item$data
   mode?: NotificationListMode
   children: React.ReactNode
 }
 
-const NotificationItemWrapper: FC<NotificationItemLinkProps> = ({
+const NotificationItemWrapper: FC<NotificationItemWrapperProps> = ({
   item,
   mode,
   children,
