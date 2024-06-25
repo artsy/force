@@ -58,9 +58,7 @@ export const HeaderSWA = () => {
                 width="100%"
                 variant="primaryBlack"
                 to={
-                  enableNewSubmissionFlow
-                    ? "sell2/submissions/new"
-                    : "/sell/submission"
+                  enableNewSubmissionFlow ? "sell2/intro" : "/sell/submission"
                 }
                 onClick={event => {
                   if (!isLoggedIn) {
