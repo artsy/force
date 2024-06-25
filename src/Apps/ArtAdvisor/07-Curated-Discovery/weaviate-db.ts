@@ -196,16 +196,31 @@ export class WeaviateDB {
       )
 
     if (priceMinUSD && priceMaxUSD) {
-      throw new Error("Price range filtering not yet implemented")
-      // TODO: set both via the multiple operands syntax
-      // https://weaviate.io/developers/weaviate/api/graphql/filters#multiple-operands
+      // range filter
+      query = query.withWhere({
+        operator: "And",
+        operands: [
+          {
+            path: ["priceMinMinorUSD"],
+            operator: "GreaterThanEqual",
+            valueNumber: priceMinUSD * 100, // because "minor" units
+          },
+          {
+            path: ["priceMaxMinorUSD"],
+            operator: "LessThanEqual",
+            valueNumber: priceMaxUSD * 100, // because "minor" units
+          },
+        ],
+      })
     } else if (priceMinUSD) {
+      // minimum filter
       query = query.withWhere({
         path: ["priceMinMinorUSD"],
         operator: "GreaterThanEqual",
         valueNumber: priceMinUSD * 100, // because "minor" units
       })
     } else if (priceMaxUSD) {
+      // maximum filter
       query = query.withWhere({
         path: ["priceMaxMinorUSD"],
         operator: "LessThanEqual",
