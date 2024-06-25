@@ -1,8 +1,9 @@
+import { screen } from "@testing-library/react"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { ThankYouRoute } from "Apps/Sell/Routes/ThankYouRoute"
-import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
@@ -12,14 +13,17 @@ const mockReplace = jest.fn()
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
-jest.unmock("react-relay")
-
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
   fetchQuery: jest.fn(),
 }))
 
 beforeEach(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => {
+    return { isLoggedIn: true }
+  })
+
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
