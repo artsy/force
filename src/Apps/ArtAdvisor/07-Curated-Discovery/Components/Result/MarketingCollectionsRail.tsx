@@ -9,7 +9,7 @@ interface MarketingCollectionsRailProps {
 }
 
 export interface DiscoveryMarketingCollections {
-  id: string
+  internalID: string
   imageUrl: string
   slug: string
   title: string
@@ -53,7 +53,7 @@ export const MarketingCollectionsRail: FC<MarketingCollectionsRailProps> = ({
                 (marketingCollection: DiscoveryMarketingCollections) => {
                   return (
                     <MarketingCollection
-                      key={marketingCollection.id}
+                      key={marketingCollection.internalID}
                       marketingCollection={marketingCollection}
                     />
                   )
