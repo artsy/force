@@ -71,8 +71,6 @@ export const ArtistRoute: React.FC<{
 
   const isNewSubmission = !submission?.internalID
 
-  const onSubmit = async () => {}
-
   const createSubmission = async (artist: AutocompleteArtist) => {
     if (!isLoggedIn) {
       showAuthDialog({
@@ -173,7 +171,7 @@ export const ArtistRoute: React.FC<{
   return (
     <Formik<FormValues>
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={() => {}}
       validateOnMount
       validationSchema={Schema}
     >
