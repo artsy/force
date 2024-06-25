@@ -2,6 +2,7 @@ import { Box, Button, Flex } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
+import { useState } from "react"
 
 const logger = createLogger("BottomFormNavigation.tsx")
 
@@ -21,19 +22,23 @@ export const BottomFormNavigation = () => {
 }
 
 const BottomFormBackButton = () => {
-  const { isSubmitting, submitForm } = useFormikContext()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { submitForm } = useFormikContext()
   const {
     actions,
     state: { isFirstStep },
   } = useSellFlowContext()
 
   const onBack = async () => {
+    setIsSubmitting(true)
     try {
       await submitForm()
 
       actions.goToPreviousStep()
     } catch (error) {
       logger.error("Error submitting form", error)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -49,19 +54,23 @@ const BottomFormBackButton = () => {
 }
 
 const BottomFormNextButton = () => {
-  const { isValid, isSubmitting, submitForm } = useFormikContext()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { isValid, submitForm } = useFormikContext()
   const {
     actions,
     state: { isSubmitStep },
   } = useSellFlowContext()
 
   const onNext = async () => {
+    setIsSubmitting(true)
     try {
       await submitForm()
 
       isSubmitStep ? actions.finishFlow() : actions.goToNextStep()
     } catch (error) {
       logger.error("Error submitting form", error)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
