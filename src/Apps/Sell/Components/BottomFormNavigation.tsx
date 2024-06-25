@@ -1,5 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Box, Button, Flex, Text } from "@artsy/palette"
+import { Box, Button, Flex } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -51,7 +51,7 @@ const BottomFormBackButton = () => {
 
   return (
     <Button loading={isSubmitting} onClick={onBack} variant="tertiary">
-      <Text style={{ textDecoration: "underline" }}>Back</Text>
+      Back
     </Button>
   )
 }
