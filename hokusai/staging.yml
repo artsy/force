@@ -88,8 +88,6 @@ spec:
         envFrom:
         - configMapRef:
             name: force-environment
-        - secretRef:
-            name: force
         image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:staging
         imagePullPolicy: Always
         ports:
@@ -186,8 +184,6 @@ spec:
         envFrom:
         - configMapRef:
             name: force-environment
-        - secretRef:
-            name: force
         image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:staging
         imagePullPolicy: Always
         ports:
