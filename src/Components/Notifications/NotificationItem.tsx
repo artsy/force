@@ -1,4 +1,4 @@
-import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
+import { Flex, Image, Join, Spacer, THEME, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import {
   ExpiresInTimer,
@@ -17,18 +17,22 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { NotificationTypeLabel } from "./NotificationTypeLabel"
 import { isArtworksBasedNotification } from "./util"
+import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 const logger = createLogger("NotificationItem")
 
 interface NotificationItemProps {
   item: NotificationItem_item$data
+  mode?: NotificationListMode
 }
 
 const UNREAD_INDICATOR_SIZE = 8
 
-const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
+const NotificationItem: FC<NotificationItemProps> = ({ item, mode }) => {
   const { tracking } = useNotificationsTracking()
   const { relayEnvironment } = useSystemContext()
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
   const {
     state: { currentNotificationId },
   } = useNotificationsContext()
@@ -70,7 +74,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
     tracking.clickedActivityPanelNotificationItem(item.notificationType)
   }
 
-  const itemUrl = getNotificationUrl(item)
+  const itemUrl = getNotificationUrl(item, isMobile ? "dropdown" : mode)
 
   const subTitle = getNotificationSubTitle(item)
 
@@ -216,7 +220,23 @@ NotificationItemLink.defaultProps = {
  * Until we support all notification types in the new activity panel,
  * we only link to the notification detail page for the supported types.
  */
-const getNotificationUrl = (notification: NotificationItem_item$data) => {
+const getNotificationUrl = (
+  notification: NotificationItem_item$data,
+  mode: NotificationListMode = "page"
+) => {
+  // Notification response has targetHref field (computed on backend), which for
+  // most notifications accounts for "objectsCount". If there is only one object,
+  // targetHref usually points to the object URL (/artwork/:id, /show/:id, etc.).
+  // In dropdown mode, when there is only one object, we want to link directly to
+  // the object URL. Otherwise, we link to the notification detail page.
+  if (
+    mode === "dropdown" &&
+    notification.objectsCount === 1 &&
+    notification.notificationType !== "PARTNER_OFFER_CREATED"
+  ) {
+    return notification.targetHref
+  }
+
   if (SUPPORTED_NOTIFICATION_TYPES.includes(notification.notificationType)) {
     return `/notification/${notification.internalID}`
   }
