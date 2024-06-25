@@ -2,17 +2,18 @@ import { screen } from "@testing-library/react"
 import { ArtistNotEligibleRoute } from "Apps/Sell/Routes/ArtistNotEligibleRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 
+jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
-jest.unmock("react-relay")
-
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
   fetchQuery: jest.fn(),
@@ -21,6 +22,10 @@ jest.mock("react-relay", () => ({
 let pathnameMock: string
 
 beforeAll(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => {
+    return { isLoggedIn: true }
+  })
+
   pathnameMock = "/artists/artist-id/artist"
 
   mockUseRouter.mockImplementation(() => ({
@@ -58,5 +63,15 @@ describe("ArtistNotEligibleRoute", () => {
     expect(screen.getByText("Add to My Collection")).toBeInTheDocument()
 
     expect(screen.getByText("Add Another Artist")).toBeInTheDocument()
+
+    expect(screen.getByTestId("add-to-collection")).toHaveAttribute(
+      "href",
+      "/collector-profile/my-collection/artworks/new"
+    )
+
+    expect(screen.getByTestId("view-collection")).toHaveAttribute(
+      "href",
+      "/sell2/submissions/new"
+    )
   })
 })

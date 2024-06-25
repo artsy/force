@@ -1,3 +1,4 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Text, useToasts } from "@artsy/palette"
 import {
   ArtistAutoComplete,
@@ -8,8 +9,10 @@ import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import {
   ArtistRoute_submission$data,
@@ -60,6 +63,8 @@ export const ArtistRouteFragmentContainer: React.FC<ArtistRouteProps> = props =>
 export const ArtistRoute: React.FC<{
   submission?: ArtistRoute_submission$data
 }> = ({ submission }) => {
+  const { isLoggedIn } = useSystemContext()
+  const { showAuthDialog } = useAuthDialog()
   const { router } = useRouter()
   const { actions } = useSellFlowContext()
   const { sendToast } = useToasts()
@@ -69,6 +74,23 @@ export const ArtistRoute: React.FC<{
   const onSubmit = async () => {}
 
   const createSubmission = async (artist: AutocompleteArtist) => {
+    if (!isLoggedIn) {
+      showAuthDialog({
+        mode: "Login",
+        options: {
+          title: () => {
+            return "Log in to submit an artwork for sale"
+          },
+        },
+        analytics: {
+          contextModule: ContextModule.sellFooter,
+          intent: Intent.login,
+        },
+      })
+
+      return
+    }
+
     if (!artist?.internalID) return
 
     const isTargetSupply = artist?.targetSupply?.isTargetSupply

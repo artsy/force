@@ -96,7 +96,9 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
       <Text variant="lg-display" mr={4}>
         Send message to gallery
       </Text>
+
       <Separator my={2} />
+
       {user && (
         <>
           <Text variant="sm-display" my={2}>
@@ -109,6 +111,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
           <Separator my={2} />
         </>
       )}
+
       <Text variant="sm-display" my={2}>
         <Box display="inline-block" width={60} color="black60">
           To
@@ -116,7 +119,9 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
 
         {artwork.partner?.name}
       </Text>
+
       <Separator my={2} />
+
       <Flex alignItems="center">
         <Image
           src={artwork.image?.resized?.src}
@@ -135,7 +140,9 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
           </Text>
         </Box>
       </Flex>
+
       <Separator my={2} />
+
       <TextArea
         placeholder="Provide the gallery with some details about your interest in this work."
         title="Your message"
@@ -143,7 +150,9 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
         onChange={handleTextAreaChange}
         required
       />
+
       <Spacer y={1} />
+
       <Text variant="xs" display="flex" gap={0.5} color="black60">
         <InfoIcon flexShrink={0} />
         <div>
@@ -159,15 +168,18 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
           </RouterLink>
         </div>
       </Text>
-      )
+
       <Spacer y={1} />
+
       {mode === "Confirm" && (
         <Banner variant="defaultLight">
           We recommend personalizing your message to get a faster answer from
           the gallery.
         </Banner>
       )}
+
       <Spacer y={2} />
+
       <Button
         type="submit"
         display="block"
