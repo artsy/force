@@ -1,4 +1,4 @@
-import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
+import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import {
   Image,
   Box,
@@ -146,13 +146,11 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
           width="16px"
           height="16px"
         >
-          <CloseStrokeIcon
+          <CloseFillIcon
             width="16px"
             height="16px"
             aria-label="Cancel"
             title="Cancel"
-            backgroundColor="black100"
-            fill="white100"
           />
         </Flex>
       </Clickable>
