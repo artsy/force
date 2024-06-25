@@ -68,13 +68,15 @@ const getBudgetIntent = async (req: ArtsyRequest, res: ArtsyResponse) => {
 }
 
 const getArtworks = async (req: ArtsyRequest, res: ArtsyResponse) => {
-  const { concepts, limit } = req.query
+  const { concepts, limit, priceMinUSD, priceMaxUSD } = req.query
 
   if (!concepts) throw new Error("Provide a concepts query string parameter")
 
   const artworks = await weaviateDB.getNearArtworks({
     concepts: concepts as string[],
     limit: limit as number,
+    priceMinUSD: parseFloat(priceMinUSD),
+    priceMaxUSD: parseFloat(priceMaxUSD),
   })
   res.json(artworks)
 }
