@@ -81,7 +81,7 @@ export const IntroRoute: React.FC = () => {
                   // @ts-ignore
                   as={RouterLink}
                   onClick={() => {
-                    // trackTappedStartMyCollection()
+                    trackTappedStartMyCollection()
                   }
                   to="/sell2/submissions/new/collection"
                   width="100%"
