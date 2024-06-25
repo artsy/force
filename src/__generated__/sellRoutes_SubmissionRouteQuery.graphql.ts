@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<03f77d87ca4a9e9babf3ae9f218742bd>>
+ * @generated SignedSource<<76738f21908220d4b34a31bf5aa14b36>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -97,6 +97,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -106,12 +113,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f8577cef4cf043873d46b5e3eb2c298a",
+    "cacheID": "67d133b1209a390fa53706a28ccdc079",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_SubmissionRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_SubmissionRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
+    "text": "query sellRoutes_SubmissionRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();

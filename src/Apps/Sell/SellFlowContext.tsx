@@ -1,5 +1,8 @@
 import { useToasts } from "@artsy/palette"
-import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import {
+  ConsignmentSubmissionStateAggregation,
+  CreateSubmissionMutationInput,
+} from "__generated__/CreateConsignSubmissionMutation.graphql"
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
@@ -22,6 +25,7 @@ export const STEPS = [
   "thank-you",
 ]
 
+const INITIAL_STEP = "artist"
 const SUBMIT_STEP = "dimensions"
 
 interface Actions {
@@ -43,6 +47,7 @@ interface State {
   index: number
   step: string
   submissionID: string | undefined
+  submissionState: ConsignmentSubmissionStateAggregation | undefined | null
   devMode: boolean
 }
 interface SellFlowContextProps {
@@ -55,12 +60,14 @@ export const SellFlowContext = createContext<SellFlowContextProps>({} as any)
 interface SellFlowContextProviderProps {
   children: React.ReactNode
   submissionID?: string
+  submissionState?: ConsignmentSubmissionStateAggregation | undefined | null
   devMode?: boolean
 }
 
 export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = ({
   children,
   submissionID,
+  submissionState,
   devMode = false,
 }) => {
   const {
@@ -75,8 +82,15 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   } = useCreateSubmission()
   const { sendToast } = useToasts()
 
-  const stepFromURL = match.location.pathname.split("/").pop()
+  const isNewSubmission = !submissionID
+
+  const stepFromURL = isNewSubmission
+    ? INITIAL_STEP
+    : match.location.pathname.split("/").pop()
+
   const initialIndex = STEPS.indexOf(stepFromURL || STEPS[0])
+
+  console.log({ initialIndex })
 
   const { index, handleNext, handlePrev } = useCursor({
     max: STEPS.length,
@@ -96,10 +110,10 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   }
 
   useEffect(() => {
-    if (!submissionID) return
+    if (isNewSubmission) return
 
     push(`/sell2/submissions/${submissionID}/${STEPS[index]}`)
-  }, [push, submissionID, index])
+  }, [push, submissionID, index, isNewSubmission])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
     const response = submitCreateSubmissionMutation({
@@ -123,6 +137,16 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const updateSubmission = (
     values: UpdateSubmissionMutationInput
   ): Promise<useUpdateSubmissionMutation$data> => {
+    // If submission is already submitted, do not allow updating
+    if (submissionState === "SUBMITTED") {
+      logger.error("Cannot update already submitted submission.")
+      sendToast({
+        variant: "error",
+        message: "Cannot update already submitted submission.",
+      })
+      throw new Error("Cannot update already submitted submission.")
+    }
+
     const response = submitUpdateSubmissionMutation({
       variables: {
         input: {
@@ -160,6 +184,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     index,
     step: STEPS[index],
     submissionID,
+    submissionState,
     devMode,
   }
 

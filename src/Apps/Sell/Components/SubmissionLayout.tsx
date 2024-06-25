@@ -18,7 +18,7 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
   const context = useSellFlowContext()
 
   return (
-    <Flex height="100dvh" flexDirection="column">
+    <Flex height="100vh" flexDirection="column">
       <SubmissionHeader />
 
       <SubmissionProgressBar />
@@ -37,7 +37,7 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
             </Column>
           </GridColumns>
         ) : (
-          <Box maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={4}>
+          <Box maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={[2, 4]}>
             {children}
           </Box>
         )}
