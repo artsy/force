@@ -31,13 +31,13 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
             </Column>
 
             <Column span={[8]}>
-              <Box maxWidth={CONTENT_WIDTH} p={2} pt={[2, 4]}>
+              <Box maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={[2, 4]}>
                 {children}
               </Box>
             </Column>
           </GridColumns>
         ) : (
-          <Box maxWidth={CONTENT_WIDTH} p={2} pt={[2, 4]}>
+          <Box maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={[2, 4]}>
             {children}
           </Box>
         )}
