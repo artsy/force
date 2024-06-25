@@ -9,7 +9,7 @@ interface ArticlesRailProps {
 }
 
 export interface ArticleType {
-  id: string
+  internalID: string
   imageUrl?: string
   href: string
   title: string
@@ -48,7 +48,7 @@ export const ArticlesRail: FC<ArticlesRailProps> = ({ state }) => {
             title="Artsy Editorial"
             getItems={() => {
               return articles.map((article: ArticleType) => {
-                return <Article key={article.id} article={article} />
+                return <Article key={article.internalID} article={article} />
               })
             }}
           />
