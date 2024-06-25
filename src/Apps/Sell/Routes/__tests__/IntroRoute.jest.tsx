@@ -11,7 +11,7 @@ jest.mock("System/Hooks/useRouter", () => ({
 }))
 jest.unmock("react-relay")
 
-beforeEach(() => {
+beforeAll(() => {
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
