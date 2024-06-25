@@ -12,6 +12,15 @@ const getBudgetIntent = async (req: ArtsyRequest, res: ArtsyResponse) => {
   res.json(intent)
 }
 
+const getArtworks = async (req: ArtsyRequest, res: ArtsyResponse) => {
+  const { concepts, limit } = req.query
+  const artworks = await weaviateDB.getNearArtworks({
+    concepts: concepts as string[],
+    limit: limit as number,
+  })
+  res.json(artworks)
+}
+
 const getMarketingCollections = async (
   req: ArtsyRequest,
   res: ArtsyResponse
@@ -44,4 +53,5 @@ export const router = express.Router()
 
 router.get("/articles", getNearArticles)
 router.get("/budget/intent", getBudgetIntent)
+router.get("/artworks", getArtworks)
 router.get("/marketing_collections", getMarketingCollections)

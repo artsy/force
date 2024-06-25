@@ -1,13 +1,16 @@
 import { ArticleType } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArticlesRail"
+import { DiscoveryArtwork } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArtworksRail"
 import { DiscoveryMarketingCollections } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollectionsRail"
 import _ from "lodash"
 import weaviate, { WeaviateClient } from "weaviate-ts-client"
 
+const DEFAULT_ARTWORKS_CLASS = "DiscoveryArtworks"
 const DEFAULT_MARKETING_COLLECTIONS_CLASS = "DiscoveryMarketingCollections"
 const DEFAULT_ARTICLES_CLASS = "DiscoveryArticles"
 
 export class WeaviateDB {
   private client: WeaviateClient
+  private artworkClass: string
   private marketingCollectionClass: string
   private articlesClass: string
 
@@ -15,6 +18,8 @@ export class WeaviateDB {
     options: {
       /** Weaviate host url */
       url?: string
+      /** Name of artwork class to use. */
+      artworkClass?: string
       /** Name of marketingCollection class to use. */
       marketingCollectionClass?: string
       /** Name of articles class to use. */
@@ -25,9 +30,65 @@ export class WeaviateDB {
     if (!url) throw new Error("Please provide url or set WEAVIATE_URL")
 
     this.client = weaviate.client({ host: url })
+    this.artworkClass = options.artworkClass || DEFAULT_ARTWORKS_CLASS
     this.marketingCollectionClass =
       options.marketingCollectionClass || DEFAULT_MARKETING_COLLECTIONS_CLASS
     this.articlesClass = options.articlesClass || DEFAULT_ARTICLES_CLASS
+  }
+
+  /**
+   * Fetch artworks by semantic search on an array of concepts.
+   */
+  async getNearArtworks({
+    concepts,
+    limit = 10,
+  }: {
+    /** List of concepts for semantic search */
+    concepts: string[]
+    /** Max number of artworks to return */
+    limit?: number
+  }) {
+    console.log("[WeaviateDB] getArtworksNearConcepts", {
+      concepts,
+      limit,
+    })
+
+    const conceptArray = ensureValidConcepts(concepts)
+
+    const response = await this.client.graphql
+      .get()
+      .withClassName(this.artworkClass)
+      .withNearText({
+        concepts: conceptArray,
+      })
+      .withLimit(limit)
+      .withFields(
+        "internalID slug title date rarity medium materials price dimensions imageUrl _additional { id distance }"
+      )
+      .do()
+
+    const result = response.data.Get.DiscoveryArtworks.map(artwork => {
+      const properties = _.pick(artwork, [
+        "internalID",
+        "slug",
+        "title",
+        "date",
+        "rarity",
+        "medium",
+        "materials",
+        "price",
+        "dimensions",
+        "imageUrl",
+      ])
+
+      return {
+        id: artwork._additional.id,
+        ...properties,
+        distance: artwork._additional.distance,
+      }
+    })
+
+    return result as DiscoveryArtwork[]
   }
 
   /**
