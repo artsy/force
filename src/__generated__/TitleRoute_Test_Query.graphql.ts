@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5add674ce469253d9cb882f6eba43997>>
+ * @generated SignedSource<<447fbd6c940fa7df8ba3f2019ed4a255>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type TitleRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type TitleRoute_Test_Query$data = {
   readonly submission: {
@@ -43,6 +44,7 @@ export type TitleRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
     readonly title: string | null | undefined;
   } | null | undefined;
 };
@@ -267,6 +269,13 @@ return {
             "name": "externalId",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
           (v2/*: any*/)
         ],
         "storageKey": "submission(id:\"submission-id\")"
@@ -274,12 +283,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2cd3c419c96caa589f95ed5c999b2450",
+    "cacheID": "f58b003b179d0f4280f548ad2a1432af",
     "id": null,
     "metadata": {},
     "name": "TitleRoute_Test_Query",
     "operationKind": "query",
-    "text": "query TitleRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...TitleRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n\nfragment TitleRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n"
+    "text": "query TitleRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...TitleRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n\nfragment TitleRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n"
   }
 };
 })();

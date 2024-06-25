@@ -9,6 +9,7 @@ const FRAGMENT = graphql`
   fragment SubmissionRoute_submission on ConsignmentSubmission {
     internalID
     externalId
+    state
   }
 `
 
@@ -25,7 +26,10 @@ export const SubmissionRoute: React.FC<SubmissionRouteProps> = props => {
   return (
     <FullBleed>
       <AppContainer>
-        <SellFlowContextProvider submissionID={submission.externalId}>
+        <SellFlowContextProvider
+          submissionID={submission.externalId}
+          submissionState={submission.state}
+        >
           {props.children}
         </SellFlowContextProvider>
       </AppContainer>

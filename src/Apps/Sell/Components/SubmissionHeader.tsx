@@ -12,7 +12,6 @@ export const SubmissionHeader: React.FC = () => {
   const context = useSellFlowContext()
   const isLastStep = context?.state?.isLastStep
   const submissionID = context?.state?.submissionID
-  const isSubmissionCompleted = isLastStep && submissionID
 
   return (
     <Sticky withoutHeaderOffset>
@@ -29,13 +28,14 @@ export const SubmissionHeader: React.FC = () => {
                   ]}
                   alignItems="center"
                   py={[1, 4]}
+                  mt={[0.5, 0]}
                 >
                   <Media greaterThan="xs">
                     <RouterLink to={"/sell"} display="block">
                       <ArtsyLogoIcon display="block" />
                     </RouterLink>
                   </Media>
-                  {submissionID ? (
+                  {submissionID && !isLastStep ? (
                     <RouterLink
                       to={"/sell"}
                       display="block"
@@ -51,12 +51,11 @@ export const SubmissionHeader: React.FC = () => {
                       data-testid="exit-link"
                     >
                       <Media at="xs">
-                        {isSubmissionCompleted && "Exit"}
-                        {!submissionID && <CloseIcon />}
+                        {isLastStep ? "Exit" : <CloseIcon />}
                       </Media>
 
                       <Media greaterThan="xs">
-                        {isSubmissionCompleted || !submissionID ? "Exit" : ""}
+                        {isLastStep || !submissionID ? "Exit" : ""}
                       </Media>
                     </RouterLink>
                   )}
