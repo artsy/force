@@ -1,8 +1,5 @@
 import { useToasts } from "@artsy/palette"
-import {
-  ConsignmentSubmissionStateAggregation,
-  CreateSubmissionMutationInput,
-} from "__generated__/CreateConsignSubmissionMutation.graphql"
+import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
@@ -47,7 +44,6 @@ interface State {
   index: number
   step: string
   submissionID: string | undefined
-  submissionState: ConsignmentSubmissionStateAggregation | undefined | null
   devMode: boolean
 }
 interface SellFlowContextProps {
@@ -60,14 +56,12 @@ export const SellFlowContext = createContext<SellFlowContextProps>({} as any)
 interface SellFlowContextProviderProps {
   children: React.ReactNode
   submissionID?: string
-  submissionState?: ConsignmentSubmissionStateAggregation | undefined | null
   devMode?: boolean
 }
 
 export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = ({
   children,
   submissionID,
-  submissionState,
   devMode = false,
 }) => {
   const {
@@ -124,7 +118,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       logger.error("Error creating submission.", err)
       sendToast({
         variant: "error",
-        message: "Something went wrong.",
+        message: err?.[0]?.message || "Something went wrong.",
       })
       throw err
     })
@@ -135,16 +129,6 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const updateSubmission = (
     values: UpdateSubmissionMutationInput
   ): Promise<useUpdateSubmissionMutation$data> => {
-    // We don't allow updating a submission that has already been submitted.
-    if (submissionState === "SUBMITTED") {
-      logger.error("Cannot update already submitted submission.")
-      sendToast({
-        variant: "error",
-        message: "Cannot update already submitted submission.",
-      })
-      throw new Error("Cannot update already submitted submission.")
-    }
-
     const response = submitUpdateSubmissionMutation({
       variables: {
         input: {
@@ -159,7 +143,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       logger.error("Error updating submission.", err)
       sendToast({
         variant: "error",
-        message: "Something went wrong.",
+        message: err?.[0]?.message || "Something went wrong.",
       })
       throw err
     })
@@ -182,7 +166,6 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     index,
     step: STEPS[index],
     submissionID,
-    submissionState,
     devMode,
   }
 

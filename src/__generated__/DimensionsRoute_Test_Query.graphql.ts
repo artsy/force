@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b27646bd44f3db775860f8d9bc5bba1b>>
+ * @generated SignedSource<<7f92aa7bcf36c4bf2f063a4799a9512e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,6 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type DimensionsRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type DimensionsRoute_Test_Query$data = {
   readonly submission: {
@@ -25,7 +24,6 @@ export type DimensionsRoute_Test_Query$rawResponse = {
     readonly height: string | null | undefined;
     readonly id: string;
     readonly internalID: string | null | undefined;
-    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
     readonly width: string | null | undefined;
   } | null | undefined;
 };
@@ -107,13 +105,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "state",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "width",
             "storageKey": null
           },
@@ -151,12 +142,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9f5574f60353632eb4e2b4f91ea6b642",
+    "cacheID": "3ad249d6845805f20627f5ab271251e3",
     "id": null,
     "metadata": {},
     "name": "DimensionsRoute_Test_Query",
     "operationKind": "query",
-    "text": "query DimensionsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...DimensionsRoute_submission\n    id\n  }\n}\n\nfragment DimensionsRoute_submission on ConsignmentSubmission {\n  width\n  height\n  depth\n  dimensionsMetric\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query DimensionsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...DimensionsRoute_submission\n    id\n  }\n}\n\nfragment DimensionsRoute_submission on ConsignmentSubmission {\n  width\n  height\n  depth\n  dimensionsMetric\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
   }
 };
 })();
