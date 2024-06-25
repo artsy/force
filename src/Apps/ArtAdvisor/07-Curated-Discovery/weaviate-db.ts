@@ -62,7 +62,7 @@ export class WeaviateDB {
       .withFields("internalID slug title imageUrl _additional { id distance }")
       .do()
 
-    const result = response.data.Get.DiscoveryMarketingCollections
+    const result = response.data.Get[this.marketingCollectionClass]
 
     return result as DiscoveryMarketingCollections[]
   }
@@ -98,7 +98,7 @@ export class WeaviateDB {
       )
       .do()
 
-    const result: ArticleType[] = response.data.Get[DEFAULT_ARTICLES_CLASS]
+    const result: ArticleType[] = response.data.Get[this.articlesClass]
 
     /**
      * Note: Because we return article sections, a single article can appear
