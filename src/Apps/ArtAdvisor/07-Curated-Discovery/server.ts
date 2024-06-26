@@ -8,7 +8,9 @@ const weaviateDB = new WeaviateDB()
 
 const getUser = async (req: ArtsyRequest, res: ArtsyResponse) => {
   const { id } = req.params
+
   const user = await weaviateDB.getUser({ internalID: id })
+
   if (user) {
     res.json(user)
   } else {
@@ -32,6 +34,7 @@ const createArtworkLike = async (req: ArtsyRequest, res: ArtsyResponse) => {
   let { userId, artworkId } = req.body
 
   if (!userId) throw new Error("Provide a userId")
+  if (!artworkId) throw new Error("Provide an artworkId")
 
   const result = await weaviateDB.reactToArtwork({
     userInternalID: userId,
@@ -45,6 +48,7 @@ const createArtworkDislike = async (req: ArtsyRequest, res: ArtsyResponse) => {
   let { userId, artworkId } = req.body
 
   if (!userId) throw new Error("Provide a userId")
+  if (!artworkId) throw new Error("Provide an artworkId")
 
   const result = await weaviateDB.reactToArtwork({
     userInternalID: userId,
@@ -56,12 +60,18 @@ const createArtworkDislike = async (req: ArtsyRequest, res: ArtsyResponse) => {
 
 const getBudgetIntent = async (req: ArtsyRequest, res: ArtsyResponse) => {
   const { budget } = req.query
+
+  if (!budget) throw new Error("Provide a budget query string parameter")
+
   const intent = await extractBudgetIntent(budget)
   res.json(intent)
 }
 
 const getArtworks = async (req: ArtsyRequest, res: ArtsyResponse) => {
   const { concepts, limit } = req.query
+
+  if (!concepts) throw new Error("Provide a concepts query string parameter")
+
   const artworks = await weaviateDB.getNearArtworks({
     concepts: concepts as string[],
     limit: limit as number,
