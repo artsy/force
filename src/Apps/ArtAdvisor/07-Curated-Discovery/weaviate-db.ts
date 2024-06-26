@@ -1,18 +1,24 @@
 import { ArticleType } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArticlesRail"
 import { DiscoveryArtwork } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArtworksRail"
 import { DiscoveryMarketingCollections } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollectionsRail"
+import {
+  DiscoveryUser,
+  MongoID,
+} from "Apps/ArtAdvisor/07-Curated-Discovery/types"
 import _ from "lodash"
-import weaviate, { WeaviateClient } from "weaviate-ts-client"
+import weaviate, { WeaviateClient, generateUuid5 } from "weaviate-ts-client"
 
 const DEFAULT_ARTWORKS_CLASS = "DiscoveryArtworks"
 const DEFAULT_MARKETING_COLLECTIONS_CLASS = "DiscoveryMarketingCollections"
 const DEFAULT_ARTICLES_CLASS = "DiscoveryArticles"
+const DEFAULT_USERS_CLASS = "DiscoveryUsers"
 
 export class WeaviateDB {
   private client: WeaviateClient
   private artworkClass: string
-  private marketingCollectionClass: string
   private articlesClass: string
+  private marketingCollectionClass: string
+  private userClass: string
 
   constructor(
     options: {
@@ -24,6 +30,8 @@ export class WeaviateDB {
       marketingCollectionClass?: string
       /** Name of articles class to use. */
       articlesClass?: string
+      /** Name of user class to use. */
+      userClass?: string
     } = {}
   ) {
     const url = options.url || process.env.WEAVIATE_URL
@@ -34,6 +42,119 @@ export class WeaviateDB {
     this.marketingCollectionClass =
       options.marketingCollectionClass || DEFAULT_MARKETING_COLLECTIONS_CLASS
     this.articlesClass = options.articlesClass || DEFAULT_ARTICLES_CLASS
+    this.userClass = options.userClass || DEFAULT_USERS_CLASS
+  }
+
+  /**
+   * Fetch a user
+   */
+  async getUser({
+    internalID,
+  }: {
+    /** Mongo ID for Gravity User */
+    internalID: string
+  }): Promise<DiscoveryUser | null> {
+    if (!internalID) throw new Error("Provide an internalID")
+
+    const response = await this.client.graphql
+      .get()
+      .withClassName(this.userClass)
+      .withWhere({
+        path: ["id"],
+        operator: "Equal",
+        valueString: generateUuid5(internalID),
+      })
+      .withFields(
+        `
+        name
+        likedArtworks {
+          ... on DiscoveryArtworks { internalID }
+        }
+        dislikedArtworks {
+          ... on DiscoveryArtworks { internalID }
+        }
+        `
+      )
+      .do()
+
+    if (!response.data.Get.DiscoveryUsers.length) return null
+
+    const {
+      name,
+      likedArtworks,
+      dislikedArtworks,
+    } = response.data.Get.DiscoveryUsers[0]
+
+    return {
+      internalID,
+      name,
+      likedArtworkIds: (likedArtworks || []).map(w => w.internalID),
+      dislikedArtworkIds: (dislikedArtworks || []).map(w => w.internalID),
+    } as DiscoveryUser
+  }
+
+  async createUser({ name, internalID }: { name: string; internalID: string }) {
+    const response = await this.client.data
+      .creator()
+      .withClassName(this.userClass)
+      .withProperties({
+        name,
+      })
+      .withId(generateUuid5(internalID))
+      .do()
+
+    console.log("[WeaviateDB] createUser", response)
+
+    return response
+  }
+
+  /**
+   * Create a liked or disliked artwork for a user
+   *
+   * @returns true on success, false if user already liked or disliked artwork
+   */
+  async reactToArtwork({
+    userInternalID,
+    artworkInternalID,
+    reaction,
+  }: {
+    userInternalID: MongoID
+    artworkInternalID: MongoID
+    reaction: "like" | "dislike"
+  }) {
+    // bail if user already liked or disliked artwork
+
+    const user = await this.getUser({ internalID: userInternalID })
+    if (!user) throw new Error("Weaviate user not found")
+
+    if (user.likedArtworkIds.includes(artworkInternalID)) return false
+    if (user.dislikedArtworkIds.includes(artworkInternalID)) return false
+
+    // else go ahead and create
+
+    const artworkId = generateUuid5(artworkInternalID)
+    const userId = generateUuid5(userInternalID)
+
+    const referenceProperty = {
+      like: "likedArtworks",
+      dislike: "dislikedArtworks",
+    }[reaction]
+
+    await this.client.data
+      .referenceCreator()
+      .withClassName(this.userClass)
+      .withId(userId)
+      .withReferenceProperty(referenceProperty)
+      .withReference(
+        this.client.data
+          .referencePayloadBuilder()
+          .withClassName(this.artworkClass)
+          .withId(artworkId)
+          .payload()
+      )
+      .do()
+
+    return true
   }
 
   /**

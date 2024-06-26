@@ -16,7 +16,9 @@ import {
   BudgetIntent,
   State,
 } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useRouter } from "System/Hooks/useRouter"
 
 interface FormProps {
   state: State
@@ -27,6 +29,39 @@ export const Form: React.FC<FormProps> = props => {
   const [isLoading, setIsLoading] = useState(false)
   const { state, dispatch } = props
   const { sendToast } = useToasts()
+  const { user } = useSystemContext()
+  const { router } = useRouter()
+
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login?redirectTo=/advisor/7")
+      return
+    }
+
+    const getWeaviateUser = () => {
+      return fetch(`/api/advisor/7/users/${user.id}`)
+    }
+
+    const createWeaviateUser = () => {
+      const headers = { "Content-Type": "application/json" }
+      const body = JSON.stringify({ userId: user.id, name: user.name })
+      const options = { method: "POST", headers, body }
+      return fetch(`/api/advisor/7/users`, options)
+    }
+
+    getWeaviateUser().then(response => {
+      if (response.status === 404) {
+        console.log("Creating user in Weaviate", response)
+        createWeaviateUser()
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          `Error checking for weaviate user: ${response.statusText}`
+        )
+      }
+    })
+  }, [user, router])
 
   const handleSubmit = async () => {
     try {
