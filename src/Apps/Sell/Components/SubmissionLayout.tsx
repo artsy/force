@@ -4,6 +4,7 @@ import { StepsNavigation } from "Apps/Sell/Components/StepsNavigation"
 import { SubmissionHeader } from "Apps/Sell/Components/SubmissionHeader"
 import { SubmissionProgressBar } from "Apps/Sell/Components/SubmissionProgressBar"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { useEffect } from "react"
 
 const CONTENT_WIDTH = 640
 
@@ -18,6 +19,10 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
   loading = false,
 }) => {
   const context = useSellFlowContext()
+
+  useEffect(() => {
+    context.actions.setLoading(loading)
+  }, [context.actions, loading])
 
   return (
     <Flex height="100dvh" flexDirection="column">
@@ -45,7 +50,7 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
         )}
       </Flex>
 
-      {!hideNavigation && <BottomFormNavigation loading={loading} />}
+      {!hideNavigation && <BottomFormNavigation />}
     </Flex>
   )
 }

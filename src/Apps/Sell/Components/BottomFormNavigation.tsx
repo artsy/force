@@ -9,7 +9,7 @@ import { useState } from "react"
 
 const logger = createLogger("BottomFormNavigation.tsx")
 
-export const BottomFormNavigation = ({ loading = false }) => {
+export const BottomFormNavigation = () => {
   return (
     <Flex
       width="100%"
@@ -19,7 +19,7 @@ export const BottomFormNavigation = ({ loading = false }) => {
       alignItems="center"
     >
       <BottomFormBackButton />
-      <BottomFormNextButton loading={loading} />
+      <BottomFormNextButton />
     </Flex>
   )
 }
@@ -29,7 +29,7 @@ const BottomFormBackButton = () => {
   const { submitForm } = useFormikContext()
   const {
     actions,
-    state: { isFirstStep },
+    state: { isFirstStep, loading },
   } = useSellFlowContext()
 
   const onBack = async () => {
@@ -50,17 +50,25 @@ const BottomFormBackButton = () => {
   }
 
   return (
-    <Button loading={isSubmitting} onClick={onBack} variant="tertiary">
+    <Button
+      loading={isSubmitting}
+      onClick={onBack}
+      variant="tertiary"
+      disabled={loading}
+    >
       Back
     </Button>
   )
 }
 
-const BottomFormNextButton = ({ loading = false }) => {
+const BottomFormNextButton = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { isValid, submitForm } = useFormikContext()
   const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
+  const {
+    state: { loading },
+  } = useSellFlowContext()
 
   const {
     actions,

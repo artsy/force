@@ -5,7 +5,7 @@ import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmiss
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
-import { createContext, useContext, useEffect } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCursor } from "use-cursor"
 import createLogger from "Utils/logger"
@@ -34,6 +34,7 @@ interface Actions {
   updateSubmission: (
     values: UpdateSubmissionMutationInput
   ) => Promise<useUpdateSubmissionMutation$data>
+  setLoading: (loading: boolean) => void
 }
 
 interface State {
@@ -44,13 +45,16 @@ interface State {
   step: string
   submissionID: string | undefined
   devMode: boolean
+  loading: boolean
 }
 interface SellFlowContextProps {
   actions: Actions
   state: State
 }
 
-export const SellFlowContext = createContext<SellFlowContextProps>({} as any)
+export const SellFlowContext = createContext<SellFlowContextProps>({
+  loading: false,
+} as any)
 
 interface SellFlowContextProviderProps {
   children: React.ReactNode
@@ -74,6 +78,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     submitMutation: submitCreateSubmissionMutation,
   } = useCreateSubmission()
   const { sendToast } = useToasts()
+  const [loading, setLoading] = useState(false)
 
   const stepFromURL = match.location.pathname.split("/").pop()
   const initialIndex = STEPS.indexOf(stepFromURL || STEPS[0])
@@ -151,6 +156,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     finishFlow,
     createSubmission,
     updateSubmission,
+    setLoading,
   }
 
   const state = {
@@ -161,6 +167,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     step: STEPS[index],
     submissionID,
     devMode,
+    loading,
   }
 
   return (
