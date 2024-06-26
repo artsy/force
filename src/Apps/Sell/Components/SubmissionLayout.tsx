@@ -21,7 +21,7 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
   const context = useSellFlowContext()
 
   useEffect(() => {
-    context.actions.setLoading(loading)
+    context.actions?.setLoading(loading)
   }, [context.actions, loading])
 
   return (
