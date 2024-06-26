@@ -2804,6 +2804,26 @@ type ArtworkConsignmentSubmission {
   stateLabel: String
 }
 
+# A connection to a list of items.
+type ArtworkConsignmentSubmissionConnection {
+  # A list of edges.
+  edges: [ArtworkConsignmentSubmissionEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type ArtworkConsignmentSubmissionEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: ArtworkConsignmentSubmission
+}
+
 enum ArtworkConsignmentSubmissionState {
   APPROVED
   CLOSED
@@ -4286,6 +4306,14 @@ type CollectorProfileType implements Node {
   isEmailConfirmed: Boolean
   isIdentityVerified: Boolean
   isProfileComplete: Boolean
+  lastUpdatePromptAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
   location: MyLocation
   loyaltyApplicantAt(
     format: String
@@ -4358,6 +4386,10 @@ type CollectorProfileTypeEdge {
 
   # The item at the end of the edge
   node: CollectorProfileType
+}
+
+type CollectorProfileUpdatePromptNotificationItem {
+  collectorProfile: CollectorProfileType!
 }
 
 type CollectorResume {
@@ -11529,6 +11561,14 @@ type InquirerCollectorProfile {
   isEmailConfirmed: Boolean
   isIdentityVerified: Boolean
   isProfileComplete: Boolean
+  lastUpdatePromptAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
   location: MyLocation
   loyaltyApplicantAt(
     format: String
@@ -12776,6 +12816,15 @@ type Me implements Node {
     first: Int
     last: Int
   ): ArtworkConnection
+
+  # A list of the current user’s submissions
+  submissionsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    states: [ArtworkConsignmentSubmissionState]
+  ): ArtworkConsignmentSubmissionConnection
   type: String
 
   # The count of conversations with unread messages.
@@ -13244,6 +13293,10 @@ type Mutation {
     input: CommerceUpdateImpulseConversationIdInput!
   ): CommerceUpdateImpulseConversationIdPayload
   confirmPassword(input: ConfirmPasswordInput!): ConfirmPasswordPayload
+  convectionCreateConsignmentSubmission(
+    # Parameters for CreateSubmissionMutation
+    input: CreateSubmissionMutationInput!
+  ): CreateSubmissionMutationPayload
 
   # Create an account request
   createAccountRequest(
@@ -14102,6 +14155,7 @@ union NotificationItem =
     AlertNotificationItem
   | ArticleFeaturedArtistNotificationItem
   | ArtworkPublishedNotificationItem
+  | CollectorProfileUpdatePromptNotificationItem
   | PartnerOfferCreatedNotificationItem
   | ShowOpenedNotificationItem
   | ViewingRoomPublishedNotificationItem
@@ -15084,6 +15138,7 @@ type PartnerOffer implements Node {
 
   # A type-specific ID.
   internalID: ID!
+  isActive: Boolean
   isAvailable: Boolean
   note: String
   partnerId: String
@@ -15178,6 +15233,7 @@ type PartnerOfferToCollector implements Node {
 
   # A type-specific ID.
   internalID: ID!
+  isActive: Boolean
   isAvailable: Boolean
   note: String
   partnerId: String
@@ -19370,6 +19426,9 @@ input UpdateCollectorProfileInput {
   loyaltyApplicant: Boolean
   professionalBuyer: Boolean
 
+  # Since we don't want to ask a collector to update their profile too often, set this to record they've been prompted
+  promptedForUpdate: Boolean
+
   # Free-form text of purchases the collector has indicated.
   selfReportedPurchases: String
 }
@@ -19430,6 +19489,14 @@ type UpdateCollectorProfilePayload {
   isEmailConfirmed: Boolean
   isIdentityVerified: Boolean
   isProfileComplete: Boolean
+  lastUpdatePromptAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
   location: MyLocation
   loyaltyApplicantAt(
     format: String

@@ -36,15 +36,18 @@ describe("SubmissionLayout", () => {
       </Formik>
     )
 
-    expect(screen.getByText("Back")).toBeInTheDocument()
+    expect(screen.queryByText("Back")).not.toBeInTheDocument()
     expect(screen.getByText("Continue")).toBeInTheDocument()
-    expect(screen.getByText("Exit").attributes["href"].value).toBe("/sell")
+    expect(screen.getByText("Exit")).toBeInTheDocument()
+    expect(screen.getByTestId("exit-link").attributes["href"].value).toBe(
+      "/sell"
+    )
     expect(screen.getByRole("progressbar")).toBeInTheDocument()
 
     expect(screen.queryByText("Save & Exit")).not.toBeInTheDocument()
   })
 
-  describe("when navigation is hidden", () => {
+  describe("without submission id", () => {
     it("does not render the navigation buttons", () => {
       render(
         <Formik<{}> initialValues={{}} onSubmit={jest.fn()}>
@@ -54,7 +57,10 @@ describe("SubmissionLayout", () => {
         </Formik>
       )
 
-      expect(screen.getByText("Exit").attributes["href"].value).toBe("/sell")
+      expect(screen.getByText("Exit")).toBeInTheDocument()
+      expect(screen.getByTestId("exit-link").attributes["href"].value).toBe(
+        "/sell"
+      )
       expect(screen.getByRole("progressbar")).toBeInTheDocument()
 
       expect(screen.queryByText("Back")).not.toBeInTheDocument()

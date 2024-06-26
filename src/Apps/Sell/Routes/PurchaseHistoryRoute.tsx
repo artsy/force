@@ -1,7 +1,3 @@
-import * as React from "react"
-import * as Yup from "yup"
-import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { Formik } from "formik"
 import {
   Column,
   GridColumns,
@@ -12,11 +8,16 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { PurchaseHistoryRoute_submission$key } from "__generated__/PurchaseHistoryRoute_submission.graphql"
+import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
-import { graphql, useFragment } from "react-relay"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { PROVENANCE_LIST } from "Apps/Sell/Utils/formUtils"
+import { PurchaseHistoryRoute_submission$key } from "__generated__/PurchaseHistoryRoute_submission.graphql"
+import { Formik } from "formik"
+import * as React from "react"
+import { graphql, useFragment } from "react-relay"
+import * as Yup from "yup"
 
 const FRAGMENT = graphql`
   fragment PurchaseHistoryRoute_submission on ConsignmentSubmission {
@@ -61,9 +62,9 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
     >
       {({ handleChange, setFieldValue, values }) => (
         <SubmissionLayout>
-          <Text mb={2} variant="xl">
+          <SubmissionStepTitle>
             Where did you purchase the artwork?
-          </Text>
+          </SubmissionStepTitle>
 
           <Join separator={<Spacer y={4} />}>
             <Select

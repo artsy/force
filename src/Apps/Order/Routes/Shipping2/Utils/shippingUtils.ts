@@ -57,7 +57,17 @@ export interface ShippingAddressFormValues {
   postalCode: string
 }
 
+// TODO: Replace with what we use in SettingsShippingAddressForm when we have
+// a rich phone input
+export const BASIC_PHONE_VALIDATION_SHAPE = {
+  phoneNumber: Yup.string()
+    .required("Phone number is required")
+    .matches(/^[+\-\d]+$/, "Phone number is required"),
+}
+
 export const ADDRESS_VALIDATION_SHAPE = {
+  ...BASIC_PHONE_VALIDATION_SHAPE,
+  name: Yup.string().required("Full name is required"),
   addressLine1: Yup.string().required("Street address is required"),
   addressLine2: Yup.string().nullable(),
   city: Yup.string().required("City is required"),

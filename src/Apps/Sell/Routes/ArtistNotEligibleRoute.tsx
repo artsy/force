@@ -1,7 +1,8 @@
-import { Button, Flex, FullBleed, Spacer, Text } from "@artsy/palette"
+import { Button, Flex, FullBleed, Spacer } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { ArtistNotEligiblText } from "Apps/Sell/Components/ArtistNotEligibleText"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { RouterLink } from "System/Components/RouterLink"
 import { ArtistNotEligibleRoute_artist$key } from "__generated__/ArtistNotEligibleRoute_artist.graphql"
@@ -24,9 +25,9 @@ export const ArtistNotEligibleRoute: React.FC<ArtistNotEligibleRouteProps> = pro
     <FullBleed>
       <AppContainer>
         <SubmissionLayout hideNavigation>
-          <Text variant="xl" mb={2}>
+          <SubmissionStepTitle>
             This artist isn’t currently eligible to sell on our platform
-          </Text>
+          </SubmissionStepTitle>
 
           {!!artist && (
             <EntityHeaderArtistFragmentContainer
@@ -44,6 +45,7 @@ export const ArtistNotEligibleRoute: React.FC<ArtistNotEligibleRouteProps> = pro
               // @ts-ignore
               as={RouterLink}
               to="/collector-profile/my-collection/artworks/new"
+              data-testid="add-to-collection"
             >
               Add to My Collection
             </Button>
@@ -55,6 +57,7 @@ export const ArtistNotEligibleRoute: React.FC<ArtistNotEligibleRouteProps> = pro
               as={RouterLink}
               to="/sell2/submissions/new"
               variant="secondaryBlack"
+              data-testid="view-collection"
             >
               Add Another Artist
             </Button>

@@ -13,7 +13,7 @@ import {
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { RouterLink } from "System/Components/RouterLink"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { resized } from "Utils/resized"
+import { cropped } from "Utils/resized"
 import * as React from "react"
 
 export const IntroRoute: React.FC = () => {
@@ -49,11 +49,10 @@ export const IntroRoute: React.FC = () => {
 
                   <Flex width={[70, 100]} height={[70, 100]}>
                     <Image
-                      {...resized(intro.image, { width: 100, height: 100 })}
+                      {...cropped(intro.image, { width: 100, height: 100 })}
                       alt={`Step ${index + 1}`}
                       width={[70, 100]}
                       height={[70, 100]}
-                      style={{ objectFit: "cover" }}
                     />
                   </Flex>
                 </Flex>
@@ -93,18 +92,18 @@ const introData = [
     title: "Tell us about your work",
     description:
       "Start by adding an artist from our list of high demand artists. Include information such as year, medium, dimensions and materials.",
-    image: "https://files.artsy.net/images/01_submission_intro_artwork.png",
+    image: "https://files.artsy.net/images/01_submission_intro_artwork.jpg",
   },
   {
     title: "Upload artwork images",
     description:
       "Improve your chances of selling by including photographs of the front, back, frame, signature, and other details.",
-    image: "https://files.artsy.net/images/02_submission_intro_upload.png",
+    image: "https://files.artsy.net/images/02_submission_intro_upload.jpg",
   },
   {
     title: "Complete submission",
     description:
       "Your work will be submitted to an Artsy advisor who will assess whether your work is eligible and help guide you on next steps.",
-    image: "https://files.artsy.net/images/03_submission_intro_advisor.png",
+    image: "https://files.artsy.net/images/03_submission_intro_advisor.jpg",
   },
 ]

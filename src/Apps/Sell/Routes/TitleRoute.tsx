@@ -1,6 +1,8 @@
 import { Input, Join, Spacer, Text } from "@artsy/palette"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
+import { useFocusInput } from "Apps/Sell/Hooks/useFocusInput"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { TitleRoute_submission$key } from "__generated__/TitleRoute_submission.graphql"
@@ -33,6 +35,7 @@ interface TitleRouteProps {
 export const TitleRoute: React.FC<TitleRouteProps> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const { actions } = useSellFlowContext()
+  const focusedInputRef = useFocusInput()
 
   const onSubmit = async (values: FormValues) => {
     return actions.updateSubmission(values)
@@ -51,9 +54,9 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
     >
       {({ handleChange, values }) => (
         <SubmissionLayout>
-          <Join separator={<Spacer y={2} />}>
-            <Text variant="xl">Add artwork title</Text>
+          <SubmissionStepTitle>Add artwork title</SubmissionStepTitle>
 
+          <Join separator={<Spacer y={2} />}>
             {!!submission.artist && (
               <EntityHeaderArtistFragmentContainer
                 artist={submission.artist}
@@ -62,6 +65,7 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
             )}
 
             <Input
+              ref={focusedInputRef}
               onChange={handleChange}
               name="title"
               placeholder="Artwork Title"

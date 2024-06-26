@@ -5,17 +5,17 @@ import {
   Join,
   Select,
   Spacer,
-  Text,
 } from "@artsy/palette"
 import { acceptableCategoriesForSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/acceptableCategoriesForSubmission"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
+import { useFocusInput } from "Apps/Sell/Hooks/useFocusInput"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { DetailsRoute_submission$key } from "__generated__/DetailsRoute_submission.graphql"
 import { ConsignmentSubmissionCategoryAggregation } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { Formik } from "formik"
 import * as React from "react"
-import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
@@ -61,11 +61,7 @@ export const DetailsRoute: React.FC<DetailsRouteProps> = props => {
     medium: submission.medium ?? "",
   }
 
-  const yearInputRef = React.useRef<HTMLInputElement | null>(null)
-
-  useEffect(() => {
-    yearInputRef.current?.focus()
-  }, [])
+  const focusedInputRef = useFocusInput()
 
   return (
     <Formik<FormValues>
@@ -76,9 +72,7 @@ export const DetailsRoute: React.FC<DetailsRouteProps> = props => {
     >
       {({ handleChange, values }) => (
         <SubmissionLayout>
-          <Text mb={2} variant="xl">
-            Artwork details
-          </Text>
+          <SubmissionStepTitle>Artwork details</SubmissionStepTitle>
 
           <Join separator={<Spacer y={4} />}>
             <GridColumns>
@@ -88,7 +82,7 @@ export const DetailsRoute: React.FC<DetailsRouteProps> = props => {
                   name="year"
                   title="Year"
                   defaultValue={values.year || ""}
-                  ref={yearInputRef}
+                  ref={focusedInputRef}
                   data-testid="year-input"
                 />
               </Column>

@@ -252,6 +252,9 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       <>
         <Join separator={<Separator borderColor="black5" />}>
           {alerts.map(node => {
+            if (node === null) {
+              return
+            }
             const isCurrentEdgeSelected =
               editAlertEntity?.id === node.internalID
             let variant: SavedSearchAlertListItemVariant | undefined

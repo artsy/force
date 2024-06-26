@@ -1,6 +1,6 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
-import { TitleRoute } from "Apps/Sell/Routes/TitleRoute"
+import { ThankYouRoute } from "Apps/Sell/Routes/ThankYouRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -13,14 +13,13 @@ const mockReplace = jest.fn()
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
-
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
   fetchQuery: jest.fn(),
 }))
 
-beforeAll(() => {
+beforeEach(() => {
   ;(useSystemContext as jest.Mock).mockImplementation(() => {
     return { isLoggedIn: true }
   })
@@ -30,7 +29,9 @@ beforeAll(() => {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "/submissions/submission-id/title" } },
+    match: {
+      location: { pathname: "submissions/submission-id/thank-you" },
+    },
   }))
 })
 
@@ -38,42 +39,43 @@ const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
     return (
       <SubmissionRoute submission={props.submission}>
-        <TitleRoute submission={props.submission} />
+        <ThankYouRoute />
       </SubmissionRoute>
     )
   },
   query: graphql`
-    query TitleRoute_Test_Query @raw_response_type {
+    query ThankYouRoute_Test_Query @raw_response_type {
       submission(id: "submission-id") {
-        ...TitleRoute_submission
         ...SubmissionRoute_submission
       }
     }
   `,
 })
 
-describe("TitleRoute", () => {
-  it("renders the artist title step", async () => {
+describe("ThankYouRoute", () => {
+  it("renders text and links", () => {
     renderWithRelay({})
 
-    await waitFor(() => {
-      expect(screen.getByText("Add artwork title")).toBeInTheDocument()
-    })
-  })
+    expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
 
-  describe("artist title input", () => {
-    it("is required", async () => {
-      renderWithRelay({})
+    expect(
+      screen.getByText("Thank you for submitting your artwork")
+    ).toBeInTheDocument()
 
-      await waitFor(async () => {
-        const artistTitleInput = screen.getByPlaceholderText("Artwork Title")
+    expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
 
-        fireEvent.change(artistTitleInput, { target: { value: "Banksy" } })
+    expect(
+      screen.getByText("View Artwork in My Collection")
+    ).toBeInTheDocument()
 
-        expect(artistTitleInput).toBeInTheDocument()
+    expect(screen.getByTestId("submit-another-work")).toHaveAttribute(
+      "href",
+      "/sell2/submissions/new"
+    )
 
-        expect(artistTitleInput).toHaveValue("Banksy")
-      })
-    })
+    expect(screen.getByTestId("view-collection")).toHaveAttribute(
+      "href",
+      "/my-collection"
+    )
   })
 })
