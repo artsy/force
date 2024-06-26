@@ -16,9 +16,8 @@ const DEFAULT_USERS_CLASS = "DiscoveryUsers"
 export class WeaviateDB {
   private client: WeaviateClient
   private artworkClass: string
-  private marketingCollectionClass: string
   private articlesClass: string
-  private artworksClass: string
+  private marketingCollectionClass: string
   private userClass: string
 
   constructor(
@@ -87,7 +86,7 @@ export class WeaviateDB {
     } = response.data.Get.DiscoveryUsers[0]
 
     return {
-      internalID, // TODO: once we create real Gravity users
+      internalID,
       name,
       likedArtworkIds: (likedArtworks || []).map(w => w.internalID),
       dislikedArtworkIds: (dislikedArtworks || []).map(w => w.internalID),
@@ -149,7 +148,7 @@ export class WeaviateDB {
       .withReference(
         this.client.data
           .referencePayloadBuilder()
-          .withClassName(this.artworksClass)
+          .withClassName(this.artworkClass)
           .withId(artworkId)
           .payload()
       )
