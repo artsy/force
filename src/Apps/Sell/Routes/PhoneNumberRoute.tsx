@@ -1,5 +1,5 @@
-import { compact } from "lodash"
 import { countries } from "Utils/countries"
+import { cleanUserPhoneNumber } from "Apps/Sell/Utils/cleanUserPhoneNumber"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { Formik } from "formik"
 import { graphql, useFragment } from "react-relay"
@@ -50,31 +50,15 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
 
   const { actions } = useSellFlowContext()
 
-  const onSubmit = async (values: FormValues) => {
-    let countryObject = countries.find(
-      item => item.value === values.phoneNumberCountryCode
-    )
-
-    const phoneNumberInternational = `+${
-      countryObject?.countryCode
-    } ${values.userPhone.trim()}`
-
-    const updatedValues = {
-      userPhone: phoneNumberInternational,
-    }
-
-    return actions.updateSubmission(updatedValues)
-  }
-
   // parse the phone number saved with the submission
   const {
-    countryCode1: submissionCountryCode,
+    countryCode: submissionCountryCode,
     phoneNumber: submissionPhoneNumber,
   } = cleanUserPhoneNumber(submission.userPhone ?? "")
 
   // parse the phone number originalNumber phone number
   const {
-    countryCode1: meCountryCode,
+    countryCode: meCountryCode,
     phoneNumber: myPhoneNumber,
   } = cleanUserPhoneNumber(me.phoneNumber?.originalNumber ?? "")
 
@@ -88,14 +72,28 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
       "us",
   }
 
+  const onSubmit = async (values: FormValues) => {
+    let country = countries.find(c => c.value === values.phoneNumberCountryCode)
+
+    const phoneNumberInternational = `+${
+      country?.countryCode
+    } ${values.userPhone.trim()}`
+
+    const updatedValues = {
+      userPhone: phoneNumberInternational,
+    }
+
+    return actions.updateSubmission(updatedValues)
+  }
+
   return (
     <Formik<FormValues>
       initialValues={initialValues}
       onSubmit={onSubmit}
-      validateOnMount // use the same validation as on app
+      validateOnMount
       validationSchema={Schema}
     >
-      {({ handleChange, values, setFieldValue }) => (
+      {({ handleChange, setFieldValue, values }) => (
         <SubmissionLayout>
           <Text variant="xl" mb={2}>
             Add phone number
@@ -116,7 +114,6 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
               onChange={handleChange}
               dropdownValue={values.phoneNumberCountryCode}
               defaultValue={values.userPhone}
-              // inputValue={values.userPhone}
               placeholder="(000) 000 0000"
               data-testid="phone-input"
             />
@@ -126,57 +123,4 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
       )}
     </Formik>
   )
-}
-
-export function cleanUserPhoneNumber(value: string) {
-  let countryCode1 = getCountryIso2FromPhoneNumber(value) ?? ""
-
-  let phoneNumber = value.replace(/[^+\d]/g, "").trim()
-
-  const dialCode = countries.find(c => c.value === countryCode1)?.countryCode
-  if (dialCode && phoneNumber.startsWith("+" + dialCode)) {
-    phoneNumber = phoneNumber.slice(dialCode.length + 1).trim()
-  }
-
-  return { countryCode1, phoneNumber }
-}
-
-export function getCountryIso2FromPhoneNumber(phoneNumber: string) {
-  if (!phoneNumber.startsWith("+")) {
-    return null
-  }
-  // replace non-digits
-  phoneNumber = phoneNumber.slice(1).replace(/\D/g, "")
-
-  const possibles = compact(
-    countries.map(c => {
-      if (!phoneNumber.startsWith(c.countryCode)) {
-        return null
-      }
-
-      // TODO: add check for area codes
-      /*        if (c.areaCodes) {
-        const rest = phoneNumber.slice(c.countryCode.length)
-
-        // if no area codes, skip
-        if (!c.areaCodes.some((code) => rest.startsWith(code))) {
-          return null
-        }
-
-        // increase specificity by 100 if area code is present
-        return { code: c.value, specificity: 100 + c.countryCode.length }
-      } */
-
-      return { code: c.value, specificity: c.countryCode.length }
-    })
-  )
-
-  // find best match
-  const best = possibles
-    .sort((a, b) => {
-      return a.specificity - b.specificity
-    })
-    .pop()
-
-  return best?.code
 }
