@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react"
 import { Box, SkeletonBox, Text } from "@artsy/palette"
 import { Rail } from "Components/Rail/Rail"
-import { State } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
+import { BudgetIntent, State } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
 import { Artwork } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/Artwork"
 
 interface ArtworksRailProps {
@@ -22,6 +22,19 @@ export type DiscoveryArtwork = {
   imageUrl: string
 }
 
+function getPriceRange(budgetIntent?: BudgetIntent) {
+  let priceMinUSD = budgetIntent?.budget?.min
+  let priceMaxUSD = budgetIntent?.budget?.max
+  let numberOfArtworks = budgetIntent?.numberOfArtworks
+
+  if (numberOfArtworks) {
+    if (priceMinUSD) priceMinUSD = priceMinUSD / numberOfArtworks
+    if (priceMaxUSD) priceMaxUSD = priceMaxUSD / numberOfArtworks
+  }
+
+  return { priceMinUSD, priceMaxUSD }
+}
+
 export const ArtworksRail: FC<ArtworksRailProps> = props => {
   const { state } = props
   const [artworks, setArtworks] = useState<DiscoveryArtwork[]>([])
@@ -32,6 +45,10 @@ export const ArtworksRail: FC<ArtworksRailProps> = props => {
     state.interests.forEach(concept => {
       params.append("concepts", concept)
     })
+
+    const { priceMinUSD, priceMaxUSD } = getPriceRange(state.budgetIntent)
+    if (priceMinUSD) params.append("priceMinUSD", priceMinUSD.toString())
+    if (priceMaxUSD) params.append("priceMaxUSD", priceMaxUSD.toString())
 
     const fetchArtworks = async () => {
       const response = await fetch(

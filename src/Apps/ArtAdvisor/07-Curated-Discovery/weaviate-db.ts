@@ -163,20 +163,28 @@ export class WeaviateDB {
   async getNearArtworks({
     concepts,
     limit = 10,
+    priceMinUSD,
+    priceMaxUSD,
   }: {
     /** List of concepts for semantic search */
     concepts: string[]
     /** Max number of artworks to return */
     limit?: number
+    /** Minimum price (USD) by which to filter artworks */
+    priceMinUSD?: number
+    /** Maximum price (USD) by which to filter artworks */
+    priceMaxUSD?: number
   }) {
     console.log("[WeaviateDB] getArtworksNearConcepts", {
       concepts,
       limit,
+      priceMinUSD,
+      priceMaxUSD,
     })
 
     const conceptArray = ensureValidConcepts(concepts)
 
-    const response = await this.client.graphql
+    let query = this.client.graphql
       .get()
       .withClassName(this.artworkClass)
       .withNearText({
@@ -186,7 +194,46 @@ export class WeaviateDB {
       .withFields(
         "internalID slug title date rarity medium materials price dimensions imageUrl _additional { id distance }"
       )
-      .do()
+
+    if (priceMinUSD && priceMaxUSD) {
+      // range filter
+      query = query.withWhere({
+        operator: "And",
+        operands: [
+          {
+            path: ["priceMinMinorUSD"],
+            operator: "GreaterThanEqual",
+            valueNumber: priceMinUSD * 100, // because "minor" units
+          },
+          {
+            path: ["priceMaxMinorUSD"],
+            operator: "LessThanEqual",
+            valueNumber: priceMaxUSD * 100, // because "minor" units
+          },
+        ],
+      })
+    } else if (priceMinUSD) {
+      // minimum filter
+      query = query.withWhere({
+        path: ["priceMinMinorUSD"],
+        operator: "GreaterThanEqual",
+        valueNumber: priceMinUSD * 100, // because "minor" units
+      })
+    } else if (priceMaxUSD) {
+      // maximum filter
+      query = query.withWhere({
+        path: ["priceMaxMinorUSD"],
+        operator: "LessThanEqual",
+        valueNumber: priceMaxUSD * 100, // because "minor" units
+      })
+    }
+
+    console.log(
+      "[WeaviateDB] getArtworksNearConcepts query",
+      JSON.stringify(query)
+    )
+
+    const response = await query.do()
 
     const result = response.data.Get.DiscoveryArtworks.map(artwork => {
       const properties = _.pick(artwork, [
