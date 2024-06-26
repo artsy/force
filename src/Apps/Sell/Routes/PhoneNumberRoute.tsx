@@ -1,13 +1,14 @@
-import { Join, PhoneInput, Spacer, Text } from "@artsy/palette"
+import { compact } from "lodash"
+import { countries } from "Utils/countries"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
+import { Formik } from "formik"
+import { graphql, useFragment } from "react-relay"
+import { Join, PhoneInput, Spacer, Text } from "@artsy/palette"
+import { PhoneNumberRoute_me$key } from "__generated__/PhoneNumberRoute_me.graphql"
+import { PhoneNumberRoute_submission$key } from "__generated__/PhoneNumberRoute_submission.graphql"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import { countries } from "Utils/countries"
-import { PhoneNumberRoute_submission$key } from "__generated__/PhoneNumberRoute_submission.graphql"
-import { PhoneNumberRoute_me$key } from "__generated__/PhoneNumberRoute_me.graphql"
-import { Formik } from "formik"
 import * as React from "react"
-import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
 const FRAGMENT = graphql`
@@ -42,6 +43,7 @@ interface PhoneNumberRouteProps {
   me: PhoneNumberRoute_me$key
 }
 
+// TODO: rename userPhone to phoneNumber
 export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const me = useFragment(FRAGMENT_ME, props.me)
@@ -64,20 +66,33 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
     return actions.updateSubmission(updatedValues)
   }
 
+  // parse the phone number saved with the submission
+  const {
+    countryCode1: submissionCountryCode,
+    phoneNumber: submissionPhoneNumber,
+  } = cleanUserPhoneNumber(submission.userPhone ?? "")
+
+  // parse the phone number originalNumber phone number
+  const {
+    countryCode1: meCountryCode,
+    phoneNumber: myPhoneNumber,
+  } = cleanUserPhoneNumber(me.phoneNumber?.originalNumber ?? "")
+
   const initialValues: FormValues = {
     userPhone:
-      me.phoneNumber?.display ??
-      me.phoneNumber?.originalNumber ??
-      submission.userPhone ??
-      "",
-    phoneNumberCountryCode: me.phoneNumber?.regionCode ?? "us",
+      submissionPhoneNumber ?? me.phoneNumber?.display ?? myPhoneNumber ?? "",
+    phoneNumberCountryCode:
+      submissionCountryCode ??
+      me.phoneNumber?.regionCode ??
+      meCountryCode ??
+      "us",
   }
 
   return (
     <Formik<FormValues>
       initialValues={initialValues}
       onSubmit={onSubmit}
-      validateOnMount
+      validateOnMount // use the same validation as on app
       validationSchema={Schema}
     >
       {({ handleChange, values, setFieldValue }) => (
@@ -97,10 +112,11 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
               onSelect={option => {
                 setFieldValue("phoneNumberCountryCode", option.value)
               }}
-              name="phoneNumber"
+              name="userPhone"
               onChange={handleChange}
               dropdownValue={values.phoneNumberCountryCode}
-              inputValue={values.userPhone}
+              defaultValue={values.userPhone}
+              // inputValue={values.userPhone}
               placeholder="(000) 000 0000"
               data-testid="phone-input"
             />
@@ -110,4 +126,57 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
       )}
     </Formik>
   )
+}
+
+export function cleanUserPhoneNumber(value: string) {
+  let countryCode1 = getCountryIso2FromPhoneNumber(value) ?? ""
+
+  let phoneNumber = value.replace(/[^+\d]/g, "").trim()
+
+  const dialCode = countries.find(c => c.value === countryCode1)?.countryCode
+  if (dialCode && phoneNumber.startsWith("+" + dialCode)) {
+    phoneNumber = phoneNumber.slice(dialCode.length + 1).trim()
+  }
+
+  return { countryCode1, phoneNumber }
+}
+
+export function getCountryIso2FromPhoneNumber(phoneNumber: string) {
+  if (!phoneNumber.startsWith("+")) {
+    return null
+  }
+  // replace non-digits
+  phoneNumber = phoneNumber.slice(1).replace(/\D/g, "")
+
+  const possibles = compact(
+    countries.map(c => {
+      if (!phoneNumber.startsWith(c.countryCode)) {
+        return null
+      }
+
+      // TODO: add check for area codes
+      /*        if (c.areaCodes) {
+        const rest = phoneNumber.slice(c.countryCode.length)
+
+        // if no area codes, skip
+        if (!c.areaCodes.some((code) => rest.startsWith(code))) {
+          return null
+        }
+
+        // increase specificity by 100 if area code is present
+        return { code: c.value, specificity: 100 + c.countryCode.length }
+      } */
+
+      return { code: c.value, specificity: c.countryCode.length }
+    })
+  )
+
+  // find best match
+  const best = possibles
+    .sort((a, b) => {
+      return a.specificity - b.specificity
+    })
+    .pop()
+
+  return best?.code
 }
