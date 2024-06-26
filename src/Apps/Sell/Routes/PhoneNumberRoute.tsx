@@ -7,6 +7,7 @@ import { Join, PhoneInput, Spacer, Text } from "@artsy/palette"
 import { PhoneNumberRoute_me$key } from "__generated__/PhoneNumberRoute_me.graphql"
 import { PhoneNumberRoute_submission$key } from "__generated__/PhoneNumberRoute_submission.graphql"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import * as React from "react"
 import * as Yup from "yup"
@@ -95,12 +96,10 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
     >
       {({ handleChange, setFieldValue, values }) => (
         <SubmissionLayout>
-          <Text variant="xl" mb={2}>
-            Add phone number
-          </Text>
+          <SubmissionStepTitle>Add phone number</SubmissionStepTitle>
 
           <Join separator={<Spacer y={4} />}>
-            <Text variant="sm-display">
+            <Text variant={["xs", "sm"]} textColor={["black60", "black100"]}>
               Add your number (optional) so an Artsy Advisor can contact you
               directly by phone.
             </Text>
