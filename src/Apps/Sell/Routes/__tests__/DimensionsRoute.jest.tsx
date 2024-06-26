@@ -4,6 +4,7 @@ import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { DimensionsRoute_Test_Query$rawResponse } from "__generated__/DimensionsRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
@@ -18,6 +19,7 @@ jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 jest.mock("Utils/Hooks/useMutation")
+jest.mock("System/Hooks/useSystemContext")
 
 const submissionMock: Partial<
   DimensionsRoute_Test_Query$rawResponse["submission"]
@@ -26,6 +28,10 @@ const submissionMock: Partial<
 }
 
 beforeEach(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => {
+    return { isLoggedIn: true }
+  })
+
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
@@ -66,7 +72,7 @@ describe("DimensionsRoute", () => {
 
     expect(screen.getByText("Artwork dimensions")).toBeInTheDocument()
     expect(screen.getByText("Back")).toBeInTheDocument()
-    expect(screen.getByText("Submit")).toBeInTheDocument()
+    expect(screen.getByText("Submit Artwork")).toBeInTheDocument()
     expect(screen.getByText("Save & Exit")).toBeInTheDocument()
   })
 
@@ -93,7 +99,7 @@ describe("DimensionsRoute", () => {
       ConsignmentSubmission: () => submissionMock,
     })
 
-    screen.getByText("Submit").click()
+    screen.getByText("Submit Artwork").click()
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(

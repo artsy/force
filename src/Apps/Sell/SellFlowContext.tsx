@@ -22,6 +22,7 @@ export const STEPS = [
   "thank-you",
 ]
 
+const INITIAL_STEP = "artist"
 const SUBMIT_STEP = "dimensions"
 
 interface Actions {
@@ -75,7 +76,12 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   } = useCreateSubmission()
   const { sendToast } = useToasts()
 
-  const stepFromURL = match.location.pathname.split("/").pop()
+  const isNewSubmission = !submissionID
+
+  const stepFromURL = isNewSubmission
+    ? INITIAL_STEP
+    : match.location.pathname.split("/").pop()
+
   const initialIndex = STEPS.indexOf(stepFromURL || STEPS[0])
 
   const { index, handleNext, handlePrev } = useCursor({
@@ -96,10 +102,10 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   }
 
   useEffect(() => {
-    if (!submissionID) return
+    if (isNewSubmission) return
 
     push(`/sell2/submissions/${submissionID}/${STEPS[index]}`)
-  }, [push, submissionID, index])
+  }, [push, index, isNewSubmission, submissionID])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
     const response = submitCreateSubmissionMutation({
@@ -112,7 +118,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       logger.error("Error creating submission.", err)
       sendToast({
         variant: "error",
-        message: "Something went wrong.",
+        message: err?.[0]?.message || "Something went wrong.",
       })
       throw err
     })
@@ -137,7 +143,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       logger.error("Error updating submission.", err)
       sendToast({
         variant: "error",
-        message: "Something went wrong.",
+        message: err?.[0]?.message || "Something went wrong.",
       })
       throw err
     })

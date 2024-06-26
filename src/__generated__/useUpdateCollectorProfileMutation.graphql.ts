@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51b0cc590db299075c5a8937557fd919>>
+ * @generated SignedSource<<4ca97fbdaf29ad023888cc74975636c7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type UpdateCollectorProfileInput = {
   intents?: ReadonlyArray<Intents | null | undefined> | null | undefined;
   loyaltyApplicant?: boolean | null | undefined;
   professionalBuyer?: boolean | null | undefined;
+  promptedForUpdate?: boolean | null | undefined;
   selfReportedPurchases?: string | null | undefined;
 };
 export type useUpdateCollectorProfileMutation$variables = {

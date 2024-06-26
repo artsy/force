@@ -55,8 +55,6 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
           sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
           artistID: artwork.artist?.internalID,
           myCollectionArtworkID: artwork.internalID,
-          // Source is necessary in order to link this to a mycollection artwork
-          source: "MY_COLLECTION",
         })
       }
 
