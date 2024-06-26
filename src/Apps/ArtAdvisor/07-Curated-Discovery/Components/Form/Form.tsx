@@ -36,15 +36,15 @@ export const Form: React.FC<FormProps> = props => {
       return
     }
 
+    const getWeaviateUser = () => {
+      return fetch(`/api/advisor/7/users/${user.id}`)
+    }
+
     const createWeaviateUser = () => {
       const headers = { "Content-Type": "application/json" }
       const body = JSON.stringify({ userId: user.id, name: user.name })
       const options = { method: "POST", headers, body }
       return fetch(`/api/advisor/7/users`, options)
-    }
-
-    const getWeaviateUser = () => {
-      return fetch(`/api/advisor/7/users/${user.id}`)
     }
 
     getWeaviateUser().then(response => {
