@@ -54,7 +54,7 @@ const BottomFormBackButton = () => {
       loading={isSubmitting}
       onClick={onBack}
       variant="tertiary"
-      disabled={loading}
+      disabled={loading || isSubmitting}
     >
       Back
     </Button>

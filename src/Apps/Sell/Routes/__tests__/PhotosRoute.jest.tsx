@@ -2,11 +2,14 @@ import { Toasts, ToastsProvider } from "@artsy/palette"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { PhotosRoute } from "Apps/Sell/Routes/PhotosRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
+import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
 import { uploadSubmissionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { PhotosRoute_Test_Query$rawResponse } from "__generated__/PhotosRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
+import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
@@ -16,6 +19,7 @@ const mockUploadPhoto = uploadSubmissionPhoto as jest.Mock
 const mockAddAsset = jest.fn()
 const mockRemoveAsset = jest.fn()
 
+jest.mock("System/Hooks/useSystemContext")
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
@@ -54,7 +58,13 @@ const submissionMock: Partial<
   ],
 }
 
+let relayEnv: MockEnvironment = createMockEnvironment()
+
 beforeEach(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => {
+    return { isLoggedIn: true, relayEnvironment: relayEnv }
+  })
+
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
@@ -82,6 +92,7 @@ afterEach(() => {
   mockUploadPhoto.mockReset()
   mockAddAsset.mockReset()
   mockRemoveAsset.mockReset()
+  relayEnv.mockClear()
 })
 
 const { renderWithRelay } = setupTestWrapperTL({

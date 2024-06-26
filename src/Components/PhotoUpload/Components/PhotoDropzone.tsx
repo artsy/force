@@ -129,9 +129,7 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
         </Media>
 
         <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
-          Files supported: JPG, PNG
-        </Text>
-        <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
+          Files supported: JPG, PNG <br />
           Total maximum size: {maxTotalSize} MB
         </Text>
 
@@ -139,7 +137,7 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
           ref={buttonRef}
           width={["100%", "auto"]}
           type="button"
-          mt={[2, 4]}
+          mt={[2, 2]}
           variant="secondaryBlack"
           onClick={open}
         >

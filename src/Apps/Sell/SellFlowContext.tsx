@@ -45,6 +45,8 @@ interface State {
   step: string
   submissionID: string | undefined
   devMode: boolean
+  // loading is used to show a loading spinner on the bottom form navigation
+  // when images are being uploaded
   loading: boolean
 }
 interface SellFlowContextProps {
