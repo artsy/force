@@ -1,13 +1,13 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
 import { HomeFeaturedShowsRailFragmentContainer } from "Apps/Home/Components/HomeFeaturedShowsRail"
-import { HomeFeaturedShowsRail_Test_Query } from "__generated__/HomeFeaturedShowsRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-const { getWrapper } = setupTestWrapper<HomeFeaturedShowsRail_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL({
   Component: HomeFeaturedShowsRailFragmentContainer,
   query: graphql`
     query HomeFeaturedShowsRail_Test_Query @relay_test_operation {
@@ -30,7 +30,7 @@ afterEach(() => {
 
 describe("HomeFeaturedShowsRail", () => {
   it("renders correctly", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Show: () => ({
         name: "Example Show",
         exhibitionPeriod: "June 9 – 25",
@@ -41,18 +41,23 @@ describe("HomeFeaturedShowsRail", () => {
       }),
     })
 
-    expect(wrapper.text()).toContain("Featured Shows")
-    expect(wrapper.text()).toContain("Explore All Shows")
-    expect(wrapper.text()).toContain("Example Show")
-    expect(wrapper.text()).toContain("Example Partner")
-    expect(wrapper.text()).toContain("June 9 – 25")
-    expect(wrapper.html()).toContain("/show/partner-show")
+    expect(screen.getByText("Featured Shows")).toBeInTheDocument()
+    expect(screen.getByText("Explore All Shows")).toBeInTheDocument()
+    expect(screen.getByText("Example Show")).toBeInTheDocument()
+    expect(screen.getByText("Example Partner")).toBeInTheDocument()
+    expect(screen.getByText("June 9 – 25 — Opening Soon")).toBeInTheDocument()
+    expect(screen.getAllByRole("link")[2]).toHaveAttribute(
+      "href",
+      "/show/partner-show"
+    )
   })
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const { wrapper } = getWrapper()
-      wrapper.find("RouterLink").last().simulate("click")
+      renderWithRelay()
+
+      fireEvent.click(screen.getAllByRole("link")[2])
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedShowGroup",
         context_module: "featuredShowsRail",
@@ -65,8 +70,8 @@ describe("HomeFeaturedShowsRail", () => {
     })
 
     it("tracks view all", () => {
-      const { wrapper } = getWrapper()
-      wrapper.find("RouterLink").first().simulate("click")
+      renderWithRelay()
+      fireEvent.click(screen.getAllByRole("link")[1])
       expect(trackEvent).toBeCalledWith({
         action: "clickedShowGroup",
         context_module: "featuredShowsRail",

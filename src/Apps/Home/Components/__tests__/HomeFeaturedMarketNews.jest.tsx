@@ -1,13 +1,13 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
 import { HomeFeaturedMarketNewsFragmentContainer } from "Apps/Home/Components/HomeFeaturedMarketNews"
-import { HomeFeaturedMarketNews_Test_Query } from "__generated__/HomeFeaturedMarketNews_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-const { getWrapper } = setupTestWrapper<HomeFeaturedMarketNews_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL({
   Component: HomeFeaturedMarketNewsFragmentContainer,
   query: graphql`
     query HomeFeaturedMarketNews_Test_Query @relay_test_operation {
@@ -30,7 +30,7 @@ afterEach(() => {
 
 describe("HomeFeaturedMarketNews", () => {
   it("renders correctly", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Article: () => ({
         href: "/article/example-article",
         title: "Example Article",
@@ -38,15 +38,20 @@ describe("HomeFeaturedMarketNews", () => {
       }),
     })
 
-    expect(wrapper.text()).toContain("Artsy Editorial")
-    expect(wrapper.text()).toContain("Explore Editorial")
-    expect(wrapper.html()).toContain("/article/example-article")
+    expect(screen.getByText("Artsy Editorial")).toBeInTheDocument()
+    expect(screen.getByText("Explore Editorial")).toBeInTheDocument()
+    expect(screen.getAllByRole("link")[1]).toHaveAttribute(
+      "href",
+      "/article/example-article"
+    )
   })
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const { wrapper } = getWrapper()
-      wrapper.find("RouterLink").last().simulate("click")
+      renderWithRelay()
+
+      fireEvent.click(screen.getAllByRole("link")[1])
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",
         context_module: "marketNews",
@@ -59,8 +64,10 @@ describe("HomeFeaturedMarketNews", () => {
     })
 
     it("tracks view all", () => {
-      const { wrapper } = getWrapper()
-      wrapper.find("RouterLink").first().simulate("click")
+      renderWithRelay()
+
+      fireEvent.click(screen.getAllByRole("link")[0])
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",
         context_module: "marketNews",

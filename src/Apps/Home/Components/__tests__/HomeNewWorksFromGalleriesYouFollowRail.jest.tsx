@@ -1,16 +1,14 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { HomeNewWorksFromGalleriesYouFollowRailFragmentContainer } from "Apps/Home/Components/HomeNewWorksFromGalleriesYouFollowRail"
-import { HomeNewWorksFromGalleriesYouFollowRail_Test_Query } from "__generated__/HomeNewWorksFromGalleriesYouFollowRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-const { getWrapper } = setupTestWrapper<
-  HomeNewWorksFromGalleriesYouFollowRail_Test_Query
->({
-  Component: props => {
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
     return (
       <HomeNewWorksFromGalleriesYouFollowRailFragmentContainer
         newWorksFromGalleriesYouFollowConnection={
@@ -43,17 +41,22 @@ afterEach(() => {
 
 describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
   it("renders correctly", () => {
-    const { wrapper } = getWrapper()
+    renderWithRelay()
 
-    expect(wrapper.html()).toContain("/new-works-from-galleries-you-follow")
-
-    expect(wrapper.text()).toContain("title")
+    expect(screen.getAllByRole("link")[1]).toHaveAttribute(
+      "href",
+      "/new-works-from-galleries-you-follow"
+    )
+    expect(
+      screen.getByText("New Works from Galleries You Follow")
+    ).toBeInTheDocument()
   })
 
   describe("tracking", () => {
     it("tracks view all clicks", () => {
-      const { wrapper } = getWrapper()
-      wrapper.find("RouterLink").at(1).simulate("click")
+      renderWithRelay()
+
+      fireEvent.click(screen.getAllByRole("link")[1])
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtworkGroup",
@@ -64,8 +67,8 @@ describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
     })
 
     it("tracks item clicks", () => {
-      const { wrapper } = getWrapper()
-      wrapper.find("RouterLink").at(2).simulate("click")
+      renderWithRelay()
+      fireEvent.click(screen.getAllByRole("link")[2])
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtworkGroup",
