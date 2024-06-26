@@ -18,7 +18,7 @@ import {
 } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
 import { useEffect, useState } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { AuthDialog } from "Components/AuthDialog/AuthDialog"
+import { useRouter } from "System/Hooks/useRouter"
 
 interface FormProps {
   state: State
@@ -30,9 +30,11 @@ export const Form: React.FC<FormProps> = props => {
   const { state, dispatch } = props
   const { sendToast } = useToasts()
   const { user } = useSystemContext()
+  const { router } = useRouter()
 
   useEffect(() => {
     if (!user) {
+      router.replace("/login?redirectTo=/advisor/7")
       return
     }
 
@@ -59,7 +61,7 @@ export const Form: React.FC<FormProps> = props => {
         )
       }
     })
-  }, [user])
+  }, [user, router])
 
   const handleSubmit = async () => {
     try {
@@ -95,14 +97,6 @@ export const Form: React.FC<FormProps> = props => {
 
   return (
     <Box>
-      {!user && (
-        <AuthDialog
-          onClose={() => {
-            /** noop */
-          }}
-        />
-      )}
-
       <Spacer y={4} />
 
       <Text as="h1" variant={"xl"}>
