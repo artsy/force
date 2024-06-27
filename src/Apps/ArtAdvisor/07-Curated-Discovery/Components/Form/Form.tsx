@@ -76,15 +76,14 @@ export const Form: React.FC<FormProps> = props => {
       if (budgetIntent.ok) {
         const intent = (await budgetIntent.json()) as BudgetIntent
         dispatch({ type: "SET_BUDGET_INTENT", intent })
-        dispatch({ type: "SET_STEP", step: "result" })
       } else {
-        sendToast({
-          variant: "error",
-          message: `Could not infer budget: ${
-            budgetIntent.statusText
-          } (Input: ${state.budget || "missing"})`,
-        })
+        console.warn(
+          "Could not infer budget from",
+          state.budget,
+          budgetIntent.statusText
+        )
       }
+      dispatch({ type: "SET_STEP", step: "result" })
     } catch (error) {
       console.error(error)
       sendToast({
