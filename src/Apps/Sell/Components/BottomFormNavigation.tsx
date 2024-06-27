@@ -29,7 +29,7 @@ const BottomFormBackButton = () => {
   const { submitForm } = useFormikContext()
   const {
     actions,
-    state: { isFirstStep },
+    state: { isFirstStep, loading },
   } = useSellFlowContext()
 
   const onBack = async () => {
@@ -50,7 +50,12 @@ const BottomFormBackButton = () => {
   }
 
   return (
-    <Button loading={isSubmitting} onClick={onBack} variant="tertiary">
+    <Button
+      loading={isSubmitting}
+      onClick={onBack}
+      variant="tertiary"
+      disabled={loading || isSubmitting}
+    >
       Back
     </Button>
   )
@@ -61,6 +66,9 @@ const BottomFormNextButton = () => {
   const { isValid, submitForm } = useFormikContext()
   const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
+  const {
+    state: { loading },
+  } = useSellFlowContext()
 
   const {
     actions,
@@ -102,8 +110,9 @@ const BottomFormNextButton = () => {
     <Button
       variant="primaryBlack"
       disabled={!isValid}
-      loading={isSubmitting}
+      loading={isSubmitting || loading}
       onClick={onNext}
+      data-testid="bottom-form-next-button"
     >
       {isSubmitStep ? "Submit Artwork" : "Continue"}
     </Button>
