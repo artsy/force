@@ -3,6 +3,7 @@ import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmis
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
 import { createContext, useContext, useEffect, useState } from "react"
@@ -19,11 +20,14 @@ export const STEPS = [
   "details",
   "purchase-history",
   "dimensions",
+  "phone-number",
   "thank-you",
-]
+] as const
 
-const INITIAL_STEP = "artist"
-const SUBMIT_STEP = "dimensions"
+const INITIAL_STEP: SellFlowStep = "artist"
+const SUBMIT_STEP: SellFlowStep = "dimensions"
+
+export type SellFlowStep = typeof STEPS[number]
 
 interface Actions {
   goToPreviousStep: () => void
@@ -43,7 +47,7 @@ interface State {
   isLastStep: boolean
   isSubmitStep: boolean
   index: number
-  step: string
+  step: SellFlowStep
   submissionID: string | undefined
   devMode: boolean
   // loading is used to show a loading spinner on the bottom form navigation
@@ -71,6 +75,10 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   devMode = false,
 }) => {
   const {
+    trackConsignmentSubmitted,
+    trackTappedSubmissionBack,
+  } = useSubmissionTracking()
+  const {
     match,
     router: { push },
   } = useRouter()
@@ -87,7 +95,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
 
   const stepFromURL = isNewSubmission
     ? INITIAL_STEP
-    : match.location.pathname.split("/").pop()
+    : (match.location.pathname.split("/").pop() as SellFlowStep)
 
   const initialIndex = STEPS.indexOf(stepFromURL || STEPS[0])
 
@@ -97,14 +105,23 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   })
 
   const goToNextStep = async () => {
-    handleNext()
+    state.isSubmitStep ? finishFlow() : handleNext()
   }
 
   const goToPreviousStep = () => {
+    trackTappedSubmissionBack(submissionID, state.step)
+
     handlePrev()
   }
 
-  const finishFlow = () => {
+  const finishFlow = async () => {
+    trackConsignmentSubmitted(submissionID, state.step)
+
+    // When the user clicks on "Submit Artwork" and the Sell flow is finished, we set the state to "SUBMITTED".
+    await updateSubmission({
+      state: "SUBMITTED",
+    })
+
     push(`/sell2/submissions/${submissionID}/thank-you`)
   }
 
@@ -141,7 +158,6 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
         input: {
           externalId: submissionID,
           ...values,
-          state: state.isSubmitStep ? "SUBMITTED" : undefined,
         } as UpdateSubmissionMutationInput,
       },
     })

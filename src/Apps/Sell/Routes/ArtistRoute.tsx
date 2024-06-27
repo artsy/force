@@ -192,7 +192,11 @@ export const ArtistRoute: React.FC<{
 
           <Text mt={2} variant="sm" color="black60">
             Currently, artists can not sell their own work on Artsy.{" "}
-            <RouterLink to="https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell">
+            <RouterLink
+              to="https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Learn more.
             </RouterLink>
           </Text>
