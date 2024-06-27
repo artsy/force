@@ -1,12 +1,11 @@
 import {
-  Banner,
-  Box,
   Button,
   Input,
   Skeleton,
-  SkeletonBox,
   SkeletonText,
+  Stack,
   Text,
+  useToasts,
 } from "@artsy/palette"
 import { Environment, createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -18,158 +17,145 @@ import {
   Location,
   LocationAutocompleteInput,
   normalizePlace,
-  Place,
 } from "Components/LocationAutocompleteInput"
-import { useState } from "react"
 import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
 import { logger } from "Components/Inquiry/util"
-import { compactObject } from "Utils/compactObject"
-import { useMode } from "Utils/Hooks/useMode"
+import { Form, Formik } from "formik"
 
 interface InquiryBasicInfoProps {
   artwork: InquiryBasicInfo_artwork$data
   me: InquiryBasicInfo_me$data | null | undefined
 }
 
-type Mode = "Pending" | "Loading" | "Success" | "Error"
-
 const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
   const { next, setContext, relayEnvironment } = useInquiryContext()
-
-  const [mode, setMode] = useMode<Mode>("Pending")
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
     relayEnvironment: relayEnvironment.current as Environment,
   })
 
-  const [state, setState] = useState<{
-    profession: string | null
-    location: Location | null
-    phone: string | null
-    shareFollows: boolean
-  }>({
-    profession: null,
-    location: null,
-    phone: null,
-    shareFollows: true,
-  })
+  const { sendToast } = useToasts()
 
-  const handleLocation = (place: Place) => {
-    setState(prevState => ({ ...prevState, location: normalizePlace(place) }))
-  }
-
-  const handleInputChange = (name: "profession" | "otherRelevantPositions") => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setState(prevState => ({ ...prevState, [name]: event.target.value }))
-  }
-
-  const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
-    event.preventDefault()
-
-    setMode("Loading")
-
-    const input = compactObject(state)
-
-    setContext(input)
-
+  const handleSubmit = async (values: InquiryBasicInfoInput) => {
     try {
-      await submitUpdateMyUserProfile(input)
-      setMode("Success")
+      const location = {
+        city: values.location?.city || null,
+        state: values.location?.state || null,
+        country: values.location?.country || null,
+        countryCode: values.location?.countryCode || null,
+      }
+
+      const payload = {
+        name: values.name,
+        location,
+        profession: values.profession,
+        otherRelevantPositions: values.otherRelevantPositions,
+      }
+
+      setContext(payload)
+
+      await submitUpdateMyUserProfile(payload)
+
+      sendToast({ variant: "success", message: "Profile information saved." })
+
       next()
     } catch (err) {
       logger.error(err)
-      setMode("Error")
+
+      sendToast({ variant: "error", message: err.message })
     }
   }
 
   return (
-    <Box as="form" onSubmit={handleSubmit}>
-      <Text variant="lg-display" pr={2}>
-        Tell {artwork.partner?.name ?? "us"} a little bit about yourself.
-      </Text>
+    <Formik<InquiryBasicInfoInput>
+      onSubmit={handleSubmit}
+      initialValues={{
+        name: me?.name ?? "",
+        location: me?.location ?? {},
+        profession: me?.profession ?? "",
+        otherRelevantPositions: me?.otherRelevantPositions ?? "",
+      }}
+    >
+      {({ values, setFieldValue, handleChange, handleBlur, isSubmitting }) => {
+        return (
+          <Stack as={Form} gap={4}>
+            <Stack gap={2}>
+              <Text variant="lg-display" pr={2}>
+                Tell {artwork.partner?.name ?? "us"} a little bit about
+                yourself.
+              </Text>
 
-      <Text variant="xs" mb={2} color="black60">
-        Galleries are more likely to respond to collectors who share their
-        profile.
-      </Text>
+              <Input
+                title="Name"
+                name="name"
+                defaultValue={me?.name ?? ""}
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                required
+              />
 
-      {mode === "Error" && (
-        <Banner variant="error" dismissable my={2}>
-          Something went wrong. Please try again.
-        </Banner>
-      )}
+              <LocationAutocompleteInput
+                title="Primary Location"
+                name="location"
+                placeholder="Location"
+                maxLength={256}
+                spellCheck={false}
+                defaultValue={me?.location?.display ?? ""}
+                onChange={place => {
+                  setFieldValue("location", normalizePlace(place))
+                }}
+              />
 
-      <Input
-        title="Profession"
-        name="profession"
-        placeholder="Profession"
-        onChange={handleInputChange("profession")}
-        defaultValue={me?.profession ?? undefined}
-        mb={1}
-      />
+              <Input
+                title="Profession"
+                name="profession"
+                placeholder="Profession"
+                value={values.profession}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
 
-      <LocationAutocompleteInput
-        title="Primary Location"
-        name="location"
-        placeholder="Location"
-        onChange={handleLocation}
-        defaultValue={me?.location?.display ?? undefined}
-        mb={1}
-      />
+              <Input
+                title="Other relevant positions"
+                name="otherRelevantPositions"
+                placeholder="Memberships, institutions, positions"
+                value={values.otherRelevantPositions}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Stack>
 
-      <Input
-        title="Other relevant positions"
-        name="otherRelevantPositions"
-        placeholder="Memberships, institutions, positions"
-        onChange={handleInputChange("otherRelevantPositions")}
-        defaultValue={me?.otherRelevantPositions ?? undefined}
-        mb={2}
-      />
-
-      <Button
-        type="submit"
-        width="100%"
-        loading={mode === "Loading"}
-        disabled={mode === "Success"}
-      >
-        Next
-      </Button>
-    </Box>
+            <Button type="submit" width="100%" loading={isSubmitting}>
+              Save & Continue
+            </Button>
+          </Stack>
+        )
+      }}
+    </Formik>
   )
 }
 
 const InquiryBasicInfoPlaceholder: React.FC = () => {
   return (
     <Skeleton>
-      <SkeletonText variant="lg-display">
-        Tell Example Partner a little bit about yourself.
-      </SkeletonText>
+      <Stack gap={4}>
+        <Stack gap={2}>
+          <SkeletonText variant="lg-display">
+            Tell Example Partner a little bit about yourself.
+          </SkeletonText>
 
-      <SkeletonText variant="xs" mb={2}>
-        Galleries are more likely to respond to collectors who share their
-        profile.
-      </SkeletonText>
+          <Input title="Name" disabled required />
 
-      <SkeletonText variant="xs" mb={0.5}>
-        Profession
-      </SkeletonText>
+          <Input title="Location" placeholder="Enter your city" disabled />
 
-      <SkeletonBox height={50} mb={1} />
+          <Input title="Profession" disabled />
 
-      <SkeletonText variant="xs" mb={0.5}>
-        Location
-      </SkeletonText>
+          <Input title="Other relevant positions" disabled />
+        </Stack>
 
-      <SkeletonBox height={50} mb={1} />
-
-      <SkeletonText variant="xs" mb={0.5}>
-        Phone Number
-      </SkeletonText>
-
-      <SkeletonBox height={50} mb={2} />
-
-      <SkeletonBox height={50} />
+        <Button width="100%" disabled />
+      </Stack>
     </Skeleton>
   )
 }
@@ -186,8 +172,12 @@ export const InquiryBasicInfoFragmentContainer = createFragmentContainer(
     `,
     me: graphql`
       fragment InquiryBasicInfo_me on Me {
+        name
         location {
           display
+          city
+          state
+          country
         }
         otherRelevantPositions
         profession
@@ -233,4 +223,11 @@ export const InquiryBasicInfoQueryRenderer: React.FC = () => {
       }}
     />
   )
+}
+
+interface InquiryBasicInfoInput {
+  name: string
+  location: Location
+  profession: string
+  otherRelevantPositions: string
 }
