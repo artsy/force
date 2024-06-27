@@ -76,7 +76,7 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
               Upload photos of your artwork
             </SubmissionStepTitle>
 
-            <Text mb={2} variant={["xs", "sm"]} color="black50">
+            <Text mb={2} variant={["xs", "sm"]} color="black60">
               Make your work stand out and get your submission evaluated faster
               by uploading high-quality photos of the work's front and back.{" "}
               <RouterLink
