@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<27e91f48a8799021adea800a3b106586>>
+ * @generated SignedSource<<8b654e161a8f03413a1fc394fe13caa8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,10 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PhoneNumberRoute_submission$data = {
-  readonly userPhone: string | null | undefined;
+  readonly userPhoneNumber: {
+    readonly display: string | null | undefined;
+    readonly regionCode: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "PhoneNumberRoute_submission";
 };
 export type PhoneNumberRoute_submission$key = {
@@ -28,8 +31,26 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "userPhone",
+      "concreteType": "PhoneNumberType",
+      "kind": "LinkedField",
+      "name": "userPhoneNumber",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "display",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "regionCode",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
@@ -37,6 +58,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9ef24e9b6e70018e7704b07614e7627f";
+(node as any).hash = "f3bb7235b3de98aeb762f30361f6e30d";
 
 export default node;

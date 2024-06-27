@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<232e35dffe9d19a79cfac2f0a2aa6ce5>>
+ * @generated SignedSource<<c4bc606c5d77b1b16907d684acf5d098>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,6 +42,13 @@ v1 = [
   }
 ],
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "regionCode",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -108,11 +115,23 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "userPhone",
+            "concreteType": "PhoneNumberType",
+            "kind": "LinkedField",
+            "name": "userPhoneNumber",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       },
@@ -146,13 +165,7 @@ return {
                 "name": "countryCode",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "regionCode",
-                "storageKey": null
-              },
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": [
@@ -176,19 +189,19 @@ return {
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "0d19e836d077c8c1a2baa0584d2731e2",
+    "cacheID": "208302490c40686530b5c50ddb247a49",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_PhoneNumberRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_PhoneNumberRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...PhoneNumberRoute_submission\n    id\n  }\n  me {\n    ...PhoneNumberRoute_me\n    id\n  }\n}\n\nfragment PhoneNumberRoute_me on Me {\n  internalID\n  phoneNumber {\n    countryCode\n    regionCode\n    display(format: NATIONAL)\n    originalNumber\n  }\n}\n\nfragment PhoneNumberRoute_submission on ConsignmentSubmission {\n  userPhone\n}\n"
+    "text": "query sellRoutes_PhoneNumberRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...PhoneNumberRoute_submission\n    id\n  }\n  me {\n    ...PhoneNumberRoute_me\n    id\n  }\n}\n\nfragment PhoneNumberRoute_me on Me {\n  internalID\n  phoneNumber {\n    countryCode\n    regionCode\n    display(format: NATIONAL)\n    originalNumber\n  }\n}\n\nfragment PhoneNumberRoute_submission on ConsignmentSubmission {\n  userPhoneNumber {\n    display\n    regionCode\n  }\n}\n"
   }
 };
 })();

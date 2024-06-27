@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6e124fc702dad2aeadd094155756a8fd>>
+ * @generated SignedSource<<c44b16716ca0482e4cf7823f76e737b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,7 +34,10 @@ export type PhoneNumberRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
-    readonly userPhone: string | null | undefined;
+    readonly userPhoneNumber: {
+      readonly display: string | null | undefined;
+      readonly regionCode: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
 };
 export type PhoneNumberRoute_Test_Query = {
@@ -55,10 +58,17 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "regionCode",
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -130,11 +140,23 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "userPhone",
+            "concreteType": "PhoneNumberType",
+            "kind": "LinkedField",
+            "name": "userPhoneNumber",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
             "storageKey": null
           },
-          (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -142,7 +164,7 @@ return {
             "name": "externalId",
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": "submission(id:\"submission-id\")"
       },
@@ -154,7 +176,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -170,13 +192,7 @@ return {
                 "name": "countryCode",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "regionCode",
-                "storageKey": null
-              },
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": [
@@ -200,19 +216,19 @@ return {
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "17727c758b9530e234c5156cbb0fab7f",
+    "cacheID": "a5ee4b961e9420fb4803dfdbe9cfdee2",
     "id": null,
     "metadata": {},
     "name": "PhoneNumberRoute_Test_Query",
     "operationKind": "query",
-    "text": "query PhoneNumberRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...PhoneNumberRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...PhoneNumberRoute_me\n    id\n  }\n}\n\nfragment PhoneNumberRoute_me on Me {\n  internalID\n  phoneNumber {\n    countryCode\n    regionCode\n    display(format: NATIONAL)\n    originalNumber\n  }\n}\n\nfragment PhoneNumberRoute_submission on ConsignmentSubmission {\n  userPhone\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
+    "text": "query PhoneNumberRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...PhoneNumberRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...PhoneNumberRoute_me\n    id\n  }\n}\n\nfragment PhoneNumberRoute_me on Me {\n  internalID\n  phoneNumber {\n    countryCode\n    regionCode\n    display(format: NATIONAL)\n    originalNumber\n  }\n}\n\nfragment PhoneNumberRoute_submission on ConsignmentSubmission {\n  userPhoneNumber {\n    display\n    regionCode\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
   }
 };
 })();

@@ -72,6 +72,7 @@ describe("TitleRoute", () => {
 
         expect(artistTitleInput).toBeInTheDocument()
 
+        // TODO: test for is required
         expect(artistTitleInput).toHaveValue("Banksy")
       })
     })

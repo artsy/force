@@ -6,7 +6,6 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { cleanUserPhoneNumber } from "Apps/Sell/Utils/cleanUserPhoneNumber"
 import { PhoneNumberRoute_Test_Query$rawResponse } from "__generated__/PhoneNumberRoute_Test_Query.graphql"
 
 const mockUseRouter = useRouter as jest.Mock
@@ -19,21 +18,19 @@ jest.mock("System/Hooks/useRouter", () => ({
 }))
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/Hooks/useSystemContext")
-jest.mock("Apps/Sell/Utils/cleanUserPhoneNumber")
 
 const submissionMock: Partial<
   PhoneNumberRoute_Test_Query$rawResponse["submission"]
 > = {
-  userPhone: "",
+  userPhoneNumber: {
+    display: "017659574333",
+    regionCode: "DE",
+  },
 }
 
 beforeAll(() => {
   ;(useSystemContext as jest.Mock).mockImplementation(() => {
     return { isLoggedIn: true }
-  })
-  ;(cleanUserPhoneNumber as jest.Mock).mockResolvedValue({
-    countryCode: "+1",
-    phoneNumber: "",
   })
 
   mockUseRouter.mockImplementation(() => ({
@@ -80,8 +77,7 @@ describe("PhoneNumberRoute", () => {
     expect(screen.getByText("Add phone number")).toBeInTheDocument()
   })
 
-  // TODO: fix test
-  it.skip("saves the submission & navigates to the confirmation step when Submit button is clicked", async () => {
+  it("saves the submission & navigates to the confirmation step when Submit button is clicked", async () => {
     renderWithRelay({
       ConsignmentSubmission: () => submissionMock,
     })
@@ -98,8 +94,7 @@ describe("PhoneNumberRoute", () => {
           variables: {
             input: {
               externalId: '<mock-value-for-field-"externalId">',
-              state: "SUBMITTED",
-              userPhone: "+1",
+              userPhone: "+49 017659574333",
             },
           },
         })
