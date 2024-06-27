@@ -77,6 +77,8 @@ export const IntroRoute: React.FC = () => {
             </Button>
 
             {/* TODO: uncomment when ChooseFromMyCollection feature is ready */}
+            {/* TODO : Add tests for the button */}
+            {/* TODO : Add tracking */}
             {/* <Button
                   // @ts-ignore
                   as={RouterLink}

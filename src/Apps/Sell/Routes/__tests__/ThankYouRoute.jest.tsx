@@ -5,10 +5,12 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
+const trackEvent = jest.fn()
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
@@ -20,6 +22,11 @@ jest.mock("react-relay", () => ({
 }))
 
 beforeEach(() => {
+  ;(useTracking as jest.Mock).mockImplementation(() => {
+    return {
+      trackEvent,
+    }
+  })
   ;(useSystemContext as jest.Mock).mockImplementation(() => {
     return { isLoggedIn: true }
   })
@@ -54,7 +61,7 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ThankYouRoute", () => {
-  it("renders text and links", () => {
+  it("renders text", () => {
     renderWithRelay({})
 
     expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
@@ -62,21 +69,44 @@ describe("ThankYouRoute", () => {
     expect(
       screen.getByText("Thank you for submitting your artwork")
     ).toBeInTheDocument()
+  })
 
-    expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
+  it("clicking on Submit Another Work navigates to new submission route", () => {
+    renderWithRelay({})
+
+    const submitAnotherWorkButton = screen.getByTestId("submit-another-work")
+    expect(submitAnotherWorkButton).toHaveAttribute(
+      "href",
+      "/sell2/submissions/new"
+    )
+
+    submitAnotherWorkButton.click()
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "tappedSubmitAnotherWork",
+      context_module: "sell",
+      context_owner_type: "submitArtworkStepCompleteYourSubmission",
+      submission_id: '<mock-value-for-field-"internalID">',
+    })
+  })
+
+  it("clicking on View Artwork in My Collection navigates to My Collection route", () => {
+    renderWithRelay({})
 
     expect(
       screen.getByText("View Artwork in My Collection")
     ).toBeInTheDocument()
 
-    expect(screen.getByTestId("submit-another-work")).toHaveAttribute(
-      "href",
-      "/sell2/submissions/new"
-    )
+    const viewCollectionButton = screen.getByTestId("view-collection")
+    expect(viewCollectionButton).toHaveAttribute("href", "/my-collection")
 
-    expect(screen.getByTestId("view-collection")).toHaveAttribute(
-      "href",
-      "/my-collection"
-    )
+    viewCollectionButton.click()
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "tappedViewArtworkInMyCollection",
+      context_module: "sell",
+      context_owner_type: "submitArtworkStepCompleteYourSubmission",
+      submission_id: '<mock-value-for-field-"internalID">',
+    })
   })
 })

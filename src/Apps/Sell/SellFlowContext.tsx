@@ -113,8 +113,12 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     handlePrev()
   }
 
-  const finishFlow = () => {
+  const finishFlow = async () => {
     trackConsignmentSubmitted(submissionID)
+
+    await updateSubmission({
+      state: state.isSubmitStep ? "SUBMITTED" : undefined,
+    })
 
     push(`/sell2/submissions/${submissionID}/thank-you`)
   }
@@ -152,7 +156,6 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
         input: {
           externalId: submissionID,
           ...values,
-          state: state.isSubmitStep ? "SUBMITTED" : undefined,
         } as UpdateSubmissionMutationInput,
       },
     })

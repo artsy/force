@@ -1,5 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Button, Flex } from "@artsy/palette"
+import { useSubmitArtworkTracking } from "Apps/Sell/Hooks/useSubmitArtworkTracking"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -25,15 +26,18 @@ export const BottomFormNavigation = () => {
 }
 
 const BottomFormBackButton = () => {
+  const { trackTappedSubmissionBack } = useSubmitArtworkTracking()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { submitForm } = useFormikContext()
   const {
     actions,
-    state: { isFirstStep, loading },
+    state: { loading, isFirstStep, submissionID, step },
   } = useSellFlowContext()
 
   const onBack = async () => {
     setIsSubmitting(true)
+
+    trackTappedSubmissionBack(submissionID, step)
 
     try {
       await submitForm()
