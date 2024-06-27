@@ -115,7 +115,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   }
 
   const finishFlow = async () => {
-    trackConsignmentSubmitted(submissionID)
+    trackConsignmentSubmitted(submissionID, state.step)
 
     await updateSubmission({
       state: state.isSubmitStep ? "SUBMITTED" : undefined,

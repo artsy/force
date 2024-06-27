@@ -113,7 +113,7 @@ describe("DimensionsRoute", () => {
         expect(trackEvent).toHaveBeenCalledWith({
           action: "consignmentSubmitted",
           context_module: "sell",
-          context_owner_type: "submitArtworkStepCompleteYourSubmission",
+          context_owner_type: "submitArtworkStepAddDimensions",
           fieldsProvided: [],
           submission_id: '<mock-value-for-field-"externalId">',
         })

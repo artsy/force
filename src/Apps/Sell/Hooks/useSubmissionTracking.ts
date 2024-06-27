@@ -66,12 +66,13 @@ export const useSubmissionTracking = () => {
   }
 
   const trackConsignmentSubmitted = (
-    submission_id: string | null | undefined
+    submission_id: string | null | undefined,
+    currentStep: SellFlowStep
   ) => {
     trackEvent({
       action: "consignmentSubmitted",
       context_module: ContextModule.sell,
-      context_owner_type: getOwnerType("thank-you"),
+      context_owner_type: getOwnerType(currentStep),
       submission_id,
       fieldsProvided: [],
     })

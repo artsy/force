@@ -97,7 +97,7 @@ describe("SubmissionLayout", () => {
       expect(trackEvent).toHaveBeenCalledWith({
         action: "tappedSubmissionSaveExit",
         context_module: "sell",
-        context_owner_type: null,
+        context_owner_type: "submitArtworkStepAddTitle",
         submission_id: "123",
         submission_step: "title",
       })
@@ -121,7 +121,7 @@ describe("SubmissionLayout", () => {
       expect(trackEvent).toHaveBeenCalledWith({
         action: "tappedSubmissionBack",
         context_module: "sell",
-        context_owner_type: null,
+        context_owner_type: "submitArtworkStepAddTitle",
         submission_id: "123",
         submission_step: "title",
       })
