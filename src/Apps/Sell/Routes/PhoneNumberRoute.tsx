@@ -36,7 +36,7 @@ const Schema = Yup.object().shape({
 
 interface FormValues {
   userPhone: string
-  phoneNumberCountryCode: string
+  phoneNumberRegionCode: string
 }
 
 interface PhoneNumberRouteProps {
@@ -53,7 +53,7 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
   const initialValues: FormValues = {
     userPhone:
       submission.userPhoneNumber?.display ?? me.phoneNumber?.display ?? "",
-    phoneNumberCountryCode:
+    phoneNumberRegionCode:
       submission.userPhoneNumber?.regionCode ??
       me.phoneNumber?.regionCode ??
       "us",
@@ -61,7 +61,7 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
 
   const onSubmit = async (values: FormValues) => {
     const phoneNumberInternational = `+${
-      COUNTRY_CODES[values.phoneNumberCountryCode.toLocaleUpperCase()]
+      COUNTRY_CODES[values.phoneNumberRegionCode.toLocaleUpperCase()]
     } ${values.userPhone.trim()}`
 
     const updatedValues = {
@@ -91,11 +91,11 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
             <PhoneInput
               options={countries}
               onSelect={option => {
-                setFieldValue("phoneNumberCountryCode", option.value)
+                setFieldValue("phoneNumberRegionCode", option.value)
               }}
               name="userPhone"
               onChange={handleChange}
-              dropdownValue={values.phoneNumberCountryCode}
+              dropdownValue={values.phoneNumberRegionCode}
               defaultValue={values.userPhone}
               placeholder="(000) 000 0000"
               data-testid="phone-input"
