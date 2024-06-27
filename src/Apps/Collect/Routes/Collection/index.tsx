@@ -1,10 +1,8 @@
 import { Spacer } from "@artsy/palette"
 import { Collection_collection$data } from "__generated__/Collection_collection.graphql"
-import { SeoProductsForArtworks } from "Apps/Collect/Components/SeoProductsForArtworks"
-import { SeoProductsForCollections } from "Apps/Collect/Components/SeoProductsForCollections"
 import { CollectionFilterFragmentContainer as CollectionHeader } from "Apps/Collect/Routes/Collection/Components/Header"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
-import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
+import { RelatedCollectionsRailQueryRenderer } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
 import * as React from "react"
 import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
@@ -19,7 +17,6 @@ import {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { MetaTags } from "Components/MetaTags"
-import { getENV } from "Utils/getENV"
 import {
   SystemContextProps,
   withSystemContext,
@@ -40,14 +37,10 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
     title,
     slug,
     headerImage,
-    description,
     descriptionMarkdown,
     fallbackHeaderImage,
     artworksConnection,
-    descending_artworks,
-    ascending_artworks,
   } = collection
-  const collectionHref = `${getENV("APP_URL")}/collection/${slug}`
 
   const metadataDescription = descriptionMarkdown
     ? `Buy, bid, and inquire on ${title} on Artsy. ${truncate(
@@ -79,23 +72,6 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
         ]}
       />
 
-      {artworksConnection && (
-        <SeoProductsForArtworks artworks={artworksConnection} />
-      )}
-
-      {artworksConnection && (
-        <SeoProductsForCollections
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          descending_artworks={descending_artworks}
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          ascending_artworks={ascending_artworks}
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          collectionDescription={description}
-          collectionURL={collectionHref}
-          collectionName={title}
-        />
-      )}
-
       {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <CollectionHeader collection={collection} artworks={artworksConnection} />
 
@@ -125,11 +101,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
           <>
             <Spacer y={6} />
 
-            <RelatedCollectionsRail
-              collections={collection.relatedCollections}
-              title={collection.title}
-              lazyLoadImages
-            />
+            <RelatedCollectionsRailQueryRenderer slug={slug} />
           </>
         )}
       </FrameWithRecentlyViewed>
@@ -159,15 +131,14 @@ export const CollectionFragmentContainer = createFragmentContainer(
           shouldFetchCounts: { type: "Boolean!", defaultValue: false }
         ) {
         ...Header_collection
-        description
         # TODO: Description should implement markdown which accepts a format argument
         descriptionMarkdown
         headerImage
         slug
         id
         title
-        relatedCollections(size: 16) {
-          ...RelatedCollectionsRail_collections
+        relatedCollections(size: 1) {
+          internalID
         }
         linkedCollections {
           ...CollectionsHubRails_linkedCollections
@@ -192,7 +163,6 @@ export const CollectionFragmentContainer = createFragmentContainer(
           sort: "-decayed_merch"
         ) {
           ...Header_artworks
-          ...SeoProductsForArtworks_artworks
           counts @include(if: $shouldFetchCounts) {
             followedArtists
           }
@@ -204,23 +174,6 @@ export const CollectionFragmentContainer = createFragmentContainer(
               count
             }
           }
-        }
-
-        #These two things are going to get highest price and lowest price of the artwork on the collection page.
-        descending_artworks: artworksConnection(
-          includeMediumFilterInAggregation: true
-          first: 1
-          sort: "sold,-has_price,-prices"
-        ) {
-          ...SeoProductsForCollections_descending_artworks
-        }
-
-        ascending_artworks: artworksConnection(
-          includeMediumFilterInAggregation: true
-          first: 1
-          sort: "sold,-has_price,prices"
-        ) {
-          ...SeoProductsForCollections_ascending_artworks
         }
 
         ...CollectionArtworksFilter_collection @arguments(input: $input)

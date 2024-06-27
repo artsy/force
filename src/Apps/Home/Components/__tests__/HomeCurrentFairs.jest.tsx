@@ -1,14 +1,14 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
 import { HomeCurrentFairsFragmentContainer } from "Apps/Home/Components/HomeCurrentFairs"
-import { HomeCurrentFairs_Test_Query } from "__generated__/HomeCurrentFairs_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-const { getWrapper } = setupTestWrapper<HomeCurrentFairs_Test_Query>({
-  Component: props => {
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
     return <HomeCurrentFairsFragmentContainer viewer={props.viewer!} />
   },
   query: graphql`
@@ -32,7 +32,7 @@ afterEach(() => {
 
 describe("HomeCurrentFairs", () => {
   it("renders correctly", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Viewer: () => ({
         fairs: [
           {
@@ -43,26 +43,31 @@ describe("HomeCurrentFairs", () => {
       }),
     })
 
-    expect(wrapper.text()).toContain("Current Fairs & Events")
-    expect(wrapper.text()).toContain("View All Fairs & Events")
-    expect(wrapper.text()).toContain("Test Fair")
-    expect(wrapper.html()).toContain("/fair/test-href")
+    expect(screen.getByText("Current Fairs & Events")).toBeInTheDocument()
+    expect(screen.getByText("View All Fairs & Events")).toBeInTheDocument()
+    expect(screen.getByText("Test Fair")).toBeInTheDocument()
+    expect(screen.getAllByRole("link")[1]).toHaveAttribute(
+      "href",
+      "/fair/test-href"
+    )
   })
 
   it("returns null when no data is received", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Viewer: () => ({
         fairs: null,
       }),
     })
 
-    expect(wrapper.html()).toEqual("")
+    expect(screen.queryByText("Current Fairs & Events")).not.toBeInTheDocument()
   })
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const { wrapper } = getWrapper()
-      wrapper.find("RouterLink").last().simulate("click")
+      renderWithRelay()
+
+      fireEvent.click(screen.getAllByRole("link")[1])
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedFairGroup",
         context_module: "fairRail",
@@ -75,8 +80,10 @@ describe("HomeCurrentFairs", () => {
     })
 
     it("tracks view all", () => {
-      const { wrapper } = getWrapper()
-      wrapper.find("RouterLink").first().simulate("click")
+      renderWithRelay()
+
+      fireEvent.click(screen.getAllByRole("link")[0])
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedFairGroup",
         context_module: "fairRail",

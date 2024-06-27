@@ -1,8 +1,8 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { HomeTrendingArtistsRailFragmentContainer } from "Apps/Home/Components/HomeTrendingArtistsRail"
-import { HomeTrendingArtistsRail_Test_Query } from "__generated__/HomeTrendingArtistsRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
+import { fireEvent, screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -10,8 +10,8 @@ jest.mock("Components/FollowButton/FollowArtistButton", () => ({
   FollowArtistButtonQueryRenderer: () => <>Following</>,
 }))
 
-const { getWrapper } = setupTestWrapper<HomeTrendingArtistsRail_Test_Query>({
-  Component: props => {
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
     return <HomeTrendingArtistsRailFragmentContainer viewer={props.viewer!} />
   },
   query: graphql`
@@ -35,30 +35,30 @@ afterEach(() => {
 
 describe("HomeTrendingArtistsRail", () => {
   it("renders correctly", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Artist: () => ({
         name: "Test Artist",
-        href: "test-href",
+        href: "/test-href",
       }),
     })
 
-    expect(wrapper.text()).toContain("Trending Artists on Artsy")
-    expect(wrapper.text()).toContain("View All Artists")
-    expect(wrapper.text()).toContain("Test Artist")
-    expect(wrapper.text()).toContain("Following")
-    expect(wrapper.html()).toContain("test-href")
+    expect(screen.getByText("Trending Artists on Artsy")).toBeInTheDocument()
+    expect(screen.getByText("View All Artists")).toBeInTheDocument()
+    expect(screen.getByText("Test Artist")).toBeInTheDocument()
+    expect(screen.getByText("Following")).toBeInTheDocument()
+    expect(screen.getAllByRole("link")[2]).toHaveAttribute("href", "/test-href")
   })
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const { wrapper } = getWrapper({
+      renderWithRelay({
         Artist: () => ({
           internalID: "test-artist-id",
           slug: "test-artist-slug",
         }),
       })
 
-      wrapper.find("RouterLink").last().simulate("click")
+      fireEvent.click(screen.getAllByRole("link")[2])
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtistGroup",
@@ -72,9 +72,9 @@ describe("HomeTrendingArtistsRail", () => {
     })
 
     it("tracks view all", () => {
-      const { wrapper } = getWrapper()
+      renderWithRelay()
 
-      wrapper.find("RouterLink").first().simulate("click")
+      fireEvent.click(screen.getAllByRole("link")[1])
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtistGroup",

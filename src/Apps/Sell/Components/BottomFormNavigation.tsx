@@ -71,13 +71,15 @@ const BottomFormNextButton = () => {
   const { isValid, submitForm } = useFormikContext()
   const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
+  const { trackTappedContinueSubmission } = useSubmissionTracking()
+
   const {
     state: { loading },
   } = useSellFlowContext()
 
   const {
     actions,
-    state: { isSubmitStep },
+    state: { submissionID, isSubmitStep, nextStep },
   } = useSellFlowContext()
 
   const onNext = async () => {
@@ -99,6 +101,8 @@ const BottomFormNextButton = () => {
     }
 
     setIsSubmitting(true)
+
+    trackTappedContinueSubmission(submissionID, nextStep)
 
     try {
       await submitForm()

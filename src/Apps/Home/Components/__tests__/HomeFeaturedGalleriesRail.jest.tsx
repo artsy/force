@@ -1,14 +1,14 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
 import { HomeFeaturedGalleriesRailFragmentContainer } from "Apps/Home/Components/HomeFeaturedGalleriesRail"
-import { HomeFeaturedGalleriesRail_Test_Query } from "__generated__/HomeFeaturedGalleriesRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-const { getWrapper } = setupTestWrapper<HomeFeaturedGalleriesRail_Test_Query>({
-  Component: props => {
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
     return (
       <HomeFeaturedGalleriesRailFragmentContainer
         orderedSet={props.orderedSet!}
@@ -36,21 +36,21 @@ afterEach(() => {
 
 describe("HomeFeaturedGalleriesRail", () => {
   it("renders correctly", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Partner: () => ({
         name: "Test Gallery",
         href: "/test-href",
       }),
     })
 
-    expect(wrapper.text()).toContain("Featured Galleries")
-    expect(wrapper.text()).toContain("View All Galleries")
-    expect(wrapper.text()).toContain("Test Gallery")
-    expect(wrapper.html()).toContain("test-href")
+    expect(screen.getByText("Featured Galleries")).toBeInTheDocument()
+    expect(screen.getByText("View All Galleries")).toBeInTheDocument()
+    expect(screen.getByText("Test Gallery")).toBeInTheDocument()
+    expect(screen.getAllByRole("link")[2]).toHaveAttribute("href", "/test-href")
   })
 
   it("shows initials if no images", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Profile: () => ({
         owner: {
           initials: "initials",
@@ -63,13 +63,15 @@ describe("HomeFeaturedGalleriesRail", () => {
       }),
     })
 
-    expect(wrapper.html()).toContain("initials")
+    expect(screen.getByText("initials")).toBeInTheDocument()
   })
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const { wrapper } = getWrapper()
-      wrapper.find("RouterLink").last().simulate("click")
+      renderWithRelay()
+
+      fireEvent.click(screen.getAllByRole("link")[2])
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedGalleryGroup",
         context_module: "featuredGalleriesRail",
@@ -82,8 +84,10 @@ describe("HomeFeaturedGalleriesRail", () => {
     })
 
     it("tracks view all", () => {
-      const { wrapper } = getWrapper()
-      wrapper.find("RouterLink").first().simulate("click")
+      renderWithRelay()
+
+      fireEvent.click(screen.getAllByRole("link")[1])
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedGalleryGroup",
         context_module: "featuredGalleriesRail",

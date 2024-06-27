@@ -1,11 +1,12 @@
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
 import { HomeEmergingPicksArtworksRailFragmentContainer } from "Apps/Home/Components/HomeEmergingPicksArtworksRail"
 
 jest.unmock("react-relay")
 
-const { getWrapper } = setupTestWrapper({
+const { renderWithRelay } = setupTestWrapperTL({
   Component: HomeEmergingPicksArtworksRailFragmentContainer,
   query: graphql`
     query HomeEmergingPicksArtworksRail_Test_Query @relay_test_operation {
@@ -28,20 +29,21 @@ describe("HomeEmergingPicksArtworksRail", () => {
   })
 
   it("renders correctly", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Viewer: () => artworksConnection,
     })
 
-    expect(wrapper.text()).toContain("Test Artwork")
-    expect(wrapper.html()).toContain("test-href")
+    expect(screen.getByText(/Test Artwork/)).toBeInTheDocument()
+    expect(screen.getAllByRole("link")[2]).toHaveAttribute("href", "test-href")
   })
 
   it("tracks artwork click", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Viewer: () => artworksConnection,
     })
 
-    wrapper.find("Shelf").find("RouterLink").first().simulate("click")
+    fireEvent.click(screen.getAllByRole("link")[2])
+
     expect(trackEvent).toBeCalledWith({
       action: "clickedArtworkGroup",
       context_module: "troveArtworksRail",
@@ -54,11 +56,12 @@ describe("HomeEmergingPicksArtworksRail", () => {
   })
 
   it("tracks view all", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Viewer: () => artworksConnection,
     })
 
-    wrapper.find("RouterLink").first().simulate("click")
+    fireEvent.click(screen.getAllByRole("link")[1])
+
     expect(trackEvent).toBeCalledWith({
       action: "clickedArtworkGroup",
       context_module: "troveArtworksRail",

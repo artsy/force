@@ -1,16 +1,14 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { HomeWorksByArtistsYouFollowRailFragmentContainer } from "Apps/Home/Components/HomeWorksByArtistsYouFollowRail"
-import { HomeWorksByArtistsYouFollowRail_Test_Query } from "__generated__/HomeWorksByArtistsYouFollowRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-const { getWrapper } = setupTestWrapper<
-  HomeWorksByArtistsYouFollowRail_Test_Query
->({
-  Component: props => {
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
     return (
       <HomeWorksByArtistsYouFollowRailFragmentContainer
         homePage={props.homePage!}
@@ -38,27 +36,29 @@ afterEach(() => {
 
 describe("HomeWorksByArtistsYouFollowRail", () => {
   it("renders correctly", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       HomePage: () => ({
         artworkModule: {
           results: [
             {
               title: "Test Artist",
-              href: "test-href",
+              href: "/test-href",
             },
           ],
         },
       }),
     })
 
-    expect(wrapper.text()).toContain("Test Artist")
-    expect(wrapper.html()).toContain("test-href")
+    expect(screen.getByText("Test Artist")).toBeInTheDocument()
+    expect(screen.getByRole("link")).toHaveAttribute("href", "/test-href")
   })
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const { wrapper } = getWrapper()
-      wrapper.find("RouterLink").first().simulate("click")
+      renderWithRelay()
+
+      fireEvent.click(screen.getByTestId("ShelfArtwork"))
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtworkGroup",
         context_module: "worksByArtistsYouFollowRail",

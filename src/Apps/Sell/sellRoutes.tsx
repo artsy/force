@@ -58,6 +58,14 @@ const DimensionsRoute = loadable(
   }
 )
 
+const PhoneNumberRoute = loadable(
+  () =>
+    import(/* webpackChunkName: "sellBundle" */ "./Routes/PhoneNumberRoute"),
+  {
+    resolveComponent: component => component.PhoneNumberRoute,
+  }
+)
+
 const PurchaseHistoryRoute = loadable(
   () =>
     import(
@@ -260,6 +268,27 @@ export const sellRoutes: RouteProps[] = [
               query sellRoutes_DimensionsRouteQuery($id: ID!) {
                 submission(id: $id) @principalField {
                   ...DimensionsRoute_submission
+                }
+              }
+            `,
+            prepareVariables: ({ id }) => {
+              return { id }
+            },
+          },
+          {
+            path: "phone-number",
+            layout: "ContainerOnly",
+            Component: PhoneNumberRoute,
+            onClientSideRender: () => {
+              PhoneNumberRoute.preload()
+            },
+            query: graphql`
+              query sellRoutes_PhoneNumberRouteQuery($id: ID!) {
+                submission(id: $id) @principalField {
+                  ...PhoneNumberRoute_submission
+                }
+                me {
+                  ...PhoneNumberRoute_me
                 }
               }
             `,
