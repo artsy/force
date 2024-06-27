@@ -32,6 +32,20 @@ export const Result: FC<ResultProps> = props => {
         <Text>
           Your interests are: <strong>{state.interests.join(", ")}</strong>
         </Text>
+        {state.budgetIntent?.budget?.max ? (
+          <Text>
+            Your budget per artwork is:{" "}
+            <strong>
+              {state.budgetIntent?.numberOfArtworks
+                ? (
+                    state.budgetIntent.budget.max /
+                    state.budgetIntent.numberOfArtworks
+                  ).toFixed(0)
+                : state.budgetIntent.budget.max}{" "}
+              {state.budgetIntent.budget?.currency}
+            </strong>
+          </Text>
+        ) : null}
         <Box mt={1}>
           Not correct? <Links dispatch={dispatch} />
         </Box>
