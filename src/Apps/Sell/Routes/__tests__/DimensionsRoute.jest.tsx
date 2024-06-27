@@ -79,7 +79,7 @@ describe("DimensionsRoute", () => {
 
     expect(screen.getByText("Artwork dimensions")).toBeInTheDocument()
     expect(screen.getByText("Back")).toBeInTheDocument()
-    expect(screen.getByText("Submit Artwork")).toBeInTheDocument()
+    expect(screen.getByText("Continue")).toBeInTheDocument()
     expect(screen.getByText("Save & Exit")).toBeInTheDocument()
   })
 
@@ -101,21 +101,21 @@ describe("DimensionsRoute", () => {
     })
   })
 
-  describe("when clicking the Submit button", () => {
-    it("saves the submission, sets the state to `SUBMITTED` & navigates to the thank you step", async () => {
+  describe("when clicking the Continue button", () => {
+    it("saves the submission and navigates to the phone number step", async () => {
       renderWithRelay({
         ConsignmentSubmission: () => submissionMock,
       })
 
-      screen.getByText("Submit Artwork").click()
+      screen.getByText("Continue").click()
 
       await waitFor(() => {
         expect(trackEvent).toHaveBeenCalledWith({
-          action: "consignmentSubmitted",
+          action: "tappedContinueSubmission",
           context_module: "sell",
-          context_owner_type: "submitArtworkStepAddDimensions",
-          fieldsProvided: [],
+          context_owner_type: "sell",
           submission_id: '<mock-value-for-field-"externalId">',
+          destination_step: "phone-number",
         })
 
         expect(submitMutation).toHaveBeenCalledWith(
@@ -132,19 +132,8 @@ describe("DimensionsRoute", () => {
           })
         )
 
-        expect(submitMutation).toHaveBeenCalledWith(
-          expect.objectContaining({
-            variables: {
-              input: {
-                externalId: '<mock-value-for-field-"externalId">',
-                state: "SUBMITTED",
-              },
-            },
-          })
-        )
-
         expect(mockPush).toHaveBeenCalledWith(
-          '/sell2/submissions/<mock-value-for-field-"externalId">/thank-you'
+          '/sell2/submissions/<mock-value-for-field-"externalId">/phone-number'
         )
       })
     })

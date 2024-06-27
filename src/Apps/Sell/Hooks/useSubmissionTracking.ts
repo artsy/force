@@ -11,7 +11,7 @@ export const useSubmissionTracking = () => {
   const { trackEvent } = useTracking()
 
   const trackTappedContinueSubmission = (
-    submission_id: string,
+    submission_id: string | null | undefined,
     destination_step: string
   ) => {
     trackEvent({
