@@ -105,7 +105,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   })
 
   const goToNextStep = async () => {
-    state.isLastStep ? finishFlow() : handleNext()
+    state.isSubmitStep ? finishFlow() : handleNext()
   }
 
   const goToPreviousStep = () => {
