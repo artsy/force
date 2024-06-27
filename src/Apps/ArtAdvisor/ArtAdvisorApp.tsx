@@ -65,7 +65,7 @@ export const ArtAdvisorApp: FC = () => {
         <Description>
           Provide a user with immediate recommendations for artworks,
           collections, etc based on a short questionnaire and segmentation
-          process
+          process. (Requires a user to be logged in)
         </Description>
       </Experiment>
     </Box>
