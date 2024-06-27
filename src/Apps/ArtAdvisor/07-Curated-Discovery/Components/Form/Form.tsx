@@ -100,16 +100,18 @@ export const Form: React.FC<FormProps> = props => {
       <Spacer y={4} />
 
       <Text as="h1" variant={"xl"}>
-        Discover Blah
+        Explore Artsy
       </Text>
 
-      <Join separator={<Spacer y={2} />}>
+      <Spacer y={4} />
+
+      <Join separator={<Spacer y={4} />}>
         <Goals state={state} dispatch={dispatch} />
         <Budget state={state} dispatch={dispatch} />
         <Interests state={state} dispatch={dispatch} />
       </Join>
 
-      <Spacer y={2} />
+      <Spacer y={4} />
 
       <Flex gap={1}>
         <Button
