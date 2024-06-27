@@ -48,6 +48,7 @@ interface State {
   isSubmitStep: boolean
   index: number
   step: SellFlowStep
+  nextStep: SellFlowStep
   submissionID: string | undefined
   devMode: boolean
   // loading is used to show a loading spinner on the bottom form navigation
@@ -189,6 +190,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     isSubmitStep: index === STEPS.indexOf(SUBMIT_STEP),
     index,
     step: STEPS[index],
+    nextStep: STEPS[index + 1],
     submissionID,
     devMode,
     loading,

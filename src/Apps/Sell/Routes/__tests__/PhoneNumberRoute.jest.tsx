@@ -7,11 +7,14 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { PhoneNumberRoute_Test_Query$rawResponse } from "__generated__/PhoneNumberRoute_Test_Query.graphql"
+import { useTracking } from "react-tracking"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 let submitMutation: jest.Mock
+const trackEvent = jest.fn()
+
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
@@ -29,6 +32,11 @@ const submissionMock: Partial<
 }
 
 beforeAll(() => {
+  ;(useTracking as jest.Mock).mockImplementation(() => {
+    return {
+      trackEvent,
+    }
+  })
   ;(useSystemContext as jest.Mock).mockImplementation(() => {
     return { isLoggedIn: true }
   })
@@ -77,28 +85,49 @@ describe("PhoneNumberRoute", () => {
     expect(screen.getByText("Add phone number")).toBeInTheDocument()
   })
 
-  it("saves the submission & navigates to the confirmation step when Submit button is clicked", async () => {
-    renderWithRelay({
-      ConsignmentSubmission: () => submissionMock,
-    })
+  describe("when clicking the Submit button", () => {
+    it("saves the submission, sets the state to `SUBMITTED` & navigates to the thank you step", async () => {
+      renderWithRelay({
+        ConsignmentSubmission: () => submissionMock,
+      })
 
-    screen.getByText("Submit Artwork").click()
+      screen.getByText("Submit Artwork").click()
 
-    await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/thank-you'
-      )
-
-      expect(submitMutation).toHaveBeenCalledWith(
-        expect.objectContaining({
-          variables: {
-            input: {
-              externalId: '<mock-value-for-field-"externalId">',
-              userPhone: "+49 017659574333",
-            },
-          },
+      await waitFor(() => {
+        expect(trackEvent).toHaveBeenCalledWith({
+          action: "consignmentSubmitted",
+          context_module: "sell",
+          context_owner_type: "submitArtworkStepAddPhoneNumber",
+          fieldsProvided: [],
+          submission_id: '<mock-value-for-field-"externalId">',
         })
-      )
+
+        expect(submitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                externalId: '<mock-value-for-field-"externalId">',
+                userPhone: "+49 017659574333",
+              },
+            },
+          })
+        )
+
+        expect(submitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                externalId: '<mock-value-for-field-"externalId">',
+                state: "SUBMITTED",
+              },
+            },
+          })
+        )
+
+        expect(mockPush).toHaveBeenCalledWith(
+          '/sell2/submissions/<mock-value-for-field-"externalId">/thank-you'
+        )
+      })
     })
   })
 })
