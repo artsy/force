@@ -1,4 +1,4 @@
-import { Box, Join, Spacer, Text } from "@artsy/palette"
+import { Box, Join, Message, Spacer, Text } from "@artsy/palette"
 import { Action, State } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
 import { FC } from "react"
 import { MarketingCollectionsRail } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollectionsRail"
@@ -23,8 +23,23 @@ export const Result: FC<ResultProps> = props => {
         Explore Artsy
       </Text>
 
+      <Spacer y={2} />
+
+      <Message borderRadius={4}>
+        <Text>
+          Your goal is: <strong>{state.goal}</strong>
+        </Text>
+        <Text>
+          Your interests are: <strong>{state.interests.join(", ")}</strong>
+        </Text>
+        <Box mt={1}>
+          Not correct? <Links dispatch={dispatch} />
+        </Box>
+      </Message>
+
+      <Spacer y={4} />
+
       <Join separator={<Spacer y={6} />}>
-        <Links dispatch={dispatch} />
         <ArtworksRail state={state} />
         <MarketingCollectionsRail state={state} />
         <ArticlesRail state={state} />
