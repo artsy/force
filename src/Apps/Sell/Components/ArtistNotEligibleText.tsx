@@ -1,8 +1,17 @@
 import { Spacer, Text } from "@artsy/palette"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import * as React from "react"
 
 export const ArtistNotEligiblText: React.FC = () => {
+  const { trackTappedContactAdvisor } = useSubmissionTracking()
+  const { user } = useSystemContext()
+
+  const handleContactAnAdvisor = () => {
+    trackTappedContactAdvisor(user?.id, user?.email)
+  }
+
   return (
     <Text mt={2} variant="sm">
       Try again with another artist or add your artwork to My Collection, your
@@ -10,7 +19,12 @@ export const ArtistNotEligiblText: React.FC = () => {
       and see updates about the artist.
       <Spacer y={2} />
       If you'd like to know more, you can&nbsp;
-      <RouterLink to="/sell/inquiry" target="_blank" rel="noopener noreferrer">
+      <RouterLink
+        to="/sell/inquiry"
+        onClick={handleContactAnAdvisor}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         contact an advisor&nbsp;
       </RouterLink>
       or read about&nbsp;
