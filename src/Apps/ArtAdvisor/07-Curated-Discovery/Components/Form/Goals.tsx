@@ -26,6 +26,10 @@ export const Goals: FC<GoalsProps> = props => {
         What are you looking to do?
       </Text>
 
+      <Text variant={"sm"} color="black60">
+        Choose one:
+      </Text>
+
       <Spacer y={1} />
 
       <Flex gap={1} flexWrap={"wrap"}>

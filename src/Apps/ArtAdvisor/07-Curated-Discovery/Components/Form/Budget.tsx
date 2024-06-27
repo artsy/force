@@ -16,6 +16,10 @@ export const Budget: FC<BudgetProps> = props => {
         Describe your budget?
       </Text>
 
+      <Text variant={"sm"} color="black60">
+        Optional:
+      </Text>
+
       <Spacer y={1} />
 
       <TextArea

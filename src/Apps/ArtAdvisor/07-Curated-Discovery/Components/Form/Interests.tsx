@@ -51,6 +51,10 @@ export const Interests: FC<InterestsProps> = props => {
         What are you interested in?
       </Text>
 
+      <Text variant={"sm"} color="black60">
+        Choose a few:
+      </Text>
+
       <Spacer y={1} />
 
       <Flex gap={1} flexWrap={"wrap"}>
