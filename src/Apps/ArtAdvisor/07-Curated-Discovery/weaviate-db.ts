@@ -194,6 +194,8 @@ export class WeaviateDB {
 
     const user = await this.getUser({ internalID: userId })
 
+    if (!user) throw new Error("Weaviate user not found")
+
     let query = this.client.graphql
       .get()
       .withClassName(this.artworkClass)
