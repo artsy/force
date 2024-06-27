@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<93414b1b95c71412ab0fc8f80c95a405>>
+ * @generated SignedSource<<b475a9127d86183b46a61cbaec370a61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -49,7 +49,7 @@ export type Collection_collection$data = {
     readonly " $fragmentSpreads": FragmentRefs<"CollectionsHubRails_linkedCollections">;
   }>;
   readonly relatedCollections: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"RelatedCollectionsRail_collections">;
+    readonly internalID: string;
   }>;
   readonly slug: string;
   readonly title: string;
@@ -152,7 +152,7 @@ return {
         {
           "kind": "Literal",
           "name": "size",
-          "value": 16
+          "value": 1
         }
       ],
       "concreteType": "MarketingCollection",
@@ -161,12 +161,14 @@ return {
       "plural": true,
       "selections": [
         {
+          "alias": null,
           "args": null,
-          "kind": "FragmentSpread",
-          "name": "RelatedCollectionsRail_collections"
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
         }
       ],
-      "storageKey": "relatedCollections(size:16)"
+      "storageKey": "relatedCollections(size:1)"
     },
     {
       "alias": null,
@@ -413,6 +415,6 @@ return {
 };
 })();
 
-(node as any).hash = "9a6b810e31b1f41ec4bf84749ec2d082";
+(node as any).hash = "d6c0a00e3bfdc4f0925b6bfe40ec5341";
 
 export default node;

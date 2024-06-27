@@ -4,7 +4,7 @@ import { SeoProductsForArtworks } from "Apps/Collect/Components/SeoProductsForAr
 import { SeoProductsForCollections } from "Apps/Collect/Components/SeoProductsForCollections"
 import { CollectionFilterFragmentContainer as CollectionHeader } from "Apps/Collect/Routes/Collection/Components/Header"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
-import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
+import { RelatedCollectionsRailQueryRenderer } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
 import * as React from "react"
 import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
@@ -125,11 +125,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
           <>
             <Spacer y={6} />
 
-            <RelatedCollectionsRail
-              collections={collection.relatedCollections}
-              title={collection.title}
-              lazyLoadImages
-            />
+            <RelatedCollectionsRailQueryRenderer slug={slug} />
           </>
         )}
       </FrameWithRecentlyViewed>
@@ -166,8 +162,8 @@ export const CollectionFragmentContainer = createFragmentContainer(
         slug
         id
         title
-        relatedCollections(size: 16) {
-          ...RelatedCollectionsRail_collections
+        relatedCollections(size: 1) {
+          internalID
         }
         linkedCollections {
           ...CollectionsHubRails_linkedCollections
