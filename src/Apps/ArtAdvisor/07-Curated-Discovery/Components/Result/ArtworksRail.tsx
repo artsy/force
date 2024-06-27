@@ -1,9 +1,10 @@
 import React, { FC, useEffect, useState } from "react"
-import { Box, SkeletonBox } from "@artsy/palette"
+import { Box, Shelf, Skeleton } from "@artsy/palette"
 import { Rail } from "Components/Rail/Rail"
 import { BudgetIntent, State } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
 import { Artwork } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/Artwork"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
 
 interface ArtworksRailProps {
   state: State
@@ -84,13 +85,24 @@ export const ArtworksRail: FC<ArtworksRailProps> = props => {
     fetchArtworks(options).then(setArtworks)
   }, [state.interests, state.goal, state.budgetIntent, excludeArtworkIds, user])
 
-  if (isLoading) {
-    return <SkeletonBox height="400px">Loading...</SkeletonBox>
-  }
-
   return (
     <>
-      {artworks.length ? (
+      {isLoading && artworks.length ? (
+        <Skeleton>
+          <Shelf>
+            {[...new Array(8)].map((_, i) => {
+              return (
+                <ShelfArtworkPlaceholder
+                  key={i}
+                  index={i}
+                  hideSaleInfo={true}
+                  maxImageHeight={400}
+                />
+              )
+            })}
+          </Shelf>
+        </Skeleton>
+      ) : (
         <Box opacity={isLoading ? 0.2 : 1}>
           <Rail
             title="Artworks"
@@ -107,8 +119,6 @@ export const ArtworksRail: FC<ArtworksRailProps> = props => {
             }}
           />
         </Box>
-      ) : (
-        <SkeletonBox height={460} />
       )}
     </>
   )

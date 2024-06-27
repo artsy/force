@@ -77,19 +77,19 @@ export const Artwork: FC<ArtworkProps> = props => {
   return (
     <Box>
       <Image src={artwork.imageUrl} height={300} />
+      <Flex py={1} gap={1} justifyContent={"center"}>
+        <Clickable onClick={handleClickLike}>
+          <CheckmarkFillIcon fill={"black60"} size={30} />
+        </Clickable>
+        <Clickable onClick={handleClickDislike}>
+          <CloseFillIcon fill={"black60"} size={30} />
+        </Clickable>
+      </Flex>
       <Flex flexDirection="column" alignItems="center">
         <a href={`/artwork/${artwork.slug}`} target="_blank">
           {artwork.title}
         </a>
         <Text>{artwork.price}</Text>
-        <Flex py={1} gap={1} justifyContent={"center"}>
-          <Clickable onClick={handleClickLike}>
-            <CheckmarkFillIcon fill={"black60"} size={30} />
-          </Clickable>
-          <Clickable onClick={handleClickDislike}>
-            <CloseFillIcon fill={"black60"} size={30} />
-          </Clickable>
-        </Flex>
       </Flex>
     </Box>
   )
