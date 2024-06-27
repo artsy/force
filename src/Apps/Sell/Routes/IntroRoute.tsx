@@ -11,14 +11,14 @@ import {
   Text,
 } from "@artsy/palette"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
-import { useSubmitArtworkTracking } from "Apps/Sell/Hooks/useSubmitArtworkTracking"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { cropped } from "Utils/resized"
 import * as React from "react"
 
 export const IntroRoute: React.FC = () => {
-  const { trackTappedNewSubmission } = useSubmitArtworkTracking()
+  const { trackTappedNewSubmission } = useSubmissionTracking()
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   return (

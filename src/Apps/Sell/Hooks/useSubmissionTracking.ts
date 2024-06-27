@@ -7,7 +7,7 @@ import {
 import { SellFlowStep } from "Apps/Sell/SellFlowContext"
 import { useTracking } from "react-tracking"
 
-export const useSubmitArtworkTracking = () => {
+export const useSubmissionTracking = () => {
   const { trackEvent } = useTracking()
 
   const trackTappedContinueSubmission = (

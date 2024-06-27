@@ -3,14 +3,14 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 import { Flex, FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { useSubmitArtworkTracking } from "Apps/Sell/Hooks/useSubmitArtworkTracking"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 
 export const SubmissionHeader: React.FC = () => {
-  const { trackTappedSubmissionSaveExit } = useSubmitArtworkTracking()
+  const { trackTappedSubmissionSaveExit } = useSubmissionTracking()
   const context = useSellFlowContext()
   const isLastStep = context?.state?.isLastStep
   const submissionID = context?.state?.submissionID

@@ -2,7 +2,7 @@ import { Button, FullBleed, Join, Message, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
-import { useSubmitArtworkTracking } from "Apps/Sell/Hooks/useSubmitArtworkTracking"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { ThankYouRoute_submission$key } from "__generated__/ThankYouRoute_submission.graphql"
 import * as React from "react"
@@ -23,7 +23,7 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
   const {
     trackTappedSubmitAnotherWork,
     trackTappedViewArtworkInMyCollection,
-  } = useSubmitArtworkTracking()
+  } = useSubmissionTracking()
 
   return (
     <FullBleed>

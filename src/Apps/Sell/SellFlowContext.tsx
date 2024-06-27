@@ -3,7 +3,7 @@ import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmis
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
-import { useSubmitArtworkTracking } from "Apps/Sell/Hooks/useSubmitArtworkTracking"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
 import { createContext, useContext, useEffect, useState } from "react"
@@ -76,7 +76,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const {
     trackConsignmentSubmitted,
     trackTappedSubmissionBack,
-  } = useSubmitArtworkTracking()
+  } = useSubmissionTracking()
   const {
     match,
     router: { push },
