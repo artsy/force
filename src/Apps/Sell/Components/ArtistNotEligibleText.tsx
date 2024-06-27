@@ -10,9 +10,12 @@ export const ArtistNotEligiblText: React.FC = () => {
       and see updates about the artist.
       <Spacer y={2} />
       If you'd like to know more, you can&nbsp;
-      <RouterLink to="#">contact an advisor&nbsp;</RouterLink>
+      <RouterLink to="/sell/inquiry">contact an advisor&nbsp;</RouterLink>
       or read about&nbsp;
-      <RouterLink to="#">what our specialists are looking for</RouterLink>.
+      <RouterLink to="/sell/faq">
+        what our specialists are looking for
+      </RouterLink>
+      .
       <Spacer y={2} />
       After adding to My Collection, an Artsy Advisor will be in touch if there
       is an opportunity to sell your work in the future.
