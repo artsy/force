@@ -20,6 +20,7 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
       {subsections.map(({ internalID, title, body, image, caption }) => {
         const img = image?.imageURLs?.normalized
           ? resized(image?.imageURLs?.normalized, {
+              quality: 85,
               width: 1200,
             })
           : null

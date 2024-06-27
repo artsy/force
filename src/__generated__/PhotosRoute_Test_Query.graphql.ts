@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd4ea8be1b4359b209ebc4fa1678710f>>
+ * @generated SignedSource<<9f02bf875bc10d471fb1efdb40dd0c2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,35 +10,41 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type sellRoutes_PhotosRouteQuery$variables = {
-  id: string;
-};
-export type sellRoutes_PhotosRouteQuery$data = {
+export type PhotosRoute_Test_Query$variables = Record<PropertyKey, never>;
+export type PhotosRoute_Test_Query$data = {
   readonly submission: {
-    readonly " $fragmentSpreads": FragmentRefs<"PhotosRoute_submission">;
+    readonly " $fragmentSpreads": FragmentRefs<"PhotosRoute_submission" | "SubmissionRoute_submission">;
   } | null | undefined;
 };
-export type sellRoutes_PhotosRouteQuery = {
-  response: sellRoutes_PhotosRouteQuery$data;
-  variables: sellRoutes_PhotosRouteQuery$variables;
+export type PhotosRoute_Test_Query$rawResponse = {
+  readonly submission: {
+    readonly assets: ReadonlyArray<{
+      readonly filename: string | null | undefined;
+      readonly geminiToken: string | null | undefined;
+      readonly id: string;
+      readonly imageUrls: any | null | undefined;
+      readonly size: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly externalId: string;
+    readonly id: string;
+    readonly internalID: string | null | undefined;
+  } | null | undefined;
+};
+export type PhotosRoute_Test_Query = {
+  rawResponse: PhotosRoute_Test_Query$rawResponse;
+  response: PhotosRoute_Test_Query$data;
+  variables: PhotosRoute_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "id"
+    "value": "submission-id"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -47,14 +53,14 @@ v2 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "sellRoutes_PhotosRouteQuery",
+    "name": "PhotosRoute_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "ConsignmentSubmission",
         "kind": "LinkedField",
         "name": "submission",
@@ -63,10 +69,15 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
+            "name": "SubmissionRoute_submission"
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
             "name": "PhotosRoute_submission"
           }
         ],
-        "storageKey": null
+        "storageKey": "submission(id:\"submission-id\")"
       }
     ],
     "type": "Query",
@@ -74,18 +85,25 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "sellRoutes_PhotosRouteQuery",
+    "name": "PhotosRoute_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "ConsignmentSubmission",
         "kind": "LinkedField",
         "name": "submission",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -101,7 +119,7 @@ return {
             "name": "assets",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -133,23 +151,23 @@ return {
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "submission(id:\"submission-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "a6abb3894e6e2b8e4ff88a8a0144ebdd",
+    "cacheID": "c33cc79047899c70e37e1ced4c620cde",
     "id": null,
     "metadata": {},
-    "name": "sellRoutes_PhotosRouteQuery",
+    "name": "PhotosRoute_Test_Query",
     "operationKind": "query",
-    "text": "query sellRoutes_PhotosRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n"
+    "text": "query PhotosRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0b9b193f461e9136d8a145c9067e3900";
+(node as any).hash = "5fecb11d4503b6a37e921c019cf45300";
 
 export default node;

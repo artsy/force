@@ -1,11 +1,30 @@
-import * as React from "react"
 import { Button, FullBleed, Join, Message, Spacer, Text } from "@artsy/palette"
-import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
-import { RouterLink } from "System/Components/RouterLink"
 import { AppContainer } from "Apps/Components/AppContainer"
+import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
+import { RouterLink } from "System/Components/RouterLink"
+import { ThankYouRoute_submission$key } from "__generated__/ThankYouRoute_submission.graphql"
+import * as React from "react"
+import { graphql, useFragment } from "react-relay"
 
-export const ThankYouRoute: React.FC = () => {
+const FRAGMENT = graphql`
+  fragment ThankYouRoute_submission on ConsignmentSubmission {
+    internalID
+  }
+`
+interface ThankYouRouteProps {
+  submission: ThankYouRoute_submission$key
+}
+
+export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
+  const submission = useFragment(FRAGMENT, props.submission)
+
+  const {
+    trackTappedSubmitAnotherWork,
+    trackTappedViewArtworkInMyCollection,
+  } = useSubmissionTracking()
+
   return (
     <FullBleed>
       <AppContainer>
@@ -33,6 +52,9 @@ export const ThankYouRoute: React.FC = () => {
                 // @ts-ignore
                 as={RouterLink}
                 to="/sell2/submissions/new"
+                onClick={() => {
+                  trackTappedSubmitAnotherWork(submission.internalID)
+                }}
                 width="100%"
                 data-testid="submit-another-work"
               >
@@ -43,6 +65,9 @@ export const ThankYouRoute: React.FC = () => {
                 // @ts-ignore
                 as={RouterLink}
                 to="/my-collection"
+                onClick={() => {
+                  trackTappedViewArtworkInMyCollection(submission.internalID)
+                }}
                 variant="secondaryBlack"
                 width="100%"
                 data-testid="view-collection"

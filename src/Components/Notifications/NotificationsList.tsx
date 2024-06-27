@@ -97,6 +97,7 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
           <NotificationItemFragmentContainer
             key={node.internalID}
             item={node}
+            mode={mode}
           />
         ))}
       </Join>

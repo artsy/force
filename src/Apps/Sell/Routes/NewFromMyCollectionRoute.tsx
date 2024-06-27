@@ -1,10 +1,10 @@
+import { FullBleed, Text } from "@artsy/palette"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { DevDebug } from "Apps/Sell/Components/DevDebug"
+import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { Formik } from "formik"
 import * as React from "react"
 import * as Yup from "yup"
-import { Text, FullBleed } from "@artsy/palette"
-import { Formik } from "formik"
-import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 
 const Schema = Yup.object().shape({
   myCollectionArtworkID: Yup.string().required().trim(),
@@ -26,21 +26,23 @@ export const NewFromMyCollectionRoute: React.FC = () => {
   return (
     <FullBleed>
       <AppContainer>
-          <Formik<FormValues>
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            validateOnMount
-            validationSchema={Schema}
-          >
-            {formik => (
-              <SubmissionLayout hideNavigation>
-                <Text mb={2} variant="lg-display">
-                  Start from My Collection
-                </Text>
-                <Text variant="sm">--- TODO: My Collection Artwork Grid ---</Text>
-                <DevDebug />
-              </SubmissionLayout>
-            )}
+        <Formik<FormValues>
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validateOnMount
+          validationSchema={Schema}
+        >
+          {formik => (
+            <SubmissionLayout hideNavigation>
+              <Text mb={2} variant="lg-display">
+                Start from My Collection
+              </Text>
+
+              <Text variant="sm">--- TODO: My Collection Artwork Grid ---</Text>
+
+              <DevDebug />
+            </SubmissionLayout>
+          )}
         </Formik>
       </AppContainer>
     </FullBleed>

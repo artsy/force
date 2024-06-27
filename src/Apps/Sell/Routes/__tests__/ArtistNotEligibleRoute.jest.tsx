@@ -74,4 +74,17 @@ describe("ArtistNotEligibleRoute", () => {
       "/sell2/submissions/new"
     )
   })
+
+  it("renders inquiry and faq links", () => {
+    renderWithRelay({})
+
+    expect(screen.getByText("contact an advisor")).toHaveAttribute(
+      "href",
+      "/sell/inquiry"
+    )
+
+    expect(
+      screen.getByText("what our specialists are looking for")
+    ).toHaveAttribute("href", "/sell/faq")
+  })
 })

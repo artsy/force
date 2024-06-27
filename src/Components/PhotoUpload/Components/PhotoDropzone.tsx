@@ -3,7 +3,11 @@ import { cloneDeep } from "lodash"
 import React, { useEffect, useRef, useState } from "react"
 import { FileRejection, useDropzone } from "react-dropzone"
 import { Media } from "Utils/Responsive"
-import { CustomErrorCode, MBSize, Photo } from "../Utils/fileUtils"
+import {
+  CustomErrorCode,
+  MBSize,
+  Photo,
+} from "Components/PhotoUpload/Utils/fileUtils"
 
 const validateTotalMaxSize = (
   currentFiles: Array<Photo>,
@@ -124,10 +128,8 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
           <Text variant="lg-display">Add photos here</Text>
         </Media>
 
-        <Text variant="sm-display" color="black60" mt={1}>
-          Files supported: JPG, PNG
-        </Text>
-        <Text variant="sm-display" color="black60" mt={1}>
+        <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
+          Files supported: JPG, PNG <br />
           Total maximum size: {maxTotalSize} MB
         </Text>
 
@@ -135,11 +137,11 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
           ref={buttonRef}
           width={["100%", "auto"]}
           type="button"
-          mt={4}
+          mt={[2, 2]}
           variant="secondaryBlack"
           onClick={open}
         >
-          Add Photo
+          Or Add Photos
         </Button>
       </Box>
     </>

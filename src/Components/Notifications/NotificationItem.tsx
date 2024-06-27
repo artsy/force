@@ -1,5 +1,4 @@
 import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import {
   ExpiresInTimer,
   shouldDisplayExpiresInTimer,
@@ -12,76 +11,35 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import { NotificationItem_item$data } from "__generated__/NotificationItem_item.graphql"
-import { FC } from "react"
+import { FC, useCallback } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import { NotificationTypeLabel } from "./NotificationTypeLabel"
 import { isArtworksBasedNotification } from "./util"
+import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { Media } from "Utils/Responsive"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 const logger = createLogger("NotificationItem")
 
 interface NotificationItemProps {
   item: NotificationItem_item$data
+  mode?: NotificationListMode
 }
 
 const UNREAD_INDICATOR_SIZE = 8
 
-const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
-  const { tracking } = useNotificationsTracking()
-  const { relayEnvironment } = useSystemContext()
-  const {
-    state: { currentNotificationId },
-  } = useNotificationsContext()
+const NotificationItem: FC<NotificationItemProps> = ({ item, mode }) => {
   const remainingArtworksCount = item.objectsCount - 4
   const shouldDisplayCounts =
     isArtworksBasedNotification(item.notificationType) &&
     remainingArtworksCount > 0
 
-  const markAsRead = async () => {
-    // If the notification is opened as a page, we don't need to mark the notification as read
-    // because it's already marked as read when the page is opened.
-    if (SUPPORTED_NOTIFICATION_TYPES.includes(item.notificationType)) {
-      return
-    }
-    if (!relayEnvironment) {
-      return
-    }
-
-    try {
-      const response = await markNotificationAsRead(
-        relayEnvironment,
-        item.id,
-        item.internalID
-      )
-      const responseOrError = response.markNotificationAsRead?.responseOrError
-      const errorMessage = responseOrError?.mutationError?.message
-
-      if (errorMessage) {
-        throw new Error(errorMessage)
-      }
-    } catch (error) {
-      logger.error(error)
-    }
-  }
-
-  const handlePress = () => {
-    markAsRead()
-
-    tracking.clickedActivityPanelNotificationItem(item.notificationType)
-  }
-
-  const itemUrl = getNotificationUrl(item)
-
   const subTitle = getNotificationSubTitle(item)
 
   return (
-    <NotificationItemLink
-      to={itemUrl}
-      onClick={handlePress}
-      backgroundColor={
-        currentNotificationId === item.internalID ? "black5" : "white100"
-      }
-    >
+    <NotificationItemWrapper item={item} mode={mode}>
       <Flex
         flex={1}
         flexDirection={
@@ -164,7 +122,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
           aria-label="Unread notification indicator"
         />
       )}
-    </NotificationItemLink>
+    </NotificationItemWrapper>
   )
 }
 
@@ -198,6 +156,87 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
   }
 )
 
+interface NotificationItemWrapperProps {
+  item: NotificationItem_item$data
+  mode?: NotificationListMode
+  children: React.ReactNode
+}
+
+const NotificationItemWrapper: FC<NotificationItemWrapperProps> = ({
+  item,
+  mode,
+  children,
+}) => {
+  const { tracking } = useNotificationsTracking()
+  const { relayEnvironment } = useSystemContext()
+  const {
+    state: { currentNotificationId },
+  } = useNotificationsContext()
+
+  const itemUrl = useCallback((item, mode) => {
+    return getNotificationUrl(item, mode)
+  }, [])
+
+  const markAsRead = async () => {
+    // If the notification is opened as a page, we don't need to mark the notification as read
+    // because it's already marked as read when the page is opened.
+    if (SUPPORTED_NOTIFICATION_TYPES.includes(item.notificationType)) {
+      return
+    }
+    if (!relayEnvironment) {
+      return
+    }
+
+    try {
+      const response = await markNotificationAsRead(
+        relayEnvironment,
+        item.id,
+        item.internalID
+      )
+      const responseOrError = response.markNotificationAsRead?.responseOrError
+      const errorMessage = responseOrError?.mutationError?.message
+
+      if (errorMessage) {
+        throw new Error(errorMessage)
+      }
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  const handlePress = () => {
+    markAsRead()
+
+    tracking.clickedActivityPanelNotificationItem(item.notificationType)
+  }
+
+  const backgroundColor =
+    currentNotificationId === item.internalID ? "black5" : "white100"
+
+  return (
+    <>
+      <Media at="xs">
+        <NotificationItemLink
+          to={itemUrl(item, "dropdown")}
+          onClick={handlePress}
+          backgroundColor={backgroundColor}
+        >
+          {children}
+        </NotificationItemLink>
+      </Media>
+      <Media greaterThan="xs">
+        <NotificationItemLink
+          to={itemUrl(item, mode)}
+          onClick={handlePress}
+          backgroundColor={backgroundColor}
+        >
+          {children}
+        </NotificationItemLink>
+      </Media>
+    </>
+  )
+}
+
 const NotificationItemLink = styled(RouterLink)`
   display: flex;
   align-items: center;
@@ -216,7 +255,23 @@ NotificationItemLink.defaultProps = {
  * Until we support all notification types in the new activity panel,
  * we only link to the notification detail page for the supported types.
  */
-const getNotificationUrl = (notification: NotificationItem_item$data) => {
+const getNotificationUrl = (
+  notification: NotificationItem_item$data,
+  mode: NotificationListMode = "page"
+) => {
+  // Notification response has targetHref field (computed on backend), which for
+  // most notifications accounts for "objectsCount". If there is only one object,
+  // targetHref usually points to the object URL (/artwork/:id, /show/:id, etc.).
+  // In dropdown mode, when there is only one object, we want to link directly to
+  // the object URL. Otherwise, we link to the notification detail page.
+  if (
+    mode === "dropdown" &&
+    notification.objectsCount === 1 &&
+    notification.notificationType !== "PARTNER_OFFER_CREATED"
+  ) {
+    return notification.targetHref
+  }
+
   if (SUPPORTED_NOTIFICATION_TYPES.includes(notification.notificationType)) {
     return `/notification/${notification.internalID}`
   }

@@ -71,8 +71,6 @@ export const ArtistRoute: React.FC<{
 
   const isNewSubmission = !submission?.internalID
 
-  const onSubmit = async () => {}
-
   const createSubmission = async (artist: AutocompleteArtist) => {
     if (!isLoggedIn) {
       showAuthDialog({
@@ -173,7 +171,7 @@ export const ArtistRoute: React.FC<{
   return (
     <Formik<FormValues>
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={() => {}}
       validateOnMount
       validationSchema={Schema}
     >
@@ -194,7 +192,11 @@ export const ArtistRoute: React.FC<{
 
           <Text mt={2} variant="sm" color="black60">
             Currently, artists can not sell their own work on Artsy.{" "}
-            <RouterLink to="https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell">
+            <RouterLink
+              to="https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Learn more.
             </RouterLink>
           </Text>

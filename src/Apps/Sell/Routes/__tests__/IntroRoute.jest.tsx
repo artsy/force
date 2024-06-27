@@ -1,10 +1,12 @@
-import { render, screen, waitFor } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { IntroRoute } from "Apps/Sell/Routes/IntroRoute"
 import { useRouter } from "System/Hooks/useRouter"
+import { useTracking } from "react-tracking"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
+const trackEvent = jest.fn()
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { location: { query: {} } } })),
@@ -12,6 +14,12 @@ jest.mock("System/Hooks/useRouter", () => ({
 jest.unmock("react-relay")
 
 beforeAll(() => {
+  ;(useTracking as jest.Mock).mockImplementation(() => {
+    return {
+      trackEvent,
+    }
+  })
+
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
@@ -62,5 +70,13 @@ describe("IntroRoute", () => {
       "href",
       "/sell2/submissions/new"
     )
+
+    fireEvent.click(startNewSubmissionButton)
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "tappedNewSubmission",
+      context_module: "sell",
+      context_owner_type: "submitArtworkStepStart",
+    })
   })
 })

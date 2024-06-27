@@ -8,11 +8,13 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { DimensionsRoute_Test_Query$rawResponse } from "__generated__/DimensionsRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 let submitMutation: jest.Mock
+const trackEvent = jest.fn()
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
@@ -28,6 +30,11 @@ const submissionMock: Partial<
 }
 
 beforeEach(() => {
+  ;(useTracking as jest.Mock).mockImplementation(() => {
+    return {
+      trackEvent,
+    }
+  })
   ;(useSystemContext as jest.Mock).mockImplementation(() => {
     return { isLoggedIn: true }
   })
@@ -94,60 +101,82 @@ describe("DimensionsRoute", () => {
     })
   })
 
-  it("saves the submission & navigates to the confirmation step when Submit button is clicked", async () => {
-    renderWithRelay({
-      ConsignmentSubmission: () => submissionMock,
-    })
+  describe("when clicking the Submit button", () => {
+    it("saves the submission, sets the state to `SUBMITTED` & navigates to the thank you step", async () => {
+      renderWithRelay({
+        ConsignmentSubmission: () => submissionMock,
+      })
 
-    screen.getByText("Submit Artwork").click()
+      screen.getByText("Submit Artwork").click()
 
-    await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/thank-you'
-      )
-
-      expect(submitMutation).toHaveBeenCalledWith(
-        expect.objectContaining({
-          variables: {
-            input: {
-              externalId: '<mock-value-for-field-"externalId">',
-              height: '<mock-value-for-field-"height">',
-              width: '<mock-value-for-field-"width">',
-              depth: '<mock-value-for-field-"depth">',
-              dimensionsMetric: "in",
-              state: "SUBMITTED",
-            },
-          },
+      await waitFor(() => {
+        expect(trackEvent).toHaveBeenCalledWith({
+          action: "consignmentSubmitted",
+          context_module: "sell",
+          context_owner_type: "submitArtworkStepAddDimensions",
+          fieldsProvided: [],
+          submission_id: '<mock-value-for-field-"externalId">',
         })
-      )
+
+        expect(submitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                depth: '<mock-value-for-field-"depth">',
+                dimensionsMetric: "in",
+                externalId: '<mock-value-for-field-"externalId">',
+                height: '<mock-value-for-field-"height">',
+                width: '<mock-value-for-field-"width">',
+              },
+            },
+          })
+        )
+
+        expect(submitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                externalId: '<mock-value-for-field-"externalId">',
+                state: "SUBMITTED",
+              },
+            },
+          })
+        )
+
+        expect(mockPush).toHaveBeenCalledWith(
+          '/sell2/submissions/<mock-value-for-field-"externalId">/thank-you'
+        )
+      })
     })
   })
-  it("does not save the submission & navigates to the previous step when the back button is clicked", async () => {
-    renderWithRelay({
-      ConsignmentSubmission: () => submissionMock,
-    })
 
-    screen.getByText("Back").click()
+  describe("when the back button is clicked", () => {
+    it("saves the submission & navigates to the previous step", async () => {
+      renderWithRelay({
+        ConsignmentSubmission: () => submissionMock,
+      })
 
-    await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/purchase-history'
-      )
+      screen.getByText("Back").click()
 
-      expect(submitMutation).toHaveBeenCalledWith(
-        expect.objectContaining({
-          variables: {
-            input: {
-              externalId: '<mock-value-for-field-"externalId">',
-              height: '<mock-value-for-field-"height">',
-              width: '<mock-value-for-field-"width">',
-              depth: '<mock-value-for-field-"depth">',
-              dimensionsMetric: "in",
-              state: "SUBMITTED",
+      await waitFor(() => {
+        expect(mockPush).toHaveBeenCalledWith(
+          '/sell2/submissions/<mock-value-for-field-"externalId">/purchase-history'
+        )
+
+        expect(submitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                externalId: '<mock-value-for-field-"externalId">',
+                height: '<mock-value-for-field-"height">',
+                width: '<mock-value-for-field-"width">',
+                depth: '<mock-value-for-field-"depth">',
+                dimensionsMetric: "in",
+              },
             },
-          },
-        })
-      )
+          })
+        )
+      })
     })
   })
 

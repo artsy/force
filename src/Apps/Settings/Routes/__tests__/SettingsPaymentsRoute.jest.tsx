@@ -1,10 +1,10 @@
 import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { SettingsPaymentsRouteFragmentContainer } from "../Payments/SettingsPaymentsRoute"
+import { SettingsPaymentsRouteFragmentContainer } from "Apps/Settings/Routes/Payments/SettingsPaymentsRoute"
 import { SettingsPaymentsRoute_Test_Query } from "__generated__/SettingsPaymentsRoute_Test_Query.graphql"
-import { useDeleteCreditCard } from "../Payments/useDeleteCreditCard"
-import { useDeleteBankAccount } from "../Payments/useDeleteBankAccount"
+import { useDeleteCreditCard } from "Apps/Settings/Routes/Payments/useDeleteCreditCard"
+import { useDeleteBankAccount } from "Apps/Settings/Routes/Payments/useDeleteBankAccount"
 
 jest.unmock("react-relay")
 jest.mock("Apps/Settings/Routes/Payments/useDeleteBankAccount")
@@ -54,9 +54,7 @@ describe("SettingsPaymentsRoute", () => {
     expect(screen.getByText("Saved Payment Details")).toBeInTheDocument()
     expect(screen.getByText("Credit cards")).toBeInTheDocument()
     expect(
-      screen.getByText(
-        "You can manage any saved payment methods from here."
-      )
+      screen.getByText("You can manage any saved payment methods from here.")
     ).toBeInTheDocument()
   })
 

@@ -3,9 +3,10 @@ import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmis
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
-import { createContext, useContext, useEffect } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCursor } from "use-cursor"
 import createLogger from "Utils/logger"
@@ -19,11 +20,14 @@ export const STEPS = [
   "details",
   "purchase-history",
   "dimensions",
+  "phone-number",
   "thank-you",
-]
+] as const
 
-const INITIAL_STEP = "artist"
-const SUBMIT_STEP = "dimensions"
+const INITIAL_STEP: SellFlowStep = "artist"
+const SUBMIT_STEP: SellFlowStep = "dimensions"
+
+export type SellFlowStep = typeof STEPS[number]
 
 interface Actions {
   goToPreviousStep: () => void
@@ -35,6 +39,7 @@ interface Actions {
   updateSubmission: (
     values: UpdateSubmissionMutationInput
   ) => Promise<useUpdateSubmissionMutation$data>
+  setLoading: (loading: boolean) => void
 }
 
 interface State {
@@ -42,16 +47,21 @@ interface State {
   isLastStep: boolean
   isSubmitStep: boolean
   index: number
-  step: string
+  step: SellFlowStep
   submissionID: string | undefined
   devMode: boolean
+  // loading is used to show a loading spinner on the bottom form navigation
+  // when images are being uploaded
+  loading: boolean
 }
 interface SellFlowContextProps {
   actions: Actions
   state: State
 }
 
-export const SellFlowContext = createContext<SellFlowContextProps>({} as any)
+export const SellFlowContext = createContext<SellFlowContextProps>({
+  loading: false,
+} as any)
 
 interface SellFlowContextProviderProps {
   children: React.ReactNode
@@ -65,6 +75,10 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   devMode = false,
 }) => {
   const {
+    trackConsignmentSubmitted,
+    trackTappedSubmissionBack,
+  } = useSubmissionTracking()
+  const {
     match,
     router: { push },
   } = useRouter()
@@ -75,12 +89,13 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     submitMutation: submitCreateSubmissionMutation,
   } = useCreateSubmission()
   const { sendToast } = useToasts()
+  const [loading, setLoading] = useState(false)
 
   const isNewSubmission = !submissionID
 
   const stepFromURL = isNewSubmission
     ? INITIAL_STEP
-    : match.location.pathname.split("/").pop()
+    : (match.location.pathname.split("/").pop() as SellFlowStep)
 
   const initialIndex = STEPS.indexOf(stepFromURL || STEPS[0])
 
@@ -90,14 +105,23 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   })
 
   const goToNextStep = async () => {
-    handleNext()
+    state.isSubmitStep ? finishFlow() : handleNext()
   }
 
   const goToPreviousStep = () => {
+    trackTappedSubmissionBack(submissionID, state.step)
+
     handlePrev()
   }
 
-  const finishFlow = () => {
+  const finishFlow = async () => {
+    trackConsignmentSubmitted(submissionID, state.step)
+
+    // When the user clicks on "Submit Artwork" and the Sell flow is finished, we set the state to "SUBMITTED".
+    await updateSubmission({
+      state: "SUBMITTED",
+    })
+
     push(`/sell2/submissions/${submissionID}/thank-you`)
   }
 
@@ -134,7 +158,6 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
         input: {
           externalId: submissionID,
           ...values,
-          state: state.isSubmitStep ? "SUBMITTED" : undefined,
         } as UpdateSubmissionMutationInput,
       },
     })
@@ -157,6 +180,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     finishFlow,
     createSubmission,
     updateSubmission,
+    setLoading,
   }
 
   const state = {
@@ -167,6 +191,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     step: STEPS[index],
     submissionID,
     devMode,
+    loading,
   }
 
   return (

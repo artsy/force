@@ -1,5 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Button, Flex } from "@artsy/palette"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -25,15 +26,19 @@ export const BottomFormNavigation = () => {
 }
 
 const BottomFormBackButton = () => {
+  const { trackTappedSubmissionBack } = useSubmissionTracking()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { submitForm } = useFormikContext()
   const {
     actions,
-    state: { isFirstStep },
+    state: { loading, isFirstStep, submissionID, step },
   } = useSellFlowContext()
 
   const onBack = async () => {
     setIsSubmitting(true)
+
+    trackTappedSubmissionBack(submissionID, step)
+
     try {
       await submitForm()
 
@@ -50,7 +55,12 @@ const BottomFormBackButton = () => {
   }
 
   return (
-    <Button loading={isSubmitting} onClick={onBack} variant="tertiary">
+    <Button
+      loading={isSubmitting}
+      onClick={onBack}
+      variant="tertiary"
+      disabled={loading || isSubmitting}
+    >
       Back
     </Button>
   )
@@ -61,6 +71,9 @@ const BottomFormNextButton = () => {
   const { isValid, submitForm } = useFormikContext()
   const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
+  const {
+    state: { loading },
+  } = useSellFlowContext()
 
   const {
     actions,
@@ -90,7 +103,7 @@ const BottomFormNextButton = () => {
     try {
       await submitForm()
 
-      isSubmitStep ? actions.finishFlow() : actions.goToNextStep()
+      actions.goToNextStep()
     } catch (error) {
       logger.error("Error submitting form", error)
     } finally {
@@ -102,8 +115,9 @@ const BottomFormNextButton = () => {
     <Button
       variant="primaryBlack"
       disabled={!isValid}
-      loading={isSubmitting}
+      loading={isSubmitting || loading}
       onClick={onNext}
+      data-testid="bottom-form-next-button"
     >
       {isSubmitStep ? "Submit Artwork" : "Continue"}
     </Button>
