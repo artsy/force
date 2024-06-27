@@ -103,7 +103,7 @@ const BottomFormNextButton = () => {
     try {
       await submitForm()
 
-      isSubmitStep ? actions.finishFlow() : actions.goToNextStep()
+      actions.goToNextStep()
     } catch (error) {
       logger.error("Error submitting form", error)
     } finally {

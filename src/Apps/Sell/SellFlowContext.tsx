@@ -105,7 +105,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   })
 
   const goToNextStep = async () => {
-    handleNext()
+    state.isLastStep ? finishFlow() : handleNext()
   }
 
   const goToPreviousStep = () => {
@@ -117,9 +117,9 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const finishFlow = async () => {
     trackConsignmentSubmitted(submissionID, state.step)
 
-    // Only when clicking on "SUBMIT ARTWORK" button in the last step we want to set the state to "SUBMITTED".
+    // When the user clicks on "Submit Artwork" and the Sell flow is finished, we set the state to "SUBMITTED".
     await updateSubmission({
-      state: state.isSubmitStep ? "SUBMITTED" : undefined,
+      state: "SUBMITTED",
     })
 
     push(`/sell2/submissions/${submissionID}/thank-you`)
