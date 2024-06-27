@@ -19,6 +19,7 @@ import {
 import { useEffect, useState } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRouter } from "System/Hooks/useRouter"
+import { StatePreview } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/StatePreview"
 
 interface FormProps {
   state: State
@@ -125,6 +126,8 @@ export const Form: React.FC<FormProps> = props => {
           {isLoading ? <Spinner color={"white"} /> : "Show me things"}
         </Button>
       </Flex>
+
+      <StatePreview state={state} />
     </Box>
   )
 }

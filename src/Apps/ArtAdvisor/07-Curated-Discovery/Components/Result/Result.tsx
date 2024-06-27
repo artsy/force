@@ -25,11 +25,12 @@ export const Result: FC<ResultProps> = props => {
 
       <Join separator={<Spacer y={6} />}>
         <Links dispatch={dispatch} />
-        <StatePreview state={state} />
         <ArtworksRail state={state} />
         <MarketingCollectionsRail state={state} />
         <ArticlesRail state={state} />
       </Join>
+
+      <StatePreview state={state} />
     </Box>
   )
 }
