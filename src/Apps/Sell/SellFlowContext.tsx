@@ -20,10 +20,11 @@ export const STEPS = [
   "details",
   "purchase-history",
   "dimensions",
+  "phone-number",
   "thank-you",
-]
+] as const
 
-const INITIAL_STEP = "artist"
+const INITIAL_STEP: SellFlowStep = "artist"
 const SUBMIT_STEP: SellFlowStep = "dimensions"
 
 export type SellFlowStep = typeof STEPS[number]
@@ -46,7 +47,7 @@ interface State {
   isLastStep: boolean
   isSubmitStep: boolean
   index: number
-  step: string
+  step: SellFlowStep
   submissionID: string | undefined
   devMode: boolean
   // loading is used to show a loading spinner on the bottom form navigation
@@ -94,7 +95,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
 
   const stepFromURL = isNewSubmission
     ? INITIAL_STEP
-    : match.location.pathname.split("/").pop()
+    : (match.location.pathname.split("/").pop() as SellFlowStep)
 
   const initialIndex = STEPS.indexOf(stepFromURL || STEPS[0])
 

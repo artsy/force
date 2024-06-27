@@ -27,7 +27,7 @@ export const useSubmissionTracking = () => {
     trackEvent({
       action: "tappedNewSubmission",
       context_module: ContextModule.sell,
-      context_owner_type: getOwnerType("StartFlow"),
+      context_owner_type: OwnerType.submitArtworkStepStart,
     })
   }
 
@@ -35,7 +35,7 @@ export const useSubmissionTracking = () => {
     trackEvent({
       action: "tappedStartMyCollection",
       context_module: ContextModule.sell,
-      context_owner_type: getOwnerType("StartFlow"),
+      context_owner_type: OwnerType.submitArtworkStepStart,
     })
   }
 
@@ -71,7 +71,7 @@ export const useSubmissionTracking = () => {
     trackEvent({
       action: "consignmentSubmitted",
       context_module: ContextModule.sell,
-      context_owner_type: getOwnerType("CompleteYourSubmission"),
+      context_owner_type: getOwnerType("thank-you"),
       submission_id,
       fieldsProvided: [],
     })
@@ -83,7 +83,7 @@ export const useSubmissionTracking = () => {
     trackEvent({
       action: "tappedSubmitAnotherWork",
       context_module: ContextModule.sell,
-      context_owner_type: getOwnerType("CompleteYourSubmission"),
+      context_owner_type: getOwnerType("thank-you"),
       submission_id,
     })
   }
@@ -94,7 +94,7 @@ export const useSubmissionTracking = () => {
     trackEvent({
       action: "tappedViewArtworkInMyCollection",
       context_module: ContextModule.sell,
-      context_owner_type: getOwnerType("CompleteYourSubmission"),
+      context_owner_type: getOwnerType("thank-you"),
       submission_id,
     })
   }
@@ -106,7 +106,7 @@ export const useSubmissionTracking = () => {
     trackEvent({
       action: ActionType.tappedConsignmentInquiry,
       context_module: ContextModule.sell,
-      context_owner_type: getOwnerType("ArtistRejected"),
+      context_owner_type: OwnerType.submitArtworkStepArtistRejected,
       label: "contact an advisor",
       user_id: userId,
       user_email: userEmail,
@@ -128,28 +128,22 @@ export const useSubmissionTracking = () => {
 
 const getOwnerType = (currentStep: SellFlowStep): PageOwnerType | null => {
   switch (currentStep) {
-    case "StartFlow":
-      return OwnerType.submitArtworkStepStart
-    case "SelectArtist":
+    case "artist":
       return OwnerType.submitArtworkStepSelectArtist
-    case "AddTitle":
+    case "title":
       return OwnerType.submitArtworkStepAddTitle
-    case "AddPhotos":
+    case "photos":
       return OwnerType.submitArtworkStepAddPhotos
-    case "AddDetails":
+    case "details":
       return OwnerType.submitArtworkStepAddDetails
-    case "PurchaseHistory":
+    case "purchase-history":
       return OwnerType.submitArtworkStepPurchaseHistory
-    case "AddDimensions":
+    case "dimensions":
       return OwnerType.submitArtworkStepAddDimensions
-    case "AddPhoneNumber":
+    case "phone-number":
       return OwnerType.submitArtworkStepAddPhoneNumber
-    case "CompleteYourSubmission":
+    case "thank-you":
       return OwnerType.submitArtworkStepCompleteYourSubmission
-    case "ArtistRejected":
-      return OwnerType.submitArtworkStepArtistRejected
-    case "SelectArtworkMyCollectionArtwork":
-      return OwnerType.submitArtworkStepSelectArtworkMyCollectionArtwork
     default:
       return null
   }
