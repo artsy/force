@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c4bc606c5d77b1b16907d684acf5d098>>
+ * @generated SignedSource<<188326c0c00b27b70d954f1ef71af0f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -158,13 +158,6 @@ return {
             "name": "phoneNumber",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "countryCode",
-                "storageKey": null
-              },
               (v2/*: any*/),
               {
                 "alias": null,
@@ -178,13 +171,6 @@ return {
                 "kind": "ScalarField",
                 "name": "display",
                 "storageKey": "display(format:\"NATIONAL\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "originalNumber",
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -196,12 +182,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "208302490c40686530b5c50ddb247a49",
+    "cacheID": "ce23cead280d7bbe9d458113ea0b1455",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_PhoneNumberRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_PhoneNumberRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...PhoneNumberRoute_submission\n    id\n  }\n  me {\n    ...PhoneNumberRoute_me\n    id\n  }\n}\n\nfragment PhoneNumberRoute_me on Me {\n  internalID\n  phoneNumber {\n    countryCode\n    regionCode\n    display(format: NATIONAL)\n    originalNumber\n  }\n}\n\nfragment PhoneNumberRoute_submission on ConsignmentSubmission {\n  userPhoneNumber {\n    display\n    regionCode\n  }\n}\n"
+    "text": "query sellRoutes_PhoneNumberRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...PhoneNumberRoute_submission\n    id\n  }\n  me {\n    ...PhoneNumberRoute_me\n    id\n  }\n}\n\nfragment PhoneNumberRoute_me on Me {\n  internalID\n  phoneNumber {\n    regionCode\n    display(format: NATIONAL)\n  }\n}\n\nfragment PhoneNumberRoute_submission on ConsignmentSubmission {\n  userPhoneNumber {\n    display\n    regionCode\n  }\n}\n"
   }
 };
 })();

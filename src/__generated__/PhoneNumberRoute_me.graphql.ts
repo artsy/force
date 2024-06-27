@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<72d59a8e64e09a8e879e5ad83431108d>>
+ * @generated SignedSource<<2fa9669990e89095e8beb7635124a820>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,9 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type PhoneNumberRoute_me$data = {
   readonly internalID: string;
   readonly phoneNumber: {
-    readonly countryCode: string | null | undefined;
     readonly display: string | null | undefined;
-    readonly originalNumber: string | null | undefined;
     readonly regionCode: string | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "PhoneNumberRoute_me";
@@ -50,13 +48,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "countryCode",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "regionCode",
           "storageKey": null
         },
@@ -72,13 +63,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "display",
           "storageKey": "display(format:\"NATIONAL\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "originalNumber",
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -88,6 +72,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "deae648d676fca16933a442da212a2f8";
+(node as any).hash = "d1b998f0c518b35a539bead3a6c6aaeb";
 
 export default node;

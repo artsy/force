@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c44b16716ca0482e4cf7823f76e737b5>>
+ * @generated SignedSource<<6825244433cf495dcced4b8b599ac81c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,9 +24,7 @@ export type PhoneNumberRoute_Test_Query$rawResponse = {
     readonly id: string;
     readonly internalID: string;
     readonly phoneNumber: {
-      readonly countryCode: string | null | undefined;
       readonly display: string | null | undefined;
-      readonly originalNumber: string | null | undefined;
       readonly regionCode: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
@@ -185,13 +183,6 @@ return {
             "name": "phoneNumber",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "countryCode",
-                "storageKey": null
-              },
               (v1/*: any*/),
               {
                 "alias": null,
@@ -205,13 +196,6 @@ return {
                 "kind": "ScalarField",
                 "name": "display",
                 "storageKey": "display(format:\"NATIONAL\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "originalNumber",
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -223,12 +207,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a5ee4b961e9420fb4803dfdbe9cfdee2",
+    "cacheID": "b1f17baf13e9b2cfb3049e4856af0573",
     "id": null,
     "metadata": {},
     "name": "PhoneNumberRoute_Test_Query",
     "operationKind": "query",
-    "text": "query PhoneNumberRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...PhoneNumberRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...PhoneNumberRoute_me\n    id\n  }\n}\n\nfragment PhoneNumberRoute_me on Me {\n  internalID\n  phoneNumber {\n    countryCode\n    regionCode\n    display(format: NATIONAL)\n    originalNumber\n  }\n}\n\nfragment PhoneNumberRoute_submission on ConsignmentSubmission {\n  userPhoneNumber {\n    display\n    regionCode\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
+    "text": "query PhoneNumberRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...PhoneNumberRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...PhoneNumberRoute_me\n    id\n  }\n}\n\nfragment PhoneNumberRoute_me on Me {\n  internalID\n  phoneNumber {\n    regionCode\n    display(format: NATIONAL)\n  }\n}\n\nfragment PhoneNumberRoute_submission on ConsignmentSubmission {\n  userPhoneNumber {\n    display\n    regionCode\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
   }
 };
 })();

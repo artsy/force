@@ -24,10 +24,8 @@ const FRAGMENT_ME = graphql`
   fragment PhoneNumberRoute_me on Me {
     internalID
     phoneNumber {
-      countryCode
       regionCode
       display(format: NATIONAL)
-      originalNumber
     }
   }
 `
