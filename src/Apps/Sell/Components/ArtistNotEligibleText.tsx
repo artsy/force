@@ -10,9 +10,11 @@ export const ArtistNotEligiblText: React.FC = () => {
       and see updates about the artist.
       <Spacer y={2} />
       If you'd like to know more, you can&nbsp;
-      <RouterLink to="/sell/inquiry">contact an advisor&nbsp;</RouterLink>
+      <RouterLink to="/sell/inquiry" target="_blank" rel="noopener noreferrer">
+        contact an advisor&nbsp;
+      </RouterLink>
       or read about&nbsp;
-      <RouterLink to="/sell/faq">
+      <RouterLink to="/sell/faq" target="_blank" rel="noopener noreferrer">
         what our specialists are looking for
       </RouterLink>
       .
