@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bffd965877589440f076fd6827333436>>
+ * @generated SignedSource<<4963d60f10a9c87e8768ce350530af7f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,11 +24,11 @@ export type ArtworkListArtworksGrid_me$data = {
       readonly pageInfo: {
         readonly hasNextPage: boolean;
       };
-      readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
+      readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks" | "useCollectorSignals_artworksConnection">;
     } | null | undefined;
     readonly internalID: string;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListEmptyState_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListEmptyState_me" | "useCollectorSignals_me">;
   readonly " $fragmentType": "ArtworkListArtworksGrid_me";
 };
 export type ArtworkListArtworksGrid_me$key = {
@@ -58,6 +58,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtworkListArtworksGrid_me",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCollectorSignals_me"
+    },
     {
       "alias": "artworkList",
       "args": [
@@ -103,6 +108,11 @@ const node: ReaderFragment = {
           "name": "artworksConnection",
           "plural": false,
           "selections": [
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "useCollectorSignals_artworksConnection"
+            },
             {
               "alias": null,
               "args": null,
@@ -193,6 +203,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "470207e2f9af102fa62e10d232191f50";
+(node as any).hash = "d0cfb5caf13766e9a35476a80c0197fd";
 
 export default node;
