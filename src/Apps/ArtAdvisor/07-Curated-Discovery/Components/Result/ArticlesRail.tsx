@@ -11,7 +11,6 @@ interface ArticlesRailProps {
 
 export const ArticlesRail: FC<ArticlesRailProps> = ({ state }) => {
   const [articles, setArticles] = useState<DiscoveryArticle[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const params = new URLSearchParams()
@@ -30,7 +29,6 @@ export const ArticlesRail: FC<ArticlesRailProps> = ({ state }) => {
       )
       const data = await response.json()
       setArticles(data)
-      setIsLoading(false)
     }
 
     fetchArticles()
@@ -39,7 +37,7 @@ export const ArticlesRail: FC<ArticlesRailProps> = ({ state }) => {
   return (
     <>
       {articles.length ? (
-        <Box opacity={isLoading ? 0.2 : 1}>
+        <Box>
           <Rail
             title="And these articles"
             getItems={() => {
@@ -50,7 +48,7 @@ export const ArticlesRail: FC<ArticlesRailProps> = ({ state }) => {
           />
         </Box>
       ) : (
-        <SkeletonBox height={460} />
+        <SkeletonBox height={405} />
       )}
     </>
   )
