@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c6c474636128d5e18009ff7bde94e03>>
+ * @generated SignedSource<<d4c920b9dd3f8f787db19fad0f3fb70d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type ArtworkGrid_artworks$data = {
       readonly " $fragmentSpreads": FragmentRefs<"FlatGridItem_artwork" | "GridItem_artwork">;
     } | null | undefined;
   } | null | undefined> | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"useCollectorSignals_artworksConnection">;
   readonly " $fragmentType": "ArtworkGrid_artworks";
 };
 export type ArtworkGrid_artworks$key = {
@@ -55,6 +56,11 @@ return {
   "metadata": null,
   "name": "ArtworkGrid_artworks",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCollectorSignals_artworksConnection"
+    },
     {
       "alias": null,
       "args": null,
@@ -145,6 +151,6 @@ return {
 };
 })();
 
-(node as any).hash = "97bb4e1cb64ddf22804fb50fbb66cff0";
+(node as any).hash = "59da1366f09b376abc5d2d0ce7b24613";
 
 export default node;

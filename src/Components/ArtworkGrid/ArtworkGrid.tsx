@@ -329,6 +329,7 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
         includeAllImages: { type: "Boolean", defaultValue: false }
         includeBlurHash: { type: "Boolean!", defaultValue: true }
       ) {
+      ...useCollectorSignals_artworksConnection
       edges {
         node {
           id
