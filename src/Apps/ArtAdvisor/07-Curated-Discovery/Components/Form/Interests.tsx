@@ -73,6 +73,7 @@ export const Interests: FC<InterestsProps> = props => {
       <Spacer y={1} />
 
       <TextArea
+        style={{ display: "none" }} /* TODO: actually parse this freetext */
         placeholder="Choose from above, or tell us more…"
         onChange={e => {
           const text = e.value
