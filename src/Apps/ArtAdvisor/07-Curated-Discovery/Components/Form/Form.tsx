@@ -20,6 +20,7 @@ import { useEffect, useState } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { StatePreview } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/StatePreview"
+import _ from "lodash"
 
 interface FormProps {
   state: State
@@ -66,6 +67,23 @@ export const Form: React.FC<FormProps> = props => {
 
   const handleSubmit = async () => {
     try {
+      if (_.isEmpty(state.goal)) {
+        sendToast({
+          variant: "error",
+          message: "Please select a goal",
+          ttl: 2000,
+        })
+        return
+      }
+      if (_.isEmpty(state.interests)) {
+        sendToast({
+          variant: "error",
+          message: "Please select some interests",
+          ttl: 2000,
+        })
+        return
+      }
+
       setIsLoading(true)
       const params = new URLSearchParams({ budget: state.budget })
       const url = `/api/advisor/7/budget/intent?${params.toString()}`
