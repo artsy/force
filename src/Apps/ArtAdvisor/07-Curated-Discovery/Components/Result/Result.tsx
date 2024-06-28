@@ -1,11 +1,11 @@
-import { Box, Join, Message, Spacer, Text } from "@artsy/palette"
+import { Box, Join, Spacer, Text } from "@artsy/palette"
 import { Action, State } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
 import { FC } from "react"
 import { MarketingCollectionsRail } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollectionsRail"
-import { Links } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/Links"
 import { ArticlesRail } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArticlesRail"
 import { ArtworksRail } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArtworksRail"
-import { StatePreview } from "./StatePreview"
+import { Header } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/Header"
+import { StatePreview } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/StatePreview"
 
 interface ResultProps {
   state: State
@@ -25,31 +25,7 @@ export const Result: FC<ResultProps> = props => {
 
       <Spacer y={2} />
 
-      <Message borderRadius={4}>
-        <Text>
-          Your goal is: <strong>{state.goal}</strong>
-        </Text>
-        <Text>
-          Your interests are: <strong>{state.interests.join(", ")}</strong>
-        </Text>
-        {state.budgetIntent?.budget?.max ? (
-          <Text>
-            Your budget per artwork is:{" "}
-            <strong>
-              {state.budgetIntent?.numberOfArtworks
-                ? (
-                    state.budgetIntent.budget.max /
-                    state.budgetIntent.numberOfArtworks
-                  ).toFixed(0)
-                : state.budgetIntent.budget.max}{" "}
-              {state.budgetIntent.budget?.currency}
-            </strong>
-          </Text>
-        ) : null}
-        <Box mt={1}>
-          Not correct? <Links dispatch={dispatch} />
-        </Box>
-      </Message>
+      <Header state={state} dispatch={dispatch} />
 
       <Spacer y={4} />
 

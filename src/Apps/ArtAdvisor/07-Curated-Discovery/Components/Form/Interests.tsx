@@ -73,8 +73,8 @@ export const Interests: FC<InterestsProps> = props => {
       <Spacer y={1} />
 
       <TextArea
-        style={{ display: "none" }} /* TODO: actually parse this freetext */
         placeholder="Choose from above, or tell us more…"
+        value={state.interestsFreeText}
         onChange={e => {
           const text = e.value
           dispatch({ type: "SET_FREETEXT_INTEREST", text })

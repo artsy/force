@@ -67,46 +67,17 @@ export const Form: React.FC<FormProps> = props => {
 
   const handleSubmit = async () => {
     try {
-      if (_.isEmpty(state.goal)) {
-        sendToast({
-          variant: "error",
-          message: "Please select a goal",
-          ttl: 2000,
-        })
-        return
-      }
-      if (_.isEmpty(state.interests)) {
-        sendToast({
-          variant: "error",
-          message: "Please select some interests",
-          ttl: 2000,
-        })
-        return
-      }
-
+      validateInput(state)
       setIsLoading(true)
-      const params = new URLSearchParams({ budget: state.budget })
-      const url = `/api/advisor/7/budget/intent?${params.toString()}`
-      const headers = { "Content-Type": "application/json" }
-      const options = { headers }
-      const budgetIntent = await fetch(url, options)
-
-      if (budgetIntent.ok) {
-        const intent = (await budgetIntent.json()) as BudgetIntent
-        dispatch({ type: "SET_BUDGET_INTENT", intent })
-      } else {
-        console.warn(
-          "Could not infer budget from",
-          state.budget,
-          budgetIntent.statusText
-        )
-      }
+      await extractBudgetIntent(state, dispatch)
+      await extractInterestsIntent(state, dispatch)
       dispatch({ type: "SET_STEP", step: "result" })
     } catch (error) {
       console.error(error)
       sendToast({
         variant: "error",
-        message: JSON.stringify(error),
+        message: error.message,
+        ttl: 2000,
       })
     } finally {
       setIsLoading(false)
@@ -147,4 +118,60 @@ export const Form: React.FC<FormProps> = props => {
       <StatePreview state={state} />
     </Box>
   )
+}
+
+function validateInput(state: State) {
+  if (_.isEmpty(state.goal)) {
+    throw new Error("Please select a goal")
+  }
+
+  if (_.isEmpty(state.interests)) {
+    throw new Error("Please select some interests")
+  }
+}
+
+async function extractBudgetIntent(
+  state: State,
+  dispatch: React.Dispatch<Action>
+) {
+  const params = new URLSearchParams({ budget: state.budget })
+  const url = `/api/advisor/7/budget/intent?${params.toString()}`
+  const headers = { "Content-Type": "application/json" }
+  const options = { headers }
+  const budgetIntent = await fetch(url, options)
+
+  if (budgetIntent.ok) {
+    const intent = (await budgetIntent.json()) as BudgetIntent
+    dispatch({ type: "SET_BUDGET_INTENT", intent })
+  } else {
+    console.warn(
+      "Could not infer budget from",
+      state.budget,
+      budgetIntent.statusText
+    )
+  }
+}
+
+async function extractInterestsIntent(
+  state: State,
+  dispatch: React.Dispatch<Action>
+) {
+  const params = new URLSearchParams({
+    interestsFreeText: state.interestsFreeText,
+  })
+  const url = `/api/advisor/7/interests/intent?${params.toString()}`
+  const headers = { "Content-Type": "application/json" }
+  const options = { headers }
+  const interestIntent = await fetch(url, options)
+
+  if (interestIntent.ok) {
+    const parsedInterests = (await interestIntent.json()) as string[]
+    dispatch({ type: "SET_PARSED_INTERESTS", interests: parsedInterests })
+  } else {
+    console.warn(
+      "Could not infer interests from",
+      state.interestsFreeText,
+      interestIntent.statusText
+    )
+  }
 }

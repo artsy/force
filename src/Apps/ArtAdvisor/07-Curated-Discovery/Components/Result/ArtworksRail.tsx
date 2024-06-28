@@ -5,23 +5,10 @@ import { BudgetIntent, State } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
 import { Artwork } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/Artwork"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
+import { DiscoveryArtwork } from "Apps/ArtAdvisor/07-Curated-Discovery/types"
 
 interface ArtworksRailProps {
   state: State
-}
-
-export type DiscoveryArtwork = {
-  id: string
-  internalID: string
-  slug: string
-  title: string
-  date: string
-  rarity: string
-  medium: string
-  materials: string
-  price: string
-  dimensions: string
-  imageUrl: string
 }
 
 function getPriceRange(budgetIntent?: BudgetIntent) {
@@ -77,13 +64,20 @@ export const ArtworksRail: FC<ArtworksRailProps> = props => {
     }
 
     const options = {
-      concepts: state.interests,
+      concepts: [...state.interests, ...state.parsedInterests],
       userId: user?.id,
       excludeArtworkIds,
     }
 
     fetchArtworks(options).then(setArtworks)
-  }, [state.interests, state.goal, state.budgetIntent, excludeArtworkIds, user])
+  }, [
+    state.interests,
+    state.parsedInterests,
+    state.goal,
+    state.budgetIntent,
+    excludeArtworkIds,
+    user,
+  ])
 
   return (
     <>

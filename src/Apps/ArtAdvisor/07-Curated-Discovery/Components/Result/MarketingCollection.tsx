@@ -1,9 +1,9 @@
 import { Box, Flex, Image } from "@artsy/palette"
-import { DiscoveryMarketingCollections } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollectionsRail"
+import { DiscoveryMarketingCollection } from "Apps/ArtAdvisor/07-Curated-Discovery/types"
 import { FC } from "react"
 
 interface MarketingCollectionProps {
-  marketingCollection: DiscoveryMarketingCollections
+  marketingCollection: DiscoveryMarketingCollection
 }
 
 export const MarketingCollection: FC<MarketingCollectionProps> = ({

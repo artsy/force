@@ -3,6 +3,7 @@ import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import _ from "lodash"
 import { WeaviateDB } from "./weaviate-db"
 import { extractBudgetIntent } from "./llm/extractBudgetIntent"
+import { extractInterestsIntent } from "./llm/extractInterestsIntent"
 
 const weaviateDB = new WeaviateDB()
 
@@ -67,6 +68,15 @@ const getBudgetIntent = async (req: ArtsyRequest, res: ArtsyResponse) => {
   res.json(intent)
 }
 
+const getInterestsIntent = async (req: ArtsyRequest, res: ArtsyResponse) => {
+  const { interestsFreeText } = req.query
+
+  if (!interestsFreeText) return res.json([])
+
+  const intent = await extractInterestsIntent(interestsFreeText)
+  res.json(intent.terms || [])
+}
+
 const getArtworks = async (req: ArtsyRequest, res: ArtsyResponse) => {
   const {
     concepts,
@@ -124,6 +134,7 @@ router.get("/articles", getNearArticles)
 router.post("/artworks/dislikes", createArtworkDislike)
 router.post("/artworks/likes", createArtworkLike)
 router.get("/budget/intent", getBudgetIntent)
+router.get("/interests/intent", getInterestsIntent)
 router.get("/artworks", getArtworks)
 router.get("/marketing_collections", getMarketingCollections)
 router.post("/users", createUser)
