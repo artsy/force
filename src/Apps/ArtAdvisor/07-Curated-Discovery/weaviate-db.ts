@@ -162,12 +162,18 @@ export class WeaviateDB {
    */
   async getNearArtworks({
     concepts,
+    excludeArtworkIds,
+    userId,
     limit = 10,
     priceMinUSD,
     priceMaxUSD,
   }: {
     /** List of concepts for semantic search */
     concepts: string[]
+    /** List of Gravity Artwork IDs to exclude from the results */
+    excludeArtworkIds?: string[]
+    /** Gravity ID of the user */
+    userId: string
     /** Max number of artworks to return */
     limit?: number
     /** Minimum price (USD) by which to filter artworks */
@@ -177,6 +183,8 @@ export class WeaviateDB {
   }) {
     console.log("[WeaviateDB] getArtworksNearConcepts", {
       concepts,
+      excludeArtworkIds,
+      userId,
       limit,
       priceMinUSD,
       priceMaxUSD,
@@ -184,11 +192,17 @@ export class WeaviateDB {
 
     const conceptArray = ensureValidConcepts(concepts)
 
+    const user = await this.getUser({ internalID: userId })
+
+    if (!user) throw new Error("Weaviate user not found")
+
     let query = this.client.graphql
       .get()
       .withClassName(this.artworkClass)
       .withNearText({
         concepts: conceptArray,
+        moveTo: getMoveObjects(user.likedArtworkIds),
+        moveAwayFrom: getMoveObjects(user.dislikedArtworkIds),
       })
       .withLimit(limit)
       .withFields(
@@ -235,7 +249,16 @@ export class WeaviateDB {
 
     const response = await query.do()
 
-    const result = response.data.Get.DiscoveryArtworks.map(artwork => {
+    let filteredResponse
+    if (excludeArtworkIds) {
+      filteredResponse = response.data.Get.DiscoveryArtworks.filter(artwork => {
+        return !excludeArtworkIds.includes(artwork.internalID)
+      })
+    } else {
+      filteredResponse = response.data.Get.DiscoveryArtworks
+    }
+
+    const result = filteredResponse.map(artwork => {
       const properties = _.pick(artwork, [
         "internalID",
         "slug",
@@ -357,4 +380,15 @@ function ensureValidConcepts(concepts: string[]) {
   }
 
   return conceptsArray
+}
+
+/**
+ * Format a list of Mongo IDs for moveTo/moveAwayFrom
+ *
+ * @param ids list of Mongo IDs
+ * @param force weight of the move
+ */
+function getMoveObjects(ids: MongoID[], force = 1) {
+  const objects = _.castArray(ids).map(id => ({ id: generateUuid5(id), force }))
+  return { objects, force }
 }
