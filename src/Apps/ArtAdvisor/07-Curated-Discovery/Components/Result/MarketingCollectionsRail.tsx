@@ -29,6 +29,9 @@ export const MarketingCollectionsRail: FC<MarketingCollectionsRailProps> = ({
     state.interests.forEach(concept => {
       params.append("concepts", concept)
     })
+    state.parsedInterests.forEach(concept => {
+      params.append("concepts", concept)
+    })
 
     const fetchMarketingCollections = async () => {
       const response = await fetch(
@@ -40,7 +43,7 @@ export const MarketingCollectionsRail: FC<MarketingCollectionsRailProps> = ({
     }
 
     fetchMarketingCollections()
-  }, [state.interests, state.goal])
+  }, [state.interests, state.parsedInterests, state.goal])
 
   return (
     <>
