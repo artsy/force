@@ -5,6 +5,7 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { storePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
@@ -14,10 +15,14 @@ export const SubmissionHeader: React.FC = () => {
   const context = useSellFlowContext()
   const isLastStep = context?.state?.isLastStep
   const submissionID = context?.state?.submissionID
+  const step = context?.state?.step
 
   const handleSaveAndExit = () => {
-    // TODO: Save the submission and exit
-    trackTappedSubmissionSaveExit(submissionID, context?.state?.step)
+    if (!submissionID) return
+    // Save the submission and current step to local storage
+    storePreviousSubmission(submissionID, step)
+
+    trackTappedSubmissionSaveExit(submissionID, step)
   }
 
   return (

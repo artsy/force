@@ -8,6 +8,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { FinishPreviousSubmissionQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FinishPreviousSubmission"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
@@ -20,7 +21,6 @@ export const HeaderSWA = () => {
   const getInTouchRoute = "/sell/inquiry"
   const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
-
   const {
     trackStartSellingClick,
     trackGetInTouchClick,
@@ -46,6 +46,8 @@ export const HeaderSWA = () => {
           With our global reach and art market expertise, our specialists will
           find the right buyer for your work.
         </Text>
+
+        {!!enableNewSubmissionFlow && <FinishPreviousSubmissionQueryRenderer />}
 
         <Media greaterThanOrEqual="sm">
           <Spacer y={[2, 4]} />
