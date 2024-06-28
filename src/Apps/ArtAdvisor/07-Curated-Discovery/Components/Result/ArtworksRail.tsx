@@ -77,13 +77,20 @@ export const ArtworksRail: FC<ArtworksRailProps> = props => {
     }
 
     const options = {
-      concepts: state.interests,
+      concepts: [...state.interests, ...state.parsedInterests],
       userId: user?.id,
       excludeArtworkIds,
     }
 
     fetchArtworks(options).then(setArtworks)
-  }, [state.interests, state.goal, state.budgetIntent, excludeArtworkIds, user])
+  }, [
+    state.interests,
+    state.parsedInterests,
+    state.goal,
+    state.budgetIntent,
+    excludeArtworkIds,
+    user,
+  ])
 
   return (
     <>

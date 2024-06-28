@@ -30,7 +30,10 @@ export const Result: FC<ResultProps> = props => {
           Your goal is: <strong>{state.goal}</strong>
         </Text>
         <Text>
-          Your interests are: <strong>{state.interests.join(", ")}</strong>
+          Your interests are:{" "}
+          <strong>
+            {[...state.interests, ...state.parsedInterests].join(", ")}
+          </strong>
         </Text>
         {state.budgetIntent?.budget?.max ? (
           <Text>

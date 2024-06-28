@@ -27,6 +27,9 @@ export const ArticlesRail: FC<ArticlesRailProps> = ({ state }) => {
     state.interests.forEach(concept => {
       params.append("concepts", concept)
     })
+    state.parsedInterests.forEach(concept => {
+      params.append("concepts", concept)
+    })
 
     const fetchArticles = async () => {
       const response = await fetch(
@@ -38,7 +41,7 @@ export const ArticlesRail: FC<ArticlesRailProps> = ({ state }) => {
     }
 
     fetchArticles()
-  }, [state.interests, state.goal])
+  }, [state.interests, state.parsedInterests, state.goal])
 
   return (
     <>
