@@ -61,7 +61,7 @@ const createArtworkDislike = async (req: ArtsyRequest, res: ArtsyResponse) => {
 const getBudgetIntent = async (req: ArtsyRequest, res: ArtsyResponse) => {
   const { budget } = req.query
 
-  if (!budget) throw new Error("Provide a budget query string parameter")
+  if (!budget) return res.json({})
 
   const intent = await extractBudgetIntent(budget)
   res.json(intent)

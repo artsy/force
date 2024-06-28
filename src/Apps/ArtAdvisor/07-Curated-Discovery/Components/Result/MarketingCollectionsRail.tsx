@@ -47,7 +47,7 @@ export const MarketingCollectionsRail: FC<MarketingCollectionsRailProps> = ({
       {marketingCollections.length ? (
         <Box opacity={isLoading ? 0.2 : 1}>
           <Rail
-            title="Marketing Collections"
+            title="And these collections"
             getItems={() => {
               return marketingCollections.map(
                 (marketingCollection: DiscoveryMarketingCollections) => {

@@ -45,7 +45,7 @@ export const ArticlesRail: FC<ArticlesRailProps> = ({ state }) => {
       {articles.length ? (
         <Box opacity={isLoading ? 0.2 : 1}>
           <Rail
-            title="Artsy Editorial"
+            title="And these articles"
             getItems={() => {
               return articles.map((article: ArticleType) => {
                 return <Article key={article.internalID} article={article} />
