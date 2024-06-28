@@ -1,5 +1,5 @@
 import { ArticleType } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArticlesRail"
-import { DiscoveryArtwork } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArtworksRail"
+import { DiscoveryArtwork } from "Apps/ArtAdvisor/07-Curated-Discovery/types"
 import { DiscoveryMarketingCollections } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollectionsRail"
 import {
   DiscoveryUser,
