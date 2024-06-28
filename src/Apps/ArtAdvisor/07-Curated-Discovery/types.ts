@@ -24,3 +24,18 @@ export type DiscoveryArtwork = {
   dimensions: string
   imageUrl: string
 }
+
+export type DiscoveryMarketingCollection = {
+  internalID: string
+  imageUrl: string
+  slug: string
+  title: string
+}
+
+export type DiscoveryArticle = {
+  internalID: string
+  imageUrl?: string
+  href: string
+  title: string
+  articleDescription: string
+}

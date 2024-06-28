@@ -1,9 +1,9 @@
 import { Box, Image } from "@artsy/palette"
-import { ArticleType } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArticlesRail"
+import { DiscoveryArticle } from "Apps/ArtAdvisor/07-Curated-Discovery/types"
 import { FC } from "react"
 
 interface ArticleRailsProps {
-  article: ArticleType
+  article: DiscoveryArticle
 }
 
 export const Article: FC<ArticleRailsProps> = ({ article }) => {

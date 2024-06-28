@@ -67,23 +67,7 @@ export const Form: React.FC<FormProps> = props => {
 
   const handleSubmit = async () => {
     try {
-      if (_.isEmpty(state.goal)) {
-        sendToast({
-          variant: "error",
-          message: "Please select a goal",
-          ttl: 2000,
-        })
-        return
-      }
-      if (_.isEmpty(state.interests)) {
-        sendToast({
-          variant: "error",
-          message: "Please select some interests",
-          ttl: 2000,
-        })
-        return
-      }
-
+      validateInput(state)
       setIsLoading(true)
       await extractBudgetIntent(state, dispatch)
       await extractInterestsIntent(state, dispatch)
@@ -92,7 +76,8 @@ export const Form: React.FC<FormProps> = props => {
       console.error(error)
       sendToast({
         variant: "error",
-        message: JSON.stringify(error),
+        message: error.message,
+        ttl: 2000,
       })
     } finally {
       setIsLoading(false)
@@ -133,6 +118,16 @@ export const Form: React.FC<FormProps> = props => {
       <StatePreview state={state} />
     </Box>
   )
+}
+
+function validateInput(state: State) {
+  if (_.isEmpty(state.goal)) {
+    throw new Error("Please select a goal")
+  }
+
+  if (_.isEmpty(state.interests)) {
+    throw new Error("Please select some interests")
+  }
 }
 
 async function extractBudgetIntent(

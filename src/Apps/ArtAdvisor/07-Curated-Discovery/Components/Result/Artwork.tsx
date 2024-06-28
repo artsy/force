@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { Box, Clickable, Flex, Image, useToasts, Text } from "@artsy/palette"
-import { DiscoveryArtwork } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArtworksRail"
+import { DiscoveryArtwork } from "Apps/ArtAdvisor/07-Curated-Discovery/types"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import { useSystemContext } from "System/Hooks/useSystemContext"
