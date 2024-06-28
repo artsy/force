@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ee102d5aacaa9e4f8522be1c53d172e>>
+ * @generated SignedSource<<8a1d71da43e9957aed97c7238e6c934a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,19 +25,19 @@ export type UserInterestInput = {
   private?: boolean | null | undefined;
   sessionID?: string | null | undefined;
 };
-export type CollectorProfileArtistsAddDialogCreateUserInterestsMutation$variables = {
+export type CollectorProfileArtistsAddCreateUserInterestsMutation$variables = {
   input: CreateUserInterestsMutationInput;
 };
-export type CollectorProfileArtistsAddDialogCreateUserInterestsMutation$data = {
+export type CollectorProfileArtistsAddCreateUserInterestsMutation$data = {
   readonly createUserInterests: {
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileArtistsList_me">;
     };
   } | null | undefined;
 };
-export type CollectorProfileArtistsAddDialogCreateUserInterestsMutation = {
-  response: CollectorProfileArtistsAddDialogCreateUserInterestsMutation$data;
-  variables: CollectorProfileArtistsAddDialogCreateUserInterestsMutation$variables;
+export type CollectorProfileArtistsAddCreateUserInterestsMutation = {
+  response: CollectorProfileArtistsAddCreateUserInterestsMutation$data;
+  variables: CollectorProfileArtistsAddCreateUserInterestsMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -109,7 +109,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CollectorProfileArtistsAddDialogCreateUserInterestsMutation",
+    "name": "CollectorProfileArtistsAddCreateUserInterestsMutation",
     "selections": [
       {
         "alias": null,
@@ -149,7 +149,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CollectorProfileArtistsAddDialogCreateUserInterestsMutation",
+    "name": "CollectorProfileArtistsAddCreateUserInterestsMutation",
     "selections": [
       {
         "alias": null,
@@ -462,16 +462,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "92e7d7d20f92071bd4af3a14b7b7973d",
+    "cacheID": "d22745fcec62d4322ed92f63c0ddf761",
     "id": null,
     "metadata": {},
-    "name": "CollectorProfileArtistsAddDialogCreateUserInterestsMutation",
+    "name": "CollectorProfileArtistsAddCreateUserInterestsMutation",
     "operationKind": "mutation",
-    "text": "mutation CollectorProfileArtistsAddDialogCreateUserInterestsMutation(\n  $input: CreateUserInterestsMutationInput!\n) {\n  createUserInterests(input: $input) {\n    me {\n      ...CollectorProfileArtistsList_me_4aMZep\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtistDialog_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      isPersonalArtist\n      counts {\n        myCollectedArtworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  ...CollectorProfileArtistsListArtistDialog_userInterestEdge\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      isPersonalArtist\n      counts {\n        myCollectedArtworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsList_me_4aMZep on Me {\n  userInterestsConnection(page: 1, size: 10, interestType: ARTIST) {\n    totalCount\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    pageInfo {\n      hasNextPage\n    }\n    edges {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      internalID\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "mutation CollectorProfileArtistsAddCreateUserInterestsMutation(\n  $input: CreateUserInterestsMutationInput!\n) {\n  createUserInterests(input: $input) {\n    me {\n      ...CollectorProfileArtistsList_me_4aMZep\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtistDialog_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      isPersonalArtist\n      counts {\n        myCollectedArtworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  ...CollectorProfileArtistsListArtistDialog_userInterestEdge\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      isPersonalArtist\n      counts {\n        myCollectedArtworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsList_me_4aMZep on Me {\n  userInterestsConnection(page: 1, size: 10, interestType: ARTIST) {\n    totalCount\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    pageInfo {\n      hasNextPage\n    }\n    edges {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      internalID\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5db077f8aca7c3b3a296135a9665d193";
+(node as any).hash = "ac4f43f322c0addc9bce4a3221e2e2e4";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c719595a2e58cd4178a35605706aff63>>
+ * @generated SignedSource<<821fabc5d08e52d716793323a8108942>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -92,6 +92,27 @@ return {
                 "name": "city",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "state",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "postalCode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "country",
+                "storageKey": null
+              },
               (v0/*: any*/)
             ],
             "storageKey": null
@@ -117,6 +138,54 @@ return {
             "name": "shareFollows",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 1
+              },
+              {
+                "kind": "Literal",
+                "name": "interestType",
+                "value": "ARTIST"
+              }
+            ],
+            "concreteType": "UserInterestConnection",
+            "kind": "LinkedField",
+            "name": "userInterestsConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "userInterestsConnection(first:1,interestType:\"ARTIST\")"
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CollectorProfileType",
+            "kind": "LinkedField",
+            "name": "collectorProfile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "lastUpdatePromptAt",
+                "storageKey": null
+              },
+              (v0/*: any*/)
+            ],
+            "storageKey": null
+          },
           (v0/*: any*/)
         ],
         "storageKey": null
@@ -124,12 +193,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2524a8c8fad5a6418555dc39fd08ff59",
+    "cacheID": "f9c5f02861a409b0f3118ed353a711a9",
     "id": null,
     "metadata": {},
     "name": "useInquiryContextQuery",
     "operationKind": "query",
-    "text": "query useInquiryContextQuery {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  collectorLevel\n  location {\n    city\n    id\n  }\n  otherRelevantPositions\n  profession\n  shareFollows\n}\n"
+    "text": "query useInquiryContextQuery {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  collectorLevel\n  location {\n    city\n    state\n    postalCode\n    country\n    id\n  }\n  otherRelevantPositions\n  profession\n  shareFollows\n  userInterestsConnection(interestType: ARTIST, first: 1) {\n    totalCount\n  }\n  collectorProfile {\n    lastUpdatePromptAt\n    id\n  }\n}\n"
   }
 };
 })();

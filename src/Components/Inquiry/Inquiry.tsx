@@ -46,8 +46,9 @@ const InquiryDialog: React.FC = () => {
     <Box
       position="relative"
       bg="white100"
+      // FIXME: Not a good pattern
       width={["100vw", current === "Confirmation" ? 450 : 550]}
-      height={["100vh", "100%"]}
+      height={["100vh", current === "ArtistsInCollection" ? 700 : "100%"]}
       p={2}
       style={{ boxShadow: theme.effects.dropShadow }}
     >

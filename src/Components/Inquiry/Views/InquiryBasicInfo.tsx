@@ -43,6 +43,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
         state: values.location?.state || null,
         country: values.location?.country || null,
         countryCode: values.location?.countryCode || null,
+        postalCode: values.location?.postalCode || null,
       }
 
       const payload = {
