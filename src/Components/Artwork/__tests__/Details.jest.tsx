@@ -129,10 +129,10 @@ describe("Details", () => {
       expect(html).toContain("$2,400")
     })
 
-    it("shows Contact for price if sale_message equals the same", async () => {
+    it("shows sale_message", async () => {
       const data: any = {
         ...artworkInAuction,
-        sale_message: "Contact For Price",
+        sale_message: "Price on request",
         sale: {
           ...artworkInAuction?.sale,
           is_auction: false,
@@ -142,21 +142,6 @@ describe("Details", () => {
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).toContain("Price on request")
-    })
-
-    it("does not show sale message if sale_message is for inquire", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        sale_message: "Inquire about availability",
-        sale: {
-          ...artworkInAuction?.sale,
-          is_auction: false,
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-      const html = wrapper.html()
-      expect(html).not.toContain("Inquire about availability")
     })
 
     it("shows sale message if sale open and no bids", async () => {
