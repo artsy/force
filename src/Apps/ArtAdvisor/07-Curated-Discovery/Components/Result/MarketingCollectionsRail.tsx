@@ -15,7 +15,6 @@ export const MarketingCollectionsRail: FC<MarketingCollectionsRailProps> = ({
   const [marketingCollections, setMarketingCollections] = useState<
     DiscoveryMarketingCollection[]
   >([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const params = new URLSearchParams()
@@ -33,7 +32,6 @@ export const MarketingCollectionsRail: FC<MarketingCollectionsRailProps> = ({
       )
       const data = await response.json()
       setMarketingCollections(data)
-      setIsLoading(false)
     }
 
     fetchMarketingCollections()
@@ -42,7 +40,7 @@ export const MarketingCollectionsRail: FC<MarketingCollectionsRailProps> = ({
   return (
     <>
       {marketingCollections.length ? (
-        <Box opacity={isLoading ? 0.2 : 1}>
+        <Box>
           <Rail
             title="And these collections"
             getItems={() => {
@@ -60,7 +58,7 @@ export const MarketingCollectionsRail: FC<MarketingCollectionsRailProps> = ({
           />
         </Box>
       ) : (
-        <SkeletonBox height={460} />
+        <SkeletonBox height={445} />
       )}
     </>
   )
