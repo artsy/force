@@ -90,7 +90,7 @@ export const ArtworksRail: FC<ArtworksRailProps> = props => {
                   key={i}
                   index={i}
                   hideSaleInfo={true}
-                  maxImageHeight={400}
+                  maxImageHeight={375}
                 />
               )
             })}

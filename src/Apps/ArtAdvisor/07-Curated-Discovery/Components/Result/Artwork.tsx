@@ -5,6 +5,10 @@ import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import _ from "lodash"
+import { resize } from "Utils/resizer"
+import { RouterLink } from "System/Components/RouterLink"
+
+const IMAGE_HEIGHT = 300
 
 interface ArtworkProps {
   artwork: DiscoveryArtwork
@@ -74,23 +78,49 @@ export const Artwork: FC<ArtworkProps> = props => {
     }
   }
 
+  const resizedImage = resize(
+    artwork.imageUrl || "https://www.artsy.net/images/missing_image.png",
+    { height: IMAGE_HEIGHT }
+  )
+
   return (
-    <Box>
-      <Image src={artwork.imageUrl} height={300} />
-      <Flex py={1} gap={1} justifyContent={"center"}>
-        <Clickable onClick={handleClickLike}>
-          <CheckmarkFillIcon fill={"black60"} size={30} />
-        </Clickable>
-        <Clickable onClick={handleClickDislike}>
-          <CloseFillIcon fill={"black60"} size={30} />
-        </Clickable>
-      </Flex>
-      <Flex flexDirection="column" alignItems="center">
-        <a href={`/artwork/${artwork.slug}`} target="_blank">
-          {artwork.title}
-        </a>
-        <Text>{artwork.price}</Text>
-      </Flex>
-    </Box>
+    <RouterLink
+      to={`/artwork/${artwork.slug}`}
+      target="_blank"
+      textDecoration={"none"}
+      overflow={"hidden"}
+    >
+      <Box>
+        <Image src={resizedImage} height={IMAGE_HEIGHT} />
+
+        <Flex py={1} gap={1} justifyContent={"center"}>
+          <Clickable onClick={handleClickLike}>
+            <CheckmarkFillIcon fill={"black60"} size={25} />
+          </Clickable>
+          <Clickable onClick={handleClickDislike}>
+            <CloseFillIcon fill={"black60"} size={25} />
+          </Clickable>
+        </Flex>
+
+        <Flex flexDirection="column" alignItems={"center"}>
+          <Text variant="sm-display" overflowEllipsis>
+            {artwork.artistNames?.join(", ") || "Unknown Artist"}
+          </Text>
+          <Text variant="sm-display" color="black60" overflowEllipsis>
+            <i>{artwork.title}</i>
+            {artwork.date && `, ${artwork.date}`}
+          </Text>
+
+          <Text
+            variant="xs"
+            color="black100"
+            fontWeight="bold"
+            overflowEllipsis
+          >
+            {artwork.price}
+          </Text>
+        </Flex>
+      </Box>
+    </RouterLink>
   )
 }
