@@ -19,6 +19,8 @@ import {
 import { useEffect, useState } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRouter } from "System/Hooks/useRouter"
+import { StatePreview } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/StatePreview"
+import _ from "lodash"
 
 interface FormProps {
   state: State
@@ -65,6 +67,23 @@ export const Form: React.FC<FormProps> = props => {
 
   const handleSubmit = async () => {
     try {
+      if (_.isEmpty(state.goal)) {
+        sendToast({
+          variant: "error",
+          message: "Please select a goal",
+          ttl: 2000,
+        })
+        return
+      }
+      if (_.isEmpty(state.interests)) {
+        sendToast({
+          variant: "error",
+          message: "Please select some interests",
+          ttl: 2000,
+        })
+        return
+      }
+
       setIsLoading(true)
       const params = new URLSearchParams({ budget: state.budget })
       const url = `/api/advisor/7/budget/intent?${params.toString()}`
@@ -75,15 +94,14 @@ export const Form: React.FC<FormProps> = props => {
       if (budgetIntent.ok) {
         const intent = (await budgetIntent.json()) as BudgetIntent
         dispatch({ type: "SET_BUDGET_INTENT", intent })
-        dispatch({ type: "SET_STEP", step: "result" })
       } else {
-        sendToast({
-          variant: "error",
-          message: `Could not infer budget: ${
-            budgetIntent.statusText
-          } (Input: ${state.budget || "missing"})`,
-        })
+        console.warn(
+          "Could not infer budget from",
+          state.budget,
+          budgetIntent.statusText
+        )
       }
+      dispatch({ type: "SET_STEP", step: "result" })
     } catch (error) {
       console.error(error)
       sendToast({
@@ -100,16 +118,18 @@ export const Form: React.FC<FormProps> = props => {
       <Spacer y={4} />
 
       <Text as="h1" variant={"xl"}>
-        Discover Blah
+        Explore Artsy
       </Text>
 
-      <Join separator={<Spacer y={2} />}>
+      <Spacer y={4} />
+
+      <Join separator={<Spacer y={4} />}>
         <Goals state={state} dispatch={dispatch} />
         <Budget state={state} dispatch={dispatch} />
         <Interests state={state} dispatch={dispatch} />
       </Join>
 
-      <Spacer y={2} />
+      <Spacer y={4} />
 
       <Flex gap={1}>
         <Button
@@ -123,6 +143,8 @@ export const Form: React.FC<FormProps> = props => {
           {isLoading ? <Spinner color={"white"} /> : "Show me things"}
         </Button>
       </Flex>
+
+      <StatePreview state={state} />
     </Box>
   )
 }

@@ -105,7 +105,7 @@ export const ArtworksRail: FC<ArtworksRailProps> = props => {
       ) : (
         <Box opacity={isLoading ? 0.2 : 1}>
           <Rail
-            title="Artworks"
+            title="We think you’ll be interested in these works"
             getItems={() => {
               return artworks.map((artwork: DiscoveryArtwork) => {
                 return (
