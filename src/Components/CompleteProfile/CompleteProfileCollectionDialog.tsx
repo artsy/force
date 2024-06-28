@@ -11,8 +11,6 @@ export const CompleteProfileCollectionDialog: FC<CompleteProfileCollectionDialog
   return (
     <CollectorProfileArtistsAddDialog
       title="Tell us about the artists your collection."
-      description="Show off your collection and make a great impression."
-      isCancellable
       onClose={onClose}
     />
   )
