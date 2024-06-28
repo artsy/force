@@ -15,6 +15,7 @@ export type State = {
   budgetIntent: BudgetIntent | undefined
   interests: string[]
   interestsFreeText: string
+  parsedInterests: string[]
 }
 
 const initialState: State = {
@@ -24,6 +25,7 @@ const initialState: State = {
   budgetIntent: undefined,
   interests: [],
   interestsFreeText: "",
+  parsedInterests: [],
 }
 
 export type Action =
@@ -38,6 +40,7 @@ export type Action =
   | { type: "TOGGLE_INTEREST"; interest: string }
   | { type: "CLEAR_INTERESTS" }
   | { type: "SET_FREETEXT_INTEREST"; text: string }
+  | { type: "SET_PARSED_INTERESTS"; interests: string[] }
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -64,6 +67,8 @@ function reducer(state: State, action: Action): State {
       return { ...state, interests: [] }
     case "SET_FREETEXT_INTEREST":
       return { ...state, interestsFreeText: action.text }
+    case "SET_PARSED_INTERESTS":
+      return { ...state, parsedInterests: action.interests }
 
     default:
       return state
