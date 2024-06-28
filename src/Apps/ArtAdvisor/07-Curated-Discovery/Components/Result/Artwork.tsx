@@ -84,16 +84,54 @@ export const Artwork: FC<ArtworkProps> = props => {
   )
 
   return (
-    <RouterLink
-      to={`/artwork/${artwork.slug}`}
-      target="_blank"
-      textDecoration={"none"}
-      overflow={"hidden"}
-    >
-      <Box>
+    <Box>
+      <RouterLink
+        to={`/artwork/${artwork.slug}`}
+        target="_blank"
+        textDecoration={"none"}
+        overflow={"hidden"}
+      >
         <Image src={resizedImage} height={IMAGE_HEIGHT} />
+      </RouterLink>
 
-        <Flex py={1} gap={1} justifyContent={"center"}>
+      <Flex
+        alignItems={"flex-start"}
+        justifyContent={"space-between"}
+        gap={1}
+        pt={0.5}
+      >
+        <RouterLink
+          to={`/artwork/${artwork.slug}`}
+          target="_blank"
+          textDecoration={"none"}
+          overflow={"hidden"}
+        >
+          <Flex flexDirection="column">
+            <Text variant="sm-display" overflowEllipsis>
+              {artwork.artistNames?.join(", ") || "Unknown Artist"}
+            </Text>
+            <Text
+              variant="sm-display"
+              color="black60"
+              overflowEllipsis
+              maxWidth={"15em"}
+            >
+              <i>{artwork.title}</i>
+              {artwork.date && `, ${artwork.date}`}
+            </Text>
+
+            <Text
+              variant="xs"
+              color="black100"
+              fontWeight="bold"
+              overflowEllipsis
+            >
+              {artwork.price}
+            </Text>
+          </Flex>
+        </RouterLink>
+
+        <Flex gap={1} justifyContent={"center"}>
           <Clickable onClick={handleClickLike}>
             <CheckmarkFillIcon fill={"black60"} size={25} />
           </Clickable>
@@ -101,26 +139,7 @@ export const Artwork: FC<ArtworkProps> = props => {
             <CloseFillIcon fill={"black60"} size={25} />
           </Clickable>
         </Flex>
-
-        <Flex flexDirection="column" alignItems={"center"}>
-          <Text variant="sm-display" overflowEllipsis>
-            {artwork.artistNames?.join(", ") || "Unknown Artist"}
-          </Text>
-          <Text variant="sm-display" color="black60" overflowEllipsis>
-            <i>{artwork.title}</i>
-            {artwork.date && `, ${artwork.date}`}
-          </Text>
-
-          <Text
-            variant="xs"
-            color="black100"
-            fontWeight="bold"
-            overflowEllipsis
-          >
-            {artwork.price}
-          </Text>
-        </Flex>
-      </Box>
-    </RouterLink>
+      </Flex>
+    </Box>
   )
 }
