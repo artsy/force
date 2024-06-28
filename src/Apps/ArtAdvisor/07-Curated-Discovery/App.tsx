@@ -12,7 +12,7 @@ export type State = {
   currentStep: Step
   goal: string
   budget: string
-  budgetIntent: BudgetIntent | undefined
+  budgetIntent: BudgetIntent
   interests: string[]
   interestsFreeText: string
   parsedInterests: string[]
@@ -22,7 +22,7 @@ const initialState: State = {
   currentStep: "form",
   goal: "",
   budget: "",
-  budgetIntent: undefined,
+  budgetIntent: {},
   interests: [],
   interestsFreeText: "",
   parsedInterests: [],
