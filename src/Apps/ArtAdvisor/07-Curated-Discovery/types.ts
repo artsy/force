@@ -23,6 +23,7 @@ export type DiscoveryArtwork = {
   price: string
   dimensions: string
   imageUrl: string
+  artistNames: string[]
 }
 
 export type DiscoveryMarketingCollection = {

@@ -208,7 +208,7 @@ export class WeaviateDB {
       })
       .withLimit(limit)
       .withFields(
-        "internalID slug title date rarity medium materials price dimensions imageUrl _additional { id distance }"
+        "internalID slug title date rarity medium materials price dimensions imageUrl hasArtist { ... on DiscoveryArtists { name } } _additional { id distance }"
       )
 
     if (priceMinUSD && priceMaxUSD) {
@@ -277,6 +277,7 @@ export class WeaviateDB {
       return {
         id: artwork._additional.id,
         ...properties,
+        artistNames: artwork.hasArtist.map(a => a.name),
         distance: artwork._additional.distance,
       }
     })
