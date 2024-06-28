@@ -1,8 +1,8 @@
 import {
   DiscoveryArticle,
   DiscoveryArtwork,
+  DiscoveryMarketingCollection,
 } from "Apps/ArtAdvisor/07-Curated-Discovery/types"
-import { DiscoveryMarketingCollections } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollectionsRail"
 import {
   DiscoveryUser,
   MongoID,
@@ -318,7 +318,7 @@ export class WeaviateDB {
 
     const result = response.data.Get[this.marketingCollectionClass]
 
-    return result as DiscoveryMarketingCollections[]
+    return result as DiscoveryMarketingCollection[]
   }
 
   /**

@@ -1,6 +1,7 @@
 import { Box, SkeletonBox } from "@artsy/palette"
 import { State } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
 import { MarketingCollection } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollection"
+import { DiscoveryMarketingCollection } from "Apps/ArtAdvisor/07-Curated-Discovery/types"
 import { Rail } from "Components/Rail/Rail"
 import { FC, useEffect, useState } from "react"
 
@@ -8,18 +9,11 @@ interface MarketingCollectionsRailProps {
   state: State
 }
 
-export interface DiscoveryMarketingCollections {
-  internalID: string
-  imageUrl: string
-  slug: string
-  title: string
-}
-
 export const MarketingCollectionsRail: FC<MarketingCollectionsRailProps> = ({
   state,
 }) => {
   const [marketingCollections, setMarketingCollections] = useState<
-    DiscoveryMarketingCollections[]
+    DiscoveryMarketingCollection[]
   >([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
@@ -53,7 +47,7 @@ export const MarketingCollectionsRail: FC<MarketingCollectionsRailProps> = ({
             title="And these collections"
             getItems={() => {
               return marketingCollections.map(
-                (marketingCollection: DiscoveryMarketingCollections) => {
+                (marketingCollection: DiscoveryMarketingCollection) => {
                   return (
                     <MarketingCollection
                       key={marketingCollection.internalID}

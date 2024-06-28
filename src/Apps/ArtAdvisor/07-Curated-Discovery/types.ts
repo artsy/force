@@ -25,6 +25,13 @@ export type DiscoveryArtwork = {
   imageUrl: string
 }
 
+export type DiscoveryMarketingCollection = {
+  internalID: string
+  imageUrl: string
+  slug: string
+  title: string
+}
+
 export type DiscoveryArticle = {
   internalID: string
   imageUrl?: string
