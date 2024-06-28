@@ -24,7 +24,7 @@ export const STEPS = [
   "thank-you",
 ] as const
 
-const INITIAL_STEP: SellFlowStep = "artist"
+export const INITIAL_STEP: SellFlowStep = "artist"
 const SUBMIT_STEP: SellFlowStep = "phone-number"
 
 export type SellFlowStep = typeof STEPS[number]
