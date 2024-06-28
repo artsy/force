@@ -1,6 +1,7 @@
 import { Box, SkeletonBox } from "@artsy/palette"
 import { State } from "Apps/ArtAdvisor/07-Curated-Discovery/App"
 import { Article } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/Article"
+import { DiscoveryArticle } from "Apps/ArtAdvisor/07-Curated-Discovery/types"
 import { Rail } from "Components/Rail/Rail"
 import { FC, useEffect, useState } from "react"
 
@@ -8,16 +9,8 @@ interface ArticlesRailProps {
   state: State
 }
 
-export interface ArticleType {
-  internalID: string
-  imageUrl?: string
-  href: string
-  title: string
-  articleDescription: string
-}
-
 export const ArticlesRail: FC<ArticlesRailProps> = ({ state }) => {
-  const [articles, setArticles] = useState<ArticleType[]>([])
+  const [articles, setArticles] = useState<DiscoveryArticle[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
@@ -50,7 +43,7 @@ export const ArticlesRail: FC<ArticlesRailProps> = ({ state }) => {
           <Rail
             title="And these articles"
             getItems={() => {
-              return articles.map((article: ArticleType) => {
+              return articles.map((article: DiscoveryArticle) => {
                 return <Article key={article.internalID} article={article} />
               })
             }}

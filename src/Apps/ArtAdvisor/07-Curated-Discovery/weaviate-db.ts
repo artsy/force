@@ -1,5 +1,7 @@
-import { ArticleType } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/ArticlesRail"
-import { DiscoveryArtwork } from "Apps/ArtAdvisor/07-Curated-Discovery/types"
+import {
+  DiscoveryArticle,
+  DiscoveryArtwork,
+} from "Apps/ArtAdvisor/07-Curated-Discovery/types"
 import { DiscoveryMarketingCollections } from "Apps/ArtAdvisor/07-Curated-Discovery/Components/Result/MarketingCollectionsRail"
 import {
   DiscoveryUser,
@@ -350,7 +352,7 @@ export class WeaviateDB {
       )
       .do()
 
-    const result: ArticleType[] = response.data.Get[this.articlesClass]
+    const result: DiscoveryArticle[] = response.data.Get[this.articlesClass]
 
     /**
      * Note: Because we return article sections, a single article can appear
