@@ -541,7 +541,6 @@ const FulfillmentDetailsFormLayout = (
                       data-testid="AddressForm_phoneNumber"
                     />
                   </Column>
-                  <Spacer y={2} />
                 </>
               }
             </GridColumns>
