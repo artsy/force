@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd0c9b484512228e665fc7f97b1c7253>>
+ * @generated SignedSource<<426e7cc1ce30df4c09b5418d67c84111>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,11 @@ export type PhotosRoute_submission$data = {
     readonly size: string | null | undefined;
   } | null | undefined> | null | undefined;
   readonly externalId: string;
+  readonly myCollectionArtwork: {
+    readonly images: ReadonlyArray<{
+      readonly url: string | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "PhotosRoute_submission";
 };
 export type PhotosRoute_submission$key = {
@@ -37,6 +42,41 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "externalId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artwork",
+      "kind": "LinkedField",
+      "name": "myCollectionArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "images",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "large"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:\"large\")"
+            }
+          ],
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -90,6 +130,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "427e6443319e04c11ec187d2a9d34983";
+(node as any).hash = "c64280d04b3f622527c15ed31d37b169";
 
 export default node;

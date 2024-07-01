@@ -11,12 +11,23 @@ import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { UploadMoreMessage } from "Apps/Sell/Components/UploadMoreMessage"
 import { ImagePreviewsGrid } from "Apps/Sell/Components/ImagePreviewsGrid"
 import { UploadPhotosForm } from "Apps/Sell/Components/UploadPhotosForm"
-import { Asset, photoFromAsset } from "Apps/Sell/Utils/photoFromAsset"
+import {
+  Asset,
+  photoFromAsset,
+  photosFromMyCollectionArtwork,
+} from "Apps/Sell/Utils/uploadUtils"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 
 const FRAGMENT = graphql`
   fragment PhotosRoute_submission on ConsignmentSubmission {
     externalId
+
+    myCollectionArtwork {
+      images {
+        url(version: "large")
+      }
+    }
+
     assets {
       id
       size
@@ -49,9 +60,12 @@ interface PhotosRouteProps {
 export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
 
-  const photos: Photo[] = (submission.assets as Asset[]).map(asset =>
-    photoFromAsset(asset)
-  )
+  // when user creates submission from MyC artwork AND photos were not initially
+  // uploaded to Convection yet - use photos from MyC artwork, then use assets
+  const photos: Photo[] =
+    submission.myCollectionArtwork && (submission.assets || []).length === 0
+      ? photosFromMyCollectionArtwork(submission.myCollectionArtwork)
+      : (submission.assets as Asset[]).map(asset => photoFromAsset(asset))
 
   const initialValues: PhotosFormValues = {
     submissionId: submission.externalId,

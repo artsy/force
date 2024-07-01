@@ -35,7 +35,9 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   const [photoSrc, setPhotoSrc] = useState<string>(photo.url || "")
 
   useEffect(() => {
-    if (photo.file) {
+    if (photo.externalUrl) {
+      setPhotoSrc(photo.externalUrl)
+    } else if (photo.file) {
       const reader = new FileReader()
 
       reader.readAsDataURL(photo.file as File)
