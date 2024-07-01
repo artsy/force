@@ -1,13 +1,16 @@
-import { Join, PhoneInput, Spacer, Text } from "@artsy/palette"
+import { Join, Message, PhoneInput, Spacer, Text } from "@artsy/palette"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { validatePhoneNumber } from "Components/PhoneNumberInput"
 import { COUNTRY_CODES, countries } from "Utils/countries"
 import { PhoneNumberRoute_me$key } from "__generated__/PhoneNumberRoute_me.graphql"
 import { PhoneNumberRoute_submission$key } from "__generated__/PhoneNumberRoute_submission.graphql"
 import { Formik } from "formik"
+import { throttle } from "lodash"
 import * as React from "react"
+import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
@@ -78,33 +81,62 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
       validateOnMount
       validationSchema={Schema}
     >
-      {({ handleChange, setFieldValue, values }) => (
-        <SubmissionLayout>
-          <SubmissionStepTitle>Add phone number</SubmissionStepTitle>
+      {({ handleChange, setFieldValue, values }) => {
+        const [isPhoneNumberValid, setIsPhoneNumberValid] = React.useState(true)
 
-          <Join separator={<Spacer y={4} />}>
-            <Text variant={["xs", "sm"]} textColor={["black60", "black100"]}>
-              Add your number (optional) so an Artsy Advisor can contact you
-              directly by phone.
-            </Text>
+        const validate = throttle(async () => {
+          const isValid = await validatePhoneNumber({
+            national: values.userPhone,
+            regionCode: values.phoneNumberRegionCode,
+          })
 
-            <PhoneInput
-              options={countries}
-              onSelect={option => {
-                setFieldValue("phoneNumberRegionCode", option.value)
-              }}
-              name="userPhone"
-              onChange={handleChange}
-              dropdownValue={values.phoneNumberRegionCode}
-              defaultValue={values.userPhone}
-              placeholder="(000) 000 0000"
-              data-testid="phone-input"
-              type="tel"
-            />
-          </Join>
-          <DevDebug />
-        </SubmissionLayout>
-      )}
+          setIsPhoneNumberValid(isValid)
+        }, 500)
+
+        useEffect(() => {
+          validate()
+        }, [values.userPhone, values.phoneNumberRegionCode])
+
+        return (
+          <SubmissionLayout>
+            <SubmissionStepTitle>Add phone number</SubmissionStepTitle>
+
+            <Join separator={<Spacer y={4} />}>
+              <Text variant={["xs", "sm"]} textColor={["black60", "black100"]}>
+                Add your number (optional) so an Artsy Advisor can contact you
+                directly by phone.
+              </Text>
+
+              <PhoneInput
+                options={countries}
+                onSelect={option => {
+                  setFieldValue("phoneNumberRegionCode", option.value)
+                }}
+                name="userPhone"
+                onChange={handleChange}
+                dropdownValue={values.phoneNumberRegionCode}
+                defaultValue={values.userPhone}
+                placeholder="(000) 000 0000"
+                data-testid="phone-input"
+                type="tel"
+                // error={
+                //   values.userPhone && !isPhoneNumberValid
+                //     ? "Invalid phone number"
+                //     : undefined
+                // }
+              />
+
+              {values.userPhone && !isPhoneNumberValid && (
+                <Message
+                  variant="warning"
+                  title="Please add a valid phone number."
+                />
+              )}
+            </Join>
+            <DevDebug />
+          </SubmissionLayout>
+        )
+      }}
     </Formik>
   )
 }
