@@ -4,6 +4,7 @@ import { StepsNavigation } from "Apps/Sell/Components/StepsNavigation"
 import { SubmissionHeader } from "Apps/Sell/Components/SubmissionHeader"
 import { SubmissionProgressBar } from "Apps/Sell/Components/SubmissionProgressBar"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { FadeInBox } from "Components/FadeInBox"
 import { useEffect } from "react"
 
 const CONTENT_WIDTH = 640
@@ -44,9 +45,9 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
             </Column>
           </GridColumns>
         ) : (
-          <Box maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={[2, 4]}>
+          <FadeInBox maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={[2, 4]}>
             {children}
-          </Box>
+          </FadeInBox>
         )}
       </Flex>
 

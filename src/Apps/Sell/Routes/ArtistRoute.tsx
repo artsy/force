@@ -190,16 +190,18 @@ export const ArtistRoute: React.FC<{
             title="Artist"
           />
 
-          <Text mt={2} variant="sm" color="black60">
-            Currently, artists can not sell their own work on Artsy.{" "}
-            <RouterLink
-              to="https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn more.
-            </RouterLink>
-          </Text>
+          {!formik.values.artistName && (
+            <Text mt={2} variant="sm" color="black60">
+              Currently, artists can not sell their own work on Artsy.{" "}
+              <RouterLink
+                to="https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn more.
+              </RouterLink>
+            </Text>
+          )}
 
           {!isNewSubmission &&
             formik.values.artistId &&

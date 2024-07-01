@@ -1,18 +1,18 @@
-import * as React from "react"
-import { PhotosRoute_submission$key } from "__generated__/PhotosRoute_submission.graphql"
 import { Text } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import * as Yup from "yup"
-import { Formik } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
-import { RouterLink } from "System/Components/RouterLink"
-import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
-import { UploadMoreMessage } from "Apps/Sell/Components/UploadMoreMessage"
 import { ImagePreviewsGrid } from "Apps/Sell/Components/ImagePreviewsGrid"
+import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
+import { UploadMoreMessage } from "Apps/Sell/Components/UploadMoreMessage"
 import { UploadPhotosForm } from "Apps/Sell/Components/UploadPhotosForm"
 import { Asset, photoFromAsset } from "Apps/Sell/Utils/photoFromAsset"
-import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
+import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import { RouterLink } from "System/Components/RouterLink"
+import { PhotosRoute_submission$key } from "__generated__/PhotosRoute_submission.graphql"
+import { Formik } from "formik"
+import * as React from "react"
+import { graphql, useFragment } from "react-relay"
+import * as Yup from "yup"
 
 const FRAGMENT = graphql`
   fragment PhotosRoute_submission on ConsignmentSubmission {
@@ -85,7 +85,7 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
                 inline
               >
                 <Text color="black100" display="inline">
-                  Tips for taking photos
+                  Tips for taking photos.
                 </Text>
               </RouterLink>
             </Text>
