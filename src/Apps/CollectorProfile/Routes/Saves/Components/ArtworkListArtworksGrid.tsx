@@ -53,9 +53,10 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
   const artworks = me.artworkList?.artworks
 
   const signals = useCollectorSignals({
-    me,
     artworks,
   })
+
+  console.log("***", { signals })
 
   const {
     pageCursors,

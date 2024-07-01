@@ -7,23 +7,22 @@ import {
 import { useCollectorSignals_artworksConnection$key } from "__generated__/useCollectorSignals_artworksConnection.graphql"
 import { useCollectorSignals_artwork$key } from "__generated__/useCollectorSignals_artwork.graphql"
 import { extractNodes } from "Utils/extractNodes"
+import { useGlobalMe } from "System/Hooks/useGlobalMe"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface SignalResult {
   partnerOffer?: any // todo
 }
 
-interface UseCollectorSignalsResult {
-  [artworkID: string]: SignalResult
-}
+type UseCollectorSignalsResult = Record<string, SignalResult>
 
 export const useCollectorSignals = ({
-  me,
   artworks,
 }: {
-  me?: useCollectorSignals_me$key | null
   artworks?: useCollectorSignals_artworksConnection$key | null
 }): UseCollectorSignalsResult => {
-  const meData = useFragment(ME_FRAGMENT, me)
+  const { me } = useGlobalMe()
+  const meData = useFragment<useCollectorSignals_me$key>(ME_FRAGMENT, me)
 
   const artworksData = useFragment(ARTWORKS_CONNECTION_FRAGMENT, artworks)
   const artworksDataNodes = extractNodes(artworksData)

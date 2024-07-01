@@ -29,6 +29,7 @@ import {
 import { ClientContext } from "System/Router/Utils/clientAppContext"
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
+import { GlobalMeProvider } from "System/Contexts/GlobalMeContext"
 
 export interface BootProps {
   children: React.ReactNode
@@ -81,25 +82,27 @@ export const Boot = track(undefined, {
               <EnvironmentProvider environment={props.relayEnvironment}>
                 <ErrorBoundary>
                   <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                    <ToastsProvider>
-                      <StickyProvider>
-                        <AuthIntentProvider>
-                          <AuthDialogProvider>
-                            <DismissibleProvider
-                              userID={props.user?.id}
-                              keys={PROGRESSIVE_ONBOARDING_KEYS}
-                            >
-                              <CookieConsentManager>
-                                <FocusVisible />
-                                <SiftContainer />
+                    <GlobalMeProvider>
+                      <ToastsProvider>
+                        <StickyProvider>
+                          <AuthIntentProvider>
+                            <AuthDialogProvider>
+                              <DismissibleProvider
+                                userID={props.user?.id}
+                                keys={PROGRESSIVE_ONBOARDING_KEYS}
+                              >
+                                <CookieConsentManager>
+                                  <FocusVisible />
+                                  <SiftContainer />
 
-                                {children}
-                              </CookieConsentManager>
-                            </DismissibleProvider>
-                          </AuthDialogProvider>
-                        </AuthIntentProvider>
-                      </StickyProvider>
-                    </ToastsProvider>
+                                  {children}
+                                </CookieConsentManager>
+                              </DismissibleProvider>
+                            </AuthDialogProvider>
+                          </AuthIntentProvider>
+                        </StickyProvider>
+                      </ToastsProvider>
+                    </GlobalMeProvider>
                   </MediaContextProvider>
                 </ErrorBoundary>
               </EnvironmentProvider>
