@@ -35,7 +35,7 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
                 Thank you for submitting your artwork
               </SubmissionStepTitle>
 
-              <Text variant="xs">
+              <Text variant="sm">
                 An Artsy Advisor will email you within 3-5 days to review your
                 submission and discuss next steps. In the meantime your
                 submission will appear in the feature, My Collection.
