@@ -25,6 +25,10 @@ export const useCollectorSignals = ({
   const meData = useFragment<useCollectorSignals_me$key>(ME_FRAGMENT, me)
 
   const artworksData = useFragment(ARTWORKS_CONNECTION_FRAGMENT, artworks)
+  const partnerOffersEnabled = useFeatureFlag(
+    "emerald_collector-signals-partner-offers"
+  )
+
   const artworksDataNodes = extractNodes(artworksData)
 
   const result: {
@@ -33,34 +37,53 @@ export const useCollectorSignals = ({
     acc[artworkData.internalID] = processCollectorSignalsOnArtwork({
       me: meData,
       artwork: artworkData,
+      partnerOffersEnabled,
     })
 
     return acc
   }, {})
 
+  console.log("Processed collector signals", result)
   return result
 }
 
 export const useCollectorSignalsOnArtwork = ({
-  me,
   artwork,
 }: {
-  me: useCollectorSignals_me$key
   artwork: useCollectorSignals_artwork$key
 }): SignalResult => {
-  const meData = useFragment(ME_FRAGMENT, me)
+  const { me } = useGlobalMe()
+  const meData = useFragment<useCollectorSignals_me$key>(ME_FRAGMENT, me)
+  const partnerOffersEnabled = useFeatureFlag(
+    "emerald_collector-signals-partner-offers"
+  )
+
   const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
-  return processCollectorSignalsOnArtwork({ me: meData, artwork: artworkData })
+
+  const result = processCollectorSignalsOnArtwork({
+    me: meData,
+    artwork: artworkData,
+    partnerOffersEnabled,
+  })
+
+  return result
 }
 
 const processCollectorSignalsOnArtwork = ({
   me,
   artwork,
+  partnerOffersEnabled,
 }: {
   me?: useCollectorSignals_me$data | null
   artwork: { internalID: string; isAcquireable?: boolean | null }
+  partnerOffersEnabled: boolean | null
 }): SignalResult => {
   if (!artwork.isAcquireable) {
+    return {}
+  }
+
+  if (!partnerOffersEnabled) {
+    console.log("*** Partner offers not enabled - skipping")
     return {}
   }
 
@@ -103,6 +126,5 @@ const ARTWORK_FRAGMENT = graphql`
   fragment useCollectorSignals_artwork on Artwork {
     internalID
     isAcquireable
-    # is for sale?
   }
 `
