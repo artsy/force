@@ -26,7 +26,7 @@ import { FulfillmentDetails } from "Apps/Order/Routes/Shipping2/Components/Fulfi
 import { ShippingContextProvider } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SaveAndContinueButton } from "Apps/Order/Routes/Shipping2/Components/SaveAndContinueButton"
-import { useSelectFirstShippingQuote } from "Apps/Order/Routes/Shipping2/Hooks/useSelectFirstShippingQuote"
+// import { useSelectFirstShippingQuote } from "Apps/Order/Routes/Shipping2/Hooks/useSelectFirstShippingQuote"
 import { CollapseDetails } from "Apps/Order/Routes/Shipping2/Components/CollapseDetails"
 
 export type ShippingStage =
@@ -73,7 +73,7 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
   const isOffer = order.mode === "OFFER"
 
   // Automatically selects first shipping quote when they change
-  useSelectFirstShippingQuote()
+  // useSelectFirstShippingQuote()
 
   return (
     <Box data-testid="orderShipping">
