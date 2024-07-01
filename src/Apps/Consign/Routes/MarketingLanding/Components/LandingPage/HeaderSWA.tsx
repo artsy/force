@@ -17,6 +17,7 @@ import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
 
 export const HeaderSWA = () => {
+  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
   const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
   const {
@@ -28,8 +29,6 @@ export const HeaderSWA = () => {
     "https://files.artsy.net/images/content-card-swa-landing-page.jpg",
     { width: 1104, height: 833 }
   )
-
-  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
 
   return (
     <GridColumns gridRowGap={[2, 4]} alignItems="center">
@@ -77,7 +76,7 @@ export const HeaderSWA = () => {
                 variant="secondaryBlack"
                 data-testid="get-in-touch-button"
                 onClick={trackGetInTouchClick}
-                to={getInTouchRoute}
+                to="/sell/inquiry"
               >
                 Get in Touch
               </Button>
