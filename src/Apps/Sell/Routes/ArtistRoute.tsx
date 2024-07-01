@@ -175,35 +175,28 @@ export const ArtistRoute: React.FC<{
       validateOnMount
       validationSchema={Schema}
     >
-      {formik => (
-        <SubmissionLayout hideNavigation={isNewSubmission}>
-          <SubmissionStepTitle>Add artist name</SubmissionStepTitle>
+      {formik => {
+        const displayArtistNotEligible =
+          !isNewSubmission &&
+          formik.values.artistId &&
+          !formik.values.isTargetSupply
 
-          <ArtistAutoComplete
-            onSelect={artist => {
-              onSelect(artist, formik)
-            }}
-            onError={() =>
-              logger.error("Something went wrong while fetching artists.")
-            }
-            showChevronIcon
-            title="Artist"
-          />
+        return (
+          <SubmissionLayout hideNavigation={isNewSubmission}>
+            <SubmissionStepTitle>Add artist name</SubmissionStepTitle>
 
-          <Text mt={2} variant="sm" color="black60">
-            Currently, artists can not sell their own work on Artsy.{" "}
-            <RouterLink
-              to="https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn more.
-            </RouterLink>
-          </Text>
+            <ArtistAutoComplete
+              onSelect={artist => {
+                onSelect(artist, formik)
+              }}
+              onError={() =>
+                logger.error("Something went wrong while fetching artists.")
+              }
+              showChevronIcon
+              title="Artist"
+            />
 
-          {!isNewSubmission &&
-            formik.values.artistId &&
-            !formik.values.isTargetSupply && (
+            {displayArtistNotEligible ? (
               <Box my={2}>
                 <Text variant="lg">
                   This artist isn't currently eligible to sell on our platform
@@ -211,11 +204,23 @@ export const ArtistRoute: React.FC<{
 
                 <ArtistNotEligiblText />
               </Box>
+            ) : (
+              <Text mt={2} variant="sm" color="black60">
+                Currently, artists can not sell their own work on Artsy.{" "}
+                <RouterLink
+                  to="https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Learn more.
+                </RouterLink>
+              </Text>
             )}
 
-          <DevDebug />
-        </SubmissionLayout>
-      )}
+            <DevDebug />
+          </SubmissionLayout>
+        )
+      }}
     </Formik>
   )
 }
