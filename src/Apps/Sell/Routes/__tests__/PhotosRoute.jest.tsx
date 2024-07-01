@@ -168,6 +168,10 @@ describe("PhotosRoute", () => {
       renderWithRelay({
         ConsignmentSubmission: () => ({
           externalId: "externalId",
+          myCollectionArtwork: {
+            id: "id",
+            images: [],
+          },
           assets: [],
         }),
       })
