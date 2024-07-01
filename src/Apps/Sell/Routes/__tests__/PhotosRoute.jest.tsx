@@ -130,7 +130,7 @@ describe("PhotosRoute", () => {
       )
     ).toBeInTheDocument()
     expect(
-      screen.getByRole("link", { name: "Tips for taking photos" })
+      screen.getByRole("link", { name: "Tips for taking photos." })
     ).toHaveAttribute(
       "href",
       "https://help.artsy.net/s/article/How-to-Take-Photos-That-Sell"
