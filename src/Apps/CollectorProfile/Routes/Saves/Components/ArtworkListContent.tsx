@@ -9,7 +9,7 @@ import {
   Counts,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { SortOptions } from "Components/SortFilter"
-import { FC, useEffect } from "react"
+import { FC, useCallback, useEffect } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -65,6 +65,14 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
     artworks: artworkList?.artworks?.totalCount ?? 0,
   }
 
+  const onChange = useCallback(state => {
+    updateUrl(state, {
+      defaultValues: {
+        sort: defaultSort,
+      },
+    })
+  }, [])
+
   useEffect(() => {
     const shouldScroll = isContentOutOfView() && artworkListItemHasBeenTouched
 
@@ -78,13 +86,7 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
       filters={match.location.query}
       counts={counts}
       sortOptions={sortOptions}
-      onChange={state => {
-        updateUrl(state, {
-          defaultValues: {
-            sort: defaultSort,
-          },
-        })
-      }}
+      onChange={onChange}
     >
       <Flex
         flexDirection="row"

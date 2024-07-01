@@ -14,7 +14,6 @@ import { HttpError } from "found"
 import { MetaTags } from "Components/MetaTags"
 import { Jump } from "Utils/Hooks/useJump"
 import { ArtworkListVisibilityProvider } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
-import { useCollectorSignals } from "System/Hooks/useCollectorSignals"
 
 export const ARTWORK_LIST_SCROLL_TARGET_ID = "ArtworkListScrollTarget"
 
@@ -33,11 +32,6 @@ const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
   const selectedArtworkListId =
     match.params.id ?? savedArtworksArtworkList?.internalID
   let customArtworkLists = extractNodes(me.customArtworkLists)
-
-  const signals = useCollectorSignals({
-    me,
-    artworks: savedArtworksArtworkList?.artworksConnection,
-  })
 
   useEffect(() => {
     const event: ViewedArtworkList = {
@@ -143,7 +137,6 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
   {
     me: graphql`
       fragment CollectorProfileSavesRoute_me on Me {
-        ...useCollectorSignals_me
         savedArtworksArtworkList: collection(id: "saved-artwork") {
           internalID
           shareableWithPartners
@@ -151,7 +144,6 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
           ...OfferSettingsListItem_item
 
           artworksConnection(first: 4) {
-            ...useCollectorSignals_artworksConnection
             totalCount
           }
         }

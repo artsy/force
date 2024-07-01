@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9b4334b5bc5a3b3526928572be94503>>
+ * @generated SignedSource<<bcdbdab12c781c473f26ebca1fed5feb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,7 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "ArtworkEdge",
+      "concreteType": null,
       "kind": "LinkedField",
       "name": "edges",
       "plural": true,
@@ -67,10 +67,10 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "ArtworkConnection",
-  "abstractKey": null
+  "type": "ArtworkConnectionInterface",
+  "abstractKey": "__isArtworkConnectionInterface"
 };
 
-(node as any).hash = "c4a46edcffb3cbe3aff5e994f0267252";
+(node as any).hash = "c91363999dcca949c67393b50b73400b";
 
 export default node;

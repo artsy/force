@@ -22,7 +22,6 @@ import { isEqual } from "lodash"
 import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { ArtworkListEmptyStateFragmentContainer } from "./ArtworkListEmptyState"
-import { useCollectorSignals } from "System/Hooks/useCollectorSignals"
 
 export const ARTWORK_LIST_ARTWORK_GRID_ID = "artworksGrid"
 
@@ -51,12 +50,6 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
   const previousFilters = usePrevious(filters)
 
   const artworks = me.artworkList?.artworks
-
-  const signals = useCollectorSignals({
-    artworks,
-  })
-
-  console.log("***", { signals })
 
   const {
     pageCursors,
@@ -211,7 +204,6 @@ export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
           page: { type: "Int", defaultValue: 1 }
           sort: { type: "CollectionArtworkSorts" }
         ) {
-        ...useCollectorSignals_me
         artworkList: collection(id: $listID) {
           internalID
 

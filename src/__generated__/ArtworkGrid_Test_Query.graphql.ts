@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0dbd731a153720bd032ea8d7278d19af>>
+ * @generated SignedSource<<c153bbfd153e77a2e9e0d37cf20a1916>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,114 +18,6 @@ export type ArtworkGrid_Test_Query$data = {
 };
 export type ArtworkGrid_Test_Query$rawResponse = {
   readonly artworksConnection: {
-    readonly __isArtworkConnectionInterface: "ArtworkConnection";
-    readonly edges: ReadonlyArray<{
-      readonly __typename: string;
-      readonly __isNode: string;
-      readonly id: string;
-      readonly node: {
-        readonly artist: {
-          readonly id: string;
-          readonly targetSupply: {
-            readonly isP1: boolean | null | undefined;
-          };
-        } | null | undefined;
-        readonly artistNames: string | null | undefined;
-        readonly artists: ReadonlyArray<{
-          readonly href: string | null | undefined;
-          readonly id: string;
-          readonly name: string | null | undefined;
-        } | null | undefined> | null | undefined;
-        readonly attributionClass: {
-          readonly id: string;
-          readonly name: string | null | undefined;
-        } | null | undefined;
-        readonly collecting_institution: string | null | undefined;
-        readonly cultural_maker: string | null | undefined;
-        readonly date: string | null | undefined;
-        readonly href: string | null | undefined;
-        readonly id: string;
-        readonly image: {
-          readonly aspectRatio: number;
-          readonly blurhashDataURL: string | null | undefined;
-          readonly internalID: string | null | undefined;
-          readonly placeholder: string | null | undefined;
-          readonly resized: {
-            readonly height: number | null | undefined;
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number | null | undefined;
-          } | null | undefined;
-          readonly url: string | null | undefined;
-          readonly versions: ReadonlyArray<string | null | undefined> | null | undefined;
-        } | null | undefined;
-        readonly imageTitle: string | null | undefined;
-        readonly image_title: string | null | undefined;
-        readonly internalID: string;
-        readonly isAcquireable: boolean | null | undefined;
-        readonly isSaved: boolean | null | undefined;
-        readonly isSavedToList: boolean;
-        readonly isUnlisted: boolean;
-        readonly is_biddable: boolean | null | undefined;
-        readonly marketPriceInsights: {
-          readonly demandRank: number | null | undefined;
-        } | null | undefined;
-        readonly mediumType: {
-          readonly filterGene: {
-            readonly id: string;
-            readonly name: string | null | undefined;
-          } | null | undefined;
-        } | null | undefined;
-        readonly partner: {
-          readonly href: string | null | undefined;
-          readonly id: string;
-          readonly name: string | null | undefined;
-        } | null | undefined;
-        readonly preview: {
-          readonly url: string | null | undefined;
-        } | null | undefined;
-        readonly sale: {
-          readonly cascadingEndTimeIntervalMinutes: number | null | undefined;
-          readonly display_timely_at: string | null | undefined;
-          readonly endAt: string | null | undefined;
-          readonly extendedBiddingIntervalMinutes: number | null | undefined;
-          readonly extendedBiddingPeriodMinutes: number | null | undefined;
-          readonly id: string;
-          readonly is_auction: boolean | null | undefined;
-          readonly is_closed: boolean | null | undefined;
-          readonly is_preview: boolean | null | undefined;
-          readonly startAt: string | null | undefined;
-        } | null | undefined;
-        readonly saleArtwork: {
-          readonly endAt: string | null | undefined;
-          readonly extendedBiddingEndAt: string | null | undefined;
-          readonly id: string;
-          readonly lotID: string | null | undefined;
-        } | null | undefined;
-        readonly sale_artwork: {
-          readonly counts: {
-            readonly bidder_positions: any | null | undefined;
-          } | null | undefined;
-          readonly endAt: string | null | undefined;
-          readonly extendedBiddingEndAt: string | null | undefined;
-          readonly formattedEndDateTime: string | null | undefined;
-          readonly highest_bid: {
-            readonly display: string | null | undefined;
-          } | null | undefined;
-          readonly id: string;
-          readonly lotID: string | null | undefined;
-          readonly lotLabel: string | null | undefined;
-          readonly opening_bid: {
-            readonly display: string | null | undefined;
-          } | null | undefined;
-        } | null | undefined;
-        readonly sale_message: string | null | undefined;
-        readonly slug: string;
-        readonly title: string | null | undefined;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-    readonly id: string;
-  } | {
     readonly __isArtworkConnectionInterface: "FilterArtworksConnection";
     readonly edges: ReadonlyArray<{
       readonly __typename: string;
@@ -414,7 +306,6 @@ return {
         "name": "artworksConnection",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -931,54 +822,19 @@ return {
                   }
                 ],
                 "storageKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "ArtworkEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Artwork",
-                        "kind": "LinkedField",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "isAcquireable",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "type": "ArtworkConnection",
-                "abstractKey": null
               }
             ],
             "type": "ArtworkConnectionInterface",
             "abstractKey": "__isArtworkConnectionInterface"
-          }
+          },
+          (v1/*: any*/)
         ],
         "storageKey": "artworksConnection(first:4)"
       }
     ]
   },
   "params": {
-    "cacheID": "65f7d8167028ae44222bfeaa2e7cc6c6",
+    "cacheID": "5b9afcd697319b26355281e53ec185dc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -993,7 +849,7 @@ return {
           "enumValues": null,
           "nullable": true,
           "plural": true,
-          "type": "ArtworkEdge"
+          "type": "ArtworkEdgeInterface"
         },
         "artworksConnection.edges.__isNode": (v12/*: any*/),
         "artworksConnection.edges.__typename": (v12/*: any*/),
@@ -1076,7 +932,6 @@ return {
         "artworksConnection.edges.node.imageTitle": (v15/*: any*/),
         "artworksConnection.edges.node.image_title": (v15/*: any*/),
         "artworksConnection.edges.node.internalID": (v13/*: any*/),
-        "artworksConnection.edges.node.isAcquireable": (v14/*: any*/),
         "artworksConnection.edges.node.isSaved": (v14/*: any*/),
         "artworksConnection.edges.node.isSavedToList": (v18/*: any*/),
         "artworksConnection.edges.node.isUnlisted": (v18/*: any*/),
@@ -1180,7 +1035,7 @@ return {
     },
     "name": "ArtworkGrid_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkGrid_Test_Query {\n  artworksConnection(first: 4) {\n    ...ArtworkGrid_artworks\n    id\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  ...useCollectorSignals_artworksConnection\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image(includeAll: false) {\n        aspectRatio\n      }\n      ...GridItem_artwork_3QDGWC\n      ...FlatGridItem_artwork_3QDGWC\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment FlatGridItem_artwork_3QDGWC on Artwork {\n  ...Metadata_artwork\n  ...DeprecatedSaveButton_artwork\n  sale {\n    extendedBiddingPeriodMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    id\n  }\n  saleArtwork {\n    endAt\n    extendedBiddingEndAt\n    lotID\n    id\n  }\n  internalID\n  title\n  image_title: imageTitle\n  image(includeAll: false) {\n    resized(width: 445, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    blurhashDataURL\n  }\n  artistNames\n  href\n  isSaved\n}\n\nfragment GridItem_artwork_3QDGWC on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n    blurhashDataURL\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...ExclusiveAccessBadge_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment useCollectorSignals_artworksConnection on ArtworkConnection {\n  edges {\n    node {\n      internalID\n      isAcquireable\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkGrid_Test_Query {\n  artworksConnection(first: 4) {\n    ...ArtworkGrid_artworks\n    id\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image(includeAll: false) {\n        aspectRatio\n      }\n      ...GridItem_artwork_3QDGWC\n      ...FlatGridItem_artwork_3QDGWC\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment FlatGridItem_artwork_3QDGWC on Artwork {\n  ...Metadata_artwork\n  ...DeprecatedSaveButton_artwork\n  sale {\n    extendedBiddingPeriodMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    id\n  }\n  saleArtwork {\n    endAt\n    extendedBiddingEndAt\n    lotID\n    id\n  }\n  internalID\n  title\n  image_title: imageTitle\n  image(includeAll: false) {\n    resized(width: 445, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    blurhashDataURL\n  }\n  artistNames\n  href\n  isSaved\n}\n\nfragment GridItem_artwork_3QDGWC on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n    blurhashDataURL\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...ExclusiveAccessBadge_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n"
   }
 };
 })();

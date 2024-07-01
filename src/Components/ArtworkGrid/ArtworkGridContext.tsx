@@ -1,4 +1,8 @@
+import { useCollectorSignals } from "System/Hooks/useCollectorSignals"
+import { ArtworkGridContext_artworksConnection$key } from "__generated__/ArtworkGridContext_artworksConnection.graphql"
+import { ArtworkGridContext_me$key } from "__generated__/ArtworkGridContext_me.graphql"
 import { createContext, useContext } from "react"
+import { graphql, useFragment } from "react-relay"
 
 /**
  * Used to configure internal details of the Artwork Grid / Brick without
@@ -13,20 +17,40 @@ interface ArtworkGridContextProps {
   hideLotLabel?: boolean
 
   saveOnlyToDefaultList?: boolean
+
+  collectorSignals: ReturnType<typeof useCollectorSignals>
 }
 
 const ArtworkGridContext = createContext<ArtworkGridContextProps>({
   isAuctionArtwork: false,
   hideLotLabel: false,
   saveOnlyToDefaultList: false,
+  collectorSignals: { signals: {} },
 })
 
-export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProps> = ({
+type ArtworkGridContextProviderProps = {
+  artworksConnection?: ArtworkGridContext_artworksConnection$key | null
+  me?: ArtworkGridContext_me$key | null
+} & Omit<ArtworkGridContextProps, "collectorSignals">
+
+export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProviderProps> = ({
+  artworksConnection,
+  me,
   children,
   ...rest
 }) => {
+  const artworksData = useFragment(
+    ARTWORKS_CONNECTION_FRAGMENT,
+    artworksConnection
+  )
+  const meData = useFragment(ME_FRAGMENT, me)
+  const collectorSignals = useCollectorSignals({
+    artworksConnection: artworksData,
+    me: meData,
+  })
+
   return (
-    <ArtworkGridContext.Provider value={rest}>
+    <ArtworkGridContext.Provider value={{ ...rest, collectorSignals }}>
       {children}
     </ArtworkGridContext.Provider>
   )
@@ -50,3 +74,14 @@ export const withArtworkGridContext = <T,>(
     )
   }
 }
+
+const ARTWORKS_CONNECTION_FRAGMENT = graphql`
+  fragment ArtworkGridContext_artworksConnection on ArtworkConnectionInterface {
+    ...useCollectorSignals_artworksConnection
+  }
+`
+const ME_FRAGMENT = graphql`
+  fragment ArtworkGridContext_me on Me {
+    ...useCollectorSignals_me
+  }
+`

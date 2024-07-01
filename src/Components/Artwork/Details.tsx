@@ -201,7 +201,9 @@ export const Details: React.FC<DetailsProps> = ({
     isAuctionArtwork,
     hideLotLabel,
     saveOnlyToDefaultList,
+    collectorSignals: allCollectorSignals,
   } = useArtworkGridContext()
+  const collectorSignals = allCollectorSignals[rest.artwork.internalID]
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =
@@ -268,7 +270,20 @@ export const Details: React.FC<DetailsProps> = ({
         )}
         {renderSaveButtonComponent()}
       </Flex>
-
+      {collectorSignals?.partnerOffer && (
+        <Flex flexDirection="row">
+          <Text
+            variant="xs"
+            color="blue100"
+            backgroundColor="blue10"
+            px={0.5}
+            alignSelf="flex-start"
+            borderRadius={3}
+          >
+            Limited-Time Offer
+          </Text>
+        </Flex>
+      )}
       <Box position="relative">
         <TitleLine {...rest} />
         {showHighDemandInfo && <HighDemandInfo />}
