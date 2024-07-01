@@ -1,11 +1,11 @@
 import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import {
-  Image,
   Box,
-  Flex,
-  Spinner,
-  ProgressBar,
   Clickable,
+  Flex,
+  Image,
+  ProgressBar,
+  Spinner,
 } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useRemoveAssetFromConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
@@ -92,7 +92,14 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
       >
         {photoSrc && (
           <Box opacity={photo.loading ? 0.3 : 1}>
-            <Image src={photoSrc} width={IMAGE_SIZES} height={IMAGE_SIZES} />
+            <Image
+              src={photoSrc}
+              width={IMAGE_SIZES}
+              height={IMAGE_SIZES}
+              style={{
+                objectFit: "contain",
+              }}
+            />
           </Box>
         )}
 
