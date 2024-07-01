@@ -17,7 +17,12 @@ export const Article: FC<ArticleRailsProps> = ({ article }) => {
   )
 
   return (
-    <RouterLink to={article.href} textDecoration="none" overflow="hidden">
+    <RouterLink
+      to={article.href}
+      target="_blank"
+      textDecoration="none"
+      overflow="hidden"
+    >
       <Box>
         <Image src={resizedImage} height={IMAGE_HEIGHT} />
         <Text height={"4em"}>{article.title}</Text>

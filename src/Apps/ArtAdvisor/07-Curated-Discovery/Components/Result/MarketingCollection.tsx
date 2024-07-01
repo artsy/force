@@ -22,6 +22,7 @@ export const MarketingCollection: FC<MarketingCollectionProps> = props => {
   return (
     <RouterLink
       to={`/collection/${marketingCollection.slug}`}
+      target="_blank"
       textDecoration="none"
       overflow="hidden"
     >
