@@ -96,11 +96,11 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
               <RouterLink
                 to="https://help.artsy.net/s/article/How-to-Take-Photos-That-Sell"
                 target="_blank"
-                inline
+                rel="noopener noreferrer"
+                color="black100"
+                textDecoration="underline"
               >
-                <Text color="black100" display="inline">
-                  Tips for taking photos.
-                </Text>
+                Tips for taking photos.
               </RouterLink>
             </Text>
 
