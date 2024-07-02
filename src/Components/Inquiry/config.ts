@@ -7,6 +7,7 @@ import { InquiryBasicInfoQueryRenderer } from "./Views/InquiryBasicInfo"
 import { InquiryInquiryQueryRenderer } from "./Views/InquiryInquiry"
 import { InquirySpecialist } from "./Views/InquirySpecialist"
 import { InquiryConfirmation } from "./Views/InquiryConfirmation"
+import { InquiryArtistsInCollection } from "./Views/InquiryArtistsInCollection"
 
 const VIEWS = {
   Account: InquiryAccount,
@@ -14,6 +15,7 @@ const VIEWS = {
   Confirmation: InquiryConfirmation,
   Inquiry: InquiryInquiryQueryRenderer,
   Specialist: InquirySpecialist,
+  ArtistsInCollection: InquiryArtistsInCollection,
 }
 
 type View = keyof typeof VIEWS
@@ -25,6 +27,26 @@ interface UseEngine {
 
 export const useEngine = ({ context, onDone }: UseEngine) => {
   const visited = useRef(new Visited("inquiry"))
+
+  const conditions = {
+    askSpecialist: () => {
+      return !!context.current?.askSpecialist
+    },
+    hasBasicInfo: () => {
+      return (
+        !!context.current?.profession &&
+        !!context.current?.location?.city &&
+        !!context.current?.otherRelevantPositions &&
+        !!context.current?.shareFollows
+      )
+    },
+    isLoggedOut: () => {
+      return !context.current?.isLoggedIn
+    },
+    hasArtistsInCollection: () => {
+      return (context.current?.userInterestsConnection?.totalCount ?? 0) > 0
+    },
+  }
 
   const engine = useRef(
     new WorkflowEngine({
@@ -40,8 +62,15 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
                 },
               },
               {
-                hasBasicInfo: {
-                  false: ["BasicInfo"],
+                hasArtistsInCollection: {
+                  false: ["ArtistsInCollection"],
+                  true: [
+                    {
+                      hasBasicInfo: {
+                        false: ["BasicInfo"],
+                      },
+                    },
+                  ],
                 },
               },
               "Confirmation",
@@ -49,22 +78,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
           },
         },
       ],
-      conditions: {
-        askSpecialist: () => {
-          return !!context.current?.askSpecialist
-        },
-        hasBasicInfo: () => {
-          return (
-            !!context.current?.profession &&
-            !!context.current?.location?.city &&
-            !!context.current?.otherRelevantPositions &&
-            !!context.current?.shareFollows
-          )
-        },
-        isLoggedOut: () => {
-          return !context.current?.isLoggedIn
-        },
-      },
+      conditions,
     })
   )
 

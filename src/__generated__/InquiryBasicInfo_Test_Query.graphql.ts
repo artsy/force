@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9214d82946caa1b8b362dfb01bc533f1>>
+ * @generated SignedSource<<68875a45565224fb3fd3890cb4624f5a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,16 +36,23 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "name",
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v3 = {
+v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -116,18 +123,12 @@ return {
             "name": "partner",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              (v1/*: any*/)
+              (v1/*: any*/),
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "artwork(id:\"example\")"
       },
@@ -139,6 +140,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -154,7 +156,28 @@ return {
                 "name": "display",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "city",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "state",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "country",
+                "storageKey": null
+              },
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
@@ -172,14 +195,14 @@ return {
             "name": "profession",
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "bca73cc165f1bf630d87c939340909dc",
+    "cacheID": "cae170ccd1a84499231ef3b0b294d564",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -189,37 +212,41 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.id": (v2/*: any*/),
+        "artwork.id": (v3/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "artwork.partner.id": (v2/*: any*/),
-        "artwork.partner.name": (v3/*: any*/),
+        "artwork.partner.id": (v3/*: any*/),
+        "artwork.partner.name": (v4/*: any*/),
         "me": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v2/*: any*/),
+        "me.id": (v3/*: any*/),
         "me.location": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "MyLocation"
         },
-        "me.location.display": (v3/*: any*/),
-        "me.location.id": (v2/*: any*/),
-        "me.otherRelevantPositions": (v3/*: any*/),
-        "me.profession": (v3/*: any*/)
+        "me.location.city": (v4/*: any*/),
+        "me.location.country": (v4/*: any*/),
+        "me.location.display": (v4/*: any*/),
+        "me.location.id": (v3/*: any*/),
+        "me.location.state": (v4/*: any*/),
+        "me.name": (v4/*: any*/),
+        "me.otherRelevantPositions": (v4/*: any*/),
+        "me.profession": (v4/*: any*/)
       }
     },
     "name": "InquiryBasicInfo_Test_Query",
     "operationKind": "query",
-    "text": "query InquiryBasicInfo_Test_Query {\n  artwork(id: \"example\") {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  location {\n    display\n    id\n  }\n  otherRelevantPositions\n  profession\n}\n"
+    "text": "query InquiryBasicInfo_Test_Query {\n  artwork(id: \"example\") {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  name\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  otherRelevantPositions\n  profession\n}\n"
   }
 };
 })();
