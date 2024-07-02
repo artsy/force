@@ -18,6 +18,8 @@ export const BottomFormNavigation = () => {
       flexDirection="row"
       justifyContent="space-between"
       alignItems="center"
+      borderTop="1px solid"
+      borderColor="black10"
     >
       <BottomFormBackButton />
       <BottomFormNextButton />
