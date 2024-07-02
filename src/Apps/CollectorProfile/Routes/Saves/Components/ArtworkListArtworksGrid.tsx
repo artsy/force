@@ -22,7 +22,7 @@ import { isEqual } from "lodash"
 import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { ArtworkListEmptyStateFragmentContainer } from "./ArtworkListEmptyState"
-import { useCollectorSignals } from "System/Hooks/useCollectorSignals"
+import { useLoadCollectorSignals } from "System/Hooks/useCollectorSignals"
 
 export const ARTWORK_LIST_ARTWORK_GRID_ID = "artworksGrid"
 
@@ -52,11 +52,9 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
 
   const artworks = me.artworkList?.artworks
 
-  const signals = useCollectorSignals({
+  const { CollectorSignalsProvider } = useLoadCollectorSignals({
     artworks,
   })
-
-  console.log("***", { signals })
 
   const {
     pageCursors,
@@ -159,7 +157,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
   }
 
   return (
-    <>
+    <CollectorSignalsProvider>
       <Jump id={ARTWORK_LIST_ARTWORK_GRID_ID} />
       <ArtworkListArtworksGridHeader />
       <Spacer y={2} />
@@ -197,7 +195,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
           scrollTo="artworksGrid"
         />
       </LoadingArea>
-    </>
+    </CollectorSignalsProvider>
   )
 }
 

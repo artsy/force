@@ -9,6 +9,7 @@ import { useCollectorSignals_artwork$key } from "__generated__/useCollectorSigna
 import { extractNodes } from "Utils/extractNodes"
 import { useGlobalMe } from "System/Hooks/useGlobalMe"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import React, { createContext, useContext, useEffect, useMemo } from "react"
 
 interface SignalResult {
   partnerOffer?: any // todo
@@ -16,37 +17,91 @@ interface SignalResult {
 
 type UseCollectorSignalsResult = Record<string, SignalResult>
 
-export const useCollectorSignals = ({
+interface CollectorSignalsContextProps {
+  signals: UseCollectorSignalsResult
+}
+
+const CollectorSignalsContext = createContext<CollectorSignalsContextProps>({
+  signals: {},
+})
+
+const providerFactory = (signals: UseCollectorSignalsResult) => {
+  return ({ children }) => (
+    <CollectorSignalsContext.Provider value={{ signals }}>
+      {children}
+    </CollectorSignalsContext.Provider>
+  )
+}
+
+/**
+ * Hook to access the collector signals context. Must be used below
+ * the provider returned by `useLoadCollectorSignals()`
+ */
+export const useCollectorSignals = (artworkID: string): SignalResult => {
+  const signalsMap = useContext(CollectorSignalsContext)
+  console.log("***", { signalsMap, artworkID })
+  return signalsMap.signals[artworkID] ?? {}
+}
+
+/**
+ * Hook to load and process collector signals for a list of artworks
+ */
+export const useLoadCollectorSignals = ({
   artworks,
 }: {
   artworks?: useCollectorSignals_artworksConnection$key | null
-}): UseCollectorSignalsResult => {
+}): {
+  signals: UseCollectorSignalsResult
+  CollectorSignalsProvider: React.FC
+} => {
   const { me } = useGlobalMe()
   const meData = useFragment<useCollectorSignals_me$key>(ME_FRAGMENT, me)
 
   const artworksData = useFragment(ARTWORKS_CONNECTION_FRAGMENT, artworks)
-  const partnerOffersEnabled = useFeatureFlag(
-    "emerald_collector-signals-partner-offers"
-  )
+  const partnerOffersEnabled = useFeatureFlag("emerald_signals-partner-offers")
 
   const artworksDataNodes = extractNodes(artworksData)
 
-  const result: {
-    [artworkID: string]: SignalResult
-  } = artworksDataNodes.reduce((acc, artworkData) => {
-    acc[artworkData.internalID] = processCollectorSignalsOnArtwork({
-      me: meData,
-      artwork: artworkData,
-      partnerOffersEnabled,
-    })
+  const artworkIDs = JSON.stringify(
+    artworksDataNodes.map(artwork => artwork.internalID)
+  )
 
-    return acc
-  }, {})
+  useEffect(() => {
+    console.log("*** First render of useLoadCollectorSignals")
+  }, [])
 
-  console.log("Processed collector signals", result)
-  return result
+  const signals = useMemo(() => {
+    const result = artworksDataNodes.reduce((acc, artworkData) => {
+      acc[artworkData.internalID] = processCollectorSignalsOnArtwork({
+        me: meData,
+        artwork: artworkData,
+        partnerOffersEnabled,
+      })
+
+      return acc
+    }, {})
+    console.log(
+      `*** processed signals for ${artworksDataNodes.length} artworks`,
+      result,
+      meData
+    )
+    return result
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [artworkIDs, meData, partnerOffersEnabled])
+
+  const signalString = JSON.stringify(signals)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const CollectorSignalsProvider = useMemo(() => providerFactory(signals), [
+    signalString,
+  ])
+
+  return { signals, CollectorSignalsProvider: CollectorSignalsProvider }
 }
 
+/**
+ * Hook to load and process collector signals for a single artwork
+ */
 export const useCollectorSignalsOnArtwork = ({
   artwork,
 }: {
@@ -54,9 +109,7 @@ export const useCollectorSignalsOnArtwork = ({
 }): SignalResult => {
   const { me } = useGlobalMe()
   const meData = useFragment<useCollectorSignals_me$key>(ME_FRAGMENT, me)
-  const partnerOffersEnabled = useFeatureFlag(
-    "emerald_collector-signals-partner-offers"
-  )
+  const partnerOffersEnabled = useFeatureFlag("emerald_signals-partner-offers")
 
   const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
 

@@ -46,26 +46,40 @@ const GlobalMeQuery = ({ queryRef, children, refetchMe }) => {
 }
 
 export const GlobalMeProvider = ({ children }) => {
-  const { user } = useSystemContext()
+  const { user, relayEnvironment } = useSystemContext()
   const [loaded, setLoaded] = useState(false)
   const [queryRef, loadQuery] = useQueryLoader(GLOBAL_ME_QUERY)
 
+  const refetchMe = () => loadQuery({})
+  console.log("*** GlobalMeProvider prefetch", {
+    user,
+    relayEnvironment,
+    loaded,
+    queryRef,
+    loadQuery,
+  })
   useEffect(() => {
-    if (!!queryRef && !loaded) {
+    if (!loaded) {
       if (!!user) {
+        console.log("*** Loading ME query")
         loadQuery({})
+      } else {
+        console.log("skipping loading me")
       }
       setLoaded(true)
     }
-  }, [loadQuery, loaded, queryRef, user])
+  }, [loadQuery, loaded, user])
 
-  if (!queryRef) {
-    return null
+  if (!!user && !queryRef) {
+    return "...Loading"
+  }
+  if (!user) {
+    return children
   }
 
   return (
-    <Suspense fallback={null}>
-      <GlobalMeQuery queryRef={queryRef} refetchMe={() => loadQuery({})}>
+    <Suspense fallback="Loading ...">
+      <GlobalMeQuery queryRef={queryRef} refetchMe={refetchMe}>
         {children}
       </GlobalMeQuery>
     </Suspense>
