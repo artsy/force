@@ -1,13 +1,13 @@
 import { Box, BoxProps, Button, Text } from "@artsy/palette"
-import { cloneDeep } from "lodash"
-import React, { useEffect, useRef, useState } from "react"
-import { FileRejection, useDropzone } from "react-dropzone"
-import { Media } from "Utils/Responsive"
 import {
   CustomErrorCode,
   MBSize,
   Photo,
 } from "Components/PhotoUpload/Utils/fileUtils"
+import { Media } from "Utils/Responsive"
+import { cloneDeep } from "lodash"
+import React, { useEffect, useRef, useState } from "react"
+import { FileRejection, useDropzone } from "react-dropzone"
 
 const validateTotalMaxSize = (
   currentFiles: Array<Photo>,
@@ -102,7 +102,7 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
     onDropRejected: () => {
       buttonRef.current?.blur()
     },
-    accept: ["image/jpeg", "image/png"],
+    accept: ["image/jpeg", "image/png", "image/heic"],
     noClick: true,
     noKeyboard: true,
     multiple: true,
@@ -129,7 +129,7 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
         </Media>
 
         <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
-          Files supported: JPG, PNG <br />
+          Files Supported: JPG, PNG, HEIC <br />
           Total maximum size: {maxTotalSize} MB
         </Text>
 

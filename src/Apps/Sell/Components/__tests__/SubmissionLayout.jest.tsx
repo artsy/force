@@ -31,7 +31,9 @@ describe("SubmissionLayout", () => {
         push: mockPush,
         replace: mockReplace,
       },
-      match: { location: { pathname: "/submissions/submission-id/title" } },
+      match: {
+        location: { pathname: "/submissions/submission-id/dimensions" },
+      },
     }))
   })
 
@@ -97,9 +99,9 @@ describe("SubmissionLayout", () => {
       expect(trackEvent).toHaveBeenCalledWith({
         action: "tappedSubmissionSaveExit",
         context_module: "sell",
-        context_owner_type: "submitArtworkStepAddTitle",
+        context_owner_type: "submitArtworkStepAddDimensions",
         submission_id: "123",
-        submission_step: "title",
+        submission_step: "dimensions",
       })
     })
 
@@ -121,9 +123,9 @@ describe("SubmissionLayout", () => {
       expect(trackEvent).toHaveBeenCalledWith({
         action: "tappedSubmissionBack",
         context_module: "sell",
-        context_owner_type: "submitArtworkStepAddTitle",
+        context_owner_type: "submitArtworkStepAddDimensions",
         submission_id: "123",
-        submission_step: "title",
+        submission_step: "dimensions",
       })
     })
   })

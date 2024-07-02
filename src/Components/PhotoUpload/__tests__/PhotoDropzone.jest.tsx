@@ -1,8 +1,8 @@
+import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
+import { MBSize } from "Components/PhotoUpload/Utils/fileUtils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { mount } from "enzyme"
 import { Formik } from "formik"
-import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
-import { MBSize } from "Components/PhotoUpload/Utils/fileUtils"
 
 const validImage = {
   name: "foo.png",
@@ -101,7 +101,8 @@ describe("PhotoDropzone", () => {
         file: pdfFile,
         errors: [
           {
-            message: "File type must be one of image/jpeg, image/png",
+            message:
+              "File type must be one of image/jpeg, image/png, image/heic",
             code: "file-invalid-type",
           },
         ],
@@ -163,7 +164,8 @@ describe("PhotoDropzone", () => {
         file: tooBigPdf,
         errors: [
           {
-            message: "File type must be one of image/jpeg, image/png",
+            message:
+              "File type must be one of image/jpeg, image/png, image/heic",
             code: "file-invalid-type",
           },
         ],

@@ -10,6 +10,7 @@ import {
   THEME,
   Text,
 } from "@artsy/palette"
+import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { RouterLink } from "System/Components/RouterLink"
@@ -23,6 +24,8 @@ export const IntroRoute: React.FC = () => {
 
   return (
     <FullBleed>
+      <SellMeta />
+
       <SubmissionLayout hideNavigation>
         <Flex
           height={isMobile ? "100%" : undefined}
