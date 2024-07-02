@@ -18,11 +18,11 @@ Tell us when we can remove this hack.
 
 #### Explanation/Context:
 
-Added to better support our custom relay test tools, but has been superceded in favor of official relay testing tools. This still remains because of old code tests.
+Added to better support our custom relay test tools, but has been superseded in favor of official relay testing tools. This still remains because of old code tests.
 
 #### When can we remove this:
 
-Can be removed when old relay test code has been deleted, and our legacy Relay dev tools in v2/Devtools is no longer used.
+Can be removed when old relay test code has been deleted, and our legacy Relay dev tools in v2/Devtools are no longer used.
 
 ## patches/found+0.5.5.patch
 
