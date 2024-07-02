@@ -59,9 +59,7 @@ export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({
   return (
     <RadioGroup
       onSelect={handleShippingQuoteSelected}
-      defaultValue={
-        shippingContext.orderData.selectedShippingQuoteID || quotes?.[0]?.id
-      }
+      defaultValue={shippingContext.state.selectedShippingQuoteID}
     >
       {quotes.map(shippingQuote => {
         const description =
