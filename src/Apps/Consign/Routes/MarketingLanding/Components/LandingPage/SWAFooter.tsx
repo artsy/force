@@ -1,11 +1,13 @@
-import { Button, Text, Box } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { useSystemContext } from "System/Hooks/useSystemContext"
+import { Box, Button, Text } from "@artsy/palette"
+import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { useAuthDialog } from "Components/AuthDialog"
+import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const SWAFooter: React.FC = () => {
+  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
   const { trackStartSellingClick } = useMarketingLandingTracking()
   const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
@@ -24,7 +26,7 @@ export const SWAFooter: React.FC = () => {
           as={RouterLink}
           width={["100%", 300]}
           variant="primaryBlack"
-          to="/sell/submission"
+          to={enableNewSubmissionFlow ? "sell2/intro" : "/sell/submission"}
           onClick={event => {
             if (!isLoggedIn) {
               event.preventDefault()

@@ -45,9 +45,11 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
             </Column>
           </GridColumns>
         ) : (
-          <FadeInBox maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={[2, 4]}>
-            {children}
-          </FadeInBox>
+          <Flex width="100vw" justifyContent="center">
+            <FadeInBox maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={[2, 4]}>
+              {children}
+            </FadeInBox>
+          </Flex>
         )}
       </Flex>
 

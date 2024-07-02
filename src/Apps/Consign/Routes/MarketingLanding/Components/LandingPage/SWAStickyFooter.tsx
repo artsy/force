@@ -1,12 +1,14 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Button, Text, useTheme, Box } from "@artsy/palette"
+import { Box, Button, Text, useTheme } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const SWAStickyFooter = () => {
+  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
   const {
     trackStartSellingClick,
     trackGetInTouchClick,
@@ -38,7 +40,7 @@ export const SWAStickyFooter = () => {
         as={RouterLink}
         width="100%"
         variant="primaryBlack"
-        to="/sell/submission"
+        to={enableNewSubmissionFlow ? "sell2/intro" : "/sell/submission"}
         onClick={event => {
           if (!isLoggedIn) {
             event.preventDefault()

@@ -102,9 +102,10 @@ describe("Details", () => {
       expect(html).toContain("$2,600")
     })
 
-    it("shows 'bidding closed' message if in closed auction", async () => {
+    it("shows sale_message if in closed auction", async () => {
       const data: any = {
         ...artworkInAuction,
+        sale_message: "Bidding closed",
         sale: { ...artworkInAuction?.sale, is_closed: true },
       }
 

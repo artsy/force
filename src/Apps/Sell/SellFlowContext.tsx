@@ -185,8 +185,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   }
 
   const state = {
-    // Both the first and second steps are considered the first step because we don't want to allow going back to the artist step.
-    isFirstStep: index === 0 || index === 1,
+    isFirstStep: index === 0,
     isLastStep: index === STEPS.length - 1,
     isSubmitStep: index === STEPS.indexOf(SUBMIT_STEP),
     index,
