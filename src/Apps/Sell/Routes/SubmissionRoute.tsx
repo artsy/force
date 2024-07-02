@@ -1,5 +1,6 @@
 import { FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
+import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
 import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
 import { SubmissionRoute_submission$key } from "__generated__/SubmissionRoute_submission.graphql"
 import { HttpError } from "found"
@@ -25,6 +26,8 @@ export const SubmissionRoute: React.FC<SubmissionRouteProps> = props => {
   return (
     <FullBleed>
       <AppContainer>
+        <SellMeta />
+
         <SellFlowContextProvider submissionID={submission.externalId}>
           {props.children}
         </SellFlowContextProvider>

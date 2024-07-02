@@ -1,8 +1,8 @@
 import {
   Column,
   GridColumns,
-  Input,
   Join,
+  LabeledInput,
   Radio,
   RadioGroup,
   Spacer,
@@ -95,7 +95,8 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
 
             <GridColumns>
               <Column span={[6, 6]}>
-                <Input
+                <LabeledInput
+                  label={values.dimensionsMetric}
                   ref={focusedInputRef}
                   onChange={handleChange}
                   name="width"
@@ -106,7 +107,8 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
               </Column>
 
               <Column span={[6, 6]}>
-                <Input
+                <LabeledInput
+                  label={values.dimensionsMetric}
                   onChange={handleChange}
                   name="height"
                   title="Height"
@@ -116,7 +118,8 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
               </Column>
 
               <Column span={[6, 6]}>
-                <Input
+                <LabeledInput
+                  label={values.dimensionsMetric}
                   onChange={handleChange}
                   name="depth"
                   title="Depth"

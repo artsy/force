@@ -1,14 +1,14 @@
-import { COUNTRY_CODES, countries } from "Utils/countries"
-import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { Formik } from "formik"
-import { graphql, useFragment } from "react-relay"
 import { Join, PhoneInput, Spacer, Text } from "@artsy/palette"
-import { PhoneNumberRoute_me$key } from "__generated__/PhoneNumberRoute_me.graphql"
-import { PhoneNumberRoute_submission$key } from "__generated__/PhoneNumberRoute_submission.graphql"
+import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { COUNTRY_CODES, countries } from "Utils/countries"
+import { PhoneNumberRoute_me$key } from "__generated__/PhoneNumberRoute_me.graphql"
+import { PhoneNumberRoute_submission$key } from "__generated__/PhoneNumberRoute_submission.graphql"
+import { Formik } from "formik"
 import * as React from "react"
+import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
 const FRAGMENT = graphql`
@@ -99,6 +99,7 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
               defaultValue={values.userPhone}
               placeholder="(000) 000 0000"
               data-testid="phone-input"
+              type="tel"
             />
           </Join>
           <DevDebug />

@@ -1,4 +1,10 @@
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import {
+  ActionType,
+  AuthContextModule,
+  ContextModule,
+  Intent,
+  OwnerType,
+} from "@artsy/cohesion"
 import { Box, Button, Spacer, Text } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
 import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
@@ -47,6 +53,7 @@ import {
   getPhotoUrlFromAsset,
   shouldRefetchPhotoUrls,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/formHelpers"
+import { useAuthDialog } from "Components/AuthDialog"
 
 const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
@@ -95,6 +102,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
 }) => {
   const { router } = useRouter()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
+  const { showAuthDialog } = useAuthDialog()
   const [isPhotosRefetchStarted, setIsPhotosRefetchStarted] = useState(false)
   const photosRefetchingCount = useRef(0)
   const {
@@ -240,7 +248,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
         initialValues={initialValue}
         initialErrors={initialErrors}
       >
-        {({ values, setFieldValue, isValid, isSubmitting }) => {
+        {({ values, setFieldValue, isValid, isSubmitting, submitForm }) => {
           const handlePhotoDelete = (photo: Photo) => {
             photo.removed = true
             photo.abortUploading?.()
@@ -384,6 +392,32 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
                 disabled={isSubmitting || !isValid}
                 loading={isSubmitting || values.photos.some(c => c.loading)}
                 type="submit"
+                onClick={event => {
+                  if (!isLoggedIn) {
+                    event.preventDefault()
+
+                    showAuthDialog({
+                      mode: "SignUp",
+                      options: {
+                        title: mode =>
+                          mode === "Login"
+                            ? "Log in to submit for sale"
+                            : "Sign up to submit for sale",
+                        afterAuthAction: {
+                          action: "associateSubmission",
+                          kind: "submission",
+                          objectId: submission?.externalId as string,
+                        },
+                      },
+                      analytics: {
+                        contextModule: ContextModule.uploadPhotos as AuthContextModule,
+                        intent: Intent.login,
+                      },
+                    })
+
+                    return
+                  }
+                }}
               >
                 {isLastStep ? "Submit Artwork" : "Save and Continue"}
               </Button>

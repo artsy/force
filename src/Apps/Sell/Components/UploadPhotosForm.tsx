@@ -46,6 +46,12 @@ export const UploadPhotosForm: React.FC = () => {
         if (!geminiToken) {
           photo.errorMessage = `Photo could not be added: ${photo.name}`
           setFieldValue("photos", values.photos)
+
+          sendToast({
+            variant: "error",
+            message: "Photo could not be added",
+          })
+
           return
         }
 
@@ -83,6 +89,7 @@ export const UploadPhotosForm: React.FC = () => {
       setFieldValue,
       values.submissionId,
       values.photos,
+      sendToast,
     ]
   )
 

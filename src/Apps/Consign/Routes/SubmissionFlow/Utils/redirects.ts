@@ -2,15 +2,6 @@ import { Match, Router } from "found"
 import { isFunction } from "lodash"
 import { graphql } from "react-relay"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
-import {
-  getArtworkDetailsFormInitialValues,
-  SubmissionType,
-} from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtworkDetailsForm"
-import { getUploadPhotosFormInitialValues } from "Apps/Consign/Routes/SubmissionFlow/UploadPhotos/UploadPhotos"
-import {
-  artworkDetailsValidationSchema,
-  uploadPhotosValidationSchema,
-} from "./validation"
 
 const redirectToIf = (
   to: ((id?: string) => string) | string,
@@ -26,41 +17,17 @@ const checkSubmissionExist = redirectToIf(
   submission => !submission || !submission.externalId
 )
 
-const checkArtworkDetailsFormValid = redirectToIf(
-  id => `/sell/submission/${id}`,
-  submission =>
-    !artworkDetailsValidationSchema.isValidSync(
-      getArtworkDetailsFormInitialValues({
-        values: submission,
-        type: SubmissionType.submission,
-      })
-    )
-)
-
-// TODO: Is this needed as a rule to go back to edit contact info?
-export const checkUploadPhotosFormValid = redirectToIf(
-  id => `/sell/submission/${id}/upload-photos`,
-  submission =>
-    !uploadPhotosValidationSchema.isValidSync(
-      getUploadPhotosFormInitialValues(submission)
-    )
-)
-
 export const redirects = {
   path: "/sell/submission",
   rules: [],
   children: [
-    {
-      path: "/artwork-details",
-      rules: [],
-    },
     {
       path: "/:id/artwork-details",
       rules: [checkSubmissionExist],
     },
     {
       path: "/:id/upload-photos",
-      rules: [checkSubmissionExist, checkArtworkDetailsFormValid],
+      rules: [checkSubmissionExist],
     },
   ],
 }

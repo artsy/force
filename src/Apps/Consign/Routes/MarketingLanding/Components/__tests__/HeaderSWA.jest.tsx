@@ -1,10 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
 
 jest.mock("react-tracking")
-jest.mock("System/Hooks/useSystemContext")
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerType: "sell",
@@ -13,12 +11,6 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     match: { params: { id: "1" } },
-  })),
-}))
-const mockShowAuthDialog = jest.fn()
-jest.mock("Components/AuthDialog", () => ({
-  useAuthDialog: jest.fn(() => ({
-    showAuthDialog: mockShowAuthDialog,
   })),
 }))
 
@@ -31,10 +23,6 @@ describe("HeaderSWA", () => {
         trackEvent,
       }
     })
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      user: { id: "user-id", email: "user-email@artsy.net" },
-      isLoggedIn: true,
-    }))
   })
 
   it("renders correctly", () => {
@@ -48,58 +36,28 @@ describe("HeaderSWA", () => {
   })
 
   describe("Start Selling button", () => {
-    describe("when user is not logged in", () => {
-      beforeAll(() => {
-        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-          user: { id: "user-id", email: "user-email@artsy.net" },
-          isLoggedIn: false,
-        }))
-      })
+    it("links out to submission flow", () => {
+      render(<HeaderSWA />)
 
-      it("links out to the auth flow when pressed", async () => {
-        render(<HeaderSWA />)
+      const link = screen.getByTestId("start-selling-button")
 
-        const link = screen.getByTestId("start-selling-button")
-
-        expect(link).toBeInTheDocument()
-        fireEvent.click(link)
-
-        expect(mockShowAuthDialog).toHaveBeenCalled()
-      })
+      expect(link).toBeInTheDocument()
+      expect(link).toHaveTextContent("Start Selling")
+      expect(link).toHaveAttribute("href", "/sell/submission")
     })
 
-    describe("when user is logged in", () => {
-      beforeAll(() => {
-        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-          user: { id: "user-id", email: "user-email@artsy.net" },
-          isLoggedIn: true,
-        }))
-      })
+    it("tracks click", () => {
+      render(<HeaderSWA />)
 
-      it("links out to submission flow", () => {
-        render(<HeaderSWA />)
+      fireEvent.click(screen.getByTestId("start-selling-button"))
 
-        const link = screen.getByTestId("start-selling-button")
-
-        expect(link).toBeInTheDocument()
-        expect(link).toHaveTextContent("Start Selling")
-        expect(link).toHaveAttribute("href", "/sell/submission")
-      })
-
-      it("tracks click", () => {
-        render(<HeaderSWA />)
-
-        fireEvent.click(screen.getByTestId("start-selling-button"))
-
-        expect(trackEvent).toHaveBeenCalled()
-        expect(trackEvent).toHaveBeenCalledWith({
-          action: "tappedConsign",
-          context_module: "Header",
-          context_page_owner_type: "sell",
-          label: "Start Selling",
-          destination_path: "/sell/submission",
-          user_id: "user-id",
-        })
+      expect(trackEvent).toHaveBeenCalled()
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "tappedConsign",
+        context_module: "Header",
+        context_page_owner_type: "sell",
+        label: "Start Selling",
+        destination_path: "/sell/submission",
       })
     })
   })
@@ -116,16 +74,10 @@ describe("HeaderSWA", () => {
         context_module: "Header",
         context_page_owner_type: "sell",
         label: "Get in Touch",
-        user_id: "user-id",
-        user_email: "user-email@artsy.net",
       })
     })
 
     it("links out to email provider", () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        user: { id: "user-id", email: "user-email@artsy.net" },
-      }))
-
       render(<HeaderSWA />)
 
       const link = screen.getByTestId("get-in-touch-button")

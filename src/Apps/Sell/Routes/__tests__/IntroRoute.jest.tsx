@@ -1,5 +1,6 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { IntroRoute } from "Apps/Sell/Routes/IntroRoute"
+import { render } from "DevTools/renderWithMockBoot"
 import { useRouter } from "System/Hooks/useRouter"
 import { useTracking } from "react-tracking"
 

@@ -9,6 +9,7 @@ import {
   Flex,
   FullBleed,
   Stack,
+  THEME,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -37,7 +38,6 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
 import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { getENV } from "Utils/getENV"
 import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
 import { Jump } from "Utils/Hooks/useJump"
 
@@ -62,7 +62,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const [sort, setSort] = useState("ENABLED_AT_DESC")
   const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.alertsConnection)
-  const isMobile = getENV("IS_MOBILE")
+
+  const xs = __internal__useMatchMedia(THEME.mediaQueries.xs)
+  const sm = __internal__useMatchMedia(THEME.mediaQueries.sm)
+  const isMobile = xs || sm
 
   const [
     editAlertEntity,
@@ -75,12 +78,14 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     if (!alerts || !alerts[0]) return
     if (match?.params?.alertID) return
     if (isMobile === null) return
+
     if (!isMobile) {
       setEditAlertEntity({
         id: alerts[0].internalID,
         name: alerts[0].title ?? "",
         artistIds: alerts[0]?.artistIDs as string[],
       })
+
       // the two following lines update the right colump and url when
       // "/favorites/alerts" is called from the tab of side menu
       setViewOption("EDIT")

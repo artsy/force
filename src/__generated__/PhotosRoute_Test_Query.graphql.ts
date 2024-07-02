@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f02bf875bc10d471fb1efdb40dd0c2d>>
+ * @generated SignedSource<<fc6bc79cdb877fe6bb810bea600f4587>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,6 +28,12 @@ export type PhotosRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly myCollectionArtwork: {
+      readonly id: string;
+      readonly images: ReadonlyArray<{
+        readonly url: string | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
   } | null | undefined;
 };
 export type PhotosRoute_Test_Query = {
@@ -114,6 +120,42 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Artwork",
+            "kind": "LinkedField",
+            "name": "myCollectionArtwork",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "images",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "large"
+                      }
+                    ],
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": "url(version:\"large\")"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "ConsignmentSubmissionCategoryAsset",
             "kind": "LinkedField",
             "name": "assets",
@@ -158,12 +200,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c33cc79047899c70e37e1ced4c620cde",
+    "cacheID": "73d0ff6d2e6ea4bd63180465137a16de",
     "id": null,
     "metadata": {},
     "name": "PhotosRoute_Test_Query",
     "operationKind": "query",
-    "text": "query PhotosRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
+    "text": "query PhotosRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  myCollectionArtwork {\n    images {\n      url(version: \"large\")\n    }\n    id\n  }\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
   }
 };
 })();
