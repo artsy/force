@@ -1,11 +1,9 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { Box, Button, Text, useTheme } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
-import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const SWAStickyFooter = () => {
   const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
@@ -14,8 +12,6 @@ export const SWAStickyFooter = () => {
     trackGetInTouchClick,
   } = useMarketingLandingTracking()
   const { theme } = useTheme()
-  const { isLoggedIn } = useSystemContext()
-  const { showAuthDialog } = useAuthDialog()
 
   const getInTouchRoute = "/sell/inquiry"
 
@@ -42,24 +38,6 @@ export const SWAStickyFooter = () => {
         variant="primaryBlack"
         to={enableNewSubmissionFlow ? "sell2/intro" : "/sell/submission"}
         onClick={event => {
-          if (!isLoggedIn) {
-            event.preventDefault()
-
-            showAuthDialog({
-              mode: "Login",
-              options: {
-                title: () => {
-                  return "Log in to submit an artwork for sale"
-                },
-              },
-              analytics: {
-                contextModule: ContextModule.sellStickyFooter,
-                intent: Intent.login,
-              },
-            })
-
-            return
-          }
           trackStartSellingClick(ContextModule.sellStickyFooter)
         }}
         mb={[1, 0]}
