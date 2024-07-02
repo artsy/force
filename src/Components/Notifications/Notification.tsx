@@ -23,6 +23,7 @@ import createLogger from "Utils/logger"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
+import { DESKTOP_HEIGHT } from "Apps/Notifications/notificationsutils"
 
 const logger = createLogger("NotificationItem")
 
@@ -104,36 +105,50 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
     return <NotificationErrorMessage />
   }
 
-  switch (notification?.notificationType) {
-    case "ARTWORK_ALERT":
-      return <AlertNotification notification={data.me?.notification} />
-    case "ARTWORK_PUBLISHED":
-      return (
-        <ArtworkPublishedNotification notification={data.me?.notification} />
-      )
-    case "ARTICLE_FEATURED_ARTIST":
-      return (
-        <ArticleFeaturedArtistNotification
-          notification={data.me?.notification}
-        />
-      )
-    case "PARTNER_OFFER_CREATED":
-      return (
-        <PartnerOfferCreatedNotification notification={data.me?.notification} />
-      )
-    case "PARTNER_SHOW_OPENED":
-      return (
-        <PartnerShowOpenedNotification notification={data.me?.notification} />
-      )
-    case "VIEWING_ROOM_PUBLISHED":
-      return (
-        <ViewingRoomPublishedNotification
-          notification={data.me?.notification}
-        />
-      )
-    default:
-      return null
+  const renderNotificationObject = data => {
+    switch (notification?.notificationType) {
+      case "ARTWORK_ALERT":
+        return <AlertNotification notification={data.me?.notification} />
+      case "ARTWORK_PUBLISHED":
+        return (
+          <ArtworkPublishedNotification notification={data.me?.notification} />
+        )
+      case "ARTICLE_FEATURED_ARTIST":
+        return (
+          <ArticleFeaturedArtistNotification
+            notification={data.me?.notification}
+          />
+        )
+      case "PARTNER_OFFER_CREATED":
+        return (
+          <PartnerOfferCreatedNotification
+            notification={data.me?.notification}
+          />
+        )
+      case "PARTNER_SHOW_OPENED":
+        return (
+          <PartnerShowOpenedNotification notification={data.me?.notification} />
+        )
+      case "VIEWING_ROOM_PUBLISHED":
+        return (
+          <ViewingRoomPublishedNotification
+            notification={data.me?.notification}
+          />
+        )
+      default:
+        return null
+    }
   }
+
+  return (
+    <Flex
+      flexDirection="column"
+      height={["auto", DESKTOP_HEIGHT]}
+      overflow="auto"
+    >
+      {renderNotificationObject(data)}
+    </Flex>
+  )
 }
 
 export const NotificationQueryRenderer: React.FC = props => {
