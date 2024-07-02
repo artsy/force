@@ -1,5 +1,13 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Flex,
+  Join,
+  Label,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
@@ -16,6 +24,7 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 import { SaveButtonFragmentContainer } from "./SaveButton"
+import { useCollectorSignals } from "System/Hooks/useCollectorSignals"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -202,6 +211,9 @@ export const Details: React.FC<DetailsProps> = ({
     hideLotLabel,
     saveOnlyToDefaultList,
   } = useArtworkGridContext()
+  const collectorSignals = useCollectorSignals(rest.artwork.internalID)
+
+  console.log("*** inside DETAILS", { collectorSignals })
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =
@@ -268,7 +280,11 @@ export const Details: React.FC<DetailsProps> = ({
         )}
         {renderSaveButtonComponent()}
       </Flex>
-
+      {collectorSignals.partnerOffer && (
+        <Flex flexDirection="row">
+          <Label variant="brand">Limited-time offer</Label>
+        </Flex>
+      )}
       <Box position="relative">
         <TitleLine {...rest} />
         {showHighDemandInfo && <HighDemandInfo />}

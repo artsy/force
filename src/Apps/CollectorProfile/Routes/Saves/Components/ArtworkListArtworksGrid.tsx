@@ -22,6 +22,7 @@ import { isEqual } from "lodash"
 import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { ArtworkListEmptyStateFragmentContainer } from "./ArtworkListEmptyState"
+import { useLoadCollectorSignals } from "System/Hooks/useCollectorSignals"
 
 export const ARTWORK_LIST_ARTWORK_GRID_ID = "artworksGrid"
 
@@ -50,6 +51,11 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
   const previousFilters = usePrevious(filters)
 
   const artworks = me.artworkList?.artworks
+
+  const { CollectorSignalsProvider } = useLoadCollectorSignals({
+    artworks,
+  })
+
   const {
     pageCursors,
     pageInfo: { hasNextPage },
@@ -151,7 +157,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
   }
 
   return (
-    <>
+    <CollectorSignalsProvider>
       <Jump id={ARTWORK_LIST_ARTWORK_GRID_ID} />
       <ArtworkListArtworksGridHeader />
       <Spacer y={2} />
@@ -189,7 +195,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
           scrollTo="artworksGrid"
         />
       </LoadingArea>
-    </>
+    </CollectorSignalsProvider>
   )
 }
 
@@ -207,6 +213,7 @@ export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
           internalID
 
           artworks: artworksConnection(first: 30, page: $page, sort: $sort) {
+            ...useCollectorSignals_artworksConnection
             pageInfo {
               hasNextPage
             }
