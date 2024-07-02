@@ -5,7 +5,6 @@ import { SubmissionHeader } from "Apps/Sell/Components/SubmissionHeader"
 import { SubmissionProgressBar } from "Apps/Sell/Components/SubmissionProgressBar"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { FadeInBox } from "Components/FadeInBox"
-import { useWindowSize } from "Utils/Hooks/useWindowSize"
 import { useEffect } from "react"
 
 const CONTENT_WIDTH = 640
@@ -25,11 +24,6 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
   useEffect(() => {
     context.actions?.setLoading(loading)
   }, [context.actions, loading])
-
-  const { width } = useWindowSize()
-
-  // 40 is the padding on either side of the content
-  const size = width < 768 ? "100vw" : width - 40
 
   return (
     <Flex height="100dvh" flexDirection="column">
@@ -51,7 +45,7 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
             </Column>
           </GridColumns>
         ) : (
-          <Flex width={size} justifyContent="center">
+          <Flex width="100vw" justifyContent="center">
             <FadeInBox maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={[2, 4]}>
               {children}
             </FadeInBox>
