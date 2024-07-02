@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<74f1bf45b7327148d376b1073e1af968>>
+ * @generated SignedSource<<886867bad519579baf4c237b829a64df>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,13 +24,11 @@ export type CollectorProfileSavesRoute_me$data = {
   readonly savedArtworksArtworkList: {
     readonly artworksConnection: {
       readonly totalCount: number | null | undefined;
-      readonly " $fragmentSpreads": FragmentRefs<"useCollectorSignals_artworksConnection">;
     } | null | undefined;
     readonly internalID: string;
     readonly shareableWithPartners: boolean;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item" | "OfferSettingsListItem_item">;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"useCollectorSignals_me">;
   readonly " $fragmentType": "CollectorProfileSavesRoute_me";
 };
 export type CollectorProfileSavesRoute_me$key = {
@@ -81,11 +79,6 @@ return {
   "name": "CollectorProfileSavesRoute_me",
   "selections": [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "useCollectorSignals_me"
-    },
-    {
       "alias": "savedArtworksArtworkList",
       "args": [
         {
@@ -117,11 +110,6 @@ return {
           "name": "artworksConnection",
           "plural": false,
           "selections": [
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "useCollectorSignals_artworksConnection"
-            },
             {
               "alias": null,
               "args": null,
@@ -224,6 +212,6 @@ return {
 };
 })();
 
-(node as any).hash = "0a5e99d66b8831dcdf5543db8c9f366a";
+(node as any).hash = "08a824fa4155abab44470b620fbd6640";
 
 export default node;

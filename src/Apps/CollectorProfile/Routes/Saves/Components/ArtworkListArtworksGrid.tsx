@@ -209,7 +209,6 @@ export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
           page: { type: "Int", defaultValue: 1 }
           sort: { type: "CollectionArtworkSorts" }
         ) {
-        ...useCollectorSignals_me
         artworkList: collection(id: $listID) {
           internalID
 

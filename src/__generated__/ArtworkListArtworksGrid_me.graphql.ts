@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4963d60f10a9c87e8768ce350530af7f>>
+ * @generated SignedSource<<2183521603097c4ce5aab78dcdb57187>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ export type ArtworkListArtworksGrid_me$data = {
     } | null | undefined;
     readonly internalID: string;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListEmptyState_me" | "useCollectorSignals_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListEmptyState_me">;
   readonly " $fragmentType": "ArtworkListArtworksGrid_me";
 };
 export type ArtworkListArtworksGrid_me$key = {
@@ -58,11 +58,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtworkListArtworksGrid_me",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "useCollectorSignals_me"
-    },
     {
       "alias": "artworkList",
       "args": [
@@ -203,6 +198,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d0cfb5caf13766e9a35476a80c0197fd";
+(node as any).hash = "16ccac26fc7c528c1f40a53b68847980";
 
 export default node;

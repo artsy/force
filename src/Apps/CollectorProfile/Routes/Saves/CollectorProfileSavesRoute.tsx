@@ -137,7 +137,6 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
   {
     me: graphql`
       fragment CollectorProfileSavesRoute_me on Me {
-        ...useCollectorSignals_me
         savedArtworksArtworkList: collection(id: "saved-artwork") {
           internalID
           shareableWithPartners
@@ -145,7 +144,6 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
           ...OfferSettingsListItem_item
 
           artworksConnection(first: 4) {
-            ...useCollectorSignals_artworksConnection
             totalCount
           }
         }
