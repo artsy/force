@@ -1,10 +1,10 @@
-import { ErrorCode, FileRejection } from "react-dropzone"
-import { Environment } from "react-relay"
-import createLogger from "Utils/logger"
-import uuid from "uuid"
 import { createGeminiAssetWithS3Credentials } from "Components/PhotoUpload/Mutations/createGeminiAssetWithS3Credentials"
 import { getConvectionGeminiKey } from "Components/PhotoUpload/Mutations/getConvectionGeminiKey"
 import { getGeminiCredentialsForEnvironment } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
+import createLogger from "Utils/logger"
+import { ErrorCode, FileRejection } from "react-dropzone"
+import { Environment } from "react-relay"
+import uuid from "uuid"
 import { uploadFileToS3 } from "./uploadFileToS3"
 
 const logger = createLogger("PhotoUpload/fileUtils.ts")
@@ -88,7 +88,8 @@ export const getErrorMessage = (fileRejection: FileRejection) => {
   let errorMessage
 
   if (errorCodes.includes(ErrorCode.FileInvalidType)) {
-    errorMessage = "File format not supported. Please upload JPG or PNG files."
+    errorMessage =
+      "File format not supported. Please upload JPG, PNG or HEIC files."
   } else if (errorCodes.includes(CustomErrorCode.TotalSizeLimit)) {
     errorMessage =
       "Whoa, you've reached the size limit! Please delete or upload smaller files."
