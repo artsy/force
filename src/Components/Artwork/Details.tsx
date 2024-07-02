@@ -152,11 +152,7 @@ const NBSP = " "
 const SaleMessage: React.FC<DetailsProps> = ({
   artwork: { sale, sale_message, sale_artwork },
 }) => {
-  if (sale?.is_auction && sale?.is_closed) {
-    return <>Bidding closed</>
-  }
-
-  if (sale?.is_auction) {
+  if (sale?.is_auction && !sale?.is_closed) {
     const highestBid_display = sale_artwork?.highest_bid?.display
     const openingBid_display = sale_artwork?.opening_bid?.display
 
