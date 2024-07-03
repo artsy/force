@@ -2,11 +2,13 @@ import { Join, PhoneInput, Spacer, Text } from "@artsy/palette"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
+import { useFocusInput } from "Apps/Sell/Hooks/useFocusInput"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { useValidatePhoneNumber } from "Components/PhoneNumberInput"
 import { COUNTRY_CODES, countries } from "Utils/countries"
 import { PhoneNumberRoute_me$key } from "__generated__/PhoneNumberRoute_me.graphql"
 import { PhoneNumberRoute_submission$key } from "__generated__/PhoneNumberRoute_submission.graphql"
-import { Formik } from "formik"
+import { Formik, useFormikContext } from "formik"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
@@ -78,33 +80,52 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
       validateOnMount
       validationSchema={Schema}
     >
-      {({ handleChange, setFieldValue, values }) => (
-        <SubmissionLayout>
-          <SubmissionStepTitle>Add phone number</SubmissionStepTitle>
+      <SubmissionLayout>
+        <SubmissionStepTitle>Add phone number</SubmissionStepTitle>
 
-          <Join separator={<Spacer y={4} />}>
-            <Text variant={["xs", "sm"]} textColor={["black60", "black100"]}>
-              Add your number (optional) so an Artsy Advisor can contact you
-              directly by phone.
-            </Text>
+        <PhoneNumberRouteForm />
 
-            <PhoneInput
-              options={countries}
-              onSelect={option => {
-                setFieldValue("phoneNumberRegionCode", option.value)
-              }}
-              name="userPhone"
-              onChange={handleChange}
-              dropdownValue={values.phoneNumberRegionCode}
-              defaultValue={values.userPhone}
-              placeholder="(000) 000 0000"
-              data-testid="phone-input"
-              type="tel"
-            />
-          </Join>
-          <DevDebug />
-        </SubmissionLayout>
-      )}
+        <DevDebug />
+      </SubmissionLayout>
     </Formik>
+  )
+}
+
+const PhoneNumberRouteForm: React.FC = () => {
+  const focusedInputRef = useFocusInput()
+  const { values, handleChange, setFieldValue } = useFormikContext<FormValues>()
+
+  const isPhoneNumberValid = useValidatePhoneNumber({
+    national: values.userPhone,
+    regionCode: values.phoneNumberRegionCode,
+  })
+
+  return (
+    <Join separator={<Spacer y={4} />}>
+      <Text variant={["xs", "sm"]} textColor={["black60", "black100"]}>
+        Add your number (optional) so an Artsy Advisor can contact you directly
+        by phone.
+      </Text>
+
+      <PhoneInput
+        ref={focusedInputRef}
+        options={countries}
+        onSelect={option => {
+          setFieldValue("phoneNumberRegionCode", option.value)
+        }}
+        name="userPhone"
+        onChange={handleChange}
+        dropdownValue={values.phoneNumberRegionCode}
+        defaultValue={values.userPhone}
+        placeholder="(000) 000 0000"
+        data-testid="phone-input"
+        type="tel"
+        error={
+          !!values.userPhone &&
+          !isPhoneNumberValid &&
+          "The phone number does not seem to be valid."
+        }
+      />
+    </Join>
   )
 }

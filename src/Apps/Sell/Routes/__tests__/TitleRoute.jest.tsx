@@ -116,9 +116,9 @@ describe("TitleRoute", () => {
     })
   })
 
-  it("does not display the Back button", () => {
+  it("displays the Back button", () => {
     renderWithRelay({})
 
-    expect(screen.queryByText("Back")).not.toBeInTheDocument()
+    expect(screen.queryByText("Back")).toBeInTheDocument()
   })
 })

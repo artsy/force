@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a5203137875bdbb9e3556dd681ee2e9a>>
+ * @generated SignedSource<<0b126ae26abaf199b47013569f5509d1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
+export type ArtworkConditionEnumType = "EXCELLENT" | "FAIR" | "GOOD" | "VERY_GOOD" | "%future added value";
 export type ArtworkImportSource = "CONVECTION" | "MY_COLLECTION" | "%future added value";
 export type ArtworkSignatureTypeEnum = "HAND_SIGNED_BY_ARTIST" | "NOT_SIGNED" | "OTHER" | "SIGNED_IN_PLATE" | "STAMPED_BY_ARTIST_ESTATE" | "STICKER_LABEL" | "%future added value";
 export type MyCollectionCreateArtworkInput = {
@@ -23,6 +24,7 @@ export type MyCollectionCreateArtworkInput = {
   coaByAuthenticatingBody?: boolean | null | undefined;
   coaByGallery?: boolean | null | undefined;
   collectorLocation?: EditableLocation | null | undefined;
+  condition?: ArtworkConditionEnumType | null | undefined;
   conditionDescription?: string | null | undefined;
   confidentialNotes?: string | null | undefined;
   costCurrencyCode?: string | null | undefined;

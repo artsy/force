@@ -279,7 +279,7 @@ describe("PhotosRoute", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "File format not supported. Please upload JPG or PNG files."
+            "File format not supported. Please upload JPG, PNG or HEIC files."
           )
         ).toBeInTheDocument()
       })

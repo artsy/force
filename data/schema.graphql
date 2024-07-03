@@ -2407,6 +2407,7 @@ type Artwork implements Node & Searchable & Sellable {
     first: Int
     last: Int
   ): AuctionResultConnection
+  condition: ArtworkCondition
   conditionDescription: ArtworkInfoRow
 
   # Notes by a partner or MyCollection user on the artwork, can only be accessed by partner or the user that owns the artwork
@@ -2769,6 +2770,19 @@ enum ArtworkAttributionClassType {
   OPEN_EDITION
   UNIQUE
   UNKNOWN_EDITION
+}
+
+type ArtworkCondition {
+  description: String
+  displayText: String
+  value: String
+}
+
+enum ArtworkConditionEnumType {
+  EXCELLENT
+  FAIR
+  GOOD
+  VERY_GOOD
 }
 
 # A connection to a list of items.
@@ -4390,6 +4404,7 @@ type CollectorProfileTypeEdge {
 
 type CollectorProfileUpdatePromptNotificationItem {
   collectorProfile: CollectorProfileType!
+  me: Me!
 }
 
 type CollectorResume {
@@ -13907,6 +13922,7 @@ input MyCollectionCreateArtworkInput {
 
   # The given location of the user as structured data
   collectorLocation: EditableLocation
+  condition: ArtworkConditionEnumType
   conditionDescription: String
   confidentialNotes: String
   costCurrencyCode: String
@@ -14008,6 +14024,7 @@ input MyCollectionUpdateArtworkInput {
 
   # The given location of the user as structured data
   collectorLocation: EditableLocation
+  condition: ArtworkConditionEnumType
   conditionDescription: String
   confidentialNotes: String
   costCurrencyCode: String
@@ -18835,12 +18852,12 @@ enum sort {
 }
 
 type SpecialistBio {
-  bio: String
-  email: String
-  firstName: String
-  image: Image
-  jobTitle: String
-  name: String
+  bio: String!
+  email: String!
+  firstName: String!
+  image: Image!
+  jobTitle: String!
+  name: String!
 }
 
 type StartIdentityVerificationFailure {
@@ -18885,7 +18902,7 @@ type StaticContent {
   slug: ID!
 
   # A list of specialists
-  specialistBios: [SpecialistBio]
+  specialistBios: [SpecialistBio!]
 }
 
 enum SubGroupInputStatus {

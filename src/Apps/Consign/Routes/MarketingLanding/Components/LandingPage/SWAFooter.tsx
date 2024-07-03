@@ -1,14 +1,11 @@
-import { Button, Text, Box } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
+import { Box, Button, Text } from "@artsy/palette"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
-import { ContextModule, Intent } from "@artsy/cohesion"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useAuthDialog } from "Components/AuthDialog"
+import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export const SWAFooter: React.FC = () => {
+  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
   const { trackStartSellingClick } = useMarketingLandingTracking()
-  const { isLoggedIn } = useSystemContext()
-  const { showAuthDialog } = useAuthDialog()
 
   return (
     <>
@@ -24,26 +21,8 @@ export const SWAFooter: React.FC = () => {
           as={RouterLink}
           width={["100%", 300]}
           variant="primaryBlack"
-          to="/sell/submission"
-          onClick={event => {
-            if (!isLoggedIn) {
-              event.preventDefault()
-
-              showAuthDialog({
-                mode: "Login",
-                options: {
-                  title: () => {
-                    return "Log in to submit an artwork for sale"
-                  },
-                },
-                analytics: {
-                  contextModule: ContextModule.sellFooter,
-                  intent: Intent.login,
-                },
-              })
-
-              return
-            }
+          to={enableNewSubmissionFlow ? "sell2/intro" : "/sell/submission"}
+          onClick={() => {
             trackStartSellingClick("Footer")
           }}
           data-testid="start-selling-button"

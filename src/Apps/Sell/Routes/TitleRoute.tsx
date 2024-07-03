@@ -61,6 +61,7 @@ export const TitleRoute: React.FC<TitleRouteProps> = props => {
               <EntityHeaderArtistFragmentContainer
                 artist={submission.artist}
                 displayFollowButton={false}
+                displayLink={false}
               />
             )}
 

@@ -15,9 +15,12 @@ export const BottomFormNavigation = () => {
     <Flex
       width="100%"
       p={[2, 4]}
+      pt={[2, 2]}
       flexDirection="row"
       justifyContent="space-between"
       alignItems="center"
+      borderTop="1px solid"
+      borderColor="black5"
     >
       <BottomFormBackButton />
       <BottomFormNextButton />
@@ -42,7 +45,7 @@ const BottomFormBackButton = () => {
     try {
       await submitForm()
 
-      actions.goToPreviousStep()
+      await actions.goToPreviousStep()
     } catch (error) {
       logger.error("Error submitting form", error)
     } finally {
@@ -107,7 +110,7 @@ const BottomFormNextButton = () => {
     try {
       await submitForm()
 
-      actions.goToNextStep()
+      await actions.goToNextStep()
     } catch (error) {
       logger.error("Error submitting form", error)
     } finally {
