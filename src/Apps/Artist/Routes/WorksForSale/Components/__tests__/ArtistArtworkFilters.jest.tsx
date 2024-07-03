@@ -6,7 +6,6 @@ import {
 import { ArtistArtworkFilters } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilters"
 import { ArtworkFilterContextProvider } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ReactElement } from "react"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const render = (ui: ReactElement, options: RenderOptions = {}) =>
   originalRender(ui, { wrapper: Wrapper, ...options })
@@ -53,33 +52,11 @@ it("renders all expected filters", () => {
   expect(screen.getByText("Price")).toBeInTheDocument()
   expect(screen.getByText("Artist Series")).toBeInTheDocument()
   expect(screen.getByText("Size")).toBeInTheDocument()
+  expect(screen.getByText("Availability")).toBeInTheDocument()
   expect(screen.getByText("Ways to Buy")).toBeInTheDocument()
   expect(screen.getByText("Material")).toBeInTheDocument()
   expect(screen.getByText("Artwork Location")).toBeInTheDocument()
   expect(screen.getByText("Time Period")).toBeInTheDocument()
   expect(screen.getByText("Color")).toBeInTheDocument()
   expect(screen.getByText("Galleries and Institutions")).toBeInTheDocument()
-})
-
-describe("feature flag: onyx_availability", () => {
-  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
-
-  describe("when the feature flag is enabled", () => {
-    beforeEach(() => {
-      mockUseFeatureFlag.mockImplementation(() => true)
-    })
-    it("renders the Availability filter", () => {
-      render(<ArtistArtworkFilters />)
-      expect(screen.getByText("Availability")).toBeInTheDocument()
-    })
-  })
-  describe("when the feature flag is disabled", () => {
-    beforeEach(() => {
-      mockUseFeatureFlag.mockImplementation(() => false)
-    })
-    it("does not render the Availability filter", () => {
-      render(<ArtistArtworkFilters />)
-      expect(screen.queryByText("Availability")).not.toBeInTheDocument()
-    })
-  })
 })
