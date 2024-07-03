@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5cc34be3e1f04948422fc43cfcdf0ed6>>
+ * @generated SignedSource<<578242c7e182b2540296369f80c36ad6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,12 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderSubmission_submission$data = {
   readonly artist: {
-    readonly avatar: {
-      readonly cropped: {
-        readonly src: string;
-        readonly srcSet: string;
+    readonly coverArtwork: {
+      readonly avatar: {
+        readonly cropped: {
+          readonly src: string;
+          readonly srcSet: string;
+        } | null | undefined;
       } | null | undefined;
     } | null | undefined;
     readonly initials: string | null | undefined;
@@ -58,56 +60,59 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": "avatar",
+          "alias": null,
           "args": null,
-          "concreteType": "Image",
+          "concreteType": "Artwork",
           "kind": "LinkedField",
-          "name": "image",
+          "name": "coverArtwork",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 45
-                },
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": [
-                    "big_and_tall",
-                    "tall"
-                  ]
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 45
-                }
-              ],
-              "concreteType": "CroppedImageUrl",
+              "alias": "avatar",
+              "args": null,
+              "concreteType": "Image",
               "kind": "LinkedField",
-              "name": "cropped",
+              "name": "image",
               "plural": false,
               "selections": [
                 {
                   "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "srcSet",
-                  "storageKey": null
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "height",
+                      "value": 45
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 45
+                    }
+                  ],
+                  "concreteType": "CroppedImageUrl",
+                  "kind": "LinkedField",
+                  "name": "cropped",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "src",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "srcSet",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": "cropped(height:45,width:45)"
                 }
               ],
-              "storageKey": "cropped(height:45,version:[\"big_and_tall\",\"tall\"],width:45)"
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -127,6 +132,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d7f5f52ac07777ff299034e0ded550a5";
+(node as any).hash = "6a0d47f39aa7d5f4db8bc4a4fac6eb3c";
 
 export default node;

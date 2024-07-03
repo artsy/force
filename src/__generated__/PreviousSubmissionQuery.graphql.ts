@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c3ab682004eef886ec0cc05d8ae5a2d>>
+ * @generated SignedSource<<554f4a7cfc7d8ad260043393ae05289b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -109,57 +109,61 @@ return {
                 "storageKey": null
               },
               {
-                "alias": "avatar",
+                "alias": null,
                 "args": null,
-                "concreteType": "Image",
+                "concreteType": "Artwork",
                 "kind": "LinkedField",
-                "name": "image",
+                "name": "coverArtwork",
                 "plural": false,
                 "selections": [
                   {
-                    "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 45
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "version",
-                        "value": [
-                          "big_and_tall",
-                          "tall"
-                        ]
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 45
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
+                    "alias": "avatar",
+                    "args": null,
+                    "concreteType": "Image",
                     "kind": "LinkedField",
-                    "name": "cropped",
+                    "name": "image",
                     "plural": false,
                     "selections": [
                       {
                         "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "src",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "srcSet",
-                        "storageKey": null
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "height",
+                            "value": 45
+                          },
+                          {
+                            "kind": "Literal",
+                            "name": "width",
+                            "value": 45
+                          }
+                        ],
+                        "concreteType": "CroppedImageUrl",
+                        "kind": "LinkedField",
+                        "name": "cropped",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "src",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "srcSet",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": "cropped(height:45,width:45)"
                       }
                     ],
-                    "storageKey": "cropped(height:45,version:[\"big_and_tall\",\"tall\"],width:45)"
-                  }
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -181,12 +185,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c81ebad31165c0412bba161a8ce6edf3",
+    "cacheID": "a5c50fe29822c7327d5baa0f256c298f",
     "id": null,
     "metadata": {},
     "name": "PreviousSubmissionQuery",
     "operationKind": "query",
-    "text": "query PreviousSubmissionQuery(\n  $id: ID!\n) {\n  submission(id: $id) {\n    ...EntityHeaderSubmission_submission\n    id\n  }\n}\n\nfragment EntityHeaderSubmission_submission on ConsignmentSubmission {\n  artist {\n    initials\n    name\n    avatar: image {\n      cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  title\n}\n"
+    "text": "query PreviousSubmissionQuery(\n  $id: ID!\n) {\n  submission(id: $id) {\n    ...EntityHeaderSubmission_submission\n    id\n  }\n}\n\nfragment EntityHeaderSubmission_submission on ConsignmentSubmission {\n  artist {\n    initials\n    name\n    coverArtwork {\n      avatar: image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n  title\n}\n"
   }
 };
 })();

@@ -22,7 +22,7 @@ const EntityHeaderSubmission: FC<EntityHeaderSubmissionProps> = ({
 
   if (!artist) return null
 
-  const image = artist?.avatar?.cropped
+  const image = artist?.coverArtwork?.avatar?.cropped
   const initials = artist?.initials || ""
   const title = submission.title
 
@@ -69,10 +69,12 @@ export const EntityHeaderSubmissionFragmentContainer = createFragmentContainer(
         artist {
           initials
           name
-          avatar: image {
-            cropped(width: 45, height: 45, version: ["big_and_tall", "tall"]) {
-              src
-              srcSet
+          coverArtwork {
+            avatar: image {
+              cropped(width: 45, height: 45) {
+                src
+                srcSet
+              }
             }
           }
         }
