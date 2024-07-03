@@ -8,9 +8,7 @@ import {
   normalizePhoto,
   uploadSubmissionPhoto,
 } from "Components/PhotoUpload/Utils/fileUtils"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Media } from "Utils/Responsive"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
@@ -20,7 +18,6 @@ import { FileRejection } from "react-dropzone"
 const logger = createLogger("Sell/UploadPhotosForm.tsx")
 
 export const UploadPhotosForm: React.FC = () => {
-  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
   const { setFieldValue, values } = useFormikContext<PhotosFormValues>()
@@ -126,40 +123,15 @@ export const UploadPhotosForm: React.FC = () => {
   }
 
   return (
-    <>
-      {enableNewSubmissionFlow ? (
-        <>
-          <Media greaterThan="xs">
-            <PhotoDropzone
-              allPhotos={values.photos}
-              maxTotalSize={30}
-              onDrop={onDrop}
-              onReject={onReject}
-              border="1px dashed"
-              borderColor="black30"
-              padding={4}
-            />
-          </Media>
-          <Media at="xs">
-            <PhotoDropzone
-              allPhotos={values.photos}
-              maxTotalSize={30}
-              onDrop={onDrop}
-              onReject={onReject}
-            />
-          </Media>
-        </>
-      ) : (
-        <PhotoDropzone
-          allPhotos={values.photos}
-          maxTotalSize={30}
-          onDrop={onDrop}
-          onReject={onReject}
-          border="1px dashed"
-          borderColor="black30"
-          padding={4}
-        />
-      )}
-    </>
+    <PhotoDropzone
+      allPhotos={values.photos}
+      maxTotalSize={30}
+      onDrop={onDrop}
+      onReject={onReject}
+      border="1px dashed"
+      borderColor="black30"
+      padding={4}
+      hideBoxOnMobile
+    />
   )
 }
