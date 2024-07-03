@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<554f4a7cfc7d8ad260043393ae05289b>>
+ * @generated SignedSource<<c0c9550cc1b7ecf9d2546b3ac5bb2d99>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,13 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type PreviousSubmissionQuery$variables = {
   id: string;
 };
 export type PreviousSubmissionQuery$data = {
   readonly submission: {
+    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderSubmission_submission">;
   } | null | undefined;
 };
@@ -42,6 +44,13 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "state",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -60,6 +69,7 @@ return {
         "name": "submission",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -86,6 +96,7 @@ return {
         "name": "submission",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -163,11 +174,11 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -178,23 +189,23 @@ return {
             "name": "title",
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "a5c50fe29822c7327d5baa0f256c298f",
+    "cacheID": "021a3e638cf3b9b6f4d3eb53b716e686",
     "id": null,
     "metadata": {},
     "name": "PreviousSubmissionQuery",
     "operationKind": "query",
-    "text": "query PreviousSubmissionQuery(\n  $id: ID!\n) {\n  submission(id: $id) {\n    ...EntityHeaderSubmission_submission\n    id\n  }\n}\n\nfragment EntityHeaderSubmission_submission on ConsignmentSubmission {\n  artist {\n    initials\n    name\n    coverArtwork {\n      avatar: image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n  title\n}\n"
+    "text": "query PreviousSubmissionQuery(\n  $id: ID!\n) {\n  submission(id: $id) {\n    state\n    ...EntityHeaderSubmission_submission\n    id\n  }\n}\n\nfragment EntityHeaderSubmission_submission on ConsignmentSubmission {\n  artist {\n    initials\n    name\n    coverArtwork {\n      avatar: image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n  title\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8334a889b81c182be9d10335d89511b7";
+(node as any).hash = "d9756f9a381714986862398ade01345d";
 
 export default node;

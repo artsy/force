@@ -14,6 +14,7 @@ import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
 import { useState } from "react"
 
+const HEADER_HEIGHT = 40
 const logger = createLogger("BottomFormNavigation.tsx")
 
 export const SubmissionHeader: React.FC = () => {
@@ -61,11 +62,12 @@ export const SubmissionHeader: React.FC = () => {
                     "space-between",
                   ]}
                   alignItems="center"
-                  py={[1, 4]}
-                  mt={[0.5, 0]}
+                  my={[0.5, 4]}
+                  pt={[1, 0]}
+                  height={HEADER_HEIGHT}
                 >
                   <Media greaterThan="xs">
-                    <RouterLink to={"/sell"} display="block">
+                    <RouterLink to="/sell" display="block">
                       <ArtsyLogoIcon display="block" />
                     </RouterLink>
                   </Media>
@@ -83,7 +85,7 @@ export const SubmissionHeader: React.FC = () => {
                     <>
                       <Media at="xs">
                         <RouterLink
-                          to={"/sell"}
+                          to="/sell"
                           display="block"
                           textDecoration={["none", "underline"]}
                           data-testid="exit-link"
