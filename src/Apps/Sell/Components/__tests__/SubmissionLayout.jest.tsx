@@ -1,4 +1,4 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
 import { render } from "DevTools/renderWithMockBoot"
@@ -15,8 +15,10 @@ const trackEvent = jest.fn()
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
-
 jest.unmock("react-relay")
+
+const setMock = jest.fn()
+Storage.prototype.setItem = setMock
 
 describe("SubmissionLayout", () => {
   beforeAll(() => {
@@ -79,7 +81,7 @@ describe("SubmissionLayout", () => {
   })
 
   describe("with a submission ID", () => {
-    it("renders the 'Save & Exit'button'", () => {
+    it("renders the 'Save & Exit'button'", async () => {
       render(
         <Formik<{}> initialValues={{}} onSubmit={onSubmitMock}>
           <SellFlowContextProvider submissionID="123">
@@ -92,16 +94,25 @@ describe("SubmissionLayout", () => {
 
       const saveAndExitButton = screen.getByText("Save & Exit")
 
-      expect(saveAndExitButton.attributes["href"].value).toBe("/sell")
-
       fireEvent.click(saveAndExitButton)
 
-      expect(trackEvent).toHaveBeenCalledWith({
-        action: "tappedSubmissionSaveExit",
-        context_module: "sell",
-        context_owner_type: "submitArtworkStepAddDimensions",
-        submission_id: "123",
-        submission_step: "dimensions",
+      await waitFor(() => {
+        expect(trackEvent).toHaveBeenCalledWith({
+          action: "tappedSubmissionSaveExit",
+          context_module: "sell",
+          context_owner_type: "submitArtworkStepAddDimensions",
+          submission_id: "123",
+          submission_step: "dimensions",
+        })
+
+        expect(setMock).toHaveBeenCalledWith("previousSubmissionID", "123")
+        expect(setMock).toHaveBeenCalledWith(
+          "previousSubmissionStep",
+          "dimensions"
+        )
+
+        expect(onSubmitMock).toHaveBeenCalled()
+        expect(mockPush).toHaveBeenCalledWith("/sell")
       })
     })
 
