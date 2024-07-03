@@ -46,7 +46,11 @@ export const HeaderSWA = () => {
         </Text>
 
         <Media greaterThanOrEqual="sm">
-          <Spacer y={[2, 1]} />
+          {enableNewSubmissionFlow ? (
+            <Spacer y={[2, 1]} />
+          ) : (
+            <Spacer y={[2, 4]} />
+          )}
 
           <GridColumns>
             <Column span={[12, 12, 10]}>
