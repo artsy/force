@@ -15,7 +15,10 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
 
     if (notification) {
       return (
-        <NotificationItemFragmentContainer item={notification} mode={mode} />
+        <NotificationItemFragmentContainer
+          notificationItem={notification}
+          mode={mode}
+        />
       )
     }
 
@@ -26,7 +29,7 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
       notificationsConnection(first: 1) {
         edges {
           node {
-            ...NotificationItem_item
+            ...NotificationItem_notificationItem
           }
         }
       }
