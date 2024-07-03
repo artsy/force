@@ -14,7 +14,7 @@ import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
 import { useState } from "react"
 
-const MOBILE_HEIGHT = 40
+const HEADER_HEIGHT = 40
 const logger = createLogger("BottomFormNavigation.tsx")
 
 export const SubmissionHeader: React.FC = () => {
@@ -64,7 +64,7 @@ export const SubmissionHeader: React.FC = () => {
                   alignItems="center"
                   my={[0.5, 4]}
                   pt={[1, 0]}
-                  height={MOBILE_HEIGHT}
+                  height={HEADER_HEIGHT}
                 >
                   <Media greaterThan="xs">
                     <RouterLink to="/sell" display="block">
