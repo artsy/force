@@ -7,23 +7,20 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FinishPreviousSubmissionQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FinishPreviousSubmission"
+import { PreviousSubmissionQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviousSubmission"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
-import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
 
 export const HeaderSWA = () => {
-  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
-  const { isLoggedIn } = useSystemContext()
-  const { showAuthDialog } = useAuthDialog()
   const {
     trackStartSellingClick,
     trackGetInTouchClick,
   } = useMarketingLandingTracking()
+
+  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
 
   const image = resized(
     "https://files.artsy.net/images/content-card-swa-landing-page.jpg",
@@ -33,6 +30,10 @@ export const HeaderSWA = () => {
   return (
     <GridColumns gridRowGap={[2, 4]} alignItems="center">
       <Column span={5} order={[1, 0]} py={[0, 2]} pr={[0, 2]}>
+        <Media at="xs">
+          {enableNewSubmissionFlow && <PreviousSubmissionQueryRenderer />}
+        </Media>
+
         <Text as="h1" variant={["xl", "xxl", "xxxl"]}>
           Sell art from your collection
         </Text>
@@ -44,12 +45,14 @@ export const HeaderSWA = () => {
           find the right buyer for your work.
         </Text>
 
-        {!!enableNewSubmissionFlow && <FinishPreviousSubmissionQueryRenderer />}
-
         <Media greaterThanOrEqual="sm">
-          <Spacer y={[2, 4]} />
+          <Spacer y={[2, 1]} />
 
           <GridColumns>
+            <Column span={[12, 12, 10]}>
+              {enableNewSubmissionFlow && <PreviousSubmissionQueryRenderer />}
+            </Column>
+
             <Column span={[12, 6, 5]}>
               <Button
                 // @ts-ignore

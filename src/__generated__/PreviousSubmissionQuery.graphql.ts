@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<658ddbe7f7223f69c7b04eadf9125cf1>>
+ * @generated SignedSource<<0c3ab682004eef886ec0cc05d8ae5a2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FinishPreviousSubmissionQuery$variables = {
+export type PreviousSubmissionQuery$variables = {
   id: string;
 };
-export type FinishPreviousSubmissionQuery$data = {
+export type PreviousSubmissionQuery$data = {
   readonly submission: {
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderSubmission_submission">;
   } | null | undefined;
 };
-export type FinishPreviousSubmissionQuery = {
-  response: FinishPreviousSubmissionQuery$data;
-  variables: FinishPreviousSubmissionQuery$variables;
+export type PreviousSubmissionQuery = {
+  response: PreviousSubmissionQuery$data;
+  variables: PreviousSubmissionQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -50,7 +50,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "FinishPreviousSubmissionQuery",
+    "name": "PreviousSubmissionQuery",
     "selections": [
       {
         "alias": null,
@@ -76,7 +76,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "FinishPreviousSubmissionQuery",
+    "name": "PreviousSubmissionQuery",
     "selections": [
       {
         "alias": null,
@@ -94,6 +94,13 @@ return {
             "name": "artist",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "initials",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -174,16 +181,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9b51727ba6cc27c52eabf588fd464379",
+    "cacheID": "c81ebad31165c0412bba161a8ce6edf3",
     "id": null,
     "metadata": {},
-    "name": "FinishPreviousSubmissionQuery",
+    "name": "PreviousSubmissionQuery",
     "operationKind": "query",
-    "text": "query FinishPreviousSubmissionQuery(\n  $id: ID!\n) {\n  submission(id: $id) {\n    ...EntityHeaderSubmission_submission\n    id\n  }\n}\n\nfragment EntityHeaderSubmission_submission on ConsignmentSubmission {\n  artist {\n    name\n    avatar: image {\n      cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  title\n}\n"
+    "text": "query PreviousSubmissionQuery(\n  $id: ID!\n) {\n  submission(id: $id) {\n    ...EntityHeaderSubmission_submission\n    id\n  }\n}\n\nfragment EntityHeaderSubmission_submission on ConsignmentSubmission {\n  artist {\n    initials\n    name\n    avatar: image {\n      cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  title\n}\n"
   }
 };
 })();
 
-(node as any).hash = "49364f55878838ce04780432b00d9649";
+(node as any).hash = "8334a889b81c182be9d10335d89511b7";
 
 export default node;

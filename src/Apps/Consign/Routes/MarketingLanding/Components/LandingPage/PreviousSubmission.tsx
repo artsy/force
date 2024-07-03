@@ -1,20 +1,21 @@
-import { Clickable, Flex, Text } from "@artsy/palette"
+import { Clickable, Flex, Spinner, Text } from "@artsy/palette"
 import { INITIAL_STEP, SellFlowStep } from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import { EntityHeaderSubmissionFragmentContainer } from "Components/EntityHeaders/EntityHeaderSubmission"
-import { FinishPreviousSubmissionQuery } from "__generated__/FinishPreviousSubmissionQuery.graphql"
+import { FadeInBox } from "Components/FadeInBox"
+import { PreviousSubmissionQuery } from "__generated__/PreviousSubmissionQuery.graphql"
 import { useRouter } from "found"
 import { Suspense } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 
-export const FinishPreviousSubmissionQueryRenderer: React.FC = () => {
+export const PreviousSubmissionQueryRenderer: React.FC = () => {
   const { submissionID, step } = usePreviousSubmission()
 
   if (!submissionID) return null
 
   return (
-    <Suspense fallback={null}>
-      <FinishPreviousSubmission
+    <Suspense fallback={<Spinner />}>
+      <PreviousSubmission
         submissionID={submissionID}
         currentStep={step as SellFlowStep}
       />
@@ -22,34 +23,38 @@ export const FinishPreviousSubmissionQueryRenderer: React.FC = () => {
   )
 }
 
-interface FinishPreviousSubmissionProps {
+interface PreviousSubmissionProps {
   submissionID: string
   currentStep: SellFlowStep
 }
 
-const FinishPreviousSubmission: React.FC<FinishPreviousSubmissionProps> = ({
+const PreviousSubmission: React.FC<PreviousSubmissionProps> = ({
   submissionID,
   currentStep = INITIAL_STEP,
 }) => {
   const { router } = useRouter()
 
-  const { submission } = useLazyLoadQuery<FinishPreviousSubmissionQuery>(
-    QUERY,
-    {
-      id: submissionID,
-    }
-  )
+  const { submission } = useLazyLoadQuery<PreviousSubmissionQuery>(QUERY, {
+    id: submissionID,
+  })
 
   const handlePreviousSubmissionClick = () => {
     if (!submissionID) return
 
-    router.push(`/sell/submission/${submissionID}/${currentStep}`)
+    router.push(`/sell2/submissions/${submissionID}/${currentStep}`)
   }
 
   if (!submission) return null
 
   return (
-    <Flex my={2} flex={1} width="100%" flexDirection="column">
+    <FadeInBox
+      mt={[1, 1, 2]}
+      mb={[2, 1, 2]}
+      flex={[0, 0, 1]}
+      width="100%"
+      flexDirection="column"
+      display="flex"
+    >
       <Text color="black60" variant="xs" mb={1}>
         Finish previous submission:
       </Text>
@@ -59,12 +64,12 @@ const FinishPreviousSubmission: React.FC<FinishPreviousSubmissionProps> = ({
           <EntityHeaderSubmissionFragmentContainer submission={submission} />
         </Flex>
       </Clickable>
-    </Flex>
+    </FadeInBox>
   )
 }
 
 const QUERY = graphql`
-  query FinishPreviousSubmissionQuery($id: ID!) {
+  query PreviousSubmissionQuery($id: ID!) {
     submission(id: $id) {
       ...EntityHeaderSubmission_submission
     }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<816f87748a4c25e82c4358cb428f3433>>
+ * @generated SignedSource<<5cc34be3e1f04948422fc43cfcdf0ed6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type EntityHeaderSubmission_submission$data = {
         readonly srcSet: string;
       } | null | undefined;
     } | null | undefined;
+    readonly initials: string | null | undefined;
     readonly name: string | null | undefined;
   } | null | undefined;
   readonly title: string | null | undefined;
@@ -42,6 +43,13 @@ const node: ReaderFragment = {
       "name": "artist",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "initials",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -119,6 +127,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9807f5e2cc9ab8f6a273e20e72bfd977";
+(node as any).hash = "d7f5f52ac07777ff299034e0ded550a5";
 
 export default node;

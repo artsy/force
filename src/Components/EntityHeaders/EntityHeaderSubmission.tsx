@@ -1,3 +1,4 @@
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Avatar, BoxProps, Flex, Text } from "@artsy/palette"
 import { EntityHeaderSubmission_submission$data } from "__generated__/EntityHeaderSubmission_submission.graphql"
 import { FC } from "react"
@@ -18,15 +19,23 @@ const EntityHeaderSubmission: FC<EntityHeaderSubmissionProps> = ({
   ...rest
 }) => {
   const artist = submission.artist
+
+  if (!artist) return null
+
   const image = artist?.avatar?.cropped
-  const initials = artist?.name?.[0]
-  const meta = submission.title
+  const initials = artist?.initials || ""
+  const title = submission.title
 
   return (
     <Flex
+      width="100%"
       display="flex"
       alignItems="center"
       justifyContent="space-between"
+      p={2}
+      border="1px solid"
+      borderColor="black10"
+      borderRadius={5}
       {...rest}
     >
       <Flex display="flex" alignItems="center" minWidth={0} flex={1}>
@@ -36,15 +45,17 @@ const EntityHeaderSubmission: FC<EntityHeaderSubmissionProps> = ({
 
         <Flex flexDirection="column" mr={1} flex={1} overflow="hidden">
           <Text variant="sm-display" lineClamp={2}>
-            {submission.title ?? "Unknown"}
+            {artist?.name ?? "Unknown"}
           </Text>
 
-          {meta && (
+          {title && (
             <Text variant="xs" color="black60" overflowEllipsis>
-              {meta}
+              {title}
             </Text>
           )}
         </Flex>
+
+        <ChevronRightIcon />
       </Flex>
     </Flex>
   )
@@ -56,6 +67,7 @@ export const EntityHeaderSubmissionFragmentContainer = createFragmentContainer(
     submission: graphql`
       fragment EntityHeaderSubmission_submission on ConsignmentSubmission {
         artist {
+          initials
           name
           avatar: image {
             cropped(width: 45, height: 45, version: ["big_and_tall", "tall"]) {
