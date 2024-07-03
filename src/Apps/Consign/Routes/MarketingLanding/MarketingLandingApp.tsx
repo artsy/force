@@ -12,7 +12,7 @@ import { PreviouslySoldOnArtsyRailQueryRenderer } from "Apps/Consign/Routes/Mark
 import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FooterBanner"
 import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
 import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
-import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
+import { MeetTheSpecialistsQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
 import { Media } from "Utils/Responsive"
 import { SWAStickyFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAStickyFooter"
 import { SWAFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
@@ -59,7 +59,7 @@ export const MarketingLandingApp = () => {
               <WaysWeSell />
               <HowItWorksSteps />
               <FAQSWA />
-              <MeetTheSpecialists />
+              <MeetTheSpecialistsQueryRenderer />
               <CollectorsOverview />
               <PreviouslySoldOnArtsyRailQueryRenderer />
               {/* <Reviews /> */}
@@ -82,7 +82,7 @@ export const MarketingLandingApp = () => {
             <WaysWeSell />
             <HowItWorksSteps />
             <SpeakToTheTeam />
-            <MeetTheSpecialists />
+            <MeetTheSpecialistsQueryRenderer />
             <CollectorsOverview />
             <PreviouslySoldOnArtsyRailQueryRenderer />
             {/* <Reviews /> */}

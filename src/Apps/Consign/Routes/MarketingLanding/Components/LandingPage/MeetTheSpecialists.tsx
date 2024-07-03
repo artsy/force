@@ -5,6 +5,8 @@ import {
   Image,
   ReadMore,
   ResponsiveBox,
+  Shelf,
+  Skeleton,
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
@@ -13,20 +15,31 @@ import {
   CARD_HEIGHT_MD,
   CARD_HEIGHT_MOBILE,
   CARD_WIDTH,
-  SPECIALISTS,
 } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
-import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { resized } from "Utils/resized"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { createFragmentContainer, graphql } from "react-relay"
+import { MeetTheSpecialistsQuery } from "__generated__/MeetTheSpecialistsQuery.graphql"
+import { MeetTheSpecialists_staticContent$data } from "__generated__/MeetTheSpecialists_staticContent.graphql"
 
-export const MeetTheSpecialists: React.FC = () => {
+export const MeetTheSpecialists: React.FC<{
+  staticContent: MeetTheSpecialists_staticContent$data
+}> = ({ staticContent }) => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
+
+  const specialists = staticContent?.specialistBios
+  // TODO: remove the local data usage
+
+  if (!specialists) {
+    return PLACEHOLDER
+  }
 
   const trackContactTheSpecialistClick = () => {
     trackEvent({
@@ -53,6 +66,9 @@ export const MeetTheSpecialists: React.FC = () => {
   const clickContactSpecialist = () => {
     trackContactTheSpecialistClick()
   }
+
+  // TODO: move title and subtitle above the query renderer so it is visible in the placeholder
+  // same for Previouslu sold on artsy component
   return (
     <>
       <Text mb={[0.5, 1]} variant={["lg-display", "xl", "xxl"]}>
@@ -61,16 +77,15 @@ export const MeetTheSpecialists: React.FC = () => {
       <Text mb={2} variant={["xs", "sm"]}>
         Our specialists span today’s most popular collecting categories.
       </Text>
-      <Rail
-        title=""
-        getItems={() => {
-          return SPECIALISTS.map(i => (
+      <Shelf showProgress={false}>
+        {specialists.map(i => {
+          return (
             <ResponsiveBox
               aspectWidth={CARD_WIDTH}
               aspectHeight={CARD_HEIGHT}
               maxWidth={CARD_WIDTH}
               minHeight={[CARD_HEIGHT_MOBILE, CARD_HEIGHT_MD, CARD_HEIGHT]}
-              backgroundColor="black60"
+              backgroundColor="black10"
               key={`specialist-${i.firstName}`}
             >
               <Box
@@ -83,7 +98,7 @@ export const MeetTheSpecialists: React.FC = () => {
                 <Image
                   width="100%"
                   height="100%"
-                  {...resized(i.imageUrl, {
+                  {...resized(i?.image?.imageURL || "", {
                     width: CARD_WIDTH,
                     height: CARD_HEIGHT,
                   })}
@@ -125,10 +140,9 @@ export const MeetTheSpecialists: React.FC = () => {
                 </Info>
               </Box>
             </ResponsiveBox>
-          ))
-        }}
-        showProgress={false}
-      />
+          )
+        })}
+      </Shelf>
       <Text mb={[2, 4]} variant={["md", "lg-display"]}>
         Not sure who’s the right fit for your collection? Get in touch and we’ll
         connect you.
@@ -152,3 +166,74 @@ const Info = styled(Box)`
   background: ${themeGet("effects.overlayGradient")};
   text-shadow: ${themeGet("effects.textShadow")};
 `
+
+export const MeetTheSpecialistsQueryRenderer: React.FC = () => {
+  return (
+    <SystemQueryRenderer<MeetTheSpecialistsQuery>
+      lazyLoad
+      query={graphql`
+        query MeetTheSpecialistsQuery {
+          viewer {
+            staticContent {
+              ...MeetTheSpecialists_staticContent
+            }
+          }
+          me {
+            name
+          }
+        }
+      `}
+      placeholder={PLACEHOLDER}
+      render={({ props }) => {
+        if (!props || !props.viewer?.staticContent) {
+          return PLACEHOLDER
+        }
+
+        return (
+          <MeetTheSpecialistsFragmentContainer
+            staticContent={props?.viewer?.staticContent}
+          />
+        )
+      }}
+    />
+  )
+}
+
+export const MeetTheSpecialistsFragmentContainer = createFragmentContainer(
+  MeetTheSpecialists,
+  {
+    staticContent: graphql`
+      fragment MeetTheSpecialists_staticContent on StaticContent {
+        specialistBios {
+          name
+          firstName
+          jobTitle
+          bio
+          email
+          image {
+            imageURL
+          }
+        }
+      }
+    `,
+  }
+)
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <Shelf>
+      {[...new Array(12)].map((_, i) => {
+        return (
+          <ResponsiveBox
+            key={i}
+            aspectWidth={CARD_WIDTH}
+            aspectHeight={CARD_HEIGHT}
+            maxWidth={CARD_WIDTH}
+            minHeight={[CARD_HEIGHT_MOBILE, CARD_HEIGHT_MD, CARD_HEIGHT]}
+            backgroundColor="black10"
+          />
+        )
+      })}
+    </Shelf>
+  </Skeleton>
+)
