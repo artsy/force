@@ -48,7 +48,7 @@ const PreviousSubmission: React.FC<PreviousSubmissionProps> = ({
     router.push(`/sell2/submissions/${submissionID}/${currentStep}`)
   }
 
-  if (!submission) return null
+  if (!submission || submission.state !== "DRAFT") return null
 
   return (
     <FadeInBox
@@ -75,6 +75,7 @@ const PreviousSubmission: React.FC<PreviousSubmissionProps> = ({
 const QUERY = graphql`
   query PreviousSubmissionQuery($id: ID!) {
     submission(id: $id) {
+      state
       ...EntityHeaderSubmission_submission
     }
   }
