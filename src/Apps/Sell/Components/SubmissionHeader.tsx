@@ -80,20 +80,30 @@ export const SubmissionHeader: React.FC = () => {
                       Save & Exit
                     </Button>
                   ) : (
-                    <RouterLink
-                      to={"/sell"}
-                      display="block"
-                      textDecoration={["none", "underline"]}
-                      data-testid="exit-link"
-                    >
+                    <>
                       <Media at="xs">
-                        {isLastStep ? "Exit" : <CloseIcon />}
+                        <RouterLink
+                          to={"/sell"}
+                          display="block"
+                          textDecoration={["none", "underline"]}
+                          data-testid="exit-link"
+                        >
+                          {isLastStep ? "Exit" : <CloseIcon />}
+                        </RouterLink>
                       </Media>
 
                       <Media greaterThan="xs">
-                        {isLastStep || !submissionID ? "Exit" : ""}
+                        <Button
+                          variant="tertiary"
+                          // @ts-ignore
+                          as={RouterLink}
+                          to="/sell"
+                          data-testid="exit-link"
+                        >
+                          {isLastStep || !submissionID ? "Exit" : ""}
+                        </Button>
                       </Media>
-                    </RouterLink>
+                    </>
                   )}
                 </Flex>
               </HorizontalPadding>
