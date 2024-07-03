@@ -150,7 +150,6 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
               ref={buttonRef}
               width={["100%", "auto"]}
               type="button"
-              mt={1}
               variant="secondaryBlack"
               onClick={open}
             >

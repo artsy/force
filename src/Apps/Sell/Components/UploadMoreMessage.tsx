@@ -1,4 +1,4 @@
-import { Message } from "@artsy/palette"
+import { Message, Text } from "@artsy/palette"
 import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
 import { useFormikContext } from "formik"
 
@@ -13,8 +13,10 @@ export const UploadMoreMessage: React.FC = () => {
 
   return (
     <Message variant="success" title="Increase your chance of selling" mt={2}>
-      Make sure to include images of the back, corners, frame and any other
-      details if you can.
+      <Text variant="sm-display">
+        Make sure to include images of the back, corners, frame and any other
+        details if you can.
+      </Text>
     </Message>
   )
 }
