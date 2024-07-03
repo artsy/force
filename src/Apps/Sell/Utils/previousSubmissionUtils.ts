@@ -8,6 +8,13 @@ const SUBMISSION_STEP_KEY = "previousSubmissionStep"
 
 const logger = createLogger("previousSubmissionUtils")
 
+const idSchema = Yup.string().required()
+const stepSchema = Yup.string().oneOf([...STEPS])
+
+const parseId = (id: any): string => idSchema.validateSync(id)
+const parseStep = (step: any): SellFlowStep | null =>
+  stepSchema.validateSync(step) as SellFlowStep | null
+
 export const storePreviousSubmission = (
   submissionID: string,
   step: SellFlowStep
@@ -20,21 +27,12 @@ export const usePreviousSubmission = () => {
   const [submissionID, setSubmissionID] = useState<string | null>(null)
   const [step, setStep] = useState<SellFlowStep | null>(null)
 
-  const stepSchema = Yup.string().oneOf([...STEPS])
-  const idSchema = Yup.string().required()
-
-  const isStepValid = (step: any): step is SellFlowStep | null =>
-    stepSchema.isValidSync(step)
-
-  const isIdValid = (id: any): id is string => idSchema.isValidSync(id)
-
   const getSubmission = async () => {
     try {
-      const id = await localStorage.getItem(SUBMISSION_ID_KEY)
-      const step = await localStorage.getItem(SUBMISSION_STEP_KEY)
+      const id = parseId(await localStorage.getItem(SUBMISSION_ID_KEY))
+      const step = parseStep(await localStorage.getItem(SUBMISSION_STEP_KEY))
 
-      if (!isIdValid(id) || !isStepValid(step)) {
-        logger.error("Invalid submission ID or step in localStorage.")
+      if (!id || !step) {
         return
       }
 
@@ -47,7 +45,6 @@ export const usePreviousSubmission = () => {
 
   useEffect(() => {
     getSubmission()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return { submissionID, step }
