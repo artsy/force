@@ -96,7 +96,7 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
         {nodes.map(node => (
           <NotificationItemFragmentContainer
             key={node.internalID}
-            item={node}
+            notificationItem={node}
             mode={mode}
           />
         ))}
@@ -144,7 +144,7 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
               artworks: artworksConnection {
                 totalCount
               }
-              ...NotificationItem_item
+              ...NotificationItem_notificationItem
               item {
                 ... on ViewingRoomPublishedNotificationItem {
                   viewingRoomsConnection(first: 1) {

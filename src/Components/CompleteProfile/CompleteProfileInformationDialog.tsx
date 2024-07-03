@@ -19,26 +19,32 @@ import {
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 
 interface CompleteProfileInformationDialogProps {
-  title: string
   onClose(): void
 }
 
 export const CompleteProfileInformationDialog: FC<CompleteProfileInformationDialogProps> = ({
-  title,
   onClose,
 }) => {
   return (
-    <ModalDialog width={550} title={title} onClose={onClose}>
+    <ModalDialog
+      width={550}
+      title="Add some more details about yourself."
+      onClose={onClose}
+    >
       <Suspense fallback={<CompleteProfileInformationDialogFormSkeleton />}>
-        <CompleteProfileInformationDialogForm />
+        <CompleteProfileInformationDialogForm onSuccess={onClose} />
       </Suspense>
     </ModalDialog>
   )
 }
 
-interface CompleteProfileInformationDialogFormProps {}
+interface CompleteProfileInformationDialogFormProps {
+  onSuccess(): void
+}
 
-const CompleteProfileInformationDialogForm: FC<CompleteProfileInformationDialogFormProps> = () => {
+const CompleteProfileInformationDialogForm: FC<CompleteProfileInformationDialogFormProps> = ({
+  onSuccess,
+}) => {
   const { me } = useLazyLoadQuery<CompleteProfileInformationDialogQuery>(
     QUERY,
     {},
@@ -68,6 +74,8 @@ const CompleteProfileInformationDialogForm: FC<CompleteProfileInformationDialogF
       }
 
       await submitUpdateMyUserProfile(payload)
+
+      onSuccess()
 
       sendToast({ variant: "success", message: "Profile information saved." })
     } catch (err) {
