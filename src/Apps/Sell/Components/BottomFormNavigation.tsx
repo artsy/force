@@ -15,11 +15,12 @@ export const BottomFormNavigation = () => {
     <Flex
       width="100%"
       p={[2, 4]}
+      pt={[2, 2]}
       flexDirection="row"
       justifyContent="space-between"
       alignItems="center"
       borderTop="1px solid"
-      borderColor="black10"
+      borderColor="black5"
     >
       <BottomFormBackButton />
       <BottomFormNextButton />
