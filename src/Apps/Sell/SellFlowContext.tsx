@@ -127,9 +127,11 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   }
 
   useEffect(() => {
-    if (isNewSubmission) return
+    const newStep = STEPS[index]
 
-    push(`/sell2/submissions/${submissionID}/${STEPS[index]}`)
+    if (isNewSubmission || !newStep) return
+
+    push(`/sell2/submissions/${submissionID}/${newStep}`)
   }, [push, index, isNewSubmission, submissionID])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
