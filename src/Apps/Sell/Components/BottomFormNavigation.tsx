@@ -45,7 +45,7 @@ const BottomFormBackButton = () => {
     try {
       await submitForm()
 
-      actions.goToPreviousStep()
+      await actions.goToPreviousStep()
     } catch (error) {
       logger.error("Error submitting form", error)
     } finally {
@@ -110,7 +110,7 @@ const BottomFormNextButton = () => {
     try {
       await submitForm()
 
-      actions.goToNextStep()
+      await actions.goToNextStep()
     } catch (error) {
       logger.error("Error submitting form", error)
     } finally {
