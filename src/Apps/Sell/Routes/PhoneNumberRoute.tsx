@@ -1,7 +1,8 @@
-import { Join, Message, PhoneInput, Spacer, Text } from "@artsy/palette"
+import { Join, PhoneInput, Spacer, Text } from "@artsy/palette"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
+import { useFocusInput } from "Apps/Sell/Hooks/useFocusInput"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useValidatePhoneNumber } from "Components/PhoneNumberInput"
 import { COUNTRY_CODES, countries } from "Utils/countries"
@@ -91,6 +92,7 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
 }
 
 const PhoneNumberRouteForm: React.FC = () => {
+  const focusedInputRef = useFocusInput()
   const { values, handleChange, setFieldValue } = useFormikContext<FormValues>()
 
   const isPhoneNumberValid = useValidatePhoneNumber({
@@ -106,6 +108,7 @@ const PhoneNumberRouteForm: React.FC = () => {
       </Text>
 
       <PhoneInput
+        ref={focusedInputRef}
         options={countries}
         onSelect={option => {
           setFieldValue("phoneNumberRegionCode", option.value)
@@ -117,16 +120,12 @@ const PhoneNumberRouteForm: React.FC = () => {
         placeholder="(000) 000 0000"
         data-testid="phone-input"
         type="tel"
-        // error={
-        //   values.userPhone && !isPhoneNumberValid
-        //     ? "Invalid phone number"
-        //     : undefined
-        // }
+        error={
+          !!values.userPhone &&
+          !isPhoneNumberValid &&
+          "The phone number does not seem to be valid."
+        }
       />
-
-      {values.userPhone && !isPhoneNumberValid && (
-        <Message variant="warning" title="Please add a valid phone number." />
-      )}
     </Join>
   )
 }
