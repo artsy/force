@@ -18836,12 +18836,12 @@ enum sort {
 }
 
 type SpecialistBio {
-  bio: String
-  email: String
-  firstName: String
-  image: Image
-  jobTitle: String
-  name: String
+  bio: String!
+  email: String!
+  firstName: String!
+  image: Image!
+  jobTitle: String!
+  name: String!
 }
 
 type StartIdentityVerificationFailure {
@@ -18886,7 +18886,7 @@ type StaticContent {
   slug: ID!
 
   # A list of specialists
-  specialistBios: [SpecialistBio]
+  specialistBios: [SpecialistBio!]
 }
 
 enum SubGroupInputStatus {
