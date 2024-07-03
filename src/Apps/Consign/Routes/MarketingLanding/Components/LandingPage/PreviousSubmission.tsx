@@ -1,4 +1,4 @@
-import { Clickable, Flex, Spinner, Text } from "@artsy/palette"
+import { Clickable, Flex, Text } from "@artsy/palette"
 import { INITIAL_STEP, SellFlowStep } from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import { EntityHeaderSubmissionFragmentContainer } from "Components/EntityHeaders/EntityHeaderSubmission"
@@ -14,7 +14,7 @@ export const PreviousSubmissionQueryRenderer: React.FC = () => {
   if (!submissionID) return null
 
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense fallback={null}>
       <PreviousSubmission
         submissionID={submissionID}
         currentStep={step as SellFlowStep}
@@ -34,9 +34,13 @@ const PreviousSubmission: React.FC<PreviousSubmissionProps> = ({
 }) => {
   const { router } = useRouter()
 
-  const { submission } = useLazyLoadQuery<PreviousSubmissionQuery>(QUERY, {
-    id: submissionID,
-  })
+  const { submission } = useLazyLoadQuery<PreviousSubmissionQuery>(
+    QUERY,
+    {
+      id: submissionID,
+    },
+    { fetchPolicy: "store-and-network" }
+  )
 
   const handlePreviousSubmissionClick = () => {
     if (!submissionID) return
