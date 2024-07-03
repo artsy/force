@@ -143,7 +143,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       logger.error("Error creating submission.", err)
       sendToast({
         variant: "error",
-        message: err?.[0]?.message || "Something went wrong.",
+        message: "Something went wrong." + ` ${err?.[0]?.message} || ""`,
       })
       throw err
     })
@@ -167,7 +167,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       logger.error("Error updating submission.", err)
       sendToast({
         variant: "error",
-        message: err?.[0]?.message || "Something went wrong.",
+        message: "Something went wrong." + ` ${err?.[0]?.message || ""}`,
       })
       throw err
     })
