@@ -70,7 +70,6 @@ export interface PhotoDropzoneProps extends BoxProps {
   maxTotalSize: number
   onDrop: (files: File[]) => void
   onReject: (rejections: FileRejection[]) => void
-  hideBoxOnMobile?: boolean
 }
 
 export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
@@ -78,7 +77,6 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
   maxTotalSize,
   onDrop,
   onReject,
-  hideBoxOnMobile,
   ...rest
 }) => {
   const [customErrors, setCustomErrors] = useState<Array<FileRejection>>([])
@@ -143,43 +141,21 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
       </Media>
 
       <Media at="xs">
-        {!!hideBoxOnMobile ? (
-          <Box data-test-id="image-dropzone" {...getRootProps()}>
-            <input data-testid="image-dropzone-input" {...getInputProps()} />
-            <Button
-              ref={buttonRef}
-              width={["100%", "auto"]}
-              type="button"
-              variant="secondaryBlack"
-              onClick={open}
-            >
-              Add Photos
-            </Button>
-            <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
-              Files Supported: JPG, PNG, HEIC <br />
-              Total maximum size: {maxTotalSize} MB
-            </Text>
-          </Box>
-        ) : (
-          <Box {...rest} data-test-id="image-dropzone" {...getRootProps()}>
-            <input data-testid="image-dropzone-input" {...getInputProps()} />
-            <Text variant="lg-display">Add photos here</Text>
-            <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
-              Files Supported: JPG, PNG, HEIC <br />
-              Total maximum size: {maxTotalSize} MB
-            </Text>
-            <Button
-              ref={buttonRef}
-              width={["100%", "auto"]}
-              type="button"
-              mt={[2, 2]}
-              variant="secondaryBlack"
-              onClick={open}
-            >
-              Add Photos
-            </Button>
-          </Box>
-        )}
+        <input data-testid="image-dropzone-input" {...getInputProps()} />
+
+        <Button
+          ref={buttonRef}
+          width={["100%", "auto"]}
+          type="button"
+          variant="secondaryBlack"
+          onClick={open}
+        >
+          Add Photos
+        </Button>
+        <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
+          Files Supported: JPG, PNG, HEIC <br />
+          Total maximum size: {maxTotalSize} MB
+        </Text>
       </Media>
     </>
   )

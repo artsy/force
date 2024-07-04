@@ -131,7 +131,6 @@ export const UploadPhotosForm: React.FC = () => {
       border="1px dashed"
       borderColor="black30"
       padding={4}
-      hideBoxOnMobile
     />
   )
 }
