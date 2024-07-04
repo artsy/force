@@ -1,11 +1,15 @@
 export const PROVENANCE_LIST = [
-  "Purchased directly from gallery",
-  "Purchased directly from artist",
-  "Purchased at auction",
-  "Gift from the artist",
-  "Other",
-  "I don’t know",
-].map(provenance => ({
-  value: provenance,
-  text: provenance,
-}))
+  { value: "", text: "Select" },
+  {
+    value: "Purchased directly from gallery",
+    text: "Purchased directly from gallery",
+  },
+  {
+    value: "Purchased directly from artist",
+    text: "Purchased directly from artist",
+  },
+  { value: "Purchased at auction", text: "Purchased at auction" },
+  { value: "Gift from the artist", text: "Gift from the artist" },
+  { value: "Other", text: "Other" },
+  { value: "I don’t know", text: "I don’t know" },
+]
