@@ -15,7 +15,8 @@ export const ImagePreviewsGrid: React.FC = () => {
       <Spacer y={2} />
 
       <Flex gap={1} flexWrap="wrap">
-        {photos.map(photo => (
+        {/* Displaying the images in reverse order to ensure the most recent image is visible. */}
+        {[...photos].reverse().map(photo => (
           <ImagePreviewItem key={photo.id} photo={photo} />
         ))}
       </Flex>

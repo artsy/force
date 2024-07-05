@@ -93,7 +93,7 @@ describe("PurchaseHistoryRoute", () => {
     })
 
     await waitFor(() => {
-      expect(screen.getByTestId("provenance-input")).toHaveValue(undefined)
+      expect(screen.getByTestId("provenance-input")).toHaveValue("")
       expect(screen.getByTestId("signature-radio-no")).not.toBeChecked()
       expect(screen.getByTestId("signature-radio-yes")).not.toBeChecked()
     })

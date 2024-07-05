@@ -49,7 +49,7 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
   }
 
   const initialValues: FormValues = {
-    provenance: submission.provenance || "",
+    provenance: submission.provenance ?? "",
     signature: submission.signature ?? null,
   }
 

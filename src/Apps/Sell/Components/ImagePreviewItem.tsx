@@ -88,7 +88,7 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
     >
       <Box
         position="relative"
-        backgroundColor="black5"
+        backgroundColor="black10"
         width={IMAGE_SIZES}
         height={IMAGE_SIZES}
       >
@@ -154,6 +154,8 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
           right={0.5}
           width="16px"
           height="16px"
+          backgroundColor="white100"
+          borderRadius="50%"
         >
           <CloseFillIcon
             width="16px"
