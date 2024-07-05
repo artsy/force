@@ -8,7 +8,6 @@ import { extractNodes } from "Utils/extractNodes"
 import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves/Components/SavesEntityImage"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import HideIcon from "@artsy/icons/HideIcon"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const ICON_SIZE = 24
 
@@ -26,10 +25,6 @@ const SelectArtworkListItem: FC<SelectArtworkListItemProps> = ({
   const { t } = useTranslation()
   const nodes = extractNodes(item.artworksConnection)
   const imageURL = nodes[0]?.image?.url ?? null
-
-  const shareableWithPartnersEnabled = useFeatureFlag(
-    "emerald_artwork-list-offerability"
-  )
 
   return (
     <Clickable
@@ -52,7 +47,7 @@ const SelectArtworkListItem: FC<SelectArtworkListItemProps> = ({
       <Flex flexDirection="column" flex={1}>
         <Flex>
           <Text variant="sm-display">{item.name}</Text>
-          {shareableWithPartnersEnabled && !item.shareableWithPartners && (
+          {!item.shareableWithPartners && (
             <HideIcon
               marginLeft={0.5}
               minWidth="18px"
