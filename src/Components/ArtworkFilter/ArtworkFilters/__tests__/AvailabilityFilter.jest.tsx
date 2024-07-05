@@ -15,12 +15,12 @@ const render = createArtworkFilterTestRenderer()
 
 describe(AvailabilityFilter, () => {
   it("renders a for-sale toggle", () => {
-    render(<AvailabilityFilter />)
+    render(<AvailabilityFilter expanded />)
     expect(screen.getByText("Only works for sale")).toBeInTheDocument()
   })
 
   it("updates context on filter change", () => {
-    render(<AvailabilityFilter />)
+    render(<AvailabilityFilter expanded />)
     expect(currentArtworkFilterContext().filters?.forSale).toBeFalsy()
 
     userEvent.click(screen.getAllByRole("checkbox")[0])
@@ -31,7 +31,7 @@ describe(AvailabilityFilter, () => {
   })
 
   it("clears local input state after Clear All", () => {
-    render(<AvailabilityFilter />)
+    render(<AvailabilityFilter expanded />)
     userEvent.click(screen.getAllByRole("checkbox")[0])
     expect(currentArtworkFilterContext().filters?.forSale).toBeTruthy()
 
@@ -62,7 +62,7 @@ describe(AvailabilityFilter, () => {
           // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
 
-        return <AvailabilityFilter />
+        return <AvailabilityFilter expanded />
       }
       render(<MobileVersionOfAvailabilityFilter />)
     })
@@ -87,6 +87,23 @@ describe(AvailabilityFilter, () => {
       userEvent.click(screen.getAllByRole("checkbox")[0])
 
       expect(screen.getByText("Availability • 1")).toBeInTheDocument()
+    })
+  })
+
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
+      render(<AvailabilityFilter />)
+      expect(screen.queryAllByRole("checkbox").length).toBe(0)
+    })
+
+    it("hides the filter controls when `false`", () => {
+      render(<AvailabilityFilter expanded={false} />)
+      expect(screen.queryAllByRole("checkbox").length).toBe(0)
+    })
+
+    it("shows the filter controls when `true`", () => {
+      render(<AvailabilityFilter expanded />)
+      expect(screen.queryAllByRole("checkbox").length).not.toBe(0)
     })
   })
 })
