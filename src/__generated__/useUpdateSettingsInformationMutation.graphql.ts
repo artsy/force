@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9189c1b3d6ef51a863d789da34d9b7ac>>
+ * @generated SignedSource<<c4c6fd685bd3a29ca524bcc4ce52b60a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,6 +38,7 @@ export type UpdateMyProfileInput = {
   priceRangeMin?: number | null | undefined;
   privacy?: string | null | undefined;
   profession?: string | null | undefined;
+  promptedForUpdate?: boolean | null | undefined;
   receiveLotOpeningSoonNotification?: boolean | null | undefined;
   receiveNewSalesNotification?: boolean | null | undefined;
   receiveNewWorksNotification?: boolean | null | undefined;
