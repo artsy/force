@@ -71,7 +71,7 @@ describe("ArtistNotEligibleRoute", () => {
 
     expect(screen.getByTestId("view-collection")).toHaveAttribute(
       "href",
-      "/sell2/submissions/new"
+      "/sell/submissions/new"
     )
   })
 

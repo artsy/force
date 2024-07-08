@@ -72,7 +72,7 @@ export const IntroRoute: React.FC = () => {
               onClick={() => {
                 trackTappedNewSubmission()
               }}
-              to="/sell2/submissions/new"
+              to="/sell/submissions/new"
               width="100%"
               data-testid="start-new-submission"
             >
@@ -88,7 +88,7 @@ export const IntroRoute: React.FC = () => {
                   onClick={() => {
                     trackTappedStartMyCollection()
                   }
-                  to="/sell2/submissions/new/collection"
+                  to="/sell/submissions/new/collection"
                   width="100%"
                 >
                   New from My Collection

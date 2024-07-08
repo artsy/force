@@ -45,7 +45,7 @@ const PreviousSubmission: React.FC<PreviousSubmissionProps> = ({
   const handlePreviousSubmissionClick = () => {
     if (!submissionID) return
 
-    router.push(`/sell2/submissions/${submissionID}/${currentStep}`)
+    router.push(`/sell/submissions/${submissionID}/${currentStep}`)
   }
 
   if (!submission || submission.state !== "DRAFT") return null

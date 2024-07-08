@@ -52,7 +52,7 @@ describe("HeaderSWA", () => {
 
       expect(link).toBeInTheDocument()
       expect(link).toHaveTextContent("Start Selling")
-      expect(link).toHaveAttribute("href", "sell2/intro")
+      expect(link).toHaveAttribute("href", "sell/intro")
     })
 
     it("tracks click", () => {

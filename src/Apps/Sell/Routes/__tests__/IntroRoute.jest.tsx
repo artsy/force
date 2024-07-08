@@ -69,7 +69,7 @@ describe("IntroRoute", () => {
     expect(startNewSubmissionButton).toBeInTheDocument()
     expect(startNewSubmissionButton).toHaveAttribute(
       "href",
-      "/sell2/submissions/new"
+      "/sell/submissions/new"
     )
 
     fireEvent.click(startNewSubmissionButton)

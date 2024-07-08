@@ -51,7 +51,7 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
               <Button
                 // @ts-ignore
                 as={RouterLink}
-                to="/sell2/submissions/new"
+                to="/sell/submissions/new"
                 onClick={() => {
                   trackTappedSubmitAnotherWork(submission.internalID)
                 }}

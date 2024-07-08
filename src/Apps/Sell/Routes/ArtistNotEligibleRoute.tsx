@@ -55,7 +55,7 @@ export const ArtistNotEligibleRoute: React.FC<ArtistNotEligibleRouteProps> = pro
             <Button
               // @ts-ignore
               as={RouterLink}
-              to="/sell2/submissions/new"
+              to="/sell/submissions/new"
               variant="secondaryBlack"
               data-testid="view-collection"
             >

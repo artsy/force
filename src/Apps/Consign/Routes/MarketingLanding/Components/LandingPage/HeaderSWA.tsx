@@ -63,9 +63,7 @@ export const HeaderSWA = () => {
                 as={RouterLink}
                 width="100%"
                 variant="primaryBlack"
-                to={
-                  enableNewSubmissionFlow ? "sell2/intro" : "/sell/submission"
-                }
+                to={enableNewSubmissionFlow ? "sell/intro" : "/sell/submission"}
                 onClick={event => {
                   trackStartSellingClick("Header")
                 }}

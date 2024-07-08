@@ -1,12 +1,12 @@
 import { screen, waitFor } from "@testing-library/react"
-import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { PhoneNumberRoute } from "Apps/Sell/Routes/PhoneNumberRoute"
+import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { PhoneNumberRoute_Test_Query$rawResponse } from "__generated__/PhoneNumberRoute_Test_Query.graphql"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 const mockUseRouter = useRouter as jest.Mock
@@ -125,7 +125,7 @@ describe("PhoneNumberRoute", () => {
         )
 
         expect(mockPush).toHaveBeenCalledWith(
-          '/sell2/submissions/<mock-value-for-field-"externalId">/thank-you'
+          '/sell/submissions/<mock-value-for-field-"externalId">/thank-you'
         )
       })
     })

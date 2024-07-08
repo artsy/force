@@ -77,7 +77,7 @@ describe("ThankYouRoute", () => {
     const submitAnotherWorkButton = screen.getByTestId("submit-another-work")
     expect(submitAnotherWorkButton).toHaveAttribute(
       "href",
-      "/sell2/submissions/new"
+      "/sell/submissions/new"
     )
 
     submitAnotherWorkButton.click()
