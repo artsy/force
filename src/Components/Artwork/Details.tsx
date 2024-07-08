@@ -370,7 +370,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       date
       sale_message: saleMessage
       cultural_maker: culturalMaker
-      artist {
+      artist(shallow: true) {
         targetSupply {
           isP1
         }
