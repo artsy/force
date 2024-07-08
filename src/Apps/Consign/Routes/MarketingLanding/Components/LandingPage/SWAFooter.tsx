@@ -21,7 +21,7 @@ export const SWAFooter: React.FC = () => {
           as={RouterLink}
           width={["100%", 300]}
           variant="primaryBlack"
-          to={enableNewSubmissionFlow ? "sell2/intro" : "/sell/submission"}
+          to={enableNewSubmissionFlow ? "sell/intro" : "/sell/submission"}
           onClick={() => {
             trackStartSellingClick("Footer")
           }}

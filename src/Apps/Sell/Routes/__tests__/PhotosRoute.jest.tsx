@@ -296,7 +296,7 @@ describe("PhotosRoute", () => {
 
       await waitFor(() => {
         expect(mockPush).toHaveBeenCalledWith(
-          "/sell2/submissions/externalId/details"
+          "/sell/submissions/externalId/details"
         )
       })
     })
@@ -310,7 +310,7 @@ describe("PhotosRoute", () => {
 
       await waitFor(() => {
         expect(mockPush).toHaveBeenCalledWith(
-          "/sell2/submissions/externalId/title"
+          "/sell/submissions/externalId/title"
         )
       })
     })

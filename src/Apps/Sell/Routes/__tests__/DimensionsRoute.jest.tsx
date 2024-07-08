@@ -133,7 +133,7 @@ describe("DimensionsRoute", () => {
         )
 
         expect(mockPush).toHaveBeenCalledWith(
-          '/sell2/submissions/<mock-value-for-field-"externalId">/phone-number'
+          '/sell/submissions/<mock-value-for-field-"externalId">/phone-number'
         )
       })
     })
@@ -149,7 +149,7 @@ describe("DimensionsRoute", () => {
 
       await waitFor(() => {
         expect(mockPush).toHaveBeenCalledWith(
-          '/sell2/submissions/<mock-value-for-field-"externalId">/purchase-history'
+          '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
         )
 
         expect(submitMutation).toHaveBeenCalledWith(

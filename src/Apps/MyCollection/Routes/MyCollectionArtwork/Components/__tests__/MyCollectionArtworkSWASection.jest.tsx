@@ -74,7 +74,7 @@ describe("MyCollection Artwork SWA Section", () => {
           fireEvent.click(screen.getByTestId("submit-for-sale-link"))
 
           expect(mockPush).toBeCalledWith(
-            '/sell2/submissions/<mock-value-for-field-"internalID">/artist'
+            '/sell/submissions/<mock-value-for-field-"internalID">/artist'
           )
 
           expect(createOrUpdateConsignSubmission).not.toBeCalled()
@@ -95,7 +95,7 @@ describe("MyCollection Artwork SWA Section", () => {
             expect(createOrUpdateConsignSubmission).toHaveBeenCalled()
 
             expect(mockPush).toBeCalledWith(
-              "/sell2/submissions/submission-id/artist"
+              "/sell/submissions/submission-id/artist"
             )
           })
         })
