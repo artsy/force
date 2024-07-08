@@ -11,7 +11,7 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { FC, useRef, useState } from "react"
-import { graphql } from "react-relay"
+import { Environment, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { CollectorProfileArtistsAddQuery } from "__generated__/CollectorProfileArtistsAddQuery.graphql"
@@ -31,12 +31,15 @@ interface CollectorProfileArtistsAddProps {
   description?: string
   onSuccess: () => void
   onCancel?: () => void
+  /* When used in the inquiry flow we may have to inject a newly authenticated environment */
+  relayEnvironment?: Environment | null
 }
 
 export const CollectorProfileArtistsAdd: FC<CollectorProfileArtistsAddProps> = ({
   description,
   onCancel,
   onSuccess,
+  relayEnvironment,
 }) => {
   const [query, setQuery] = useState("")
 
@@ -68,7 +71,7 @@ export const CollectorProfileArtistsAdd: FC<CollectorProfileArtistsAddProps> = (
 
   const { submitMutation } = useMutation<
     CollectorProfileArtistsAddCreateUserInterestsMutation
-  >({ mutation: MUTATION })
+  >({ mutation: MUTATION, relayEnvironment })
 
   const handleAdd = async () => {
     setMode("Adding")

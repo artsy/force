@@ -4,7 +4,7 @@ import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { FC } from "react"
 
 export const InquiryArtistsInCollection: FC = () => {
-  const { next } = useInquiryContext()
+  const { next, relayEnvironment } = useInquiryContext()
 
   return (
     <Stack gap={2} height="100%">
@@ -17,7 +17,11 @@ export const InquiryArtistsInCollection: FC = () => {
       </Box>
 
       <Box flex={1} overflow="hidden">
-        <CollectorProfileArtistsAdd onSuccess={next} onCancel={next} />
+        <CollectorProfileArtistsAdd
+          relayEnvironment={relayEnvironment.current}
+          onSuccess={next}
+          onCancel={next}
+        />
       </Box>
     </Stack>
   )
