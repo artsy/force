@@ -98,6 +98,8 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
                 objectFit: "contain",
               }}
               onError={() => {
+                if (!photoSrc.startsWith("data:")) return
+
                 // HEIC images are not supported by most browsers, so we display a "Processing..." message in case loading the image fails (https://caniuse.com/?search=HEIC).
                 setIsProcessing(true)
               }}
