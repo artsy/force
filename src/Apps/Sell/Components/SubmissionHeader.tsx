@@ -73,14 +73,29 @@ export const SubmissionHeader: React.FC = () => {
                   </Media>
 
                   {submissionID && !isLastStep ? (
-                    <Button
-                      variant="tertiary"
-                      onClick={handleSaveAndExit}
-                      display="block"
-                      loading={isSubmitting}
-                    >
-                      Save & Exit
-                    </Button>
+                    <>
+                      <Media at="xs">
+                        <RouterLink
+                          to={null}
+                          textDecoration={["none", "underline"]}
+                          onClick={handleSaveAndExit}
+                          display="block"
+                        >
+                          Save & Exit
+                        </RouterLink>
+                      </Media>
+                      <Media greaterThan="xs">
+                        <Button
+                          variant="tertiary"
+                          // @ts-ignore
+                          as={RouterLink}
+                          to={null}
+                          onClick={handleSaveAndExit}
+                        >
+                          Save & Exit
+                        </Button>
+                      </Media>
+                    </>
                   ) : (
                     <>
                       <Media at="xs">
