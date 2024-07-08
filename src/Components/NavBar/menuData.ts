@@ -146,24 +146,24 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "Blue-Chip Artists",
           links: [
             {
-              text: "Yayoi Kusama",
-              href: "/artist/yayoi-kusama?metric=in",
+              text: "David Hockney",
+              href: "/artist/david-hockney",
             },
             {
-              text: "Stanley Whitney",
-              href: "/artist/stanley-whitney",
+              text: "Cindy Sherman",
+              href: "/artist/cindy-sherman",
             },
             {
-              text: "Tracey Emin",
-              href: "/artist/tracey-emin",
+              text: "Katharina Grosse",
+              href: "/artist/katharina-grosse",
             },
             {
-              text: "KAWS",
-              href: "/artist/kaws?metric=in",
+              text: "Imi Knoebel",
+              href: "/artist/imi-knoebel",
             },
             {
-              text: "Pablo Picasso",
-              href: "/artist/pablo-picasso",
+              text: "Ugo Rondinone",
+              href: "/artist/ugo-rondinone",
             },
           ],
         },
@@ -174,24 +174,24 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "Trending on Artsy",
           links: [
             {
-              text: "Etel Adnan",
-              href: "/artist/etel-adnan",
+              text: "Jess Allen",
+              href: "/artist/jess-allen",
             },
             {
-              text: "Tesfaye Urgessa",
-              href: "/artist/tesfaye-urgessa?metric=in",
+              text: "Alexis Ralaivao",
+              href: "/artist/alexis-ralaivao",
             },
             {
-              text: "Faith Ringgold",
-              href: "/artist/faith-ringgold?metric=in",
+              text: "Zoe McGuire",
+              href: "/artist/zoe-mcguire",
             },
             {
-              text: "Carla Accardi",
-              href: "/artist/carla-accardi",
+              text: "Louise Giovanelli",
+              href: "/artist/louise-giovanelli",
             },
             {
-              text: "Günther Förg",
-              href: "/artist/gunther-forg",
+              text: "GaHee Park",
+              href: "/artist/gahee-park",
             },
           ],
         },
@@ -202,24 +202,24 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "Recent Auction Records",
           links: [
             {
-              text: "Felix Gonzalez-Torres",
-              href: "/artist/felix-gonzalez-torres",
+              text: "Bob Thompson",
+              href: "/artist/bob-thompson",
             },
             {
-              text: "Ana Mendieta",
-              href: "/artist/ana-mendieta?metric=in",
+              text: "Katsushika Hokusai",
+              href: "/artist/katsushika-hokusai",
             },
             {
-              text: "Chloe Wise",
-              href: "/artist/chloe-wise",
+              text: "Faith Ringgold",
+              href: "/artist/faith-ringgold",
             },
             {
-              text: "Martin Wong",
-              href: "/artist/martin-wong?metric=in",
+              text: "Lucy Bull",
+              href: "/artist/lucy-bull",
             },
             {
-              text: "Leonora Carrington",
-              href: "/artist/leonora-carrington?metric=in",
+              text: "Seund Ja Rhee",
+              href: "/artist/seund-ja-rhee",
             },
           ],
         },
@@ -230,24 +230,24 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "New Representation",
           links: [
             {
-              text: "Walter Price",
-              href: "/artist/walter-price",
+              text: "Ali Banisadr",
+              href: "/artist/ali-banisadr",
             },
             {
-              text: "Hannah Levy",
-              href: "/artist/hannah-levy?metric=in",
+              text: "Scott Kahn",
+              href: "/artist/scott-kahn",
             },
             {
-              text: "Pélagie Gbaguidi",
-              href: "/artist/pelagie-gbaguidi?metric=in",
+              text: "Mire Lee",
+              href: "/artist/mire-lee",
             },
             {
-              text: "Oren Pinhassi",
-              href: "/artist/oren-pinhassi?metric=in",
+              text: "Sidival Fila",
+              href: "/artist/sidival-fila",
             },
             {
-              text: "Pierre Knop",
-              href: "/artist/pierre-knop",
+              text: "Terry Winters",
+              href: "/artist/terry-winters",
             },
           ],
         },

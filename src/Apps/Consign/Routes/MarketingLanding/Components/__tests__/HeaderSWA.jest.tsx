@@ -1,7 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { useTracking } from "react-tracking"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useTracking } from "react-tracking"
 
+const mockUseFeatureFlag = useFeatureFlag as jest.Mock
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
@@ -16,8 +21,12 @@ jest.mock("System/Hooks/useRouter", () => ({
 
 const trackEvent = useTracking as jest.Mock
 
+const getMock = jest.fn()
+Storage.prototype.getItem = getMock
+
 describe("HeaderSWA", () => {
   beforeAll(() => {
+    mockUseFeatureFlag.mockImplementation(() => true)
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -43,7 +52,7 @@ describe("HeaderSWA", () => {
 
       expect(link).toBeInTheDocument()
       expect(link).toHaveTextContent("Start Selling")
-      expect(link).toHaveAttribute("href", "/sell/submission")
+      expect(link).toHaveAttribute("href", "sell2/intro")
     })
 
     it("tracks click", () => {
@@ -85,6 +94,24 @@ describe("HeaderSWA", () => {
       expect(link).toBeInTheDocument()
       expect(link).toHaveTextContent("Get in Touch")
       expect(link).toHaveAttribute("href", "/sell/inquiry")
+    })
+
+    describe("with previous draft submission", () => {
+      beforeEach(() => {
+        getMock.mockImplementation(key =>
+          key === "previousSubmissionID" ? "test-id" : "test-step"
+        )
+      })
+
+      it("renders previous submission", () => {
+        render(<HeaderSWA />)
+
+        expect(getMock).toHaveBeenCalledWith("previousSubmissionID")
+
+        expect(
+          screen.queryByText("Finish previous submission:")
+        ).not.toBeInTheDocument()
+      })
     })
   })
 })

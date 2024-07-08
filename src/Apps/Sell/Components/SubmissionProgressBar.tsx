@@ -33,6 +33,7 @@ export const SubmissionProgressBar: React.FC = ({}) => {
               width="100%"
               height={PROGRESS_BAR_HEIGHT}
               borderRadius={PROGRESS_BAR_HEIGHT / 2}
+              my={0}
             />
           </Flex>
 

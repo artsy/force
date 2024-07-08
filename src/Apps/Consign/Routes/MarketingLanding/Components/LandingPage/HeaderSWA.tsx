@@ -7,6 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { PreviousSubmissionQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviousSubmission"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
@@ -14,23 +15,25 @@ import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
 
 export const HeaderSWA = () => {
-  const getInTouchRoute = "/sell/inquiry"
-
   const {
     trackStartSellingClick,
     trackGetInTouchClick,
   } = useMarketingLandingTracking()
+
+  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
 
   const image = resized(
     "https://files.artsy.net/images/content-card-swa-landing-page.jpg",
     { width: 1104, height: 833 }
   )
 
-  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
-
   return (
     <GridColumns gridRowGap={[2, 4]} alignItems="center">
       <Column span={5} order={[1, 0]} py={[0, 2]} pr={[0, 2]}>
+        <Media at="xs">
+          {enableNewSubmissionFlow && <PreviousSubmissionQueryRenderer />}
+        </Media>
+
         <Text as="h1" variant={["xl", "xxl", "xxxl"]}>
           Sell art from your collection
         </Text>
@@ -43,9 +46,17 @@ export const HeaderSWA = () => {
         </Text>
 
         <Media greaterThanOrEqual="sm">
-          <Spacer y={[2, 4]} />
+          {enableNewSubmissionFlow ? (
+            <Spacer y={[2, 1]} />
+          ) : (
+            <Spacer y={[2, 4]} />
+          )}
 
           <GridColumns>
+            <Column span={[12, 12, 10]}>
+              {enableNewSubmissionFlow && <PreviousSubmissionQueryRenderer />}
+            </Column>
+
             <Column span={[12, 6, 5]}>
               <Button
                 // @ts-ignore
@@ -72,7 +83,7 @@ export const HeaderSWA = () => {
                 variant="secondaryBlack"
                 data-testid="get-in-touch-button"
                 onClick={trackGetInTouchClick}
-                to={getInTouchRoute}
+                to="/sell/inquiry"
               >
                 Get in Touch
               </Button>
