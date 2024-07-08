@@ -7,6 +7,7 @@ import {
 import { InquiryBackdrop } from "./Components/InquiryBackdrop"
 import { Box, Clickable, useTheme } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
+import { SKIPPABLE_VIEWS, View } from "Components/Inquiry/config"
 
 interface InquiryProps {
   artworkID: string
@@ -42,6 +43,8 @@ const InquiryDialog: React.FC = () => {
 
   const { theme } = useTheme()
 
+  const isSkippable = SKIPPABLE_VIEWS.includes(current as View)
+
   return (
     <Box
       position="relative"
@@ -59,8 +62,8 @@ const InquiryDialog: React.FC = () => {
         pt={2}
         px={1}
         mx={0.5}
-        onClick={current === "BasicInfo" ? next : onClose}
-        aria-label={current === "BasicInfo" ? "Skip" : "Close"}
+        onClick={isSkippable ? next : onClose}
+        aria-label={isSkippable ? "Skip" : "Close"}
       >
         <CloseIcon fill="black100" display="block" />
       </Clickable>

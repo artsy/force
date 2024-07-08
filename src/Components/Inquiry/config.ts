@@ -18,7 +18,9 @@ const VIEWS = {
   ArtistsInCollection: InquiryArtistsInCollection,
 }
 
-type View = keyof typeof VIEWS
+export const SKIPPABLE_VIEWS: View[] = ["BasicInfo", "ArtistsInCollection"]
+
+export type View = keyof typeof VIEWS
 
 interface UseEngine {
   context: React.RefObject<Context>

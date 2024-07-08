@@ -212,7 +212,7 @@ export const CollectorProfileArtistsAdd: FC<CollectorProfileArtistsAddProps> = (
           >
             Add{mode === "Adding" ? "ing" : ""} selected artist
             {selected.length === 1 ? "" : "s"}
-            {selected.length > 0 && <>• {selected.length}</>}
+            {selected.length > 0 && <> • {selected.length}</>}
           </Button>
 
           {onCancel && (
