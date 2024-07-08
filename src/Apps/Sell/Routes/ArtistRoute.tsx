@@ -94,7 +94,7 @@ export const ArtistRoute: React.FC<{
     const isTargetSupply = artist?.targetSupply?.isTargetSupply
 
     if (!isTargetSupply) {
-      router.push(`/sell2/artist-not-eligible/${artist.internalID}`)
+      router.push(`/sell/artist-not-eligible/${artist.internalID}`)
       return
     }
 
@@ -114,8 +114,8 @@ export const ArtistRoute: React.FC<{
         throw new Error("Submission ID not found.")
       }
 
-      router.replace(`/sell2/submissions/${submissionID}/artist`)
-      router.push(`/sell2/submissions/${submissionID}/title`)
+      router.replace(`/sell/submissions/${submissionID}/artist`)
+      router.push(`/sell/submissions/${submissionID}/title`)
     } catch (error) {
       logger.error("Error creating submission.", error)
     }
@@ -152,7 +152,7 @@ export const ArtistRoute: React.FC<{
 
     if (isNewSubmission) {
       if (!isTargetSupply) {
-        router.push(`/sell2/artist-not-eligible/${artist.internalID}`)
+        router.push(`/sell/artist-not-eligible/${artist.internalID}`)
         return
       }
 

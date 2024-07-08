@@ -58,7 +58,7 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
         })
       }
 
-      router.push(`/sell2/submissions/${submissionID}/artist`)
+      router.push(`/sell/submissions/${submissionID}/artist`)
     } catch (error) {
       console.error(error)
     } finally {
