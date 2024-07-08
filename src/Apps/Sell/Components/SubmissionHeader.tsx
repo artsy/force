@@ -91,6 +91,7 @@ export const SubmissionHeader: React.FC = () => {
                           as={RouterLink}
                           to={null}
                           onClick={handleSaveAndExit}
+                          loading={isSubmitting}
                         >
                           Save & Exit
                         </Button>
