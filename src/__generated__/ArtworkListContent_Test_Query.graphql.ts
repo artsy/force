@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * @generated SignedSource<<144a9105c4cefa994438e2345469e6c5>>
+=======
+ * @generated SignedSource<<92715c84a31292d282d31ef8ab34f166>>
+>>>>>>> 1e9a331052 (example implementation in user saves page)
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -415,14 +419,6 @@ return {
                             "name": "node",
                             "plural": false,
                             "selections": [
-                              (v0/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "isAcquireable",
-                                "storageKey": null
-                              },
                               {
                                 "alias": null,
                                 "args": null,
@@ -431,6 +427,7 @@ return {
                                 "storageKey": null
                               },
                               (v7/*: any*/),
+                              (v0/*: any*/),
                               {
                                 "alias": null,
                                 "args": [
@@ -897,6 +894,13 @@ return {
                                 "kind": "ScalarField",
                                 "name": "imageTitle",
                                 "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "isAcquireable",
+                                "storageKey": null
                               }
                             ],
                             "storageKey": null
@@ -952,6 +956,54 @@ return {
             ],
             "storageKey": "collection(id:\"saved-artwork\")"
           },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 100
+              }
+            ],
+            "concreteType": "PartnerOfferToCollectorConnection",
+            "kind": "LinkedField",
+            "name": "partnerOffersConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PartnerOfferToCollectorEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PartnerOfferToCollector",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "artworkId",
+                        "storageKey": null
+                      },
+                      (v10/*: any*/),
+                      (v5/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "partnerOffersConnection(first:100)"
+          },
           (v5/*: any*/)
         ],
         "storageKey": null
@@ -959,7 +1011,11 @@ return {
     ]
   },
   "params": {
+<<<<<<< HEAD
     "cacheID": "852602eaa2736e5b7fcb372e3cab71c1",
+=======
+    "cacheID": "38c7187d6e819b36594cb73fb5b46d55",
+>>>>>>> 1e9a331052 (example implementation in user saves page)
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -1203,6 +1259,27 @@ return {
         "me.artworkList.name": (v16/*: any*/),
         "me.artworkList.shareableWithPartners": (v22/*: any*/),
         "me.id": (v17/*: any*/),
+        "me.partnerOffersConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerOfferToCollectorConnection"
+        },
+        "me.partnerOffersConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "PartnerOfferToCollectorEdge"
+        },
+        "me.partnerOffersConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerOfferToCollector"
+        },
+        "me.partnerOffersConnection.edges.node.artworkId": (v19/*: any*/),
+        "me.partnerOffersConnection.edges.node.endAt": (v19/*: any*/),
+        "me.partnerOffersConnection.edges.node.id": (v17/*: any*/),
         "me.savedArtworksArtworkList": (v15/*: any*/),
         "me.savedArtworksArtworkList.artworksCount": (v24/*: any*/),
         "me.savedArtworksArtworkList.id": (v17/*: any*/)
@@ -1210,7 +1287,11 @@ return {
     },
     "name": "ArtworkListContent_Test_Query",
     "operationKind": "query",
+<<<<<<< HEAD
     "text": "query ArtworkListContent_Test_Query {\n  me {\n    ...ArtworkListContent_me_3NGuxX\n    id\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image(includeAll: false) {\n        aspectRatio\n      }\n      ...GridItem_artwork_3QDGWC\n      ...FlatGridItem_artwork_3QDGWC\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkListArtworksGrid_me_17mhZ7 on Me {\n  artworkList: collection(id: \"listID\") {\n    internalID\n    artworks: artworksConnection(first: 30, page: 1) {\n      ...useCollectorSignals_artworksConnection\n      pageInfo {\n        hasNextPage\n      }\n      pageCursors {\n        ...Pagination_pageCursors\n      }\n      edges {\n        node {\n          id\n        }\n      }\n      ...ArtworkGrid_artworks\n    }\n    id\n  }\n  ...ArtworkListEmptyState_me_3NGuxX\n}\n\nfragment ArtworkListContent_me_3NGuxX on Me {\n  artworkList: collection(id: \"listID\") {\n    internalID\n    name\n    default\n    shareableWithPartners\n    artworks: artworksConnection(first: 30, page: 1) {\n      totalCount\n    }\n    id\n  }\n  ...ArtworkListArtworksGrid_me_17mhZ7\n}\n\nfragment ArtworkListEmptyState_me_3NGuxX on Me {\n  artworkList: collection(id: \"listID\") {\n    default\n    id\n  }\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    artworksCount(onlyVisible: true)\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment FlatGridItem_artwork_3QDGWC on Artwork {\n  ...Metadata_artwork\n  ...DeprecatedSaveButton_artwork\n  sale {\n    extendedBiddingPeriodMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    id\n  }\n  saleArtwork {\n    endAt\n    extendedBiddingEndAt\n    lotID\n    id\n  }\n  internalID\n  title\n  image_title: imageTitle\n  image(includeAll: false) {\n    resized(width: 445, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    blurhashDataURL\n  }\n  artistNames\n  href\n  isSaved\n}\n\nfragment GridItem_artwork_3QDGWC on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n    blurhashDataURL\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...ExclusiveAccessBadge_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment useCollectorSignals_artworksConnection on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      internalID\n      isAcquireable\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+=======
+    "text": "query ArtworkListContent_Test_Query {\n  me {\n    ...ArtworkListContent_me_3NGuxX\n    id\n  }\n}\n\nfragment ArtworkGridContext_artworksConnection on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  ...useCollectorSignals_artworksConnection\n}\n\nfragment ArtworkGridContext_me on Me {\n  ...useCollectorSignals_me\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image(includeAll: false) {\n        aspectRatio\n      }\n      ...GridItem_artwork_3QDGWC\n      ...FlatGridItem_artwork_3QDGWC\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkListArtworksGrid_me_17mhZ7 on Me {\n  artworkList: collection(id: \"listID\") {\n    internalID\n    artworks: artworksConnection(first: 30, page: 1) {\n      pageInfo {\n        hasNextPage\n      }\n      pageCursors {\n        ...Pagination_pageCursors\n      }\n      edges {\n        node {\n          id\n        }\n      }\n      ...ArtworkGrid_artworks\n      ...ArtworkGridContext_artworksConnection\n    }\n    id\n  }\n  ...ArtworkListEmptyState_me_3NGuxX\n  ...ArtworkGridContext_me\n}\n\nfragment ArtworkListContent_me_3NGuxX on Me {\n  artworkList: collection(id: \"listID\") {\n    internalID\n    name\n    default\n    shareableWithPartners\n    artworks: artworksConnection(first: 30, page: 1) {\n      totalCount\n    }\n    id\n  }\n  ...ArtworkListArtworksGrid_me_17mhZ7\n}\n\nfragment ArtworkListEmptyState_me_3NGuxX on Me {\n  artworkList: collection(id: \"listID\") {\n    default\n    id\n  }\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    artworksCount(onlyVisible: true)\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment FlatGridItem_artwork_3QDGWC on Artwork {\n  ...Metadata_artwork\n  ...DeprecatedSaveButton_artwork\n  sale {\n    extendedBiddingPeriodMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    id\n  }\n  saleArtwork {\n    endAt\n    extendedBiddingEndAt\n    lotID\n    id\n  }\n  internalID\n  title\n  image_title: imageTitle\n  image(includeAll: false) {\n    resized(width: 445, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    blurhashDataURL\n  }\n  artistNames\n  href\n  isSaved\n}\n\nfragment GridItem_artwork_3QDGWC on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n    blurhashDataURL\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...ExclusiveAccessBadge_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment useCollectorSignals_artworksConnection on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      internalID\n      isAcquireable\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment useCollectorSignals_me on Me {\n  partnerOffersConnection(first: 100) {\n    edges {\n      node {\n        artworkId\n        endAt\n        id\n      }\n    }\n  }\n}\n"
+>>>>>>> 1e9a331052 (example implementation in user saves page)
   }
 };
 })();

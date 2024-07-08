@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2183521603097c4ce5aab78dcdb57187>>
+ * @generated SignedSource<<4310431b8bfa01077f347c79e76b3949>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,11 +24,11 @@ export type ArtworkListArtworksGrid_me$data = {
       readonly pageInfo: {
         readonly hasNextPage: boolean;
       };
-      readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks" | "useCollectorSignals_artworksConnection">;
+      readonly " $fragmentSpreads": FragmentRefs<"ArtworkGridContext_artworksConnection" | "ArtworkGrid_artworks">;
     } | null | undefined;
     readonly internalID: string;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListEmptyState_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkGridContext_me" | "ArtworkListEmptyState_me">;
   readonly " $fragmentType": "ArtworkListArtworksGrid_me";
 };
 export type ArtworkListArtworksGrid_me$key = {
@@ -104,11 +104,6 @@ const node: ReaderFragment = {
           "plural": false,
           "selections": [
             {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "useCollectorSignals_artworksConnection"
-            },
-            {
               "alias": null,
               "args": null,
               "concreteType": "PageInfo",
@@ -175,6 +170,11 @@ const node: ReaderFragment = {
               "args": null,
               "kind": "FragmentSpread",
               "name": "ArtworkGrid_artworks"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "ArtworkGridContext_artworksConnection"
             }
           ],
           "storageKey": null
@@ -192,12 +192,17 @@ const node: ReaderFragment = {
       ],
       "kind": "FragmentSpread",
       "name": "ArtworkListEmptyState_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkGridContext_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "16ccac26fc7c528c1f40a53b68847980";
+(node as any).hash = "e55b98ddeae2bf426dada430a4521493";
 
 export default node;
