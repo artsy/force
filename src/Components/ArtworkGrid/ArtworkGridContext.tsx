@@ -1,4 +1,5 @@
 import { useCollectorSignals } from "System/Hooks/useCollectorSignals"
+import { extractNodes } from "Utils/extractNodes"
 import { ArtworkGridContext_artworksConnection$key } from "__generated__/ArtworkGridContext_artworksConnection.graphql"
 import { ArtworkGridContext_me$key } from "__generated__/ArtworkGridContext_me.graphql"
 import { createContext, useContext } from "react"
@@ -25,7 +26,7 @@ const ArtworkGridContext = createContext<ArtworkGridContextProps>({
   isAuctionArtwork: false,
   hideLotLabel: false,
   saveOnlyToDefaultList: false,
-  collectorSignals: { signals: {} },
+  collectorSignals: {},
 })
 
 type ArtworkGridContextProviderProps = {
@@ -44,9 +45,10 @@ export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProviderProp
     artworksConnection
   )
   const meData = useFragment(ME_FRAGMENT, me)
+
   const collectorSignals = useCollectorSignals({
-    artworksConnection: artworksData,
-    me: meData,
+    artworks: extractNodes(artworksData),
+    partnerOffers: extractNodes(meData?.partnerOffersConnection),
   })
 
   return (
@@ -77,11 +79,23 @@ export const withArtworkGridContext = <T,>(
 
 const ARTWORKS_CONNECTION_FRAGMENT = graphql`
   fragment ArtworkGridContext_artworksConnection on ArtworkConnectionInterface {
-    ...useCollectorSignals_artworksConnection
+    edges {
+      node {
+        internalID
+        isAcquireable
+      }
+    }
   }
 `
 const ME_FRAGMENT = graphql`
   fragment ArtworkGridContext_me on Me {
-    ...useCollectorSignals_me
+    partnerOffersConnection(first: 100) {
+      edges {
+        node {
+          artworkId
+          endAt
+        }
+      }
+    }
   }
 `

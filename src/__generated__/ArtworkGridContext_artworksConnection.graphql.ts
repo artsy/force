@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee9ae8047c9a92cc12bcb5eaf092e36a>>
+ * @generated SignedSource<<067bf8086ae1d47e9bb524285ecef420>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkGridContext_artworksConnection$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"useCollectorSignals_artworksConnection">;
+  readonly edges: ReadonlyArray<{
+    readonly node: {
+      readonly internalID: string;
+      readonly isAcquireable: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "ArtworkGridContext_artworksConnection";
 };
 export type ArtworkGridContext_artworksConnection$key = {
@@ -26,15 +31,46 @@ const node: ReaderFragment = {
   "name": "ArtworkGridContext_artworksConnection",
   "selections": [
     {
+      "alias": null,
       "args": null,
-      "kind": "FragmentSpread",
-      "name": "useCollectorSignals_artworksConnection"
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "edges",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "node",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isAcquireable",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "ArtworkConnectionInterface",
   "abstractKey": "__isArtworkConnectionInterface"
 };
 
-(node as any).hash = "35e928a4fa45cece049c7db800f518c8";
+(node as any).hash = "35c028c4475fc3a2a2a5835abeb0dd64";
 
 export default node;
