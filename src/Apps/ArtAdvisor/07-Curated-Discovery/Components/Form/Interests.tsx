@@ -16,12 +16,14 @@ export const INTERESTS = [
   // mediums
   "Painting",
   "Prints",
-  "Works on Paper",
+  "Drawings",
+  "Collage",
   "Photography",
   "Sculpture",
+  "Mixed media",
   "Ceramics",
   "Textile Art",
-  "Design Objects and Furniture",
+  "Design and Decorative Art",
   // artist segments
   "Emerging artists",
   "Blue chip artists",
