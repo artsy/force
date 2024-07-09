@@ -234,12 +234,10 @@ const mockViewer = {
       {
         email: "jessica@artsymail.com",
         firstName: "Jessica",
-        name: "Jessica Backus",
       },
       {
         email: "rachel.hagopian@artsy.net",
         firstName: "Rachel",
-        name: "Rachel Hagopian",
       },
     ],
   },

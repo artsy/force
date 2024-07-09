@@ -251,11 +251,6 @@ export const consignRoutes: RouteProps[] = [
               ...ConsignmentInquiry_me
             }
             viewer {
-              staticContent {
-                specialistBios {
-                  name
-                }
-              }
               ...ConsignmentInquiry_viewer
             }
           }

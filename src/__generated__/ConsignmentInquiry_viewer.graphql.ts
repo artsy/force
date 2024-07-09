@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2e4d67a8de86447f5cbf4b73466971b>>
+ * @generated SignedSource<<4db31d7dabf63725125f8e41cbfe1534>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,6 @@ export type ConsignmentInquiry_viewer$data = {
     readonly specialistBios: ReadonlyArray<{
       readonly email: string;
       readonly firstName: string;
-      readonly name: string;
     }> | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "ConsignmentInquiry_viewer";
@@ -51,13 +50,6 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "name",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
               "name": "firstName",
               "storageKey": null
             },
@@ -79,6 +71,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3f2c6012a7b94403975aa688919d31dc";
+(node as any).hash = "0aa04602f2167f41db8a004c61db3c60";
 
 export default node;

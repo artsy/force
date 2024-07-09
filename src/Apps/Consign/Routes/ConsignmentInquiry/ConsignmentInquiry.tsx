@@ -264,7 +264,6 @@ export const ConsignmentInquiryFragmentContainer = createFragmentContainer(
       fragment ConsignmentInquiry_viewer on Viewer {
         staticContent {
           specialistBios {
-            name
             firstName
             email
           }

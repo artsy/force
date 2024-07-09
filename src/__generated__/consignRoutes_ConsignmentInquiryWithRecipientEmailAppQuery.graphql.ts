@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<364d7bdf79ca2058aab8080a30cb8fa1>>
+ * @generated SignedSource<<8fbf8206948093e9e0da6008cea40fc9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,11 +16,6 @@ export type consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery$data = {
     readonly " $fragmentSpreads": FragmentRefs<"ConsignmentInquiry_me">;
   } | null | undefined;
   readonly viewer: {
-    readonly staticContent: {
-      readonly specialistBios: ReadonlyArray<{
-        readonly name: string;
-      }> | null | undefined;
-    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ConsignmentInquiry_viewer">;
   } | null | undefined;
 };
@@ -34,17 +29,10 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "email",
   "storageKey": null
 },
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -83,29 +71,6 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "StaticContent",
-            "kind": "LinkedField",
-            "name": "staticContent",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "SpecialistBio",
-                "kind": "LinkedField",
-                "name": "specialistBios",
-                "plural": true,
-                "selections": [
-                  (v0/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
             "args": null,
             "kind": "FragmentSpread",
             "name": "ConsignmentInquiry_viewer"
@@ -138,8 +103,14 @@ return {
             "name": "internalID",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
           (v0/*: any*/),
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -165,7 +136,7 @@ return {
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": null
       },
@@ -193,7 +164,6 @@ return {
                 "name": "specialistBios",
                 "plural": true,
                 "selections": [
-                  (v0/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -201,11 +171,11 @@ return {
                     "name": "firstName",
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v0/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           }
@@ -215,16 +185,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e2f794914c2208c8d55ae5e264ebdfbc",
+    "cacheID": "e350c45645b8507ed0e85481ab057361",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n  viewer {\n    staticContent {\n      specialistBios {\n        name\n      }\n      id\n    }\n    ...ConsignmentInquiry_viewer\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ConsignmentInquiry_viewer on Viewer {\n  staticContent {\n    specialistBios {\n      name\n      firstName\n      email\n    }\n    id\n  }\n}\n"
+    "text": "query consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n  viewer {\n    ...ConsignmentInquiry_viewer\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ConsignmentInquiry_viewer on Viewer {\n  staticContent {\n    specialistBios {\n      firstName\n      email\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "80a79362d1529c1e7d75265328f77b06";
+(node as any).hash = "161c00c6165e6c1b36436b173dcb692c";
 
 export default node;

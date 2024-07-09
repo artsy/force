@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2aa4283a0ad34da41796b0c49fd35f2>>
+ * @generated SignedSource<<ef945efa0be77939ba417e1fae2917ba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,36 +29,29 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "email",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "email",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v4 = {
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -128,8 +121,14 @@ return {
             "name": "internalID",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
           (v0/*: any*/),
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -155,7 +154,7 @@ return {
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": null
       },
@@ -183,7 +182,6 @@ return {
                 "name": "specialistBios",
                 "plural": true,
                 "selections": [
-                  (v0/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -191,11 +189,11 @@ return {
                     "name": "firstName",
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v0/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           }
@@ -205,7 +203,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "02113f1ef19f07b1e89c53873b3f129a",
+    "cacheID": "6becda9717f11814aa0c339445779049",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -215,18 +213,18 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.email": (v3/*: any*/),
-        "me.id": (v4/*: any*/),
-        "me.internalID": (v4/*: any*/),
-        "me.name": (v3/*: any*/),
-        "me.phone": (v3/*: any*/),
+        "me.email": (v2/*: any*/),
+        "me.id": (v3/*: any*/),
+        "me.internalID": (v3/*: any*/),
+        "me.name": (v2/*: any*/),
+        "me.phone": (v2/*: any*/),
         "me.phoneNumber": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PhoneNumberType"
         },
-        "me.phoneNumber.regionCode": (v3/*: any*/),
+        "me.phoneNumber.regionCode": (v2/*: any*/),
         "viewer": {
           "enumValues": null,
           "nullable": true,
@@ -239,21 +237,20 @@ return {
           "plural": false,
           "type": "StaticContent"
         },
-        "viewer.staticContent.id": (v4/*: any*/),
+        "viewer.staticContent.id": (v3/*: any*/),
         "viewer.staticContent.specialistBios": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "SpecialistBio"
         },
-        "viewer.staticContent.specialistBios.email": (v5/*: any*/),
-        "viewer.staticContent.specialistBios.firstName": (v5/*: any*/),
-        "viewer.staticContent.specialistBios.name": (v5/*: any*/)
+        "viewer.staticContent.specialistBios.email": (v4/*: any*/),
+        "viewer.staticContent.specialistBios.firstName": (v4/*: any*/)
       }
     },
     "name": "ConsignmentInquiry_Test_Query",
     "operationKind": "query",
-    "text": "query ConsignmentInquiry_Test_Query {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n  viewer {\n    ...ConsignmentInquiry_viewer\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ConsignmentInquiry_viewer on Viewer {\n  staticContent {\n    specialistBios {\n      name\n      firstName\n      email\n    }\n    id\n  }\n}\n"
+    "text": "query ConsignmentInquiry_Test_Query {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n  viewer {\n    ...ConsignmentInquiry_viewer\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ConsignmentInquiry_viewer on Viewer {\n  staticContent {\n    specialistBios {\n      firstName\n      email\n    }\n    id\n  }\n}\n"
   }
 };
 })();

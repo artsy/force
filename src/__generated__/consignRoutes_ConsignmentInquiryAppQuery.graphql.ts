@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e4e8a0590f26488c3d13dd24ef7c84c4>>
+ * @generated SignedSource<<afbba52bce60a76487d82a935db239cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,17 +29,10 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "email",
   "storageKey": null
 },
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -110,8 +103,14 @@ return {
             "name": "internalID",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
           (v0/*: any*/),
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -137,7 +136,7 @@ return {
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": null
       },
@@ -165,7 +164,6 @@ return {
                 "name": "specialistBios",
                 "plural": true,
                 "selections": [
-                  (v0/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -173,11 +171,11 @@ return {
                     "name": "firstName",
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v0/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           }
@@ -187,12 +185,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "479fbdf66157f6823266b331529af371",
+    "cacheID": "56e74d468a19eef2501359f54a7a7511",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_ConsignmentInquiryAppQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_ConsignmentInquiryAppQuery {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n  viewer {\n    ...ConsignmentInquiry_viewer\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ConsignmentInquiry_viewer on Viewer {\n  staticContent {\n    specialistBios {\n      name\n      firstName\n      email\n    }\n    id\n  }\n}\n"
+    "text": "query consignRoutes_ConsignmentInquiryAppQuery {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n  viewer {\n    ...ConsignmentInquiry_viewer\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ConsignmentInquiry_viewer on Viewer {\n  staticContent {\n    specialistBios {\n      firstName\n      email\n    }\n    id\n  }\n}\n"
   }
 };
 })();

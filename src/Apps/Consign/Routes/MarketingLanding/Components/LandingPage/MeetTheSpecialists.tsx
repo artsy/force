@@ -7,7 +7,6 @@ import {
   ResponsiveBox,
   Shelf,
   Skeleton,
-  SkeletonText,
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
@@ -66,8 +65,6 @@ export const MeetTheSpecialists: React.FC<{
     trackContactTheSpecialistClick()
   }
 
-  // TODO: move title and subtitle above the query renderer so it is visible in the placeholder
-  // same for Previouslu sold on artsy component
   return (
     <>
       <Text mb={[0.5, 1]} variant={["lg-display", "xl", "xxl"]}>
@@ -217,12 +214,12 @@ export const MeetTheSpecialistsFragmentContainer = createFragmentContainer(
 
 const PLACEHOLDER = (
   <Skeleton>
-    <SkeletonText mb={[0.5, 1]} variant={["lg-display", "xl", "xxl"]}>
+    <Text mb={[0.5, 1]} variant={["lg-display", "xl", "xxl"]}>
       Meet the specialists
-    </SkeletonText>
-    <SkeletonText mb={2} variant={["xs", "sm"]}>
+    </Text>
+    <Text mb={2} variant={["xs", "sm"]}>
       Our specialists span today’s most popular collecting categories.
-    </SkeletonText>
+    </Text>
     <Shelf>
       {[...new Array(5)].map((_, i) => {
         return (
