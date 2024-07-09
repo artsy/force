@@ -5,12 +5,15 @@ import { useTracking } from "react-tracking"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { useRouter } from "System/Hooks/useRouter"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
+
+jest.mock("System/Hooks/useRouter")
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
@@ -55,6 +58,9 @@ const getWrapper = () =>
         me {
           ...ConsignmentInquiry_me
         }
+        viewer {
+          ...ConsignmentInquiry_viewer
+        }
       }
     `,
     variables: {},
@@ -72,10 +78,23 @@ const getInput = (name: string) =>
   screen.getAllByRole("textbox").find(c => c.getAttribute("name") === name)
 
 describe("ConsignmentInquiry", () => {
+  const mockUseRouter = useRouter as jest.Mock
+
+  afterEach(() => {
+    mockUseRouter.mockReset()
+  })
+
   beforeEach(() => {
     ;(useMutation as jest.Mock).mockImplementation(() => {
       return { submitMutation }
     })
+    mockUseRouter.mockImplementation(() => ({
+      router: {
+        push: mockRouterPush,
+        replace: mockRouterReplace,
+      },
+      match: { params: { artworkId: undefined, recipientEmail: null } },
+    }))
   })
 
   afterEach(() => {
@@ -88,6 +107,33 @@ describe("ConsignmentInquiry", () => {
     })
 
     expect(screen.getByText("Contact a specialist")).toBeInTheDocument()
+
+    expect(
+      screen.getAllByRole("button").find(c => c.textContent?.includes("Back"))
+    ).toBeInTheDocument()
+
+    expect(getSubmitButton()).toBeInTheDocument()
+  })
+
+  it("renders correctly with selected specialist", async () => {
+    mockUseRouter.mockImplementation(() => ({
+      router: {
+        push: mockRouterPush,
+        replace: mockRouterReplace,
+      },
+      match: {
+        params: {
+          artworkId: undefined,
+          recipientEmail: "jessica@artsymail.com",
+        },
+      },
+    }))
+
+    getWrapper().renderWithRelay({
+      Viewer: () => mockViewer,
+    })
+
+    expect(screen.getByText("Contact Jessica")).toBeInTheDocument()
 
     expect(
       screen.getAllByRole("button").find(c => c.textContent?.includes("Back"))
@@ -180,4 +226,21 @@ const mockEmptyMe = {
   email: null,
   phone: null,
   phoneNumber: null,
+}
+
+const mockViewer = {
+  staticContent: {
+    specialistBios: [
+      {
+        email: "jessica@artsymail.com",
+        firstName: "Jessica",
+        name: "Jessica Backus",
+      },
+      {
+        email: "rachel.hagopian@artsy.net",
+        firstName: "Rachel",
+        name: "Rachel Hagopian",
+      },
+    ],
+  },
 }

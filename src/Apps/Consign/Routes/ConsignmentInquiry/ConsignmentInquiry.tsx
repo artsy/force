@@ -13,6 +13,8 @@ import {
 } from "Apps/Consign/Routes/ConsignmentInquiry/Components/ConsignmentInquiryForm"
 import { SentConsignmentInquiry } from "@artsy/cohesion/dist/Schema/Events/Consignments"
 import { ConsignmentInquiry_me$data } from "__generated__/ConsignmentInquiry_me.graphql"
+import { ConsignmentInquiry_viewer$data } from "__generated__/ConsignmentInquiry_viewer.graphql"
+
 import { useCreateConsignmentInquiry } from "Apps/Consign/Routes/ConsignmentInquiry/utils/useCreateConsignmentInquiry"
 import {
   consignmentInquiryValidationSchema,
@@ -22,7 +24,6 @@ import { CreateConsignmentInquiryMutationInput } from "__generated__/useCreateCo
 import { ConsignmentInquiryFormAbandonEditModal } from "Apps/Consign/Routes/ConsignmentInquiry/Components/ConsignmentInquiryFormAbandonEdit"
 import { useState } from "react"
 import { TopContextBar } from "Components/TopContextBar"
-import { SPECIALISTS } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
 import { RouterLink } from "System/Components/RouterLink"
 
 const logger = createLogger("ConsignmentInquiry/ConsignmentInquiry.tsx")
@@ -48,10 +49,12 @@ const getContactInformationFormInitialValues = (
 
 export interface ConsignmentInquiryProps {
   me: ConsignmentInquiry_me$data
+  viewer: ConsignmentInquiry_viewer$data
 }
 
 export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
   me,
+  viewer,
 }) => {
   const [showExitModal, setShowExitModal] = useState(false)
   const { trackEvent } = useTracking()
@@ -72,8 +75,9 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
 
   const recipientEmail = match.params.recipientEmail ?? null
 
-  const recipientName = SPECIALISTS.find(i => i.email === recipientEmail)
-    ?.firstName
+  const recipientName =
+    viewer?.staticContent?.specialistBios?.find(i => i.email === recipientEmail)
+      ?.firstName ?? null
 
   const handleSubmit = async ({
     name,
@@ -253,6 +257,17 @@ export const ConsignmentInquiryFragmentContainer = createFragmentContainer(
         phone
         phoneNumber {
           regionCode
+        }
+      }
+    `,
+    viewer: graphql`
+      fragment ConsignmentInquiry_viewer on Viewer {
+        staticContent {
+          specialistBios {
+            name
+            firstName
+            email
+          }
         }
       }
     `,

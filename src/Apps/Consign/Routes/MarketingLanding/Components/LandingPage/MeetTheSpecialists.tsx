@@ -10,12 +10,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import {
-  CARD_HEIGHT,
-  CARD_HEIGHT_MD,
-  CARD_HEIGHT_MOBILE,
-  CARD_WIDTH,
-} from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -27,6 +21,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MeetTheSpecialistsQuery } from "__generated__/MeetTheSpecialistsQuery.graphql"
 import { MeetTheSpecialists_staticContent$data } from "__generated__/MeetTheSpecialists_staticContent.graphql"
 
+export const CARD_WIDTH = 404
+export const CARD_HEIGHT = 610
+export const CARD_HEIGHT_MD = 557
+export const CARD_HEIGHT_MOBILE = 418
+
 export const MeetTheSpecialists: React.FC<{
   staticContent: MeetTheSpecialists_staticContent$data
 }> = ({ staticContent }) => {
@@ -35,7 +34,6 @@ export const MeetTheSpecialists: React.FC<{
   const { trackEvent } = useTracking()
 
   const specialists = staticContent?.specialistBios
-  // TODO: remove the local data usage
 
   if (!specialists) {
     return PLACEHOLDER
@@ -177,9 +175,6 @@ export const MeetTheSpecialistsQueryRenderer: React.FC = () => {
             staticContent {
               ...MeetTheSpecialists_staticContent
             }
-          }
-          me {
-            name
           }
         }
       `}

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a98c9a527710e1ea9ce71d39ba07833>>
+ * @generated SignedSource<<4d1ebc090fbcdbb947a218aa8f4de464>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,6 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MeetTheSpecialistsQuery$variables = Record<PropertyKey, never>;
 export type MeetTheSpecialistsQuery$data = {
-  readonly me: {
-    readonly name: string | null | undefined;
-  } | null | undefined;
   readonly viewer: {
     readonly staticContent: {
       readonly " $fragmentSpreads": FragmentRefs<"MeetTheSpecialists_staticContent">;
@@ -26,22 +23,7 @@ export type MeetTheSpecialistsQuery = {
   variables: MeetTheSpecialistsQuery$variables;
 };
 
-const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -72,18 +54,6 @@ return {
             ],
             "storageKey": null
           }
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
-        "plural": false,
-        "selections": [
-          (v0/*: any*/)
         ],
         "storageKey": null
       }
@@ -121,7 +91,13 @@ return {
                 "name": "specialistBios",
                 "plural": true,
                 "selections": [
-                  (v0/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -171,39 +147,31 @@ return {
                 ],
                 "storageKey": null
               },
-              (v1/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              }
             ],
             "storageKey": null
           }
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
-        "plural": false,
-        "selections": [
-          (v0/*: any*/),
-          (v1/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "ef90ecd90f47dd0b1e5db12242f13286",
+    "cacheID": "41b878db37d3ac58b8547a4670b6b648",
     "id": null,
     "metadata": {},
     "name": "MeetTheSpecialistsQuery",
     "operationKind": "query",
-    "text": "query MeetTheSpecialistsQuery {\n  viewer {\n    staticContent {\n      ...MeetTheSpecialists_staticContent\n      id\n    }\n  }\n  me {\n    name\n    id\n  }\n}\n\nfragment MeetTheSpecialists_staticContent on StaticContent {\n  specialistBios {\n    name\n    firstName\n    jobTitle\n    bio\n    email\n    image {\n      imageURL\n    }\n  }\n}\n"
+    "text": "query MeetTheSpecialistsQuery {\n  viewer {\n    staticContent {\n      ...MeetTheSpecialists_staticContent\n      id\n    }\n  }\n}\n\nfragment MeetTheSpecialists_staticContent on StaticContent {\n  specialistBios {\n    name\n    firstName\n    jobTitle\n    bio\n    email\n    image {\n      imageURL\n    }\n  }\n}\n"
   }
 };
-})();
 
-(node as any).hash = "24dbb99496cdf55ba6e23610ef09df29";
+(node as any).hash = "5ef3e3b0aa428a922854b7f4e8ad92b0";
 
 export default node;
