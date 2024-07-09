@@ -1,4 +1,4 @@
-import { Flex, Spacer, Text, Box } from "@artsy/palette"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { RouterLink } from "System/Components/RouterLink"
 import { FC } from "react"
@@ -7,6 +7,7 @@ import { ArtworkPublishedNotification_notification$key } from "__generated__/Art
 import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
 import { NotificationArtworkList } from "Components/Notifications/NotificationArtworkList"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { NotificationWrapper } from "Components/Notifications/Notification"
 
 interface ArtworkPublishedNotificationProps {
   notification: ArtworkPublishedNotification_notification$key
@@ -29,7 +30,7 @@ export const ArtworkPublishedNotification: FC<ArtworkPublishedNotificationProps>
   }
 
   return (
-    <Box>
+    <NotificationWrapper>
       <Text variant="lg-display">{headline}</Text>
 
       <Spacer y={1} />
@@ -51,7 +52,7 @@ export const ArtworkPublishedNotification: FC<ArtworkPublishedNotificationProps>
           <Text fontWeight="bold">View all works by {artist.name}</Text>
         </Flex>
       </RouterLink>
-    </Box>
+    </NotificationWrapper>
   )
 }
 

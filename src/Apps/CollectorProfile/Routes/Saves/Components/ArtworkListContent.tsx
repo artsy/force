@@ -21,7 +21,6 @@ import { useJump } from "Utils/Hooks/useJump"
 import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
 import { ARTWORK_LIST_SCROLL_TARGET_ID } from "Apps/CollectorProfile/Routes/Saves/CollectorProfileSavesRoute"
 import HideIcon from "@artsy/icons/HideIcon"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useTranslation } from "react-i18next"
 
 interface ArtworkListContentQueryRendererProps {
@@ -74,10 +73,6 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
     }
   }, [jumpTo, artworkListItemHasBeenTouched])
 
-  const shareableWithPartnersEnabled = useFeatureFlag(
-    "emerald_artwork-list-offerability"
-  )
-
   return (
     <ArtworkFilterContextProvider
       filters={match.location.query}
@@ -99,27 +94,22 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
         <Join separator={<Spacer x={2} />}>
           <Flex alignItems="center">
             <Text variant="lg-display">{artworkList?.name}</Text>
-            {shareableWithPartnersEnabled &&
-              !artworkList?.shareableWithPartners && (
-                <Tooltip
-                  pointer
-                  variant="defaultDark"
-                  placement="bottom-start"
-                  content={
-                    <Text variant="xs">
-                      {t("collectorSaves.artworkListsHeader.hideIconTooltip")}
-                    </Text>
-                  }
-                >
-                  <Clickable style={{ lineHeight: 0 }}>
-                    <HideIcon
-                      minWidth="18px"
-                      data-testid="hide-icon"
-                      ml={0.5}
-                    />
-                  </Clickable>
-                </Tooltip>
-              )}
+            {!artworkList?.shareableWithPartners && (
+              <Tooltip
+                pointer
+                variant="defaultDark"
+                placement="bottom-start"
+                content={
+                  <Text variant="xs">
+                    {t("collectorSaves.artworkListsHeader.hideIconTooltip")}
+                  </Text>
+                }
+              >
+                <Clickable style={{ lineHeight: 0 }}>
+                  <HideIcon minWidth="18px" data-testid="hide-icon" ml={0.5} />
+                </Clickable>
+              </Tooltip>
+            )}
           </Flex>
           {!artworkList?.default && artworkList && (
             <ArtworkListContextualMenu artworkList={artworkList} />

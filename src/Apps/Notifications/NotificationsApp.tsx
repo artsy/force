@@ -7,14 +7,14 @@ import { NotificationsContextProvider } from "Components/Notifications/Hooks/use
 import { NotificationQueryRenderer } from "Components/Notifications/Notification"
 import { useRouter } from "found"
 import { GridColumns, Column, Flex, FullBleed } from "@artsy/palette"
-import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useEffect } from "react"
-
-const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
-const MIN_LIST_WIDTH = 370
+import {
+  DESKTOP_HEIGHT,
+  MIN_LIST_WIDTH,
+} from "Apps/Notifications/notificationsutils"
 
 interface NotificationsAppProps {
   me: NotificationsApp_me$data
@@ -73,13 +73,7 @@ const NotificationsApp: React.FC<NotificationsAppProps> = ({ me }) => {
             </Column>
 
             <Column span={9}>
-              <Flex
-                flexDirection="column"
-                height={DESKTOP_HEIGHT}
-                overflow="auto"
-              >
-                <NotificationQueryRenderer />
-              </Flex>
+              <NotificationQueryRenderer />
             </Column>
           </GridColumns>
         </Media>

@@ -57,7 +57,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ item, mode }) => {
                     <Image
                       key={image.url}
                       src={image.url}
-                      alt={"Activity artwork image"}
+                      alt="Activity artwork image"
                       width={58}
                       height={58}
                       lazyLoad

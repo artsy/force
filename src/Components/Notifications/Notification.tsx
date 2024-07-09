@@ -23,6 +23,7 @@ import createLogger from "Utils/logger"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
+import { DESKTOP_HEIGHT } from "Apps/Notifications/notificationsutils"
 
 const logger = createLogger("NotificationItem")
 
@@ -39,6 +40,16 @@ export const SUPPORTED_NOTIFICATION_TYPES = [
 interface NotificationProps {
   notificationId: string
 }
+
+export const NotificationWrapper: React.FC = ({ children }) => (
+  <Flex
+    flexDirection="column"
+    height={["auto", DESKTOP_HEIGHT]}
+    overflow="auto"
+  >
+    <Box>{children}</Box>
+  </Flex>
+)
 
 const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
   const { relayEnvironment } = useSystemContext()

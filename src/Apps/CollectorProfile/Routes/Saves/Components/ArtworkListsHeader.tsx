@@ -8,7 +8,6 @@ import { ProgressiveOnboardingSaveTitle } from "Components/ProgressiveOnboarding
 import { RouterLink } from "System/Components/RouterLink"
 import { OfferSettingsModal } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { ProgressiveOnboardingSaveOfferSettings } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveOfferSettings"
 
 interface ArtworkListsHeaderProps {
@@ -24,10 +23,6 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
   const { sendToast } = useToasts()
   const [createModalIsOpened, setCreateModalIsOpened] = useState(false)
   const [editModalIsOpened, setEditModalIsOpened] = useState(false)
-
-  const offerSettingsEnabled = useFeatureFlag(
-    "emerald_artwork-list-offerability"
-  )
 
   const handleCreateListClick = () => {
     setCreateModalIsOpened(true)
@@ -94,18 +89,16 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
           </Text>
 
           <Flex>
-            {offerSettingsEnabled && (
-              <ProgressiveOnboardingSaveOfferSettings>
-                <Button
-                  variant="tertiary"
-                  size={["small", "large"]}
-                  onClick={handleEditListClick}
-                  mt={[2, 0]}
-                >
-                  {t("collectorSaves.artworkListsHeader.offerSettingsButton")}
-                </Button>
-              </ProgressiveOnboardingSaveOfferSettings>
-            )}
+            <ProgressiveOnboardingSaveOfferSettings>
+              <Button
+                variant="tertiary"
+                size={["small", "large"]}
+                onClick={handleEditListClick}
+                mt={[2, 0]}
+              >
+                {t("collectorSaves.artworkListsHeader.offerSettingsButton")}
+              </Button>
+            </ProgressiveOnboardingSaveOfferSettings>
 
             <Spacer x={4} />
 
