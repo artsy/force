@@ -25,12 +25,7 @@ export const INTERESTS = [
   "Design Objects and Furniture",
   // artist segments
   "Emerging artists",
-  "Critically acclaimed",
-  "Blue chip",
-  "New & Noteworthy",
-  "Trending Emerging",
-  "Street & urban artists",
-  "Ultra-high demand",
+  "Blue chip artists",
   // passions
   "Social issues",
   "Supporting local galleries",
