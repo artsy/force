@@ -177,7 +177,7 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
 
   return (
     <>
-      <Text variant="xs" mb={0.5}>
+      <Text variant="xs" mb={[2, 0.5]}>
         Upload Photos
       </Text>
       <PhotoDropzone

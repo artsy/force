@@ -24,7 +24,7 @@ export const STEPS = [
   "thank-you",
 ] as const
 
-const INITIAL_STEP: SellFlowStep = "artist"
+export const INITIAL_STEP: SellFlowStep = "artist"
 const SUBMIT_STEP: SellFlowStep = "phone-number"
 
 export type SellFlowStep = typeof STEPS[number]
@@ -106,7 +106,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   })
 
   const goToNextStep = async () => {
-    state.isSubmitStep ? finishFlow() : handleNext()
+    state.isSubmitStep ? await finishFlow() : await handleNext()
   }
 
   const goToPreviousStep = () => {
@@ -123,13 +123,15 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       state: "SUBMITTED",
     })
 
-    push(`/sell2/submissions/${submissionID}/thank-you`)
+    push(`/sell/submissions/${submissionID}/thank-you`)
   }
 
   useEffect(() => {
-    if (isNewSubmission) return
+    const newStep = STEPS[index]
 
-    push(`/sell2/submissions/${submissionID}/${STEPS[index]}`)
+    if (isNewSubmission || !newStep) return
+
+    push(`/sell/submissions/${submissionID}/${newStep}`)
   }, [push, index, isNewSubmission, submissionID])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
@@ -143,7 +145,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       logger.error("Error creating submission.", err)
       sendToast({
         variant: "error",
-        message: err?.[0]?.message || "Something went wrong.",
+        message: "Something went wrong." + ` ${err?.[0]?.message} || ""`,
       })
       throw err
     })
@@ -167,7 +169,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       logger.error("Error updating submission.", err)
       sendToast({
         variant: "error",
-        message: err?.[0]?.message || "Something went wrong.",
+        message: "Something went wrong." + ` ${err?.[0]?.message || ""}`,
       })
       throw err
     })

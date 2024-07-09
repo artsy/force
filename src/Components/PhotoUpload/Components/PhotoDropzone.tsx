@@ -118,32 +118,45 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
 
   return (
     <>
-      <Box {...rest} data-test-id="image-dropzone" {...getRootProps()}>
-        <input data-testid="image-dropzone-input" {...getInputProps()} />
+      <Media greaterThan="xs">
+        <Box {...rest} data-test-id="image-dropzone" {...getRootProps()}>
+          <input data-testid="image-dropzone-input" {...getInputProps()} />
 
-        <Media greaterThan="xs">
           <Text variant="lg-display">Drag and drop photos here</Text>
-        </Media>
-        <Media at="xs">
-          <Text variant="lg-display">Add photos here</Text>
-        </Media>
+          <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
+            Files Supported: JPG, PNG, HEIC <br />
+            Total maximum size: {maxTotalSize} MB
+          </Text>
+          <Button
+            ref={buttonRef}
+            width={["100%", "auto"]}
+            type="button"
+            mt={[2, 2]}
+            variant="secondaryBlack"
+            onClick={open}
+          >
+            Or Add Photos
+          </Button>
+        </Box>
+      </Media>
 
-        <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
-          Files Supported: JPG, PNG, HEIC <br />
-          Total maximum size: {maxTotalSize} MB
-        </Text>
+      <Media at="xs">
+        <input data-testid="image-dropzone-input" {...getInputProps()} />
 
         <Button
           ref={buttonRef}
           width={["100%", "auto"]}
           type="button"
-          mt={[2, 2]}
           variant="secondaryBlack"
           onClick={open}
         >
-          Or Add Photos
+          Add Photos
         </Button>
-      </Box>
+        <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
+          Files Supported: JPG, PNG, HEIC <br />
+          Total maximum size: {maxTotalSize} MB
+        </Text>
+      </Media>
     </>
   )
 }

@@ -25,6 +25,8 @@ import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFi
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Join, Spacer } from "@artsy/palette"
+import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface CollectionArtworksFilterProps {
   relay: RelayRefetchProp
@@ -42,6 +44,8 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
   const { pathname } = usePathnameComplete()
   const { userPreferences } = useSystemContext()
 
+  const isAvailabilityFilterEnabled = useFeatureFlag("onyx_availability-filter")
+
   const Filters = (
     <Join separator={<Spacer y={4} />}>
       {!isArtistCollection && <ArtistsFilter expanded />}
@@ -49,6 +53,7 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
       <MediumFilter expanded />
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
+      {isAvailabilityFilterEnabled && <AvailabilityFilter expanded />}
       <WaysToBuyFilter expanded />
       <MaterialsFilter expanded />
       {!isArtistCollection && <ArtistNationalityFilter expanded />}

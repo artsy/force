@@ -1,12 +1,5 @@
 import CloseFillIcon from "@artsy/icons/CloseFillIcon"
-import {
-  Box,
-  Clickable,
-  Flex,
-  Image,
-  ProgressBar,
-  Spinner,
-} from "@artsy/palette"
+import { Box, Clickable, Flex, Image, ProgressBar, Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useRemoveAssetFromConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
 import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
@@ -33,6 +26,9 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   } = useRemoveAssetFromConsignmentSubmission()
   const { setFieldValue, values } = useFormikContext<PhotosFormValues>()
   const [photoSrc, setPhotoSrc] = useState<string>(photo.url || "")
+  const [isProcessing, setIsProcessing] = useState(
+    !!photo.geminiToken && !photoSrc
+  )
 
   useEffect(() => {
     if (photo.externalUrl) {
@@ -77,7 +73,7 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
     setFieldValue("photos", photosToSave)
   }
 
-  const isProcessing = photo.geminiToken && !photoSrc
+  const isLoading = photo.loading && photo.progress
 
   return (
     <Flex
@@ -88,7 +84,7 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
     >
       <Box
         position="relative"
-        backgroundColor="black5"
+        backgroundColor="black10"
         width={IMAGE_SIZES}
         height={IMAGE_SIZES}
       >
@@ -101,13 +97,13 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
               style={{
                 objectFit: "contain",
               }}
-            />
-          </Box>
-        )}
+              onError={() => {
+                if (!photoSrc.startsWith("data:")) return
 
-        {isProcessing && (
-          <Box display="flex" alignItems="center" justifyContent="center">
-            <Spinner size="medium" mt={-0.5} />
+                // HEIC images are not supported by most browsers, so we display a "Processing..." message in case loading the image fails (https://caniuse.com/?search=HEIC).
+                setIsProcessing(true)
+              }}
+            />
           </Box>
         )}
 
@@ -119,7 +115,13 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
           />
         )}
 
-        {photo.loading && photo.progress && (
+        {!!isProcessing && !isLoading && (
+          <Box position="absolute" bottom={0.2} left={0.5}>
+            <Text variant="xs">Processing...</Text>
+          </Box>
+        )}
+
+        {!!isLoading && (
           <Flex
             position="absolute"
             bottom={0}
@@ -154,6 +156,8 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
           right={0.5}
           width="16px"
           height="16px"
+          backgroundColor="white100"
+          borderRadius="50%"
         >
           <CloseFillIcon
             width="16px"

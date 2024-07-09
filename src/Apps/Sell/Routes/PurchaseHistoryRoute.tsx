@@ -49,7 +49,7 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
   }
 
   const initialValues: FormValues = {
-    provenance: submission.provenance || "",
+    provenance: submission.provenance ?? "",
     signature: submission.signature ?? null,
   }
 
@@ -74,6 +74,7 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
               selected={values.provenance}
               onChange={handleChange}
               data-testid="provenance-input"
+              pt={1}
             />
 
             <Join separator={<Spacer y={2} />}>
@@ -106,6 +107,7 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
               </GridColumns>
             </Join>
           </Join>
+
           <DevDebug />
         </SubmissionLayout>
       )}

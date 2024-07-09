@@ -12,6 +12,7 @@ import {
   mediumAggregation,
   partnerAggregation,
 } from "Apps/__tests__/Fixtures/aggregations"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
@@ -24,6 +25,9 @@ jest.mock("System/Hooks/useRouter", () => ({
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
+}))
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => false),
 }))
 
 const { getWrapper } = setupTestWrapper<TagArtworkFilter_Query>({
@@ -44,6 +48,7 @@ const { getWrapper } = setupTestWrapper<TagArtworkFilter_Query>({
 
 describe("TagArtworkFilter", () => {
   const trackEvent = jest.fn()
+  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -51,6 +56,7 @@ describe("TagArtworkFilter", () => {
         trackEvent,
       }
     })
+    mockUseFeatureFlag.mockImplementation(() => true)
   })
 
   it("renders correctly", () => {
@@ -99,6 +105,10 @@ describe("TagArtworkFilter", () => {
       },
       {
         label: "Size",
+        expanded: true,
+      },
+      {
+        label: "Availability",
         expanded: true,
       },
       {

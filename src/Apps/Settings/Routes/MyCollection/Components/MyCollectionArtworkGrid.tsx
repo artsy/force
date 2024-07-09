@@ -64,7 +64,7 @@ export const MyCollectionArtworkGrid = createFragmentContainer(
             image(includeAll: true) {
               aspectRatio
             }
-            artist {
+            artist(shallow: true) {
               targetSupply {
                 priority
               }

@@ -105,7 +105,7 @@ const ArtistNotEligibleRoute = loadable(
 
 export const sellRoutes: RouteProps[] = [
   {
-    path: "/sell2",
+    path: "/sell",
     children: [
       {
         path: "intro",

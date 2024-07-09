@@ -100,7 +100,7 @@ describe("DetailsRoute", () => {
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/details'
+        '/sell/submissions/<mock-value-for-field-"externalId">/details'
       )
 
       expect(submitMutation).toHaveBeenCalledWith(
@@ -127,7 +127,7 @@ describe("DetailsRoute", () => {
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/photos'
+        '/sell/submissions/<mock-value-for-field-"externalId">/photos'
       )
 
       expect(submitMutation).toHaveBeenCalledWith(
