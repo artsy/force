@@ -117,6 +117,16 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
 
       if (currentArtwork) {
         if (action === "Like") {
+          fetch("/api/advisor/8/artworks/likes", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: me.internalID,
+              artworkId: currentArtwork.internalID,
+            }),
+          })
           submitSave({
             variables: {
               input: {
@@ -169,6 +179,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
       submitSave,
       trackEvent,
       submitDislike,
+      me.internalID,
     ]
   )
 
@@ -307,6 +318,7 @@ export const ArtQuizArtworksFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtQuizArtworks_me on Me {
         id
+        internalID
         quiz {
           quizArtworkConnection(first: 16) {
             edges {

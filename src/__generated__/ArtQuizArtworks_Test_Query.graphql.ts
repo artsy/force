@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c0c1058f231df103f4aa023869d1b50>>
+ * @generated SignedSource<<bc5f059b679858040090b259c7a3c6e9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,14 +29,21 @@ var v0 = {
   "name": "id",
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -46,25 +53,25 @@ v2 = [
   },
   (v0/*: any*/)
 ],
-v3 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v4 = {
+v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Int"
 },
-v6 = {
+v7 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -112,6 +119,7 @@ return {
         "plural": false,
         "selections": [
           (v0/*: any*/),
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -187,22 +195,22 @@ return {
                           },
                           {
                             "alias": null,
-                            "args": (v1/*: any*/),
+                            "args": (v2/*: any*/),
                             "concreteType": "Artist",
                             "kind": "LinkedField",
                             "name": "artists",
                             "plural": true,
-                            "selections": (v2/*: any*/),
+                            "selections": (v3/*: any*/),
                             "storageKey": "artists(shallow:true)"
                           },
                           {
                             "alias": null,
-                            "args": (v1/*: any*/),
+                            "args": (v2/*: any*/),
                             "concreteType": "Partner",
                             "kind": "LinkedField",
                             "name": "partner",
                             "plural": false,
-                            "selections": (v2/*: any*/),
+                            "selections": (v3/*: any*/),
                             "storageKey": "partner(shallow:true)"
                           },
                           {
@@ -276,13 +284,7 @@ return {
                             ],
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "internalID",
-                            "storageKey": null
-                          },
+                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -324,7 +326,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "856c2b79b889594d0fc32d3da48b5743",
+    "cacheID": "5db90d2932079513fa37693a19c07559",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -334,14 +336,15 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v3/*: any*/),
+        "me.id": (v4/*: any*/),
+        "me.internalID": (v4/*: any*/),
         "me.quiz": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Quiz"
         },
-        "me.quiz.id": (v3/*: any*/),
+        "me.quiz.id": (v4/*: any*/),
         "me.quiz.quizArtworkConnection": {
           "enumValues": null,
           "nullable": true,
@@ -354,7 +357,7 @@ return {
           "plural": true,
           "type": "QuizArtworkEdge"
         },
-        "me.quiz.quizArtworkConnection.edges.interactedAt": (v4/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.interactedAt": (v5/*: any*/),
         "me.quiz.quizArtworkConnection.edges.node": {
           "enumValues": null,
           "nullable": true,
@@ -367,17 +370,17 @@ return {
           "plural": true,
           "type": "Artist"
         },
-        "me.quiz.quizArtworkConnection.edges.node.artists.id": (v3/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.artists.name": (v4/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.culturalMaker": (v4/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.date": (v4/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.artists.id": (v4/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.artists.name": (v5/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.culturalMaker": (v5/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.date": (v5/*: any*/),
         "me.quiz.quizArtworkConnection.edges.node.dominantColors": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "String"
         },
-        "me.quiz.quizArtworkConnection.edges.node.id": (v3/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.id": (v4/*: any*/),
         "me.quiz.quizArtworkConnection.edges.node.image": {
           "enumValues": null,
           "nullable": true,
@@ -390,11 +393,11 @@ return {
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "me.quiz.quizArtworkConnection.edges.node.image.resized.height": (v5/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.image.resized.src": (v6/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.image.resized.srcSet": (v6/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.image.resized.width": (v5/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.internalID": (v3/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.height": (v6/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.src": (v7/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.srcSet": (v7/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.width": (v6/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.internalID": (v4/*: any*/),
         "me.quiz.quizArtworkConnection.edges.node.isDisliked": {
           "enumValues": null,
           "nullable": false,
@@ -413,15 +416,15 @@ return {
           "plural": false,
           "type": "Partner"
         },
-        "me.quiz.quizArtworkConnection.edges.node.partner.id": (v3/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.partner.name": (v4/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.slug": (v3/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.title": (v4/*: any*/)
+        "me.quiz.quizArtworkConnection.edges.node.partner.id": (v4/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.partner.name": (v5/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.slug": (v4/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.title": (v5/*: any*/)
       }
     },
     "name": "ArtQuizArtworks_Test_Query",
     "operationKind": "query",
-    "text": "query ArtQuizArtworks_Test_Query {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworksCardMetadata_artwork on Artwork {\n  title\n  date\n  dominantColors\n  culturalMaker\n  artists(shallow: true) {\n    name\n    id\n  }\n  partner(shallow: true) {\n    name\n    id\n  }\n}\n\nfragment ArtQuizArtworksCard_artwork on Artwork {\n  ...ArtQuizArtworksCardMetadata_artwork\n  image {\n    resized(width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        node {\n          ...ArtQuizArtworksCard_artwork\n          internalID\n          slug\n          isDisliked\n          isSaved\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtQuizArtworks_Test_Query {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworksCardMetadata_artwork on Artwork {\n  title\n  date\n  dominantColors\n  culturalMaker\n  artists(shallow: true) {\n    name\n    id\n  }\n  partner(shallow: true) {\n    name\n    id\n  }\n}\n\nfragment ArtQuizArtworksCard_artwork on Artwork {\n  ...ArtQuizArtworksCardMetadata_artwork\n  image {\n    resized(width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  internalID\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        node {\n          ...ArtQuizArtworksCard_artwork\n          internalID\n          slug\n          isDisliked\n          isSaved\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
