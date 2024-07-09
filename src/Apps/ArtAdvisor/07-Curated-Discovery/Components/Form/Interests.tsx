@@ -6,7 +6,6 @@ import { SuggestionPill } from "./SuggestionPill"
 export const INTERESTS = [
   // movements
   "Contemporary Art",
-  "Emerging Art",
   "Post-War Art",
   "Abstract Art",
   "Figurative Art",
