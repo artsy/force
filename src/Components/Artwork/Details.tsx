@@ -209,35 +209,6 @@ export const Details: React.FC<DetailsProps> = ({
 
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
-  // FIXME: Extract into a real component
-  const renderSaveButtonComponent = () => {
-    if (!contextModule) return null
-
-    if (!showSaveButton) {
-      return null
-    }
-
-    if (isFunction(renderSaveButton)) {
-      return renderSaveButton(rest.artwork.internalID)
-    }
-
-    if (!saveOnlyToDefaultList) {
-      return (
-        <SaveArtworkToListsButtonFragmentContainer
-          contextModule={contextModule}
-          artwork={rest.artwork}
-        />
-      )
-    }
-
-    return (
-      <SaveButtonFragmentContainer
-        contextModule={contextModule}
-        artwork={rest.artwork}
-      />
-    )
-  }
-
   return (
     <Box>
       {isAuctionArtwork && (
@@ -266,7 +237,13 @@ export const Details: React.FC<DetailsProps> = ({
         {!hideArtistName && (
           <ArtistLine showSaveButton={showSaveButton} {...rest} />
         )}
-        {renderSaveButtonComponent()}
+        <SaveButton
+          artwork={rest.artwork}
+          showSaveButton={showSaveButton}
+          saveOnlyToDefaultList={saveOnlyToDefaultList}
+          renderSaveButton={renderSaveButton}
+          contextModule={contextModule}
+        />
       </Flex>
 
       <Box position="relative">
@@ -441,5 +418,47 @@ export const DetailsPlaceholder: React.FC<DetailsPlaceholderProps> = ({
 
       {!hideSaleInfo && <SkeletonText variant="xs">Price</SkeletonText>}
     </>
+  )
+}
+
+interface SaveButtonProps {
+  showSaveButton?: boolean
+  saveOnlyToDefaultList?: boolean
+  renderSaveButton?: (artworkId: string) => JSX.Element
+  contextModule?: AuthContextModule
+  artwork: Details_artwork$data
+}
+
+const SaveButton: React.FC<SaveButtonProps> = ({
+  showSaveButton,
+  saveOnlyToDefaultList,
+  renderSaveButton,
+  contextModule,
+  artwork,
+}: SaveButtonProps) => {
+  if (!contextModule) return null
+
+  if (!showSaveButton) {
+    return null
+  }
+
+  if (isFunction(renderSaveButton)) {
+    return renderSaveButton(artwork.internalID)
+  }
+
+  if (!saveOnlyToDefaultList) {
+    return (
+      <SaveArtworkToListsButtonFragmentContainer
+        contextModule={contextModule}
+        artwork={artwork}
+      />
+    )
+  }
+
+  return (
+    <SaveButtonFragmentContainer
+      contextModule={contextModule}
+      artwork={artwork}
+    />
   )
 }
