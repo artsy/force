@@ -1,71 +1,62 @@
-import { graphql, RelayEnvironmentProvider } from "react-relay"
-import { renderHook } from "@testing-library/react-hooks"
-import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { graphql } from "react-relay"
+import { screen } from "@testing-library/react"
 import { useCollectorSignals } from "Utils/Hooks/useCollectorSignals"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag" // Adjust the import path
-import { createOperationDescriptor } from "relay-runtime"
-import useCollectorSignalsArtworksConnectionTestQuery from "__generated__/useCollectorSignalsArtworksConnectionTestQuery.graphql"
-import useCollectorSignalsSingleArtworkTestQuery from "__generated__/useCollectorSignalsSingleArtworkTestQuery.graphql"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
-jest.mock("react-relay", () => {
-  const originalModule = jest.requireActual("react-relay")
-  return {
-    ...originalModule,
-    useFragment: jest.fn((fradmentDefinition, fragmentData) => fragmentData),
-  }
-})
+
 jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
 }))
 const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
-// @ts-expect-error
-const ARTWORKS_CONNECTION_QUERY = graphql`
-  query useCollectorSignalsArtworksConnectionTestQuery {
-    artworksConnection(first: 3) {
-      __typename
-      ...useCollectorSignals_artworksConnection
-    }
-    me {
-      ...useCollectorSignals_me
-    }
-  }
-`
+// We are testing a hook, but because we are using a Relay fragment we must
+// create masked fragments with our mocked environment and resolvers
+const TestApp = props => {
+  const result = useCollectorSignals(props)
+  return <div data-testid="result">{JSON.stringify(result)}</div>
+}
 
-// @ts-expect-error
-const SINGLE_ARTWORK_QUERY = graphql`
-  query useCollectorSignalsSingleArtworkTestQuery {
-    artwork(id: "artwork-id") {
-      ...useCollectorSignals_artwork
-    }
-    me {
-      ...useCollectorSignals_me
-    }
-  }
-`
-let mockEnvironment: ReturnType<typeof createMockEnvironment>
+const getResult = () => JSON.parse(screen.getByTestId("result").textContent!)
 
-const wrapper = ({ children }) => (
-  <RelayEnvironmentProvider environment={mockEnvironment}>
-    {children}
-  </RelayEnvironmentProvider>
-)
+const { renderWithRelay: renderWithArtworksConnection } = setupTestWrapperTL({
+  Component: TestApp,
+  query: graphql`
+    query useCollectorSignalsArtworksConnectionTestQuery {
+      artworksConnection(first: 3) {
+        __typename
+        ...useCollectorSignals_artworksConnection
+      }
+      me {
+        ...useCollectorSignals_me
+      }
+    }
+  `,
+})
+
+const { renderWithRelay: renderWithSingleArtwork } = setupTestWrapperTL({
+  Component: TestApp,
+  query: graphql`
+    query useCollectorSignalsSingleArtworkTestQuery {
+      artwork(id: "artwork-id") {
+        ...useCollectorSignals_artwork
+      }
+      me {
+        ...useCollectorSignals_me
+      }
+    }
+  `,
+})
 
 describe("useCollectorSignals", () => {
   beforeEach(() => {
     mockUseFeatureFlag.mockReturnValue(true)
-    mockEnvironment = createMockEnvironment()
   })
 
-  it("should process signals for multiple artworks", () => {
-    const operationDescriptor = createOperationDescriptor(
-      useCollectorSignalsArtworksConnectionTestQuery,
-      {}
-    )
-    const hookProps = MockPayloadGenerator.generate(operationDescriptor, {
+  it("should process signals for multiple artworks", async () => {
+    await renderWithArtworksConnection({
       FilterArtworksConnection: () => ({
-        __typename: "FilterArtworksConnection",
         edges: [
           {
             node: {
@@ -92,31 +83,20 @@ describe("useCollectorSignals", () => {
       }),
     })
 
-    const { result } = renderHook(
-      () =>
-        useCollectorSignals({
-          artworksConnection: hookProps.data?.artworksConnection,
-          me: hookProps.data?.me,
-        }),
-      { wrapper }
-    )
+    const result = getResult()
 
-    expect(result.current["acquireable-with-partner-offer"]).toEqual({
+    expect(result["acquireable-with-partner-offer"]).toEqual({
       partnerOffer: expect.objectContaining({
         artworkId: "acquireable-with-partner-offer",
         endAt: "2042-01-01",
       }),
     })
-    expect(result.current["not-acquireable"]).toBeUndefined()
-    expect(result.current["no-partner-offer"]).toBeUndefined()
+    expect(result["not-acquireable"]).toBeUndefined()
+    expect(result["no-partner-offer"]).toBeUndefined()
   })
 
-  it("should process signals for a single artwork", () => {
-    const operationDescriptor = createOperationDescriptor(
-      useCollectorSignalsSingleArtworkTestQuery,
-      {}
-    )
-    const hookProps = MockPayloadGenerator.generate(operationDescriptor, {
+  it("should process signals for a single artwork", async () => {
+    await renderWithSingleArtwork({
       Artwork: () => ({
         internalID: "acquireable-with-partner-offer",
         isAcquireable: true,
@@ -135,16 +115,9 @@ describe("useCollectorSignals", () => {
       }),
     })
 
-    const { result } = renderHook(
-      () =>
-        useCollectorSignals({
-          artwork: hookProps.data?.artwork,
-          me: hookProps.data?.me,
-        }),
-      { wrapper }
-    )
+    const result = getResult()
 
-    expect(result.current).toEqual({
+    expect(result).toEqual({
       partnerOffer: expect.objectContaining({
         artworkId: "acquireable-with-partner-offer",
         endAt: "2042-01-01",
