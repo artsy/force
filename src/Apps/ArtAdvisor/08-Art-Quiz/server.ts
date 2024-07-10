@@ -57,6 +57,7 @@ const getQuizResults = async (req: ArtsyRequest, res: ArtsyResponse) => {
 export const router = express.Router()
 
 router.post("/artworks/likes", createArtworkLike)
+router.post("/artworks/dislikes", createArtworkLike)
 router.get("/artworks/quiz_results", getQuizResults)
 router.post("/users", createUser)
 router.get("/users/:id", getUser)
