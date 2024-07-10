@@ -17,6 +17,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCursor } from "use-cursor"
+import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 
 const logger = createLogger("SellFlowContext.tsx")
@@ -198,7 +199,10 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const createSubmission = (values: CreateSubmissionMutationInput) => {
     const response = submitCreateSubmissionMutation({
       variables: {
-        input: values,
+        input: {
+          sessionID: getENV("SESSION_ID"),
+          ...values,
+        },
       },
     })
 
@@ -221,6 +225,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       variables: {
         input: {
           externalId: submission?.externalId,
+          sessionID: getENV("SESSION_ID"),
           ...values,
         } as UpdateSubmissionMutationInput,
       },
