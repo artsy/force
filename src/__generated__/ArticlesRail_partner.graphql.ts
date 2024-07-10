@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d487e52ff65ab8832860b45a8a562e0>>
+ * @generated SignedSource<<e6cf0a06fd206a8c99a0c40550b24954>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -48,6 +48,11 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "first",
           "value": 8
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "PUBLISHED_AT_DESC"
         }
       ],
       "concreteType": "ArticleConnection",
@@ -97,13 +102,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "articlesConnection(first:8)"
+      "storageKey": "articlesConnection(first:8,sort:\"PUBLISHED_AT_DESC\")"
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
 
-(node as any).hash = "09179c23e2649250a136cbb5629b2960";
+(node as any).hash = "fdacedb195b664f0661cb51f000e7c61";
 
 export default node;
