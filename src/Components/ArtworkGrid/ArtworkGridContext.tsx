@@ -1,4 +1,4 @@
-import { useCollectorSignals } from "System/Hooks/useCollectorSignals"
+import { useCollectorSignals } from "Utils/Hooks/useCollectorSignals"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtworkGridContext_artworksConnection$key } from "__generated__/ArtworkGridContext_artworksConnection.graphql"
 import { ArtworkGridContext_me$key } from "__generated__/ArtworkGridContext_me.graphql"

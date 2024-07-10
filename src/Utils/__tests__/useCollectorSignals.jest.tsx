@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks"
-import { useCollectorSignals } from "System/Hooks/useCollectorSignals"
+import { useCollectorSignals } from "Utils/Hooks/useCollectorSignals"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag" // Adjust the import path
 
 jest.mock("System/Hooks/useFeatureFlag", () => ({
