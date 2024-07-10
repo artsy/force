@@ -6,7 +6,6 @@ import { SuggestionPill } from "./SuggestionPill"
 export const INTERESTS = [
   // movements
   "Contemporary Art",
-  "Emerging Art",
   "Post-War Art",
   "Abstract Art",
   "Figurative Art",
@@ -17,20 +16,17 @@ export const INTERESTS = [
   // mediums
   "Painting",
   "Prints",
-  "Works on Paper",
+  "Drawings",
+  "Collage",
   "Photography",
   "Sculpture",
+  "Mixed media",
   "Ceramics",
   "Textile Art",
-  "Design Objects and Furniture",
+  "Design and Decorative Art",
   // artist segments
   "Emerging artists",
-  "Critically acclaimed",
-  "Blue chip",
-  "New & Noteworthy",
-  "Trending Emerging",
-  "Street & urban artists",
-  "Ultra-high demand",
+  "Blue chip artists",
   // passions
   "Social issues",
   "Supporting local galleries",
