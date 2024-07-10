@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95c7ed16fcb649d0ae530c023b7c9cc9>>
+ * @generated SignedSource<<674f10d6393d51098058c3a8fffbe130>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -57,21 +57,22 @@ v3 = {
   "name": "internalID",
   "storageKey": null
 },
-v4 = [
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v5 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v5 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "name",
-    "storageKey": null
-  },
+v6 = [
+  (v4/*: any*/),
   (v2/*: any*/)
 ];
 return {
@@ -151,6 +152,7 @@ return {
         "selections": [
           (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -226,22 +228,22 @@ return {
                           },
                           {
                             "alias": null,
-                            "args": (v4/*: any*/),
+                            "args": (v5/*: any*/),
                             "concreteType": "Artist",
                             "kind": "LinkedField",
                             "name": "artists",
                             "plural": true,
-                            "selections": (v5/*: any*/),
+                            "selections": (v6/*: any*/),
                             "storageKey": "artists(shallow:true)"
                           },
                           {
                             "alias": null,
-                            "args": (v4/*: any*/),
+                            "args": (v5/*: any*/),
                             "concreteType": "Partner",
                             "kind": "LinkedField",
                             "name": "partner",
                             "plural": false,
-                            "selections": (v5/*: any*/),
+                            "selections": (v6/*: any*/),
                             "storageKey": "partner(shallow:true)"
                           },
                           {
@@ -387,12 +389,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7c7e6c6533ce6710f7f25a3b666d5f72",
+    "cacheID": "26bc90e258a8113c550ac32c0e6c2c0f",
     "id": null,
     "metadata": {},
     "name": "artQuizRoutes_ArtworksQuery",
     "operationKind": "query",
-    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        isSaved\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtQuizArtworksCardMetadata_artwork on Artwork {\n  title\n  date\n  dominantColors\n  culturalMaker\n  artists(shallow: true) {\n    name\n    id\n  }\n  partner(shallow: true) {\n    name\n    id\n  }\n}\n\nfragment ArtQuizArtworksCard_artwork on Artwork {\n  ...ArtQuizArtworksCardMetadata_artwork\n  image {\n    resized(width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  internalID\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        node {\n          ...ArtQuizArtworksCard_artwork\n          internalID\n          slug\n          isDisliked\n          isSaved\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        isSaved\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtQuizArtworksCardMetadata_artwork on Artwork {\n  title\n  date\n  dominantColors\n  culturalMaker\n  artists(shallow: true) {\n    name\n    id\n  }\n  partner(shallow: true) {\n    name\n    id\n  }\n}\n\nfragment ArtQuizArtworksCard_artwork on Artwork {\n  ...ArtQuizArtworksCardMetadata_artwork\n  image {\n    resized(width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  internalID\n  name\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        node {\n          ...ArtQuizArtworksCard_artwork\n          internalID\n          slug\n          isDisliked\n          isSaved\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

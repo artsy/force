@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5dda4a99fffaae5e1c27e055cf62a3bc>>
+ * @generated SignedSource<<68abc9154abc5e7710012c026c49502a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtQuizArtworks_me$data = {
   readonly id: string;
   readonly internalID: string;
+  readonly name: string | null | undefined;
   readonly quiz: {
     readonly quizArtworkConnection: {
       readonly edges: ReadonlyArray<{
@@ -56,6 +57,13 @@ return {
       "storageKey": null
     },
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -146,6 +154,6 @@ return {
 };
 })();
 
-(node as any).hash = "946cb592b4612be87ba773c6febebea5";
+(node as any).hash = "21dec1b25314e8a14cbccbc9c11d6629";
 
 export default node;

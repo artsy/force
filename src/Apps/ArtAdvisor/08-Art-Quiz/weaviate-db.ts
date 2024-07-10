@@ -109,15 +109,12 @@ export class WeaviateDB {
   }: {
     userInternalID: MongoID
     artworkInternalID: MongoID
-    reaction: "like"
+    reaction: "like" | "dislike"
   }) {
     // error if user doesn't exist in weaviate
 
-    let user = await this.getUser({ internalID: userInternalID })
-    if (!user) {
-      await this.createUser({ internalID: userInternalID })
-      user = await this.getUser({ internalID: userInternalID })
-    }
+    const user = await this.getUser({ internalID: userInternalID })
+    if (!user) throw new Error("[WeaviateDB] user not found")
 
     // bail if user already liked artwork
 
@@ -168,6 +165,7 @@ export class WeaviateDB {
       userId,
       limit,
     })
+
     const user = await this.getUser({ internalID: userId })
 
     if (!user) throw new Error("[WeaviateDB] user not found")
@@ -189,14 +187,19 @@ export class WeaviateDB {
 
     const response = await query.do()
 
-    let filteredResponse = response.data.Get[this.artworkClass]
+    let artworks = response.data.Get[this.artworkClass]
 
-    const result = filteredResponse.map(artwork => {
-      const properties = _.pick(artwork, ["internalID"])
+    const filteredArtworks = artworks.filter(
+      (artwork: ArtQuizArtwork) =>
+        !user.likedArtworkIds?.includes(artwork.internalID) &&
+        !user.dislikedArtworkIds?.includes(artwork.internalID)
+    )
 
+    const result = filteredArtworks.map(artwork => {
+      console.log("[WeaviateDB] getNearObjectArtworks", artwork)
       return {
         id: artwork._additional.id,
-        ...properties,
+        internalID: artwork.internalID,
         distance: artwork._additional.distance,
       }
     })
