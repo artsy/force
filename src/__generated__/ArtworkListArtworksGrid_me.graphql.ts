@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bffd965877589440f076fd6827333436>>
+ * @generated SignedSource<<4310431b8bfa01077f347c79e76b3949>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,11 +24,11 @@ export type ArtworkListArtworksGrid_me$data = {
       readonly pageInfo: {
         readonly hasNextPage: boolean;
       };
-      readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
+      readonly " $fragmentSpreads": FragmentRefs<"ArtworkGridContext_artworksConnection" | "ArtworkGrid_artworks">;
     } | null | undefined;
     readonly internalID: string;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListEmptyState_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkGridContext_me" | "ArtworkListEmptyState_me">;
   readonly " $fragmentType": "ArtworkListArtworksGrid_me";
 };
 export type ArtworkListArtworksGrid_me$key = {
@@ -170,6 +170,11 @@ const node: ReaderFragment = {
               "args": null,
               "kind": "FragmentSpread",
               "name": "ArtworkGrid_artworks"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "ArtworkGridContext_artworksConnection"
             }
           ],
           "storageKey": null
@@ -187,12 +192,17 @@ const node: ReaderFragment = {
       ],
       "kind": "FragmentSpread",
       "name": "ArtworkListEmptyState_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkGridContext_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "470207e2f9af102fa62e10d232191f50";
+(node as any).hash = "e55b98ddeae2bf426dada430a4521493";
 
 export default node;
