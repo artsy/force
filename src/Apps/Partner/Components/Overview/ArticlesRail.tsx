@@ -51,7 +51,7 @@ export const ArticlesRailFragmentContainer = createFragmentContainer(
     partner: graphql`
       fragment ArticlesRail_partner on Partner {
         slug
-        articlesConnection(first: 8) {
+        articlesConnection(first: 8, sort: PUBLISHED_AT_DESC) {
           totalCount
           edges {
             node {
