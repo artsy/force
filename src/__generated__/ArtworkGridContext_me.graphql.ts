@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b424127c456949e407f8e05b4c08a4c0>>
+ * @generated SignedSource<<e520d3902567dfa212bb157e09b3074a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkGridContext_me$data = {
-  readonly partnerOffersConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly artworkId: string | null | undefined;
-        readonly endAt: string | null | undefined;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"useCollectorSignals_me">;
   readonly " $fragmentType": "ArtworkGridContext_me";
 };
 export type ArtworkGridContext_me$key = {
@@ -33,63 +26,15 @@ const node: ReaderFragment = {
   "name": "ArtworkGridContext_me",
   "selections": [
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 100
-        }
-      ],
-      "concreteType": "PartnerOfferToCollectorConnection",
-      "kind": "LinkedField",
-      "name": "partnerOffersConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PartnerOfferToCollectorEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "PartnerOfferToCollector",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "artworkId",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "endAt",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "partnerOffersConnection(first:100)"
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCollectorSignals_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "d9b84034d3df8dd6a0ad9d058aa8eed3";
+(node as any).hash = "4011d6a2236947ab11d3dcd1c445d4fe";
 
 export default node;

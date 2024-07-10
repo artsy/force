@@ -1,5 +1,4 @@
 import { useCollectorSignals } from "Utils/Hooks/useCollectorSignals"
-import { extractNodes } from "Utils/extractNodes"
 import { ArtworkGridContext_artworksConnection$key } from "__generated__/ArtworkGridContext_artworksConnection.graphql"
 import { ArtworkGridContext_me$key } from "__generated__/ArtworkGridContext_me.graphql"
 import { createContext, useContext } from "react"
@@ -30,8 +29,8 @@ const ArtworkGridContext = createContext<ArtworkGridContextProps>({
 })
 
 type ArtworkGridContextProviderProps = {
-  artworksConnection?: ArtworkGridContext_artworksConnection$key | null
-  me?: ArtworkGridContext_me$key | null
+  artworksConnection?: ArtworkGridContext_artworksConnection$key
+  me?: ArtworkGridContext_me$key
 } & Omit<ArtworkGridContextProps, "collectorSignals">
 
 export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProviderProps> = ({
@@ -40,15 +39,15 @@ export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProviderProp
   children,
   ...rest
 }) => {
-  const artworksData = useFragment(
+  const artworksConnectionData = useFragment(
     ARTWORKS_CONNECTION_FRAGMENT,
     artworksConnection
   )
   const meData = useFragment(ME_FRAGMENT, me)
 
   const collectorSignals = useCollectorSignals({
-    artworks: extractNodes(artworksData),
-    partnerOffers: extractNodes(meData?.partnerOffersConnection),
+    artworksConnection: artworksConnectionData,
+    me: meData,
   })
 
   return (
@@ -79,23 +78,11 @@ export const withArtworkGridContext = <T,>(
 
 const ARTWORKS_CONNECTION_FRAGMENT = graphql`
   fragment ArtworkGridContext_artworksConnection on ArtworkConnectionInterface {
-    edges {
-      node {
-        internalID
-        isAcquireable
-      }
-    }
+    ...useCollectorSignals_artworksConnection
   }
 `
 const ME_FRAGMENT = graphql`
   fragment ArtworkGridContext_me on Me {
-    partnerOffersConnection(first: 100) {
-      edges {
-        node {
-          artworkId
-          endAt
-        }
-      }
-    }
+    ...useCollectorSignals_me
   }
 `
