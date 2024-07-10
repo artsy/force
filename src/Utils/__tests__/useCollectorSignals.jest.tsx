@@ -25,7 +25,6 @@ const { renderWithRelay: renderWithArtworksConnection } = setupTestWrapperTL({
   query: graphql`
     query useCollectorSignalsArtworksConnectionTestQuery {
       artworksConnection(first: 3) {
-        __typename
         ...useCollectorSignals_artworksConnection
       }
       me {

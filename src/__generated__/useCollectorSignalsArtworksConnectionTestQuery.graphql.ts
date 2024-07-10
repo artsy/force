@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d889285203b629758dacc578f2304e1d>>
+ * @generated SignedSource<<08aca8520caa427475cd9fba2d0d40ab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,6 @@ import { FragmentRefs } from "relay-runtime";
 export type useCollectorSignalsArtworksConnectionTestQuery$variables = Record<PropertyKey, never>;
 export type useCollectorSignalsArtworksConnectionTestQuery$data = {
   readonly artworksConnection: {
-    readonly __typename: "FilterArtworksConnection";
     readonly " $fragmentSpreads": FragmentRefs<"useCollectorSignals_artworksConnection">;
   } | null | undefined;
   readonly me: {
@@ -37,13 +36,6 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -62,7 +54,6 @@ return {
         "name": "artworksConnection",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -105,7 +96,6 @@ return {
         "name": "artworksConnection",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -117,7 +107,13 @@ return {
                 "name": "edges",
                 "plural": true,
                 "selections": [
-                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "__typename",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -140,14 +136,14 @@ return {
                         "name": "isAcquireable",
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   },
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
@@ -159,7 +155,7 @@ return {
             "type": "ArtworkConnectionInterface",
             "abstractKey": "__isArtworkConnectionInterface"
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "artworksConnection(first:3)"
       },
@@ -215,7 +211,7 @@ return {
                         "name": "endAt",
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -225,23 +221,23 @@ return {
             ],
             "storageKey": "partnerOffersConnection(first:100)"
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "88872f427ec65b040e779efbecd1415a",
+    "cacheID": "eb6b6dd35ec13d4e747e1afe5e3e1fb8",
     "id": null,
     "metadata": {},
     "name": "useCollectorSignalsArtworksConnectionTestQuery",
     "operationKind": "query",
-    "text": "query useCollectorSignalsArtworksConnectionTestQuery {\n  artworksConnection(first: 3) {\n    __typename\n    ...useCollectorSignals_artworksConnection\n    id\n  }\n  me {\n    ...useCollectorSignals_me\n    id\n  }\n}\n\nfragment useCollectorSignals_artworksConnection on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      internalID\n      isAcquireable\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment useCollectorSignals_me on Me {\n  partnerOffersConnection(first: 100) {\n    edges {\n      node {\n        artworkId\n        endAt\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query useCollectorSignalsArtworksConnectionTestQuery {\n  artworksConnection(first: 3) {\n    ...useCollectorSignals_artworksConnection\n    id\n  }\n  me {\n    ...useCollectorSignals_me\n    id\n  }\n}\n\nfragment useCollectorSignals_artworksConnection on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      internalID\n      isAcquireable\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment useCollectorSignals_me on Me {\n  partnerOffersConnection(first: 100) {\n    edges {\n      node {\n        artworkId\n        endAt\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4a6cc0257397c235b6f056f06c18f554";
+(node as any).hash = "3d5d353f23c8398a19099ecf60c3afa9";
 
 export default node;
