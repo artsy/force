@@ -319,6 +319,14 @@ describe.skip("Shipping", () => {
     `,
   })
 
+  describe("initial load with order data", () => {
+    it.todo("loads with saved shipping fulfillment and no saved addresses")
+    it.todo(
+      "loads with saved shipping fulfillment and matching saved addresses"
+    )
+    it.todo("loads with saved pickup fulfillment")
+  })
+
   describe("with partner shipping", () => {
     describe("with no saved address", () => {
       it("shows an active offer stepper if it's an offer order", async () => {
@@ -2289,8 +2297,8 @@ describe.skip("Shipping", () => {
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
 
-      const phoneNumber = screen.getByPlaceholderText(
-        "Add phone number including country code"
+      const phoneNumber = await screen.findByTestId(
+        "AddressForm_pickupPhoneNumber"
       )
       // TODO: need a better way to check the input is displayed/expanded (height > 0)
       expect(phoneNumber).toHaveAttribute("tabindex", "0")

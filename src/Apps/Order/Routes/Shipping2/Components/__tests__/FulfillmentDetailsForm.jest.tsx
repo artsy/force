@@ -159,8 +159,8 @@ describe("FulfillmentDetailsForm", () => {
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
 
-      const phoneNumberField = await screen.findByPlaceholderText(
-        "Add phone number including country code"
+      const phoneNumberField = await screen.findByTestId(
+        "AddressForm_pickupPhoneNumber"
       )
 
       expect(phoneNumberField).toBeVisible()
@@ -210,8 +210,8 @@ describe("FulfillmentDetailsForm", () => {
       await userEvent.click(
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
-      const phoneNumberField = await screen.findByPlaceholderText(
-        "Add phone number including country code"
+      const phoneNumberField = await screen.findByTestId(
+        "AddressForm_pickupPhoneNumber"
       )
 
       await userEvent.type(phoneNumberField, "1234567890")
@@ -260,6 +260,10 @@ describe("FulfillmentDetailsForm", () => {
         expect(screen.getByPlaceholderText("City")).toBeVisible()
       })
     })
+
+    it.todo(
+      "user can select shipping if pickup fulfillment is already saved to order"
+    )
   })
 
   describe("Pickup not available", () => {

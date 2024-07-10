@@ -10,7 +10,7 @@ import {
   FulfillmentValues,
   ShipValues,
   addressWithFallbackValues,
-  getDefaultUserAddress,
+  getInitialShippingValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { FulfillmentDetailsForm_me$key } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import createLogger from "Utils/logger"
@@ -83,7 +83,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
   /*
    * Re-save fulfillment details on load if they are already saved
-   * and shipping quotes need refreshing for new address mode only
+   * and shipping quotes need refreshing for new address mode only ?? Is this correct?
    */
   useEffect(() => {
     const existingFulfillmentDetails =
@@ -319,40 +319,9 @@ const getInitialValues = (
 
   const savedAddresses = meData.addressList
 
-  // The default ship-to address should be the first one that
-  // can be shipped-to, preferring the default
-
-  const defaultUserAddress = getDefaultUserAddress(
+  return getInitialShippingValues(
     savedAddresses,
+    orderData.shipsFrom,
     orderData.availableShippingCountries
   )
-
-  if (defaultUserAddress) {
-    return {
-      fulfillmentType: FulfillmentType.SHIP,
-      attributes: addressWithFallbackValues(defaultUserAddress),
-      meta: {
-        saveAddress: false,
-        addressVerifiedBy: null,
-      },
-    }
-  }
-
-  // The user doesn't have a valid ship-to address, so we'll return empty values.
-  // TODO: This doesn't account for matching the saved address id
-  // (that is still in parsedOrderData). In addition the initial values
-  // are less relevant if the user has saved addresses - Setting country
-  // doesn't matter.
-  const initialFulfillmentValues: ShipValues["attributes"] = addressWithFallbackValues(
-    { country: orderData.shipsFrom }
-  )
-
-  return {
-    fulfillmentType: FulfillmentType.SHIP,
-    attributes: initialFulfillmentValues,
-    meta: {
-      addressVerifiedBy: null,
-      saveAddress: true,
-    },
-  }
 }
