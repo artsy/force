@@ -84,7 +84,10 @@ describe("SubmissionLayout", () => {
     it("renders the 'Save & Exit'button'", async () => {
       render(
         <Formik<{}> initialValues={{}} onSubmit={onSubmitMock}>
-          <SellFlowContextProvider submissionID="123">
+          <SellFlowContextProvider
+            submissionID="123"
+            internalSubmissionID="123"
+          >
             <SubmissionLayout />
           </SellFlowContextProvider>
         </Formik>
@@ -119,7 +122,10 @@ describe("SubmissionLayout", () => {
     it("renders the 'Back' button", () => {
       render(
         <Formik<{}> initialValues={{}} onSubmit={onSubmitMock}>
-          <SellFlowContextProvider submissionID="123">
+          <SellFlowContextProvider
+            submissionID="123"
+            internalSubmissionID="123"
+          >
             <SubmissionLayout />
           </SellFlowContextProvider>
         </Formik>

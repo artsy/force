@@ -99,7 +99,7 @@ describe("PhoneNumberRoute", () => {
           context_module: "sell",
           context_owner_type: "submitArtworkStepAddPhoneNumber",
           fieldsProvided: [],
-          submission_id: '<mock-value-for-field-"externalId">',
+          submission_id: '<mock-value-for-field-"internalID">',
         })
 
         expect(submitMutation).toHaveBeenCalledWith(
