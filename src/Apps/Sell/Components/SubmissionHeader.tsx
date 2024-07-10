@@ -23,9 +23,8 @@ export const SubmissionHeader: React.FC = () => {
   const { trackTappedSubmissionSaveExit } = useSubmissionTracking()
   const context = useSellFlowContext()
   const formik = useFormikContext()
-  const isLastStep = context?.state?.isLastStep
-  const submissionID = context?.state?.submissionID
-  const step = context?.state?.step
+  const { isLastStep, submissionID, internalSubmissionID, step } =
+    context?.state || {}
 
   const handleSaveAndExit = async () => {
     if (!submissionID) return
@@ -41,7 +40,7 @@ export const SubmissionHeader: React.FC = () => {
     // Save the submission and current step to local storage
     storePreviousSubmission(submissionID, step)
 
-    trackTappedSubmissionSaveExit(submissionID, step)
+    trackTappedSubmissionSaveExit(internalSubmissionID, step)
 
     setIsSubmitting(false)
 

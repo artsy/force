@@ -49,7 +49,8 @@ interface State {
   index: number
   step: SellFlowStep
   nextStep: SellFlowStep
-  submissionID: string | undefined
+  submissionID?: string
+  internalSubmissionID: string | undefined | null
   devMode: boolean
   // loading is used to show a loading spinner on the bottom form navigation
   // when images are being uploaded
@@ -67,12 +68,14 @@ export const SellFlowContext = createContext<SellFlowContextProps>({
 interface SellFlowContextProviderProps {
   children: React.ReactNode
   submissionID?: string
+  internalSubmissionID?: string | null
   devMode?: boolean
 }
 
 export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = ({
   children,
   submissionID,
+  internalSubmissionID,
   devMode = false,
 }) => {
   const {
@@ -110,13 +113,13 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   }
 
   const goToPreviousStep = () => {
-    trackTappedSubmissionBack(submissionID, state.step)
+    trackTappedSubmissionBack(internalSubmissionID, state.step)
 
     handlePrev()
   }
 
   const finishFlow = async () => {
-    trackConsignmentSubmitted(submissionID, state.step)
+    trackConsignmentSubmitted(internalSubmissionID, state.step)
 
     // When the user clicks on "Submit Artwork" and the Sell flow is finished, we set the state to "SUBMITTED".
     await updateSubmission({
@@ -194,6 +197,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     step: STEPS[index],
     nextStep: STEPS[index + 1],
     submissionID,
+    internalSubmissionID,
     devMode,
     loading,
   }

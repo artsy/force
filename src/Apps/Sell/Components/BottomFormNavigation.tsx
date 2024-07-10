@@ -34,13 +34,13 @@ const BottomFormBackButton = () => {
   const { submitForm } = useFormikContext()
   const {
     actions,
-    state: { loading, isFirstStep, submissionID, step },
+    state: { loading, isFirstStep, internalSubmissionID, step },
   } = useSellFlowContext()
 
   const onBack = async () => {
     setIsSubmitting(true)
 
-    trackTappedSubmissionBack(submissionID, step)
+    trackTappedSubmissionBack(internalSubmissionID, step)
 
     try {
       await submitForm()
@@ -82,7 +82,7 @@ const BottomFormNextButton = () => {
 
   const {
     actions,
-    state: { submissionID, isSubmitStep, nextStep },
+    state: { internalSubmissionID, isSubmitStep, nextStep },
   } = useSellFlowContext()
 
   const onNext = async () => {
@@ -105,7 +105,7 @@ const BottomFormNextButton = () => {
 
     setIsSubmitting(true)
 
-    trackTappedContinueSubmission(submissionID, nextStep)
+    trackTappedContinueSubmission(internalSubmissionID, nextStep)
 
     try {
       await submitForm()
