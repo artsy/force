@@ -189,4 +189,55 @@ describe("DimensionsRoute", () => {
       })
     })
   })
+
+  describe("navigation", () => {
+    describe("in DRAFT state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/phone-number'
+          )
+        })
+      })
+
+      it("navigates to the previous step when the Back button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+          )
+        })
+      })
+    })
+
+    describe("in APPROVED state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/phone-number'
+          )
+        })
+      })
+    })
+  })
 })

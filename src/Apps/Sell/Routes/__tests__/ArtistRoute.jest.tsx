@@ -19,6 +19,9 @@ jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
   fetchQuery: jest.fn(),
 }))
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
 
 let pathnameMock: string
 

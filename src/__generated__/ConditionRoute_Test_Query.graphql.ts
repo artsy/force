@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<447fbd6c940fa7df8ba3f2019ed4a255>>
+ * @generated SignedSource<<58ab811e87812db704769d0803458362>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
-export type TitleRoute_Test_Query$variables = Record<PropertyKey, never>;
-export type TitleRoute_Test_Query$data = {
+export type ConditionRoute_Test_Query$variables = Record<PropertyKey, never>;
+export type ConditionRoute_Test_Query$data = {
   readonly submission: {
-    readonly " $fragmentSpreads": FragmentRefs<"SubmissionRoute_submission" | "TitleRoute_submission">;
+    readonly " $fragmentSpreads": FragmentRefs<"ConditionRoute_submission" | "SubmissionRoute_submission">;
   } | null | undefined;
 };
-export type TitleRoute_Test_Query$rawResponse = {
+export type ConditionRoute_Test_Query$rawResponse = {
   readonly submission: {
     readonly artist: {
       readonly counts: {
@@ -44,14 +44,20 @@ export type TitleRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly myCollectionArtwork: {
+      readonly condition: {
+        readonly value: string | null | undefined;
+      } | null | undefined;
+      readonly id: string;
+    } | null | undefined;
     readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
     readonly title: string | null | undefined;
   } | null | undefined;
 };
-export type TitleRoute_Test_Query = {
-  rawResponse: TitleRoute_Test_Query$rawResponse;
-  response: TitleRoute_Test_Query$data;
-  variables: TitleRoute_Test_Query$variables;
+export type ConditionRoute_Test_Query = {
+  rawResponse: ConditionRoute_Test_Query$rawResponse;
+  response: ConditionRoute_Test_Query$data;
+  variables: ConditionRoute_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -66,14 +72,14 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "id",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 };
 return {
@@ -81,7 +87,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "TitleRoute_Test_Query",
+    "name": "ConditionRoute_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -94,7 +100,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "TitleRoute_submission"
+            "name": "ConditionRoute_submission"
           },
           {
             "args": null,
@@ -112,7 +118,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "TitleRoute_Test_Query",
+    "name": "ConditionRoute_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -132,12 +138,42 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Artwork",
+            "kind": "LinkedField",
+            "name": "myCollectionArtwork",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtworkCondition",
+                "kind": "LinkedField",
+                "name": "condition",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "value",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artist",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -253,15 +289,15 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v1/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
-          (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -276,23 +312,23 @@ return {
             "name": "state",
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "submission(id:\"submission-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "f58b003b179d0f4280f548ad2a1432af",
+    "cacheID": "379a8d19e36fe69af67d27946682762d",
     "id": null,
     "metadata": {},
-    "name": "TitleRoute_Test_Query",
+    "name": "ConditionRoute_Test_Query",
     "operationKind": "query",
-    "text": "query TitleRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...TitleRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n\nfragment TitleRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n"
+    "text": "query ConditionRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ConditionRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  title\n  myCollectionArtwork {\n    condition {\n      value\n    }\n    id\n  }\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();
 
-(node as any).hash = "02ca660f920490aaf1810b09ed05bf54";
+(node as any).hash = "62410c32853ac737f0f25b4a0378cef2";
 
 export default node;

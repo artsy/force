@@ -1,19 +1,23 @@
 import { useToasts } from "@artsy/palette"
-import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import {
+  ConsignmentSubmissionStateAggregation,
+  CreateSubmissionMutationInput,
+} from "__generated__/CreateConsignSubmissionMutation.graphql"
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useMemo, useState } from "react"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCursor } from "use-cursor"
 import createLogger from "Utils/logger"
 
 const logger = createLogger("SellFlowContext.tsx")
 
-export const STEPS = [
+const BASIC_STEPS = [
   "artist",
   "title",
   "photos",
@@ -21,13 +25,29 @@ export const STEPS = [
   "purchase-history",
   "dimensions",
   "phone-number",
-  "thank-you",
-] as const
+]
 
-export const INITIAL_STEP: SellFlowStep = "artist"
-const SUBMIT_STEP: SellFlowStep = "phone-number"
+const POST_APPROVAL_STEPS = [
+  "shipping-location",
+  "frame",
+  "additional-documents",
+  "condition",
+]
 
-export type SellFlowStep = typeof STEPS[number]
+const THANK_YOU_STEP = "thank-you"
+
+export const ALL_STEPS = [
+  ...BASIC_STEPS,
+  ...POST_APPROVAL_STEPS,
+  THANK_YOU_STEP,
+]
+
+export const INITIAL_STEP: SellFlowStep = BASIC_STEPS[0]
+export const INITIAL_POST_APPROVAL_STEP: SellFlowStep = POST_APPROVAL_STEPS[0]
+export type SellFlowStep =
+  | typeof BASIC_STEPS[number]
+  | typeof POST_APPROVAL_STEPS[number]
+  | typeof THANK_YOU_STEP
 
 interface Actions {
   goToPreviousStep: () => void
@@ -45,19 +65,20 @@ interface Actions {
 type Submission = {
   externalId: string
   internalID: string | null | undefined
+  state: ConsignmentSubmissionStateAggregation | null | undefined
 }
 
 interface State {
   isFirstStep: boolean
   isLastStep: boolean
   isSubmitStep: boolean
-  index: number
+  isExtended: boolean
   step: SellFlowStep
+  steps: SellFlowStep[]
   nextStep: SellFlowStep
   submission: Submission | null | undefined
   devMode: boolean
-  // loading is used to show a loading spinner on the bottom form navigation
-  // when images are being uploaded
+  // loading is used to show a loading spinner on the bottom form navigation when images are being uploaded
   loading: boolean
 }
 interface SellFlowContextProps {
@@ -65,9 +86,7 @@ interface SellFlowContextProps {
   state: State
 }
 
-export const SellFlowContext = createContext<SellFlowContextProps>({
-  loading: false,
-} as any)
+export const SellFlowContext = createContext<SellFlowContextProps>({} as any)
 
 interface SellFlowContextProviderProps {
   children: React.ReactNode
@@ -80,14 +99,14 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   submission,
   devMode = false,
 }) => {
+  const enablePostSubmissionFlow = useFeatureFlag(
+    "onyx_post_approval_submission_flow"
+  )
   const {
     trackConsignmentSubmitted,
     trackTappedSubmissionBack,
   } = useSubmissionTracking()
-  const {
-    match,
-    router: { push },
-  } = useRouter()
+  const { match, router } = useRouter()
   const {
     submitMutation: submitUpdateSubmissionMutation,
   } = useUpdateSubmission()
@@ -103,10 +122,22 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     ? INITIAL_STEP
     : (match.location.pathname.split("/").pop() as SellFlowStep)
 
-  const initialIndex = STEPS.indexOf(stepFromURL || STEPS[0])
+  const isExtended =
+    !!enablePostSubmissionFlow && submission?.state === "APPROVED"
+
+  const steps = useMemo(
+    () => [
+      ...BASIC_STEPS,
+      ...(isExtended ? POST_APPROVAL_STEPS : []),
+      THANK_YOU_STEP,
+    ],
+    [isExtended]
+  )
+
+  const initialIndex = steps.indexOf(stepFromURL || INITIAL_STEP)
 
   const { index, handleNext, handlePrev } = useCursor({
-    max: STEPS.length,
+    max: steps.length,
     initialCursor: initialIndex,
   })
 
@@ -123,21 +154,22 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const finishFlow = async () => {
     trackConsignmentSubmitted(submission?.internalID, state.step)
 
-    // When the user clicks on "Submit Artwork" and the Sell flow is finished, we set the state to "SUBMITTED".
-    await updateSubmission({
-      state: "SUBMITTED",
-    })
+    if (submission?.state === "DRAFT") {
+      await updateSubmission({
+        state: "SUBMITTED",
+      })
+    }
 
-    push(`/sell/submissions/${submission?.externalId}/thank-you`)
+    handleNext()
   }
 
   useEffect(() => {
-    const newStep = STEPS[index]
+    const newStep = steps[index]
 
     if (isNewSubmission || !newStep) return
 
-    push(`/sell/submissions/${submission?.externalId}/${newStep}`)
-  }, [push, index, isNewSubmission, submission])
+    router.push(`/sell/submissions/${submission?.externalId}/${newStep}`)
+  }, [router, index, isNewSubmission, submission, steps])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
     const response = submitCreateSubmissionMutation({
@@ -161,6 +193,14 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const updateSubmission = (
     values: UpdateSubmissionMutationInput
   ): Promise<useUpdateSubmissionMutation$data> => {
+    if (submission?.state !== "DRAFT") {
+      logger.error("Cannot update a submitted submission.")
+      sendToast({
+        variant: "alert",
+        message: "Cannot update a submitted submission.",
+      })
+    }
+
     const response = submitUpdateSubmissionMutation({
       variables: {
         input: {
@@ -193,11 +233,12 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
 
   const state = {
     isFirstStep: index === 0,
-    isLastStep: index === STEPS.length - 1,
-    isSubmitStep: index === STEPS.indexOf(SUBMIT_STEP),
-    index,
-    step: STEPS[index],
-    nextStep: STEPS[index + 1],
+    isLastStep: index === steps.length - 1,
+    isSubmitStep: index === steps.length - 2,
+    isExtended,
+    step: steps[index],
+    steps: steps as SellFlowStep[],
+    nextStep: steps[index + 1],
     submission,
     devMode,
     loading,

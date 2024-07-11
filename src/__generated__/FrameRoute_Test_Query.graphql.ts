@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<447fbd6c940fa7df8ba3f2019ed4a255>>
+ * @generated SignedSource<<f036762b3a35bf6e2f74378de15e7a8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
-export type TitleRoute_Test_Query$variables = Record<PropertyKey, never>;
-export type TitleRoute_Test_Query$data = {
+export type FrameRoute_Test_Query$variables = Record<PropertyKey, never>;
+export type FrameRoute_Test_Query$data = {
   readonly submission: {
-    readonly " $fragmentSpreads": FragmentRefs<"SubmissionRoute_submission" | "TitleRoute_submission">;
+    readonly " $fragmentSpreads": FragmentRefs<"FrameRoute_submission" | "SubmissionRoute_submission">;
   } | null | undefined;
 };
-export type TitleRoute_Test_Query$rawResponse = {
+export type FrameRoute_Test_Query$rawResponse = {
   readonly submission: {
     readonly artist: {
       readonly counts: {
@@ -48,10 +48,10 @@ export type TitleRoute_Test_Query$rawResponse = {
     readonly title: string | null | undefined;
   } | null | undefined;
 };
-export type TitleRoute_Test_Query = {
-  rawResponse: TitleRoute_Test_Query$rawResponse;
-  response: TitleRoute_Test_Query$data;
-  variables: TitleRoute_Test_Query$variables;
+export type FrameRoute_Test_Query = {
+  rawResponse: FrameRoute_Test_Query$rawResponse;
+  response: FrameRoute_Test_Query$data;
+  variables: FrameRoute_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -81,7 +81,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "TitleRoute_Test_Query",
+    "name": "FrameRoute_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -94,7 +94,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "TitleRoute_submission"
+            "name": "FrameRoute_submission"
           },
           {
             "args": null,
@@ -112,7 +112,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "TitleRoute_Test_Query",
+    "name": "FrameRoute_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -283,16 +283,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f58b003b179d0f4280f548ad2a1432af",
+    "cacheID": "448e9a7ed6c6d9f9ea9220c6bd75ba67",
     "id": null,
     "metadata": {},
-    "name": "TitleRoute_Test_Query",
+    "name": "FrameRoute_Test_Query",
     "operationKind": "query",
-    "text": "query TitleRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...TitleRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n\nfragment TitleRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n"
+    "text": "query FrameRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...FrameRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FrameRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();
 
-(node as any).hash = "02ca660f920490aaf1810b09ed05bf54";
+(node as any).hash = "c828fdd14a30a9172c933be57f5f6b0e";
 
 export default node;

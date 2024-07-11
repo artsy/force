@@ -20,6 +20,9 @@ jest.mock("System/Hooks/useRouter", () => ({
 }))
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/Hooks/useSystemContext")
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
 
 const submissionMock: Partial<
   PurchaseHistoryRoute_Test_Query$rawResponse["submission"]
@@ -175,6 +178,63 @@ describe("PurchaseHistoryRoute", () => {
 
       await waitFor(() => {
         expect(submitMutation).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe("navigation", () => {
+    describe("in DRAFT state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        mockPush.mockClear()
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/dimensions'
+          )
+        })
+      })
+
+      it("navigates to the previous step when the Back button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        mockPush.mockClear()
+
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/details'
+          )
+        })
+      })
+    })
+
+    describe("in APPROVED state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
+
+        mockPush.mockClear()
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/dimensions'
+          )
+        })
       })
     })
   })

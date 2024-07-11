@@ -103,6 +103,46 @@ const ArtistNotEligibleRoute = loadable(
   }
 )
 
+const AdditionalDocumentsRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "sellBundle" */ "./Routes/AdditionalRoutes/AdditionalDocumentsRoute"
+    ),
+  {
+    resolveComponent: component => component.AdditionalDocumentsRoute,
+  }
+)
+
+const ConditionRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "sellBundle" */ "./Routes/AdditionalRoutes/ConditionRoute"
+    ),
+  {
+    resolveComponent: component => component.ConditionRoute,
+  }
+)
+
+const ShippingLocationRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "sellBundle" */ "./Routes/AdditionalRoutes/ShippingLocationRoute"
+    ),
+  {
+    resolveComponent: component => component.ShippingLocationRoute,
+  }
+)
+
+const FrameRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "sellBundle" */ "./Routes/AdditionalRoutes/FrameRoute"
+    ),
+  {
+    resolveComponent: component => component.FrameRoute,
+  }
+)
+
 export const sellRoutes: RouteProps[] = [
   {
     path: "/sell",
@@ -302,6 +342,91 @@ export const sellRoutes: RouteProps[] = [
             Component: ThankYouRoute,
             onClientSideRender: () => {
               ThankYouRoute.preload()
+            },
+            query: graphql`
+              query sellRoutes_ThankYouRouteQuery($id: ID!) {
+                submission(id: $id) @principalField {
+                  ...ThankYouRoute_submission
+                }
+              }
+            `,
+            prepareVariables: ({ id }) => {
+              return { id }
+            },
+          },
+
+          // Additional Routes
+
+          {
+            path: "shipping-location",
+            layout: "ContainerOnly",
+            Component: ShippingLocationRoute,
+            onClientSideRender: () => {
+              ShippingLocationRoute.preload()
+            },
+            query: graphql`
+              query sellRoutes_ShippingLocationRouteQuery($id: ID!) {
+                submission(id: $id) @principalField {
+                  ...ShippingLocationRoute_submission
+                }
+              }
+            `,
+            prepareVariables: ({ id }) => {
+              return { id }
+            },
+          },
+          {
+            path: "frame",
+            layout: "ContainerOnly",
+            Component: FrameRoute,
+            onClientSideRender: () => {
+              FrameRoute.preload()
+            },
+            query: graphql`
+              query sellRoutes_FrameRouteQuery($id: ID!) {
+                submission(id: $id) @principalField {
+                  ...FrameRoute_submission
+                }
+              }
+            `,
+            prepareVariables: ({ id }) => {
+              return { id }
+            },
+          },
+          {
+            path: "additional-documents",
+            layout: "ContainerOnly",
+            Component: AdditionalDocumentsRoute,
+            onClientSideRender: () => {
+              AdditionalDocumentsRoute.preload()
+            },
+            query: graphql`
+              query sellRoutes_AdditionalDocumentsRouteQuery($id: ID!) {
+                submission(id: $id) @principalField {
+                  ...AdditionalDocumentsRoute_submission
+                }
+              }
+            `,
+            prepareVariables: ({ id }) => {
+              return { id }
+            },
+          },
+          {
+            path: "condition",
+            layout: "ContainerOnly",
+            Component: ConditionRoute,
+            onClientSideRender: () => {
+              ConditionRoute.preload()
+            },
+            query: graphql`
+              query sellRoutes_ConditionRouteQuery($id: ID!) {
+                submission(id: $id) @principalField {
+                  ...ConditionRoute_submission
+                }
+              }
+            `,
+            prepareVariables: ({ id }) => {
+              return { id }
             },
           },
         ],

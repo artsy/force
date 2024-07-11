@@ -33,17 +33,19 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
 
       <Flex flex={1} overflowY="auto">
         {!!context?.state?.devMode && !hideNavigation ? (
-          <GridColumns>
-            <Column span={[4]}>
-              <StepsNavigation />
-            </Column>
+          <FadeInBox p={2} pt={[2, 4]}>
+            <GridColumns>
+              <Column span={[4]}>
+                <StepsNavigation />
+              </Column>
 
-            <Column span={[8]}>
-              <Box maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={[2, 4]}>
-                {children}
-              </Box>
-            </Column>
-          </GridColumns>
+              <Column span={[8]}>
+                <Box maxWidth="100vw" width={CONTENT_WIDTH} p={2} pt={[2, 4]}>
+                  {children}
+                </Box>
+              </Column>
+            </GridColumns>
+          </FadeInBox>
         ) : (
           <FadeInBox width={CONTENT_WIDTH} p={2} pt={[2, 4]} mx="auto">
             {children}

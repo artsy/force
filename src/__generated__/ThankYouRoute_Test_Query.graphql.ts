@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e271ab2689eb3f1cdd207db9760f9125>>
+ * @generated SignedSource<<fa2b89e318c88bdaa43222c61d2392a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type ThankYouRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type ThankYouRoute_Test_Query$data = {
   readonly submission: {
@@ -21,6 +22,7 @@ export type ThankYouRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   } | null | undefined;
 };
 export type ThankYouRoute_Test_Query = {
@@ -101,6 +103,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -110,12 +119,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "048040010cce16c223129a159ad12753",
+    "cacheID": "2f8aaa5e5994737349e1af183b4db7fa",
     "id": null,
     "metadata": {},
     "name": "ThankYouRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ThankYouRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...ThankYouRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n\nfragment ThankYouRoute_submission on ConsignmentSubmission {\n  internalID\n}\n"
+    "text": "query ThankYouRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...ThankYouRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n\nfragment ThankYouRoute_submission on ConsignmentSubmission {\n  internalID\n  state\n}\n"
   }
 };
 })();

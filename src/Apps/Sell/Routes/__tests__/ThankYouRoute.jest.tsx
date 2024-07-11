@@ -20,6 +20,9 @@ jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
   fetchQuery: jest.fn(),
 }))
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
 
 beforeEach(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -61,14 +64,34 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ThankYouRoute", () => {
-  it("renders text", () => {
-    renderWithRelay({})
+  describe("in SUBMITTED state", () => {
+    it("renders text", () => {
+      renderWithRelay({ ConsignmentSubmission: () => ({ state: "SUBMITTED" }) })
 
-    expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
+      expect(
+        screen.getByText("Thank you for submitting your artwork")
+      ).toBeInTheDocument()
 
-    expect(
-      screen.getByText("Thank you for submitting your artwork")
-    ).toBeInTheDocument()
+      expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
+      expect(
+        screen.getByText("View Artwork in My Collection")
+      ).toBeInTheDocument()
+    })
+  })
+
+  describe("in APPROVED state", () => {
+    it("renders text", () => {
+      renderWithRelay({ ConsignmentSubmission: () => ({ state: "APPROVED" }) })
+
+      expect(
+        screen.getByText("Thank you for listing your artwork")
+      ).toBeInTheDocument()
+
+      expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
+      expect(
+        screen.getByText("View Artwork in My Collection")
+      ).toBeInTheDocument()
+    })
   })
 
   it("clicking on Submit Another Work navigates to new submission route", () => {

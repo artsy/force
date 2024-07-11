@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<76738f21908220d4b34a31bf5aa14b36>>
+ * @generated SignedSource<<761d9e1179410f465eeb4196e1b5569f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type sellRoutes_SubmissionRouteQuery$variables = {
+export type sellRoutes_ShippingLocationRouteQuery$variables = {
   id: string;
 };
-export type sellRoutes_SubmissionRouteQuery$data = {
+export type sellRoutes_ShippingLocationRouteQuery$data = {
   readonly submission: {
-    readonly " $fragmentSpreads": FragmentRefs<"SubmissionRoute_submission">;
+    readonly " $fragmentSpreads": FragmentRefs<"ShippingLocationRoute_submission">;
   } | null | undefined;
 };
-export type sellRoutes_SubmissionRouteQuery = {
-  response: sellRoutes_SubmissionRouteQuery$data;
-  variables: sellRoutes_SubmissionRouteQuery$variables;
+export type sellRoutes_ShippingLocationRouteQuery = {
+  response: sellRoutes_ShippingLocationRouteQuery$data;
+  variables: sellRoutes_ShippingLocationRouteQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -43,7 +43,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "sellRoutes_SubmissionRouteQuery",
+    "name": "sellRoutes_ShippingLocationRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -56,7 +56,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SubmissionRoute_submission"
+            "name": "ShippingLocationRoute_submission"
           }
         ],
         "storageKey": null
@@ -69,7 +69,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "sellRoutes_SubmissionRouteQuery",
+    "name": "sellRoutes_ShippingLocationRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -83,21 +83,28 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
+            "name": "locationCity",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "externalId",
+            "name": "locationCountry",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "state",
+            "name": "locationPostalCode",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationState",
             "storageKey": null
           },
           {
@@ -113,16 +120,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "67d133b1209a390fa53706a28ccdc079",
+    "cacheID": "9f73bf5b8284a78b3dc63d5ab65da2e8",
     "id": null,
     "metadata": {},
-    "name": "sellRoutes_SubmissionRouteQuery",
+    "name": "sellRoutes_ShippingLocationRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_SubmissionRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query sellRoutes_ShippingLocationRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ShippingLocationRoute_submission\n    id\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationPostalCode\n  locationState\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9207f5acb78269476cc9d3e18dcb983d";
+(node as any).hash = "8028137f341642db49408b8f25e7590d";
 
 export default node;

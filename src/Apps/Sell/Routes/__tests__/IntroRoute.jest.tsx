@@ -13,6 +13,9 @@ jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { location: { query: {} } } })),
 }))
 jest.unmock("react-relay")
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
 
 beforeAll(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => {

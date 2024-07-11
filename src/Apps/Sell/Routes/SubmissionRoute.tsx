@@ -10,6 +10,7 @@ const FRAGMENT = graphql`
   fragment SubmissionRoute_submission on ConsignmentSubmission {
     internalID
     externalId
+    state
   }
 `
 
