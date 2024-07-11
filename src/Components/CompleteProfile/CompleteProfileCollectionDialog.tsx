@@ -10,7 +10,7 @@ export const CompleteProfileCollectionDialog: FC<CompleteProfileCollectionDialog
 }) => {
   return (
     <CollectorProfileArtistsAddDialog
-      title="Tell us about the artists your collection."
+      title="Tell us about the artists in your collection."
       onClose={onClose}
     />
   )
