@@ -1,8 +1,6 @@
 import { useToasts } from "@artsy/palette"
-import {
-  ConsignmentSubmissionStateAggregation,
-  CreateSubmissionMutationInput,
-} from "__generated__/CreateConsignSubmissionMutation.graphql"
+import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
@@ -62,12 +60,6 @@ interface Actions {
   setLoading: (loading: boolean) => void
 }
 
-type Submission = {
-  externalId: string
-  internalID: string | null | undefined
-  state: ConsignmentSubmissionStateAggregation | null | undefined
-}
-
 interface State {
   isFirstStep: boolean
   isLastStep: boolean
@@ -76,7 +68,7 @@ interface State {
   step: SellFlowStep
   steps: SellFlowStep[]
   nextStep: SellFlowStep
-  submission: Submission | null | undefined
+  submission: SubmissionRoute_submission$data | undefined
   devMode: boolean
   // loading is used to show a loading spinner on the bottom form navigation when images are being uploaded
   loading: boolean
@@ -90,7 +82,7 @@ export const SellFlowContext = createContext<SellFlowContextProps>({} as any)
 
 interface SellFlowContextProviderProps {
   children: React.ReactNode
-  submission?: Submission | null
+  submission?: SubmissionRoute_submission$data
   devMode?: boolean
 }
 
