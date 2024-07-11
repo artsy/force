@@ -31,7 +31,7 @@ jest.mock("System/Hooks/useFeatureFlag", () => ({
 
 const submissionMock: Partial<
   ConditionRoute_Test_Query$rawResponse["submission"]
-> = {}
+> = { state: "DRAFT" }
 
 beforeEach(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -54,6 +54,10 @@ beforeEach(() => {
   ;(useMutation as jest.Mock).mockImplementation(() => {
     return { submitMutation }
   })
+
+  mockPush.mockClear()
+  trackEvent.mockClear()
+  submitMutation.mockClear()
 })
 
 const { renderWithRelay } = setupTestWrapperTL({

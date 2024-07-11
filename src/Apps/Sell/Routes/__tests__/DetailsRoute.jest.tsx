@@ -28,6 +28,7 @@ const submissionMock: Partial<
   DetailsRoute_Test_Query$rawResponse["submission"]
 > = {
   category: "Painting",
+  state: "DRAFT",
 }
 
 beforeEach(() => {

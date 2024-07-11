@@ -27,6 +27,7 @@ const submissionMock: Partial<
   DimensionsRoute_Test_Query$rawResponse["submission"]
 > = {
   dimensionsMetric: "in",
+  state: "DRAFT",
 }
 
 beforeEach(() => {
@@ -107,6 +108,10 @@ describe("DimensionsRoute", () => {
         ConsignmentSubmission: () => submissionMock,
       })
 
+      mockPush.mockClear()
+      trackEvent.mockClear()
+      submitMutation.mockClear()
+
       screen.getByText("Continue").click()
 
       await waitFor(() => {
@@ -144,6 +149,10 @@ describe("DimensionsRoute", () => {
       renderWithRelay({
         ConsignmentSubmission: () => submissionMock,
       })
+
+      mockPush.mockClear()
+      trackEvent.mockClear()
+      submitMutation.mockClear()
 
       screen.getByText("Back").click()
 
