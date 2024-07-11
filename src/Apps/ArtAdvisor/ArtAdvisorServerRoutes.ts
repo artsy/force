@@ -6,6 +6,7 @@ import { router as router4 } from "./04-Bio-Follows-Alerts/server"
 import { router as router5 } from "./05-Near-Object-Rail/server"
 import { router as router6 } from "./06-Discovery-Neartext/server"
 import { router as router7 } from "./07-Curated-Discovery/server"
+import { router as router8 } from "./08-Art-Quiz/server"
 
 /*
  * Define API routes that can be collocated with each app experiment
@@ -20,3 +21,4 @@ artAdvisorServerRoutes.use("/api/advisor/4", router4)
 artAdvisorServerRoutes.use("/api/advisor/5", router5)
 artAdvisorServerRoutes.use("/api/advisor/6", router6)
 artAdvisorServerRoutes.use("/api/advisor/7", router7)
+artAdvisorServerRoutes.use("/api/advisor/8", router8)
