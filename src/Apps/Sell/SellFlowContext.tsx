@@ -115,13 +115,13 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   }
 
   const goToPreviousStep = () => {
-    trackTappedSubmissionBack(submission?.externalId, state.step)
+    trackTappedSubmissionBack(submission?.internalID, state.step)
 
     handlePrev()
   }
 
   const finishFlow = async () => {
-    trackConsignmentSubmitted(submission?.externalId, state.step)
+    trackConsignmentSubmitted(submission?.internalID, state.step)
 
     // When the user clicks on "Submit Artwork" and the Sell flow is finished, we set the state to "SUBMITTED".
     await updateSubmission({

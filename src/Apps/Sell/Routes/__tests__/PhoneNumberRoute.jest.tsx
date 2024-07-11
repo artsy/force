@@ -93,6 +93,9 @@ describe("PhoneNumberRoute", () => {
 
       screen.getByText("Submit Artwork").click()
 
+      trackEvent.mockClear()
+      submitMutation.mockClear()
+
       await waitFor(() => {
         expect(trackEvent).toHaveBeenCalledWith({
           action: "consignmentSubmitted",
