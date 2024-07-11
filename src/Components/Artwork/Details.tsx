@@ -136,6 +136,18 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
   )
 }
 
+const ArtworkSignalsLine: React.FC = () => {
+  return (
+    <Text variant="xs" color="black60" overflowEllipsis>
+      Artwork Signal
+    </Text>
+  )
+}
+
+const EmptyLine: React.FC = () => {
+  return <Text variant="xs" />
+}
+
 const HighDemandInfo = () => {
   return (
     <Flex flexDirection="row" alignItems="center">
@@ -209,6 +221,8 @@ export const Details: React.FC<DetailsProps> = ({
 
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
+  const hasSignals = true
+
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
     if (!contextModule) return null
@@ -262,10 +276,13 @@ export const Details: React.FC<DetailsProps> = ({
         </Flex>
       )}
 
-      <Flex flexDirection="row" justifyContent="space-between">
-        {!hideArtistName && (
-          <ArtistLine showSaveButton={showSaveButton} {...rest} />
-        )}
+      <Flex justifyContent="space-between">
+        <Flex flexDirection="column">
+          {hasSignals && <ArtworkSignalsLine {...rest} />}
+          {!hideArtistName && (
+            <ArtistLine showSaveButton={showSaveButton} {...rest} />
+          )}
+        </Flex>
         {renderSaveButtonComponent()}
       </Flex>
 
@@ -279,6 +296,8 @@ export const Details: React.FC<DetailsProps> = ({
       </Box>
 
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
+
+      {!hasSignals && <EmptyLine />}
     </Box>
   )
 }
