@@ -87,7 +87,6 @@ export const InquiryLogin: React.FC = () => {
         },
         profession: user.profession,
         requiresReload: true,
-        shareFollows: user.share_follows,
       })
 
       // Creates an authenticated relay environment now that we have a user

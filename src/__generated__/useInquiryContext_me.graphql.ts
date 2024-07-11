@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80200849c4f3d6e16aa843f3bb89c756>>
+ * @generated SignedSource<<d13e5d75c5f6591ba75aa6488e2c116d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,6 @@ export type useInquiryContext_me$data = {
   } | null | undefined;
   readonly otherRelevantPositions: string | null | undefined;
   readonly profession: string | null | undefined;
-  readonly shareFollows: boolean;
   readonly userInterestsConnection: {
     readonly totalCount: number | null | undefined;
   } | null | undefined;
@@ -110,13 +109,6 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "shareFollows",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -167,6 +159,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "af25034d4a424b670747d3aa6091bfa4";
+(node as any).hash = "0e8b61fe219ada3dadebde1fbd4d2f8e";
 
 export default node;

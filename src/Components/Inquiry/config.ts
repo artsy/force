@@ -35,12 +35,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
       return !!context.current?.askSpecialist
     },
     hasBasicInfo: () => {
-      return (
-        !!context.current?.profession &&
-        !!context.current?.location?.city &&
-        !!context.current?.otherRelevantPositions &&
-        !!context.current?.shareFollows
-      )
+      return !!context.current?.profession && !!context.current?.location?.city
     },
     isLoggedOut: () => {
       return !context.current?.isLoggedIn

@@ -77,7 +77,6 @@ describe("InquiryBasicInfo", () => {
 
     expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
       otherRelevantPositions: "Collector",
-      shareFollows: true,
     })
 
     expect(mockNext).toBeCalled()
@@ -99,7 +98,6 @@ describe("InquiryBasicInfo", () => {
     expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
       profession: "Carpenter",
       otherRelevantPositions: "Artist",
-      shareFollows: true,
     })
 
     expect(mockNext).toBeCalled()

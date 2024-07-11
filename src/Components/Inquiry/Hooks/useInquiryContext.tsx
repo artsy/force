@@ -40,7 +40,6 @@ export const DEFAULT_CONTEXT: Context = {
   otherRelevantPositions: null,
   profession: null,
   requiresReload: false,
-  shareFollows: false,
   userInterestsConnection: { totalCount: 0 },
   collectorProfile: { lastUpdatePromptAt: null },
 }
@@ -231,7 +230,6 @@ const InquiryContextContextFragmentContainer = createFragmentContainer(
         }
         otherRelevantPositions
         profession
-        shareFollows
         userInterestsConnection(interestType: ARTIST, first: 1) {
           totalCount
         }
