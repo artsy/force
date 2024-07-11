@@ -3,6 +3,7 @@ import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
 import { render } from "DevTools/renderWithMockBoot"
 import { useRouter } from "System/Hooks/useRouter"
+import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
 import { Formik } from "formik"
 import { useTracking } from "react-tracking"
 
@@ -23,7 +24,7 @@ Storage.prototype.setItem = setMock
 const submissionMock = {
   internalID: "internal-id",
   externalId: "external-id",
-}
+} as SubmissionRoute_submission$data
 
 describe("SubmissionLayout", () => {
   beforeAll(() => {
@@ -126,7 +127,10 @@ describe("SubmissionLayout", () => {
 
     it("renders the 'Back' button", () => {
       render(
-        <Formik<{}> initialValues={{}} onSubmit={onSubmitMock}>
+        <Formik<{}>
+          initialValues={{} as SubmissionRoute_submission$data}
+          onSubmit={onSubmitMock}
+        >
           <SellFlowContextProvider submission={submissionMock}>
             <SubmissionLayout />
           </SellFlowContextProvider>

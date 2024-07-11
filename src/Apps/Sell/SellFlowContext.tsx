@@ -185,12 +185,16 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const updateSubmission = (
     values: UpdateSubmissionMutationInput
   ): Promise<useUpdateSubmissionMutation$data> => {
+    // TODO: Allow updating a submission that has already been submitted and remove this check
     if (submission?.state !== "DRAFT") {
-      logger.error("Cannot update a submitted submission.")
+      logger.error(
+        "Cannot update a submission that has already been submitted."
+      )
       sendToast({
         variant: "alert",
-        message: "Cannot update a submitted submission.",
+        message: "Cannot update a submission that has already been submitted.",
       })
+      return null as any
     }
 
     const response = submitUpdateSubmissionMutation({
