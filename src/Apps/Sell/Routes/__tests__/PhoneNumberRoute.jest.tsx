@@ -93,13 +93,16 @@ describe("PhoneNumberRoute", () => {
 
       screen.getByText("Submit Artwork").click()
 
+      trackEvent.mockClear()
+      submitMutation.mockClear()
+
       await waitFor(() => {
         expect(trackEvent).toHaveBeenCalledWith({
           action: "consignmentSubmitted",
           context_module: "sell",
           context_owner_type: "submitArtworkStepAddPhoneNumber",
           fieldsProvided: [],
-          submission_id: '<mock-value-for-field-"externalId">',
+          submission_id: '<mock-value-for-field-"internalID">',
         })
 
         expect(submitMutation).toHaveBeenCalledWith(

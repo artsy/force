@@ -42,6 +42,11 @@ interface Actions {
   setLoading: (loading: boolean) => void
 }
 
+type Submission = {
+  externalId: string
+  internalID: string | null | undefined
+}
+
 interface State {
   isFirstStep: boolean
   isLastStep: boolean
@@ -49,7 +54,7 @@ interface State {
   index: number
   step: SellFlowStep
   nextStep: SellFlowStep
-  submissionID: string | undefined
+  submission: Submission | null | undefined
   devMode: boolean
   // loading is used to show a loading spinner on the bottom form navigation
   // when images are being uploaded
@@ -66,13 +71,13 @@ export const SellFlowContext = createContext<SellFlowContextProps>({
 
 interface SellFlowContextProviderProps {
   children: React.ReactNode
-  submissionID?: string
+  submission?: Submission | null
   devMode?: boolean
 }
 
 export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = ({
   children,
-  submissionID,
+  submission,
   devMode = false,
 }) => {
   const {
@@ -92,7 +97,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const { sendToast } = useToasts()
   const [loading, setLoading] = useState(false)
 
-  const isNewSubmission = !submissionID
+  const isNewSubmission = !submission?.externalId
 
   const stepFromURL = isNewSubmission
     ? INITIAL_STEP
@@ -110,20 +115,20 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   }
 
   const goToPreviousStep = () => {
-    trackTappedSubmissionBack(submissionID, state.step)
+    trackTappedSubmissionBack(submission?.internalID, state.step)
 
     handlePrev()
   }
 
   const finishFlow = async () => {
-    trackConsignmentSubmitted(submissionID, state.step)
+    trackConsignmentSubmitted(submission?.internalID, state.step)
 
     // When the user clicks on "Submit Artwork" and the Sell flow is finished, we set the state to "SUBMITTED".
     await updateSubmission({
       state: "SUBMITTED",
     })
 
-    push(`/sell/submissions/${submissionID}/thank-you`)
+    push(`/sell/submissions/${submission?.externalId}/thank-you`)
   }
 
   useEffect(() => {
@@ -131,8 +136,8 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
 
     if (isNewSubmission || !newStep) return
 
-    push(`/sell/submissions/${submissionID}/${newStep}`)
-  }, [push, index, isNewSubmission, submissionID])
+    push(`/sell/submissions/${submission?.externalId}/${newStep}`)
+  }, [push, index, isNewSubmission, submission])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
     const response = submitCreateSubmissionMutation({
@@ -159,7 +164,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     const response = submitUpdateSubmissionMutation({
       variables: {
         input: {
-          externalId: submissionID,
+          externalId: submission?.externalId,
           ...values,
         } as UpdateSubmissionMutationInput,
       },
@@ -193,7 +198,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     index,
     step: STEPS[index],
     nextStep: STEPS[index + 1],
-    submissionID,
+    submission,
     devMode,
     loading,
   }

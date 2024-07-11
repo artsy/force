@@ -114,7 +114,7 @@ describe("DimensionsRoute", () => {
           action: "tappedContinueSubmission",
           context_module: "sell",
           context_owner_type: "sell",
-          submission_id: '<mock-value-for-field-"externalId">',
+          submission_id: '<mock-value-for-field-"internalID">',
           destination_step: "phone-number",
         })
 
