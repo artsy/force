@@ -74,7 +74,7 @@ export const MeetTheSpecialists: React.FC<{
         Our specialists span today’s most popular collecting categories.
       </Text>
       <Shelf showProgress={false}>
-        {specialists.map(i => {
+        {specialists.map(specialist => {
           return (
             <ResponsiveBox
               aspectWidth={CARD_WIDTH}
@@ -82,7 +82,7 @@ export const MeetTheSpecialists: React.FC<{
               maxWidth={CARD_WIDTH}
               minHeight={[CARD_HEIGHT_MOBILE, CARD_HEIGHT_MD, CARD_HEIGHT]}
               backgroundColor="black10"
-              key={`specialist-${i.firstName}`}
+              key={`specialist-${specialist.firstName}`}
             >
               <Box
                 width="100%"
@@ -94,22 +94,22 @@ export const MeetTheSpecialists: React.FC<{
                 <Image
                   width="100%"
                   height="100%"
-                  {...resized(i?.image?.imageURL || "", {
+                  {...resized(specialist?.image?.imageURL || "", {
                     width: CARD_WIDTH,
                     height: CARD_HEIGHT,
                   })}
                   lazyLoad
-                  alt={`specialist ${i.firstName}`}
+                  alt={`specialist ${specialist.firstName}`}
                 />
 
                 <Info position="absolute" width="100%" pt={12}>
                   <Box pl={2} pr={2} zIndex={10}>
                     <Text variant={["lg-display", "xl"]} color="white100">
-                      {i.name}
+                      {specialist.name}
                     </Text>
 
                     <Text mb={1} variant={["xs", "xs"]} color="white100">
-                      {i.jobTitle}
+                      {specialist.jobTitle}
                     </Text>
 
                     <Text
@@ -117,7 +117,7 @@ export const MeetTheSpecialists: React.FC<{
                       variant={["xs", "sm-display"]}
                       color="white100"
                     >
-                      <ReadMore content={i.bio} maxChars={88} />
+                      <ReadMore content={specialist.bio} maxChars={88} />
                     </Text>
 
                     <Button
@@ -127,10 +127,10 @@ export const MeetTheSpecialists: React.FC<{
                       size="small"
                       mb={2}
                       onClick={clickContactSpecialist}
-                      data-testid={`get-in-touch-button-${i.firstName}`}
-                      to={`/sell/inquiry/${i.email}`}
+                      data-testid={`get-in-touch-button-${specialist.firstName}`}
+                      to={`/sell/inquiry/${specialist.email}`}
                     >
-                      Contact {i.firstName}
+                      Contact {specialist.firstName}
                     </Button>
                   </Box>
                 </Info>
