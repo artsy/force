@@ -16,7 +16,7 @@ interface Props {
 export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
   artwork,
 }) => {
-  const enablePostSubmissionFlow = useFeatureFlag(
+  const enablePostApprovalSubmissionFlow = useFeatureFlag(
     "onyx_post_approval_submission_flow"
   )
   const [
@@ -80,7 +80,7 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
         </Flex>
       </Flex>
 
-      {!!enablePostSubmissionFlow && (
+      {!!enablePostApprovalSubmissionFlow && (
         <Button
           my={2}
           // @ts-ignore

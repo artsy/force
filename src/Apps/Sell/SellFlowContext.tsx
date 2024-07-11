@@ -91,7 +91,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   submission,
   devMode = false,
 }) => {
-  const enablePostSubmissionFlow = useFeatureFlag(
+  const enablePostApprovalSubmissionFlow = useFeatureFlag(
     "onyx_post_approval_submission_flow"
   )
   const {
@@ -115,7 +115,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     : (match.location.pathname.split("/").pop() as SellFlowStep)
 
   const isExtended =
-    !!enablePostSubmissionFlow && submission?.state === "APPROVED"
+    !!enablePostApprovalSubmissionFlow && submission?.state === "APPROVED"
 
   const steps = useMemo(
     () => [
