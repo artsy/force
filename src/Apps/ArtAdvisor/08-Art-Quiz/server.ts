@@ -44,10 +44,9 @@ const createArtworkLike = async (req: ArtsyRequest, res: ArtsyResponse) => {
 }
 
 const getQuizResults = async (req: ArtsyRequest, res: ArtsyResponse) => {
-  const { excludeArtworkIds, userId, limit } = req.query
+  const { userId, limit } = req.query
 
   const artworks = await weaviateClient.getNearObjectArtworks({
-    excludeArtworkIds: excludeArtworkIds as string[],
     userInternalID: userId as string,
     limit: limit as number,
   })

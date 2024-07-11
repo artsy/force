@@ -118,9 +118,10 @@ export class WeaviateDB {
     const user = await this.getUser({ internalID: userInternalID })
     if (!user) throw new Error("[WeaviateDB] user not found")
 
-    /* bail if user already liked artwork */
+    /* bail if user already liked or disliked artwork  */
 
     if (user?.likedArtworkIds?.includes(artworkInternalID)) return false
+    if (user?.dislikedArtworkIds?.includes(artworkInternalID)) return false
 
     /* else go ahead and create */
 
