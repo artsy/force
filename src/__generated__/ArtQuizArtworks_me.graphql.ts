@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3f0f452b8b730612d180a7e52d17ba1>>
+ * @generated SignedSource<<68abc9154abc5e7710012c026c49502a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtQuizArtworks_me$data = {
   readonly id: string;
+  readonly internalID: string;
+  readonly name: string | null | undefined;
   readonly quiz: {
     readonly quizArtworkConnection: {
       readonly edges: ReadonlyArray<{
@@ -33,7 +35,15 @@ export type ArtQuizArtworks_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtQuizArtworks_me">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -44,6 +54,14 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "id",
+      "storageKey": null
+    },
+    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
       "storageKey": null
     },
     {
@@ -96,13 +114,7 @@ const node: ReaderFragment = {
                       "kind": "FragmentSpread",
                       "name": "ArtQuizArtworksCard_artwork"
                     },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "internalID",
-                      "storageKey": null
-                    },
+                    (v0/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -140,7 +152,8 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "ab176323e68d5d2dd3e855e7a91304c6";
+(node as any).hash = "21dec1b25314e8a14cbccbc9c11d6629";
 
 export default node;

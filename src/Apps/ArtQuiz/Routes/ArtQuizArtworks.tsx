@@ -15,7 +15,7 @@ import {
 import { Mode, useArtQuizCards } from "Apps/ArtQuiz/Components/ArtQuizCard"
 import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
 import { useDislikeArtwork } from "Apps/ArtQuiz/Hooks/useDislikeArtwork"
-import { FC, useCallback, useRef, useState } from "react"
+import { FC, useCallback, useEffect, useRef, useState } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
@@ -53,6 +53,32 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
     cards: compact(edges),
     startingIndex,
   })
+
+  useEffect(() => {
+    const getWeaviateUser = () => {
+      return fetch(`/api/advisor/8/users/${me.internalID}`)
+    }
+
+    const createWeaviateUser = () => {
+      const headers = { "Content-Type": "application/json" }
+      const body = JSON.stringify({ userId: me.internalID, name: me.name })
+      const options = { method: "POST", headers, body }
+      return fetch(`/api/advisor/8/users`, options)
+    }
+
+    getWeaviateUser().then(response => {
+      if (response.status === 404) {
+        console.log("Creating user in Weaviate", response)
+        createWeaviateUser()
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          `Error checking for weaviate user: ${response.statusText}`
+        )
+      }
+    })
+  }, [me])
 
   const handlePrevious = useCallback(() => {
     const previousArtwork =
@@ -117,6 +143,16 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
 
       if (currentArtwork) {
         if (action === "Like") {
+          fetch("/api/advisor/8/artworks/likes", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: me.internalID,
+              artworkId: currentArtwork.internalID,
+            }),
+          })
           submitSave({
             variables: {
               input: {
@@ -133,6 +169,16 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
         }
 
         if (action === "Dislike") {
+          fetch("/api/advisor/8/artworks/dislikes", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: me.internalID,
+              artworkId: currentArtwork.internalID,
+            }),
+          })
           submitDislike({
             variables: {
               input: {
@@ -169,6 +215,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
       submitSave,
       trackEvent,
       submitDislike,
+      me.internalID,
     ]
   )
 
@@ -307,6 +354,8 @@ export const ArtQuizArtworksFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtQuizArtworks_me on Me {
         id
+        internalID
+        name
         quiz {
           quizArtworkConnection(first: 16) {
             edges {
