@@ -26,9 +26,12 @@ export interface Context
   enableCreateAlert: boolean
   isLoggedIn: boolean
   requiresReload: boolean
+  /** The ID of the inquiry after it's been sent */
+  inquiryID?: string
 }
 
 export const DEFAULT_CONTEXT: Context = {
+  internalID: "guest",
   askSpecialist: false,
   collectorLevel: null,
   enableCreateAlert: false,
@@ -218,6 +221,7 @@ const InquiryContextContextFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment useInquiryContext_me on Me {
+        internalID
         collectorLevel
         location {
           city

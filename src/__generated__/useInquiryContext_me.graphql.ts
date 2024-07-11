@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a83d96e29ef437e5debfebcafdc1872a>>
+ * @generated SignedSource<<80200849c4f3d6e16aa843f3bb89c756>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type useInquiryContext_me$data = {
   readonly collectorProfile: {
     readonly lastUpdatePromptAt: string | null | undefined;
   } | null | undefined;
+  readonly internalID: string;
   readonly location: {
     readonly city: string | null | undefined;
     readonly country: string | null | undefined;
@@ -40,6 +41,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "useInquiryContext_me",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -159,6 +167,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3add8c17a1b710742b83e82e37eab173";
+(node as any).hash = "af25034d4a424b670747d3aa6091bfa4";
 
 export default node;

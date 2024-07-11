@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<821fabc5d08e52d716793323a8108942>>
+ * @generated SignedSource<<4a88746d0a39c8c3de681679f98c4510>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -70,6 +70,13 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -193,12 +200,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f9c5f02861a409b0f3118ed353a711a9",
+    "cacheID": "2876d2fa8a25932a862f5958a7b14882",
     "id": null,
     "metadata": {},
     "name": "useInquiryContextQuery",
     "operationKind": "query",
-    "text": "query useInquiryContextQuery {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  collectorLevel\n  location {\n    city\n    state\n    postalCode\n    country\n    id\n  }\n  otherRelevantPositions\n  profession\n  shareFollows\n  userInterestsConnection(interestType: ARTIST, first: 1) {\n    totalCount\n  }\n  collectorProfile {\n    lastUpdatePromptAt\n    id\n  }\n}\n"
+    "text": "query useInquiryContextQuery {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  internalID\n  collectorLevel\n  location {\n    city\n    state\n    postalCode\n    country\n    id\n  }\n  otherRelevantPositions\n  profession\n  shareFollows\n  userInterestsConnection(interestType: ARTIST, first: 1) {\n    totalCount\n  }\n  collectorProfile {\n    lastUpdatePromptAt\n    id\n  }\n}\n"
   }
 };
 })();

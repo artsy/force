@@ -21,6 +21,9 @@ import {
 import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
 import { logger } from "Components/Inquiry/util"
 import { Form, Formik } from "formik"
+import { ActionType, ContextModule, EditedUserProfile } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface InquiryBasicInfoProps {
   artwork: InquiryBasicInfo_artwork$data
@@ -35,6 +38,9 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
   })
 
   const { sendToast } = useToasts()
+
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType } = useAnalyticsContext()
 
   const handleSubmit = async (values: InquiryBasicInfoInput) => {
     try {
@@ -58,6 +64,15 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
       await submitUpdateMyUserProfile(payload)
 
       sendToast({ variant: "success", message: "Profile information saved." })
+
+      const editedUserProfile: EditedUserProfile = {
+        action: ActionType.editedUserProfile,
+        context_screen: ContextModule.inquiry,
+        context_screen_owner_type: contextPageOwnerType,
+        platform: "web",
+      }
+
+      trackEvent(editedUserProfile)
 
       next()
     } catch (err) {
