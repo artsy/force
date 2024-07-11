@@ -217,6 +217,9 @@ export const consignRoutes: RouteProps[] = [
             me {
               ...ConsignmentInquiry_me
             }
+            viewer {
+              ...ConsignmentInquiry_viewer
+            }
           }
         `,
         render: renderConsignmentInquiry,
@@ -246,6 +249,9 @@ export const consignRoutes: RouteProps[] = [
           query consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery {
             me {
               ...ConsignmentInquiry_me
+            }
+            viewer {
+              ...ConsignmentInquiry_viewer
             }
           }
         `,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e35c863fb4101a04c50d9dcf96357219>>
+ * @generated SignedSource<<8fbf8206948093e9e0da6008cea40fc9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,13 +15,31 @@ export type consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ConsignmentInquiry_me">;
   } | null | undefined;
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ConsignmentInquiry_viewer">;
+  } | null | undefined;
 };
 export type consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery = {
   response: consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery$data;
   variables: consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery$variables;
 };
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "email",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -40,6 +58,22 @@ const node: ConcreteRequest = {
             "args": null,
             "kind": "FragmentSpread",
             "name": "ConsignmentInquiry_me"
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ConsignmentInquiry_viewer"
           }
         ],
         "storageKey": null
@@ -76,13 +110,7 @@ const node: ConcreteRequest = {
             "name": "name",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "email",
-            "storageKey": null
-          },
+          (v0/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -108,11 +136,47 @@ const node: ConcreteRequest = {
             ],
             "storageKey": null
           },
+          (v1/*: any*/)
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "StaticContent",
+            "kind": "LinkedField",
+            "name": "staticContent",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "SpecialistBio",
+                "kind": "LinkedField",
+                "name": "specialistBios",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "firstName",
+                    "storageKey": null
+                  },
+                  (v0/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
             "storageKey": null
           }
         ],
@@ -121,15 +185,16 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "27b400da35bed3bbb03c1199f72166a8",
+    "cacheID": "e350c45645b8507ed0e85481ab057361",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n"
+    "text": "query consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n  viewer {\n    ...ConsignmentInquiry_viewer\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ConsignmentInquiry_viewer on Viewer {\n  staticContent {\n    specialistBios {\n      firstName\n      email\n    }\n    id\n  }\n}\n"
   }
 };
+})();
 
-(node as any).hash = "5b5752f5738819c6d80f26079d09ba31";
+(node as any).hash = "161c00c6165e6c1b36436b173dcb692c";
 
 export default node;
