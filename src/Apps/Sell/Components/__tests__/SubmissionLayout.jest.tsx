@@ -20,6 +20,11 @@ jest.unmock("react-relay")
 const setMock = jest.fn()
 Storage.prototype.setItem = setMock
 
+const submissionMock = {
+  internalID: "internal-id",
+  externalId: "external-id",
+}
+
 describe("SubmissionLayout", () => {
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -84,10 +89,7 @@ describe("SubmissionLayout", () => {
     it("renders the 'Save & Exit'button'", async () => {
       render(
         <Formik<{}> initialValues={{}} onSubmit={onSubmitMock}>
-          <SellFlowContextProvider
-            submissionID="123"
-            internalSubmissionID="123"
-          >
+          <SellFlowContextProvider submission={submissionMock}>
             <SubmissionLayout />
           </SellFlowContextProvider>
         </Formik>
@@ -104,11 +106,14 @@ describe("SubmissionLayout", () => {
           action: "tappedSubmissionSaveExit",
           context_module: "sell",
           context_owner_type: "submitArtworkStepAddDimensions",
-          submission_id: "123",
+          submission_id: "internal-id",
           submission_step: "dimensions",
         })
 
-        expect(setMock).toHaveBeenCalledWith("previousSubmissionID", "123")
+        expect(setMock).toHaveBeenCalledWith(
+          "previousSubmissionID",
+          "external-id"
+        )
         expect(setMock).toHaveBeenCalledWith(
           "previousSubmissionStep",
           "dimensions"
@@ -122,10 +127,7 @@ describe("SubmissionLayout", () => {
     it("renders the 'Back' button", () => {
       render(
         <Formik<{}> initialValues={{}} onSubmit={onSubmitMock}>
-          <SellFlowContextProvider
-            submissionID="123"
-            internalSubmissionID="123"
-          >
+          <SellFlowContextProvider submission={submissionMock}>
             <SubmissionLayout />
           </SellFlowContextProvider>
         </Formik>
@@ -141,7 +143,7 @@ describe("SubmissionLayout", () => {
         action: "tappedSubmissionBack",
         context_module: "sell",
         context_owner_type: "submitArtworkStepAddDimensions",
-        submission_id: "123",
+        submission_id: "internal-id",
         submission_step: "dimensions",
       })
     })

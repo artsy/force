@@ -28,10 +28,7 @@ export const SubmissionRoute: React.FC<SubmissionRouteProps> = props => {
       <AppContainer>
         <SellMeta />
 
-        <SellFlowContextProvider
-          submissionID={submission.externalId}
-          internalSubmissionID={submission.internalID}
-        >
+        <SellFlowContextProvider submission={submission}>
           {props.children}
         </SellFlowContextProvider>
       </AppContainer>

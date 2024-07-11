@@ -23,11 +23,10 @@ export const SubmissionHeader: React.FC = () => {
   const { trackTappedSubmissionSaveExit } = useSubmissionTracking()
   const context = useSellFlowContext()
   const formik = useFormikContext()
-  const { isLastStep, submissionID, internalSubmissionID, step } =
-    context?.state || {}
+  const { isLastStep, submission, step } = context?.state || {}
 
   const handleSaveAndExit = async () => {
-    if (!submissionID) return
+    if (!submission?.externalId) return
 
     setIsSubmitting(true)
 
@@ -38,9 +37,9 @@ export const SubmissionHeader: React.FC = () => {
     }
 
     // Save the submission and current step to local storage
-    storePreviousSubmission(submissionID, step)
+    storePreviousSubmission(submission?.externalId, step)
 
-    trackTappedSubmissionSaveExit(internalSubmissionID, step)
+    trackTappedSubmissionSaveExit(submission?.internalID, step)
 
     setIsSubmitting(false)
 
@@ -57,7 +56,7 @@ export const SubmissionHeader: React.FC = () => {
                 <Flex
                   flexDirection="row"
                   justifyContent={[
-                    submissionID ? "end" : "space-between",
+                    submission?.externalId ? "end" : "space-between",
                     "space-between",
                   ]}
                   alignItems="center"
@@ -71,7 +70,7 @@ export const SubmissionHeader: React.FC = () => {
                     </RouterLink>
                   </Media>
 
-                  {submissionID && !isLastStep ? (
+                  {submission?.externalId && !isLastStep ? (
                     <>
                       <Media at="xs">
                         <RouterLink
@@ -117,7 +116,7 @@ export const SubmissionHeader: React.FC = () => {
                           to="/sell"
                           data-testid="exit-link"
                         >
-                          {isLastStep || !submissionID ? "Exit" : ""}
+                          {isLastStep || !submission?.externalId ? "Exit" : ""}
                         </Button>
                       </Media>
                     </>

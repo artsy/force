@@ -7,7 +7,7 @@ export const StepsNavigation: React.FC = () => {
   const { state } = useSellFlowContext()
 
   const pathForStep = (step: string) => {
-    return `/sell/submissions/${state.submissionID}/${step}`
+    return `/sell/submissions/${state.submission?.externalId}/${step}`
   }
 
   const steps = STEPS.filter(step => step !== "thank-you")
