@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<447fbd6c940fa7df8ba3f2019ed4a255>>
+ * @generated SignedSource<<af0016f065e65b24826534873f2a2e01>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,65 +10,34 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
-export type TitleRoute_Test_Query$variables = Record<PropertyKey, never>;
-export type TitleRoute_Test_Query$data = {
+export type sellRoutes_FrameRouteQuery$variables = {
+  id: string;
+};
+export type sellRoutes_FrameRouteQuery$data = {
   readonly submission: {
-    readonly " $fragmentSpreads": FragmentRefs<"SubmissionRoute_submission" | "TitleRoute_submission">;
+    readonly " $fragmentSpreads": FragmentRefs<"FrameRoute_submission">;
   } | null | undefined;
 };
-export type TitleRoute_Test_Query$rawResponse = {
-  readonly submission: {
-    readonly artist: {
-      readonly counts: {
-        readonly artworks: any | null | undefined;
-        readonly forSaleArtworks: any | null | undefined;
-      } | null | undefined;
-      readonly coverArtwork: {
-        readonly avatar: {
-          readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-          } | null | undefined;
-        } | null | undefined;
-        readonly id: string;
-      } | null | undefined;
-      readonly formattedNationalityAndBirthday: string | null | undefined;
-      readonly href: string | null | undefined;
-      readonly id: string;
-      readonly initials: string | null | undefined;
-      readonly internalID: string;
-      readonly name: string | null | undefined;
-      readonly slug: string;
-    } | null | undefined;
-    readonly externalId: string;
-    readonly id: string;
-    readonly internalID: string | null | undefined;
-    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
-    readonly title: string | null | undefined;
-  } | null | undefined;
-};
-export type TitleRoute_Test_Query = {
-  rawResponse: TitleRoute_Test_Query$rawResponse;
-  response: TitleRoute_Test_Query$data;
-  variables: TitleRoute_Test_Query$variables;
+export type sellRoutes_FrameRouteQuery = {
+  response: sellRoutes_FrameRouteQuery$data;
+  variables: sellRoutes_FrameRouteQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "id",
-    "value": "submission-id"
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
   }
 ],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
 v2 = {
   "alias": null,
   "args": null,
@@ -78,14 +47,14 @@ v2 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "TitleRoute_Test_Query",
+    "name": "sellRoutes_FrameRouteQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "ConsignmentSubmission",
         "kind": "LinkedField",
         "name": "submission",
@@ -94,15 +63,10 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "TitleRoute_submission"
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "SubmissionRoute_submission"
+            "name": "FrameRoute_submission"
           }
         ],
-        "storageKey": "submission(id:\"submission-id\")"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -110,13 +74,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "TitleRoute_Test_Query",
+    "name": "sellRoutes_FrameRouteQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "ConsignmentSubmission",
         "kind": "LinkedField",
         "name": "submission",
@@ -137,7 +101,13 @@ return {
             "name": "artist",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -261,38 +231,23 @@ return {
             ],
             "storageKey": null
           },
-          (v1/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "externalId",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "state",
-            "storageKey": null
-          },
           (v2/*: any*/)
         ],
-        "storageKey": "submission(id:\"submission-id\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "f58b003b179d0f4280f548ad2a1432af",
+    "cacheID": "6d22fd7b7c587f0aca6c75322bcf0f13",
     "id": null,
     "metadata": {},
-    "name": "TitleRoute_Test_Query",
+    "name": "sellRoutes_FrameRouteQuery",
     "operationKind": "query",
-    "text": "query TitleRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...TitleRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n\nfragment TitleRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n"
+    "text": "query sellRoutes_FrameRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...FrameRoute_submission\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FrameRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "02ca660f920490aaf1810b09ed05bf54";
+(node as any).hash = "be8db85cb6ece23cc6d7b21082d10058";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<553734721e8d988041cefebf3719bee4>>
+ * @generated SignedSource<<212bbc22c9897f8eed7bf9fb7e18fbf9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" 
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSWASectionSubmitted_submissionState$data = {
   readonly consignmentSubmission: {
+    readonly internalID: string | null | undefined;
     readonly state: ArtworkConsignmentSubmissionState;
     readonly stateHelpMessage: string | null | undefined;
     readonly stateLabel: string | null | undefined;
@@ -42,6 +43,13 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "state",
           "storageKey": null
         },
@@ -67,6 +75,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "313d5e5d8baf7c5cbba15ec6ad2ee7a9";
+(node as any).hash = "1903546687b7941c99e819aab1b220d5";
 
 export default node;

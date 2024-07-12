@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f2c8dd03d95a304fde0034f3fc20b4f0>>
+ * @generated SignedSource<<05e921850282505b37483bce1764eb01>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,9 +9,11 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ThankYouRoute_submission$data = {
   readonly internalID: string | null | undefined;
+  readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   readonly " $fragmentType": "ThankYouRoute_submission";
 };
 export type ThankYouRoute_submission$key = {
@@ -31,12 +33,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "state",
+      "storageKey": null
     }
   ],
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
 
-(node as any).hash = "5378e57c68e2ee6b36d442552fa3ab40";
+(node as any).hash = "171dba6fe796d0ab8c678e663e01238b";
 
 export default node;

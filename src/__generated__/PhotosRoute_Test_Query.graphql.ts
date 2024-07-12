@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fc6bc79cdb877fe6bb810bea600f4587>>
+ * @generated SignedSource<<fdce3e4ff39003b1bfae08d3faff302a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type PhotosRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type PhotosRoute_Test_Query$data = {
   readonly submission: {
@@ -34,6 +35,7 @@ export type PhotosRoute_Test_Query$rawResponse = {
         readonly url: string | null | undefined;
       } | null | undefined> | null | undefined;
     } | null | undefined;
+    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   } | null | undefined;
 };
 export type PhotosRoute_Test_Query = {
@@ -120,6 +122,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Artwork",
             "kind": "LinkedField",
             "name": "myCollectionArtwork",
@@ -200,12 +209,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "73d0ff6d2e6ea4bd63180465137a16de",
+    "cacheID": "f487ab4f419a507ba5673d7dddad8ec4",
     "id": null,
     "metadata": {},
     "name": "PhotosRoute_Test_Query",
     "operationKind": "query",
-    "text": "query PhotosRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  myCollectionArtwork {\n    images {\n      url(version: \"large\")\n    }\n    id\n  }\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
+    "text": "query PhotosRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  myCollectionArtwork {\n    images {\n      url(version: \"large\")\n    }\n    id\n  }\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<76738f21908220d4b34a31bf5aa14b36>>
+ * @generated SignedSource<<b0f538c3fae2ef1a6614dabf1c8937a1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type sellRoutes_SubmissionRouteQuery$variables = {
+export type sellRoutes_ThankYouRouteQuery$variables = {
   id: string;
 };
-export type sellRoutes_SubmissionRouteQuery$data = {
+export type sellRoutes_ThankYouRouteQuery$data = {
   readonly submission: {
-    readonly " $fragmentSpreads": FragmentRefs<"SubmissionRoute_submission">;
+    readonly " $fragmentSpreads": FragmentRefs<"ThankYouRoute_submission">;
   } | null | undefined;
 };
-export type sellRoutes_SubmissionRouteQuery = {
-  response: sellRoutes_SubmissionRouteQuery$data;
-  variables: sellRoutes_SubmissionRouteQuery$variables;
+export type sellRoutes_ThankYouRouteQuery = {
+  response: sellRoutes_ThankYouRouteQuery$data;
+  variables: sellRoutes_ThankYouRouteQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -43,7 +43,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "sellRoutes_SubmissionRouteQuery",
+    "name": "sellRoutes_ThankYouRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -56,7 +56,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SubmissionRoute_submission"
+            "name": "ThankYouRoute_submission"
           }
         ],
         "storageKey": null
@@ -69,7 +69,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "sellRoutes_SubmissionRouteQuery",
+    "name": "sellRoutes_ThankYouRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -84,13 +84,6 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "internalID",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "externalId",
             "storageKey": null
           },
           {
@@ -113,16 +106,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "67d133b1209a390fa53706a28ccdc079",
+    "cacheID": "1efee06de6cb30fd961d3431ff02c33b",
     "id": null,
     "metadata": {},
-    "name": "sellRoutes_SubmissionRouteQuery",
+    "name": "sellRoutes_ThankYouRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_SubmissionRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query sellRoutes_ThankYouRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ThankYouRoute_submission\n    id\n  }\n}\n\nfragment ThankYouRoute_submission on ConsignmentSubmission {\n  internalID\n  state\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9207f5acb78269476cc9d3e18dcb983d";
+(node as any).hash = "1ee99eecd482885887ede24b0f8f936d";
 
 export default node;

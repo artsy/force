@@ -11,6 +11,7 @@ import { graphql, useFragment } from "react-relay"
 const FRAGMENT = graphql`
   fragment ThankYouRoute_submission on ConsignmentSubmission {
     internalID
+    state
   }
 `
 interface ThankYouRouteProps {
@@ -25,6 +26,8 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
     trackTappedViewArtworkInMyCollection,
   } = useSubmissionTracking()
 
+  const isSubmitted = submission.state === "SUBMITTED"
+
   return (
     <FullBleed>
       <AppContainer>
@@ -32,7 +35,9 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
           <Join separator={<Spacer y={4} />}>
             <Join separator={<Spacer y={2} />}>
               <SubmissionStepTitle>
-                Thank you for submitting your artwork
+                {isSubmitted
+                  ? "Thank you for submitting your artwork"
+                  : "Thank you for listing your artwork"}
               </SubmissionStepTitle>
 
               <Text variant="sm">
@@ -41,10 +46,13 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
                 submission will appear in the feature, My Collection.
               </Text>
 
-              <Message variant="success" title="What happens next?">
-                If your artwork is accepted, we will guide you in selecting the
-                best selling option. Additional information may be requested.
-              </Message>
+              {!!isSubmitted && (
+                <Message variant="success" title="What happens next?">
+                  If your artwork is accepted, we will guide you in selecting
+                  the best selling option. Additional information may be
+                  requested.
+                </Message>
+              )}
             </Join>
 
             <Join separator={<Spacer y={2} />}>

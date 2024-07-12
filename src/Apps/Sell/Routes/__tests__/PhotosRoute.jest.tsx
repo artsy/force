@@ -287,31 +287,58 @@ describe("PhotosRoute", () => {
   })
 
   describe("navigation", () => {
-    it("navigates to the details step when Continue button is clicked", async () => {
-      renderWithRelay({
-        ConsignmentSubmission: () => submissionMock,
+    describe("in DRAFT state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        mockPush.mockClear()
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            "/sell/submissions/externalId/details"
+          )
+        })
       })
 
-      screen.getByText("Continue").click()
+      it("navigates to the previous step when the Back button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
 
-      await waitFor(() => {
-        expect(mockPush).toHaveBeenCalledWith(
-          "/sell/submissions/externalId/details"
-        )
+        mockPush.mockClear()
+
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            "/sell/submissions/externalId/title"
+          )
+        })
       })
     })
 
-    it("navigates to the previous step when the back button is clicked", async () => {
-      renderWithRelay({
-        ConsignmentSubmission: () => submissionMock,
-      })
+    describe("in APPROVED state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
 
-      screen.getByText("Back").click()
+        mockPush.mockClear()
 
-      await waitFor(() => {
-        expect(mockPush).toHaveBeenCalledWith(
-          "/sell/submissions/externalId/title"
-        )
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            "/sell/submissions/externalId/details"
+          )
+        })
       })
     })
   })
