@@ -1,5 +1,8 @@
 import { useToasts } from "@artsy/palette"
-import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import {
+  ConsignmentSubmissionStateAggregation,
+  CreateSubmissionMutationInput,
+} from "__generated__/CreateConsignSubmissionMutation.graphql"
 import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
@@ -14,6 +17,12 @@ import { useCursor } from "use-cursor"
 import createLogger from "Utils/logger"
 
 const logger = createLogger("SellFlowContext.tsx")
+
+// If a submission is in one of these states, we will only show the basic steps.
+const BASIC_FLOW_STATES: ConsignmentSubmissionStateAggregation[] = [
+  "DRAFT",
+  "SUBMITTED",
+]
 
 const BASIC_STEPS = [
   "artist",
@@ -115,7 +124,9 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     : (match.location.pathname.split("/").pop() as SellFlowStep)
 
   const isExtended =
-    !!enablePostApprovalSubmissionFlow && submission?.state === "APPROVED"
+    !!enablePostApprovalSubmissionFlow &&
+    !!submission?.state &&
+    !BASIC_FLOW_STATES.includes(submission?.state)
 
   const steps = useMemo(
     () => [
