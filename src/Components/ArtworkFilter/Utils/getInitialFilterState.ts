@@ -1,5 +1,5 @@
 import { Location } from "found"
-import { ArtworkFilters } from "../ArtworkFilterContext"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { allowedFilters } from "./allowedFilters"
 import { paramsToCamelCase } from "./urlBuilder"
 

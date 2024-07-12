@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<505837aaba46b4926fefc81ae5f157a2>>
+ * @generated SignedSource<<84b4778344041c64d391fb3297cc6fa8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -284,16 +284,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2bd34abc90970abe0d5af720753c1651",
+    "cacheID": "089f33429200f3afdbd429da4c6e7581",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_OverviewQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  internalID\n  name\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    artworks\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) @principalField {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  internalID\n  name\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    artworks\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f2a3f47e12d676a81af105092a6c94cf";
+(node as any).hash = "0c76e4fcbd4d8d7591f0539a009052df";
 
 export default node;
