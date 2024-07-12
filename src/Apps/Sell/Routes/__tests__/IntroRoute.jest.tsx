@@ -29,7 +29,7 @@ beforeAll(() => {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "/intro" } },
+    match: { location: { pathname: "/sell/submissions/intro" } },
   }))
 })
 

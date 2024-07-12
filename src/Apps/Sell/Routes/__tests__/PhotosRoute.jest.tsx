@@ -69,7 +69,7 @@ beforeEach(() => {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "submissions/submission-id/photos" } },
+    match: { location: { pathname: "/sell/submissions/submission-id/photos" } },
   }))
 
   //@ts-ignore

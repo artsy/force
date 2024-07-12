@@ -36,7 +36,9 @@ beforeEach(() => {
       replace: mockReplace,
     },
     match: {
-      location: { pathname: "/submissions/submission-id/additional-documents" },
+      location: {
+        pathname: "/sell/submissions/submission-id/additional-documents",
+      },
     },
   }))
 

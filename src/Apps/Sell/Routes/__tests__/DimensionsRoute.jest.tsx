@@ -45,7 +45,9 @@ beforeEach(() => {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "submissions/submission-id/dimensions" } },
+    match: {
+      location: { pathname: "/sell/submissions/submission-id/dimensions" },
+    },
   }))
 
   submitMutation = jest.fn(() => ({ catch: () => {} }))
