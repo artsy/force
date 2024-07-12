@@ -57,7 +57,7 @@ export const ArtistShowsRouteFragmentContainer = createFragmentContainer(
           upcomingShowsStatus: { type: "String", defaultValue: "upcoming" }
           upcomingShowsSort: { type: "ShowSorts", defaultValue: START_AT_ASC }
         ) {
-        artist(id: $artistID) {
+        artist(id: $artistID) @principalField {
           name
           # TODO: 'status' should be an enum and accept multiple statuses
           currentShowsCount: showsConnection(first: 1, status: "running") {
