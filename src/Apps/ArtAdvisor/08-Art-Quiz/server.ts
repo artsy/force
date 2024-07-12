@@ -43,6 +43,20 @@ const createArtworkLike = async (req: ArtsyRequest, res: ArtsyResponse) => {
   res.json(result)
 }
 
+const createArtworkDislike = async (req: ArtsyRequest, res: ArtsyResponse) => {
+  let { userId, artworkId } = req.body
+
+  if (!userId) throw new Error("Provide a userId")
+  if (!artworkId) throw new Error("Provide an artworkId")
+
+  const result = await weaviateClient.reactToArtwork({
+    userInternalID: userId,
+    artworkInternalID: artworkId,
+    reaction: "dislike",
+  })
+  res.json(result)
+}
+
 const getQuizResults = async (req: ArtsyRequest, res: ArtsyResponse) => {
   const { userId, limit } = req.query
 
@@ -56,7 +70,7 @@ const getQuizResults = async (req: ArtsyRequest, res: ArtsyResponse) => {
 export const router = express.Router()
 
 router.post("/artworks/likes", createArtworkLike)
-router.post("/artworks/dislikes", createArtworkLike)
+router.post("/artworks/dislikes", createArtworkDislike)
 router.get("/artworks/quiz_results", getQuizResults)
 router.post("/users", createUser)
 router.get("/users/:id", getUser)
