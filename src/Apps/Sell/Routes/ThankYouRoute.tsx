@@ -12,6 +12,7 @@ const FRAGMENT = graphql`
   fragment ThankYouRoute_submission on ConsignmentSubmission {
     internalID
     state
+    myCollectionArtworkID
   }
 `
 interface ThankYouRouteProps {
@@ -19,14 +20,21 @@ interface ThankYouRouteProps {
 }
 
 export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
-  const submission = useFragment(FRAGMENT, props.submission)
+  const { myCollectionArtworkID, internalID, state } = useFragment(
+    FRAGMENT,
+    props.submission
+  )
 
   const {
     trackTappedSubmitAnotherWork,
     trackTappedViewArtworkInMyCollection,
   } = useSubmissionTracking()
 
-  const isSubmitted = submission.state === "SUBMITTED"
+  const isSubmitted = state === "SUBMITTED"
+
+  const myCollectionUrl = myCollectionArtworkID
+    ? `/my-collection/artwork/${myCollectionArtworkID}`
+    : "/my-collection"
 
   return (
     <FullBleed>
@@ -61,7 +69,7 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
                 as={RouterLink}
                 to="/sell/submissions/new"
                 onClick={() => {
-                  trackTappedSubmitAnotherWork(submission.internalID)
+                  trackTappedSubmitAnotherWork(internalID)
                 }}
                 width="100%"
                 data-testid="submit-another-work"
@@ -72,9 +80,9 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
               <Button
                 // @ts-ignore
                 as={RouterLink}
-                to="/my-collection"
+                to={myCollectionUrl}
                 onClick={() => {
-                  trackTappedViewArtworkInMyCollection(submission.internalID)
+                  trackTappedViewArtworkInMyCollection(internalID)
                 }}
                 variant="secondaryBlack"
                 width="100%"

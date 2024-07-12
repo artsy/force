@@ -169,10 +169,15 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   useEffect(() => {
     const newStep = steps[index]
 
-    if (isNewSubmission || !newStep) return
+    // If we are navigating away from the Sell flow, we don't want to redirect
+    const isSellFlowRoute = match.location.pathname.includes(
+      "/sell/submissions"
+    )
+
+    if (isNewSubmission || !newStep || !isSellFlowRoute) return
 
     router.push(`/sell/submissions/${submission?.externalId}/${newStep}`)
-  }, [router, index, isNewSubmission, submission, steps])
+  }, [index, isNewSubmission, match, router, submission, steps])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
     const response = submitCreateSubmissionMutation({

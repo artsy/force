@@ -43,6 +43,9 @@ beforeEach(() => {
       location: { pathname: "submissions/submission-id/thank-you" },
     },
   }))
+
+  mockPush.mockClear()
+  trackEvent.mockClear()
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -113,23 +116,52 @@ describe("ThankYouRoute", () => {
     })
   })
 
-  it("clicking on View Artwork in My Collection navigates to My Collection route", () => {
-    renderWithRelay({})
+  describe("View Artwork in My Collection button", () => {
+    it("navigates to artwork page & tracks the event", () => {
+      renderWithRelay()
 
-    expect(
-      screen.getByText("View Artwork in My Collection")
-    ).toBeInTheDocument()
+      expect(
+        screen.getByText("View Artwork in My Collection")
+      ).toBeInTheDocument()
 
-    const viewCollectionButton = screen.getByTestId("view-collection")
-    expect(viewCollectionButton).toHaveAttribute("href", "/my-collection")
+      const viewCollectionButton = screen.getByTestId("view-collection")
+      expect(viewCollectionButton).toHaveAttribute(
+        "href",
+        '/my-collection/artwork/<mock-value-for-field-"myCollectionArtworkID">'
+      )
 
-    viewCollectionButton.click()
+      viewCollectionButton.click()
 
-    expect(trackEvent).toHaveBeenCalledWith({
-      action: "tappedViewArtworkInMyCollection",
-      context_module: "sell",
-      context_owner_type: "submitArtworkStepCompleteYourSubmission",
-      submission_id: '<mock-value-for-field-"internalID">',
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "tappedViewArtworkInMyCollection",
+        context_module: "sell",
+        context_owner_type: "submitArtworkStepCompleteYourSubmission",
+        submission_id: '<mock-value-for-field-"internalID">',
+      })
+    })
+
+    describe("when My Collection artwork ID is NOT present", () => {
+      it("navigates to artwork grid", () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ myCollectionArtworkID: null }),
+        })
+
+        expect(
+          screen.getByText("View Artwork in My Collection")
+        ).toBeInTheDocument()
+
+        const viewCollectionButton = screen.getByTestId("view-collection")
+        expect(viewCollectionButton).toHaveAttribute("href", "/my-collection")
+
+        viewCollectionButton.click()
+
+        expect(trackEvent).toHaveBeenCalledWith({
+          action: "tappedViewArtworkInMyCollection",
+          context_module: "sell",
+          context_owner_type: "submitArtworkStepCompleteYourSubmission",
+          submission_id: '<mock-value-for-field-"internalID">',
+        })
+      })
     })
   })
 })
