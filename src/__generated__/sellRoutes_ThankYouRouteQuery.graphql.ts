@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b0f538c3fae2ef1a6614dabf1c8937a1>>
+ * @generated SignedSource<<60b64f8d788dcae12aff770fa6a81320>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -97,6 +97,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "myCollectionArtworkID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -106,12 +113,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1efee06de6cb30fd961d3431ff02c33b",
+    "cacheID": "400bc17b5cf564c2a35327bcde86e22c",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_ThankYouRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_ThankYouRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ThankYouRoute_submission\n    id\n  }\n}\n\nfragment ThankYouRoute_submission on ConsignmentSubmission {\n  internalID\n  state\n}\n"
+    "text": "query sellRoutes_ThankYouRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ThankYouRoute_submission\n    id\n  }\n}\n\nfragment ThankYouRoute_submission on ConsignmentSubmission {\n  internalID\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();

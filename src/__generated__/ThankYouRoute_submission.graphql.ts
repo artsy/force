@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<05e921850282505b37483bce1764eb01>>
+ * @generated SignedSource<<921b582305d4c97863116c636b7af4b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRA
 import { FragmentRefs } from "relay-runtime";
 export type ThankYouRoute_submission$data = {
   readonly internalID: string | null | undefined;
+  readonly myCollectionArtworkID: string | null | undefined;
   readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   readonly " $fragmentType": "ThankYouRoute_submission";
 };
@@ -40,12 +41,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "state",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "myCollectionArtworkID",
+      "storageKey": null
     }
   ],
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
 
-(node as any).hash = "171dba6fe796d0ab8c678e663e01238b";
+(node as any).hash = "23abbccc0a924ccac794f641333186d7";
 
 export default node;

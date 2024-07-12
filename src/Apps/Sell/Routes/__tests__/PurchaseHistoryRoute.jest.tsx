@@ -48,7 +48,9 @@ beforeAll(() => {
       replace: mockReplace,
     },
     match: {
-      location: { pathname: "submissions/submission-id/purchase-history" },
+      location: {
+        pathname: "/sell/submissions/submission-id/purchase-history",
+      },
     },
   }))
 

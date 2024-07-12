@@ -30,7 +30,7 @@ beforeAll(() => {
     return { isLoggedIn: true }
   })
 
-  pathnameMock = "/submissions/submission-id/artist"
+  pathnameMock = "/sell/submissions/submission-id/artist"
 
   mockUseRouter.mockImplementation(() => ({
     router: {
@@ -104,7 +104,7 @@ describe("ArtistRoute", () => {
 
   describe("when creating a new submission", () => {
     beforeAll(() => {
-      pathnameMock = "/submissions/new"
+      pathnameMock = "/sell/submissions/new"
     })
 
     it("calls createSubmission when a new artist is selected", async () => {

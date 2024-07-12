@@ -40,7 +40,7 @@ describe("SubmissionLayout", () => {
         replace: mockReplace,
       },
       match: {
-        location: { pathname: "/submissions/submission-id/dimensions" },
+        location: { pathname: "/sell/submissions/submission-id/dimensions" },
       },
     }))
   })
