@@ -154,7 +154,7 @@ const CollectorSignalsLine: React.FC = () => {
 }
 
 const EmptyLine: React.FC = () => {
-  return <Text variant="xs" />
+  return <Text variant="xs"> &nbsp; </Text>
 }
 
 const HighDemandInfo = () => {
