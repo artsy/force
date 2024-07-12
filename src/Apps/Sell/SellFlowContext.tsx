@@ -177,7 +177,14 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     if (isNewSubmission || !newStep || !isSellFlowRoute) return
 
     router.push(`/sell/submissions/${submission?.externalId}/${newStep}`)
-  }, [index, isNewSubmission, match, router, submission, steps])
+  }, [
+    index,
+    isNewSubmission,
+    match.location.pathname,
+    router,
+    submission,
+    steps,
+  ])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
     const response = submitCreateSubmissionMutation({
