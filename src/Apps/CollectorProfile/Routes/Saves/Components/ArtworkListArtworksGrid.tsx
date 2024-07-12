@@ -22,6 +22,8 @@ import { isEqual } from "lodash"
 import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { ArtworkListEmptyStateFragmentContainer } from "./ArtworkListEmptyState"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
+import { ArtworkGridContext_artworksConnection$key } from "__generated__/ArtworkGridContext_artworksConnection.graphql"
 
 export const ARTWORK_LIST_ARTWORK_GRID_ID = "artworksGrid"
 
@@ -156,29 +158,36 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
       <ArtworkListArtworksGridHeader />
       <Spacer y={2} />
       <LoadingArea isLoading={fetching}>
-        <ArtworkGrid
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          artworks={artworks!}
-          columnCount={[2, 3]}
-          contextModule={ContextModule.artworkGrid}
-          itemMargin={40}
-          emptyStateComponent={null}
-          savedListId={me.artworkList?.internalID}
-          onBrickClick={(artwork, artworkIndex) => {
-            // TODO: Clarify moments about analytics
-            trackEvent(
-              clickedMainArtworkGrid({
-                contextPageOwnerType: contextPageOwnerType,
-                contextPageOwnerSlug,
-                contextPageOwnerId,
-                destinationPageOwnerId: artwork.internalID,
-                destinationPageOwnerSlug: artwork.slug,
-                position: artworkIndex,
-                sort: context?.filters?.sort,
-              })
-            )
-          }}
-        />
+        <ArtworkGridContextProvider
+          me={me}
+          artworksConnection={
+            artworks as ArtworkGridContext_artworksConnection$key
+          }
+        >
+          <ArtworkGrid
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            artworks={artworks!}
+            columnCount={[2, 3]}
+            contextModule={ContextModule.artworkGrid}
+            itemMargin={40}
+            emptyStateComponent={null}
+            savedListId={me.artworkList?.internalID}
+            onBrickClick={(artwork, artworkIndex) => {
+              // TODO: Clarify moments about analytics
+              trackEvent(
+                clickedMainArtworkGrid({
+                  contextPageOwnerType: contextPageOwnerType,
+                  contextPageOwnerSlug,
+                  contextPageOwnerId,
+                  destinationPageOwnerId: artwork.internalID,
+                  destinationPageOwnerSlug: artwork.slug,
+                  position: artworkIndex,
+                  sort: context?.filters?.sort,
+                })
+              )
+            }}
+          />
+        </ArtworkGridContextProvider>
 
         <Pagination
           hasNextPage={hasNextPage}
@@ -219,9 +228,11 @@ export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
               }
             }
             ...ArtworkGrid_artworks
+            ...ArtworkGridContext_artworksConnection
           }
         }
         ...ArtworkListEmptyState_me @arguments(listID: $listID)
+        ...ArtworkGridContext_me
       }
     `,
   }

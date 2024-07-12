@@ -136,10 +136,19 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
   )
 }
 
-const ArtworkSignalsLine: React.FC = () => {
+const CollectorSignalsLine: React.FC = () => {
+  // return signal based on signal priority
+  // if (collectorSignals.partnerOffer) { return <PartnerOfferSignal /> }
   return (
-    <Text variant="xs" color="black60" overflowEllipsis>
-      Artwork Signal
+    <Text
+      variant="xs"
+      color="blue100"
+      backgroundColor="blue10"
+      px={0.5}
+      alignSelf="flex-start"
+      borderRadius={3}
+    >
+      Limited-Time Offer
     </Text>
   )
 }
@@ -213,7 +222,10 @@ export const Details: React.FC<DetailsProps> = ({
     isAuctionArtwork,
     hideLotLabel,
     saveOnlyToDefaultList,
+    collectorSignals: allCollectorSignals,
   } = useArtworkGridContext()
+
+  const collectorSignals = allCollectorSignals[rest.artwork.internalID]
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =
@@ -221,7 +233,7 @@ export const Details: React.FC<DetailsProps> = ({
 
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
-  const hasSignals = true
+  const hasSignals = !!collectorSignals //check if there are any signals
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -278,7 +290,7 @@ export const Details: React.FC<DetailsProps> = ({
 
       <Flex justifyContent="space-between">
         <Flex flexDirection="column">
-          {hasSignals && <ArtworkSignalsLine {...rest} />}
+          {hasSignals && <CollectorSignalsLine {...rest} />}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
           )}
