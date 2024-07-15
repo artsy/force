@@ -38,7 +38,13 @@ interface InquiryInquiryProps {
 const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const { user } = useSystemContext()
 
-  const { next, setInquiry, inquiry, artworkID } = useInquiryContext()
+  const {
+    next,
+    setInquiry,
+    inquiry,
+    artworkID,
+    setContext,
+  } = useInquiryContext()
 
   const [mode, setMode] = useState<Mode>("Pending")
 
@@ -70,12 +76,19 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
     setMode("Sending")
 
     try {
-      await submitArtworkInquiryRequest({
+      const res = await submitArtworkInquiryRequest({
         artworkID,
         message: inquiry.message,
       })
+
+      setContext({
+        inquiryID: res.submitInquiryRequestMutation?.inquiryRequest?.internalID,
+      })
+
       setMode("Success")
+
       await wait(500)
+
       next()
     } catch (err) {
       logger.error(err)

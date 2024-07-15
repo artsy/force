@@ -82,13 +82,11 @@ export const InquiryLogin: React.FC = () => {
         location: {
           city: user.location?.city,
           state: user.location?.state,
-          stateCode: user.location?.stateCode,
           postalCode: user.location?.postalCode,
           country: user.location?.country,
         },
         profession: user.profession,
         requiresReload: true,
-        shareFollows: user.share_follows,
       })
 
       // Creates an authenticated relay environment now that we have a user

@@ -2,9 +2,9 @@ import { InquiryBasicInfoFragmentContainer } from "Components/Inquiry/Views/Inqu
 import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { fill } from "Components/Inquiry/__tests__/util"
+import { fireEvent, screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("../../Hooks/useUpdateMyUserProfile")
@@ -13,7 +13,7 @@ jest.mock("Components/LocationAutocompleteInput", () => ({
   LocationAutocompleteInput: () => null,
 }))
 
-const { getWrapper } = setupTestWrapper({
+const { renderWithRelay } = setupTestWrapperTL({
   Component: InquiryBasicInfoFragmentContainer,
   query: graphql`
     query InquiryBasicInfo_Test_Query @relay_test_operation {
@@ -51,55 +51,92 @@ describe("InquiryBasicInfo", () => {
   })
 
   it("renders correctly", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Partner: () => ({ name: "Example Partner" }),
     })
 
-    expect(wrapper.html()).toContain(
-      "Tell Example Partner a little bit about yourself."
-    )
-    expect(wrapper.html()).toContain(
-      "Galleries are more likely to respond to collectors who share their profile."
-    )
+    expect(
+      screen.getByText("Tell Example Partner a little bit about yourself.")
+    ).toBeInTheDocument()
   })
 
   it("updates the collector profile when the form is submitted", async () => {
-    const { wrapper } = getWrapper()
+    renderWithRelay({
+      Me: () => ({
+        location: null,
+        name: "Example User",
+        profession: null,
+      }),
+    })
 
     expect(mockSubmitUpdateMyUserProfile).not.toBeCalled()
     expect(mockNext).not.toBeCalled()
 
-    fill(wrapper, "otherRelevantPositions", "Collector")
+    const input = screen.getByPlaceholderText(
+      "Memberships, institutions, positions"
+    )
+    fireEvent.change(input, { target: { value: "Collector" } })
 
-    wrapper.find("form").simulate("submit")
+    screen.getByText("Save & Continue").click()
 
     await flushPromiseQueue()
 
     expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
+      name: "Example User",
+      location: {
+        city: null,
+        country: null,
+        countryCode: null,
+        postalCode: null,
+        state: null,
+      },
+      profession: "",
       otherRelevantPositions: "Collector",
-      shareFollows: true,
     })
 
     expect(mockNext).toBeCalled()
   })
 
   it("updates the collector profile when the form is submitted with more information", async () => {
-    const { wrapper } = getWrapper()
+    renderWithRelay({
+      Me: () => ({
+        location: {
+          city: "New York",
+          country: "United States",
+          state: "NY",
+        },
+        name: "Example User",
+      }),
+    })
 
     expect(mockSubmitUpdateMyUserProfile).not.toBeCalled()
     expect(mockNext).not.toBeCalled()
 
-    fill(wrapper, "profession", "Carpenter")
-    fill(wrapper, "otherRelevantPositions", "Artist")
+    const professionInput = screen.getByPlaceholderText("Profession")
+    fireEvent.change(professionInput, { target: { value: "Carpenter" } })
 
-    wrapper.find("form").simulate("submit")
+    const otherRelevantPositionsInput = screen.getByPlaceholderText(
+      "Memberships, institutions, positions"
+    )
+    fireEvent.change(otherRelevantPositionsInput, {
+      target: { value: "Artist" },
+    })
+
+    screen.getByText("Save & Continue").click()
 
     await flushPromiseQueue()
 
     expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
+      name: "Example User",
+      location: {
+        city: "New York",
+        country: "United States",
+        countryCode: null,
+        postalCode: null,
+        state: "NY",
+      },
       profession: "Carpenter",
       otherRelevantPositions: "Artist",
-      shareFollows: true,
     })
 
     expect(mockNext).toBeCalled()

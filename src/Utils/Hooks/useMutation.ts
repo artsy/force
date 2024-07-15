@@ -1,4 +1,4 @@
-import { commitMutation, GraphQLTaggedNode } from "react-relay"
+import { commitMutation, Environment, GraphQLTaggedNode } from "react-relay"
 import { MutationParameters, MutationConfig } from "relay-runtime"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
@@ -6,12 +6,15 @@ export const useMutation = <T extends MutationParameters>({
   mutation,
   optimisticResponse,
   updater,
+  relayEnvironment,
 }: {
   mutation: GraphQLTaggedNode
   optimisticResponse?: T["response"]
   updater?: MutationConfig<T>["updater"]
+  relayEnvironment?: Environment | null
 }) => {
-  const { relayEnvironment } = useSystemContext()
+  const { relayEnvironment: defaultRelayEnvironment } = useSystemContext()
+  const environment = relayEnvironment || defaultRelayEnvironment
 
   const submitMutation = (props: {
     variables: T["variables"]
@@ -20,7 +23,7 @@ export const useMutation = <T extends MutationParameters>({
     const { variables = {}, rejectIf } = props
 
     return new Promise((resolve, reject) => {
-      commitMutation<T>(relayEnvironment, {
+      commitMutation<T>(environment, {
         mutation,
         variables,
         updater,

@@ -4,6 +4,7 @@ import { Environment, commitMutation, graphql } from "react-relay"
 import {
   SubmitInquiryRequestMutationInput,
   useArtworkInquiryRequestMutation,
+  useArtworkInquiryRequestMutation$data,
 } from "__generated__/useArtworkInquiryRequestMutation.graphql"
 import { useInquiryContext } from "./useInquiryContext"
 
@@ -31,7 +32,9 @@ export const useArtworkInquiryRequest = () => {
   const submitArtworkInquiryRequest = ({
     artworkID,
     ...rest
-  }: UseArtworkInquiryRequestInput) => {
+  }: UseArtworkInquiryRequestInput): Promise<
+    useArtworkInquiryRequestMutation$data
+  > => {
     return new Promise((resolve, reject) => {
       commitMutation<useArtworkInquiryRequestMutation>(
         relayEnvironment.current as Environment,

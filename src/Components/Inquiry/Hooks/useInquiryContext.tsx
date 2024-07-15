@@ -16,24 +16,22 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Visited } from "Components/Inquiry/Visited"
 import { logger } from "Components/Inquiry/util"
-import { Location } from "Components/LocationAutocompleteInput"
 import { Spinner } from "@artsy/palette"
 import { Environment as IEnvironment } from "react-relay"
 import { setAfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
-export type Context = {
+export interface Context
+  extends Omit<useInquiryContext_me$data, " $fragmentType"> {
   askSpecialist: boolean
-  collectorLevel?: number | null
   enableCreateAlert: boolean
   isLoggedIn: boolean
-  location?: Location | null
-  otherRelevantPositions?: string | null
-  profession?: string | null
   requiresReload: boolean
-  shareFollows: boolean
+  /** The ID of the inquiry after it's been sent */
+  inquiryID?: string
 }
 
 export const DEFAULT_CONTEXT: Context = {
+  internalID: "guest",
   askSpecialist: false,
   collectorLevel: null,
   enableCreateAlert: false,
@@ -42,7 +40,8 @@ export const DEFAULT_CONTEXT: Context = {
   otherRelevantPositions: null,
   profession: null,
   requiresReload: false,
-  shareFollows: false,
+  userInterestsConnection: { totalCount: 0 },
+  collectorProfile: { lastUpdatePromptAt: null },
 }
 
 export const DEFAULT_MESSAGE =
@@ -210,14 +209,7 @@ const InquiryContextContext: React.FC<InquiryContextContextProps> = ({
   const { setContext } = useInquiryContext()
 
   useEffect(() => {
-    setContext({
-      collectorLevel: me?.collectorLevel,
-      isLoggedIn: !!me,
-      location: !!me?.location?.city ? { city: me.location.city } : null,
-      otherRelevantPositions: me?.otherRelevantPositions,
-      profession: me?.profession,
-      shareFollows: !!me?.shareFollows,
-    })
+    setContext({ ...me, isLoggedIn: !!me })
   }, [me, setContext])
 
   return <>{children}</>
@@ -228,13 +220,22 @@ const InquiryContextContextFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment useInquiryContext_me on Me {
+        internalID
         collectorLevel
         location {
           city
+          state
+          postalCode
+          country
         }
         otherRelevantPositions
         profession
-        shareFollows
+        userInterestsConnection(interestType: ARTIST, first: 1) {
+          totalCount
+        }
+        collectorProfile {
+          lastUpdatePromptAt
+        }
       }
     `,
   }
