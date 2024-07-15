@@ -3,7 +3,7 @@ import {
   NotificationTypesEnum,
 } from "__generated__/NotificationsList_viewer.graphql"
 
-export type Notification = NonNullable<
+export type NotificationNode = NonNullable<
   NonNullable<
     NonNullable<NotificationsList_viewer$data["notifications"]>["edges"]
   >[0]
@@ -11,7 +11,10 @@ export type Notification = NonNullable<
 
 export const shouldDisplayNotification = (
   notification:
-    | Pick<NonNullable<Notification>, "notificationType" | "artworks" | "item">
+    | Pick<
+        NonNullable<NotificationNode>,
+        "notificationType" | "artworks" | "item"
+      >
     | null
     | undefined
 ) => {
