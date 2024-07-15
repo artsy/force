@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e92a2b36d3b051ce0399dbf4d78b4001>>
+ * @generated SignedSource<<ee913479cfdaa5c521d6101c97893504>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,10 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CollectorProfileArtistsAddDialogQuery$variables = {
+export type CollectorProfileArtistsAddQuery$variables = {
   query: string;
 };
-export type CollectorProfileArtistsAddDialogQuery$data = {
+export type CollectorProfileArtistsAddQuery$data = {
   readonly matchConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -23,9 +23,9 @@ export type CollectorProfileArtistsAddDialogQuery$data = {
     } | null | undefined> | null | undefined;
   } | null | undefined;
 };
-export type CollectorProfileArtistsAddDialogQuery = {
-  response: CollectorProfileArtistsAddDialogQuery$data;
-  variables: CollectorProfileArtistsAddDialogQuery$variables;
+export type CollectorProfileArtistsAddQuery = {
+  response: CollectorProfileArtistsAddQuery$data;
+  variables: CollectorProfileArtistsAddQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -80,7 +80,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CollectorProfileArtistsAddDialogQuery",
+    "name": "CollectorProfileArtistsAddQuery",
     "selections": [
       {
         "alias": null,
@@ -136,7 +136,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CollectorProfileArtistsAddDialogQuery",
+    "name": "CollectorProfileArtistsAddQuery",
     "selections": [
       {
         "alias": null,
@@ -332,16 +332,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0fb4c855836423ef06f449a609763aab",
+    "cacheID": "0583707b802770baae3e85ce5c84e632",
     "id": null,
     "metadata": {},
-    "name": "CollectorProfileArtistsAddDialogQuery",
+    "name": "CollectorProfileArtistsAddQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileArtistsAddDialogQuery(\n  $query: String!\n) {\n  matchConnection(term: $query, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        ...CollectorProfileArtistsAddResult_artist\n        ... on Artist {\n          internalID\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n        ... on Profile {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CollectorProfileArtistsAddResult_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query CollectorProfileArtistsAddQuery(\n  $query: String!\n) {\n  matchConnection(term: $query, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        ...CollectorProfileArtistsAddResult_artist\n        ... on Artist {\n          internalID\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n        ... on Profile {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CollectorProfileArtistsAddResult_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c674d0994c913ea605959a3086849049";
+(node as any).hash = "560d6abd7de9eeff4da971c906493602";
 
 export default node;
