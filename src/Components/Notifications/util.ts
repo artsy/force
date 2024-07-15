@@ -9,7 +9,12 @@ export type Notification = NonNullable<
   >[0]
 >["node"]
 
-export const shouldDisplayNotification = (notification: Notification) => {
+export const shouldDisplayNotification = (
+  notification:
+    | Pick<NonNullable<Notification>, "notificationType" | "artworks" | "item">
+    | null
+    | undefined
+) => {
   if (!notification) return false
 
   if (isArtworksBasedNotification(notification.notificationType)) {
