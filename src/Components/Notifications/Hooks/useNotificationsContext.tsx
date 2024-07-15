@@ -1,6 +1,6 @@
 import { NotificationType } from "Components/Notifications/types"
 import { useRouter } from "System/Hooks/useRouter"
-import { createContext, FC, useState, useContext, useEffect } from "react"
+import { createContext, FC, useContext, useEffect, useState } from "react"
 
 export type State = {
   currentNotificationId: string | null
@@ -41,7 +41,8 @@ export const NotificationsContextProvider: FC<NotificationsContextProviderProps>
     if (!match.params.notificationId) return
 
     setCurrentNotificationId(match.params.notificationId)
-  }, [match.params.notificationId, setCurrentNotificationId])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [match.params.notificationId])
 
   return (
     <NotificationsContext.Provider
