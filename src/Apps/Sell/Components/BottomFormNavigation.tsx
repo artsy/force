@@ -121,7 +121,7 @@ const BottomFormNextButton = () => {
   return (
     <Button
       variant="primaryBlack"
-      disabled={!isValid}
+      disabled={!isValid || isSubmitting || loading}
       loading={isSubmitting || loading}
       onClick={onNext}
       data-testid="bottom-form-next-button"

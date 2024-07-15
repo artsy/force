@@ -20,11 +20,15 @@ jest.mock("System/Hooks/useRouter", () => ({
 }))
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/Hooks/useSystemContext")
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
 
 const submissionMock: Partial<
   DetailsRoute_Test_Query$rawResponse["submission"]
 > = {
   category: "Painting",
+  state: "DRAFT",
 }
 
 beforeEach(() => {
@@ -37,7 +41,9 @@ beforeEach(() => {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "submissions/submission-id/details" } },
+    match: {
+      location: { pathname: "/sell/submissions/submission-id/details" },
+    },
   }))
 
   submitMutation = jest.fn(() => ({ catch: () => {} }))
@@ -162,6 +168,57 @@ describe("DetailsRoute", () => {
 
       await waitFor(() => {
         expect(submitMutation).not.toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe("navigation", () => {
+    describe("in DRAFT state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+          )
+        })
+      })
+
+      it("navigates to the previous step when the Back button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/photos'
+          )
+        })
+      })
+    })
+
+    describe("in APPROVED state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+          )
+        })
       })
     })
   })

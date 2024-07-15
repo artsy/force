@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6825244433cf495dcced4b8b599ac81c>>
+ * @generated SignedSource<<ce92b8a155a3b0a98b3752edc75becfa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type PhoneNumberRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type PhoneNumberRoute_Test_Query$data = {
   readonly me: {
@@ -32,6 +33,7 @@ export type PhoneNumberRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
     readonly userPhoneNumber: {
       readonly display: string | null | undefined;
       readonly regionCode: string | null | undefined;
@@ -162,6 +164,13 @@ return {
             "name": "externalId",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
           (v3/*: any*/)
         ],
         "storageKey": "submission(id:\"submission-id\")"
@@ -207,12 +216,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b1f17baf13e9b2cfb3049e4856af0573",
+    "cacheID": "0c8ee08600966b80e333ba172ff942ab",
     "id": null,
     "metadata": {},
     "name": "PhoneNumberRoute_Test_Query",
     "operationKind": "query",
-    "text": "query PhoneNumberRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...PhoneNumberRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...PhoneNumberRoute_me\n    id\n  }\n}\n\nfragment PhoneNumberRoute_me on Me {\n  internalID\n  phoneNumber {\n    regionCode\n    display(format: NATIONAL)\n  }\n}\n\nfragment PhoneNumberRoute_submission on ConsignmentSubmission {\n  userPhoneNumber {\n    display\n    regionCode\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
+    "text": "query PhoneNumberRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...PhoneNumberRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...PhoneNumberRoute_me\n    id\n  }\n}\n\nfragment PhoneNumberRoute_me on Me {\n  internalID\n  phoneNumber {\n    regionCode\n    display(format: NATIONAL)\n  }\n}\n\nfragment PhoneNumberRoute_submission on ConsignmentSubmission {\n  userPhoneNumber {\n    display\n    regionCode\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();

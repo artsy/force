@@ -24,7 +24,7 @@ beforeEach(() => {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "/submissions/new" } },
+    match: { location: { pathname: "/sell/submissions/new" } },
   }))
 })
 

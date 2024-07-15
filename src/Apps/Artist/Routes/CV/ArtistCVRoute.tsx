@@ -13,23 +13,27 @@ interface ArtistCVRouteProps {
 const ArtistCVRoute: React.FC<ArtistCVRouteProps> = ({ viewer }) => {
   const { t } = useTranslation()
 
+  if (!viewer) {
+    return null
+  }
+
   return (
     <>
       <MetaTags title={`${viewer?.soloShows?.name} - CV | Artsy`} />
 
       <Join separator={<Spacer y={4} />}>
         <ArtistCVGroupRefetchContainer
-          artist={viewer.soloShows!}
+          artist={viewer.soloShows}
           title={t("artistPage.cv.soloTitle")}
         />
 
         <ArtistCVGroupRefetchContainer
-          artist={viewer.groupShows!}
+          artist={viewer.groupShows}
           title={t("artistPage.cv.groupTitle")}
         />
 
         <ArtistCVGroupRefetchContainer
-          artist={viewer.fairBooths!}
+          artist={viewer.fairBooths}
           title={t("artistPage.cv.fairTitle")}
         />
       </Join>
@@ -42,14 +46,16 @@ export const ArtistCVRouteFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment ArtistCVRoute_viewer on Viewer {
-        soloShows: artist(id: $artistID) {
+        soloShows: artist(id: $artistID)
+          @principalField
+          @required(action: NONE) {
           ...ArtistCVGroup_artist @arguments(atAFair: false, soloShow: true)
           name
         }
-        groupShows: artist(id: $artistID) {
+        groupShows: artist(id: $artistID) @required(action: NONE) {
           ...ArtistCVGroup_artist @arguments(atAFair: false, soloShow: false)
         }
-        fairBooths: artist(id: $artistID) {
+        fairBooths: artist(id: $artistID) @required(action: NONE) {
           ...ArtistCVGroup_artist @arguments(atAFair: true)
         }
       }

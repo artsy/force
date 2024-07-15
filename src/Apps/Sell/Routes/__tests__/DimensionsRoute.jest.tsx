@@ -27,6 +27,7 @@ const submissionMock: Partial<
   DimensionsRoute_Test_Query$rawResponse["submission"]
 > = {
   dimensionsMetric: "in",
+  state: "DRAFT",
 }
 
 beforeEach(() => {
@@ -44,7 +45,9 @@ beforeEach(() => {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "submissions/submission-id/dimensions" } },
+    match: {
+      location: { pathname: "/sell/submissions/submission-id/dimensions" },
+    },
   }))
 
   submitMutation = jest.fn(() => ({ catch: () => {} }))
@@ -107,6 +110,10 @@ describe("DimensionsRoute", () => {
         ConsignmentSubmission: () => submissionMock,
       })
 
+      mockPush.mockClear()
+      trackEvent.mockClear()
+      submitMutation.mockClear()
+
       screen.getByText("Continue").click()
 
       await waitFor(() => {
@@ -144,6 +151,10 @@ describe("DimensionsRoute", () => {
       renderWithRelay({
         ConsignmentSubmission: () => submissionMock,
       })
+
+      mockPush.mockClear()
+      trackEvent.mockClear()
+      submitMutation.mockClear()
 
       screen.getByText("Back").click()
 
@@ -186,6 +197,57 @@ describe("DimensionsRoute", () => {
 
       await waitFor(() => {
         expect(submitMutation).not.toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe("navigation", () => {
+    describe("in DRAFT state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/phone-number'
+          )
+        })
+      })
+
+      it("navigates to the previous step when the Back button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+          )
+        })
+      })
+    })
+
+    describe("in APPROVED state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/phone-number'
+          )
+        })
       })
     })
   })

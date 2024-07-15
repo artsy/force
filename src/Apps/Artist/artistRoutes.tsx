@@ -142,7 +142,7 @@ export const artistRoutes: RouteProps[] = [
             $aggregations: [ArtworkAggregation]
             $includeBlurHash: Boolean!
           ) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistWorksForSaleRoute_artist
                 @arguments(
                   input: $input
@@ -190,7 +190,7 @@ export const artistRoutes: RouteProps[] = [
             $createdBeforeYear: Int
             $allowEmptyCreatedDates: Boolean
           ) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistAuctionResultsRoute_artist
                 @arguments(
                   page: $page
@@ -218,7 +218,7 @@ export const artistRoutes: RouteProps[] = [
         },
         query: graphql`
           query artistRoutes_OverviewQuery($artistID: String!) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistOverviewRoute_artist
             }
           }
@@ -232,7 +232,7 @@ export const artistRoutes: RouteProps[] = [
     getComponent: () => ArtistSubApp,
     query: graphql`
       query artistRoutes_ArtistSubAppQuery($artistID: String!) {
-        artist(id: $artistID) {
+        artist(id: $artistID) @principalField {
           ...ArtistSubApp_artist
         }
       }
@@ -246,7 +246,7 @@ export const artistRoutes: RouteProps[] = [
         },
         query: graphql`
           query artistRoutes_ArticlesQuery($artistID: String!) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistArticlesRoute_artist
             }
           }
@@ -260,7 +260,7 @@ export const artistRoutes: RouteProps[] = [
         },
         query: graphql`
           query artistRoutes_ArtistConsignQuery($artistID: String!) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistConsignRoute_artist
               targetSupply {
                 isInMicrofunnel
@@ -306,7 +306,7 @@ export const artistRoutes: RouteProps[] = [
         },
         query: graphql`
           query artistRoutes_ArtistSeriesQuery($artistID: String!) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistArtistSeriesRoute_artist
             }
           }

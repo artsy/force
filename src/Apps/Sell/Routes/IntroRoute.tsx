@@ -12,6 +12,7 @@ import {
 } from "@artsy/palette"
 import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
@@ -33,11 +34,11 @@ export const IntroRoute: React.FC = () => {
           overflowY="auto"
         >
           <Flex flex={1} overflowY="auto" flexDirection="column">
-            <Text variant={["lg-display", "xl"]}>
+            <SubmissionStepTitle>
               It’s easy to sell on Artsy
-            </Text>
+            </SubmissionStepTitle>
 
-            <Spacer y={4} />
+            <Spacer y={2} />
 
             <Join separator={<Separator my={2} color="black5" />}>
               {introData.map((intro, index) => (

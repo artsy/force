@@ -19,6 +19,9 @@ jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
   fetchQuery: jest.fn(),
 }))
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
 
 let pathnameMock: string
 
@@ -27,7 +30,7 @@ beforeAll(() => {
     return { isLoggedIn: true }
   })
 
-  pathnameMock = "/submissions/submission-id/artist"
+  pathnameMock = "/sell/submissions/submission-id/artist"
 
   mockUseRouter.mockImplementation(() => ({
     router: {
@@ -101,7 +104,7 @@ describe("ArtistRoute", () => {
 
   describe("when creating a new submission", () => {
     beforeAll(() => {
-      pathnameMock = "/submissions/new"
+      pathnameMock = "/sell/submissions/new"
     })
 
     it("calls createSubmission when a new artist is selected", async () => {

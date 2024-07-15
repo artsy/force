@@ -33,7 +33,7 @@ beforeEach(() => {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "/submissions/submission-id/title" } },
+    match: { location: { pathname: "/sell/submissions/submission-id/title" } },
   }))
 
   submitMutation = jest.fn(() => ({ catch: () => {} }))
@@ -116,9 +116,57 @@ describe("TitleRoute", () => {
     })
   })
 
-  it("displays the Back button", () => {
-    renderWithRelay({})
+  describe("navigation", () => {
+    describe("in DRAFT state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ state: "DRAFT" }),
+        })
 
-    expect(screen.queryByText("Back")).toBeInTheDocument()
+        mockPush.mockClear()
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/photos'
+          )
+        })
+      })
+
+      it("navigates to the previous step when the Back button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ state: "DRAFT" }),
+        })
+
+        mockPush.mockClear()
+
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/artist'
+          )
+        })
+      })
+    })
+
+    describe("in APPROVED state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ state: "APPROVED" }),
+        })
+
+        mockPush.mockClear()
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/photos'
+          )
+        })
+      })
+    })
   })
 })

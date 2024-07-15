@@ -21,18 +21,12 @@ export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
 }
 
 const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
-  order: {
-    lineItems,
-    currencyCode,
-    mode,
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    sellerDetails: { name },
-    source,
-  },
+  order: { lineItems, currencyCode, mode, sellerDetails, source },
   ...others
 }) => {
   const firstLineItem = get({}, () => lineItems?.edges?.[0]?.node)
   const { artwork, artworkVersion } = firstLineItem || {}
+  const name = sellerDetails?.name
 
   const { artistNames, title, image, date } = artworkVersion || {}
   const { shippingOrigin, isUnlisted } = artwork || {}
@@ -100,9 +94,11 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
         </Box>
         {!isPrivateSale && (
           <>
-            <Text variant="sm" overflowEllipsis color="black60">
-              {name}
-            </Text>
+            {name && (
+              <Text variant="sm" overflowEllipsis color="black60">
+                {name}
+              </Text>
+            )}
             <Text variant="sm" color="black60">
               {shippingOrigin}
             </Text>
@@ -110,7 +106,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
         )}
         {!isPrivateSale && artworkPrice?.price && (
           <Text variant="sm">
-            {`${priceLabel} ${appendCurrencySymbol(
+            {`${priceLabel}: ${appendCurrencySymbol(
               artworkPrice.price,
               currencyCode
             )}`}

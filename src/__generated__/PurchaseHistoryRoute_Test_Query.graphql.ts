@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91a6767c234d6a9caa92252af42341dd>>
+ * @generated SignedSource<<99bdef9e94ce9c71af8f21f51abd0e0a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type PurchaseHistoryRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type PurchaseHistoryRoute_Test_Query$data = {
   readonly submission: {
@@ -23,6 +24,7 @@ export type PurchaseHistoryRoute_Test_Query$rawResponse = {
     readonly internalID: string | null | undefined;
     readonly provenance: string | null | undefined;
     readonly signature: boolean | null | undefined;
+    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   } | null | undefined;
 };
 export type PurchaseHistoryRoute_Test_Query = {
@@ -103,6 +105,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "provenance",
             "storageKey": null
           },
@@ -126,12 +135,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "333f1e5bcedcc1a018f0bbbae6dc919c",
+    "cacheID": "199264a29c9b1de31c0aea9276f72471",
     "id": null,
     "metadata": {},
     "name": "PurchaseHistoryRoute_Test_Query",
     "operationKind": "query",
-    "text": "query PurchaseHistoryRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PurchaseHistoryRoute_submission\n    id\n  }\n}\n\nfragment PurchaseHistoryRoute_submission on ConsignmentSubmission {\n  provenance\n  signature\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
+    "text": "query PurchaseHistoryRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PurchaseHistoryRoute_submission\n    id\n  }\n}\n\nfragment PurchaseHistoryRoute_submission on ConsignmentSubmission {\n  provenance\n  signature\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();
