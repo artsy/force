@@ -1,6 +1,25 @@
-import { NotificationTypesEnum } from "__generated__/NotificationsList_viewer.graphql"
+import {
+  NotificationsList_viewer$data,
+  NotificationTypesEnum,
+} from "__generated__/NotificationsList_viewer.graphql"
 
-export const shouldDisplayNotification = notification => {
+export type NotificationNode = NonNullable<
+  NonNullable<
+    NonNullable<NotificationsList_viewer$data["notifications"]>["edges"]
+  >[0]
+>["node"]
+
+export const shouldDisplayNotification = (
+  notification:
+    | Pick<
+        NonNullable<NotificationNode>,
+        "notificationType" | "artworks" | "item"
+      >
+    | null
+    | undefined
+) => {
+  if (!notification) return false
+
   if (isArtworksBasedNotification(notification.notificationType)) {
     const artworksCount = notification.artworks?.totalCount ?? 0
     return artworksCount > 0
