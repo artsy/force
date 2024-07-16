@@ -17,8 +17,8 @@ const SUBMISSION_FRAGMENT = graphql`
   fragment ShippingLocationRoute_submission on ConsignmentSubmission {
     locationCity
     locationCountry
-    # locationAddress
-    # locationAddress2
+    locationAddress
+    locationAddress2
     locationPostalCode
     locationState
   }
@@ -85,9 +85,8 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
       locationCountry: values.location.country,
       locationCountryCode: values.location.stateCode,
       locationPostalCode: values.location.postalCode,
-      // TODO: Add backend support
-      // locationAddressLine1: values.location.addressLine1,
-      // locationAddressLine2: values.location.addressLine2,
+      locationAddress: values.location.address,
+      locationAddress2: values.location.address2,
       locationState: values.location.state,
     })
   }
@@ -95,13 +94,11 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
   // Initializing the form with the last user address in the list
   const userAddress = last(extractNodes(me?.addressConnection) || [])
 
-  const submissionHasAddress = !!submission.locationCity
-
-  const initialValues: FormValues = submissionHasAddress
+  // Check if the submission has an address; if not, use the user's address.
+  const initialValues: FormValues = !!submission.locationCity
     ? {
         location: {
           country: submission.locationCountry ?? "",
-          // TODO: Add backend support
           address: "",
           address2: "",
           city: submission.locationCity ?? "",
@@ -129,123 +126,115 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
       validateOnMount
       validationSchema={Schema}
     >
-      {({ errors, handleChange, handleBlur, touched, values }) => {
-        console.log({ errors })
-        return (
-          <SubmissionLayout>
-            <SubmissionStepTitle>Shipping Location</SubmissionStepTitle>
+      {({ errors, handleChange, handleBlur, touched, values }) => (
+        <SubmissionLayout>
+          <SubmissionStepTitle>Shipping Location</SubmissionStepTitle>
 
-            <Text color="black60" mb={2}>
-              Location is where the artwork ships from. It’s required so we can
-              estimate shipping costs and tax.
-            </Text>
+          <Text color="black60" mb={2}>
+            Location is where the artwork ships from. It’s required so we can
+            estimate shipping costs and tax.
+          </Text>
 
-            <Form>
-              <GridColumns>
-                <Column span={12}>
-                  <CountrySelect
-                    title="Country"
-                    name="location.country"
-                    value={values.location.country}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={
-                      touched.location?.country && errors.location?.country
-                    }
-                    required
-                  />
-                </Column>
+          <Form>
+            <GridColumns>
+              <Column span={12}>
+                <CountrySelect
+                  title="Country"
+                  name="location.country"
+                  value={values.location.country}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.location?.country && errors.location?.country}
+                  required
+                />
+              </Column>
 
-                {!!values.location.country && (
-                  <>
-                    <Column span={12}>
-                      <Input
-                        name="location.address"
-                        title="Address Line 1"
-                        placeholder="Add address"
-                        autoComplete="address-line1"
-                        value={values.location.address}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          touched.location?.address && errors.location?.address
-                        }
-                        required
-                      />
-                    </Column>
+              {!!values.location.country && (
+                <>
+                  <Column span={12}>
+                    <Input
+                      name="location.address"
+                      title="Address Line 1"
+                      placeholder="Add address"
+                      autoComplete="address-line1"
+                      value={values.location.address}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        touched.location?.address && errors.location?.address
+                      }
+                      required
+                    />
+                  </Column>
 
-                    <Column span={12}>
-                      <Input
-                        name="location.address2"
-                        title="Address Line 2"
-                        placeholder="Add address line 2"
-                        autoComplete="address-line2"
-                        value={values.location.address2}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          touched.location?.address2 &&
-                          errors.location?.address2
-                        }
-                        mb={1}
-                      />
-                    </Column>
+                  <Column span={12}>
+                    <Input
+                      name="location.address2"
+                      title="Address Line 2"
+                      placeholder="Add address line 2"
+                      autoComplete="address-line2"
+                      value={values.location.address2}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        touched.location?.address2 && errors.location?.address2
+                      }
+                      mb={1}
+                    />
+                  </Column>
 
-                    <Column span={6}>
-                      <Input
-                        name="location.city"
-                        title="City"
-                        placeholder="Enter city"
-                        autoComplete="address-level2"
-                        value={values.location.city}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={touched.location?.city && errors.location?.city}
-                        required
-                      />
-                    </Column>
+                  <Column span={6}>
+                    <Input
+                      name="location.city"
+                      title="City"
+                      placeholder="Enter city"
+                      autoComplete="address-level2"
+                      value={values.location.city}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={touched.location?.city && errors.location?.city}
+                      required
+                    />
+                  </Column>
 
-                    <Column span={6}>
-                      <Input
-                        name="location.postalCode"
-                        title="Postal Code"
-                        placeholder="Add postal code"
-                        autoComplete="postal-code"
-                        value={values.location.postalCode}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          touched.location?.postalCode &&
-                          errors.location?.postalCode
-                        }
-                        required
-                      />
-                    </Column>
+                  <Column span={6}>
+                    <Input
+                      name="location.postalCode"
+                      title="Postal Code"
+                      placeholder="Add postal code"
+                      autoComplete="postal-code"
+                      value={values.location.postalCode}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        touched.location?.postalCode &&
+                        errors.location?.postalCode
+                      }
+                      required
+                    />
+                  </Column>
 
-                    <Column span={12}>
-                      <Input
-                        name="location.state"
-                        title="State, Province, or Region"
-                        placeholder="Add state, province, or region"
-                        autoComplete="address-level1"
-                        value={values.location.state}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          touched.location?.state && errors.location?.state
-                        }
-                        required
-                      />
-                    </Column>
-                  </>
-                )}
-              </GridColumns>
-            </Form>
+                  <Column span={12}>
+                    <Input
+                      name="location.state"
+                      title="State, Province, or Region"
+                      placeholder="Add state, province, or region"
+                      autoComplete="address-level1"
+                      value={values.location.state}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={touched.location?.state && errors.location?.state}
+                      required
+                    />
+                  </Column>
+                </>
+              )}
+            </GridColumns>
+          </Form>
 
-            <DevDebug />
-          </SubmissionLayout>
-        )
-      }}
+          <DevDebug />
+        </SubmissionLayout>
+      )}
     </Formik>
   )
 }

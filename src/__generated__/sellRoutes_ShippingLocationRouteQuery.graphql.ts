@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c688499cc1e1c5ed25a60b43a88de3c>>
+ * @generated SignedSource<<2ed96473e78a56d099598d6cfe697c03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -117,6 +117,20 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "locationCountry",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationAddress",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationAddress2",
             "storageKey": null
           },
           {
@@ -256,12 +270,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5e3db63c66f67f6302bdc35583f45cec",
+    "cacheID": "7707aea8e310d936dbf3c6b6c967f128",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_ShippingLocationRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_ShippingLocationRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ShippingLocationRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationPostalCode\n  locationState\n}\n"
+    "text": "query sellRoutes_ShippingLocationRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ShippingLocationRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationAddress\n  locationAddress2\n  locationPostalCode\n  locationState\n}\n"
   }
 };
 })();

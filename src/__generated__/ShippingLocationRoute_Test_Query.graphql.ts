@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a44281329ec9201c61e23629bfc680d>>
+ * @generated SignedSource<<08a2bf2c9028bf94c6e65c5ef0afe321>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,6 +45,8 @@ export type ShippingLocationRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly locationAddress: string | null | undefined;
+    readonly locationAddress2: string | null | undefined;
     readonly locationCity: string | null | undefined;
     readonly locationCountry: string | null | undefined;
     readonly locationPostalCode: string | null | undefined;
@@ -147,6 +149,20 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "locationCountry",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationAddress",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationAddress2",
             "storageKey": null
           },
           {
@@ -307,12 +323,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8a58efe8b454efa7b216b2f93cf20498",
+    "cacheID": "abe1fb986a7f6bf42eecb12b92bfcb4d",
     "id": null,
     "metadata": {},
     "name": "ShippingLocationRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ShippingLocationRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ShippingLocationRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationPostalCode\n  locationState\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query ShippingLocationRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ShippingLocationRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationAddress\n  locationAddress2\n  locationPostalCode\n  locationState\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();

@@ -33,9 +33,8 @@ const submissionMock: Partial<
   locationCity: "city",
   locationCountry: "country",
   locationPostalCode: "postalCode",
-  // TODO: Add backend support
-  // locationAddress: values.location.address,
-  // locationAddress2: values.location.address2,
+  locationAddress: "locationAddress",
+  locationAddress2: "locationAddress2",
   locationState: "state",
 }
 
@@ -173,6 +172,8 @@ describe("ShippingLocationRoute", () => {
           variables: {
             input: {
               externalId: '<mock-value-for-field-"externalId">',
+              locationAddress: "new address",
+              locationAddress2: "new address line 2",
               locationCity: "new city",
               locationCountry: "country",
               locationCountryCode: "postalCode",
