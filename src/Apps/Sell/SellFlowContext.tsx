@@ -141,6 +141,8 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const steps = useMemo(
     () => [
       ...BASIC_STEPS,
+      // TODO: Remove this line
+      ...POST_APPROVAL_STEPS,
       ...(isExtended ? POST_APPROVAL_STEPS : []),
       THANK_YOU_STEP,
     ],
