@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b0f7a3a0b3d4f235236683a4a07ceca>>
+ * @generated SignedSource<<6a44281329ec9201c61e23629bfc680d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,11 +13,34 @@ import { FragmentRefs } from "relay-runtime";
 export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type ShippingLocationRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type ShippingLocationRoute_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShippingLocationRoute_me">;
+  } | null | undefined;
   readonly submission: {
     readonly " $fragmentSpreads": FragmentRefs<"ShippingLocationRoute_submission" | "SubmissionRoute_submission">;
   } | null | undefined;
 };
 export type ShippingLocationRoute_Test_Query$rawResponse = {
+  readonly me: {
+    readonly addressConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly addressLine1: string;
+          readonly addressLine2: string | null | undefined;
+          readonly city: string;
+          readonly country: string;
+          readonly id: string;
+          readonly isDefault: boolean;
+          readonly name: string | null | undefined;
+          readonly phoneNumber: string | null | undefined;
+          readonly phoneNumberCountryCode: string | null | undefined;
+          readonly postalCode: string | null | undefined;
+          readonly region: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+    readonly id: string;
+  } | null | undefined;
   readonly submission: {
     readonly externalId: string;
     readonly id: string;
@@ -42,7 +65,14 @@ var v0 = [
     "name": "id",
     "value": "submission-id"
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -70,6 +100,22 @@ return {
           }
         ],
         "storageKey": "submission(id:\"submission-id\")"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ShippingLocationRoute_me"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -138,29 +184,139 @@ return {
             "name": "state",
             "storageKey": null
           },
+          (v1/*: any*/)
+        ],
+        "storageKey": "submission(id:\"submission-id\")"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "UserAddressConnection",
+            "kind": "LinkedField",
+            "name": "addressConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "UserAddressEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "UserAddress",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "addressLine1",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "addressLine2",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "city",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "country",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isDefault",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "phoneNumber",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "phoneNumberCountryCode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "postalCode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "region",
+                        "storageKey": null
+                      },
+                      (v1/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
             "storageKey": null
-          }
+          },
+          (v1/*: any*/)
         ],
-        "storageKey": "submission(id:\"submission-id\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "00c858d737e8b420a5fcf09a5097157c",
+    "cacheID": "8a58efe8b454efa7b216b2f93cf20498",
     "id": null,
     "metadata": {},
     "name": "ShippingLocationRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ShippingLocationRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ShippingLocationRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationPostalCode\n  locationState\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query ShippingLocationRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ShippingLocationRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationPostalCode\n  locationState\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c740ebb31f78b3b094bd94734591d988";
+(node as any).hash = "fa2b81b1533c08cae3ad5da58fe1d5b2";
 
 export default node;

@@ -1,31 +1,55 @@
-import { Column, GridColumns, Input, Join, Spacer, Text } from "@artsy/palette"
+import { Column, GridColumns, Input, Text } from "@artsy/palette"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { CountrySelect } from "Components/CountrySelect"
+import { extractNodes } from "Utils/extractNodes"
+import { ShippingLocationRoute_me$key } from "__generated__/ShippingLocationRoute_me.graphql"
 import { ShippingLocationRoute_submission$key } from "__generated__/ShippingLocationRoute_submission.graphql"
 import { Form, Formik } from "formik"
+import { last } from "lodash"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
-const FRAGMENT = graphql`
+const SUBMISSION_FRAGMENT = graphql`
   fragment ShippingLocationRoute_submission on ConsignmentSubmission {
     locationCity
     locationCountry
-    # locationAddressLine1
-    # locationAddressLine2
+    # locationAddress
+    # locationAddress2
     locationPostalCode
     locationState
+  }
+`
+
+const ME_FRAGMENT = graphql`
+  fragment ShippingLocationRoute_me on Me {
+    addressConnection {
+      edges {
+        node {
+          addressLine1
+          addressLine2
+          city
+          country
+          isDefault
+          name
+          phoneNumber
+          phoneNumberCountryCode
+          postalCode
+          region
+        }
+      }
+    }
   }
 `
 
 const Schema = Yup.object().shape({
   location: Yup.object().shape({
     country: Yup.string().required("Country is required"),
-    addressLine1: Yup.string().required("Address is required"),
-    addressLine2: Yup.string(),
+    address: Yup.string().required("Address is required"),
+    address2: Yup.string(),
     city: Yup.string().required("City is required"),
     // region: Yup.string().required("Region is required"),
     postalCode: Yup.string().required("Postal Code is required"),
@@ -35,8 +59,8 @@ const Schema = Yup.object().shape({
 interface FormValues {
   location: {
     country: string
-    addressLine1: string
-    addressLine2: string
+    address: string
+    address2: string
     city: string
     postalCode: string
     state: string
@@ -45,12 +69,15 @@ interface FormValues {
 }
 
 interface ShippingLocationRouteProps {
+  me: ShippingLocationRoute_me$key
   submission: ShippingLocationRoute_submission$key
 }
 
 export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props => {
-  const submission = useFragment(FRAGMENT, props.submission)
   const { actions } = useSellFlowContext()
+
+  const submission = useFragment(SUBMISSION_FRAGMENT, props.submission)
+  const me = useFragment(ME_FRAGMENT, props.me)
 
   const onSubmit = async (values: FormValues) => {
     return actions.updateSubmission({
@@ -65,17 +92,35 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
     })
   }
 
-  const initialValues: FormValues = {
-    location: {
-      country: submission.locationCountry ?? "",
-      addressLine1: "",
-      addressLine2: "",
-      city: submission.locationCity ?? "",
-      postalCode: submission.locationPostalCode ?? "",
-      state: submission.locationState ?? "",
-      stateCode: submission.locationPostalCode ?? "",
-    },
-  }
+  // Initializing the form with the last user address in the list
+  const userAddress = last(extractNodes(me?.addressConnection) || [])
+
+  const submissionHasAddress = !!submission.locationCity
+
+  const initialValues: FormValues = submissionHasAddress
+    ? {
+        location: {
+          country: submission.locationCountry ?? "",
+          // TODO: Add backend support
+          address: "",
+          address2: "",
+          city: submission.locationCity ?? "",
+          postalCode: submission.locationPostalCode ?? "",
+          state: submission.locationState ?? "",
+          stateCode: submission.locationPostalCode ?? "",
+        },
+      }
+    : {
+        location: {
+          country: userAddress?.country ?? "",
+          address: userAddress?.addressLine1 ?? "",
+          address2: userAddress?.addressLine2 ?? "",
+          city: userAddress?.city ?? "",
+          postalCode: userAddress?.postalCode ?? "",
+          state: userAddress?.region ?? "",
+          stateCode: userAddress?.region ?? "",
+        },
+      }
 
   return (
     <Formik<FormValues>
@@ -84,12 +129,13 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
       validateOnMount
       validationSchema={Schema}
     >
-      {({ errors, handleChange, handleBlur, touched, values }) => (
-        <SubmissionLayout>
-          <SubmissionStepTitle>Shipping Location</SubmissionStepTitle>
+      {({ errors, handleChange, handleBlur, touched, values }) => {
+        console.log({ errors })
+        return (
+          <SubmissionLayout>
+            <SubmissionStepTitle>Shipping Location</SubmissionStepTitle>
 
-          <Join separator={<Spacer y={2} />}>
-            <Text color="black60">
+            <Text color="black60" mb={2}>
               Location is where the artwork ships from. It’s required so we can
               estimate shipping costs and tax.
             </Text>
@@ -114,16 +160,15 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
                   <>
                     <Column span={12}>
                       <Input
-                        name="location.addressLine1"
+                        name="location.address"
                         title="Address Line 1"
                         placeholder="Add address"
                         autoComplete="address-line1"
-                        value={values.location.addressLine1}
+                        value={values.location.address}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          touched.location?.addressLine1 &&
-                          errors.location?.addressLine1
+                          touched.location?.address && errors.location?.address
                         }
                         required
                       />
@@ -131,16 +176,16 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
 
                     <Column span={12}>
                       <Input
-                        name="location.addressLine2"
+                        name="location.address2"
                         title="Address Line 2"
                         placeholder="Add address line 2"
                         autoComplete="address-line2"
-                        value={values.location.addressLine2}
+                        value={values.location.address2}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          touched.location?.addressLine2 &&
-                          errors.location?.addressLine2
+                          touched.location?.address2 &&
+                          errors.location?.address2
                         }
                         mb={1}
                       />
@@ -196,10 +241,11 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
                 )}
               </GridColumns>
             </Form>
-          </Join>
-          <DevDebug />
-        </SubmissionLayout>
-      )}
+
+            <DevDebug />
+          </SubmissionLayout>
+        )
+      }}
     </Formik>
   )
 }

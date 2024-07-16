@@ -34,9 +34,30 @@ const submissionMock: Partial<
   locationCountry: "country",
   locationPostalCode: "postalCode",
   // TODO: Add backend support
-  // locationAddressLine1: values.location.addressLine1,
-  // locationAddressLine2: values.location.addressLine2,
+  // locationAddress: values.location.address,
+  // locationAddress2: values.location.address2,
   locationState: "state",
+}
+
+const meMock = {
+  addressConnection: {
+    edges: [
+      {
+        node: {
+          addressLine1: "addressLine1",
+          addressLine2: "addressLine2",
+          city: "city",
+          country: "country",
+          isDefault: false,
+          name: "name",
+          phoneNumber: "phoneNumber",
+          phoneNumberCountryCode: "phoneNumberCountryCode",
+          postalCode: "postalCode",
+          region: "region",
+        },
+      },
+    ],
+  },
 }
 
 beforeEach(() => {
@@ -69,7 +90,7 @@ const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
     return (
       <SubmissionRoute submission={props.submission}>
-        <ShippingLocationRoute submission={props.submission} />
+        <ShippingLocationRoute submission={props.submission} me={props.me} />
       </SubmissionRoute>
     )
   },
@@ -78,6 +99,9 @@ const { renderWithRelay } = setupTestWrapperTL({
       submission(id: "submission-id") {
         ...ShippingLocationRoute_submission
         ...SubmissionRoute_submission
+      }
+      me {
+        ...ShippingLocationRoute_me
       }
     }
   `,
@@ -89,6 +113,29 @@ describe("ShippingLocationRoute", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Shipping Location")).toBeInTheDocument()
+    })
+  })
+
+  it("initializes the form with the last user address in the list", async () => {
+    renderWithRelay({
+      ConsignmentSubmission: () => ({ locationCity: null }),
+      Me: () => meMock,
+    })
+
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText("Add address")).toHaveValue(
+        "addressLine1"
+      )
+      expect(screen.getByPlaceholderText("Add address line 2")).toHaveValue(
+        "addressLine2"
+      )
+      expect(screen.getByPlaceholderText("Enter city")).toHaveValue("city")
+      expect(screen.getByPlaceholderText("Add postal code")).toHaveValue(
+        "postalCode"
+      )
+      expect(
+        screen.getByPlaceholderText("Add state, province, or region")
+      ).toHaveValue("region")
     })
   })
 
