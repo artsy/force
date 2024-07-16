@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12eae8cf036f8a3892c22629d67d8851>>
+ * @generated SignedSource<<9febd56cc64f26ab62e03827db904988>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type NotificationItem_test_Query$data = {
   readonly notificationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_notificationItem">;
+        readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_notification">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -93,7 +93,7 @@ return {
                   {
                     "args": null,
                     "kind": "FragmentSpread",
-                    "name": "NotificationItem_notificationItem"
+                    "name": "NotificationItem_notification"
                   }
                 ],
                 "storageKey": null
@@ -344,7 +344,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4961142ac21ed39ff5b2325244df27b7",
+    "cacheID": "8f0c14ab1845dedbc2b5394b011e0375",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -445,11 +445,11 @@ return {
     },
     "name": "NotificationItem_test_Query",
     "operationKind": "query",
-    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_notificationItem\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItemCollectorProfileUpdatePrompt_notificationItem on NotificationItem {\n  __isNotificationItem: __typename\n  ... on CollectorProfileUpdatePromptNotificationItem {\n    me {\n      userInterestsConnection(interestType: ARTIST, first: 1) {\n        totalCount\n      }\n      id\n    }\n  }\n}\n\nfragment NotificationItem_notificationItem on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    ...NotificationItemCollectorProfileUpdatePrompt_notificationItem\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    blurhashDataURL\n    url(version: \"thumbnail\")\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n"
+    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItemCollectorProfileUpdatePrompt_notificationItem on NotificationItem {\n  __isNotificationItem: __typename\n  ... on CollectorProfileUpdatePromptNotificationItem {\n    me {\n      userInterestsConnection(interestType: ARTIST, first: 1) {\n        totalCount\n      }\n      id\n    }\n  }\n}\n\nfragment NotificationItem_notification on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    ...NotificationItemCollectorProfileUpdatePrompt_notificationItem\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    blurhashDataURL\n    url(version: \"thumbnail\")\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c9cbd039ba621d1cf16346f5f693b360";
+(node as any).hash = "fe674d7c3f61fd84bbb1cfa593935d9e";
 
 export default node;

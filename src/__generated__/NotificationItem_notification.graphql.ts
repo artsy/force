@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34fb916d65bb774d697de2f0ce845b14>>
+ * @generated SignedSource<<48f4c31e932bc341c3cc3395ea1c798a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "COLLECTOR_PROFILE_UPDATE_PROMPT" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type NotificationItem_notificationItem$data = {
+export type NotificationItem_notification$data = {
   readonly headline: string;
   readonly id: string;
   readonly internalID: string;
@@ -32,18 +32,18 @@ export type NotificationItem_notificationItem$data = {
   readonly targetHref: string;
   readonly title: string;
   readonly " $fragmentSpreads": FragmentRefs<"NotificationTypeLabel_notification">;
-  readonly " $fragmentType": "NotificationItem_notificationItem";
+  readonly " $fragmentType": "NotificationItem_notification";
 };
-export type NotificationItem_notificationItem$key = {
-  readonly " $data"?: NotificationItem_notificationItem$data;
-  readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_notificationItem">;
+export type NotificationItem_notification$key = {
+  readonly " $data"?: NotificationItem_notification$data;
+  readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_notification">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "NotificationItem_notificationItem",
+  "name": "NotificationItem_notification",
   "selections": [
     {
       "alias": null,
@@ -199,6 +199,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bfc1eadd4968c49b2e5614921f247adc";
+(node as any).hash = "d4b93239ed89af7d688f3d87d95c4e96";
 
 export default node;

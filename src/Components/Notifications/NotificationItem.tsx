@@ -2,12 +2,11 @@ import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
 import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
-import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
+import { useMarkNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
 import { RouterLink } from "System/Components/RouterLink"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
-import { NotificationItem_notificationItem$data } from "__generated__/NotificationItem_notificationItem.graphql"
+import { NotificationItem_notification$data } from "__generated__/NotificationItem_notification.graphql"
 import { FC, useCallback } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NotificationTypeLabel } from "./NotificationTypeLabel"
@@ -17,56 +16,79 @@ import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { Media } from "Utils/Responsive"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-import { NotificationItemCollectorProfileUpdatePromptFragmentContainer } from "Components/Notifications/NotificationItemCollectorProfileUpdatePrompt"
+import { NotificationItemCollectorProfileUpdatePrompt } from "Components/Notifications/NotificationItemCollectorProfileUpdatePrompt"
 import { NotificationItemUnreadIndicator } from "Components/Notifications/NotificationItemUnreadIndicator"
 
 const logger = createLogger("NotificationItem")
 
 interface NotificationItemProps {
-  notificationItem: NotificationItem_notificationItem$data
+  notification: NotificationItem_notification$data
   mode?: NotificationListMode
 }
 
 const NotificationItem: FC<NotificationItemProps> = ({
-  notificationItem,
+  notification,
   mode,
 }) => {
-  if (!notificationItem.item) return null
+  const {
+    state: { currentNotificationId },
+  } = useNotificationsContext()
+  const { tracking } = useNotificationsTracking()
+  const { markAsRead } = useMarkNotificationAsRead()
 
-  switch (notificationItem.item.__typename) {
+  const handleClick = () => {
+    markAsRead({
+      id: notification.id,
+      internalID: notification.internalID,
+    }).catch(logger.error)
+
+    tracking.clickedActivityPanelNotificationItem(notification.notificationType)
+  }
+
+  const isActive = currentNotificationId === notification.internalID
+
+  if (!notification.item) return null
+
+  switch (notification.item.__typename) {
     case "CollectorProfileUpdatePromptNotificationItem": {
       return (
-        <NotificationItemCollectorProfileUpdatePromptFragmentContainer
-          notificationItem={notificationItem.item}
-          isUnread={notificationItem.isUnread}
+        <NotificationItemCollectorProfileUpdatePrompt
+          isActive={isActive}
+          isUnread={notification.isUnread}
+          notificationItem={notification.item}
+          onClick={handleClick}
         />
       )
     }
 
     // FIXME: Simplify by returning unique components for each notification type
     default: {
-      const remainingArtworksCount = notificationItem.objectsCount - 4
+      const remainingArtworksCount = notification.objectsCount - 4
       const shouldDisplayCounts =
-        isArtworksBasedNotification(notificationItem.notificationType) &&
+        isArtworksBasedNotification(notification.notificationType) &&
         remainingArtworksCount > 0
 
-      const subTitle = getNotificationSubTitle(notificationItem)
+      const subTitle = getNotificationSubTitle(notification)
 
       return (
-        <NotificationItemWrapper item={notificationItem} mode={mode}>
+        <NotificationItemWrapper
+          item={notification}
+          mode={mode}
+          onClick={handleClick}
+        >
           <Flex
             flex={1}
             flexDirection={
-              notificationItem.notificationType === "PARTNER_OFFER_CREATED"
+              notification.notificationType === "PARTNER_OFFER_CREATED"
                 ? "row"
                 : "column"
             }
           >
-            {!!notificationItem.previewImages.length && (
+            {!!notification.previewImages.length && (
               <Flex flexDirection="row" alignItems="center" mb={0.5}>
                 <Flex flex={1}>
                   <Join separator={<Spacer x={1} />}>
-                    {notificationItem.previewImages.map(image => {
+                    {notification.previewImages.map(image => {
                       if (!image.url) return null
 
                       return (
@@ -107,32 +129,30 @@ const NotificationItem: FC<NotificationItemProps> = ({
                 alignSelf="flex-start"
                 borderRadius={3}
               >
-                {getNotificationPrelude(notificationItem)}
+                {getNotificationPrelude(notification)}
               </Text>
 
               <Text fontWeight="bold" variant="sm-display">
-                {notificationItem.headline}
+                {notification.headline}
               </Text>
 
               {!!subTitle && <Text variant="xs">{subTitle}</Text>}
 
               <Flex flexDirection="row" gap={0.5}>
-                <NotificationTypeLabel notification={notificationItem} />
-                {notificationItem.item?.__typename ===
+                <NotificationTypeLabel notification={notification} />
+                {notification.item?.__typename ===
                   "PartnerOfferCreatedNotificationItem" &&
-                  notificationItem.item.expiresAt && (
+                  notification.item.expiresAt && (
                     <ExpiresInTimer
-                      expiresAt={notificationItem.item.expiresAt}
-                      available={notificationItem.item.available}
+                      expiresAt={notification.item.expiresAt}
+                      available={notification.item.available}
                     />
                   )}
               </Flex>
             </Flex>
           </Flex>
 
-          {notificationItem.isUnread && (
-            <NotificationItemUnreadIndicator ml={1} />
-          )}
+          {notification.isUnread && <NotificationItemUnreadIndicator ml={1} />}
         </NotificationItemWrapper>
       )
     }
@@ -142,8 +162,8 @@ const NotificationItem: FC<NotificationItemProps> = ({
 export const NotificationItemFragmentContainer = createFragmentContainer(
   NotificationItem,
   {
-    notificationItem: graphql`
-      fragment NotificationItem_notificationItem on Notification {
+    notification: graphql`
+      fragment NotificationItem_notification on Notification {
         id
         internalID
         headline
@@ -172,18 +192,18 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
 )
 
 interface NotificationItemWrapperProps {
-  item: NotificationItem_notificationItem$data
+  item: NotificationItem_notification$data
   mode?: NotificationListMode
   children: React.ReactNode
+  onClick: () => void
 }
 
 export const NotificationItemWrapper: FC<NotificationItemWrapperProps> = ({
   item,
   mode,
   children,
+  onClick,
 }) => {
-  const { tracking } = useNotificationsTracking()
-  const { relayEnvironment } = useSystemContext()
   const {
     state: { currentNotificationId },
   } = useNotificationsContext()
@@ -191,39 +211,6 @@ export const NotificationItemWrapper: FC<NotificationItemWrapperProps> = ({
   const itemUrl = useCallback((item, mode) => {
     return getNotificationUrl(item, mode)
   }, [])
-
-  const markAsRead = async () => {
-    // If the notification is opened as a page, we don't need to mark the notification as read
-    // because it's already marked as read when the page is opened.
-    if (SUPPORTED_NOTIFICATION_TYPES.includes(item.notificationType)) {
-      return
-    }
-    if (!relayEnvironment) {
-      return
-    }
-
-    try {
-      const response = await markNotificationAsRead(
-        relayEnvironment,
-        item.id,
-        item.internalID
-      )
-      const responseOrError = response.markNotificationAsRead?.responseOrError
-      const errorMessage = responseOrError?.mutationError?.message
-
-      if (errorMessage) {
-        throw new Error(errorMessage)
-      }
-    } catch (error) {
-      logger.error(error)
-    }
-  }
-
-  const handlePress = () => {
-    markAsRead()
-
-    tracking.clickedActivityPanelNotificationItem(item.notificationType)
-  }
 
   const backgroundColor =
     currentNotificationId === item.internalID ? "black5" : "white100"
@@ -233,7 +220,7 @@ export const NotificationItemWrapper: FC<NotificationItemWrapperProps> = ({
       <Media at="xs">
         <NotificationItemLink
           to={itemUrl(item, "dropdown")}
-          onClick={handlePress}
+          onClick={onClick}
           backgroundColor={backgroundColor}
         >
           {children}
@@ -243,7 +230,7 @@ export const NotificationItemWrapper: FC<NotificationItemWrapperProps> = ({
       <Media greaterThan="xs">
         <NotificationItemLink
           to={itemUrl(item, mode)}
-          onClick={handlePress}
+          onClick={onClick}
           backgroundColor={backgroundColor}
         >
           {children}
@@ -272,7 +259,7 @@ NotificationItemLink.defaultProps = {
  * we only link to the notification detail page for the supported types.
  */
 const getNotificationUrl = (
-  notification: NotificationItem_notificationItem$data,
+  notification: NotificationItem_notification$data,
   mode: NotificationListMode = "page"
 ) => {
   // Notification response has targetHref field (computed on backend), which for
@@ -295,9 +282,7 @@ const getNotificationUrl = (
   return notification.targetHref
 }
 
-const getNotificationPrelude = (
-  item: NotificationItem_notificationItem$data
-) => {
+const getNotificationPrelude = (item: NotificationItem_notification$data) => {
   switch (item.notificationType) {
     case "PARTNER_OFFER_CREATED":
       return "Limited-Time Offer"
@@ -306,9 +291,7 @@ const getNotificationPrelude = (
   }
 }
 
-const getNotificationSubTitle = (
-  item: NotificationItem_notificationItem$data
-) => {
+const getNotificationSubTitle = (item: NotificationItem_notification$data) => {
   switch (item.notificationType) {
     case "ARTICLE_FEATURED_ARTIST":
       return "An artist you follow is featured"

@@ -17,6 +17,9 @@ import {
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import { ActionType, ContextModule, EditedUserProfile } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface CompleteProfileInformationDialogProps {
   onClose(): void
@@ -51,6 +54,9 @@ const CompleteProfileInformationDialogForm: FC<CompleteProfileInformationDialogF
     { fetchPolicy: "network-only" }
   )
 
+  const { contextPageOwnerType } = useAnalyticsContext()
+  const { trackEvent } = useTracking()
+
   const { sendToast } = useToasts()
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
@@ -78,6 +84,15 @@ const CompleteProfileInformationDialogForm: FC<CompleteProfileInformationDialogF
       onSuccess()
 
       sendToast({ variant: "success", message: "Profile information saved." })
+
+      const editedUserProfile: EditedUserProfile = {
+        action: ActionType.editedUserProfile,
+        context_screen: ContextModule.inquiry,
+        context_screen_owner_type: contextPageOwnerType,
+        platform: "web",
+      }
+
+      trackEvent(editedUserProfile)
     } catch (err) {
       console.error(err)
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<10002cab0dca6b14b42aa1d2303ad27a>>
+ * @generated SignedSource<<47b022c5e614566d443d4f306d179a63>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ export type NotificationsList_viewer$data = {
           } | null | undefined;
         } | null | undefined;
         readonly notificationType: NotificationTypesEnum;
-        readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_notificationItem">;
+        readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_notification">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -134,7 +134,7 @@ return {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "NotificationItem_notificationItem"
+                  "name": "NotificationItem_notification"
                 },
                 {
                   "alias": null,
@@ -243,6 +243,6 @@ return {
 };
 })();
 
-(node as any).hash = "68a3540ff64b9499cc1ae3c5eef86fbe";
+(node as any).hash = "1780ad1839779864a432dcf138081658";
 
 export default node;

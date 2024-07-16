@@ -13,5 +13,5 @@ export const NotificationItemUnreadIndicator = styled(Box)`
 `
 
 NotificationItemUnreadIndicator.defaultProps = {
-  "aria-label": "Unread notification",
+  "aria-label": "Unread",
 }
