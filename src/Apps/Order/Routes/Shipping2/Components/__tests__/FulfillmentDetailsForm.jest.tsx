@@ -105,6 +105,8 @@ beforeEach(() => {
     orderData: {
       shippingQuotes: [],
     },
+    meData: { addressList: [] },
+
     state: {
       shippingFormMode: "saved_addresses",
     },
@@ -261,9 +263,28 @@ describe("FulfillmentDetailsForm", () => {
       })
     })
 
-    it.todo(
-      "user can select shipping if pickup fulfillment is already saved to order"
-    )
+    it("user can select shipping if pickup fulfillment is already saved to order", async () => {
+      testProps.initialValues!.fulfillmentType = FulfillmentType.PICKUP
+      testProps.initialValues!.attributes = {
+        name: "John Doe",
+        phoneNumber: "1234567890",
+        addressLine1: "401 Broadway",
+        city: "New York",
+        region: "NY",
+        postalCode: "10013",
+        country: "US",
+      }
+      renderTree(testProps)
+
+      let shippingRadio: HTMLElement = await screen.findByRole("radio", {
+        name: "Shipping",
+      })
+
+      await userEvent.click(shippingRadio)
+      await waitFor(() => {
+        expect(screen.getByPlaceholderText("City")).toBeVisible()
+      })
+    })
   })
 
   describe("Pickup not available", () => {
