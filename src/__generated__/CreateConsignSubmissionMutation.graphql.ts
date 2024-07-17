@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0a39fdcc25d5ae4871c2926caa2ecdc>>
+ * @generated SignedSource<<179fb4f637d17a1672cfd4fc55501498>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,8 @@ export type CreateSubmissionMutationInput = {
   editionSize?: number | null | undefined;
   editionSizeFormatted?: string | null | undefined;
   height?: string | null | undefined;
+  locationAddress?: string | null | undefined;
+  locationAddress2?: string | null | undefined;
   locationCity?: string | null | undefined;
   locationCountry?: string | null | undefined;
   locationCountryCode?: string | null | undefined;
