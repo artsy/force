@@ -83,17 +83,19 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
   /*
    * Re-save fulfillment details on load if they are already saved
-   * and shipping quotes need refreshing for new address mode only ?? Is this correct?
+   * and shipping quotes need refreshing for new address mode only
    */
   useEffect(() => {
     const existingFulfillmentDetails =
       shippingContext.orderData.savedFulfillmentDetails
-    if (
+
+    const isArtsyShippingSaved =
       existingFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
       shippingContext.orderData.requiresArtsyShippingTo(
         existingFulfillmentDetails.attributes.country
       )
-    ) {
+
+    if (isArtsyShippingSaved) {
       const refreshShippingQuotes = async () => {
         // instead of handleSubmit, call the save fulfillment details function
         // directly
