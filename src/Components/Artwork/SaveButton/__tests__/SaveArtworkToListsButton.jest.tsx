@@ -61,12 +61,13 @@ describe("SaveArtworkToListsButton", () => {
     expect(screen.getByLabelText("Save")).toBeInTheDocument()
   })
 
-  describe("Save flow", () => {
+  describe("Save flow for non auction artwork", () => {
     beforeEach(() => {
       mockSaveArtwork.mockImplementation(args => ({
         saveArtwork: {
           artwork: {
             isSaved: true,
+            isInAuction: false,
           },
         },
       }))
@@ -91,6 +92,45 @@ describe("SaveArtworkToListsButton", () => {
     it("should open the modal when `Add to a List` button was pressed", async () => {
       renderWithRelay({
         Artwork: () => unsavedArtwork,
+      })
+
+      fireEvent.click(await screen.findByLabelText("Save"))
+      fireEvent.click(await screen.findByText("Add to a List"))
+
+      const modalTitle = "Select lists for this artwork"
+      expect(screen.getByText(modalTitle)).toBeInTheDocument()
+    })
+  })
+
+  describe("Save flow for auction artwork", () => {
+    beforeEach(() => {
+      mockSaveArtwork.mockImplementation(args => ({
+        saveArtwork: {
+          artwork: {
+            isSaved: true,
+            isInAuction: true,
+          },
+        },
+      }))
+    })
+
+    it("should display a toast message without the description", async () => {
+      renderWithRelay({
+        Artwork: () => unsavedAuctionArtwork,
+      })
+
+      fireEvent.click(screen.getByLabelText("Save"))
+
+      expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
+      expect(
+        screen.queryByText("Saving an artwork signals interest to galleries.")
+      ).not.toBeInTheDocument()
+      expect(await screen.findByText("Add to a List")).toBeInTheDocument()
+    })
+
+    it("should open the modal when `Add to a List` button was pressed", async () => {
+      renderWithRelay({
+        Artwork: () => unsavedAuctionArtwork,
       })
 
       fireEvent.click(await screen.findByLabelText("Save"))
@@ -188,11 +228,19 @@ describe("SaveArtworkToListsButton", () => {
 })
 
 const unsavedArtwork = {
+  isInAuction: false,
   isSaved: false,
   isSavedToList: false,
 }
 
 const savedArtwork = {
+  isInAuction: false,
   isSaved: true,
+  isSavedToList: false,
+}
+
+const unsavedAuctionArtwork = {
+  isInAuction: true,
+  isSaved: false,
   isSavedToList: false,
 }

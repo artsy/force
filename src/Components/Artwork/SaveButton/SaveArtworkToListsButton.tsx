@@ -35,6 +35,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
       year: artwork.date,
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
+      isInAuction: !!artwork.isInAuction,
       isSavedToDefaultList,
       isSavedToCustomLists: artwork.isSavedToList,
     },
@@ -91,6 +92,7 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
         preview: image {
           url(version: "square")
         }
+        isInAuction
         isSavedToList
       }
     `,

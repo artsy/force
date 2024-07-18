@@ -12,6 +12,7 @@ type Artwork = {
   year: string | null | undefined
   artistNames: string | null | undefined
   imageURL: string | null
+  isInAuction: boolean
   isSavedToDefaultList: boolean
   isSavedToCustomLists: boolean
 }
