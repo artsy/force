@@ -69,9 +69,11 @@ const easeOutExpo = "cubic-bezier(0.19, 1, 0.22, 1)"
 const loadingAnimation = keyframes`
   from {
     width: 0%;
+    left: -15%;
   }
   to {
     width: 30%;
+    left: 0%;
   }
 `
 

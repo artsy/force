@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48cf10f2a5e2f5e16434360d83a8ec69>>
+ * @generated SignedSource<<89841c528846e6962b1a86a9dd065b55>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,14 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FrameRoute_submission$data = {
-  readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
+  readonly myCollectionArtwork: {
+    readonly artworkId: string;
+    readonly framedDepth: string | null | undefined;
+    readonly framedHeight: string | null | undefined;
+    readonly framedMetric: string | null | undefined;
+    readonly framedWidth: string | null | undefined;
+    readonly isFramed: boolean | null | undefined;
   } | null | undefined;
-  readonly title: string | null | undefined;
   readonly " $fragmentType": "FrameRoute_submission";
 };
 export type FrameRoute_submission$key = {
@@ -31,22 +35,52 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Artist",
+      "concreteType": "Artwork",
       "kind": "LinkedField",
-      "name": "artist",
+      "name": "myCollectionArtwork",
       "plural": false,
       "selections": [
         {
+          "alias": "artworkId",
           "args": null,
-          "kind": "FragmentSpread",
-          "name": "EntityHeaderArtist_artist"
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isFramed",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "framedMetric",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "framedWidth",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "framedHeight",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "framedDepth",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -56,6 +90,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b28f603b831d7c0a313069026b1e5aff";
+(node as any).hash = "7aa547e814096d330af5c92ca61cac37";
 
 export default node;
