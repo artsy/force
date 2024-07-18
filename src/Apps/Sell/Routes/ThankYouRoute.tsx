@@ -43,18 +43,18 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
           <Join separator={<Spacer y={4} />}>
             <Join separator={<Spacer y={2} />}>
               <SubmissionStepTitle>
-                {!!isSubmitted
-                  ? "Thank you for submitting additional information"
-                  : "Thank you for listing your artwork"}
+                {isSubmitted
+                  ? "Thank you for listing your artwork"
+                  : "Thank you for submitting additional information"}
               </SubmissionStepTitle>
 
               <Text variant="sm">
-                {!!isSubmitted
-                  ? "This will be used to list, sell and fulfil your work. Additional information may be requested."
-                  : "An Artsy Advisor will email you within 3-5 days to review your submission and discuss next steps. In the meantime your submission will appear in the feature, My Collection."}
+                {isSubmitted
+                  ? "An Artsy Advisor will email you within 3-5 days to review your submission and discuss next steps. In the meantime your submission will appear in the feature, My Collection."
+                  : "This will be used to list, sell and fulfil your work. Additional information may be requested."}
               </Text>
 
-              {!!isSubmitted && (
+              {!isSubmitted && (
                 <Message
                   variant="success"
                   title="What happens next?"
