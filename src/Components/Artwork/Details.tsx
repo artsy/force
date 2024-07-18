@@ -4,10 +4,11 @@ import { themeGet } from "@styled-system/theme-get"
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { useCollectorSignalsContext } from "Components/Artwork/CollectorSignalsContext"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { isFunction } from "lodash"
 import * as React from "react"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
@@ -185,6 +186,25 @@ const BidInfo: React.FC<DetailsProps> = ({
   )
 }
 
+const CollectorSignalBadgeLine: React.FC = () => {
+  return (
+    <Text
+      variant="xs"
+      color="blue100"
+      backgroundColor="blue10"
+      px={0.5}
+      alignSelf="flex-start"
+      borderRadius={3}
+    >
+      Limited-Time Offer
+    </Text>
+  )
+}
+
+const EmptyLine: React.FC = () => {
+  return <Text variant="xs"> &nbsp; </Text>
+}
+
 export const Details: React.FC<DetailsProps> = ({
   contextModule,
   hideArtistName,
@@ -203,11 +223,21 @@ export const Details: React.FC<DetailsProps> = ({
     saveOnlyToDefaultList,
   } = useArtworkGridContext()
 
+  const { showCollectorSignalBadge } = useCollectorSignalsContext()
+
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
+
+  // TODO: replace randomization with real signals and business logic
+  const hasCollectorSignalBadge: boolean = useMemo(
+    () => !!showCollectorSignalBadge && Math.random() < 0.2,
+    [showCollectorSignalBadge]
+  )
+  const padForCollectorSignalBadge: boolean =
+    !!showCollectorSignalBadge && !hasCollectorSignalBadge
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -262,10 +292,13 @@ export const Details: React.FC<DetailsProps> = ({
         </Flex>
       )}
 
-      <Flex flexDirection="row" justifyContent="space-between">
-        {!hideArtistName && (
-          <ArtistLine showSaveButton={showSaveButton} {...rest} />
-        )}
+      <Flex justifyContent="space-between">
+        <Flex flexDirection="column">
+          {hasCollectorSignalBadge && <CollectorSignalBadgeLine {...rest} />}
+          {!hideArtistName && (
+            <ArtistLine showSaveButton={showSaveButton} {...rest} />
+          )}
+        </Flex>
         {renderSaveButtonComponent()}
       </Flex>
 
@@ -279,6 +312,7 @@ export const Details: React.FC<DetailsProps> = ({
       </Box>
 
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
+      {padForCollectorSignalBadge && <EmptyLine />}
     </Box>
   )
 }
