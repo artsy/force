@@ -72,7 +72,7 @@ describe("ThankYouRoute", () => {
       renderWithRelay({ ConsignmentSubmission: () => ({ state: "SUBMITTED" }) })
 
       expect(
-        screen.getByText("Thank you for listing your artwork")
+        screen.getByText("Thank you for submitting your artwork")
       ).toBeInTheDocument()
 
       expect(
