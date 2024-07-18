@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<183c47c8fbd5339a9247fe895d2a70b6>>
+ * @generated SignedSource<<6ac3bc0233eddbbcb8766f34981e1ac3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -73,7 +73,6 @@ export type useUpdateMyCollectionArtworkMutation$data = {
     readonly artworkOrError: {
       readonly artwork?: {
         readonly internalID: string;
-        readonly title: string | null | undefined;
       } | null | undefined;
       readonly mutationError?: {
         readonly message: string;
@@ -105,17 +104,10 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -174,8 +166,7 @@ return {
                     "name": "artwork",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v3/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -183,7 +174,7 @@ return {
                 "type": "MyCollectionArtworkMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -235,7 +226,6 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -250,7 +240,7 @@ return {
                 "type": "MyCollectionArtworkMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -260,16 +250,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "073f4d6748a3c6629788781239bdf513",
+    "cacheID": "a9864aead9350d3ef76d9d7e5bfca28f",
     "id": null,
     "metadata": {},
     "name": "useUpdateMyCollectionArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateMyCollectionArtworkMutation(\n  $input: MyCollectionUpdateArtworkInput!\n) {\n  myCollectionUpdateArtwork(input: $input) {\n    artworkOrError {\n      __typename\n      ... on MyCollectionArtworkMutationSuccess {\n        artwork {\n          title\n          internalID\n          id\n        }\n      }\n      ... on MyCollectionArtworkMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateMyCollectionArtworkMutation(\n  $input: MyCollectionUpdateArtworkInput!\n) {\n  myCollectionUpdateArtwork(input: $input) {\n    artworkOrError {\n      __typename\n      ... on MyCollectionArtworkMutationSuccess {\n        artwork {\n          internalID\n          id\n        }\n      }\n      ... on MyCollectionArtworkMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "92507dd71fcc636b3357303ae64529ec";
+(node as any).hash = "5764375174cfa0bf705f960348549710";
 
 export default node;

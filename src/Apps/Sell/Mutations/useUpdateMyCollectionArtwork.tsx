@@ -12,7 +12,6 @@ export const useUpdateMyCollectionArtwork = () => {
           artworkOrError {
             ... on MyCollectionArtworkMutationSuccess {
               artwork {
-                title
                 internalID
               }
             }
