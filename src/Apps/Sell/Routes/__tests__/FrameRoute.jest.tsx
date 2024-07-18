@@ -6,6 +6,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
+import { FrameRoute_Test_Query$rawResponse } from "__generated__/FrameRoute_Test_Query.graphql"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
@@ -25,6 +26,21 @@ jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
 }))
 
+const submissionMock: Partial<
+  FrameRoute_Test_Query$rawResponse["submission"]
+> = {
+  externalId: "submission-id",
+  myCollectionArtwork: {
+    id: "id",
+    artworkId: "artworkId",
+    isFramed: true,
+    framedMetric: "cm",
+    framedWidth: "160",
+    framedHeight: "100",
+    framedDepth: "1",
+  },
+}
+
 beforeEach(() => {
   ;(useSystemContext as jest.Mock).mockImplementation(() => {
     return { isLoggedIn: true }
@@ -38,7 +54,7 @@ beforeEach(() => {
     match: { location: { pathname: "/sell/submissions/submission-id/frame" } },
   }))
 
-  submitMutation = jest.fn(() => ({ catch: () => {} }))
+  submitMutation = jest.fn(() => ({ then: () => {}, catch: () => {} }))
   ;(useMutation as jest.Mock).mockImplementation(() => {
     return { submitMutation }
   })
@@ -71,34 +87,42 @@ describe("FrameRoute", () => {
     })
   })
 
+  it("initializes the form with the submission data", async () => {
+    renderWithRelay({
+      ConsignmentSubmission: () => submissionMock,
+    })
+
+    expect(screen.getByTestId("signature-radio-yes")).toBeChecked()
+    expect(screen.getByTestId("width-input")).toHaveValue("160")
+    expect(screen.getByTestId("height-input")).toHaveValue("100")
+    expect(screen.getByTestId("depth-input")).toHaveValue("1")
+    expect(screen.getByTestId("dimensionsMetric-radio-cm")).toBeChecked()
+  })
+
   describe("when form is valid", () => {
-    it("updates the submission", async () => {
-      renderWithRelay({})
-    })
-  })
+    it("updates my collection artwork", async () => {
+      renderWithRelay({
+        ConsignmentSubmission: () => submissionMock,
+      })
 
-  describe("when form is not valid", () => {
-    it("does not update the submission", async () => {
-      renderWithRelay({})
-    })
-  })
+      submitMutation.mockClear()
+      screen.getByText("Continue").click()
 
-  describe("navigation", () => {
-    describe("in APPROVED state", () => {
-      it("navigates to next step when the Continue button is clicked", async () => {
-        renderWithRelay({
-          ConsignmentSubmission: () => ({ state: "APPROVED" }),
-        })
-
-        mockPush.mockClear()
-
-        screen.getByText("Continue").click()
-
-        await waitFor(() => {
-          expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/additional-documents'
-          )
-        })
+      await waitFor(() => {
+        expect(submitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                artworkId: "artworkId",
+                isFramed: true,
+                framedMetric: "cm",
+                framedWidth: "160",
+                framedHeight: "100",
+                framedDepth: "1",
+              },
+            },
+          })
+        )
       })
     })
   })
