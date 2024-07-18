@@ -1,4 +1,5 @@
 import { ConditionRoute_submission$key } from "__generated__/ConditionRoute_submission.graphql"
+import { ArtworkConditionEnumType } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { Formik } from "formik"
 import { graphql, useFragment } from "react-relay"
@@ -14,22 +15,19 @@ import {
 } from "@artsy/palette"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
-// import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import * as React from "react"
 import * as Yup from "yup"
-import { useUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useUpdateArtwork"
 import { useMemo, useState } from "react"
 import { acceptableConditionsForSubmission } from "Apps/Sell/Utils/acceptableConditionsForSubmission"
-import { ArtworkConditionEnumType } from "__generated__/useUpdateArtworkMutation.graphql"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 
 const FRAGMENT = graphql`
   fragment ConditionRoute_submission on ConsignmentSubmission {
     myCollectionArtwork {
-      internalID
+      artworkId: internalID
       condition {
         description
-        displayText
         value
       }
     }
@@ -42,6 +40,7 @@ const Schema = Yup.object().shape({
 })
 
 interface FormValues {
+  artworkId: string
   condition: string
   description: string
 }
@@ -52,40 +51,28 @@ interface ConditionRouteProps {
 
 export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
-  // const { actions } = useSellFlowContext() // TODO: add a new action to update mycollection artwork
-  const { submitMutation: updateArtwork } = useUpdateArtwork()
+  const artwork = submission.myCollectionArtwork
+  const { actions } = useSellFlowContext()
   const conditionOptions = useMemo(acceptableConditionsForSubmission, [])
   const [
     isConditionDefinitionModalOpen,
     setIsConditionDefinitionModalOpen,
   ] = useState(false)
 
-  if (
-    !submission.myCollectionArtwork ||
-    !submission.myCollectionArtwork?.internalID
-  ) {
-    return null
-  }
+  if (!artwork) return null
 
   const onSubmit = async (values: FormValues) => {
-    if (!submission.myCollectionArtwork?.internalID) {
-      return // ERROR
-    }
-
-    return updateArtwork({
-      variables: {
-        input: {
-          condition: values.condition as ArtworkConditionEnumType,
-          conditionDescription: values.description,
-          artworkId: submission.myCollectionArtwork?.internalID,
-        },
-      },
+    return await actions.updateMyCollectionArtwork({
+      condition: values.condition as ArtworkConditionEnumType,
+      conditionDescription: values.description,
+      artworkId: artwork.artworkId,
     })
   }
 
   const initialValues: FormValues = {
-    condition: submission?.myCollectionArtwork?.condition?.value ?? "",
-    description: submission?.myCollectionArtwork?.condition?.description ?? "",
+    artworkId: artwork.artworkId,
+    condition: artwork.condition?.value ?? "",
+    description: artwork.condition?.description ?? "",
   }
 
   return (
@@ -131,17 +118,17 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
                 selected={values.condition}
                 onChange={handleChange}
                 pt={1}
-                data-testid="provenance-input"
+                data-testid="condition-input"
               />
             </Box>
 
             <TextArea
               title="Add Additional Condition Details (Optional)"
+              name="description"
               defaultValue={values.description}
               maxLength={500}
-              name="description"
               onChange={handleChange}
-              value={values.description}
+              data-testid="description-input"
             />
           </Join>
 

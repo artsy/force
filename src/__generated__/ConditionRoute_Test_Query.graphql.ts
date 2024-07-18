@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f5a80fd873f8bf58b9369fca150f5b1a>>
+ * @generated SignedSource<<f782380f4d9c09eec6e903df119e11c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,13 +23,12 @@ export type ConditionRoute_Test_Query$rawResponse = {
     readonly id: string;
     readonly internalID: string | null | undefined;
     readonly myCollectionArtwork: {
+      readonly artworkId: string;
       readonly condition: {
         readonly description: string | null | undefined;
-        readonly displayText: string | null | undefined;
         readonly value: string | null | undefined;
       } | null | undefined;
       readonly id: string;
-      readonly internalID: string;
     } | null | undefined;
     readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   } | null | undefined;
@@ -49,13 +48,6 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -116,7 +108,13 @@ return {
             "name": "myCollectionArtwork",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
+              {
+                "alias": "artworkId",
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -136,24 +134,23 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "displayText",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "value",
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
-          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -168,19 +165,19 @@ return {
             "name": "state",
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "submission(id:\"submission-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "ee1463b052fcf111a94468e314b1881b",
+    "cacheID": "61a7e449891eb968fa357355a5ea5ff1",
     "id": null,
     "metadata": {},
     "name": "ConditionRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ConditionRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ConditionRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    internalID\n    condition {\n      description\n      displayText\n      value\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query ConditionRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ConditionRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    artworkId: internalID\n    condition {\n      description\n      value\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();

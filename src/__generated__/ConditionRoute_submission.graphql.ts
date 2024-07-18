@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dfd654e5498114691c0d13e904989a5a>>
+ * @generated SignedSource<<8f409a79b29cc45eb95d18b31c098623>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConditionRoute_submission$data = {
   readonly myCollectionArtwork: {
+    readonly artworkId: string;
     readonly condition: {
       readonly description: string | null | undefined;
-      readonly displayText: string | null | undefined;
       readonly value: string | null | undefined;
     } | null | undefined;
-    readonly internalID: string;
   } | null | undefined;
   readonly " $fragmentType": "ConditionRoute_submission";
 };
@@ -41,7 +40,7 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
-          "alias": null,
+          "alias": "artworkId",
           "args": null,
           "kind": "ScalarField",
           "name": "internalID",
@@ -66,13 +65,6 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "displayText",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
               "name": "value",
               "storageKey": null
             }
@@ -87,6 +79,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "0ece9dffe4a846b2dd413fb7ba7a579d";
+(node as any).hash = "eb17ba91253a548f677709a33f6e3649";
 
 export default node;

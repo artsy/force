@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c83f02318a9c2bd06b98df09479a690>>
+ * @generated SignedSource<<4370b2f921c910f0ddc69da41faf40c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -95,7 +95,7 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": null,
+                "alias": "artworkId",
                 "args": null,
                 "kind": "ScalarField",
                 "name": "internalID",
@@ -120,13 +120,6 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "displayText",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "value",
                     "storageKey": null
                   }
@@ -144,12 +137,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "76bc68204d932ad884cb98ce86afafbf",
+    "cacheID": "934716095b02c4dea6f7ec41e25c7d33",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_ConditionRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_ConditionRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ConditionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    internalID\n    condition {\n      description\n      displayText\n      value\n    }\n    id\n  }\n}\n"
+    "text": "query sellRoutes_ConditionRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ConditionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    artworkId: internalID\n    condition {\n      description\n      value\n    }\n    id\n  }\n}\n"
   }
 };
 })();
