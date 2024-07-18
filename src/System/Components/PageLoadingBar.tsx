@@ -52,7 +52,6 @@ export const PageLoadingBar: React.FC<PageLoadingBarProps> = ({
         height={2}
         top="1px"
         left="0px"
-        zIndex={1000}
         overflow="hidden"
         position="fixed"
         onAnimationEnd={() => {
