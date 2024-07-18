@@ -300,8 +300,7 @@ const ME_FRAGMENT = graphql`
  */
 const getInitialValues = (
   meData: ShippingContextProps["meData"],
-  orderData: ShippingContextProps["orderData"],
-  forceNewAddressFormMode?: boolean
+  orderData: ShippingContextProps["orderData"]
 ): FulfillmentValues => {
   if (orderData.savedFulfillmentDetails) {
     return {
