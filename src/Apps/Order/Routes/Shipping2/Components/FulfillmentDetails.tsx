@@ -82,29 +82,28 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   }, [hasSavedAddresses])
 
   /*
-   * Re-save fulfillment details on load if they are already saved
-   * and shipping quotes need refreshing for new address mode only
+   * Re-save fulfillment details on load if they are already saved &
+   * require artsy shipping (new address form mode only - saved addresses
+   * handle this separately)
    */
   useEffect(() => {
-    const existingFulfillmentDetails =
-      shippingContext.orderData.savedFulfillmentDetails
+    const { savedFulfillmentDetails } = shippingContext.orderData
 
     const isArtsyShippingSaved =
-      existingFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
-      shippingContext.orderData.requiresArtsyShippingTo(
-        existingFulfillmentDetails.attributes.country
-      )
+      savedFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
+      savedFulfillmentDetails.isArtsyShipping &&
+      shippingContext.meData.addressList.length === 0
 
     if (isArtsyShippingSaved) {
       const refreshShippingQuotes = async () => {
         // instead of handleSubmit, call the save fulfillment details function
         // directly
         const result = await handleSaveFulfillmentDetails({
-          attributes: existingFulfillmentDetails.attributes,
+          attributes: savedFulfillmentDetails.attributes,
           fulfillmentType: FulfillmentType.SHIP,
           meta: {
             // FIXME: Will clobber previous address verification (but we can't
-            // know what the previous status was unless we read from server)
+            // know what the previous status was until we can read from server)
             addressVerifiedBy: null,
           },
         })

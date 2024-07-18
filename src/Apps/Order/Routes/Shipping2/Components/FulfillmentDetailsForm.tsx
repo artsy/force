@@ -205,7 +205,6 @@ const FulfillmentDetailsFormLayout = (
 
     if (newValue === FulfillmentType.PICKUP) {
       const initialValuesForPickup: PickupValues = {
-        // ...values,
         fulfillmentType: FulfillmentType.PICKUP,
         attributes: {
           name: "",
