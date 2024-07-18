@@ -63,11 +63,7 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
               )}
 
               {!isSubmitted && (
-                <Message
-                  variant="success"
-                  title="What happens next?"
-                  data-testid="message-on-the-thank-you-screen"
-                >
+                <Message variant="success" title="What happens next?">
                   An Artsy Advisor will email you within 3-5 days to discuss the
                   next steps. In the meantime you can view your submission in My
                   Collection.

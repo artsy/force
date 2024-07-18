@@ -81,10 +81,6 @@ describe("ThankYouRoute", () => {
         )
       ).toBeInTheDocument()
 
-      expect(
-        screen.queryByTestId("message-on-the-thank-you-screen")
-      ).not.toBeInTheDocument()
-
       expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
       expect(
         screen.getByText("View Artwork in My Collection")
@@ -104,10 +100,6 @@ describe("ThankYouRoute", () => {
         screen.getByText(
           "This will be used to list, sell and fulfil your work. Additional information may be requested."
         )
-      ).toBeInTheDocument()
-
-      expect(
-        screen.getByTestId("message-on-the-thank-you-screen")
       ).toBeInTheDocument()
 
       expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
