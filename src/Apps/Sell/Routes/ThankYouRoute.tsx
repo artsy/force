@@ -54,6 +54,14 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
                   : "This will be used to list, sell and fulfil your work. Additional information may be requested."}
               </Text>
 
+              {!!isSubmitted && (
+                <Message variant="success" title="What happens next?">
+                  If your artwork is accepted, we will guide you in selecting
+                  the best selling option. Additional information may be
+                  requested.
+                </Message>
+              )}
+
               {!isSubmitted && (
                 <Message
                   variant="success"
