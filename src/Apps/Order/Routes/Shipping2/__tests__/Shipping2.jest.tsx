@@ -321,19 +321,22 @@ describe.skip("Shipping", () => {
 
   describe("initial load with order data", () => {
     it("loads with saved shipping fulfillment and no saved addresses", async () => {
-      ;(order.requestedFulfillment as any) = {
-        __typename: "CommerceShip",
-        name: "Dr Collector",
-        addressLine1: "1 Main St",
-        addressLine2: "",
-        city: "Madrid",
-        country: "ES",
-        postalCode: "28001",
-        region: "",
-        phoneNumber: "555-555-5555",
+      const orderWithFulfillment = {
+        ...order,
+        requestedFulfillment: {
+          __typename: "CommerceShip",
+          name: "Dr Collector",
+          addressLine1: "1 Main St",
+          addressLine2: "",
+          city: "Madrid",
+          country: "ES",
+          postalCode: "28001",
+          region: "",
+          phoneNumber: "555-555-5555",
+        },
       }
       renderWithRelay({
-        CommerceOrder: () => order,
+        CommerceOrder: () => orderWithFulfillment,
         Me: () => meWithoutAddress,
       })
 
@@ -357,20 +360,23 @@ describe.skip("Shipping", () => {
       const unexpectedAddress = meWithAddresses.addressConnection!.edges![0]!
         .node!
 
-      ;(order.requestedFulfillment as any) = {
-        __typename: "CommerceShip",
-        name: expectedAddress.name,
-        addressLine1: expectedAddress.addressLine1,
-        addressLine2: expectedAddress.addressLine2,
-        city: expectedAddress.city,
-        country: expectedAddress.country,
-        postalCode: expectedAddress.postalCode,
-        region: expectedAddress.region,
-        phoneNumber: expectedAddress.phoneNumber,
+      const orderWithFulfillment = {
+        ...order,
+        requestedFulfillment: {
+          __typename: "CommerceShip",
+          name: expectedAddress.name,
+          addressLine1: expectedAddress.addressLine1,
+          addressLine2: expectedAddress.addressLine2,
+          city: expectedAddress.city,
+          country: expectedAddress.country,
+          postalCode: expectedAddress.postalCode,
+          region: expectedAddress.region,
+          phoneNumber: expectedAddress.phoneNumber,
+        },
       }
 
       renderWithRelay({
-        CommerceOrder: () => order,
+        CommerceOrder: () => orderWithFulfillment,
         Me: () => meWithAddresses,
       })
 
@@ -381,14 +387,17 @@ describe.skip("Shipping", () => {
       expect(screen.getByRole("radio", { name: /1 Main St/ })).not.toBeChecked()
     })
     it("loads with saved pickup fulfillment", async () => {
-      ;(order.requestedFulfillment as any) = {
-        __typename: "CommercePickup",
-        fulfillmentType: "PICKUP",
-        phoneNumber: "555-555-5555",
+      const orderWithFulfillment = {
+        ...order,
+        requestedFulfillment: {
+          __typename: "CommercePickup",
+          fulfillmentType: "PICKUP",
+          phoneNumber: "555-555-5555",
+        },
       }
 
       renderWithRelay({
-        CommerceOrder: () => order,
+        CommerceOrder: () => orderWithFulfillment,
         Me: () => meWithoutAddress,
       })
 
