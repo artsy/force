@@ -6,9 +6,12 @@ import {
 import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
+import { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
+import { useUpdateMyCollectionArtworkMutation$data } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
 import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
+import { useUpdateMyCollectionArtwork } from "Apps/Sell/Mutations/useUpdateMyCollectionArtwork"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
 import { createContext, useContext, useEffect, useMemo, useState } from "react"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
@@ -66,6 +69,9 @@ interface Actions {
   updateSubmission: (
     values: UpdateSubmissionMutationInput
   ) => Promise<useUpdateSubmissionMutation$data>
+  updateMyCollectionArtwork: (
+    values: MyCollectionUpdateArtworkInput
+  ) => Promise<useUpdateMyCollectionArtworkMutation$data>
   setLoading: (loading: boolean) => void
 }
 
@@ -111,6 +117,9 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const {
     submitMutation: submitUpdateSubmissionMutation,
   } = useUpdateSubmission()
+  const {
+    submitMutation: submitUpdateMyCollectionArtworkMutation,
+  } = useUpdateMyCollectionArtwork()
   const {
     submitMutation: submitCreateSubmissionMutation,
   } = useCreateSubmission()
@@ -229,12 +238,43 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     return response
   }
 
+  const updateMyCollectionArtwork = (
+    values: MyCollectionUpdateArtworkInput
+  ): Promise<useUpdateMyCollectionArtworkMutation$data> => {
+    const response = submitUpdateMyCollectionArtworkMutation({
+      variables: {
+        input: {
+          ...values,
+        } as MyCollectionUpdateArtworkInput,
+      },
+    })
+
+    response
+      .then(res => {
+        const error =
+          res.myCollectionUpdateArtwork?.artworkOrError?.mutationError
+
+        if (error) throw [error]
+      })
+      .catch(err => {
+        logger.error("Error updating submission's my collection artwork..", err)
+        sendToast({
+          variant: "error",
+          message: "Something went wrong." + ` ${err?.[0]?.message || ""}`,
+        })
+        throw err
+      })
+
+    return response
+  }
+
   const actions = {
     goToPreviousStep,
     goToNextStep,
     finishFlow,
     createSubmission,
     updateSubmission,
+    updateMyCollectionArtwork,
     setLoading,
   }
 
