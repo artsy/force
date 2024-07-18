@@ -10,6 +10,7 @@ import { PartnerOfferArtwork } from "Components/Notifications/PartnerOfferArtwor
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { NotificationWrapper } from "Components/Notifications/Notification"
+import { PartnerOfferLabel } from "Components/Artwork/PartnerOfferLabel"
 
 interface PartnerOfferCreatedNotificationProps {
   notification: PartnerOfferCreatedNotification_notification$key
@@ -53,15 +54,7 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
   return (
     <NotificationWrapper>
       <Flex width="100%" justifyContent="space-between">
-        <Text
-          variant="xs"
-          color="blue100"
-          backgroundColor="blue10"
-          px={0.5}
-          borderRadius={3}
-        >
-          Limited-Time Offer
-        </Text>
+        <PartnerOfferLabel />
         {isOfferFromSaves && (
           <RouterLink to={BASE_SAVES_PATH} data-testid="manage-saves-link">
             <Text variant="xs">Manage Saves</Text>

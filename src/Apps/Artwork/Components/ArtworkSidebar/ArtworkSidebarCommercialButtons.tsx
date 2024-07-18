@@ -45,6 +45,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { ResponsiveValue } from "styled-system"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { PartnerOfferLabel } from "Components/Artwork/PartnerOfferLabel"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
@@ -537,15 +538,7 @@ const OfferDisplay: React.FC<OfferDisplayProps> = ({
     <>
       <Spacer y={2} />
       <Flex>
-        <Text
-          variant="xs"
-          color="blue100"
-          backgroundColor="blue10"
-          px={0.5}
-          borderRadius={3}
-        >
-          Limited-Time Offer
-        </Text>
+        <PartnerOfferLabel />
       </Flex>
 
       <Spacer y={0.5} />
