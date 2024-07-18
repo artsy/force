@@ -72,7 +72,17 @@ describe("ThankYouRoute", () => {
       renderWithRelay({ ConsignmentSubmission: () => ({ state: "SUBMITTED" }) })
 
       expect(
-        screen.getByText("Thank you for submitting your artwork")
+        screen.getByText("Thank you for submitting additional information")
+      ).toBeInTheDocument()
+
+      expect(
+        screen.getByText(
+          "This will be used to list, sell and fulfil your work. Additional information may be requested."
+        )
+      ).toBeInTheDocument()
+
+      expect(
+        screen.getByTestId("message-on-the-thank-you-screen")
       ).toBeInTheDocument()
 
       expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
@@ -89,6 +99,16 @@ describe("ThankYouRoute", () => {
       expect(
         screen.getByText("Thank you for listing your artwork")
       ).toBeInTheDocument()
+
+      expect(
+        screen.getByText(
+          "An Artsy Advisor will email you within 3-5 days to review your submission and discuss next steps. In the meantime your submission will appear in the feature, My Collection."
+        )
+      ).toBeInTheDocument()
+
+      expect(
+        screen.queryByTestId("message-on-the-thank-you-screen")
+      ).not.toBeInTheDocument()
 
       expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
       expect(
