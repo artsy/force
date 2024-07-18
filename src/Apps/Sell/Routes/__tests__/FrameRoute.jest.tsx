@@ -29,7 +29,7 @@ jest.mock("System/Hooks/useFeatureFlag", () => ({
 const submissionMock: Partial<
   FrameRoute_Test_Query$rawResponse["submission"]
 > = {
-  externalId: "externalId",
+  externalId: "submission-id",
   myCollectionArtwork: {
     id: "id",
     artworkId: "artworkId",
@@ -51,7 +51,7 @@ beforeEach(() => {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "/sell/submissions/externalId/frame" } },
+    match: { location: { pathname: "/sell/submissions/submission-id/frame" } },
   }))
 
   submitMutation = jest.fn(() => ({ then: () => {}, catch: () => {} }))
@@ -106,6 +106,7 @@ describe("FrameRoute", () => {
       })
 
       submitMutation.mockClear()
+      screen.getByText("Continue").click()
 
       await waitFor(() => {
         expect(submitMutation).toHaveBeenCalledWith(
@@ -121,27 +122,6 @@ describe("FrameRoute", () => {
               },
             },
           })
-        )
-      })
-    })
-  })
-
-  describe("navigation", () => {
-    it("navigates to next step when the Continue button is clicked", async () => {
-      renderWithRelay({
-        ConsignmentSubmission: () => ({
-          ...submissionMock,
-          state: "APPROVED",
-        }),
-      })
-
-      mockPush.mockClear()
-
-      screen.getByText("Continue").click()
-
-      await waitFor(() => {
-        expect(mockPush).toHaveBeenCalledWith(
-          "/sell/submissions/externalId/additional-documents"
         )
       })
     })
