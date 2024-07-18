@@ -1,6 +1,7 @@
 import { screen, waitFor } from "@testing-library/react"
 import { ConditionRoute } from "Apps/Sell/Routes/AdditionalRoutes/ConditionRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -85,7 +86,7 @@ describe("ConditionRoute", () => {
     renderWithRelay({})
 
     await waitFor(() => {
-      expect(screen.getByText("Condition")).toBeInTheDocument()
+      expect(screen.getByTestId("submission-step-title")).toBeInTheDocument()
     })
   })
 
@@ -98,6 +99,14 @@ describe("ConditionRoute", () => {
   describe("when form is not valid", () => {
     it("does not update the submission", async () => {
       renderWithRelay({})
+
+      screen.getByText("Submit Artwork").click()
+
+      await flushPromiseQueue()
+
+      await waitFor(() => {
+        expect(submitMutation).not.toHaveBeenCalled()
+      })
     })
   })
 
