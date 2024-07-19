@@ -1,6 +1,7 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, Button, Clickable, Text } from "@artsy/palette"
+import { Box, Button, Separator, Text } from "@artsy/palette"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+import { MyCollectionArtworkSWAHelpSection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWAHelpSection"
 import { RouterLink } from "System/Components/RouterLink"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
@@ -12,18 +13,13 @@ import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
 interface MyCollectionArtworkSWASectionProps {
-  learnMore: () => void
   artwork: MyCollectionArtworkSWASection_artwork$key
-  ctaColor?: "primaryBlack" | "secondaryNeutral" | null
 }
 
-export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASectionProps> = ({
-  learnMore,
-  ...restProps
-}) => {
+export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASectionProps> = props => {
   const artwork = useFragment(
     MyCollectionArtworkSWASectionFragment,
-    restProps.artwork
+    props.artwork
   )
 
   const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
@@ -67,8 +63,10 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
   }
 
   return (
-    <Box my={2}>
-      <Text mb={0.5} variant="sm-display">
+    <Box>
+      <Separator my={4} />
+
+      <Text mb={0.5} variant="md">
         Interested in Selling This Work?
       </Text>
 
@@ -78,8 +76,6 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
 
       <Button
         variant="primaryBlack"
-        width="100%"
-        mb={2}
         // @ts-ignore
         as={enableNewSubmissionFlow ? undefined : RouterLink}
         to={
@@ -93,27 +89,7 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
         Submit for Sale
       </Button>
 
-      <Text color="black60" variant="xs">
-        Learn more about{" "}
-        <Clickable
-          onClick={() => {
-            learnMore()
-            tracking.trackEvent({
-              contextModule: ContextModule.topWorksRail,
-              context_page_owner_type: OwnerType.myCollectionArtwork,
-              context_page_owner_id: artwork.internalID,
-              context_page_owner_slug: artwork?.artist?.slug,
-              subject: "Learn More",
-              platform: "web",
-            })
-          }}
-          color="black60"
-          textDecoration="underline"
-          data-testid="learn-more"
-        >
-          selling with Artsy.
-        </Clickable>
-      </Text>
+      <MyCollectionArtworkSWAHelpSection />
     </Box>
   )
 }

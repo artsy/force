@@ -1,8 +1,8 @@
-import { Button, Flex, Text } from "@artsy/palette"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import { Box, Button, Flex, Separator, Text } from "@artsy/palette"
+import { MyCollectionArtworkRequestPriceEstimateSection_artwork$data } from "__generated__/MyCollectionArtworkRequestPriceEstimateSection_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { MyCollectionArtworkRequestPriceEstimateSection_artwork$data } from "__generated__/MyCollectionArtworkRequestPriceEstimateSection_artwork.graphql"
-import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 
 interface MyCollectionArtworkRequestPriceEstimateSectionProps {
   artwork: MyCollectionArtworkRequestPriceEstimateSection_artwork$data
@@ -24,10 +24,12 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
   artwork,
   ctaColor = "primaryBlack",
 }) => {
-  if (artwork.hasPriceEstimateRequest) {
+  if (true || artwork.hasPriceEstimateRequest) {
     return (
       <>
-        <Flex alignItems="center" flexDirection={"row"} mb={2} mt={2}>
+        <Separator my={4} />
+
+        <Flex alignItems="center" flexDirection="row">
           <CheckmarkStrokeIcon />
           <Text variant="sm" ml={0.5}>
             Price estimate request sent
@@ -42,13 +44,17 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
   }
 
   return (
-    <>
+    <Box>
+      <Separator my={4} />
+
       <Text mb={0.5} variant="sm-display">
         Get a Free Price Estimate
       </Text>
+
       <Text mb={2} color="black60" variant="xs">
         This artwork is eligible for a free evaluation from an Artsy specialist.
       </Text>
+
       <RouterLink
         to={`/collector-profile/my-collection/artwork/${artwork.internalID}/price-estimate`}
         textDecoration="none"
@@ -58,7 +64,7 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
           Request a Price Estimate
         </Button>
       </RouterLink>
-    </>
+    </Box>
   )
 }
 

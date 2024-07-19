@@ -1,12 +1,17 @@
-import { Button, Clickable, Flex, ModalDialog, Text } from "@artsy/palette"
+import {
+  Button,
+  Clickable,
+  Flex,
+  ModalDialog,
+  Separator,
+  Text,
+} from "@artsy/palette"
 
 import { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__generated__/MyCollectionArtworkSWASectionSubmitted_submissionState.graphql"
-import { INITIAL_POST_APPROVAL_STEP } from "Apps/Sell/SellFlowContext"
 
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 
 interface Props {
@@ -16,9 +21,6 @@ interface Props {
 export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
   artwork,
 }) => {
-  const enablePostApprovalSubmissionFlow = useFeatureFlag(
-    "onyx_post_approval_submission_flow"
-  )
   const [
     isSubmissionStatusModalOpen,
     setIsSubmissionStatusModalOpen,
@@ -42,10 +44,7 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
 
   return (
     <>
-      <SubmissionStatusModal
-        show={isSubmissionStatusModalOpen}
-        onClose={() => setIsSubmissionStatusModalOpen(false)}
-      />
+      <Separator my={4} />
 
       <Flex
         flexDirection={["column", "row"]}
@@ -80,22 +79,6 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
         </Flex>
       </Flex>
 
-      {!!enablePostApprovalSubmissionFlow && (
-        <Button
-          my={2}
-          // @ts-ignore
-          as={RouterLink}
-          onClick={() => {
-            // TODO: Tracking
-          }}
-          to={`/sell/submissions/${consignmentSubmission.internalID}/${INITIAL_POST_APPROVAL_STEP}`}
-          width="100%"
-          data-testid="start-new-submission"
-        >
-          Add Additional Information
-        </Button>
-      )}
-
       <Media greaterThanOrEqual="sm">
         <Text mb={2} color="black60" variant="xs">
           {stateHelpMessage}
@@ -112,6 +95,11 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
           </RouterLink>
         </Text>
       </Media>
+
+      <SubmissionStatusModal
+        show={isSubmissionStatusModalOpen}
+        onClose={() => setIsSubmissionStatusModalOpen(false)}
+      />
     </>
   )
 }

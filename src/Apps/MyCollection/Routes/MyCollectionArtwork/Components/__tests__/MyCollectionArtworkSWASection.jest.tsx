@@ -32,12 +32,7 @@ jest.mock("System/Hooks/useRouter", () => ({
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
-    return (
-      <MyCollectionArtworkSWASection
-        artwork={props.artwork}
-        learnMore={learnMoreMock}
-      />
-    )
+    return <MyCollectionArtworkSWASection artwork={props.artwork} />
   },
   query: graphql`
     query MyCollectionArtworkSWASection_Test_Query @raw_response_type {

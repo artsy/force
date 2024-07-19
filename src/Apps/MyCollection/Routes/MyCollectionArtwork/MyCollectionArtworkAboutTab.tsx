@@ -12,15 +12,13 @@ import { FC } from "react"
 interface MyCollectionArtworkAboutTabProps {
   artwork: MyCollectionArtwork_artwork$data
   submittedConsignment: boolean
-  onLearnMoreClick?: () => void
 }
 
 export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> = ({
   artwork,
   submittedConsignment,
-  onLearnMoreClick,
 }) => {
-  const isP1Artist = artwork.artist?.targetSupply?.isP1
+  const isP1Artist = artwork.artist?.targetSupply?.priority === "TRUE"
   const showSubmitForSaleCtaMobile = isP1Artist && !submittedConsignment
 
   return (
@@ -46,12 +44,7 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
 
         {showSubmitForSaleCtaMobile && (
           <Box mt={2}>
-            <MyCollectionArtworkSWASection
-              artwork={artwork}
-              learnMore={() => {
-                onLearnMoreClick?.()
-              }}
-            />
+            <MyCollectionArtworkSWASection artwork={artwork} />
           </Box>
         )}
 
