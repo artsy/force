@@ -1,9 +1,12 @@
-import { Join, Separator, Spacer } from "@artsy/palette"
+import { Box, Join, Separator, Spacer } from "@artsy/palette"
 import {
   MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
   MyCollectionPriceEstimateSentSection,
 } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimateSection"
 import { MyCollectionArtworkSWASection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASection"
+import { MyCollectionArtworkSWASectionSubmitted } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASectionSubmitted"
+import { MyCollectionArtworkSWASubmissionStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASubmissionStatus"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkInsights_artwork$data } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -23,60 +26,80 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
   isP1Artist,
   displayText,
 }) => {
+  const enablePostApprovalSubmissionFlow = useFeatureFlag(
+    "onyx_post_approval_submission_flow"
+  )
   const showSubmitForSaleCtaMobile = isP1Artist && !displayText
   const hasAuctionResults = artwork.auctionResults?.totalCount ?? 0 > 0
   const artistHasAuctionResults =
     artwork.artist?.auctionResultsCount?.totalCount ?? 0 > 0
 
+  const displaySubmissionStateSection =
+    artwork.consignmentSubmission?.state === "REJECTED"
   return (
-    <Join separator={<Spacer y={[4, 6]} />}>
-      {artwork.marketPriceInsights && (
-        <MyCollectionArtworkDemandIndexFragmentContainer
-          marketPriceInsights={artwork.marketPriceInsights}
-        />
-      )}
-
-      {artwork.hasPriceEstimateRequest && (
-        <Media lessThan="sm">
-          <MyCollectionPriceEstimateSentSection />
-        </Media>
-      )}
-
-      {showSubmitForSaleCtaMobile && (
-        <Media lessThan="sm">
-          <MyCollectionArtworkSWASection artwork={artwork} />
-        </Media>
-      )}
-
-      {artwork.marketPriceInsights && (
-        <MyCollectionArtworkArtistMarketFragmentContainer
-          marketPriceInsights={artwork.marketPriceInsights}
-        />
-      )}
-
-      {hasAuctionResults && (
-        <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
-      )}
-
-      {artistHasAuctionResults && artwork?.artist && (
-        <MyCollectionArtworkAuctionResultsFragmentContainer
-          artist={artwork.artist}
-        />
-      )}
-
-      {!artwork.hasPriceEstimateRequest && artwork.isPriceEstimateRequestable && (
-        <Media lessThan="sm">
-          <Separator my={2} />
-          <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-            artwork={artwork}
-            ctaColor={
-              showSubmitForSaleCtaMobile ? "secondaryNeutral" : "primaryBlack"
-            }
+    <Box pt={[1, 0]}>
+      <Join separator={<Spacer y={[4, 6]} />}>
+        {artwork.marketPriceInsights && (
+          <MyCollectionArtworkDemandIndexFragmentContainer
+            marketPriceInsights={artwork.marketPriceInsights}
           />
-          <Separator my={2} />
-        </Media>
-      )}
-    </Join>
+        )}
+
+        {!!displaySubmissionStateSection && (
+          <Box mb={4}>
+            {enablePostApprovalSubmissionFlow ? (
+              <MyCollectionArtworkSWASubmissionStatus artwork={artwork} />
+            ) : (
+              <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
+            )}
+          </Box>
+        )}
+
+        {artwork.hasPriceEstimateRequest && (
+          <Media lessThan="sm">
+            <MyCollectionPriceEstimateSentSection />
+          </Media>
+        )}
+
+        {showSubmitForSaleCtaMobile && (
+          <Media lessThan="sm">
+            <MyCollectionArtworkSWASection artwork={artwork} />
+          </Media>
+        )}
+
+        {artwork.marketPriceInsights && (
+          <MyCollectionArtworkArtistMarketFragmentContainer
+            marketPriceInsights={artwork.marketPriceInsights}
+          />
+        )}
+
+        {hasAuctionResults && (
+          <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
+        )}
+
+        {artistHasAuctionResults && artwork?.artist && (
+          <MyCollectionArtworkAuctionResultsFragmentContainer
+            artist={artwork.artist}
+          />
+        )}
+
+        {!artwork.hasPriceEstimateRequest &&
+          artwork.isPriceEstimateRequestable && (
+            <Media lessThan="sm">
+              <Separator my={2} />
+              <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+                artwork={artwork}
+                ctaColor={
+                  showSubmitForSaleCtaMobile
+                    ? "secondaryNeutral"
+                    : "primaryBlack"
+                }
+              />
+              <Separator my={2} />
+            </Media>
+          )}
+      </Join>
+    </Box>
   )
 }
 
@@ -93,12 +116,17 @@ export const MyCollectionArtworkInsightsFragmentContainer = createFragmentContai
         }
         ...MyCollectionArtworkComparables_artwork
         ...MyCollectionArtworkRequestPriceEstimateSection_artwork
+        ...MyCollectionArtworkSWASectionSubmitted_submissionState
+        ...MyCollectionArtworkSWASubmissionStatus_artwork
         artist {
           slug
           auctionResultsCount: auctionResultsConnection(first: 1) {
             totalCount
           }
           ...MyCollectionArtworkAuctionResults_artist
+        }
+        consignmentSubmission {
+          state
         }
         marketPriceInsights {
           ...MyCollectionArtworkArtistMarket_marketPriceInsights

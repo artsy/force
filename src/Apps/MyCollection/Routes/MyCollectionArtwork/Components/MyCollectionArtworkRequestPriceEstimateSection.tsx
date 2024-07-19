@@ -11,7 +11,7 @@ interface MyCollectionArtworkRequestPriceEstimateSectionProps {
 
 export const MyCollectionPriceEstimateSentSection: React.FC = () => {
   return (
-    <Flex alignItems="center" flexDirection={"row"} mb={2} mt={2}>
+    <Flex alignItems="center" flexDirection="row" mb={2} mt={2}>
       <CheckmarkStrokeIcon />
       <Text variant="sm" ml={0.5}>
         Price estimate request sent
@@ -24,7 +24,7 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
   artwork,
   ctaColor = "primaryBlack",
 }) => {
-  if (true || artwork.hasPriceEstimateRequest) {
+  if (artwork.hasPriceEstimateRequest) {
     return (
       <>
         <Separator my={4} />
@@ -60,9 +60,7 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
         textDecoration="none"
         display="block"
       >
-        <Button variant={ctaColor} width="100%">
-          Request a Price Estimate
-        </Button>
+        <Button variant={ctaColor}>Request a Price Estimate</Button>
       </RouterLink>
     </Box>
   )

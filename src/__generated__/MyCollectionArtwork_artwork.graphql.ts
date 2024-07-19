@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33275c702a9235922f53867a948269af>>
+ * @generated SignedSource<<54e53c5e02d01a4e08ab394987a6d284>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,7 @@ export type MyCollectionArtwork_artwork$data = {
     readonly totalCount: number | null | undefined;
   } | null | undefined;
   readonly consignmentSubmission: {
+    readonly internalID: string | null | undefined;
     readonly state: ArtworkConsignmentSubmissionState;
     readonly stateLabel: string | null | undefined;
   } | null | undefined;
@@ -54,6 +55,13 @@ var v0 = [
   }
 ],
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -147,14 +155,8 @@ return {
       "name": "submissionId",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
     (v1/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -176,7 +178,8 @@ return {
           "kind": "ScalarField",
           "name": "stateLabel",
           "storageKey": null
-        }
+        },
+        (v1/*: any*/)
       ],
       "storageKey": null
     },
@@ -188,7 +191,7 @@ return {
       "name": "artist",
       "plural": false,
       "selections": [
-        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -231,6 +234,6 @@ return {
 };
 })();
 
-(node as any).hash = "39db9514c3528c7321d701e5945ab71a";
+(node as any).hash = "72dd39cf2afb01c2e08355b01fc01a0b";
 
 export default node;

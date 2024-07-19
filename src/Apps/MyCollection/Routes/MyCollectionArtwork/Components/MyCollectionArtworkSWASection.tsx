@@ -22,6 +22,8 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
     props.artwork
   )
 
+  const isHighDemand = (artwork?.marketPriceInsights?.demandRank || 0) >= 0.9
+
   const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
   const tracking = useTracking()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
@@ -70,7 +72,8 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
         Interested in Selling This Work?
       </Text>
 
-      <Text mb={2} color="black60" variant="xs">
+      <Text mb={2} color="black60" variant="sm">
+        {!!isHighDemand && "Your artwork is in high demand. "}
         Let our experts find the best sales option for you.
       </Text>
 
@@ -103,6 +106,9 @@ const MyCollectionArtworkSWASectionFragment = graphql`
     }
     consignmentSubmission {
       internalID
+    }
+    marketPriceInsights {
+      demandRank
     }
   }
 `

@@ -22,7 +22,7 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
   const showSubmitForSaleCtaMobile = isP1Artist && !submittedConsignment
 
   return (
-    <>
+    <Box pt={[1, 0]}>
       <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
 
       {!showSubmitForSaleCtaMobile && <Spacer x={6} y={6} />}
@@ -65,6 +65,6 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
           artworkId={artwork.internalID}
         />
       </Join>
-    </>
+    </Box>
   )
 }

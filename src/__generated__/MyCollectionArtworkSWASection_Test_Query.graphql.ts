@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<871b0e01969adf31363b44ec360b9f1e>>
+ * @generated SignedSource<<98e26ee3838f138a2d40d5cb24256846>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,6 +28,9 @@ export type MyCollectionArtworkSWASection_Test_Query$rawResponse = {
     } | null | undefined;
     readonly id: string;
     readonly internalID: string;
+    readonly marketPriceInsights: {
+      readonly demandRank: number | null | undefined;
+    } | null | undefined;
   } | null | undefined;
 };
 export type MyCollectionArtworkSWASection_Test_Query = {
@@ -132,6 +135,24 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworkPriceInsights",
+            "kind": "LinkedField",
+            "name": "marketPriceInsights",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "demandRank",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           (v2/*: any*/)
         ],
         "storageKey": "artwork(id:\"artwork-id\")"
@@ -139,12 +160,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6790b277252c4de5378a94f04a174c5b",
+    "cacheID": "7235d48fbe939d889767826f84db19d2",
     "id": null,
     "metadata": {},
     "name": "MyCollectionArtworkSWASection_Test_Query",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSWASection_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASection_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASection_artwork on Artwork {\n  internalID\n  artist {\n    internalID\n    slug\n    id\n  }\n  consignmentSubmission {\n    internalID\n  }\n}\n"
+    "text": "query MyCollectionArtworkSWASection_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASection_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASection_artwork on Artwork {\n  internalID\n  artist {\n    internalID\n    slug\n    id\n  }\n  consignmentSubmission {\n    internalID\n  }\n  marketPriceInsights {\n    demandRank\n  }\n}\n"
   }
 };
 })();
