@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b9de60fd0170279b0924c0f269e037f8>>
+ * @generated SignedSource<<4324c6f53a473dfc3c8f23e9dca5dd78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type sellRoutes_PurchaseHistoryRouteQuery$variables = {
   id: string;
+  sessionID: string;
 };
 export type sellRoutes_PurchaseHistoryRouteQuery$data = {
   readonly submission: {
@@ -29,6 +30,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "sessionID"
   }
 ],
 v1 = [
@@ -36,6 +42,11 @@ v1 = [
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
+  },
+  {
+    "kind": "Variable",
+    "name": "sessionID",
+    "variableName": "sessionID"
   }
 ];
 return {
@@ -106,16 +117,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "99e2f40b36070661f43fbf3a33a5ccbe",
+    "cacheID": "fe685ddc81a113b98fdaf1cf1846eae1",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_PurchaseHistoryRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_PurchaseHistoryRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...PurchaseHistoryRoute_submission\n    id\n  }\n}\n\nfragment PurchaseHistoryRoute_submission on ConsignmentSubmission {\n  provenance\n  signature\n}\n"
+    "text": "query sellRoutes_PurchaseHistoryRouteQuery(\n  $id: ID!\n  $sessionID: String!\n) {\n  submission(id: $id, sessionID: $sessionID) @principalField {\n    ...PurchaseHistoryRoute_submission\n    id\n  }\n}\n\nfragment PurchaseHistoryRoute_submission on ConsignmentSubmission {\n  provenance\n  signature\n}\n"
   }
 };
 })();
 
-(node as any).hash = "edce7fd445c83ea3ee42e959040cba6c";
+(node as any).hash = "7ef056639d38f2a19fc9c955143eb848";
 
 export default node;

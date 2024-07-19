@@ -8,9 +8,10 @@ import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutati
 import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
 import { createOrderMutation } from "./mutations/AuthIntentCreateOrderMutation"
 import { createOfferOrderMutation } from "./mutations/AuthIntentCreateOfferOrderMutation"
-import { associateSubmissionMutation } from "./mutations/AuthIntentAssociateSubmissionMutation"
 import { Environment } from "react-relay"
 import { useDismissibleContext } from "@artsy/dismissible"
+import { SellFlowStep } from "Apps/Sell/SellFlowContext"
+import { associateSubmissionMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentAssociateSubmissionMutation"
 
 export const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
@@ -35,6 +36,17 @@ export type AfterAuthAction =
       kind: "artworks"
       objectId: string
       secondaryObjectId: string | null | undefined
+    }
+  | {
+      action: "saveAndExitSubmission"
+      kind: "submission"
+      objectId: string
+      step: SellFlowStep
+    }
+  | {
+      action: "submitSubmission"
+      kind: "submission"
+      objectId: string
     }
 
 export const runAuthIntent = async ({
@@ -100,6 +112,11 @@ export const runAuthIntent = async ({
 
         case "associateSubmission":
           return associateSubmissionMutation(relayEnvironment, value.objectId)
+
+        case "saveAndExitSubmission" ||
+          "submitSubmission":
+          // Do nothing. Value update triggers UI which handles mutation.
+          break
       }
     })()
 
@@ -194,6 +211,8 @@ const schema = Yup.object({
       "saveArtworkToLists",
       "buyNow",
       "makeOffer",
+      "submitSubmission",
+      "saveAndExitSubmission",
     ])
     .required(),
   kind: Yup.string()
@@ -205,6 +224,7 @@ const schema = Yup.object({
     return action === "createAlert" ? schema.notRequired() : schema.required()
   }),
   secondaryObjectId: Yup.string(),
+  step: Yup.string(),
 })
 
 export const isValid = (value: any): value is AfterAuthAction => {

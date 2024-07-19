@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6e94064e0a43668b0766b4efd4cecfef>>
+ * @generated SignedSource<<386a6b434368a92fb296f8c81a649155>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type sellRoutes_ArtistRouteQuery$variables = {
   id: string;
+  sessionID: string;
 };
 export type sellRoutes_ArtistRouteQuery$data = {
   readonly submission: {
@@ -29,6 +30,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "sessionID"
   }
 ],
 v1 = [
@@ -36,6 +42,11 @@ v1 = [
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
+  },
+  {
+    "kind": "Variable",
+    "name": "sessionID",
+    "variableName": "sessionID"
   }
 ],
 v2 = {
@@ -139,16 +150,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f9cc0979cfbbc7699bec4a1670ad2fb7",
+    "cacheID": "d01d446ade18834a29bc63e928474d62",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_ArtistRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_ArtistRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ArtistRoute_submission\n    id\n  }\n}\n\nfragment ArtistRoute_submission on ConsignmentSubmission {\n  internalID\n  artist {\n    internalID\n    targetSupply {\n      isTargetSupply\n    }\n    name\n    id\n  }\n}\n"
+    "text": "query sellRoutes_ArtistRouteQuery(\n  $id: ID!\n  $sessionID: String!\n) {\n  submission(id: $id, sessionID: $sessionID) @principalField {\n    ...ArtistRoute_submission\n    id\n  }\n}\n\nfragment ArtistRoute_submission on ConsignmentSubmission {\n  internalID\n  artist {\n    internalID\n    targetSupply {\n      isTargetSupply\n    }\n    name\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "45d0577595aaac4b3851de2c920f2805";
+(node as any).hash = "9ec00e294e0875f54c147660bb99ae6d";
 
 export default node;

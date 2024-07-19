@@ -1,6 +1,7 @@
 import { screen, waitFor } from "@testing-library/react"
 import { PhoneNumberRoute } from "Apps/Sell/Routes/PhoneNumberRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
+import { useAuthDialog } from "Components/AuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -10,6 +11,7 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 const mockUseRouter = useRouter as jest.Mock
+const mockUseSystemContext = useSystemContext as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 let submitMutation: jest.Mock
@@ -23,6 +25,9 @@ jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
+}))
+jest.mock("Components/AuthDialog/useAuthDialog", () => ({
+  useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
 }))
 
 const submissionMock: Partial<
@@ -61,6 +66,12 @@ beforeAll(() => {
   })
 })
 
+beforeEach(() => {
+  mockPush.mockClear()
+  trackEvent.mockClear()
+  submitMutation.mockClear()
+})
+
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
     return (
@@ -96,10 +107,6 @@ describe("PhoneNumberRoute", () => {
           renderWithRelay({
             ConsignmentSubmission: () => submissionMock,
           })
-
-          mockPush.mockClear()
-          trackEvent.mockClear()
-          submitMutation.mockClear()
 
           screen.getByText("Submit Artwork").click()
 
@@ -139,6 +146,46 @@ describe("PhoneNumberRoute", () => {
             )
           })
         })
+
+        describe("while logged out", () => {
+          const mockUseAuthDialog = useAuthDialog as jest.Mock
+
+          beforeEach(() => {
+            mockUseSystemContext.mockImplementation(() => {
+              return { isLoggedIn: false }
+            })
+          })
+
+          it("prompts for authentication", async () => {
+            const showAuthDialog = jest.fn()
+            mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
+
+            renderWithRelay({
+              ConsignmentSubmission: () => submissionMock,
+            })
+
+            screen.getByText("Submit Artwork").click()
+
+            await waitFor(() => {
+              expect(showAuthDialog).toBeCalledWith({
+                mode: "SignUp",
+                options: {
+                  title: expect.any(Function),
+                  afterAuthAction: {
+                    action: "submitSubmission",
+                    kind: "submission",
+                    objectId: expect.stringContaining("externalId"),
+                  },
+                },
+                analytics: {
+                  contextModule: "sell",
+                  intent: "consign",
+                  trigger: "click",
+                },
+              })
+            })
+          })
+        })
       })
 
       describe("when clicking the Back button", () => {
@@ -146,10 +193,6 @@ describe("PhoneNumberRoute", () => {
           renderWithRelay({
             ConsignmentSubmission: () => submissionMock,
           })
-
-          mockPush.mockClear()
-          trackEvent.mockClear()
-          submitMutation.mockClear()
 
           screen.getByText("Back").click()
 
@@ -170,8 +213,6 @@ describe("PhoneNumberRoute", () => {
             state: "APPROVED",
           }),
         })
-
-        mockPush.mockClear()
 
         screen.getByText("Continue").click()
 

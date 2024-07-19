@@ -4,10 +4,13 @@ import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
 import { render } from "DevTools/renderWithMockBoot"
 import { useRouter } from "System/Hooks/useRouter"
 import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Formik } from "formik"
 import { useTracking } from "react-tracking"
+import { useAuthDialog } from "Components/AuthDialog"
 
 const mockUseRouter = useRouter as jest.Mock
+const mockUseSystemContext = useSystemContext as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 const onSubmitMock = jest.fn()
@@ -15,6 +18,10 @@ const trackEvent = jest.fn()
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
+}))
+jest.mock("System/Hooks/useSystemContext")
+jest.mock("Components/AuthDialog/useAuthDialog", () => ({
+  useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
 }))
 jest.unmock("react-relay")
 
@@ -32,6 +39,9 @@ describe("SubmissionLayout", () => {
       return {
         trackEvent,
       }
+    })
+    mockUseSystemContext.mockImplementation(() => {
+      return { isLoggedIn: true }
     })
 
     mockUseRouter.mockImplementation(() => ({
@@ -97,32 +107,7 @@ describe("SubmissionLayout", () => {
       )
 
       expect(screen.queryByText("Exit")).not.toBeInTheDocument()
-
-      const saveAndExitButton = screen.getByText("Save & Exit")
-
-      fireEvent.click(saveAndExitButton)
-
-      await waitFor(() => {
-        expect(trackEvent).toHaveBeenCalledWith({
-          action: "tappedSubmissionSaveExit",
-          context_module: "sell",
-          context_owner_type: "submitArtworkStepAddDimensions",
-          submission_id: "internal-id",
-          submission_step: "dimensions",
-        })
-
-        expect(setMock).toHaveBeenCalledWith(
-          "previousSubmissionID",
-          "external-id"
-        )
-        expect(setMock).toHaveBeenCalledWith(
-          "previousSubmissionStep",
-          "dimensions"
-        )
-
-        expect(onSubmitMock).toHaveBeenCalled()
-        expect(mockPush).toHaveBeenCalledWith("/sell")
-      })
+      expect(screen.getByText("Save & Exit")).toBeInTheDocument()
     })
 
     it("renders the 'Back' button", () => {
@@ -149,6 +134,101 @@ describe("SubmissionLayout", () => {
         context_owner_type: "submitArtworkStepAddDimensions",
         submission_id: "internal-id",
         submission_step: "dimensions",
+      })
+    })
+  })
+
+  describe("Save & Exit", () => {
+    describe("while logged in", () => {
+      it("saves the submission and redirects to the sell page", async () => {
+        render(
+          <Formik<{}> initialValues={{}} onSubmit={onSubmitMock}>
+            <SellFlowContextProvider submission={submissionMock}>
+              <SubmissionLayout />
+            </SellFlowContextProvider>
+          </Formik>
+        )
+
+        const saveAndExitButton = screen.getByText("Save & Exit")
+
+        fireEvent.click(saveAndExitButton)
+
+        await waitFor(() => {
+          expect(trackEvent).toHaveBeenCalledWith({
+            action: "tappedSubmissionSaveExit",
+            context_module: "sell",
+            context_owner_type: "submitArtworkStepAddDimensions",
+            submission_id: "internal-id",
+            submission_step: "dimensions",
+          })
+
+          expect(setMock).toHaveBeenCalledWith(
+            "previousSubmissionID",
+            "external-id"
+          )
+          expect(setMock).toHaveBeenCalledWith(
+            "previousSubmissionStep",
+            "dimensions"
+          )
+
+          expect(onSubmitMock).toHaveBeenCalled()
+          expect(mockPush).toHaveBeenCalledWith("/sell")
+        })
+      })
+    })
+
+    describe("while logged out", () => {
+      const mockUseAuthDialog = useAuthDialog as jest.Mock
+
+      beforeEach(() => {
+        mockUseSystemContext.mockImplementation(() => {
+          return { isLoggedIn: false }
+        })
+      })
+
+      it("prompts for authentication", async () => {
+        const showAuthDialog = jest.fn()
+        mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
+
+        render(
+          <Formik<{}> initialValues={{}} onSubmit={onSubmitMock}>
+            <SellFlowContextProvider submission={submissionMock}>
+              <SubmissionLayout />
+            </SellFlowContextProvider>
+          </Formik>
+        )
+
+        const saveAndExitButton = screen.getByText("Save & Exit")
+
+        fireEvent.click(saveAndExitButton)
+
+        await waitFor(() => {
+          expect(trackEvent).toHaveBeenCalledWith({
+            action: "tappedSubmissionSaveExit",
+            context_module: "sell",
+            context_owner_type: "submitArtworkStepAddDimensions",
+            submission_id: "internal-id",
+            submission_step: "dimensions",
+          })
+
+          expect(showAuthDialog).toBeCalledWith({
+            mode: "SignUp",
+            options: {
+              title: expect.any(Function),
+              afterAuthAction: {
+                action: "saveAndExitSubmission",
+                kind: "submission",
+                objectId: "external-id",
+                step: "dimensions",
+              },
+            },
+            analytics: {
+              contextModule: "sell",
+              intent: "saveAndExitSubmission",
+              trigger: "click",
+            },
+          })
+        })
       })
     })
   })
