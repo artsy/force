@@ -1,12 +1,12 @@
-import { Flex, Spacer, Text, Pill } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import { FC } from "react"
-import { useFragment, graphql } from "react-relay"
-import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
-import { NotificationArtworkList } from "Components/Notifications/NotificationArtworkList"
-import { AlertNotification_notification$key } from "__generated__/AlertNotification_notification.graphql"
-import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { Flex, Pill, Spacer, Text } from "@artsy/palette"
 import { NotificationWrapper } from "Components/Notifications/Notification"
+import { NotificationArtworkList } from "Components/Notifications/NotificationArtworkList"
+import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
+import { RouterLink } from "System/Components/RouterLink"
+import { AlertNotification_notification$key } from "__generated__/AlertNotification_notification.graphql"
+import { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface AlertNotificationProps {
   notification: AlertNotification_notification$key
