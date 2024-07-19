@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Column,
   Flex,
@@ -45,10 +46,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const submissionStateLabel = artwork.consignmentSubmission?.stateLabel
 
-  const displaySubmissionStateSection =
-    artwork.consignmentSubmission?.state &&
-    artwork.consignmentSubmission?.state != "DRAFT"
-
   const submittedConsignment = !!submissionStateLabel
 
   const showComparables = !!artwork.comparables?.totalCount
@@ -61,11 +58,15 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const isP1Artist = artwork.artist?.targetSupply?.priority === "TRUE"
 
+  console.log("internal id", artwork.consignmentSubmission?.internalID)
+
+  const displaySubmissionStateSection =
+    artwork.consignmentSubmission?.state !== "REJECTED"
   return (
     <>
       <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
 
-      <Flex py={[2, 1]} justifyContent="space-between" alignItems="center">
+      <Flex pt={[2, 1]} justifyContent="space-between" alignItems="center">
         <MyCollectionArtworkBackButton />
 
         <Button
@@ -84,21 +85,21 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         </Button>
       </Flex>
 
-      <GridColumns gridRowGap={[2, null]} mb={[0, 4]}>
+      <GridColumns gap={[2, null]} mb={[0, 4]}>
         <Column span={8}>
           <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
         </Column>
 
         <Column span={4}>
           <Media greaterThanOrEqual="sm">
-            <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
+            <Box mt={2}>
+              <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
 
-            {artwork.hasPriceEstimateRequest && (
-              <MyCollectionPriceEstimateSentSection />
-            )}
+              {artwork.hasPriceEstimateRequest && (
+                <MyCollectionPriceEstimateSentSection />
+              )}
 
-            {isP1Artist &&
-              (displaySubmissionStateSection ? (
+              {displaySubmissionStateSection ? (
                 <>
                   {enablePostApprovalSubmissionFlow ? (
                     <MyCollectionArtworkSWASubmissionStatus artwork={artwork} />
@@ -108,23 +109,32 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 </>
               ) : (
                 <MyCollectionArtworkSWASection artwork={artwork} />
-              ))}
+              )}
 
-            {!artwork.hasPriceEstimateRequest && !submissionStateLabel && (
-              <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-                artwork={artwork}
-                ctaColor={isP1Artist ? "secondaryNeutral" : "primaryBlack"}
-              />
-            )}
+              {!artwork.hasPriceEstimateRequest && !submissionStateLabel && (
+                <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+                  artwork={artwork}
+                  ctaColor={isP1Artist ? "secondaryNeutral" : "primaryBlack"}
+                />
+              )}
+            </Box>
           </Media>
 
           <Media lessThan="sm">
             <MyCollectionArtworkSidebarTitleInfoFragmentContainer
               artwork={artwork}
             />
+
             {isP1Artist && displaySubmissionStateSection && (
-              <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
+              <Box mb={4}>
+                {enablePostApprovalSubmissionFlow ? (
+                  <MyCollectionArtworkSWASubmissionStatus artwork={artwork} />
+                ) : (
+                  <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
+                )}
+              </Box>
             )}
+
             {hasInsights ? (
               <Tabs fill mt={2}>
                 <Tab name="Insights">
@@ -157,7 +167,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <>
             <MyCollectionArtworkInsightsFragmentContainer artwork={artwork} />
 
-            <Spacer x={[4, 6]} y={[4, 6]} />
+            <Spacer x={6} y={6} />
 
             <ArtistCurrentArticlesRailQueryRenderer
               slug={artwork?.artist?.slug ?? ""}
@@ -196,6 +206,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         consignmentSubmission {
           state
           stateLabel
+          internalID
         }
         artist {
           slug

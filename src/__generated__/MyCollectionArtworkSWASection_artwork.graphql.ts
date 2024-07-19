@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3a43d41efd8f3b4b4ff2f061f8813c5>>
+ * @generated SignedSource<<27d587e48325ea80b2debfef0490c9de>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,9 @@ export type MyCollectionArtworkSWASection_artwork$data = {
     readonly internalID: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
+  readonly marketPriceInsights: {
+    readonly demandRank: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "MyCollectionArtworkSWASection_artwork";
 };
 export type MyCollectionArtworkSWASection_artwork$key = {
@@ -71,6 +74,24 @@ return {
         (v0/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkPriceInsights",
+      "kind": "LinkedField",
+      "name": "marketPriceInsights",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "demandRank",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -78,6 +99,6 @@ return {
 };
 })();
 
-(node as any).hash = "4a5d740d7d262e2ed44b34df794ee9d1";
+(node as any).hash = "e5e115e2d7af1aeb6d37b4e9a2bf2019";
 
 export default node;
