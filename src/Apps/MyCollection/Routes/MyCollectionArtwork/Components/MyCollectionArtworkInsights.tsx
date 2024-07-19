@@ -16,14 +16,12 @@ interface MyCollectionArtworkInsightsProps {
   artwork: MyCollectionArtworkInsights_artwork$data
   isP1Artist?: boolean | null
   displayText?: string | null
-  onLearnMoreClick?: () => void
 }
 
 const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
   artwork,
   isP1Artist,
   displayText,
-  onLearnMoreClick,
 }) => {
   const showSubmitForSaleCtaMobile = isP1Artist && !displayText
   const hasAuctionResults = artwork.auctionResults?.totalCount ?? 0 > 0
@@ -32,36 +30,23 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
 
   return (
     <Join separator={<Spacer y={[4, 6]} />}>
-      <Join
-        separator={
-          <Media lessThan="sm">
-            <Separator my={2} />
-          </Media>
-        }
-      >
-        {artwork.marketPriceInsights && (
-          <MyCollectionArtworkDemandIndexFragmentContainer
-            marketPriceInsights={artwork.marketPriceInsights}
-          />
-        )}
+      {artwork.marketPriceInsights && (
+        <MyCollectionArtworkDemandIndexFragmentContainer
+          marketPriceInsights={artwork.marketPriceInsights}
+        />
+      )}
 
-        {artwork.hasPriceEstimateRequest && (
-          <Media lessThan="sm">
-            <MyCollectionPriceEstimateSentSection />
-          </Media>
-        )}
+      {artwork.hasPriceEstimateRequest && (
+        <Media lessThan="sm">
+          <MyCollectionPriceEstimateSentSection />
+        </Media>
+      )}
 
-        {showSubmitForSaleCtaMobile && (
-          <Media lessThan="sm">
-            <MyCollectionArtworkSWASection
-              artwork={artwork}
-              learnMore={() => {
-                onLearnMoreClick?.()
-              }}
-            />
-          </Media>
-        )}
-      </Join>
+      {showSubmitForSaleCtaMobile && (
+        <Media lessThan="sm">
+          <MyCollectionArtworkSWASection artwork={artwork} />
+        </Media>
+      )}
 
       {artwork.marketPriceInsights && (
         <MyCollectionArtworkArtistMarketFragmentContainer
