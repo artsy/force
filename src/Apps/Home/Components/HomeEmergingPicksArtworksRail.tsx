@@ -16,7 +16,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
 import { HomeEmergingPicksArtworksRailQuery } from "__generated__/HomeEmergingPicksArtworksRailQuery.graphql"
 import { useTracking } from "react-tracking"
-import { CollectorSignalsContextProvider } from "Components/Artwork/CollectorSignalsContext"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface HomeEmergingPicksArtworksRailProps {
   viewer: HomeEmergingPicksArtworksRail_viewer$data
@@ -34,7 +34,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRa
   }
 
   return (
-    <CollectorSignalsContextProvider showCollectorSignalBadge>
+    <ArtworkGridContextProvider showCollectorSignalBadge>
       <Rail
         title="Curators’ Picks: Emerging"
         subTitle="The best works by rising talents on Artsy, all available now."
@@ -77,7 +77,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRa
           ))
         }}
       />
-    </CollectorSignalsContextProvider>
+    </ArtworkGridContextProvider>
   )
 }
 

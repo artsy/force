@@ -4,7 +4,6 @@ import { themeGet } from "@styled-system/theme-get"
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import { useCollectorSignalsContext } from "Components/Artwork/CollectorSignalsContext"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { isFunction } from "lodash"
 import * as React from "react"
@@ -221,9 +220,8 @@ export const Details: React.FC<DetailsProps> = ({
     isAuctionArtwork,
     hideLotLabel,
     saveOnlyToDefaultList,
+    showCollectorSignalBadge,
   } = useArtworkGridContext()
-
-  const { showCollectorSignalBadge } = useCollectorSignalsContext()
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =

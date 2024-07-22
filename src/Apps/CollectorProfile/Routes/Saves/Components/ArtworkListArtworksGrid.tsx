@@ -22,7 +22,7 @@ import { isEqual } from "lodash"
 import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { ArtworkListEmptyStateFragmentContainer } from "./ArtworkListEmptyState"
-import { CollectorSignalsContextProvider } from "Components/Artwork/CollectorSignalsContext"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 export const ARTWORK_LIST_ARTWORK_GRID_ID = "artworksGrid"
 
@@ -157,7 +157,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
       <ArtworkListArtworksGridHeader />
       <Spacer y={2} />
       <LoadingArea isLoading={fetching}>
-        <CollectorSignalsContextProvider showCollectorSignalBadge>
+        <ArtworkGridContextProvider showCollectorSignalBadge>
           <ArtworkGrid
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             artworks={artworks!}
@@ -181,7 +181,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
               )
             }}
           />
-        </CollectorSignalsContextProvider>
+        </ArtworkGridContextProvider>
 
         <Pagination
           hasNextPage={hasNextPage}
