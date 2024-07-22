@@ -49,9 +49,9 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
 
   const { consignmentSubmission: submission } = artwork
 
-  if (!submission) return null
-
   const submissionData = getSubmissionData(artwork)
+
+  if (!submission || !submissionData) return null
 
   return (
     <Box>
@@ -214,7 +214,7 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
 
 const getSubmissionData = (
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$data
-): SubmissionData => {
+): SubmissionData | null => {
   const submission = artwork.consignmentSubmission
 
   if (!submission) return { stateLabel: null }
@@ -266,6 +266,7 @@ const getSubmissionData = (
               variant: "secondaryBlack",
             }
           : undefined,
+        description: "Your artwork has been successfully listed on Artsy.",
         stateLabel: submission.stateLabel,
       }
     case "REJECTED":
@@ -286,9 +287,11 @@ const getSubmissionData = (
         ),
         stateLabel: submission.stateLabel,
       }
-    default:
-      return {
-        stateLabel: submission.stateLabel,
-      }
+    case "CLOSED":
+      return null
+    case "HOLD":
+      return null
   }
+
+  return null
 }

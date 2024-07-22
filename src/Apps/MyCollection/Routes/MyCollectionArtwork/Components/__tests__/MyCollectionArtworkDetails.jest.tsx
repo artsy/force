@@ -30,21 +30,6 @@ describe("MyCollectionArtworkDetails", () => {
       renderWithRelay({ Artwork: () => mockResolversWithData })
     })
 
-    it("displays artists names and title with the artist url", () => {
-      expect(screen.getByText("Jean-Michel Basquiat")).toBeInTheDocument()
-      expect(screen.getByText("Jean-Michel Basquiat")).toHaveAttribute(
-        "href",
-        "/artist/artist-id"
-      )
-
-      expect(
-        screen.getByText(
-          "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)"
-        )
-      ).toBeInTheDocument()
-      expect(screen.getByText(", 1979")).toBeInTheDocument()
-    })
-
     it("displays metadata", () => {
       expect(
         screen.getByText("Acrylic on cotton sweatshirt.")
@@ -117,21 +102,6 @@ describe("MyCollectionArtworkDetails", () => {
       renderWithRelay({ Artwork: () => emptyMockResolvers })
     })
 
-    it("displays artists names and title", () => {
-      expect(screen.getByText("Jean-Michel Basquiat")).toBeInTheDocument()
-      expect(screen.getByText("Jean-Michel Basquiat")).toHaveAttribute(
-        "href",
-        "/artist/artist-id"
-      )
-
-      expect(
-        screen.getByText(
-          "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)"
-        )
-      ).toBeInTheDocument()
-      expect(screen.getByText(", 1979")).toBeInTheDocument()
-    })
-
     it("displays minimal metadata", () => {
       expect(
         screen.getByText("Acrylic on cotton sweatshirt.")
@@ -154,13 +124,9 @@ describe("MyCollectionArtworkDetails", () => {
 })
 
 const mockResolversWithData = {
-  artistNames: "Jean-Michel Basquiat",
-  artist: {
-    href: "/artist/artist-id",
+  mediumType: {
+    name: "Drawing, Collage or other Work on Paper",
   },
-  title:
-    "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)",
-  category: "Drawing, Collage or other Work on Paper",
   date: "1979",
   medium: "Acrylic on cotton sweatshirt.",
   metric: "in",
@@ -191,7 +157,9 @@ const emptyMockResolvers = {
   title:
     "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)",
   date: "1979",
-  category: "Drawing, Collage or other Work on Paper",
+  mediumType: {
+    name: "Drawing, Collage or other Work on Paper",
+  },
   medium: "Acrylic on cotton sweatshirt.",
   dimensions: null,
   provenance: null,
