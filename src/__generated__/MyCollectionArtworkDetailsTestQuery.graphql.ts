@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b2984adec3275113a106edc8b1848d7>>
+ * @generated SignedSource<<559a6fe7875a70d7e72d61f7127c1418>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkSidebarTestQuery$variables = Record<PropertyKey, never>;
-export type MyCollectionArtworkSidebarTestQuery$data = {
+export type MyCollectionArtworkDetailsTestQuery$variables = Record<PropertyKey, never>;
+export type MyCollectionArtworkDetailsTestQuery$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkSidebarMetadata_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkDetails_artwork">;
   } | null | undefined;
 };
-export type MyCollectionArtworkSidebarTestQuery = {
-  response: MyCollectionArtworkSidebarTestQuery$data;
-  variables: MyCollectionArtworkSidebarTestQuery$variables;
+export type MyCollectionArtworkDetailsTestQuery = {
+  response: MyCollectionArtworkDetailsTestQuery$data;
+  variables: MyCollectionArtworkDetailsTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -38,22 +38,22 @@ v1 = {
 },
 v2 = {
   "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v3 = {
-  "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "MyCollectionArtworkSidebarTestQuery",
+    "name": "MyCollectionArtworkDetailsTestQuery",
     "selections": [
       {
         "alias": null,
@@ -66,12 +66,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "MyCollectionArtworkSidebarTitleInfo_artwork"
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "MyCollectionArtworkSidebarMetadata_artwork"
+            "name": "MyCollectionArtworkDetails_artwork"
           }
         ],
         "storageKey": "artwork(id:\"foo\")"
@@ -84,7 +79,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "MyCollectionArtworkSidebarTestQuery",
+    "name": "MyCollectionArtworkDetailsTestQuery",
     "selections": [
       {
         "alias": null,
@@ -97,55 +92,19 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "artistNames",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "title",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "date",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Artist",
+            "concreteType": "ArtworkMedium",
             "kind": "LinkedField",
-            "name": "artist",
+            "name": "mediumType",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "href",
+                "name": "name",
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isPersonalArtist",
-                "storageKey": null
-              },
-              (v1/*: any*/)
+              }
             ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "category",
             "storageKey": null
           },
           {
@@ -292,7 +251,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2b314eecd0306bcc82f7d5fc3d63e27c",
+    "cacheID": "3fad4e3d6d387285592a3b3d0eb6443c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -302,73 +261,62 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.artist": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Artist"
-        },
-        "artwork.artist.href": (v2/*: any*/),
-        "artwork.artist.id": (v3/*: any*/),
-        "artwork.artist.isPersonalArtist": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "artwork.artistNames": (v2/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "artwork.attributionClass.id": (v3/*: any*/),
-        "artwork.attributionClass.shortDescription": (v2/*: any*/),
-        "artwork.category": (v2/*: any*/),
+        "artwork.attributionClass.id": (v2/*: any*/),
+        "artwork.attributionClass.shortDescription": (v3/*: any*/),
         "artwork.collectorLocation": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "MyLocation"
         },
-        "artwork.collectorLocation.city": (v2/*: any*/),
-        "artwork.collectorLocation.country": (v2/*: any*/),
-        "artwork.collectorLocation.countryCode": (v2/*: any*/),
-        "artwork.collectorLocation.id": (v3/*: any*/),
-        "artwork.collectorLocation.state": (v2/*: any*/),
-        "artwork.confidentialNotes": (v2/*: any*/),
-        "artwork.date": (v2/*: any*/),
+        "artwork.collectorLocation.city": (v3/*: any*/),
+        "artwork.collectorLocation.country": (v3/*: any*/),
+        "artwork.collectorLocation.countryCode": (v3/*: any*/),
+        "artwork.collectorLocation.id": (v2/*: any*/),
+        "artwork.collectorLocation.state": (v3/*: any*/),
+        "artwork.confidentialNotes": (v3/*: any*/),
         "artwork.dimensions": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "dimensions"
         },
-        "artwork.dimensions.cm": (v2/*: any*/),
-        "artwork.dimensions.in": (v2/*: any*/),
-        "artwork.editionOf": (v2/*: any*/),
-        "artwork.id": (v3/*: any*/),
-        "artwork.medium": (v2/*: any*/),
-        "artwork.metric": (v2/*: any*/),
+        "artwork.dimensions.cm": (v3/*: any*/),
+        "artwork.dimensions.in": (v3/*: any*/),
+        "artwork.editionOf": (v3/*: any*/),
+        "artwork.id": (v2/*: any*/),
+        "artwork.medium": (v3/*: any*/),
+        "artwork.mediumType": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMedium"
+        },
+        "artwork.mediumType.name": (v3/*: any*/),
+        "artwork.metric": (v3/*: any*/),
         "artwork.pricePaid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Money"
         },
-        "artwork.pricePaid.display": (v2/*: any*/),
-        "artwork.provenance": (v2/*: any*/),
-        "artwork.title": (v2/*: any*/)
+        "artwork.pricePaid.display": (v3/*: any*/),
+        "artwork.provenance": (v3/*: any*/)
       }
     },
-    "name": "MyCollectionArtworkSidebarTestQuery",
+    "name": "MyCollectionArtworkDetailsTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  confidentialNotes\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  editionOf\n  pricePaid {\n    display\n  }\n  collectorLocation {\n    city\n    state\n    country\n    countryCode\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    isPersonalArtist\n    id\n  }\n}\n"
+    "text": "query MyCollectionArtworkDetailsTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkDetails_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkDetails_artwork on Artwork {\n  mediumType {\n    name\n  }\n  confidentialNotes\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  editionOf\n  pricePaid {\n    display\n  }\n  collectorLocation {\n    city\n    state\n    country\n    countryCode\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7d2cccb01a3a93af464433277d27a66a";
+(node as any).hash = "f52b0ea71f48dafb17bdd17f5903f04a";
 
 export default node;

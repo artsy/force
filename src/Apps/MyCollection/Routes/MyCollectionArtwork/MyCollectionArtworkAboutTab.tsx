@@ -1,10 +1,10 @@
 import { Box, Join, Separator, Spacer } from "@artsy/palette"
+import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
 import {
   MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
   MyCollectionPriceEstimateSentSection,
 } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimateSection"
 import { MyCollectionArtworkSWASection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASection"
-import { MyCollectionArtworkSidebarFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSidebar"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
 import { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { FC } from "react"
@@ -23,7 +23,7 @@ export const MyCollectionArtworkAboutTab: FC<MyCollectionArtworkAboutTabProps> =
 
   return (
     <Box pt={[1, 0]}>
-      <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
+      <MyCollectionArtworkDetails artwork={artwork} />
 
       {!showSubmitForSaleCtaMobile && <Spacer x={6} y={6} />}
 

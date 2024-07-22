@@ -1,28 +1,25 @@
 import { screen } from "@testing-library/react"
+import { MyCollectionArtworkDetailsTestQuery } from "__generated__/MyCollectionArtworkDetailsTestQuery.graphql"
+import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { MyCollectionArtworkSidebarTestQuery } from "__generated__/MyCollectionArtworkSidebarTestQuery.graphql"
-import { MyCollectionArtworkSidebarFragmentContainer } from ".."
 
 jest.unmock("react-relay")
 
-describe("MyCollectionArtworkSidebar", () => {
+describe("MyCollectionArtworkDetails", () => {
   const { renderWithRelay } = setupTestWrapperTL<
-    MyCollectionArtworkSidebarTestQuery
+    MyCollectionArtworkDetailsTestQuery
   >({
     Component: props => {
       if (props?.artwork) {
-        return (
-          <MyCollectionArtworkSidebarFragmentContainer {...(props as any)} />
-        )
+        return <MyCollectionArtworkDetails {...(props as any)} />
       }
       return null
     },
     query: graphql`
-      query MyCollectionArtworkSidebarTestQuery @relay_test_operation {
+      query MyCollectionArtworkDetailsTestQuery @relay_test_operation {
         artwork(id: "foo") {
-          ...MyCollectionArtworkSidebarTitleInfo_artwork
-          ...MyCollectionArtworkSidebarMetadata_artwork
+          ...MyCollectionArtworkDetails_artwork
         }
       }
     `,
