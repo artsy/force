@@ -1,8 +1,4 @@
-import { States } from "storybook-states"
-import {
-  AppDownloadBanner,
-  AppDownloadBannerProps,
-} from "Components/AppDownloadBanner"
+import { AppDownloadBanner } from "Components/AppDownloadBanner"
 import { Input, Stack } from "@artsy/palette"
 import { useState } from "react"
 
@@ -36,12 +32,10 @@ export const Default = () => {
         />
       </Stack>
 
-      <States<Partial<AppDownloadBannerProps>> states={[{}]}>
-        <AppDownloadBanner
-          transitionDuration={transitionDuration}
-          idleDuration={idleDuration}
-        />
-      </States>
+      <AppDownloadBanner
+        transitionDuration={transitionDuration}
+        idleDuration={idleDuration}
+      />
     </Stack>
   )
 }
