@@ -1,10 +1,11 @@
-import { screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { ShippingLocationRoute } from "Apps/Sell/Routes/AdditionalRoutes/ShippingLocationRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { ShippingLocationRoute_Test_Query$rawResponse } from "__generated__/ShippingLocationRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
@@ -24,6 +25,39 @@ jest.mock("react-relay", () => ({
 jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
 }))
+
+const submissionMock: Partial<
+  ShippingLocationRoute_Test_Query$rawResponse["submission"]
+> = {
+  state: "DRAFT",
+  locationCity: "city",
+  locationCountry: "country",
+  locationPostalCode: "postalCode",
+  locationAddress: "locationAddress",
+  locationAddress2: "locationAddress2",
+  locationState: "state",
+}
+
+const meMock = {
+  addressConnection: {
+    edges: [
+      {
+        node: {
+          addressLine1: "addressLine1",
+          addressLine2: "addressLine2",
+          city: "city",
+          country: "country",
+          isDefault: false,
+          name: "name",
+          phoneNumber: "phoneNumber",
+          phoneNumberCountryCode: "phoneNumberCountryCode",
+          postalCode: "postalCode",
+          region: "region",
+        },
+      },
+    ],
+  },
+}
 
 beforeEach(() => {
   ;(useSystemContext as jest.Mock).mockImplementation(() => {
@@ -46,13 +80,16 @@ beforeEach(() => {
   ;(useMutation as jest.Mock).mockImplementation(() => {
     return { submitMutation }
   })
+
+  mockPush.mockClear()
+  submitMutation.mockClear()
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
     return (
       <SubmissionRoute submission={props.submission}>
-        <ShippingLocationRoute submission={props.submission} />
+        <ShippingLocationRoute submission={props.submission} me={props.me} />
       </SubmissionRoute>
     )
   },
@@ -62,12 +99,15 @@ const { renderWithRelay } = setupTestWrapperTL({
         ...ShippingLocationRoute_submission
         ...SubmissionRoute_submission
       }
+      me {
+        ...ShippingLocationRoute_me
+      }
     }
   `,
 })
 
 describe("ShippingLocationRoute", () => {
-  it("renders the artist title step", async () => {
+  it("renders the 'Shipping Location' step", async () => {
     renderWithRelay({})
 
     await waitFor(() => {
@@ -75,9 +115,73 @@ describe("ShippingLocationRoute", () => {
     })
   })
 
+  it("initializes the form with the last user address in the list", async () => {
+    renderWithRelay({
+      ConsignmentSubmission: () => ({ locationCity: null }),
+      Me: () => meMock,
+    })
+
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText("Add address")).toHaveValue(
+        "addressLine1"
+      )
+      expect(screen.getByPlaceholderText("Add address line 2")).toHaveValue(
+        "addressLine2"
+      )
+      expect(screen.getByPlaceholderText("Enter city")).toHaveValue("city")
+      expect(screen.getByPlaceholderText("Add postal code")).toHaveValue(
+        "postalCode"
+      )
+      expect(
+        screen.getByPlaceholderText("Add state, province, or region")
+      ).toHaveValue("region")
+    })
+  })
+
   describe("when form is valid", () => {
     it("updates the submission", async () => {
-      renderWithRelay({})
+      renderWithRelay({ ConsignmentSubmission: () => submissionMock })
+
+      fireEvent.change(screen.getByPlaceholderText("Add postal code"), {
+        target: { value: "new postal code" },
+      })
+
+      fireEvent.change(screen.getByPlaceholderText("Add address"), {
+        target: { value: "new address" },
+      })
+
+      fireEvent.change(screen.getByPlaceholderText("Add address line 2"), {
+        target: { value: "new address line 2" },
+      })
+
+      fireEvent.change(screen.getByPlaceholderText("Enter city"), {
+        target: { value: "new city" },
+      })
+
+      fireEvent.change(
+        screen.getByPlaceholderText("Add state, province, or region"),
+        {
+          target: { value: "new state" },
+        }
+      )
+
+      screen.getByText("Continue").click()
+
+      await waitFor(async () => {
+        expect(submitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              externalId: '<mock-value-for-field-"externalId">',
+              locationAddress: "new address",
+              locationAddress2: "new address line 2",
+              locationCity: "new city",
+              locationCountry: "country",
+              locationPostalCode: "new postal code",
+              locationState: "new state",
+            },
+          },
+        })
+      })
     })
   })
 
