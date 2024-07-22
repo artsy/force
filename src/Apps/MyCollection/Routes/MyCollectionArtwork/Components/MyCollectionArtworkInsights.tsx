@@ -1,41 +1,40 @@
-import { Box, Join, Separator, Spacer } from "@artsy/palette"
-import {
-  MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
-  MyCollectionPriceEstimateSentSection,
-} from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimateSection"
-import { MyCollectionArtworkSWASection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASection"
+import { Box, Join, Spacer } from "@artsy/palette"
+import { MyCollectionArtworkInsights_artwork$key } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
+import { MyCollectionArtworkRequestPriceEstimate } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimate"
+import { MyCollectionArtworkSubmitForSale } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSubmitForSale"
 import { MyCollectionArtworkSWASectionSubmitted } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASectionSubmitted"
 import { MyCollectionArtworkSWASubmissionStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASubmissionStatus"
+import { MyCollectionPriceEstimateStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionPriceEstimateStatus"
+import { graphql, useFragment } from "react-relay"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Media } from "Utils/Responsive"
-import { MyCollectionArtworkInsights_artwork$data } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "./MyCollectionArtworkArtistMarket"
 import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkComparablesFragmentContainer } from "./MyCollectionArtworkComparables"
 import { MyCollectionArtworkDemandIndexFragmentContainer } from "./MyCollectionArtworkDemandIndex"
 
 interface MyCollectionArtworkInsightsProps {
-  artwork: MyCollectionArtworkInsights_artwork$data
-  isP1Artist?: boolean | null
-  displayText?: string | null
+  artwork: MyCollectionArtworkInsights_artwork$key
 }
 
-const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
-  artwork,
-  isP1Artist,
-  displayText,
+export const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
+  ...restProps
 }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
     "onyx_post_approval_submission_flow"
   )
-  const showSubmitForSaleCtaMobile = isP1Artist && !displayText
+
+  const artwork = useFragment(FRAGMENT, restProps.artwork)
+
+  const isTargetSupply = artwork.artist?.targetSupply?.priority === "TRUE"
+  const submissionStateLabel = artwork.consignmentSubmission?.stateLabel
+  const showSubmitForSaleCtaMobile = isTargetSupply && !submissionStateLabel
   const hasAuctionResults = artwork.auctionResults?.totalCount ?? 0 > 0
   const artistHasAuctionResults =
     artwork.artist?.auctionResultsCount?.totalCount ?? 0 > 0
-
   const displaySubmissionStateSection =
     artwork.consignmentSubmission?.state === "REJECTED"
+
   return (
     <Box pt={[1, 0]}>
       <Join separator={<Spacer y={[4, 6]} />}>
@@ -57,13 +56,13 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
 
         {artwork.hasPriceEstimateRequest && (
           <Media lessThan="sm">
-            <MyCollectionPriceEstimateSentSection />
+            <MyCollectionPriceEstimateStatus />
           </Media>
         )}
 
         {showSubmitForSaleCtaMobile && (
           <Media lessThan="sm">
-            <MyCollectionArtworkSWASection artwork={artwork} />
+            <MyCollectionArtworkSubmitForSale artwork={artwork} />
           </Media>
         )}
 
@@ -83,11 +82,10 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
           />
         )}
 
-        {!artwork.hasPriceEstimateRequest &&
-          artwork.isPriceEstimateRequestable && (
-            <Media lessThan="sm">
-              <Separator my={2} />
-              <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+        <Media lessThan="sm">
+          {!artwork.hasPriceEstimateRequest &&
+            artwork.isPriceEstimateRequestable && (
+              <MyCollectionArtworkRequestPriceEstimate
                 artwork={artwork}
                 ctaColor={
                   showSubmitForSaleCtaMobile
@@ -95,45 +93,44 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
                     : "primaryBlack"
                 }
               />
-              <Separator my={2} />
-            </Media>
-          )}
+            )}
+        </Media>
       </Join>
     </Box>
   )
 }
 
-export const MyCollectionArtworkInsightsFragmentContainer = createFragmentContainer(
-  MyCollectionArtworkInsights,
-  {
-    artwork: graphql`
-      fragment MyCollectionArtworkInsights_artwork on Artwork {
-        hasPriceEstimateRequest
-        isPriceEstimateRequestable
-        internalID
-        auctionResults: comparableAuctionResults(first: 1) @optionalField {
-          totalCount
-        }
-        ...MyCollectionArtworkComparables_artwork
-        ...MyCollectionArtworkRequestPriceEstimateSection_artwork
-        ...MyCollectionArtworkSWASectionSubmitted_submissionState
-        ...MyCollectionArtworkSWASubmissionStatus_artwork
-        artist {
-          slug
-          auctionResultsCount: auctionResultsConnection(first: 1) {
-            totalCount
-          }
-          ...MyCollectionArtworkAuctionResults_artist
-        }
-        consignmentSubmission {
-          state
-        }
-        marketPriceInsights {
-          ...MyCollectionArtworkArtistMarket_marketPriceInsights
-          ...MyCollectionArtworkDemandIndex_marketPriceInsights
-        }
-        ...MyCollectionArtworkSWASection_artwork
+const FRAGMENT = graphql`
+  fragment MyCollectionArtworkInsights_artwork on Artwork {
+    hasPriceEstimateRequest
+    isPriceEstimateRequestable
+    internalID
+    auctionResults: comparableAuctionResults(first: 1) @optionalField {
+      totalCount
+    }
+    ...MyCollectionArtworkComparables_artwork
+    ...MyCollectionArtworkRequestPriceEstimate_artwork
+    ...MyCollectionArtworkSWASectionSubmitted_submissionState
+    ...MyCollectionArtworkSWASubmissionStatus_artwork
+    artist {
+      slug
+      auctionResultsCount: auctionResultsConnection(first: 1) {
+        totalCount
       }
-    `,
+      targetSupply {
+        priority
+      }
+
+      ...MyCollectionArtworkAuctionResults_artist
+    }
+    consignmentSubmission {
+      state
+      stateLabel
+    }
+    marketPriceInsights {
+      ...MyCollectionArtworkArtistMarket_marketPriceInsights
+      ...MyCollectionArtworkDemandIndex_marketPriceInsights
+    }
+    ...MyCollectionArtworkSubmitForSale_artwork
   }
-)
+`

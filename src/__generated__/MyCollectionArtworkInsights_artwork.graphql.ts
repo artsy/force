@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<88e236492c4f6620634f2d5c5158233f>>
+ * @generated SignedSource<<57acf5242990a99c0808f7b76634ad66>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
 export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkInsights_artwork$data = {
@@ -17,6 +18,9 @@ export type MyCollectionArtworkInsights_artwork$data = {
       readonly totalCount: number | null | undefined;
     } | null | undefined;
     readonly slug: string;
+    readonly targetSupply: {
+      readonly priority: ArtistTargetSupplyPriority | null | undefined;
+    };
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
   } | null | undefined;
   readonly auctionResults: {
@@ -24,6 +28,7 @@ export type MyCollectionArtworkInsights_artwork$data = {
   } | null | undefined;
   readonly consignmentSubmission: {
     readonly state: ArtworkConsignmentSubmissionState;
+    readonly stateLabel: string | null | undefined;
   } | null | undefined;
   readonly hasPriceEstimateRequest: boolean | null | undefined;
   readonly internalID: string;
@@ -31,7 +36,7 @@ export type MyCollectionArtworkInsights_artwork$data = {
   readonly marketPriceInsights: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights" | "MyCollectionArtworkDemandIndex_marketPriceInsights">;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkRequestPriceEstimateSection_artwork" | "MyCollectionArtworkSWASectionSubmitted_submissionState" | "MyCollectionArtworkSWASection_artwork" | "MyCollectionArtworkSWASubmissionStatus_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkRequestPriceEstimate_artwork" | "MyCollectionArtworkSWASectionSubmitted_submissionState" | "MyCollectionArtworkSWASubmissionStatus_artwork" | "MyCollectionArtworkSubmitForSale_artwork">;
   readonly " $fragmentType": "MyCollectionArtworkInsights_artwork";
 };
 export type MyCollectionArtworkInsights_artwork$key = {
@@ -101,7 +106,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkRequestPriceEstimateSection_artwork"
+      "name": "MyCollectionArtworkRequestPriceEstimate_artwork"
     },
     {
       "args": null,
@@ -139,6 +144,24 @@ return {
           "storageKey": "auctionResultsConnection(first:1)"
         },
         {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistTargetSupply",
+          "kind": "LinkedField",
+          "name": "targetSupply",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "priority",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "MyCollectionArtworkAuctionResults_artist"
@@ -159,6 +182,13 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "state",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "stateLabel",
           "storageKey": null
         }
       ],
@@ -188,7 +218,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkSWASection_artwork"
+      "name": "MyCollectionArtworkSubmitForSale_artwork"
     }
   ],
   "type": "Artwork",
@@ -196,6 +226,6 @@ return {
 };
 })();
 
-(node as any).hash = "91c003c11ea27850e7be282f84665522";
+(node as any).hash = "a4908e94f350de80bde3f41cd9b3948c";
 
 export default node;
