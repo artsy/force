@@ -33,7 +33,6 @@ const submissionMock: Partial<
   locationCity: "city",
   locationCountry: "country",
   locationPostalCode: "postalCode",
-
   locationAddress: "locationAddress",
   locationAddress2: "locationAddress2",
   locationState: "state",
