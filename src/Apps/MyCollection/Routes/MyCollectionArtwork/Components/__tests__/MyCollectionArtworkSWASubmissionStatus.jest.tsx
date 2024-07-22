@@ -85,6 +85,7 @@ describe("MyCollection Artwork SWA Submission Status", () => {
         expect(screen.getByText("Edit Submission")).toBeInTheDocument()
       })
     })
+
     describe("state: 'approved'", () => {
       it("renders title and description", () => {
         renderWithRelay({
@@ -106,6 +107,7 @@ describe("MyCollection Artwork SWA Submission Status", () => {
         expect(screen.getByText("Complete Listing")).toBeInTheDocument()
       })
     })
+
     describe("state: 'published'", () => {
       it("renders title and description", () => {
         renderWithRelay({
@@ -127,6 +129,7 @@ describe("MyCollection Artwork SWA Submission Status", () => {
         expect(screen.getByText("View Listing")).toBeInTheDocument()
       })
     })
+
     describe("state: 'rejected'", () => {
       it("renders title and description", () => {
         renderWithRelay({
@@ -143,6 +146,7 @@ describe("MyCollection Artwork SWA Submission Status", () => {
         expect(screen.getByText("submission criteria")).toBeInTheDocument()
       })
     })
+
     describe("state: 'hold'", () => {
       it("does not render", () => {
         renderWithRelay({
@@ -157,6 +161,7 @@ describe("MyCollection Artwork SWA Submission Status", () => {
         expect(screen.queryByText("Submission Status")).not.toBeInTheDocument()
       })
     })
+
     describe("state: 'closed'", () => {
       it("does not render", () => {
         renderWithRelay({
@@ -171,41 +176,5 @@ describe("MyCollection Artwork SWA Submission Status", () => {
         expect(screen.queryByText("Submission Status")).not.toBeInTheDocument()
       })
     })
-
-    // it("opens the submission page and does not create a new submission", async () => {
-    //   renderWithRelay({
-    //     Artwork: () => ({
-    //       consignmentSubmission: { submissionId: "submission-id" },
-    //     }),
-    //   })
-
-    //   fireEvent.click(screen.getByTestId("submit-for-sale-link"))
-
-    //   expect(mockPush).toBeCalledWith(
-    //     '/sell/submissions/<mock-value-for-field-"internalID">/artist'
-    //   )
-
-    //   expect(createOrUpdateConsignSubmission).not.toBeCalled()
-    // })
   })
-
-  // describe("when artwork has not not submitted", () => {
-  //   it("creates a new submission and opens the submission page", async () => {
-  //     renderWithRelay({
-  //       Artwork: () => ({
-  //         consignmentSubmission: null,
-  //       }),
-  //     })
-
-  //     fireEvent.click(screen.getByTestId("submit-for-sale-link"))
-
-  //     await waitFor(() => {
-  //       expect(createOrUpdateConsignSubmission).toHaveBeenCalled()
-
-  //       expect(mockPush).toBeCalledWith(
-  //         "/sell/submissions/submission-id/artist"
-  //       )
-  //     })
-  //   })
-  // })
 })
