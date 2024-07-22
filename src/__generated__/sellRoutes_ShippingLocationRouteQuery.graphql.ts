@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2ed96473e78a56d099598d6cfe697c03>>
+ * @generated SignedSource<<f13403abb32355b52d1e1ff07bdacc5f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -123,14 +123,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "locationAddress",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "locationAddress2",
+            "name": "locationState",
             "storageKey": null
           },
           {
@@ -144,7 +137,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "locationState",
+            "name": "locationAddress",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationAddress2",
             "storageKey": null
           },
           (v2/*: any*/)
@@ -222,27 +222,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "phoneNumber",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "phoneNumberCountryCode",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "postalCode",
                         "storageKey": null
                       },
@@ -270,12 +249,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7707aea8e310d936dbf3c6b6c967f128",
+    "cacheID": "e4d1ca32f9c4305a687776b41c201d08",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_ShippingLocationRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_ShippingLocationRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ShippingLocationRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationAddress\n  locationAddress2\n  locationPostalCode\n  locationState\n}\n"
+    "text": "query sellRoutes_ShippingLocationRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ShippingLocationRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationAddress\n  locationAddress2\n}\n"
   }
 };
 })();

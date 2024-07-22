@@ -17,10 +17,10 @@ const SUBMISSION_FRAGMENT = graphql`
   fragment ShippingLocationRoute_submission on ConsignmentSubmission {
     locationCity
     locationCountry
+    locationState
+    locationPostalCode
     locationAddress
     locationAddress2
-    locationPostalCode
-    locationState
   }
 `
 
@@ -34,9 +34,6 @@ const ME_FRAGMENT = graphql`
           city
           country
           isDefault
-          name
-          phoneNumber
-          phoneNumberCountryCode
           postalCode
           region
         }
@@ -47,24 +44,23 @@ const ME_FRAGMENT = graphql`
 
 const Schema = Yup.object().shape({
   location: Yup.object().shape({
-    country: Yup.string().required("Country is required"),
-    address: Yup.string().required("Address is required"),
-    address2: Yup.string(),
-    city: Yup.string().required("City is required"),
-    // region: Yup.string().required("Region is required"),
-    postalCode: Yup.string().required("Postal Code is required"),
+    city: Yup.string().required().trim(),
+    state: Yup.string().required().trim(),
+    country: Yup.string().required().trim(),
+    zipCode: Yup.string().required().trim(),
+    address: Yup.string().required().trim(),
+    address2: Yup.string().trim(),
   }),
 })
 
 interface FormValues {
   location: {
-    country: string
-    address: string
-    address2: string
-    city: string
-    postalCode: string
-    state: string
-    stateCode: string
+    city?: string
+    state?: string
+    country?: string
+    zipCode?: string
+    address?: string
+    address2?: string
   }
 }
 
@@ -79,45 +75,43 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
   const submission = useFragment(SUBMISSION_FRAGMENT, props.submission)
   const me = useFragment(ME_FRAGMENT, props.me)
 
+  const userAddresses = extractNodes(me?.addressConnection)
+  const defaultUserAddress =
+    userAddresses.find(node => node.isDefault) || last(userAddresses || [])
+
+  // Check whether the submission has an address; if not, use the user's address.
+  const initialValues: FormValues = !!submission.locationCity
+    ? {
+        location: {
+          country: submission.locationCountry ?? "",
+          address: submission.locationAddress ?? "",
+          address2: submission.locationAddress2 ?? "",
+          city: submission.locationCity ?? "",
+          zipCode: submission.locationPostalCode ?? "",
+          state: submission.locationState ?? "",
+        },
+      }
+    : {
+        location: {
+          country: defaultUserAddress?.country ?? "",
+          address: defaultUserAddress?.addressLine1 ?? "",
+          address2: defaultUserAddress?.addressLine2 ?? "",
+          city: defaultUserAddress?.city ?? "",
+          zipCode: defaultUserAddress?.postalCode ?? "",
+          state: defaultUserAddress?.region ?? "",
+        },
+      }
+
   const onSubmit = async (values: FormValues) => {
     return actions.updateSubmission({
       locationCity: values.location.city,
       locationCountry: values.location.country,
-      locationCountryCode: values.location.stateCode,
-      locationPostalCode: values.location.postalCode,
+      locationPostalCode: values.location.zipCode,
       locationAddress: values.location.address,
       locationAddress2: values.location.address2,
       locationState: values.location.state,
     })
   }
-
-  // Initializing the form with the last user address in the list
-  const userAddress = last(extractNodes(me?.addressConnection) || [])
-
-  // Check if the submission has an address; if not, use the user's address.
-  const initialValues: FormValues = !!submission.locationCity
-    ? {
-        location: {
-          country: submission.locationCountry ?? "",
-          address: "",
-          address2: "",
-          city: submission.locationCity ?? "",
-          postalCode: submission.locationPostalCode ?? "",
-          state: submission.locationState ?? "",
-          stateCode: submission.locationPostalCode ?? "",
-        },
-      }
-    : {
-        location: {
-          country: userAddress?.country ?? "",
-          address: userAddress?.addressLine1 ?? "",
-          address2: userAddress?.addressLine2 ?? "",
-          city: userAddress?.city ?? "",
-          postalCode: userAddress?.postalCode ?? "",
-          state: userAddress?.region ?? "",
-          stateCode: userAddress?.region ?? "",
-        },
-      }
 
   return (
     <Formik<FormValues>
@@ -199,16 +193,15 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
 
                   <Column span={6}>
                     <Input
-                      name="location.postalCode"
+                      name="location.zipCode"
                       title="Postal Code"
                       placeholder="Add postal code"
                       autoComplete="postal-code"
-                      value={values.location.postalCode}
+                      value={values.location.zipCode}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
-                        touched.location?.postalCode &&
-                        errors.location?.postalCode
+                        touched.location?.zipCode && errors.location?.zipCode
                       }
                       required
                     />

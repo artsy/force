@@ -33,6 +33,7 @@ const submissionMock: Partial<
   locationCity: "city",
   locationCountry: "country",
   locationPostalCode: "postalCode",
+
   locationAddress: "locationAddress",
   locationAddress2: "locationAddress2",
   locationState: "state",
@@ -176,7 +177,6 @@ describe("ShippingLocationRoute", () => {
               locationAddress2: "new address line 2",
               locationCity: "new city",
               locationCountry: "country",
-              locationCountryCode: "postalCode",
               locationPostalCode: "new postal code",
               locationState: "new state",
             },

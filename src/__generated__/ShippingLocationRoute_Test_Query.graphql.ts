@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08a2bf2c9028bf94c6e65c5ef0afe321>>
+ * @generated SignedSource<<c335a13d89d66f9e0314c71d02b111f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,9 +31,6 @@ export type ShippingLocationRoute_Test_Query$rawResponse = {
           readonly country: string;
           readonly id: string;
           readonly isDefault: boolean;
-          readonly name: string | null | undefined;
-          readonly phoneNumber: string | null | undefined;
-          readonly phoneNumberCountryCode: string | null | undefined;
           readonly postalCode: string | null | undefined;
           readonly region: string | null | undefined;
         } | null | undefined;
@@ -155,14 +152,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "locationAddress",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "locationAddress2",
+            "name": "locationState",
             "storageKey": null
           },
           {
@@ -176,7 +166,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "locationState",
+            "name": "locationAddress",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationAddress2",
             "storageKey": null
           },
           {
@@ -275,27 +272,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "phoneNumber",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "phoneNumberCountryCode",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "postalCode",
                         "storageKey": null
                       },
@@ -323,12 +299,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "abe1fb986a7f6bf42eecb12b92bfcb4d",
+    "cacheID": "dc64881d4e329e1c6d556a0c596ac9fc",
     "id": null,
     "metadata": {},
     "name": "ShippingLocationRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ShippingLocationRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ShippingLocationRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationAddress\n  locationAddress2\n  locationPostalCode\n  locationState\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query ShippingLocationRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ShippingLocationRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationAddress\n  locationAddress2\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();
