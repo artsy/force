@@ -14,7 +14,6 @@ import {
   MyCollectionArtworkSWASubmissionStatus_artwork$data,
   MyCollectionArtworkSWASubmissionStatus_artwork$key,
 } from "__generated__/MyCollectionArtworkSWASubmissionStatus_artwork.graphql"
-import { MyCollectionArtworkSWAHelpSection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWAHelpSection"
 import {
   INITIAL_POST_APPROVAL_STEP,
   INITIAL_STEP,
@@ -132,8 +131,6 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
             {submissionData.button.label}
           </Button>
         )}
-
-        <MyCollectionArtworkSWAHelpSection />
       </Media>
     </Box>
   )

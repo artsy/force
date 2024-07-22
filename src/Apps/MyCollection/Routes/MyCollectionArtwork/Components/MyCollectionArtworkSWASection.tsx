@@ -1,7 +1,6 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Button, Separator, Text } from "@artsy/palette"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-import { MyCollectionArtworkSWAHelpSection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWAHelpSection"
 import { RouterLink } from "System/Components/RouterLink"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
@@ -91,8 +90,6 @@ export const MyCollectionArtworkSWASection: React.FC<MyCollectionArtworkSWASecti
       >
         Submit for Sale
       </Button>
-
-      <MyCollectionArtworkSWAHelpSection />
     </Box>
   )
 }

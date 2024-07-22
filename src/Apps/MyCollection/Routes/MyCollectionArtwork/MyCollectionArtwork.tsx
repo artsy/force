@@ -9,7 +9,10 @@ import {
   Tabs,
 } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
+import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
+import { MyCollectionArtworkSWAHelpSection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWAHelpSection"
 import { MyCollectionArtworkSWASubmissionStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASubmissionStatus"
+import { MyCollectionArtworkTitle } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkTitle"
 import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtworkAboutTab"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
 import { RouterLink } from "System/Components/RouterLink"
@@ -27,8 +30,6 @@ import {
 } from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
 import { MyCollectionArtworkSWASection } from "./Components/MyCollectionArtworkSWASection"
 import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
-import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
-import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
@@ -58,10 +59,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const isP1Artist = artwork.artist?.targetSupply?.priority === "TRUE"
 
-  console.log("internal id", artwork.consignmentSubmission?.internalID)
-
   const displaySubmissionStateSection =
     artwork.consignmentSubmission?.state !== "REJECTED"
+
   return (
     <>
       <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
@@ -93,13 +93,15 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         <Column span={4}>
           <Media greaterThanOrEqual="sm">
             <Box mt={2}>
-              <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
+              <MyCollectionArtworkTitle artwork={artwork} />
+
+              <MyCollectionArtworkDetails artwork={artwork} />
 
               {artwork.hasPriceEstimateRequest && (
                 <MyCollectionPriceEstimateSentSection />
               )}
 
-              {displaySubmissionStateSection ? (
+              {artwork.consignmentSubmission ? (
                 <>
                   {enablePostApprovalSubmissionFlow ? (
                     <MyCollectionArtworkSWASubmissionStatus artwork={artwork} />
@@ -111,19 +113,22 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 <MyCollectionArtworkSWASection artwork={artwork} />
               )}
 
-              {!artwork.hasPriceEstimateRequest && !submissionStateLabel && (
-                <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-                  artwork={artwork}
-                  ctaColor={isP1Artist ? "secondaryNeutral" : "primaryBlack"}
-                />
+              {!artwork.hasPriceEstimateRequest &&
+                !artwork.consignmentSubmission && (
+                  <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+                    artwork={artwork}
+                    ctaColor={isP1Artist ? "secondaryNeutral" : "primaryBlack"}
+                  />
+                )}
+
+              {(!!artwork.consignmentSubmission || isP1Artist) && (
+                <MyCollectionArtworkSWAHelpSection />
               )}
             </Box>
           </Media>
 
           <Media lessThan="sm">
-            <MyCollectionArtworkSidebarTitleInfoFragmentContainer
-              artwork={artwork}
-            />
+            <MyCollectionArtworkTitle artwork={artwork} />
 
             {isP1Artist && displaySubmissionStateSection && (
               <Box mb={4}>
@@ -185,12 +190,13 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment MyCollectionArtwork_artwork on Artwork {
-        ...MyCollectionArtworkSidebar_artwork
+        ...MyCollectionArtworkTitle_artwork
+        ...MyCollectionArtworkDetails_artwork
         ...MyCollectionArtworkMeta_artwork
         ...MyCollectionArtworkInsights_artwork
         ...MyCollectionArtworkImageBrowser_artwork
         ...MyCollectionArtworkComparables_artwork
-        ...MyCollectionArtworkSidebarTitleInfo_artwork
+        ...MyCollectionArtworkTitle_artwork
         ...MyCollectionArtworkRequestPriceEstimateSection_artwork
         ...MyCollectionArtworkSWASectionSubmitted_submissionState
         ...MyCollectionArtworkSWASubmissionStatus_artwork

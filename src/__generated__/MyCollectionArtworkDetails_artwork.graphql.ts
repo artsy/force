@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<278e73eba918108eafdad4d83acc35bf>>
+ * @generated SignedSource<<e176ca3eee36030d146a4fe8961ff2ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,10 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkSidebarMetadata_artwork$data = {
+export type MyCollectionArtworkDetails_artwork$data = {
   readonly attributionClass: {
     readonly shortDescription: string | null | undefined;
   } | null | undefined;
-  readonly category: string | null | undefined;
   readonly collectorLocation: {
     readonly city: string | null | undefined;
     readonly country: string | null | undefined;
@@ -28,29 +27,43 @@ export type MyCollectionArtworkSidebarMetadata_artwork$data = {
   } | null | undefined;
   readonly editionOf: string | null | undefined;
   readonly medium: string | null | undefined;
+  readonly mediumType: {
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly metric: string | null | undefined;
   readonly pricePaid: {
     readonly display: string | null | undefined;
   } | null | undefined;
   readonly provenance: string | null | undefined;
-  readonly " $fragmentType": "MyCollectionArtworkSidebarMetadata_artwork";
+  readonly " $fragmentType": "MyCollectionArtworkDetails_artwork";
 };
-export type MyCollectionArtworkSidebarMetadata_artwork$key = {
-  readonly " $data"?: MyCollectionArtworkSidebarMetadata_artwork$data;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkSidebarMetadata_artwork">;
+export type MyCollectionArtworkDetails_artwork$key = {
+  readonly " $data"?: MyCollectionArtworkDetails_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkDetails_artwork">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "MyCollectionArtworkSidebarMetadata_artwork",
+  "name": "MyCollectionArtworkDetails_artwork",
   "selections": [
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "category",
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -193,6 +206,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8b0ac5a7160cfe388c8afd44190007f2";
+(node as any).hash = "d655b4416fe006e93f793b962751ae47";
 
 export default node;
