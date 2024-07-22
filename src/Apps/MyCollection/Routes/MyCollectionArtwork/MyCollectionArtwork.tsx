@@ -9,11 +9,11 @@ import {
   Tabs,
 } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
+import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkAboutTab"
 import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
 import { MyCollectionArtworkSWAHelpSection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWAHelpSection"
 import { MyCollectionArtworkSWASubmissionStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASubmissionStatus"
 import { MyCollectionArtworkTitle } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkTitle"
-import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtworkAboutTab"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
 import { RouterLink } from "System/Components/RouterLink"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
@@ -46,9 +46,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   } = useMyCollectionTracking()
 
   const submissionStateLabel = artwork.consignmentSubmission?.stateLabel
-
-  const submittedConsignment = !!submissionStateLabel
-
   const showComparables = !!artwork.comparables?.totalCount
   const showAuctionResults = !!artwork.artist?.auctionResults?.totalCount
   const showDemandIndex = !!artwork.hasMarketPriceInsights
@@ -58,9 +55,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     showComparables || showAuctionResults || showDemandIndex || showArtistMarket
 
   const isP1Artist = artwork.artist?.targetSupply?.priority === "TRUE"
-
-  const displaySubmissionStateSection =
-    artwork.consignmentSubmission?.state !== "REJECTED"
 
   return (
     <>
@@ -130,15 +124,16 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <Media lessThan="sm">
             <MyCollectionArtworkTitle artwork={artwork} />
 
-            {isP1Artist && displaySubmissionStateSection && (
-              <Box mb={4}>
-                {enablePostApprovalSubmissionFlow ? (
-                  <MyCollectionArtworkSWASubmissionStatus artwork={artwork} />
-                ) : (
-                  <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
-                )}
-              </Box>
-            )}
+            {isP1Artist &&
+              artwork.consignmentSubmission?.state !== "REJECTED" && (
+                <Box mb={4}>
+                  {enablePostApprovalSubmissionFlow ? (
+                    <MyCollectionArtworkSWASubmissionStatus artwork={artwork} />
+                  ) : (
+                    <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
+                  )}
+                </Box>
+              )}
 
             {hasInsights ? (
               <Tabs fill mt={2}>
@@ -151,17 +146,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 </Tab>
 
                 <Tab name="About">
-                  <MyCollectionArtworkAboutTab
-                    artwork={artwork}
-                    submittedConsignment={submittedConsignment}
-                  />
+                  <MyCollectionArtworkAboutTab artwork={artwork} />
                 </Tab>
               </Tabs>
             ) : (
-              <MyCollectionArtworkAboutTab
-                artwork={artwork}
-                submittedConsignment={submittedConsignment}
-              />
+              <MyCollectionArtworkAboutTab artwork={artwork} />
             )}
           </Media>
         </Column>
@@ -201,6 +190,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkSWASectionSubmitted_submissionState
         ...MyCollectionArtworkSWASubmissionStatus_artwork
         ...MyCollectionArtworkSWASection_artwork
+        ...MyCollectionArtworkAboutTab_artwork
         comparables: comparableAuctionResults {
           totalCount
         }
