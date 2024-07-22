@@ -157,7 +157,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
       <ArtworkListArtworksGridHeader />
       <Spacer y={2} />
       <LoadingArea isLoading={fetching}>
-        <ArtworkGridContextProvider showCollectorSignalBadge>
+        <ArtworkGridContextProvider showActivePartnerOffer>
           <ArtworkGrid
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             artworks={artworks!}

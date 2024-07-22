@@ -185,7 +185,7 @@ const BidInfo: React.FC<DetailsProps> = ({
   )
 }
 
-const CollectorSignalBadgeLine: React.FC = () => {
+const ActivePartnerOfferLine: React.FC = () => {
   return (
     <Text
       variant="xs"
@@ -220,7 +220,7 @@ export const Details: React.FC<DetailsProps> = ({
     isAuctionArtwork,
     hideLotLabel,
     saveOnlyToDefaultList,
-    showCollectorSignalBadge,
+    showActivePartnerOffer,
   } = useArtworkGridContext()
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
@@ -230,12 +230,12 @@ export const Details: React.FC<DetailsProps> = ({
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
   // TODO: replace randomization with real signals and business logic
-  const hasCollectorSignalBadge: boolean = useMemo(
-    () => !!showCollectorSignalBadge && Math.random() < 0.2,
-    [showCollectorSignalBadge]
+  const showActivePartnerOfferLine: boolean = useMemo(
+    () => !!showActivePartnerOffer && Math.random() < 0.2,
+    [showActivePartnerOffer]
   )
-  const padForCollectorSignalBadge: boolean =
-    !!showCollectorSignalBadge && !hasCollectorSignalBadge
+  const padForActivePartnerOfferLine: boolean =
+    !!showActivePartnerOffer && !showActivePartnerOfferLine
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -292,7 +292,7 @@ export const Details: React.FC<DetailsProps> = ({
 
       <Flex justifyContent="space-between">
         <Flex flexDirection="column">
-          {hasCollectorSignalBadge && <CollectorSignalBadgeLine {...rest} />}
+          {showActivePartnerOfferLine && <ActivePartnerOfferLine {...rest} />}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
           )}
@@ -310,7 +310,7 @@ export const Details: React.FC<DetailsProps> = ({
       </Box>
 
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
-      {padForCollectorSignalBadge && <EmptyLine />}
+      {padForActivePartnerOfferLine && <EmptyLine />}
     </Box>
   )
 }
