@@ -16,6 +16,7 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 import { SaveButtonFragmentContainer } from "./SaveButton"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -229,13 +230,22 @@ export const Details: React.FC<DetailsProps> = ({
 
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
+  const signalsPartnerOffersEnabled = useFeatureFlag(
+    "emerald_signals-partner-offers"
+  )
+
   // TODO: replace randomization with real signals and business logic
   const showActivePartnerOfferLine: boolean = useMemo(
-    () => !!showActivePartnerOffer && Math.random() < 0.2,
-    [showActivePartnerOffer]
+    () =>
+      !!signalsPartnerOffersEnabled &&
+      !!showActivePartnerOffer &&
+      Math.random() < 0.2,
+    [signalsPartnerOffersEnabled, showActivePartnerOffer]
   )
   const padForActivePartnerOfferLine: boolean =
-    !!showActivePartnerOffer && !showActivePartnerOfferLine
+    !!signalsPartnerOffersEnabled &&
+    !!showActivePartnerOffer &&
+    !showActivePartnerOfferLine
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
