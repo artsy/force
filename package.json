@@ -339,7 +339,7 @@
     "simple-progress-webpack-plugin": "2.0.0",
     "sinon": "1.17.7",
     "size-plugin": "^3.0.0",
-    "storybook-states": "1.2.0",
+    "storybook-states": "^1.2.0",
     "style-loader": "0.23.1",
     "swc-loader": "^0.2.3",
     "terser-webpack-plugin": "5.1.3",
