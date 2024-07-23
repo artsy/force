@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f782380f4d9c09eec6e903df119e11c1>>
+ * @generated SignedSource<<5c2e9becd14f55e0021e5afbb00d6606>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,8 +25,10 @@ export type ConditionRoute_Test_Query$rawResponse = {
     readonly myCollectionArtwork: {
       readonly artworkId: string;
       readonly condition: {
-        readonly description: string | null | undefined;
         readonly value: string | null | undefined;
+      } | null | undefined;
+      readonly conditionDescription: {
+        readonly details: string | null | undefined;
       } | null | undefined;
       readonly id: string;
     } | null | undefined;
@@ -127,14 +129,25 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "description",
+                    "name": "value",
                     "storageKey": null
-                  },
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtworkInfoRow",
+                "kind": "LinkedField",
+                "name": "conditionDescription",
+                "plural": false,
+                "selections": [
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "value",
+                    "name": "details",
                     "storageKey": null
                   }
                 ],
@@ -172,12 +185,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "61a7e449891eb968fa357355a5ea5ff1",
+    "cacheID": "f96956400df9c34cf952ad05146609b1",
     "id": null,
     "metadata": {},
     "name": "ConditionRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ConditionRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ConditionRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    artworkId: internalID\n    condition {\n      description\n      value\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query ConditionRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ConditionRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    artworkId: internalID\n    condition {\n      value\n    }\n    conditionDescription {\n      details\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();

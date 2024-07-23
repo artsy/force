@@ -27,8 +27,10 @@ const FRAGMENT = graphql`
     myCollectionArtwork {
       artworkId: internalID
       condition {
-        description
         value
+      }
+      conditionDescription {
+        details
       }
     }
   }
@@ -62,6 +64,7 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
   if (!artwork) return null
 
   const onSubmit = async (values: FormValues) => {
+    console.log("[LOGD] values", values)
     return await actions.updateMyCollectionArtwork({
       condition: values.condition as ArtworkConditionEnumType,
       conditionDescription: values.description,
@@ -72,9 +75,10 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
   const initialValues: FormValues = {
     artworkId: artwork.artworkId,
     condition: artwork.condition?.value ?? "",
-    description: artwork.condition?.description ?? "",
+    description: artwork.conditionDescription?.details ?? "",
   }
 
+  console.log("[LOGD] artwork.conditionDescription?.details", artwork)
   return (
     <Formik<FormValues>
       initialValues={initialValues}
@@ -82,7 +86,7 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
       validateOnMount
       validationSchema={Schema}
     >
-      {({ handleChange, values }) => (
+      {({ handleChange, setFieldValue, values }) => (
         <SubmissionLayout>
           <SubmissionStepTitle>Condition</SubmissionStepTitle>
 
@@ -126,8 +130,10 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
               title="Add Additional Condition Details (Optional)"
               name="description"
               defaultValue={values.description}
+              onChange={({ value }) => {
+                setFieldValue("description", value)
+              }}
               maxLength={500}
-              onChange={handleChange}
               data-testid="description-input"
             />
           </Join>

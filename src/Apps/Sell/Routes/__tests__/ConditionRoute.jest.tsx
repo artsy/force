@@ -39,6 +39,9 @@ const submissionMock: Partial<
       description: "description",
       value: "GOOD",
     },
+    conditionDescription: {
+      details: "description",
+    },
   },
 }
 
@@ -50,6 +53,9 @@ const submissionMockInvalid: Partial<
     id: "id",
     artworkId: "artworkId",
     condition: null,
+    conditionDescription: {
+      details: "",
+    },
   },
 }
 

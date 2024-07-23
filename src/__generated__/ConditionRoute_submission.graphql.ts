@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f409a79b29cc45eb95d18b31c098623>>
+ * @generated SignedSource<<d3191585caf406aa8c244a4c1b82b683>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,10 @@ export type ConditionRoute_submission$data = {
   readonly myCollectionArtwork: {
     readonly artworkId: string;
     readonly condition: {
-      readonly description: string | null | undefined;
       readonly value: string | null | undefined;
+    } | null | undefined;
+    readonly conditionDescription: {
+      readonly details: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "ConditionRoute_submission";
@@ -58,14 +60,25 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "description",
+              "name": "value",
               "storageKey": null
-            },
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtworkInfoRow",
+          "kind": "LinkedField",
+          "name": "conditionDescription",
+          "plural": false,
+          "selections": [
             {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "value",
+              "name": "details",
               "storageKey": null
             }
           ],
@@ -79,6 +92,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "eb17ba91253a548f677709a33f6e3649";
+(node as any).hash = "adc0ebd4bb4d87d7b38733b7563d770f";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4370b2f921c910f0ddc69da41faf40c1>>
+ * @generated SignedSource<<bfa678f77f81ac7aef4f3f2550342e17>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -113,14 +113,25 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "description",
+                    "name": "value",
                     "storageKey": null
-                  },
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtworkInfoRow",
+                "kind": "LinkedField",
+                "name": "conditionDescription",
+                "plural": false,
+                "selections": [
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "value",
+                    "name": "details",
                     "storageKey": null
                   }
                 ],
@@ -137,12 +148,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "934716095b02c4dea6f7ec41e25c7d33",
+    "cacheID": "b9e1177ec658c5e19cd2e7dc1a7a219e",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_ConditionRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_ConditionRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ConditionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    artworkId: internalID\n    condition {\n      description\n      value\n    }\n    id\n  }\n}\n"
+    "text": "query sellRoutes_ConditionRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ConditionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    artworkId: internalID\n    condition {\n      value\n    }\n    conditionDescription {\n      details\n    }\n    id\n  }\n}\n"
   }
 };
 })();
