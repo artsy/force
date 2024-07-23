@@ -36,7 +36,6 @@ const submissionMock: Partial<
     id: "id",
     artworkId: "artworkId",
     condition: {
-      description: "description",
       value: "GOOD",
     },
     conditionDescription: {
