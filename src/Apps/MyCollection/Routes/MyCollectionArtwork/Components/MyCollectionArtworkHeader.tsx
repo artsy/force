@@ -18,7 +18,7 @@ export const MyCollectionArtworkHeader: React.FC<MyCollectionArtworkHeaderProps>
   const artwork = useFragment(FRAGMENT, props.artwork)
 
   return (
-    <Flex py={2} justifyContent="space-between" alignItems="center">
+    <Flex pt={2} justifyContent="space-between" alignItems="center">
       <MyCollectionArtworkBackButton />
 
       <Button
