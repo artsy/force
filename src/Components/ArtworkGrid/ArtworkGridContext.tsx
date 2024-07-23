@@ -1,8 +1,4 @@
-import { useCollectorSignals } from "Utils/Hooks/useCollectorSignals"
-import { ArtworkGridContext_artworksConnection$key } from "__generated__/ArtworkGridContext_artworksConnection.graphql"
-import { ArtworkGridContext_me$key } from "__generated__/ArtworkGridContext_me.graphql"
 import { createContext, useContext } from "react"
-import { graphql, useFragment } from "react-relay"
 
 /**
  * Used to configure internal details of the Artwork Grid / Brick without
@@ -18,8 +14,6 @@ interface ArtworkGridContextProps {
 
   saveOnlyToDefaultList?: boolean
 
-  collectorSignals: ReturnType<typeof useCollectorSignals>
-
   showActivePartnerOffer?: boolean
 }
 
@@ -27,34 +21,15 @@ const ArtworkGridContext = createContext<ArtworkGridContextProps>({
   isAuctionArtwork: false,
   hideLotLabel: false,
   saveOnlyToDefaultList: false,
-  collectorSignals: {},
   showActivePartnerOffer: false,
 })
 
-type ArtworkGridContextProviderProps = {
-  artworksConnection?: ArtworkGridContext_artworksConnection$key
-  me?: ArtworkGridContext_me$key
-} & Omit<ArtworkGridContextProps, "collectorSignals">
-
-export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProviderProps> = ({
-  artworksConnection,
-  me,
+export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProps> = ({
   children,
   ...rest
 }) => {
-  const artworksConnectionData = useFragment(
-    ARTWORKS_CONNECTION_FRAGMENT,
-    artworksConnection
-  )
-  const meData = useFragment(ME_FRAGMENT, me)
-
-  const collectorSignals = useCollectorSignals({
-    artworksConnection: artworksConnectionData,
-    me: meData,
-  })
-
   return (
-    <ArtworkGridContext.Provider value={{ ...rest, collectorSignals }}>
+    <ArtworkGridContext.Provider value={rest}>
       {children}
     </ArtworkGridContext.Provider>
   )
@@ -78,14 +53,3 @@ export const withArtworkGridContext = <T,>(
     )
   }
 }
-
-const ARTWORKS_CONNECTION_FRAGMENT = graphql`
-  fragment ArtworkGridContext_artworksConnection on ArtworkConnectionInterface {
-    ...useCollectorSignals_artworksConnection
-  }
-`
-const ME_FRAGMENT = graphql`
-  fragment ArtworkGridContext_me on Me {
-    ...useCollectorSignals_me
-  }
-`
