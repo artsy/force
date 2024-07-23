@@ -1,7 +1,6 @@
 import { screen, waitFor } from "@testing-library/react"
 import { ConditionRoute } from "Apps/Sell/Routes/AdditionalRoutes/ConditionRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -58,7 +57,7 @@ const submissionMockInvalid: Partial<
   },
 }
 
-beforeAll(() => {
+beforeEach(() => {
   ;(useSystemContext as jest.Mock).mockImplementation(() => {
     return { isLoggedIn: true }
   })
@@ -77,6 +76,8 @@ beforeAll(() => {
   ;(useMutation as jest.Mock).mockImplementation(() => {
     return { submitMutation }
   })
+
+  submitMutation.mockClear()
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -117,10 +118,7 @@ describe("ConditionRoute", () => {
     it("updates my collection artwork", async () => {
       renderWithRelay({ ConsignmentSubmission: () => submissionMock })
 
-      submitMutation.mockClear()
       screen.getByText("Submit Artwork").click()
-
-      await flushPromiseQueue()
 
       await waitFor(() => {
         expect(submitMutation).toHaveBeenCalledWith(
@@ -144,10 +142,7 @@ describe("ConditionRoute", () => {
         ConsignmentSubmission: () => submissionMockInvalid,
       })
 
-      submitMutation.mockClear()
       screen.getByText("Submit Artwork").click()
-
-      await flushPromiseQueue()
 
       await waitFor(() => {
         expect(submitMutation).not.toHaveBeenCalled()
@@ -155,9 +150,11 @@ describe("ConditionRoute", () => {
     })
   })
 
-  /* describe("navigation", () => {
+  describe("navigation", () => {
     it("navigates to the previous step when the Back button is clicked", async () => {
-      renderWithRelay({})
+      renderWithRelay({
+        ConsignmentSubmission: () => ({ ...submissionMock, state: "APPROVED" }),
+      })
 
       mockPush.mockClear()
 
@@ -165,15 +162,19 @@ describe("ConditionRoute", () => {
 
       await waitFor(() => {
         expect(mockPush).toHaveBeenCalledWith(
-          '/sell/submissions/<mock-value-for-field-"externalId">/additional-documents'
+          "/sell/submissions/externalId/additional-documents"
         )
       })
     })
 
-    it("navigates to next step when the Continue button is clicked", async () => {
-      renderWithRelay({})
+    it("navigates to the thank you screen when Submit Artwork button is clicked", async () => {
+      renderWithRelay({
+        ConsignmentSubmission: () => ({ ...submissionMock, state: "APPROVED" }),
+      })
 
       mockPush.mockClear()
+
+      expect(screen.getByTestId("condition-input")).toHaveValue("GOOD")
 
       screen.getByText("Submit Artwork").click()
 
@@ -183,5 +184,5 @@ describe("ConditionRoute", () => {
         )
       })
     })
-  }) */
+  })
 })

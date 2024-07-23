@@ -18,8 +18,8 @@ import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import * as React from "react"
 import * as Yup from "yup"
-import { useMemo, useState } from "react"
-import { acceptableConditionsForSubmission } from "Apps/Sell/Utils/acceptableConditionsForSubmission"
+import { useState } from "react"
+import { conditionOptions } from "Apps/Sell/Utils/acceptableConditionsForSubmission"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 
 const FRAGMENT = graphql`
@@ -55,7 +55,7 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const artwork = submission.myCollectionArtwork
   const { actions } = useSellFlowContext()
-  const conditionOptions = useMemo(acceptableConditionsForSubmission, [])
+
   const [
     isConditionDefinitionModalOpen,
     setIsConditionDefinitionModalOpen,
@@ -64,7 +64,6 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
   if (!artwork) return null
 
   const onSubmit = async (values: FormValues) => {
-    console.log("[LOGD] values", values)
     return await actions.updateMyCollectionArtwork({
       condition: values.condition as ArtworkConditionEnumType,
       conditionDescription: values.description,
@@ -78,7 +77,6 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
     description: artwork.conditionDescription?.details ?? "",
   }
 
-  console.log("[LOGD] artwork.conditionDescription?.details", artwork)
   return (
     <Formik<FormValues>
       initialValues={initialValues}
