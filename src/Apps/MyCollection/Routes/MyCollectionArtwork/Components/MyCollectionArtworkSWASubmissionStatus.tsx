@@ -272,18 +272,8 @@ const getSubmissionData = (
         stateLabel: "Approved",
         actionLabel: "Complete Listing",
       }
-    // TODO: Add new State to Submission
+    // TODO: Add new State to Submission and return the same as PUBLISHED
     // case "RESUBMITTED":
-    //   return {
-    //     button: {
-    //       label: "Edit Submission",
-    //       to: `/sell/submissions/${submission.internalID}/${INITIAL_STEP}`,
-    //       variant: "secondaryBlack",
-    //     },
-    //     description:
-    //       "Thank you for the information. Your submission is being assessed for sales opportunities. Our specialists will contact you via email or phone to coordinate the next steps.",
-    //     stateLabel: "In Progress",
-    //   }
     case "PUBLISHED":
       return {
         button: {
