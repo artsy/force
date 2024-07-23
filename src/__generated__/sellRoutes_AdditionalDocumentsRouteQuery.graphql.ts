@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12503b233561b6dcb6b88c5397c413a6>>
+ * @generated SignedSource<<864784f748e8c881bb48ff0b16e6f16c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -90,146 +90,63 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "title",
+            "name": "externalId",
             "storageKey": null
           },
           {
             "alias": null,
-            "args": null,
-            "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artist",
-            "plural": false,
-            "selections": [
+            "args": [
               {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "href",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "slug",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "initials",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "formattedNationalityAndBirthday",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "ArtistCounts",
-                "kind": "LinkedField",
-                "name": "counts",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "artworks",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "forSaleArtworks",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Artwork",
-                "kind": "LinkedField",
-                "name": "coverArtwork",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": "avatar",
-                    "args": null,
-                    "concreteType": "Image",
-                    "kind": "LinkedField",
-                    "name": "image",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "height",
-                            "value": 45
-                          },
-                          {
-                            "kind": "Literal",
-                            "name": "width",
-                            "value": 45
-                          }
-                        ],
-                        "concreteType": "CroppedImageUrl",
-                        "kind": "LinkedField",
-                        "name": "cropped",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "src",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "srcSet",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": "cropped(height:45,width:45)"
-                      }
-                    ],
-                    "storageKey": null
-                  },
-                  (v2/*: any*/)
-                ],
-                "storageKey": null
-              },
-              (v2/*: any*/)
+                "kind": "Literal",
+                "name": "assetType",
+                "value": [
+                  "ADDITIONAL_FILE"
+                ]
+              }
             ],
-            "storageKey": null
+            "concreteType": "ConsignmentSubmissionCategoryAsset",
+            "kind": "LinkedField",
+            "name": "assets",
+            "plural": true,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "size",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "filename",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "documentPath",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "s3Path",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "s3Bucket",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "assets(assetType:[\"ADDITIONAL_FILE\"])"
           },
           (v2/*: any*/)
         ],
@@ -238,12 +155,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "167e587f44f1171c4640bc0acf5a25b9",
+    "cacheID": "fb94cfdb6e151d1568a95b1be381d3d9",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_AdditionalDocumentsRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_AdditionalDocumentsRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...AdditionalDocumentsRoute_submission\n    id\n  }\n}\n\nfragment AdditionalDocumentsRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query sellRoutes_AdditionalDocumentsRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...AdditionalDocumentsRoute_submission\n    id\n  }\n}\n\nfragment AdditionalDocumentsRoute_submission on ConsignmentSubmission {\n  externalId\n  assets(assetType: [ADDITIONAL_FILE]) {\n    id\n    size\n    filename\n    documentPath\n    s3Path\n    s3Bucket\n  }\n}\n"
   }
 };
 })();

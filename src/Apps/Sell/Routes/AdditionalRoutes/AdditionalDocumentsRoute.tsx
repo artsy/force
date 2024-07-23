@@ -1,28 +1,39 @@
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
-import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { AdditionalDocumentsRoute_submission$key } from "__generated__/AdditionalDocumentsRoute_submission.graphql"
 import { Formik } from "formik"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
+import { Text } from "@artsy/palette"
+import { UploadDocumentsForm } from "Apps/Sell/Components/UploadDocumentsForm"
+import { DocumentPreviewsGrid } from "Apps/Sell/Components/DocumentPreviewsGrid"
+import { Asset, dropzoneFileFromAsset } from "Apps/Sell/Utils/uploadUtils"
+import { DropzoneFile } from "Components/FileUpload/types"
 
 const FRAGMENT = graphql`
   fragment AdditionalDocumentsRoute_submission on ConsignmentSubmission {
-    title
-    artist {
-      ...EntityHeaderArtist_artist
+    externalId
+
+    assets(assetType: [ADDITIONAL_FILE]) {
+      id
+      size
+      filename
+      documentPath
+      s3Path
+      s3Bucket
     }
   }
 `
 
 const Schema = Yup.object().shape({
-  title: Yup.string().required().trim(),
+  documents: Yup.array().min(1),
 })
 
-interface FormValues {
-  title: string
+export interface DocumentsFormValues {
+  submissionId: string
+  documents: DropzoneFile[]
 }
 
 interface AdditionalDocumentsRouteProps {
@@ -31,32 +42,45 @@ interface AdditionalDocumentsRouteProps {
 
 export const AdditionalDocumentsRoute: React.FC<AdditionalDocumentsRouteProps> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
-  const { actions } = useSellFlowContext()
-  // TODO: Add ref to first input
-  // const focusedInputRef = useFocusInput()
 
-  const onSubmit = async (values: FormValues) => {
-    return actions.updateSubmission(values)
-  }
+  const documents: DropzoneFile[] = ((submission.assets as Asset[]) || []).map(
+    dropzoneFileFromAsset
+  )
 
-  const initialValues: FormValues = {
-    title: submission.title ?? "",
+  const initialValues: DocumentsFormValues = {
+    submissionId: submission.externalId,
+    documents,
   }
 
   return (
-    <Formik<FormValues>
+    <Formik<DocumentsFormValues>
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={() => {}}
       validateOnMount
       validationSchema={Schema}
     >
-      {({ handleChange, values }) => (
-        <SubmissionLayout>
-          <SubmissionStepTitle>Additional Documents</SubmissionStepTitle>
+      {({ values }) => {
+        const isAnyDocumentLoading = values.documents.some(
+          (document: DropzoneFile) => document.loading
+        )
 
-          <DevDebug />
-        </SubmissionLayout>
-      )}
+        return (
+          <SubmissionLayout loading={isAnyDocumentLoading}>
+            <SubmissionStepTitle>Additional documents</SubmissionStepTitle>
+
+            <Text mb={2} variant={["xs", "sm"]} color="black60">
+              Please add any of the following if you have them: Proof of
+              Purchase, Certificate of Authentication, Fact Sheet, Condition
+              Report
+            </Text>
+
+            <UploadDocumentsForm />
+            <DocumentPreviewsGrid />
+
+            <DevDebug />
+          </SubmissionLayout>
+        )
+      }}
     </Formik>
   )
 }

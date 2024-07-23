@@ -1,9 +1,9 @@
 import { useToasts } from "@artsy/palette"
 import { useAddAssetToConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
 import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
-import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
+import { FileDropzone } from "Components/FileUpload/FileDropzone"
+import { DropzoneFile } from "Components/FileUpload/types"
 import {
-  Photo,
   getErrorMessage,
   normalizePhoto,
   uploadSubmissionPhoto,
@@ -24,7 +24,7 @@ export const UploadPhotosForm: React.FC = () => {
   const { sendToast } = useToasts()
 
   const handlePhotoUploadingProgress = useCallback(
-    (photo: Photo) => progress => {
+    (photo: DropzoneFile) => progress => {
       photo.progress = progress
       setFieldValue("photos", values.photos)
     },
@@ -123,8 +123,17 @@ export const UploadPhotosForm: React.FC = () => {
   }
 
   return (
-    <PhotoDropzone
-      allPhotos={values.photos}
+    <FileDropzone
+      title="Drag and drop photos here"
+      subtitle={
+        <>
+          Files Supported: JPG, PNG, HEIC <br />
+          Total maximum size: 30 MB
+        </>
+      }
+      buttonText="Add Photos"
+      allFiles={values.photos}
+      allowedMimeTypes={["image/jpeg", "image/png", "image/heic"]}
       maxTotalSize={30}
       onDrop={onDrop}
       onReject={onReject}

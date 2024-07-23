@@ -187,7 +187,7 @@ describe("PhotosRoute", () => {
       ConsignmentSubmission: () => submissionMock,
     })
 
-    fireEvent.change(screen.getByTestId("image-dropzone-input"), {
+    fireEvent.change(screen.getByTestId("file-dropzone-input"), {
       target: {
         files: [
           {
@@ -236,7 +236,7 @@ describe("PhotosRoute", () => {
         ConsignmentSubmission: () => submissionMock,
       })
 
-      fireEvent.change(screen.getByTestId("image-dropzone-input"), {
+      fireEvent.change(screen.getByTestId("file-dropzone-input"), {
         target: {
           files: [
             {
@@ -263,7 +263,7 @@ describe("PhotosRoute", () => {
         ConsignmentSubmission: () => submissionMock,
       })
 
-      fireEvent.change(screen.getByTestId("image-dropzone-input"), {
+      fireEvent.change(screen.getByTestId("file-dropzone-input"), {
         target: {
           files: [
             {
@@ -279,7 +279,7 @@ describe("PhotosRoute", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "File format not supported. Please upload JPG, PNG or HEIC files."
+            "File format not supported. Please upload files with supported formats."
           )
         ).toBeInTheDocument()
       })
