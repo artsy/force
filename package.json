@@ -79,7 +79,7 @@
     "superagent": "3.8.3"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.193.1",
+    "@artsy/cohesion": "4.195.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/dismissible": "^0.3.2",
@@ -102,8 +102,8 @@
     "@sentry/integrations": "^6.7.2",
     "@sentry/node": "^6.7.1",
     "@sentry/tracing": "^6.7.1",
-    "@stripe/react-stripe-js": "^1.10.0",
-    "@stripe/stripe-js": "^1.34.0",
+    "@stripe/react-stripe-js": "1.10.0",
+    "@stripe/stripe-js": "^4.1.0",
     "@styled-system/theme-get": "5.1.2",
     "actioncable": "^5.2.7-1",
     "analytics-node": "2.4.1",

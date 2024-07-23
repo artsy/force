@@ -54,10 +54,10 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
 
   const initialValues: FormValues = {
     userPhone:
-      submission.userPhoneNumber?.display ?? me.phoneNumber?.display ?? "",
+      submission.userPhoneNumber?.display ?? me?.phoneNumber?.display ?? "",
     phoneNumberRegionCode:
       submission.userPhoneNumber?.regionCode ??
-      me.phoneNumber?.regionCode ??
+      me?.phoneNumber?.regionCode ??
       "us",
   }
 

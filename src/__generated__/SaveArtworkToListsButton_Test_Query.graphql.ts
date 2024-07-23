@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c37713c90186aa26dd5623f2ebfdc57d>>
+ * @generated SignedSource<<12faaccb9d0d74c6fffcefc2bf06da1e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,6 +40,12 @@ v2 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -159,6 +165,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "isInAuction",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "isSavedToList",
             "storageKey": null
           }
@@ -168,7 +181,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2181a66364c06d99daf3e8ba50317abf",
+    "cacheID": "da70fea9abac42721f69b9deee98b935",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -182,12 +195,8 @@ return {
         "artwork.date": (v1/*: any*/),
         "artwork.id": (v2/*: any*/),
         "artwork.internalID": (v2/*: any*/),
-        "artwork.isSaved": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
+        "artwork.isInAuction": (v3/*: any*/),
+        "artwork.isSaved": (v3/*: any*/),
         "artwork.isSavedToList": {
           "enumValues": null,
           "nullable": false,
@@ -207,7 +216,7 @@ return {
     },
     "name": "SaveArtworkToListsButton_Test_Query",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n"
+    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n}\n"
   }
 };
 })();

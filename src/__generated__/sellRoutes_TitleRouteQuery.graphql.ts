@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebc611cf2b9002c6693a9546f4f3ae3e>>
+ * @generated SignedSource<<56d49e009fea58733a71c39719152398>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type sellRoutes_TitleRouteQuery$variables = {
   id: string;
+  sessionID: string;
 };
 export type sellRoutes_TitleRouteQuery$data = {
   readonly submission: {
@@ -29,6 +30,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "sessionID"
   }
 ],
 v1 = [
@@ -36,6 +42,11 @@ v1 = [
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
+  },
+  {
+    "kind": "Variable",
+    "name": "sessionID",
+    "variableName": "sessionID"
   }
 ],
 v2 = {
@@ -238,16 +249,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3238a2c7db256b5147897a834e026833",
+    "cacheID": "cb0fe9ed5fcf9cf2d939481649815f0b",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_TitleRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_TitleRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...TitleRoute_submission\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment TitleRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n"
+    "text": "query sellRoutes_TitleRouteQuery(\n  $id: ID!\n  $sessionID: String!\n) {\n  submission(id: $id, sessionID: $sessionID) @principalField {\n    ...TitleRoute_submission\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment TitleRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "90ebd56d298e56d80ee2fd9d3b311149";
+(node as any).hash = "7574ea0e6101cfa20bcbdcc8cb9a2d24";
 
 export default node;

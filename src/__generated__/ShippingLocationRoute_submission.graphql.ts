@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5c8f5ed9dcb5fe30857b6e98d0a1cca>>
+ * @generated SignedSource<<15ce1ddc6960d5e5f621c24e523f45d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShippingLocationRoute_submission$data = {
+  readonly locationAddress: string | null | undefined;
+  readonly locationAddress2: string | null | undefined;
   readonly locationCity: string | null | undefined;
   readonly locationCountry: string | null | undefined;
   readonly locationPostalCode: string | null | undefined;
@@ -46,6 +48,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "locationState",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "locationPostalCode",
       "storageKey": null
     },
@@ -53,7 +62,14 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "locationState",
+      "name": "locationAddress",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "locationAddress2",
       "storageKey": null
     }
   ],
@@ -61,6 +77,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "840c0356f8a09fa79e81c9cb6d8be256";
+(node as any).hash = "202a345dfc3053e8e7682af670cb2331";
 
 export default node;

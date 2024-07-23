@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd2523d1b1cdeceeea0697020ee368fb>>
+ * @generated SignedSource<<45fcffb57cfb646f584b0139bf45d5b9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type sellRoutes_PhotosRouteQuery$variables = {
   id: string;
+  sessionID: string;
 };
 export type sellRoutes_PhotosRouteQuery$data = {
   readonly submission: {
@@ -29,6 +30,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "sessionID"
   }
 ],
 v1 = [
@@ -36,6 +42,11 @@ v1 = [
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
+  },
+  {
+    "kind": "Variable",
+    "name": "sessionID",
+    "variableName": "sessionID"
   }
 ],
 v2 = {
@@ -176,16 +187,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f66ec34fd97c5e4aba03f3ffca3da7cc",
+    "cacheID": "33f86c5b3ff2f6bc63d82f52fa8a31d8",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_PhotosRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_PhotosRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  myCollectionArtwork {\n    images {\n      url(version: \"large\")\n    }\n    id\n  }\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n"
+    "text": "query sellRoutes_PhotosRouteQuery(\n  $id: ID!\n  $sessionID: String!\n) {\n  submission(id: $id, sessionID: $sessionID) @principalField {\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  myCollectionArtwork {\n    images {\n      url(version: \"large\")\n    }\n    id\n  }\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0b9b193f461e9136d8a145c9067e3900";
+(node as any).hash = "3a841dd794ceb756f6ca9ce597f9bdff";
 
 export default node;

@@ -22,10 +22,10 @@
   dependencies:
     tslib "~2.0.1"
 
-"@artsy/cohesion@4.193.1":
-  version "4.193.1"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.193.1.tgz#5b733c1ed783e34db919d0630a39a36f9b40a6f5"
-  integrity sha512-nWpPUKy85r9TtIPBcKtrsYvUPvi/G/FXPvg/4r7Cd+u349aRozrNrR5u3lda7UrQSBRUMxbmzSNRPj/V76tuCA==
+"@artsy/cohesion@4.195.0":
+  version "4.195.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.195.0.tgz#b39507907521ad91b823d1fb5c9ca08549375a6d"
+  integrity sha512-9P6W+/gCSCgGGHnS+B/hlnKPOW5GN4zCGCfrOs5Ut59JyFDtvG4hM7IKLKuvWlBttlDRI9Ct/tvmHNPbm6lltQ==
   dependencies:
     core-js "3"
 
@@ -4348,17 +4348,17 @@
     regenerator-runtime "^0.13.7"
     resolve-from "^5.0.0"
 
-"@stripe/react-stripe-js@^1.10.0":
+"@stripe/react-stripe-js@1.10.0":
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-1.10.0.tgz#5412874b5ed4732e917c6d9bb2b6721ee25615ab"
   integrity sha512-vuIjJUZJ3nyiaGa5z5iyMCzZfGGsgzOOjWjqknbbhkNsewyyginfeky9EZLSz9+iSAsgC9K6MeNOTLKVGcMycQ==
   dependencies:
     prop-types "^15.7.2"
 
-"@stripe/stripe-js@^1.34.0":
-  version "1.34.0"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.34.0.tgz#62fecff2580469ec56ec31066b73a0fc016749b8"
-  integrity sha512-fFuchE1mK2GWyZmTS87L6NaIvKo4yIj3SpkTuHY41A7frfB07/3z8l1jBrHKGzvVnlFkeCVnEvfMjBmdlqcO6w==
+"@stripe/stripe-js@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-4.1.0.tgz#11a54478df28b7a2d146251f645fb26e9efc9bfd"
+  integrity sha512-HhstGRUz/4JdbZpb26OcOf8Qb/cFR02arvHvgz4sPFLSnI6ZNHC53Jc6JP/FGNwxtrF719YyUnK0gGy4oyhucQ==
 
 "@styled-system/background@^5.1.2":
   version "5.1.2"

@@ -33,7 +33,7 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
       openSelectListsForArtworkModal()
     } else if (artwork.isSavedToDefaultList) {
       // Display toast if artwork is already saved to the default list
-      showToastByAction(ResultAction.SavedToDefaultList)
+      showToastByAction(ResultAction.SavedToDefaultList, artwork.isInAuction)
     } else {
       // Save artwork to the default list
       saveArtworkToLists()
@@ -43,16 +43,18 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, clearValue])
 
-  const showToastByAction = (action: ResultAction) => {
+  const showToastByAction = (action: ResultAction, isInAuction: boolean) => {
     if (action === ResultAction.SavedToDefaultList) {
       sendToast({
         variant: "success",
         message: t(
           `collectorSaves.saveArtworkToLists.toast.artworkSaved.message`
         ),
-        description: t(
-          `collectorSaves.saveArtworkToLists.toast.artworkSaved.description`
-        ),
+        description: isInAuction
+          ? ""
+          : t(
+              `collectorSaves.saveArtworkToLists.toast.artworkSaved.description`
+            ),
         action: {
           label: t(
             "collectorSaves.saveArtworkToLists.toast.artworkSaved.button"
@@ -79,7 +81,7 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
       action === ResultAction.SavedToDefaultList ||
       action === ResultAction.RemovedFromDefaultList
     ) {
-      showToastByAction(action)
+      showToastByAction(action, artwork.isInAuction)
     }
 
     return action

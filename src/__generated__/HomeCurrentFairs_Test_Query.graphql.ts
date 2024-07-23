@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<92277648cbb86fa94373c2f65e829152>>
+ * @generated SignedSource<<56c55d93a1315266a892cd42f1e70fd4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -241,6 +241,14 @@ return {
                       },
                       {
                         "kind": "Literal",
+                        "name": "version",
+                        "value": [
+                          "wide",
+                          "large_rectangle"
+                        ]
+                      },
+                      {
+                        "kind": "Literal",
                         "name": "width",
                         "value": 600
                       }
@@ -279,7 +287,7 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "storageKey": "cropped(height:450,width:600)"
+                    "storageKey": "cropped(height:450,version:[\"wide\",\"large_rectangle\"],width:600)"
                   }
                 ],
                 "storageKey": null
@@ -294,7 +302,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "592a02c16f813dfbe77aab629544e6c3",
+    "cacheID": "46d9f4becd9185f99dc74833867017bc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -348,7 +356,7 @@ return {
     },
     "name": "HomeCurrentFairs_Test_Query",
     "operationKind": "query",
-    "text": "query HomeCurrentFairs_Test_Query {\n  viewer {\n    ...HomeCurrentFairs_viewer\n  }\n}\n\nfragment HomeCurrentFairs_viewer on Viewer {\n  fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    slug\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    href\n    name\n    startAt(format: \"MMM Do\")\n    endAt(format: \"MMM Do YYYY\")\n    exhibitionPeriod\n    image {\n      cropped(width: 600, height: 450) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query HomeCurrentFairs_Test_Query {\n  viewer {\n    ...HomeCurrentFairs_viewer\n  }\n}\n\nfragment HomeCurrentFairs_viewer on Viewer {\n  fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    slug\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    href\n    name\n    startAt(format: \"MMM Do\")\n    endAt(format: \"MMM Do YYYY\")\n    exhibitionPeriod\n    image {\n      cropped(width: 600, height: 450, version: [\"wide\", \"large_rectangle\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

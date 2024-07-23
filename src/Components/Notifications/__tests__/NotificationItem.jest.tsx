@@ -15,7 +15,10 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
 
     if (notification) {
       return (
-        <NotificationItemFragmentContainer item={notification} mode={mode} />
+        <NotificationItemFragmentContainer
+          notification={notification}
+          mode={mode}
+        />
       )
     }
 
@@ -26,7 +29,7 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
       notificationsConnection(first: 1) {
         edges {
           node {
-            ...NotificationItem_item
+            ...NotificationItem_notification
           }
         }
       }
@@ -92,7 +95,7 @@ describe("NotificationItem", () => {
         Notification: () => notification,
       })
 
-      const indicator = screen.queryByLabelText("Unread notification indicator")
+      const indicator = screen.queryByLabelText("Unread")
       expect(indicator).not.toBeInTheDocument()
     })
 
@@ -104,7 +107,7 @@ describe("NotificationItem", () => {
         }),
       })
 
-      const indicator = screen.queryByLabelText("Unread notification indicator")
+      const indicator = screen.queryByLabelText("Unread")
       expect(indicator).toBeInTheDocument()
     })
   })

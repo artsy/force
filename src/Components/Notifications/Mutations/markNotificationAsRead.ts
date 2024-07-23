@@ -3,6 +3,7 @@ import {
   markNotificationAsReadMutation$data,
 } from "__generated__/markNotificationAsReadMutation.graphql"
 import { Environment, commitMutation, graphql } from "react-relay"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 const updater = (id: string, store: any) => {
   const notification = store.get(id)
@@ -13,7 +14,7 @@ const updater = (id: string, store: any) => {
 export const markNotificationAsRead = (
   environment: Environment,
   id: string,
-  internalId: string
+  internalID: string
 ): Promise<markNotificationAsReadMutation$data> => {
   return new Promise((resolve, reject) => {
     commitMutation<markNotificationAsReadMutation>(environment, {
@@ -41,7 +42,7 @@ export const markNotificationAsRead = (
       `,
       variables: {
         input: {
-          id: internalId,
+          id: internalID,
         },
       },
       updater: store => {
@@ -58,4 +59,33 @@ export const markNotificationAsRead = (
       },
     })
   })
+}
+
+export const useMarkNotificationAsRead = () => {
+  const { relayEnvironment } = useSystemContext()
+
+  const markAsRead = async ({
+    id,
+    internalID,
+  }: {
+    id: string
+    internalID: string
+  }) => {
+    if (!relayEnvironment) return
+
+    const response = await markNotificationAsRead(
+      relayEnvironment,
+      id,
+      internalID
+    )
+
+    const responseOrError = response.markNotificationAsRead?.responseOrError
+    const errorMessage = responseOrError?.mutationError?.message
+
+    if (errorMessage) {
+      throw new Error(errorMessage)
+    }
+  }
+
+  return { markAsRead }
 }

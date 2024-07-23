@@ -1,5 +1,6 @@
 import loadable from "@loadable/component"
 import { RouteProps } from "System/Router/Route"
+import { getENV } from "Utils/getENV"
 import { graphql } from "react-relay"
 
 const IntroRoute = loadable(
@@ -197,14 +198,14 @@ export const sellRoutes: RouteProps[] = [
           SubmissionRoute.preload()
         },
         query: graphql`
-          query sellRoutes_SubmissionRouteQuery($id: ID!) {
-            submission(id: $id) @principalField {
+          query sellRoutes_SubmissionRouteQuery($id: ID!, $sessionID: String!) {
+            submission(id: $id, sessionID: $sessionID) @principalField {
               ...SubmissionRoute_submission
             }
           }
         `,
         prepareVariables: ({ id }) => {
-          return { id }
+          return { id, sessionID: getENV("SESSION_ID") }
         },
         children: [
           {
@@ -215,14 +216,14 @@ export const sellRoutes: RouteProps[] = [
               ArtistRoute.preload()
             },
             query: graphql`
-              query sellRoutes_ArtistRouteQuery($id: ID!) {
-                submission(id: $id) @principalField {
+              query sellRoutes_ArtistRouteQuery($id: ID!, $sessionID: String!) {
+                submission(id: $id, sessionID: $sessionID) @principalField {
                   ...ArtistRoute_submission
                 }
               }
             `,
             prepareVariables: ({ id }) => {
-              return { id }
+              return { id, sessionID: getENV("SESSION_ID") }
             },
           },
           {
@@ -233,14 +234,14 @@ export const sellRoutes: RouteProps[] = [
               TitleRoute.preload()
             },
             query: graphql`
-              query sellRoutes_TitleRouteQuery($id: ID!) {
-                submission(id: $id) @principalField {
+              query sellRoutes_TitleRouteQuery($id: ID!, $sessionID: String!) {
+                submission(id: $id, sessionID: $sessionID) @principalField {
                   ...TitleRoute_submission
                 }
               }
             `,
             prepareVariables: ({ id }) => {
-              return { id }
+              return { id, sessionID: getENV("SESSION_ID") }
             },
           },
           {
@@ -251,14 +252,14 @@ export const sellRoutes: RouteProps[] = [
               PhotosRoute.preload()
             },
             query: graphql`
-              query sellRoutes_PhotosRouteQuery($id: ID!) {
-                submission(id: $id) @principalField {
+              query sellRoutes_PhotosRouteQuery($id: ID!, $sessionID: String!) {
+                submission(id: $id, sessionID: $sessionID) @principalField {
                   ...PhotosRoute_submission
                 }
               }
             `,
             prepareVariables: ({ id }) => {
-              return { id }
+              return { id, sessionID: getENV("SESSION_ID") }
             },
           },
           {
@@ -269,14 +270,17 @@ export const sellRoutes: RouteProps[] = [
               DetailsRoute.preload()
             },
             query: graphql`
-              query sellRoutes_DetailsRouteQuery($id: ID!) {
-                submission(id: $id) @principalField {
+              query sellRoutes_DetailsRouteQuery(
+                $id: ID!
+                $sessionID: String!
+              ) {
+                submission(id: $id, sessionID: $sessionID) @principalField {
                   ...DetailsRoute_submission
                 }
               }
             `,
             prepareVariables: ({ id }) => {
-              return { id }
+              return { id, sessionID: getENV("SESSION_ID") }
             },
           },
           {
@@ -287,14 +291,17 @@ export const sellRoutes: RouteProps[] = [
               PurchaseHistoryRoute.preload()
             },
             query: graphql`
-              query sellRoutes_PurchaseHistoryRouteQuery($id: ID!) {
-                submission(id: $id) @principalField {
+              query sellRoutes_PurchaseHistoryRouteQuery(
+                $id: ID!
+                $sessionID: String!
+              ) {
+                submission(id: $id, sessionID: $sessionID) @principalField {
                   ...PurchaseHistoryRoute_submission
                 }
               }
             `,
             prepareVariables: ({ id }) => {
-              return { id }
+              return { id, sessionID: getENV("SESSION_ID") }
             },
           },
           {
@@ -305,14 +312,17 @@ export const sellRoutes: RouteProps[] = [
               DimensionsRoute.preload()
             },
             query: graphql`
-              query sellRoutes_DimensionsRouteQuery($id: ID!) {
-                submission(id: $id) @principalField {
+              query sellRoutes_DimensionsRouteQuery(
+                $id: ID!
+                $sessionID: String!
+              ) {
+                submission(id: $id, sessionID: $sessionID) @principalField {
                   ...DimensionsRoute_submission
                 }
               }
             `,
             prepareVariables: ({ id }) => {
-              return { id }
+              return { id, sessionID: getENV("SESSION_ID") }
             },
           },
           {
@@ -323,8 +333,11 @@ export const sellRoutes: RouteProps[] = [
               PhoneNumberRoute.preload()
             },
             query: graphql`
-              query sellRoutes_PhoneNumberRouteQuery($id: ID!) {
-                submission(id: $id) @principalField {
+              query sellRoutes_PhoneNumberRouteQuery(
+                $id: ID!
+                $sessionID: String!
+              ) {
+                submission(id: $id, sessionID: $sessionID) @principalField {
                   ...PhoneNumberRoute_submission
                 }
                 me {
@@ -333,7 +346,7 @@ export const sellRoutes: RouteProps[] = [
               }
             `,
             prepareVariables: ({ id }) => {
-              return { id }
+              return { id, sessionID: getENV("SESSION_ID") }
             },
           },
           {
@@ -368,6 +381,9 @@ export const sellRoutes: RouteProps[] = [
               query sellRoutes_ShippingLocationRouteQuery($id: ID!) {
                 submission(id: $id) @principalField {
                   ...ShippingLocationRoute_submission
+                }
+                me {
+                  ...ShippingLocationRoute_me
                 }
               }
             `,
