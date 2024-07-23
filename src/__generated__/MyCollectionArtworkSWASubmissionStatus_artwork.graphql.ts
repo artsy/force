@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<984155baf486f56e6d83ae86f18fa6f6>>
+ * @generated SignedSource<<915dd35925acefe01c1217d1bf9f7206>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,8 @@ export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" 
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSWASubmissionStatus_artwork$data = {
   readonly consignmentSubmission: {
+    readonly actionLabel: string | null | undefined;
+    readonly buttonLabel: string | null | undefined;
     readonly internalID: string | null | undefined;
     readonly state: ArtworkConsignmentSubmissionState;
     readonly stateHelpMessage: string | null | undefined;
@@ -94,6 +96,20 @@ return {
       "name": "consignmentSubmission",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "actionLabel",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "buttonLabel",
+          "storageKey": null
+        },
         (v0/*: any*/),
         {
           "alias": null,
@@ -125,6 +141,6 @@ return {
 };
 })();
 
-(node as any).hash = "0aa07f000763c81482e1c77e66afc9f6";
+(node as any).hash = "2472b69b21db890435607d659a92940f";
 
 export default node;

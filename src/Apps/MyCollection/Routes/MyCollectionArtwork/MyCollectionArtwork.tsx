@@ -168,6 +168,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
           state
           internalID
         }
+        submissionId
         artist {
           slug
           targetSupply {

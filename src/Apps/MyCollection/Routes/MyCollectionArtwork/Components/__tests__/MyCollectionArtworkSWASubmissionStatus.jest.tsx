@@ -46,135 +46,21 @@ describe("MyCollection Artwork SWA Submission Status", () => {
   })
 
   describe("when artwork is already submitted", () => {
-    describe("state: 'draft'", () => {
-      it("renders title and description", () => {
-        renderWithRelay({
-          Artwork: () => ({
-            consignmentSubmission: { state: "DRAFT" },
-          }),
-        })
-
-        expect(screen.getByText("Submission Status")).toBeInTheDocument()
-        expect(screen.getAllByText("Complete Submission")).toHaveLength(2)
-        expect(
-          screen.getByText(
-            "You’ve started a submission to sell with Artsy but have not yet completed it."
-          )
-        ).toBeInTheDocument()
+    it("renders title and description", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          consignmentSubmission: {
+            state: "DRAFT",
+            actionLabel: "action-label",
+            stateHelpMessage: "state-helper-message",
+            buttonLabel: "button-label",
+          },
+        }),
       })
-    })
 
-    describe("state: 'submitted'", () => {
-      it("renders title and description", () => {
-        renderWithRelay({
-          Artwork: () => ({
-            consignmentSubmission: {
-              state: "SUBMITTED",
-              stateLabel: "state-label",
-            },
-          }),
-        })
-
-        expect(screen.getByText("Submission Status")).toBeInTheDocument()
-        expect(screen.getByText("state-label")).toBeInTheDocument()
-        expect(
-          screen.getByText(
-            "Your submission is currently being reviewed by our team. You will receive a response within 3 to 5 days."
-          )
-        ).toBeInTheDocument()
-        expect(screen.getByText("Edit Submission")).toBeInTheDocument()
-      })
-    })
-
-    describe("state: 'approved'", () => {
-      it("renders title and description", () => {
-        renderWithRelay({
-          Artwork: () => ({
-            consignmentSubmission: {
-              state: "APPROVED",
-              stateLabel: "state-label",
-            },
-          }),
-        })
-
-        expect(screen.getByText("Submission Status")).toBeInTheDocument()
-        expect(screen.getByText("Approved")).toBeInTheDocument()
-        expect(
-          screen.getByText(
-            "Congratulations, your submission has been approved. Please provide additional information so we can list your work and match it with the best selling opportunity."
-          )
-        ).toBeInTheDocument()
-        expect(screen.getByText("Complete Listing")).toBeInTheDocument()
-      })
-    })
-
-    describe("state: 'published'", () => {
-      it("renders title and description", () => {
-        renderWithRelay({
-          Artwork: () => ({
-            consignmentSubmission: {
-              state: "PUBLISHED",
-              stateLabel: "state-label",
-            },
-          }),
-        })
-
-        expect(screen.getByText("Submission Status")).toBeInTheDocument()
-        expect(screen.getByText("state-label")).toBeInTheDocument()
-        expect(
-          screen.getByText(
-            "Your artwork has been successfully listed on Artsy."
-          )
-        ).toBeInTheDocument()
-        expect(screen.getByText("View Listing")).toBeInTheDocument()
-      })
-    })
-
-    describe("state: 'rejected'", () => {
-      it("renders title and description", () => {
-        renderWithRelay({
-          Artwork: () => ({
-            consignmentSubmission: {
-              state: "REJECTED",
-              stateLabel: "state-label",
-            },
-          }),
-        })
-
-        expect(screen.getByText("Submission Status")).toBeInTheDocument()
-        expect(screen.getByText("state-label")).toBeInTheDocument()
-        expect(screen.getByText("submission criteria")).toBeInTheDocument()
-      })
-    })
-
-    describe("state: 'hold'", () => {
-      it("does not render", () => {
-        renderWithRelay({
-          Artwork: () => ({
-            consignmentSubmission: {
-              state: "HOLD",
-              stateLabel: "state-label",
-            },
-          }),
-        })
-
-        expect(screen.queryByText("Submission Status")).not.toBeInTheDocument()
-      })
-    })
-
-    describe("state: 'closed'", () => {
-      it("does not render", () => {
-        renderWithRelay({
-          Artwork: () => ({
-            consignmentSubmission: {
-              state: "CLOSED",
-              stateLabel: "state-label",
-            },
-          }),
-        })
-
-        expect(screen.queryByText("Submission Status")).not.toBeInTheDocument()
-      })
+      expect(screen.getByText("Submission Status")).toBeInTheDocument()
+      expect(screen.getByText("action-label")).toBeInTheDocument()
+      expect(screen.getByText("state-helper-message")).toBeInTheDocument()
     })
   })
 })

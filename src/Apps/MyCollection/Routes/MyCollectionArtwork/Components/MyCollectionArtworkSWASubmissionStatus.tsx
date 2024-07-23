@@ -24,17 +24,6 @@ import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
 
-type SubmissionData = {
-  button?: {
-    label: string
-    to: string
-    variant: ButtonProps["variant"]
-  }
-  stateLabel: string | null | undefined
-  actionLabel?: string
-  description?: string | React.ReactNode
-}
-
 interface Props {
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$key
 }
@@ -49,9 +38,12 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
 
   const { consignmentSubmission: submission } = artwork
 
-  const submissionData = getSubmissionData(artwork)
+  if (!submission) return null
 
-  if (!submission || !submissionData) return null
+  const buttonURL = getButtonURL(artwork)
+  const buttonVariant = ["DRAFT", "APPROVED"].includes(submission.state)
+    ? "primaryBlack"
+    : "secondaryBlack"
 
   return (
     <Box>
@@ -75,21 +67,21 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
       </Text>
 
       <Text variant="md" fontWeight="400">
-        {submissionData.stateLabel}
+        {submission.stateLabel}
       </Text>
 
       <Media lessThan="sm">
-        {!!submissionData.button && !!submissionData.actionLabel && (
+        {!!submission.actionLabel && !!buttonURL && (
           <RouterLink
             onClick={() => {
               // TODO: Tracking
             }}
-            to={submissionData.button.to}
+            to={buttonURL}
             textDecoration="none"
             color="orange100"
           >
             <Flex alignItems="center">
-              <Text variant="sm-display">{submissionData.actionLabel}</Text>
+              <Text variant="sm-display">{submission.actionLabel}</Text>
 
               <ChevronRightIcon ml={0.5} size={16} />
             </Flex>
@@ -97,38 +89,40 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
         )}
 
         <SubmissionStatusModal
-          submissionData={submissionData}
+          buttonURL={buttonURL}
+          buttonVariant={buttonVariant}
+          submission={submission}
           show={isSubmissionStatusModalOpen}
           onClose={() => setIsSubmissionStatusModalOpen(false)}
         />
       </Media>
 
       <Media greaterThanOrEqual="sm">
-        {!!submissionData.actionLabel && (
+        {!!submission.actionLabel && (
           <Text variant="md" fontWeight="400" color="orange100">
-            {submissionData.actionLabel}
+            {submission.actionLabel}
           </Text>
         )}
 
         <Spacer y={1} />
 
         <Text variant="sm" color="black60">
-          {submissionData.description}
+          {submission.stateHelpMessage}
         </Text>
 
         <Spacer y={2} />
 
-        {!!submissionData.button && (
+        {!!buttonURL && (
           <Button
-            variant={submissionData.button.variant}
+            variant={buttonVariant}
             // @ts-ignore
             as={RouterLink}
             onClick={() => {
               // TODO: Tracking
             }}
-            to={submissionData.button.to}
+            to={buttonURL}
           >
-            {submissionData.button.label}
+            {submission.buttonLabel}
           </Button>
         )}
       </Media>
@@ -146,6 +140,8 @@ const submissionStatusFragment = graphql`
       }
     }
     consignmentSubmission {
+      actionLabel
+      buttonLabel
       internalID
       state
       stateLabel
@@ -155,17 +151,21 @@ const submissionStatusFragment = graphql`
 `
 
 interface SubmissionStatusModalProps {
+  buttonURL: string | null
+  buttonVariant: ButtonProps["variant"] | null
   show: boolean
   onClose(): void
-  submissionData: SubmissionData
+  submission: MyCollectionArtworkSWASubmissionStatus_artwork$data["consignmentSubmission"]
 }
 
 const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
-  show,
+  buttonURL,
+  buttonVariant,
   onClose,
-  submissionData,
+  show,
+  submission,
 }) => {
-  if (!show) return null
+  if (!show || !submission) return null
 
   return (
     <ModalDialog onClose={onClose}>
@@ -175,36 +175,36 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
         </Text>
 
         <Text variant="md" fontWeight="400">
-          {submissionData.stateLabel}
+          {submission.stateLabel}
         </Text>
 
-        {!!submissionData.actionLabel && (
+        {!!submission.actionLabel && (
           <Text variant="md" fontWeight="400" color="orange100">
-            {submissionData.actionLabel}
+            {submission.actionLabel}
           </Text>
         )}
 
         <Spacer y={1} />
 
         <Text variant="sm" color="black60">
-          {submissionData.description}
+          {submission.stateHelpMessage}
         </Text>
 
         <Spacer y={2} />
 
-        {!!submissionData.button && (
+        {!!buttonURL && (
           <Button
-            variant={submissionData.button.variant}
+            variant={buttonVariant}
             // @ts-ignore
             as={RouterLink}
             onClick={() => {
               // TODO: Tracking
             }}
-            to={submissionData.button.to}
+            to={buttonURL}
             width="100%"
             mb={2}
           >
-            {submissionData.button.label}
+            {submission.buttonLabel}
           </Button>
         )}
       </Box>
@@ -212,101 +212,30 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
   )
 }
 
-const getSubmissionData = (
+const getButtonURL = (
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$data
-): SubmissionData | null => {
+): string | null => {
   const submission = artwork.consignmentSubmission
-
-  if (!submission) return { stateLabel: null }
 
   const listedArtwork = extractNodes(artwork.listedArtworksConnection)[0]
 
   // The artwork has been listed on Artsy.
   if (listedArtwork) {
-    return {
-      button: listedArtwork
-        ? {
-            label: "View Listing",
-            to: `/artwork/${listedArtwork?.internalID}`,
-            variant: "secondaryBlack",
-          }
-        : undefined,
-      description: "Your artwork has been successfully listed on Artsy.",
-      stateLabel: "Listed",
-    }
+    return `/artwork/${listedArtwork?.internalID}`
   }
 
-  switch (submission.state) {
-    case "DRAFT":
-      return {
-        button: {
-          label: "Complete Submission",
-          to: `/sell/submissions/${submission.internalID}/${INITIAL_STEP}`,
-          variant: "primaryBlack",
-        },
-        description:
-          "You’ve started a submission to sell with Artsy but have not yet completed it.",
-        stateLabel: null,
-        actionLabel: "Complete Submission",
-      }
-    case "SUBMITTED":
-      return {
-        button: {
-          label: "Edit Submission",
-          to: `/sell/submissions/${submission.internalID}/${INITIAL_STEP}`,
-          variant: "secondaryBlack",
-        },
-        description:
-          "Your submission is currently being reviewed by our team. You will receive a response within 3 to 5 days.",
-        stateLabel: submission.stateLabel,
-      }
-    case "APPROVED":
-      return {
-        button: {
-          label: "Add Additional Information",
-          to: `/sell/submissions/${submission.internalID}/${INITIAL_POST_APPROVAL_STEP}`,
-          variant: "primaryBlack",
-        },
-        description:
-          "Congratulations, your submission has been approved. Please provide additional information so we can list your work and match it with the best selling opportunity.",
-        stateLabel: "Approved",
-        actionLabel: "Complete Listing",
-      }
-    // TODO: Add new State to Submission and return the same as PUBLISHED
-    // case "RESUBMITTED":
-    case "PUBLISHED":
-      return {
-        button: {
-          label: "Edit Submission",
-          to: `/sell/submissions/${submission.internalID}/${INITIAL_STEP}`,
-          variant: "secondaryBlack",
-        },
-        description:
-          "Thank you for the information. Your submission is being assessed for sales opportunities. Our specialists will contact you via email or phone to coordinate the next steps.",
-        stateLabel: "In Progress",
-      }
-    case "REJECTED":
-      return {
-        description: (
-          <>
-            Our specialists have reviewed this submission and determined that we
-            do not currently have a market for it. Find out more about our{" "}
-            <RouterLink
-              to="https://support.artsy.net/s/article/What-items-do-you-accept"
-              inline
-              color="black60"
-            >
-              submission criteria
-            </RouterLink>
-            .
-          </>
-        ),
-        stateLabel: submission.stateLabel,
-      }
-    case "CLOSED":
-      return null
-    case "HOLD":
-      return null
+  if (!submission) return null
+
+  if (
+    ["DRAFT", "SUBMITTED", "RESUBMITTED", "PUBLISHED"].includes(
+      submission.state
+    )
+  ) {
+    return `/sell/submissions/${submission.internalID}/${INITIAL_STEP}`
+  }
+
+  if (["APPROVED"].includes(submission.state)) {
+    return `/sell/submissions/${submission.internalID}/${INITIAL_POST_APPROVAL_STEP}`
   }
 
   return null

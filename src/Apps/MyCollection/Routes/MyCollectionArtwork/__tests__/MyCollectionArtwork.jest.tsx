@@ -74,6 +74,7 @@ describe("MyCollectionArtwork", () => {
       // eslint-disable-next-line jest/valid-expect
       expect(screen.getByText("Interested in Selling This Work?"))
     })
+
     it("not P1 artist: the section is not rendered", () => {
       const { renderWithRelay } = getWrapper("lg")
       renderWithRelay(mockResolversNotP1)
@@ -180,7 +181,7 @@ const mockResolversWithoutInsights = {
     artist: {
       auctionResults: null,
       targetSupply: {
-        isP1: true,
+        priority: true,
       },
     },
     consignmentSubmission: null,
