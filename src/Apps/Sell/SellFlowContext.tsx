@@ -188,7 +188,8 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       isNewSubmission ||
       !newStep ||
       !isSellFlowRoute ||
-      newStep === state.step
+      // If we are already on the correct step, don't redirect
+      match.location.pathname.includes(newStep)
     )
       return
 
