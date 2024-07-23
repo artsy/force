@@ -16,18 +16,19 @@ interface MyCollectionArtworkSubmitForSaleProps {
 }
 
 export const MyCollectionArtworkSubmitForSale: React.FC<MyCollectionArtworkSubmitForSaleProps> = props => {
+  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
+  const tracking = useTracking()
+  const { isLoggedIn, relayEnvironment } = useSystemContext()
+  const { router } = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+
   const artwork = useFragment(
     MyCollectionArtworkSubmitForSaleFragment,
     props.artwork
   )
 
   const isHighDemand = (artwork?.marketPriceInsights?.demandRank || 0) >= 0.9
-
-  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
-  const tracking = useTracking()
-  const { isLoggedIn, relayEnvironment } = useSystemContext()
-  const { router } = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+  const isTargetSupply = artwork?.artist?.targetSupply?.priority === "TRUE"
 
   const handleSubmitArtwork = async () => {
     tracking.trackEvent({
@@ -62,6 +63,8 @@ export const MyCollectionArtworkSubmitForSale: React.FC<MyCollectionArtworkSubmi
       setIsLoading(false)
     }
   }
+
+  if (!isTargetSupply) return null
 
   return (
     <Box>
@@ -100,6 +103,9 @@ const MyCollectionArtworkSubmitForSaleFragment = graphql`
     artist {
       internalID
       slug
+      targetSupply {
+        priority
+      }
     }
     consignmentSubmission {
       internalID

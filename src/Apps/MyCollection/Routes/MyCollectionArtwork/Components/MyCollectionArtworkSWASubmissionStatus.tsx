@@ -219,6 +219,23 @@ const getSubmissionData = (
 
   if (!submission) return { stateLabel: null }
 
+  const listedArtwork = extractNodes(artwork.listedArtworksConnection)[0]
+
+  // The artwork has been listed on Artsy.
+  if (listedArtwork) {
+    return {
+      button: listedArtwork
+        ? {
+            label: "View Listing",
+            to: `/artwork/${listedArtwork?.internalID}`,
+            variant: "secondaryBlack",
+          }
+        : undefined,
+      description: "Your artwork has been successfully listed on Artsy.",
+      stateLabel: "Listed",
+    }
+  }
+
   switch (submission.state) {
     case "DRAFT":
       return {
@@ -255,19 +272,28 @@ const getSubmissionData = (
         stateLabel: "Approved",
         actionLabel: "Complete Listing",
       }
+    // TODO: Add new State to Submission
+    // case "RESUBMITTED":
+    //   return {
+    //     button: {
+    //       label: "Edit Submission",
+    //       to: `/sell/submissions/${submission.internalID}/${INITIAL_STEP}`,
+    //       variant: "secondaryBlack",
+    //     },
+    //     description:
+    //       "Thank you for the information. Your submission is being assessed for sales opportunities. Our specialists will contact you via email or phone to coordinate the next steps.",
+    //     stateLabel: "In Progress",
+    //   }
     case "PUBLISHED":
-      const listedArtwork = extractNodes(artwork.listedArtworksConnection)[0]
-
       return {
-        button: listedArtwork
-          ? {
-              label: "View Listing",
-              to: `/artwork/${listedArtwork?.internalID}`,
-              variant: "secondaryBlack",
-            }
-          : undefined,
-        description: "Your artwork has been successfully listed on Artsy.",
-        stateLabel: submission.stateLabel,
+        button: {
+          label: "Edit Submission",
+          to: `/sell/submissions/${submission.internalID}/${INITIAL_STEP}`,
+          variant: "secondaryBlack",
+        },
+        description:
+          "Thank you for the information. Your submission is being assessed for sales opportunities. Our specialists will contact you via email or phone to coordinate the next steps.",
+        stateLabel: "In Progress",
       }
     case "REJECTED":
       return {

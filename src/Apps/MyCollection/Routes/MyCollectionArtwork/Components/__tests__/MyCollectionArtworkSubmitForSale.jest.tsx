@@ -61,7 +61,14 @@ describe("MyCollection Artwork SWA Section", () => {
         it("opens the submission page and does not create a new submission", async () => {
           renderWithRelay({
             Artwork: () => ({
-              consignmentSubmission: { submissionId: "submission-id" },
+              consignmentSubmission: {
+                submissionId: "submission-id",
+              },
+              artist: {
+                targetSupply: {
+                  priority: "TRUE",
+                },
+              },
             }),
           })
 
@@ -80,6 +87,11 @@ describe("MyCollection Artwork SWA Section", () => {
           renderWithRelay({
             Artwork: () => ({
               consignmentSubmission: null,
+              artist: {
+                targetSupply: {
+                  priority: "TRUE",
+                },
+              },
             }),
           })
 
@@ -103,9 +115,39 @@ describe("MyCollection Artwork SWA Section", () => {
     })
 
     it("the link has right attributes", async () => {
-      renderWithRelay()
+      renderWithRelay({
+        Artwork: () => ({
+          consignmentSubmission: null,
+          artist: {
+            targetSupply: {
+              priority: "TRUE",
+            },
+          },
+        }),
+      })
 
       expect(screen.getByTestId("submit-for-sale-link")).toBeInTheDocument()
+    })
+  })
+
+  describe("when artist is not in target supply", () => {
+    it("does not render the component", async () => {
+      renderWithRelay({
+        Artwork: () => ({
+          artist: {
+            targetSupply: {
+              priority: "FALSE",
+            },
+          },
+        }),
+      })
+
+      expect(
+        screen.queryByText("Interested in Selling This Work?")
+      ).not.toBeInTheDocument()
+      expect(
+        screen.queryByTestId("submit-for-sale-link")
+      ).not.toBeInTheDocument()
     })
   })
 })

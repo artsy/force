@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc69fcc8f2b79d95dd67a83e9747a766>>
+ * @generated SignedSource<<cdb1a0d86f0c4069c5df8f6a889e26d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,15 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSubmitForSale_artwork$data = {
   readonly artist: {
     readonly internalID: string;
     readonly slug: string;
+    readonly targetSupply: {
+      readonly priority: ArtistTargetSupplyPriority | null | undefined;
+    };
   } | null | undefined;
   readonly consignmentSubmission: {
     readonly internalID: string | null | undefined;
@@ -59,6 +63,24 @@ return {
           "kind": "ScalarField",
           "name": "slug",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistTargetSupply",
+          "kind": "LinkedField",
+          "name": "targetSupply",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "priority",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -99,6 +121,6 @@ return {
 };
 })();
 
-(node as any).hash = "a267cc3a0d1f5b6a635923d0d9bfe468";
+(node as any).hash = "88cec9d6161e8962d6a6989588c48ec2";
 
 export default node;
