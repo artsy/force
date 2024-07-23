@@ -13,7 +13,7 @@ export const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageB
 
   if (artwork?.figures?.length === 0) {
     return (
-      <Flex maxWidth={["100%", 600]} mx="auto">
+      <Flex maxWidth={["100%", 600]} mx="auto" mb={[2, 0]}>
         <ResponsiveBox
           data-testid="artwork-browser-no-image-box"
           bg="black10"
@@ -29,10 +29,12 @@ export const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageB
   }
 
   return (
-    <ArtworkImageBrowserFragmentContainer
-      artwork={artwork}
-      isMyCollectionArtwork
-    />
+    <Flex mb={[1, 0]}>
+      <ArtworkImageBrowserFragmentContainer
+        artwork={artwork}
+        isMyCollectionArtwork
+      />
+    </Flex>
   )
 }
 
