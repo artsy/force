@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4d9f6496ba75b8e9a16cd773204a104c>>
+ * @generated SignedSource<<48f4c31e932bc341c3cc3395ea1c798a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "COLLECTOR_PROFILE_UPDATE_PROMPT" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type NotificationItem_item$data = {
+export type NotificationItem_notification$data = {
   readonly headline: string;
   readonly id: string;
   readonly internalID: string;
   readonly isUnread: boolean;
   readonly item: {
+    readonly __typename: string;
     readonly available?: boolean | null | undefined;
     readonly expiresAt?: string | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"NotificationItemCollectorProfileUpdatePrompt_notificationItem">;
   } | null | undefined;
   readonly message: string;
   readonly notificationType: NotificationTypesEnum;
@@ -30,18 +32,18 @@ export type NotificationItem_item$data = {
   readonly targetHref: string;
   readonly title: string;
   readonly " $fragmentSpreads": FragmentRefs<"NotificationTypeLabel_notification">;
-  readonly " $fragmentType": "NotificationItem_item";
+  readonly " $fragmentType": "NotificationItem_notification";
 };
-export type NotificationItem_item$key = {
-  readonly " $data"?: NotificationItem_item$data;
-  readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_item">;
+export type NotificationItem_notification$key = {
+  readonly " $data"?: NotificationItem_notification$data;
+  readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_notification">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "NotificationItem_item",
+  "name": "NotificationItem_notification",
   "selections": [
     {
       "alias": null,
@@ -107,6 +109,18 @@ const node: ReaderFragment = {
       "name": "item",
       "plural": false,
       "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "NotificationItemCollectorProfileUpdatePrompt_notificationItem"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        },
         {
           "kind": "InlineFragment",
           "selections": [
@@ -185,6 +199,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e9bfed85f8dab37a8d59c301e0dd3d87";
+(node as any).hash = "d4b93239ed89af7d688f3d87d95c4e96";
 
 export default node;
