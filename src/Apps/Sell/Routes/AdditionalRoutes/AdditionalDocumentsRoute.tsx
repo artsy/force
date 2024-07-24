@@ -11,6 +11,7 @@ import { UploadDocumentsForm } from "Apps/Sell/Components/UploadDocumentsForm"
 import { DocumentPreviewsGrid } from "Apps/Sell/Components/DocumentPreviewsGrid"
 import { Asset, dropzoneFileFromAsset } from "Apps/Sell/Utils/uploadUtils"
 import { DropzoneFile } from "Components/FileUpload/types"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 
 const FRAGMENT = graphql`
   fragment AdditionalDocumentsRoute_submission on ConsignmentSubmission {
@@ -42,6 +43,9 @@ interface AdditionalDocumentsRouteProps {
 
 export const AdditionalDocumentsRoute: React.FC<AdditionalDocumentsRouteProps> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
+  const {
+    actions: { setLoading },
+  } = useSellFlowContext()
 
   const documents: DropzoneFile[] = ((submission.assets as Asset[]) || []).map(
     dropzoneFileFromAsset
@@ -63,9 +67,10 @@ export const AdditionalDocumentsRoute: React.FC<AdditionalDocumentsRouteProps> =
         const isAnyDocumentLoading = values.documents.some(
           (document: DropzoneFile) => document.loading
         )
+        setLoading(isAnyDocumentLoading)
 
         return (
-          <SubmissionLayout loading={isAnyDocumentLoading}>
+          <SubmissionLayout>
             <SubmissionStepTitle>Additional documents</SubmissionStepTitle>
 
             <Text mb={2} variant={["xs", "sm"]} color="black60">

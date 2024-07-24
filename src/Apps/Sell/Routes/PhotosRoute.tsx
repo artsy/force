@@ -5,6 +5,7 @@ import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { UploadMoreMessage } from "Apps/Sell/Components/UploadMoreMessage"
 import { UploadPhotosForm } from "Apps/Sell/Components/UploadPhotosForm"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import {
   Asset,
   dropzoneFileFromAsset,
@@ -58,6 +59,9 @@ interface PhotosRouteProps {
 }
 
 export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
+  const {
+    actions: { setLoading },
+  } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
 
   // when user creates submission from MyC artwork AND photos were not initially
@@ -83,8 +87,9 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
     >
       {({ values }) => {
         const isAnyPhotoLoading = values.photos.some(
-          (photo: DropzoneFile) => photo.loading
+          (document: DropzoneFile) => document.loading
         )
+        setLoading(isAnyPhotoLoading)
 
         return (
           <SubmissionLayout loading={isAnyPhotoLoading}>

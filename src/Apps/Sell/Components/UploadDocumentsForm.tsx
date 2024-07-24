@@ -1,10 +1,7 @@
 import { useToasts } from "@artsy/palette"
 import { useAddAssetToConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
 import { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
-import {
-  getErrorMessage,
-  normalizePhoto,
-} from "Components/PhotoUpload/Utils/fileUtils"
+import { normalizePhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
@@ -14,8 +11,20 @@ import { FileRejection } from "react-dropzone"
 import { uploadDocument as uploadDocumentToS3 } from "Apps/Sell/Utils/uploadUtils"
 import { DropzoneFile } from "Components/FileUpload/types"
 import { FileDropzone } from "Components/FileUpload/FileDropzone"
+import { getErrorMessage } from "Components/FileUpload/utils/getErrorMessage"
 
 const logger = createLogger("Sell/UploadDocumentsForm.tsx")
+
+const ALLOWED_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/heic",
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+]
+const ALLOWED_MIME_TYPES_HUMINIZED =
+  "images (JPG, PNG or HEIC) or PDF or Microsoft Office files"
 
 export const UploadDocumentsForm: React.FC = () => {
   const { isLoggedIn, relayEnvironment } = useSystemContext()
@@ -117,7 +126,10 @@ export const UploadDocumentsForm: React.FC = () => {
   const onReject = useCallback(
     (rejections: FileRejection[]) => {
       rejections.forEach(rejection => {
-        const errorMessage = getErrorMessage(rejection)
+        const errorMessage = getErrorMessage(
+          rejection,
+          ALLOWED_MIME_TYPES_HUMINIZED
+        )
         sendToast({
           variant: "error",
           message: errorMessage,
@@ -132,14 +144,7 @@ export const UploadDocumentsForm: React.FC = () => {
       title="Drag and drop documents here"
       buttonText="Add Documents"
       allFiles={values.documents}
-      allowedMimeTypes={[
-        "image/jpeg",
-        "image/png",
-        "image/heic",
-        "application/pdf",
-        "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      ]}
+      allowedMimeTypes={ALLOWED_MIME_TYPES}
       maxTotalSize={300}
       onDrop={onDrop}
       onReject={onReject}

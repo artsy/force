@@ -231,7 +231,7 @@ describe("PhotosRoute", () => {
   })
 
   describe("error messages", () => {
-    it("file size exceeds 30MB limit", async () => {
+    it("file size exceeds 300MB limit", async () => {
       renderWithRelay({
         ConsignmentSubmission: () => submissionMock,
       })
@@ -243,7 +243,7 @@ describe("PhotosRoute", () => {
               name: "foo.png",
               path: "foo.png",
               type: "image/png",
-              size: 32 * 1024 * 1024,
+              size: 32 * 1024 * 1024 * 10,
             },
           ],
         },
@@ -279,7 +279,7 @@ describe("PhotosRoute", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "File format not supported. Please upload files with supported formats."
+            "File format not supported. Please upload JPG, PNG or HEIC files."
           )
         ).toBeInTheDocument()
       })

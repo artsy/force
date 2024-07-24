@@ -251,7 +251,7 @@ describe("AdditionalDocumentsRoute", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "File format not supported. Please upload files with supported formats."
+            "File format not supported. Please upload images (JPG, PNG or HEIC) or PDF or Microsoft Office files."
           )
         ).toBeInTheDocument()
       })

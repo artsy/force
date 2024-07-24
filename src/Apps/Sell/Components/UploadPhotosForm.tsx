@@ -3,8 +3,8 @@ import { useAddAssetToConsignmentSubmission } from "Apps/Consign/Routes/Submissi
 import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
 import { FileDropzone } from "Components/FileUpload/FileDropzone"
 import { DropzoneFile } from "Components/FileUpload/types"
+import { getErrorMessage } from "Components/FileUpload/utils/getErrorMessage"
 import {
-  getErrorMessage,
   normalizePhoto,
   uploadSubmissionPhoto,
 } from "Components/PhotoUpload/Utils/fileUtils"
@@ -16,6 +16,9 @@ import { useCallback, useEffect } from "react"
 import { FileRejection } from "react-dropzone"
 
 const logger = createLogger("Sell/UploadPhotosForm.tsx")
+
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/heic"]
+const ALLOWED_MIME_TYPES_HUMINIZED = "JPG, PNG or HEIC files"
 
 export const UploadPhotosForm: React.FC = () => {
   const { isLoggedIn, relayEnvironment } = useSystemContext()
@@ -115,7 +118,10 @@ export const UploadPhotosForm: React.FC = () => {
   const onReject = useCallback(
     (rejections: FileRejection[]) => {
       rejections.forEach(rejection => {
-        const errorMessage = getErrorMessage(rejection)
+        const errorMessage = getErrorMessage(
+          rejection,
+          ALLOWED_MIME_TYPES_HUMINIZED
+        )
         sendToast({
           variant: "error",
           message: errorMessage,
@@ -136,7 +142,7 @@ export const UploadPhotosForm: React.FC = () => {
       }
       buttonText="Add Photos"
       allFiles={values.photos}
-      allowedMimeTypes={["image/jpeg", "image/png", "image/heic"]}
+      allowedMimeTypes={ALLOWED_MIME_TYPES}
       maxTotalSize={300}
       onDrop={onDrop}
       onReject={onReject}
