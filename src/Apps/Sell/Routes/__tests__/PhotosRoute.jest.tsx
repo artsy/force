@@ -187,7 +187,7 @@ describe("PhotosRoute", () => {
       ConsignmentSubmission: () => submissionMock,
     })
 
-    fireEvent.change(screen.getByTestId("image-dropzone-input"), {
+    fireEvent.change(screen.getByTestId("file-dropzone-input"), {
       target: {
         files: [
           {
@@ -231,19 +231,19 @@ describe("PhotosRoute", () => {
   })
 
   describe("error messages", () => {
-    it("file size exceeds 30MB limit", async () => {
+    it("file size exceeds 300MB limit", async () => {
       renderWithRelay({
         ConsignmentSubmission: () => submissionMock,
       })
 
-      fireEvent.change(screen.getByTestId("image-dropzone-input"), {
+      fireEvent.change(screen.getByTestId("file-dropzone-input"), {
         target: {
           files: [
             {
               name: "foo.png",
               path: "foo.png",
               type: "image/png",
-              size: 32 * 1024 * 1024,
+              size: 32 * 1024 * 1024 * 10,
             },
           ],
         },
@@ -263,7 +263,7 @@ describe("PhotosRoute", () => {
         ConsignmentSubmission: () => submissionMock,
       })
 
-      fireEvent.change(screen.getByTestId("image-dropzone-input"), {
+      fireEvent.change(screen.getByTestId("file-dropzone-input"), {
         target: {
           files: [
             {

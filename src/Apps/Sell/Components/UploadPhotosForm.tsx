@@ -1,10 +1,10 @@
 import { useToasts } from "@artsy/palette"
 import { useAddAssetToConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
 import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
-import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
+import { FileDropzone } from "Components/FileUpload/FileDropzone"
+import { DropzoneFile } from "Components/FileUpload/types"
+import { getErrorMessage } from "Components/FileUpload/utils/getErrorMessage"
 import {
-  Photo,
-  getErrorMessage,
   normalizePhoto,
   uploadSubmissionPhoto,
 } from "Components/PhotoUpload/Utils/fileUtils"
@@ -17,6 +17,9 @@ import { FileRejection } from "react-dropzone"
 
 const logger = createLogger("Sell/UploadPhotosForm.tsx")
 
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/heic"]
+const ALLOWED_MIME_TYPES_HUMINIZED = "JPG, PNG or HEIC files"
+
 export const UploadPhotosForm: React.FC = () => {
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
@@ -24,7 +27,7 @@ export const UploadPhotosForm: React.FC = () => {
   const { sendToast } = useToasts()
 
   const handlePhotoUploadingProgress = useCallback(
-    (photo: Photo) => progress => {
+    (photo: DropzoneFile) => progress => {
       photo.progress = progress
       setFieldValue("photos", values.photos)
     },
@@ -112,20 +115,35 @@ export const UploadPhotosForm: React.FC = () => {
     ])
   }
 
-  const onReject = (rejections: FileRejection[]) => {
-    rejections.forEach(rejection => {
-      const errorMessage = getErrorMessage(rejection)
-      sendToast({
-        variant: "error",
-        message: errorMessage,
+  const onReject = useCallback(
+    (rejections: FileRejection[]) => {
+      rejections.forEach(rejection => {
+        const errorMessage = getErrorMessage(
+          rejection,
+          ALLOWED_MIME_TYPES_HUMINIZED
+        )
+        sendToast({
+          variant: "error",
+          message: errorMessage,
+        })
       })
-    })
-  }
+    },
+    [sendToast]
+  )
 
   return (
-    <PhotoDropzone
-      allPhotos={values.photos}
-      maxTotalSize={30}
+    <FileDropzone
+      title="Drag and drop photos here"
+      subtitle={
+        <>
+          Files Supported: JPG, PNG, HEIC <br />
+          Total maximum size: 300 MB
+        </>
+      }
+      buttonText="Add Photos"
+      allFiles={values.photos}
+      allowedMimeTypes={ALLOWED_MIME_TYPES}
+      maxTotalSize={300}
       onDrop={onDrop}
       onReject={onReject}
       border="1px dashed"

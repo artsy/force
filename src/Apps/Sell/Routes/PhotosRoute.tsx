@@ -5,12 +5,13 @@ import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { UploadMoreMessage } from "Apps/Sell/Components/UploadMoreMessage"
 import { UploadPhotosForm } from "Apps/Sell/Components/UploadPhotosForm"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import {
   Asset,
-  photoFromAsset,
+  dropzoneFileFromAsset,
   photosFromMyCollectionArtwork,
 } from "Apps/Sell/Utils/uploadUtils"
-import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import { DropzoneFile } from "Components/FileUpload/types"
 import { RouterLink } from "System/Components/RouterLink"
 import { PhotosRoute_submission$key } from "__generated__/PhotosRoute_submission.graphql"
 import { Formik } from "formik"
@@ -50,7 +51,7 @@ const Schema = Yup.object().shape({
 
 export interface PhotosFormValues {
   submissionId: string
-  photos: Photo[]
+  photos: DropzoneFile[]
 }
 
 interface PhotosRouteProps {
@@ -58,14 +59,19 @@ interface PhotosRouteProps {
 }
 
 export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
+  const {
+    actions: { setLoading },
+  } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
 
   // when user creates submission from MyC artwork AND photos were not initially
   // uploaded to Convection yet - use photos from MyC artwork, then use assets
-  const photos: Photo[] =
+  const photos: DropzoneFile[] =
     submission.myCollectionArtwork && (submission.assets || []).length === 0
       ? photosFromMyCollectionArtwork(submission.myCollectionArtwork)
-      : (submission.assets as Asset[]).map(asset => photoFromAsset(asset))
+      : (submission.assets as Asset[]).map(asset =>
+          dropzoneFileFromAsset(asset)
+        )
 
   const initialValues: PhotosFormValues = {
     submissionId: submission.externalId,
@@ -81,8 +87,9 @@ export const PhotosRoute: React.FC<PhotosRouteProps> = props => {
     >
       {({ values }) => {
         const isAnyPhotoLoading = values.photos.some(
-          (photo: Photo) => photo.loading
+          (document: DropzoneFile) => document.loading
         )
+        setLoading(isAnyPhotoLoading)
 
         return (
           <SubmissionLayout loading={isAnyPhotoLoading}>
