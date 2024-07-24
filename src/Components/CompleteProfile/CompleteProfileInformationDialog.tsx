@@ -17,33 +17,45 @@ import {
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import { ActionType, ContextModule, EditedUserProfile } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface CompleteProfileInformationDialogProps {
-  title: string
   onClose(): void
 }
 
 export const CompleteProfileInformationDialog: FC<CompleteProfileInformationDialogProps> = ({
-  title,
   onClose,
 }) => {
   return (
-    <ModalDialog width={550} title={title} onClose={onClose}>
+    <ModalDialog
+      width={550}
+      title="Add some more details about yourself."
+      onClose={onClose}
+    >
       <Suspense fallback={<CompleteProfileInformationDialogFormSkeleton />}>
-        <CompleteProfileInformationDialogForm />
+        <CompleteProfileInformationDialogForm onSuccess={onClose} />
       </Suspense>
     </ModalDialog>
   )
 }
 
-interface CompleteProfileInformationDialogFormProps {}
+interface CompleteProfileInformationDialogFormProps {
+  onSuccess(): void
+}
 
-const CompleteProfileInformationDialogForm: FC<CompleteProfileInformationDialogFormProps> = () => {
+const CompleteProfileInformationDialogForm: FC<CompleteProfileInformationDialogFormProps> = ({
+  onSuccess,
+}) => {
   const { me } = useLazyLoadQuery<CompleteProfileInformationDialogQuery>(
     QUERY,
     {},
     { fetchPolicy: "network-only" }
   )
+
+  const { contextPageOwnerType } = useAnalyticsContext()
+  const { trackEvent } = useTracking()
 
   const { sendToast } = useToasts()
 
@@ -69,7 +81,18 @@ const CompleteProfileInformationDialogForm: FC<CompleteProfileInformationDialogF
 
       await submitUpdateMyUserProfile(payload)
 
+      onSuccess()
+
       sendToast({ variant: "success", message: "Profile information saved." })
+
+      const editedUserProfile: EditedUserProfile = {
+        action: ActionType.editedUserProfile,
+        context_screen: ContextModule.inquiry,
+        context_screen_owner_type: contextPageOwnerType,
+        platform: "web",
+      }
+
+      trackEvent(editedUserProfile)
     } catch (err) {
       console.error(err)
 

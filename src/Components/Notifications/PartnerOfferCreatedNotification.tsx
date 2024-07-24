@@ -9,7 +9,6 @@ import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 import { PartnerOfferArtwork } from "Components/Notifications/PartnerOfferArtwork"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { useTimer } from "Utils/Hooks/useTimer"
-import { NotificationWrapper } from "Components/Notifications/Notification"
 
 interface PartnerOfferCreatedNotificationProps {
   notification: PartnerOfferCreatedNotification_notification$key
@@ -51,7 +50,7 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
   }
 
   return (
-    <NotificationWrapper>
+    <>
       <Flex width="100%" justifyContent="space-between">
         <Text
           variant="xs"
@@ -108,7 +107,7 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
           priceWithDiscount={partnerOffer?.priceWithDiscount?.display}
         />
       </Flex>
-    </NotificationWrapper>
+    </>
   )
 }
 

@@ -3,13 +3,13 @@ import { NotificationQueryRenderer } from "Components/Notifications/Notification
 import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
-const mockRouterReplace = jest.fn()
+const mockRouterPush = jest.fn()
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     match: { params: { notificationId: "test-id" } },
-    router: { replace: mockRouterReplace },
+    router: { push: mockRouterPush },
   })),
 }))
 
@@ -32,7 +32,7 @@ describe("Notification", () => {
 
       await flushPromiseQueue()
 
-      expect(mockRouterReplace).toHaveBeenCalledWith("test-href")
+      expect(mockRouterPush).toHaveBeenCalledWith("test-href")
     })
   })
 })

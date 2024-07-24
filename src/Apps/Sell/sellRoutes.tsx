@@ -382,6 +382,9 @@ export const sellRoutes: RouteProps[] = [
                 submission(id: $id) @principalField {
                   ...ShippingLocationRoute_submission
                 }
+                me {
+                  ...ShippingLocationRoute_me
+                }
               }
             `,
             prepareVariables: ({ id }) => {

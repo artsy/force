@@ -42,7 +42,7 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
   relay,
   type,
 }) => {
-  const { router } = useRouter()
+  const { router, match } = useRouter()
   const [loading, setLoading] = useState(false)
 
   const nodes = extractNodes(viewer.notifications).filter(node =>
@@ -53,9 +53,12 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
 
   const isMobile = getENV("IS_MOBILE")
 
+  const pathname = match?.location?.pathname
+
   // Set the current notification ID to the first one from the list in case no ID is selected.
   useEffect(() => {
     if (isMobile === null) return
+    if (pathname !== "/notifications") return
 
     const firstNotificationId = nodes[0]?.internalID
 
@@ -69,8 +72,7 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
     }
 
     router.replace(`/notification/${firstNotificationId}`)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile])
+  }, [isMobile, pathname, mode, nodes, router, state.currentNotificationId])
 
   const handleLoadNext = () => {
     if (!relay.hasMore() || relay.isLoading()) {
@@ -96,7 +98,7 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
         {nodes.map(node => (
           <NotificationItemFragmentContainer
             key={node.internalID}
-            item={node}
+            notification={node}
             mode={mode}
           />
         ))}
@@ -144,7 +146,7 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
               artworks: artworksConnection {
                 totalCount
               }
-              ...NotificationItem_item
+              ...NotificationItem_notification
               item {
                 ... on ViewingRoomPublishedNotificationItem {
                   viewingRoomsConnection(first: 1) {

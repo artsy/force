@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<32ebb2af2662cf46d2a2e91754313d4b>>
+ * @generated SignedSource<<1ba2914d859614e3205d3b05d08873d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,37 +53,42 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 1
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v6 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Int"
 },
-v7 = {
+v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v8 = {
+v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Boolean"
 },
-v9 = {
+v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -216,7 +221,47 @@ return {
                         "name": "item",
                         "plural": false,
                         "selections": [
-                          (v4/*: any*/),
+                          {
+                            "kind": "TypeDiscriminator",
+                            "abstractKey": "__isNotificationItem"
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Me",
+                                "kind": "LinkedField",
+                                "name": "me",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": [
+                                      (v4/*: any*/),
+                                      {
+                                        "kind": "Literal",
+                                        "name": "interestType",
+                                        "value": "ARTIST"
+                                      }
+                                    ],
+                                    "concreteType": "UserInterestConnection",
+                                    "kind": "LinkedField",
+                                    "name": "userInterestsConnection",
+                                    "plural": false,
+                                    "selections": (v2/*: any*/),
+                                    "storageKey": "userInterestsConnection(first:1,interestType:\"ARTIST\")"
+                                  },
+                                  (v3/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "type": "CollectorProfileUpdatePromptNotificationItem",
+                            "abstractKey": null
+                          },
+                          (v5/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
@@ -244,11 +289,7 @@ return {
                               {
                                 "alias": null,
                                 "args": [
-                                  {
-                                    "kind": "Literal",
-                                    "name": "first",
-                                    "value": 1
-                                  }
+                                  (v4/*: any*/)
                                 ],
                                 "concreteType": "ViewingRoomsConnection",
                                 "kind": "LinkedField",
@@ -341,7 +382,7 @@ return {
                         "name": "publishedAt",
                         "storageKey": "publishedAt(format:\"RELATIVE\")"
                       },
-                      (v4/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -398,7 +439,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cb9401d6bef15b4fa49a965ef4cb3471",
+    "cacheID": "fb6d4796872e3187d1f08bdd5c424c49",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -420,55 +461,70 @@ return {
           "plural": true,
           "type": "NotificationEdge"
         },
-        "viewer.notifications.edges.cursor": (v5/*: any*/),
+        "viewer.notifications.edges.cursor": (v6/*: any*/),
         "viewer.notifications.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Notification"
         },
-        "viewer.notifications.edges.node.__typename": (v5/*: any*/),
+        "viewer.notifications.edges.node.__typename": (v6/*: any*/),
         "viewer.notifications.edges.node.artworks": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkConnection"
         },
-        "viewer.notifications.edges.node.artworks.totalCount": (v6/*: any*/),
-        "viewer.notifications.edges.node.headline": (v5/*: any*/),
-        "viewer.notifications.edges.node.id": (v7/*: any*/),
-        "viewer.notifications.edges.node.internalID": (v7/*: any*/),
-        "viewer.notifications.edges.node.isUnread": (v8/*: any*/),
+        "viewer.notifications.edges.node.artworks.totalCount": (v7/*: any*/),
+        "viewer.notifications.edges.node.headline": (v6/*: any*/),
+        "viewer.notifications.edges.node.id": (v8/*: any*/),
+        "viewer.notifications.edges.node.internalID": (v8/*: any*/),
+        "viewer.notifications.edges.node.isUnread": (v9/*: any*/),
         "viewer.notifications.edges.node.item": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "NotificationItem"
         },
-        "viewer.notifications.edges.node.item.__typename": (v5/*: any*/),
+        "viewer.notifications.edges.node.item.__isNotificationItem": (v6/*: any*/),
+        "viewer.notifications.edges.node.item.__typename": (v6/*: any*/),
         "viewer.notifications.edges.node.item.article": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Article"
         },
-        "viewer.notifications.edges.node.item.article.id": (v7/*: any*/),
-        "viewer.notifications.edges.node.item.article.internalID": (v7/*: any*/),
+        "viewer.notifications.edges.node.item.article.id": (v8/*: any*/),
+        "viewer.notifications.edges.node.item.article.internalID": (v8/*: any*/),
         "viewer.notifications.edges.node.item.available": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
-        "viewer.notifications.edges.node.item.expiresAt": (v9/*: any*/),
+        "viewer.notifications.edges.node.item.expiresAt": (v10/*: any*/),
+        "viewer.notifications.edges.node.item.me": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Me"
+        },
+        "viewer.notifications.edges.node.item.me.id": (v8/*: any*/),
+        "viewer.notifications.edges.node.item.me.userInterestsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "UserInterestConnection"
+        },
+        "viewer.notifications.edges.node.item.me.userInterestsConnection.totalCount": (v7/*: any*/),
         "viewer.notifications.edges.node.item.viewingRoomsConnection": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ViewingRoomsConnection"
         },
-        "viewer.notifications.edges.node.item.viewingRoomsConnection.totalCount": (v6/*: any*/),
-        "viewer.notifications.edges.node.message": (v5/*: any*/),
+        "viewer.notifications.edges.node.item.viewingRoomsConnection.totalCount": (v7/*: any*/),
+        "viewer.notifications.edges.node.message": (v6/*: any*/),
         "viewer.notifications.edges.node.notificationType": {
           "enumValues": [
             "ARTICLE_FEATURED_ARTIST",
@@ -495,24 +551,24 @@ return {
           "plural": true,
           "type": "Image"
         },
-        "viewer.notifications.edges.node.previewImages.blurhashDataURL": (v9/*: any*/),
-        "viewer.notifications.edges.node.previewImages.url": (v9/*: any*/),
-        "viewer.notifications.edges.node.publishedAt": (v5/*: any*/),
-        "viewer.notifications.edges.node.targetHref": (v5/*: any*/),
-        "viewer.notifications.edges.node.title": (v5/*: any*/),
+        "viewer.notifications.edges.node.previewImages.blurhashDataURL": (v10/*: any*/),
+        "viewer.notifications.edges.node.previewImages.url": (v10/*: any*/),
+        "viewer.notifications.edges.node.publishedAt": (v6/*: any*/),
+        "viewer.notifications.edges.node.targetHref": (v6/*: any*/),
+        "viewer.notifications.edges.node.title": (v6/*: any*/),
         "viewer.notifications.pageInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "PageInfo"
         },
-        "viewer.notifications.pageInfo.endCursor": (v9/*: any*/),
-        "viewer.notifications.pageInfo.hasNextPage": (v8/*: any*/)
+        "viewer.notifications.pageInfo.endCursor": (v10/*: any*/),
+        "viewer.notifications.pageInfo.hasNextPage": (v9/*: any*/)
       }
     },
     "name": "NotificationsList_test_Query",
     "operationKind": "query",
-    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    blurhashDataURL\n    url(version: \"thumbnail\")\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        item {\n          __typename\n          ... on ViewingRoomPublishedNotificationItem {\n            viewingRoomsConnection(first: 1) {\n              totalCount\n            }\n          }\n          ... on ArticleFeaturedArtistNotificationItem {\n            article {\n              internalID\n              id\n            }\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItemCollectorProfileUpdatePrompt_notificationItem on NotificationItem {\n  __isNotificationItem: __typename\n  ... on CollectorProfileUpdatePromptNotificationItem {\n    me {\n      userInterestsConnection(interestType: ARTIST, first: 1) {\n        totalCount\n      }\n      id\n    }\n  }\n}\n\nfragment NotificationItem_notification on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    ...NotificationItemCollectorProfileUpdatePrompt_notificationItem\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    blurhashDataURL\n    url(version: \"thumbnail\")\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_notification\n        item {\n          __typename\n          ... on ViewingRoomPublishedNotificationItem {\n            viewingRoomsConnection(first: 1) {\n              totalCount\n            }\n          }\n          ... on ArticleFeaturedArtistNotificationItem {\n            article {\n              internalID\n              id\n            }\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

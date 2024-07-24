@@ -16,7 +16,6 @@ import { extractNodes } from "Utils/extractNodes"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
-import { NotificationWrapper } from "Components/Notifications/Notification"
 
 interface ArticleFeaturedArtistNotificationProps {
   notification: ArticleFeaturedArtistNotification_notification$key
@@ -41,7 +40,7 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
   }
 
   return (
-    <NotificationWrapper>
+    <>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1}>
           <Text variant="lg-display">{headline}</Text>
@@ -130,7 +129,7 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
           </Button>
         </Box>
       </Flex>
-    </NotificationWrapper>
+    </>
   )
 }
 

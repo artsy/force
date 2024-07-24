@@ -39,7 +39,7 @@ const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {
   return (
     <HomeCurrentFairsContainer>
       <GridColumns gridRowGap={4}>
-        {viewer.fairs!.map((fair, index) => {
+        {viewer.fairs.map((fair, index) => {
           if (!fair) return null
 
           return (
@@ -183,7 +183,11 @@ export const HomeCurrentFairsFragmentContainer = createFragmentContainer(
           bannerSize
           image {
             # 4:3 aspect ratio
-            cropped(width: 600, height: 450) {
+            cropped(
+              width: 600
+              height: 450
+              version: ["wide", "large_rectangle"]
+            ) {
               src
               srcSet
               width
