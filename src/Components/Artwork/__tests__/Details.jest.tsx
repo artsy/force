@@ -574,4 +574,9 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   preview: null,
   isInAuction: true,
   isSavedToList: false,
+  collectorSignals: {
+    bidCount: null,
+    lotWatcherCount: null,
+    partnerOffer: null,
+  },
 }
