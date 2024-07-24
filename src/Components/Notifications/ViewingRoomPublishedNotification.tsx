@@ -8,7 +8,6 @@ import { ContextModule } from "@artsy/cohesion"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { NotificationViewingRoomsList } from "Components/Notifications/NotificationViewingRoomsList"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
-import { NotificationWrapper } from "Components/Notifications/Notification"
 
 interface ViewingRoomPublishedNotificationProps {
   notification: ViewingRoomPublishedNotification_notification$key
@@ -32,7 +31,7 @@ export const ViewingRoomPublishedNotification: FC<ViewingRoomPublishedNotificati
   }
 
   return (
-    <NotificationWrapper>
+    <>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1}>
           <Text variant="lg-display">{headline}</Text>
@@ -64,7 +63,7 @@ export const ViewingRoomPublishedNotification: FC<ViewingRoomPublishedNotificati
           viewingRoomsConnection={item?.viewingRoomsConnection}
         />
       </Flex>
-    </NotificationWrapper>
+    </>
   )
 }
 

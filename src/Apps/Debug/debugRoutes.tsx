@@ -4,6 +4,7 @@ import { HttpError } from "found"
 import { useState } from "react"
 import { RouteProps } from "System/Router/Route"
 import { RouterLink } from "System/Components/RouterLink"
+import { Default as AppDownloadBannerStory } from "Components/__stories__/AppDownloadBanner.story"
 
 const DebugApp = loadable(
   () => import(/* webpackChunkName: "debugBundle" */ "./DebugApp"),
@@ -80,6 +81,11 @@ export const debugRoutes: RouteProps[] = [
             </>
           )
         },
+      },
+
+      {
+        path: "app-download-banner",
+        Component: AppDownloadBannerStory,
       },
     ],
   },

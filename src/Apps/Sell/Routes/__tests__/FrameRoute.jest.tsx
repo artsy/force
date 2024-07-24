@@ -29,7 +29,7 @@ jest.mock("System/Hooks/useFeatureFlag", () => ({
 const submissionMock: Partial<
   FrameRoute_Test_Query$rawResponse["submission"]
 > = {
-  externalId: "submission-id",
+  externalId: "externalId",
   myCollectionArtwork: {
     id: "id",
     artworkId: "artworkId",
@@ -51,10 +51,10 @@ beforeEach(() => {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "/sell/submissions/submission-id/frame" } },
+    match: { location: { pathname: "/sell/submissions/externalId/frame" } },
   }))
 
-  submitMutation = jest.fn(() => ({ then: () => {}, catch: () => {} }))
+  submitMutation = jest.fn().mockResolvedValue({})
   ;(useMutation as jest.Mock).mockImplementation(() => {
     return { submitMutation }
   })
@@ -123,6 +123,44 @@ describe("FrameRoute", () => {
             },
           })
         )
+      })
+    })
+  })
+
+  describe("navigation", () => {
+    describe("in APPROVED state", () => {
+      it("navigates to the previous step when the Back button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
+
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            "/sell/submissions/externalId/shipping-location"
+          )
+        })
+      })
+
+      it("navigates to the thank you screen when Submit Artwork button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            "/sell/submissions/externalId/additional-documents"
+          )
+        })
       })
     })
   })

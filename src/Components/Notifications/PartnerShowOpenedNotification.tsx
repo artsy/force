@@ -9,7 +9,6 @@ import { RouterLink } from "System/Components/RouterLink"
 import { NotificationPartnerShow } from "Components/Notifications/NotificationPartnerShow"
 import { ContextModule } from "@artsy/cohesion"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
-import { NotificationWrapper } from "Components/Notifications/Notification"
 
 interface PartnerShowOpenedNotificationProps {
   notification: PartnerShowOpenedNotification_notification$key
@@ -34,7 +33,7 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
   }
 
   return (
-    <NotificationWrapper>
+    <>
       <Text variant="lg-display">{headline}</Text>
 
       <Spacer y={1} />
@@ -66,7 +65,7 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
           <NotificationPartnerShow show={show} key={show.internalID} />
         ))}
       </Flex>
-    </NotificationWrapper>
+    </>
   )
 }
 

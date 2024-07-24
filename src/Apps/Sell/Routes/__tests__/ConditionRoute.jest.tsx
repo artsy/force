@@ -7,13 +7,11 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { ConditionRoute_Test_Query$rawResponse } from "__generated__/ConditionRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 let submitMutation: jest.Mock
-const trackEvent = jest.fn()
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
@@ -31,17 +29,39 @@ jest.mock("System/Hooks/useFeatureFlag", () => ({
 
 const submissionMock: Partial<
   ConditionRoute_Test_Query$rawResponse["submission"]
-> = { state: "DRAFT" }
+> = {
+  externalId: "externalId",
+  myCollectionArtwork: {
+    id: "id",
+    artworkId: "artworkId",
+    condition: {
+      value: "GOOD",
+    },
+    conditionDescription: {
+      details: "description",
+    },
+  },
+}
+
+const submissionMockInvalid: Partial<
+  ConditionRoute_Test_Query$rawResponse["submission"]
+> = {
+  externalId: "externalId",
+  myCollectionArtwork: {
+    id: "id",
+    artworkId: "artworkId",
+    condition: null,
+    conditionDescription: {
+      details: "",
+    },
+  },
+}
 
 beforeEach(() => {
-  ;(useTracking as jest.Mock).mockImplementation(() => {
-    return {
-      trackEvent,
-    }
-  })
   ;(useSystemContext as jest.Mock).mockImplementation(() => {
     return { isLoggedIn: true }
   })
+
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
@@ -52,13 +72,11 @@ beforeEach(() => {
     },
   }))
 
-  submitMutation = jest.fn(() => ({ catch: () => {} }))
+  submitMutation = jest.fn().mockResolvedValue({})
   ;(useMutation as jest.Mock).mockImplementation(() => {
     return { submitMutation }
   })
 
-  mockPush.mockClear()
-  trackEvent.mockClear()
   submitMutation.mockClear()
 })
 
@@ -85,25 +103,56 @@ describe("ConditionRoute", () => {
     renderWithRelay({})
 
     await waitFor(() => {
-      expect(screen.getByText("Condition")).toBeInTheDocument()
+      expect(screen.getByTestId("submission-step-title")).toBeInTheDocument()
     })
   })
 
+  it("initializes the form with the submission data", async () => {
+    renderWithRelay({ ConsignmentSubmission: () => submissionMock })
+
+    expect(screen.getByTestId("condition-input")).toHaveValue("GOOD")
+    expect(screen.getByTestId("description-input")).toHaveValue("description")
+  })
+
   describe("when form is valid", () => {
-    it("updates the submission", async () => {
-      renderWithRelay({})
+    it("updates my collection artwork", async () => {
+      renderWithRelay({ ConsignmentSubmission: () => submissionMock })
+
+      screen.getByText("Submit Artwork").click()
+
+      await waitFor(() => {
+        expect(submitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                artworkId: "artworkId",
+                condition: "GOOD",
+                conditionDescription: "description",
+              },
+            },
+          })
+        )
+      })
     })
   })
 
   describe("when form is not valid", () => {
     it("does not update the submission", async () => {
-      renderWithRelay({})
+      renderWithRelay({
+        ConsignmentSubmission: () => submissionMockInvalid,
+      })
+
+      screen.getByText("Submit Artwork").click()
+
+      await waitFor(() => {
+        expect(submitMutation).not.toHaveBeenCalled()
+      })
     })
   })
 
   describe("navigation", () => {
     describe("in APPROVED state", () => {
-      it("saves the submission, sets the state to `SUBMITTED` & navigates to the thank you step", async () => {
+      it("navigates to the previous step when the Back button is clicked", async () => {
         renderWithRelay({
           ConsignmentSubmission: () => ({
             ...submissionMock,
@@ -111,41 +160,30 @@ describe("ConditionRoute", () => {
           }),
         })
 
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            "/sell/submissions/externalId/additional-documents"
+          )
+        })
+      })
+
+      it("navigates to the thank you screen when Submit Artwork button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
+
+        expect(screen.getByTestId("condition-input")).toHaveValue("GOOD")
+
         screen.getByText("Submit Artwork").click()
 
         await waitFor(() => {
-          // expect(trackEvent).toHaveBeenCalledWith({
-          //   action: "consignmentSubmitted",
-          //   context_module: "sell",
-          //   context_owner_type: "submitArtworkStepAddPhoneNumber",
-          //   fieldsProvided: [],
-          //   submission_id: '<mock-value-for-field-"externalId">',
-          // })
-
-          expect(submitMutation).toHaveBeenCalledWith(
-            expect.objectContaining({
-              variables: {
-                input: {
-                  externalId: '<mock-value-for-field-"externalId">',
-                  title: '<mock-value-for-field-"title">',
-                },
-              },
-            })
-          )
-
-          expect(submitMutation).not.toHaveBeenCalledWith(
-            expect.objectContaining({
-              variables: {
-                input: {
-                  externalId: '<mock-value-for-field-"externalId">',
-                  state: "SUBMITTED",
-                },
-              },
-            })
-          )
-
           expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/thank-you'
+            "/sell/submissions/externalId/thank-you"
           )
         })
       })

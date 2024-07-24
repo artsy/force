@@ -7,7 +7,10 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { graphql } from "react-relay"
-import { NotificationQuery } from "__generated__/NotificationQuery.graphql"
+import {
+  NotificationQuery,
+  NotificationTypesEnum,
+} from "__generated__/NotificationQuery.graphql"
 import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
 import { useEffect } from "react"
 import { ArtworkPublishedNotification } from "Components/Notifications/ArtworkPublishedNotification"
@@ -23,33 +26,25 @@ import createLogger from "Utils/logger"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
-import { DESKTOP_HEIGHT } from "Apps/Notifications/notificationsutils"
+import { NotificationCollectorProfileUpdatePrompt } from "Components/Notifications/NotificationCollectorProfileUpdatePrompt"
 
 const logger = createLogger("NotificationItem")
 
+// FIXME: Should probably be a column span
 export const NOTIFICATION_MAX_WIDTH = 600
-export const SUPPORTED_NOTIFICATION_TYPES = [
+export const SUPPORTED_NOTIFICATION_TYPES: NotificationTypesEnum[] = [
   "ARTWORK_ALERT",
   "ARTWORK_PUBLISHED",
   "ARTICLE_FEATURED_ARTIST",
   "PARTNER_OFFER_CREATED",
   "VIEWING_ROOM_PUBLISHED",
   "PARTNER_SHOW_OPENED",
+  "COLLECTOR_PROFILE_UPDATE_PROMPT",
 ]
 
 interface NotificationProps {
   notificationId: string
 }
-
-export const NotificationWrapper: React.FC = ({ children }) => (
-  <Flex
-    flexDirection="column"
-    height={["auto", DESKTOP_HEIGHT]}
-    overflow="auto"
-  >
-    <Box>{children}</Box>
-  </Flex>
-)
 
 const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
   const { relayEnvironment } = useSystemContext()
@@ -66,44 +61,39 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
   useEffect(() => {
     if (
       notification &&
-      !SUPPORTED_NOTIFICATION_TYPES.includes(
-        notification?.notificationType as string
-      )
+      !SUPPORTED_NOTIFICATION_TYPES.includes(notification?.notificationType)
     ) {
-      router.replace(notification?.targetHref as string)
+      router.push(notification?.targetHref as string)
     }
   }, [notification, router])
 
   useEffect(() => {
-    if (!notification) {
-      return
+    if (!notification) return
+
+    const markAsRead = async () => {
+      if (!relayEnvironment || !notification) {
+        return
+      }
+
+      try {
+        const response = await markNotificationAsRead(
+          relayEnvironment,
+          notification.id,
+          notification.internalID
+        )
+        const responseOrError = response.markNotificationAsRead?.responseOrError
+        const errorMessage = responseOrError?.mutationError?.message
+
+        if (errorMessage) {
+          throw new Error(errorMessage)
+        }
+      } catch (error) {
+        logger.error(error)
+      }
     }
 
     markAsRead()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [notification])
-
-  const markAsRead = async () => {
-    if (!relayEnvironment || !notification) {
-      return
-    }
-
-    try {
-      const response = await markNotificationAsRead(
-        relayEnvironment,
-        notification.id,
-        notification.internalID
-      )
-      const responseOrError = response.markNotificationAsRead?.responseOrError
-      const errorMessage = responseOrError?.mutationError?.message
-
-      if (errorMessage) {
-        throw new Error(errorMessage)
-      }
-    } catch (error) {
-      logger.error(error)
-    }
-  }
+  }, [notification, relayEnvironment])
 
   if (loading) {
     return <Placeholder />
@@ -116,32 +106,30 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
   }
 
   switch (notification?.notificationType) {
-    case "ARTWORK_ALERT":
-      return <AlertNotification notification={data.me?.notification} />
+    case "ARTWORK_ALERT": {
+      return <AlertNotification notification={notification} />
+    }
+
     case "ARTWORK_PUBLISHED":
-      return (
-        <ArtworkPublishedNotification notification={data.me?.notification} />
-      )
+      return <ArtworkPublishedNotification notification={notification} />
+
     case "ARTICLE_FEATURED_ARTIST":
-      return (
-        <ArticleFeaturedArtistNotification
-          notification={data.me?.notification}
-        />
-      )
+      return <ArticleFeaturedArtistNotification notification={notification} />
+
     case "PARTNER_OFFER_CREATED":
-      return (
-        <PartnerOfferCreatedNotification notification={data.me?.notification} />
-      )
+      return <PartnerOfferCreatedNotification notification={notification} />
+
     case "PARTNER_SHOW_OPENED":
-      return (
-        <PartnerShowOpenedNotification notification={data.me?.notification} />
-      )
+      return <PartnerShowOpenedNotification notification={notification} />
+
     case "VIEWING_ROOM_PUBLISHED":
+      return <ViewingRoomPublishedNotification notification={notification} />
+
+    case "COLLECTOR_PROFILE_UPDATE_PROMPT":
       return (
-        <ViewingRoomPublishedNotification
-          notification={data.me?.notification}
-        />
+        <NotificationCollectorProfileUpdatePrompt notification={notification} />
       )
+
     default:
       return null
   }
@@ -155,6 +143,7 @@ export const NotificationQueryRenderer: React.FC = props => {
   }
 
   return (
+    // FIXME: Should not have external margins
     <Box mx={[2, 4]} my={2}>
       <Notification notificationId={state.currentNotificationId} {...props} />
     </Box>
@@ -165,17 +154,17 @@ const notificationQuery = graphql`
   query NotificationQuery($internalID: String!) {
     me {
       notification(id: $internalID) {
-        id
-        internalID
-        notificationType
-        targetHref
-
         ...AlertNotification_notification
         ...ArtworkPublishedNotification_notification
         ...ArticleFeaturedArtistNotification_notification
         ...PartnerOfferCreatedNotification_notification
         ...PartnerShowOpenedNotification_notification
         ...ViewingRoomPublishedNotification_notification
+        ...NotificationCollectorProfileUpdatePrompt_notification
+        id
+        internalID
+        notificationType
+        targetHref
       }
     }
   }

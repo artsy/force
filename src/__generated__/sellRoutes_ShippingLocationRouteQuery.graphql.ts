@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<761d9e1179410f465eeb4196e1b5569f>>
+ * @generated SignedSource<<f13403abb32355b52d1e1ff07bdacc5f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,9 @@ export type sellRoutes_ShippingLocationRouteQuery$variables = {
   id: string;
 };
 export type sellRoutes_ShippingLocationRouteQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShippingLocationRoute_me">;
+  } | null | undefined;
   readonly submission: {
     readonly " $fragmentSpreads": FragmentRefs<"ShippingLocationRoute_submission">;
   } | null | undefined;
@@ -37,7 +40,14 @@ v1 = [
     "name": "id",
     "variableName": "id"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -57,6 +67,22 @@ return {
             "args": null,
             "kind": "FragmentSpread",
             "name": "ShippingLocationRoute_submission"
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ShippingLocationRoute_me"
           }
         ],
         "storageKey": null
@@ -97,13 +123,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "locationPostalCode",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "locationState",
             "storageKey": null
           },
@@ -111,25 +130,135 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "id",
+            "name": "locationPostalCode",
             "storageKey": null
-          }
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationAddress",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationAddress2",
+            "storageKey": null
+          },
+          (v2/*: any*/)
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "UserAddressConnection",
+            "kind": "LinkedField",
+            "name": "addressConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "UserAddressEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "UserAddress",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "addressLine1",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "addressLine2",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "city",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "country",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isDefault",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "postalCode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "region",
+                        "storageKey": null
+                      },
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "9f73bf5b8284a78b3dc63d5ab65da2e8",
+    "cacheID": "e4d1ca32f9c4305a687776b41c201d08",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_ShippingLocationRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_ShippingLocationRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ShippingLocationRoute_submission\n    id\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationPostalCode\n  locationState\n}\n"
+    "text": "query sellRoutes_ShippingLocationRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ShippingLocationRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationAddress\n  locationAddress2\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8028137f341642db49408b8f25e7590d";
+(node as any).hash = "4ee65e94497ef1131abf9eee232c0a4a";
 
 export default node;

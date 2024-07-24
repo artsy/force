@@ -1,15 +1,14 @@
-import { useEffect } from "react"
 import { DateTime } from "luxon"
 import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import { NotificationsWrapperProps } from "./NotificationsWrapper"
-import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
 import { Box, Flex, Separator, useTheme } from "@artsy/palette"
 import { NotificationsHeader } from "Components/Notifications/NotificationsHeader"
 import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
 import Sticky from "react-stickynode"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
+import { useOnce } from "Utils/Hooks/useOnce"
 
 const DROPDOWN_HEADER_HEIGHT = 113
 const VERTICAL_OFFSET = 10
@@ -53,13 +52,10 @@ export const Notifications: React.FC<NotificationsProps> = ({
     }
   }
 
-  useEffect(() => {
-    markAsSeen()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  useOnce(markAsSeen)
 
   return (
-    <NotificationsContextProvider>
+    <>
       <Box>
         {mode === "dropdown" ? (
           <Box style={{ boxShadow: theme.effects.dropShadow }}>
@@ -102,6 +98,6 @@ export const Notifications: React.FC<NotificationsProps> = ({
           </>
         )}
       </Box>
-    </NotificationsContextProvider>
+    </>
   )
 }

@@ -19,6 +19,8 @@ interface ArtworkGridContextProps {
   saveOnlyToDefaultList?: boolean
 
   collectorSignals: ReturnType<typeof useCollectorSignals>
+
+  showActivePartnerOffer?: boolean
 }
 
 const ArtworkGridContext = createContext<ArtworkGridContextProps>({
@@ -26,6 +28,7 @@ const ArtworkGridContext = createContext<ArtworkGridContextProps>({
   hideLotLabel: false,
   saveOnlyToDefaultList: false,
   collectorSignals: {},
+  showActivePartnerOffer: false,
 })
 
 type ArtworkGridContextProviderProps = {

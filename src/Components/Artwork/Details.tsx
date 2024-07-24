@@ -7,7 +7,7 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { isFunction } from "lodash"
 import * as React from "react"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
@@ -16,6 +16,7 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 import { SaveButtonFragmentContainer } from "./SaveButton"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -185,6 +186,25 @@ const BidInfo: React.FC<DetailsProps> = ({
   )
 }
 
+const ActivePartnerOfferLine: React.FC = () => {
+  return (
+    <Text
+      variant="xs"
+      color="blue100"
+      backgroundColor="blue10"
+      px={0.5}
+      alignSelf="flex-start"
+      borderRadius={3}
+    >
+      Limited-Time Offer
+    </Text>
+  )
+}
+
+const EmptyLine: React.FC = () => {
+  return <Text variant="xs"> &nbsp; </Text>
+}
+
 export const Details: React.FC<DetailsProps> = ({
   contextModule,
   hideArtistName,
@@ -201,6 +221,7 @@ export const Details: React.FC<DetailsProps> = ({
     isAuctionArtwork,
     hideLotLabel,
     saveOnlyToDefaultList,
+    showActivePartnerOffer,
   } = useArtworkGridContext()
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
@@ -208,6 +229,23 @@ export const Details: React.FC<DetailsProps> = ({
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
+
+  const signalsPartnerOffersEnabled = useFeatureFlag(
+    "emerald_signals-partner-offers"
+  )
+
+  // TODO: replace randomization with real signals and business logic
+  const showActivePartnerOfferLine: boolean = useMemo(
+    () =>
+      !!signalsPartnerOffersEnabled &&
+      !!showActivePartnerOffer &&
+      Math.random() < 0.2,
+    [signalsPartnerOffersEnabled, showActivePartnerOffer]
+  )
+  const padForActivePartnerOfferLine: boolean =
+    !!signalsPartnerOffersEnabled &&
+    !!showActivePartnerOffer &&
+    !showActivePartnerOfferLine
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -262,10 +300,13 @@ export const Details: React.FC<DetailsProps> = ({
         </Flex>
       )}
 
-      <Flex flexDirection="row" justifyContent="space-between">
-        {!hideArtistName && (
-          <ArtistLine showSaveButton={showSaveButton} {...rest} />
-        )}
+      <Flex justifyContent="space-between">
+        <Flex flexDirection="column">
+          {showActivePartnerOfferLine && <ActivePartnerOfferLine {...rest} />}
+          {!hideArtistName && (
+            <ArtistLine showSaveButton={showSaveButton} {...rest} />
+          )}
+        </Flex>
         {renderSaveButtonComponent()}
       </Flex>
 
@@ -279,6 +320,7 @@ export const Details: React.FC<DetailsProps> = ({
       </Box>
 
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
+      {padForActivePartnerOfferLine && <EmptyLine />}
     </Box>
   )
 }

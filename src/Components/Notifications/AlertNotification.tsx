@@ -6,7 +6,6 @@ import { NotificationTypeLabel } from "Components/Notifications/NotificationType
 import { NotificationArtworkList } from "Components/Notifications/NotificationArtworkList"
 import { AlertNotification_notification$key } from "__generated__/AlertNotification_notification.graphql"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
-import { NotificationWrapper } from "Components/Notifications/Notification"
 
 interface AlertNotificationProps {
   notification: AlertNotification_notification$key
@@ -27,7 +26,7 @@ export const AlertNotification: FC<AlertNotificationProps> = ({
   }
 
   return (
-    <NotificationWrapper>
+    <>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1} mr={1}>
           <Text variant="lg-display">{headline}</Text>
@@ -69,7 +68,7 @@ export const AlertNotification: FC<AlertNotificationProps> = ({
       <RouterLink to={`/artist/${artist?.slug}/works-for-sale`}>
         <Text fontWeight="bold">View all works by {artist.name}</Text>
       </RouterLink>
-    </NotificationWrapper>
+    </>
   )
 }
 

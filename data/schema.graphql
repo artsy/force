@@ -2287,6 +2287,24 @@ enum ArtistSorts {
   TRENDING_DESC
 }
 
+# An artists rail section in the home view
+type ArtistsRailHomeViewSection implements GenericHomeViewSection & Node {
+  # The component that is prescribed for this section
+  component: HomeViewComponent
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+
+  # A stable identifier for this section
+  key: String!
+
+  # A display title for this section
+  title: String!
+}
+
 type ArtistStatuses {
   articles: Boolean
   artists: Boolean
@@ -2401,6 +2419,9 @@ type Artwork implements Node & Searchable & Sellable {
 
   # The location of the artwork in My Collection
   collectorLocation: MyLocation
+
+  # List of collector signals
+  collectorSignals: CollectorSignals
 
   # Comparable auction results
   comparableAuctionResults(
@@ -3130,6 +3151,24 @@ enum ArtworkSorts {
   RECENT_SAVES_COUNT_DESC
   TITLE_ASC
   TITLE_DESC
+}
+
+# An artwork rail section in the home view
+type ArtworksRailHomeViewSection implements GenericHomeViewSection & Node {
+  # The component that is prescribed for this section
+  component: HomeViewComponent
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+
+  # A stable identifier for this section
+  key: String!
+
+  # A display title for this section
+  title: String!
 }
 
 type ArtworkVersion implements Node {
@@ -4426,6 +4465,18 @@ type CollectorResume {
 
   # Collector's ID used to stitch buyerActivity with the Exchange schema
   userId: String!
+}
+
+# Collector signals available to the artwork
+type CollectorSignals {
+  # Lot bid count
+  bidCount: Int
+
+  # Lot watcher count
+  lotWatcherCount: Int
+
+  # Partner offer available to collector
+  partnerOffer: PartnerOfferToCollector
 }
 
 # Represents either an action or a potential failure
@@ -10930,6 +10981,24 @@ type GeneMeta {
   description: String!
 }
 
+# Abstract interface shared by every kind of home view section
+interface GenericHomeViewSection {
+  # The component that is prescribed for this section
+  component: HomeViewComponent
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+
+  # A stable identifier for this section
+  key: String!
+
+  # A display title for this section
+  title: String!
+}
+
 type GravityMutationError {
   detail: String
   error: String
@@ -11277,6 +11346,53 @@ type HomePageRelatedArtistArtworkModule {
 
 type HomePageSalesModule {
   results: [Sale]!
+}
+
+# Experimental schema for new home view
+type HomeView {
+  sectionsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): HomeViewSectionConnection
+}
+
+# A component specification
+type HomeViewComponent {
+  # Which component type to render
+  type: HomeViewComponentType
+}
+
+# Known component types for use in home view
+enum HomeViewComponentType {
+  # A standard rail of artists
+  ARTISTS_RAIL
+
+  # A standard rail of artworks
+  ARTWORKS_RAIL
+}
+
+union HomeViewSection = ArtistsRailHomeViewSection | ArtworksRailHomeViewSection
+
+# A connection to a list of items.
+type HomeViewSectionConnection {
+  # A list of edges.
+  edges: [HomeViewSectionEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type HomeViewSectionEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: HomeViewSection
 }
 
 type IdentityVerification {
@@ -16697,6 +16813,9 @@ type Query {
   # Home screen content
   homePage: HomePage
 
+  # Home view content
+  homeView: HomeView!
+
   # An identity verification that the user has access to
   identityVerification(
     # ID of the IdentityVerification
@@ -21675,6 +21794,9 @@ type Viewer {
 
   # Home screen content
   homePage: HomePage
+
+  # Home view content
+  homeView: HomeView!
 
   # An identity verification that the user has access to
   identityVerification(

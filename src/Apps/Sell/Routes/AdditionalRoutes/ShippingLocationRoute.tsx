@@ -1,72 +1,116 @@
-import { Join, Spacer, Text } from "@artsy/palette"
+import { Column, GridColumns, Input, Text } from "@artsy/palette"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import {
-  LocationAutocompleteInput,
-  Place,
-  buildLocationDisplay,
-  normalizePlace,
-} from "Components/LocationAutocompleteInput"
+import { CountrySelect } from "Components/CountrySelect"
+import { extractNodes } from "Utils/extractNodes"
+import { ShippingLocationRoute_me$key } from "__generated__/ShippingLocationRoute_me.graphql"
 import { ShippingLocationRoute_submission$key } from "__generated__/ShippingLocationRoute_submission.graphql"
-import { Formik } from "formik"
+import { Form, Formik } from "formik"
+import { last } from "lodash"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
-const FRAGMENT = graphql`
+const SUBMISSION_FRAGMENT = graphql`
   fragment ShippingLocationRoute_submission on ConsignmentSubmission {
     locationCity
     locationCountry
-    locationPostalCode
     locationState
+    locationPostalCode
+    locationAddress
+    locationAddress2
+  }
+`
+
+const ME_FRAGMENT = graphql`
+  fragment ShippingLocationRoute_me on Me {
+    addressConnection {
+      edges {
+        node {
+          addressLine1
+          addressLine2
+          city
+          country
+          isDefault
+          postalCode
+          region
+        }
+      }
+    }
   }
 `
 
 const Schema = Yup.object().shape({
   location: Yup.object().shape({
-    locationCity: Yup.string().trim(),
-    locationState: Yup.string(),
-    stateCode: Yup.string(),
-    locationPostalCode: Yup.string(),
-    locationCountry: Yup.string(),
+    city: Yup.string().required().trim(),
+    state: Yup.string().required().trim(),
+    country: Yup.string().required().trim(),
+    zipCode: Yup.string().required().trim(),
+    address: Yup.string().required().trim(),
+    address2: Yup.string().trim(),
   }),
 })
 
 interface FormValues {
   location: {
-    city: string
-    state: string
-    stateCode: string
-    country: string
+    city?: string
+    state?: string
+    country?: string
+    zipCode?: string
+    address?: string
+    address2?: string
   }
 }
 
 interface ShippingLocationRouteProps {
+  me: ShippingLocationRoute_me$key
   submission: ShippingLocationRoute_submission$key
 }
 
 export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props => {
-  const submission = useFragment(FRAGMENT, props.submission)
   const { actions } = useSellFlowContext()
+
+  const submission = useFragment(SUBMISSION_FRAGMENT, props.submission)
+  const me = useFragment(ME_FRAGMENT, props.me)
+
+  const userAddresses = extractNodes(me?.addressConnection)
+  const defaultUserAddress =
+    userAddresses.find(node => node.isDefault) || last(userAddresses || [])
+
+  // Check whether the submission has an address; if not, use the user's address.
+  const initialValues: FormValues = !!submission.locationCity
+    ? {
+        location: {
+          country: submission.locationCountry ?? "",
+          address: submission.locationAddress ?? "",
+          address2: submission.locationAddress2 ?? "",
+          city: submission.locationCity ?? "",
+          zipCode: submission.locationPostalCode ?? "",
+          state: submission.locationState ?? "",
+        },
+      }
+    : {
+        location: {
+          country: defaultUserAddress?.country ?? "",
+          address: defaultUserAddress?.addressLine1 ?? "",
+          address2: defaultUserAddress?.addressLine2 ?? "",
+          city: defaultUserAddress?.city ?? "",
+          zipCode: defaultUserAddress?.postalCode ?? "",
+          state: defaultUserAddress?.region ?? "",
+        },
+      }
 
   const onSubmit = async (values: FormValues) => {
     return actions.updateSubmission({
       locationCity: values.location.city,
       locationCountry: values.location.country,
-      locationCountryCode: values.location.stateCode,
+      locationPostalCode: values.location.zipCode,
+      locationAddress: values.location.address,
+      locationAddress2: values.location.address2,
       locationState: values.location.state,
     })
-  }
-
-  const initialValues: FormValues = {
-    location: {
-      city: submission.locationCity ?? "",
-      state: submission.locationState ?? "",
-      stateCode: submission.locationPostalCode ?? "",
-      country: submission.locationCountry ?? "",
-    },
   }
 
   return (
@@ -76,39 +120,111 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
       validateOnMount
       validationSchema={Schema}
     >
-      {({ errors, setFieldValue, setFieldTouched, touched, values }) => (
+      {({ errors, handleChange, handleBlur, touched, values }) => (
         <SubmissionLayout>
           <SubmissionStepTitle>Shipping Location</SubmissionStepTitle>
 
-          <Join separator={<Spacer y={2} />}>
-            <Text color="black60">
-              Location is where the artwork ships from. It’s required so we can
-              estimate shipping costs and tax.
-            </Text>
+          <Text color="black60" mb={2}>
+            Location is where the artwork ships from. It’s required so we can
+            estimate shipping costs and tax.
+          </Text>
 
-            <LocationAutocompleteInput
-              flex={1}
-              name="location"
-              title="City"
-              placeholder="Enter city where artwork is located"
-              maxLength={256}
-              spellCheck={false}
-              defaultValue={buildLocationDisplay(values.location)}
-              error={touched.location && errors.location?.city}
-              onClose={() => setFieldTouched("location")}
-              onSelect={(place?: Place) => {
-                setFieldValue("location", normalizePlace(place, true))
-              }}
-              onChange={() => {
-                setFieldValue("postalCode", "")
-                setFieldTouched("postalCode", false)
+          <Form>
+            <GridColumns>
+              <Column span={12}>
+                <CountrySelect
+                  title="Country"
+                  name="location.country"
+                  value={values.location.country}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.location?.country && errors.location?.country}
+                  required
+                />
+              </Column>
 
-                setFieldValue("location", {})
-                setFieldTouched("location", false)
-              }}
-              onClick={() => setFieldTouched("location", false)}
-            />
-          </Join>
+              {!!values.location.country && (
+                <>
+                  <Column span={12}>
+                    <Input
+                      name="location.address"
+                      title="Address Line 1"
+                      placeholder="Add address"
+                      autoComplete="address-line1"
+                      value={values.location.address}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        touched.location?.address && errors.location?.address
+                      }
+                      required
+                    />
+                  </Column>
+
+                  <Column span={12}>
+                    <Input
+                      name="location.address2"
+                      title="Address Line 2"
+                      placeholder="Add address line 2"
+                      autoComplete="address-line2"
+                      value={values.location.address2}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        touched.location?.address2 && errors.location?.address2
+                      }
+                      mb={1}
+                    />
+                  </Column>
+
+                  <Column span={6}>
+                    <Input
+                      name="location.city"
+                      title="City"
+                      placeholder="Enter city"
+                      autoComplete="address-level2"
+                      value={values.location.city}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={touched.location?.city && errors.location?.city}
+                      required
+                    />
+                  </Column>
+
+                  <Column span={6}>
+                    <Input
+                      name="location.zipCode"
+                      title="Postal Code"
+                      placeholder="Add postal code"
+                      autoComplete="postal-code"
+                      value={values.location.zipCode}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        touched.location?.zipCode && errors.location?.zipCode
+                      }
+                      required
+                    />
+                  </Column>
+
+                  <Column span={12}>
+                    <Input
+                      name="location.state"
+                      title="State, Province, or Region"
+                      placeholder="Add state, province, or region"
+                      autoComplete="address-level1"
+                      value={values.location.state}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={touched.location?.state && errors.location?.state}
+                      required
+                    />
+                  </Column>
+                </>
+              )}
+            </GridColumns>
+          </Form>
+
           <DevDebug />
         </SubmissionLayout>
       )}
