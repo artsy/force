@@ -19,7 +19,7 @@ import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import * as React from "react"
 import * as Yup from "yup"
 import { useState } from "react"
-import { conditionOptions } from "Apps/Sell/Utils/acceptableConditionsForSubmission"
+import { conditionOptions } from "Apps/Sell/Utils/conditionOptions"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 
 const FRAGMENT = graphql`

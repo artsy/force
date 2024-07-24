@@ -72,7 +72,7 @@ beforeEach(() => {
     },
   }))
 
-  submitMutation = jest.fn(() => ({ catch: () => {} }))
+  submitMutation = jest.fn().mockResolvedValue({})
   ;(useMutation as jest.Mock).mockImplementation(() => {
     return { submitMutation }
   })
@@ -151,37 +151,41 @@ describe("ConditionRoute", () => {
   })
 
   describe("navigation", () => {
-    it("navigates to the previous step when the Back button is clicked", async () => {
-      renderWithRelay({
-        ConsignmentSubmission: () => ({ ...submissionMock, state: "APPROVED" }),
+    describe("in APPROVED state", () => {
+      it("navigates to the previous step when the Back button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
+
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            "/sell/submissions/externalId/additional-documents"
+          )
+        })
       })
 
-      mockPush.mockClear()
+      it("navigates to the thank you screen when Submit Artwork button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
 
-      screen.getByText("Back").click()
+        expect(screen.getByTestId("condition-input")).toHaveValue("GOOD")
 
-      await waitFor(() => {
-        expect(mockPush).toHaveBeenCalledWith(
-          "/sell/submissions/externalId/additional-documents"
-        )
-      })
-    })
+        screen.getByText("Submit Artwork").click()
 
-    it("navigates to the thank you screen when Submit Artwork button is clicked", async () => {
-      renderWithRelay({
-        ConsignmentSubmission: () => ({ ...submissionMock, state: "APPROVED" }),
-      })
-
-      mockPush.mockClear()
-
-      expect(screen.getByTestId("condition-input")).toHaveValue("GOOD")
-
-      screen.getByText("Submit Artwork").click()
-
-      await waitFor(() => {
-        expect(mockPush).toHaveBeenCalledWith(
-          "/sell/submissions/externalId/thank-you"
-        )
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            "/sell/submissions/externalId/thank-you"
+          )
+        })
       })
     })
   })
