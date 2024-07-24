@@ -112,15 +112,18 @@ export const UploadPhotosForm: React.FC = () => {
     ])
   }
 
-  const onReject = (rejections: FileRejection[]) => {
-    rejections.forEach(rejection => {
-      const errorMessage = getErrorMessage(rejection)
-      sendToast({
-        variant: "error",
-        message: errorMessage,
+  const onReject = useCallback(
+    (rejections: FileRejection[]) => {
+      rejections.forEach(rejection => {
+        const errorMessage = getErrorMessage(rejection)
+        sendToast({
+          variant: "error",
+          message: errorMessage,
+        })
       })
-    })
-  }
+    },
+    [sendToast]
+  )
 
   return (
     <FileDropzone
@@ -128,13 +131,13 @@ export const UploadPhotosForm: React.FC = () => {
       subtitle={
         <>
           Files Supported: JPG, PNG, HEIC <br />
-          Total maximum size: 30 MB
+          Total maximum size: 300 MB
         </>
       }
       buttonText="Add Photos"
       allFiles={values.photos}
       allowedMimeTypes={["image/jpeg", "image/png", "image/heic"]}
-      maxTotalSize={30}
+      maxTotalSize={300}
       onDrop={onDrop}
       onReject={onReject}
       border="1px dashed"

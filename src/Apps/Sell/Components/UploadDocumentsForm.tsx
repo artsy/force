@@ -114,15 +114,18 @@ export const UploadDocumentsForm: React.FC = () => {
     ])
   }
 
-  const onReject = (rejections: FileRejection[]) => {
-    rejections.forEach(rejection => {
-      const errorMessage = getErrorMessage(rejection)
-      sendToast({
-        variant: "error",
-        message: errorMessage,
+  const onReject = useCallback(
+    (rejections: FileRejection[]) => {
+      rejections.forEach(rejection => {
+        const errorMessage = getErrorMessage(rejection)
+        sendToast({
+          variant: "error",
+          message: errorMessage,
+        })
       })
-    })
-  }
+    },
+    [sendToast]
+  )
 
   return (
     <FileDropzone
