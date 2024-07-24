@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<65cae79550e015f2c7c4d11a3f771706>>
+ * @generated SignedSource<<bfa678f77f81ac7aef4f3f2550342e17>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -89,18 +89,18 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "title",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "Artwork",
             "kind": "LinkedField",
             "name": "myCollectionArtwork",
             "plural": false,
             "selections": [
+              {
+                "alias": "artworkId",
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -119,141 +119,21 @@ return {
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artist",
-            "plural": false,
-            "selections": [
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "href",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "slug",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "initials",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "formattedNationalityAndBirthday",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "ArtistCounts",
+                "concreteType": "ArtworkInfoRow",
                 "kind": "LinkedField",
-                "name": "counts",
+                "name": "conditionDescription",
                 "plural": false,
                 "selections": [
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "artworks",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "forSaleArtworks",
+                    "name": "details",
                     "storageKey": null
                   }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Artwork",
-                "kind": "LinkedField",
-                "name": "coverArtwork",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": "avatar",
-                    "args": null,
-                    "concreteType": "Image",
-                    "kind": "LinkedField",
-                    "name": "image",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "height",
-                            "value": 45
-                          },
-                          {
-                            "kind": "Literal",
-                            "name": "width",
-                            "value": 45
-                          }
-                        ],
-                        "concreteType": "CroppedImageUrl",
-                        "kind": "LinkedField",
-                        "name": "cropped",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "src",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "srcSet",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": "cropped(height:45,width:45)"
-                      }
-                    ],
-                    "storageKey": null
-                  },
-                  (v2/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -268,12 +148,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ab2396d61d576200a399c79fa79cdbd8",
+    "cacheID": "b9e1177ec658c5e19cd2e7dc1a7a219e",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_ConditionRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_ConditionRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ConditionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  title\n  myCollectionArtwork {\n    condition {\n      value\n    }\n    id\n  }\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query sellRoutes_ConditionRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ConditionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    artworkId: internalID\n    condition {\n      value\n    }\n    conditionDescription {\n      details\n    }\n    id\n  }\n}\n"
   }
 };
 })();
