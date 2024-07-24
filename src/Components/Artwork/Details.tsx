@@ -410,6 +410,13 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
+      collectorSignals {
+        bidCount
+        lotWatcherCount
+        partnerOffer {
+          endAt
+        }
+      }
       sale_message: saleMessage
       cultural_maker: culturalMaker
       artist(shallow: true) {

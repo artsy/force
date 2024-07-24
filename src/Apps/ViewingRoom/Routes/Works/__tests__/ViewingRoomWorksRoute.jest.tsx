@@ -226,6 +226,11 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
                 name: "Prints",
               },
             },
+            collectorSignals: {
+              bidCount: null,
+              lotWatcherCount: null,
+              partnerOffer: null,
+            },
             preview: null,
           },
         },
@@ -373,6 +378,11 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
                 id: "gene-id",
                 name: "Prints",
               },
+            },
+            collectorSignals: {
+              bidCount: null,
+              lotWatcherCount: null,
+              partnerOffer: null,
             },
             preview: null,
           },
