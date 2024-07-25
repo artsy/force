@@ -2826,6 +2826,11 @@ interface ArtworkConnectionInterface {
 }
 
 type ArtworkConsignmentSubmission {
+  # Action label asks the user to poseed with the submission.
+  actionLabel: String
+
+  # Button label visible to the user.
+  buttonLabel: String
   displayText: String @deprecated(reason: "Prefer `stateLabel` field.")
   inProgress: Boolean
   internalID: String
@@ -2839,6 +2844,7 @@ type ArtworkConsignmentSubmission {
 
   # Submission state label visible to the user.
   stateLabel: String
+  stateLabelColor: String
 }
 
 # A connection to a list of items.
