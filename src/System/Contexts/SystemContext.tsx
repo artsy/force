@@ -3,11 +3,14 @@ import { createContext, FC, useMemo, useState } from "react"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { Environment } from "react-relay"
-
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { getUser } from "Utils/user"
-import { UserPreferences } from "Server/middleware/userPreferencesMiddleware"
 import { FeatureFlags } from "System/Hooks/useFeatureFlag"
+import { getSupportedMetric, Metric } from "Utils/metrics"
+
+export type UserPreferences = {
+  metric: Metric
+}
 
 /**
  * FIXME: Use a proper state management library. Ran into problems with useReducer
@@ -39,11 +42,16 @@ export interface SystemContextProps extends SystemContextState {
   isLoggedIn?: boolean
   featureFlags?: FeatureFlags
   searchQuery?: string
-  userPreferences?: UserPreferences
 }
 
-export const SystemContext = createContext<SystemContextProps>(
-  ({} as unknown) as SystemContextProps
+export const SystemContext = createContext<
+  SystemContextProps & {
+    userPreferences: UserPreferences
+  }
+>(
+  ({} as unknown) as SystemContextProps & {
+    userPreferences: UserPreferences
+  }
 )
 
 export let setRouteFetching
@@ -80,6 +88,9 @@ export const SystemContextProvider: FC<Partial<SystemContextProps>> = ({
     setUser,
     isEigen: sd.EIGEN || props.isEigen,
     isLoggedIn: !!user,
+    userPreferences: {
+      metric: getSupportedMetric(user?.length_unit_preference),
+    },
   }
 
   return (
