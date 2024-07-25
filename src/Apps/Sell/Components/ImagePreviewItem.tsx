@@ -3,7 +3,7 @@ import { Box, Clickable, Flex, Image, ProgressBar, Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useRemoveAssetFromConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
 import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
-import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import { DropzoneFile } from "Components/FileUpload/types"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
@@ -14,7 +14,7 @@ const logger = createLogger("Sell/ImagePreviewItem.tsx")
 const IMAGE_SIZES = [100, 140]
 
 interface ImagePreviewItemProps {
-  photo: Photo
+  photo: DropzoneFile
 }
 
 export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
@@ -52,7 +52,7 @@ export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
     }
   }, [photo.url, photoSrc])
 
-  const handlePhotoDelete = (photo: Photo) => {
+  const handlePhotoDelete = (photo: DropzoneFile) => {
     photo.removed = true
     photo.abortUploading?.()
 

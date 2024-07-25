@@ -5,7 +5,6 @@ import { SubmissionHeader } from "Apps/Sell/Components/SubmissionHeader"
 import { SubmissionProgressBar } from "Apps/Sell/Components/SubmissionProgressBar"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { FadeInBox } from "Components/FadeInBox"
-import { useEffect } from "react"
 
 const CONTENT_WIDTH = 640
 
@@ -17,13 +16,8 @@ interface SubmissionLayoutProps {
 export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
   children,
   hideNavigation = false,
-  loading = false,
 }) => {
   const context = useSellFlowContext()
-
-  useEffect(() => {
-    context.actions?.setLoading(loading)
-  }, [context.actions, loading])
 
   return (
     <Flex height="100dvh" flexDirection="column">

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ede806e1ee768af36a3cdc87ef5b0452>>
+ * @generated SignedSource<<5bb6b03e39332f297e53b6e19964b881>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,13 @@ export type Details_artwork$data = {
     readonly name: string | null | undefined;
   } | null | undefined> | null | undefined;
   readonly collecting_institution: string | null | undefined;
+  readonly collectorSignals: {
+    readonly bidCount: number | null | undefined;
+    readonly lotWatcherCount: number | null | undefined;
+    readonly partnerOffer: {
+      readonly endAt: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly cultural_maker: string | null | undefined;
   readonly date: string | null | undefined;
   readonly href: string | null | undefined;
@@ -75,25 +82,25 @@ var v0 = {
   "name": "href",
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "endAt",
+  "storageKey": null
+},
+v2 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "endAt",
+  "name": "name",
   "storageKey": null
 },
 v4 = [
@@ -134,6 +141,43 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorSignals",
+      "kind": "LinkedField",
+      "name": "collectorSignals",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "bidCount",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lotWatcherCount",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PartnerOfferToCollector",
+          "kind": "LinkedField",
+          "name": "partnerOffer",
+          "plural": false,
+          "selections": [
+            (v1/*: any*/)
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "alias": "sale_message",
       "args": null,
       "kind": "ScalarField",
@@ -149,7 +193,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -196,7 +240,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artists",
@@ -210,7 +254,7 @@ return {
           "storageKey": null
         },
         (v0/*: any*/),
-        (v2/*: any*/)
+        (v3/*: any*/)
       ],
       "storageKey": "artists(shallow:true)"
     },
@@ -223,13 +267,13 @@ return {
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partner",
       "plural": false,
       "selections": [
-        (v2/*: any*/),
+        (v3/*: any*/),
         (v0/*: any*/)
       ],
       "storageKey": "partner(shallow:true)"
@@ -242,7 +286,7 @@ return {
       "name": "sale",
       "plural": false,
       "selections": [
-        (v3/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -303,7 +347,7 @@ return {
           "name": "lotLabel",
           "storageKey": null
         },
-        (v3/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -380,6 +424,6 @@ return {
 };
 })();
 
-(node as any).hash = "eeae18405ea0dfc09d861ca83ac48ec6";
+(node as any).hash = "da82a7b0619de32caddd1dc826a36998";
 
 export default node;

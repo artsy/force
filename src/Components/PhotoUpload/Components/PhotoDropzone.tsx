@@ -1,69 +1,10 @@
 import { Box, BoxProps, Button, Text } from "@artsy/palette"
-import {
-  CustomErrorCode,
-  MBSize,
-  Photo,
-} from "Components/PhotoUpload/Utils/fileUtils"
+import { concatDropzoneErrors } from "Components/FileUpload/utils/concatDropzoneErrors"
+import { validateTotalMaxSize } from "Components/FileUpload/utils/validateTotalMaxSize"
+import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { Media } from "Utils/Responsive"
-import { cloneDeep } from "lodash"
 import React, { useEffect, useRef, useState } from "react"
 import { FileRejection, useDropzone } from "react-dropzone"
-
-const validateTotalMaxSize = (
-  currentFiles: Array<Photo>,
-  filesToAdd: Array<File>,
-  maxTotalSize: number
-): [Array<File>, FileRejection[]] => {
-  const acceptedFiles: Array<File> = []
-  const fileRejections: Array<FileRejection> = []
-  const totalSize = maxTotalSize * MBSize
-  const currentFilesSize = currentFiles.reduce((acc, photo) => {
-    return acc + (photo.size || 0)
-  }, 0)
-
-  filesToAdd
-    .sort((a, b) => a.size - b.size)
-    .forEach(file => {
-      const acceptedFilesSize = acceptedFiles.reduce((acc, photo) => {
-        return acc + photo.size
-      }, 0)
-
-      if (currentFilesSize + acceptedFilesSize + file.size > totalSize) {
-        fileRejections.push({
-          file,
-          errors: [
-            {
-              code: CustomErrorCode.TotalSizeLimit,
-              message: "",
-            },
-          ],
-        })
-      } else {
-        acceptedFiles.push(file)
-      }
-    })
-
-  return [acceptedFiles, fileRejections]
-}
-
-const concatErrors = (
-  errors: FileRejection[],
-  customErrors: FileRejection[]
-) => {
-  const result: FileRejection[] = errors.map(cloneDeep)
-
-  customErrors.forEach(error => {
-    const err = result.find(err => err.file === error.file)
-
-    if (err) {
-      err.errors.concat(error.errors)
-    } else {
-      result.push(error)
-    }
-  })
-
-  return result
-}
 
 export interface PhotoDropzoneProps extends BoxProps {
   allPhotos: Photo[]
@@ -72,6 +13,10 @@ export interface PhotoDropzoneProps extends BoxProps {
   onReject: (rejections: FileRejection[]) => void
 }
 
+/**
+ * @deprecated Deprecated - prefer using FileDropzone, which is a more generic version of this component
+ * Also probably safe to remove this component entirely when cleaning up old sell flow
+ */
 export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
   allPhotos,
   maxTotalSize,
@@ -109,7 +54,7 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
   })
 
   useEffect(() => {
-    const errors = concatErrors(fileRejections, customErrors)
+    const errors = concatDropzoneErrors(fileRejections, customErrors)
 
     onReject(errors)
     // FIXME: Remove this disable

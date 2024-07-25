@@ -89,7 +89,7 @@ export const getErrorMessage = (fileRejection: FileRejection) => {
 
   if (errorCodes.includes(ErrorCode.FileInvalidType)) {
     errorMessage =
-      "File format not supported. Please upload JPG, PNG or HEIC files."
+      "File format not supported. Please upload files with supported formats."
   } else if (errorCodes.includes(CustomErrorCode.TotalSizeLimit)) {
     errorMessage =
       "Whoa, you've reached the size limit! Please delete or upload smaller files."

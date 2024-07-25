@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d80ee76aec4e0b0376d5dc200730f334>>
+ * @generated SignedSource<<fa8a1067cfe4e7271c6fdfff4d7bc92e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,33 +19,18 @@ export type AdditionalDocumentsRoute_Test_Query$data = {
 };
 export type AdditionalDocumentsRoute_Test_Query$rawResponse = {
   readonly submission: {
-    readonly artist: {
-      readonly counts: {
-        readonly artworks: any | null | undefined;
-        readonly forSaleArtworks: any | null | undefined;
-      } | null | undefined;
-      readonly coverArtwork: {
-        readonly avatar: {
-          readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-          } | null | undefined;
-        } | null | undefined;
-        readonly id: string;
-      } | null | undefined;
-      readonly formattedNationalityAndBirthday: string | null | undefined;
-      readonly href: string | null | undefined;
+    readonly assets: ReadonlyArray<{
+      readonly documentPath: string | null | undefined;
+      readonly filename: string | null | undefined;
       readonly id: string;
-      readonly initials: string | null | undefined;
-      readonly internalID: string;
-      readonly name: string | null | undefined;
-      readonly slug: string;
-    } | null | undefined;
+      readonly s3Bucket: string | null | undefined;
+      readonly s3Path: string | null | undefined;
+      readonly size: string | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
     readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
-    readonly title: string | null | undefined;
   } | null | undefined;
 };
 export type AdditionalDocumentsRoute_Test_Query = {
@@ -63,13 +48,6 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -94,12 +72,12 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "AdditionalDocumentsRoute_submission"
+            "name": "SubmissionRoute_submission"
           },
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SubmissionRoute_submission"
+            "name": "AdditionalDocumentsRoute_submission"
           }
         ],
         "storageKey": "submission(id:\"submission-id\")"
@@ -126,142 +104,9 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "title",
+            "name": "internalID",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artist",
-            "plural": false,
-            "selections": [
-              (v1/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "href",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "slug",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "initials",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "formattedNationalityAndBirthday",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "ArtistCounts",
-                "kind": "LinkedField",
-                "name": "counts",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "artworks",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "forSaleArtworks",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Artwork",
-                "kind": "LinkedField",
-                "name": "coverArtwork",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": "avatar",
-                    "args": null,
-                    "concreteType": "Image",
-                    "kind": "LinkedField",
-                    "name": "image",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "height",
-                            "value": 45
-                          },
-                          {
-                            "kind": "Literal",
-                            "name": "width",
-                            "value": 45
-                          }
-                        ],
-                        "concreteType": "CroppedImageUrl",
-                        "kind": "LinkedField",
-                        "name": "cropped",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "src",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "srcSet",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": "cropped(height:45,width:45)"
-                      }
-                    ],
-                    "storageKey": null
-                  },
-                  (v2/*: any*/)
-                ],
-                "storageKey": null
-              },
-              (v2/*: any*/)
-            ],
-            "storageKey": null
-          },
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -276,23 +121,78 @@ return {
             "name": "state",
             "storageKey": null
           },
-          (v2/*: any*/)
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "assetType",
+                "value": [
+                  "ADDITIONAL_FILE"
+                ]
+              }
+            ],
+            "concreteType": "ConsignmentSubmissionCategoryAsset",
+            "kind": "LinkedField",
+            "name": "assets",
+            "plural": true,
+            "selections": [
+              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "size",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "filename",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "documentPath",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "s3Path",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "s3Bucket",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "assets(assetType:[\"ADDITIONAL_FILE\"])"
+          },
+          (v1/*: any*/)
         ],
         "storageKey": "submission(id:\"submission-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "1d28321206477d8cda4803d435f67fd9",
+    "cacheID": "ba51a5a21a430a6734a07d980fad1656",
     "id": null,
     "metadata": {},
     "name": "AdditionalDocumentsRoute_Test_Query",
     "operationKind": "query",
-    "text": "query AdditionalDocumentsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...AdditionalDocumentsRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment AdditionalDocumentsRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query AdditionalDocumentsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...AdditionalDocumentsRoute_submission\n    id\n  }\n}\n\nfragment AdditionalDocumentsRoute_submission on ConsignmentSubmission {\n  externalId\n  assets(assetType: [ADDITIONAL_FILE]) {\n    id\n    size\n    filename\n    documentPath\n    s3Path\n    s3Bucket\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
   }
 };
 })();
 
-(node as any).hash = "15acb732ff701664bb7768e902a9f49b";
+(node as any).hash = "f32d3fcd2cb52f5ace1aa7401f109b78";
 
 export default node;

@@ -448,7 +448,7 @@ describe("UploadPhotos", () => {
       await waitFor(() => {
         expect(screen.getAllByTestId("photo-thumbnail-error").length).toEqual(1)
         expect(screen.getByTestId("photo-thumbnail-error")).toHaveTextContent(
-          "File format not supported. Please upload JPG, PNG or HEIC files."
+          "File format not supported. Please upload files with supported formats."
         )
       })
     })
@@ -474,7 +474,7 @@ describe("UploadPhotos", () => {
       await waitFor(() => {
         expect(screen.getAllByTestId("photo-thumbnail-error").length).toEqual(1)
         expect(screen.getByTestId("photo-thumbnail-error")).toHaveTextContent(
-          "File format not supported. Please upload JPG, PNG or HEIC files."
+          "File format not supported. Please upload files with supported formats."
         )
       })
     })
