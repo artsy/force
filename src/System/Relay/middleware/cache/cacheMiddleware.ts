@@ -72,6 +72,7 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
       }
 
       const res = await next(req)
+
       if (!res.errors || (res.errors && cacheErrors)) {
         await cache.set(queryId, variables, res, {
           cacheConfig: req.cacheConfig,

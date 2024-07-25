@@ -179,7 +179,6 @@ describe("serverRouter", () => {
               "relayEnvironment",
               "router",
               "routes",
-              "setFetching",
               "setRouter",
               "setUser",
               "user",

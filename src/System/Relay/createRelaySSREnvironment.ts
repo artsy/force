@@ -15,11 +15,11 @@ import {
 import "regenerator-runtime/runtime"
 import { Environment, INetwork, RecordSource, Store } from "relay-runtime"
 import { Environment as IEnvironment } from "react-relay"
-import { cacheMiddleware } from "./middleware/cache/cacheMiddleware"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
 import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmediateResolveMiddleware"
+import { cacheMiddleware } from "System/Relay/middleware/cache/cacheMiddleware"
 
 const logger = createLogger("System/Relay/createRelaySSREnvironment")
 
@@ -29,7 +29,6 @@ const isDevelopment = getENV("NODE_ENV") === "development"
 // Only log on the client during development
 const loggingEnabled = isDevelopment && !isServer
 
-const METAPHYSICS_ENDPOINT = `${getENV("METAPHYSICS_ENDPOINT")}/v2`
 const USER_AGENT = `Reaction/Migration`
 
 interface Config {
@@ -53,8 +52,10 @@ export function createRelaySSREnvironment(config: Config = {}) {
     user,
     relayNetwork,
     userAgent,
-    metaphysicsEndpoint = METAPHYSICS_ENDPOINT,
+    metaphysicsEndpoint,
   } = config
+
+  const url = metaphysicsEndpoint ?? `${getENV("APP_URL")}/api/metaphysics`
 
   /**
    * Lazy load these here so we can safely ignore the server module from client
@@ -101,7 +102,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
   const middlewares = [
     searchBarImmediateResolveMiddleware(),
     urlMiddleware({
-      url: metaphysicsEndpoint,
+      url,
       headers: authenticatedHeaders,
     }),
     relaySSRMiddleware.getMiddleware(),
@@ -126,7 +127,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
       ? [
           batchMiddleware({
             headers: authenticatedHeaders,
-            batchUrl: `${METAPHYSICS_ENDPOINT}/batch`,
+            batchUrl: `${getENV("METAPHYSICS_ENDPOINT")}/v2/batch`,
             // Period of time (integer in milliseconds) for gathering multiple requests
             // before sending them to the server.
             // Will delay sending of the requests on specified in this option period of time,

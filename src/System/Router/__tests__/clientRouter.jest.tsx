@@ -123,7 +123,6 @@ describe("clientRouter", () => {
               "relayEnvironment",
               "router",
               "routes",
-              "setFetching",
               "setRouter",
               "setUser",
               "user",

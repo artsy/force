@@ -1,5 +1,5 @@
 import { Router } from "found"
-import { createContext, FC, useMemo, useState } from "react"
+import { createContext, FC, useState } from "react"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { Environment } from "react-relay"
@@ -18,7 +18,6 @@ export type UserPreferences = {
  */
 export type SystemContextState = Partial<{
   isFetching: boolean
-  setFetching: (isFetching: boolean) => void
   router: Router | null
   setRouter: (router?: Router) => void
 
@@ -54,8 +53,6 @@ export const SystemContext = createContext<
   }
 )
 
-export let setRouteFetching
-
 /**
  * Creates a new Context.Provider with a user and Relay environment, or defaults
  * if not passed in as props.
@@ -64,23 +61,16 @@ export const SystemContextProvider: FC<Partial<SystemContextProps>> = ({
   children,
   ...props
 }) => {
-  const [isFetching, setFetching] = useState<boolean>(false)
   const [router, setRouter] = useState<SystemContextProps["router"]>(null)
   const [user, setUser] = useState<SystemContextProps["user"]>(
     getUser(props.user)
   )
-
-  // Globally export the fetch toggle so that we can access it from the router's
-  // loadingIndicatorMiddleware actions
-  setRouteFetching = useMemo(() => setFetching, [setFetching])
 
   const relayEnvironment =
     props.relayEnvironment || createRelaySSREnvironment({ user })
 
   const providerValues = {
     ...props,
-    isFetching,
-    setFetching,
     router,
     setRouter,
     relayEnvironment,

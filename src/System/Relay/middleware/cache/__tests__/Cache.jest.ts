@@ -32,20 +32,20 @@ describe("Cache", () => {
 
   describe("enableServerSideCaching", () => {
     it("disables if disableServerSideCache=true", () => {
-      process.env.ENABLE_SERVER_SIDE_CACHE = "true"
+      process.env.ENABLE_GRAPHQL_REDIS_CACHE = "true"
       const cache = getCache({ disableServerSideCache: true })
       expect(cache.enableServerSideCache).toBe(false)
     })
 
     it("enables if disableServerSideCache=false", () => {
-      process.env.ENABLE_SERVER_SIDE_CACHE = "true"
+      process.env.ENABLE_GRAPHQL_REDIS_CACHE = "true"
       const cache = getCache({ disableServerSideCache: false })
       expect(cache.enableServerSideCache).toBe(true)
     })
 
-    describe("env var overides via ENABLE_SERVER_SIDE_CACHE", () => {
+    describe("env var overides via ENABLE_GRAPHQL_REDIS_CACHE", () => {
       it("enables if disableServerSideCache=false", () => {
-        process.env.ENABLE_SERVER_SIDE_CACHE = "false"
+        process.env.ENABLE_GRAPHQL_REDIS_CACHE = "false"
         const cache = getCache({ disableServerSideCache: false })
         expect(cache.enableServerSideCache).toBe(false)
       })
