@@ -53,7 +53,6 @@ describe("Artsy context", () => {
               "isLoggedIn",
               "relayEnvironment",
               "router",
-              "setFetching",
               "setRouter",
               "setUser",
               "user",

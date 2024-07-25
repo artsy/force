@@ -27,7 +27,7 @@ export class Cache {
   constructor(cacheConfig: CacheConfig) {
     this.cacheConfig = cacheConfig
     this.enableServerSideCache =
-      getENV("ENABLE_SERVER_SIDE_CACHE") === "true" &&
+      getENV("ENABLE_GRAPHQL_REDIS_CACHE") === "true" &&
       isServer &&
       !this.cacheConfig.disableServerSideCache
     this.initRelayCache()
