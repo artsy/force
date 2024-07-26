@@ -108,6 +108,12 @@ type addOrderedSetItemSuccess {
   setItem: OrderedSetItem
 }
 
+enum addressType {
+  BUSINESS
+  OTHER
+  TEMPORARY
+}
+
 type addUserRoleFailure {
   mutationError: GravityMutationError
 }
@@ -2420,7 +2426,7 @@ type Artwork implements Node & Searchable & Sellable {
   # The location of the artwork in My Collection
   collectorLocation: MyLocation
 
-  # List of collector signals
+  # Collector signals on artwork
   collectorSignals: CollectorSignals
 
   # Comparable auction results
@@ -2582,6 +2588,7 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Is this artwork part of a current show
   isInShow: Boolean
+  isListed: Boolean!
   isNotForSale: String
 
   # Whether a user can make an offer on a work
@@ -7627,6 +7634,7 @@ enum ConsignmentSubmissionStateAggregation {
   HOLD
   PUBLISHED
   REJECTED
+  RESUBMITTED
   SUBMITTED
 }
 
@@ -14902,6 +14910,7 @@ type Partner implements Node {
 
   # A connection of locations from a Partner.
   locationsConnection(
+    addressType: addressType
     after: String
     before: String
     first: Int
