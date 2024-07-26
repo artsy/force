@@ -14,7 +14,7 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 import Cookies from "cookies-js"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-import { useOnce } from "Utils/Hooks/useOnce"
+import { useRouteComplete } from "Utils/Hooks/useRouteComplete"
 
 const APP_DOWNLOAD_FOOTER_KEY = "AppDownloadFooter"
 
@@ -27,8 +27,9 @@ export const AppDownloadFooter: FC<AppDownloadFooterProps> = () => {
 
   const { downloadAppUrl } = useDeviceDetection()
 
-  useOnce(() => {
-    const init = async () => {
+  useRouteComplete({
+    // Used to ensure we just show the banner after an initial internal navigation
+    onComplete: async () => {
       if (!ref.current || !("animate" in ref.current)) return
 
       const animation = ref.current.animate(
@@ -37,9 +38,7 @@ export const AppDownloadFooter: FC<AppDownloadFooterProps> = () => {
       )
 
       await animation.finished
-    }
-
-    requestAnimationFrame(init)
+    },
   })
 
   const handleDismiss = async () => {
@@ -110,4 +109,5 @@ const AppDownloadFooterPanel = styled(Box)`
   left: 0;
   z-index: ${Z.appDownloadFooter};
   box-shadow: ${themeGet("effects.dropShadow")};
+  transform: translateY(100%);
 `
