@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { Cache } from "../Cache"
+import { Cache } from "System/Relay/middleware/cache/Cache"
 jest.mock("Server/isServer")
 jest.mock("Server/cacheClient", () => {
   return {
@@ -30,24 +30,24 @@ describe("Cache", () => {
     jest.restoreAllMocks()
   })
 
-  describe("enableServerSideCaching", () => {
+  describe("enableRedisGraphqlCache", () => {
     it("disables if disableServerSideCache=true", () => {
-      process.env.ENABLE_GRAPHQL_REDIS_CACHE = "true"
+      process.env.ENABLE_REDIS_GRAPHQL_CACHE = "true"
       const cache = getCache({ disableServerSideCache: true })
-      expect(cache.enableServerSideCache).toBe(false)
+      expect(cache.enableRedisGraphqlCache).toBe(false)
     })
 
     it("enables if disableServerSideCache=false", () => {
-      process.env.ENABLE_GRAPHQL_REDIS_CACHE = "true"
+      process.env.ENABLE_REDIS_GRAPHQL_CACHE = "true"
       const cache = getCache({ disableServerSideCache: false })
-      expect(cache.enableServerSideCache).toBe(true)
+      expect(cache.enableRedisGraphqlCache).toBe(true)
     })
 
-    describe("env var overides via ENABLE_GRAPHQL_REDIS_CACHE", () => {
+    describe("env var overides via ENABLE_REDIS_GRAPHQL_CACHE", () => {
       it("enables if disableServerSideCache=false", () => {
-        process.env.ENABLE_GRAPHQL_REDIS_CACHE = "false"
+        process.env.ENABLE_REDIS_GRAPHQL_CACHE = "false"
         const cache = getCache({ disableServerSideCache: false })
-        expect(cache.enableServerSideCache).toBe(false)
+        expect(cache.enableRedisGraphqlCache).toBe(false)
       })
     })
   })
@@ -75,7 +75,7 @@ describe("Cache", () => {
     describe("client", () => {
       it("sets / gets the cache by cacheKey", async () => {
         const cache = getCache()
-        cache.enableServerSideCache = false
+        cache.enableRedisGraphqlCache = false
         const queryId = "ArtistQuery"
         const variables = { slug: "picasso" }
         const response = { data: { artist: { slug: "picasso" } } }
@@ -88,10 +88,10 @@ describe("Cache", () => {
     })
 
     describe("server", () => {
-      it("does not set cache if enableServerSideCaching=false", async () => {
+      it("does not set cache if enableRedisGraphqlCache=false", async () => {
         const cacheSpy = jest.spyOn(cacheClient, "set")
         const cache = getCache()
-        cache.enableServerSideCache = false
+        cache.enableRedisGraphqlCache = false
         const queryId = "ArtistQuery"
         const variables = { slug: "picasso" }
         const response = { data: { artist: { slug: "picasso" } } }
@@ -104,7 +104,7 @@ describe("Cache", () => {
       it("does not set cache if cacheConfig.force=true", async () => {
         const cacheSpy = jest.spyOn(cacheClient, "get")
         const cache = getCache()
-        cache.enableServerSideCache = true
+        cache.enableRedisGraphqlCache = true
         const queryId = "ArtistQuery"
         const variables = { slug: "picasso" }
         const response = { data: { artist: { slug: "picasso" } } }
@@ -116,7 +116,7 @@ describe("Cache", () => {
 
       it("gets / sets the cache by cacheKey", async () => {
         const cache = getCache()
-        cache.enableServerSideCache = true
+        cache.enableRedisGraphqlCache = true
         cache.relayCache.get = jest.fn()
         const queryId = "ArtistQuery"
         const variables = { slug: "picasso" }
@@ -132,7 +132,7 @@ describe("Cache", () => {
   describe("cache.clear", () => {
     it("clears all caches", () => {
       const cache = getCache()
-      cache.enableServerSideCache = true
+      cache.enableRedisGraphqlCache = true
       const relaySpy = jest.fn()
       cache.relayCache.clear = relaySpy
       cache.clear()

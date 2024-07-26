@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { cache } from "Server/cache"
+import { cache } from "Server/cacheClient"
 import { ArtsyRequest } from "Server/middleware/artsyExpress"
 import { getUser } from "Utils/user"
 
@@ -17,7 +17,7 @@ adminServerRoutes.post("/admin/clear-cache", (req: ArtsyRequest, res) => {
     return
   }
 
-  cache.flushall(() => {
+  cache.redisClient.flushall(() => {
     res.status(200).send({ status: 200, message: "Cache cleared." })
   })
 })

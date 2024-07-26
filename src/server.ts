@@ -13,7 +13,6 @@ import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManage
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
 import { setupServerRouter } from "System/Router/serverRouter"
 import { getRoutes } from "System/Router/Utils/routeUtils"
-import { graphqlCacheProxyMiddleware } from "Server/middleware/graphqlCacheProxyMiddleware"
 
 const app = express()
 
@@ -56,8 +55,6 @@ app
   .use(adminServerRoutes)
   .use(sitemapsServerApp)
   .use(rssServerApp)
-  // Dropped here so that we can take advantage of hot reloading in dev
-  .use("/api/metaphysics", graphqlCacheProxyMiddleware)
   // Should be last
   .use(redirectsServerRoutes)
 
