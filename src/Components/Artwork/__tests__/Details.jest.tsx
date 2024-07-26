@@ -32,6 +32,7 @@ describe("Details", () => {
       showHoverDetails?: boolean
       contextModule?: AuthContextModule
       showSaveButton?: boolean
+      showSubmissionStatus?: boolean
     }
   ) => {
     return await renderRelayTree({
@@ -396,8 +397,18 @@ describe("Details", () => {
 
       expect(wrapper.html()).not.toContain("High Demand")
     })
-  })
 
+    it("does not render high demand icon for artworks submitted for sale", async () => {
+      props = {
+        showHighDemandIcon: true,
+        showSubmissionStatus: true,
+      }
+      const wrapper = await getWrapper(myCollectionArtworkSubmission, props)
+
+      expect(wrapper.html()).not.toContain("High Demand")
+    })
+  })
+  // TODO: add test for the submission status
   it("should display save artwork button by default when showSaveButton prop is passed", async () => {
     props = {
       showSaveButton: true,
@@ -579,4 +590,87 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
     lotWatcherCount: null,
     partnerOffer: null,
   },
+  consignmentSubmission: null,
+  isListed: false,
+}
+
+const myCollectionArtworkSubmission: Details_Test_Query$rawResponse["artwork"] = {
+  id: "opaque-artwork-id",
+  internalID: "opaque-internal-id",
+  artist: {
+    id: "artist-id",
+    targetSupply: {
+      isP1: true,
+    },
+  },
+  marketPriceInsights: {
+    demandRank: 0.9,
+  },
+  artistNames: "Gerhard Richter",
+  artists: [
+    {
+      id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
+      href: "/artist/gerhard-richter",
+      name: "Gerhard Richter",
+    },
+  ],
+  slug: "gerhard-richter-tulips-p17-14",
+  isSaved: false,
+  href: "/artwork/gerhard-richter-tulips-p17-14",
+  date: "2017",
+  sale_message: "$450",
+  cultural_maker: null,
+  title: "Tulips (P17)",
+  collecting_institution: "This Really Great Gallery",
+  partner: {
+    id: "opaque-partner-id",
+    name: "Forum Auctions",
+    href: "/auction/forum-auctions",
+  },
+  sale: {
+    id: "opaque-sale-id",
+    is_auction: true,
+    is_closed: false,
+    cascadingEndTimeIntervalMinutes: null,
+    extendedBiddingIntervalMinutes: null,
+    startAt: "2022-03-11T12:33:37.000Z",
+    endAt: "2022-03-12T12:33:37.000Z",
+  },
+  sale_artwork: {
+    lotID: "lot-id",
+    lotLabel: "0",
+    id: "opaque-sale-artwork-id",
+    highest_bid: { display: "$2,600" },
+    opening_bid: { display: "$2,400" },
+    counts: { bidder_positions: 0 },
+    endAt: "2022-03-12T12:33:37.000Z",
+    formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
+    extendedBiddingEndAt: null,
+  },
+  attributionClass: {
+    id: "attributionClass-id",
+    name: "Unique",
+  },
+  mediumType: {
+    filterGene: {
+      id: "gene-id",
+      name: "Prints",
+    },
+  },
+  preview: null,
+  isInAuction: true,
+  isSavedToList: false,
+  collectorSignals: {
+    bidCount: null,
+    lotWatcherCount: null,
+    partnerOffer: null,
+  },
+  consignmentSubmission: {
+    internalID: "internal-id",
+    state: "SUBMITTED",
+    stateLabel: "Submitted",
+    actionLabel: "Action",
+    stateLabelColor: "black100",
+  },
+  isListed: false,
 }

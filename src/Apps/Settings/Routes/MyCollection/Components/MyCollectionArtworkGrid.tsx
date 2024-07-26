@@ -6,6 +6,7 @@ import { Text } from "@artsy/palette"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { _FragmentRefs } from "relay-runtime"
 import { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const POPOVER_KEY = PROGRESSIVE_ONBOARDING.startSelling
 
@@ -18,6 +19,8 @@ const MyCollectionArtworksGrid: FC<MyCollectionArtworkGridProps> = ({
   artworks,
   onLoadMore,
 }) => {
+  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
+
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const displayPopover = !isDismissed(POPOVER_KEY).status
@@ -34,6 +37,7 @@ const MyCollectionArtworksGrid: FC<MyCollectionArtworkGridProps> = ({
       }
       showHighDemandIcon
       showSaveButton={false}
+      showSubmissionStatus={!!enableNewSubmissionFlow}
       onLoadMore={onLoadMore}
       popoverContent={
         displayPopover && (

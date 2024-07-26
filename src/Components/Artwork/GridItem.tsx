@@ -29,6 +29,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
+  showSubmissionStatus?: boolean
   to?: string | null
   savedListId?: string
   popoverContent?: React.ReactNode | null
@@ -46,6 +47,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   showHighDemandIcon = false,
   showHoverDetails,
   showSaveButton = true,
+  showSubmissionStatus,
   to,
   savedListId,
   renderSaveButton,
@@ -127,6 +129,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           disableRouterLinking={disableRouterLinking}
           to={to}
           renderSaveButton={renderSaveButton}
+          showSubmissionStatus={showSubmissionStatus}
         />
       </div>
     </ManageArtworkForSavesProvider>

@@ -1,7 +1,6 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
@@ -17,6 +16,8 @@ import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 import { SaveButtonFragmentContainer } from "./SaveButton"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
+import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -29,6 +30,7 @@ interface DetailsProps {
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
+  showSubmissionStatus?: boolean
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
@@ -140,7 +142,7 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
 const HighDemandInfo = () => {
   return (
     <Flex flexDirection="row" alignItems="center">
-      <HighDemandIcon width={16} height={16} />
+      <HighDemandIcon fill="blue100" />
       <Text variant="xs" color="blue100" ml={0.3}>
         &nbsp;High Demand
       </Text>
@@ -214,6 +216,7 @@ export const Details: React.FC<DetailsProps> = ({
   showHighDemandIcon = false,
   showHoverDetails = true,
   showSaveButton,
+  showSubmissionStatus,
   renderSaveButton,
   ...rest
 }) => {
@@ -227,8 +230,14 @@ export const Details: React.FC<DetailsProps> = ({
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
+  const isConsignmentSubmission = !!rest?.artwork.consignmentSubmission
+    ?.internalID
 
-  const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
+  const showHighDemandInfo =
+    !!isP1Artist &&
+    isHighDemand &&
+    showHighDemandIcon &&
+    !isConsignmentSubmission
 
   const signalsPartnerOffersEnabled = useFeatureFlag(
     "emerald_signals-partner-offers"
@@ -312,12 +321,23 @@ export const Details: React.FC<DetailsProps> = ({
 
       <Box position="relative">
         <TitleLine {...rest} />
-        {showHighDemandInfo && <HighDemandInfo />}
+
+        {
+          showHighDemandInfo && (
+            <HighDemandInfo />
+          ) /* TODO: show only when no submission associated with the artwork */
+        }
+
         {!hidePartnerName && <PartnerLine {...rest} />}
+
         {isHovered && showHoverDetails && (
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
         )}
       </Box>
+
+      {showSubmissionStatus && (
+        <ConsignmentSubmissionStatusFragmentContainer artwork={rest.artwork} />
+      )}
 
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
       {padForActivePartnerOfferLine && <EmptyLine />}
@@ -461,9 +481,13 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           display
         }
       }
+      consignmentSubmission {
+        internalID
+      }
       ...SaveButton_artwork
       ...SaveArtworkToListsButton_artwork
       ...HoverDetails_artwork
+      ...ConsignmentSubmissionStatus_artwork
     }
   `,
 })
