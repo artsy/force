@@ -54,6 +54,7 @@ export const ENABLE_NEW_AUCTIONS_FILTER: any = false
 export const ENABLE_QUERY_BATCHING: any = false
 export const ENABLE_SAVED_SEARCH: any = false
 export const ENABLE_REDIS_GRAPHQL_CACHE: any = false
+export const REDIS_GRAPHQL_CACHE_TTL: any = 1000000000
 export const ENABLE_WEB_CRAWLING: any = false
 export const FACEBOOK_APP_NAMESPACE: any = "artsyinc"
 export const FACEBOOK_ID: any = null
