@@ -17,13 +17,13 @@ const TEXTS = [
 ]
 
 export interface AppDownloadBannerProps {
-  transitionDuration: number
-  idleDuration: number
+  transitionDuration?: number
+  idleDuration?: number
 }
 
 export const AppDownloadBanner: FC<AppDownloadBannerProps> = ({
-  transitionDuration,
-  idleDuration,
+  transitionDuration = 1500,
+  idleDuration = 4000,
 }) => {
   const { index, handleNext } = useCursor({
     max: TEXTS.length,
