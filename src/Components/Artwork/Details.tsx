@@ -32,6 +32,10 @@ interface DetailsProps {
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
+interface SaleInfoLineProps extends DetailsProps {
+  showActivePartnerOfferLine: boolean
+}
+
 const StyledConditionalLink = styled(RouterLink)`
   color: ${themeGet("colors.black100")};
   text-decoration: none;
@@ -129,11 +133,16 @@ const PartnerLine: React.FC<DetailsProps> = ({
   return null
 }
 
-const SaleInfoLine: React.FC<DetailsProps> = props => {
+const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
+  const { showActivePartnerOfferLine } = props
+
   return (
-    <Text variant="xs" color="black100" fontWeight="bold" overflowEllipsis>
-      <SaleMessage {...props} /> <BidInfo {...props} />
-    </Text>
+    <Flex flexDirection="row" alignItems="center">
+      <Text variant="xs" color="black100" fontWeight="bold" overflowEllipsis>
+        <SaleMessage {...props} /> <BidInfo {...props} />
+      </Text>
+      {showActivePartnerOfferLine && <ActivePartnerOfferTimer {...props} />}
+    </Flex>
   )
 }
 
@@ -186,7 +195,9 @@ const BidInfo: React.FC<DetailsProps> = ({
   )
 }
 
-const ActivePartnerOfferLine: React.FC = () => {
+const ActivePartnerOfferLine: React.FC<DetailsProps> = ({
+  artwork: { collectorSignals },
+}) => {
   return (
     <Text
       variant="xs"
@@ -197,6 +208,23 @@ const ActivePartnerOfferLine: React.FC = () => {
       borderRadius={3}
     >
       Limited-Time Offer
+    </Text>
+  )
+}
+
+const ActivePartnerOfferTimer: React.FC<DetailsProps> = ({
+  artwork: { collectorSignals },
+}) => {
+  const SEPARATOR = <>&nbsp;&nbsp;</>
+  const { endAt } = collectorSignals?.partnerOffer ?? {}
+  const { time } = useTimer(endAt ?? "")
+  const { days, hours } = time
+
+  return (
+    <Text variant="xs" color="blue100" px={0.5} alignSelf="flex-start">
+      Exp.{SEPARATOR}
+      {days}d{SEPARATOR}
+      {hours}h{SEPARATOR}
     </Text>
   )
 }
@@ -234,14 +262,25 @@ export const Details: React.FC<DetailsProps> = ({
     "emerald_signals-partner-offers"
   )
 
-  // TODO: replace randomization with real signals and business logic
+  const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
+
+  const { endAt } = partnerOffer ?? {}
+  const { hasEnded } = useTimer(endAt ?? "")
+
   const showActivePartnerOfferLine: boolean = useMemo(
     () =>
       !!signalsPartnerOffersEnabled &&
       !!showActivePartnerOffer &&
-      Math.random() < 0.2,
-    [signalsPartnerOffersEnabled, showActivePartnerOffer]
+      !!partnerOffer &&
+      !hasEnded,
+    [
+      signalsPartnerOffersEnabled,
+      showActivePartnerOffer,
+      partnerOffer,
+      hasEnded,
+    ]
   )
+
   const padForActivePartnerOfferLine: boolean =
     !!signalsPartnerOffersEnabled &&
     !!showActivePartnerOffer &&
@@ -318,8 +357,12 @@ export const Details: React.FC<DetailsProps> = ({
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
         )}
       </Box>
-
-      {!hideSaleInfo && <SaleInfoLine {...rest} />}
+      {!hideSaleInfo && (
+        <SaleInfoLine
+          showActivePartnerOfferLine={showActivePartnerOfferLine}
+          {...rest}
+        />
+      )}
       {padForActivePartnerOfferLine && <EmptyLine />}
     </Box>
   )
