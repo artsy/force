@@ -1,7 +1,8 @@
-import { Box, Clickable, Text } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import { FC, useEffect } from "react"
 import ChevronSmallRightIcon from "@artsy/icons/ChevronSmallRightIcon"
 import { useCursor } from "use-cursor"
+import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 
 const TEXTS = [
   "Get the app, get the art.",
@@ -17,17 +18,17 @@ const TEXTS = [
 ]
 
 export interface AppDownloadBannerProps {
-  transitionDuration: number
-  idleDuration: number
+  transitionDuration?: number
+  idleDuration?: number
 }
 
 export const AppDownloadBanner: FC<AppDownloadBannerProps> = ({
-  transitionDuration,
-  idleDuration,
+  transitionDuration = 1500,
+  idleDuration = 4000,
 }) => {
-  const { index, handleNext } = useCursor({
-    max: TEXTS.length,
-  })
+  const { downloadAppUrl } = useDeviceDetection()
+
+  const { index, handleNext } = useCursor({ max: TEXTS.length })
 
   useEffect(() => {
     const interval = setInterval(handleNext, transitionDuration + idleDuration)
@@ -38,7 +39,7 @@ export const AppDownloadBanner: FC<AppDownloadBannerProps> = ({
 
   return (
     <Text
-      as={Clickable}
+      as="a"
       variant="xs"
       bg="black100"
       color="white100"
@@ -48,6 +49,10 @@ export const AppDownloadBanner: FC<AppDownloadBannerProps> = ({
       justifyContent="space-between"
       alignItems="center"
       width="100%"
+      // @ts-ignore
+      href={downloadAppUrl}
+      target="_blank"
+      style={{ textDecoration: "none" }}
     >
       <Box position="relative" flex={1}>
         {TEXTS.map((text, i) => {
