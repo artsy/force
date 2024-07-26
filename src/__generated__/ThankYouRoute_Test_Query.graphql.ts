@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6df5d99d78c3db659562a3bc36a9b8b9>>
+ * @generated SignedSource<<71c0acbff6a559dc4540ae95a44c866b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 export type ThankYouRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type ThankYouRoute_Test_Query$data = {
   readonly submission: {
