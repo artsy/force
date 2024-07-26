@@ -67,9 +67,6 @@ app.use(
   })
 )
 
-// Mount middleware
-initializeMiddleware(app)
-
 const mountAndReload = createReloadable(app, require)
 
 // Mount express-reloadable on app

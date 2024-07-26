@@ -71,8 +71,6 @@ import { userPreferencesMiddleware } from "./Server/middleware/userPreferencesMi
 import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
 import { graphqlCacheProxyMiddleware } from "Server/middleware/graphqlCacheProxyMiddleware"
 
-// Find the v2 routes, we will not be testing memory caching for legacy pages.
-
 export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)
 
