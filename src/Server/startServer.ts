@@ -2,7 +2,6 @@ import http from "http"
 import withGracefulShutdown from "http-shutdown"
 import { once } from "lodash"
 import { initializeArtsyXapp } from "./artsyXapp"
-import { initializeCache } from "./cacheClient"
 import { errorHandlerMiddleware } from "./middleware/errorHandler"
 import * as Sentry from "@sentry/node"
 import { APP_URL, NODE_ENV, PORT } from "Server/config"
@@ -14,8 +13,6 @@ const { HEADERS_TIMEOUT_SECONDS, KEEPALIVE_TIMEOUT_SECONDS } = process.env
  * cache have a chance to be refactored.
  */
 export async function startServer(app) {
-  await initializeCache()
-
   setupErrorHandling(app)
 
   initializeArtsyXapp(() => {

@@ -11,25 +11,27 @@ import {
 } from "relay-runtime"
 import { getENV } from "Utils/getENV"
 
-const logger = createLogger("System/middleware/cache/Cache")
+const logger = createLogger("System/Relay/middleware/cache/Cache")
 
 export interface CacheConfig {
   size: number
   ttl: number // in milliseconds
-  disableServerSideCache?: boolean
+  enableRedisGraphqlCache?: boolean
 }
 
 export class Cache {
   cacheConfig: CacheConfig
-  enableServerSideCache: boolean
+  enableRedisGraphqlCache: boolean
   relayCache: RelayQueryResponseCache
 
   constructor(cacheConfig: CacheConfig) {
     this.cacheConfig = cacheConfig
-    this.enableServerSideCache =
-      getENV("ENABLE_GRAPHQL_REDIS_CACHE") === "true" &&
+
+    this.enableRedisGraphqlCache =
+      getENV("ENABLE_REDIS_GRAPHQL_CACHE") === "true" &&
       isServer &&
-      !this.cacheConfig.disableServerSideCache
+      !!this.cacheConfig.enableRedisGraphqlCache
+
     this.initRelayCache()
   }
 
@@ -48,7 +50,7 @@ export class Cache {
     if (cachedRes) return cachedRes
 
     // No cache in relay store, check redis
-    if (this.enableServerSideCache) {
+    if (this.enableRedisGraphqlCache) {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {
@@ -56,10 +58,10 @@ export class Cache {
 
         if (rawCachedRes) {
           cachedRes = JSON.parse(rawCachedRes)
-          logger.log("\n[RelayCache#get] Success", cacheKey)
+          logger.log("\n[RedisGraphqlCache#get] Success", cacheKey)
         }
       } catch (error) {
-        logger.error("[RelayCache#get] Error", cacheKey, error)
+        logger.error("[RedisGraphqlCache#get] Error", cacheKey, error)
       }
     }
 
@@ -75,7 +77,7 @@ export class Cache {
     this.relayCache.set(queryId, variables, res)
 
     // Store in redis during server-side pass
-    if (this.enableServerSideCache && !options?.cacheConfig?.force) {
+    if (this.enableRedisGraphqlCache && !options?.cacheConfig?.force) {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {
@@ -90,9 +92,9 @@ export class Cache {
           "PX",
           this.cacheConfig.ttl
         )
-        logger.log("\n[RelayCache#set] Success", cacheKey)
+        logger.log("\n[RedisGraphqlCache#set] Success", cacheKey)
       } catch (error) {
-        logger.error("[RelayCache#set] Error", cacheKey, error)
+        logger.error("[RedisGraphqlCache#set] Error", cacheKey, error)
       }
     }
   }

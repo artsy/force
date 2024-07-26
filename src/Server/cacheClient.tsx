@@ -1,5 +1,6 @@
+import { isServer } from "Server/isServer"
 import createLogger from "Utils/logger"
-import { cache as artsyCache } from "./cache"
+import { RedisClient } from "redis"
 
 interface RedisCache {
   get: (key: string) => Promise<string>
@@ -9,27 +10,31 @@ interface RedisCache {
     expirationCommandCode?: string,
     expirationValue?: string | number
   ) => Promise<void>
+  redisClient: RedisClient
 }
 
 let redisClient
-let cache: RedisCache
 
 const logger = createLogger("Server/cacheClient")
+
 const cacheAccessTimeoutMs =
   process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS || "200"
 
 const safeCacheCommand = async (func, ...args) => {
   try {
     let data
+
     await new Promise<void>((resolve, reject) => {
       // Will reject promise after configured timeout if the
       // cache command has not completed yet.
       let timeoutId = setTimeout(() => {
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         timeoutId = null
+
         const error = new Error(
           `Timeout of ${cacheAccessTimeoutMs}ms, skipping...`
         )
+
         reject(error)
       }, parseInt(cacheAccessTimeoutMs))
 
@@ -55,7 +60,11 @@ const safeCacheCommand = async (func, ...args) => {
   }
 }
 
-const redisCacheSetup = cb => {
+const redisCacheSetup = (cb?) => {
+  if (!isServer) {
+    return
+  }
+
   const redis = require("redis")
 
   redisClient = redis.createClient({
@@ -85,24 +94,11 @@ const redisCacheSetup = cb => {
     return await safeCacheCommand("get", key)
   }
 
-  cache = {
+  return {
     get: cacheGet,
     set: cacheSet,
+    redisClient,
   }
-
-  cb()
 }
 
-export { cache }
-
-/**
- * Connect to Redis
- * TODO: Should we still hold off the server spin up until after the cache is loaded?
- */
-export function initializeCache() {
-  console.log("[Force] Initializing cache...")
-
-  return new Promise(resolve => {
-    artsyCache.setup(() => redisCacheSetup(resolve))
-  })
-}
+export const cache = redisCacheSetup() as RedisCache

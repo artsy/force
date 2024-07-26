@@ -62,9 +62,6 @@ export const viewingRoomRoutes: RouteProps[] = [
         }
       }
     `,
-    cacheConfig: {
-      force: true,
-    },
   },
   {
     path: "/viewing-room/:slug",

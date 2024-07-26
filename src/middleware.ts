@@ -69,6 +69,7 @@ import {
 import { registerFeatureFlagService } from "./Server/featureFlags/featureFlagService"
 import { userPreferencesMiddleware } from "./Server/middleware/userPreferencesMiddleware"
 import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
+import { graphqlCacheProxyMiddleware } from "Server/middleware/graphqlCacheProxyMiddleware"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 
@@ -111,6 +112,9 @@ export function initializeMiddleware(app) {
   app.use(hardcodedRedirectsMiddleware)
   app.use(localsMiddleware)
   app.use(sameOriginMiddleware)
+
+  // Mount MP Graphql proxy and cache
+  app.use("/api/metaphysics", graphqlCacheProxyMiddleware)
 
   // Need sharify for unleash
   registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)

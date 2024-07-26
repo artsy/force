@@ -20,6 +20,7 @@ import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsE
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
 import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmediateResolveMiddleware"
 import { cacheMiddleware } from "System/Relay/middleware/cache/cacheMiddleware"
+import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 
 const logger = createLogger("System/Relay/createRelaySSREnvironment")
 
@@ -52,10 +53,10 @@ export function createRelaySSREnvironment(config: Config = {}) {
     user,
     relayNetwork,
     userAgent,
-    metaphysicsEndpoint,
+    metaphysicsEndpoint = getMetaphysicsEndpoint(),
   } = config
 
-  const url = metaphysicsEndpoint ?? `${getENV("APP_URL")}/api/metaphysics`
+  console.log(metaphysicsEndpoint)
 
   /**
    * Lazy load these here so we can safely ignore the server module from client
@@ -102,15 +103,16 @@ export function createRelaySSREnvironment(config: Config = {}) {
   const middlewares = [
     searchBarImmediateResolveMiddleware(),
     urlMiddleware({
-      url,
+      url: metaphysicsEndpoint,
       headers: authenticatedHeaders,
+      method: "POST",
     }),
     relaySSRMiddleware.getMiddleware(),
     cacheMiddleware({
-      size: Number(getENV("NETWORK_CACHE_SIZE")) ?? 2000, // max 2000 requests
-      ttl: Number(getENV("NETWORK_CACHE_TTL")) ?? 3600000, // 1 hour
+      size: Number(getENV("REDIS_GRAPHQL_CACHE_SIZE")) ?? 2000, // max 2000 requests
+      ttl: Number(getENV("REDIS_GRAPHQL_CACHE_TTL")) ?? 3600000, // 1 hour
       clearOnMutation: true,
-      disableServerSideCache: !!user, // disable server-side cache if logged in
+      enableRedisGraphqlCache: !user, // disable server-side cache if logged in
       onInit: queryResponseCache => {
         if (!isServer) {
           hydrateCacheFromSSR(queryResponseCache)

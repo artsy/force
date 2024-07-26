@@ -49,7 +49,7 @@ declare module "sharify" {
       ENABLE_NEW_AUCTIONS_FILTER: boolean
       ENABLE_QUERY_BATCHING: boolean
       ENABLE_SAVED_SEARCH: boolean
-      ENABLE_GRAPHQL_REDIS_CACHE: string
+      ENABLE_REDIS_GRAPHQL_CACHE: string
       ENABLE_WEB_CRAWLING: string
       FACEBOOK_APP_NAMESPACE: string
       FACEBOOK_ID: string
@@ -65,8 +65,6 @@ declare module "sharify" {
       IS_MOBILE: boolean
       JSON_PAGE_DATA: any
       METAPHYSICS_ENDPOINT: string
-      NETWORK_CACHE_SIZE: string
-      NETWORK_CACHE_TTL: string
       NODE_ENV: string
       NOTIFICATION_COUNT: string
       PAGE_TYPE?: string
@@ -78,6 +76,8 @@ declare module "sharify" {
       PROFILE?: any // mobile partner app data
       PUBLIC_GOOGLE_MAPS_API_KEY: string
       RECAPTCHA_KEY: string
+      REDIS_GRAPHQL_CACHE_SIZE: string
+      REDIS_GRAPHQL_CACHE_TTL: string
       REQUEST_ID?: string
       RESET_PASSWORD_REDIRECT_TO: string
       RESET_PASSWORD_TOKEN: string

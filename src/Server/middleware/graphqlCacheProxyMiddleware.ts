@@ -1,9 +1,9 @@
 import { createProxyMiddleware, fixRequestBody } from "http-proxy-middleware"
-import { METAPHYSICS_ENDPOINT, ENABLE_GRAPHQL_REDIS_CACHE } from "Server/config"
+import { METAPHYSICS_ENDPOINT, ENABLE_REDIS_GRAPHQL_CACHE } from "Server/config"
 import { cache } from "Server/cacheClient"
 
 export const graphqlCacheProxyMiddleware = async (req, res, next) => {
-  if (ENABLE_GRAPHQL_REDIS_CACHE) {
+  if (ENABLE_REDIS_GRAPHQL_CACHE) {
     try {
       const queryId = req.body?.id
       const variables = req.body?.variables
@@ -11,14 +11,14 @@ export const graphqlCacheProxyMiddleware = async (req, res, next) => {
       const response = await cache.get(cacheKey)
 
       if (response) {
-        console.log("[cacheProxyMiddleware] Cache hit:", cacheKey)
+        console.log("\n[graphqlCacheProxyMiddleware#get] Success", cacheKey)
 
         const parsed = JSON.parse(response).json
 
         return res.json(parsed)
       }
     } catch (error) {
-      console.error("[cacheProxyMiddleware] Error:", error)
+      console.error("[graphqlCacheProxyMiddleware] Error:", error)
     }
   }
 
