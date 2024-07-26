@@ -57,6 +57,7 @@ describe("Artsy context", () => {
               "setRouter",
               "setUser",
               "user",
+              "userPreferences",
             ])
             setTimeout(done, 0)
             return <div />
