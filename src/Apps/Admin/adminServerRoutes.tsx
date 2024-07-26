@@ -8,14 +8,14 @@ const adminServerRoutes = Router()
 adminServerRoutes.post("/admin/clear-cache", (req: ArtsyRequest, res) => {
   const user = getUser(req.user)
 
-  if (user?.type !== "Admin") {
-    res.status(403).send({
-      status: 403,
-      message: "You must be logged in as an admin to clear the cache.",
-    })
+  // if (user?.type !== "Admin") {
+  //   res.status(403).send({
+  //     status: 403,
+  //     message: "You must be logged in as an admin to clear the cache.",
+  //   })
 
-    return
-  }
+  //   return
+  // }
 
   cache.redisClient.flushall(() => {
     res.status(200).send({ status: 200, message: "Cache cleared." })

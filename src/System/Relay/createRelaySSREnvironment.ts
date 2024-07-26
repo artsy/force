@@ -8,6 +8,7 @@ import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import {
   RelayNetworkLayer,
   batchMiddleware,
+  cacheMiddleware,
   errorMiddleware,
   loggerMiddleware,
   urlMiddleware,
@@ -19,7 +20,6 @@ import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsError
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
 import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmediateResolveMiddleware"
-import { cacheMiddleware } from "System/Relay/middleware/cache/cacheMiddleware"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 
 const logger = createLogger("System/Relay/createRelaySSREnvironment")
@@ -112,7 +112,6 @@ export function createRelaySSREnvironment(config: Config = {}) {
       size: Number(getENV("GRAPHQL_CACHE_SIZE")) ?? 2000, // max 2000 requests
       ttl: Number(getENV("GRAPHQL_CACHE_TTL")) ?? 3600000, // 1 hour
       clearOnMutation: true,
-      enableGraphqlProxy: !user, // disable server-side cache if logged in
       onInit: queryResponseCache => {
         if (!isServer) {
           hydrateCacheFromSSR(queryResponseCache)
