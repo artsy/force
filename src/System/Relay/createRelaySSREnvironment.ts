@@ -109,10 +109,10 @@ export function createRelaySSREnvironment(config: Config = {}) {
     }),
     relaySSRMiddleware.getMiddleware(),
     cacheMiddleware({
-      size: Number(getENV("REDIS_GRAPHQL_CACHE_SIZE")) ?? 2000, // max 2000 requests
-      ttl: Number(getENV("REDIS_GRAPHQL_CACHE_TTL")) ?? 3600000, // 1 hour
+      size: Number(getENV("GRAPHQL_CACHE_SIZE")) ?? 2000, // max 2000 requests
+      ttl: Number(getENV("GRAPHQL_CACHE_TTL")) ?? 3600000, // 1 hour
       clearOnMutation: true,
-      enableRedisGraphqlCache: !user, // disable server-side cache if logged in
+      enableGraphqlProxy: !user, // disable server-side cache if logged in
       onInit: queryResponseCache => {
         if (!isServer) {
           hydrateCacheFromSSR(queryResponseCache)

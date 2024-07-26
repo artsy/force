@@ -26,13 +26,13 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
     allowFormData,
     clearOnMutation,
     cacheErrors,
-    enableRedisGraphqlCache = false,
+    enableGraphqlProxy = false,
   } = opts || {}
 
   const cache = new Cache({
     size: size || 100, // 100 requests
     ttl: ttl || 15 * 60 * 1000, // 15 minutes
-    enableRedisGraphqlCache,
+    enableGraphqlProxy,
   })
 
   if (isFunction(onInit)) {
@@ -56,7 +56,7 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
     }
 
     if (
-      (isServer && !enableRedisGraphqlCache) ||
+      (isServer && !enableGraphqlProxy) ||
       (req.cacheConfig && req.cacheConfig.force)
     ) {
       return next(req)

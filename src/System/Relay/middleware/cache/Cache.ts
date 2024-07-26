@@ -16,21 +16,21 @@ const logger = createLogger("System/Relay/middleware/cache/Cache")
 export interface CacheConfig {
   size: number
   ttl: number // in milliseconds
-  enableRedisGraphqlCache?: boolean
+  enableGraphqlProxy?: boolean
 }
 
 export class Cache {
   cacheConfig: CacheConfig
-  enableRedisGraphqlCache: boolean
+  enableGraphqlProxy: boolean
   relayCache: RelayQueryResponseCache
 
   constructor(cacheConfig: CacheConfig) {
     this.cacheConfig = cacheConfig
 
-    this.enableRedisGraphqlCache =
-      getENV("ENABLE_REDIS_GRAPHQL_CACHE") === "true" &&
+    this.enableGraphqlProxy =
+      getENV("ENABLE_GRAPHQL_PROXY") === "true" &&
       isServer &&
-      !!this.cacheConfig.enableRedisGraphqlCache
+      !!this.cacheConfig.enableGraphqlProxy
 
     this.initRelayCache()
   }
@@ -50,7 +50,7 @@ export class Cache {
     if (cachedRes) return cachedRes
 
     // No cache in relay store, check redis
-    if (this.enableRedisGraphqlCache) {
+    if (this.enableGraphqlProxy) {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {
@@ -77,7 +77,7 @@ export class Cache {
     this.relayCache.set(queryId, variables, res)
 
     // Store in redis during server-side pass
-    if (this.enableRedisGraphqlCache && !options?.cacheConfig?.force) {
+    if (this.enableGraphqlProxy && !options?.cacheConfig?.force) {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {

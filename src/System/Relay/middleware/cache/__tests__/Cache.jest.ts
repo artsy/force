@@ -30,24 +30,24 @@ describe("Cache", () => {
     jest.restoreAllMocks()
   })
 
-  describe("enableRedisGraphqlCache", () => {
+  describe("enableGraphqlProxy", () => {
     it("disables if disableServerSideCache=true", () => {
-      process.env.ENABLE_REDIS_GRAPHQL_CACHE = "true"
+      process.env.ENABLE_GRAPHQL_PROXY = "true"
       const cache = getCache({ disableServerSideCache: true })
-      expect(cache.enableRedisGraphqlCache).toBe(false)
+      expect(cache.enableGraphqlProxy).toBe(false)
     })
 
     it("enables if disableServerSideCache=false", () => {
-      process.env.ENABLE_REDIS_GRAPHQL_CACHE = "true"
+      process.env.ENABLE_GRAPHQL_PROXY = "true"
       const cache = getCache({ disableServerSideCache: false })
-      expect(cache.enableRedisGraphqlCache).toBe(true)
+      expect(cache.enableGraphqlProxy).toBe(true)
     })
 
-    describe("env var overides via ENABLE_REDIS_GRAPHQL_CACHE", () => {
+    describe("env var overides via ENABLE_GRAPHQL_PROXY", () => {
       it("enables if disableServerSideCache=false", () => {
-        process.env.ENABLE_REDIS_GRAPHQL_CACHE = "false"
+        process.env.ENABLE_GRAPHQL_PROXY = "false"
         const cache = getCache({ disableServerSideCache: false })
-        expect(cache.enableRedisGraphqlCache).toBe(false)
+        expect(cache.enableGraphqlProxy).toBe(false)
       })
     })
   })
@@ -75,7 +75,7 @@ describe("Cache", () => {
     describe("client", () => {
       it("sets / gets the cache by cacheKey", async () => {
         const cache = getCache()
-        cache.enableRedisGraphqlCache = false
+        cache.enableGraphqlProxy = false
         const queryId = "ArtistQuery"
         const variables = { slug: "picasso" }
         const response = { data: { artist: { slug: "picasso" } } }
@@ -88,10 +88,10 @@ describe("Cache", () => {
     })
 
     describe("server", () => {
-      it("does not set cache if enableRedisGraphqlCache=false", async () => {
+      it("does not set cache if enableGraphqlProxy=false", async () => {
         const cacheSpy = jest.spyOn(cacheClient, "set")
         const cache = getCache()
-        cache.enableRedisGraphqlCache = false
+        cache.enableGraphqlProxy = false
         const queryId = "ArtistQuery"
         const variables = { slug: "picasso" }
         const response = { data: { artist: { slug: "picasso" } } }
@@ -104,7 +104,7 @@ describe("Cache", () => {
       it("does not set cache if cacheConfig.force=true", async () => {
         const cacheSpy = jest.spyOn(cacheClient, "get")
         const cache = getCache()
-        cache.enableRedisGraphqlCache = true
+        cache.enableGraphqlProxy = true
         const queryId = "ArtistQuery"
         const variables = { slug: "picasso" }
         const response = { data: { artist: { slug: "picasso" } } }
@@ -116,7 +116,7 @@ describe("Cache", () => {
 
       it("gets / sets the cache by cacheKey", async () => {
         const cache = getCache()
-        cache.enableRedisGraphqlCache = true
+        cache.enableGraphqlProxy = true
         cache.relayCache.get = jest.fn()
         const queryId = "ArtistQuery"
         const variables = { slug: "picasso" }
@@ -132,7 +132,7 @@ describe("Cache", () => {
   describe("cache.clear", () => {
     it("clears all caches", () => {
       const cache = getCache()
-      cache.enableRedisGraphqlCache = true
+      cache.enableGraphqlProxy = true
       const relaySpy = jest.fn()
       cache.relayCache.clear = relaySpy
       cache.clear()

@@ -1,14 +1,14 @@
 import { createProxyMiddleware, fixRequestBody } from "http-proxy-middleware"
 import {
   METAPHYSICS_ENDPOINT,
-  ENABLE_REDIS_GRAPHQL_CACHE,
-  REDIS_GRAPHQL_CACHE_TTL,
+  ENABLE_GRAPHQL_PROXY,
+  GRAPHQL_CACHE_TTL,
 } from "Server/config"
 import { cache } from "Server/cacheClient"
 import { createGunzip } from "zlib"
 
 export const graphqlCacheProxyMiddleware = async (req, res, next) => {
-  if (ENABLE_REDIS_GRAPHQL_CACHE) {
+  if (ENABLE_GRAPHQL_PROXY) {
     try {
       const queryId = req.body?.id
       const variables = req.body?.variables
@@ -49,12 +49,7 @@ export const graphqlCacheProxyMiddleware = async (req, res, next) => {
               const variables = req.body?.variables
               const cacheKey = JSON.stringify({ queryId, variables })
 
-              await cache.set(
-                cacheKey,
-                responseBody,
-                "PX",
-                REDIS_GRAPHQL_CACHE_TTL
-              )
+              await cache.set(cacheKey, responseBody, "PX", GRAPHQL_CACHE_TTL)
 
               // await cache.set(cacheKey, JSON.stringify({ json: jsonResponse }));
               console.log(
