@@ -38,6 +38,7 @@ import {
   IP_DENYLIST,
   NODE_ENV,
   SENTRY_PRIVATE_DSN,
+  ENABLE_GRAPHQL_PROXY,
 } from "./Server/config"
 
 // NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
@@ -69,7 +70,7 @@ import {
 import { registerFeatureFlagService } from "./Server/featureFlags/featureFlagService"
 import { userPreferencesMiddleware } from "./Server/middleware/userPreferencesMiddleware"
 import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
-import { graphqlCacheProxyMiddleware } from "Server/middleware/graphqlCacheProxyMiddleware"
+import { graphqlProxyMiddleware } from "Server/middleware/graphqlProxyMiddleware"
 
 export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)
@@ -112,7 +113,9 @@ export function initializeMiddleware(app) {
   app.use(sameOriginMiddleware)
 
   // Mount MP Graphql proxy and cache
-  app.use("/api/metaphysics", graphqlCacheProxyMiddleware)
+  if (ENABLE_GRAPHQL_PROXY) {
+    app.use("/api/metaphysics", graphqlProxyMiddleware)
+  }
 
   // Need sharify for unleash
   registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)

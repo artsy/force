@@ -4,7 +4,7 @@ import { getENV } from "Utils/getENV"
 const translations = require("System/i18n/locales/en-US/translation.json")
 
 export default {
-  debug: getENV("ENABLE_I18N_DEBUG") === "true",
+  debug: getENV("ENABLE_I18N_DEBUG"),
   resources: {
     ["en-US"]: {
       translation: translations,
