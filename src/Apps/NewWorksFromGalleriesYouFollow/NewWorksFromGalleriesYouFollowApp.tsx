@@ -11,6 +11,7 @@ import { NewWorksFromGalleriesYouFollowApp_me$data } from "__generated__/NewWork
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { ContextModule, AuthContextModule } from "@artsy/cohesion"
 import { LogInPrompt } from "Apps/Components/LogInPrompt"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 export interface NewWorksFromGalleriesYouFollowAppProps {
   me: NewWorksFromGalleriesYouFollowApp_me$data
@@ -59,12 +60,14 @@ const NewWorksFromGalleriesYouFollowApp: FC<NewWorksFromGalleriesYouFollowAppPro
 
       {artworksConnection?.totalCount ? (
         <>
-          <ArtworkGrid
-            artworks={artworksConnection}
-            columnCount={[2, 3, 3, 4]}
-            to={artwork => `/artwork/${artwork.internalID}`}
-            onLoadMore={handleLoadMore}
-          />
+          <ArtworkGridContextProvider showActivePartnerOffer>
+            <ArtworkGrid
+              artworks={artworksConnection}
+              columnCount={[2, 3, 3, 4]}
+              to={artwork => `/artwork/${artwork.internalID}`}
+              onLoadMore={handleLoadMore}
+            />
+          </ArtworkGridContextProvider>
 
           {relay.hasMore() && (
             <Box textAlign="center" mt={4}>

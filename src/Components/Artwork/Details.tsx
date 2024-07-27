@@ -36,6 +36,10 @@ interface SaleInfoLineProps extends DetailsProps {
   showActivePartnerOfferLine: boolean
 }
 
+interface SaleMessageProps extends DetailsProps {
+  showActivePartnerOfferLine: boolean
+}
+
 const StyledConditionalLink = styled(RouterLink)`
   color: ${themeGet("colors.black100")};
   text-decoration: none;
@@ -159,14 +163,21 @@ const HighDemandInfo = () => {
 
 const NBSP = " "
 
-const SaleMessage: React.FC<DetailsProps> = ({
-  artwork: { sale, sale_message, sale_artwork },
-}) => {
+const SaleMessage: React.FC<SaleMessageProps> = props => {
+  const {
+    artwork: { sale, sale_message, sale_artwork, collectorSignals },
+    showActivePartnerOfferLine,
+  } = props
+
   if (sale?.is_auction && !sale?.is_closed) {
     const highestBid_display = sale_artwork?.highest_bid?.display
     const openingBid_display = sale_artwork?.opening_bid?.display
 
     return <>{highestBid_display || openingBid_display || ""}</>
+  }
+
+  if (showActivePartnerOfferLine) {
+    return <>{collectorSignals?.partnerOffer?.priceWithDiscount?.display}</>
   }
 
   // NBSP is used to prevent un-aligned carousels
@@ -264,8 +275,7 @@ export const Details: React.FC<DetailsProps> = ({
 
   const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
 
-  const { endAt } = partnerOffer ?? {}
-  const { hasEnded } = useTimer(endAt ?? "")
+  const { hasEnded } = useTimer(partnerOffer?.endAt ?? "")
 
   const showActivePartnerOfferLine: boolean = useMemo(
     () =>
@@ -458,6 +468,9 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         lotWatcherCount
         partnerOffer {
           endAt
+          priceWithDiscount {
+            display
+          }
         }
       }
       sale_message: saleMessage

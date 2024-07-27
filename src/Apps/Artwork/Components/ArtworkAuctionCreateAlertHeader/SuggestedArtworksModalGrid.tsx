@@ -58,10 +58,12 @@ export const SuggestedArtworksModalGrid: FC<SuggestedArtworksModalGridProps> = (
         <Spacer y={2} />
       </Media>
 
-      <ArtworkGridContextProvider saveOnlyToDefaultList>
+      <ArtworkGridContextProvider showActivePartnerOffer saveOnlyToDefaultList>
         <GridColumns>
           <Column span={12}>
-            <ArtworkGrid artworks={artworksConnection!} columnCount={2} />
+            {artworksConnection && (
+              <ArtworkGrid artworks={artworksConnection} columnCount={2} />
+            )}
           </Column>
         </GridColumns>
       </ArtworkGridContextProvider>

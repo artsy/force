@@ -3,6 +3,7 @@ import React, { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { NewForYouArtworksGrid_viewer$data } from "__generated__/NewForYouArtworksGrid_viewer.graphql"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface NewForYouArtworksGridProps {
   viewer: NewForYouArtworksGrid_viewer$data
@@ -15,10 +16,12 @@ export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({
     <>
       {viewer.artworksForUser &&
       (viewer.artworksForUser.totalCount ?? 0) > 0 ? (
-        <ArtworkGrid
-          artworks={viewer.artworksForUser}
-          columnCount={[2, 3, 4]}
-        />
+        <ArtworkGridContextProvider showActivePartnerOffer>
+          <ArtworkGrid
+            artworks={viewer.artworksForUser}
+            columnCount={[2, 3, 4]}
+          />
+        </ArtworkGridContextProvider>
       ) : (
         <Text variant="lg-display" mt={4} color="black60">
           Nothing yet.
