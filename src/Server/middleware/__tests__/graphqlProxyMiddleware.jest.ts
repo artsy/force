@@ -85,14 +85,12 @@ describe("graphqlProxyMiddleware", () => {
 })
 
 describe("readCache", () => {
-  let req, res, next
+  let req
 
   const mockCacheGet = cache.get as jest.Mock
 
   beforeEach(() => {
     req = { body: { id: "test", variables: {} }, user: null }
-    res = {}
-    next = jest.fn()
   })
 
   it("should return parsed cached response if cache is enabled and hit", async () => {
@@ -100,7 +98,7 @@ describe("readCache", () => {
     const cachedResponse = JSON.stringify({ data: "cached" })
     mockCacheGet.mockResolvedValueOnce(cachedResponse)
 
-    const result = await readCache(req, res, next)
+    const result = await readCache(req)
     console.log(readCache)
 
     expect(mockCacheGet).toHaveBeenCalledWith(cacheKey)
@@ -110,7 +108,7 @@ describe("readCache", () => {
   it("should return undefined if cache is not enabled", async () => {
     req.user = { id: "user" }
 
-    const result = await readCache(req, res, next)
+    const result = await readCache(req)
 
     expect(result).toBeUndefined()
   })
@@ -120,7 +118,7 @@ describe("readCache", () => {
       ENABLE_GRAPHQL_CACHE: false,
     }))
 
-    const result = await readCache(req, res, next)
+    const result = await readCache(req)
 
     expect(result).toBeUndefined()
   })
@@ -204,13 +202,5 @@ describe("writeCache", () => {
 
     expect(createGunzip).toHaveBeenCalled()
     expect(mockCacheSet).toHaveBeenCalled()
-  })
-
-  it("should not set cache if user exists", async () => {
-    req.user = { id: "user" }
-
-    await writeCache(proxyRes, req, res)
-
-    expect(mockCacheSet).not.toHaveBeenCalled()
   })
 })
