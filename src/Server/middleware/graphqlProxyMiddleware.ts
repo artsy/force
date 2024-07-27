@@ -8,6 +8,7 @@ import { cache } from "Server/cacheClient"
 import { createGunzip } from "zlib"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { NextFunction } from "express"
+import { IncomingMessage } from "http"
 
 export const graphqlProxyMiddleware = async (
   req: ArtsyRequest,
@@ -17,30 +18,32 @@ export const graphqlProxyMiddleware = async (
   const isLoggedIn = !!req.user
 
   if (!isLoggedIn) {
-    const cachedResponse = await readCache(req, res, next)
+    const cachedResponse = await readCache(req)
 
     if (cachedResponse) {
       return res.json(cachedResponse)
     }
   }
 
-  const proxyConfig = {
+  return createProxyMiddleware({
     target: `${METAPHYSICS_ENDPOINT}/v2`,
     changeOrigin: true,
     on: {
       proxyReq: fixRequestBody,
-      proxyRes: (proxyRes, req, res) => {
+      proxyRes: (
+        proxyRes: IncomingMessage,
+        req: ArtsyRequest,
+        res: ArtsyResponse
+      ) => {
         if (!isLoggedIn) {
           writeCache(proxyRes, req, res)
         }
       },
     },
-  }
-
-  return createProxyMiddleware(proxyConfig)(req, res, next)
+  })(req, res, next)
 }
 
-export const readCache = async (req, res, next) => {
+export const readCache = async (req: ArtsyRequest) => {
   if (ENABLE_GRAPHQL_CACHE) {
     try {
       const queryId = req.body?.id
@@ -65,7 +68,11 @@ export const readCache = async (req, res, next) => {
   }
 }
 
-export const writeCache = async (proxyRes, req, res) => {
+export const writeCache = async (
+  proxyRes: IncomingMessage,
+  req: ArtsyRequest,
+  res: ArtsyResponse
+) => {
   if (ENABLE_GRAPHQL_CACHE) {
     if (proxyRes.statusCode !== 200) {
       return res.end()
