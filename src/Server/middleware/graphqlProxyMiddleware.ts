@@ -56,7 +56,7 @@ export const readCache = async (req: ArtsyRequest) => {
       const response = await cache.get(cacheKey)
 
       if (response) {
-        console.log("\n[graphqlProxyMiddleware#get] Success", cacheKey)
+        console.log("\n[graphqlProxyMiddleware#get] Cache hit", cacheKey)
 
         const parsedResponse = JSON.parse(response)
 
@@ -75,13 +75,31 @@ export const writeCache = async (
 ) => {
   if (ENABLE_GRAPHQL_CACHE) {
     if (proxyRes.statusCode !== 200) {
-      return res.end()
+      res.end()
+      return
+    }
+
+    const contentEncoding = proxyRes.headers["content-encoding"]
+
+    // TODO: We might need to handle other content types, like Brotli (br)
+    if (contentEncoding !== "gzip") {
+      res.end()
+      return
     }
 
     let responseBody = ""
 
     const gunzip = createGunzip()
     const stream = proxyRes.pipe(gunzip)
+
+    stream.on("error", error => {
+      console.log(
+        "\n[graphqlProxyMiddleware # writeCache] Decompression Error:",
+        error
+      )
+
+      res.end()
+    })
 
     stream.on("data", chunk => {
       responseBody += chunk

@@ -131,7 +131,11 @@ describe("writeCache", () => {
   const mockCreateGunzip = createGunzip as jest.Mock
 
   beforeEach(() => {
-    proxyRes = { statusCode: 200, pipe: jest.fn() }
+    proxyRes = {
+      statusCode: 200,
+      pipe: jest.fn(),
+      headers: { "content-encoding": "gzip" },
+    }
     req = { body: { id: "test", variables: {} }, user: null }
     res = { end: jest.fn() }
   })
@@ -145,6 +149,7 @@ describe("writeCache", () => {
     const responseBody = '{"data":"response"}'
 
     proxyRes = {
+      ...proxyRes,
       statusCode: 200,
       pipe: jest.fn().mockReturnThis(),
       on: (event, callback) => {
@@ -178,11 +183,22 @@ describe("writeCache", () => {
     expect(mockCacheSet).not.toHaveBeenCalled()
   })
 
+  it("should not set cache if response is not gzip", async () => {
+    proxyRes.statusCode = 200
+    proxyRes.headers = { "content-encoding": "br" }
+
+    await writeCache(proxyRes, req, res)
+
+    expect(res.end).toHaveBeenCalled()
+    expect(mockCacheSet).not.toHaveBeenCalled()
+  })
+
   it("should handle cache set errors gracefully", async () => {
     const responseBody = '{"data":"response"}'
     const cacheError = new Error("Cache set error")
 
     proxyRes = {
+      ...proxyRes,
       statusCode: 200,
       pipe: jest.fn().mockReturnThis(),
       on: (event, callback) => {
