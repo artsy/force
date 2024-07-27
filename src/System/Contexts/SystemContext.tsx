@@ -17,7 +17,6 @@ export type UserPreferences = {
  * leading to an infinite loop.
  */
 export type SystemContextState = Partial<{
-  isFetching: boolean
   router: Router | null
   setRouter: (router?: Router) => void
 

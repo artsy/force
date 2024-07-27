@@ -6,32 +6,35 @@ import {
 } from "Server/config"
 import { cache } from "Server/cacheClient"
 import { createGunzip } from "zlib"
-import { isEmpty } from "lodash"
-import { getUser } from "Utils/user"
+import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 
-export const graphqlProxyMiddleware = async (req, res, next) => {
-  const user = getUser(req.user)
+export const graphqlProxyMiddleware = async (
+  req: ArtsyRequest,
+  res: ArtsyResponse,
+  next
+) => {
+  const CACHE_ENABLED = ENABLE_GRAPHQL_CACHE && !req.user
 
-  if (!user && ENABLE_GRAPHQL_CACHE) {
+  if (CACHE_ENABLED) {
     try {
       const queryId = req.body?.id
       const variables = req.body?.variables
       const cacheKey = JSON.stringify({
         queryId,
-        variables: isEmpty(variables) ? null : variables,
+        variables,
       })
 
       const response = await cache.get(cacheKey)
 
       if (response) {
-        console.log("\n[graphqlCacheProxyMiddleware#get] Success", cacheKey)
+        console.log("\n[graphqlProxyMiddleware#get] Success", cacheKey)
 
         const parsed = JSON.parse(response)
 
         return res.json(parsed)
       }
     } catch (error) {
-      console.error("[graphqlCacheProxyMiddleware] Error:", error)
+      console.error("[graphqlProxyMiddleware] Cache Error:", error)
     }
   }
 
@@ -41,7 +44,7 @@ export const graphqlProxyMiddleware = async (req, res, next) => {
     on: {
       proxyReq: fixRequestBody,
       proxyRes: async (proxyRes, req, res) => {
-        if (ENABLE_GRAPHQL_CACHE) {
+        if (CACHE_ENABLED) {
           if (proxyRes.statusCode !== 200) {
             return res.end()
           }
@@ -61,7 +64,7 @@ export const graphqlProxyMiddleware = async (req, res, next) => {
               const variables = req.body?.variables
               const cacheKey = JSON.stringify({
                 queryId,
-                variables: isEmpty(variables) ? null : variables,
+                variables,
               })
 
               await cache.set(
@@ -72,12 +75,12 @@ export const graphqlProxyMiddleware = async (req, res, next) => {
               )
 
               console.log(
-                "\n[graphqlCacheProxyMiddleware#set] Cache updated",
+                "\n[graphqlProxyMiddleware#set] Cache updated",
                 cacheKey
               )
             } catch (error) {
               console.error(
-                "[graphqlCacheProxyMiddleware#proxyRes] Error:",
+                "[graphqlProxyMiddleware#proxyRes] Cache Error:",
                 error
               )
             }

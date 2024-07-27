@@ -174,7 +174,6 @@ describe("serverRouter", () => {
               "featureFlags",
               "initialMatchingMediaQueries",
               "isEigen",
-              "isFetching",
               "isLoggedIn",
               "relayEnvironment",
               "router",
