@@ -135,6 +135,16 @@ export function createRelaySSREnvironment(config: Config = {}) {
           }),
         ]
       : []),
+
+    next => async req => {
+      if (!isServer) {
+        req.fetchOpts.headers = {
+          "X-Current-Url": window.location.pathname,
+        }
+      }
+      const res = await next(req)
+      return res
+    },
   ]
 
   // TODO: The `noThrow` option is used since we do our own error handling,

@@ -2,13 +2,17 @@ import { compact, uniq } from "lodash"
 import { RouteProps } from "System/Router/Route"
 import { match } from "path-to-regexp"
 
-export function getRoutes(): {
+export function getRoutes(
+  fullRepresentation = true
+): {
   routes: RouteProps[]
   routePaths: string[]
   flatRoutes: RouteProps[]
 } {
   // Avoid circular dep
-  const routes = require("routes").getAppRoutes()
+  const routes = fullRepresentation
+    ? require("routes").getAppRoutes()
+    : require("routes").ROUTES.flat()
 
   // Store all routes, including `children` routes, in a flat array. Useful for
   // lookup and other forms of introspection.
@@ -74,8 +78,8 @@ export const findCurrentRoute = (match): RouteProps => {
   return route
 }
 
-export function findRoutesByPath({ path }): RouteProps[] {
-  const { flatRoutes = [] } = getRoutes()
+export function findRoutesByPath({ path, fullRepresentation }): RouteProps[] {
+  const { flatRoutes = [] } = getRoutes(fullRepresentation)
 
   const foundRoutes = flatRoutes.filter(route => {
     const matcher = match(route.path as string, { decode: decodeURIComponent })

@@ -9,12 +9,22 @@ import { createGunzip } from "zlib"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { NextFunction } from "express"
 import { IncomingMessage } from "http"
+import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 
 export const graphqlProxyMiddleware = async (
   req: ArtsyRequest,
   res: ArtsyResponse,
   next: NextFunction
 ) => {
+  const path = req.headers["x-current-url"]
+
+  const route = findRoutesByPath({
+    path,
+    fullRepresentation: false,
+  })
+
+  console.log(route.cacheConfig)
+
   const isLoggedIn = !!req.user
 
   if (!isLoggedIn) {
