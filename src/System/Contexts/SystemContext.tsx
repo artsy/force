@@ -14,7 +14,6 @@ import { FeatureFlags } from "System/Hooks/useFeatureFlag"
  * leading to an infinite loop.
  */
 export type SystemContextState = Partial<{
-  isFetching: boolean
   router: Router | null
   setRouter: (router?: Router) => void
 

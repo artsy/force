@@ -118,7 +118,6 @@ describe("clientRouter", () => {
             expect(Object.keys(context).sort()).toEqual([
               "featureFlags",
               "isEigen",
-              "isFetching",
               "isLoggedIn",
               "relayEnvironment",
               "router",
