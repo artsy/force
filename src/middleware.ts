@@ -111,7 +111,7 @@ export function initializeMiddleware(app) {
   app.use(localsMiddleware)
   app.use(sameOriginMiddleware)
 
-  // Mount MP Graphql proxy and cache
+  // Mount GraphQL proxy and cache
   if (ENABLE_GRAPHQL_PROXY) {
     app.use("/api/metaphysics", graphqlProxyMiddleware)
   }

@@ -20,15 +20,14 @@ const logger = createLogger("Server/cacheClient")
 const cacheAccessTimeoutMs =
   process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS || "200"
 
-const safeCacheCommand = async (func, ...args) => {
+const cacheCommandWithTimeout = async (func: "get" | "set", ...args: any[]) => {
   try {
-    let data
+    let data: unknown
 
     await new Promise<void>((resolve, reject) => {
-      // Will reject promise after configured timeout if the
-      // cache command has not completed yet.
-      let timeoutId = setTimeout(() => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      // Will reject promise after configured timeout if the cache command has
+      // not completed yet.
+      let timeoutId: NodeJS.Timeout | null = setTimeout(() => {
         timeoutId = null
 
         const error = new Error(
@@ -38,20 +37,25 @@ const safeCacheCommand = async (func, ...args) => {
         reject(error)
       }, parseInt(cacheAccessTimeoutMs))
 
-      // Callback to the cache command.
-      // * Will clear the timer monitoring the overall length of time.
-      // * Will assign the cache response to be returned.
-      // * Resolves the promise.
-      const cb = (_err, resp) => {
-        if (!timeoutId) return // Already timed out.
+      /**
+       * Callback to the cache command.
+       *
+       * - Will clear the timer monitoring the overall length of time.
+       * - Will assign the cache response to be returned.
+       * - Resolves the promise.
+       */
+      const onComplete = (_err, response) => {
+        if (!timeoutId) {
+          return // Already timed out.
+        }
 
         clearTimeout(timeoutId)
-        data = resp
+        data = response
         resolve()
       }
 
       // Invoke cache command, passing a callback.
-      redisClient[func](...args, cb)
+      redisClient[func](...args, onComplete)
     })
 
     return data
@@ -60,7 +64,7 @@ const safeCacheCommand = async (func, ...args) => {
   }
 }
 
-const redisCacheSetup = (cb?) => {
+const redisCacheSetup = (onComplete?: () => void) => {
   if (!isServer) {
     return
   }
@@ -81,7 +85,7 @@ const redisCacheSetup = (cb?) => {
     expirationCommandCode,
     expirationValue
   ) => {
-    return await safeCacheCommand(
+    return await cacheCommandWithTimeout(
       "set",
       key,
       value,
@@ -91,7 +95,7 @@ const redisCacheSetup = (cb?) => {
   }
 
   const cacheGet = async key => {
-    return await safeCacheCommand("get", key)
+    return await cacheCommandWithTimeout("get", key)
   }
 
   return {
