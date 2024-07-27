@@ -116,6 +116,10 @@ export function initializeMiddleware(app) {
     app.use("/api/metaphysics", graphqlProxyMiddleware)
   }
 
+  // Add CSRF to the cookie and remove it from the page. This allows the caching
+  // on the html and is used by the Login Modal to make secure requests.
+  app.use(csrfTokenMiddleware)
+
   // Need sharify for unleash
   registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
   app.use(featureFlagMiddleware(UnleashService))
@@ -211,10 +215,6 @@ function applySecurityMiddleware(app) {
       ],
     })
   )
-
-  // Add CSRF to the cookie and remove it from the page. This will allows the
-  // caching on the html and is used by the Login Modal to make secure requests.
-  app.use(csrfTokenMiddleware)
 
   // Require a user for these routes
   app.use(userRequiredMiddleware)
