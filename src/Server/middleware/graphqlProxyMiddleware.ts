@@ -13,6 +13,25 @@ export const graphqlProxyMiddleware = async (
   res: ArtsyResponse,
   next
 ) => {
+  const cachedResponse = await readCache(req, res, next)
+
+  if (cachedResponse) {
+    return res.json(cachedResponse)
+  }
+
+  const proxyConfig = {
+    target: `${METAPHYSICS_ENDPOINT}/v2`,
+    changeOrigin: true,
+    on: {
+      proxyReq: fixRequestBody,
+      proxyRes: writeCache,
+    },
+  }
+
+  return createProxyMiddleware(proxyConfig)(req, res, next)
+}
+
+export const readCache = async (req, res, next) => {
   const CACHE_ENABLED = ENABLE_GRAPHQL_CACHE && !req.user
 
   if (CACHE_ENABLED) {
@@ -29,66 +48,58 @@ export const graphqlProxyMiddleware = async (
       if (response) {
         console.log("\n[graphqlProxyMiddleware#get] Success", cacheKey)
 
-        const parsed = JSON.parse(response)
+        const parsedResponse = JSON.parse(response)
 
-        return res.json(parsed)
+        return parsedResponse
       }
     } catch (error) {
       console.error("[graphqlProxyMiddleware] Cache Error:", error)
     }
   }
+}
 
-  const proxyConfig = {
-    target: `${METAPHYSICS_ENDPOINT}/v2`,
-    changeOrigin: true,
-    on: {
-      proxyReq: fixRequestBody,
-      proxyRes: async (proxyRes, req, res) => {
-        if (CACHE_ENABLED) {
-          if (proxyRes.statusCode !== 200) {
-            return res.end()
-          }
+export const writeCache = async (proxyRes, req, res) => {
+  const CACHE_ENABLED = ENABLE_GRAPHQL_CACHE && !req.user
 
-          let responseBody = ""
+  if (CACHE_ENABLED) {
+    if (proxyRes.statusCode !== 200) {
+      return res.end()
+    }
 
-          const gunzip = createGunzip()
-          const stream = proxyRes.pipe(gunzip)
+    let responseBody = ""
 
-          stream.on("data", chunk => {
-            responseBody += chunk
-          })
+    const gunzip = createGunzip()
+    const stream = proxyRes.pipe(gunzip)
 
-          stream.on("end", async () => {
-            try {
-              const queryId = req.body?.id
-              const variables = req.body?.variables
-              const cacheKey = JSON.stringify({
-                queryId,
-                variables,
-              })
+    stream.on("data", chunk => {
+      responseBody += chunk
+    })
 
-              await cache.set(
-                cacheKey,
-                JSON.stringify(JSON.parse(responseBody)),
-                "PX",
-                GRAPHQL_CACHE_TTL
-              )
+    stream.on("end", async () => {
+      try {
+        const queryId = req.body?.id
+        const variables = req.body?.variables
+        const cacheKey = JSON.stringify({
+          queryId,
+          variables,
+        })
 
-              console.log(
-                "\n[graphqlProxyMiddleware#set] Cache updated",
-                cacheKey
-              )
-            } catch (error) {
-              console.error(
-                "[graphqlProxyMiddleware#proxyRes] Cache Error:",
-                error
-              )
-            }
-          })
-        }
-      },
-    },
+        await cache.set(
+          cacheKey,
+          JSON.stringify(JSON.parse(responseBody)),
+          "PX",
+          GRAPHQL_CACHE_TTL
+        )
+
+        console.log("\n[graphqlProxyMiddleware # writeCache]", cacheKey)
+      } catch (error) {
+        console.error(
+          "[graphqlProxyMiddleware # writeCache] Cache error:",
+          error
+        )
+
+        res.end()
+      }
+    })
   }
-
-  return createProxyMiddleware(proxyConfig)(req, res, next)
 }

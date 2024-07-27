@@ -56,8 +56,6 @@ export function createRelaySSREnvironment(config: Config = {}) {
     metaphysicsEndpoint = getMetaphysicsEndpoint(),
   } = config
 
-  console.log(metaphysicsEndpoint)
-
   /**
    * Lazy load these here so we can safely ignore the server module from client
    * bundles without that leading to an exception trying to import it
