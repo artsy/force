@@ -83,8 +83,6 @@ export function findRoutesByPath({
 }: FindRoutesByPathProps): RouteProps[] {
   const { flatRoutes = [] } = getRoutes()
 
-  console.log(getRoutes)
-
   const foundRoutes = flatRoutes.filter(route => {
     const matcher = match(route.path as string, { decode: decodeURIComponent })
     return !!matcher(path)

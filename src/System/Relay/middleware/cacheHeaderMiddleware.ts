@@ -20,6 +20,13 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
       [RELAY_CACHE_CONFIG_HEADER_KEY]: JSON.stringify(req.cacheConfig),
     }
 
+    /**
+     * We need to dynamically set a path header, because after the SSR pass we
+     * only have access to the initial req.url _entrypoint_; from there our
+     * client-side SPA intializes, which manages URL updates. Setting headers
+     * at the relay network level lets us configure queries to be sent to the
+     * graphql proxy (and redis cache).
+     */
     if (url) {
       cacheHeaders[RELAY_CACHE_PATH_HEADER_KEY] = url
     }
