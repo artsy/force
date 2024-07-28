@@ -1,11 +1,14 @@
 import { createProxyMiddleware, fixRequestBody } from "http-proxy-middleware"
-import { createGunzip } from "zlib"
+import { createBrotliDecompress, createGunzip } from "zlib"
 import { cache } from "Server/cacheClient"
 import {
   graphqlProxyMiddleware,
   readCache,
+  shouldSkipCache,
   writeCache,
 } from "Server/middleware/graphqlProxyMiddleware"
+import { ArtsyRequest } from "Server/middleware/artsyExpress"
+import { RELAY_CACHE_CONFIG_HEADER_KEY } from "System/Relay/middleware/cacheHeaderMiddleware"
 
 jest.mock("Server/config", () => ({
   METAPHYSICS_ENDPOINT: "https://metaphysics.artsy.net",
@@ -30,6 +33,10 @@ jest.mock("zlib", () => ({
     pipe: jest.fn().mockReturnThis(),
     on: jest.fn(),
   })),
+  createBrotliDecompress: jest.fn(() => ({
+    pipe: jest.fn().mockReturnThis(),
+    on: jest.fn(),
+  })),
 }))
 
 describe("graphqlProxyMiddleware", () => {
@@ -38,19 +45,21 @@ describe("graphqlProxyMiddleware", () => {
   const mockCacheGet = cache.get as jest.Mock
 
   beforeEach(() => {
-    req = { body: {}, user: null }
+    req = { body: {}, user: null, headers: {} }
     res = { json: jest.fn(), end: jest.fn() }
     next = jest.fn()
   })
 
-  it("should return cached response if available", async () => {
-    const cachedResponse = JSON.stringify({ data: "cached" })
-    mockCacheGet.mockResolvedValueOnce(cachedResponse)
+  describe("cache lookup", () => {
+    it("should return cached response if available", async () => {
+      const cachedResponse = JSON.stringify({ data: "cached" })
+      mockCacheGet.mockResolvedValueOnce(cachedResponse)
 
-    await graphqlProxyMiddleware(req, res, next)
+      await graphqlProxyMiddleware(req, res, next)
 
-    expect(res.json).toHaveBeenCalledWith(JSON.parse(cachedResponse))
-    expect(createProxyMiddleware).not.toHaveBeenCalled()
+      expect(res.json).toHaveBeenCalledWith(JSON.parse(cachedResponse))
+      expect(createProxyMiddleware).not.toHaveBeenCalled()
+    })
   })
 
   it("should call createProxyMiddleware with correct config if no cached response", async () => {
@@ -68,8 +77,24 @@ describe("graphqlProxyMiddleware", () => {
     })
   })
 
-  it("should call createProxyMiddleware with correct config logged in", async () => {
+  it("should call createProxyMiddleware with correct config if user is logged in", async () => {
     req.user = { id: "user" }
+
+    await graphqlProxyMiddleware(req, res, next)
+
+    expect(createProxyMiddleware).toHaveBeenCalledWith({
+      target: `https://metaphysics.artsy.net/v2`,
+      changeOrigin: true,
+      on: {
+        proxyReq: fixRequestBody,
+        proxyRes: expect.any(Function),
+      },
+    })
+  })
+
+  it("should call createProxyMiddleware with correct if shouldSkipCache returns true", async () => {
+    req.user = { id: "user" }
+    req.headers["x-relay-cache-config"] = JSON.stringify({ force: true })
 
     await graphqlProxyMiddleware(req, res, next)
 
@@ -129,6 +154,7 @@ describe("writeCache", () => {
 
   const mockCacheSet = cache.set as jest.Mock
   const mockCreateGunzip = createGunzip as jest.Mock
+  const mockCreateBrotliDecompress = createBrotliDecompress as jest.Mock
 
   beforeEach(() => {
     proxyRes = {
@@ -174,6 +200,31 @@ describe("writeCache", () => {
     )
   })
 
+  it("should set cache if response is br", async () => {
+    proxyRes.statusCode = 200
+    proxyRes.headers = { "content-encoding": "br" }
+    const responseBody = '{"data":"response"}'
+
+    proxyRes = {
+      ...proxyRes,
+      pipe: jest.fn().mockReturnThis(),
+      on: (event, callback) => {
+        if (event === "data") {
+          callback(responseBody)
+        }
+        if (event === "end") {
+          callback()
+        }
+        return this
+      },
+    }
+
+    await writeCache(proxyRes, req, res)
+
+    expect(mockCreateBrotliDecompress).toHaveBeenCalled()
+    expect(mockCacheSet).toHaveBeenCalled()
+  })
+
   it("should not set cache if response is not 200", async () => {
     proxyRes.statusCode = 500
 
@@ -183,9 +234,9 @@ describe("writeCache", () => {
     expect(mockCacheSet).not.toHaveBeenCalled()
   })
 
-  it("should not set cache if response is not gzip", async () => {
+  it("should not set cache if response is not gzip or br", async () => {
     proxyRes.statusCode = 200
-    proxyRes.headers = { "content-encoding": "br" }
+    proxyRes.headers = { "content-encoding": "foo" }
 
     await writeCache(proxyRes, req, res)
 
@@ -218,5 +269,49 @@ describe("writeCache", () => {
 
     expect(createGunzip).toHaveBeenCalled()
     expect(mockCacheSet).toHaveBeenCalled()
+  })
+})
+
+describe("shouldSkipCache", () => {
+  it("should return true if relayCacheConfig.force is true", () => {
+    const req = ({
+      headers: {
+        [RELAY_CACHE_CONFIG_HEADER_KEY]: JSON.stringify({ force: true }),
+      },
+    } as unknown) as ArtsyRequest
+
+    const result = shouldSkipCache(req)
+    expect(result).toBe(true)
+  })
+
+  it("should return false if relayCacheConfig.force is not true", () => {
+    const req = ({
+      headers: {
+        [RELAY_CACHE_CONFIG_HEADER_KEY]: JSON.stringify({ force: false }),
+      },
+    } as unknown) as ArtsyRequest
+
+    const result = shouldSkipCache(req)
+    expect(result).toBe(false)
+  })
+
+  it("should return false if there is no relayCacheConfig header", () => {
+    const req = {
+      headers: {},
+    } as ArtsyRequest
+
+    const result = shouldSkipCache(req)
+    expect(result).toBe(false)
+  })
+
+  it("should return false if relayCacheConfig header is not a valid JSON string", () => {
+    const req = ({
+      headers: {
+        [RELAY_CACHE_CONFIG_HEADER_KEY]: "invalid-json",
+      },
+    } as unknown) as ArtsyRequest
+
+    const result = shouldSkipCache(req)
+    expect(result).toBe(false)
   })
 })

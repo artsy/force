@@ -1,0 +1,38 @@
+import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
+
+describe("cacheHeaderMiddleware", () => {
+  const next = jest.fn()
+  const req = {
+    fetchOpts: {
+      headers: {},
+    },
+    cacheConfig: { someKey: "someValue" },
+  }
+
+  beforeEach(() => {
+    next.mockClear()
+  })
+
+  it("should add x-relay-cache-config header to req.fetchOpts.headers", async () => {
+    next.mockResolvedValue({ status: 200 })
+
+    const middleware = cacheHeaderMiddleware()(next)
+    const res = await middleware(req)
+
+    expect(req.fetchOpts.headers["x-relay-cache-config"]).toBe(
+      JSON.stringify(req.cacheConfig)
+    )
+    expect(next).toHaveBeenCalledWith(req)
+    expect(res).toEqual({ status: 200 })
+  })
+
+  it("should return the response from next function", async () => {
+    const mockResponse = { status: 200, data: "mockData" }
+    next.mockResolvedValue(mockResponse)
+
+    const middleware = cacheHeaderMiddleware()(next)
+    const res = await middleware(req)
+
+    expect(res).toEqual(mockResponse)
+  })
+})

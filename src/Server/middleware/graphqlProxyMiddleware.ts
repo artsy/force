@@ -5,10 +5,11 @@ import {
   ENABLE_GRAPHQL_CACHE,
 } from "Server/config"
 import { cache } from "Server/cacheClient"
-import { createGunzip } from "zlib"
+import { createBrotliDecompress, createGunzip } from "zlib"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { NextFunction } from "express"
 import { IncomingMessage } from "http"
+import { RELAY_CACHE_CONFIG_HEADER_KEY } from "System/Relay/middleware/cacheHeaderMiddleware"
 
 export const graphqlProxyMiddleware = async (
   req: ArtsyRequest,
@@ -16,8 +17,9 @@ export const graphqlProxyMiddleware = async (
   next: NextFunction
 ) => {
   const isLoggedIn = !!req.user
+  const skipCache = isLoggedIn || shouldSkipCache(req)
 
-  if (!isLoggedIn) {
+  if (!skipCache) {
     const cachedResponse = await readCache(req)
 
     if (cachedResponse) {
@@ -29,13 +31,14 @@ export const graphqlProxyMiddleware = async (
     target: `${METAPHYSICS_ENDPOINT}/v2`,
     changeOrigin: true,
     on: {
+      // Fix proxy incompatability with express.js body-parser middleware
       proxyReq: fixRequestBody,
       proxyRes: (
         proxyRes: IncomingMessage,
         req: ArtsyRequest,
         res: ArtsyResponse
       ) => {
-        if (!isLoggedIn) {
+        if (!skipCache) {
           writeCache(proxyRes, req, res)
         }
       },
@@ -81,16 +84,20 @@ export const writeCache = async (
 
     const contentEncoding = proxyRes.headers["content-encoding"]
 
-    // TODO: We might need to handle other content types, like Brotli (br)
-    if (contentEncoding !== "gzip") {
+    let decompressStream
+
+    if (contentEncoding === "gzip") {
+      decompressStream = createGunzip()
+    } else if (contentEncoding === "br") {
+      decompressStream = createBrotliDecompress()
+    } else {
       res.end()
       return
     }
 
     let responseBody = ""
 
-    const gunzip = createGunzip()
-    const stream = proxyRes.pipe(gunzip)
+    const stream = proxyRes.pipe(decompressStream)
 
     stream.on("error", error => {
       console.log(
@@ -131,5 +138,21 @@ export const writeCache = async (
         res.end()
       }
     })
+  }
+}
+
+export const shouldSkipCache = (req: ArtsyRequest) => {
+  const relayCacheHeader = req.headers[RELAY_CACHE_CONFIG_HEADER_KEY] as string
+
+  if (!relayCacheHeader) {
+    return false
+  }
+
+  try {
+    const relayCacheConfig = JSON.parse(relayCacheHeader)
+
+    return relayCacheConfig.force === true
+  } catch {
+    return false
   }
 }
