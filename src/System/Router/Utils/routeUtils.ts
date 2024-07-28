@@ -88,7 +88,5 @@ export function findRoutesByPath({
     return !!matcher(path)
   })
 
-  console.log(flatRoutes, path)
-
   return foundRoutes
 }

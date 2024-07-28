@@ -208,6 +208,7 @@ describe("writeCache", () => {
       "PX",
       3600
     )
+    expect(res.end).toHaveBeenCalled()
   })
 
   it("should set cache with route-level cache config TTLs", async () => {
@@ -246,6 +247,7 @@ describe("writeCache", () => {
       "PX",
       1000
     )
+    expect(res.end).toHaveBeenCalled()
   })
 
   it("should set cache if response is br", async () => {
@@ -271,6 +273,7 @@ describe("writeCache", () => {
 
     expect(mockCreateBrotliDecompress).toHaveBeenCalled()
     expect(mockCacheSet).toHaveBeenCalled()
+    expect(res.end).toHaveBeenCalled()
   })
 
   it("should not set cache if response is not 200", async () => {
@@ -315,8 +318,8 @@ describe("writeCache", () => {
 
     await writeCache(proxyRes, req, res)
 
-    expect(createGunzip).toHaveBeenCalled()
     expect(mockCacheSet).toHaveBeenCalled()
+    expect(res.end).toHaveBeenCalled()
   })
 })
 

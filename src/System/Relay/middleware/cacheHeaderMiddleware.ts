@@ -1,8 +1,3 @@
-/**
- * Store individual relay query cache configs as a header, so that we can
- * ensure that certain queries aren't cached at the redis level, in the proxy.
- */
-
 import { isServer } from "Server/isServer"
 
 export const RELAY_CACHE_CONFIG_HEADER_KEY = "x-relay-cache-config"

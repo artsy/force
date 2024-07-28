@@ -161,6 +161,8 @@ export const writeCache = async (
         )
 
         res.end()
+      } finally {
+        res.end()
       }
     })
   }
