@@ -74,13 +74,23 @@ export const findCurrentRoute = (match): RouteProps => {
   return route
 }
 
-export function findRoutesByPath({ path }): RouteProps[] {
+interface FindRoutesByPathProps {
+  path: string
+}
+
+export function findRoutesByPath({
+  path,
+}: FindRoutesByPathProps): RouteProps[] {
   const { flatRoutes = [] } = getRoutes()
+
+  console.log(getRoutes)
 
   const foundRoutes = flatRoutes.filter(route => {
     const matcher = match(route.path as string, { decode: decodeURIComponent })
     return !!matcher(path)
   })
+
+  console.log(flatRoutes, path)
 
   return foundRoutes
 }

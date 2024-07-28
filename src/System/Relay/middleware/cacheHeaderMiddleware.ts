@@ -3,13 +3,30 @@
  * ensure that certain queries aren't cached at the redis level, in the proxy.
  */
 
-export const RELAY_CACHE_CONFIG_HEADER_KEY = "x-relay-cache-config"
+import { isServer } from "Server/isServer"
 
-export const cacheHeaderMiddleware = () => {
+export const RELAY_CACHE_CONFIG_HEADER_KEY = "x-relay-cache-config"
+export const RELAY_CACHE_PATH_HEADER_KEY = "x-relay-cache-path"
+
+interface CacheHeaderMiddlewareProps {
+  url?: string
+}
+
+export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
   return next => async req => {
+    const url = isServer ? props?.url : window.location.pathname
+
+    const cacheHeaders = {
+      [RELAY_CACHE_CONFIG_HEADER_KEY]: JSON.stringify(req.cacheConfig),
+    }
+
+    if (url) {
+      cacheHeaders[RELAY_CACHE_PATH_HEADER_KEY] = url
+    }
+
     req.fetchOpts.headers = {
       ...req.fetchOpts.headers,
-      [RELAY_CACHE_CONFIG_HEADER_KEY]: JSON.stringify(req.cacheConfig),
+      ...cacheHeaders,
     }
 
     const res = await next(req)

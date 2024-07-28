@@ -35,11 +35,12 @@ const USER_AGENT = `Reaction/Migration`
 
 interface Config {
   cache?: object
-  user?: User | null
   checkStatus?: boolean
-  relayNetwork?: INetwork
-  userAgent?: string
   metaphysicsEndpoint?: string
+  relayNetwork?: INetwork
+  url?: string
+  user?: User | null
+  userAgent?: string
 }
 
 export interface RelaySSREnvironment extends Environment {
@@ -51,10 +52,11 @@ export function createRelaySSREnvironment(config: Config = {}) {
   const {
     cache = {},
     checkStatus,
-    user,
-    relayNetwork,
-    userAgent,
     metaphysicsEndpoint = getMetaphysicsEndpoint(),
+    relayNetwork,
+    url,
+    user,
+    userAgent,
   } = config
 
   /**
@@ -119,7 +121,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
     }),
     principalFieldErrorHandlerMiddleware(),
     metaphysicsErrorHandlerMiddleware({ checkStatus }),
-    cacheHeaderMiddleware(),
+    cacheHeaderMiddleware({ url }),
     loggingEnabled && loggerMiddleware(),
     loggingEnabled && metaphysicsExtensionsLoggerMiddleware(),
     loggingEnabled && errorMiddleware({ disableServerMiddlewareTip: true }),

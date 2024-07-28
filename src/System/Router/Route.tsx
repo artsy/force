@@ -16,6 +16,7 @@ interface Route extends RouteObjectBase {
       [key: string]: string | undefined
     }
   }) => CacheConfig
+  serverCacheTTL?: number
   children?: RouteProps[]
   ignoreScrollBehavior?: boolean
   ignoreScrollBehaviorBetweenChildren?: boolean

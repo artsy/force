@@ -8,7 +8,11 @@ import {
   writeCache,
 } from "Server/middleware/graphqlProxyMiddleware"
 import { ArtsyRequest } from "Server/middleware/artsyExpress"
-import { RELAY_CACHE_CONFIG_HEADER_KEY } from "System/Relay/middleware/cacheHeaderMiddleware"
+import {
+  RELAY_CACHE_CONFIG_HEADER_KEY,
+  RELAY_CACHE_PATH_HEADER_KEY,
+} from "System/Relay/middleware/cacheHeaderMiddleware"
+import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 
 jest.mock("Server/config", () => ({
   METAPHYSICS_ENDPOINT: "https://metaphysics.artsy.net",
@@ -37,6 +41,10 @@ jest.mock("zlib", () => ({
     pipe: jest.fn().mockReturnThis(),
     on: jest.fn(),
   })),
+}))
+
+jest.mock("System/Router/Utils/routeUtils", () => ({
+  findRoutesByPath: jest.fn(),
 }))
 
 describe("graphqlProxyMiddleware", () => {
@@ -124,7 +132,6 @@ describe("readCache", () => {
     mockCacheGet.mockResolvedValueOnce(cachedResponse)
 
     const result = await readCache(req)
-    console.log(readCache)
 
     expect(mockCacheGet).toHaveBeenCalledWith(cacheKey)
     expect(result).toEqual(JSON.parse(cachedResponse))
@@ -155,6 +162,7 @@ describe("writeCache", () => {
   const mockCacheSet = cache.set as jest.Mock
   const mockCreateGunzip = createGunzip as jest.Mock
   const mockCreateBrotliDecompress = createBrotliDecompress as jest.Mock
+  const mockFindRoutesByPath = findRoutesByPath as jest.Mock
 
   beforeEach(() => {
     proxyRes = {
@@ -162,8 +170,10 @@ describe("writeCache", () => {
       pipe: jest.fn(),
       headers: { "content-encoding": "gzip" },
     }
-    req = { body: { id: "test", variables: {} }, user: null }
+    req = { body: { id: "test", variables: {} }, user: null, headers: {} }
     res = { end: jest.fn() }
+
+    mockFindRoutesByPath.mockReturnValue([])
   })
 
   afterEach(() => {
@@ -197,6 +207,44 @@ describe("writeCache", () => {
       JSON.stringify(JSON.parse(responseBody)),
       "PX",
       3600
+    )
+  })
+
+  it("should set cache with route-level cache config TTLs", async () => {
+    const cacheKey = JSON.stringify({ queryId: "test", variables: {} })
+    const responseBody = '{"data":"response"}'
+
+    proxyRes = {
+      ...proxyRes,
+      statusCode: 200,
+      pipe: jest.fn().mockReturnThis(),
+      on: (event, callback) => {
+        if (event === "data") {
+          callback(responseBody)
+        }
+        if (event === "end") {
+          callback()
+        }
+        return this
+      },
+    }
+
+    req.headers = {
+      [RELAY_CACHE_PATH_HEADER_KEY]: "/collect",
+    }
+
+    mockFindRoutesByPath.mockReturnValue([
+      { path: "/collect", serverCacheTTL: 1000 },
+    ])
+
+    await writeCache(proxyRes, req, res)
+
+    expect(mockCreateGunzip).toHaveBeenCalled()
+    expect(cache.set).toHaveBeenCalledWith(
+      cacheKey,
+      JSON.stringify(JSON.parse(responseBody)),
+      "PX",
+      1000
     )
   })
 

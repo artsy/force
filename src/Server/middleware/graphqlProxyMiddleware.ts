@@ -9,15 +9,18 @@ import { createBrotliDecompress, createGunzip } from "zlib"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { NextFunction } from "express"
 import { IncomingMessage } from "http"
-import { RELAY_CACHE_CONFIG_HEADER_KEY } from "System/Relay/middleware/cacheHeaderMiddleware"
+import {
+  RELAY_CACHE_CONFIG_HEADER_KEY,
+  RELAY_CACHE_PATH_HEADER_KEY,
+} from "System/Relay/middleware/cacheHeaderMiddleware"
+import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 
 export const graphqlProxyMiddleware = async (
   req: ArtsyRequest,
   res: ArtsyResponse,
   next: NextFunction
 ) => {
-  const isLoggedIn = !!req.user
-  const skipCache = isLoggedIn || shouldSkipCache(req)
+  const skipCache = !!req.user || shouldSkipCache(req)
 
   if (!skipCache) {
     const cachedResponse = await readCache(req)
@@ -59,7 +62,12 @@ export const readCache = async (req: ArtsyRequest) => {
       const response = await cache.get(cacheKey)
 
       if (response) {
-        console.log("\n[graphqlProxyMiddleware#get] Cache hit", cacheKey)
+        console.log(
+          "\n[graphqlProxyMiddleware # get] Cache hit: \n",
+          "[cacheKey]:",
+          cacheKey,
+          "\n"
+        )
 
         const parsedResponse = JSON.parse(response)
 
@@ -114,6 +122,15 @@ export const writeCache = async (
 
     stream.on("end", async () => {
       try {
+        // Check to see if we're using a custom cache TTL for this route
+        const TTL = (() => {
+          const path = req.headers[RELAY_CACHE_PATH_HEADER_KEY] as string
+          const route = findRoutesByPath({ path })[0]
+
+          // Use route TTL or fall back to default
+          return route?.serverCacheTTL ?? GRAPHQL_CACHE_TTL
+        })()
+
         const queryId = req.body?.id
         const variables = req.body?.variables
         const cacheKey = JSON.stringify({
@@ -125,10 +142,18 @@ export const writeCache = async (
           cacheKey,
           JSON.stringify(JSON.parse(responseBody)),
           "PX",
-          GRAPHQL_CACHE_TTL
+          TTL
         )
 
-        console.log("\n[graphqlProxyMiddleware # writeCache]", cacheKey)
+        console.log(
+          "\n[graphqlProxyMiddleware # writeCache] \n",
+          "[cacheKey]:",
+          cacheKey,
+          "\n",
+          "[TTL]:",
+          TTL,
+          "\n"
+        )
       } catch (error) {
         console.error(
           "[graphqlProxyMiddleware # writeCache] Cache error:",
