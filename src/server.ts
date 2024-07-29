@@ -13,8 +13,12 @@ import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManage
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
 import { setupServerRouter } from "System/Router/serverRouter"
 import { getRoutes } from "System/Router/Utils/routeUtils"
+import { initializeMiddleware } from "middleware"
 
 const app = express()
+
+// Mount middleware
+initializeMiddleware(app)
 
 const { routes, routePaths } = getRoutes()
 
