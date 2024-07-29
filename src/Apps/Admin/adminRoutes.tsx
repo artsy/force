@@ -27,10 +27,12 @@ const AdminNavigateToRoute = loadable(
 export const adminRoutes: RouteProps[] = [
   {
     path: "/admin",
+    layout: "NavOnly",
     getComponent: () => AdminApp,
     children: [
       {
-        path: "clear-cache",
+        path: "cache",
+        layout: "NavOnly",
         getComponent: () => AdminCacheManagementRoute,
         onServerSideRender: ({ req }) => {
           const user = getUser(req.user)
