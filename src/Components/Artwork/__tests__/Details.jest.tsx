@@ -518,7 +518,7 @@ describe("Details", () => {
     })
   })
 
-  describe("User has active partner offer on artwork", () => {
+  describe("user has active partner offer on artwork", () => {
     const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
     beforeEach(() => {
@@ -527,14 +527,14 @@ describe("Details", () => {
 
     it("should render the active partner offer badge", async () => {
       const data: any = {
-        ...artworkInAuction,
+        ...artworkNotInAuction,
         collectorSignals: {
           bidCount: null,
           lotWatcherCount: null,
           partnerOffer: {
             isActive: true,
             endAt: "2055-03-12T12:33:37.000Z",
-            priceWithDiscount: { display: "$2,600" },
+            priceWithDiscount: { display: "$3,500" },
           },
         },
       }
@@ -544,18 +544,19 @@ describe("Details", () => {
 
       expect(html).toContain("Limited-Time Offer")
       expect(html).toContain("Exp.")
+      expect(html).toContain("$3,500")
     })
 
     it("should not render the active partner offer badge if the offer is expired", async () => {
       const data: any = {
-        ...artworkInAuction,
+        ...artworkNotInAuction,
         collectorSignals: {
           bidCount: null,
           lotWatcherCount: null,
           partnerOffer: {
             isActive: false,
             endAt: "2055-03-12T12:33:37.000Z",
-            priceWithDiscount: { display: "$2,600" },
+            priceWithDiscount: { display: "$3,500" },
           },
         },
       }
@@ -565,6 +566,7 @@ describe("Details", () => {
 
       expect(html).not.toContain("Limited-Time Offer")
       expect(html).not.toContain("Exp.")
+      expect(html).toContain("$4000")
     })
   })
 })
@@ -634,6 +636,61 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   },
   preview: null,
   isInAuction: true,
+  isSavedToList: false,
+  collectorSignals: {
+    bidCount: null,
+    lotWatcherCount: null,
+    partnerOffer: null,
+  },
+}
+
+const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
+  id: "opaque-artwork-id",
+  internalID: "opaque-internal-id",
+  artist: {
+    id: "artist-id",
+    targetSupply: {
+      isP1: true,
+    },
+  },
+  marketPriceInsights: {
+    demandRank: 0.9,
+  },
+  artistNames: "Gerhard Richter",
+  artists: [
+    {
+      id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
+      href: "/artist/gerhard-richter",
+      name: "Gerhard Richter",
+    },
+  ],
+  sale: null,
+  sale_artwork: null,
+  slug: "gerhard-richter-tulips-p17-14",
+  isSaved: false,
+  href: "/artwork/gerhard-richter-tulips-p17-14",
+  date: "2017",
+  sale_message: "$4000",
+  cultural_maker: null,
+  title: "Tulips (P17)",
+  collecting_institution: "This Really Great Gallery",
+  partner: {
+    id: "opaque-partner-id",
+    name: "Forum Auctions",
+    href: "/auction/forum-auctions",
+  },
+  attributionClass: {
+    id: "attributionClass-id",
+    name: "Unique",
+  },
+  mediumType: {
+    filterGene: {
+      id: "gene-id",
+      name: "Prints",
+    },
+  },
+  preview: null,
+  isInAuction: false,
   isSavedToList: false,
   collectorSignals: {
     bidCount: null,
