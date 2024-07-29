@@ -92,13 +92,14 @@ export const writeCache = async (
     }
 
     const contentEncoding = proxyRes.headers["content-encoding"]
-
     let decompressStream
 
     if (contentEncoding === "gzip") {
       decompressStream = createGunzip()
     } else if (contentEncoding === "br") {
       decompressStream = createBrotliDecompress()
+    } else if (!contentEncoding) {
+      decompressStream = null // Handle uncompressed response
     } else {
       res.end()
       return
@@ -106,11 +107,12 @@ export const writeCache = async (
 
     let responseBody = ""
 
-    const stream = proxyRes.pipe(decompressStream)
+    // TODO: Sometimes responses come back from MP uncompressed. Why?
+    const stream = decompressStream ? proxyRes.pipe(decompressStream) : proxyRes
 
     stream.on("error", error => {
       console.log(
-        "\n[graphqlProxyMiddleware # writeCache] Decompression Error:",
+        "\n[graphqlProxyMiddleware # writeCache] General Error:",
         error
       )
 

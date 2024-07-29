@@ -276,6 +276,33 @@ describe("writeCache", () => {
     expect(res.end).toHaveBeenCalled()
   })
 
+  it("should set cache if response is uncompressed", async () => {
+    proxyRes.statusCode = 200
+    proxyRes.headers = {}
+    const responseBody = '{"data":"response"}'
+
+    proxyRes = {
+      ...proxyRes,
+      pipe: jest.fn().mockReturnThis(),
+      on: (event, callback) => {
+        if (event === "data") {
+          callback(responseBody)
+        }
+        if (event === "end") {
+          callback()
+        }
+        return this
+      },
+    }
+
+    await writeCache(proxyRes, req, res)
+
+    expect(mockCreateGunzip).not.toHaveBeenCalled()
+    expect(mockCreateBrotliDecompress).not.toHaveBeenCalled()
+    expect(mockCacheSet).toHaveBeenCalled()
+    expect(res.end).toHaveBeenCalled()
+  })
+
   it("should not set cache if response is not 200", async () => {
     proxyRes.statusCode = 500
 
