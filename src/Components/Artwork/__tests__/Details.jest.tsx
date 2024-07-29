@@ -6,11 +6,18 @@ import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridCo
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthDialog } from "Components/AuthDialog"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("Utils/getCurrentTimeAsIsoString")
 jest.mock("Components/AuthDialog/useAuthDialog")
+
+jest.mock("System/Hooks/useFeatureFlag", () => {
+  return {
+    useFeatureFlag: jest.fn(),
+  }
+})
 
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(
   "2022-03-18T05:22:32.000Z"
@@ -36,7 +43,11 @@ describe("Details", () => {
   ) => {
     return await renderRelayTree({
       Component: props => (
-        <ArtworkGridContextProvider isAuctionArtwork saveOnlyToDefaultList>
+        <ArtworkGridContextProvider
+          isAuctionArtwork
+          saveOnlyToDefaultList
+          showActivePartnerOffer
+        >
           <DetailsFragmentContainer {...(props as any)} {...restProps} />
         </ArtworkGridContextProvider>
       ),
@@ -504,6 +515,56 @@ describe("Details", () => {
 
       expect(html).toContain("Unique")
       expect(html).not.toContain("Print")
+    })
+  })
+
+  describe("User has active partner offer on artwork", () => {
+    const mockUseFeatureFlag = useFeatureFlag as jest.Mock
+
+    beforeEach(() => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+    })
+
+    it("should render the active partner offer badge", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          bidCount: null,
+          lotWatcherCount: null,
+          partnerOffer: {
+            isActive: true,
+            endAt: "2055-03-12T12:33:37.000Z",
+            priceWithDiscount: { display: "$2,600" },
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data)
+      const html = wrapper.html()
+
+      expect(html).toContain("Limited-Time Offer")
+      expect(html).toContain("Exp.")
+    })
+
+    it("should not render the active partner offer badge if the offer is expired", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          bidCount: null,
+          lotWatcherCount: null,
+          partnerOffer: {
+            isActive: false,
+            endAt: "2055-03-12T12:33:37.000Z",
+            priceWithDiscount: { display: "$2,600" },
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data)
+      const html = wrapper.html()
+
+      expect(html).not.toContain("Limited-Time Offer")
+      expect(html).not.toContain("Exp.")
     })
   })
 })
