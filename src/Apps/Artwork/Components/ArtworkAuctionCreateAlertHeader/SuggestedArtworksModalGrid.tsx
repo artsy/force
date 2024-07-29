@@ -58,7 +58,7 @@ export const SuggestedArtworksModalGrid: FC<SuggestedArtworksModalGridProps> = (
         <Spacer y={2} />
       </Media>
 
-      <ArtworkGridContextProvider showActivePartnerOffer saveOnlyToDefaultList>
+      <ArtworkGridContextProvider saveOnlyToDefaultList>
         <GridColumns>
           <Column span={12}>
             {artworksConnection && (

@@ -150,6 +150,24 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
   )
 }
 
+const ActivePartnerOfferLine: React.FC<DetailsProps> = ({
+  artwork: { collectorSignals },
+}) => {
+  return (
+    <Text
+      variant="xs"
+      color="blue100"
+      backgroundColor="blue10"
+      px={0.5}
+      marginBottom={0.5}
+      alignSelf="flex-start"
+      borderRadius={3}
+    >
+      Limited-Time Offer
+    </Text>
+  )
+}
+
 const HighDemandInfo = () => {
   return (
     <Flex flexDirection="row" alignItems="center">
@@ -203,23 +221,6 @@ const BidInfo: React.FC<DetailsProps> = ({
     <>
       ({bidderPositionCounts} bid{bidderPositionCounts === 1 ? "" : "s"})
     </>
-  )
-}
-
-const ActivePartnerOfferLine: React.FC<DetailsProps> = ({
-  artwork: { collectorSignals },
-}) => {
-  return (
-    <Text
-      variant="xs"
-      color="blue100"
-      backgroundColor="blue10"
-      px={0.5}
-      alignSelf="flex-start"
-      borderRadius={3}
-    >
-      Limited-Time Offer
-    </Text>
   )
 }
 
@@ -277,19 +278,22 @@ export const Details: React.FC<DetailsProps> = ({
 
   const { hasEnded } = useTimer(partnerOffer?.endAt ?? "")
 
-  const showActivePartnerOfferLine: boolean = useMemo(
-    () =>
+  const showActivePartnerOfferLine: boolean = useMemo(() => {
+    const result =
       !!signalsPartnerOffersEnabled &&
       !!showActivePartnerOffer &&
       !!partnerOffer &&
-      !hasEnded,
-    [
-      signalsPartnerOffersEnabled,
-      showActivePartnerOffer,
-      partnerOffer,
-      hasEnded,
-    ]
-  )
+      !hasEnded
+
+    console.log("showActivePartnerOffer", showActivePartnerOffer)
+    console.log("signalsPartnerOffersEnabled", signalsPartnerOffersEnabled)
+    return result
+  }, [
+    signalsPartnerOffersEnabled,
+    showActivePartnerOffer,
+    partnerOffer,
+    hasEnded,
+  ])
 
   const padForActivePartnerOfferLine: boolean =
     !!signalsPartnerOffersEnabled &&

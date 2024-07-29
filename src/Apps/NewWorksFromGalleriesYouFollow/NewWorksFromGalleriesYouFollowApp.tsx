@@ -60,7 +60,7 @@ const NewWorksFromGalleriesYouFollowApp: FC<NewWorksFromGalleriesYouFollowAppPro
 
       {artworksConnection?.totalCount ? (
         <>
-          <ArtworkGridContextProvider showActivePartnerOffer>
+          <ArtworkGridContextProvider>
             <ArtworkGrid
               artworks={artworksConnection}
               columnCount={[2, 3, 3, 4]}

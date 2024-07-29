@@ -4,6 +4,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { HomeNewWorksForYouRailQueryRenderer } from "./HomeNewWorksForYouRail"
 import { HomeRecentlyViewedRailQueryRenderer } from "./HomeRecentlyViewedRail"
 import { HomeWorksByArtistsYouFollowRailQueryRenderer } from "./HomeWorksByArtistsYouFollowRail"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 export const HomeWorksForYouTabBar: React.FC = () => {
   const { user } = useSystemContext()
@@ -13,16 +14,18 @@ export const HomeWorksForYouTabBar: React.FC = () => {
   }
 
   return (
-    <Tabs>
-      <Tab name="New Works for You">
-        <HomeNewWorksForYouRailQueryRenderer />
-      </Tab>
-      <Tab name="New Works by Artists You Follow">
-        <HomeWorksByArtistsYouFollowRailQueryRenderer />
-      </Tab>
-      <Tab name="Recently Viewed">
-        <HomeRecentlyViewedRailQueryRenderer />
-      </Tab>
-    </Tabs>
+    <ArtworkGridContextProvider showActivePartnerOffer>
+      <Tabs>
+        <Tab name="New Works for You">
+          <HomeNewWorksForYouRailQueryRenderer />
+        </Tab>
+        <Tab name="New Works by Artists You Follow">
+          <HomeWorksByArtistsYouFollowRailQueryRenderer />
+        </Tab>
+        <Tab name="Recently Viewed">
+          <HomeRecentlyViewedRailQueryRenderer />
+        </Tab>
+      </Tabs>
+    </ArtworkGridContextProvider>
   )
 }

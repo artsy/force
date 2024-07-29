@@ -9,6 +9,7 @@ import {
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { Skeleton } from "@artsy/palette"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface AboutArtworksRailProps {
   marketingCollection: AboutArtworksRail_marketingCollection$data
@@ -22,19 +23,21 @@ export const AboutArtworksRail: React.FC<AboutArtworksRailProps> = props => {
   }
 
   return (
-    <Rail
-      title="Trending Now"
-      viewAllLabel="View All"
-      viewAllHref="/gene/trending-this-week"
-      getItems={() => {
-        return artworks.map(artwork => (
-          <ShelfArtworkFragmentContainer
-            artwork={artwork}
-            key={artwork.internalID}
-          />
-        ))
-      }}
-    />
+    <ArtworkGridContextProvider showActivePartnerOffer>
+      <Rail
+        title="Trending Now"
+        viewAllLabel="View All"
+        viewAllHref="/gene/trending-this-week"
+        getItems={() => {
+          return artworks.map(artwork => (
+            <ShelfArtworkFragmentContainer
+              artwork={artwork}
+              key={artwork.internalID}
+            />
+          ))
+        }}
+      />
+    </ArtworkGridContextProvider>
   )
 }
 

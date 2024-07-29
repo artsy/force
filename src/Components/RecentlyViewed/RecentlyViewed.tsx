@@ -12,6 +12,7 @@ import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { RecentlyViewedPlaceholder } from "./RecentlyViewedPlaceholder"
 import { Rail } from "Components/Rail/Rail"
 import { useTracking } from "react-tracking"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 export interface RecentlyViewedProps {
   me: RecentlyViewed_me$data
@@ -35,22 +36,24 @@ export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ me }) => {
   if (artworks.length === 0) return null
 
   return (
-    <Rail
-      title="Recently Viewed"
-      getItems={() => {
-        return artworks.map(artwork => {
-          return (
-            <ShelfArtworkFragmentContainer
-              key={artwork.id}
-              lazyLoad={true}
-              artwork={artwork}
-              onClick={trackClick}
-              contextModule={ContextModule.recentlyViewedRail}
-            />
-          )
-        })
-      }}
-    />
+    <ArtworkGridContextProvider showActivePartnerOffer>
+      <Rail
+        title="Recently Viewed"
+        getItems={() => {
+          return artworks.map(artwork => {
+            return (
+              <ShelfArtworkFragmentContainer
+                key={artwork.id}
+                lazyLoad={true}
+                artwork={artwork}
+                onClick={trackClick}
+                contextModule={ContextModule.recentlyViewedRail}
+              />
+            )
+          })
+        }}
+      />
+    </ArtworkGridContextProvider>
   )
 }
 

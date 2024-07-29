@@ -8,6 +8,7 @@ import { ViewAllButton } from "./ViewAllButton"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface ArtworksRailProps extends BoxProps {
   partner: ArtworksRail_partner$data
@@ -37,17 +38,19 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
         <ViewAllButton to={`/partner/${slug}/works`} />
       </Flex>
 
-      <Shelf>
-        {artworks.map(artwork => {
-          return (
-            <ShelfArtworkFragmentContainer
-              key={artwork.internalID}
-              artwork={artwork}
-              lazyLoad
-            />
-          )
-        })}
-      </Shelf>
+      <ArtworkGridContextProvider showActivePartnerOffer>
+        <Shelf>
+          {artworks.map(artwork => {
+            return (
+              <ShelfArtworkFragmentContainer
+                key={artwork.internalID}
+                artwork={artwork}
+                lazyLoad
+              />
+            )
+          })}
+        </Shelf>
+      </ArtworkGridContextProvider>
     </Box>
   )
 }
