@@ -41,9 +41,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
   if (!submission) return null
 
   const buttonURL = getButtonURL(artwork)
-  const buttonVariant = ["DRAFT", "APPROVED"].includes(submission.state)
-    ? "primaryBlack"
-    : "secondaryBlack"
+  const buttonVariant = getButtonVariant(submission.state)
 
   return (
     <Box>
@@ -210,6 +208,12 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
       </Box>
     </ModalDialog>
   )
+}
+
+const getButtonVariant = (submissionState: string) => {
+  return ["DRAFT", "APPROVED"].includes(submissionState)
+    ? "primaryBlack"
+    : "secondaryBlack"
 }
 
 const getButtonURL = (
