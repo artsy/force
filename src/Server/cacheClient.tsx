@@ -64,7 +64,7 @@ const cacheCommandWithTimeout = async (func: "get" | "set", ...args: any[]) => {
   }
 }
 
-const redisCacheSetup = (onComplete?: () => void) => {
+const redisCacheSetup = () => {
   if (!isServer) {
     return
   }

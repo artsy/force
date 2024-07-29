@@ -54,7 +54,8 @@ export const readCache = async (req: ArtsyRequest) => {
     try {
       const queryId = req.body?.id
       const variables = req.body?.variables
-      const cacheKey = JSON.stringify({
+
+      const cacheKey = getCacheKey({
         queryId,
         variables,
       })
@@ -133,7 +134,8 @@ export const writeCache = async (
 
         const queryId = req.body?.id
         const variables = req.body?.variables
-        const cacheKey = JSON.stringify({
+
+        const cacheKey = getCacheKey({
           queryId,
           variables,
         })
@@ -165,6 +167,26 @@ export const writeCache = async (
         res.end()
       }
     })
+  }
+}
+
+interface GetCacheKeyProps {
+  queryId: string
+  variables: Record<string, unknown>
+}
+
+const getCacheKey = (props: GetCacheKeyProps) => {
+  const fallbackCacheKey = "" // Falsy value for redis
+
+  try {
+    const cacheKey = JSON.stringify({
+      queryId: props.queryId,
+      variables: props.variables,
+    })
+
+    return cacheKey
+  } catch {
+    return fallbackCacheKey
   }
 }
 

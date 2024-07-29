@@ -68,6 +68,11 @@ export const myNewAppRoutes: AppRouteConfig[] = [
     path: "/new-app",
     // How long should we cache the query on the server? Default is .env GRAPHQL_CACHE_TTL
     serverCacheTTL: 1000,
+    // Relay config to always force a fetch; use very deliberately! We want
+    // caching, but some pages should never be cached.
+    cacheConfig: {
+      force: true
+    }
     Component: props => {
       return (
         <div>

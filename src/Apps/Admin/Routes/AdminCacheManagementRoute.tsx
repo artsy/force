@@ -238,9 +238,8 @@ const DeleteButton = ({ onClick }) => {
   )
 }
 
-type CacheKey = {
+interface CacheKey {
   queryId: string
-  // Add other properties as needed
 }
 
 interface State {
