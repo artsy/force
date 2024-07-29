@@ -52,6 +52,7 @@ export const auctionRoutes: RouteProps[] = [
   {
     path: "/auction/:slug?",
     getComponent: () => AuctionApp,
+    serverCacheTTL: 0,
     onClientSideRender: () => {
       AuctionApp.preload()
     },
