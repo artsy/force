@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4bf968c83fd718d4d34d46d4d2c7e37d>>
+ * @generated SignedSource<<d844f2d3724f085d932b75b686a16b2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,7 @@ export type Details_artwork$data = {
     readonly lotWatcherCount: number | null | undefined;
     readonly partnerOffer: {
       readonly endAt: string | null | undefined;
+      readonly isActive: boolean | null | undefined;
       readonly priceWithDiscount: {
         readonly display: string | null | undefined;
       } | null | undefined;
@@ -174,6 +175,13 @@ return {
           "plural": false,
           "selections": [
             (v1/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isActive",
+              "storageKey": null
+            },
             {
               "alias": null,
               "args": null,
@@ -437,6 +445,6 @@ return {
 };
 })();
 
-(node as any).hash = "6e29b56273198dd1e006e7bfe9deffff";
+(node as any).hash = "7c5f42371a332593ece18c976ee0bac0";
 
 export default node;

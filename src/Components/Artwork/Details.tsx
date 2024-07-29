@@ -150,9 +150,7 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
   )
 }
 
-const ActivePartnerOfferLine: React.FC<DetailsProps> = ({
-  artwork: { collectorSignals },
-}) => {
+const ActivePartnerOfferLine: React.FC<DetailsProps> = () => {
   return (
     <Text
       variant="xs"
@@ -166,6 +164,10 @@ const ActivePartnerOfferLine: React.FC<DetailsProps> = ({
       Limited-Time Offer
     </Text>
   )
+}
+
+const EmptyLine: React.FC = () => {
+  return <Text variant="xs"> &nbsp; </Text>
 }
 
 const HighDemandInfo = () => {
@@ -241,10 +243,6 @@ const ActivePartnerOfferTimer: React.FC<DetailsProps> = ({
   )
 }
 
-const EmptyLine: React.FC = () => {
-  return <Text variant="xs"> &nbsp; </Text>
-}
-
 export const Details: React.FC<DetailsProps> = ({
   contextModule,
   hideArtistName,
@@ -275,25 +273,22 @@ export const Details: React.FC<DetailsProps> = ({
   )
 
   const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
+  const isActive = partnerOffer?.isActive ?? false
 
-  const { hasEnded } = useTimer(partnerOffer?.endAt ?? "")
-
-  const showActivePartnerOfferLine: boolean = useMemo(() => {
-    const result =
+  const showActivePartnerOfferLine: boolean = useMemo(
+    () =>
       !!signalsPartnerOffersEnabled &&
       !!showActivePartnerOffer &&
       !!partnerOffer &&
-      !hasEnded
+      !!isActive,
 
-    console.log("showActivePartnerOffer", showActivePartnerOffer)
-    console.log("signalsPartnerOffersEnabled", signalsPartnerOffersEnabled)
-    return result
-  }, [
-    signalsPartnerOffersEnabled,
-    showActivePartnerOffer,
-    partnerOffer,
-    hasEnded,
-  ])
+    [
+      signalsPartnerOffersEnabled,
+      showActivePartnerOffer,
+      partnerOffer,
+      isActive,
+    ]
+  )
 
   const padForActivePartnerOfferLine: boolean =
     !!signalsPartnerOffersEnabled &&
@@ -472,6 +467,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         lotWatcherCount
         partnerOffer {
           endAt
+          isActive
           priceWithDiscount {
             display
           }
