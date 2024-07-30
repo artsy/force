@@ -255,7 +255,7 @@ kind: Ingress
 metadata:
   name: force
   annotations:
-    nginx.ingress.kubernetes.io/whitelist-source-range: {{ cloudflareIpSourceRanges|join(',') }}
+    nginx.ingress.kubernetes.io/whitelist-source-range: {{ externalIngressAllowSourceIP|join(',') }}
 spec:
   ingressClassName: nginx
   rules:
