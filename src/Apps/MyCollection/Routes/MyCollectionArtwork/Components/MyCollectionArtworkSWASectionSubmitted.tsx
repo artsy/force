@@ -39,9 +39,6 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
   if (["APPROVED", "REJECTED", "CLOSED", "PUBLISHED"].includes(state))
     stateLabelColor = "orange150"
 
-  const article =
-    "https://support.artsy.net/s/topic/0TO3b000000UevOGAS/sell-with-artsy"
-
   return (
     <>
       <Separator my={4} />
@@ -82,17 +79,6 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
       <Media greaterThanOrEqual="sm">
         <Text mb={2} color="black60" variant="xs">
           {stateHelpMessage}
-        </Text>
-
-        <Text mb={2} color="black60" variant="xs">
-          Have a question? Visit our{" "}
-          <RouterLink to={article} target="_blank" color="black100">
-            help center
-          </RouterLink>{" "}
-          or get in touch with one of our specialists at{" "}
-          <RouterLink to={"mailto:sell@artsy.net"} color="black100">
-            sell@artsy.net
-          </RouterLink>
         </Text>
       </Media>
 
