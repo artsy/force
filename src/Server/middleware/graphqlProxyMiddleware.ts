@@ -14,6 +14,9 @@ import {
   RELAY_CACHE_PATH_HEADER_KEY,
 } from "System/Relay/middleware/cacheHeaderMiddleware"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
+import { getENV } from "Utils/getENV"
+
+const isDevelopment = getENV("NODE_ENV") === "development"
 
 export const graphqlProxyMiddleware = async (
   req: ArtsyRequest,
@@ -63,12 +66,14 @@ export const readCache = async (req: ArtsyRequest) => {
       const response = await cache.get(cacheKey)
 
       if (response) {
-        console.log(
-          "\n[graphqlProxyMiddleware # get] Cache hit: \n",
-          "[cacheKey]:",
-          cacheKey,
-          "\n"
-        )
+        if (isDevelopment) {
+          console.log(
+            "\n[graphqlProxyMiddleware # get] Cache hit: \n",
+            "[cacheKey]:",
+            cacheKey,
+            "\n"
+          )
+        }
 
         const parsedResponse = JSON.parse(response)
 
@@ -149,15 +154,17 @@ export const writeCache = async (
           TTL
         )
 
-        console.log(
-          "\n[graphqlProxyMiddleware # writeCache] \n",
-          "[cacheKey]:",
-          cacheKey,
-          "\n",
-          "[TTL]:",
-          TTL,
-          "\n"
-        )
+        if (isDevelopment) {
+          console.log(
+            "\n[graphqlProxyMiddleware # writeCache] \n",
+            "[cacheKey]:",
+            cacheKey,
+            "\n",
+            "[TTL]:",
+            TTL,
+            "\n"
+          )
+        }
       } catch (error) {
         console.error(
           "[graphqlProxyMiddleware # writeCache] Cache error:",
