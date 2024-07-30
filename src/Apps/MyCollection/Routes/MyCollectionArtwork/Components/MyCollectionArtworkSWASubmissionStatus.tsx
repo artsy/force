@@ -2,7 +2,6 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   Box,
   Button,
-  ButtonProps,
   Clickable,
   Flex,
   ModalDialog,
@@ -40,8 +39,15 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
 
   if (!submission) return null
 
+  const isListed = extractNodes(artwork.listedArtworksConnection).length > 0
+  const stateLabel = isListed ? "Listed" : submission.stateLabel
+  const buttonLabel = isListed ? "View Listing" : submission.buttonLabel
+
   const buttonURL = getButtonURL(artwork)
-  const buttonVariant = getButtonVariant(submission.state)
+  const buttonVariant = ["DRAFT", "APPROVED"].includes(submission.state)
+    ? "primaryBlack"
+    : "secondaryBlack"
+  const stateHelpMessage = getStateHelpMessage(submission, isListed)
 
   return (
     <Box>
@@ -65,7 +71,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
       </Text>
 
       <Text variant="md" fontWeight="400">
-        {submission.stateLabel}
+        {stateLabel}
       </Text>
 
       <Media lessThan="sm">
@@ -86,13 +92,49 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
           </RouterLink>
         )}
 
-        <SubmissionStatusModal
-          buttonURL={buttonURL}
-          buttonVariant={buttonVariant}
-          submission={submission}
-          show={isSubmissionStatusModalOpen}
-          onClose={() => setIsSubmissionStatusModalOpen(false)}
-        />
+        {!!isSubmissionStatusModalOpen && (
+          <ModalDialog onClose={() => setIsSubmissionStatusModalOpen(false)}>
+            <Box>
+              <Text variant="xs" mb={1}>
+                Submission Status
+              </Text>
+
+              <Text variant="md" fontWeight="400">
+                {stateLabel}
+              </Text>
+
+              {!!submission.actionLabel && (
+                <Text variant="md" fontWeight="400" color="orange100">
+                  {submission.actionLabel}
+                </Text>
+              )}
+
+              <Spacer y={1} />
+
+              <Text variant="sm" color="black60">
+                {stateHelpMessage}
+              </Text>
+
+              <Spacer y={2} />
+
+              {!!buttonURL && (
+                <Button
+                  variant={buttonVariant}
+                  // @ts-ignore
+                  as={RouterLink}
+                  onClick={() => {
+                    // TODO: Tracking
+                  }}
+                  to={buttonURL}
+                  width="100%"
+                  mb={2}
+                >
+                  {buttonLabel}
+                </Button>
+              )}
+            </Box>
+          </ModalDialog>
+        )}
       </Media>
 
       <Media greaterThanOrEqual="sm">
@@ -105,7 +147,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
         <Spacer y={1} />
 
         <Text variant="sm" color="black60">
-          {submission.stateHelpMessage}
+          {stateHelpMessage}
         </Text>
 
         <Spacer y={2} />
@@ -120,7 +162,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
             }}
             to={buttonURL}
           >
-            {submission.buttonLabel}
+            {buttonLabel}
           </Button>
         )}
       </Media>
@@ -147,74 +189,6 @@ const submissionStatusFragment = graphql`
     }
   }
 `
-
-interface SubmissionStatusModalProps {
-  buttonURL: string | null
-  buttonVariant: ButtonProps["variant"] | null
-  show: boolean
-  onClose(): void
-  submission: MyCollectionArtworkSWASubmissionStatus_artwork$data["consignmentSubmission"]
-}
-
-const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
-  buttonURL,
-  buttonVariant,
-  onClose,
-  show,
-  submission,
-}) => {
-  if (!show || !submission) return null
-
-  return (
-    <ModalDialog onClose={onClose}>
-      <Box>
-        <Text variant="xs" mb={1}>
-          Submission Status
-        </Text>
-
-        <Text variant="md" fontWeight="400">
-          {submission.stateLabel}
-        </Text>
-
-        {!!submission.actionLabel && (
-          <Text variant="md" fontWeight="400" color="orange100">
-            {submission.actionLabel}
-          </Text>
-        )}
-
-        <Spacer y={1} />
-
-        <Text variant="sm" color="black60">
-          {submission.stateHelpMessage}
-        </Text>
-
-        <Spacer y={2} />
-
-        {!!buttonURL && (
-          <Button
-            variant={buttonVariant}
-            // @ts-ignore
-            as={RouterLink}
-            onClick={() => {
-              // TODO: Tracking
-            }}
-            to={buttonURL}
-            width="100%"
-            mb={2}
-          >
-            {submission.buttonLabel}
-          </Button>
-        )}
-      </Box>
-    </ModalDialog>
-  )
-}
-
-const getButtonVariant = (submissionState: string) => {
-  return ["DRAFT", "APPROVED"].includes(submissionState)
-    ? "primaryBlack"
-    : "secondaryBlack"
-}
 
 const getButtonURL = (
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$data
@@ -243,4 +217,27 @@ const getButtonURL = (
   }
 
   return null
+}
+
+const getStateHelpMessage = (submission, isListed): JSX.Element => {
+  if (isListed) {
+    return <>Your artwork has been successfully listed on Artsy.</>
+  }
+
+  if (submission.state === "REJECTED") {
+    return (
+      <>
+        {submission.stateHelpMessage} Find out more about our{" "}
+        <RouterLink
+          to="https://support.artsy.net/s/article/What-items-do-you-accept"
+          color="black60"
+          inline
+        >
+          submission criteria
+        </RouterLink>
+      </>
+    )
+  }
+
+  return submission.stateHelpMessage
 }

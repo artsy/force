@@ -45,8 +45,8 @@ describe("MyCollection Artwork SWA Submission Status", () => {
     }))
   })
 
-  describe("when artwork is already submitted", () => {
-    it("renders title and description", () => {
+  describe("when artwork is submitted", () => {
+    it("renders the submission status section", () => {
       renderWithRelay({
         Artwork: () => ({
           consignmentSubmission: {
@@ -55,12 +55,51 @@ describe("MyCollection Artwork SWA Submission Status", () => {
             stateHelpMessage: "state-helper-message",
             buttonLabel: "button-label",
           },
+          listedArtworksConnection: null,
         }),
       })
 
       expect(screen.getByText("Submission Status")).toBeInTheDocument()
       expect(screen.getByText("action-label")).toBeInTheDocument()
       expect(screen.getByText("state-helper-message")).toBeInTheDocument()
+    })
+  })
+
+  describe("when artwork is listed", () => {
+    it("renders the submission status section", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          listedArtworksConnection: {
+            edges: [
+              {
+                node: {
+                  internalID: "listed-artwork-id",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.getByText("Submission Status")).toBeInTheDocument()
+      expect(screen.getByText("View Listing")).toBeInTheDocument()
+      expect(
+        screen.getByText("Your artwork has been successfully listed on Artsy.")
+      ).toBeInTheDocument()
+      expect(screen.getByText("Listed")).toBeInTheDocument()
+    })
+  })
+
+  describe("when artwork is not submitted", () => {
+    it("does not render the submission status", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          consignmentSubmission: null,
+          listedArtworksConnection: null,
+        }),
+      })
+
+      expect(screen.queryByText("Submission Status")).not.toBeInTheDocument()
     })
   })
 })
