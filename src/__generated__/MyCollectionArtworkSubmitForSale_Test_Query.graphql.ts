@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<871b0e01969adf31363b44ec360b9f1e>>
+ * @generated SignedSource<<d50d0e01e978705dfed80708f1a59e2c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,30 +10,37 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkSWASection_Test_Query$variables = Record<PropertyKey, never>;
-export type MyCollectionArtworkSWASection_Test_Query$data = {
+export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
+export type MyCollectionArtworkSubmitForSale_Test_Query$variables = Record<PropertyKey, never>;
+export type MyCollectionArtworkSubmitForSale_Test_Query$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkSWASection_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkSubmitForSale_artwork">;
   } | null | undefined;
 };
-export type MyCollectionArtworkSWASection_Test_Query$rawResponse = {
+export type MyCollectionArtworkSubmitForSale_Test_Query$rawResponse = {
   readonly artwork: {
     readonly artist: {
       readonly id: string;
       readonly internalID: string;
       readonly slug: string;
+      readonly targetSupply: {
+        readonly priority: ArtistTargetSupplyPriority | null | undefined;
+      };
     } | null | undefined;
     readonly consignmentSubmission: {
       readonly internalID: string | null | undefined;
     } | null | undefined;
     readonly id: string;
     readonly internalID: string;
+    readonly marketPriceInsights: {
+      readonly demandRank: number | null | undefined;
+    } | null | undefined;
   } | null | undefined;
 };
-export type MyCollectionArtworkSWASection_Test_Query = {
-  rawResponse: MyCollectionArtworkSWASection_Test_Query$rawResponse;
-  response: MyCollectionArtworkSWASection_Test_Query$data;
-  variables: MyCollectionArtworkSWASection_Test_Query$variables;
+export type MyCollectionArtworkSubmitForSale_Test_Query = {
+  rawResponse: MyCollectionArtworkSubmitForSale_Test_Query$rawResponse;
+  response: MyCollectionArtworkSubmitForSale_Test_Query$data;
+  variables: MyCollectionArtworkSubmitForSale_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -63,7 +70,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "MyCollectionArtworkSWASection_Test_Query",
+    "name": "MyCollectionArtworkSubmitForSale_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -76,7 +83,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "MyCollectionArtworkSWASection_artwork"
+            "name": "MyCollectionArtworkSubmitForSale_artwork"
           }
         ],
         "storageKey": "artwork(id:\"artwork-id\")"
@@ -89,7 +96,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "MyCollectionArtworkSWASection_Test_Query",
+    "name": "MyCollectionArtworkSubmitForSale_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -116,6 +123,24 @@ return {
                 "name": "slug",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistTargetSupply",
+                "kind": "LinkedField",
+                "name": "targetSupply",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "priority",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
               (v2/*: any*/)
             ],
             "storageKey": null
@@ -132,6 +157,24 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworkPriceInsights",
+            "kind": "LinkedField",
+            "name": "marketPriceInsights",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "demandRank",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           (v2/*: any*/)
         ],
         "storageKey": "artwork(id:\"artwork-id\")"
@@ -139,16 +182,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6790b277252c4de5378a94f04a174c5b",
+    "cacheID": "ff278d77de74a054e45dbe630daa98a1",
     "id": null,
     "metadata": {},
-    "name": "MyCollectionArtworkSWASection_Test_Query",
+    "name": "MyCollectionArtworkSubmitForSale_Test_Query",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSWASection_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASection_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASection_artwork on Artwork {\n  internalID\n  artist {\n    internalID\n    slug\n    id\n  }\n  consignmentSubmission {\n    internalID\n  }\n}\n"
+    "text": "query MyCollectionArtworkSubmitForSale_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSubmitForSale_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSubmitForSale_artwork on Artwork {\n  internalID\n  artist {\n    internalID\n    slug\n    targetSupply {\n      priority\n    }\n    id\n  }\n  consignmentSubmission {\n    internalID\n  }\n  marketPriceInsights {\n    demandRank\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "954b24e31e85c83862ac93f3a699cc9c";
+(node as any).hash = "cdad8af3e8fa51c1ec8a4ebfc9acf42d";
 
 export default node;

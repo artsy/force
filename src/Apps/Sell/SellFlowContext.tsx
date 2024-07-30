@@ -184,9 +184,17 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       "/sell/submissions"
     )
 
-    if (isNewSubmission || !newStep || !isSellFlowRoute) return
+    if (
+      isNewSubmission ||
+      !newStep ||
+      !isSellFlowRoute ||
+      // If we are already on the correct step, don't redirect
+      match.location.pathname.includes(newStep)
+    )
+      return
 
     router.push(`/sell/submissions/${submission?.externalId}/${newStep}`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     index,
     isNewSubmission,

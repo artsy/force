@@ -1,12 +1,11 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-import { MyCollectionArtworkSWASection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASection"
+import { MyCollectionArtworkSubmitForSale } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSubmitForSale"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { graphql } from "react-relay"
 
-const learnMoreMock = jest.fn()
 const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
@@ -32,17 +31,12 @@ jest.mock("System/Hooks/useRouter", () => ({
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
-    return (
-      <MyCollectionArtworkSWASection
-        artwork={props.artwork}
-        learnMore={learnMoreMock}
-      />
-    )
+    return <MyCollectionArtworkSubmitForSale artwork={props.artwork} />
   },
   query: graphql`
-    query MyCollectionArtworkSWASection_Test_Query @raw_response_type {
+    query MyCollectionArtworkSubmitForSale_Test_Query @raw_response_type {
       artwork(id: "artwork-id") {
-        ...MyCollectionArtworkSWASection_artwork
+        ...MyCollectionArtworkSubmitForSale_artwork
       }
     }
   `,
@@ -67,7 +61,14 @@ describe("MyCollection Artwork SWA Section", () => {
         it("opens the submission page and does not create a new submission", async () => {
           renderWithRelay({
             Artwork: () => ({
-              consignmentSubmission: { submissionId: "submission-id" },
+              consignmentSubmission: {
+                submissionId: "submission-id",
+              },
+              artist: {
+                targetSupply: {
+                  priority: "TRUE",
+                },
+              },
             }),
           })
 
@@ -86,6 +87,11 @@ describe("MyCollection Artwork SWA Section", () => {
           renderWithRelay({
             Artwork: () => ({
               consignmentSubmission: null,
+              artist: {
+                targetSupply: {
+                  priority: "TRUE",
+                },
+              },
             }),
           })
 
@@ -101,14 +107,6 @@ describe("MyCollection Artwork SWA Section", () => {
         })
       })
     })
-
-    it("opens Modal when Learn More is pressed", async () => {
-      renderWithRelay()
-
-      fireEvent.click(screen.getByTestId("learn-more"))
-
-      expect(learnMoreMock).toBeCalled()
-    })
   })
 
   describe("when onyx_new_submission_flow feature flag is disabled", () => {
@@ -116,17 +114,40 @@ describe("MyCollection Artwork SWA Section", () => {
       mockUseFeatureFlag.mockImplementation(() => false)
     })
 
-    it("opens Modal when Learn More is pressed", async () => {
-      renderWithRelay()
-
-      fireEvent.click(screen.getByTestId("learn-more"))
-      expect(learnMoreMock).toBeCalled()
-    })
-
     it("the link has right attributes", async () => {
-      renderWithRelay()
+      renderWithRelay({
+        Artwork: () => ({
+          consignmentSubmission: null,
+          artist: {
+            targetSupply: {
+              priority: "TRUE",
+            },
+          },
+        }),
+      })
 
       expect(screen.getByTestId("submit-for-sale-link")).toBeInTheDocument()
+    })
+  })
+
+  describe("when artist is not in target supply", () => {
+    it("does not render the component", async () => {
+      renderWithRelay({
+        Artwork: () => ({
+          artist: {
+            targetSupply: {
+              priority: "FALSE",
+            },
+          },
+        }),
+      })
+
+      expect(
+        screen.queryByText("Interested in Selling This Work?")
+      ).not.toBeInTheDocument()
+      expect(
+        screen.queryByTestId("submit-for-sale-link")
+      ).not.toBeInTheDocument()
     })
   })
 })

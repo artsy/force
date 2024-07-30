@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e6d22aa02a2c81cf56863ec1b32b65a1>>
+ * @generated SignedSource<<fcfd048cb16027c782b3f2a22c38c8a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,22 +10,22 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkRequestPriceEstimateSection_artwork$data = {
+export type MyCollectionArtworkRequestPriceEstimate_artwork$data = {
   readonly hasPriceEstimateRequest: boolean | null | undefined;
   readonly internalID: string;
   readonly isPriceEstimateRequestable: boolean | null | undefined;
-  readonly " $fragmentType": "MyCollectionArtworkRequestPriceEstimateSection_artwork";
+  readonly " $fragmentType": "MyCollectionArtworkRequestPriceEstimate_artwork";
 };
-export type MyCollectionArtworkRequestPriceEstimateSection_artwork$key = {
-  readonly " $data"?: MyCollectionArtworkRequestPriceEstimateSection_artwork$data;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkRequestPriceEstimateSection_artwork">;
+export type MyCollectionArtworkRequestPriceEstimate_artwork$key = {
+  readonly " $data"?: MyCollectionArtworkRequestPriceEstimate_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkRequestPriceEstimate_artwork">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "MyCollectionArtworkRequestPriceEstimateSection_artwork",
+  "name": "MyCollectionArtworkRequestPriceEstimate_artwork",
   "selections": [
     {
       "alias": null,
@@ -53,6 +53,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a40ebe03c74faf79a86b19ae902307c8";
+(node as any).hash = "dfde0e4b54e2c3b25cb5aaee2b1d62dd";
 
 export default node;
