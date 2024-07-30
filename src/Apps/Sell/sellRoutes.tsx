@@ -189,6 +189,7 @@ export const sellRoutes: RouteProps[] = [
         onClientSideRender: () => {
           NewFromMyCollectionRoute.preload()
         },
+        onServerSideRender: checkIfLoggedIn,
       },
 
       {
@@ -356,6 +357,7 @@ export const sellRoutes: RouteProps[] = [
             onClientSideRender: () => {
               ThankYouRoute.preload()
             },
+            onServerSideRender: checkIfLoggedIn,
             query: graphql`
               query sellRoutes_ThankYouRouteQuery($id: ID!) {
                 submission(id: $id) @principalField {
@@ -377,6 +379,7 @@ export const sellRoutes: RouteProps[] = [
             onClientSideRender: () => {
               ShippingLocationRoute.preload()
             },
+            onServerSideRender: checkIfLoggedIn,
             query: graphql`
               query sellRoutes_ShippingLocationRouteQuery($id: ID!) {
                 submission(id: $id) @principalField {
@@ -398,6 +401,7 @@ export const sellRoutes: RouteProps[] = [
             onClientSideRender: () => {
               FrameRoute.preload()
             },
+            onServerSideRender: checkIfLoggedIn,
             query: graphql`
               query sellRoutes_FrameRouteQuery($id: ID!) {
                 submission(id: $id) @principalField {
@@ -416,6 +420,7 @@ export const sellRoutes: RouteProps[] = [
             onClientSideRender: () => {
               AdditionalDocumentsRoute.preload()
             },
+            onServerSideRender: checkIfLoggedIn,
             query: graphql`
               query sellRoutes_AdditionalDocumentsRouteQuery($id: ID!) {
                 submission(id: $id) @principalField {
@@ -434,6 +439,7 @@ export const sellRoutes: RouteProps[] = [
             onClientSideRender: () => {
               ConditionRoute.preload()
             },
+            onServerSideRender: checkIfLoggedIn,
             query: graphql`
               query sellRoutes_ConditionRouteQuery($id: ID!) {
                 submission(id: $id) @principalField {
@@ -450,3 +456,9 @@ export const sellRoutes: RouteProps[] = [
     ],
   },
 ]
+
+function checkIfLoggedIn({ req, res }) {
+  if (!req.user) {
+    res.redirect(`/login?redirectTo=${req.originalUrl}`)
+  }
+}
