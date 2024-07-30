@@ -21,6 +21,7 @@ import {
   SystemContextProps,
   withSystemContext,
 } from "System/Contexts/SystemContext"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface CollectionAppProps extends SystemContextProps {
   collection: Collection_collection$data
@@ -41,6 +42,15 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
     fallbackHeaderImage,
     artworksConnection,
   } = collection
+
+  const partnerOfferEnabledSlugs = [
+    "curators-picks-blue-chip-artists",
+    "curators-picks-emerging-artists",
+    "trending-now",
+    "new-this-week",
+  ]
+
+  const showActivePartnerOffer = partnerOfferEnabledSlugs.includes(slug ?? "")
 
   const metadataDescription = descriptionMarkdown
     ? `Buy, bid, and inquire on ${title} on Artsy. ${truncate(
@@ -87,15 +97,18 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
         )}
 
         <Spacer y={6} />
-
-        <CollectionArtworksFilterRefetchContainer
-          collection={collection}
-          aggregations={
-            collection.artworksConnection
-              ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-          }
-          counts={collection.artworksConnection?.counts as Counts}
-        />
+        <ArtworkGridContextProvider
+          showActivePartnerOffer={showActivePartnerOffer}
+        >
+          <CollectionArtworksFilterRefetchContainer
+            collection={collection}
+            aggregations={
+              collection.artworksConnection
+                ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+            }
+            counts={collection.artworksConnection?.counts as Counts}
+          />
+        </ArtworkGridContextProvider>
 
         {collection.linkedCollections.length === 0 && (
           <>

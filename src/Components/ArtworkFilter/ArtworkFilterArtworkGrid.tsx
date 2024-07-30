@@ -9,7 +9,6 @@ import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import { ContextModule, clickedMainArtworkGrid } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
-import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
@@ -57,31 +56,29 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
   return (
     <>
       <LoadingArea isLoading={!!props.isLoading}>
-        <ArtworkGridContextProvider showActivePartnerOffer>
-          <ArtworkGrid
-            artworks={props.filtered_artworks}
-            columnCount={columnCount}
-            contextModule={ContextModule.artworkGrid}
-            itemMargin={40}
-            user={user}
-            onClearFilters={context.resetFilters}
-            emptyStateComponent={context.ZeroState && <context.ZeroState />}
-            onBrickClick={(artwork, artworkIndex) => {
-              trackEvent(
-                clickedMainArtworkGrid({
-                  contextPageOwnerType,
-                  contextPageOwnerSlug,
-                  contextPageOwnerId,
-                  destinationPageOwnerId: artwork.internalID,
-                  destinationPageOwnerSlug: artwork.slug,
-                  position: artworkIndex,
-                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                  sort: context.filters.sort,
-                })
-              )
-            }}
-          />
-        </ArtworkGridContextProvider>
+        <ArtworkGrid
+          artworks={props.filtered_artworks}
+          columnCount={columnCount}
+          contextModule={ContextModule.artworkGrid}
+          itemMargin={40}
+          user={user}
+          onClearFilters={context.resetFilters}
+          emptyStateComponent={context.ZeroState && <context.ZeroState />}
+          onBrickClick={(artwork, artworkIndex) => {
+            trackEvent(
+              clickedMainArtworkGrid({
+                contextPageOwnerType,
+                contextPageOwnerSlug,
+                contextPageOwnerId,
+                destinationPageOwnerId: artwork.internalID,
+                destinationPageOwnerSlug: artwork.slug,
+                position: artworkIndex,
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+                sort: context.filters.sort,
+              })
+            )
+          }}
+        />
 
         <Pagination
           hasNextPage={hasNextPage}

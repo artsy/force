@@ -281,7 +281,6 @@ export const Details: React.FC<DetailsProps> = ({
       !!showActivePartnerOffer &&
       !!partnerOffer &&
       !!isActive,
-
     [
       signalsPartnerOffersEnabled,
       showActivePartnerOffer,
