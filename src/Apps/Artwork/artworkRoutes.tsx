@@ -62,12 +62,12 @@ export const artworkRoutes: RouteProps[] = [
         }
       }
     `,
-    getCacheConfig: ({ context }) => {
-      return {
-        force: true,
+    getCacheConfig: ({ context, ...rest }) => {
+      const isLoggedIn = !!context.user
 
-        // TODO: In the future, we might want to only cache for logged out users
-        // force: !!context.user,
+      return {
+        // Fetch artwork if logged in, otherwise cache
+        force: isLoggedIn,
       }
     },
   },

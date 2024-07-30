@@ -319,6 +319,100 @@ describe.skip("Shipping", () => {
     `,
   })
 
+  describe("initial load with order data", () => {
+    it("loads with saved shipping fulfillment and no saved addresses", async () => {
+      const orderWithFulfillment = {
+        ...order,
+        requestedFulfillment: {
+          __typename: "CommerceShip",
+          name: "Dr Collector",
+          addressLine1: "1 Main St",
+          addressLine2: "",
+          city: "Madrid",
+          country: "ES",
+          postalCode: "28001",
+          region: "",
+          phoneNumber: "555-555-5555",
+        },
+      }
+      renderWithRelay({
+        CommerceOrder: () => orderWithFulfillment,
+        Me: () => meWithoutAddress,
+      })
+
+      const renderedFullName = await screen.findByDisplayValue("Dr Collector")
+      expect(renderedFullName).toHaveValue("Dr Collector")
+      expect(screen.getByPlaceholderText("Street address")).toHaveValue(
+        "1 Main St"
+      )
+      expect(screen.getByPlaceholderText("City")).toHaveValue("Madrid")
+      expect(screen.getByPlaceholderText("ZIP/Postal code")).toHaveValue(
+        "28001"
+      )
+      expect(
+        screen.getByPlaceholderText("Add phone number including country code")
+      ).toHaveValue("555-555-5555")
+    })
+
+    it("loads with saved shipping fulfillment and matching saved addresses", async () => {
+      const expectedAddress = meWithAddresses.addressConnection!.edges![1]!
+        .node!
+      const unexpectedAddress = meWithAddresses.addressConnection!.edges![0]!
+        .node!
+
+      const orderWithFulfillment = {
+        ...order,
+        requestedFulfillment: {
+          __typename: "CommerceShip",
+          name: expectedAddress.name,
+          addressLine1: expectedAddress.addressLine1,
+          addressLine2: expectedAddress.addressLine2,
+          city: expectedAddress.city,
+          country: expectedAddress.country,
+          postalCode: expectedAddress.postalCode,
+          region: expectedAddress.region,
+          phoneNumber: expectedAddress.phoneNumber,
+        },
+      }
+
+      renderWithRelay({
+        CommerceOrder: () => orderWithFulfillment,
+        Me: () => meWithAddresses,
+      })
+
+      expect(expectedAddress.addressLine1).toEqual("401 Broadway")
+      expect(unexpectedAddress.addressLine1).toEqual("1 Main St")
+
+      expect(screen.getByRole("radio", { name: /401 Broadway/ })).toBeChecked()
+      expect(screen.getByRole("radio", { name: /1 Main St/ })).not.toBeChecked()
+    })
+    it("loads with saved pickup fulfillment", async () => {
+      const orderWithFulfillment = {
+        ...order,
+        requestedFulfillment: {
+          __typename: "CommercePickup",
+          fulfillmentType: "PICKUP",
+          phoneNumber: "555-555-5555",
+        },
+      }
+
+      renderWithRelay({
+        CommerceOrder: () => orderWithFulfillment,
+        Me: () => meWithoutAddress,
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.getByRole("radio", { name: /Arrange for pickup/ })
+        ).toBeChecked()
+      })
+
+      expect(
+        screen.getByPlaceholderText("Add phone number including country code")
+      ).toHaveValue("555-555-5555")
+    })
+  })
+
   describe("with partner shipping", () => {
     describe("with no saved address", () => {
       it("shows an active offer stepper if it's an offer order", async () => {
@@ -2289,8 +2383,8 @@ describe.skip("Shipping", () => {
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
 
-      const phoneNumber = screen.getByPlaceholderText(
-        "Add phone number including country code"
+      const phoneNumber = await screen.findByTestId(
+        "AddressForm_pickupPhoneNumber"
       )
       // TODO: need a better way to check the input is displayed/expanded (height > 0)
       expect(phoneNumber).toHaveAttribute("tabindex", "0")

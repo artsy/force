@@ -1,19 +1,20 @@
+import ArrowDownIcon from "@artsy/icons/ArrowDownIcon"
+import ArrowUpIcon from "@artsy/icons/ArrowUpIcon"
+import InfoIcon from "@artsy/icons/InfoIcon"
 import {
   Clickable,
   Column,
   Flex,
   GridColumns,
+  Separator,
   Spacer,
   Text,
   Tooltip,
 } from "@artsy/palette"
+import { MyCollectionArtworkArtistMarket_marketPriceInsights$data } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
 import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { MyCollectionArtworkArtistMarket_marketPriceInsights$data } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
-import InfoIcon from "@artsy/icons/InfoIcon"
-import ArrowUpIcon from "@artsy/icons/ArrowUpIcon"
-import ArrowDownIcon from "@artsy/icons/ArrowDownIcon"
 
 export const MyCollectionArtworkArtistMarket = ({
   marketPriceInsights,
@@ -44,6 +45,8 @@ export const MyCollectionArtworkArtistMarket = ({
       </Media>
 
       <Media lessThan="sm">
+        <Separator my={4} />
+
         <Flex>
           <Text variant="sm-display">Artist Market</Text>
 

@@ -12,7 +12,7 @@ export enum FulfillmentType {
 export interface PickupValues {
   fulfillmentType: FulfillmentType.PICKUP
   attributes: {
-    name: string
+    name: ""
     phoneNumber: string
     // Even though these don't appear on the form
     // we want values to not mess with the controlled/
@@ -135,9 +135,55 @@ export const getDefaultUserAddress = (
     if (!filterCountries) return true
     return filterCountries.includes(node.country)
   })
+
+  if (shippableAddresses.length === 0) {
+    return null
+  }
+
   return (
     shippableAddresses.find(node => node.isDefault) || shippableAddresses[0]
   )
+}
+
+export const getInitialShippingValues = (
+  savedAddresses: SavedAddressType[],
+  defaultCountry,
+  filterCountries?: string[]
+): ShipValues => {
+  const defaultUserAddress = getDefaultUserAddress(
+    savedAddresses,
+    filterCountries
+  )
+
+  // The default ship-to address should be the first one that
+  // can be shipped-to, preferring the default address if it exists.
+  const attributesFromDefaultAddress: ShipValues["attributes"] = addressWithFallbackValues(
+    defaultUserAddress
+  )
+  if (defaultUserAddress) {
+    return {
+      fulfillmentType: FulfillmentType.SHIP,
+      attributes: attributesFromDefaultAddress,
+      meta: {
+        saveAddress: false,
+        addressVerifiedBy: null,
+      },
+    }
+  }
+
+  // The user doesn't have a valid ship-to address, so we'll return empty values.
+  const initialFulfillmentValues: ShipValues["attributes"] = addressWithFallbackValues(
+    { country: defaultCountry }
+  )
+
+  return {
+    fulfillmentType: FulfillmentType.SHIP,
+    attributes: initialFulfillmentValues,
+    meta: {
+      addressVerifiedBy: null,
+      saveAddress: true,
+    },
+  }
 }
 
 export const matchAddressFields = (...addressPair: [object, object]) => {

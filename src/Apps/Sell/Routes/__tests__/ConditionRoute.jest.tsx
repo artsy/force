@@ -182,6 +182,30 @@ describe("ConditionRoute", () => {
         screen.getByText("Submit Artwork").click()
 
         await waitFor(() => {
+          expect(submitMutation).toHaveBeenCalledWith(
+            expect.objectContaining({
+              variables: {
+                input: {
+                  artworkId: "artworkId",
+                  condition: "GOOD",
+                  conditionDescription: "description",
+                },
+              },
+            })
+          )
+
+          expect(submitMutation).toHaveBeenCalledWith(
+            expect.objectContaining({
+              variables: {
+                input: {
+                  externalId: "externalId",
+                  sessionID: undefined,
+                  state: "RESUBMITTED",
+                },
+              },
+            })
+          )
+
           expect(mockPush).toHaveBeenCalledWith(
             "/sell/submissions/externalId/thank-you"
           )

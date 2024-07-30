@@ -1,34 +1,22 @@
-import {
-  Button,
-  Column,
-  Flex,
-  GridColumns,
-  Separator,
-  Spacer,
-  Tab,
-  Tabs,
-} from "@artsy/palette"
-import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
-import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtworkAboutTab"
-import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
-import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
+import { Box, Column, GridColumns, Spacer, Tab, Tabs } from "@artsy/palette"
 import { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
-import { useState } from "react"
+import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkAboutTab"
+import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
+import { MyCollectionArtworkHeader } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkHeader"
+import { MyCollectionArtworkSWAHelpSection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWAHelpSection"
+import { MyCollectionArtworkSWASubmissionStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASubmissionStatus"
+import { MyCollectionArtworkTitle } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkTitle"
+import { MyCollectionPriceEstimateStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionPriceEstimateStatus"
+import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkBackButton"
-import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
-import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
-import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
-import {
-  MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer,
-  MyCollectionPriceEstimateSentSection,
-} from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
-import { MyCollectionArtworkSWAHowItWorksModal } from "./Components/MyCollectionArtworkSWAHowItWorksModal"
-import { MyCollectionArtworkSWASection } from "./Components/MyCollectionArtworkSWASection"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { Media } from "Utils/Responsive"
+import { MyCollectionArtworkImageBrowser } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
+import { MyCollectionArtworkInsights } from "./Components/MyCollectionArtworkInsights"
+import { MyCollectionArtworkMeta } from "./Components/MyCollectionArtworkMeta"
+import { MyCollectionArtworkRequestPriceEstimate } from "./Components/MyCollectionArtworkRequestPriceEstimate"
+import { MyCollectionArtworkSubmitForSale } from "./Components/MyCollectionArtworkSubmitForSale"
 import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
-import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
-import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
@@ -37,156 +25,113 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
-  const {
-    editCollectedArtwork: trackEditCollectedArtwork,
-  } = useMyCollectionTracking()
-  const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
-
-  const slug = artwork?.artist?.slug ?? ""
-  const displayText = artwork.consignmentSubmission?.displayText
-
-  const displaySubmissionStateSection =
-    artwork.consignmentSubmission?.state &&
-    artwork.consignmentSubmission?.state != "DRAFT"
-
-  const submittedConsignment = !!displayText
+  const enablePostApprovalSubmissionFlow = useFeatureFlag(
+    "onyx_post_approval_submission_flow"
+  )
 
   const showComparables = !!artwork.comparables?.totalCount
-
   const showAuctionResults = !!artwork.artist?.auctionResults?.totalCount
   const showDemandIndex = !!artwork.hasMarketPriceInsights
-
   const showArtistMarket = !!artwork.hasMarketPriceInsights
 
   const hasInsights =
     showComparables || showAuctionResults || showDemandIndex || showArtistMarket
 
-  const isP1Artist = artwork.artist?.targetSupply?.isP1
+  const isTargetSupply = artwork.artist?.targetSupply?.priority === "TRUE"
 
   return (
     <>
-      <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
+      <MyCollectionArtworkMeta artwork={artwork} />
 
-      {showHowItWorksModal && (
-        <MyCollectionArtworkSWAHowItWorksModal
-          onClose={() => setShowHowItWorksModal(false)}
-        />
-      )}
-
-      <Flex py={[2, 1]} justifyContent="space-between" alignItems="center">
-        <MyCollectionArtworkBackButton />
-
-        <Button
-          // @ts-ignore
-          as={RouterLink}
-          variant="secondaryNeutral"
-          size="small"
-          to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
-          onClick={() =>
-            trackEditCollectedArtwork(artwork.internalID, artwork.slug)
-          }
-          alignSelf="flex-end"
-        >
-          <Media greaterThanOrEqual="sm">Edit Artwork Details</Media>
-          <Media lessThan="sm">Edit</Media>
-        </Button>
-      </Flex>
-
-      <GridColumns gridRowGap={[2, null]} mb={[0, 4]}>
-        <Column span={8}>
-          <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
-        </Column>
-
-        <Column span={4}>
-          <Media greaterThanOrEqual="sm">
-            <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
-
-            {artwork.hasPriceEstimateRequest && (
-              <>
-                <Separator mt={2} />
-                <MyCollectionPriceEstimateSentSection />
-              </>
-            )}
-
-            {isP1Artist &&
-              (displaySubmissionStateSection ? (
-                <>
-                  <Separator my={2} />
-                  <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
-                </>
-              ) : (
-                <MyCollectionArtworkSWASection
-                  artwork={artwork}
-                  learnMore={() => setShowHowItWorksModal(true)}
-                  ctaColor={
-                    artwork.hasPriceEstimateRequest
-                      ? "secondaryNeutral"
-                      : "primaryBlack"
-                  }
-                />
-              ))}
-
-            {!artwork.hasPriceEstimateRequest && !displayText && (
-              <>
-                <Spacer y={2} />
-                <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-                  artwork={artwork}
-                  ctaColor={isP1Artist ? "secondaryNeutral" : "primaryBlack"}
-                />
-                <Separator my={2} />
-              </>
-            )}
-          </Media>
-
-          <Media lessThan="sm">
-            <MyCollectionArtworkSidebarTitleInfoFragmentContainer
-              artwork={artwork}
-            />
-            {isP1Artist && displaySubmissionStateSection && (
-              <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
-            )}
-            {hasInsights ? (
-              <Tabs fill mt={2}>
-                <Tab name="Insights">
-                  <MyCollectionArtworkInsightsFragmentContainer
-                    artwork={artwork}
-                    isP1Artist={isP1Artist}
-                    displayText={displayText}
-                    onLearnMoreClick={() => setShowHowItWorksModal(true)}
-                  />
-                </Tab>
-
-                <Tab name="About">
-                  <MyCollectionArtworkAboutTab
-                    artwork={artwork}
-                    submittedConsignment={submittedConsignment}
-                    onLearnMoreClick={() => setShowHowItWorksModal(true)}
-                  />
-                </Tab>
-              </Tabs>
-            ) : (
-              <MyCollectionArtworkAboutTab
-                artwork={artwork}
-                submittedConsignment={submittedConsignment}
-                onLearnMoreClick={() => setShowHowItWorksModal(true)}
-              />
-            )}
-          </Media>
-        </Column>
-      </GridColumns>
+      <MyCollectionArtworkHeader artwork={artwork} />
 
       <Media greaterThanOrEqual="sm">
-        {hasInsights && (
-          <>
-            <MyCollectionArtworkInsightsFragmentContainer artwork={artwork} />
+        <GridColumns gap={2} mb={4}>
+          <Column span={8}>
+            <MyCollectionArtworkImageBrowser artwork={artwork} />
+          </Column>
 
-            <Spacer x={[4, 6]} y={[4, 6]} />
+          <Column span={4} mt={2}>
+            <MyCollectionArtworkTitle artwork={artwork} />
 
-            <ArtistCurrentArticlesRailQueryRenderer
-              slug={slug}
-              artworkId={artwork.internalID}
-            />
-          </>
+            <MyCollectionArtworkDetails artwork={artwork} />
+
+            {artwork.hasPriceEstimateRequest && (
+              <MyCollectionPriceEstimateStatus />
+            )}
+
+            {artwork.consignmentSubmission ? (
+              <>
+                {enablePostApprovalSubmissionFlow ? (
+                  <MyCollectionArtworkSWASubmissionStatus artwork={artwork} />
+                ) : (
+                  <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
+                )}
+              </>
+            ) : (
+              <MyCollectionArtworkSubmitForSale artwork={artwork} />
+            )}
+
+            {!artwork.hasPriceEstimateRequest &&
+              !artwork.consignmentSubmission && (
+                <MyCollectionArtworkRequestPriceEstimate
+                  artwork={artwork}
+                  ctaColor={
+                    isTargetSupply ? "secondaryNeutral" : "primaryBlack"
+                  }
+                />
+              )}
+
+            {(!!artwork.consignmentSubmission || isTargetSupply) && (
+              <MyCollectionArtworkSWAHelpSection />
+            )}
+          </Column>
+
+          <Column span={12}>
+            {hasInsights && (
+              <>
+                <MyCollectionArtworkInsights artwork={artwork} />
+
+                <Spacer x={6} y={6} />
+
+                <ArtistCurrentArticlesRailQueryRenderer
+                  slug={artwork?.artist?.slug ?? ""}
+                  artworkId={artwork.internalID}
+                />
+              </>
+            )}
+          </Column>
+        </GridColumns>
+      </Media>
+
+      <Media lessThan="sm">
+        <MyCollectionArtworkImageBrowser artwork={artwork} />
+
+        <MyCollectionArtworkTitle artwork={artwork} />
+
+        {isTargetSupply &&
+          artwork.consignmentSubmission?.state !== "REJECTED" && (
+            <Box mb={4}>
+              {enablePostApprovalSubmissionFlow ? (
+                <MyCollectionArtworkSWASubmissionStatus artwork={artwork} />
+              ) : (
+                <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
+              )}
+            </Box>
+          )}
+
+        {hasInsights ? (
+          <Tabs fill mt={2}>
+            <Tab name="Insights">
+              <MyCollectionArtworkInsights artwork={artwork} />
+            </Tab>
+
+            <Tab name="About">
+              <MyCollectionArtworkAboutTab artwork={artwork} />
+            </Tab>
+          </Tabs>
+        ) : (
+          <MyCollectionArtworkAboutTab artwork={artwork} />
         )}
       </Media>
     </>
@@ -198,15 +143,19 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment MyCollectionArtwork_artwork on Artwork {
-        ...MyCollectionArtworkSidebar_artwork
+        ...MyCollectionArtworkHeader_artwork
+        ...MyCollectionArtworkTitle_artwork
+        ...MyCollectionArtworkDetails_artwork
         ...MyCollectionArtworkMeta_artwork
         ...MyCollectionArtworkInsights_artwork
         ...MyCollectionArtworkImageBrowser_artwork
         ...MyCollectionArtworkComparables_artwork
-        ...MyCollectionArtworkSidebarTitleInfo_artwork
-        ...MyCollectionArtworkRequestPriceEstimateSection_artwork
+        ...MyCollectionArtworkTitle_artwork
+        ...MyCollectionArtworkRequestPriceEstimate_artwork
         ...MyCollectionArtworkSWASectionSubmitted_submissionState
-        ...MyCollectionArtworkSWASection_artwork
+        ...MyCollectionArtworkSWASubmissionStatus_artwork
+        ...MyCollectionArtworkSubmitForSale_artwork
+        ...MyCollectionArtworkAboutTab_artwork
         comparables: comparableAuctionResults {
           totalCount
         }
@@ -217,12 +166,13 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         slug
         consignmentSubmission {
           state
-          displayText
+          internalID
         }
+        submissionId
         artist {
           slug
           targetSupply {
-            isP1
+            priority
           }
           auctionResults: auctionResultsConnection {
             totalCount

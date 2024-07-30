@@ -5,7 +5,7 @@ import { LayoutDefault } from "Apps/Components/Layouts/LayoutDefault"
 import { LayoutFullBleed } from "Apps/Components/Layouts/LayoutFullBleed"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { LayoutNavOnly } from "Apps/Components/Layouts/LayoutNavOnly"
-import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useRouter } from "System/Hooks/useRouter"
 import { FC, ReactNode } from "react"
 
 export interface BaseLayoutProps {
@@ -28,7 +28,9 @@ export const LAYOUTS = {
 export type LayoutVariant = keyof typeof LAYOUTS
 
 export const Layout: FC<LayoutProps> = ({ variant = "Default", children }) => {
-  const { isFetching } = useSystemContext()
+  const { match } = useRouter()
+
+  const isFetching = !match.elements
 
   // If we're fetching, we want to render the previous layout and not execute
   // the new one right away.

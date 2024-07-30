@@ -1,6 +1,6 @@
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useEffect, useState } from "react"
 import { usePrevious } from "Utils/Hooks/usePrevious"
+import { useRouter } from "System/Hooks/useRouter"
 
 /**
  * Checks to see if a route was previously fetching and has completed.
@@ -9,7 +9,8 @@ export const useRouteComplete = ({
   onComplete,
 }: { onComplete?(): void } = {}) => {
   const [isComplete, setIsComplete] = useState(false)
-  const { isFetching } = useSystemContext()
+  const { match } = useRouter()
+  const isFetching = !match.elements
   const prevFetching = usePrevious(isFetching)
 
   useEffect(() => {

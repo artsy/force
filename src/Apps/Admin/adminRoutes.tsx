@@ -3,24 +3,37 @@ import { HttpError } from "found"
 import { RouteProps } from "System/Router/Route"
 import { getUser } from "Utils/user"
 
-const AdminClearCacheApp = loadable(
-  () => import(/* webpackChunkName: "adminBundle" */ "./AdminClearCacheApp"),
-  { resolveComponent: component => component.AdminClearCacheApp }
+const AdminApp = loadable(
+  () => import(/* webpackChunkName: "adminBundle" */ "./AdminApp"),
+  { resolveComponent: component => component.AdminApp }
 )
 
-const NavigateToRoute = loadable(
-  () => import(/* webpackChunkName: "adminBundle" */ "./NavigateToRoute"),
-  { resolveComponent: component => component.NavigateToRoute }
+const AdminCacheManagementRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "adminBundle" */ "./Routes/AdminCacheManagementRoute"
+    ),
+  { resolveComponent: component => component.AdminCacheManagementRoute }
+)
+
+const AdminNavigateToRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "adminBundle" */ "./Routes/AdminNavigateToRoute"
+    ),
+  { resolveComponent: component => component.AdminNavigateToRoute }
 )
 
 export const adminRoutes: RouteProps[] = [
   {
     path: "/admin",
-    Component: ({ children }) => children,
+    layout: "NavOnly",
+    getComponent: () => AdminApp,
     children: [
       {
-        path: "clear-cache",
-        Component: AdminClearCacheApp,
+        path: "cache",
+        layout: "NavOnly",
+        getComponent: () => AdminCacheManagementRoute,
         onServerSideRender: ({ req }) => {
           const user = getUser(req.user)
           if (user?.type !== "Admin") {
@@ -30,7 +43,7 @@ export const adminRoutes: RouteProps[] = [
       },
       {
         path: "navigate-to-route",
-        Component: NavigateToRoute,
+        getComponent: () => AdminNavigateToRoute,
         layout: "NavOnly",
       },
     ],

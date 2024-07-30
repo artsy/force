@@ -38,6 +38,7 @@ import {
   IP_DENYLIST,
   NODE_ENV,
   SENTRY_PRIVATE_DSN,
+  ENABLE_GRAPHQL_PROXY,
 } from "./Server/config"
 
 // NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
@@ -68,8 +69,7 @@ import {
 } from "./Server/featureFlags/unleashService"
 import { registerFeatureFlagService } from "./Server/featureFlags/featureFlagService"
 import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
-
-// Find the v2 routes, we will not be testing memory caching for legacy pages.
+import { graphqlProxyMiddleware } from "Server/middleware/graphqlProxyMiddleware"
 
 export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)
@@ -110,6 +110,15 @@ export function initializeMiddleware(app) {
   app.use(hardcodedRedirectsMiddleware)
   app.use(localsMiddleware)
   app.use(sameOriginMiddleware)
+
+  // Mount GraphQL proxy and cache
+  if (ENABLE_GRAPHQL_PROXY) {
+    app.use("/api/metaphysics", graphqlProxyMiddleware)
+  }
+
+  // Add CSRF to the cookie and remove it from the page. This allows the caching
+  // on the html and is used by the Login Modal to make secure requests.
+  app.use(csrfTokenMiddleware)
 
   // Need sharify for unleash
   registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
@@ -206,10 +215,6 @@ function applySecurityMiddleware(app) {
       ],
     })
   )
-
-  // Add CSRF to the cookie and remove it from the page. This will allows the
-  // caching on the html and is used by the Login Modal to make secure requests.
-  app.use(csrfTokenMiddleware)
 
   // Require a user for these routes
   app.use(userRequiredMiddleware)

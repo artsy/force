@@ -62,7 +62,11 @@ export const setupServerRouter = async ({
 
   const user = getUser(matchContext.user)
 
-  const relayEnvironment = createRelaySSREnvironment({ user, userAgent })
+  const relayEnvironment = createRelaySSREnvironment({
+    user,
+    userAgent,
+    url: req.url,
+  })
 
   const historyMiddlewares = [
     createQueryMiddleware({

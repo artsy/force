@@ -50,6 +50,10 @@ beforeEach(() => {
   ;(useMutation as jest.Mock).mockImplementation(() => {
     return { submitMutation }
   })
+
+  submitMutation.mockClear()
+  mockPush.mockClear()
+  mockReplace.mockClear()
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -106,7 +110,7 @@ describe("DetailsRoute", () => {
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(
-        '/sell/submissions/<mock-value-for-field-"externalId">/details'
+        '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
       )
 
       expect(submitMutation).toHaveBeenCalledWith(
