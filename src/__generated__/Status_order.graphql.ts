@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc26475910776c794abec924d5e493ea>>
+ * @generated SignedSource<<b90732a1831d2c447fb4d50a717bcffa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ export type Status_order$data = {
           readonly edges: ReadonlyArray<{
             readonly node: {
               readonly courier: string;
-              readonly estimatedDelivery: string;
+              readonly estimatedDelivery: string | null | undefined;
               readonly trackingId: string | null | undefined;
             } | null | undefined;
           } | null | undefined> | null | undefined;
