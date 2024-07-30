@@ -171,6 +171,10 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       await updateSubmission({
         state: "SUBMITTED",
       })
+    } else if (submission?.state === "APPROVED") {
+      await updateSubmission({
+        state: "RESUBMITTED",
+      })
     }
 
     handleNext()
