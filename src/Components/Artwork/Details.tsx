@@ -7,7 +7,7 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { isFunction } from "lodash"
 import * as React from "react"
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
@@ -259,7 +259,6 @@ export const Details: React.FC<DetailsProps> = ({
     isAuctionArtwork,
     hideLotLabel,
     saveOnlyToDefaultList,
-    showActivePartnerOffer,
   } = useArtworkGridContext()
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
@@ -274,25 +273,12 @@ export const Details: React.FC<DetailsProps> = ({
 
   const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
   const isActive = partnerOffer?.isActive ?? false
+  const isAuction = rest?.artwork?.sale?.is_auction ?? false
 
-  const showActivePartnerOfferLine: boolean = useMemo(
-    () =>
-      !!signalsPartnerOffersEnabled &&
-      !!showActivePartnerOffer &&
-      !!partnerOffer &&
-      !!isActive,
-    [
-      signalsPartnerOffersEnabled,
-      showActivePartnerOffer,
-      partnerOffer,
-      isActive,
-    ]
-  )
+  const showActivePartnerOfferLine: boolean =
+    !!signalsPartnerOffersEnabled && !isAuction && !!partnerOffer && !!isActive
 
-  const padForActivePartnerOfferLine: boolean =
-    !!signalsPartnerOffersEnabled &&
-    !!showActivePartnerOffer &&
-    !showActivePartnerOfferLine
+  const padForActivePartnerOfferLine: boolean = !showActivePartnerOfferLine
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {

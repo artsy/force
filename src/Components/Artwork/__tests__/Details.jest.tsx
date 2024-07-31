@@ -43,11 +43,7 @@ describe("Details", () => {
   ) => {
     return await renderRelayTree({
       Component: props => (
-        <ArtworkGridContextProvider
-          isAuctionArtwork
-          saveOnlyToDefaultList
-          showActivePartnerOffer
-        >
+        <ArtworkGridContextProvider isAuctionArtwork saveOnlyToDefaultList>
           <DetailsFragmentContainer {...(props as any)} {...restProps} />
         </ArtworkGridContextProvider>
       ),
@@ -567,6 +563,28 @@ describe("Details", () => {
       expect(html).not.toContain("Limited-Time Offer")
       expect(html).not.toContain("Exp.")
       expect(html).toContain("$4000")
+    })
+
+    it("should not render the active partner offer badge if the artwork is in an auction", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          bidCount: null,
+          lotWatcherCount: null,
+          partnerOffer: {
+            isActive: false,
+            endAt: "2055-03-12T12:33:37.000Z",
+            priceWithDiscount: { display: "$2000" },
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data)
+      const html = wrapper.html()
+
+      expect(html).not.toContain("Limited-Time Offer")
+      expect(html).not.toContain("Exp.")
+      expect(html).toContain("$2,600")
     })
   })
 })
