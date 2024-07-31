@@ -5,6 +5,11 @@ There are a few different layers of caching on Artsy.net, namely:
 - Caching at the Relay (GraphQL) level, which happens as users navigate from page to page on the client. This is typically configured via the route.
 - Caching at the server level, via Redis, while logged out.
 
+> ⚠️ If for whatever reason we need to disable the cache, unset the environment variables via hokusai: 
+> ```
+> hokusai production env unset ENABLE_GRAPHQL_PROXY ENABLE_GRAPHQL_CACHE
+> ```
+
 ### General Cache Behavior
 
 #### Logged in:
