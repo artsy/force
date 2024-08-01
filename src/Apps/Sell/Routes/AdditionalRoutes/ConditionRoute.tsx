@@ -1,8 +1,3 @@
-import { ConditionRoute_submission$key } from "__generated__/ConditionRoute_submission.graphql"
-import { ArtworkConditionEnumType } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
-import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { Formik } from "formik"
-import { graphql, useFragment } from "react-relay"
 import {
   Box,
   Clickable,
@@ -13,14 +8,20 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
+import { ConditionRoute_submission$key } from "__generated__/ConditionRoute_submission.graphql"
+import { ArtworkConditionEnumType } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
+import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
+import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import * as React from "react"
-import * as Yup from "yup"
-import { useState } from "react"
 import { conditionOptions } from "Apps/Sell/Utils/conditionOptions"
-import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
+import { ErrorPage } from "Components/ErrorPage"
+import { Formik } from "formik"
+import * as React from "react"
+import { useState } from "react"
+import { graphql, useFragment } from "react-relay"
+import * as Yup from "yup"
 
 const FRAGMENT = graphql`
   fragment ConditionRoute_submission on ConsignmentSubmission {
@@ -52,16 +53,24 @@ interface ConditionRouteProps {
 }
 
 export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
+  const { actions } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
   const artwork = submission.myCollectionArtwork
-  const { actions } = useSellFlowContext()
 
   const [
     isConditionDefinitionModalOpen,
     setIsConditionDefinitionModalOpen,
   ] = useState(false)
 
-  if (!artwork) return null
+  if (!artwork) {
+    return (
+      <ErrorPage
+        code="Something went wrong."
+        message="The artwork could not be loaded. Please try again or contact support@artsy.net."
+        m={4}
+      />
+    )
+  }
 
   const onSubmit = async (values: FormValues) => {
     return await actions.updateMyCollectionArtwork({
@@ -102,13 +111,14 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
             </Text>
 
             <Box>
-              <Flex justifyContent="flex-end">
+              <Flex justifyContent="flex-end" mb={-1}>
                 <Clickable
                   onClick={() => setIsConditionDefinitionModalOpen(true)}
                   data-test-id="open-rarity-modal"
+                  textDecoration="underline"
                 >
                   <Text variant="xs" color="black60">
-                    <u>Condition Definition</u>
+                    Condition Definition
                   </Text>
                 </Clickable>
               </Flex>
