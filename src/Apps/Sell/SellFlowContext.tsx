@@ -13,7 +13,14 @@ import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateMyCollectionArtwork } from "Apps/Sell/Mutations/useUpdateMyCollectionArtwork"
 import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
-import { createContext, useContext, useEffect, useMemo, useState } from "react"
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCursor } from "use-cursor"
@@ -180,7 +187,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     handleNext()
   }
 
-  useEffect(() => {
+  const navigateToNewStep = useCallback(() => {
     const newStep = steps[index]
 
     // If we are navigating away from the Sell flow, we don't want to redirect
@@ -198,8 +205,18 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       return
 
     router.push(`/sell/submissions/${submission?.externalId}/${newStep}`)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index, isNewSubmission, submission, steps])
+  }, [
+    index,
+    isNewSubmission,
+    match.location.pathname,
+    router,
+    steps,
+    submission,
+  ])
+
+  useEffect(() => {
+    navigateToNewStep()
+  }, [navigateToNewStep])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
     const response = submitCreateSubmissionMutation({
