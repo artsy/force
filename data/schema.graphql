@@ -2293,12 +2293,6 @@ type ArtistsRailHomeViewSection implements GenericHomeViewSection & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
-
-  # A stable identifier for this section
-  key: String!
-
-  # A display title for this section
-  title: String!
 }
 
 type Artwork implements Node & Searchable & Sellable {
@@ -3146,12 +3140,6 @@ type ArtworksRailHomeViewSection implements GenericHomeViewSection & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
-
-  # A stable identifier for this section
-  key: String!
-
-  # A display title for this section
-  title: String!
 }
 
 enum AssetType {
@@ -10509,12 +10497,6 @@ interface GenericHomeViewSection {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
-
-  # A stable identifier for this section
-  key: String!
-
-  # A display title for this section
-  title: String!
 }
 
 type GravityMutationError {
@@ -10860,6 +10842,11 @@ type HomePageSalesModule {
 
 # Experimental schema for new home view
 type HomeView {
+  # A home view section
+  section(
+    # The ID of the section
+    id: String!
+  ): HomeViewSection
   sectionsConnection(
     after: String
     before: String
@@ -10870,17 +10857,8 @@ type HomeView {
 
 # A component specification
 type HomeViewComponent {
-  # Which component type to render
-  type: HomeViewComponentType
-}
-
-# Known component types for use in home view
-enum HomeViewComponentType {
-  # A standard rail of artists
-  ARTISTS_RAIL
-
-  # A standard rail of artworks
-  ARTWORKS_RAIL
+  # A display title for this section
+  title: String!
 }
 
 union HomeViewSection = ArtistsRailHomeViewSection | ArtworksRailHomeViewSection
