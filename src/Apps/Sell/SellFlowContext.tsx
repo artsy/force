@@ -199,14 +199,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
 
     router.push(`/sell/submissions/${submission?.externalId}/${newStep}`)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    index,
-    isNewSubmission,
-    match.location.pathname,
-    router,
-    submission,
-    steps,
-  ])
+  }, [index, isNewSubmission, submission, steps])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
     const response = submitCreateSubmissionMutation({
