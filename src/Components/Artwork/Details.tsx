@@ -322,11 +322,7 @@ export const Details: React.FC<DetailsProps> = ({
       <Box position="relative">
         <TitleLine {...rest} />
 
-        {
-          showHighDemandInfo && (
-            <HighDemandInfo />
-          ) /* TODO: show only when no submission associated with the artwork */
-        }
+        {showHighDemandInfo && <HighDemandInfo />}
 
         {!hidePartnerName && <PartnerLine {...rest} />}
 
