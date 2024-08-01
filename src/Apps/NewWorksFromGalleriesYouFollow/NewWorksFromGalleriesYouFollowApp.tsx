@@ -60,14 +60,12 @@ const NewWorksFromGalleriesYouFollowApp: FC<NewWorksFromGalleriesYouFollowAppPro
 
       {artworksConnection?.totalCount ? (
         <>
-          <ArtworkGridContextProvider>
-            <ArtworkGrid
-              artworks={artworksConnection}
-              columnCount={[2, 3, 3, 4]}
-              to={artwork => `/artwork/${artwork.internalID}`}
-              onLoadMore={handleLoadMore}
-            />
-          </ArtworkGridContextProvider>
+          <ArtworkGrid
+            artworks={artworksConnection}
+            columnCount={[2, 3, 3, 4]}
+            to={artwork => `/artwork/${artwork.internalID}`}
+            onLoadMore={handleLoadMore}
+          />
 
           {relay.hasMore() && (
             <Box textAlign="center" mt={4}>

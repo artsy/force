@@ -572,7 +572,7 @@ describe("Details", () => {
           bidCount: null,
           lotWatcherCount: null,
           partnerOffer: {
-            isActive: false,
+            isActive: true,
             endAt: "2055-03-12T12:33:37.000Z",
             priceWithDiscount: { display: "$2000" },
           },
