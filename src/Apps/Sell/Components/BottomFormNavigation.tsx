@@ -83,7 +83,7 @@ const BottomFormNextButton = () => {
   const { value, clearValue } = useAuthIntent()
 
   const {
-    actions: { goToNextStep},
+    actions: { goToNextStep },
     state: { submission, isSubmitStep, nextStep, loading },
   } = useSellFlowContext()
 
@@ -129,7 +129,7 @@ const BottomFormNextButton = () => {
     try {
       await submitForm()
 
-      await goToNextStep()
+      await goToNextStepCallback()
     } catch (error) {
       logger.error("Error submitting form", error)
     } finally {
@@ -149,7 +149,11 @@ const BottomFormNextButton = () => {
     } finally {
       setIsSubmitting(false)
     }
-  }, [associateSubmissionMutation, submitAndNavigateToNextStepCallback, submission])
+  }, [
+    associateSubmissionMutation,
+    submitAndNavigateToNextStepCallback,
+    submission,
+  ])
 
   useEffect(() => {
     if (value?.action === "submitSubmission") {
