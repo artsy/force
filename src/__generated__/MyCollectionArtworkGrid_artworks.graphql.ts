@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dcb5b27f7630a9f74f262c5b2ce619e4>>
+ * @generated SignedSource<<6a8b7e71872e0100f118abb671715431>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
-export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
+export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkGrid_artworks$data = {
   readonly edges: ReadonlyArray<{
