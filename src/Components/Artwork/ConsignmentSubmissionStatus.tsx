@@ -10,10 +10,9 @@ interface ConsignmentSubmissionStatusProps {
 const ConsignmentSubmissionStatus: React.FC<ConsignmentSubmissionStatusProps> = ({
   artwork,
 }) => {
-  if (!artwork.consignmentSubmission) {
-    null
-  }
   const submission = artwork.consignmentSubmission
+
+  if (!submission) return null
 
   return (
     <Flex flexDirection="column">
@@ -28,6 +27,7 @@ const ConsignmentSubmissionStatus: React.FC<ConsignmentSubmissionStatusProps> = 
       {submission?.actionLabel && (
         <Flex flexDirection="row" alignItems="center">
           <AlertFillIcon width={16} height={16} fill="orange100" />
+
           <Text variant="xs" fontWeight="bold" color="orange100">
             &nbsp;{submission?.actionLabel}
           </Text>

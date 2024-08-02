@@ -19,7 +19,9 @@ const MyCollectionArtworksGrid: FC<MyCollectionArtworkGridProps> = ({
   artworks,
   onLoadMore,
 }) => {
-  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
+  const enablePostApprovalSubmissionFlow = useFeatureFlag(
+    "onyx_post_approval_submission_flow"
+  )
 
   const { dismiss, isDismissed } = useDismissibleContext()
 
@@ -37,7 +39,7 @@ const MyCollectionArtworksGrid: FC<MyCollectionArtworkGridProps> = ({
       }
       showHighDemandIcon
       showSaveButton={false}
-      showSubmissionStatus={!!enableNewSubmissionFlow}
+      showSubmissionStatus={!!enablePostApprovalSubmissionFlow}
       onLoadMore={onLoadMore}
       popoverContent={
         displayPopover && (

@@ -403,12 +403,20 @@ describe("Details", () => {
         showHighDemandIcon: true,
         showSubmissionStatus: true,
       }
-      const wrapper = await getWrapper(myCollectionArtworkSubmission, props)
+      const wrapper = await getWrapper(submittedMyCollectionArtwork, props)
 
       expect(wrapper.html()).not.toContain("High Demand")
     })
   })
-  // TODO: add test for the submission status
+
+  describe("Show Submission Status", () => {
+    it("renders submission status for MyCollectionArtwork", async () => {
+      const wrapper = await getWrapper(submittedMyCollectionArtwork, props)
+
+      expect(wrapper.html()).toContain("Submitted")
+    })
+  })
+
   it("should display save artwork button by default when showSaveButton prop is passed", async () => {
     props = {
       showSaveButton: true,
@@ -594,7 +602,7 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   isListed: false,
 }
 
-const myCollectionArtworkSubmission: Details_Test_Query$rawResponse["artwork"] = {
+const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = {
   id: "opaque-artwork-id",
   internalID: "opaque-internal-id",
   artist: {
