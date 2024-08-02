@@ -58,10 +58,10 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
             <ArtistsFilter expanded />
             <PriceRangeFilter expanded />
             <MediumFilter expanded />
-            <SizeFilter />
-            <MaterialsFilter />
-            <TimePeriodFilter />
-            <ColorFilter />
+            <SizeFilter expanded />
+            <MaterialsFilter expanded />
+            <TimePeriodFilter expanded />
+            <ColorFilter expanded />
           </Join>
         }
       />
