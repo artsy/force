@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<213ee44d220290a7747b726be0989695>>
+ * @generated SignedSource<<de46fcc55ad8382eaf7943429e1d5310>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -1849,6 +1849,7 @@ return {
             "HOLD",
             "PUBLISHED",
             "REJECTED",
+            "RESUBMITTED",
             "SUBMITTED"
           ],
           "nullable": false,

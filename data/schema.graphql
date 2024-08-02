@@ -2285,20 +2285,21 @@ enum ArtistTargetSupplyType {
 
 # An artists rail section in the home view
 type ArtistsRailHomeViewSection implements GenericHomeViewSection & Node {
+  artistsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): ArtistConnection!
+
   # The component that is prescribed for this section
-  component: HomeViewComponent
+  component: HomeViewComponent!
 
   # A globally unique ID.
   id: ID!
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
-
-  # A stable identifier for this section
-  key: String!
-
-  # A display title for this section
-  title: String!
 }
 
 type Artwork implements Node & Searchable & Sellable {
@@ -2805,6 +2806,7 @@ enum ArtworkConsignmentSubmissionState {
   HOLD
   PUBLISHED
   REJECTED
+  RESUBMITTED
   SUBMITTED
 }
 
@@ -3136,22 +3138,16 @@ type ArtworksRailHomeViewSection implements GenericHomeViewSection & Node {
     before: String
     first: Int
     last: Int
-  ): ArtworkConnection
+  ): ArtworkConnection!
 
   # The component that is prescribed for this section
-  component: HomeViewComponent
+  component: HomeViewComponent!
 
   # A globally unique ID.
   id: ID!
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
-
-  # A stable identifier for this section
-  key: String!
-
-  # A display title for this section
-  title: String!
 }
 
 enum AssetType {
@@ -10502,19 +10498,13 @@ type GeneMeta {
 # Abstract interface shared by every kind of home view section
 interface GenericHomeViewSection {
   # The component that is prescribed for this section
-  component: HomeViewComponent
+  component: HomeViewComponent!
 
   # A globally unique ID.
   id: ID!
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
-
-  # A stable identifier for this section
-  key: String!
-
-  # A display title for this section
-  title: String!
 }
 
 type GravityMutationError {
@@ -10860,27 +10850,23 @@ type HomePageSalesModule {
 
 # Experimental schema for new home view
 type HomeView {
+  # A home view section
+  section(
+    # The ID of the section
+    id: String!
+  ): HomeViewSection
   sectionsConnection(
     after: String
     before: String
     first: Int
     last: Int
-  ): HomeViewSectionConnection
+  ): HomeViewSectionConnection!
 }
 
 # A component specification
 type HomeViewComponent {
-  # Which component type to render
-  type: HomeViewComponentType
-}
-
-# Known component types for use in home view
-enum HomeViewComponentType {
-  # A standard rail of artists
-  ARTISTS_RAIL
-
-  # A standard rail of artworks
-  ARTWORKS_RAIL
+  # A display title for this section
+  title: String!
 }
 
 union HomeViewSection = ArtistsRailHomeViewSection | ArtworksRailHomeViewSection
