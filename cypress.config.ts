@@ -4,7 +4,7 @@ export default defineConfig({
   retries: 5,
   userAgent: "ForceSmokeTest",
   e2e: {
-    baseUrl: "http://localhost:5000",
+    baseUrl: "http://localhost:4000",
     supportFile: false,
   },
 })
