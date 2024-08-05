@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fba5b3ff5bb54248eceb4ea946af31c2>>
+ * @generated SignedSource<<f6c94bac866da6d5a5ffb337317f02cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,8 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
+export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
+export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtwork_artwork$data = {
   readonly artist: {
@@ -18,7 +19,7 @@ export type MyCollectionArtwork_artwork$data = {
     } | null | undefined;
     readonly slug: string;
     readonly targetSupply: {
-      readonly isP1: boolean | null | undefined;
+      readonly priority: ArtistTargetSupplyPriority | null | undefined;
     };
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
   } | null | undefined;
@@ -26,7 +27,7 @@ export type MyCollectionArtwork_artwork$data = {
     readonly totalCount: number | null | undefined;
   } | null | undefined;
   readonly consignmentSubmission: {
-    readonly displayText: string | null | undefined;
+    readonly internalID: string | null | undefined;
     readonly state: ArtworkConsignmentSubmissionState;
   } | null | undefined;
   readonly hasMarketPriceInsights: boolean | null | undefined;
@@ -34,7 +35,7 @@ export type MyCollectionArtwork_artwork$data = {
   readonly internalID: string;
   readonly slug: string;
   readonly submissionId: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkRequestPriceEstimateSection_artwork" | "MyCollectionArtworkSWASectionSubmitted_submissionState" | "MyCollectionArtworkSWASection_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebar_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAboutTab_artwork" | "MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkDetails_artwork" | "MyCollectionArtworkHeader_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkRequestPriceEstimate_artwork" | "MyCollectionArtworkSWASectionSubmitted_submissionState" | "MyCollectionArtworkSWASubmissionStatus_artwork" | "MyCollectionArtworkSubmitForSale_artwork" | "MyCollectionArtworkTitle_artwork">;
   readonly " $fragmentType": "MyCollectionArtwork_artwork";
 };
 export type MyCollectionArtwork_artwork$key = {
@@ -56,6 +57,13 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 };
@@ -68,7 +76,17 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkSidebar_artwork"
+      "name": "MyCollectionArtworkHeader_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkTitle_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkDetails_artwork"
     },
     {
       "args": null,
@@ -93,12 +111,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkSidebarTitleInfo_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkRequestPriceEstimateSection_artwork"
+      "name": "MyCollectionArtworkRequestPriceEstimate_artwork"
     },
     {
       "args": null,
@@ -108,7 +121,17 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkSWASection_artwork"
+      "name": "MyCollectionArtworkSWASubmissionStatus_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkSubmitForSale_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkAboutTab_artwork"
     },
     {
       "alias": "comparables",
@@ -141,14 +164,8 @@ return {
       "name": "submissionId",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
     (v1/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -164,13 +181,7 @@ return {
           "name": "state",
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "displayText",
-          "storageKey": null
-        }
+        (v1/*: any*/)
       ],
       "storageKey": null
     },
@@ -182,7 +193,7 @@ return {
       "name": "artist",
       "plural": false,
       "selections": [
-        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -195,7 +206,7 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "isP1",
+              "name": "priority",
               "storageKey": null
             }
           ],
@@ -225,6 +236,6 @@ return {
 };
 })();
 
-(node as any).hash = "a875a80f2950877b45828aed291e42f4";
+(node as any).hash = "184d7bd2a5e89f1a008616dcbcd90a38";
 
 export default node;

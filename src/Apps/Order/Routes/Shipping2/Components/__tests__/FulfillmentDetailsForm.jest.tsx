@@ -105,6 +105,8 @@ beforeEach(() => {
     orderData: {
       shippingQuotes: [],
     },
+    meData: { addressList: [] },
+
     state: {
       shippingFormMode: "saved_addresses",
     },
@@ -159,8 +161,8 @@ describe("FulfillmentDetailsForm", () => {
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
 
-      const phoneNumberField = await screen.findByPlaceholderText(
-        "Add phone number including country code"
+      const phoneNumberField = await screen.findByTestId(
+        "AddressForm_pickupPhoneNumber"
       )
 
       expect(phoneNumberField).toBeVisible()
@@ -210,8 +212,8 @@ describe("FulfillmentDetailsForm", () => {
       await userEvent.click(
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
-      const phoneNumberField = await screen.findByPlaceholderText(
-        "Add phone number including country code"
+      const phoneNumberField = await screen.findByTestId(
+        "AddressForm_pickupPhoneNumber"
       )
 
       await userEvent.type(phoneNumberField, "1234567890")
@@ -256,6 +258,29 @@ describe("FulfillmentDetailsForm", () => {
       await userEvent.click(screen.getByRole("radio", { name: "Shipping" }))
 
       // find address form fields
+      await waitFor(() => {
+        expect(screen.getByPlaceholderText("City")).toBeVisible()
+      })
+    })
+
+    it("user can select shipping if pickup fulfillment is already saved to order", async () => {
+      testProps.initialValues!.fulfillmentType = FulfillmentType.PICKUP
+      testProps.initialValues!.attributes = {
+        name: "John Doe",
+        phoneNumber: "1234567890",
+        addressLine1: "401 Broadway",
+        city: "New York",
+        region: "NY",
+        postalCode: "10013",
+        country: "US",
+      }
+      renderTree(testProps)
+
+      let shippingRadio: HTMLElement = await screen.findByRole("radio", {
+        name: "Shipping",
+      })
+
+      await userEvent.click(shippingRadio)
       await waitFor(() => {
         expect(screen.getByPlaceholderText("City")).toBeVisible()
       })

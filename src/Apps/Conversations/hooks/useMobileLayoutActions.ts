@@ -1,5 +1,4 @@
 import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { omit } from "lodash"
 import { useEffect, useState, useCallback } from "react"
 
@@ -8,8 +7,9 @@ import { useEffect, useState, useCallback } from "react"
  * in between these columns.
  */
 export const useMobileLayoutActions = () => {
-  const { isFetching } = useSystemContext()
   const { match, router } = useRouter()
+
+  const isFetching = !match.elements
 
   const {
     location: { query },

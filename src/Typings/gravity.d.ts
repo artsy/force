@@ -1,15 +1,16 @@
 type User =
   | {
-      roles?: UserRole[]
       accessToken?: string
       appToken?: string
       email?: string
       has_partner_access?: string
       id?: string
       lab_features?: string[]
-      type?: string
+      length_unit_preference?: string
       name?: string
       phone?: string
+      roles?: UserRole[]
+      type?: string
     }
   | null
   | undefined

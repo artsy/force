@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ca5da257b996126e0ac5e504d4bfdaf>>
+ * @generated SignedSource<<42de8363060b8d79ff556e74093f262c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
+export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 export type Details_Test_Query$variables = {
   includeConsignmentSubmission: boolean;
 };
@@ -767,6 +767,7 @@ return {
             "HOLD",
             "PUBLISHED",
             "REJECTED",
+            "RESUBMITTED",
             "SUBMITTED"
           ],
           "nullable": false,

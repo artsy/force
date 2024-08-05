@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2c6585d4857009ba363b71e807ae67ef>>
+ * @generated SignedSource<<8dc25bddfc81c7012580c21c96d6e8cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
+export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentSubmissionStatus_artwork$data = {
   readonly consignmentSubmission: {

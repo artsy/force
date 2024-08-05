@@ -1,9 +1,9 @@
 import { screen } from "@testing-library/react"
+import { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
+import { MyCollectionArtworkImageBrowser } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
-import { MyCollectionArtworkImageBrowserFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
 jest.mock("System/Hooks/useSystemContext")
@@ -16,7 +16,7 @@ describe("MyCollectionArtworkImageBrowser", () => {
     Component: (props: any) => {
       return (
         <MockBoot>
-          <MyCollectionArtworkImageBrowserFragmentContainer {...props} />
+          <MyCollectionArtworkImageBrowser {...props} />
         </MockBoot>
       )
     },
