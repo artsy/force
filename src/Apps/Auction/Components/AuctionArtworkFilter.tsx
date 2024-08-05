@@ -13,6 +13,10 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { Join, Spacer } from "@artsy/palette"
+import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
+import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
+import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 
 interface AuctionArtworkFilterProps {
   relay: RelayRefetchProp
@@ -54,6 +58,10 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
             <ArtistsFilter expanded />
             <PriceRangeFilter expanded />
             <MediumFilter expanded />
+            <SizeFilter expanded />
+            <MaterialsFilter expanded />
+            <TimePeriodFilter expanded />
+            <ColorFilter expanded />
           </Join>
         }
       />
@@ -95,7 +103,7 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
 )
 
 export const getArtworkFilterInputArgs = (user?: User) => {
-  const aggregations = ["ARTIST", "MEDIUM", "TOTAL"]
+  const aggregations = ["ARTIST", "MEDIUM", "TOTAL", "MATERIALS_TERMS"]
 
   if (user) {
     aggregations.push("FOLLOWED_ARTISTS")
