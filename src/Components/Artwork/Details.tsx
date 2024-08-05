@@ -229,7 +229,7 @@ const BidInfo: React.FC<DetailsProps> = ({
 const ActivePartnerOfferTimer: React.FC<DetailsProps> = ({
   artwork: { collectorSignals },
 }) => {
-  const SEPARATOR = <>&nbsp;&nbsp;</>
+  const SEPARATOR = <>&nbsp;</>
   const { endAt } = collectorSignals?.partnerOffer ?? {}
   const { time } = useTimer(endAt ?? "")
   const { days, hours } = time
