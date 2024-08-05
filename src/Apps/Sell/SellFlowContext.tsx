@@ -36,14 +36,14 @@ const BASIC_STEPS = [
   "purchase-history",
   "dimensions",
   "phone-number",
-]
+] as const
 
 const POST_APPROVAL_STEPS = [
   "shipping-location",
   "frame",
   "additional-documents",
   "condition",
-]
+] as const
 
 const THANK_YOU_STEP = "thank-you"
 
@@ -293,9 +293,9 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     isLastStep: index === steps.length - 1,
     isSubmitStep: index === steps.length - 2,
     isExtended,
-    step: steps[index],
+    step: steps[index] as SellFlowStep,
     steps: steps as SellFlowStep[],
-    nextStep: steps[index + 1],
+    nextStep: steps[index + 1] as SellFlowStep,
     submission,
     devMode,
     loading,

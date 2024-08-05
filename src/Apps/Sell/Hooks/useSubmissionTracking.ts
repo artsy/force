@@ -145,7 +145,19 @@ const getOwnerType = (currentStep: SellFlowStep): PageOwnerType | null => {
       return OwnerType.submitArtworkStepAddPhoneNumber
     case "thank-you":
       return OwnerType.submitArtworkStepCompleteYourSubmission
+    case "shipping-location":
+      return OwnerType.submitArtworkStepShippingLocation
+    case "frame":
+      return OwnerType.submitArtworkStepFrameInformation
+    case "additional-documents":
+      return OwnerType.submitArtworkStepAddtionalDocuments
+    case "condition":
+      return OwnerType.submitArtworkStepCondition
     default:
-      return null
+      // https://graphite.dev/guides/typescript-switches#using-the-object-object-type-for-exhaustive-checks
+      const exhaustiveCheck: never = currentStep
+      throw new Error(`Unhandled case: ${exhaustiveCheck}`)
   }
+
+  return null
 }
