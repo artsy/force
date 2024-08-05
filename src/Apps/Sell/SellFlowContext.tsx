@@ -36,21 +36,23 @@ const BASIC_STEPS = [
   "purchase-history",
   "dimensions",
   "phone-number",
-]
+] as const
 
 const POST_APPROVAL_STEPS = [
   "shipping-location",
   "frame",
   "additional-documents",
   "condition",
-]
+] as const
 
 const THANK_YOU_STEP = "thank-you"
+const POST_APPROVAL_THANK_YOU_STEP = "thank-you-post-approval"
 
 export const ALL_STEPS = [
   ...BASIC_STEPS,
   ...POST_APPROVAL_STEPS,
   THANK_YOU_STEP,
+  POST_APPROVAL_THANK_YOU_STEP,
 ]
 
 export const INITIAL_STEP: SellFlowStep = BASIC_STEPS[0]
@@ -59,6 +61,7 @@ export type SellFlowStep =
   | typeof BASIC_STEPS[number]
   | typeof POST_APPROVAL_STEPS[number]
   | typeof THANK_YOU_STEP
+  | typeof POST_APPROVAL_THANK_YOU_STEP
 
 interface Actions {
   goToPreviousStep: () => void
@@ -142,7 +145,7 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     () => [
       ...BASIC_STEPS,
       ...(isExtended ? POST_APPROVAL_STEPS : []),
-      THANK_YOU_STEP,
+      isExtended ? POST_APPROVAL_THANK_YOU_STEP : THANK_YOU_STEP,
     ],
     [isExtended]
   )
@@ -293,9 +296,9 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     isLastStep: index === steps.length - 1,
     isSubmitStep: index === steps.length - 2,
     isExtended,
-    step: steps[index],
+    step: steps[index] as SellFlowStep,
     steps: steps as SellFlowStep[],
-    nextStep: steps[index + 1],
+    nextStep: steps[index + 1] as SellFlowStep,
     submission,
     devMode,
     loading,

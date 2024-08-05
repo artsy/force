@@ -1,3 +1,4 @@
+import { OwnerType } from "@artsy/cohesion"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   Box,
@@ -19,6 +20,7 @@ import {
 } from "Apps/Sell/SellFlowContext"
 import React, { useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
@@ -28,6 +30,7 @@ interface Props {
 }
 
 export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => {
+  const { trackEvent } = useTracking()
   const [
     isSubmissionStatusModalOpen,
     setIsSubmissionStatusModalOpen,
@@ -48,6 +51,19 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
     ? "primaryBlack"
     : "secondaryBlack"
   const stateHelpMessage = getStateHelpMessage(submission, isListed)
+
+  const trackEditSubmission = () => {
+    trackEvent({
+      action: "tappedEditSubmission",
+      context_page_owner_type: OwnerType.myCollectionArtwork,
+      context_page_owner_id: artwork.internalID,
+      destination_page_owner_type: OwnerType.consignmentFlow,
+      submission_id: submission.internalID,
+      submission_state: submission.state,
+      subject: buttonLabel,
+      platform: "web",
+    })
+  }
 
   return (
     <Box>
@@ -78,7 +94,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
         {!!submission.actionLabel && !!buttonURL && (
           <RouterLink
             onClick={() => {
-              // TODO: Tracking
+              trackEditSubmission()
             }}
             to={buttonURL}
             textDecoration="none"
@@ -123,7 +139,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
                   // @ts-ignore
                   as={RouterLink}
                   onClick={() => {
-                    // TODO: Tracking
+                    trackEditSubmission()
                   }}
                   to={buttonURL}
                   width="100%"
@@ -172,6 +188,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
 
 const submissionStatusFragment = graphql`
   fragment MyCollectionArtworkSWASubmissionStatus_artwork on Artwork {
+    internalID
     listedArtworksConnection(first: 1) {
       edges {
         node {

@@ -99,7 +99,9 @@ export const RecentlyViewedQueryRenderer = () => {
           return <RecentlyViewedPlaceholder />
         }
 
-        return <RecentlyViewedFragmentContainer me={props.me!} />
+        return props.me ? (
+          <RecentlyViewedFragmentContainer me={props.me} />
+        ) : null
       }}
       cacheConfig={{
         force: true,

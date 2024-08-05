@@ -4,6 +4,7 @@ import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFi
 import { FilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/FilterQuick"
 import { PriceRangeFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/PriceRangeFilterQuick"
 import { ArtistSeriesFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/ArtistSeriesFilterQuick"
+import { FeaturedKeywordsFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/FeaturedKeywordsFilterQuick"
 import { FC } from "react"
 
 // NOTE: Keep in sync with components below
@@ -14,7 +15,9 @@ export const ARTWORK_FILTERS_QUICK_FIELDS = [
 ]
 
 interface ArtworkFiltersQuickProps
-  extends Omit<DropdownProps, "dropdown" | "children"> {}
+  extends Omit<DropdownProps, "dropdown" | "children"> {
+  featuredKeywords: string[] | null
+}
 
 export const ArtworkFiltersQuick: FC<ArtworkFiltersQuickProps> = props => {
   return (
@@ -37,6 +40,8 @@ export const ArtworkFiltersQuick: FC<ArtworkFiltersQuickProps> = props => {
       <PriceRangeFilterQuick {...props} />
 
       <ArtistSeriesFilterQuick {...props} />
+
+      <FeaturedKeywordsFilterQuick {...props} />
     </>
   )
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89de6a04d48d21169b6e8da4fdcf29a2>>
+ * @generated SignedSource<<4dd83e649930e69862310e00e7797397>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,20 +52,6 @@ v3 = {
 },
 v4 = [
   {
-    "kind": "Literal",
-    "name": "shallow",
-    "value": true
-  }
-],
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v6 = [
-  {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
@@ -73,8 +59,22 @@ v6 = [
     "storageKey": null
   }
 ],
+v5 = [
+  {
+    "kind": "Literal",
+    "name": "shallow",
+    "value": true
+  }
+],
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
 v7 = [
-  (v5/*: any*/),
+  (v6/*: any*/),
   (v1/*: any*/)
 ],
 v8 = {
@@ -276,6 +276,23 @@ return {
                             "plural": false,
                             "selections": [
                               (v3/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "isActive",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Money",
+                                "kind": "LinkedField",
+                                "name": "priceWithDiscount",
+                                "plural": false,
+                                "selections": (v4/*: any*/),
+                                "storageKey": null
+                              },
                               (v1/*: any*/)
                             ],
                             "storageKey": null
@@ -299,7 +316,7 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v4/*: any*/),
+                        "args": (v5/*: any*/),
                         "concreteType": "Artist",
                         "kind": "LinkedField",
                         "name": "artist",
@@ -347,7 +364,7 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v4/*: any*/),
+                        "args": (v5/*: any*/),
                         "concreteType": "Artist",
                         "kind": "LinkedField",
                         "name": "artists",
@@ -355,7 +372,7 @@ return {
                         "selections": [
                           (v1/*: any*/),
                           (v2/*: any*/),
-                          (v5/*: any*/)
+                          (v6/*: any*/)
                         ],
                         "storageKey": "artists(shallow:true)"
                       },
@@ -368,13 +385,13 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v4/*: any*/),
+                        "args": (v5/*: any*/),
                         "concreteType": "Partner",
                         "kind": "LinkedField",
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v5/*: any*/),
+                          (v6/*: any*/),
                           (v2/*: any*/),
                           (v1/*: any*/)
                         ],
@@ -484,7 +501,7 @@ return {
                             "kind": "LinkedField",
                             "name": "highestBid",
                             "plural": false,
-                            "selections": (v6/*: any*/),
+                            "selections": (v4/*: any*/),
                             "storageKey": null
                           },
                           {
@@ -494,7 +511,7 @@ return {
                             "kind": "LinkedField",
                             "name": "openingBid",
                             "plural": false,
-                            "selections": (v6/*: any*/),
+                            "selections": (v4/*: any*/),
                             "storageKey": null
                           },
                           (v1/*: any*/)
@@ -656,7 +673,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c28433b61d82615ed936088086fd03ad",
+    "cacheID": "626a87d2c7bb3b85f9bbbaa14acf7b49",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -729,6 +746,14 @@ return {
         },
         "me.activeLotStandings.saleArtwork.artwork.collectorSignals.partnerOffer.endAt": (v11/*: any*/),
         "me.activeLotStandings.saleArtwork.artwork.collectorSignals.partnerOffer.id": (v10/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.collectorSignals.partnerOffer.isActive": (v8/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.collectorSignals.partnerOffer.priceWithDiscount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Money"
+        },
+        "me.activeLotStandings.saleArtwork.artwork.collectorSignals.partnerOffer.priceWithDiscount.display": (v11/*: any*/),
         "me.activeLotStandings.saleArtwork.artwork.cultural_maker": (v11/*: any*/),
         "me.activeLotStandings.saleArtwork.artwork.date": (v11/*: any*/),
         "me.activeLotStandings.saleArtwork.artwork.href": (v11/*: any*/),
@@ -842,7 +867,7 @@ return {
     },
     "name": "UserActiveBids_Test_Query",
     "operationKind": "query",
-    "text": "query UserActiveBids_Test_Query {\n  me {\n    ...UserActiveBids_me\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    bidCount\n    lotWatcherCount\n    partnerOffer {\n      endAt\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment SettingsAuctionsLotStanding_lotStanding on LotStanding {\n  isLeadingBidder\n  saleArtwork {\n    lotLabel\n    sale {\n      isClosed\n      id\n    }\n    artwork {\n      ...Details_artwork\n      href\n      image {\n        cropped(height: 100, width: 100) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment UserActiveBids_me on Me {\n  activeLotStandings: lotStandings(live: true) {\n    ...SettingsAuctionsLotStanding_lotStanding\n  }\n}\n"
+    "text": "query UserActiveBids_Test_Query {\n  me {\n    ...UserActiveBids_me\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    bidCount\n    lotWatcherCount\n    partnerOffer {\n      endAt\n      isActive\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment SettingsAuctionsLotStanding_lotStanding on LotStanding {\n  isLeadingBidder\n  saleArtwork {\n    lotLabel\n    sale {\n      isClosed\n      id\n    }\n    artwork {\n      ...Details_artwork\n      href\n      image {\n        cropped(height: 100, width: 100) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment UserActiveBids_me on Me {\n  activeLotStandings: lotStandings(live: true) {\n    ...SettingsAuctionsLotStanding_lotStanding\n  }\n}\n"
   }
 };
 })();

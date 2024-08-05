@@ -1,17 +1,17 @@
+import { Text } from "@artsy/palette"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
+import { DocumentPreviewsGrid } from "Apps/Sell/Components/DocumentPreviewsGrid"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
+import { UploadDocumentsForm } from "Apps/Sell/Components/UploadDocumentsForm"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { Asset, dropzoneFileFromAsset } from "Apps/Sell/Utils/uploadUtils"
+import { DropzoneFile } from "Components/FileUpload/types"
 import { AdditionalDocumentsRoute_submission$key } from "__generated__/AdditionalDocumentsRoute_submission.graphql"
 import { Formik } from "formik"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
-import { Text } from "@artsy/palette"
-import { UploadDocumentsForm } from "Apps/Sell/Components/UploadDocumentsForm"
-import { DocumentPreviewsGrid } from "Apps/Sell/Components/DocumentPreviewsGrid"
-import { Asset, dropzoneFileFromAsset } from "Apps/Sell/Utils/uploadUtils"
-import { DropzoneFile } from "Components/FileUpload/types"
-import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 
 const FRAGMENT = graphql`
   fragment AdditionalDocumentsRoute_submission on ConsignmentSubmission {
@@ -29,7 +29,7 @@ const FRAGMENT = graphql`
 `
 
 const Schema = Yup.object().shape({
-  documents: Yup.array().min(1),
+  documents: Yup.array(),
 })
 
 export interface DocumentsFormValues {
@@ -71,7 +71,7 @@ export const AdditionalDocumentsRoute: React.FC<AdditionalDocumentsRouteProps> =
 
         return (
           <SubmissionLayout>
-            <SubmissionStepTitle>Additional documents</SubmissionStepTitle>
+            <SubmissionStepTitle>Additional Documents</SubmissionStepTitle>
 
             <Text mb={2} variant={["xs", "sm"]} color="black60">
               Please add any of the following if you have them: Proof of
@@ -80,6 +80,7 @@ export const AdditionalDocumentsRoute: React.FC<AdditionalDocumentsRouteProps> =
             </Text>
 
             <UploadDocumentsForm />
+
             <DocumentPreviewsGrid />
 
             <DevDebug />

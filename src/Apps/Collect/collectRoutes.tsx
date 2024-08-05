@@ -3,6 +3,7 @@ import { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 import { redirectCollectionToArtistSeries } from "./Server/redirectCollectionToArtistSeries"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 
 const CollectApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collect"),
@@ -26,6 +27,7 @@ const CollectionApp = loadable(
 export const collectRoutes: RouteProps[] = [
   {
     path: "/collect/:medium?",
+    serverCacheTTL: serverCacheTTLs.collect,
     getComponent: () => CollectApp,
     onClientSideRender: () => {
       CollectApp.preload()
@@ -35,6 +37,7 @@ export const collectRoutes: RouteProps[] = [
   },
   {
     path: "/collect/color/:color?",
+    serverCacheTTL: serverCacheTTLs.collect,
     getComponent: () => CollectApp,
     onClientSideRender: () => {
       CollectApp.preload()
@@ -44,6 +47,7 @@ export const collectRoutes: RouteProps[] = [
   },
   {
     path: "/collections",
+    serverCacheTTL: serverCacheTTLs.collections,
     getComponent: () => CollectionsApp,
     onClientSideRender: () => {
       CollectionsApp.preload()
@@ -58,6 +62,7 @@ export const collectRoutes: RouteProps[] = [
   },
   {
     path: "/collection/:slug",
+    serverCacheTTL: serverCacheTTLs.collections,
     getComponent: () => CollectionApp,
     onServerSideRender: redirectCollectionToArtistSeries,
     onClientSideRender: () => {

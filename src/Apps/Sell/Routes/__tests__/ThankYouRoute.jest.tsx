@@ -123,7 +123,7 @@ describe("ThankYouRoute", () => {
     expect(trackEvent).toHaveBeenCalledWith({
       action: "tappedSubmitAnotherWork",
       context_module: "sell",
-      context_owner_type: "submitArtworkStepCompleteYourSubmission",
+      context_owner_type: "submitArtworkStepCompleteYourSubmissionPostApproval",
       submission_id: '<mock-value-for-field-"internalID">',
     })
   })
@@ -147,7 +147,8 @@ describe("ThankYouRoute", () => {
       expect(trackEvent).toHaveBeenCalledWith({
         action: "tappedViewArtworkInMyCollection",
         context_module: "sell",
-        context_owner_type: "submitArtworkStepCompleteYourSubmission",
+        context_owner_type:
+          "submitArtworkStepCompleteYourSubmissionPostApproval",
         submission_id: '<mock-value-for-field-"internalID">',
       })
     })
@@ -166,6 +167,24 @@ describe("ThankYouRoute", () => {
         expect(viewCollectionButton).toHaveAttribute("href", "/my-collection")
 
         viewCollectionButton.click()
+
+        expect(trackEvent).toHaveBeenCalledWith({
+          action: "tappedViewArtworkInMyCollection",
+          context_module: "sell",
+          context_owner_type:
+            "submitArtworkStepCompleteYourSubmissionPostApproval",
+          submission_id: '<mock-value-for-field-"internalID">',
+        })
+      })
+    })
+
+    describe("when submission is in SUBMITTED state", () => {
+      it("tracks with submitArtworkStepCompleteYourSubmission owner type", () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ state: "SUBMITTED" }),
+        })
+
+        screen.getByTestId("view-collection").click()
 
         expect(trackEvent).toHaveBeenCalledWith({
           action: "tappedViewArtworkInMyCollection",

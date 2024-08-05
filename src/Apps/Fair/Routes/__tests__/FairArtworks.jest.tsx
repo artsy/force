@@ -78,6 +78,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
     id: "xxx",
     slug: "cool-fair",
     internalID: "bson-fair",
+    featuredKeywords: ["cats", "dogs"],
     filtered_artworks: {
       __isArtworkConnectionInterface: "FilterArtworksConnection",
       id: "filteredartworksabc123",

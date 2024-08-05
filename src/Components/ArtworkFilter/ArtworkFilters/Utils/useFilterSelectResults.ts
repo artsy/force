@@ -6,7 +6,7 @@ import {
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { useFilterLabelCountByKey } from "../../Utils/useFilterLabelCountByKey"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 
 export interface UseFilterSelectResultsProps {
   facetName: keyof MultiSelectArtworkFilters

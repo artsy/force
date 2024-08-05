@@ -207,7 +207,7 @@ describe("ConditionRoute", () => {
           )
 
           expect(mockPush).toHaveBeenCalledWith(
-            "/sell/submissions/externalId/thank-you"
+            "/sell/submissions/externalId/thank-you-post-approval"
           )
         })
       })

@@ -7,7 +7,7 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { isFunction } from "lodash"
 import * as React from "react"
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
@@ -30,6 +30,14 @@ interface DetailsProps {
   showHoverDetails?: boolean
   showSaveButton?: boolean
   renderSaveButton?: (artworkId: string) => React.ReactNode
+}
+
+interface SaleInfoLineProps extends DetailsProps {
+  showActivePartnerOfferLine: boolean
+}
+
+interface SaleMessageProps extends DetailsProps {
+  showActivePartnerOfferLine: boolean
 }
 
 const StyledConditionalLink = styled(RouterLink)`
@@ -129,12 +137,37 @@ const PartnerLine: React.FC<DetailsProps> = ({
   return null
 }
 
-const SaleInfoLine: React.FC<DetailsProps> = props => {
+const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
+  const { showActivePartnerOfferLine } = props
+
   return (
-    <Text variant="xs" color="black100" fontWeight="bold" overflowEllipsis>
-      <SaleMessage {...props} /> <BidInfo {...props} />
+    <Flex flexDirection="row" alignItems="center">
+      <Text variant="xs" color="black100" fontWeight="bold" overflowEllipsis>
+        <SaleMessage {...props} /> <BidInfo {...props} />
+      </Text>
+      {showActivePartnerOfferLine && <ActivePartnerOfferTimer {...props} />}
+    </Flex>
+  )
+}
+
+const ActivePartnerOfferLine: React.FC<DetailsProps> = () => {
+  return (
+    <Text
+      variant="xs"
+      color="blue100"
+      backgroundColor="blue10"
+      px={0.5}
+      marginBottom={0.5}
+      alignSelf="flex-start"
+      borderRadius={3}
+    >
+      Limited-Time Offer
     </Text>
   )
+}
+
+const EmptyLine: React.FC = () => {
+  return <Text variant="xs"> &nbsp; </Text>
 }
 
 const HighDemandInfo = () => {
@@ -150,14 +183,21 @@ const HighDemandInfo = () => {
 
 const NBSP = " "
 
-const SaleMessage: React.FC<DetailsProps> = ({
-  artwork: { sale, sale_message, sale_artwork },
-}) => {
+const SaleMessage: React.FC<SaleMessageProps> = props => {
+  const {
+    artwork: { sale, sale_message, sale_artwork, collectorSignals },
+    showActivePartnerOfferLine,
+  } = props
+
   if (sale?.is_auction && !sale?.is_closed) {
     const highestBid_display = sale_artwork?.highest_bid?.display
     const openingBid_display = sale_artwork?.opening_bid?.display
 
     return <>{highestBid_display || openingBid_display || ""}</>
+  }
+
+  if (showActivePartnerOfferLine) {
+    return <>{collectorSignals?.partnerOffer?.priceWithDiscount?.display}</>
   }
 
   // NBSP is used to prevent un-aligned carousels
@@ -186,23 +226,21 @@ const BidInfo: React.FC<DetailsProps> = ({
   )
 }
 
-const ActivePartnerOfferLine: React.FC = () => {
+const ActivePartnerOfferTimer: React.FC<DetailsProps> = ({
+  artwork: { collectorSignals },
+}) => {
+  const SEPARATOR = <>&nbsp;</>
+  const { endAt } = collectorSignals?.partnerOffer ?? {}
+  const { time } = useTimer(endAt ?? "")
+  const { days, hours } = time
+
   return (
-    <Text
-      variant="xs"
-      color="blue100"
-      backgroundColor="blue10"
-      px={0.5}
-      alignSelf="flex-start"
-      borderRadius={3}
-    >
-      Limited-Time Offer
+    <Text variant="xs" color="blue100" px={0.5} alignSelf="flex-start">
+      Exp.{SEPARATOR}
+      {days}d{SEPARATOR}
+      {hours}h{SEPARATOR}
     </Text>
   )
-}
-
-const EmptyLine: React.FC = () => {
-  return <Text variant="xs"> &nbsp; </Text>
 }
 
 export const Details: React.FC<DetailsProps> = ({
@@ -221,7 +259,6 @@ export const Details: React.FC<DetailsProps> = ({
     isAuctionArtwork,
     hideLotLabel,
     saveOnlyToDefaultList,
-    showActivePartnerOffer,
   } = useArtworkGridContext()
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
@@ -234,18 +271,13 @@ export const Details: React.FC<DetailsProps> = ({
     "emerald_signals-partner-offers"
   )
 
-  // TODO: replace randomization with real signals and business logic
-  const showActivePartnerOfferLine: boolean = useMemo(
-    () =>
-      !!signalsPartnerOffersEnabled &&
-      !!showActivePartnerOffer &&
-      Math.random() < 0.2,
-    [signalsPartnerOffersEnabled, showActivePartnerOffer]
-  )
-  const padForActivePartnerOfferLine: boolean =
-    !!signalsPartnerOffersEnabled &&
-    !!showActivePartnerOffer &&
-    !showActivePartnerOfferLine
+  const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
+  const isAuction = rest?.artwork?.sale?.is_auction ?? false
+
+  const showActivePartnerOfferLine: boolean =
+    !!signalsPartnerOffersEnabled && !isAuction && !!partnerOffer
+
+  const padForActivePartnerOfferLine: boolean = !showActivePartnerOfferLine
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -318,8 +350,12 @@ export const Details: React.FC<DetailsProps> = ({
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
         )}
       </Box>
-
-      {!hideSaleInfo && <SaleInfoLine {...rest} />}
+      {!hideSaleInfo && (
+        <SaleInfoLine
+          showActivePartnerOfferLine={showActivePartnerOfferLine}
+          {...rest}
+        />
+      )}
       {padForActivePartnerOfferLine && <EmptyLine />}
     </Box>
   )
@@ -415,6 +451,10 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         lotWatcherCount
         partnerOffer {
           endAt
+          isActive
+          priceWithDiscount {
+            display
+          }
         }
       }
       sale_message: saleMessage

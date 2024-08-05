@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f5fb4f614071fbc5439e78be0b07b7e8>>
+ * @generated SignedSource<<df6d35e500ce51c39094b014772a83ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,7 @@ export type AdditionalDocumentsRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly myCollectionArtworkID: string | null | undefined;
     readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   } | null | undefined;
 };
@@ -123,6 +124,13 @@ return {
           },
           {
             "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "myCollectionArtworkID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -183,12 +191,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ba51a5a21a430a6734a07d980fad1656",
+    "cacheID": "fa5b5e28f5ac000a391ec74ae975ed19",
     "id": null,
     "metadata": {},
     "name": "AdditionalDocumentsRoute_Test_Query",
     "operationKind": "query",
-    "text": "query AdditionalDocumentsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...AdditionalDocumentsRoute_submission\n    id\n  }\n}\n\nfragment AdditionalDocumentsRoute_submission on ConsignmentSubmission {\n  externalId\n  assets(assetType: [ADDITIONAL_FILE]) {\n    id\n    size\n    filename\n    documentPath\n    s3Path\n    s3Bucket\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query AdditionalDocumentsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...AdditionalDocumentsRoute_submission\n    id\n  }\n}\n\nfragment AdditionalDocumentsRoute_submission on ConsignmentSubmission {\n  externalId\n  assets(assetType: [ADDITIONAL_FILE]) {\n    id\n    size\n    filename\n    documentPath\n    s3Path\n    s3Bucket\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();

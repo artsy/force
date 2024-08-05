@@ -94,7 +94,9 @@ export const ArtworksRailRenderer: React.FC<
           return <ArtworksRailPlaceholder {...rest} count={15} />
 
         return (
-          <ArtworksRailFragmentContainer {...rest} partner={props.partner!} />
+          props.partner && (
+            <ArtworksRailFragmentContainer {...rest} partner={props.partner} />
+          )
         )
       }}
     />
