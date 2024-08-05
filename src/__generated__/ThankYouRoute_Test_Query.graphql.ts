@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<71c0acbff6a559dc4540ae95a44c866b>>
+ * @generated SignedSource<<5e261f8c00f2645495be8aab6a5ce6fd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -127,12 +127,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6fe494ad3a1e12391b8a7c55c4bed45c",
+    "cacheID": "8c6b59f9bd00ac00aef79894933110fe",
     "id": null,
     "metadata": {},
     "name": "ThankYouRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ThankYouRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...ThankYouRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n\nfragment ThankYouRoute_submission on ConsignmentSubmission {\n  internalID\n  state\n  myCollectionArtworkID\n}\n"
+    "text": "query ThankYouRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...ThankYouRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n\nfragment ThankYouRoute_submission on ConsignmentSubmission {\n  internalID\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();

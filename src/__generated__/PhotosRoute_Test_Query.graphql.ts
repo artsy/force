@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5d656ea0de91f1604cc98f92b23d8c3>>
+ * @generated SignedSource<<0a0bf15cc6cbd82efca54485d7b056fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,6 +35,7 @@ export type PhotosRoute_Test_Query$rawResponse = {
         readonly url: string | null | undefined;
       } | null | undefined> | null | undefined;
     } | null | undefined;
+    readonly myCollectionArtworkID: string | null | undefined;
     readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   } | null | undefined;
 };
@@ -129,6 +130,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "myCollectionArtworkID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Artwork",
             "kind": "LinkedField",
             "name": "myCollectionArtwork",
@@ -209,12 +217,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f487ab4f419a507ba5673d7dddad8ec4",
+    "cacheID": "3b955119945204fcd7e4d03799c2c54b",
     "id": null,
     "metadata": {},
     "name": "PhotosRoute_Test_Query",
     "operationKind": "query",
-    "text": "query PhotosRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  myCollectionArtwork {\n    images {\n      url(version: \"large\")\n    }\n    id\n  }\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query PhotosRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  myCollectionArtwork {\n    images {\n      url(version: \"large\")\n    }\n    id\n  }\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();
