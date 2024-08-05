@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dcb5b27f7630a9f74f262c5b2ce619e4>>
+ * @generated SignedSource<<7842ec1a2d1a94700f3e36d623cd22f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,6 +45,11 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "includeAllImages",
+    "value": true
+  },
+  {
+    "kind": "Literal",
+    "name": "includeConsignmentSubmission",
     "value": true
   }
 ];
@@ -197,6 +202,6 @@ return {
 };
 })();
 
-(node as any).hash = "fded4aabad6f71c55dbfcb47a2c55c9f";
+(node as any).hash = "c52e6cfed2fe497274b8f532e8245592";
 
 export default node;

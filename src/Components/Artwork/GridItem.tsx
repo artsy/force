@@ -300,6 +300,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         @argumentDefinitions(
           includeAllImages: { type: "Boolean", defaultValue: false }
           includeBlurHash: { type: "Boolean", defaultValue: true }
+          includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
         ) {
         internalID
         title
@@ -315,6 +316,9 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         artistNames
         href
         ...Metadata_artwork
+          @arguments(
+            includeConsignmentSubmission: $includeConsignmentSubmission
+          )
         ...ExclusiveAccessBadge_artwork
         ...Badge_artwork
       }

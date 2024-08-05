@@ -421,7 +421,10 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
 
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
   artwork: graphql`
-    fragment Details_artwork on Artwork {
+    fragment Details_artwork on Artwork
+      @argumentDefinitions(
+        includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+      ) {
       internalID
       href
       title
@@ -477,13 +480,14 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           display
         }
       }
-      consignmentSubmission {
+      consignmentSubmission @include(if: $includeConsignmentSubmission) {
         internalID
       }
       ...SaveButton_artwork
       ...SaveArtworkToListsButton_artwork
       ...HoverDetails_artwork
       ...ConsignmentSubmissionStatus_artwork
+        @include(if: $includeConsignmentSubmission)
     }
   `,
 })

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a65d65b5e61183ec85f77f39ffcbf614>>
+ * @generated SignedSource<<9f2cec3e1d3db1c65d86c6670db7b7e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,7 +29,7 @@ export type Details_artwork$data = {
       readonly endAt: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
-  readonly consignmentSubmission: {
+  readonly consignmentSubmission?: {
     readonly internalID: string | null | undefined;
   } | null | undefined;
   readonly cultural_maker: string | null | undefined;
@@ -123,7 +123,13 @@ v5 = [
   }
 ];
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeConsignmentSubmission"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "Details_artwork",
@@ -408,16 +414,28 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtworkConsignmentSubmission",
-      "kind": "LinkedField",
-      "name": "consignmentSubmission",
-      "plural": false,
+      "condition": "includeConsignmentSubmission",
+      "kind": "Condition",
+      "passingValue": true,
       "selections": [
-        (v0/*: any*/)
-      ],
-      "storageKey": null
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtworkConsignmentSubmission",
+          "kind": "LinkedField",
+          "name": "consignmentSubmission",
+          "plural": false,
+          "selections": [
+            (v0/*: any*/)
+          ],
+          "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ConsignmentSubmissionStatus_artwork"
+        }
+      ]
     },
     {
       "args": null,
@@ -433,11 +451,6 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "HoverDetails_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ConsignmentSubmissionStatus_artwork"
     }
   ],
   "type": "Artwork",
@@ -445,6 +458,6 @@ return {
 };
 })();
 
-(node as any).hash = "f161f0ee2e14987d07572b623a8861cb";
+(node as any).hash = "388139243e2a6903cbaeb1ed4d7d7d72";
 
 export default node;

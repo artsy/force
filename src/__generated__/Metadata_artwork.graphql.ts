@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a09a2c7398af93e0010b3229b729fee0>>
+ * @generated SignedSource<<2f22150a5802f697992645f7c5b3229f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,13 +22,25 @@ export type Metadata_artwork$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeConsignmentSubmission"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "Metadata_artwork",
   "selections": [
     {
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "includeConsignmentSubmission",
+          "variableName": "includeConsignmentSubmission"
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "Details_artwork"
     },
@@ -51,6 +63,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b32ff35e55d3159ffb6bfb362459aff9";
+(node as any).hash = "eeeb45c66c57246b87946c622ccff1bc";
 
 export default node;
