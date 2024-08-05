@@ -387,6 +387,7 @@ export const BaseArtworkFilter: React.FC<
                           </Flex>
 
                           <ArtworkFiltersQuick
+                            featuredKeywords={viewer.featuredKeywords}
                             {...(stuck ? { offset: 20 } : {})}
                           />
                         </Flex>
