@@ -543,28 +543,6 @@ describe("Details", () => {
       expect(html).toContain("$3,500")
     })
 
-    it("should not render the active partner offer badge if the offer is expired", async () => {
-      const data: any = {
-        ...artworkNotInAuction,
-        collectorSignals: {
-          bidCount: null,
-          lotWatcherCount: null,
-          partnerOffer: {
-            isActive: false,
-            endAt: "2055-03-12T12:33:37.000Z",
-            priceWithDiscount: { display: "$3,500" },
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-      const html = wrapper.html()
-
-      expect(html).not.toContain("Limited-Time Offer")
-      expect(html).not.toContain("Exp.")
-      expect(html).toContain("$4000")
-    })
-
     it("should not render the active partner offer badge if the artwork is in an auction", async () => {
       const data: any = {
         ...artworkInAuction,

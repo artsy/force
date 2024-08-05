@@ -272,11 +272,10 @@ export const Details: React.FC<DetailsProps> = ({
   )
 
   const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
-  const isActive = partnerOffer?.isActive ?? false
   const isAuction = rest?.artwork?.sale?.is_auction ?? false
 
   const showActivePartnerOfferLine: boolean =
-    !!signalsPartnerOffersEnabled && !isAuction && !!partnerOffer && !!isActive
+    !!signalsPartnerOffersEnabled && !isAuction && !!partnerOffer
 
   const padForActivePartnerOfferLine: boolean = !showActivePartnerOfferLine
 
