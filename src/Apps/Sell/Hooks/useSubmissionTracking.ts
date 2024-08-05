@@ -79,23 +79,25 @@ export const useSubmissionTracking = () => {
   }
 
   const trackTappedSubmitAnotherWork = (
-    submission_id: string | null | undefined
+    submission_id: string | null | undefined,
+    currentStep: SellFlowStep
   ) => {
     trackEvent({
       action: "tappedSubmitAnotherWork",
       context_module: ContextModule.sell,
-      context_owner_type: getOwnerType("thank-you"),
+      context_owner_type: getOwnerType(currentStep),
       submission_id,
     })
   }
 
   const trackTappedViewArtworkInMyCollection = (
-    submission_id: string | null | undefined
+    submission_id: string | null | undefined,
+    currentStep: SellFlowStep
   ) => {
     trackEvent({
       action: "tappedViewArtworkInMyCollection",
       context_module: ContextModule.sell,
-      context_owner_type: getOwnerType("thank-you"),
+      context_owner_type: getOwnerType(currentStep),
       submission_id,
     })
   }
@@ -144,7 +146,7 @@ const getOwnerType = (currentStep: SellFlowStep): PageOwnerType | null => {
     case "phone-number":
       return OwnerType.submitArtworkStepAddPhoneNumber
     case "thank-you":
-      return OwnerType.submitArtworkStepCompleteYourSubmission
+      OwnerType.submitArtworkStepCompleteYourSubmission
     case "shipping-location":
       return OwnerType.submitArtworkStepShippingLocation
     case "frame":
@@ -153,6 +155,8 @@ const getOwnerType = (currentStep: SellFlowStep): PageOwnerType | null => {
       return OwnerType.submitArtworkStepAddtionalDocuments
     case "condition":
       return OwnerType.submitArtworkStepCondition
+    case "thank-you-post-approval":
+      return OwnerType.submitArtworkStepCompleteYourSubmissionPostApproval
     default:
       // https://graphite.dev/guides/typescript-switches#using-the-object-object-type-for-exhaustive-checks
       const exhaustiveCheck: never = currentStep
@@ -161,3 +165,4 @@ const getOwnerType = (currentStep: SellFlowStep): PageOwnerType | null => {
 
   return null
 }
+f
