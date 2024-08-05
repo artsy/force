@@ -6,6 +6,7 @@ import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { RouteProps } from "System/Router/Route"
 import { redirectGeneToCollection } from "./Server/redirectGeneToCollection"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 
 const GeneApp = loadable(
   () => import(/* webpackChunkName: "geneBundle" */ "./GeneApp"),
@@ -24,6 +25,7 @@ const GeneShowRoute = loadable(
 export const geneRoutes: RouteProps[] = [
   {
     path: "/gene/:slug",
+    serverCacheTTL: serverCacheTTLs.gene,
     getComponent: () => GeneApp,
     onServerSideRender: redirectGeneToCollection,
     onClientSideRender: () => {
@@ -42,6 +44,7 @@ export const geneRoutes: RouteProps[] = [
       },
       {
         path: "",
+        serverCacheTTL: serverCacheTTLs.gene,
         getComponent: () => GeneShowRoute,
         onClientSideRender: () => {
           return GeneShowRoute.preload()
