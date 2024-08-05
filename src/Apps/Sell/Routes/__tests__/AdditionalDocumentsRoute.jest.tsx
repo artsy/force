@@ -1,14 +1,14 @@
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { AdditionalDocumentsRoute_Test_Query$rawResponse } from "__generated__/AdditionalDocumentsRoute_Test_Query.graphql"
 import { AdditionalDocumentsRoute } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { AdditionalDocumentsRoute_Test_Query$rawResponse } from "__generated__/AdditionalDocumentsRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
@@ -129,12 +129,12 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("AdditionalDocumentsRoute", () => {
-  it("renders the Additional documents step", () => {
+  it("renders the Additional Documents step", () => {
     renderWithRelay({
       ConsignmentSubmission: () => submissionMock,
     })
 
-    expect(screen.getByText("Additional documents")).toBeInTheDocument()
+    expect(screen.getByText("Additional Documents")).toBeInTheDocument()
     expect(
       screen.getByText(
         /Please add any of the following if you have them: Proof of Purchase, Certificate of Authentication, Fact Sheet, Condition Report/
