@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2a361fc6786ca33c20e39d99f9de09c>>
+ * @generated SignedSource<<3a4ac76ed43191855e453ae1c7a5fe6a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,7 @@ export type ArtistRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly myCollectionArtworkID: string | null | undefined;
     readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   } | null | undefined;
 };
@@ -125,6 +126,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "myCollectionArtworkID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artist",
@@ -167,12 +175,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "062bc1cd8730c03b48d9a513922aea69",
+    "cacheID": "19f22da6e4e8aa965f191e3b51072346",
     "id": null,
     "metadata": {},
     "name": "ArtistRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...ArtistRoute_submission\n    id\n  }\n}\n\nfragment ArtistRoute_submission on ConsignmentSubmission {\n  internalID\n  artist {\n    internalID\n    targetSupply {\n      isTargetSupply\n    }\n    name\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query ArtistRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...ArtistRoute_submission\n    id\n  }\n}\n\nfragment ArtistRoute_submission on ConsignmentSubmission {\n  internalID\n  artist {\n    internalID\n    targetSupply {\n      isTargetSupply\n    }\n    name\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0d79d23c6de65bd58860d4162d26115d>>
+ * @generated SignedSource<<30178cbb88b0d2335fa3dd1941953c11>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -115,6 +115,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "myCollectionArtworkID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -124,12 +131,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bf4b8c95905f83b773e8ea2704a4bd5e",
+    "cacheID": "a8df6760d33cbb13e9b79cdfafb50f6b",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_SubmissionRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_SubmissionRouteQuery(\n  $id: ID!\n  $sessionID: String!\n) {\n  submission(id: $id, sessionID: $sessionID) @principalField {\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query sellRoutes_SubmissionRouteQuery(\n  $id: ID!\n  $sessionID: String!\n) {\n  submission(id: $id, sessionID: $sessionID) @principalField {\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();

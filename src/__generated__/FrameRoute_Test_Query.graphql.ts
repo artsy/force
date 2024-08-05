@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d282428b8972b25e0a3303dea626b77c>>
+ * @generated SignedSource<<dbb2690af8727c778f0b47aabec2bcdc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,7 @@ export type FrameRoute_Test_Query$rawResponse = {
       readonly id: string;
       readonly isFramed: boolean | null | undefined;
     } | null | undefined;
+    readonly myCollectionArtworkID: string | null | undefined;
     readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   } | null | undefined;
 };
@@ -176,6 +177,13 @@ return {
             "name": "state",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "myCollectionArtworkID",
+            "storageKey": null
+          },
           (v1/*: any*/)
         ],
         "storageKey": "submission(id:\"submission-id\")"
@@ -183,12 +191,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2823a61501c20df422714e7a2946d4e9",
+    "cacheID": "bfebd378c9ccb7682d6d454cd46392eb",
     "id": null,
     "metadata": {},
     "name": "FrameRoute_Test_Query",
     "operationKind": "query",
-    "text": "query FrameRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...FrameRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment FrameRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    artworkId: internalID\n    isFramed\n    framedMetric\n    framedWidth\n    framedHeight\n    framedDepth\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query FrameRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...FrameRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment FrameRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    artworkId: internalID\n    isFramed\n    framedMetric\n    framedWidth\n    framedHeight\n    framedDepth\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();
