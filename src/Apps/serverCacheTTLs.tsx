@@ -1,5 +1,5 @@
 const NO_CACHE = 0
-const HOURS_24 = 86400000
+const HOURS_24 = 86400000 // In milliseconds
 
 /**
  * This defines non-default cache TTLs for specific routes. Default is typically
@@ -16,6 +16,5 @@ export const serverCacheTTLs = {
   collection: HOURS_24,
   collections: HOURS_24,
   gene: HOURS_24,
-  partners: HOURS_24,
   sale: NO_CACHE,
 }
