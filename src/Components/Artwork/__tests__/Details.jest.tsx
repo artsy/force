@@ -6,11 +6,18 @@ import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridCo
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthDialog } from "Components/AuthDialog"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("Utils/getCurrentTimeAsIsoString")
 jest.mock("Components/AuthDialog/useAuthDialog")
+
+jest.mock("System/Hooks/useFeatureFlag", () => {
+  return {
+    useFeatureFlag: jest.fn(),
+  }
+})
 
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(
   "2022-03-18T05:22:32.000Z"
@@ -533,6 +540,58 @@ describe("Details", () => {
       expect(html).not.toContain("Print")
     })
   })
+
+  describe("user has active partner offer on artwork", () => {
+    const mockUseFeatureFlag = useFeatureFlag as jest.Mock
+
+    beforeEach(() => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+    })
+
+    it("should render the active partner offer badge", async () => {
+      const data: any = {
+        ...artworkNotInAuction,
+        collectorSignals: {
+          bidCount: null,
+          lotWatcherCount: null,
+          partnerOffer: {
+            isActive: true,
+            endAt: "2055-03-12T12:33:37.000Z",
+            priceWithDiscount: { display: "$3,500" },
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data)
+      const html = wrapper.html()
+
+      expect(html).toContain("Limited-Time Offer")
+      expect(html).toContain("Exp.")
+      expect(html).toContain("$3,500")
+    })
+
+    it("should not render the active partner offer badge if the artwork is in an auction", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          bidCount: null,
+          lotWatcherCount: null,
+          partnerOffer: {
+            isActive: true,
+            endAt: "2055-03-12T12:33:37.000Z",
+            priceWithDiscount: { display: "$2000" },
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data)
+      const html = wrapper.html()
+
+      expect(html).not.toContain("Limited-Time Offer")
+      expect(html).not.toContain("Exp.")
+      expect(html).toContain("$2,600")
+    })
+  })
 })
 
 const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
@@ -689,4 +748,59 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = 
     stateLabelColor: "black100",
   },
   isListed: false,
+}
+
+const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
+  id: "opaque-artwork-id",
+  internalID: "opaque-internal-id",
+  artist: {
+    id: "artist-id",
+    targetSupply: {
+      isP1: true,
+    },
+  },
+  marketPriceInsights: {
+    demandRank: 0.9,
+  },
+  artistNames: "Gerhard Richter",
+  artists: [
+    {
+      id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
+      href: "/artist/gerhard-richter",
+      name: "Gerhard Richter",
+    },
+  ],
+  sale: null,
+  sale_artwork: null,
+  slug: "gerhard-richter-tulips-p17-14",
+  isSaved: false,
+  href: "/artwork/gerhard-richter-tulips-p17-14",
+  date: "2017",
+  sale_message: "$4000",
+  cultural_maker: null,
+  title: "Tulips (P17)",
+  collecting_institution: "This Really Great Gallery",
+  partner: {
+    id: "opaque-partner-id",
+    name: "Forum Auctions",
+    href: "/auction/forum-auctions",
+  },
+  attributionClass: {
+    id: "attributionClass-id",
+    name: "Unique",
+  },
+  mediumType: {
+    filterGene: {
+      id: "gene-id",
+      name: "Prints",
+    },
+  },
+  preview: null,
+  isInAuction: false,
+  isSavedToList: false,
+  collectorSignals: {
+    bidCount: null,
+    lotWatcherCount: null,
+    partnerOffer: null,
+  },
 }
