@@ -17,7 +17,7 @@ interface MyCollectionArtworkSubmitForSaleProps {
 
 export const MyCollectionArtworkSubmitForSale: React.FC<MyCollectionArtworkSubmitForSaleProps> = props => {
   const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
-  const tracking = useTracking()
+  const { trackEvent } = useTracking()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { router } = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -31,7 +31,7 @@ export const MyCollectionArtworkSubmitForSale: React.FC<MyCollectionArtworkSubmi
   const isTargetSupply = artwork?.artist?.targetSupply?.priority === "TRUE"
 
   const handleSubmitArtwork = async () => {
-    tracking.trackEvent({
+    trackEvent({
       contextModule: ContextModule.topWorksRail,
       context_page_owner_type: OwnerType.myCollectionArtwork,
       context_page_owner_id: artwork.internalID,

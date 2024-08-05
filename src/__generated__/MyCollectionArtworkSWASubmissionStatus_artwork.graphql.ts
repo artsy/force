@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<32e7f64e6554dbf89bd1598744860c4d>>
+ * @generated SignedSource<<30a39d960e130c330bde4aa367916434>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type MyCollectionArtworkSWASubmissionStatus_artwork$data = {
     readonly stateHelpMessage: string | null | undefined;
     readonly stateLabel: string | null | undefined;
   } | null | undefined;
+  readonly internalID: string;
   readonly listedArtworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -48,6 +49,7 @@ return {
   "metadata": null,
   "name": "MyCollectionArtworkSWASubmissionStatus_artwork",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": [
@@ -141,6 +143,6 @@ return {
 };
 })();
 
-(node as any).hash = "2472b69b21db890435607d659a92940f";
+(node as any).hash = "b3c49b15c3659dfe9af99e69568a32b4";
 
 export default node;
