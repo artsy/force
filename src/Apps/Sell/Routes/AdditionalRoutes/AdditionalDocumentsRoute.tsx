@@ -71,7 +71,7 @@ export const AdditionalDocumentsRoute: React.FC<AdditionalDocumentsRouteProps> =
 
         return (
           <SubmissionLayout>
-            <SubmissionStepTitle>Additional documents</SubmissionStepTitle>
+            <SubmissionStepTitle>Additional Documents</SubmissionStepTitle>
 
             <Text mb={2} variant={["xs", "sm"]} color="black60">
               Please add any of the following if you have them: Proof of
@@ -80,6 +80,7 @@ export const AdditionalDocumentsRoute: React.FC<AdditionalDocumentsRouteProps> =
             </Text>
 
             <UploadDocumentsForm />
+
             <DocumentPreviewsGrid />
 
             <DevDebug />
