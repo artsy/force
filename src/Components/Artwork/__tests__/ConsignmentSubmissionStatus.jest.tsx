@@ -1,5 +1,3 @@
-// ConsignmentSubmissionStatus
-
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
