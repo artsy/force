@@ -97,3 +97,9 @@ We should avoid needing to hand-manage individual Redis cache entries, but occas
 - Tell AE to reload page, which will return the latest version
 
 As a last resort, we can flush the entire Redis cache by clicking the "Clear entire cache" button. This should be avoided however as all of our previous cache keys will need to be reindexed, which will greatly slow down the site.
+
+### Useful Links for Monitoring Cache Performance
+
+- [Force-production redis cluster metrics](https://us-east-1.console.aws.amazon.com/elasticache/home?region=us-east-1#/redis/force-production) (hit rate, eviction rate, # items, etc.)
+- [Calibre scores over time](https://app.datadoghq.com/dashboard/qfh-2gu-td7/calibre-scores?fromUser=false&refresh_mode=sliding&view=spans&from_ts=1720285399034&to_ts=1722877399034&live=true) (by page, device type, just a few data points per day)
+- [Force end-user load times](https://app.datadoghq.com/dashboard/dt4-sdd-r6r/force-load-times?fromUser=false&refresh_mode=sliding&view=spans&from_ts=1722272630753&to_ts=1722877430753&live=true) (FP, FCP, TTI, etc.)
