@@ -803,4 +803,6 @@ const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
     lotWatcherCount: null,
     partnerOffer: null,
   },
+  consignmentSubmission: null,
+  isListed: false,
 }

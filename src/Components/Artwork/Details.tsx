@@ -362,9 +362,11 @@ export const Details: React.FC<DetailsProps> = ({
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
         )}
       </Box>
+
       {showSubmissionStatus && (
         <ConsignmentSubmissionStatusFragmentContainer artwork={rest.artwork} />
       )}
+
       {!hideSaleInfo && (
         <SaleInfoLine
           showActivePartnerOfferLine={showActivePartnerOfferLine}
