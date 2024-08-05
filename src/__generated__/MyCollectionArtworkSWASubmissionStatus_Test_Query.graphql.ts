@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cb0f57a8262d14d99b02a06f0e034d02>>
+ * @generated SignedSource<<6d373621ccbd972672f795239a6da7d8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,6 +28,7 @@ export type MyCollectionArtworkSWASubmissionStatus_Test_Query$rawResponse = {
       readonly stateLabel: string | null | undefined;
     } | null | undefined;
     readonly id: string;
+    readonly internalID: string;
     readonly listedArtworksConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -107,6 +108,7 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
           {
             "alias": null,
             "args": [
@@ -202,12 +204,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0b156892cc9457363d6d0e4211adbcd8",
+    "cacheID": "6508b8636b1a07490196f8efc97a74bc",
     "id": null,
     "metadata": {},
     "name": "MyCollectionArtworkSWASubmissionStatus_Test_Query",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSWASubmissionStatus_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASubmissionStatus_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASubmissionStatus_artwork on Artwork {\n  listedArtworksConnection(first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n  consignmentSubmission {\n    actionLabel\n    buttonLabel\n    internalID\n    state\n    stateLabel\n    stateHelpMessage\n  }\n}\n"
+    "text": "query MyCollectionArtworkSWASubmissionStatus_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASubmissionStatus_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASubmissionStatus_artwork on Artwork {\n  internalID\n  listedArtworksConnection(first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n  consignmentSubmission {\n    actionLabel\n    buttonLabel\n    internalID\n    state\n    stateLabel\n    stateHelpMessage\n  }\n}\n"
   }
 };
 })();

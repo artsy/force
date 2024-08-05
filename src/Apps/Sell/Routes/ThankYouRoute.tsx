@@ -3,6 +3,7 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { ThankYouRoute_submission$key } from "__generated__/ThankYouRoute_submission.graphql"
 import * as React from "react"
@@ -20,6 +21,9 @@ interface ThankYouRouteProps {
 }
 
 export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
+  const {
+    state: { step },
+  } = useSellFlowContext()
   const { myCollectionArtworkID, internalID, state } = useFragment(
     FRAGMENT,
     props.submission
@@ -69,7 +73,7 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
                 as={RouterLink}
                 to="/sell/submissions/new"
                 onClick={() => {
-                  trackTappedSubmitAnotherWork(internalID)
+                  trackTappedSubmitAnotherWork(internalID, step)
                 }}
                 width="100%"
                 data-testid="submit-another-work"
@@ -82,7 +86,7 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
                 as={RouterLink}
                 to={myCollectionUrl}
                 onClick={() => {
-                  trackTappedViewArtworkInMyCollection(internalID)
+                  trackTappedViewArtworkInMyCollection(internalID, step)
                 }}
                 variant="secondaryBlack"
                 width="100%"

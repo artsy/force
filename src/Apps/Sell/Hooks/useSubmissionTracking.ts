@@ -79,23 +79,25 @@ export const useSubmissionTracking = () => {
   }
 
   const trackTappedSubmitAnotherWork = (
-    submission_id: string | null | undefined
+    submission_id: string | null | undefined,
+    currentStep: SellFlowStep
   ) => {
     trackEvent({
       action: "tappedSubmitAnotherWork",
       context_module: ContextModule.sell,
-      context_owner_type: getOwnerType("thank-you"),
+      context_owner_type: getOwnerType(currentStep),
       submission_id,
     })
   }
 
   const trackTappedViewArtworkInMyCollection = (
-    submission_id: string | null | undefined
+    submission_id: string | null | undefined,
+    currentStep: SellFlowStep
   ) => {
     trackEvent({
       action: "tappedViewArtworkInMyCollection",
       context_module: ContextModule.sell,
-      context_owner_type: getOwnerType("thank-you"),
+      context_owner_type: getOwnerType(currentStep),
       submission_id,
     })
   }
@@ -145,7 +147,19 @@ const getOwnerType = (currentStep: SellFlowStep): PageOwnerType | null => {
       return OwnerType.submitArtworkStepAddPhoneNumber
     case "thank-you":
       return OwnerType.submitArtworkStepCompleteYourSubmission
+    case "shipping-location":
+      return OwnerType.submitArtworkStepShippingLocation
+    case "frame":
+      return OwnerType.submitArtworkStepFrameInformation
+    case "additional-documents":
+      return OwnerType.submitArtworkStepAddtionalDocuments
+    case "condition":
+      return OwnerType.submitArtworkStepCondition
+    case "thank-you-post-approval":
+      return OwnerType.submitArtworkStepCompleteYourSubmissionPostApproval
     default:
-      return null
+      // https://graphite.dev/guides/typescript-switches#using-the-object-object-type-for-exhaustive-checks
+      const exhaustiveCheck: never = currentStep
+      throw new Error(`Unhandled case: ${exhaustiveCheck}`)
   }
 }
