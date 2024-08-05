@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { graphql } from "react-relay"
 import { RouteProps } from "System/Router/Route"
 
@@ -21,6 +22,7 @@ const InstitutionsRoute = loadable(
 export const partnersRoutes: RouteProps[] = [
   {
     path: "/galleries",
+    serverCacheTTL: serverCacheTTLs.partners,
     getComponent: () => GalleriesRoute,
     onClientSideRender: () => {
       return GalleriesRoute.preload()
@@ -35,6 +37,7 @@ export const partnersRoutes: RouteProps[] = [
   },
   {
     path: "/institutions",
+    serverCacheTTL: serverCacheTTLs.partners,
     getComponent: () => InstitutionsRoute,
     onClientSideRender: () => {
       return InstitutionsRoute.preload()

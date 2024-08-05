@@ -2,6 +2,7 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RouteProps } from "System/Router/Route"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 
 const ArtistSeriesApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistSeriesApp"),
@@ -13,6 +14,7 @@ const ArtistSeriesApp = loadable(
 export const artistSeriesRoutes: RouteProps[] = [
   {
     path: "/artist-series/:slug",
+    serverCacheTTL: serverCacheTTLs.artistSeries,
     getComponent: () => ArtistSeriesApp,
     onClientSideRender: () => {
       ArtistSeriesApp.preload()

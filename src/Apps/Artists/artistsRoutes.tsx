@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { graphql } from "react-relay"
 import { RouteProps } from "System/Router/Route"
 
@@ -27,6 +28,7 @@ const ArtistsByLetterRoute = loadable(
 export const artistsRoutes: RouteProps[] = [
   {
     path: "/artists",
+    serverCacheTTL: serverCacheTTLs.artists,
     getComponent: () => ArtistsApp,
     onClientSideRender: () => {
       return ArtistsApp.preload()
@@ -34,6 +36,7 @@ export const artistsRoutes: RouteProps[] = [
     children: [
       {
         path: "",
+        serverCacheTTL: serverCacheTTLs.artists,
         getComponent: () => ArtistsIndexRoute,
         onClientSideRender: () => {
           return ArtistsIndexRoute.preload()
@@ -51,6 +54,7 @@ export const artistsRoutes: RouteProps[] = [
       },
       {
         path: "artists-starting-with-:letter([a-zA-Z])",
+        serverCacheTTL: serverCacheTTLs.artists,
         getComponent: () => ArtistsByLetterRoute,
         onClientSideRender: () => {
           return ArtistsByLetterRoute.preload()
