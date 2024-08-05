@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5bb6b03e39332f297e53b6e19964b881>>
+ * @generated SignedSource<<d844f2d3724f085d932b75b686a16b2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,10 @@ export type Details_artwork$data = {
     readonly lotWatcherCount: number | null | undefined;
     readonly partnerOffer: {
       readonly endAt: string | null | undefined;
+      readonly isActive: boolean | null | undefined;
+      readonly priceWithDiscount: {
+        readonly display: string | null | undefined;
+      } | null | undefined;
     } | null | undefined;
   } | null | undefined;
   readonly cultural_maker: string | null | undefined;
@@ -91,27 +95,27 @@ v1 = {
 },
 v2 = [
   {
-    "kind": "Literal",
-    "name": "shallow",
-    "value": true
-  }
-],
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v4 = [
-  {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
     "name": "display",
     "storageKey": null
   }
-];
+],
+v3 = [
+  {
+    "kind": "Literal",
+    "name": "shallow",
+    "value": true
+  }
+],
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -170,7 +174,24 @@ return {
           "name": "partnerOffer",
           "plural": false,
           "selections": [
-            (v1/*: any*/)
+            (v1/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isActive",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Money",
+              "kind": "LinkedField",
+              "name": "priceWithDiscount",
+              "plural": false,
+              "selections": (v2/*: any*/),
+              "storageKey": null
+            }
           ],
           "storageKey": null
         }
@@ -193,7 +214,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v2/*: any*/),
+      "args": (v3/*: any*/),
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -240,7 +261,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v2/*: any*/),
+      "args": (v3/*: any*/),
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artists",
@@ -254,7 +275,7 @@ return {
           "storageKey": null
         },
         (v0/*: any*/),
-        (v3/*: any*/)
+        (v4/*: any*/)
       ],
       "storageKey": "artists(shallow:true)"
     },
@@ -267,13 +288,13 @@ return {
     },
     {
       "alias": null,
-      "args": (v2/*: any*/),
+      "args": (v3/*: any*/),
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partner",
       "plural": false,
       "selections": [
-        (v3/*: any*/),
+        (v4/*: any*/),
         (v0/*: any*/)
       ],
       "storageKey": "partner(shallow:true)"
@@ -387,7 +408,7 @@ return {
           "kind": "LinkedField",
           "name": "highestBid",
           "plural": false,
-          "selections": (v4/*: any*/),
+          "selections": (v2/*: any*/),
           "storageKey": null
         },
         {
@@ -397,7 +418,7 @@ return {
           "kind": "LinkedField",
           "name": "openingBid",
           "plural": false,
-          "selections": (v4/*: any*/),
+          "selections": (v2/*: any*/),
           "storageKey": null
         }
       ],
@@ -424,6 +445,6 @@ return {
 };
 })();
 
-(node as any).hash = "da82a7b0619de32caddd1dc826a36998";
+(node as any).hash = "7c5f42371a332593ece18c976ee0bac0";
 
 export default node;

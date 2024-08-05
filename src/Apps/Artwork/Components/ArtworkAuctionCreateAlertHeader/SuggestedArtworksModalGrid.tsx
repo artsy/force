@@ -61,7 +61,9 @@ export const SuggestedArtworksModalGrid: FC<SuggestedArtworksModalGridProps> = (
       <ArtworkGridContextProvider saveOnlyToDefaultList>
         <GridColumns>
           <Column span={12}>
-            <ArtworkGrid artworks={artworksConnection!} columnCount={2} />
+            {artworksConnection && (
+              <ArtworkGrid artworks={artworksConnection} columnCount={2} />
+            )}
           </Column>
         </GridColumns>
       </ArtworkGridContextProvider>
