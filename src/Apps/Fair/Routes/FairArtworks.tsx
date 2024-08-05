@@ -112,6 +112,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
         ) {
         slug
         internalID
+        featuredKeywords
         sidebarAggregations: filterArtworksConnection(
           aggregations: $aggregations
           first: 1
