@@ -42,12 +42,20 @@ describe("Details", () => {
         </ArtworkGridContextProvider>
       ),
       query: graphql`
-        query Details_Test_Query @raw_response_type @relay_test_operation {
+        query Details_Test_Query($includeConsignmentSubmission: Boolean!)
+          @raw_response_type
+          @relay_test_operation {
           artwork(id: "gerhard-richter-bagdad-ii-flow-p10-1") {
             ...Details_artwork
+              @arguments(
+                includeConsignmentSubmission: $includeConsignmentSubmission
+              )
           }
         }
       `,
+      variables: {
+        includeConsignmentSubmission: true,
+      },
       mockData: {
         artwork: response,
       } as Details_Test_Query$rawResponse,

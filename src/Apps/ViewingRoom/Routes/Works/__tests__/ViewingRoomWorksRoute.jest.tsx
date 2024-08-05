@@ -232,8 +232,6 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               partnerOffer: null,
             },
             preview: null,
-            consignmentSubmission: null,
-            isListed: false,
           },
         },
         {
@@ -387,8 +385,6 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               partnerOffer: null,
             },
             preview: null,
-            consignmentSubmission: null,
-            isListed: false,
           },
         },
       ],
