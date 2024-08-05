@@ -7,10 +7,12 @@ import {
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import SearchIcon from "@artsy/icons/SearchIcon"
+import { useRouter } from "System/Hooks/useRouter"
 
 const DEBOUNCE_DELAY = 300
 
 export const KeywordFilter: React.FC = () => {
+  const { match } = useRouter()
   const { setFilter } = useArtworkFilterContext()
 
   const setFilterRef = useRef(setFilter)
@@ -47,6 +49,12 @@ export const KeywordFilter: React.FC = () => {
       setValue("")
     }
   }, [keyword, setValue])
+
+  useEffect(() => {
+    if (match.location.query?.keyword.length) {
+      setValue(match.location.query.keyword)
+    }
+  }, [match.location.query.keyword])
 
   return (
     <FilterExpandable label="Keyword Search" expanded>
