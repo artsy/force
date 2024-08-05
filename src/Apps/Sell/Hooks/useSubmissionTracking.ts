@@ -146,7 +146,7 @@ const getOwnerType = (currentStep: SellFlowStep): PageOwnerType | null => {
     case "phone-number":
       return OwnerType.submitArtworkStepAddPhoneNumber
     case "thank-you":
-      OwnerType.submitArtworkStepCompleteYourSubmission
+      return OwnerType.submitArtworkStepCompleteYourSubmission
     case "shipping-location":
       return OwnerType.submitArtworkStepShippingLocation
     case "frame":
@@ -162,7 +162,4 @@ const getOwnerType = (currentStep: SellFlowStep): PageOwnerType | null => {
       const exhaustiveCheck: never = currentStep
       throw new Error(`Unhandled case: ${exhaustiveCheck}`)
   }
-
-  return null
 }
-f
