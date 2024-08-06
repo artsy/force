@@ -77,6 +77,10 @@ export const readCache = async (req: ArtsyRequest) => {
 
         const parsedResponse = JSON.parse(response)
 
+        // Add debug log flag to response
+        // TODO: Remove this once cache layer stabilizes
+        parsedResponse.cached = true
+
         return parsedResponse
       }
     } catch (error) {

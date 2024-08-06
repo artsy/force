@@ -50,6 +50,7 @@ interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
+  showSubmissionStatus?: boolean
   user?: User
   emptyStateComponent?: ReactNode | boolean
   to?: (artwork: Artwork) => string | null
@@ -146,6 +147,7 @@ export class ArtworkGridContainer extends React.Component<
       showHighDemandIcon,
       showHoverDetails,
       showSaveButton,
+      showSubmissionStatus,
       to,
     } = this.props
     const spacerStyle = {
@@ -202,6 +204,7 @@ export class ArtworkGridContainer extends React.Component<
                 : null
             }
             onPopoverDismiss={this.props.onPopoverDismiss}
+            showSubmissionStatus={showSubmissionStatus}
           />
         )
         // Setting a marginBottom on the artwork component didn’t work, so using a spacer view instead.
@@ -328,6 +331,7 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
       @argumentDefinitions(
         includeAllImages: { type: "Boolean", defaultValue: false }
         includeBlurHash: { type: "Boolean!", defaultValue: true }
+        includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
       ) {
       edges {
         node {
@@ -339,7 +343,11 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
             aspectRatio
           }
           ...GridItem_artwork @arguments(includeBlurHash: $includeBlurHash)
-          ...FlatGridItem_artwork @arguments(includeBlurHash: $includeBlurHash)
+          ...FlatGridItem_artwork
+            @arguments(
+              includeBlurHash: $includeBlurHash
+              includeConsignmentSubmission: $includeConsignmentSubmission
+            )
         }
       }
     }

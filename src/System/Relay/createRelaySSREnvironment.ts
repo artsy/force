@@ -22,6 +22,7 @@ import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFiel
 import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmediateResolveMiddleware"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
+import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddleware"
 
 const logger = createLogger("System/Relay/createRelaySSREnvironment")
 
@@ -122,6 +123,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
     principalFieldErrorHandlerMiddleware(),
     metaphysicsErrorHandlerMiddleware({ checkStatus }),
     cacheHeaderMiddleware({ url }),
+    cacheLoggerMiddleware(),
     loggingEnabled && loggerMiddleware(),
     loggingEnabled && metaphysicsExtensionsLoggerMiddleware(),
     loggingEnabled && errorMiddleware({ disableServerMiddlewareTip: true }),

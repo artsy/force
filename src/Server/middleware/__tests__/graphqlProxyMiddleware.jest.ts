@@ -60,7 +60,7 @@ describe("graphqlProxyMiddleware", () => {
 
   describe("cache lookup", () => {
     it("should return cached response if available", async () => {
-      const cachedResponse = JSON.stringify({ data: "cached" })
+      const cachedResponse = JSON.stringify({ data: "cached", cached: true })
       mockCacheGet.mockResolvedValueOnce(cachedResponse)
 
       await graphqlProxyMiddleware(req, res, next)
@@ -128,7 +128,7 @@ describe("readCache", () => {
 
   it("should return parsed cached response if cache is enabled and hit", async () => {
     const cacheKey = JSON.stringify({ queryId: "test", variables: {} })
-    const cachedResponse = JSON.stringify({ data: "cached" })
+    const cachedResponse = JSON.stringify({ data: "cached", cached: true })
     mockCacheGet.mockResolvedValueOnce(cachedResponse)
 
     const result = await readCache(req)

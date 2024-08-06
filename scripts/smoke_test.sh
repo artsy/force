@@ -41,7 +41,7 @@ done
 set -e
 
 # wait for it to accept connections
-while ! curl --output /dev/null --silent --head --fail http://localhost:5000; do
+while ! curl --output /dev/null --silent --head --fail http://localhost:4000; do
     sleep 1
 done
 
