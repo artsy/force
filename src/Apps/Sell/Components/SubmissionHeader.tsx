@@ -84,7 +84,11 @@ export const SubmissionHeader: React.FC = () => {
       // Save the submission and current step to local storage
       storePreviousSubmission(submission?.externalId as string, step)
 
-      routerPush("/sell")
+      routerPush(
+        submission.myCollectionArtworkID
+          ? `/my-collection/artwork/${submission.myCollectionArtworkID}`
+          : "/sell"
+      )
     } catch (error) {
       logger.error("Something went wrong.", error)
     } finally {

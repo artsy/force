@@ -11,6 +11,7 @@ const FRAGMENT = graphql`
     internalID
     externalId
     state
+    myCollectionArtworkID
   }
 `
 

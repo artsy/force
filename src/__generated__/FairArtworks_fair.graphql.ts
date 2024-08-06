@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e5e09b67b5110538b5ad87b639f87adc>>
+ * @generated SignedSource<<c18d90f5ad39d922fb4f3493ee866761>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ARTIST_SERIES" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type FairArtworks_fair$data = {
+  readonly featuredKeywords: ReadonlyArray<string>;
   readonly filtered_artworks: {
     readonly counts: {
       readonly followedArtists: any | null | undefined;
@@ -68,6 +69,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "featuredKeywords",
       "storageKey": null
     },
     {
@@ -212,6 +220,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "881b35e298f799206cd1355de43898b3";
+(node as any).hash = "53daa5fa2a16cc9b5e462fe056667ee5";
 
 export default node;

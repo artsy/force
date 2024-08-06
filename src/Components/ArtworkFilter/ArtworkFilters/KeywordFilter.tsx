@@ -43,9 +43,7 @@ export const KeywordFilter: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    if (keyword === undefined) {
-      setValue("")
-    }
+    setValue(keyword ?? "")
   }, [keyword, setValue])
 
   return (

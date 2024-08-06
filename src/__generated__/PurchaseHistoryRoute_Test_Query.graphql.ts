@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d8a3ef9bfddffc99770f00227e275a87>>
+ * @generated SignedSource<<07cf6f550d5cac1a56886ad7de2a0725>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type PurchaseHistoryRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly myCollectionArtworkID: string | null | undefined;
     readonly provenance: string | null | undefined;
     readonly signature: boolean | null | undefined;
     readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
@@ -112,6 +113,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "myCollectionArtworkID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "provenance",
             "storageKey": null
           },
@@ -135,12 +143,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "199264a29c9b1de31c0aea9276f72471",
+    "cacheID": "b6cd336c97e459dc816da72acbbf70e5",
     "id": null,
     "metadata": {},
     "name": "PurchaseHistoryRoute_Test_Query",
     "operationKind": "query",
-    "text": "query PurchaseHistoryRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PurchaseHistoryRoute_submission\n    id\n  }\n}\n\nfragment PurchaseHistoryRoute_submission on ConsignmentSubmission {\n  provenance\n  signature\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n}\n"
+    "text": "query PurchaseHistoryRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PurchaseHistoryRoute_submission\n    id\n  }\n}\n\nfragment PurchaseHistoryRoute_submission on ConsignmentSubmission {\n  provenance\n  signature\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();
