@@ -16,7 +16,8 @@ export const useAuthValidation = () => {
             authenticationStatus
           }
         `,
-        {}
+        {},
+        { networkCacheConfig: { force: true } }
       ).toPromise()
 
       if (data?.authenticationStatus === "INVALID") {
