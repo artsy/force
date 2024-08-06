@@ -6,6 +6,7 @@ import { Text } from "@artsy/palette"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { _FragmentRefs } from "relay-runtime"
 import { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const POPOVER_KEY = PROGRESSIVE_ONBOARDING.startSelling
 
@@ -18,6 +19,10 @@ const MyCollectionArtworksGrid: FC<MyCollectionArtworkGridProps> = ({
   artworks,
   onLoadMore,
 }) => {
+  const enablePostApprovalSubmissionFlow = useFeatureFlag(
+    "onyx_post_approval_submission_flow"
+  )
+
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const displayPopover = !isDismissed(POPOVER_KEY).status
@@ -34,6 +39,7 @@ const MyCollectionArtworksGrid: FC<MyCollectionArtworkGridProps> = ({
       }
       showHighDemandIcon
       showSaveButton={false}
+      showSubmissionStatus={!!enablePostApprovalSubmissionFlow}
       onLoadMore={onLoadMore}
       popoverContent={
         displayPopover && (
@@ -72,8 +78,16 @@ export const MyCollectionArtworkGrid = createFragmentContainer(
             consignmentSubmission {
               state
             }
-            ...GridItem_artwork @arguments(includeAllImages: true)
-            ...FlatGridItem_artwork @arguments(includeAllImages: true)
+            ...GridItem_artwork
+              @arguments(
+                includeAllImages: true
+                includeConsignmentSubmission: true
+              )
+            ...FlatGridItem_artwork
+              @arguments(
+                includeAllImages: true
+                includeConsignmentSubmission: true
+              )
           }
         }
       }

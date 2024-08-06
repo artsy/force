@@ -29,6 +29,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
+  showSubmissionStatus?: boolean
   to?: string | null
   savedListId?: string
   popoverContent?: React.ReactNode | null
@@ -46,6 +47,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   showHighDemandIcon = false,
   showHoverDetails,
   showSaveButton = true,
+  showSubmissionStatus,
   to,
   savedListId,
   renderSaveButton,
@@ -127,6 +129,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           disableRouterLinking={disableRouterLinking}
           to={to}
           renderSaveButton={renderSaveButton}
+          showSubmissionStatus={showSubmissionStatus}
         />
       </div>
     </ManageArtworkForSavesProvider>
@@ -297,6 +300,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         @argumentDefinitions(
           includeAllImages: { type: "Boolean", defaultValue: false }
           includeBlurHash: { type: "Boolean", defaultValue: true }
+          includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
         ) {
         internalID
         title
@@ -312,6 +316,9 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         artistNames
         href
         ...Metadata_artwork
+          @arguments(
+            includeConsignmentSubmission: $includeConsignmentSubmission
+          )
         ...ExclusiveAccessBadge_artwork
         ...Badge_artwork
       }
