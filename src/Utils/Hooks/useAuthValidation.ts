@@ -7,28 +7,37 @@ import { useAuthValidationQuery } from "__generated__/useAuthValidationQuery.gra
 export const useAuthValidation = () => {
   const { relayEnvironment } = useSystemContext()
 
+  const logoutAndReload = async () => {
+    try {
+      await logout()
+    } catch (e) {
+      console.error(e)
+    }
+
+    window.location.reload()
+    return
+  }
+
   useEffect(() => {
     const exec = async () => {
-      const data = await fetchQuery<useAuthValidationQuery>(
-        relayEnvironment,
-        graphql`
-          query useAuthValidationQuery {
-            authenticationStatus
-          }
-        `,
-        {},
-        { networkCacheConfig: { force: true } }
-      ).toPromise()
+      try {
+        const data = await fetchQuery<useAuthValidationQuery>(
+          relayEnvironment,
+          graphql`
+            query useAuthValidationQuery {
+              authenticationStatus
+            }
+          `,
+          {},
+          { networkCacheConfig: { force: true } }
+        ).toPromise()
 
-      if (data?.authenticationStatus === "INVALID") {
-        try {
-          await logout()
-        } catch (e) {
-          console.error(e)
+        if (data?.authenticationStatus === "INVALID") {
+          await logoutAndReload()
+          return
         }
-
-        window.location.reload()
-        return
+      } catch (error) {
+        await logoutAndReload()
       }
     }
 
