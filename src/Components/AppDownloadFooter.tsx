@@ -15,6 +15,10 @@ import Cookies from "cookies-js"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { useRouteComplete } from "Utils/Hooks/useRouteComplete"
+import { useTracking } from "react-tracking"
+import { ActionType } from "@artsy/cohesion"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 const APP_DOWNLOAD_FOOTER_KEY = "AppDownloadFooter"
 
@@ -22,6 +26,13 @@ interface AppDownloadFooterProps {}
 
 export const AppDownloadFooter: FC<AppDownloadFooterProps> = () => {
   const isMounted = useDidMount()
+  const { user } = useSystemContext()
+  const {
+    contextPageOwnerType,
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+  } = useAnalyticsContext()
+  const { trackEvent } = useTracking()
 
   const ref = useRef<HTMLDivElement | null>(null)
 
@@ -40,6 +51,18 @@ export const AppDownloadFooter: FC<AppDownloadFooterProps> = () => {
       await animation.finished
     },
   })
+
+  const trackAppDownload = () => {
+    const trackingEvent = {
+      action: ActionType.clickedDownloadAppFooter,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      user_id: user?.id,
+    }
+
+    trackEvent(trackingEvent)
+  }
 
   const handleDismiss = async () => {
     Cookies.set(APP_DOWNLOAD_FOOTER_KEY, 1, { expires: 0 })
@@ -90,6 +113,7 @@ export const AppDownloadFooter: FC<AppDownloadFooterProps> = () => {
         as="a"
         href={downloadAppUrl}
         target="_blank"
+        onClick={trackAppDownload}
       >
         Download Artsy
       </Button>

@@ -3,6 +3,10 @@ import { FC, useEffect } from "react"
 import ChevronSmallRightIcon from "@artsy/icons/ChevronSmallRightIcon"
 import { useCursor } from "use-cursor"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import { useTracking } from "react-tracking"
+import { ActionType, ClickedDownloadAppHeader } from "@artsy/cohesion"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 const TEXTS = [
   "Get the app, get the art.",
@@ -27,8 +31,15 @@ export const AppDownloadBanner: FC<AppDownloadBannerProps> = ({
   idleDuration = 4000,
 }) => {
   const { downloadAppUrl } = useDeviceDetection()
+  const { user } = useSystemContext()
+  const {
+    contextPageOwnerType,
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+  } = useAnalyticsContext()
 
   const { index, handleNext } = useCursor({ max: TEXTS.length })
+  const { trackEvent } = useTracking()
 
   useEffect(() => {
     const interval = setInterval(handleNext, transitionDuration + idleDuration)
@@ -36,6 +47,18 @@ export const AppDownloadBanner: FC<AppDownloadBannerProps> = ({
       clearInterval(interval)
     }
   }, [handleNext, idleDuration, transitionDuration])
+
+  const trackDownloadBanner = () => {
+    const trackingEvent: ClickedDownloadAppHeader = {
+      action: ActionType.clickedDownloadAppHeader,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      user_id: user?.id,
+    }
+
+    trackEvent(trackingEvent)
+  }
 
   return (
     <Text
@@ -51,6 +74,7 @@ export const AppDownloadBanner: FC<AppDownloadBannerProps> = ({
       width="100%"
       // @ts-ignore
       href={downloadAppUrl}
+      onClick={trackDownloadBanner}
       target="_blank"
       style={{ textDecoration: "none" }}
     >
