@@ -1,7 +1,12 @@
-import { Box, Clickable, Text } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import { FC, useEffect } from "react"
 import ChevronSmallRightIcon from "@artsy/icons/ChevronSmallRightIcon"
 import { useCursor } from "use-cursor"
+import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import { useTracking } from "react-tracking"
+import { ActionType, ClickedDownloadAppHeader } from "@artsy/cohesion"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 const TEXTS = [
   "Get the app, get the art.",
@@ -13,21 +18,28 @@ const TEXTS = [
   "Get the app, and stay connected with galleries.",
   "Get the app, and build your art world profile.",
   "Get the app, and keep track of your collection.",
-  "Get the app, and stay informed on your artists’ markets.",
+  "Get the app, and keep track of artists’ markets.",
 ]
 
 export interface AppDownloadBannerProps {
-  transitionDuration: number
-  idleDuration: number
+  transitionDuration?: number
+  idleDuration?: number
 }
 
 export const AppDownloadBanner: FC<AppDownloadBannerProps> = ({
-  transitionDuration,
-  idleDuration,
+  transitionDuration = 1500,
+  idleDuration = 4000,
 }) => {
-  const { index, handleNext } = useCursor({
-    max: TEXTS.length,
-  })
+  const { downloadAppUrl } = useDeviceDetection()
+  const { user } = useSystemContext()
+  const {
+    contextPageOwnerType,
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+  } = useAnalyticsContext()
+
+  const { index, handleNext } = useCursor({ max: TEXTS.length })
+  const { trackEvent } = useTracking()
 
   useEffect(() => {
     const interval = setInterval(handleNext, transitionDuration + idleDuration)
@@ -36,9 +48,21 @@ export const AppDownloadBanner: FC<AppDownloadBannerProps> = ({
     }
   }, [handleNext, idleDuration, transitionDuration])
 
+  const trackDownloadBanner = () => {
+    const trackingEvent: ClickedDownloadAppHeader = {
+      action: ActionType.clickedDownloadAppHeader,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      user_id: user?.id,
+    }
+
+    trackEvent(trackingEvent)
+  }
+
   return (
     <Text
-      as={Clickable}
+      as="a"
       variant="xs"
       bg="black100"
       color="white100"
@@ -48,6 +72,11 @@ export const AppDownloadBanner: FC<AppDownloadBannerProps> = ({
       justifyContent="space-between"
       alignItems="center"
       width="100%"
+      // @ts-ignore
+      href={downloadAppUrl}
+      onClick={trackDownloadBanner}
+      target="_blank"
+      style={{ textDecoration: "none" }}
     >
       <Box position="relative" flex={1}>
         {TEXTS.map((text, i) => {

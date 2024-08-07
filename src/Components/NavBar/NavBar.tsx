@@ -50,6 +50,8 @@ import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding
 import { SearchBar } from "Components/Search/SearchBar"
 import { NavBarMobileMenuProfile } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuProfile"
 import styled from "styled-components"
+import { AppDownloadBanner } from "Components/AppDownloadBanner"
+import { Media } from "Utils/Responsive"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -151,7 +153,11 @@ export const NavBar: React.FC = track(
         borderColor="black30"
         height={height}
       >
-        <AppContainer height="100%">
+        <Media at="xs">
+          <AppDownloadBanner />
+        </Media>
+
+        <AppContainer height={[null, "100%"]}>
           <HorizontalPadding
             as="nav"
             display="flex"
