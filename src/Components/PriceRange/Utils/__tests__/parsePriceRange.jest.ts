@@ -1,3 +1,4 @@
+import { DEFAULT_CUSTOM_RANGE } from "Components/PriceRange/constants"
 import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
 
 describe("parsePriceRange", () => {
@@ -13,5 +14,11 @@ describe("parsePriceRange", () => {
     expect(parsePriceRange("*-5")).toEqual(["*", 5])
     expect(parsePriceRange("5-*")).toEqual([5, "*"])
     expect(parsePriceRange("*-*")).toEqual(["*", "*"])
+  })
+
+  it("should return the default value if the format is invalid", () => {
+    expect(parsePriceRange("5-")).toEqual([5, "*"])
+    expect(parsePriceRange("-5")).toEqual(["*", 5])
+    expect(parsePriceRange("5")).toEqual(DEFAULT_CUSTOM_RANGE)
   })
 })

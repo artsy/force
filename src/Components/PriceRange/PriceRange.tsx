@@ -1,4 +1,4 @@
-import { FC, useState, FormEvent, useEffect, useMemo } from "react"
+import { FC, useState, FormEvent, useEffect } from "react"
 import { Flex, Spacer, Box, Text, Range, usePrevious } from "@artsy/palette"
 import { Histogram, HistogramBarEntity } from "./Histogram"
 import { CustomRange, DEFAULT_RANGE } from "Components/PriceRange/constants"
@@ -7,7 +7,7 @@ import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
 import { parseSliderPriceRange } from "Components/PriceRange/Utils/parseSliderPriceRange"
 import { convertToFilterFormatRange } from "Components/PriceRange/Utils/convertToFilterFormatRange"
 import { getPriceValue } from "Components/PriceRange/Utils/getPriceValue"
-import { debounce } from "lodash"
+import { useDebouncedCallback } from "use-debounce"
 
 interface PriceRangeProps {
   priceRange: string
@@ -38,11 +38,12 @@ export const PriceRange: FC<PriceRangeProps> = ({
     setLocalRange(nextRange)
   }, [localRange, previousPriceRange, priceRange])
 
-  const handleDebouncedUpdate = useMemo(() => {
-    return debounce((nextRange: CustomRange) => {
+  const handleDebouncedUpdate = useDebouncedCallback(
+    (nextRange: CustomRange) => {
       onDebouncedUpdate?.(nextRange)
-    }, 250)
-  }, [onDebouncedUpdate])
+    },
+    250
+  )
 
   const updateRange = (nextRange: CustomRange) => {
     setLocalRange(nextRange)
