@@ -169,7 +169,11 @@ const ActivePartnerOfferLine: React.FC<DetailsProps> = () => {
 }
 
 const EmptyLine: React.FC = () => {
-  return <Text variant="xs"> &nbsp; </Text>
+  return (
+    <Text variant="xs" marginBottom={0.5}>
+      &nbsp;
+    </Text>
+  )
 }
 
 const HighDemandInfo = () => {
@@ -239,8 +243,8 @@ const ActivePartnerOfferTimer: React.FC<DetailsProps> = ({
   return (
     <Text variant="xs" color="blue100" px={0.5} alignSelf="flex-start">
       Exp.{SEPARATOR}
-      {days}d{SEPARATOR}
-      {hours}h{SEPARATOR}
+      {Number(days)}d{SEPARATOR}
+      {Number(hours)}h{SEPARATOR}
     </Text>
   )
 }
@@ -284,9 +288,13 @@ export const Details: React.FC<DetailsProps> = ({
   const isAuction = rest?.artwork?.sale?.is_auction ?? false
 
   const showActivePartnerOfferLine: boolean =
-    !!signalsPartnerOffersEnabled && !isAuction && !!partnerOffer
+    !!signalsPartnerOffersEnabled &&
+    !isAuction &&
+    !!partnerOffer &&
+    contextModule !== "activity"
 
-  const padForActivePartnerOfferLine: boolean = !showActivePartnerOfferLine
+  const padForActivePartnerOfferLine: boolean =
+    !showActivePartnerOfferLine && contextModule !== "activity"
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
