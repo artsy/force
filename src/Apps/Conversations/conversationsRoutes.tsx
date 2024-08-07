@@ -51,6 +51,7 @@ export const conversationsRoutes: RouteProps[] = [
   },
   {
     path: "/user/conversations/:conversationId",
+    fetchPolicy: "store-and-network",
     layout: "FullBleed",
     ignoreScrollBehavior: true,
     getComponent: () => ConversationApp,
