@@ -2790,6 +2790,7 @@ type ArtworkConsignmentSubmission {
   # Button label visible to the user.
   buttonLabel: String
   displayText: String @deprecated(reason: "Prefer `stateLabel` field.")
+  externalID: String
   inProgress: Boolean
   internalID: String
   isSold: Boolean
@@ -11528,6 +11529,7 @@ type Location {
   daySchedules: [DaySchedule]
   display: String
   displayCountry: String
+  euShippingLocation: Boolean
 
   # A globally unique ID.
   id: ID!
@@ -14287,6 +14289,9 @@ type Partner implements Node {
     last: Int
     showID: String
   ): PartnerDocumentConnection
+
+  # Suggested filters for associated artworks
+  featuredKeywords: [String!]!
   featuredShow: Show
 
   # Artworks Elastic Search results
@@ -14492,7 +14497,8 @@ type PartnerAlertsEdge {
     before: String
     first: Int
     last: Int
-    totalCount: Boolean
+    page: Int
+    size: Int
   ): PartnerCollectorProfilesConnection
 
   # A cursor for use in pagination
