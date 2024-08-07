@@ -71,7 +71,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
         <Separator my={4} />
       </Media>
 
-      <Text variant="xs" mb={[0.3, 1]}>
+      <Text variant="xs" mb={[0.5, 1]}>
         <Flex justifyContent="space-between">
           Submission Status
           <Media lessThan="sm">
@@ -86,7 +86,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
         </Flex>
       </Text>
 
-      <Text variant="md" fontWeight="400">
+      <Text variant={["sm", "md"]} fontWeight="400">
         {stateLabel}
       </Text>
 
