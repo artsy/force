@@ -18,6 +18,7 @@ import {
   INITIAL_POST_APPROVAL_STEP,
   INITIAL_STEP,
 } from "Apps/Sell/SellFlowContext"
+import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import React, { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -46,7 +47,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
   const stateLabel = isListed ? "Listed" : submission.stateLabel
   const buttonLabel = isListed ? "View Listing" : submission.buttonLabel
 
-  const buttonURL = getButtonURL(artwork)
+  const buttonURL = useGetButtonURL(artwork)
   const buttonVariant = ["DRAFT", "APPROVED"].includes(submission.state)
     ? "primaryBlack"
     : "secondaryBlack"
@@ -207,9 +208,11 @@ const submissionStatusFragment = graphql`
   }
 `
 
-const getButtonURL = (
+const useGetButtonURL = (
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$data
 ): string | null => {
+  const { submissionID, step: previousStep } = usePreviousSubmission()
+
   const submission = artwork.consignmentSubmission
 
   const listedArtwork = extractNodes(artwork.listedArtworksConnection)[0]
@@ -221,12 +224,15 @@ const getButtonURL = (
 
   if (!submission) return null
 
+  const currentStep =
+    submissionID === submission.internalID ? previousStep : INITIAL_STEP
+
   if (
     ["DRAFT", "SUBMITTED", "RESUBMITTED", "PUBLISHED"].includes(
       submission.state
     )
   ) {
-    return `/sell/submissions/${submission.internalID}/${INITIAL_STEP}`
+    return `/sell/submissions/${submission.internalID}/${currentStep}`
   }
 
   if (["APPROVED"].includes(submission.state)) {
