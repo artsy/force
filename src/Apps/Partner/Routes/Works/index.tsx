@@ -67,6 +67,7 @@ export const ArtworksRefetchContainer = createRefetchContainer(
         ) {
         slug
         internalID
+        featuredKeywords
         sidebar: filterArtworksConnection(
           first: 1
           aggregations: $aggregations
