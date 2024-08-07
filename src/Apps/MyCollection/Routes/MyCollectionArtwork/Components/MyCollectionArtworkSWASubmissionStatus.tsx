@@ -15,6 +15,7 @@ import {
   MyCollectionArtworkSWASubmissionStatus_artwork$key,
 } from "__generated__/MyCollectionArtworkSWASubmissionStatus_artwork.graphql"
 import {
+  BASIC_STEPS,
   INITIAL_POST_APPROVAL_STEP,
   INITIAL_STEP,
 } from "Apps/Sell/SellFlowContext"
@@ -212,7 +213,7 @@ const submissionStatusFragment = graphql`
 const useGetButtonURL = (
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$data
 ): string | null => {
-  const { submissionID, step: previousStep } = usePreviousSubmission()
+  const { submissionID, step } = usePreviousSubmission()
 
   const submission = artwork.consignmentSubmission
 
@@ -225,9 +226,13 @@ const useGetButtonURL = (
 
   if (!submission) return null
 
+  const previousStep = submissionID === submission.externalID && step
+
   // This does not work in all cases because we only store the current step for the most recent submission.
-  const currentStep =
-    submissionID === submission.externalID ? previousStep : INITIAL_STEP
+  const currentStep = previousStep || INITIAL_STEP
+  const currentPostApprovalStep =
+    (!BASIC_STEPS.includes(previousStep as any) && previousStep) ||
+    INITIAL_POST_APPROVAL_STEP
 
   if (
     ["DRAFT", "SUBMITTED", "RESUBMITTED", "PUBLISHED"].includes(
@@ -238,7 +243,7 @@ const useGetButtonURL = (
   }
 
   if (["APPROVED"].includes(submission.state)) {
-    return `/sell/submissions/${submission.internalID}/${INITIAL_POST_APPROVAL_STEP}`
+    return `/sell/submissions/${submission.internalID}/${currentPostApprovalStep}`
   }
 
   return null
