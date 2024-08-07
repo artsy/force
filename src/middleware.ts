@@ -111,7 +111,10 @@ export function initializeMiddleware(app) {
   app.use(localsMiddleware)
   app.use(sameOriginMiddleware)
 
-  // Mount GraphQL proxy and cache
+  /**
+   * Mount GraphQL proxy and cache. If logged in we hit Metaphysics directly.
+   * @see: System/Relay/getMetaphysicsEndpoint.ts
+   */
   if (ENABLE_GRAPHQL_PROXY) {
     app.use("/api/metaphysics", graphqlProxyMiddleware)
   }
