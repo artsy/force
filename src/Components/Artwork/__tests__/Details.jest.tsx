@@ -591,6 +591,30 @@ describe("Details", () => {
       expect(html).not.toContain("Exp.")
       expect(html).toContain("$2,600")
     })
+
+    it("should not render the active partner offer badge if the artwork in the activity panel", async () => {
+      props = {
+        contextModule: ContextModule.activity,
+      }
+
+      const data: any = {
+        ...artworkNotInAuction,
+        collectorSignals: {
+          bidCount: null,
+          lotWatcherCount: null,
+          partnerOffer: {
+            isActive: true,
+            endAt: "2055-03-12T12:33:37.000Z",
+            priceWithDiscount: { display: "$2000" },
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).not.toContain("Limited-Time Offer")
+    })
   })
 })
 
