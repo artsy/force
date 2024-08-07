@@ -200,6 +200,7 @@ const submissionStatusFragment = graphql`
     consignmentSubmission {
       actionLabel
       buttonLabel
+      externalID
       internalID
       state
       stateLabel
@@ -224,8 +225,10 @@ const useGetButtonURL = (
 
   if (!submission) return null
 
+  console.log({ submissionID, submission: submission.internalID, previousStep })
+
   const currentStep =
-    submissionID === submission.internalID ? previousStep : INITIAL_STEP
+    submissionID === submission.externalID ? previousStep : INITIAL_STEP
 
   if (
     ["DRAFT", "SUBMITTED", "RESUBMITTED", "PUBLISHED"].includes(
