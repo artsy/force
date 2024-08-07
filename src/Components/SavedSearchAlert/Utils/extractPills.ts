@@ -19,6 +19,7 @@ import {
   getPredefinedSizesByMetric,
   parseSizeRange,
 } from "Utils/customSizeUtils"
+import { priceRangeToLabel } from "Components/PriceRange/Utils/parsePriceRange"
 
 export const extractPillFromAggregation = (
   filter: {
@@ -81,24 +82,6 @@ export const extractSizeLabel = ({
   }
 
   return `${prefix}: ${label} ${metric.toLowerCase()}`
-}
-
-const extractPriceLabel = (range: string) => {
-  const [min, max] = range.split("-").map(value => {
-    return value === "*" ? value : (+value).toLocaleString()
-  })
-
-  let label: string
-
-  if (min === "*") {
-    label = `$0-$${max}`
-  } else if (max === "*") {
-    label = `$${min}+`
-  } else {
-    label = `$${min}-$${max}`
-  }
-
-  return label
 }
 
 export const extractPillsFromCriteria = ({
@@ -191,7 +174,7 @@ export const extractPillsFromCriteria = ({
           result = {
             field: paramName,
             value: paramValue,
-            displayValue: extractPriceLabel(paramValue),
+            displayValue: priceRangeToLabel(paramValue),
           }
         }
         break
