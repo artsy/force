@@ -225,8 +225,7 @@ const useGetButtonURL = (
 
   if (!submission) return null
 
-  console.log({ submissionID, submission: submission.internalID, previousStep })
-
+  // This does not work in all cases because we only store the current step for the most recent submission.
   const currentStep =
     submissionID === submission.externalID ? previousStep : INITIAL_STEP
 
