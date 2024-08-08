@@ -370,6 +370,26 @@ export const sellRoutes: RouteProps[] = [
             },
           },
 
+          {
+            path: "thank-you-post-approval",
+            layout: "ContainerOnly",
+            Component: ThankYouRoute,
+            onClientSideRender: () => {
+              ThankYouRoute.preload()
+            },
+            onServerSideRender: checkIfLoggedIn,
+            query: graphql`
+              query sellRoutes_ThankYouPostApprovalRouteQuery($id: ID!) {
+                submission(id: $id) @principalField {
+                  ...ThankYouRoute_submission
+                }
+              }
+            `,
+            prepareVariables: ({ id }) => {
+              return { id }
+            },
+          },
+
           // Additional Routes
 
           {
