@@ -174,7 +174,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
             // @ts-ignore
             as={RouterLink}
             onClick={() => {
-              // TODO: Tracking
+              trackEditSubmission()
             }}
             to={buttonURL}
           >
