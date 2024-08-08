@@ -44,11 +44,11 @@ const ME_FRAGMENT = graphql`
 
 const Schema = Yup.object().shape({
   location: Yup.object().shape({
-    city: Yup.string().required().trim(),
-    state: Yup.string().required().trim(),
-    country: Yup.string().required().trim(),
-    zipCode: Yup.string().required().trim(),
-    address: Yup.string().required().trim(),
+    city: Yup.string().required("City is required.").trim(),
+    state: Yup.string().required("State is required.").trim(),
+    country: Yup.string().required("Country is required.").trim(),
+    zipCode: Yup.string().required("Postal code is required.").trim(),
+    address: Yup.string().required("Address is required.").trim(),
     address2: Yup.string().trim(),
   }),
 })
@@ -120,7 +120,7 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
       validateOnMount
       validationSchema={Schema}
     >
-      {({ errors, handleChange, handleBlur, touched, values }) => (
+      {({ handleChange, handleBlur, touched, values }) => (
         <SubmissionLayout>
           <SubmissionStepTitle>Shipping Location</SubmissionStepTitle>
 
@@ -138,7 +138,6 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
                   value={values.location.country}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={touched.location?.country && errors.location?.country}
                   required
                 />
               </Column>
@@ -154,9 +153,6 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
                       value={values.location.address}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={
-                        touched.location?.address && errors.location?.address
-                      }
                       required
                     />
                   </Column>
@@ -170,9 +166,6 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
                       value={values.location.address2}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={
-                        touched.location?.address2 && errors.location?.address2
-                      }
                       mb={1}
                     />
                   </Column>
@@ -186,7 +179,6 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
                       value={values.location.city}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={touched.location?.city && errors.location?.city}
                       required
                     />
                   </Column>
@@ -200,9 +192,6 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
                       value={values.location.zipCode}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={
-                        touched.location?.zipCode && errors.location?.zipCode
-                      }
                       required
                     />
                   </Column>
@@ -216,7 +205,6 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
                       value={values.location.state}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={touched.location?.state && errors.location?.state}
                       required
                     />
                   </Column>
