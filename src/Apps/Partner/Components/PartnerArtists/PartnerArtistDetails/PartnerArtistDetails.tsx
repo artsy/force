@@ -141,12 +141,16 @@ export const PartnerArtistDetailsRenderer: React.FC<{
       render={({ error, props }) => {
         if (error || !props) return <PartnerArtistDetailsPlaceholder />
 
+        if (!props?.partner?.artistsConnection?.edges?.[0]) {
+          return null
+        }
+
         return (
           <PartnerArtistDetailsFragmentContainer
             {...rest}
             {...props}
             partnerId={partnerId}
-            partnerArtist={props?.partner?.artistsConnection?.edges?.[0]!}
+            partnerArtist={props?.partner?.artistsConnection?.edges?.[0]}
           />
         )
       }}

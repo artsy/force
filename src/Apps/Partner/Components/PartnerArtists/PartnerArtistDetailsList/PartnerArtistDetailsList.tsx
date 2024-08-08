@@ -17,7 +17,7 @@ export interface PartnerArtistDetailsListProps {
   relay: RelayPaginationProp
 }
 
-const PAGE_SIZE = 3
+const PAGE_SIZE = 10
 
 export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> = ({
   partner,
@@ -107,7 +107,7 @@ export const PartnerArtistDetailsListPaginationContainer = createPaginationConta
     partner: graphql`
       fragment PartnerArtistDetailsList_partner on Partner
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 3 }
+          first: { type: "Int", defaultValue: 10 }
           after: { type: "String" }
         ) {
         slug
@@ -162,10 +162,14 @@ export const PartnerArtistDetailsListRenderer: React.FC<{
         if (error || !props)
           return <PartnerArtistDetailsListPlaceholder count={PAGE_SIZE} />
 
+        if (!props.partner) {
+          return null
+        }
+
         return (
           <PartnerArtistDetailsListPaginationContainer
             {...rest}
-            partner={props.partner!}
+            partner={props.partner}
           />
         )
       }}
