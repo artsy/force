@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6d373621ccbd972672f795239a6da7d8>>
+ * @generated SignedSource<<dc7339a7e1c2fbf321cb74476da78dfb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type MyCollectionArtworkSWASubmissionStatus_Test_Query$rawResponse = {
     readonly consignmentSubmission: {
       readonly actionLabel: string | null | undefined;
       readonly buttonLabel: string | null | undefined;
+      readonly externalID: string | null | undefined;
       readonly internalID: string | null | undefined;
       readonly state: ArtworkConsignmentSubmissionState;
       readonly stateHelpMessage: string | null | undefined;
@@ -172,6 +173,13 @@ return {
                 "name": "buttonLabel",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "externalID",
+                "storageKey": null
+              },
               (v1/*: any*/),
               {
                 "alias": null,
@@ -204,12 +212,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6508b8636b1a07490196f8efc97a74bc",
+    "cacheID": "6cc74d6f71fd40197d17929d7d8ea0f1",
     "id": null,
     "metadata": {},
     "name": "MyCollectionArtworkSWASubmissionStatus_Test_Query",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSWASubmissionStatus_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASubmissionStatus_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASubmissionStatus_artwork on Artwork {\n  internalID\n  listedArtworksConnection(first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n  consignmentSubmission {\n    actionLabel\n    buttonLabel\n    internalID\n    state\n    stateLabel\n    stateHelpMessage\n  }\n}\n"
+    "text": "query MyCollectionArtworkSWASubmissionStatus_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASubmissionStatus_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASubmissionStatus_artwork on Artwork {\n  internalID\n  listedArtworksConnection(first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n  consignmentSubmission {\n    actionLabel\n    buttonLabel\n    externalID\n    internalID\n    state\n    stateLabel\n    stateHelpMessage\n  }\n}\n"
   }
 };
 })();
