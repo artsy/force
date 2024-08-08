@@ -42,13 +42,14 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
 
   const { consignmentSubmission: submission } = artwork
 
+  const buttonURL = useGetButtonURL(artwork)
+
   if (!submission) return null
 
   const isListed = extractNodes(artwork.listedArtworksConnection).length > 0
   const stateLabel = isListed ? "Listed" : submission.stateLabel
   const buttonLabel = isListed ? "View Listing" : submission.buttonLabel
 
-  const buttonURL = useGetButtonURL(artwork)
   const buttonVariant = ["DRAFT", "APPROVED"].includes(submission.state)
     ? "primaryBlack"
     : "secondaryBlack"
@@ -265,6 +266,7 @@ const getStateHelpMessage = (submission, isListed): JSX.Element => {
         >
           submission criteria
         </RouterLink>
+        .
       </>
     )
   }
