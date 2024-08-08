@@ -5,7 +5,7 @@ export const getMetaphysicsEndpoint = () => {
 
   const endpoint =
     // Only use the proxy if logged out
-    getENV("ENABLE_GRAPHQL_PROXY") && !getENV("CURRENT_USER")
+    getENV("ENABLE_GRAPHQL_PROXY")
       ? `${APP_URL}/api/metaphysics`
       : `${getENV("METAPHYSICS_ENDPOINT")}/v2`
 
