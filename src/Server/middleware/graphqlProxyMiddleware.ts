@@ -23,7 +23,7 @@ export const graphqlProxyMiddleware = async (
   res: ArtsyResponse,
   next: NextFunction
 ) => {
-  const skipCache = !!req.user || shouldSkipCache(req)
+  const skipCache = shouldSkipCache(req)
 
   if (!skipCache) {
     const cachedResponse = await readCache(req)
@@ -204,6 +204,12 @@ const getCacheKey = (props: GetCacheKeyProps) => {
 }
 
 export const shouldSkipCache = (req: ArtsyRequest) => {
+  const isLoggedIn = req.headers["x-access-token"]
+
+  if (isLoggedIn) {
+    return true
+  }
+
   const relayCacheHeader = req.headers[RELAY_CACHE_CONFIG_HEADER_KEY] as string
 
   if (!relayCacheHeader) {
