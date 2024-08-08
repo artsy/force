@@ -135,12 +135,17 @@ export const writeCache = async (
     stream.on("end", async () => {
       try {
         // Check to see if we're using a custom cache TTL for this route
-        const TTL = (() => {
+        const TTL = (async () => {
           const path = req.headers[RELAY_CACHE_PATH_HEADER_KEY] as string
           const route = findRoutesByPath({ path })[0]
 
+          let serverCacheTTL
+          if (route?.getServerCacheTTL) {
+            serverCacheTTL = await route.getServerCacheTTL()
+          }
+
           // Use route TTL or fall back to default
-          return route?.serverCacheTTL ?? GRAPHQL_CACHE_TTL
+          return serverCacheTTL ?? GRAPHQL_CACHE_TTL
         })()
 
         const queryId = req.body?.id

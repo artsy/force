@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { RedirectException } from "found"
-import { graphql } from "react-relay"
+import { fetchQuery, graphql } from "react-relay"
 import { RouteProps } from "System/Router/Route"
 import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
@@ -112,7 +112,31 @@ export const artistRoutes: RouteProps[] = [
   {
     path: "/artist/:artistID",
     ignoreScrollBehaviorBetweenChildren: true,
-    serverCacheTTL: serverCacheTTLs.artist,
+    getServerCacheTTL: async (params, { relayEnvironment }) => {
+      const defaultTTL = 1000
+      const data = await fetchQuery(
+        relayEnvironment,
+        graphql`
+          query artistRoutes_TTLQuery($artistID: String!) {
+            artist(id: $artistID) {
+              updatedAt
+            }
+          }
+        `,
+        {
+          artistID: params.artistID,
+        },
+        {
+          networkCacheConfig: {
+            force: true,
+          },
+        }
+      ).toPromise()
+
+      const bustCache = data.artist.updatedAt > Date.now() - defaultTTL
+      const ttl = bustCache ? 0 : defaultTTL
+      return ttl
+    },
     getComponent: () => ArtistApp,
     onServerSideRender: enableArtistPageCTA,
     onClientSideRender: () => {
