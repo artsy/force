@@ -1,5 +1,5 @@
 import { ActionType, TooltipViewed } from "@artsy/cohesion"
-import { useEffect } from "react"
+import { useCallback } from "react"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
@@ -10,7 +10,7 @@ interface UseProgressiveOnboardingTracking {
 export const useProgressiveOnboardingTracking = ({
   name,
 }: UseProgressiveOnboardingTracking) => {
-  const { trackEvent } = useTracking()
+  const analytics = useTracking()
 
   const {
     contextPageOwnerId,
@@ -18,7 +18,7 @@ export const useProgressiveOnboardingTracking = ({
     contextPageOwnerType,
   } = useAnalyticsContext()
 
-  useEffect(() => {
+  const trackEvent = useCallback(() => {
     if (
       (!contextPageOwnerId && !contextPageOwnerSlug) ||
       !contextPageOwnerType
@@ -29,18 +29,20 @@ export const useProgressiveOnboardingTracking = ({
 
     const payload: TooltipViewed = {
       action: ActionType.tooltipViewed,
-      context_owner_id: contextPageOwnerId!,
-      context_owner_slug: contextPageOwnerSlug!,
+      context_owner_id: contextPageOwnerId ?? "unknown",
+      context_owner_slug: contextPageOwnerSlug ?? "unknown",
       context_owner_type: contextPageOwnerType,
       type: name,
     }
 
-    trackEvent(payload)
+    analytics.trackEvent(payload)
   }, [
+    analytics,
     contextPageOwnerId,
     contextPageOwnerSlug,
     contextPageOwnerType,
     name,
-    trackEvent,
   ])
+
+  return { trackEvent }
 }

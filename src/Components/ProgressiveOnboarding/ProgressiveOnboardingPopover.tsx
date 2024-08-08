@@ -1,7 +1,8 @@
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import { Box, Popover, PopoverProps } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useProgressiveOnboardingTracking } from "Components/ProgressiveOnboarding/useProgressiveOnboardingTracking"
+import { isTouch } from "Utils/device"
 
 interface ProgressiveOnboardingPopoverProps
   extends Omit<PopoverProps, "children"> {
@@ -14,7 +15,16 @@ export const ProgressiveOnboardingPopover: FC<ProgressiveOnboardingPopoverProps>
   name,
   ...rest
 }) => {
-  useProgressiveOnboardingTracking({ name })
+  const [visible, setVisible] = useState(false)
+
+  const { trackEvent } = useProgressiveOnboardingTracking({ name })
+
+  useEffect(() => {
+    if (isTouch) return // Ignores touch devices
+
+    setVisible(true)
+    trackEvent()
+  }, [trackEvent])
 
   return (
     <Popover
@@ -22,7 +32,7 @@ export const ProgressiveOnboardingPopover: FC<ProgressiveOnboardingPopoverProps>
       width={250}
       variant="defaultDark"
       pointer
-      visible
+      visible={visible}
       ignoreClickOutside
       zIndex={Z.popover}
       manageFocus={false}

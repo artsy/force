@@ -3,6 +3,7 @@ import { themeGet } from "@styled-system/theme-get"
 import { useProgressiveOnboardingTracking } from "Components/ProgressiveOnboarding/useProgressiveOnboardingTracking"
 import { FC } from "react"
 import styled, { keyframes } from "styled-components"
+import { useOnce } from "Utils/Hooks/useOnce"
 
 export type ProgressiveOnboardingHighlightPosition =
   | "center"
@@ -18,7 +19,9 @@ export const ProgressiveOnboardingHighlight: FC<ProgressiveOnboardingHighlightPr
   name,
   position,
 }) => {
-  useProgressiveOnboardingTracking({ name })
+  const { trackEvent } = useProgressiveOnboardingTracking({ name })
+
+  useOnce(trackEvent)
 
   return (
     <Box position="relative" width="100%">

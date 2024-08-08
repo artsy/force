@@ -38,8 +38,13 @@ export const SubmissionHeader: React.FC = () => {
   const formik = useFormikContext()
   const { isLastStep, submission, step } = context?.state || {}
 
+  const exitURL = submission?.myCollectionArtworkID
+    ? `/my-collection/artwork/${submission?.myCollectionArtworkID}`
+    : "/sell"
+
   const handleSaveAndExit = async () => {
     if (!submission?.externalId) return
+
     trackTappedSubmissionSaveExit(submission?.internalID, step)
 
     if (isLoggedIn) {
@@ -84,11 +89,7 @@ export const SubmissionHeader: React.FC = () => {
       // Save the submission and current step to local storage
       storePreviousSubmission(submission?.externalId as string, step)
 
-      routerPush(
-        submission.myCollectionArtworkID
-          ? `/my-collection/artwork/${submission.myCollectionArtworkID}`
-          : "/sell"
-      )
+      routerPush(exitURL)
     } catch (error) {
       logger.error("Something went wrong.", error)
     } finally {
@@ -171,7 +172,7 @@ export const SubmissionHeader: React.FC = () => {
                     <>
                       <Media at="xs">
                         <RouterLink
-                          to="/sell"
+                          to={exitURL}
                           display="block"
                           textDecoration={["none", "underline"]}
                           data-testid="exit-link"
@@ -185,7 +186,7 @@ export const SubmissionHeader: React.FC = () => {
                           variant="tertiary"
                           // @ts-ignore
                           as={RouterLink}
-                          to="/sell"
+                          to={exitURL}
                           data-testid="exit-link"
                         >
                           {isLastStep || !submission?.externalId ? "Exit" : ""}

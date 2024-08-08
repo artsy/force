@@ -15,9 +15,11 @@ import {
   MyCollectionArtworkSWASubmissionStatus_artwork$key,
 } from "__generated__/MyCollectionArtworkSWASubmissionStatus_artwork.graphql"
 import {
+  BASIC_STEPS,
   INITIAL_POST_APPROVAL_STEP,
   INITIAL_STEP,
 } from "Apps/Sell/SellFlowContext"
+import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import React, { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -40,13 +42,14 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
 
   const { consignmentSubmission: submission } = artwork
 
+  const buttonURL = useGetButtonURL(artwork)
+
   if (!submission) return null
 
   const isListed = extractNodes(artwork.listedArtworksConnection).length > 0
   const stateLabel = isListed ? "Listed" : submission.stateLabel
   const buttonLabel = isListed ? "View Listing" : submission.buttonLabel
 
-  const buttonURL = getButtonURL(artwork)
   const buttonVariant = ["DRAFT", "APPROVED"].includes(submission.state)
     ? "primaryBlack"
     : "secondaryBlack"
@@ -71,7 +74,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
         <Separator my={4} />
       </Media>
 
-      <Text variant="xs" mb={1}>
+      <Text variant="xs" mb={[0.5, 1]}>
         <Flex justifyContent="space-between">
           Submission Status
           <Media lessThan="sm">
@@ -86,7 +89,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
         </Flex>
       </Text>
 
-      <Text variant="md" fontWeight="400">
+      <Text variant={["sm", "md"]} fontWeight="400">
         {stateLabel}
       </Text>
 
@@ -174,7 +177,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
             // @ts-ignore
             as={RouterLink}
             onClick={() => {
-              // TODO: Tracking
+              trackEditSubmission()
             }}
             to={buttonURL}
           >
@@ -199,6 +202,7 @@ const submissionStatusFragment = graphql`
     consignmentSubmission {
       actionLabel
       buttonLabel
+      externalID
       internalID
       state
       stateLabel
@@ -207,9 +211,11 @@ const submissionStatusFragment = graphql`
   }
 `
 
-const getButtonURL = (
+const useGetButtonURL = (
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$data
 ): string | null => {
+  const { submissionID, step } = usePreviousSubmission()
+
   const submission = artwork.consignmentSubmission
 
   const listedArtwork = extractNodes(artwork.listedArtworksConnection)[0]
@@ -221,16 +227,24 @@ const getButtonURL = (
 
   if (!submission) return null
 
+  const previousStep = submissionID === submission.externalID && step
+
+  // This does not work in all cases because we only store the current step for the most recent submission.
+  const currentStep = previousStep || INITIAL_STEP
+  const currentPostApprovalStep =
+    (!BASIC_STEPS.includes(previousStep as any) && previousStep) ||
+    INITIAL_POST_APPROVAL_STEP
+
   if (
     ["DRAFT", "SUBMITTED", "RESUBMITTED", "PUBLISHED"].includes(
       submission.state
     )
   ) {
-    return `/sell/submissions/${submission.internalID}/${INITIAL_STEP}`
+    return `/sell/submissions/${submission.internalID}/${currentStep}`
   }
 
   if (["APPROVED"].includes(submission.state)) {
-    return `/sell/submissions/${submission.internalID}/${INITIAL_POST_APPROVAL_STEP}`
+    return `/sell/submissions/${submission.internalID}/${currentPostApprovalStep}`
   }
 
   return null
@@ -252,6 +266,7 @@ const getStateHelpMessage = (submission, isListed): JSX.Element => {
         >
           submission criteria
         </RouterLink>
+        .
       </>
     )
   }

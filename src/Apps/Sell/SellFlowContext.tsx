@@ -28,7 +28,7 @@ const BASIC_FLOW_STATES: ConsignmentSubmissionStateAggregation[] = [
   "SUBMITTED",
 ]
 
-const BASIC_STEPS = [
+export const BASIC_STEPS = [
   "artist",
   "title",
   "photos",

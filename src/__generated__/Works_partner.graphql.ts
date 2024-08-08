@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<924f256bdde687371a797caf701cb504>>
+ * @generated SignedSource<<988bd334ad3536031da1ca555abab895>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ARTIST_SERIES" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Works_partner$data = {
+  readonly featuredKeywords: ReadonlyArray<string>;
   readonly filtered_artworks: {
     readonly counts: {
       readonly total: any | null | undefined;
@@ -75,6 +76,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "featuredKeywords",
       "storageKey": null
     },
     {
@@ -237,6 +245,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8717354f1f5956bc30748da7d832e576";
+(node as any).hash = "d47f1349b1483f8207d4fa0eb9ff3f96";
 
 export default node;

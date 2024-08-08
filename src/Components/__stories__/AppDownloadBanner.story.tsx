@@ -7,8 +7,8 @@ export default {
 }
 
 export const Default = () => {
-  const [transitionDuration, setTransitionDuration] = useState(1000)
-  const [idleDuration, setIdleDuration] = useState(3000)
+  const [transitionDuration, setTransitionDuration] = useState(1500)
+  const [idleDuration, setIdleDuration] = useState(4000)
 
   return (
     <Stack gap={2}>
