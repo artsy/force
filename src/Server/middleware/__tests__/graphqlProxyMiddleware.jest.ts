@@ -53,7 +53,7 @@ describe("graphqlProxyMiddleware", () => {
   const mockCacheGet = cache.get as jest.Mock
 
   beforeEach(() => {
-    req = { body: {}, user: null, headers: {} }
+    req = { body: {}, headers: {} }
     res = { json: jest.fn(), end: jest.fn() }
     next = jest.fn()
   })
@@ -86,7 +86,7 @@ describe("graphqlProxyMiddleware", () => {
   })
 
   it("should call createProxyMiddleware with correct config if user is logged in", async () => {
-    req.user = { id: "user" }
+    req.headers = { "x-access-token": "some-token" }
 
     await graphqlProxyMiddleware(req, res, next)
 
@@ -101,7 +101,7 @@ describe("graphqlProxyMiddleware", () => {
   })
 
   it("should call createProxyMiddleware with correct if shouldSkipCache returns true", async () => {
-    req.user = { id: "user" }
+    req.headers["x-access-token"] = "some-token"
     req.headers["x-relay-cache-config"] = JSON.stringify({ force: true })
 
     await graphqlProxyMiddleware(req, res, next)
@@ -123,7 +123,7 @@ describe("readCache", () => {
   const mockCacheGet = cache.get as jest.Mock
 
   beforeEach(() => {
-    req = { body: { id: "test", variables: {} }, user: null }
+    req = { body: { id: "test", variables: {} } }
   })
 
   it("should return parsed cached response if cache is enabled and hit", async () => {
@@ -138,7 +138,7 @@ describe("readCache", () => {
   })
 
   it("should return undefined if cache is not enabled", async () => {
-    req.user = { id: "user" }
+    req["x-access-token"] = "some-token"
 
     const result = await readCache(req)
 
@@ -170,7 +170,7 @@ describe("writeCache", () => {
       pipe: jest.fn(),
       headers: { "content-encoding": "gzip" },
     }
-    req = { body: { id: "test", variables: {} }, user: null, headers: {} }
+    req = { body: { id: "test", variables: {} }, headers: {} }
     res = { end: jest.fn() }
 
     mockFindRoutesByPath.mockReturnValue([])
