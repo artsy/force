@@ -92,6 +92,19 @@ export function initializeMiddleware(app) {
   // Ensure all responses are gzip compressed
   app.use(compression())
 
+  // JSON Body Parser is required for getting the `_csurf` token for passport.
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: true }))
+
+  /**
+   * Mount GraphQL proxy and cache. If logged in we hit Metaphysics directly.
+   * @important Body parser middleware must always be above the proxy.
+   * @see: System/Relay/getMetaphysicsEndpoint.ts
+   */
+  if (ENABLE_GRAPHQL_PROXY) {
+    app.use("/api/metaphysics", graphqlProxyMiddleware)
+  }
+
   // Ensure basic security settings
   applySecurityMiddleware(app)
 
@@ -110,14 +123,6 @@ export function initializeMiddleware(app) {
   app.use(hardcodedRedirectsMiddleware)
   app.use(localsMiddleware)
   app.use(sameOriginMiddleware)
-
-  /**
-   * Mount GraphQL proxy and cache. If logged in we hit Metaphysics directly.
-   * @see: System/Relay/getMetaphysicsEndpoint.ts
-   */
-  if (ENABLE_GRAPHQL_PROXY) {
-    app.use("/api/metaphysics", graphqlProxyMiddleware)
-  }
 
   // Add CSRF to the cookie and remove it from the page. This allows the caching
   // on the html and is used by the Login Modal to make secure requests.
@@ -168,10 +173,6 @@ function applySecurityMiddleware(app) {
 
   // Session cookie
   app.use(sessionMiddleware())
-
-  // JSON Body Parser is required for getting the `_csurf` token for passport.
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true }))
 
   // Initialize async context for the request
   app.use(asyncLocalsMiddleware)
