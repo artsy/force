@@ -33,17 +33,17 @@ module.exports.onLocalLogin = function (
       if (err) {
         switch (true) {
           case err.message?.includes("invalid email or password"): {
-            return res.status(403).send({ success: false, error: err.message })
+            return res.status(401).send({ success: false, error: err.message })
           }
           case err.message?.includes(
             "missing two-factor authentication code"
           ): {
-            return res.status(403).send({ success: false, error: err.message })
+            return res.status(401).send({ success: false, error: err.message })
           }
           case err.message?.includes(
             "invalid two-factor authentication code"
           ): {
-            return res.status(403).send({ success: false, error: err.message })
+            return res.status(401).send({ success: false, error: err.message })
           }
           case err.message?.includes(
             "account locked, try again in a few minutes"
