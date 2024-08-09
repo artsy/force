@@ -108,7 +108,7 @@ interface SellFlowContextProviderProps {
 export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = ({
   children,
   submission,
-  devMode = true,
+  devMode = false,
 }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
     "onyx_post_approval_submission_flow"
