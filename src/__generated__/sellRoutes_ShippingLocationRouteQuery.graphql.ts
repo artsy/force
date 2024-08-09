@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f13403abb32355b52d1e1ff07bdacc5f>>
+ * @generated SignedSource<<d7a33881be4781ade239f2b1561cbf13>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -117,6 +117,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "locationCountry",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationCountryCode",
             "storageKey": null
           },
           {
@@ -249,12 +256,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e4d1ca32f9c4305a687776b41c201d08",
+    "cacheID": "0d1e710c5b3024b4c06304d266f795b6",
     "id": null,
     "metadata": {},
     "name": "sellRoutes_ShippingLocationRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_ShippingLocationRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ShippingLocationRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationAddress\n  locationAddress2\n}\n"
+    "text": "query sellRoutes_ShippingLocationRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ShippingLocationRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationCountryCode\n  locationState\n  locationPostalCode\n  locationAddress\n  locationAddress2\n}\n"
   }
 };
 })();
