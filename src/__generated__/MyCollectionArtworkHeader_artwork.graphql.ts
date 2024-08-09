@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f376dee71f609f46052917004df7877>>
+ * @generated SignedSource<<8f360f224fdf82cf2503a23b6d6a7f98>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkHeader_artwork$data = {
+  readonly consignmentSubmission: {
+    readonly internalID: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly slug: string;
   readonly " $fragmentType": "MyCollectionArtworkHeader_artwork";
@@ -20,31 +23,46 @@ export type MyCollectionArtworkHeader_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkHeader_artwork">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "MyCollectionArtworkHeader_artwork",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkConsignmentSubmission",
+      "kind": "LinkedField",
+      "name": "consignmentSubmission",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "30ce4fbe3910040e64e7277641f54736";
+(node as any).hash = "33c6015118e1ebacafb53136f6afcf69";
 
 export default node;

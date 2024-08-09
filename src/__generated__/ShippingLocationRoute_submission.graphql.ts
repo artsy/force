@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<15ce1ddc6960d5e5f621c24e523f45d2>>
+ * @generated SignedSource<<80b55861afe1dfda433c2d8e6017a239>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type ShippingLocationRoute_submission$data = {
   readonly locationAddress2: string | null | undefined;
   readonly locationCity: string | null | undefined;
   readonly locationCountry: string | null | undefined;
+  readonly locationCountryCode: string | null | undefined;
   readonly locationPostalCode: string | null | undefined;
   readonly locationState: string | null | undefined;
   readonly " $fragmentType": "ShippingLocationRoute_submission";
@@ -42,6 +43,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "locationCountry",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "locationCountryCode",
       "storageKey": null
     },
     {
@@ -77,6 +85,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "202a345dfc3053e8e7682af670cb2331";
+(node as any).hash = "69d2d9d81886a88766324025aaeb368b";
 
 export default node;

@@ -56,6 +56,7 @@ export const ALL_STEPS = [
 ]
 
 export const INITIAL_STEP: SellFlowStep = BASIC_STEPS[0]
+export const INITIAL_EDIT_STEP: SellFlowStep = "title"
 export const INITIAL_POST_APPROVAL_STEP: SellFlowStep = POST_APPROVAL_STEPS[0]
 export type SellFlowStep =
   | typeof BASIC_STEPS[number]

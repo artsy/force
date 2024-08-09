@@ -68,6 +68,20 @@ describe("graphqlProxyMiddleware", () => {
       expect(res.json).toHaveBeenCalledWith(JSON.parse(cachedResponse))
       expect(createProxyMiddleware).not.toHaveBeenCalled()
     })
+
+    it("should not return cached response if cached response contains GraphQL errors", async () => {
+      const cachedResponse = JSON.stringify({
+        data: "cached",
+        errors: ["foo"],
+        cached: true,
+      })
+      mockCacheGet.mockResolvedValueOnce(cachedResponse)
+
+      await graphqlProxyMiddleware(req, res, next)
+
+      expect(res.json).not.toHaveBeenCalled()
+      expect(createProxyMiddleware).toHaveBeenCalled()
+    })
   })
 
   it("should call createProxyMiddleware with correct config if no cached response", async () => {
@@ -315,6 +329,30 @@ describe("writeCache", () => {
   it("should not set cache if response is not gzip or br", async () => {
     proxyRes.statusCode = 200
     proxyRes.headers = { "content-encoding": "foo" }
+
+    await writeCache(proxyRes, req, res)
+
+    expect(res.end).toHaveBeenCalled()
+    expect(mockCacheSet).not.toHaveBeenCalled()
+  })
+
+  it("should not set cache if graphql response contains errors", async () => {
+    const responseBody = '{"data":"response", "errors": [{"message": "error"}]}'
+
+    proxyRes = {
+      ...proxyRes,
+      statusCode: 200,
+      pipe: jest.fn().mockReturnThis(),
+      on: (event, callback) => {
+        if (event === "data") {
+          callback(responseBody)
+        }
+        if (event === "end") {
+          callback()
+        }
+        return this
+      },
+    }
 
     await writeCache(proxyRes, req, res)
 

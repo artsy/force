@@ -1,6 +1,6 @@
 import { Column, GridColumns, Input } from "@artsy/palette"
-import { CountrySelect } from "Components/CountrySelect"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
+import { CountrySelect } from "Components/CountrySelect"
 
 export const AddressForm = () => {
   const { handleChange, handleBlur, errors, values, touched } = useFormContext()

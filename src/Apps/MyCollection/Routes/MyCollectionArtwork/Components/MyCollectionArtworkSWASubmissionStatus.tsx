@@ -16,8 +16,8 @@ import {
 } from "__generated__/MyCollectionArtworkSWASubmissionStatus_artwork.graphql"
 import {
   BASIC_STEPS,
+  INITIAL_EDIT_STEP,
   INITIAL_POST_APPROVAL_STEP,
-  INITIAL_STEP,
 } from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import React, { useState } from "react"
@@ -230,7 +230,7 @@ const useGetButtonURL = (
   const previousStep = submissionID === submission.externalID && step
 
   // This does not work in all cases because we only store the current step for the most recent submission.
-  const currentStep = previousStep || INITIAL_STEP
+  const currentStep = previousStep || INITIAL_EDIT_STEP
   const currentPostApprovalStep =
     (!BASIC_STEPS.includes(previousStep as any) && previousStep) ||
     INITIAL_POST_APPROVAL_STEP

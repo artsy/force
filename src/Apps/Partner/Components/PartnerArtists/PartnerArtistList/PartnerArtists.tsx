@@ -61,8 +61,12 @@ export const PartnerArtistsQueryRenderer: React.FC<{
           return <PartnerArtistListPlaceholder />
         }
 
+        if (!props.partner) {
+          return null
+        }
+
         return (
-          <PartnerArtistsFragmentContainer {...rest} partner={props.partner!} />
+          <PartnerArtistsFragmentContainer {...rest} partner={props.partner} />
         )
       }}
     />
