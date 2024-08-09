@@ -31,7 +31,35 @@ module.exports.onLocalLogin = function (
   passport.authenticate("local-with-otp")(req, res, function (err: any) {
     if (req.xhr) {
       if (err) {
-        return res.status(500).send({ success: false, error: err.message })
+        switch (true) {
+          case err.message?.includes("invalid email or password"): {
+            return res.status(401).send({ success: false, error: err.message })
+          }
+          case err.message?.includes(
+            "missing two-factor authentication code"
+          ): {
+            return res.status(401).send({ success: false, error: err.message })
+          }
+          case err.message?.includes(
+            "invalid two-factor authentication code"
+          ): {
+            return res.status(401).send({ success: false, error: err.message })
+          }
+          case err.message?.includes(
+            "account locked, try again in a few minutes"
+          ): {
+            return res.status(403).send({ success: false, error: err.message })
+          }
+          case err.message?.includes("Unexpected token"): {
+            return res.status(500).send({
+              success: false,
+              error: "An error occurred. Please try again.",
+            })
+          }
+          default: {
+            return res.status(500).send({ success: false, error: err.message })
+          }
+        }
       } else {
         return next()
       }
