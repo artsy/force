@@ -7,6 +7,9 @@ interface UseDebounce {
   settings?: any
 }
 
+/**
+ * @deprecated Use `import { useDebouncedCallback } from "use-debounce"` instead
+ */
 export const useDebounce = ({
   callback,
   delay = 200,
@@ -22,6 +25,9 @@ interface UseDebouncedValue<T> {
   settings?: any
 }
 
+/**
+ * @deprecated Use `import { useDebounce } from "use-debounce"` instead
+ */
 export const useDebouncedValue = <T>({
   value,
   delay = 200,

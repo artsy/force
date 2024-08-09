@@ -14,6 +14,7 @@ import {
   EditArtworkListEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/EditArtworkListModal"
 
+// FIXME: Should be a fragment
 export type ArtworkListEntity = DeleteArtworkListEntity & EditArtworkListEntity
 
 interface ArtworkListContextualMenuProps {
