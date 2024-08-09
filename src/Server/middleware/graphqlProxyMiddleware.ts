@@ -28,7 +28,7 @@ export const graphqlProxyMiddleware = async (
   if (!skipCache) {
     const cachedResponse = await readCache(req)
 
-    if (cachedResponse) {
+    if (cachedResponse && !cachedResponse?.errors?.length) {
       return res.json(cachedResponse)
     }
   }
@@ -150,6 +150,16 @@ export const writeCache = async (
           queryId,
           variables,
         })
+
+        const response = JSON.parse(responseBody)
+
+        // Don't cache responses that contain errors from MP
+        if (response.errors?.length) {
+          throw new Error(
+            "Skipping write due to GraphQL response containing errors: " +
+              JSON.stringify(response.errors)
+          )
+        }
 
         await cache.set(
           cacheKey,
