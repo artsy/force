@@ -98,7 +98,7 @@ describe("ThankYouRoute", () => {
 
       expect(
         screen.getByText(
-          "This will be used to list, sell and fulfil your work. Additional information may be requested."
+          "This will be used to list, sell and fulfill your work. Additional information may be requested."
         )
       ).toBeInTheDocument()
 

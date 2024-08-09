@@ -55,7 +55,7 @@ export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
               <Text variant="sm">
                 {isSubmitted
                   ? "An Artsy Advisor will email you within 3-5 days to review your submission and discuss next steps. In the meantime your submission will appear in the feature, My Collection."
-                  : "This will be used to list, sell and fulfil your work. Additional information may be requested."}
+                  : "This will be used to list, sell and fulfill your work. Additional information may be requested."}
               </Text>
 
               {!!isSubmitted && (
