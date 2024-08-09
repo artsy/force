@@ -16,7 +16,7 @@ export const ARTWORK_FILTERS_QUICK_FIELDS = [
 
 interface ArtworkFiltersQuickProps
   extends Omit<DropdownProps, "dropdown" | "children"> {
-  featuredKeywords: string[] | null
+  featuredKeywords: readonly string[] | null | undefined
 }
 
 export const ArtworkFiltersQuick: FC<ArtworkFiltersQuickProps> = props => {

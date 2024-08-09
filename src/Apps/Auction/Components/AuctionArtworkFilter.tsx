@@ -52,6 +52,7 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
           { text: "Price (High to Low)", value: "-prices" },
         ]}
         viewer={viewer}
+        featuredKeywords={viewer.sale?.featuredKeywords}
         Filters={
           <Join separator={<Spacer y={4} />}>
             <KeywordFilter />
@@ -74,9 +75,14 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
   {
     viewer: graphql`
       fragment AuctionArtworkFilter_viewer on Viewer
-        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        @argumentDefinitions(
+          input: { type: "FilterArtworksInput" }
+          saleID: { type: "String!" }
+        ) {
         ...ArtworkFilter_viewer @arguments(input: $input)
-
+        sale(id: $saleID) {
+          featuredKeywords
+        }
         sidebarAggregations: artworksConnection(input: $input, first: 1) {
           counts {
             followedArtists
@@ -94,9 +100,13 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query AuctionArtworkFilterQuery($input: FilterArtworksInput) {
+    query AuctionArtworkFilterQuery(
+      $input: FilterArtworksInput
+      $saleID: String!
+    ) {
       viewer {
-        ...AuctionArtworkFilter_viewer @arguments(input: $input)
+        ...AuctionArtworkFilter_viewer
+          @arguments(input: $input, saleID: $saleID)
       }
     }
   `

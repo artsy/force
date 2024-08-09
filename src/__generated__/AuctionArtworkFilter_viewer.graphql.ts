@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5f20cdf8ad99820b64dcd3bc84ee414>>
+ * @generated SignedSource<<227b6e41a151ee27e0246198679d1491>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ARTIST_SERIES" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type AuctionArtworkFilter_viewer$data = {
+  readonly sale: {
+    readonly featuredKeywords: ReadonlyArray<string>;
+  } | null | undefined;
   readonly sidebarAggregations: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
@@ -45,6 +48,11 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "input"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "saleID"
     }
   ],
   "kind": "Fragment",
@@ -57,6 +65,30 @@ return {
       ],
       "kind": "FragmentSpread",
       "name": "ArtworkFilter_viewer"
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "id",
+          "variableName": "saleID"
+        }
+      ],
+      "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "featuredKeywords",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     },
     {
       "alias": "sidebarAggregations",
@@ -150,6 +182,6 @@ return {
 };
 })();
 
-(node as any).hash = "5fba4c2b4f9d24038de90ae2bae9c11b";
+(node as any).hash = "beba93f8a8a2302b36705b0316e214d3";
 
 export default node;

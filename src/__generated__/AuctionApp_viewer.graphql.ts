@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<efb8c49360ce437ba500e39740348115>>
+ * @generated SignedSource<<8fd7941c09ea3702e52ef96ad16f0199>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,13 @@ export type AuctionApp_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"AuctionApp_viewer">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "kind": "Variable",
+  "name": "saleID",
+  "variableName": "saleID"
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -49,18 +55,15 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "input",
           "variableName": "input"
-        }
+        },
+        (v0/*: any*/)
       ],
       "kind": "FragmentSpread",
       "name": "AuctionArtworkFilter_viewer"
     },
     {
       "args": [
-        {
-          "kind": "Variable",
-          "name": "saleID",
-          "variableName": "saleID"
-        }
+        (v0/*: any*/)
       ],
       "kind": "FragmentSpread",
       "name": "AuctionWorksByFollowedArtistsRail_viewer"
@@ -137,7 +140,8 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "d761435e9548123e40861cc1ad7ea4a0";
+(node as any).hash = "6756efc9b372b3023d35abaac9791b46";
 
 export default node;

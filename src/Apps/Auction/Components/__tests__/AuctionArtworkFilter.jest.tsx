@@ -37,7 +37,8 @@ describe("AuctionArtworkFilter", () => {
     query: graphql`
       query AuctionArtworkFilterTestQuery($input: FilterArtworksInput!) {
         viewer {
-          ...AuctionArtworkFilter_viewer @arguments(input: $input)
+          ...AuctionArtworkFilter_viewer
+            @arguments(input: $input, saleID: "test-sale")
         }
       }
     `,
