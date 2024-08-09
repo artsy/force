@@ -31,6 +31,7 @@ module.exports.onLocalLogin = function (
   passport.authenticate("local-with-otp")(req, res, function (err: any) {
     if (req.xhr) {
       if (err) {
+        console.log(err)
         switch (true) {
           case err.message?.includes("invalid email or password"): {
             return res.status(401).send({ success: false, error: err.message })
@@ -57,7 +58,7 @@ module.exports.onLocalLogin = function (
             })
           }
           default: {
-            return res.status(400).send({ success: false, error: err.message })
+            return res.status(500).send({ success: false, error: err.message })
           }
         }
       } else {
@@ -133,7 +134,7 @@ module.exports.onLocalSignup = function (
         } else if (err.message) {
           msg = err.message
         }
-        return res.status(400).send({ success: false, error: msg })
+        return res.status(500).send({ success: false, error: msg })
       } else if (err) {
         return next(new Error(err))
       } else {
