@@ -61,7 +61,10 @@ const SaleApp: React.FC<SaleAppProps> = ({ children, sale, viewer }) => {
           <Message variant="default" title="Works will be available soon." />
         </>
       ) : (
-        <SaleArtworkFilterRefetchContainer viewer={viewer} />
+        <SaleArtworkFilterRefetchContainer
+          viewer={viewer}
+          featuredKeywords={sale.featuredKeywords}
+        />
       )}
 
       <Box my={2}>{children}</Box>
@@ -80,6 +83,7 @@ export const SaleAppFragmentContainer = createFragmentContainer(SaleApp, {
       eligibleSaleArtworksCount
       internalID
       name
+      featuredKeywords
     }
   `,
   viewer: graphql`
