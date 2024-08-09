@@ -32,7 +32,7 @@ We use [TypeScript](https://www.typescriptlang.org/docs) to maximize runtime cod
 
 ### Avoid copying and try to fix `// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` flags
 
-Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced via a special flag inserted by a script (`// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION`) with all _new code_ expected to adhere to best practices. Going forward, this flag should never be used, and if encounted while working on old code it should be removed and the type error fixed.
+Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced via a special flag inserted by a script (`// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION`) with all _new code_ expected to adhere to best practices. Going forward, this flag should never be used, and if encountered while working on old code it should be removed and the type error fixed.
 
 ## UI
 

@@ -1,6 +1,6 @@
 ## Creating a Force Review App
 
-If you want to create a deploy for a WIP feature or for QA, Hokusai supports [Review Apps](https://github.com/artsy/hokusai/blob/main/docs/Review_Apps.md).
+If you want to create a deployment for a WIP feature or for QA, Hokusai supports [Review Apps](https://github.com/artsy/hokusai/blob/main/docs/Review_Apps.md).
 
 You can create a review app via CircleCI which runs the [`build_review_app.sh`](https://github.com/artsy/force/blob/main/scripts/build_review_app.sh) script. Or, you can run that script locally, which will be slower because it involves building the docker image locally and pushing it up to AWS ECR.
 
@@ -35,7 +35,7 @@ The script will save a K8s spec in `hokusai/awesome-feature.yml`
 
 ### Accessing the review app.
 
-To access the review app, you must create a DNS name for it. The name must match the name of the review app, and it must end in `artsy.net`. So it must be `awesome-feature.artsy.net`. This is required for full OAuth flow to complete. On Cloudflare, please do:
+To access the review app, you must create a DNS name for it. The name must match the name of the review app, and it must end in `artsy.net`. So it must be `awesome-feature.artsy.net`. This is required for full OAuth flow to be complete. On Cloudflare, please do:
 
 1. [Login to Cloudflare](https://dash.cloudflare.com/), and navigate to **artsy.net** > **DNS**
 1. Click `+ Add Record`
@@ -92,6 +92,6 @@ Delete its DNS entry by:
 
 ### Conclusion
 
-For more info on Review App maintenence, [see Hokusai docs](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
+For more info on Review App maintenance, [see Hokusai docs](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
 
 Read over the [`build_review_app.sh`](https://github.com/artsy/force/blob/main/scripts/build_review_app.sh) script for more info on how this is all done.
