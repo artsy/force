@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ad4e6aeb7effe3997abb92fb131bb02>>
+ * @generated SignedSource<<d76be1256a2b05b8960d67c0501a511f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,6 +46,7 @@ export type ShippingLocationRoute_Test_Query$rawResponse = {
     readonly locationAddress2: string | null | undefined;
     readonly locationCity: string | null | undefined;
     readonly locationCountry: string | null | undefined;
+    readonly locationCountryCode: string | null | undefined;
     readonly locationPostalCode: string | null | undefined;
     readonly locationState: string | null | undefined;
     readonly myCollectionArtworkID: string | null | undefined;
@@ -147,6 +148,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "locationCountry",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationCountryCode",
             "storageKey": null
           },
           {
@@ -307,12 +315,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "38ee8a99c67331b8777927dbbf4d903c",
+    "cacheID": "080056e2e77867c8c3f858556e9af4b4",
     "id": null,
     "metadata": {},
     "name": "ShippingLocationRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ShippingLocationRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ShippingLocationRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationAddress\n  locationAddress2\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
+    "text": "query ShippingLocationRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ShippingLocationRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationCountryCode\n  locationState\n  locationPostalCode\n  locationAddress\n  locationAddress2\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();

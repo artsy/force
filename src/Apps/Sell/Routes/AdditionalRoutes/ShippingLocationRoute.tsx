@@ -3,7 +3,7 @@ import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import { CountrySelect } from "Components/CountrySelect"
+import { COUNTRY_SELECT_OPTIONS, CountrySelect } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
 import { ShippingLocationRoute_me$key } from "__generated__/ShippingLocationRoute_me.graphql"
 import { ShippingLocationRoute_submission$key } from "__generated__/ShippingLocationRoute_submission.graphql"
@@ -17,6 +17,7 @@ const SUBMISSION_FRAGMENT = graphql`
   fragment ShippingLocationRoute_submission on ConsignmentSubmission {
     locationCity
     locationCountry
+    locationCountryCode
     locationState
     locationPostalCode
     locationAddress
@@ -46,7 +47,8 @@ const Schema = Yup.object().shape({
   location: Yup.object().shape({
     city: Yup.string().required("City is required.").trim(),
     state: Yup.string().required("State is required.").trim(),
-    country: Yup.string().required("Country is required.").trim(),
+    country: Yup.string().trim(),
+    countryCode: Yup.string().required("Country is required.").trim(),
     zipCode: Yup.string().required("Postal code is required.").trim(),
     address: Yup.string().required("Address is required.").trim(),
     address2: Yup.string().trim(),
@@ -58,6 +60,7 @@ interface FormValues {
     city?: string
     state?: string
     country?: string
+    countryCode?: string
     zipCode?: string
     address?: string
     address2?: string
@@ -80,10 +83,11 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
     userAddresses.find(node => node.isDefault) || last(userAddresses || [])
 
   // Check whether the submission has an address; if not, use the user's address.
-  const initialValues: FormValues = !!submission.locationCity
+  const initialValues: FormValues = submission.locationCity
     ? {
         location: {
           country: submission.locationCountry ?? "",
+          countryCode: submission.locationCountryCode ?? "",
           address: submission.locationAddress ?? "",
           address2: submission.locationAddress2 ?? "",
           city: submission.locationCity ?? "",
@@ -93,7 +97,7 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
       }
     : {
         location: {
-          country: defaultUserAddress?.country ?? "",
+          countryCode: defaultUserAddress?.country ?? "",
           address: defaultUserAddress?.addressLine1 ?? "",
           address2: defaultUserAddress?.addressLine2 ?? "",
           city: defaultUserAddress?.city ?? "",
@@ -103,9 +107,15 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
       }
 
   const onSubmit = async (values: FormValues) => {
+    // Looking up the country name from the country code
+    const locationCountry = COUNTRY_SELECT_OPTIONS.find(
+      option => option.value === values.location.countryCode
+    )?.text
+
     return actions.updateSubmission({
       locationCity: values.location.city,
-      locationCountry: values.location.country,
+      locationCountry,
+      locationCountryCode: values.location.countryCode,
       locationPostalCode: values.location.zipCode,
       locationAddress: values.location.address,
       locationAddress2: values.location.address2,
@@ -120,7 +130,7 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
       validateOnMount
       validationSchema={Schema}
     >
-      {({ handleChange, handleBlur, touched, values }) => (
+      {({ handleChange, handleBlur, values }) => (
         <SubmissionLayout>
           <SubmissionStepTitle>Shipping Location</SubmissionStepTitle>
 
@@ -134,15 +144,15 @@ export const ShippingLocationRoute: React.FC<ShippingLocationRouteProps> = props
               <Column span={12}>
                 <CountrySelect
                   title="Country"
-                  name="location.country"
-                  value={values.location.country}
+                  name="location.countryCode"
+                  value={values.location.countryCode}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   required
                 />
               </Column>
 
-              {!!values.location.country && (
+              {!!values.location.countryCode && (
                 <>
                   <Column span={12}>
                     <Input
