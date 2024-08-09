@@ -57,7 +57,7 @@ module.exports.onLocalLogin = function (
             })
           }
           default: {
-            return res.status(400).send({ success: false, error: err.message })
+            return res.status(500).send({ success: false, error: err.message })
           }
         }
       } else {
@@ -133,7 +133,7 @@ module.exports.onLocalSignup = function (
         } else if (err.message) {
           msg = err.message
         }
-        return res.status(400).send({ success: false, error: msg })
+        return res.status(500).send({ success: false, error: msg })
       } else if (err) {
         return next(new Error(err))
       } else {
