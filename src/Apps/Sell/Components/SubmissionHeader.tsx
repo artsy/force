@@ -138,9 +138,7 @@ export const SubmissionHeader: React.FC = () => {
                   height={HEADER_HEIGHT}
                 >
                   <Media greaterThan="xs">
-                    <RouterLink to="/sell" display="block">
-                      <ArtsyLogoIcon display="block" />
-                    </RouterLink>
+                    <ArtsyLogoIcon display="block" />
                   </Media>
 
                   {submission?.externalId && !isLastStep ? (
