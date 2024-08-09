@@ -7,6 +7,10 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 
+jest.mock("use-debounce", () => ({
+  useDebouncedCallback: fn => fn,
+}))
+
 describe("PriceFilter", () => {
   let alertContext
 

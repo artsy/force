@@ -19,7 +19,7 @@ import {
   getPredefinedSizesByMetric,
   parseSizeRange,
 } from "Utils/customSizeUtils"
-import { priceRangeToLabel } from "Components/PriceRange/Utils/parsePriceRange"
+import { priceRangeToLabel } from "Components/PriceRange/Utils/priceRangeToLabel"
 
 export const extractPillFromAggregation = (
   filter: {

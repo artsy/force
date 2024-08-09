@@ -13,12 +13,14 @@ describe("parsePriceRange", () => {
   it("should correctly parse range when default range values are passed", () => {
     expect(parsePriceRange("*-5")).toEqual(["*", 5])
     expect(parsePriceRange("5-*")).toEqual([5, "*"])
-    expect(parsePriceRange("*-*")).toEqual(["*", "*"])
+    expect(parsePriceRange("*-*")).toEqual(DEFAULT_CUSTOM_RANGE)
   })
 
   it("should return the default value if the format is invalid", () => {
     expect(parsePriceRange("5-")).toEqual([5, "*"])
     expect(parsePriceRange("-5")).toEqual(["*", 5])
     expect(parsePriceRange("5")).toEqual(DEFAULT_CUSTOM_RANGE)
+    expect(parsePriceRange("-5-*")).toEqual(DEFAULT_CUSTOM_RANGE)
+    expect(parsePriceRange("*--5")).toEqual(DEFAULT_CUSTOM_RANGE)
   })
 })
