@@ -89,7 +89,7 @@ export const collectRoutes: RouteProps[] = [
   },
 ]
 
-function initializeVariablesWithFilterState(params, props) {
+export function initializeVariablesWithFilterState(params, props) {
   const initialFilterState = getInitialFilterState(props.location?.query ?? {})
 
   if (params.medium) {
@@ -145,12 +145,7 @@ function initializeVariablesWithFilterState(params, props) {
 
 function getArtworkFilterQuery() {
   return graphql`
-    query collectRoutes_ArtworkFilterQuery(
-      $sort: String
-      $input: FilterArtworksInput
-      $aggregations: [ArtworkAggregation]
-      $shouldFetchCounts: Boolean!
-    ) {
+    query collectRoutes_ArtworkFilterQuery($sort: String) {
       marketingCollections(
         slugs: [
           "contemporary"
@@ -165,22 +160,6 @@ function getArtworkFilterQuery() {
       }
       filterArtworks: artworksConnection(sort: $sort, first: 30) {
         ...SeoProductsForArtworks_artworks
-      }
-      viewer {
-        ...ArtworkFilter_viewer @arguments(input: $input)
-        artworksConnection(aggregations: $aggregations, input: $input) {
-          counts @include(if: $shouldFetchCounts) {
-            followedArtists
-          }
-          aggregations {
-            slice
-            counts {
-              value
-              name
-              count
-            }
-          }
-        }
       }
     }
   `
