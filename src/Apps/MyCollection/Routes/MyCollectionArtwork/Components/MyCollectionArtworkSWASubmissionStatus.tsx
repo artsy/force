@@ -18,7 +18,8 @@ import {
   BASIC_STEPS,
   INITIAL_EDIT_STEP,
   INITIAL_POST_APPROVAL_STEP,
-  PRE_SUBMITTED_STEPS
+  INITIAL_STEP,
+  PRE_SUBMITTED_STEPS,
 } from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import React, { useState } from "react"
