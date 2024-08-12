@@ -13,6 +13,7 @@ import {
   RELAY_CACHE_PATH_HEADER_KEY,
 } from "System/Relay/middleware/cacheHeaderMiddleware"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
+import { createHash } from "crypto"
 
 jest.mock("Server/config", () => ({
   METAPHYSICS_ENDPOINT: "https://metaphysics.artsy.net",
@@ -137,11 +138,15 @@ describe("readCache", () => {
   const mockCacheGet = cache.get as jest.Mock
 
   beforeEach(() => {
-    req = { body: { id: "test", variables: {} } }
+    req = { body: { id: "test", query: "", variables: {} } }
   })
 
   it("should return parsed cached response if cache is enabled and hit", async () => {
-    const cacheKey = JSON.stringify({ queryId: "test", variables: {} })
+    const cacheKey = JSON.stringify({
+      queryId: "test",
+      digest: createHash("sha1").update("").digest("hex"),
+      variables: {},
+    })
     const cachedResponse = JSON.stringify({ data: "cached", cached: true })
     mockCacheGet.mockResolvedValueOnce(cachedResponse)
 
@@ -184,7 +189,7 @@ describe("writeCache", () => {
       pipe: jest.fn(),
       headers: { "content-encoding": "gzip" },
     }
-    req = { body: { id: "test", variables: {} }, headers: {} }
+    req = { body: { id: "test", query: "", variables: {} }, headers: {} }
     res = { end: jest.fn() }
 
     mockFindRoutesByPath.mockReturnValue([])
@@ -195,7 +200,11 @@ describe("writeCache", () => {
   })
 
   it("should set cache if cache is enabled and response is 200", async () => {
-    const cacheKey = JSON.stringify({ queryId: "test", variables: {} })
+    const cacheKey = JSON.stringify({
+      queryId: "test",
+      digest: createHash("sha1").update("").digest("hex"),
+      variables: {},
+    })
     const responseBody = '{"data":"response"}'
 
     proxyRes = {
@@ -226,7 +235,11 @@ describe("writeCache", () => {
   })
 
   it("should set cache with route-level cache config TTLs", async () => {
-    const cacheKey = JSON.stringify({ queryId: "test", variables: {} })
+    const cacheKey = JSON.stringify({
+      queryId: "test",
+      digest: createHash("sha1").update("").digest("hex"),
+      variables: {},
+    })
     const responseBody = '{"data":"response"}'
 
     proxyRes = {

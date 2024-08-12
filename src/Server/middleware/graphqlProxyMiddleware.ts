@@ -15,6 +15,7 @@ import {
 } from "System/Relay/middleware/cacheHeaderMiddleware"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import { getENV } from "Utils/getENV"
+import { createHash } from "crypto"
 
 const isDevelopment = getENV("NODE_ENV") === "development"
 
@@ -56,10 +57,12 @@ export const readCache = async (req: ArtsyRequest) => {
   if (ENABLE_GRAPHQL_CACHE) {
     try {
       const queryId = req.body?.id
+      const query = req.body?.query
       const variables = req.body?.variables
 
       const cacheKey = getCacheKey({
         queryId,
+        query,
         variables,
       })
 
@@ -144,10 +147,12 @@ export const writeCache = async (
         })()
 
         const queryId = req.body?.id
+        const query = req.body?.query
         const variables = req.body?.variables
 
         const cacheKey = getCacheKey({
           queryId,
+          query,
           variables,
         })
 
@@ -195,6 +200,7 @@ export const writeCache = async (
 
 interface GetCacheKeyProps {
   queryId: string
+  query: string
   variables: Record<string, unknown>
 }
 
@@ -202,8 +208,10 @@ const getCacheKey = (props: GetCacheKeyProps) => {
   const fallbackCacheKey = "" // Falsy value for redis
 
   try {
+    const digest = createHash("sha1").update(props.query).digest("hex")
     const cacheKey = JSON.stringify({
       queryId: props.queryId,
+      digest,
       variables: props.variables,
     })
 
