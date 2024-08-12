@@ -27,6 +27,11 @@ const BASIC_FLOW_STATES: ConsignmentSubmissionStateAggregation[] = [
   "DRAFT",
   "SUBMITTED",
 ]
+// If a submission is in one of these states, additional information is required.
+export const PRE_SUBMITTED_STEPS: ConsignmentSubmissionStateAggregation[] = [
+  "DRAFT",
+  "APPROVED",
+]
 
 export const BASIC_STEPS = [
   "artist",

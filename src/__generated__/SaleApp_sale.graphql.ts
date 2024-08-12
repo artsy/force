@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<440f96a41bcb854d1fb51b4ef932bb1d>>
+ * @generated SignedSource<<162855ace85bbdd4f7047623593a2242>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type SaleApp_sale$data = {
   } | null | undefined;
   readonly description: string | null | undefined;
   readonly eligibleSaleArtworksCount: number | null | undefined;
+  readonly featuredKeywords: ReadonlyArray<string>;
   readonly internalID: string;
   readonly name: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"SaleMeta_sale">;
@@ -98,12 +99,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "name",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "featuredKeywords",
+      "storageKey": null
     }
   ],
   "type": "Sale",
   "abstractKey": null
 };
 
-(node as any).hash = "0c9f879ff02b0fa0d604171d957bdf74";
+(node as any).hash = "ae19b218d2aa362257af152707de59d7";
 
 export default node;

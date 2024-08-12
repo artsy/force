@@ -3,7 +3,7 @@ import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterC
 import { Pill } from "@artsy/palette"
 
 export interface FeaturedKeywordsFilterQuickProps {
-  featuredKeywords: string[] | null
+  featuredKeywords: readonly string[] | null | undefined
 }
 
 export const FeaturedKeywordsFilterQuick: FC<FeaturedKeywordsFilterQuickProps> = props => {

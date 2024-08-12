@@ -95,6 +95,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         mt={[0, 6]}
         relay={relay}
         viewer={fair}
+        featuredKeywords={fair.featuredKeywords}
         Filters={Filters}
       />
     </ArtworkFilterContextProvider>

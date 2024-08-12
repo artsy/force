@@ -18,7 +18,7 @@ import {
   BASIC_STEPS,
   INITIAL_EDIT_STEP,
   INITIAL_POST_APPROVAL_STEP,
-  INITIAL_STEP,
+  PRE_SUBMITTED_STEPS
 } from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import React, { useState } from "react"
@@ -51,7 +51,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
   const stateLabel = isListed ? "Listed" : submission.stateLabel
   const buttonLabel = isListed ? "View Listing" : submission.buttonLabel
 
-  const buttonVariant = ["DRAFT", "APPROVED"].includes(submission.state)
+  const buttonVariant = PRE_SUBMITTED_STEPS.includes(submission.state)
     ? "primaryBlack"
     : "secondaryBlack"
   const stateHelpMessage = getStateHelpMessage(submission, isListed)
