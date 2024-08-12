@@ -1,5 +1,4 @@
 import { Shelf, Spacer } from "@artsy/palette"
-import { ArtworkListContentQueryRenderer } from "./Components/ArtworkListContent"
 import { ArtworkListsHeader } from "./Components/ArtworkListsHeader"
 import { ArtworkListItemFragmentContainer } from "./Components/ArtworkListItem"
 import { FC, useEffect, useMemo, useRef } from "react"
@@ -14,6 +13,8 @@ import { HttpError } from "found"
 import { MetaTags } from "Components/MetaTags"
 import { Jump } from "Utils/Hooks/useJump"
 import { ArtworkListVisibilityProvider } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
+import { SavesArtworks } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworks"
+import { SavesArtworksHeaderQueryRenderer } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworksHeader"
 
 export const ARTWORK_LIST_SCROLL_TARGET_ID = "ArtworkListScrollTarget"
 
@@ -24,15 +25,19 @@ interface CollectorProfileSavesRouteProps {
 const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
   me,
 }) => {
-  const { match } = useRouter()
+  const {
+    match: { params },
+  } = useRouter()
+
   const { trackEvent } = useTracking()
-  const initialArtworkListId = useRef(match.params.id)
-  const { page, sort } = match.location.query ?? {}
+
+  const initialArtworkListId = useRef(params.id)
+
   const savedArtworksArtworkList = me.savedArtworksArtworkList
   const selectedArtworkListId =
-    match.params.id ?? savedArtworksArtworkList?.internalID
-  let customArtworkLists = extractNodes(me.customArtworkLists)
+    params.id ?? savedArtworksArtworkList?.internalID
 
+  // FIXME: Move this into a click handler
   useEffect(() => {
     const event: ViewedArtworkList = {
       action: ActionType.viewedArtworkList,
@@ -42,6 +47,9 @@ const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
 
     trackEvent(event)
   }, [selectedArtworkListId, trackEvent])
+
+  // FIXME: Avoid mutation directly in a render function
+  let customArtworkLists = extractNodes(me.customArtworkLists)
 
   if (initialArtworkListId.current !== undefined) {
     const index = customArtworkLists.findIndex(
@@ -78,6 +86,7 @@ const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
     [selectedArtworkListId]
   )
 
+  // TODO: Should be at routing level
   if (!selectedArtworkList) {
     throw new HttpError(404)
   }
@@ -97,7 +106,7 @@ const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
 
       <Spacer y={4} />
 
-      <Shelf showProgress={false}>
+      <Shelf>
         {artworkLists.map(artworkList => {
           const isDefaultArtworkList =
             artworkList.internalID === savedArtworksArtworkList?.internalID
@@ -113,11 +122,13 @@ const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
         })}
       </Shelf>
 
-      <ArtworkListContentQueryRenderer
-        listID={selectedArtworkListId}
-        initialPage={(page as unknown) as number}
-        initialSort={sort}
-      />
+      <Spacer y={4} />
+
+      <SavesArtworksHeaderQueryRenderer id={selectedArtworkListId} />
+
+      <Spacer y={4} />
+
+      <SavesArtworks key={selectedArtworkListId} id={selectedArtworkListId} />
     </ArtworkListVisibilityProvider>
   )
 }
