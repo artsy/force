@@ -18,6 +18,7 @@ import {
   BASIC_STEPS,
   INITIAL_EDIT_STEP,
   INITIAL_POST_APPROVAL_STEP,
+  INITIAL_STEP,
   PRE_SUBMITTED_STEPS,
 } from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
@@ -228,9 +229,11 @@ const useGetButtonURL = (
 
   if (!submission) return null
 
-  const previousStep = submissionID === submission.externalID && step
+  // Do not link to the initial artist step.
+  const previousStep =
+    submissionID === submission.externalID && step !== INITIAL_STEP && step
 
-  // This does not work in all cases because we only store the current step for the most recent submission.
+  // Linking to the previous step does not work in all cases because we only store the current step for the most recent submission.
   const currentStep = previousStep || INITIAL_EDIT_STEP
   const currentPostApprovalStep =
     (!BASIC_STEPS.includes(previousStep as any) && previousStep) ||

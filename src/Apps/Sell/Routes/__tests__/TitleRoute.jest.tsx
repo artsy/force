@@ -134,20 +134,10 @@ describe("TitleRoute", () => {
         })
       })
 
-      it("navigates to the previous step when the Back button is clicked", async () => {
-        renderWithRelay({
-          ConsignmentSubmission: () => ({ state: "DRAFT" }),
-        })
+      it("Back button isn't visible", () => {
+        renderWithRelay({})
 
-        mockPush.mockClear()
-
-        screen.getByText("Back").click()
-
-        await waitFor(() => {
-          expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/artist'
-          )
-        })
+        expect(screen.queryByText("Back")).not.toBeInTheDocument()
       })
     })
 
@@ -166,6 +156,12 @@ describe("TitleRoute", () => {
             '/sell/submissions/<mock-value-for-field-"externalId">/photos'
           )
         })
+      })
+
+      it("Back button isn't visible", () => {
+        renderWithRelay({})
+
+        expect(screen.queryByText("Back")).not.toBeInTheDocument()
       })
     })
   })

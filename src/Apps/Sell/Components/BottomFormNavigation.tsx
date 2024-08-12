@@ -2,7 +2,10 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Button, Flex } from "@artsy/palette"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useAssociateSubmission } from "Apps/Sell/Mutations/useAssociateSubmission"
-import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import {
+  INITIAL_EDIT_STEP,
+  useSellFlowContext,
+} from "Apps/Sell/SellFlowContext"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
@@ -55,7 +58,8 @@ const BottomFormBackButton = () => {
     }
   }
 
-  if (isFirstStep) {
+  // Don't show back button on first step or "Title" step to not allow editing of the artist
+  if (isFirstStep || step === INITIAL_EDIT_STEP) {
     return <Box />
   }
 
