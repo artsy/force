@@ -1,5 +1,9 @@
 import { Clickable, Flex, Text } from "@artsy/palette"
-import { INITIAL_STEP, SellFlowStep } from "Apps/Sell/SellFlowContext"
+import {
+  INITIAL_STEP,
+  PRE_SUBMITTED_STEPS,
+  SellFlowStep,
+} from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import { EntityHeaderSubmissionFragmentContainer } from "Components/EntityHeaders/EntityHeaderSubmission"
 import { FadeInBox } from "Components/FadeInBox"
@@ -48,7 +52,8 @@ const PreviousSubmission: React.FC<PreviousSubmissionProps> = ({
     router.push(`/sell/submissions/${submissionID}/${currentStep}`)
   }
 
-  if (!submission || submission.state !== "DRAFT") return null
+  if (!submission?.state || !PRE_SUBMITTED_STEPS.includes(submission.state))
+    return null
 
   return (
     <FadeInBox
