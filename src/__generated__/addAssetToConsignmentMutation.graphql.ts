@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c717493a704a510b7a0fe1f95230cf3c>>
+ * @generated SignedSource<<afaa83d4565d640b8d33787ad37c33c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,15 @@ export type AddAssetToConsignmentSubmissionInput = {
   clientMutationId?: string | null | undefined;
   externalSubmissionId?: string | null | undefined;
   filename?: string | null | undefined;
-  geminiToken: string;
+  geminiToken?: string | null | undefined;
   sessionID?: string | null | undefined;
   size?: string | null | undefined;
+  source?: UploadSource | null | undefined;
   submissionID?: string | null | undefined;
+};
+export type UploadSource = {
+  bucket?: string | null | undefined;
+  key?: string | null | undefined;
 };
 export type addAssetToConsignmentMutation$variables = {
   input: AddAssetToConsignmentSubmissionInput;

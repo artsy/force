@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc1f66c5c7754d5656f35108a72a25cf>>
+ * @generated SignedSource<<d20931a996cad6e69df47f2555c1b557>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -86,7 +86,7 @@ export type StatusQuery$rawResponse = {
             readonly edges: ReadonlyArray<{
               readonly node: {
                 readonly courier: string;
-                readonly estimatedDelivery: string | null | undefined;
+                readonly estimatedDelivery: string;
                 readonly id: string;
                 readonly trackingId: string | null | undefined;
               } | null | undefined;
@@ -233,7 +233,7 @@ export type StatusQuery$rawResponse = {
             readonly edges: ReadonlyArray<{
               readonly node: {
                 readonly courier: string;
-                readonly estimatedDelivery: string | null | undefined;
+                readonly estimatedDelivery: string;
                 readonly id: string;
                 readonly trackingId: string | null | undefined;
               } | null | undefined;
@@ -1266,7 +1266,7 @@ return {
           "type": "CommerceFulfillment"
         },
         "order.lineItems.edges.node.fulfillments.edges.node.courier": (v15/*: any*/),
-        "order.lineItems.edges.node.fulfillments.edges.node.estimatedDelivery": (v16/*: any*/),
+        "order.lineItems.edges.node.fulfillments.edges.node.estimatedDelivery": (v15/*: any*/),
         "order.lineItems.edges.node.fulfillments.edges.node.id": (v17/*: any*/),
         "order.lineItems.edges.node.fulfillments.edges.node.trackingId": (v16/*: any*/),
         "order.lineItems.edges.node.id": (v17/*: any*/),

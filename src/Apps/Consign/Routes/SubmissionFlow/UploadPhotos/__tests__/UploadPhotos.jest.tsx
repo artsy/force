@@ -6,7 +6,9 @@ import {
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fetchQuery, graphql } from "react-relay"
+import { createMockEnvironment, MockEnvironment } from "relay-test-utils"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 jest.unmock("react-relay")
 
@@ -60,6 +62,15 @@ jest.mock("react-relay", () => ({
 }))
 
 const mockFetchQuery = fetchQuery as jest.Mock
+const mockShowAuthDialog = jest.fn()
+jest.mock("Components/AuthDialog", () => ({
+  useAuthDialog: jest.fn(() => ({
+    showAuthDialog: mockShowAuthDialog,
+  })),
+}))
+
+jest.mock("System/Hooks/useSystemContext")
+let relayEnv: MockEnvironment = createMockEnvironment()
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: props => {
@@ -129,6 +140,11 @@ describe("UploadPhotos", () => {
       },
     })
     mockRemoveAsset.mockImplementation(() => Promise.resolve())
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      user: { id: "user-id", email: "user-email@artsy.net" },
+      isLoggedIn: true,
+      relayEnvironment: relayEnv,
+    }))
   })
 
   afterEach(() => {
@@ -334,6 +350,31 @@ describe("UploadPhotos", () => {
     expect(mockFetchQuery).toHaveBeenCalled()
   })
 
+  it("prompts for login / sign up if unauthenticated", async () => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      isLoggedIn: false,
+    }))
+
+    renderWithRelay({
+      ConsignmentSubmission: () => ({
+        ...submission,
+        assets: [
+          {
+            id: "id",
+            imageUrls: {},
+            geminiToken: "geminiToken",
+            size: "111084",
+            filename: "foo.png",
+          },
+        ],
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Submit Artwork"))
+
+    expect(mockShowAuthDialog).toHaveBeenCalled()
+  })
+
   describe("show error message", () => {
     it("if an image could not be uploaded", async () => {
       mockUploadPhoto.mockRejectedValueOnce("rejected")
@@ -407,7 +448,7 @@ describe("UploadPhotos", () => {
       await waitFor(() => {
         expect(screen.getAllByTestId("photo-thumbnail-error").length).toEqual(1)
         expect(screen.getByTestId("photo-thumbnail-error")).toHaveTextContent(
-          "File format not supported. Please upload JPG or PNG files."
+          "File format not supported. Please upload files with supported formats."
         )
       })
     })
@@ -433,7 +474,7 @@ describe("UploadPhotos", () => {
       await waitFor(() => {
         expect(screen.getAllByTestId("photo-thumbnail-error").length).toEqual(1)
         expect(screen.getByTestId("photo-thumbnail-error")).toHaveTextContent(
-          "File format not supported. Please upload JPG or PNG files."
+          "File format not supported. Please upload files with supported formats."
         )
       })
     })

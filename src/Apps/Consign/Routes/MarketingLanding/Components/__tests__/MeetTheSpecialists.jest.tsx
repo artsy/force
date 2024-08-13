@@ -1,8 +1,11 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
+import { MeetTheSpecialistsFragmentContainer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
 
+jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
@@ -21,8 +24,19 @@ jest.mock("System/Hooks/useRouter", () => ({
 
 const trackEvent = useTracking as jest.Mock
 
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: MeetTheSpecialistsFragmentContainer,
+  query: graphql`
+    query MeetTheSpecialists_test_Query @relay_test_operation {
+      staticContent {
+        ...MeetTheSpecialists_staticContent
+      }
+    }
+  `,
+})
+
 describe("MeetTheSpecialists", () => {
-  beforeAll(() => {
+  beforeEach(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -34,61 +48,63 @@ describe("MeetTheSpecialists", () => {
   })
 
   it("renders correctly", () => {
-    render(<MeetTheSpecialists />)
+    renderWithRelay()
 
     expect(screen.getByText("Meet the specialists")).toBeInTheDocument()
     expect(screen.getByText("Get in Touch")).toBeInTheDocument()
   })
 
-  describe("Get in Touch button", () => {
-    it("links out to submission flow", () => {
-      render(<MeetTheSpecialists />)
+  it("Get in Touch button links out to submission flow and tracks click", () => {
+    renderWithRelay()
 
-      const link = screen.getByTestId("get-in-touch-button")
+    const link = screen.getByTestId("get-in-touch-button")
 
-      expect(link).toBeInTheDocument()
-      expect(link).toHaveTextContent("Get in Touch")
-      expect(link).toHaveAttribute("href", "/sell/inquiry")
-    })
+    expect(link).toBeInTheDocument()
+    expect(link).toHaveTextContent("Get in Touch")
+    expect(link).toHaveAttribute("href", "/sell/inquiry")
 
-    it("tracks click", () => {
-      render(<MeetTheSpecialists />)
+    fireEvent.click(link)
 
-      fireEvent.click(screen.getByTestId("get-in-touch-button"))
-
-      expect(trackEvent).toHaveBeenCalled()
-      expect(trackEvent).toHaveBeenCalledWith({
-        action: "tappedConsignmentInquiry",
-        context_module: "sellMeetTheSpecialists",
-        context_page_owner_type: "sell",
-        label: "Get in Touch",
-        user_id: "user-id",
-        user_email: "user-email@artsy.net",
-      })
-    })
-
-    it("links out to email provider", () => {
-      render(<MeetTheSpecialists />)
-
-      const link = screen.getByTestId("get-in-touch-button")
-
-      expect(link).toBeInTheDocument()
-      expect(link).toHaveTextContent("Get in Touch")
-      expect(link).toHaveAttribute("href", "/sell/inquiry")
+    expect(trackEvent).toHaveBeenCalled()
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "tappedConsignmentInquiry",
+      context_module: "sellMeetTheSpecialists",
+      context_page_owner_type: "sell",
+      label: "Get in Touch",
+      user_id: "user-id",
+      user_email: "user-email@artsy.net",
     })
   })
 
-  describe("Contact the specialist button", () => {
-    it("links out to email provider", () => {
-      render(<MeetTheSpecialists />)
+  it("Contact the specialist button links out to email provider", () => {
+    renderWithRelay({ StaticContent: () => mockstaticContent })
 
-      const link = screen.getByTestId("get-in-touch-button-Jessica") // here
+    expect(screen.getByText("Jessica Backus")).toBeInTheDocument()
 
-      expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute(
-        "href",
-        "/sell/inquiry/jessica@artsymail.com"
-      )
-    })
+    const link = screen.getByTestId("get-in-touch-button-Jessica")
+
+    expect(link).toBeInTheDocument()
+    expect(link).toHaveAttribute("href", "/sell/inquiry/jessica@artsymail.com")
   })
 })
+
+const mockstaticContent = {
+  specialistBios: [
+    {
+      name: "Jessica Backus",
+      firstName: "Jessica",
+      jobTitle: "some job title",
+      bio: "some bio",
+      email: "jessica@artsymail.com",
+      image: {},
+    },
+    {
+      name: "Rachel Hagopian",
+      firstName: "Rachel",
+      jobTitle: "some job title",
+      bio: "some bio",
+      email: "rachel.hagopian@artsy.net",
+      image: {},
+    },
+  ],
+}

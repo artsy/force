@@ -1,22 +1,22 @@
-import { useEffect } from "react"
-import { useRouter } from "System/Hooks/useRouter"
-import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { Box, Flex, Join, Spacer } from "@artsy/palette"
+import { CollectorsOverview } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/CollectorsOverview"
+import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
+import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FooterBanner"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
 import { Highlights } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Highlights"
-import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/WaysWeSell"
 import { HowItWorksSteps } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HowItWorksSteps"
-import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
-import { CollectorsOverview } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/CollectorsOverview"
+import { MeetTheSpecialistsQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
 import { PreviouslySoldOnArtsyRailQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviouslySoldOnArtsyRail"
-import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FooterBanner"
-import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
-import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
-import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
-import { Media } from "Utils/Responsive"
-import { SWAStickyFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAStickyFooter"
 import { SWAFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
+import { SWAStickyFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAStickyFooter"
+import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
+import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/WaysWeSell"
+import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
+import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { Footer } from "Components/Footer/Footer"
+import { useRouter } from "System/Hooks/useRouter"
+import { Media } from "Utils/Responsive"
+import { useEffect } from "react"
 
 export const MarketingLandingApp = () => {
   const {
@@ -59,7 +59,7 @@ export const MarketingLandingApp = () => {
               <WaysWeSell />
               <HowItWorksSteps />
               <FAQSWA />
-              <MeetTheSpecialists />
+              <MeetTheSpecialistsQueryRenderer />
               <CollectorsOverview />
               <PreviouslySoldOnArtsyRailQueryRenderer />
               {/* <Reviews /> */}
@@ -82,7 +82,7 @@ export const MarketingLandingApp = () => {
             <WaysWeSell />
             <HowItWorksSteps />
             <SpeakToTheTeam />
-            <MeetTheSpecialists />
+            <MeetTheSpecialistsQueryRenderer />
             <CollectorsOverview />
             <PreviouslySoldOnArtsyRailQueryRenderer />
             {/* <Reviews /> */}

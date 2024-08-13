@@ -1,4 +1,4 @@
-import { Flex, Spacer, Text, Box } from "@artsy/palette"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { FC } from "react"
 import { useFragment, graphql } from "react-relay"
@@ -50,7 +50,7 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
   }
 
   return (
-    <Box>
+    <>
       <Flex width="100%" justifyContent="space-between">
         <Text
           variant="xs"
@@ -107,7 +107,7 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
           priceWithDiscount={partnerOffer?.priceWithDiscount?.display}
         />
       </Flex>
-    </Box>
+    </>
   )
 }
 

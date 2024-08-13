@@ -10,7 +10,7 @@ import {
   FulfillmentValues,
   ShipValues,
   addressWithFallbackValues,
-  getDefaultUserAddress,
+  getInitialShippingValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { FulfillmentDetailsForm_me$key } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import createLogger from "Utils/logger"
@@ -82,27 +82,28 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   }, [hasSavedAddresses])
 
   /*
-   * Re-save fulfillment details on load if they are already saved
-   * and shipping quotes need refreshing for new address mode only
+   * Re-save fulfillment details on load if they are already saved &
+   * require artsy shipping (new address form mode only - saved addresses
+   * handle this separately)
    */
   useEffect(() => {
-    const existingFulfillmentDetails =
-      shippingContext.orderData.savedFulfillmentDetails
-    if (
-      existingFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
-      shippingContext.orderData.requiresArtsyShippingTo(
-        existingFulfillmentDetails.attributes.country
-      )
-    ) {
+    const { savedFulfillmentDetails } = shippingContext.orderData
+
+    const isArtsyShippingSaved =
+      savedFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
+      savedFulfillmentDetails.isArtsyShipping &&
+      shippingContext.meData.addressList.length === 0
+
+    if (isArtsyShippingSaved) {
       const refreshShippingQuotes = async () => {
         // instead of handleSubmit, call the save fulfillment details function
         // directly
         const result = await handleSaveFulfillmentDetails({
-          attributes: existingFulfillmentDetails.attributes,
+          attributes: savedFulfillmentDetails.attributes,
           fulfillmentType: FulfillmentType.SHIP,
           meta: {
             // FIXME: Will clobber previous address verification (but we can't
-            // know what the previous status was unless we read from server)
+            // know what the previous status was until we can read from server)
             addressVerifiedBy: null,
           },
         })
@@ -299,8 +300,7 @@ const ME_FRAGMENT = graphql`
  */
 const getInitialValues = (
   meData: ShippingContextProps["meData"],
-  orderData: ShippingContextProps["orderData"],
-  forceNewAddressFormMode?: boolean
+  orderData: ShippingContextProps["orderData"]
 ): FulfillmentValues => {
   if (orderData.savedFulfillmentDetails) {
     return {
@@ -319,40 +319,9 @@ const getInitialValues = (
 
   const savedAddresses = meData.addressList
 
-  // The default ship-to address should be the first one that
-  // can be shipped-to, preferring the default
-
-  const defaultUserAddress = getDefaultUserAddress(
+  return getInitialShippingValues(
     savedAddresses,
+    orderData.shipsFrom,
     orderData.availableShippingCountries
   )
-
-  if (defaultUserAddress) {
-    return {
-      fulfillmentType: FulfillmentType.SHIP,
-      attributes: addressWithFallbackValues(defaultUserAddress),
-      meta: {
-        saveAddress: false,
-        addressVerifiedBy: null,
-      },
-    }
-  }
-
-  // The user doesn't have a valid ship-to address, so we'll return empty values.
-  // TODO: This doesn't account for matching the saved address id
-  // (that is still in parsedOrderData). In addition the initial values
-  // are less relevant if the user has saved addresses - Setting country
-  // doesn't matter.
-  const initialFulfillmentValues: ShipValues["attributes"] = addressWithFallbackValues(
-    { country: orderData.shipsFrom }
-  )
-
-  return {
-    fulfillmentType: FulfillmentType.SHIP,
-    attributes: initialFulfillmentValues,
-    meta: {
-      addressVerifiedBy: null,
-      saveAddress: true,
-    },
-  }
 }

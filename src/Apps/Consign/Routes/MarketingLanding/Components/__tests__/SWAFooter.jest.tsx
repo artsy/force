@@ -1,19 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SWAFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
 
 jest.mock("react-tracking")
-jest.mock("System/Hooks/useSystemContext")
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerType: "sell",
-  })),
-}))
-const mockShowAuthDialog = jest.fn()
-jest.mock("Components/AuthDialog", () => ({
-  useAuthDialog: jest.fn(() => ({
-    showAuthDialog: mockShowAuthDialog,
   })),
 }))
 const trackEvent = useTracking as jest.Mock
@@ -25,10 +17,6 @@ describe("SWAFooter", () => {
         trackEvent,
       }
     })
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      user: { id: "user-id", email: "user-email@artsy.net" },
-      isLoggedIn: true,
-    }))
   })
 
   it("renders correctly", () => {
@@ -65,7 +53,6 @@ describe("SWAFooter", () => {
         context_page_owner_type: "sell",
         label: "Start Selling",
         destination_path: "/sell/submission",
-        user_id: "user-id",
       })
     })
   })

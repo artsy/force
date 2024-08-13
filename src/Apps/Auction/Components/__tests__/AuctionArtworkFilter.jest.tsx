@@ -37,7 +37,8 @@ describe("AuctionArtworkFilter", () => {
     query: graphql`
       query AuctionArtworkFilterTestQuery($input: FilterArtworksInput!) {
         viewer {
-          ...AuctionArtworkFilter_viewer @arguments(input: $input)
+          ...AuctionArtworkFilter_viewer
+            @arguments(input: $input, saleID: "test-sale")
         }
       }
     `,
@@ -80,7 +81,7 @@ describe("AuctionArtworkFilter", () => {
   describe("#getArtworkFilterInputArgs", () => {
     it("returns default arguments", () => {
       expect(getArtworkFilterInputArgs()).toEqual({
-        aggregations: ["ARTIST", "MEDIUM", "TOTAL"],
+        aggregations: ["ARTIST", "MEDIUM", "TOTAL", "MATERIALS_TERMS"],
         first: 39,
       })
     })
@@ -90,6 +91,7 @@ describe("AuctionArtworkFilter", () => {
         "ARTIST",
         "MEDIUM",
         "TOTAL",
+        "MATERIALS_TERMS",
         "FOLLOWED_ARTISTS",
       ])
     })

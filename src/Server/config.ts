@@ -5,6 +5,8 @@
 // on process.env and sharify.
 //
 
+import { tryParse } from "Utils/tryParse"
+
 // Warn if this file is included client-side
 if (process.env.NODE_ENV !== "test") {
   if (typeof window !== "undefined" && window !== null) {
@@ -53,8 +55,11 @@ export const ENABLE_MEMORY_PROFILING: any = false
 export const ENABLE_NEW_AUCTIONS_FILTER: any = false
 export const ENABLE_QUERY_BATCHING: any = false
 export const ENABLE_SAVED_SEARCH: any = false
-export const ENABLE_SERVER_SIDE_CACHE: any = false
+export const ENABLE_GRAPHQL_CACHE: any = false
+export const ENABLE_GRAPHQL_PROXY: any = true
 export const ENABLE_WEB_CRAWLING: any = false
+export const GRAPHQL_CACHE_TTL: any = 1000000000
+export const GRAPHQL_CACHE_SIZE: any = 1000000000
 export const FACEBOOK_APP_NAMESPACE: any = "artsyinc"
 export const FACEBOOK_ID: any = null
 export const FACEBOOK_SECRET: any = null
@@ -141,13 +146,5 @@ for (let key in module.exports) {
   module.exports = {
     ...module.exports,
     [key]: tryParse(val),
-  }
-}
-
-function tryParse(val) {
-  try {
-    return JSON.parse(val)
-  } catch (error) {
-    return val
   }
 }

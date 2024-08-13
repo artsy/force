@@ -22,10 +22,10 @@
   dependencies:
     tslib "~2.0.1"
 
-"@artsy/cohesion@4.189.0":
-  version "4.189.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.189.0.tgz#08f217eb87e5b1568fafdb6cfe5fe1c867c61be8"
-  integrity sha512-x+cqPqMYNWn6Iqa/qEU9gv/91s9k/AwhapQTU0wlg9JTby4fvkV//OQrlD/eMobifXvIVAJBb6yfG/rKc40TXg==
+"@artsy/cohesion@4.198.0":
+  version "4.198.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.198.0.tgz#a04f61459ab146243fdd75a96c2bc25285b74cd9"
+  integrity sha512-mBpsr1y4qv9/A8L9/lu3MmHDmIW08TgsN10S+/CqPR2vva2m7n0pGCauo2nUy7CIyXBvcbb6XQyXfKX+6WmdzA==
   dependencies:
     core-js "3"
 
@@ -109,24 +109,6 @@
   integrity sha512-Iuq3hjvx6O2d1glmuoo1kFnMLOBJFW2OuQ4Q5fXS1Q/DMAvjwrBmmzZE6HVzwR5BwX5Xy6knRiD8FuPrldeo0Q==
 
 "@artsy/palette@38.13.1", "@artsy/palette@^38.13.1":
-  version "38.13.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-38.13.1.tgz#b3cc2903a3d532769b3505b2e717ccd37fb27912"
-  integrity sha512-Xlp3fJy3A3B3E2NiRu7m0xTTeYZiDniWhb5g0KkOAX/r4KzGE5qQ95yefaDpgY7CPTKdJJ/5/HkxatxSOyjh4w==
-  dependencies:
-    "@artsy/icons" "^3.2.2"
-    "@artsy/palette-tokens" "^6.0.3"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    lodash "^4.17.21"
-    proportional-scale "^4.0.0"
-    react-focus-on "^3.7.0"
-    react-lazy-load-image-component "1.5.5"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-    use-keyboard-list-navigation "2.4.2"
-
-"@artsy/palette@^38.13.1":
   version "38.13.1"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-38.13.1.tgz#b3cc2903a3d532769b3505b2e717ccd37fb27912"
   integrity sha512-Xlp3fJy3A3B3E2NiRu7m0xTTeYZiDniWhb5g0KkOAX/r4KzGE5qQ95yefaDpgY7CPTKdJJ/5/HkxatxSOyjh4w==
@@ -4366,17 +4348,17 @@
     regenerator-runtime "^0.13.7"
     resolve-from "^5.0.0"
 
-"@stripe/react-stripe-js@^1.10.0":
+"@stripe/react-stripe-js@1.10.0":
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-1.10.0.tgz#5412874b5ed4732e917c6d9bb2b6721ee25615ab"
   integrity sha512-vuIjJUZJ3nyiaGa5z5iyMCzZfGGsgzOOjWjqknbbhkNsewyyginfeky9EZLSz9+iSAsgC9K6MeNOTLKVGcMycQ==
   dependencies:
     prop-types "^15.7.2"
 
-"@stripe/stripe-js@^1.34.0":
-  version "1.34.0"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.34.0.tgz#62fecff2580469ec56ec31066b73a0fc016749b8"
-  integrity sha512-fFuchE1mK2GWyZmTS87L6NaIvKo4yIj3SpkTuHY41A7frfB07/3z8l1jBrHKGzvVnlFkeCVnEvfMjBmdlqcO6w==
+"@stripe/stripe-js@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-4.1.0.tgz#11a54478df28b7a2d146251f645fb26e9efc9bfd"
+  integrity sha512-HhstGRUz/4JdbZpb26OcOf8Qb/cFR02arvHvgz4sPFLSnI6ZNHC53Jc6JP/FGNwxtrF719YyUnK0gGy4oyhucQ==
 
 "@styled-system/background@^5.1.2":
   version "5.1.2"
@@ -4839,6 +4821,13 @@
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@types/html-minifier-terser/-/html-minifier-terser-6.1.0.tgz#4fc33a00c1d0c16987b1a20cf92d20614c55ac35"
   integrity sha512-oh/6byDPnL1zeNXFrDXFLyZjkr1MsBG667IM792caf1L2UPOOMf65NFzjUH/ltyfwjAGfs1rsX1eftK0jC/KIg==
+
+"@types/http-proxy@^1.17.10":
+  version "1.17.14"
+  resolved "https://registry.yarnpkg.com/@types/http-proxy/-/http-proxy-1.17.14.tgz#57f8ccaa1c1c3780644f8a94f9c6b5000b5e2eec"
+  integrity sha512-SSrD0c1OQzlFX7pGu1eXxSEjemej64aaNPRhhVYUGqXh0BtldAAx37MG8btcumvpgKyZp1F5Gn3JkktdxiFv6w==
+  dependencies:
+    "@types/node" "*"
 
 "@types/is-function@^1.0.0":
   version "1.0.0"
@@ -7566,6 +7555,13 @@ braces@^3.0.1, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
+braces@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/braces/-/braces-3.0.3.tgz#490332f40919452272d55a8480adc0c441358789"
+  integrity sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==
+  dependencies:
+    fill-range "^7.1.1"
+
 brorand@^1.0.1, brorand@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
@@ -9554,6 +9550,13 @@ debug@^3.0.0, debug@^3.1.0, debug@^3.2.6, debug@^3.2.7:
   integrity sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==
   dependencies:
     ms "^2.1.1"
+
+debug@^4.3.4:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.5.tgz#e83444eceb9fedd4a1da56d671ae2446a01a6e1e"
+  integrity sha512-pt0bNEmneDIvdL1Xsd9oDQ/wrQRkXDT4AUWlNZNPKvW5x/jyO9VFXkJUP07vQ2upmw5PlaITaPKc31jK13V+jg==
+  dependencies:
+    ms "2.1.2"
 
 debug@~2.2.0:
   version "2.2.0"
@@ -11629,6 +11632,13 @@ fill-range@^7.0.1:
   dependencies:
     to-regex-range "^5.0.1"
 
+fill-range@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-7.1.1.tgz#44265d3cac07e3ea7dc247516380643754a05292"
+  integrity sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==
+  dependencies:
+    to-regex-range "^5.0.1"
+
 filter-obj@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/filter-obj/-/filter-obj-1.1.0.tgz#9b311112bc6c6127a16e016c6c5d7f19e0805c5b"
@@ -13148,7 +13158,19 @@ http-proxy-agent@^5.0.0:
     agent-base "6"
     debug "4"
 
-http-proxy@1.18.1:
+http-proxy-middleware@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-3.0.0.tgz#550790357d6f92a9b82ab2d63e07343a791cf26b"
+  integrity sha512-36AV1fIaI2cWRzHo+rbcxhe3M3jUDCNzc4D5zRl57sEWRAxdXYtw7FSQKYY6PDKssiAKjLYypbssHk+xs/kMXw==
+  dependencies:
+    "@types/http-proxy" "^1.17.10"
+    debug "^4.3.4"
+    http-proxy "^1.18.1"
+    is-glob "^4.0.1"
+    is-plain-obj "^3.0.0"
+    micromatch "^4.0.5"
+
+http-proxy@1.18.1, http-proxy@^1.18.1:
   version "1.18.1"
   resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.1.tgz#401541f0534884bbf95260334e72f88ee3976549"
   integrity sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==
@@ -14064,6 +14086,11 @@ is-plain-obj@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-2.1.0.tgz#45e42e37fccf1f40da8e5f76ee21515840c09287"
   integrity sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==
+
+is-plain-obj@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-3.0.0.tgz#af6f2ea14ac5a646183a5bbdb5baabbc156ad9d7"
+  integrity sha512-gwsOE28k+23GP1B6vFl1oVh/WOzmawBrKwo5Ev6wMKzPkaXaCDIQKzLnvsA42DRlbVTWorkgTKIviAKCWkfUwA==
 
 is-plain-object@5.0.0, is-plain-object@^5.0.0:
   version "5.0.0"
@@ -16805,6 +16832,14 @@ micromatch@^4.0.2, micromatch@^4.0.4:
     braces "^3.0.1"
     picomatch "^2.2.3"
 
+micromatch@^4.0.5:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.7.tgz#33e8190d9fe474a9895525f5618eee136d46c2e5"
+  integrity sha512-LPP/3KorzCwBxfeUuZmaR6bG2kdeHSbe0P2tY3FLRU4vYrjYz5hI4QZwV0njUx3jeuKe67YukQ1LSPZBKDqO/Q==
+  dependencies:
+    braces "^3.0.3"
+    picomatch "^2.3.1"
+
 miller-rabin@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/miller-rabin/-/miller-rabin-4.0.1.tgz#f080351c865b0dc562a8462966daa53543c78a4d"
@@ -18458,7 +18493,7 @@ picomatch@^2.2.3:
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.0.tgz#f1f061de8f6a4bf022892e2d128234fb98302972"
   integrity sha512-lY1Q/PiJGC2zOv/z391WOTD+Z02bCgsFfvxoXXf6h7kv9o+WmsmzYqrAwY63sNgOxE4xEdq0WyUnXfKeBrSvYw==
 
-picomatch@^2.3.0:
+picomatch@^2.3.0, picomatch@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.1.tgz#3ba3833733646d9d3e4995946c1365a67fb07a42"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
@@ -23158,6 +23193,11 @@ use-cursor@^1.2.3:
   integrity sha512-xSm2bDLnRpdupZTfWPmUHU1ZipxVh/p0fPsrF9wkH59MslWdYUK4xq4gAxL3nmVSEyfly3q65FcHYdyqTK0iIg==
   dependencies:
     map-cursor-to-max "^1.0.0"
+
+use-debounce@^10.0.2:
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-10.0.2.tgz#a2e903d5d7f9f5111dd0cba5bfa67e103f6e96a6"
+  integrity sha512-MwBiJK2dk+2qhMDVDCPRPeLuIekKfH2t1UYMnrW9pwcJJGFDbTLliSMBz2UKGmE1PJs8l3XoMqbIU1MemMAJ8g==
 
 use-deep-compare-effect@^1.2.0:
   version "1.8.1"

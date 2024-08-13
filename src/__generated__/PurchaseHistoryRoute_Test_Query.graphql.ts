@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91a6767c234d6a9caa92252af42341dd>>
+ * @generated SignedSource<<07cf6f550d5cac1a56886ad7de2a0725>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 export type PurchaseHistoryRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type PurchaseHistoryRoute_Test_Query$data = {
   readonly submission: {
@@ -21,8 +22,10 @@ export type PurchaseHistoryRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly myCollectionArtworkID: string | null | undefined;
     readonly provenance: string | null | undefined;
     readonly signature: boolean | null | undefined;
+    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   } | null | undefined;
 };
 export type PurchaseHistoryRoute_Test_Query = {
@@ -103,6 +106,20 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "myCollectionArtworkID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "provenance",
             "storageKey": null
           },
@@ -126,12 +143,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "333f1e5bcedcc1a018f0bbbae6dc919c",
+    "cacheID": "b6cd336c97e459dc816da72acbbf70e5",
     "id": null,
     "metadata": {},
     "name": "PurchaseHistoryRoute_Test_Query",
     "operationKind": "query",
-    "text": "query PurchaseHistoryRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PurchaseHistoryRoute_submission\n    id\n  }\n}\n\nfragment PurchaseHistoryRoute_submission on ConsignmentSubmission {\n  provenance\n  signature\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
+    "text": "query PurchaseHistoryRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PurchaseHistoryRoute_submission\n    id\n  }\n}\n\nfragment PurchaseHistoryRoute_submission on ConsignmentSubmission {\n  provenance\n  signature\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0f806314dff4851d2f4b8e6515687436>>
+ * @generated SignedSource<<5e261f8c00f2645495be8aab6a5ce6fd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 export type ThankYouRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type ThankYouRoute_Test_Query$data = {
   readonly submission: {
-    readonly " $fragmentSpreads": FragmentRefs<"SubmissionRoute_submission">;
+    readonly " $fragmentSpreads": FragmentRefs<"SubmissionRoute_submission" | "ThankYouRoute_submission">;
   } | null | undefined;
 };
 export type ThankYouRoute_Test_Query$rawResponse = {
@@ -21,6 +22,8 @@ export type ThankYouRoute_Test_Query$rawResponse = {
     readonly externalId: string;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly myCollectionArtworkID: string | null | undefined;
+    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
   } | null | undefined;
 };
 export type ThankYouRoute_Test_Query = {
@@ -56,6 +59,11 @@ return {
             "args": null,
             "kind": "FragmentSpread",
             "name": "SubmissionRoute_submission"
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ThankYouRoute_submission"
           }
         ],
         "storageKey": "submission(id:\"submission-id\")"
@@ -96,6 +104,20 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "myCollectionArtworkID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -105,16 +127,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9003525fa2df6e603b6ac750e9671b49",
+    "cacheID": "8c6b59f9bd00ac00aef79894933110fe",
     "id": null,
     "metadata": {},
     "name": "ThankYouRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ThankYouRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
+    "text": "query ThankYouRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...ThankYouRoute_submission\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n\nfragment ThankYouRoute_submission on ConsignmentSubmission {\n  internalID\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d2b9754262794bb6cd63fac867223bc4";
+(node as any).hash = "ac0ec3a8a0855ede978ce4c9b3ae7d0c";
 
 export default node;

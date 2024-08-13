@@ -38,6 +38,7 @@ import {
   IP_DENYLIST,
   NODE_ENV,
   SENTRY_PRIVATE_DSN,
+  ENABLE_GRAPHQL_PROXY,
 } from "./Server/config"
 
 // NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
@@ -67,10 +68,8 @@ import {
   UnleashService,
 } from "./Server/featureFlags/unleashService"
 import { registerFeatureFlagService } from "./Server/featureFlags/featureFlagService"
-import { userPreferencesMiddleware } from "./Server/middleware/userPreferencesMiddleware"
 import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
-
-// Find the v2 routes, we will not be testing memory caching for legacy pages.
+import { graphqlProxyMiddleware } from "Server/middleware/graphqlProxyMiddleware"
 
 export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)
@@ -93,6 +92,19 @@ export function initializeMiddleware(app) {
   // Ensure all responses are gzip compressed
   app.use(compression())
 
+  // JSON Body Parser is required for getting the `_csurf` token for passport.
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: true }))
+
+  /**
+   * Mount GraphQL proxy and cache. If logged in we hit Metaphysics directly.
+   * @important Body parser middleware must always be above the proxy.
+   * @see: System/Relay/getMetaphysicsEndpoint.ts
+   */
+  if (ENABLE_GRAPHQL_PROXY) {
+    app.use("/api/metaphysics", graphqlProxyMiddleware)
+  }
+
   // Ensure basic security settings
   applySecurityMiddleware(app)
 
@@ -111,6 +123,10 @@ export function initializeMiddleware(app) {
   app.use(hardcodedRedirectsMiddleware)
   app.use(localsMiddleware)
   app.use(sameOriginMiddleware)
+
+  // Add CSRF to the cookie and remove it from the page. This allows the caching
+  // on the html and is used by the Login Modal to make secure requests.
+  app.use(csrfTokenMiddleware)
 
   // Need sharify for unleash
   registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
@@ -158,10 +174,6 @@ function applySecurityMiddleware(app) {
   // Session cookie
   app.use(sessionMiddleware())
 
-  // JSON Body Parser is required for getting the `_csurf` token for passport.
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true }))
-
   // Initialize async context for the request
   app.use(asyncLocalsMiddleware)
 
@@ -198,6 +210,7 @@ function applySecurityMiddleware(app) {
         "has_partner_access",
         "id",
         "lab_features",
+        "length_unit_preference",
         "name",
         "paddle_number",
         "phone",
@@ -207,15 +220,8 @@ function applySecurityMiddleware(app) {
     })
   )
 
-  // Add CSRF to the cookie and remove it from the page. This will allows the
-  // caching on the html and is used by the Login Modal to make secure requests.
-  app.use(csrfTokenMiddleware)
-
   // Require a user for these routes
   app.use(userRequiredMiddleware)
-
-  // Get user preferences (e.g. metric, currency)
-  app.use(userPreferencesMiddleware)
 
   // Get app preferences (e.g. theme)
   app.use(appPreferencesMiddleware)

@@ -3,15 +3,18 @@ import { Box, Button, Clickable, LabeledInput, Stack } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { FC, useRef, useState } from "react"
 import { CollectorProfileArtistsList } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsList"
-import { CollectorProfileArtistsAddDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsAddDialog"
+import { CollectorProfileArtistsAddDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddDialog"
 import { CollectorProfileArtistsListHeader } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListHeader"
 import { CollectorProfileArtistsSearchResults } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsSearchResults"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import SearchIcon from "@artsy/icons/SearchIcon"
+import { useRouter } from "System/Hooks/useRouter"
 
 interface CollectorProfileArtistsRouteProps {}
 
-export const CollectorProfileArtistsRoute: FC<CollectorProfileArtistsRouteProps> = props => {
+export const CollectorProfileArtistsRoute: FC<CollectorProfileArtistsRouteProps> = () => {
+  const { router } = useRouter()
+
   const [mode, setMode] = useState<"Idle" | "Add">("Idle")
   const [term, setTerm] = useState("")
 
@@ -85,7 +88,16 @@ export const CollectorProfileArtistsRoute: FC<CollectorProfileArtistsRouteProps>
       </Stack>
 
       {mode === "Add" && (
-        <CollectorProfileArtistsAddDialog onClose={handleClose} />
+        <CollectorProfileArtistsAddDialog
+          title="Select an artist"
+          onClose={handleClose}
+          onSuccess={() => {
+            router.push({
+              pathname: "/collector-profile/artists",
+              query: { page: 1 },
+            })
+          }}
+        />
       )}
     </>
   )

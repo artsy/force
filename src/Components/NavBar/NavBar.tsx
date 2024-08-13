@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Clickable,
   Dropdown,
   Flex,
@@ -30,7 +29,6 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { Z } from "Apps/Components/constants"
 import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
-import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import Events from "Utils/Events"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
@@ -52,6 +50,8 @@ import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding
 import { SearchBar } from "Components/Search/SearchBar"
 import { NavBarMobileMenuProfile } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuProfile"
 import styled from "styled-components"
+import { AppDownloadBanner } from "Components/AppDownloadBanner"
+import { Media } from "Utils/Responsive"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -153,40 +153,17 @@ export const NavBar: React.FC = track(
         borderColor="black30"
         height={height}
       >
-        <AppContainer height="100%">
+        <Media at="xs">
+          <AppDownloadBanner />
+        </Media>
+
+        <AppContainer height={[null, "100%"]}>
           <HorizontalPadding
             as="nav"
             display="flex"
             flexDirection="column"
             height="100%"
           >
-            {/* Mobile authentication banner */}
-            {!isLoggedIn && (
-              <Flex display={["flex", "none"]} py={1}>
-                <Button
-                  // @ts-ignore
-                  as={RouterLink}
-                  to="/signup"
-                  variant="secondaryBlack"
-                  flex={1}
-                  size="small"
-                >
-                  {t`navbar.signup`}
-                </Button>
-
-                <Button
-                  // @ts-ignore
-                  as={RouterLink}
-                  to="/login"
-                  flex={1}
-                  ml={1}
-                  size="small"
-                >
-                  {t`navbar.login`}
-                </Button>
-              </Flex>
-            )}
-
             {/* Top-tier */}
             <Flex pt={1} pb={[1, 0]} alignItems="stretch" flex={1}>
               <NavBarPrimaryLogo mr={[1, 2]} />
@@ -276,7 +253,7 @@ export const NavBar: React.FC = track(
 
               {/* Mobile. Triggers at the `xs` breakpoint. */}
               <Flex display={["flex", "none"]}>
-                {isLoggedIn && (
+                {isLoggedIn ? (
                   <>
                     <NavBarItemButton
                       display="flex"
@@ -318,6 +295,16 @@ export const NavBar: React.FC = track(
                       </ProgressiveOnboardingFollowFind>
                     </ProgressiveOnboardingAlertFind>
                   </>
+                ) : (
+                  <NavBarItemLink
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    aria-label="Login"
+                    href="/login"
+                  >
+                    <PersonIcon aria-hidden="true" height={22} width={22} />
+                  </NavBarItemLink>
                 )}
 
                 <NavBarItemButton

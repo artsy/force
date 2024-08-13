@@ -8,6 +8,7 @@ import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWo
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
 import { redirectWithCanonicalParams } from "./Server/redirect"
 import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
@@ -111,6 +112,7 @@ export const artistRoutes: RouteProps[] = [
   {
     path: "/artist/:artistID",
     ignoreScrollBehaviorBetweenChildren: true,
+    serverCacheTTL: serverCacheTTLs.artist,
     getComponent: () => ArtistApp,
     onServerSideRender: enableArtistPageCTA,
     onClientSideRender: () => {
@@ -128,6 +130,7 @@ export const artistRoutes: RouteProps[] = [
     children: [
       {
         path: "",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => WorksForSaleRoute,
         onServerSideRender: redirectWithCanonicalParams,
         onClientSideRender: () => {
@@ -142,7 +145,7 @@ export const artistRoutes: RouteProps[] = [
             $aggregations: [ArtworkAggregation]
             $includeBlurHash: Boolean!
           ) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistWorksForSaleRoute_artist
                 @arguments(
                   input: $input
@@ -155,6 +158,7 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "auction-results",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => AuctionResultsRoute,
         onClientSideRender: () => {
           AuctionResultsRoute.preload()
@@ -190,7 +194,7 @@ export const artistRoutes: RouteProps[] = [
             $createdBeforeYear: Int
             $allowEmptyCreatedDates: Boolean
           ) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistAuctionResultsRoute_artist
                 @arguments(
                   page: $page
@@ -211,6 +215,7 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "about",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => OverviewRoute,
         onServerSideRender: enableArtistPageCTA,
         onClientSideRender: () => {
@@ -218,7 +223,7 @@ export const artistRoutes: RouteProps[] = [
         },
         query: graphql`
           query artistRoutes_OverviewQuery($artistID: String!) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistOverviewRoute_artist
             }
           }
@@ -228,11 +233,12 @@ export const artistRoutes: RouteProps[] = [
   },
   {
     path: "/artist/:artistID",
+    serverCacheTTL: serverCacheTTLs.artist,
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => ArtistSubApp,
     query: graphql`
       query artistRoutes_ArtistSubAppQuery($artistID: String!) {
-        artist(id: $artistID) {
+        artist(id: $artistID) @principalField {
           ...ArtistSubApp_artist
         }
       }
@@ -240,13 +246,14 @@ export const artistRoutes: RouteProps[] = [
     children: [
       {
         path: "articles/:artworkId?",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ArticlesRoute,
         onClientSideRender: () => {
           ArticlesRoute.preload()
         },
         query: graphql`
           query artistRoutes_ArticlesQuery($artistID: String!) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistArticlesRoute_artist
             }
           }
@@ -260,7 +267,7 @@ export const artistRoutes: RouteProps[] = [
         },
         query: graphql`
           query artistRoutes_ArtistConsignQuery($artistID: String!) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistConsignRoute_artist
               targetSupply {
                 isInMicrofunnel
@@ -286,6 +293,7 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "cv",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => CVRoute,
         onClientSideRender: () => {
           CVRoute.preload()
@@ -300,13 +308,14 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "series",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ArtistSeriesRoute,
         onClientSideRender: () => {
           ArtistSeriesRoute.preload()
         },
         query: graphql`
           query artistRoutes_ArtistSeriesQuery($artistID: String!) {
-            artist(id: $artistID) {
+            artist(id: $artistID) @principalField {
               ...ArtistArtistSeriesRoute_artist
             }
           }
@@ -314,6 +323,7 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "shows",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ShowsRoute,
         onClientSideRender: () => {
           ShowsRoute.preload()
@@ -340,6 +350,7 @@ export const artistRoutes: RouteProps[] = [
   },
   {
     path: "/auction-result/:auctionResultId",
+    serverCacheTTL: serverCacheTTLs.artist,
     getComponent: () => AuctionResultRoute,
     onServerSideRender: enableArtistPageCTA,
     onClientSideRender: () => {

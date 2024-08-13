@@ -13,6 +13,7 @@ import {
 import { fireEvent, screen, within } from "@testing-library/react"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -22,6 +23,9 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 }))
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
+}))
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => false),
 }))
 
 const { getWrapper } = setupTestWrapper<Works_Query>({
@@ -60,6 +64,7 @@ describe("PartnerArtworks", () => {
   const trackEvent = jest.fn()
   const mockUseRouter = useRouter as jest.Mock
   const mockGetENV = getENV as jest.Mock
+  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -76,6 +81,7 @@ describe("PartnerArtworks", () => {
         },
       },
     }))
+    mockUseFeatureFlag.mockImplementation(() => true)
   })
 
   it("renders correctly", () => {
@@ -122,6 +128,10 @@ describe("PartnerArtworks", () => {
       },
       {
         label: "Size",
+        expanded: true,
+      },
+      {
+        label: "Availability",
         expanded: true,
       },
       {

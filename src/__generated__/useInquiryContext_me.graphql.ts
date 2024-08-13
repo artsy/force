@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<404fb125ca17cbbb17b5992e7fbc61d5>>
+ * @generated SignedSource<<d13e5d75c5f6591ba75aa6488e2c116d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,21 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type useInquiryContext_me$data = {
   readonly collectorLevel: number | null | undefined;
+  readonly collectorProfile: {
+    readonly lastUpdatePromptAt: string | null | undefined;
+  } | null | undefined;
+  readonly internalID: string;
   readonly location: {
     readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly postalCode: string | null | undefined;
+    readonly state: string | null | undefined;
   } | null | undefined;
   readonly otherRelevantPositions: string | null | undefined;
   readonly profession: string | null | undefined;
-  readonly shareFollows: boolean;
+  readonly userInterestsConnection: {
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "useInquiryContext_me";
 };
 export type useInquiryContext_me$key = {
@@ -31,6 +40,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "useInquiryContext_me",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -52,6 +68,27 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "city",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "state",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "postalCode",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "country",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -72,9 +109,49 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        },
+        {
+          "kind": "Literal",
+          "name": "interestType",
+          "value": "ARTIST"
+        }
+      ],
+      "concreteType": "UserInterestConnection",
+      "kind": "LinkedField",
+      "name": "userInterestsConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "userInterestsConnection(first:1,interestType:\"ARTIST\")"
+    },
+    {
+      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "shareFollows",
+      "concreteType": "CollectorProfileType",
+      "kind": "LinkedField",
+      "name": "collectorProfile",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lastUpdatePromptAt",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
@@ -82,6 +159,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c0c1a7db2bdd89bbf53666b0c0e61b1b";
+(node as any).hash = "0e8b61fe219ada3dadebde1fbd4d2f8e";
 
 export default node;

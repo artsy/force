@@ -23,7 +23,7 @@ export const LayoutDefault: FC<BaseLayoutProps> = ({ children }) => {
       >
         <LayoutNav />
 
-        <AppContainer as="main" id="main" flex={1}>
+        <AppContainer as="main" id="main" flex={1} minHeight="100vh">
           <HorizontalPadding>{children}</HorizontalPadding>
         </AppContainer>
 

@@ -1,4 +1,4 @@
-import { Flex, Spacer, Text, Box } from "@artsy/palette"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { RouterLink } from "System/Components/RouterLink"
 import { FC } from "react"
@@ -29,7 +29,7 @@ export const ArtworkPublishedNotification: FC<ArtworkPublishedNotificationProps>
   }
 
   return (
-    <Box>
+    <>
       <Text variant="lg-display">{headline}</Text>
 
       <Spacer y={1} />
@@ -51,7 +51,7 @@ export const ArtworkPublishedNotification: FC<ArtworkPublishedNotificationProps>
           <Text fontWeight="bold">View all works by {artist.name}</Text>
         </Flex>
       </RouterLink>
-    </Box>
+    </>
   )
 }
 

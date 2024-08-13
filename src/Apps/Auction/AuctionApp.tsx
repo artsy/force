@@ -191,9 +191,9 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
     fragment AuctionApp_viewer on Viewer
       @argumentDefinitions(
         input: { type: "FilterArtworksInput" }
-        saleID: { type: "String" }
+        saleID: { type: "String!" }
       ) {
-      ...AuctionArtworkFilter_viewer @arguments(input: $input)
+      ...AuctionArtworkFilter_viewer @arguments(input: $input, saleID: $saleID)
       ...AuctionWorksByFollowedArtistsRail_viewer @arguments(saleID: $saleID)
       ...AuctionCurrentAuctionsRail_viewer
 

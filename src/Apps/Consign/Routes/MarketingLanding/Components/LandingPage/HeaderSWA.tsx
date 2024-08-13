@@ -1,4 +1,3 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Button,
   Column,
@@ -8,22 +7,20 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { PreviousSubmissionQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviousSubmission"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
-import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
-import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
 
 export const HeaderSWA = () => {
-  const getInTouchRoute = "/sell/inquiry"
-  const { isLoggedIn } = useSystemContext()
-  const { showAuthDialog } = useAuthDialog()
-
   const {
     trackStartSellingClick,
     trackGetInTouchClick,
   } = useMarketingLandingTracking()
+
+  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
 
   const image = resized(
     "https://files.artsy.net/images/content-card-swa-landing-page.jpg",
@@ -33,6 +30,10 @@ export const HeaderSWA = () => {
   return (
     <GridColumns gridRowGap={[2, 4]} alignItems="center">
       <Column span={5} order={[1, 0]} py={[0, 2]} pr={[0, 2]}>
+        <Media at="xs">
+          {enableNewSubmissionFlow && <PreviousSubmissionQueryRenderer />}
+        </Media>
+
         <Text as="h1" variant={["xl", "xxl", "xxxl"]}>
           Sell art from your collection
         </Text>
@@ -45,35 +46,25 @@ export const HeaderSWA = () => {
         </Text>
 
         <Media greaterThanOrEqual="sm">
-          <Spacer y={[2, 4]} />
+          {enableNewSubmissionFlow ? (
+            <Spacer y={[2, 1]} />
+          ) : (
+            <Spacer y={[2, 4]} />
+          )}
 
           <GridColumns>
+            <Column span={[12, 12, 10]}>
+              {enableNewSubmissionFlow && <PreviousSubmissionQueryRenderer />}
+            </Column>
+
             <Column span={[12, 6, 5]}>
               <Button
                 // @ts-ignore
                 as={RouterLink}
                 width="100%"
                 variant="primaryBlack"
-                to="/sell/submission"
+                to={enableNewSubmissionFlow ? "sell/intro" : "/sell/submission"}
                 onClick={event => {
-                  if (!isLoggedIn) {
-                    event.preventDefault()
-
-                    showAuthDialog({
-                      mode: "Login",
-                      options: {
-                        title: () => {
-                          return "Log in to submit an artwork for sale"
-                        },
-                      },
-                      analytics: {
-                        contextModule: ContextModule.sellHeader,
-                        intent: Intent.login,
-                      },
-                    })
-
-                    return
-                  }
                   trackStartSellingClick("Header")
                 }}
                 mb={[1, 0]}
@@ -90,7 +81,7 @@ export const HeaderSWA = () => {
                 variant="secondaryBlack"
                 data-testid="get-in-touch-button"
                 onClick={trackGetInTouchClick}
-                to={getInTouchRoute}
+                to="/sell/inquiry"
               >
                 Get in Touch
               </Button>

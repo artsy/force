@@ -1,7 +1,6 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
@@ -16,6 +15,9 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 import { SaveButtonFragmentContainer } from "./SaveButton"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
+import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -28,7 +30,16 @@ interface DetailsProps {
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
+  showSubmissionStatus?: boolean
   renderSaveButton?: (artworkId: string) => React.ReactNode
+}
+
+interface SaleInfoLineProps extends DetailsProps {
+  showActivePartnerOfferLine: boolean
+}
+
+interface SaleMessageProps extends DetailsProps {
+  showActivePartnerOfferLine: boolean
 }
 
 const StyledConditionalLink = styled(RouterLink)`
@@ -128,10 +139,39 @@ const PartnerLine: React.FC<DetailsProps> = ({
   return null
 }
 
-const SaleInfoLine: React.FC<DetailsProps> = props => {
+const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
+  const { showActivePartnerOfferLine } = props
+
   return (
-    <Text variant="xs" color="black100" fontWeight="bold" overflowEllipsis>
-      <SaleMessage {...props} /> <BidInfo {...props} />
+    <Flex flexDirection="row" alignItems="center">
+      <Text variant="xs" color="black100" fontWeight="bold" overflowEllipsis>
+        <SaleMessage {...props} /> <BidInfo {...props} />
+      </Text>
+      {showActivePartnerOfferLine && <ActivePartnerOfferTimer {...props} />}
+    </Flex>
+  )
+}
+
+const ActivePartnerOfferLine: React.FC<DetailsProps> = () => {
+  return (
+    <Text
+      variant="xs"
+      color="blue100"
+      backgroundColor="blue10"
+      px={0.5}
+      marginBottom={0.5}
+      alignSelf="flex-start"
+      borderRadius={3}
+    >
+      Limited-Time Offer
+    </Text>
+  )
+}
+
+const EmptyLine: React.FC = () => {
+  return (
+    <Text variant="xs" marginBottom={0.5}>
+      &nbsp;
     </Text>
   )
 }
@@ -139,7 +179,7 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
 const HighDemandInfo = () => {
   return (
     <Flex flexDirection="row" alignItems="center">
-      <HighDemandIcon width={16} height={16} />
+      <HighDemandIcon fill="blue100" />
       <Text variant="xs" color="blue100" ml={0.3}>
         &nbsp;High Demand
       </Text>
@@ -149,27 +189,23 @@ const HighDemandInfo = () => {
 
 const NBSP = " "
 
-const SaleMessage: React.FC<DetailsProps> = ({
-  artwork: { sale, sale_message, sale_artwork },
-}) => {
-  if (sale?.is_auction && sale?.is_closed) {
-    return <>Bidding closed</>
-  }
+const SaleMessage: React.FC<SaleMessageProps> = props => {
+  const {
+    artwork: { sale, sale_message, sale_artwork, collectorSignals },
+    showActivePartnerOfferLine,
+  } = props
 
-  if (sale?.is_auction) {
+  if (sale?.is_auction && !sale?.is_closed) {
     const highestBid_display = sale_artwork?.highest_bid?.display
     const openingBid_display = sale_artwork?.opening_bid?.display
 
     return <>{highestBid_display || openingBid_display || ""}</>
   }
 
-  if (sale_message?.toLowerCase() === "contact for price") {
-    return <>Price on request</>
+  if (showActivePartnerOfferLine) {
+    return <>{collectorSignals?.partnerOffer?.priceWithDiscount?.display}</>
   }
 
-  if (sale_message?.toLowerCase() === "inquire about availability") {
-    return <>{NBSP}</>
-  }
   // NBSP is used to prevent un-aligned carousels
   return <>{sale_message ?? NBSP}</>
 }
@@ -196,6 +232,23 @@ const BidInfo: React.FC<DetailsProps> = ({
   )
 }
 
+const ActivePartnerOfferTimer: React.FC<DetailsProps> = ({
+  artwork: { collectorSignals },
+}) => {
+  const SEPARATOR = <>&nbsp;</>
+  const { endAt } = collectorSignals?.partnerOffer ?? {}
+  const { time } = useTimer(endAt ?? "")
+  const { days, hours } = time
+
+  return (
+    <Text variant="xs" color="blue100" px={0.5} alignSelf="flex-start">
+      Exp.{SEPARATOR}
+      {Number(days)}d{SEPARATOR}
+      {Number(hours)}h{SEPARATOR}
+    </Text>
+  )
+}
+
 export const Details: React.FC<DetailsProps> = ({
   contextModule,
   hideArtistName,
@@ -205,6 +258,7 @@ export const Details: React.FC<DetailsProps> = ({
   showHighDemandIcon = false,
   showHoverDetails = true,
   showSaveButton,
+  showSubmissionStatus,
   renderSaveButton,
   ...rest
 }) => {
@@ -217,8 +271,30 @@ export const Details: React.FC<DetailsProps> = ({
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
+  const isConsignmentSubmission = !!rest?.artwork.consignmentSubmission
+    ?.internalID
 
-  const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
+  const showHighDemandInfo =
+    !!isP1Artist &&
+    isHighDemand &&
+    showHighDemandIcon &&
+    !isConsignmentSubmission
+
+  const signalsPartnerOffersEnabled = useFeatureFlag(
+    "emerald_signals-partner-offers"
+  )
+
+  const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
+  const isAuction = rest?.artwork?.sale?.is_auction ?? false
+
+  const showActivePartnerOfferLine: boolean =
+    !!signalsPartnerOffersEnabled &&
+    !isAuction &&
+    !!partnerOffer &&
+    contextModule !== "activity"
+
+  const padForActivePartnerOfferLine: boolean =
+    !showActivePartnerOfferLine && contextModule !== "activity"
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -273,23 +349,39 @@ export const Details: React.FC<DetailsProps> = ({
         </Flex>
       )}
 
-      <Flex flexDirection="row" justifyContent="space-between">
-        {!hideArtistName && (
-          <ArtistLine showSaveButton={showSaveButton} {...rest} />
-        )}
+      <Flex justifyContent="space-between">
+        <Flex flexDirection="column">
+          {showActivePartnerOfferLine && <ActivePartnerOfferLine {...rest} />}
+          {!hideArtistName && (
+            <ArtistLine showSaveButton={showSaveButton} {...rest} />
+          )}
+        </Flex>
         {renderSaveButtonComponent()}
       </Flex>
 
       <Box position="relative">
         <TitleLine {...rest} />
+
         {showHighDemandInfo && <HighDemandInfo />}
+
         {!hidePartnerName && <PartnerLine {...rest} />}
+
         {isHovered && showHoverDetails && (
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
         )}
       </Box>
 
-      {!hideSaleInfo && <SaleInfoLine {...rest} />}
+      {showSubmissionStatus && (
+        <ConsignmentSubmissionStatusFragmentContainer artwork={rest.artwork} />
+      )}
+
+      {!hideSaleInfo && (
+        <SaleInfoLine
+          showActivePartnerOfferLine={showActivePartnerOfferLine}
+          {...rest}
+        />
+      )}
+      {padForActivePartnerOfferLine && <EmptyLine />}
     </Box>
   )
 }
@@ -374,14 +466,28 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
 
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
   artwork: graphql`
-    fragment Details_artwork on Artwork {
+    fragment Details_artwork on Artwork
+      @argumentDefinitions(
+        includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+      ) {
       internalID
       href
       title
       date
+      collectorSignals {
+        bidCount
+        lotWatcherCount
+        partnerOffer {
+          endAt
+          isActive
+          priceWithDiscount {
+            display
+          }
+        }
+      }
       sale_message: saleMessage
       cultural_maker: culturalMaker
-      artist {
+      artist(shallow: true) {
         targetSupply {
           isP1
         }
@@ -423,9 +529,14 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           display
         }
       }
+      consignmentSubmission @include(if: $includeConsignmentSubmission) {
+        internalID
+      }
       ...SaveButton_artwork
       ...SaveArtworkToListsButton_artwork
       ...HoverDetails_artwork
+      ...ConsignmentSubmissionStatus_artwork
+        @include(if: $includeConsignmentSubmission)
     }
   `,
 })

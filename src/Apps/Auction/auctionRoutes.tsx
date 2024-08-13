@@ -4,6 +4,7 @@ import { graphql } from "react-relay"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { RouteProps } from "System/Router/Route"
 import { getArtworkFilterInputArgs } from "./Components/AuctionArtworkFilter"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 
 const AuctionApp = loadable(
   () => import(/* webpackChunkName: "auctionBundle" */ "./AuctionApp"),
@@ -52,6 +53,7 @@ export const auctionRoutes: RouteProps[] = [
   {
     path: "/auction/:slug?",
     getComponent: () => AuctionApp,
+    serverCacheTTL: serverCacheTTLs.auction,
     onClientSideRender: () => {
       AuctionApp.preload()
     },

@@ -1,7 +1,3 @@
-import * as React from "react"
-import * as Yup from "yup"
-import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { Formik } from "formik"
 import {
   Column,
   GridColumns,
@@ -12,12 +8,16 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { PurchaseHistoryRoute_submission$key } from "__generated__/PurchaseHistoryRoute_submission.graphql"
+import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
-import { graphql, useFragment } from "react-relay"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { PROVENANCE_LIST } from "Apps/Sell/Utils/formUtils"
-import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
+import { PurchaseHistoryRoute_submission$key } from "__generated__/PurchaseHistoryRoute_submission.graphql"
+import { Formik } from "formik"
+import * as React from "react"
+import { graphql, useFragment } from "react-relay"
+import * as Yup from "yup"
 
 const FRAGMENT = graphql`
   fragment PurchaseHistoryRoute_submission on ConsignmentSubmission {
@@ -49,7 +49,7 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
   }
 
   const initialValues: FormValues = {
-    provenance: submission.provenance || "",
+    provenance: submission.provenance ?? "",
     signature: submission.signature ?? null,
   }
 
@@ -74,6 +74,7 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
               selected={values.provenance}
               onChange={handleChange}
               data-testid="provenance-input"
+              pt={1}
             />
 
             <Join separator={<Spacer y={2} />}>
@@ -106,6 +107,7 @@ export const PurchaseHistoryRoute: React.FC<PurchaseHistoryRouteProps> = props =
               </GridColumns>
             </Join>
           </Join>
+
           <DevDebug />
         </SubmissionLayout>
       )}

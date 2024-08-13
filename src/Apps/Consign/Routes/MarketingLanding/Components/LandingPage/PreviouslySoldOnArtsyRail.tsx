@@ -146,6 +146,7 @@ const PLACEHOLDER = (
         return [...new Array(20)].map((_, i) => {
           return (
             <Box
+              key={i}
               display="flex"
               flexDirection="column"
               justifyContent="flex-end"

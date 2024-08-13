@@ -16,7 +16,6 @@ import {
   ArtworkModalHeaderInfo,
   ArtworkModalHeaderInfoEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkModalHeaderInfo"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export interface ArtworkList {
   internalID: string
@@ -49,7 +48,6 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   const { submitMutation } = useCreateCollection()
   const { trackEvent } = useTracking()
   const analytics = useAnalyticsContext()
-  const sharedListEnabled = useFeatureFlag("emerald_artwork-list-offerability")
 
   const handleBackOnCancelClick = onBackClick ?? onClose
   const cancelMode = onBackClick ? "back" : "dismiss"
@@ -75,10 +73,8 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
         variables: {
           input: {
             name: values.name.trim(),
-            // add shareableWithPartners to the input only if the feature flag is enabled
-            ...(sharedListEnabled
-              ? { shareableWithPartners: values.shareableWithPartners }
-              : {}),
+            // add shareableWithPartners to the input
+            ...{ shareableWithPartners: values.shareableWithPartners },
           },
         },
         rejectIf: response => {

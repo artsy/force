@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Join,
-  Spacer,
-  Text,
-  useDidMount,
-} from "@artsy/palette"
+import { Box, Button, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { Formik } from "formik"
 import { FC } from "react"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
@@ -16,6 +8,7 @@ import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
 import { SavedSearchFrequency } from "Components/SavedSearchAlert/types"
+import { FadeInBox } from "Components/FadeInBox"
 
 export interface AlertFormikValues {
   name: string
@@ -36,8 +29,6 @@ export const Details: FC = () => {
     createAlertError,
   } = useAlertContext()
 
-  const isMounted = useDidMount()
-
   return (
     <Formik<AlertFormikValues>
       initialValues={state.settings}
@@ -51,19 +42,7 @@ export const Details: FC = () => {
         }
 
         return (
-          <Box
-            maxWidth={[null, 500]}
-            style={{
-              ...(isMounted
-                ? {
-                    opacity: 1,
-                    transition: "opacity 250ms",
-                  }
-                : {
-                    opacity: 0,
-                  }),
-            }}
-          >
+          <FadeInBox maxWidth={[null, 500]}>
             <Flex flexDirection="column" p={2}>
               <Join separator={<Spacer y={4} />}>
                 <Box>
@@ -100,7 +79,7 @@ export const Details: FC = () => {
                 Create Alert
               </Button>
             </Box>
-          </Box>
+          </FadeInBox>
         )
       }}
     </Formik>

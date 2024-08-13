@@ -1,4 +1,4 @@
-import { Flex, Spacer, Text, Box } from "@artsy/palette"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { FC } from "react"
 import { useFragment, graphql } from "react-relay"
@@ -31,7 +31,7 @@ export const ViewingRoomPublishedNotification: FC<ViewingRoomPublishedNotificati
   }
 
   return (
-    <Box>
+    <>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1}>
           <Text variant="lg-display">{headline}</Text>
@@ -63,7 +63,7 @@ export const ViewingRoomPublishedNotification: FC<ViewingRoomPublishedNotificati
           viewingRoomsConnection={item?.viewingRoomsConnection}
         />
       </Flex>
-    </Box>
+    </>
   )
 }
 

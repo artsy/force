@@ -1,178 +1,169 @@
 import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
-import {
-  ExpiresInTimer,
-  shouldDisplayExpiresInTimer,
-} from "Components/Notifications/ExpiresInTimer"
+import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
 import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
-import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
+import { useMarkNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
 import { RouterLink } from "System/Components/RouterLink"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
-import { NotificationItem_item$data } from "__generated__/NotificationItem_item.graphql"
-import { FC } from "react"
+import { NotificationItem_notification$data } from "__generated__/NotificationItem_notification.graphql"
+import { FC, useCallback } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import { NotificationTypeLabel } from "./NotificationTypeLabel"
 import { isArtworksBasedNotification } from "./util"
+import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { Media } from "Utils/Responsive"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
+import { NotificationItemCollectorProfileUpdatePrompt } from "Components/Notifications/NotificationItemCollectorProfileUpdatePrompt"
+import { NotificationItemUnreadIndicator } from "Components/Notifications/NotificationItemUnreadIndicator"
 
 const logger = createLogger("NotificationItem")
 
 interface NotificationItemProps {
-  item: NotificationItem_item$data
+  notification: NotificationItem_notification$data
+  mode?: NotificationListMode
 }
 
-const UNREAD_INDICATOR_SIZE = 8
-
-const NotificationItem: FC<NotificationItemProps> = ({ item }) => {
-  const { tracking } = useNotificationsTracking()
-  const { relayEnvironment } = useSystemContext()
+const NotificationItem: FC<NotificationItemProps> = ({
+  notification,
+  mode,
+}) => {
   const {
     state: { currentNotificationId },
   } = useNotificationsContext()
-  const remainingArtworksCount = item.objectsCount - 4
-  const shouldDisplayCounts =
-    isArtworksBasedNotification(item.notificationType) &&
-    remainingArtworksCount > 0
+  const { tracking } = useNotificationsTracking()
+  const { markAsRead } = useMarkNotificationAsRead()
 
-  const markAsRead = async () => {
-    // If the notification is opened as a page, we don't need to mark the notification as read
-    // because it's already marked as read when the page is opened.
-    if (SUPPORTED_NOTIFICATION_TYPES.includes(item.notificationType)) {
-      return
-    }
-    if (!relayEnvironment) {
-      return
-    }
+  const handleClick = () => {
+    markAsRead({
+      id: notification.id,
+      internalID: notification.internalID,
+    }).catch(logger.error)
 
-    try {
-      const response = await markNotificationAsRead(
-        relayEnvironment,
-        item.id,
-        item.internalID
+    tracking.clickedActivityPanelNotificationItem(notification.notificationType)
+  }
+
+  const isActive = currentNotificationId === notification.internalID
+
+  if (!notification.item) return null
+
+  switch (notification.item.__typename) {
+    case "CollectorProfileUpdatePromptNotificationItem": {
+      return (
+        <NotificationItemCollectorProfileUpdatePrompt
+          isActive={isActive}
+          isUnread={notification.isUnread}
+          notificationItem={notification.item}
+          onClick={handleClick}
+        />
       )
-      const responseOrError = response.markNotificationAsRead?.responseOrError
-      const errorMessage = responseOrError?.mutationError?.message
-
-      if (errorMessage) {
-        throw new Error(errorMessage)
-      }
-    } catch (error) {
-      logger.error(error)
     }
-  }
 
-  const handlePress = () => {
-    markAsRead()
+    // FIXME: Simplify by returning unique components for each notification type
+    default: {
+      const remainingArtworksCount = notification.objectsCount - 4
+      const shouldDisplayCounts =
+        isArtworksBasedNotification(notification.notificationType) &&
+        remainingArtworksCount > 0
 
-    tracking.clickedActivityPanelNotificationItem(item.notificationType)
-  }
+      const subTitle = getNotificationSubTitle(notification)
 
-  const itemUrl = getNotificationUrl(item)
+      return (
+        <NotificationItemWrapper
+          item={notification}
+          mode={mode}
+          onClick={handleClick}
+        >
+          <Flex
+            flex={1}
+            flexDirection={
+              notification.notificationType === "PARTNER_OFFER_CREATED"
+                ? "row"
+                : "column"
+            }
+          >
+            {!!notification.previewImages.length && (
+              <Flex flexDirection="row" alignItems="center" mb={0.5}>
+                <Flex flex={1}>
+                  <Join separator={<Spacer x={1} />}>
+                    {notification.previewImages.map(image => {
+                      if (!image.url) return null
 
-  const subTitle = getNotificationSubTitle(item)
+                      return (
+                        <Image
+                          key={image.url}
+                          src={image.url}
+                          alt=""
+                          width={58}
+                          height={58}
+                          lazyLoad
+                          placeHolderURL={image.blurhashDataURL ?? undefined}
+                        />
+                      )
+                    })}
+                  </Join>
+                  <Spacer x={1} />
+                </Flex>
 
-  return (
-    <NotificationItemLink
-      to={itemUrl}
-      onClick={handlePress}
-      backgroundColor={
-        currentNotificationId === item.internalID ? "black5" : "white100"
-      }
-    >
-      <Flex
-        flex={1}
-        flexDirection={
-          item.notificationType === "PARTNER_OFFER_CREATED" ? "row" : "column"
-        }
-      >
-        {!!item.previewImages.length && (
-          <Flex flexDirection="row" alignItems="center" mb={0.5}>
-            <Flex flex={1}>
-              <Join separator={<Spacer x={1} />}>
-                {item.previewImages.map(image => {
-                  if (!image.url) return null
+                {shouldDisplayCounts && (
+                  <Text
+                    variant="xs"
+                    color="black60"
+                    aria-label="Remaining artworks count"
+                    ml={1}
+                  >
+                    + {remainingArtworksCount}
+                  </Text>
+                )}
+              </Flex>
+            )}
 
-                  return (
-                    <Image
-                      key={image.url}
-                      src={image.url}
-                      alt={"Activity artwork image"}
-                      width={58}
-                      height={58}
-                      lazyLoad
-                      placeHolderURL={image.blurhashDataURL ?? undefined}
-                    />
-                  )
-                })}
-              </Join>
-              <Spacer x={1} />
-            </Flex>
-
-            {shouldDisplayCounts && (
+            <Flex flexDirection="column">
               <Text
                 variant="xs"
-                color="black60"
-                aria-label="Remaining artworks count"
-                ml={1}
+                color="blue100"
+                backgroundColor="blue10"
+                px={0.5}
+                alignSelf="flex-start"
+                borderRadius={3}
               >
-                + {remainingArtworksCount}
+                {getNotificationPrelude(notification)}
               </Text>
-            )}
+
+              <Text fontWeight="bold" variant="sm-display">
+                {notification.headline}
+              </Text>
+
+              {!!subTitle && <Text variant="xs">{subTitle}</Text>}
+
+              <Flex flexDirection="row" gap={0.5}>
+                <NotificationTypeLabel notification={notification} />
+                {notification.item?.__typename ===
+                  "PartnerOfferCreatedNotificationItem" &&
+                  notification.item.expiresAt && (
+                    <ExpiresInTimer
+                      expiresAt={notification.item.expiresAt}
+                      available={notification.item.available}
+                    />
+                  )}
+              </Flex>
+            </Flex>
           </Flex>
-        )}
 
-        <Flex flexDirection="column">
-          <Text
-            variant="xs"
-            color="blue100"
-            backgroundColor="blue10"
-            px={0.5}
-            alignSelf="flex-start"
-            borderRadius={3}
-          >
-            {getNotificationPrelude(item)}
-          </Text>
-
-          <Text fontWeight="bold" variant="sm-display">
-            {item.headline}
-          </Text>
-
-          {!!subTitle && <Text variant="xs">{subTitle}</Text>}
-
-          <Flex flexDirection="row" gap={0.5}>
-            <NotificationTypeLabel notification={item} />
-            {shouldDisplayExpiresInTimer(item) && (
-              <ExpiresInTimer
-                expiresAt={item.item?.expiresAt}
-                available={item.item?.available}
-              />
-            )}
-          </Flex>
-        </Flex>
-      </Flex>
-
-      {item.isUnread && (
-        <Flex
-          width={UNREAD_INDICATOR_SIZE}
-          height={UNREAD_INDICATOR_SIZE}
-          borderRadius={UNREAD_INDICATOR_SIZE / 2}
-          ml={1}
-          bg="blue100"
-          aria-label="Unread notification indicator"
-        />
-      )}
-    </NotificationItemLink>
-  )
+          {notification.isUnread && <NotificationItemUnreadIndicator ml={1} />}
+        </NotificationItemWrapper>
+      )
+    }
+  }
 }
 
 export const NotificationItemFragmentContainer = createFragmentContainer(
   NotificationItem,
   {
-    item: graphql`
-      fragment NotificationItem_item on Notification {
+    notification: graphql`
+      fragment NotificationItem_notification on Notification {
         id
         internalID
         headline
@@ -182,6 +173,8 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         notificationType
         objectsCount
         item {
+          ...NotificationItemCollectorProfileUpdatePrompt_notificationItem
+          __typename
           ... on PartnerOfferCreatedNotificationItem {
             available
             expiresAt
@@ -197,6 +190,55 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+interface NotificationItemWrapperProps {
+  item: NotificationItem_notification$data
+  mode?: NotificationListMode
+  children: React.ReactNode
+  onClick: () => void
+}
+
+export const NotificationItemWrapper: FC<NotificationItemWrapperProps> = ({
+  item,
+  mode,
+  children,
+  onClick,
+}) => {
+  const {
+    state: { currentNotificationId },
+  } = useNotificationsContext()
+
+  const itemUrl = useCallback((item, mode) => {
+    return getNotificationUrl(item, mode)
+  }, [])
+
+  const backgroundColor =
+    currentNotificationId === item.internalID ? "black5" : "white100"
+
+  return (
+    <>
+      <Media at="xs">
+        <NotificationItemLink
+          to={itemUrl(item, "dropdown")}
+          onClick={onClick}
+          backgroundColor={backgroundColor}
+        >
+          {children}
+        </NotificationItemLink>
+      </Media>
+
+      <Media greaterThan="xs">
+        <NotificationItemLink
+          to={itemUrl(item, mode)}
+          onClick={onClick}
+          backgroundColor={backgroundColor}
+        >
+          {children}
+        </NotificationItemLink>
+      </Media>
+    </>
+  )
+}
 
 const NotificationItemLink = styled(RouterLink)`
   display: flex;
@@ -216,7 +258,23 @@ NotificationItemLink.defaultProps = {
  * Until we support all notification types in the new activity panel,
  * we only link to the notification detail page for the supported types.
  */
-const getNotificationUrl = (notification: NotificationItem_item$data) => {
+const getNotificationUrl = (
+  notification: NotificationItem_notification$data,
+  mode: NotificationListMode = "page"
+) => {
+  // Notification response has targetHref field (computed on backend), which for
+  // most notifications accounts for "objectsCount". If there is only one object,
+  // targetHref usually points to the object URL (/artwork/:id, /show/:id, etc.).
+  // In dropdown mode, when there is only one object, we want to link directly to
+  // the object URL. Otherwise, we link to the notification detail page.
+  if (
+    mode === "dropdown" &&
+    notification.objectsCount === 1 &&
+    notification.notificationType !== "PARTNER_OFFER_CREATED"
+  ) {
+    return notification.targetHref
+  }
+
   if (SUPPORTED_NOTIFICATION_TYPES.includes(notification.notificationType)) {
     return `/notification/${notification.internalID}`
   }
@@ -224,7 +282,7 @@ const getNotificationUrl = (notification: NotificationItem_item$data) => {
   return notification.targetHref
 }
 
-const getNotificationPrelude = (item: NotificationItem_item$data) => {
+const getNotificationPrelude = (item: NotificationItem_notification$data) => {
   switch (item.notificationType) {
     case "PARTNER_OFFER_CREATED":
       return "Limited-Time Offer"
@@ -233,7 +291,7 @@ const getNotificationPrelude = (item: NotificationItem_item$data) => {
   }
 }
 
-const getNotificationSubTitle = (item: NotificationItem_item$data) => {
+const getNotificationSubTitle = (item: NotificationItem_notification$data) => {
   switch (item.notificationType) {
     case "ARTICLE_FEATURED_ARTIST":
       return "An artist you follow is featured"

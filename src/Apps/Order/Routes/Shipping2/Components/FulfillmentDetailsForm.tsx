@@ -21,8 +21,10 @@ import {
   BASIC_PHONE_VALIDATION_SHAPE,
   FulfillmentType,
   FulfillmentValues,
+  PickupValues,
   ShipValues,
   addressWithFallbackValues,
+  getInitialShippingValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { CountrySelect } from "Components/CountrySelect"
 import { RouterLink } from "System/Components/RouterLink"
@@ -107,6 +109,7 @@ const FulfillmentDetailsFormLayout = (
     handleBlur,
     setFieldValue,
     setValues,
+    setTouched,
   } = formikContext
 
   const addressFormMode: AddressFormMode =
@@ -128,11 +131,8 @@ const FulfillmentDetailsFormLayout = (
   const withBackToFulfillmentDetails = <F extends (...args: any[]) => void>(
     cb: F
   ) => (...args: Parameters<F>) => {
-    if (
-      addressFormMode === "new_address" &&
-      shippingContext.state.stage !== "fulfillment_details"
-    ) {
-      shippingContext.actions.setStage("fulfillment_details")
+    if (addressFormMode === "new_address") {
+      shippingContext.actions.goBackToFulfillmentDetails()
     }
     cb(...args)
   }
@@ -193,47 +193,48 @@ const FulfillmentDetailsFormLayout = (
     formikContext.submitForm()
   }
 
-  /**
-   * Effects
-   */
+  const previousFulfillmentType = usePrevious(values.fulfillmentType)
 
-  // Reset form fields when switching between ship/pickup
-  const previousValues = usePrevious(values)
-
-  useEffect(() => {
-    const resetAttributesOnFulfillmentTypeChange = async () => {
-      if (values.fulfillmentType !== previousValues.fulfillmentType) {
-        if (values.fulfillmentType === FulfillmentType.PICKUP) {
-          await setValues({
-            ...values,
-            attributes: {
-              name: "",
-              phoneNumber: "",
-              addressLine1: "",
-              addressLine2: "",
-              city: "",
-              region: "",
-              postalCode: "",
-              country: "",
-            },
-          })
-          return
-        }
-
-        if (values.fulfillmentType === FulfillmentType.SHIP) {
-          // reset to current initialValues (based on calculation in FulfillmentDetails.tsx)
-          formikContext.resetForm()
-        }
-      }
+  const handleChangeFulfillmentType = async (newValue: FulfillmentType) => {
+    if (newValue === previousFulfillmentType) {
+      return
     }
-    resetAttributesOnFulfillmentTypeChange()
-  }, [
-    setValues,
-    previousValues.fulfillmentType,
-    formikContext,
-    values,
-    shippingContext.actions,
-  ])
+
+    shippingContext.actions.goBackToFulfillmentDetails()
+    await setTouched({})
+
+    if (newValue === FulfillmentType.PICKUP) {
+      const initialValuesForPickup: PickupValues = {
+        fulfillmentType: FulfillmentType.PICKUP,
+        attributes: {
+          name: "",
+          phoneNumber: "",
+          addressLine1: "",
+          addressLine2: "",
+          city: "",
+          region: "",
+          postalCode: "",
+          country: "",
+        },
+        meta: {},
+      }
+
+      await setValues(initialValuesForPickup)
+      return
+    }
+
+    if (newValue === FulfillmentType.SHIP) {
+      const savedAddresses = shippingContext.meData.addressList
+
+      await setValues(
+        getInitialShippingValues(
+          savedAddresses,
+          shippingContext.orderData.shipsFrom,
+          shippingContext.orderData.availableShippingCountries
+        )
+      )
+    }
+  }
 
   // When not showing the form/creating a new address,
   // inputs should not be tabbable
@@ -264,9 +265,9 @@ const FulfillmentDetailsFormLayout = (
         <>
           <RadioGroup
             data-testid="shipping-options"
-            onSelect={withBackToFulfillmentDetails(value => {
-              setFieldValue("fulfillmentType", value)
-            })}
+            onSelect={value => {
+              handleChangeFulfillmentType(value)
+            }}
             defaultValue={values.fulfillmentType}
           >
             <Text variant="lg-display" mb="1">
@@ -400,6 +401,7 @@ const FulfillmentDetailsFormLayout = (
                       },
                     })
                     setHasAutocompletedAddress(true)
+                    shippingContext.actions.goBackToFulfillmentDetails()
 
                     autocompleteTracking.selectedAutocompletedAddress(
                       option,
@@ -537,10 +539,9 @@ const FulfillmentDetailsFormLayout = (
                         touched.attributes?.phoneNumber &&
                         errors.attributes?.phoneNumber
                       }
-                      data-testid="AddressForm_phoneNumber"
+                      data-testid="AddressForm_shipPhoneNumber"
                     />
                   </Column>
-                  <Spacer y={2} />
                 </>
               }
             </GridColumns>
@@ -581,7 +582,7 @@ const FulfillmentDetailsFormLayout = (
                 touched.attributes?.phoneNumber &&
                 errors.attributes?.phoneNumber
               }
-              data-testid="AddressForm_phoneNumber"
+              data-testid="AddressForm_pickupPhoneNumber"
             />
             <Spacer y={4} />
           </>
