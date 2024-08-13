@@ -54,7 +54,9 @@ describe("SettingsPaymentsRoute", () => {
     expect(screen.getByText("Saved Payment Details")).toBeInTheDocument()
     expect(screen.getByText("Credit cards")).toBeInTheDocument()
     expect(
-      screen.getByText("You can manage any saved payment methods from here.")
+      screen.getByText(
+        "Please add a payment method for faster checkout in the future."
+      )
     ).toBeInTheDocument()
   })
 

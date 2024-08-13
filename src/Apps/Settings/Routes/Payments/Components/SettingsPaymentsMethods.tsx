@@ -49,7 +49,7 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
 
       {creditCards.length === 0 ? (
         <Message variant="info">
-          You can manage any saved payment methods from here.
+          Please add a payment method for faster checkout in the future.
         </Message>
       ) : (
         <GridColumns gridRowGap={0}>
@@ -63,7 +63,7 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
         </GridColumns>
       )}
 
-      <Button mt={4} onClick={handleClick} disabled={creditCards.length === 0}>
+      <Button mt={4} onClick={handleClick}>
         Add New Card
       </Button>
 
