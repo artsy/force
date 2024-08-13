@@ -17,6 +17,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { findSignalLabels } from "Utils/findSignalLabels"
 
 interface HomeNewWorksForYouRailProps {
   artworksForUser: HomeNewWorksForYouRail_artworksForUser$data
@@ -54,6 +55,7 @@ const HomeNewWorksForYouRail: React.FC<HomeNewWorksForYouRailProps> = ({
                 destination_page_owner_slug: artwork.slug,
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
+                signal_labels: findSignalLabels(artwork),
               }
               trackEvent(trackingEvent)
             }}
@@ -83,6 +85,11 @@ export const HomeNewWorksForYouRailFragmentContainer = createFragmentContainer(
           node {
             internalID
             slug
+            collectorSignals {
+              partnerOffer {
+                isActive
+              }
+            }
             ...ShelfArtwork_artwork
           }
         }

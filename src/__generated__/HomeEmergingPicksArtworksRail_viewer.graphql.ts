@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<57496b27864b2ff83cd0d4a589eda54e>>
+ * @generated SignedSource<<d61a1560d55c70e4e105953268b80edd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,11 @@ export type HomeEmergingPicksArtworksRail_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly collectorSignals: {
+          readonly partnerOffer: {
+            readonly isActive: boolean | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
         readonly href: string | null | undefined;
         readonly internalID: string;
         readonly slug: string;
@@ -75,11 +80,6 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ShelfArtwork_artwork"
-                },
-                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -99,6 +99,40 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "href",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CollectorSignals",
+                  "kind": "LinkedField",
+                  "name": "collectorSignals",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "PartnerOfferToCollector",
+                      "kind": "LinkedField",
+                      "name": "partnerOffer",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "isActive",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ShelfArtwork_artwork"
                 }
               ],
               "storageKey": null
@@ -114,6 +148,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "ead3b6ec0a4dc2beac44ff1ebd71ba96";
+(node as any).hash = "b880aac701e6a2566c14e1ec3477b0a2";
 
 export default node;
