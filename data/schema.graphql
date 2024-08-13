@@ -2298,7 +2298,7 @@ type ArtistsRailHomeViewSection implements GenericHomeViewSection & Node {
   ): ArtistConnection!
 
   # The component that is prescribed for this section
-  component: HomeViewComponent!
+  component: HomeViewComponent
 
   # A globally unique ID.
   id: ID!
@@ -3168,7 +3168,7 @@ type ArtworksRailHomeViewSection implements GenericHomeViewSection & Node {
   ): ArtworkConnection!
 
   # The component that is prescribed for this section
-  component: HomeViewComponent!
+  component: HomeViewComponent
 
   # A globally unique ID.
   id: ID!
@@ -10528,7 +10528,7 @@ type GeneMeta {
 # Abstract interface shared by every kind of home view section
 interface GenericHomeViewSection {
   # The component that is prescribed for this section
-  component: HomeViewComponent!
+  component: HomeViewComponent
 
   # A globally unique ID.
   id: ID!
@@ -10618,6 +10618,24 @@ type HeroUnitLink {
 
   # URL for the CTA of the Hero Unit.
   url: String!
+}
+
+# Hero units rail section
+type HeroUnitsHomeViewSection implements GenericHomeViewSection & Node {
+  # The component that is prescribed for this section
+  component: HomeViewComponent
+  heroUnitsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): HeroUnitConnection!
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
 }
 
 type HighestBid {
@@ -10896,10 +10914,13 @@ type HomeView {
 # A component specification
 type HomeViewComponent {
   # A display title for this section
-  title: String!
+  title: String
 }
 
-union HomeViewSection = ArtistsRailHomeViewSection | ArtworksRailHomeViewSection
+union HomeViewSection =
+    ArtistsRailHomeViewSection
+  | ArtworksRailHomeViewSection
+  | HeroUnitsHomeViewSection
 
 # A connection to a list of items.
 type HomeViewSectionConnection {
