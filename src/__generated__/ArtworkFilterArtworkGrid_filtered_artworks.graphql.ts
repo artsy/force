@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<10b84819e7571de7f7a08cf5fc0923ba>>
+ * @generated SignedSource<<248882de7f775465c5007d340e0d09c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,11 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkFilterArtworkGrid_filtered_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
+      readonly collectorSignals: {
+        readonly partnerOffer: {
+          readonly isActive: boolean | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
       readonly id: string;
     } | null | undefined;
   } | null | undefined> | null | undefined;
@@ -110,6 +115,35 @@ return {
           "name": "node",
           "plural": false,
           "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "CollectorSignals",
+              "kind": "LinkedField",
+              "name": "collectorSignals",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "PartnerOfferToCollector",
+                  "kind": "LinkedField",
+                  "name": "partnerOffer",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isActive",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
             (v0/*: any*/)
           ],
           "storageKey": null
@@ -134,6 +168,6 @@ return {
 };
 })();
 
-(node as any).hash = "e6296fabcc752b9bb5de3add8435132d";
+(node as any).hash = "0f25265235e9c0f4a8ef5110fa5a42ff";
 
 export default node;
