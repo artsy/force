@@ -129,7 +129,7 @@ export const useSubmissionTracking = () => {
   }
 }
 
-const getOwnerType = (currentStep: SellFlowStep): PageOwnerType | null => {
+const getOwnerType = (currentStep: SellFlowStep): PageOwnerType => {
   switch (currentStep) {
     case "artist":
       return OwnerType.submitArtworkStepSelectArtist
@@ -157,9 +157,5 @@ const getOwnerType = (currentStep: SellFlowStep): PageOwnerType | null => {
       return OwnerType.submitArtworkStepCondition
     case "thank-you-post-approval":
       return OwnerType.submitArtworkStepCompleteYourSubmissionPostApproval
-    default:
-      // https://graphite.dev/guides/typescript-switches#using-the-object-object-type-for-exhaustive-checks
-      const exhaustiveCheck: never = currentStep
-      throw new Error(`Unhandled case: ${exhaustiveCheck}`)
   }
 }
