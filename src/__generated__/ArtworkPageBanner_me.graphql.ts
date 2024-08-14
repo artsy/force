@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21d54474001d39398a5f6e34be008528>>
+ * @generated SignedSource<<6666e05d66a3b0cf08ebd7ab1ba98738>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type ArtworkPageBanner_me$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
+        readonly isAvailable: boolean | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -78,6 +79,13 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "internalID",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isAvailable",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -93,6 +101,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "92c6a7724e067972687eb857ebd89268";
+(node as any).hash = "682a8939eb37d61bd11664af49e36d70";
 
 export default node;
