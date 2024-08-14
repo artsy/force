@@ -106,6 +106,7 @@ COPY data ./data
 COPY patches ./patches
 COPY src ./src
 COPY webpack ./webpack
+COPY .git ./.git
 COPY .env.oss \
   .env.test \
   .eslintrc.js \
@@ -118,6 +119,7 @@ COPY .env.oss \
   jest.config.js \
   package.json \
   relay.config.js \
+  relativeci.config.js \
   tsconfig.json \
   yarn.lock \
   ./

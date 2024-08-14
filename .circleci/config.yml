@@ -216,6 +216,17 @@ jobs:
       - store_artifacts:
           path: cypress/screenshots
 
+  bundle-stats:
+    docker:
+      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    working_directory: /app
+    steps:
+      - run: yarn bundle-report:client --json webpack-stats.json
+      - run: npx relative-ci-agent
+
 not_main_or_staging_or_release: &not_main_or_staging_or_release
   filters:
     branches:
@@ -330,6 +341,12 @@ workflows:
           requires:
             - electron-runner-image-push
 
+      - bundle-stats:
+          <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - builder-image-push
+
       # Staging
       - artsy-remote-docker/buildkit-build:
           <<: *only_main
@@ -349,6 +366,7 @@ workflows:
             - type-check
             - relay-check
             - acceptance
+            - bundle-stats
             - production-image-build
 
       - hokusai/deploy-staging:
