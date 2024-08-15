@@ -29,6 +29,7 @@ import { useTracking } from "react-tracking"
 import {
   ActionType,
   ClickedBuyNow,
+  ClickedContactGallery,
   ContextModule,
   Intent,
   OwnerType,
@@ -84,7 +85,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
 
   const { t } = useTranslation()
 
-  const tracking = useTracking()
+  const { trackEvent } = useTracking()
 
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false)
 
@@ -120,13 +121,17 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const handleInquiry = () => {
-    tracking.trackEvent({
-      context_module: DeprecatedSchema.ContextModule.Sidebar,
-      action_type: DeprecatedSchema.ActionType.ClickedContactGallery,
-      subject: DeprecatedSchema.Subject.ContactGallery,
-      artwork_id: artwork.internalID,
-      artwork_slug: artwork.slug,
-    })
+    const event: ClickedContactGallery = {
+      action: ActionType.tappedContactGallery,
+      context_owner_type: OwnerType.artwork,
+      context_owner_slug: artwork.slug,
+      context_owner_id: artwork.internalID,
+      signal_labels: artwork.collectorSignals
+        ? findSignalLabels(artwork.collectorSignals)
+        : undefined,
+    }
+    trackEvent(event)
+
     showInquiry({ enableCreateAlert: true })
   }
 
@@ -142,7 +147,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
         : undefined,
     }
 
-    tracking.trackEvent(event)
+    trackEvent(event)
 
     if (!activePartnerOffer?.internalID) {
       throw new ErrorWithMetadata(
@@ -200,7 +205,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
         : undefined,
     }
 
-    tracking.trackEvent(event)
+    trackEvent(event)
 
     if (!!user?.id) {
       try {
@@ -256,7 +261,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const handleCreateOfferOrder = async () => {
-    tracking.trackEvent({
+    trackEvent({
       action_type: DeprecatedSchema.ActionType.ClickedMakeOffer,
       flow: DeprecatedSchema.Flow.MakeOffer,
       type: DeprecatedSchema.Type.Button,
