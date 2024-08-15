@@ -9,5 +9,5 @@ export interface CollectorSignals {
 export const findSignalLabel = (collectorSignals: CollectorSignals) => {
   const { partnerOffer } = collectorSignals
 
-  return partnerOffer ? "Limited-Time Offer" : ""
+  return partnerOffer?.isActive ? "Limited-Time Offer" : ""
 }

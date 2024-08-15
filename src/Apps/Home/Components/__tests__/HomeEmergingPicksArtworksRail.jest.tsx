@@ -52,6 +52,7 @@ describe("HomeEmergingPicksArtworksRail", () => {
       destination_page_owner_slug: "artwork-slug",
       destination_page_owner_type: "artwork",
       type: "thumbnail",
+      signal_label: "",
     })
   })
 

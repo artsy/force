@@ -78,6 +78,7 @@ describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
         destination_page_owner_slug: "<Artwork-mock-id-2>",
         destination_page_owner_type: "artwork",
         type: "thumbnail",
+        signal_label: "",
       })
     })
   })
