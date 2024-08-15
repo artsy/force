@@ -46,7 +46,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { ResponsiveValue } from "styled-system"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
-import { findSignalLabels } from "Utils/findSignalLabels"
+import { findSignalLabel } from "Utils/findSignalLabel"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
@@ -126,9 +126,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       context_owner_type: OwnerType.artwork,
       context_owner_slug: artwork.slug,
       context_owner_id: artwork.internalID,
-      signal_labels: artwork.collectorSignals
-        ? findSignalLabels(artwork.collectorSignals)
-        : undefined,
+      signal_label: artwork.collectorSignals
+        ? findSignalLabel(artwork.collectorSignals)
+        : "",
     }
     trackEvent(event)
 
@@ -142,9 +142,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Partner offer",
-      signal_labels: artwork.collectorSignals
-        ? findSignalLabels(artwork.collectorSignals)
-        : undefined,
+      signal_label: artwork.collectorSignals
+        ? findSignalLabel(artwork.collectorSignals)
+        : "",
     }
 
     trackEvent(event)
@@ -200,9 +200,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Buy now",
-      signal_labels: artwork.collectorSignals
-        ? findSignalLabels(artwork.collectorSignals)
-        : undefined,
+      signal_label: artwork.collectorSignals
+        ? findSignalLabel(artwork.collectorSignals)
+        : "",
     }
 
     trackEvent(event)

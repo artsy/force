@@ -11,7 +11,7 @@ import {
 } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { Rail } from "Components/Rail/Rail"
-import { findSignalLabels } from "Utils/findSignalLabels"
+import { findSignalLabel } from "Utils/findSignalLabel"
 
 interface Props {
   artwork: ArtistSeriesArtworkRail_artwork$data
@@ -71,9 +71,9 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
                   destination_page_owner_slug: artwork.slug,
                   horizontal_slide_position: index,
                   type: "thumbnail",
-                  signal_labels: artwork.collectorSignals
-                    ? findSignalLabels(artwork.collectorSignals)
-                    : undefined,
+                  signal_label: artwork.collectorSignals
+                    ? findSignalLabel(artwork.collectorSignals)
+                    : "",
                 }
                 trackEvent(properties)
               }}

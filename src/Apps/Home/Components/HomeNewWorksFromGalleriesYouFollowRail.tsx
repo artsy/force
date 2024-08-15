@@ -20,7 +20,7 @@ import {
 } from "@artsy/cohesion"
 import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { findSignalLabels } from "Utils/findSignalLabels"
+import { findSignalLabel } from "Utils/findSignalLabel"
 
 interface HomeNewWorksFromGalleriesYouFollowRailProps {
   newWorksFromGalleriesYouFollowConnection: HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data
@@ -75,9 +75,9 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
                 destination_page_owner_id: artwork.internalID,
                 destination_page_owner_slug: artwork.slug,
                 type: "thumbnail",
-                signal_labels: artwork.collectorSignals
-                  ? findSignalLabels(artwork.collectorSignals)
-                  : undefined,
+                signal_label: artwork.collectorSignals
+                  ? findSignalLabel(artwork.collectorSignals)
+                  : "",
               }
               trackEvent(trackingEvent)
             }}
