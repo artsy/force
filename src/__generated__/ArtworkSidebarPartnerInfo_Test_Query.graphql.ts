@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<40dab41100027ff0e07fe6a33150849d>>
+ * @generated SignedSource<<ea4553d74b91200a03993d25cf54719c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -200,7 +200,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "isActive",
+                    "name": "isAvailable",
                     "storageKey": null
                   },
                   (v4/*: any*/)
@@ -217,7 +217,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7a29df3fa6df1276313d9a8e96b6f1f6",
+    "cacheID": "63b31684a3c63998174f3e28a62f1388",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -240,7 +240,7 @@ return {
           "type": "PartnerOfferToCollector"
         },
         "artwork.collectorSignals.partnerOffer.id": (v5/*: any*/),
-        "artwork.collectorSignals.partnerOffer.isActive": (v6/*: any*/),
+        "artwork.collectorSignals.partnerOffer.isAvailable": (v6/*: any*/),
         "artwork.id": (v5/*: any*/),
         "artwork.internalID": (v5/*: any*/),
         "artwork.isInquireable": (v6/*: any*/),
@@ -275,7 +275,7 @@ return {
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isUnlisted\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n  collectorSignals {\n    partnerOffer {\n      isActive\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isUnlisted\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n  collectorSignals {\n    partnerOffer {\n      isAvailable\n      id\n    }\n  }\n}\n"
   }
 };
 })();

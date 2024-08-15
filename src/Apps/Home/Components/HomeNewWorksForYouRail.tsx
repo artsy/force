@@ -89,7 +89,7 @@ export const HomeNewWorksForYouRailFragmentContainer = createFragmentContainer(
             slug
             collectorSignals {
               partnerOffer {
-                isActive
+                isAvailable
               }
             }
             ...ShelfArtwork_artwork

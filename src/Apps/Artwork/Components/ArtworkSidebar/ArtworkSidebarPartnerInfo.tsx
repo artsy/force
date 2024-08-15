@@ -171,7 +171,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
         }
         collectorSignals {
           partnerOffer {
-            isActive
+            isAvailable
           }
         }
       }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f1247438ea499c96e6302e2312d7e1f>>
+ * @generated SignedSource<<581d4ce06b201fc2ba78563de21eed7a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork$data = {
   readonly collectorSignals: {
     readonly partnerOffer: {
-      readonly isActive: boolean | null | undefined;
+      readonly isAvailable: boolean | null | undefined;
     } | null | undefined;
   } | null | undefined;
   readonly internalID: string;
@@ -141,7 +141,7 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "isActive",
+              "name": "isAvailable",
               "storageKey": null
             }
           ],
@@ -156,6 +156,6 @@ return {
 };
 })();
 
-(node as any).hash = "4f1db64a6cec5244eeae93ced0d58967";
+(node as any).hash = "cb72e6e7e45ae0a4f310994de91a5ca3";
 
 export default node;

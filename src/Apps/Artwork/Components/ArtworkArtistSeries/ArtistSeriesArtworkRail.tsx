@@ -104,7 +104,7 @@ export const ArtistSeriesArtworkRailFragmentContainer = createFragmentContainer(
                     internalID
                     collectorSignals {
                       partnerOffer {
-                        isActive
+                        isAvailable
                       }
                     }
                     ...ShelfArtwork_artwork

@@ -1,5 +1,5 @@
 export interface PartnerOffer {
-  isActive: boolean | null | undefined
+  isAvailable: boolean | null | undefined
 }
 
 export interface CollectorSignals {
@@ -9,5 +9,5 @@ export interface CollectorSignals {
 export const findSignalLabel = (collectorSignals: CollectorSignals) => {
   const { partnerOffer } = collectorSignals
 
-  return partnerOffer?.isActive ? "Limited-Time Offer" : ""
+  return partnerOffer?.isAvailable ? "Limited-Time Offer" : ""
 }

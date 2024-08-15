@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd729f6dbffe9e2a8df564e7d65156d5>>
+ * @generated SignedSource<<53edcbeefb266f83dc201ff7a2874ca6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type ArtistSeriesArtworkRail_artwork$data = {
             readonly node: {
               readonly collectorSignals: {
                 readonly partnerOffer: {
-                  readonly isActive: boolean | null | undefined;
+                  readonly isAvailable: boolean | null | undefined;
                 } | null | undefined;
               } | null | undefined;
               readonly internalID: string;
@@ -154,7 +154,7 @@ return {
                                       "alias": null,
                                       "args": null,
                                       "kind": "ScalarField",
-                                      "name": "isActive",
+                                      "name": "isAvailable",
                                       "storageKey": null
                                     }
                                   ],
@@ -192,6 +192,6 @@ return {
 };
 })();
 
-(node as any).hash = "e2ad4f13bb133ed9e503c48b012ff80a";
+(node as any).hash = "8c708dcdb26db9109199d14b39d185e5";
 
 export default node;

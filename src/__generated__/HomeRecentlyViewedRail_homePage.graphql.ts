@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb76a1cad760dc4d95f3538ff3b00818>>
+ * @generated SignedSource<<df5958d54c302fdf9e0e82a798dfaf23>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type HomeRecentlyViewedRail_homePage$data = {
     readonly results: ReadonlyArray<{
       readonly collectorSignals: {
         readonly partnerOffer: {
-          readonly isActive: boolean | null | undefined;
+          readonly isAvailable: boolean | null | undefined;
         } | null | undefined;
       } | null | undefined;
       readonly internalID: string;
@@ -92,7 +92,7 @@ const node: ReaderFragment = {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "isActive",
+                      "name": "isAvailable",
                       "storageKey": null
                     }
                   ],
@@ -117,6 +117,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a1fbe28702851411fd86a9bbb6694648";
+(node as any).hash = "66dece99928e57db79bf82755462013a";
 
 export default node;

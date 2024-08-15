@@ -99,7 +99,7 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
               href
               collectorSignals {
                 partnerOffer {
-                  isActive
+                  isAvailable
                 }
               }
               ...ShelfArtwork_artwork

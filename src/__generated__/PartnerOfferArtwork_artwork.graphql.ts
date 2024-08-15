@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ae5e0c4ccfb346a8058f4094324a1b4>>
+ * @generated SignedSource<<cbb090cd5990e4081713436eb3563afd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type PartnerOfferArtwork_artwork$data = {
   readonly artistNames: string | null | undefined;
   readonly collectorSignals: {
     readonly partnerOffer: {
-      readonly isActive: boolean | null | undefined;
+      readonly isAvailable: boolean | null | undefined;
     } | null | undefined;
   } | null | undefined;
   readonly href: string | null | undefined;
@@ -203,7 +203,7 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "isActive",
+              "name": "isAvailable",
               "storageKey": null
             }
           ],
@@ -222,6 +222,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "cefed196b62bd428d4a2dd3a99b36ba3";
+(node as any).hash = "e48d2509881167a3a74b56642f8852bf";
 
 export default node;

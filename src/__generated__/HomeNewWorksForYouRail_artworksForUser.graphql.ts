@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e15eecbede6cfea272a826d7a0b2668>>
+ * @generated SignedSource<<2df89e0155a06700b03c189ec4b97d9b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type HomeNewWorksForYouRail_artworksForUser$data = {
     readonly node: {
       readonly collectorSignals: {
         readonly partnerOffer: {
-          readonly isActive: boolean | null | undefined;
+          readonly isAvailable: boolean | null | undefined;
         } | null | undefined;
       } | null | undefined;
       readonly internalID: string;
@@ -86,7 +86,7 @@ const node: ReaderFragment = {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "isActive",
+                      "name": "isAvailable",
                       "storageKey": null
                     }
                   ],
@@ -111,6 +111,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c6cdb27e93e1360707af113c07cd17e5";
+(node as any).hash = "d039c039f6f7d3005c2f4219131e3823";
 
 export default node;

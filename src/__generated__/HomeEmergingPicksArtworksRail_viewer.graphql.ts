@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d61a1560d55c70e4e105953268b80edd>>
+ * @generated SignedSource<<8fdfca0e04312f675c24a3e7c92f5fc0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type HomeEmergingPicksArtworksRail_viewer$data = {
       readonly node: {
         readonly collectorSignals: {
           readonly partnerOffer: {
-            readonly isActive: boolean | null | undefined;
+            readonly isAvailable: boolean | null | undefined;
           } | null | undefined;
         } | null | undefined;
         readonly href: string | null | undefined;
@@ -120,7 +120,7 @@ const node: ReaderFragment = {
                           "alias": null,
                           "args": null,
                           "kind": "ScalarField",
-                          "name": "isActive",
+                          "name": "isAvailable",
                           "storageKey": null
                         }
                       ],
@@ -148,6 +148,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b880aac701e6a2566c14e1ec3477b0a2";
+(node as any).hash = "fc9ba14137cb9d8a952ae0744ad3f9e5";
 
 export default node;

@@ -88,7 +88,7 @@ export const HomeRecentlyViewedRailFragmentContainer = createFragmentContainer(
             slug
             collectorSignals {
               partnerOffer {
-                isActive
+                isAvailable
               }
             }
             ...ShelfArtwork_artwork

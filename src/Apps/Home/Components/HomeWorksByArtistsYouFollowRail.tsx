@@ -88,7 +88,7 @@ export const HomeWorksByArtistsYouFollowRailFragmentContainer = createFragmentCo
             slug
             collectorSignals {
               partnerOffer {
-                isActive
+                isAvailable
               }
             }
             ...ShelfArtwork_artwork

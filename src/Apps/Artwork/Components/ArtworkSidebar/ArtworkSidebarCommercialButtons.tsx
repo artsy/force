@@ -711,7 +711,7 @@ const ARTWORK_FRAGMENT = graphql`
     }
     collectorSignals {
       partnerOffer {
-        isActive
+        isAvailable
       }
     }
   }
