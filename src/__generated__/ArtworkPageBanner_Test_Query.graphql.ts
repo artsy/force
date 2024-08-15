@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06517153142708958d6a42a6657dd962>>
+ * @generated SignedSource<<2425108f3696d2f28259a74ee9faf1ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,7 +40,7 @@ export type ArtworkPageBanner_Test_Query$rawResponse = {
         readonly node: {
           readonly id: string;
           readonly internalID: string;
-          readonly isAvailable: boolean | null | undefined;
+          readonly isActive: boolean | null | undefined;
         } | null | undefined;
       } | null | undefined> | null | undefined;
     } | null | undefined;
@@ -239,7 +239,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "isAvailable",
+                        "name": "isActive",
                         "storageKey": null
                       },
                       (v2/*: any*/)
@@ -259,12 +259,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8993c141ca01b3dfdaa4dfa65d82ecf4",
+    "cacheID": "62dbf85d0772b08f1bc14c684bdd8a5a",
     "id": null,
     "metadata": {},
     "name": "ArtworkPageBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkPageBanner_Test_Query {\n  artwork(id: \"erik-s-mona-lisa\") {\n    ...ArtworkPageBanner_artwork\n    id\n  }\n  me {\n    ...ArtworkPageBanner_me_4FqYAG\n    id\n  }\n}\n\nfragment ArtworkPageBanner_artwork on Artwork {\n  published\n  visibilityLevel\n  isPurchasable\n  sale {\n    __typename\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment ArtworkPageBanner_me_4FqYAG on Me {\n  partnerOffersConnection(artworkID: \"erik-s-mona-lisa\", first: 1) {\n    edges {\n      node {\n        internalID\n        isAvailable\n        id\n      }\n    }\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n"
+    "text": "query ArtworkPageBanner_Test_Query {\n  artwork(id: \"erik-s-mona-lisa\") {\n    ...ArtworkPageBanner_artwork\n    id\n  }\n  me {\n    ...ArtworkPageBanner_me_4FqYAG\n    id\n  }\n}\n\nfragment ArtworkPageBanner_artwork on Artwork {\n  published\n  visibilityLevel\n  isPurchasable\n  sale {\n    __typename\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment ArtworkPageBanner_me_4FqYAG on Me {\n  partnerOffersConnection(artworkID: \"erik-s-mona-lisa\", first: 1) {\n    edges {\n      node {\n        internalID\n        isActive\n        id\n      }\n    }\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n"
   }
 };
 })();

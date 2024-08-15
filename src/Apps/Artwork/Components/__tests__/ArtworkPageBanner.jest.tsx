@@ -182,7 +182,7 @@ describe("ArtworkPageBanner", () => {
               {
                 node: {
                   internalID: "123",
-                  isAvailable: false,
+                  isActive: false,
                 },
               },
             ],
