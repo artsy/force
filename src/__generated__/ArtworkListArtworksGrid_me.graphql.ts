@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<24e24264a6431f38db6cd3f90395a3b8>>
+ * @generated SignedSource<<bffd965877589440f076fd6827333436>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,11 +15,6 @@ export type ArtworkListArtworksGrid_me$data = {
     readonly artworks: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly collectorSignals: {
-            readonly partnerOffer: {
-              readonly isActive: boolean | null | undefined;
-            } | null | undefined;
-          } | null | undefined;
           readonly id: string;
         } | null | undefined;
       } | null | undefined> | null | undefined;
@@ -161,35 +156,6 @@ const node: ReaderFragment = {
                     {
                       "alias": null,
                       "args": null,
-                      "concreteType": "CollectorSignals",
-                      "kind": "LinkedField",
-                      "name": "collectorSignals",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "PartnerOfferToCollector",
-                          "kind": "LinkedField",
-                          "name": "partnerOffer",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "isActive",
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
                       "name": "id",
                       "storageKey": null
@@ -227,6 +193,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "156418581bbbeb61646c300c0fcd91ec";
+(node as any).hash = "470207e2f9af102fa62e10d232191f50";
 
 export default node;

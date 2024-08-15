@@ -71,7 +71,9 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
                   destination_page_owner_slug: artwork.slug,
                   horizontal_slide_position: index,
                   type: "thumbnail",
-                  signal_labels: findSignalLabels(artwork),
+                  signal_labels: artwork.collectorSignals
+                    ? findSignalLabels(artwork.collectorSignals)
+                    : undefined,
                 }
                 trackEvent(properties)
               }}

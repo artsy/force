@@ -69,7 +69,9 @@ export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRa
                 destination_page_owner_id: artwork.internalID,
                 destination_page_owner_slug: artwork.slug,
                 type: "thumbnail",
-                signal_labels: findSignalLabels(artwork),
+                signal_labels: artwork.collectorSignals
+                  ? findSignalLabels(artwork.collectorSignals)
+                  : undefined,
               }
               trackEvent(trackingEvent)
             }}

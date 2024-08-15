@@ -54,7 +54,9 @@ const HomeWorksByArtistsYouFollowRail: React.FC<HomeWorksByArtistsYouFollowRailP
                 destination_page_owner_slug: artwork.slug,
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
-                signal_labels: findSignalLabels(artwork),
+                signal_labels: artwork.collectorSignals
+                  ? findSignalLabels(artwork.collectorSignals)
+                  : undefined,
               }
               trackEvent(trackingEvent)
             }}

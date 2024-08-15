@@ -14,7 +14,6 @@ import {
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
-import { findSignalLabels } from "Utils/findSignalLabels"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
@@ -82,7 +81,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
               destination_page_owner_type: OwnerType.artwork,
               position: artworkIndex,
               sort: context?.filters?.sort,
-              signal_labels: findSignalLabels(artwork),
               type: "thumbnail",
             }
             trackEvent(event)
@@ -120,11 +118,6 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
         }
         edges {
           node {
-            collectorSignals {
-              partnerOffer {
-                isActive
-              }
-            }
             id
           }
         }

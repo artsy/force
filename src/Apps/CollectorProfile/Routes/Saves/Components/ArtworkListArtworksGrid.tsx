@@ -23,7 +23,6 @@ import { isEqual } from "lodash"
 import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { ArtworkListEmptyStateFragmentContainer } from "./ArtworkListEmptyState"
-import { findSignalLabels } from "Utils/findSignalLabels"
 
 export const ARTWORK_LIST_ARTWORK_GRID_ID = "artworksGrid"
 
@@ -178,7 +177,6 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
               destination_page_owner_type: OwnerType.artwork,
               position: artworkIndex,
               sort: context?.filters?.sort,
-              signal_labels: findSignalLabels(artwork),
               type: "thumbnail",
             }
             trackEvent(event)
@@ -220,11 +218,6 @@ export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
             }
             edges {
               node {
-                collectorSignals {
-                  partnerOffer {
-                    isActive
-                  }
-                }
                 id
               }
             }
