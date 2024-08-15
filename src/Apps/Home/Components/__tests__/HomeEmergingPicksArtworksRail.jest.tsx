@@ -40,6 +40,7 @@ describe("HomeEmergingPicksArtworksRail", () => {
   it("tracks artwork click", () => {
     renderWithRelay({
       Viewer: () => artworksConnection,
+      CollectorSignals: () => ({ partnerOffer: null }),
     })
 
     fireEvent.click(screen.getAllByRole("link")[2])

@@ -55,7 +55,7 @@ describe("HomeWorksByArtistsYouFollowRail", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      renderWithRelay()
+      renderWithRelay({ CollectorSignals: () => ({ partnerOffer: null }) })
 
       fireEvent.click(screen.getByTestId("ShelfArtwork"))
 

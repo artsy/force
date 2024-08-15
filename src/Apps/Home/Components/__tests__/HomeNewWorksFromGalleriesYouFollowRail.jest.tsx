@@ -67,7 +67,8 @@ describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
     })
 
     it("tracks item clicks", () => {
-      renderWithRelay()
+      renderWithRelay({ CollectorSignals: () => ({ partnerOffer: null }) })
+
       fireEvent.click(screen.getAllByRole("link")[2])
 
       expect(trackEvent).toBeCalledWith({

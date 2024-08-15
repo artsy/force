@@ -142,7 +142,6 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
               artwork.collectorSignals ?? undefined
             )
           }}
-          Explana
           data-testid="partner-offer-artwork-button"
           flex={fullyAvailable ? 1 : [1, 0.5]}
         >
