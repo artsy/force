@@ -3,7 +3,7 @@ import { omit } from "lodash"
 import { graphql } from "react-relay"
 import loadable from "@loadable/component"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { redirectQueryToTerm } from "./Server/redirectQueryToTerm"
 
 const SearchResultsArtists = loadable(

@@ -1,9 +1,6 @@
-import {
-  ArtworkFilters,
-  initialArtworkFilterState,
-} from "../../ArtworkFilterContext"
-
-import { urlFragmentFromState } from "../urlFragmentFromState"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { urlFragmentFromState } from "Components/ArtworkFilter/Utils/urlFragmentFromState"
 
 describe("urlFragmentFromState", () => {
   it("returns a queryParam-safe representation of artworkFilterState", () => {

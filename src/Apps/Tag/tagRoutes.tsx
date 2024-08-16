@@ -3,7 +3,7 @@ import { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 
 const TagApp = loadable(
   () => import(/* webpackChunkName: "tagBundle" */ "./TagApp"),

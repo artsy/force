@@ -1,7 +1,7 @@
 import { Location } from "found"
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { allowedFilters } from "./allowedFilters"
-import { paramsToCamelCase } from "./urlBuilder"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 
 export const getInitialFilterState = (
   query: Location["query"]

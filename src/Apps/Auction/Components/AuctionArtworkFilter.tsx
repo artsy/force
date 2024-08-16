@@ -17,6 +17,7 @@ import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 
 interface AuctionArtworkFilterProps {
   relay: RelayRefetchProp
@@ -111,17 +112,3 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
     }
   `
 )
-
-export const getArtworkFilterInputArgs = (user?: User) => {
-  const aggregations = ["ARTIST", "MEDIUM", "TOTAL", "MATERIALS_TERMS"]
-
-  if (user) {
-    aggregations.push("FOLLOWED_ARTISTS")
-  }
-
-  // Shared with auctionRoutes
-  return {
-    aggregations,
-    first: 39,
-  }
-}

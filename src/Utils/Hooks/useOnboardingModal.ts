@@ -4,6 +4,7 @@ import { useOnboarding } from "Components/Onboarding"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 
+// TODO: Lazy load
 export const useOnboardingModal = () => {
   const { isLoggedIn } = useSystemContext()
   const { match, router } = useRouter()
