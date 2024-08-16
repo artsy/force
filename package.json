@@ -228,6 +228,7 @@
     "@loadable/babel-plugin": "5.13.2",
     "@loadable/webpack-plugin": "5.15.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@relative-ci/agent": "^4.2.10",
     "@storybook/addon-actions": "6.5.13",
     "@storybook/addon-essentials": "6.5.13",
     "@storybook/addon-links": "6.5.13",
