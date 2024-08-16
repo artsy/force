@@ -10,10 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
-import {
-  paramsToCamelCase,
-  updateUrl,
-} from "Components/ArtworkFilter/Utils/urlBuilder"
+import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
@@ -35,7 +32,6 @@ import useDeepCompareEffect from "use-deep-compare-effect"
 import { ArtistAuctionResultItemFragmentContainer } from "./ArtistAuctionResultItem"
 import {
   AuctionResultsFilterContextProvider,
-  initialAuctionResultsFilterState,
   SharedAuctionResultsFilterContextProps,
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
@@ -50,6 +46,8 @@ import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResult
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
 import { SystemContext } from "System/Contexts/SystemContext"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 

@@ -1,11 +1,11 @@
 import { FilterSelectChangeState, FilterSelectItems } from "@artsy/palette"
 import {
-  MultiSelectArtworkFilters,
   SelectedFiltersCountsLabels,
   Slice,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { MultiSelectArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 
 export interface UseFilterSelectResultsProps {

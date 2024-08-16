@@ -6,9 +6,10 @@ import { SortOptions } from "Components/SortFilter"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
-import { paramsToCamelCase } from "./Utils/urlBuilder"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { DEFAULT_METRIC, getSupportedMetric, Metric } from "Utils/metrics"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 /**
  * Initial filter state
@@ -74,47 +75,6 @@ export const customSizeFilterNames = [
   FilterParamName.width,
   FilterParamName.height,
 ]
-
-/**
- * A list of filters that support multiple selections
- */
-export interface MultiSelectArtworkFilters {
-  attributionClass?: string[]
-  artistIDs?: string[]
-  artistSeriesIDs?: string[]
-  colors?: string[]
-  additionalGeneIDs?: string[]
-  majorPeriods?: string[]
-  partnerIDs?: string[]
-  sizes?: string[]
-  locationCities?: string[]
-  artistNationalities?: string[]
-  materialsTerms?: string[]
-}
-
-/**
- * A list of all possible artwork filters across all apps
- */
-export interface ArtworkFilters extends MultiSelectArtworkFilters {
-  acquireable?: boolean
-  artist_id?: string
-  atAuction?: boolean
-  color?: string
-  forSale?: boolean
-  height?: string
-  includeArtworksByFollowedArtists?: boolean
-  inquireableOnly?: boolean
-  keyword?: string
-  medium?: string
-  offerable?: boolean
-  page?: number
-  partnerID?: string
-  priceRange?: string
-  sort?: string
-  term?: string
-  width?: string
-  metric?: Metric
-}
 
 export interface ArtworkFiltersState extends ArtworkFilters {
   reset?: boolean
@@ -303,7 +263,7 @@ export const ArtworkFilterContextProvider: React.FC<
   ZeroState,
 }) => {
   const camelCasedFilters: ArtworkFiltersState = paramsToCamelCase(filters)
-  const defaultSort = sortOptions?.[0].value ?? initialArtworkFilterState.sort!
+  const defaultSort = sortOptions?.[0].value ?? initialArtworkFilterState.sort
   const defaultMetric = userPreferredMetric ?? initialArtworkFilterState.metric
   const defaultFilters = {
     ...initialArtworkFilterState,

@@ -9,6 +9,7 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { SaleArtworksFilter_viewer$data } from "__generated__/SaleArtworksFilter_viewer.graphql"
+import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 
 interface SaleArtworkFilterProps {
   relay: RelayRefetchProp
@@ -100,17 +101,3 @@ export const SaleArtworkFilterRefetchContainer = createRefetchContainer(
     }
   `
 )
-
-export const getArtworkFilterInputArgs = (user?: User) => {
-  const aggregations = ["ARTIST", "MEDIUM", "TOTAL"]
-
-  if (user) {
-    aggregations.push("FOLLOWED_ARTISTS")
-  }
-
-  // Shared with saleRoutes
-  return {
-    aggregations,
-    first: 39,
-  }
-}

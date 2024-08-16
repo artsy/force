@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { RouteProps } from "System/Router/Route"
 
 const AlertApp = loadable(
-  () => import(/* webpackChunkName: "AlertBundle" */ "./AlertApp"),
+  () => import(/* webpackChunkName: "alertBundle" */ "./AlertApp"),
   {
     resolveComponent: component => component.AlertApp,
   }

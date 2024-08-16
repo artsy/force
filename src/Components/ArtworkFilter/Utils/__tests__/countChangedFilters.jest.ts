@@ -1,4 +1,4 @@
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { countChangedFilters } from "Components/ArtworkFilter/Utils/countChangedFilters"
 
 const EMPTY_FILTER: ArtworkFilters = {

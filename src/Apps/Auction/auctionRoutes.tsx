@@ -1,10 +1,10 @@
 import loadable from "@loadable/component"
 import { Redirect } from "found"
 import { graphql } from "react-relay"
-import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { RouteProps } from "System/Router/Route"
-import { getArtworkFilterInputArgs } from "./Components/AuctionArtworkFilter"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
+import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
+import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 
 const AuctionApp = loadable(
   () => import(/* webpackChunkName: "auctionBundle" */ "./AuctionApp"),
