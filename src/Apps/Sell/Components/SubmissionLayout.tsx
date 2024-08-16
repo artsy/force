@@ -1,5 +1,8 @@
 import { Box, Column, Flex, GridColumns } from "@artsy/palette"
-import { BottomFormNavigation } from "Apps/Sell/Components/BottomFormNavigation"
+import {
+  BOTTOM_FORM_NAVIGATION_SAVE_AREA,
+  BottomFormNavigation,
+} from "Apps/Sell/Components/BottomFormNavigation"
 import { StepsNavigation } from "Apps/Sell/Components/StepsNavigation"
 import { SubmissionHeader } from "Apps/Sell/Components/SubmissionHeader"
 import { SubmissionProgressBar } from "Apps/Sell/Components/SubmissionProgressBar"
@@ -42,12 +45,15 @@ export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
           </FadeInBox>
         ) : (
           <FadeInBox width={CONTENT_WIDTH} p={2} pt={[2, 4]} mx="auto">
-            {children}
+            <Box
+              style={{ paddingBottom: `${BOTTOM_FORM_NAVIGATION_SAVE_AREA}px` }}
+            >
+              {children}
+            </Box>
           </FadeInBox>
         )}
+        {!hideNavigation && <BottomFormNavigation />}
       </Flex>
-
-      {!hideNavigation && <BottomFormNavigation />}
     </Flex>
   )
 }

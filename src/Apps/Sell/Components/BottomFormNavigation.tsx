@@ -1,5 +1,7 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Button, Flex } from "@artsy/palette"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { Z } from "Apps/Components/constants"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useAssociateSubmission } from "Apps/Sell/Mutations/useAssociateSubmission"
 import {
@@ -15,20 +17,35 @@ import { useCallback, useEffect, useState } from "react"
 
 const logger = createLogger("BottomFormNavigation.tsx")
 
+export const BOTTOM_FORM_NAVIGATION_SAVE_AREA = 140
+
 export const BottomFormNavigation = () => {
   return (
     <Flex
+      position="absolute"
+      bottom={0}
+      left={0}
       width="100%"
-      p={[2, 4]}
-      pt={[2, 2]}
-      flexDirection="row"
-      justifyContent="space-between"
+      maxWidth="100vw"
+      background="rgba(255, 255, 255, 0.8)"
       alignItems="center"
-      borderTop="1px solid"
-      borderColor="black5"
+      zIndex={Z.globalNav}
     >
-      <BottomFormBackButton />
-      <BottomFormNextButton />
+      <AppContainer>
+        <Flex
+          width="100%"
+          p={[2, 4]}
+          pt={[2, 2]}
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+          borderTop="1px solid"
+          borderColor="black5"
+        >
+          <BottomFormBackButton />
+          <BottomFormNextButton />
+        </Flex>
+      </AppContainer>
     </Flex>
   )
 }
