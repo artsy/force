@@ -152,7 +152,7 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
   )
 }
 
-const ActivePartnerOfferLine: React.FC<DetailsProps> = () => {
+const CollectorSignalLine: React.FC<DetailsProps> = () => {
   return (
     <Text
       variant="xs"
@@ -351,7 +351,7 @@ export const Details: React.FC<DetailsProps> = ({
 
       <Flex justifyContent="space-between">
         <Flex flexDirection="column">
-          {showActivePartnerOfferLine && <ActivePartnerOfferLine {...rest} />}
+          {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
           )}

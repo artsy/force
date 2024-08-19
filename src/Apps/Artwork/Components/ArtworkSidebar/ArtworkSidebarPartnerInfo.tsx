@@ -9,7 +9,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
 import { themeGet } from "@styled-system/theme-get"
 import { ActionType, ClickedContactGallery, OwnerType } from "@artsy/cohesion"
-import { findSignalLabel } from "Utils/findSignalLabel"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface ArtworkSidebarPartnerInfoProps {
   artwork: ArtworkSidebarPartnerInfo_artwork$data
@@ -62,7 +62,7 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
       context_owner_type: OwnerType.artwork,
       context_owner_slug: slug,
       context_owner_id: internalID,
-      signal_label: collectorSignals ? findSignalLabel(collectorSignals) : "",
+      signal_label: collectorSignals ? getSignalLabel(collectorSignals) : "",
     }
 
     trackEvent(event)

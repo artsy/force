@@ -6,7 +6,7 @@ export interface CollectorSignals {
   partnerOffer: PartnerOffer | null | undefined
 }
 
-export const findSignalLabel = (collectorSignals: CollectorSignals) => {
+export const getSignalLabel = (collectorSignals: CollectorSignals) => {
   const { partnerOffer } = collectorSignals
 
   return partnerOffer ? "Limited-Time Offer" : ""

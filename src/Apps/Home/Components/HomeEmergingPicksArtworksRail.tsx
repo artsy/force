@@ -16,7 +16,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
 import { HomeEmergingPicksArtworksRailQuery } from "__generated__/HomeEmergingPicksArtworksRailQuery.graphql"
 import { useTracking } from "react-tracking"
-import { findSignalLabel } from "Utils/findSignalLabel"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface HomeEmergingPicksArtworksRailProps {
   viewer: HomeEmergingPicksArtworksRail_viewer$data
@@ -70,7 +70,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRa
                 destination_page_owner_slug: artwork.slug,
                 type: "thumbnail",
                 signal_label: artwork.collectorSignals
-                  ? findSignalLabel(artwork.collectorSignals)
+                  ? getSignalLabel(artwork.collectorSignals)
                   : "",
               }
               trackEvent(trackingEvent)

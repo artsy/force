@@ -17,7 +17,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { findSignalLabel } from "Utils/findSignalLabel"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface HomeNewWorksForYouRailProps {
   artworksForUser: HomeNewWorksForYouRail_artworksForUser$data
@@ -56,7 +56,7 @@ const HomeNewWorksForYouRail: React.FC<HomeNewWorksForYouRailProps> = ({
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
                 signal_label: artwork.collectorSignals
-                  ? findSignalLabel(artwork.collectorSignals)
+                  ? getSignalLabel(artwork.collectorSignals)
                   : "",
               }
               trackEvent(trackingEvent)

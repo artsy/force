@@ -9,7 +9,7 @@ import {
   ClickedActivityPanelTab,
 } from "@artsy/cohesion/dist/Schema/Events/ActivityPanel"
 import { useTracking } from "react-tracking"
-import { CollectorSignals, findSignalLabel } from "Utils/findSignalLabel"
+import { CollectorSignals, getSignalLabel } from "Utils/getSignalLabel"
 
 export const useNotificationsTracking = () => {
   const { trackEvent } = useTracking()
@@ -53,7 +53,7 @@ export const useNotificationsTracking = () => {
         context_owner_id: artworkID,
         context_owner_slug: artworkSlug,
         flow: "Partner Offer",
-        signal_label: collectorSignals ? findSignalLabel(collectorSignals) : "",
+        signal_label: collectorSignals ? getSignalLabel(collectorSignals) : "",
       }
 
       trackEvent(event)
