@@ -53,16 +53,33 @@ describe("HomeRecentlyViewedRail", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      renderWithRelay()
+      renderWithRelay({
+        HomePage: () => ({
+          artworkModule: {
+            results: [
+              {
+                title: "Test Artist",
+                href: "/test-href",
+                internalID: "123",
+                slug: "test-slug",
+                collectorSignals: null,
+              },
+            ],
+          },
+        }),
+      })
+
       fireEvent.click(screen.getByTestId("ShelfArtwork"))
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtworkGroup",
         context_module: "recentlyViewedRail",
         context_page_owner_type: "home",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_id: "123",
+        destination_page_owner_slug: "test-slug",
         destination_page_owner_type: "artwork",
         type: "thumbnail",
+        signal_label: "",
       })
     })
   })

@@ -16,6 +16,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface HomeRecentlyViewedRailProps {
   homePage: HomeRecentlyViewedRail_homePage$data
@@ -53,6 +54,9 @@ const HomeRecentlyViewedRail: React.FC<HomeRecentlyViewedRailProps> = ({
                 destination_page_owner_slug: artwork.slug,
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
+                signal_label: artwork.collectorSignals
+                  ? getSignalLabel(artwork.collectorSignals)
+                  : "",
               }
               trackEvent(trackingEvent)
             }}
@@ -82,6 +86,11 @@ export const HomeRecentlyViewedRailFragmentContainer = createFragmentContainer(
           results {
             internalID
             slug
+            collectorSignals {
+              partnerOffer {
+                isAvailable
+              }
+            }
             ...ShelfArtwork_artwork
           }
         }

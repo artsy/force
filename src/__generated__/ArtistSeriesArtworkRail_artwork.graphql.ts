@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8af2b11e585a684a96cbb9f26f28ce35>>
+ * @generated SignedSource<<53edcbeefb266f83dc201ff7a2874ca6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,11 @@ export type ArtistSeriesArtworkRail_artwork$data = {
         readonly filterArtworksConnection: {
           readonly edges: ReadonlyArray<{
             readonly node: {
+              readonly collectorSignals: {
+                readonly partnerOffer: {
+                  readonly isAvailable: boolean | null | undefined;
+                } | null | undefined;
+              } | null | undefined;
               readonly internalID: string;
               readonly slug: string;
               readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
@@ -130,6 +135,35 @@ return {
                             (v1/*: any*/),
                             (v0/*: any*/),
                             {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "CollectorSignals",
+                              "kind": "LinkedField",
+                              "name": "collectorSignals",
+                              "plural": false,
+                              "selections": [
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "concreteType": "PartnerOfferToCollector",
+                                  "kind": "LinkedField",
+                                  "name": "partnerOffer",
+                                  "plural": false,
+                                  "selections": [
+                                    {
+                                      "alias": null,
+                                      "args": null,
+                                      "kind": "ScalarField",
+                                      "name": "isAvailable",
+                                      "storageKey": null
+                                    }
+                                  ],
+                                  "storageKey": null
+                                }
+                              ],
+                              "storageKey": null
+                            },
+                            {
                               "args": null,
                               "kind": "FragmentSpread",
                               "name": "ShelfArtwork_artwork"
@@ -158,6 +192,6 @@ return {
 };
 })();
 
-(node as any).hash = "cfb241b354625af4e82f02523ff0b0a0";
+(node as any).hash = "8c708dcdb26db9109199d14b39d185e5";
 
 export default node;

@@ -40,6 +40,7 @@ describe("HomeEmergingPicksArtworksRail", () => {
   it("tracks artwork click", () => {
     renderWithRelay({
       Viewer: () => artworksConnection,
+      CollectorSignals: () => ({ partnerOffer: null }),
     })
 
     fireEvent.click(screen.getAllByRole("link")[2])
@@ -52,6 +53,7 @@ describe("HomeEmergingPicksArtworksRail", () => {
       destination_page_owner_slug: "artwork-slug",
       destination_page_owner_type: "artwork",
       type: "thumbnail",
+      signal_label: "",
     })
   })
 

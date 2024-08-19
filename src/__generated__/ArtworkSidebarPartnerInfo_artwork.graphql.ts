@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3728b482d28826af723dc456a864e888>>
+ * @generated SignedSource<<581d4ce06b201fc2ba78563de21eed7a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork$data = {
+  readonly collectorSignals: {
+    readonly partnerOffer: {
+      readonly isAvailable: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly isInquireable: boolean | null | undefined;
   readonly isUnlisted: boolean;
@@ -115,6 +120,35 @@ return {
         (v2/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorSignals",
+      "kind": "LinkedField",
+      "name": "collectorSignals",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PartnerOfferToCollector",
+          "kind": "LinkedField",
+          "name": "partnerOffer",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isAvailable",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -122,6 +156,6 @@ return {
 };
 })();
 
-(node as any).hash = "a7ca3ed8d431bf9fabce88e4478c76f3";
+(node as any).hash = "cb72e6e7e45ae0a4f310994de91a5ca3";
 
 export default node;

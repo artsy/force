@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d834aa5c3c4f8834d2ff2bd3081de38>>
+ * @generated SignedSource<<cbb090cd5990e4081713436eb3563afd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerOfferArtwork_artwork$data = {
   readonly artistNames: string | null | undefined;
+  readonly collectorSignals: {
+    readonly partnerOffer: {
+      readonly isAvailable: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly href: string | null | undefined;
   readonly image: {
     readonly height: number | null | undefined;
@@ -179,6 +184,35 @@ const node: ReaderFragment = {
       "storageKey": "partner(shallow:true)"
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorSignals",
+      "kind": "LinkedField",
+      "name": "collectorSignals",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PartnerOfferToCollector",
+          "kind": "LinkedField",
+          "name": "partnerOffer",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isAvailable",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Metadata_artwork"
@@ -188,6 +222,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e8dbd6343625d864832be3b6f0b794dd";
+(node as any).hash = "e48d2509881167a3a74b56642f8852bf";
 
 export default node;

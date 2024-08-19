@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91ecf4711b13db49c376b1ce68d5b5ef>>
+ * @generated SignedSource<<bfc5035b8e89e464670bf41f5afcd9fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,11 +23,8 @@ export type Details_artwork$data = {
   } | null | undefined> | null | undefined;
   readonly collecting_institution: string | null | undefined;
   readonly collectorSignals: {
-    readonly bidCount: number | null | undefined;
-    readonly lotWatcherCount: number | null | undefined;
     readonly partnerOffer: {
       readonly endAt: string | null | undefined;
-      readonly isActive: boolean | null | undefined;
       readonly priceWithDiscount: {
         readonly display: string | null | undefined;
       } | null | undefined;
@@ -165,33 +162,12 @@ return {
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "bidCount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "lotWatcherCount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
           "concreteType": "PartnerOfferToCollector",
           "kind": "LinkedField",
           "name": "partnerOffer",
           "plural": false,
           "selections": [
             (v2/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isActive",
-              "storageKey": null
-            },
             {
               "alias": null,
               "args": null,
@@ -479,6 +455,6 @@ return {
 };
 })();
 
-(node as any).hash = "d380632c4716d8141767573753b5a5d4";
+(node as any).hash = "eb8792f4b6e2f416696a4ba76b1eb9a2";
 
 export default node;

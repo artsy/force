@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be22ad22e9b1bf1fc6ef1925b0a38900>>
+ * @generated SignedSource<<ea4553d74b91200a03993d25cf54719c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -65,11 +65,17 @@ v5 = {
 },
 v6 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "Boolean"
 },
 v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
+},
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -174,6 +180,36 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CollectorSignals",
+            "kind": "LinkedField",
+            "name": "collectorSignals",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PartnerOfferToCollector",
+                "kind": "LinkedField",
+                "name": "partnerOffer",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "isAvailable",
+                    "storageKey": null
+                  },
+                  (v4/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"artwork_from_partner_with_locations\")"
@@ -181,7 +217,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3577526261dd704cce867ac2c7bf668e",
+    "cacheID": "63b31684a3c63998174f3e28a62f1388",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -191,15 +227,24 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.id": (v5/*: any*/),
-        "artwork.internalID": (v5/*: any*/),
-        "artwork.isInquireable": {
+        "artwork.collectorSignals": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "Boolean"
+          "type": "CollectorSignals"
         },
-        "artwork.isUnlisted": (v6/*: any*/),
+        "artwork.collectorSignals.partnerOffer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerOfferToCollector"
+        },
+        "artwork.collectorSignals.partnerOffer.id": (v5/*: any*/),
+        "artwork.collectorSignals.partnerOffer.isAvailable": (v6/*: any*/),
+        "artwork.id": (v5/*: any*/),
+        "artwork.internalID": (v5/*: any*/),
+        "artwork.isInquireable": (v6/*: any*/),
+        "artwork.isUnlisted": (v7/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -212,25 +257,25 @@ return {
           "plural": true,
           "type": "String"
         },
-        "artwork.partner.href": (v7/*: any*/),
+        "artwork.partner.href": (v8/*: any*/),
         "artwork.partner.id": (v5/*: any*/),
-        "artwork.partner.isInquireable": (v6/*: any*/),
-        "artwork.partner.name": (v7/*: any*/),
+        "artwork.partner.isInquireable": (v7/*: any*/),
+        "artwork.partner.name": (v8/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.href": (v7/*: any*/),
+        "artwork.sale.href": (v8/*: any*/),
         "artwork.sale.id": (v5/*: any*/),
-        "artwork.sale.name": (v7/*: any*/),
+        "artwork.sale.name": (v8/*: any*/),
         "artwork.slug": (v5/*: any*/)
       }
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isUnlisted\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isUnlisted\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n  collectorSignals {\n    partnerOffer {\n      isAvailable\n      id\n    }\n  }\n}\n"
   }
 };
 })();

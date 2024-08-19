@@ -6,7 +6,12 @@ import { useTracking } from "react-tracking"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
-import { ContextModule, clickedMainArtworkGrid } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedMainArtworkGrid,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
 
@@ -65,18 +70,20 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           onClearFilters={context.resetFilters}
           emptyStateComponent={context.ZeroState && <context.ZeroState />}
           onBrickClick={(artwork, artworkIndex) => {
-            trackEvent(
-              clickedMainArtworkGrid({
-                contextPageOwnerType,
-                contextPageOwnerSlug,
-                contextPageOwnerId,
-                destinationPageOwnerId: artwork.internalID,
-                destinationPageOwnerSlug: artwork.slug,
-                position: artworkIndex,
-                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                sort: context.filters.sort,
-              })
-            )
+            const event: ClickedMainArtworkGrid = {
+              action: ActionType.clickedMainArtworkGrid,
+              context_module: ContextModule.artworkGrid,
+              context_page_owner_type: contextPageOwnerType,
+              context_page_owner_slug: contextPageOwnerSlug,
+              context_page_owner_id: contextPageOwnerId,
+              destination_page_owner_id: artwork.internalID,
+              destination_page_owner_slug: artwork.slug,
+              destination_page_owner_type: OwnerType.artwork,
+              position: artworkIndex,
+              sort: context?.filters?.sort,
+              type: "thumbnail",
+            }
+            trackEvent(event)
           }}
         />
 

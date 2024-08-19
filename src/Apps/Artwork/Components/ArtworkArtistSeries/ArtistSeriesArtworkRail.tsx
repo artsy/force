@@ -11,6 +11,7 @@ import {
 } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { Rail } from "Components/Rail/Rail"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface Props {
   artwork: ArtistSeriesArtworkRail_artwork$data
@@ -70,6 +71,9 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
                   destination_page_owner_slug: artwork.slug,
                   horizontal_slide_position: index,
                   type: "thumbnail",
+                  signal_label: artwork.collectorSignals
+                    ? getSignalLabel(artwork.collectorSignals)
+                    : "",
                 }
                 trackEvent(properties)
               }}
@@ -98,6 +102,11 @@ export const ArtistSeriesArtworkRailFragmentContainer = createFragmentContainer(
                   node {
                     slug
                     internalID
+                    collectorSignals {
+                      partnerOffer {
+                        isAvailable
+                      }
+                    }
                     ...ShelfArtwork_artwork
                   }
                 }

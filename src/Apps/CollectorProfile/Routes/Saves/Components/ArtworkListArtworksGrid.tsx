@@ -5,10 +5,11 @@ import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import {
   ContextModule,
-  clickedMainArtworkGrid,
   ClickedChangePage,
   ActionType,
   commercialFilterParamsChanged,
+  ClickedMainArtworkGrid,
+  OwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
@@ -165,18 +166,20 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
           emptyStateComponent={null}
           savedListId={me.artworkList?.internalID}
           onBrickClick={(artwork, artworkIndex) => {
-            // TODO: Clarify moments about analytics
-            trackEvent(
-              clickedMainArtworkGrid({
-                contextPageOwnerType: contextPageOwnerType,
-                contextPageOwnerSlug,
-                contextPageOwnerId,
-                destinationPageOwnerId: artwork.internalID,
-                destinationPageOwnerSlug: artwork.slug,
-                position: artworkIndex,
-                sort: context?.filters?.sort,
-              })
-            )
+            const event: ClickedMainArtworkGrid = {
+              action: ActionType.clickedMainArtworkGrid,
+              context_module: ContextModule.artworkGrid,
+              context_page_owner_type: contextPageOwnerType,
+              context_page_owner_slug: contextPageOwnerSlug,
+              context_page_owner_id: contextPageOwnerId,
+              destination_page_owner_id: artwork.internalID,
+              destination_page_owner_slug: artwork.slug,
+              destination_page_owner_type: OwnerType.artwork,
+              position: artworkIndex,
+              sort: context?.filters?.sort,
+              type: "thumbnail",
+            }
+            trackEvent(event)
           }}
         />
 

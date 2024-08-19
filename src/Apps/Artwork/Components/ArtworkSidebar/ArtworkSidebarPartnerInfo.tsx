@@ -7,8 +7,9 @@ import { useTracking } from "react-tracking"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
 import { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { themeGet } from "@styled-system/theme-get"
+import { ActionType, ClickedContactGallery, OwnerType } from "@artsy/cohesion"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface ArtworkSidebarPartnerInfoProps {
   artwork: ArtworkSidebarPartnerInfo_artwork$data
@@ -35,7 +36,15 @@ const StyledPartnerLink = styled(RouterLink)`
 const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   artwork,
 }) => {
-  const { internalID, partner, sale, slug, isInquireable, isUnlisted } = artwork
+  const {
+    internalID,
+    partner,
+    sale,
+    slug,
+    isInquireable,
+    isUnlisted,
+    collectorSignals,
+  } = artwork
 
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
@@ -48,13 +57,16 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
     !isInquireable && !!partner?.isInquireable
 
   const handleInquiry = () => {
-    trackEvent({
-      context_module: DeprecatedAnalyticsSchema.ContextModule.Sidebar,
-      action_type: DeprecatedAnalyticsSchema.ActionType.ClickedContactGallery,
-      subject: DeprecatedAnalyticsSchema.Subject.ContactGallery,
-      artwork_id: internalID,
-      artwork_slug: slug,
-    })
+    const event: ClickedContactGallery = {
+      action: ActionType.clickedContactGallery,
+      context_owner_type: OwnerType.artwork,
+      context_owner_slug: slug,
+      context_owner_id: internalID,
+      signal_label: collectorSignals ? getSignalLabel(collectorSignals) : "",
+    }
+
+    trackEvent(event)
+
     showInquiry({ enableCreateAlert: true })
   }
 
@@ -156,6 +168,11 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
         sale {
           name
           href
+        }
+        collectorSignals {
+          partnerOffer {
+            isAvailable
+          }
         }
       }
     `,

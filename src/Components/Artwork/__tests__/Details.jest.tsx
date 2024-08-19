@@ -685,8 +685,6 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   isInAuction: true,
   isSavedToList: false,
   collectorSignals: {
-    bidCount: null,
-    lotWatcherCount: null,
     partnerOffer: null,
   },
   consignmentSubmission: null,
@@ -760,8 +758,6 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = 
   isInAuction: true,
   isSavedToList: false,
   collectorSignals: {
-    bidCount: null,
-    lotWatcherCount: null,
     partnerOffer: null,
   },
   consignmentSubmission: {
@@ -823,8 +819,6 @@ const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
   isInAuction: false,
   isSavedToList: false,
   collectorSignals: {
-    bidCount: null,
-    lotWatcherCount: null,
     partnerOffer: null,
   },
   consignmentSubmission: null,

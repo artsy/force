@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2b12e4cdaf2d89de9ac9d0cfcbe8ff20>>
+ * @generated SignedSource<<2319fc0756b2778f6785bfbe7615f2e8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,11 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
   } | null | undefined> | null | undefined;
   readonly attributionClass: {
     readonly internalID: string;
+  } | null | undefined;
+  readonly collectorSignals: {
+    readonly partnerOffer: {
+      readonly isAvailable: boolean | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly editionSets: ReadonlyArray<{
     readonly dimensions: {
@@ -310,6 +315,35 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorSignals",
+      "kind": "LinkedField",
+      "name": "collectorSignals",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PartnerOfferToCollector",
+          "kind": "LinkedField",
+          "name": "partnerOffer",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isAvailable",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -317,6 +351,6 @@ return {
 };
 })();
 
-(node as any).hash = "56f07625bc892159701ee61bd68fc827";
+(node as any).hash = "91d63adcc3a8df890ea00b4de69677a5";
 
 export default node;

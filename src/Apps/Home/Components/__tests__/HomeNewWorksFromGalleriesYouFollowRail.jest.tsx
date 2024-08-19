@@ -67,7 +67,8 @@ describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
     })
 
     it("tracks item clicks", () => {
-      renderWithRelay()
+      renderWithRelay({ CollectorSignals: () => ({ partnerOffer: null }) })
+
       fireEvent.click(screen.getAllByRole("link")[2])
 
       expect(trackEvent).toBeCalledWith({
@@ -78,6 +79,7 @@ describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
         destination_page_owner_slug: "<Artwork-mock-id-2>",
         destination_page_owner_type: "artwork",
         type: "thumbnail",
+        signal_label: "",
       })
     })
   })

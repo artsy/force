@@ -227,8 +227,6 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               },
             },
             collectorSignals: {
-              bidCount: null,
-              lotWatcherCount: null,
               partnerOffer: null,
             },
             preview: null,
@@ -380,8 +378,6 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               },
             },
             collectorSignals: {
-              bidCount: null,
-              lotWatcherCount: null,
               partnerOffer: null,
             },
             preview: null,
