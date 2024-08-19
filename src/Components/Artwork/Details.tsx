@@ -18,6 +18,7 @@ import { SaveButtonFragmentContainer } from "./SaveButton"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -152,7 +153,13 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
   )
 }
 
-const CollectorSignalLine: React.FC<DetailsProps> = () => {
+const CollectorSignalLine: React.FC<DetailsProps> = ({
+  artwork: { collectorSignals },
+}) => {
+  if (!collectorSignals) {
+    return null
+  }
+
   return (
     <Text
       variant="xs"
@@ -163,7 +170,7 @@ const CollectorSignalLine: React.FC<DetailsProps> = () => {
       alignSelf="flex-start"
       borderRadius={3}
     >
-      Limited-Time Offer
+      {getSignalLabel(collectorSignals)}
     </Text>
   )
 }
@@ -479,7 +486,6 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         lotWatcherCount
         partnerOffer {
           endAt
-          isActive
           priceWithDiscount {
             display
           }
