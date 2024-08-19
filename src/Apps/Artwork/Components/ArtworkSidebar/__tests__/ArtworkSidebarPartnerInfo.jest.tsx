@@ -173,7 +173,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
       fireEvent.click(screen.getByText("Contact Gallery"))
 
       expect(trackEvent).toBeCalledWith({
-        action: "tappedContactGallery",
+        action: "clickedContactGallery",
         context_owner_id: "artwork_from_partner_with_locations",
         context_owner_slug: "test-slug",
         context_owner_type: "artwork",

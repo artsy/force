@@ -58,7 +58,7 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
 
   const handleInquiry = () => {
     const event: ClickedContactGallery = {
-      action: ActionType.tappedContactGallery,
+      action: ActionType.clickedContactGallery,
       context_owner_type: OwnerType.artwork,
       context_owner_slug: slug,
       context_owner_id: internalID,
