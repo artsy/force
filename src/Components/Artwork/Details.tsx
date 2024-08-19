@@ -482,8 +482,6 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       title
       date
       collectorSignals {
-        bidCount
-        lotWatcherCount
         partnerOffer {
           endAt
           priceWithDiscount {

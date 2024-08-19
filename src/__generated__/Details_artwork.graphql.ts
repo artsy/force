@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<174595b9d892dee160f18b71808765e3>>
+ * @generated SignedSource<<bfc5035b8e89e464670bf41f5afcd9fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,8 +23,6 @@ export type Details_artwork$data = {
   } | null | undefined> | null | undefined;
   readonly collecting_institution: string | null | undefined;
   readonly collectorSignals: {
-    readonly bidCount: number | null | undefined;
-    readonly lotWatcherCount: number | null | undefined;
     readonly partnerOffer: {
       readonly endAt: string | null | undefined;
       readonly priceWithDiscount: {
@@ -161,20 +159,6 @@ return {
       "name": "collectorSignals",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "bidCount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "lotWatcherCount",
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -471,6 +455,6 @@ return {
 };
 })();
 
-(node as any).hash = "098cabbf8431329b6bb1d6fd84df6a1e";
+(node as any).hash = "eb8792f4b6e2f416696a4ba76b1eb9a2";
 
 export default node;

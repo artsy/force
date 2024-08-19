@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c14ed3fdec91fe69e64ea538529f680a>>
+ * @generated SignedSource<<ec6a81728fbd6177cbbd6bc23ef48ecd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,8 +42,6 @@ export type ViewingRoomWorksRoute_Test_Query$rawResponse = {
           } | null | undefined;
           readonly collecting_institution: string | null | undefined;
           readonly collectorSignals: {
-            readonly bidCount: number | null | undefined;
-            readonly lotWatcherCount: number | null | undefined;
             readonly partnerOffer: {
               readonly endAt: string | null | undefined;
               readonly id: string;
@@ -264,13 +262,13 @@ v16 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "ResizedImageUrl"
 },
 v17 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "ResizedImageUrl"
+  "type": "Int"
 },
 v18 = {
   "enumValues": null,
@@ -415,20 +413,6 @@ return {
                         "name": "collectorSignals",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "bidCount",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "lotWatcherCount",
-                            "storageKey": null
-                          },
                           {
                             "alias": null,
                             "args": null,
@@ -792,7 +776,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "140d2998eef23f379b48175e843d08a5",
+    "cacheID": "1dd5a2dc9c13aa4484f25b390017cbe7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -860,8 +844,6 @@ return {
           "plural": false,
           "type": "CollectorSignals"
         },
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.bidCount": (v16/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.lotWatcherCount": (v16/*: any*/),
         "viewingRoom.artworksConnection.edges.node.collectorSignals.partnerOffer": {
           "enumValues": null,
           "nullable": true,
@@ -893,16 +875,16 @@ return {
           "plural": false,
           "type": "ID"
         },
-        "viewingRoom.artworksConnection.edges.node.images.resized": (v17/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.resized.height": (v16/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.images.resized": (v16/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.images.resized.height": (v17/*: any*/),
         "viewingRoom.artworksConnection.edges.node.images.resized.src": (v18/*: any*/),
         "viewingRoom.artworksConnection.edges.node.images.resized.srcSet": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.resized.width": (v16/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.solo": (v17/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.solo.height": (v16/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.images.resized.width": (v17/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.images.solo": (v16/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.images.solo.height": (v17/*: any*/),
         "viewingRoom.artworksConnection.edges.node.images.solo.src": (v18/*: any*/),
         "viewingRoom.artworksConnection.edges.node.images.solo.srcSet": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.solo.width": (v16/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.images.solo.width": (v17/*: any*/),
         "viewingRoom.artworksConnection.edges.node.internalID": (v14/*: any*/),
         "viewingRoom.artworksConnection.edges.node.isInAuction": (v15/*: any*/),
         "viewingRoom.artworksConnection.edges.node.isSaved": (v15/*: any*/),
@@ -960,9 +942,9 @@ return {
           "plural": false,
           "type": "Sale"
         },
-        "viewingRoom.artworksConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": (v16/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": (v17/*: any*/),
         "viewingRoom.artworksConnection.edges.node.sale.endAt": (v13/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale.extendedBiddingIntervalMinutes": (v16/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.sale.extendedBiddingIntervalMinutes": (v17/*: any*/),
         "viewingRoom.artworksConnection.edges.node.sale.id": (v14/*: any*/),
         "viewingRoom.artworksConnection.edges.node.sale.is_auction": (v15/*: any*/),
         "viewingRoom.artworksConnection.edges.node.sale.is_closed": (v15/*: any*/),
@@ -1012,7 +994,7 @@ return {
     },
     "name": "ViewingRoomWorksRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomWorksRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    bidCount\n    lotWatcherCount\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  ...Details_artwork\n  id\n  additionalInformation\n  href\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        title\n        images {\n          internalID\n          solo: resized(quality: 85, width: 600, version: \"normalized\") {\n            src\n            srcSet\n            width\n            height\n          }\n          resized(quality: 85, height: 550, version: \"normalized\") {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ViewingRoomWorksRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  ...Details_artwork\n  id\n  additionalInformation\n  href\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        title\n        images {\n          internalID\n          solo: resized(quality: 85, width: 600, version: \"normalized\") {\n            src\n            srcSet\n            width\n            height\n          }\n          resized(quality: 85, height: 550, version: \"normalized\") {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
