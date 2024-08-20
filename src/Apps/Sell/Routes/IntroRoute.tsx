@@ -32,8 +32,16 @@ export const IntroRoute: React.FC = () => {
           height={isMobile ? "100%" : undefined}
           flexDirection="column"
           overflowY="auto"
+          overflow="scroll"
         >
-          <Flex flex={1} overflowY="auto" flexDirection="column">
+          <Flex
+            flex={1}
+            overflowY="auto"
+            flexDirection="column"
+            maxHeight={`calc(100vh - ${270}px)`}
+            px={1}
+            pb={[2, 4]}
+          >
             <SubmissionStepTitle>
               It’s easy to sell on Artsy
             </SubmissionStepTitle>
@@ -66,7 +74,7 @@ export const IntroRoute: React.FC = () => {
             </Join>
           </Flex>
 
-          <Flex gap="2" width="100%" pt={[2, 6]}>
+          <Flex gap="2" width="100%" pt={2} px={1}>
             <Button
               // @ts-ignore
               as={RouterLink}
