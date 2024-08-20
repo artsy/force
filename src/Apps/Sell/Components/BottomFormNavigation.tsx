@@ -27,7 +27,7 @@ export const BottomFormNavigation = () => {
       left={0}
       width="100%"
       maxWidth="100vw"
-      background="rgba(255, 255, 255, 0.8)"
+      background="rgba(255, 255, 255, 0.9)"
       alignItems="center"
       zIndex={Z.globalNav}
     >
