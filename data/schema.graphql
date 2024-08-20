@@ -2295,7 +2295,7 @@ type ArtistsRailHomeViewSection implements GenericHomeViewSection & Node {
     before: String
     first: Int
     last: Int
-  ): ArtistConnection!
+  ): ArtistConnection
 
   # The component that is prescribed for this section
   component: HomeViewComponent
@@ -3165,7 +3165,7 @@ type ArtworksRailHomeViewSection implements GenericHomeViewSection & Node {
     before: String
     first: Int
     last: Int
-  ): ArtworkConnection!
+  ): ArtworkConnection
 
   # The component that is prescribed for this section
   component: HomeViewComponent
@@ -10691,7 +10691,7 @@ type HeroUnitsHomeViewSection implements GenericHomeViewSection & Node {
     before: String
     first: Int
     last: Int
-  ): HeroUnitConnection!
+  ): HeroUnitConnection
 
   # A globally unique ID.
   id: ID!
