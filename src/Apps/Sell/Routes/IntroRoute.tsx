@@ -11,6 +11,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
+import { SUBMISSION_LAYOUT_TOP_NAV_HEIGHT } from "Apps/Conversations/components/ConversationLayout"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
@@ -38,7 +39,7 @@ export const IntroRoute: React.FC = () => {
             flex={1}
             overflowY="auto"
             flexDirection="column"
-            maxHeight={`calc(100vh - ${270}px)`}
+            maxHeight={`calc(100vh - ${SUBMISSION_LAYOUT_TOP_NAV_HEIGHT}px)`}
             px={1}
             pb={[2, 4]}
           >
