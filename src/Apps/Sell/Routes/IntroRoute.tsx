@@ -11,6 +11,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
+import { SUBMISSION_LAYOUT_TOP_NAV_HEIGHT } from "Apps/Conversations/components/ConversationLayout"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
@@ -32,8 +33,16 @@ export const IntroRoute: React.FC = () => {
           height={isMobile ? "100%" : undefined}
           flexDirection="column"
           overflowY="auto"
+          overflow="scroll"
         >
-          <Flex flex={1} overflowY="auto" flexDirection="column">
+          <Flex
+            flex={1}
+            overflowY="auto"
+            flexDirection="column"
+            maxHeight={`calc(100vh - ${SUBMISSION_LAYOUT_TOP_NAV_HEIGHT}px)`}
+            px={1}
+            pb={[2, 4]}
+          >
             <SubmissionStepTitle>
               It’s easy to sell on Artsy
             </SubmissionStepTitle>
@@ -66,7 +75,7 @@ export const IntroRoute: React.FC = () => {
             </Join>
           </Flex>
 
-          <Flex gap="2" width="100%" pt={[2, 6]}>
+          <Flex gap="2" width="100%" pt={2} px={1}>
             <Button
               // @ts-ignore
               as={RouterLink}
