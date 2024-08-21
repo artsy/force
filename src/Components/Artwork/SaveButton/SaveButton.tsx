@@ -46,9 +46,12 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
 
   return (
     <Flex alignItems="center">
-      <Text variant="xs" color="black100">
-        {lotWatcherCount}
-      </Text>
+      {lotWatcherCount != null && lotWatcherCount > 0 && (
+        <Text variant="xs" color="black100">
+          {lotWatcherCount}
+        </Text>
+      )}
+
       <Clickable
         aria-label={isSaved ? "Unsave" : "Save"}
         data-test="saveButton"
