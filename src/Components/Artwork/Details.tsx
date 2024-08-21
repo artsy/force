@@ -217,24 +217,16 @@ const SaleMessage: React.FC<SaleMessageProps> = props => {
   return <>{sale_message ?? NBSP}</>
 }
 
-const BidInfo: React.FC<DetailsProps> = ({
-  artwork: { sale, sale_artwork },
-}) => {
-  const inRunningAuction = sale?.is_auction && !sale?.is_closed
+const BidInfo: React.FC<DetailsProps> = ({ artwork: { collectorSignals } }) => {
+  const bidCount = collectorSignals?.auction?.bidCount ?? 0
 
-  if (!inRunningAuction) {
-    return null
-  }
-
-  const bidderPositionCounts = sale_artwork?.counts?.bidder_positions ?? 0
-
-  if (bidderPositionCounts === 0) {
+  if (bidCount === 0) {
     return null
   }
 
   return (
     <>
-      ({bidderPositionCounts} bid{bidderPositionCounts === 1 ? "" : "s"})
+      ({bidCount} bid{bidCount === 1 ? "" : "s"})
     </>
   )
 }
@@ -334,33 +326,34 @@ export const Details: React.FC<DetailsProps> = ({
 
   return (
     <>
-      {isAuctionArtwork && (
+      {isAuction && (
         <Box>
-          <Flex flexDirection="row">
-            <Join separator={<Spacer x={1} />}>
-              {!hideLotLabel && (
-                <Text variant="xs" flexShrink={0}>
-                  Lot {rest.artwork?.sale_artwork?.lotLabel}
-                </Text>
-              )}
-
-              {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
-                rest?.artwork?.sale_artwork && (
-                  <>
-                    <LotCloseInfo
-                      saleArtwork={rest.artwork.sale_artwork}
-                      sale={rest.artwork.sale}
-                    />
-                  </>
+          {isAuctionArtwork && (
+            <Flex flexDirection="row">
+              <Join separator={<Spacer x={1} />}>
+                {!hideLotLabel && (
+                  <Text variant="xs" flexShrink={0}>
+                    LOT {rest.artwork?.sale_artwork?.lotLabel}
+                  </Text>
                 )}
-            </Join>
-          </Flex>
-          <Flex justifyContent="space-between">
-            <Flex flexDirection="column">
-              {!hideArtistName && (
-                <ArtistLine showSaveButton={showSaveButton} {...rest} />
-              )}
+
+                {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
+                  rest?.artwork?.sale_artwork && (
+                    <>
+                      <LotCloseInfo
+                        saleArtwork={rest.artwork.sale_artwork}
+                        sale={rest.artwork.sale}
+                      />
+                    </>
+                  )}
+              </Join>
             </Flex>
+          )}
+          <Flex justifyContent="space-between">
+            {!hideArtistName && (
+              <ArtistLine showSaveButton={showSaveButton} {...rest} />
+            )}
+
             {renderSaveButtonComponent()}
           </Flex>
 
@@ -369,7 +362,7 @@ export const Details: React.FC<DetailsProps> = ({
 
             {showHighDemandInfo && <HighDemandInfo />}
 
-            {!hidePartnerName && <PartnerLine {...rest} />}
+            {!isAuctionArtwork && !hidePartnerName && <PartnerLine {...rest} />}
 
             {isHovered && showHoverDetails && (
               <HoverDetailsFragmentContainer artwork={rest.artwork} />
@@ -391,15 +384,14 @@ export const Details: React.FC<DetailsProps> = ({
         </Box>
       )}
 
-      {!isAuctionArtwork && (
+      {!isAuction && (
         <Box>
           <Flex justifyContent="space-between">
-            <Flex flexDirection="column">
-              {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
-              {!hideArtistName && (
-                <ArtistLine showSaveButton={showSaveButton} {...rest} />
-              )}
-            </Flex>
+            {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
+            {!hideArtistName && (
+              <ArtistLine showSaveButton={showSaveButton} {...rest} />
+            )}
+
             {renderSaveButtonComponent()}
           </Flex>
 
