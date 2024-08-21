@@ -311,6 +311,7 @@ const getInitialValues = (
         ),
       },
       meta: {
+        saveAddress: true,
         userAddressAction: null,
         addressVerifiedBy: null,
       },
