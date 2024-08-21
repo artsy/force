@@ -357,12 +357,10 @@ export const Details: React.FC<DetailsProps> = ({
       )}
 
       <Flex justifyContent="space-between">
-        <Flex flexDirection="column">
-          {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
-          {!hideArtistName && (
-            <ArtistLine showSaveButton={showSaveButton} {...rest} />
-          )}
-        </Flex>
+        {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
+        {!hideArtistName && (
+          <ArtistLine showSaveButton={showSaveButton} {...rest} />
+        )}
         {renderSaveButtonComponent()}
       </Flex>
 
