@@ -67,7 +67,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
 }) => {
   if (cultural_maker) {
     return (
-      <Text variant="sm-display" overflowEllipsis>
+      <Text variant="xs" overflowEllipsis>
         {cultural_maker}
       </Text>
     )
@@ -76,7 +76,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
   if (!artists?.length) {
     if (showSaveButton) {
       return (
-        <Text variant="sm-display" overflowEllipsis>
+        <Text variant="xs" overflowEllipsis>
           Artist Unavailable
         </Text>
       )
@@ -86,7 +86,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
   }
 
   return (
-    <Text variant="sm-display" overflowEllipsis>
+    <Text variant="xs" overflowEllipsis>
       {artists.map((artist, i) => {
         if (!artist || !artist.href || !artist.name) return null
 
@@ -107,7 +107,7 @@ const TitleLine: React.FC<DetailsProps> = ({
 }) => {
   return (
     <ConditionalLink includeLinks={includeLinks} to={href}>
-      <Text variant="sm-display" color="black60" overflowEllipsis>
+      <Text variant="xs" color="black60" overflowEllipsis>
         <i>{title}</i>
         {date && `, ${date}`}
       </Text>
@@ -333,63 +333,104 @@ export const Details: React.FC<DetailsProps> = ({
   }
 
   return (
-    <Box>
+    <>
       {isAuctionArtwork && (
-        <Flex flexDirection="row">
-          <Join separator={<Spacer x={1} />}>
-            {!hideLotLabel && (
-              <Text variant="xs" flexShrink={0}>
-                Lot {rest.artwork?.sale_artwork?.lotLabel}
-              </Text>
-            )}
-
-            {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
-              rest?.artwork?.sale_artwork && (
-                <>
-                  <LotCloseInfo
-                    saleArtwork={rest.artwork.sale_artwork}
-                    sale={rest.artwork.sale}
-                  />
-                </>
+        <Box>
+          <Flex flexDirection="row">
+            <Join separator={<Spacer x={1} />}>
+              {!hideLotLabel && (
+                <Text variant="xs" flexShrink={0}>
+                  Lot {rest.artwork?.sale_artwork?.lotLabel}
+                </Text>
               )}
-          </Join>
-        </Flex>
-      )}
 
-      <Flex justifyContent="space-between">
-        <Flex flexDirection="column" maxWidth="85%">
-          {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
-          {!hideArtistName && (
-            <ArtistLine showSaveButton={showSaveButton} {...rest} />
+              {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
+                rest?.artwork?.sale_artwork && (
+                  <>
+                    <LotCloseInfo
+                      saleArtwork={rest.artwork.sale_artwork}
+                      sale={rest.artwork.sale}
+                    />
+                  </>
+                )}
+            </Join>
+          </Flex>
+          <Flex justifyContent="space-between">
+            <Flex flexDirection="column">
+              {!hideArtistName && (
+                <ArtistLine showSaveButton={showSaveButton} {...rest} />
+              )}
+            </Flex>
+            {renderSaveButtonComponent()}
+          </Flex>
+
+          <Box position="relative">
+            <TitleLine {...rest} />
+
+            {showHighDemandInfo && <HighDemandInfo />}
+
+            {!hidePartnerName && <PartnerLine {...rest} />}
+
+            {isHovered && showHoverDetails && (
+              <HoverDetailsFragmentContainer artwork={rest.artwork} />
+            )}
+          </Box>
+
+          {showSubmissionStatus && (
+            <ConsignmentSubmissionStatusFragmentContainer
+              artwork={rest.artwork}
+            />
           )}
-        </Flex>
-        {renderSaveButtonComponent()}
-      </Flex>
 
-      <Box position="relative">
-        <TitleLine {...rest} />
-
-        {showHighDemandInfo && <HighDemandInfo />}
-
-        {!hidePartnerName && <PartnerLine {...rest} />}
-
-        {isHovered && showHoverDetails && (
-          <HoverDetailsFragmentContainer artwork={rest.artwork} />
-        )}
-      </Box>
-
-      {showSubmissionStatus && (
-        <ConsignmentSubmissionStatusFragmentContainer artwork={rest.artwork} />
+          {!hideSaleInfo && (
+            <SaleInfoLine
+              showActivePartnerOfferLine={showActivePartnerOfferLine}
+              {...rest}
+            />
+          )}
+        </Box>
       )}
 
-      {!hideSaleInfo && (
-        <SaleInfoLine
-          showActivePartnerOfferLine={showActivePartnerOfferLine}
-          {...rest}
-        />
+      {!isAuctionArtwork && (
+        <Box>
+          <Flex justifyContent="space-between">
+            <Flex flexDirection="column">
+              {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
+              {!hideArtistName && (
+                <ArtistLine showSaveButton={showSaveButton} {...rest} />
+              )}
+            </Flex>
+            {renderSaveButtonComponent()}
+          </Flex>
+
+          <Box position="relative">
+            <TitleLine {...rest} />
+
+            {showHighDemandInfo && <HighDemandInfo />}
+
+            {!hidePartnerName && <PartnerLine {...rest} />}
+
+            {isHovered && showHoverDetails && (
+              <HoverDetailsFragmentContainer artwork={rest.artwork} />
+            )}
+          </Box>
+
+          {showSubmissionStatus && (
+            <ConsignmentSubmissionStatusFragmentContainer
+              artwork={rest.artwork}
+            />
+          )}
+
+          {!hideSaleInfo && (
+            <SaleInfoLine
+              showActivePartnerOfferLine={showActivePartnerOfferLine}
+              {...rest}
+            />
+          )}
+          {padForActivePartnerOfferLine && <EmptyLine />}
+        </Box>
       )}
-      {padForActivePartnerOfferLine && <EmptyLine />}
-    </Box>
+    </>
   )
 }
 
@@ -482,6 +523,9 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       title
       date
       collectorSignals {
+        auction {
+          bidCount
+        }
         partnerOffer {
           endAt
           priceWithDiscount {

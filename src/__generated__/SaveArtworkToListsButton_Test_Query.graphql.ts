@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12faaccb9d0d74c6fffcefc2bf06da1e>>
+ * @generated SignedSource<<2197b49b8beba6601735d34b68118d2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -174,6 +174,35 @@ return {
             "kind": "ScalarField",
             "name": "isSavedToList",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CollectorSignals",
+            "kind": "LinkedField",
+            "name": "collectorSignals",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "AuctionCollectorSignals",
+                "kind": "LinkedField",
+                "name": "auction",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "lotWatcherCount",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": "artwork(id:\"artworkID\")"
@@ -181,7 +210,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "da70fea9abac42721f69b9deee98b935",
+    "cacheID": "b58d67ba1c135b44abd597920ccc2833",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -192,6 +221,24 @@ return {
           "type": "Artwork"
         },
         "artwork.artistNames": (v1/*: any*/),
+        "artwork.collectorSignals": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CollectorSignals"
+        },
+        "artwork.collectorSignals.auction": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "AuctionCollectorSignals"
+        },
+        "artwork.collectorSignals.auction.lotWatcherCount": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Int"
+        },
         "artwork.date": (v1/*: any*/),
         "artwork.id": (v2/*: any*/),
         "artwork.internalID": (v2/*: any*/),
@@ -216,7 +263,7 @@ return {
     },
     "name": "SaveArtworkToListsButton_Test_Query",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n}\n"
+    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
   }
 };
 })();
