@@ -357,7 +357,7 @@ export const Details: React.FC<DetailsProps> = ({
       )}
 
       <Flex justifyContent="space-between">
-        <Flex flexDirection="column">
+        <Flex flexDirection="column" maxWidth="85%">
           {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
