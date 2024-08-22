@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce39f6a55caabd66da26a76a26c423ec>>
+ * @generated SignedSource<<92e5bbe6bf2c837373f77be02c860761>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,8 @@ export type SaveArtworkToListsButton_artwork$data = {
   readonly artistNames: string | null | undefined;
   readonly collectorSignals: {
     readonly auction: {
+      readonly liveBiddingStarted: boolean;
+      readonly lotClosesAt: string | null | undefined;
       readonly lotWatcherCount: number;
     } | null | undefined;
   } | null | undefined;
@@ -150,6 +152,20 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "lotWatcherCount",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "lotClosesAt",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "liveBiddingStarted",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -162,6 +178,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "20bd8e2978054cc28087303112bfedca";
+(node as any).hash = "32b66f45b583117302b4a1c85b90ff4f";
 
 export default node;

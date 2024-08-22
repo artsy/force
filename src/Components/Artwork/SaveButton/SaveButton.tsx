@@ -9,6 +9,7 @@ import { useState } from "react"
 import { isTouch } from "Utils/device"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import HeartFillIcon from "@artsy/icons/HeartFillIcon"
+import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
 
 export interface SaveButtonProps {
   artwork: SaveButton_artwork$data
@@ -17,7 +18,7 @@ export interface SaveButtonProps {
 
 interface SaveButtonBaseProps {
   isSaved: boolean
-  lotWatcherCount?: number | undefined
+  artwork: SaveArtworkToListsButton_artwork$data | SaveButton_artwork$data
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
@@ -27,10 +28,18 @@ const BTN_WIDTH = 18
 export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
   isSaved,
   onClick,
-  lotWatcherCount,
+  artwork,
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   const title = isSaved ? "Unsave" : "Save"
+  const { lotWatcherCount, lotClosesAt, liveBiddingStarted } =
+    artwork.collectorSignals?.auction || {}
+
+  const shouldDisplayLotCount =
+    lotWatcherCount != null &&
+    lotWatcherCount > 0 &&
+    !liveBiddingStarted &&
+    (!lotClosesAt || new Date(lotClosesAt) >= new Date())
 
   const handleMouseEnter = () => {
     if (!isTouch) {
@@ -46,7 +55,7 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
 
   return (
     <Flex alignItems="center">
-      {lotWatcherCount != null && lotWatcherCount > 0 && (
+      {shouldDisplayLotCount && (
         <Text variant="xs" color="black100">
           {lotWatcherCount}
         </Text>
@@ -109,7 +118,9 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
     handleSave()
   }
 
-  return <SaveButtonBase isSaved={isSaved} onClick={handleClick} />
+  return (
+    <SaveButtonBase artwork={artwork} isSaved={isSaved} onClick={handleClick} />
+  )
 }
 
 export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
@@ -120,6 +131,13 @@ export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
       slug
       isSaved
       title
+      collectorSignals {
+        auction {
+          lotWatcherCount
+          lotClosesAt
+          liveBiddingStarted
+        }
+      }
     }
   `,
 })

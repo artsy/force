@@ -73,7 +73,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     <SaveButtonBase
       isSaved={savedListId ? isSavedToList : isSaved}
       onClick={handleClick}
-      lotWatcherCount={artwork.collectorSignals?.auction?.lotWatcherCount}
+      artwork={artwork}
     />
   )
 }
@@ -98,6 +98,8 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
         collectorSignals {
           auction {
             lotWatcherCount
+            lotClosesAt
+            liveBiddingStarted
           }
         }
       }

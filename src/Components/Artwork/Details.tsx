@@ -142,6 +142,24 @@ const PartnerLine: React.FC<DetailsProps> = ({
 
 const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
   const { showActivePartnerOfferLine } = props
+  const { lotClosesAt } = props.artwork.collectorSignals?.auction ?? {}
+  const { liveBiddingStarted } = props.artwork.collectorSignals?.auction ?? {}
+
+  if (liveBiddingStarted) {
+    return (
+      <Text variant="xs" color="blue100">
+        Bidding live now
+      </Text>
+    )
+  }
+
+  if (lotClosesAt && new Date(lotClosesAt) <= new Date()) {
+    return (
+      <Text variant="xs" color="black100">
+        Bidding closed
+      </Text>
+    )
+  }
 
   return (
     <Flex flexDirection="row" alignItems="center">
@@ -517,6 +535,8 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       collectorSignals {
         auction {
           bidCount
+          lotClosesAt
+          liveBiddingStarted
         }
         partnerOffer {
           endAt
