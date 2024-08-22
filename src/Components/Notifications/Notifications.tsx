@@ -9,6 +9,7 @@ import { NotificationsListQueryRenderer } from "Components/Notifications/Notific
 import Sticky from "react-stickynode"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { useOnce } from "Utils/Hooks/useOnce"
+import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
 
 const DROPDOWN_HEADER_HEIGHT = 113
 const VERTICAL_OFFSET = 10
@@ -55,7 +56,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
   useOnce(markAsSeen)
 
   return (
-    <>
+    <NotificationsContextProvider>
       <Box>
         {mode === "dropdown" ? (
           <Box style={{ boxShadow: theme.effects.dropShadow }}>
@@ -98,6 +99,6 @@ export const Notifications: React.FC<NotificationsProps> = ({
           </>
         )}
       </Box>
-    </>
+    </NotificationsContextProvider>
   )
 }
