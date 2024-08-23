@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<227b6e41a151ee27e0246198679d1491>>
+ * @generated SignedSource<<cd2c7606b98215d551dff0fc6547bba5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,7 @@ export type AuctionArtworkFilter_viewer$data = {
       } | null | undefined> | null | undefined;
       readonly slice: ArtworkAggregation | null | undefined;
     } | null | undefined> | null | undefined;
-    readonly counts: {
+    readonly counts?: {
       readonly followedArtists: any | null | undefined;
     } | null | undefined;
   } | null | undefined;
@@ -48,6 +48,11 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "input"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "isLoggedIn"
     },
     {
       "defaultValue": null,
@@ -106,22 +111,29 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "FilterArtworksCounts",
-          "kind": "LinkedField",
-          "name": "counts",
-          "plural": false,
+          "condition": "isLoggedIn",
+          "kind": "Condition",
+          "passingValue": true,
           "selections": [
             {
               "alias": null,
               "args": null,
-              "kind": "ScalarField",
-              "name": "followedArtists",
+              "concreteType": "FilterArtworksCounts",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "followedArtists",
+                  "storageKey": null
+                }
+              ],
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
           "alias": null,
@@ -182,6 +194,6 @@ return {
 };
 })();
 
-(node as any).hash = "beba93f8a8a2302b36705b0316e214d3";
+(node as any).hash = "fe86a017742f36987c61b0b1fe544538";
 
 export default node;

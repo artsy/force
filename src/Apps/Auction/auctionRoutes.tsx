@@ -61,6 +61,7 @@ export const auctionRoutes: RouteProps[] = [
       query auctionRoutes_TopLevelQuery(
         $input: FilterArtworksInput
         $slug: String!
+        $isLoggedIn: Boolean!
       ) {
         me {
           ...AuctionApp_me @arguments(saleID: $slug)
@@ -69,7 +70,8 @@ export const auctionRoutes: RouteProps[] = [
           ...AuctionApp_sale
         }
         viewer {
-          ...AuctionApp_viewer @arguments(input: $input, saleID: $slug)
+          ...AuctionApp_viewer
+            @arguments(input: $input, saleID: $slug, isLoggedIn: $isLoggedIn)
         }
       }
     `,
@@ -88,6 +90,7 @@ export const auctionRoutes: RouteProps[] = [
 
       const variables = {
         slug: params.slug,
+        isLoggedIn: !!props.context.user,
         input: {
           ...auctionFilterDefaults,
           ...initialFilterStateFromUrl,
