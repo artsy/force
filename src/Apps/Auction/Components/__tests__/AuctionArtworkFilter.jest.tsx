@@ -36,7 +36,7 @@ describe("AuctionArtworkFilter", () => {
       query AuctionArtworkFilterTestQuery($input: FilterArtworksInput!) {
         viewer {
           ...AuctionArtworkFilter_viewer
-            @arguments(input: $input, saleID: "test-sale")
+            @arguments(input: $input, saleID: "test-sale", isLoggedIn: false)
         }
       }
     `,

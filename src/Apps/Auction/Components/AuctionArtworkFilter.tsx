@@ -79,13 +79,14 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
         @argumentDefinitions(
           input: { type: "FilterArtworksInput" }
           saleID: { type: "String!" }
+          isLoggedIn: { type: "Boolean!" }
         ) {
         ...ArtworkFilter_viewer @arguments(input: $input)
         sale(id: $saleID) {
           featuredKeywords
         }
         sidebarAggregations: artworksConnection(input: $input, first: 1) {
-          counts {
+          counts @include(if: $isLoggedIn) {
             followedArtists
           }
           aggregations {
@@ -104,10 +105,11 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
     query AuctionArtworkFilterQuery(
       $input: FilterArtworksInput
       $saleID: String!
+      $isLoggedIn: Boolean!
     ) {
       viewer {
         ...AuctionArtworkFilter_viewer
-          @arguments(input: $input, saleID: $saleID)
+          @arguments(input: $input, saleID: $saleID, isLoggedIn: $isLoggedIn)
       }
     }
   `

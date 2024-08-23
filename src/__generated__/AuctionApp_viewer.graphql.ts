@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8fd7941c09ea3702e52ef96ad16f0199>>
+ * @generated SignedSource<<389ccb59af90dd116bcef5892c347093>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionApp_viewer$data = {
-  readonly showFollowedArtistsTab: {
+  readonly showFollowedArtistsTab?: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
@@ -42,6 +42,11 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "isLoggedIn"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "saleID"
     }
   ],
@@ -56,75 +61,83 @@ return {
           "name": "input",
           "variableName": "input"
         },
+        {
+          "kind": "Variable",
+          "name": "isLoggedIn",
+          "variableName": "isLoggedIn"
+        },
         (v0/*: any*/)
       ],
       "kind": "FragmentSpread",
       "name": "AuctionArtworkFilter_viewer"
     },
     {
-      "args": [
-        (v0/*: any*/)
-      ],
-      "kind": "FragmentSpread",
-      "name": "AuctionWorksByFollowedArtistsRail_viewer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionCurrentAuctionsRail_viewer"
-    },
-    {
-      "alias": "showFollowedArtistsTab",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "aggregations",
-          "value": [
-            "TOTAL"
-          ]
-        },
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 1
-        },
-        {
-          "kind": "Literal",
-          "name": "includeArtworksByFollowedArtists",
-          "value": true
-        },
-        {
-          "kind": "Variable",
-          "name": "saleSlug",
-          "variableName": "saleID"
-        }
-      ],
-      "concreteType": "SaleArtworksConnection",
-      "kind": "LinkedField",
-      "name": "saleArtworksConnection",
-      "plural": false,
+      "condition": "isLoggedIn",
+      "kind": "Condition",
+      "passingValue": true,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "SaleArtwork",
+          "args": [
+            (v0/*: any*/)
+          ],
+          "kind": "FragmentSpread",
+          "name": "AuctionWorksByFollowedArtistsRail_viewer"
+        },
+        {
+          "alias": "showFollowedArtistsTab",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "aggregations",
+              "value": [
+                "TOTAL"
+              ]
+            },
+            {
+              "kind": "Literal",
+              "name": "first",
+              "value": 1
+            },
+            {
+              "kind": "Literal",
+              "name": "includeArtworksByFollowedArtists",
+              "value": true
+            },
+            {
+              "kind": "Variable",
+              "name": "saleSlug",
+              "variableName": "saleID"
+            }
+          ],
+          "concreteType": "SaleArtworksConnection",
           "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
+          "name": "saleArtworksConnection",
+          "plural": false,
           "selections": [
             {
               "alias": null,
               "args": null,
-              "concreteType": "Artwork",
+              "concreteType": "SaleArtwork",
               "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
+              "name": "edges",
+              "plural": true,
               "selections": [
                 {
                   "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
+                  "concreteType": "Artwork",
+                  "kind": "LinkedField",
+                  "name": "node",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "internalID",
+                      "storageKey": null
+                    }
+                  ],
                   "storageKey": null
                 }
               ],
@@ -133,8 +146,12 @@ return {
           ],
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionCurrentAuctionsRail_viewer"
     }
   ],
   "type": "Viewer",
@@ -142,6 +159,6 @@ return {
 };
 })();
 
-(node as any).hash = "6756efc9b372b3023d35abaac9791b46";
+(node as any).hash = "a8b68200b1e9591b3f754ce0598565df";
 
 export default node;
