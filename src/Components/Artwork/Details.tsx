@@ -184,7 +184,6 @@ const CollectorSignalLine: React.FC<DetailsProps> = ({
       color="blue100"
       backgroundColor="blue10"
       px={0.5}
-      marginBottom={0.5}
       alignSelf="flex-start"
       borderRadius={3}
     >
@@ -193,12 +192,42 @@ const CollectorSignalLine: React.FC<DetailsProps> = ({
   )
 }
 
-const EmptyLine: React.FC = () => {
+const BidTimerLine: React.FC<DetailsProps> = ({
+  artwork: { collectorSignals },
+}) => {
+  const { lotClosesAt } = collectorSignals?.auction ?? {}
+  const { time } = useTimer(lotClosesAt ?? "")
+  const { days, hours, minutes } = time
+
+  const biddingEnded = lotClosesAt && new Date(lotClosesAt) <= new Date()
+
+  const numDays = Number(days)
+  const numHours = Number(hours)
+  const numMinutes = Number(minutes)
+
+  if (!lotClosesAt || numDays > 5 || biddingEnded) {
+    return <EmptyLine />
+  }
+
+  const renderTime = [
+    numDays > 0 && `${numDays}d`,
+    numHours > 0 && `${numHours}h`,
+    numDays === 0 && numHours === 0 && `${numMinutes}m`,
+  ]
+    .filter(Boolean)
+    .join(" ")
+
+  const textColor = numHours < 1 && numDays === 0 ? "red100" : "blue100"
+
   return (
-    <Text variant="xs" marginBottom={0.5}>
-      &nbsp;
+    <Text variant="xs" color={textColor} alignSelf="flex-start">
+      {renderTime} left to bid
     </Text>
   )
+}
+
+const EmptyLine: React.FC = () => {
+  return <Text variant="xs">&nbsp;</Text>
 }
 
 const HighDemandInfo = () => {
@@ -399,6 +428,8 @@ export const Details: React.FC<DetailsProps> = ({
               {...rest}
             />
           )}
+
+          <BidTimerLine {...rest} />
         </Box>
       )}
 
