@@ -686,6 +686,14 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   isSavedToList: false,
   collectorSignals: {
     partnerOffer: null,
+    auction: {
+      bidCount: 0,
+      liveBiddingStarted: false,
+      lotClosesAt: "2022-03-12T12:33:37.000Z",
+      lotWatcherCount: 3,
+      onlineBiddingExtended: false,
+      registrationEndsAt: "2022-03-5T12:33:37.000Z",
+    },
   },
   consignmentSubmission: null,
   isListed: false,
@@ -759,6 +767,14 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = 
   isSavedToList: false,
   collectorSignals: {
     partnerOffer: null,
+    auction: {
+      bidCount: 0,
+      liveBiddingStarted: false,
+      lotClosesAt: "2022-03-12T12:33:37.000Z",
+      lotWatcherCount: 3,
+      onlineBiddingExtended: false,
+      registrationEndsAt: "2022-03-5T12:33:37.000Z",
+    },
   },
   consignmentSubmission: {
     internalID: "internal-id",
@@ -820,6 +836,7 @@ const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
   isSavedToList: false,
   collectorSignals: {
     partnerOffer: null,
+    auction: null,
   },
   consignmentSubmission: null,
   isListed: false,
