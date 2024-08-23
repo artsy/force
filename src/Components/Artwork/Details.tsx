@@ -19,6 +19,7 @@ import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { getSignalLabel } from "Utils/getSignalLabel"
+import { DateTime } from "luxon"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -195,15 +196,28 @@ const CollectorSignalLine: React.FC<DetailsProps> = ({
 const BidTimerLine: React.FC<DetailsProps> = ({
   artwork: { collectorSignals },
 }) => {
-  const { lotClosesAt } = collectorSignals?.auction ?? {}
+  const { lotClosesAt, registrationEndsAt } = collectorSignals?.auction ?? {}
   const { time } = useTimer(lotClosesAt ?? "")
   const { days, hours, minutes } = time
-
+  const { isAuctionArtwork } = useArtworkGridContext()
   const biddingEnded = lotClosesAt && new Date(lotClosesAt) <= new Date()
+  const registrationEnded =
+    registrationEndsAt && new Date(registrationEndsAt) <= new Date()
 
   const numDays = Number(days)
   const numHours = Number(hours)
   const numMinutes = Number(minutes)
+
+  if (registrationEndsAt && !registrationEnded && !isAuctionArtwork) {
+    const date = DateTime.fromISO(registrationEndsAt)
+    const formattedRegistrationEndsAt = date.toFormat("MMM d")
+
+    return (
+      <Text variant="xs" color="black100" alignSelf="flex-start">
+        Register by {formattedRegistrationEndsAt}
+      </Text>
+    )
+  }
 
   if (!lotClosesAt || numDays > 5 || biddingEnded) {
     return <EmptyLine />
@@ -372,106 +386,66 @@ export const Details: React.FC<DetailsProps> = ({
   }
 
   return (
-    <>
-      {isAuction && (
-        <Box>
-          {isAuctionArtwork && (
-            <Flex flexDirection="row">
-              <Join separator={<Spacer x={1} />}>
-                {!hideLotLabel && (
-                  <Text variant="xs" flexShrink={0}>
-                    LOT {rest.artwork?.sale_artwork?.lotLabel}
-                  </Text>
-                )}
-
-                {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
-                  rest?.artwork?.sale_artwork && (
-                    <>
-                      <LotCloseInfo
-                        saleArtwork={rest.artwork.sale_artwork}
-                        sale={rest.artwork.sale}
-                      />
-                    </>
-                  )}
-              </Join>
-            </Flex>
-          )}
-          <Flex justifyContent="space-between">
-            {!hideArtistName && (
-              <ArtistLine showSaveButton={showSaveButton} {...rest} />
+    <Box>
+      {isAuctionArtwork && (
+        <Flex flexDirection="row">
+          <Join separator={<Spacer x={1} />}>
+            {!hideLotLabel && (
+              <Text variant="xs" flexShrink={0}>
+                LOT {rest.artwork?.sale_artwork?.lotLabel}
+              </Text>
             )}
 
-            {renderSaveButtonComponent()}
-          </Flex>
-
-          <Box position="relative">
-            <TitleLine {...rest} />
-
-            {showHighDemandInfo && <HighDemandInfo />}
-
-            {!isAuctionArtwork && !hidePartnerName && <PartnerLine {...rest} />}
-
-            {isHovered && showHoverDetails && (
-              <HoverDetailsFragmentContainer artwork={rest.artwork} />
-            )}
-          </Box>
-
-          {showSubmissionStatus && (
-            <ConsignmentSubmissionStatusFragmentContainer
-              artwork={rest.artwork}
-            />
-          )}
-
-          {!hideSaleInfo && (
-            <SaleInfoLine
-              showActivePartnerOfferLine={showActivePartnerOfferLine}
-              {...rest}
-            />
-          )}
-
-          <BidTimerLine {...rest} />
-        </Box>
+            {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
+              rest?.artwork?.sale_artwork && (
+                <>
+                  <LotCloseInfo
+                    saleArtwork={rest.artwork.sale_artwork}
+                    sale={rest.artwork.sale}
+                  />
+                </>
+              )}
+          </Join>
+        </Flex>
       )}
 
-      {!isAuction && (
-        <Box>
-          <Flex justifyContent="space-between">
-            {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
-            {!hideArtistName && (
-              <ArtistLine showSaveButton={showSaveButton} {...rest} />
-            )}
-
-            {renderSaveButtonComponent()}
-          </Flex>
-
-          <Box position="relative">
-            <TitleLine {...rest} />
-
-            {showHighDemandInfo && <HighDemandInfo />}
-
-            {!hidePartnerName && <PartnerLine {...rest} />}
-
-            {isHovered && showHoverDetails && (
-              <HoverDetailsFragmentContainer artwork={rest.artwork} />
-            )}
-          </Box>
-
-          {showSubmissionStatus && (
-            <ConsignmentSubmissionStatusFragmentContainer
-              artwork={rest.artwork}
-            />
+      <Flex justifyContent="space-between">
+        <Flex flexDirection="column">
+          {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
+          {!hideArtistName && (
+            <ArtistLine showSaveButton={showSaveButton} {...rest} />
           )}
+        </Flex>
+        {renderSaveButtonComponent()}
+      </Flex>
 
-          {!hideSaleInfo && (
-            <SaleInfoLine
-              showActivePartnerOfferLine={showActivePartnerOfferLine}
-              {...rest}
-            />
-          )}
-          {padForActivePartnerOfferLine && <EmptyLine />}
-        </Box>
+      <Box position="relative">
+        <TitleLine {...rest} />
+
+        {showHighDemandInfo && <HighDemandInfo />}
+
+        {!hidePartnerName && !isAuctionArtwork && <PartnerLine {...rest} />}
+
+        {isHovered && showHoverDetails && (
+          <HoverDetailsFragmentContainer artwork={rest.artwork} />
+        )}
+      </Box>
+
+      {showSubmissionStatus && (
+        <ConsignmentSubmissionStatusFragmentContainer artwork={rest.artwork} />
       )}
-    </>
+
+      {!hideSaleInfo && (
+        <SaleInfoLine
+          showActivePartnerOfferLine={showActivePartnerOfferLine}
+          {...rest}
+        />
+      )}
+
+      <BidTimerLine {...rest} />
+
+      {padForActivePartnerOfferLine && <EmptyLine />}
+    </Box>
   )
 }
 
@@ -568,6 +542,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           bidCount
           lotClosesAt
           liveBiddingStarted
+          registrationEndsAt
         }
         partnerOffer {
           endAt
