@@ -10,7 +10,6 @@ import { LocalImage, useLocalImage } from "Utils/localImageHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
-import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
@@ -115,7 +114,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
             />
           </LinkContainer>
           <ExclusiveAccessBadge artwork={artwork} />
-          <Badge artwork={artwork} />
         </Box>
         <Metadata
           artwork={artwork}
