@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bad99180f562a298241e1370fef23ee9>>
+ * @generated SignedSource<<d37952062ffeafe3822c96c6e9574467>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -349,6 +349,13 @@ return {
                                 "alias": null,
                                 "args": null,
                                 "kind": "ScalarField",
+                                "name": "onlineBiddingExtended",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
                                 "name": "lotWatcherCount",
                                 "storageKey": null
                               }
@@ -522,21 +529,7 @@ return {
                             "name": "isClosed",
                             "storageKey": null
                           },
-                          (v6/*: any*/),
-                          {
-                            "alias": "is_preview",
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "isPreview",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": "display_timely_at",
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "displayTimelyAt",
-                            "storageKey": null
-                          }
+                          (v6/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -709,13 +702,6 @@ return {
                         "kind": "ScalarField",
                         "name": "isUnlisted",
                         "storageKey": null
-                      },
-                      {
-                        "alias": "is_biddable",
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isBiddable",
-                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -734,7 +720,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2d7c270452191dbbb44100e6b625e229",
+    "cacheID": "f5bf17045d100a2f991806a667d686a3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -811,6 +797,7 @@ return {
         "marketingCollection.artworks.edges.node.collectorSignals.auction.liveBiddingStarted": (v14/*: any*/),
         "marketingCollection.artworks.edges.node.collectorSignals.auction.lotClosesAt": (v12/*: any*/),
         "marketingCollection.artworks.edges.node.collectorSignals.auction.lotWatcherCount": (v13/*: any*/),
+        "marketingCollection.artworks.edges.node.collectorSignals.auction.onlineBiddingExtended": (v14/*: any*/),
         "marketingCollection.artworks.edges.node.collectorSignals.auction.registrationEndsAt": (v12/*: any*/),
         "marketingCollection.artworks.edges.node.collectorSignals.partnerOffer": {
           "enumValues": null,
@@ -859,7 +846,6 @@ return {
         "marketingCollection.artworks.edges.node.isSaved": (v11/*: any*/),
         "marketingCollection.artworks.edges.node.isSavedToList": (v14/*: any*/),
         "marketingCollection.artworks.edges.node.isUnlisted": (v14/*: any*/),
-        "marketingCollection.artworks.edges.node.is_biddable": (v11/*: any*/),
         "marketingCollection.artworks.edges.node.marketPriceInsights": {
           "enumValues": null,
           "nullable": true,
@@ -904,13 +890,11 @@ return {
           "type": "Sale"
         },
         "marketingCollection.artworks.edges.node.sale.cascadingEndTimeIntervalMinutes": (v16/*: any*/),
-        "marketingCollection.artworks.edges.node.sale.display_timely_at": (v12/*: any*/),
         "marketingCollection.artworks.edges.node.sale.endAt": (v12/*: any*/),
         "marketingCollection.artworks.edges.node.sale.extendedBiddingIntervalMinutes": (v16/*: any*/),
         "marketingCollection.artworks.edges.node.sale.id": (v10/*: any*/),
         "marketingCollection.artworks.edges.node.sale.is_auction": (v11/*: any*/),
         "marketingCollection.artworks.edges.node.sale.is_closed": (v11/*: any*/),
-        "marketingCollection.artworks.edges.node.sale.is_preview": (v11/*: any*/),
         "marketingCollection.artworks.edges.node.sale.startAt": (v12/*: any*/),
         "marketingCollection.artworks.edges.node.sale_artwork": {
           "enumValues": null,
@@ -965,7 +949,7 @@ return {
     },
     "name": "OnboardingMarketingCollection_Test_Query",
     "operationKind": "query",
-    "text": "query OnboardingMarketingCollection_Test_Query {\n  marketingCollection(slug: \"example\") {\n    ...OnboardingMarketingCollection_marketingCollection\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork_1ZRKfT on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n    }\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n    blurhashDataURL\n  }\n  artistNames\n  href\n  ...Metadata_artwork_1ZRKfT\n  ...ExclusiveAccessBadge_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork_1ZRKfT on Artwork {\n  ...Details_artwork_1ZRKfT\n  internalID\n  href\n}\n\nfragment OnboardingMarketingCollection_marketingCollection on MarketingCollection {\n  title\n  artworks: artworksConnection(first: 50, page: 1, sort: \"-decayed_merch\") {\n    edges {\n      node {\n        internalID\n        ...GridItem_artwork\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
+    "text": "query OnboardingMarketingCollection_Test_Query {\n  marketingCollection(slug: \"example\") {\n    ...OnboardingMarketingCollection_marketingCollection\n    id\n  }\n}\n\nfragment Details_artwork_1ZRKfT on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n    blurhashDataURL\n  }\n  artistNames\n  href\n  ...Metadata_artwork_1ZRKfT\n  ...ExclusiveAccessBadge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork_1ZRKfT on Artwork {\n  ...Details_artwork_1ZRKfT\n  internalID\n  href\n}\n\nfragment OnboardingMarketingCollection_marketingCollection on MarketingCollection {\n  title\n  artworks: artworksConnection(first: 50, page: 1, sort: \"-decayed_merch\") {\n    edges {\n      node {\n        internalID\n        ...GridItem_artwork\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b4c42529691700afb0ec7fe386c87274>>
+ * @generated SignedSource<<42a0220e90b81fad2837e74cd12c48cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,7 @@ export type Details_artwork$data = {
       readonly bidCount: number;
       readonly liveBiddingStarted: boolean;
       readonly lotClosesAt: string | null | undefined;
+      readonly onlineBiddingExtended: boolean;
       readonly registrationEndsAt: string | null | undefined;
     } | null | undefined;
     readonly partnerOffer: {
@@ -199,6 +200,13 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "registrationEndsAt",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "onlineBiddingExtended",
               "storageKey": null
             }
           ],
@@ -500,6 +508,6 @@ return {
 };
 })();
 
-(node as any).hash = "fd5dcc3e0daa5b97fd97feb2d246406c";
+(node as any).hash = "716eabc703e2891de71f6edae126030e";
 
 export default node;

@@ -156,7 +156,7 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
 
   if (lotClosesAt && new Date(lotClosesAt) <= new Date()) {
     return (
-      <Text variant="xs" color="black100">
+      <Text variant="xs" color="black100" fontWeight="bold">
         Bidding closed
       </Text>
     )
@@ -196,7 +196,8 @@ const CollectorSignalLine: React.FC<DetailsProps> = ({
 const BidTimerLine: React.FC<DetailsProps> = ({
   artwork: { collectorSignals },
 }) => {
-  const { lotClosesAt, registrationEndsAt } = collectorSignals?.auction ?? {}
+  const { lotClosesAt, registrationEndsAt, onlineBiddingExtended } =
+    collectorSignals?.auction ?? {}
   const { time } = useTimer(lotClosesAt ?? "")
   const { days, hours, minutes } = time
   const { isAuctionArtwork } = useArtworkGridContext()
@@ -223,7 +224,7 @@ const BidTimerLine: React.FC<DetailsProps> = ({
     return <EmptyLine />
   }
 
-  const renderTime = [
+  const renderLotCloseTime = [
     numDays > 0 && `${numDays}d`,
     numHours > 0 && `${numHours}h`,
     numDays === 0 && numHours === 0 && `${numMinutes}m`,
@@ -233,9 +234,17 @@ const BidTimerLine: React.FC<DetailsProps> = ({
 
   const textColor = numHours < 1 && numDays === 0 ? "red100" : "blue100"
 
+  if (onlineBiddingExtended) {
+    return (
+      <Text variant="xs" color="red100" alignSelf="flex-start">
+        Extended, {renderLotCloseTime} left to bid
+      </Text>
+    )
+  }
+
   return (
     <Text variant="xs" color={textColor} alignSelf="flex-start">
-      {renderTime} left to bid
+      {renderLotCloseTime} left to bid
     </Text>
   )
 }
@@ -543,6 +552,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           lotClosesAt
           liveBiddingStarted
           registrationEndsAt
+          onlineBiddingExtended
         }
         partnerOffer {
           endAt

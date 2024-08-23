@@ -318,7 +318,6 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
             includeConsignmentSubmission: $includeConsignmentSubmission
           )
         ...ExclusiveAccessBadge_artwork
-        ...Badge_artwork
       }
     `,
   }
