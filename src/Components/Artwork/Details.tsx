@@ -1,5 +1,5 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { Box, Flex, SkeletonText, Text } from "@artsy/palette"
+import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
@@ -17,6 +17,9 @@ import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { getSignalLabel } from "Utils/getSignalLabel"
 import { DateTime } from "luxon"
+import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
+import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
+import { useState } from "react"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -350,6 +353,10 @@ export const Details: React.FC<DetailsProps> = ({
     "emerald_signals-partner-offers"
   )
 
+  const signalsAuctionEnabled = useFeatureFlag(
+    "emerald_signals-auction-improvements"
+  )
+
   const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
   const isAuction = rest?.artwork?.sale?.is_auction ?? false
 
@@ -393,10 +400,27 @@ export const Details: React.FC<DetailsProps> = ({
 
   return (
     <Box>
-      {isAuctionArtwork && !hideLotLabel && (
-        <Text variant="xs" flexShrink={0}>
-          LOT {rest.artwork?.sale_artwork?.lotLabel}
-        </Text>
+      {isAuctionArtwork && (
+        <Flex flexDirection="row">
+          <Join separator={<Spacer x={1} />}>
+            {!hideLotLabel && (
+              <Text variant="xs" flexShrink={0}>
+                LOT {rest.artwork?.sale_artwork?.lotLabel}
+              </Text>
+            )}
+
+            {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
+              rest?.artwork?.sale_artwork &&
+              !signalsAuctionEnabled && (
+                <>
+                  <LotCloseInfo
+                    saleArtwork={rest.artwork.sale_artwork}
+                    sale={rest.artwork.sale}
+                  />
+                </>
+              )}
+          </Join>
+        </Flex>
       )}
 
       <Flex justifyContent="space-between">
@@ -436,6 +460,84 @@ export const Details: React.FC<DetailsProps> = ({
 
       {padForActivePartnerOfferLine && <EmptyLine />}
     </Box>
+  )
+}
+
+interface LotCloseInfoProps {
+  saleArtwork: NonNullable<Details_artwork$data["sale_artwork"]>
+  sale: NonNullable<Details_artwork$data["sale"]>
+}
+
+export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
+  saleArtwork,
+  sale,
+}) => {
+  const { endAt, extendedBiddingEndAt, lotID } = saleArtwork
+  const biddingEndAt = extendedBiddingEndAt ?? endAt
+
+  const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
+  const [isExtended, setIsExtended] = useState(!!extendedBiddingEndAt)
+
+  useAuctionWebsocket({
+    lotID: lotID ?? "",
+    onChange: ({ extended_bidding_end_at }) => {
+      setUpdatedBiddingEndAt(extended_bidding_end_at)
+      setIsExtended(true)
+    },
+  })
+
+  const { hasEnded: lotHasClosed, time } = useTimer(
+    updatedBiddingEndAt ?? "",
+    sale.startAt ?? ""
+  )
+
+  const { hasEnded: lotsAreClosing, hasStarted: saleHasStarted } = useTimer(
+    sale.endAt ?? "",
+    sale.startAt ?? ""
+  )
+
+  if (!saleHasStarted) {
+    return null
+  }
+
+  const timerCopy = getSaleOrLotTimerInfo(time, {
+    hasStarted: saleHasStarted,
+    extendedBiddingEndAt: isExtended
+      ? updatedBiddingEndAt
+      : extendedBiddingEndAt,
+    urgencyIntervalMinutes: sale.cascadingEndTimeIntervalMinutes,
+  })
+
+  let lotCloseCopy
+  let labelColor = "black60"
+
+  // FIXME: Yikes...
+  // Lot has already closed
+  if (lotHasClosed) {
+    lotCloseCopy = "Closed"
+  } else if (saleHasStarted) {
+    // Sale has started and lots are <24 hours from closing or are actively closing
+    if (parseInt(time.days) < 1 || lotsAreClosing) {
+      lotCloseCopy = isExtended
+        ? // show Extended: timer if bidding has been extended
+          timerCopy.copy
+        : `Closes ${timerCopy.copy}`
+      if (timerCopy.color === "red100") {
+        labelColor = "red100"
+      } else {
+        labelColor = "black100"
+      }
+    }
+    // Sale has started but lots have not started closing
+    else {
+      lotCloseCopy = saleArtwork.formattedEndDateTime
+    }
+  }
+
+  return (
+    <Text variant="xs" color={labelColor} overflowEllipsis>
+      {lotCloseCopy}
+    </Text>
   )
 }
 
