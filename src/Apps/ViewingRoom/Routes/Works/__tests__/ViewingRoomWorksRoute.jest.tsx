@@ -231,7 +231,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               auction: {
                 bidCount: 0,
                 liveBiddingStarted: false,
-                lotClosesAt: "2022-03-12T12:33:37.000Z",
+                lotClosesAt: new Date(Date.now() + 60 * 1000).toISOString(),
                 lotWatcherCount: 3,
                 onlineBiddingExtended: false,
                 registrationEndsAt: "2022-03-5T12:33:37.000Z",
@@ -390,7 +390,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               auction: {
                 bidCount: 0,
                 liveBiddingStarted: false,
-                lotClosesAt: "2022-03-12T12:33:37.000Z",
+                lotClosesAt: new Date(Date.now() + 60 * 1000).toISOString(),
                 lotWatcherCount: 3,
                 onlineBiddingExtended: false,
                 registrationEndsAt: "2022-03-5T12:33:37.000Z",

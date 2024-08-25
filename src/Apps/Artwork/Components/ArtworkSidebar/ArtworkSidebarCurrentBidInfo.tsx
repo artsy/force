@@ -166,7 +166,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
         </Flex>
       )}
 
-      {lotWatcherCount != null && lotWatcherCount > 0 && (
+      {!!lotWatcherCount && (
         <Text variant="xs" color="black100">
           {lotWatcherCount} {lotWatcherCount === 1 ? "watcher" : "watchers"}
         </Text>

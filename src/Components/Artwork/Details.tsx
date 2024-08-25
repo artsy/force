@@ -143,18 +143,18 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
   const { lotClosesAt } = props.artwork.collectorSignals?.auction ?? {}
   const { liveBiddingStarted } = props.artwork.collectorSignals?.auction ?? {}
 
-  if (liveBiddingStarted) {
-    return (
-      <Text variant="xs" color="blue100">
-        Bidding live now
-      </Text>
-    )
-  }
-
   if (lotClosesAt && new Date(lotClosesAt) <= new Date()) {
     return (
       <Text variant="xs" color="black100" fontWeight="bold">
         Bidding closed
+      </Text>
+    )
+  }
+
+  if (liveBiddingStarted) {
+    return (
+      <Text variant="xs" color="blue100">
+        Bidding live now
       </Text>
     )
   }

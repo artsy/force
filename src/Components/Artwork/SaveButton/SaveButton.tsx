@@ -36,8 +36,7 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
     artwork.collectorSignals?.auction || {}
 
   const shouldDisplayLotCount =
-    lotWatcherCount != null &&
-    lotWatcherCount > 0 &&
+    !!lotWatcherCount &&
     !liveBiddingStarted &&
     (!lotClosesAt || new Date(lotClosesAt) >= new Date())
 
