@@ -10,11 +10,13 @@ import { LocalImage, useLocalImage } from "Utils/localImageHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
+import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
 import { Z } from "Apps/Components/constants"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
 
@@ -56,6 +58,10 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
 }) => {
   const localImage = useLocalImage(artwork.image)
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
+
+  const signalsAuctionEnabled = useFeatureFlag(
+    "emerald_signals-auction-improvements"
+  )
 
   const handleClick = () => {
     onClick?.()
@@ -114,6 +120,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
             />
           </LinkContainer>
           <ExclusiveAccessBadge artwork={artwork} />
+          {!signalsAuctionEnabled && <Badge artwork={artwork} />}
         </Box>
         <Metadata
           artwork={artwork}
@@ -318,6 +325,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
             includeConsignmentSubmission: $includeConsignmentSubmission
           )
         ...ExclusiveAccessBadge_artwork
+        ...Badge_artwork
       }
     `,
   }
