@@ -69,13 +69,16 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
   /*
    * If the view ever has no saved addresses, force new address form mode for
-   * the rest of its life
+   * the rest of its life and reset values
    */
   useEffect(() => {
     if (
       shippingContext.state.shippingFormMode !== "new_address" &&
       !hasSavedAddresses
     ) {
+      shippingContext.state.fulfillmentDetailsFormikContext.setValues(
+        initialValues
+      )
       shippingContext.actions.setShippingFormMode("new_address")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
