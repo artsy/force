@@ -10,7 +10,6 @@ import { data as sd } from "sharify"
 import { Provider as StateProvider } from "unstated"
 import Events from "Utils/Events"
 import { getENV } from "Utils/getENV"
-import { FocusVisible } from "Components/FocusVisible"
 import { MatchingMediaQueries, MediaContextProvider } from "Utils/Responsive"
 import { SiftContainer } from "Utils/SiftContainer"
 import { setupSentryClient } from "Server/setupSentryClient"
@@ -90,7 +89,6 @@ export const Boot = track(undefined, {
                               keys={PROGRESSIVE_ONBOARDING_KEYS}
                             >
                               <CookieConsentManager>
-                                <FocusVisible />
                                 <SiftContainer />
 
                                 {children}
