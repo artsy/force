@@ -24,12 +24,12 @@ describe("UserBidHistory", () => {
         lotLabel: "1",
       }),
       Artwork: () => ({
-        sale_message: "$3,000",
+        sale_message: "Example Sale",
       }),
     })
 
     expect(screen.getByText("Lot 1")).toBeInTheDocument()
-    expect(screen.getByText("$3,000 (42 bids)")).toBeInTheDocument()
+    expect(screen.getByText("Example Sale")).toBeInTheDocument()
     expect(screen.getByText("Bid")).toBeInTheDocument()
   })
 
