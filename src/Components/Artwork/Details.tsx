@@ -463,6 +463,7 @@ export const Details: React.FC<DetailsProps> = ({
   )
 }
 
+// TODO: Delete LotCloseInfo when signalsAuctionEnabled is removed
 interface LotCloseInfoProps {
   saleArtwork: NonNullable<Details_artwork$data["sale_artwork"]>
   sale: NonNullable<Details_artwork$data["sale"]>

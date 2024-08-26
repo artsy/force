@@ -349,6 +349,7 @@ describe("Details", () => {
           expect(wrapper.html()).toContain("Extended: 2m 0s")
         })
       })
+
       describe("bidding has not yet been extended", () => {
         it("shows the normal cascading timer copy", async () => {
           const data: any = {
@@ -594,6 +595,26 @@ describe("Details", () => {
   })
 
   describe("auction signals", () => {
+    // This test is skipped due to trouble with mocking the current date in the test environment
+
+    it("should render bidding closing timer when bidding is open", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          partnerOffer: null,
+          auction: {
+            ...artworkInAuction?.collectorSignals?.auction,
+            lotClosesAt: "2022-03-20T05:22:32.000Z",
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).toContain("2d left to bid")
+    })
+
     it("should render 'Bidding Closed' when the bidding for an auction has ended", async () => {
       const data: any = {
         ...artworkInAuction,
@@ -631,7 +652,7 @@ describe("Details", () => {
       expect(html).toContain("Bidding live now")
     })
 
-    it("should render register by date auction is live", async () => {
+    it("should render register by date when auction is live", async () => {
       const data: any = {
         ...artworkInAuction,
         collectorSignals: {

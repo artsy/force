@@ -120,6 +120,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
             />
           </LinkContainer>
           <ExclusiveAccessBadge artwork={artwork} />
+          {/* TODO: Delete when signalsAuctionEnabled is removed */}
           {!signalsAuctionEnabled && <Badge artwork={artwork} />}
         </Box>
         <Metadata
