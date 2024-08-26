@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bfc5035b8e89e464670bf41f5afcd9fc>>
+ * @generated SignedSource<<42a0220e90b81fad2837e74cd12c48cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,13 @@ export type Details_artwork$data = {
   } | null | undefined> | null | undefined;
   readonly collecting_institution: string | null | undefined;
   readonly collectorSignals: {
+    readonly auction: {
+      readonly bidCount: number;
+      readonly liveBiddingStarted: boolean;
+      readonly lotClosesAt: string | null | undefined;
+      readonly onlineBiddingExtended: boolean;
+      readonly registrationEndsAt: string | null | undefined;
+    } | null | undefined;
     readonly partnerOffer: {
       readonly endAt: string | null | undefined;
       readonly priceWithDiscount: {
@@ -159,6 +166,52 @@ return {
       "name": "collectorSignals",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "AuctionCollectorSignals",
+          "kind": "LinkedField",
+          "name": "auction",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "bidCount",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "lotClosesAt",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "liveBiddingStarted",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "registrationEndsAt",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "onlineBiddingExtended",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -455,6 +508,6 @@ return {
 };
 })();
 
-(node as any).hash = "eb8792f4b6e2f416696a4ba76b1eb9a2";
+(node as any).hash = "716eabc703e2891de71f6edae126030e";
 
 export default node;

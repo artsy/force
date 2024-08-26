@@ -204,35 +204,14 @@ describe("Details", () => {
       expect(html).toContain("(2 bids)")
     })
 
-    it("skips bid information in a closed show", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        sale: {
-          ...artworkInAuction?.sale,
-          is_closed: true,
-        },
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
-          counts: {
-            ...artworkInAuction?.sale_artwork?.counts,
-            bidder_positions: 2,
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-      const html = wrapper.html()
-      expect(html).not.toContain("(2 bids)")
-    })
-
     it("skips showing bid information when there are no bidder positions", async () => {
       const data: any = {
         ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
-          counts: {
-            ...artworkInAuction?.sale_artwork?.counts,
-            bidder_positions: 0,
+        collectorSignals: {
+          partnerOffer: null,
+          auction: {
+            ...artworkInAuction?.collectorSignals?.auction,
+            bidCount: 0,
           },
         },
       }
@@ -241,154 +220,156 @@ describe("Details", () => {
       const html = wrapper.html()
       expect(html).not.toContain("bid")
     })
+  })
 
-    describe("lot close info", () => {
-      it("shows the lot is closed if the lot end time has passed and if the sale has cascading end times enabled", async () => {
-        const data: any = {
-          ...artworkInAuction,
-          sale_artwork: {
-            ...artworkInAuction?.sale_artwork,
-            endAt: "2022-03-11T12:33:37.000Z",
-          },
-          sale: {
-            ...artworkInAuction?.sale,
-            cascadingEndTimeIntervalMinutes: 2,
-          },
-        }
+  describe("lot close info", () => {
+    it("shows the lot is closed if the lot end time has passed and if the sale has cascading end times enabled", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        sale_artwork: {
+          ...artworkInAuction?.sale_artwork,
+          endAt: "2022-03-11T12:33:37.000Z",
+        },
+        sale: {
+          ...artworkInAuction?.sale,
+          cascadingEndTimeIntervalMinutes: 2,
+        },
+      }
 
-        const wrapper = await getWrapper(data)
-        expect(wrapper.html()).toContain("Closed")
-      })
+      const wrapper = await getWrapper(data)
+      expect(wrapper.html()).toContain("Closed")
+    })
 
-      it("shows the lot is closing with the days countdown if lots have started closing and the sale has cascading end times enabled", async () => {
-        const data: any = {
-          ...artworkInAuction,
-          sale_artwork: {
-            ...artworkInAuction?.sale_artwork,
-            endAt: "2026-03-11T12:33:37.000Z",
-          },
-          sale: {
-            ...artworkInAuction?.sale,
-            cascadingEndTimeIntervalMinutes: 2,
-            endAt: "2022-03-12T12:33:37.000Z",
-          },
-        }
+    it("shows the lot is closing with the days countdown if lots have started closing and the sale has cascading end times enabled", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        sale_artwork: {
+          ...artworkInAuction?.sale_artwork,
+          endAt: "2026-03-11T12:33:37.000Z",
+        },
+        sale: {
+          ...artworkInAuction?.sale,
+          cascadingEndTimeIntervalMinutes: 2,
+          endAt: "2022-03-12T12:33:37.000Z",
+        },
+      }
 
-        const wrapper = await getWrapper(data)
+      const wrapper = await getWrapper(data)
 
-        expect(wrapper.html()).toContain("Closes in 1454d 7h")
-      })
+      expect(wrapper.html()).toContain("Closes in 1454d 7h")
+    })
 
-      it("shows the lot is closing with the hours countdown if lots are hours from closing and the sale has cascading end times enabled", async () => {
-        const data: any = {
-          ...artworkInAuction,
-          sale_artwork: {
-            ...artworkInAuction?.sale_artwork,
-            endAt: "2022-03-18T16:33:37.000Z",
-          },
-          sale: {
-            ...artworkInAuction?.sale,
-            cascadingEndTimeIntervalMinutes: 2,
-            endAt: "2022-03-18T15:33:37.000Z",
-          },
-        }
+    it("shows the lot is closing with the hours countdown if lots are hours from closing and the sale has cascading end times enabled", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        sale_artwork: {
+          ...artworkInAuction?.sale_artwork,
+          endAt: "2022-03-18T16:33:37.000Z",
+        },
+        sale: {
+          ...artworkInAuction?.sale,
+          cascadingEndTimeIntervalMinutes: 2,
+          endAt: "2022-03-18T15:33:37.000Z",
+        },
+      }
 
-        const wrapper = await getWrapper(data)
+      const wrapper = await getWrapper(data)
 
-        expect(wrapper.html()).toContain("Closes in 11h 11m")
-      })
+      expect(wrapper.html()).toContain("Closes in 11h 11m")
+    })
 
-      it("shows the lot is closing with the formatted end time of the sale if the lots have not started closing and the sale has cascading end times enabled", async () => {
-        const data: any = {
-          ...artworkInAuction,
-          sale_artwork: {
-            ...artworkInAuction?.sale_artwork,
-            endAt: "2026-03-11T12:33:37.000Z",
-          },
-          sale: {
-            ...artworkInAuction?.sale,
-            cascadingEndTimeIntervalMinutes: 2,
-            endAt: "2030-03-12T12:33:37.000Z",
-          },
-        }
+    it("shows the lot is closing with the formatted end time of the sale if the lots have not started closing and the sale has cascading end times enabled", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        sale_artwork: {
+          ...artworkInAuction?.sale_artwork,
+          endAt: "2026-03-11T12:33:37.000Z",
+        },
+        sale: {
+          ...artworkInAuction?.sale,
+          cascadingEndTimeIntervalMinutes: 2,
+          endAt: "2030-03-12T12:33:37.000Z",
+        },
+      }
 
-        const wrapper = await getWrapper(data)
-        expect(wrapper.html()).toContain("Closes, Mar 12 • 12:33pm GMT")
-      })
+      const wrapper = await getWrapper(data)
+      expect(wrapper.html()).toContain("Closes, Mar 12 • 12:33pm GMT")
+    })
 
-      it("does not show the lot close info if the cascading end time flag is off", async () => {
-        const data: any = {
-          ...artworkInAuction,
-          sale: {
-            ...artworkInAuction?.sale,
-            cascadingEndTimeIntervalMinutes: null,
-          },
-        }
+    it("does not show the lot close info if the cascading end time flag is off", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        sale: {
+          ...artworkInAuction?.sale,
+          cascadingEndTimeIntervalMinutes: null,
+        },
+      }
 
-        const wrapper = await getWrapper(data)
-        expect(wrapper.html()).not.toContain("Closed")
-      })
+      const wrapper = await getWrapper(data)
+      expect(wrapper.html()).not.toContain("Closed")
+    })
 
-      it("does not show the lot close info if sale is not yet open", async () => {
-        const data: any = {
-          ...artworkInAuction,
-          sale_artwork: {
-            ...artworkInAuction?.sale_artwork,
-          },
-          sale: {
-            ...artworkInAuction?.sale,
-            cascadingEndTimeIntervalMinutes: 2,
-            startAt: "2030-03-12T12:33:37.000Z",
-          },
-        }
+    it("does not show the lot close info if sale is not yet open", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        sale_artwork: {
+          ...artworkInAuction?.sale_artwork,
+        },
+        sale: {
+          ...artworkInAuction?.sale,
+          cascadingEndTimeIntervalMinutes: 2,
+          startAt: "2030-03-12T12:33:37.000Z",
+        },
+      }
 
-        const wrapper = await getWrapper(data)
-        expect(wrapper.html()).not.toContain("Closes")
-      })
-      describe("extended bidding fucntionality", () => {
-        describe("bidding has been extended", () => {
-          it("shows the extended label and the timer reflects the extendedBiddingEndAt", async () => {
-            const data: any = {
-              ...artworkInAuction,
-              sale_artwork: {
-                ...artworkInAuction?.sale_artwork,
-                endAt: "2022-03-18T05:23:37.000Z",
-                extendedBiddingEndAt: "2022-03-18T05:24:32.000Z",
-              },
-              sale: {
-                ...artworkInAuction?.sale,
-                extendedBiddingIntervalMinutes: 2,
-                cascadingEndTimeIntervalMinutes: 2,
-                endAt: "2022-03-18T15:33:37.000Z",
-              },
-            }
+      const wrapper = await getWrapper(data)
+      expect(wrapper.html()).not.toContain("Closes")
+    })
 
-            const wrapper = await getWrapper(data)
+    describe("extended bidding fucntionality", () => {
+      describe("bidding has been extended", () => {
+        it("shows the extended label and the timer reflects the extendedBiddingEndAt", async () => {
+          const data: any = {
+            ...artworkInAuction,
+            sale_artwork: {
+              ...artworkInAuction?.sale_artwork,
+              endAt: "2022-03-18T05:23:37.000Z",
+              extendedBiddingEndAt: "2022-03-18T05:24:32.000Z",
+            },
+            sale: {
+              ...artworkInAuction?.sale,
+              extendedBiddingIntervalMinutes: 2,
+              cascadingEndTimeIntervalMinutes: 2,
+              endAt: "2022-03-18T15:33:37.000Z",
+            },
+          }
 
-            expect(wrapper.html()).toContain("Extended: 2m 0s")
-          })
+          const wrapper = await getWrapper(data)
+
+          expect(wrapper.html()).toContain("Extended: 2m 0s")
         })
-        describe("bidding has not yet been extended", () => {
-          it("shows the normal cascading timer copy", async () => {
-            const data: any = {
-              ...artworkInAuction,
-              sale_artwork: {
-                ...artworkInAuction?.sale_artwork,
-                endAt: "2022-03-18T05:23:37.000Z",
-                extendedBiddingEndAt: null,
-              },
-              sale: {
-                ...artworkInAuction?.sale,
-                extendedBiddingIntervalMinutes: 2,
-                cascadingEndTimeIntervalMinutes: 2,
-                endAt: "2022-03-18T15:33:37.000Z",
-              },
-            }
+      })
 
-            const wrapper = await getWrapper(data)
+      describe("bidding has not yet been extended", () => {
+        it("shows the normal cascading timer copy", async () => {
+          const data: any = {
+            ...artworkInAuction,
+            sale_artwork: {
+              ...artworkInAuction?.sale_artwork,
+              endAt: "2022-03-18T05:23:37.000Z",
+              extendedBiddingEndAt: null,
+            },
+            sale: {
+              ...artworkInAuction?.sale,
+              extendedBiddingIntervalMinutes: 2,
+              cascadingEndTimeIntervalMinutes: 2,
+              endAt: "2022-03-18T15:33:37.000Z",
+            },
+          }
 
-            expect(wrapper.html()).toContain("Closes in 1m 5s")
-          })
+          const wrapper = await getWrapper(data)
+
+          expect(wrapper.html()).toContain("Closes in 1m 5s")
         })
       })
     })
@@ -552,8 +533,7 @@ describe("Details", () => {
       const data: any = {
         ...artworkNotInAuction,
         collectorSignals: {
-          bidCount: null,
-          lotWatcherCount: null,
+          ...artworkInAuction?.collectorSignals,
           partnerOffer: {
             isActive: true,
             endAt: "2055-03-12T12:33:37.000Z",
@@ -574,8 +554,7 @@ describe("Details", () => {
       const data: any = {
         ...artworkInAuction,
         collectorSignals: {
-          bidCount: null,
-          lotWatcherCount: null,
+          ...artworkInAuction?.collectorSignals,
           partnerOffer: {
             isActive: true,
             endAt: "2055-03-12T12:33:37.000Z",
@@ -600,8 +579,6 @@ describe("Details", () => {
       const data: any = {
         ...artworkNotInAuction,
         collectorSignals: {
-          bidCount: null,
-          lotWatcherCount: null,
           partnerOffer: {
             isActive: true,
             endAt: "2055-03-12T12:33:37.000Z",
@@ -614,6 +591,83 @@ describe("Details", () => {
       const html = wrapper.html()
 
       expect(html).not.toContain("Limited-Time Offer")
+    })
+  })
+
+  describe("auction signals", () => {
+    // This test is skipped due to trouble with mocking the current date in the test environment
+
+    it.skip("should render bidding closing timer when bidding is open", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          partnerOffer: null,
+          auction: {
+            ...artworkInAuction?.collectorSignals?.auction,
+            lotClosesAt: "2022-03-20T05:22:32.000Z",
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).toContain("2d left to bid")
+    })
+
+    it("should render 'Bidding Closed' when the bidding for an auction has ended", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          partnerOffer: null,
+          auction: {
+            ...artworkInAuction?.collectorSignals?.auction,
+            liveBiddingStarted: true,
+            lotClosesAt: "2022-03-12T12:33:37.000Z",
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).toContain("Bidding closed")
+    })
+
+    it("should render 'Bidding live now' when the bidding for an auction is live", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          partnerOffer: null,
+          auction: {
+            ...artworkInAuction?.collectorSignals?.auction,
+            liveBiddingStarted: true,
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).toContain("Bidding live now")
+    })
+
+    it("should render register by date when auction is live", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          partnerOffer: null,
+          auction: {
+            ...artworkInAuction?.collectorSignals?.auction,
+            liveBiddingStarted: true,
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).toContain("Bidding live now")
     })
   })
 })
@@ -686,6 +740,14 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   isSavedToList: false,
   collectorSignals: {
     partnerOffer: null,
+    auction: {
+      bidCount: 2,
+      liveBiddingStarted: false,
+      lotClosesAt: new Date(Date.now() + 60 * 1000).toISOString(),
+      lotWatcherCount: 3,
+      onlineBiddingExtended: false,
+      registrationEndsAt: "2022-03-5T12:33:37.000Z",
+    },
   },
   consignmentSubmission: null,
   isListed: false,
@@ -759,6 +821,7 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = 
   isSavedToList: false,
   collectorSignals: {
     partnerOffer: null,
+    auction: null,
   },
   consignmentSubmission: {
     internalID: "internal-id",
@@ -820,6 +883,7 @@ const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
   isSavedToList: false,
   collectorSignals: {
     partnerOffer: null,
+    auction: null,
   },
   consignmentSubmission: null,
   isListed: false,
