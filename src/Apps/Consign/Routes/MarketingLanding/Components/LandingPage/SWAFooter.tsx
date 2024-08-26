@@ -19,7 +19,7 @@ export const SWAFooter: React.FC = () => {
           as={RouterLink}
           width={["100%", 300]}
           variant="primaryBlack"
-          to="sell/intro"
+          to="/sell/intro"
           onClick={() => {
             trackStartSellingClick("Footer")
           }}

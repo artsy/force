@@ -34,7 +34,7 @@ export const SWAStickyFooter = () => {
         as={RouterLink}
         width="100%"
         variant="primaryBlack"
-        to="sell/intro"
+        to="/sell/intro"
         onClick={event => {
           trackStartSellingClick(ContextModule.sellStickyFooter)
         }}

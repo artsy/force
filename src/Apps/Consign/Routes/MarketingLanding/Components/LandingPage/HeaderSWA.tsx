@@ -56,7 +56,7 @@ export const HeaderSWA = () => {
                 as={RouterLink}
                 width="100%"
                 variant="primaryBlack"
-                to="sell/intro"
+                to="/sell/intro"
                 onClick={() => {
                   trackStartSellingClick("Header")
                 }}

@@ -16,7 +16,7 @@ export const useMarketingLandingTracking = () => {
       // we use "Header" with capital letter for analyticks already and we do not want to intrpduce another name
       context_page_owner_type: contextPageOwnerType,
       label: "Start Selling",
-      destination_path: "/sell/submission",
+      destination_path: "/sell/intro",
       user_id: user?.id,
     })
   }
