@@ -10,7 +10,6 @@ import {
 import { PreviousSubmissionQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviousSubmission"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { RouterLink } from "System/Components/RouterLink"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
 
@@ -19,8 +18,6 @@ export const HeaderSWA = () => {
     trackStartSellingClick,
     trackGetInTouchClick,
   } = useMarketingLandingTracking()
-
-  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
 
   const image = resized(
     "https://files.artsy.net/images/content-card-swa-landing-page.jpg",
@@ -31,7 +28,7 @@ export const HeaderSWA = () => {
     <GridColumns gridRowGap={[2, 4]} alignItems="center">
       <Column span={5} order={[1, 0]} py={[0, 2]} pr={[0, 2]}>
         <Media at="xs">
-          {enableNewSubmissionFlow && <PreviousSubmissionQueryRenderer />}
+          <PreviousSubmissionQueryRenderer />
         </Media>
 
         <Text as="h1" variant={["xl", "xxl", "xxxl"]}>
@@ -46,15 +43,11 @@ export const HeaderSWA = () => {
         </Text>
 
         <Media greaterThanOrEqual="sm">
-          {enableNewSubmissionFlow ? (
-            <Spacer y={[2, 1]} />
-          ) : (
-            <Spacer y={[2, 4]} />
-          )}
+          <Spacer y={[2, 1]} />
 
           <GridColumns>
             <Column span={[12, 12, 10]}>
-              {enableNewSubmissionFlow && <PreviousSubmissionQueryRenderer />}
+              <PreviousSubmissionQueryRenderer />
             </Column>
 
             <Column span={[12, 6, 5]}>
@@ -63,8 +56,8 @@ export const HeaderSWA = () => {
                 as={RouterLink}
                 width="100%"
                 variant="primaryBlack"
-                to={enableNewSubmissionFlow ? "sell/intro" : "/sell/submission"}
-                onClick={event => {
+                to="/sell/intro"
+                onClick={() => {
                   trackStartSellingClick("Header")
                 }}
                 mb={[1, 0]}

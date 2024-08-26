@@ -52,7 +52,7 @@ describe("HeaderSWA", () => {
 
       expect(link).toBeInTheDocument()
       expect(link).toHaveTextContent("Start Selling")
-      expect(link).toHaveAttribute("href", "sell/intro")
+      expect(link).toHaveAttribute("href", "/sell/intro")
     })
 
     it("tracks click", () => {
@@ -66,7 +66,7 @@ describe("HeaderSWA", () => {
         context_module: "Header",
         context_page_owner_type: "sell",
         label: "Start Selling",
-        destination_path: "/sell/submission",
+        destination_path: "/sell/intro",
       })
     })
   })

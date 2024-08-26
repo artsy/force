@@ -43,90 +43,67 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("MyCollection Artwork SWA Section", () => {
-  describe("when onyx_new_submission_flow feature flag is enabled", () => {
-    beforeEach(() => {
-      mockUseFeatureFlag.mockImplementation(() => true)
-    })
-
-    describe("submit for sale", () => {
-      beforeEach(() => {
-        mockUseRouter.mockImplementation(() => ({
-          router: {
-            push: mockPush,
-          },
-        }))
-      })
-
-      describe("when artwork is already submitted", () => {
-        it("opens the submission page and does not create a new submission", async () => {
-          renderWithRelay({
-            Artwork: () => ({
-              consignmentSubmission: {
-                submissionId: "submission-id",
-              },
-              artist: {
-                targetSupply: {
-                  priority: "TRUE",
-                },
-              },
-            }),
-          })
-
-          fireEvent.click(screen.getByTestId("submit-for-sale-link"))
-
-          expect(mockPush).toBeCalledWith(
-            '/sell/submissions/<mock-value-for-field-"internalID">/artist'
-          )
-
-          expect(createOrUpdateConsignSubmission).not.toBeCalled()
-        })
-      })
-
-      describe("when artwork has not not submitted", () => {
-        it("creates a new submission and opens the submission page", async () => {
-          renderWithRelay({
-            Artwork: () => ({
-              consignmentSubmission: null,
-              artist: {
-                targetSupply: {
-                  priority: "TRUE",
-                },
-              },
-            }),
-          })
-
-          fireEvent.click(screen.getByTestId("submit-for-sale-link"))
-
-          await waitFor(() => {
-            expect(createOrUpdateConsignSubmission).toHaveBeenCalled()
-
-            expect(mockPush).toBeCalledWith(
-              "/sell/submissions/submission-id/artist"
-            )
-          })
-        })
-      })
-    })
+  beforeEach(() => {
+    mockUseFeatureFlag.mockImplementation(() => true)
   })
 
-  describe("when onyx_new_submission_flow feature flag is disabled", () => {
+  describe("submit for sale", () => {
     beforeEach(() => {
-      mockUseFeatureFlag.mockImplementation(() => false)
+      mockUseRouter.mockImplementation(() => ({
+        router: {
+          push: mockPush,
+        },
+      }))
     })
 
-    it("the link has right attributes", async () => {
-      renderWithRelay({
-        Artwork: () => ({
-          consignmentSubmission: null,
-          artist: {
-            targetSupply: {
-              priority: "TRUE",
+    describe("when artwork is already submitted", () => {
+      it("opens the submission page and does not create a new submission", async () => {
+        renderWithRelay({
+          Artwork: () => ({
+            consignmentSubmission: {
+              submissionId: "submission-id",
             },
-          },
-        }),
-      })
+            artist: {
+              targetSupply: {
+                priority: "TRUE",
+              },
+            },
+          }),
+        })
 
-      expect(screen.getByTestId("submit-for-sale-link")).toBeInTheDocument()
+        fireEvent.click(screen.getByTestId("submit-for-sale-link"))
+
+        expect(mockPush).toBeCalledWith(
+          '/sell/submissions/<mock-value-for-field-"internalID">/artist'
+        )
+
+        expect(createOrUpdateConsignSubmission).not.toBeCalled()
+      })
+    })
+
+    describe("when artwork has not not submitted", () => {
+      it("creates a new submission and opens the submission page", async () => {
+        renderWithRelay({
+          Artwork: () => ({
+            consignmentSubmission: null,
+            artist: {
+              targetSupply: {
+                priority: "TRUE",
+              },
+            },
+          }),
+        })
+
+        fireEvent.click(screen.getByTestId("submit-for-sale-link"))
+
+        await waitFor(() => {
+          expect(createOrUpdateConsignSubmission).toHaveBeenCalled()
+
+          expect(mockPush).toBeCalledWith(
+            "/sell/submissions/submission-id/artist"
+          )
+        })
+      })
     })
   })
 
