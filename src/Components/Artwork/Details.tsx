@@ -287,16 +287,37 @@ const SaleMessage: React.FC<SaleMessageProps> = props => {
   return <>{sale_message ?? NBSP}</>
 }
 
-const BidInfo: React.FC<DetailsProps> = ({ artwork: { collectorSignals } }) => {
+const BidInfo: React.FC<DetailsProps> = ({
+  artwork: { collectorSignals, sale, sale_artwork },
+}) => {
+  const signalsAuctionEnabled = useFeatureFlag(
+    "emerald_signals-auction-improvements"
+  )
+
+  const inRunningAuction = sale?.is_auction && !sale?.is_closed
+
+  if (!inRunningAuction) {
+    return null
+  }
+
+  const bidderPositionCounts = sale_artwork?.counts?.bidder_positions ?? 0
   const bidCount = collectorSignals?.auction?.bidCount ?? 0
 
-  if (bidCount === 0) {
+  if (bidCount === 0 && bidderPositionCounts === 0) {
     return null
   }
 
   return (
     <>
-      ({bidCount} bid{bidCount === 1 ? "" : "s"})
+      {signalsAuctionEnabled ? (
+        <>
+          ({bidCount} bid{bidCount === 1 ? "" : "s"})
+        </>
+      ) : (
+        <>
+          ({bidderPositionCounts} bid{bidderPositionCounts === 1 ? "" : "s"})
+        </>
+      )}
     </>
   )
 }

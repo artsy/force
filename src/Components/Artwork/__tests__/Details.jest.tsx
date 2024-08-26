@@ -189,11 +189,11 @@ describe("Details", () => {
     it("shows the number of bids in the message if sale open and are bids", async () => {
       const data: any = {
         ...artworkInAuction,
-        collectorSignals: {
-          partnerOffer: null,
-          auction: {
-            ...artworkInAuction?.collectorSignals?.auction,
-            bidCount: 2,
+        sale_artwork: {
+          ...artworkInAuction?.sale_artwork,
+          counts: {
+            ...artworkInAuction?.sale_artwork?.counts,
+            bidder_positions: 2,
           },
         },
       }
