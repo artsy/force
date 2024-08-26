@@ -3,10 +3,8 @@ import { Box, Button, Text, useTheme } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { RouterLink } from "System/Components/RouterLink"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export const SWAStickyFooter = () => {
-  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
   const {
     trackStartSellingClick,
     trackGetInTouchClick,
@@ -36,7 +34,7 @@ export const SWAStickyFooter = () => {
         as={RouterLink}
         width="100%"
         variant="primaryBlack"
-        to={enableNewSubmissionFlow ? "sell/intro" : "/sell/submission"}
+        to="sell/intro"
         onClick={event => {
           trackStartSellingClick(ContextModule.sellStickyFooter)
         }}

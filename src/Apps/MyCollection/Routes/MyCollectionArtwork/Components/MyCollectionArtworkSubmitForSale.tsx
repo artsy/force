@@ -1,8 +1,6 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Button, Separator, Text } from "@artsy/palette"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-import { RouterLink } from "System/Components/RouterLink"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
@@ -16,7 +14,6 @@ interface MyCollectionArtworkSubmitForSaleProps {
 }
 
 export const MyCollectionArtworkSubmitForSale: React.FC<MyCollectionArtworkSubmitForSaleProps> = props => {
-  const enableNewSubmissionFlow = useFeatureFlag("onyx_new_submission_flow")
   const { trackEvent } = useTracking()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { router } = useRouter()
@@ -40,8 +37,6 @@ export const MyCollectionArtworkSubmitForSale: React.FC<MyCollectionArtworkSubmi
       subject: "Submit This Artwork to Sell",
       platform: "web",
     })
-
-    if (!enableNewSubmissionFlow) return
 
     setIsLoading(true)
 
@@ -81,12 +76,6 @@ export const MyCollectionArtworkSubmitForSale: React.FC<MyCollectionArtworkSubmi
 
       <Button
         variant="primaryBlack"
-        // @ts-ignore
-        as={enableNewSubmissionFlow ? undefined : RouterLink}
-        to={
-          !enableNewSubmissionFlow &&
-          `/collector-profile/my-collection/submission/artwork-details/${artwork.internalID}`
-        }
         data-testid="submit-for-sale-link"
         onClick={handleSubmitArtwork}
         loading={isLoading}
