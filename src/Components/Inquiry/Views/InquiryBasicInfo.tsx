@@ -48,8 +48,8 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
 
   const { contextPageOwnerType } = useAnalyticsContext()
 
-  useOnce(async () => {
-    await submitUpdateMyUserProfile({
+  useOnce(() => {
+    submitUpdateMyUserProfile({
       promptedForUpdate: true,
     })
 

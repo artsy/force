@@ -30,8 +30,8 @@ export const InquiryArtistsInCollection: FC = () => {
   } = useAnalyticsContext()
   const { trackEvent } = useTracking()
 
-  useOnce(async () => {
-    await submitUpdateMyUserProfile({
+  useOnce(() => {
+    submitUpdateMyUserProfile({
       promptedForUpdate: true,
     })
 
