@@ -143,7 +143,7 @@ const buttonMixin = css`
 
   &:hover,
   &:focus,
-  &.focus-visible {
+  &:focus-visible {
     outline: none;
     color: ${themeGet("colors.white100")};
   }
