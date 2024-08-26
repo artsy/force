@@ -142,10 +142,15 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     ? INITIAL_STEP
     : (match.location.pathname.split("/").pop() as SellFlowStep)
 
+  // Setting the submission state from the URL query param only for testing purposes
+  const testSubmisionState = match.location.query
+    ?.testSubmisionState as ConsignmentSubmissionStateAggregation
+  const submissionState = testSubmisionState ?? submission?.state
+
   const isExtended =
     !!enablePostApprovalSubmissionFlow &&
-    !!submission?.state &&
-    !BASIC_FLOW_STATES.includes(submission?.state)
+    !!submissionState &&
+    !BASIC_FLOW_STATES.includes(submissionState)
 
   const steps = useMemo(
     () => [
@@ -176,11 +181,11 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const finishFlow = async () => {
     trackConsignmentSubmitted(submission?.internalID, state.step)
 
-    if (submission?.state === "DRAFT") {
+    if (submissionState === "DRAFT") {
       await updateSubmission({
         state: "SUBMITTED",
       })
-    } else if (submission?.state === "APPROVED") {
+    } else if (submissionState === "APPROVED") {
       await updateSubmission({
         state: "RESUBMITTED",
       })
@@ -206,7 +211,15 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     )
       return
 
-    router.push(`/sell/submissions/${submission?.externalId}/${newStep}`)
+    // Setting the submission state from the URL query param only for testing purposes
+    const testSubmissionQueryParams = testSubmisionState
+      ? `?testSubmisionState=${testSubmisionState}`
+      : ""
+
+    router.push(
+      `/sell/submissions/${submission?.externalId}/${newStep}` +
+        testSubmissionQueryParams
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, isNewSubmission, submission, steps])
 
