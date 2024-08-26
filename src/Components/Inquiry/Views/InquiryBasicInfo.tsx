@@ -21,9 +21,15 @@ import {
 import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
 import { logger } from "Components/Inquiry/util"
 import { Form, Formik } from "formik"
-import { ActionType, ContextModule, EditedUserProfile } from "@artsy/cohesion"
+import {
+  ActionType,
+  ContextModule,
+  EditedUserProfile,
+  EditProfileModalViewed,
+} from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useOnce } from "Utils/Hooks/useOnce"
 
 interface InquiryBasicInfoProps {
   artwork: InquiryBasicInfo_artwork$data
@@ -31,16 +37,33 @@ interface InquiryBasicInfoProps {
 }
 
 const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
-  const { next, setContext, relayEnvironment } = useInquiryContext()
+  const { next, setContext, relayEnvironment, context } = useInquiryContext()
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
     relayEnvironment: relayEnvironment.current as Environment,
   })
 
   const { sendToast } = useToasts()
-
   const { trackEvent } = useTracking()
+
   const { contextPageOwnerType } = useAnalyticsContext()
+
+  useOnce(async () => {
+    await submitUpdateMyUserProfile({
+      promptedForUpdate: true,
+    })
+
+    const payload: EditProfileModalViewed = {
+      action: ActionType.editProfileModalViewed,
+      context_module: ContextModule.inquiry,
+      context_page_owner_type: contextPageOwnerType,
+      user_id: context.current?.internalID ?? "guest",
+      inquiry_id: context.current?.inquiryID ?? "unknown",
+      platform: "web",
+    }
+
+    trackEvent(payload)
+  })
 
   const handleSubmit = async (values: InquiryBasicInfoInput) => {
     try {
