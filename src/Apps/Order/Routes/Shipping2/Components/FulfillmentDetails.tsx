@@ -43,9 +43,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   const addressVerificationUSEnabled = !!useFeatureFlag(
     "address_verification_us"
   )
-  const addressVerificationIntlEnabled = !!useFeatureFlag(
-    "address_verification_intl"
-  )
 
   // Trigger address verification by setting this to true
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
@@ -138,9 +135,8 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
    */
   const shouldVerifyAddressOnSubmit = (values: FulfillmentValues) => {
     const enabledForAddress =
-      (values as ShipValues).attributes.country === "US"
-        ? addressVerificationUSEnabled
-        : addressVerificationIntlEnabled
+      (values as ShipValues).attributes.country === "US" &&
+      addressVerificationUSEnabled
 
     return (
       values.fulfillmentType === FulfillmentType.SHIP &&
