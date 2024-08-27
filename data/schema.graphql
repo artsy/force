@@ -3506,6 +3506,25 @@ type AuctionResultsByArtistsEdge {
   node: AuctionResultsByArtists
 }
 
+# An auction results rail section in the home view
+type AuctionResultsRailHomeViewSection implements GenericHomeViewSection & Node {
+  auctionResultsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): AuctionResultConnection
+
+  # The component that is prescribed for this section
+  component: HomeViewComponent
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+}
+
 enum AuctionResultsState {
   ALL
   PAST
@@ -11039,6 +11058,9 @@ type HomeViewComponent {
     version: HomeViewComponentBackgroundImageURLVersion
   ): String
 
+  # Behaviors for the view
+  behaviors: HomeViewComponentBehaviors
+
   # A description for this section
   description: String
 
@@ -11057,11 +11079,25 @@ enum HomeViewComponentBackgroundImageURLVersion {
   WIDE
 }
 
+type HomeViewComponentBehaviors {
+  # Represents the behavior of the view all button
+  viewAll: HomeViewComponentBehaviorsViewAll
+}
+
+type HomeViewComponentBehaviorsViewAll {
+  # Text for the CTA of the view all button
+  buttonText: String!
+
+  # href of the view all button
+  href: String!
+}
+
 union HomeViewSection =
     ActivityRailHomeViewSection
   | ArticlesRailHomeViewSection
   | ArtistsRailHomeViewSection
   | ArtworksRailHomeViewSection
+  | AuctionResultsRailHomeViewSection
   | FairsRailHomeViewSection
   | HeroUnitsHomeViewSection
   | MarketingCollectionsRailHomeViewSection
