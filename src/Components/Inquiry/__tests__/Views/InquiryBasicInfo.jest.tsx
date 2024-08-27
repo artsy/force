@@ -42,6 +42,7 @@ describe("InquiryBasicInfo", () => {
       next: mockNext,
       setContext: () => {},
       relayEnvironment: { current: null },
+      context: { current: null },
     }))
   })
 
@@ -69,7 +70,11 @@ describe("InquiryBasicInfo", () => {
       }),
     })
 
-    expect(mockSubmitUpdateMyUserProfile).not.toBeCalled()
+    await flushPromiseQueue()
+
+    expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
+      promptedForUpdate: true,
+    })
     expect(mockNext).not.toBeCalled()
 
     const input = screen.getByPlaceholderText(
@@ -109,7 +114,11 @@ describe("InquiryBasicInfo", () => {
       }),
     })
 
-    expect(mockSubmitUpdateMyUserProfile).not.toBeCalled()
+    await flushPromiseQueue()
+
+    expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
+      promptedForUpdate: true,
+    })
     expect(mockNext).not.toBeCalled()
 
     const professionInput = screen.getByPlaceholderText("Profession")
