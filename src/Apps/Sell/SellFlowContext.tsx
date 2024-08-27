@@ -334,7 +334,7 @@ export const useSellFlowContext = () => {
 
 export const useTestSubmissionState = () => {
   const { match } = useRouter()
-  const testSubmissionState = match.location.query?.testSubmissionState as
+  const testSubmissionState = match?.location?.query?.testSubmissionState as
     | ConsignmentSubmissionStateAggregation
     | undefined
 
