@@ -2,13 +2,14 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { SaveButton_artwork$data } from "__generated__/SaveButton_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Clickable } from "@artsy/palette"
+import { Clickable, Flex, Text } from "@artsy/palette"
 import { useSaveArtwork } from "./useSaveArtwork"
 import { useTracking } from "react-tracking"
 import { useState } from "react"
 import { isTouch } from "Utils/device"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import HeartFillIcon from "@artsy/icons/HeartFillIcon"
+import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
 
 export interface SaveButtonProps {
   artwork: SaveButton_artwork$data
@@ -17,18 +18,27 @@ export interface SaveButtonProps {
 
 interface SaveButtonBaseProps {
   isSaved: boolean
+  artwork: SaveArtworkToListsButton_artwork$data | SaveButton_artwork$data
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
-const BTN_HEIGHT = 20
-const BTN_WIDTH = 20
+const BTN_HEIGHT = 18
+const BTN_WIDTH = 18
 
 export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
   isSaved,
   onClick,
+  artwork,
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   const title = isSaved ? "Unsave" : "Save"
+  const { lotWatcherCount, lotClosesAt, liveBiddingStarted } =
+    artwork.collectorSignals?.auction || {}
+
+  const shouldDisplayLotCount =
+    !!lotWatcherCount &&
+    !liveBiddingStarted &&
+    (!lotClosesAt || new Date(lotClosesAt) >= new Date())
 
   const handleMouseEnter = () => {
     if (!isTouch) {
@@ -43,31 +53,39 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
   }
 
   return (
-    <Clickable
-      aria-label={isSaved ? "Unsave" : "Save"}
-      data-test="saveButton"
-      height={BTN_HEIGHT}
-      width={BTN_WIDTH}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={onClick}
-    >
-      {isSaved || isHovered ? (
-        <HeartFillIcon
-          title={title}
-          fill="blue100"
-          width={BTN_WIDTH}
-          height={BTN_HEIGHT}
-        />
-      ) : (
-        <HeartStrokeIcon
-          title={title}
-          fill="black100"
-          width={BTN_WIDTH}
-          height={BTN_HEIGHT}
-        />
+    <Flex alignItems="center">
+      {shouldDisplayLotCount && (
+        <Text variant="xs" color="black100">
+          {lotWatcherCount}
+        </Text>
       )}
-    </Clickable>
+
+      <Clickable
+        aria-label={isSaved ? "Unsave" : "Save"}
+        data-test="saveButton"
+        height={BTN_HEIGHT}
+        width={BTN_WIDTH}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={onClick}
+      >
+        {isSaved || isHovered ? (
+          <HeartFillIcon
+            title={title}
+            fill="blue100"
+            width={BTN_WIDTH}
+            height={BTN_HEIGHT}
+          />
+        ) : (
+          <HeartStrokeIcon
+            title={title}
+            fill="black100"
+            width={BTN_WIDTH}
+            height={BTN_HEIGHT}
+          />
+        )}
+      </Clickable>
+    </Flex>
   )
 }
 
@@ -99,7 +117,9 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
     handleSave()
   }
 
-  return <SaveButtonBase isSaved={isSaved} onClick={handleClick} />
+  return (
+    <SaveButtonBase artwork={artwork} isSaved={isSaved} onClick={handleClick} />
+  )
 }
 
 export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
@@ -110,6 +130,13 @@ export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
       slug
       isSaved
       title
+      collectorSignals {
+        auction {
+          lotWatcherCount
+          lotClosesAt
+          liveBiddingStarted
+        }
+      }
     }
   `,
 })

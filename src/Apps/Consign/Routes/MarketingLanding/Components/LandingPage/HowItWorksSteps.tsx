@@ -1,10 +1,10 @@
+import { ActionType, ContextModule, Intent } from "@artsy/cohesion"
 import { Button, Column, GridColumns, Text } from "@artsy/palette"
+import { useAuthDialog } from "Components/AuthDialog"
 import { useTracking } from "react-tracking"
+import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { RouterLink } from "System/Components/RouterLink"
-import { ActionType, ContextModule, Intent } from "@artsy/cohesion"
-import { useAuthDialog } from "Components/AuthDialog"
 
 const reasons = [
   {
@@ -45,7 +45,7 @@ export const HowItWorksSteps: React.FC = () => {
       context_module: ContextModule.sellHowItWorks,
       context_page_owner_type: contextPageOwnerType,
       label: "Get Started",
-      destination_path: "/sell/submission",
+      destination_path: "/sell/intro",
       user_id: user?.id,
     })
   }
@@ -71,7 +71,7 @@ export const HowItWorksSteps: React.FC = () => {
         mt={[2, 4]}
         width={["100%", 300]}
         variant="primaryBlack"
-        to="/sell/submission"
+        to="/sell/intro"
         onClick={event => {
           if (!isLoggedIn) {
             event.preventDefault()

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { useTracking } from "react-tracking"
 import { SWAFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
@@ -38,7 +38,7 @@ describe("SWAFooter", () => {
 
       expect(link).toBeInTheDocument()
       expect(link).toHaveTextContent("Start Selling")
-      expect(link).toHaveAttribute("href", "/sell/submission")
+      expect(link).toHaveAttribute("href", "/sell/intro")
     })
 
     it("tracks click", () => {
@@ -52,7 +52,7 @@ describe("SWAFooter", () => {
         context_module: "Footer",
         context_page_owner_type: "sell",
         label: "Start Selling",
-        destination_path: "/sell/submission",
+        destination_path: "/sell/intro",
       })
     })
   })

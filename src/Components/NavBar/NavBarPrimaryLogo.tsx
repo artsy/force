@@ -25,7 +25,7 @@ const HitArea = styled(RouterLink)`
     box-sizing: content-box;
   }
 
-  &.focus-visible {
+  &:focus-visible {
     outline: none;
 
     > svg {

@@ -84,7 +84,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
     bidsPresent &&
     artwork.sale_artwork.reserve_status === "reserve_not_met"
       ? "red100"
-      : "black60"
+      : "black100"
 
   const bidTextParts: string[] = []
   let reserveMessage = artwork.sale_artwork.reserve_message
@@ -113,6 +113,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
     ? myLotStanding?.active_bid?.is_winning
     : null
   const myMaxBid = myMostRecent?.max_bid?.display
+  const lotWatcherCount = artwork.collectorSignals?.auction?.lotWatcherCount
 
   const CurrentBid = currentBidChanged ? TextWithPulse : Text
 
@@ -165,6 +166,14 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
         </Flex>
       )}
 
+      {!!lotWatcherCount && (
+        <Text variant="xs" color="black100">
+          {lotWatcherCount} {lotWatcherCount === 1 ? "watcher" : "watchers"}
+        </Text>
+      )}
+
+      <Spacer y={2} />
+
       {artwork.sale && artwork.sale.is_with_buyers_premium && (
         <>
           <Spacer y={1} />
@@ -214,6 +223,11 @@ export const ArtworkSidebarCurrentBidInfoFragmentContainer = createFragmentConta
             max_bid: maxBid {
               display
             }
+          }
+        }
+        collectorSignals {
+          auction {
+            lotWatcherCount
           }
         }
         ...ArtworkSidebarBiddingClosedMessage_artwork

@@ -3,14 +3,11 @@ import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { isFunction } from "lodash"
 import * as React from "react"
-import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
@@ -19,6 +16,10 @@ import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { getSignalLabel } from "Utils/getSignalLabel"
+import { DateTime } from "luxon"
+import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
+import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
+import { useState } from "react"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -67,7 +68,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
 }) => {
   if (cultural_maker) {
     return (
-      <Text variant="sm-display" overflowEllipsis>
+      <Text variant="xs" overflowEllipsis>
         {cultural_maker}
       </Text>
     )
@@ -76,7 +77,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
   if (!artists?.length) {
     if (showSaveButton) {
       return (
-        <Text variant="sm-display" overflowEllipsis>
+        <Text variant="xs" overflowEllipsis>
           Artist Unavailable
         </Text>
       )
@@ -86,7 +87,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
   }
 
   return (
-    <Text variant="sm-display" overflowEllipsis>
+    <Text variant="xs" overflowEllipsis>
       {artists.map((artist, i) => {
         if (!artist || !artist.href || !artist.name) return null
 
@@ -107,7 +108,7 @@ const TitleLine: React.FC<DetailsProps> = ({
 }) => {
   return (
     <ConditionalLink includeLinks={includeLinks} to={href}>
-      <Text variant="sm-display" color="black60" overflowEllipsis>
+      <Text variant="xs" color="black60" overflowEllipsis>
         <i>{title}</i>
         {date && `, ${date}`}
       </Text>
@@ -142,6 +143,24 @@ const PartnerLine: React.FC<DetailsProps> = ({
 
 const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
   const { showActivePartnerOfferLine } = props
+  const { lotClosesAt } = props.artwork.collectorSignals?.auction ?? {}
+  const { liveBiddingStarted } = props.artwork.collectorSignals?.auction ?? {}
+
+  if (lotClosesAt && new Date(lotClosesAt) <= new Date()) {
+    return (
+      <Text variant="xs" color="black100" fontWeight="bold">
+        Bidding closed
+      </Text>
+    )
+  }
+
+  if (liveBiddingStarted) {
+    return (
+      <Text variant="xs" color="blue100">
+        Bidding live now
+      </Text>
+    )
+  }
 
   return (
     <Flex flexDirection="row" alignItems="center">
@@ -166,7 +185,6 @@ const CollectorSignalLine: React.FC<DetailsProps> = ({
       color="blue100"
       backgroundColor="blue10"
       px={0.5}
-      marginBottom={0.5}
       alignSelf="flex-start"
       borderRadius={3}
     >
@@ -175,12 +193,64 @@ const CollectorSignalLine: React.FC<DetailsProps> = ({
   )
 }
 
-const EmptyLine: React.FC = () => {
+const BidTimerLine: React.FC<DetailsProps> = ({
+  artwork: { collectorSignals },
+}) => {
+  const { lotClosesAt, registrationEndsAt, onlineBiddingExtended } =
+    collectorSignals?.auction ?? {}
+  const { time } = useTimer(lotClosesAt ?? "")
+  const { days, hours, minutes } = time
+  const { isAuctionArtwork } = useArtworkGridContext()
+  const biddingEnded = lotClosesAt && new Date(lotClosesAt) <= new Date()
+  const registrationEnded =
+    registrationEndsAt && new Date(registrationEndsAt) <= new Date()
+
+  const numDays = Number(days)
+  const numHours = Number(hours)
+  const numMinutes = Number(minutes)
+
+  if (registrationEndsAt && !registrationEnded && !isAuctionArtwork) {
+    const date = DateTime.fromISO(registrationEndsAt)
+    const formattedRegistrationEndsAt = date.toFormat("MMM d")
+
+    return (
+      <Text variant="xs" color="black100" alignSelf="flex-start">
+        Register by {formattedRegistrationEndsAt}
+      </Text>
+    )
+  }
+
+  if (!lotClosesAt || numDays > 5 || biddingEnded) {
+    return <EmptyLine />
+  }
+
+  const renderLotCloseTime = [
+    numDays > 0 && `${numDays}d`,
+    numHours > 0 && `${numHours}h`,
+    numDays === 0 && numHours === 0 && `${numMinutes}m`,
+  ]
+    .filter(Boolean)
+    .join(" ")
+
+  const textColor = numHours < 1 && numDays === 0 ? "red100" : "blue100"
+
+  if (onlineBiddingExtended) {
+    return (
+      <Text variant="xs" color="red100" alignSelf="flex-start">
+        Extended, {renderLotCloseTime} left to bid
+      </Text>
+    )
+  }
+
   return (
-    <Text variant="xs" marginBottom={0.5}>
-      &nbsp;
+    <Text variant="xs" color={textColor} alignSelf="flex-start">
+      {renderLotCloseTime} left to bid
     </Text>
   )
+}
+
+const EmptyLine: React.FC = () => {
+  return <Text variant="xs">&nbsp;</Text>
 }
 
 const HighDemandInfo = () => {
@@ -218,8 +288,12 @@ const SaleMessage: React.FC<SaleMessageProps> = props => {
 }
 
 const BidInfo: React.FC<DetailsProps> = ({
-  artwork: { sale, sale_artwork },
+  artwork: { collectorSignals, sale, sale_artwork },
 }) => {
+  const signalsAuctionEnabled = useFeatureFlag(
+    "emerald_signals-auction-improvements"
+  )
+
   const inRunningAuction = sale?.is_auction && !sale?.is_closed
 
   if (!inRunningAuction) {
@@ -227,14 +301,23 @@ const BidInfo: React.FC<DetailsProps> = ({
   }
 
   const bidderPositionCounts = sale_artwork?.counts?.bidder_positions ?? 0
+  const bidCount = collectorSignals?.auction?.bidCount ?? 0
 
-  if (bidderPositionCounts === 0) {
+  if (bidCount === 0 && bidderPositionCounts === 0) {
     return null
   }
 
   return (
     <>
-      ({bidderPositionCounts} bid{bidderPositionCounts === 1 ? "" : "s"})
+      {signalsAuctionEnabled ? (
+        <>
+          ({bidCount} bid{bidCount === 1 ? "" : "s"})
+        </>
+      ) : (
+        <>
+          ({bidderPositionCounts} bid{bidderPositionCounts === 1 ? "" : "s"})
+        </>
+      )}
     </>
   )
 }
@@ -291,6 +374,10 @@ export const Details: React.FC<DetailsProps> = ({
     "emerald_signals-partner-offers"
   )
 
+  const signalsAuctionEnabled = useFeatureFlag(
+    "emerald_signals-auction-improvements"
+  )
+
   const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
   const isAuction = rest?.artwork?.sale?.is_auction ?? false
 
@@ -339,12 +426,13 @@ export const Details: React.FC<DetailsProps> = ({
           <Join separator={<Spacer x={1} />}>
             {!hideLotLabel && (
               <Text variant="xs" flexShrink={0}>
-                Lot {rest.artwork?.sale_artwork?.lotLabel}
+                LOT {rest.artwork?.sale_artwork?.lotLabel}
               </Text>
             )}
 
             {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
-              rest?.artwork?.sale_artwork && (
+              rest?.artwork?.sale_artwork &&
+              !signalsAuctionEnabled && (
                 <>
                   <LotCloseInfo
                     saleArtwork={rest.artwork.sale_artwork}
@@ -356,7 +444,7 @@ export const Details: React.FC<DetailsProps> = ({
         </Flex>
       )}
 
-      <Flex justifyContent="space-between">
+      <Flex justifyContent="space-between" alignItems="flex-start">
         <Flex flexDirection="column" maxWidth="85%">
           {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
           {!hideArtistName && (
@@ -371,7 +459,7 @@ export const Details: React.FC<DetailsProps> = ({
 
         {showHighDemandInfo && <HighDemandInfo />}
 
-        {!hidePartnerName && <PartnerLine {...rest} />}
+        {!hidePartnerName && !isAuctionArtwork && <PartnerLine {...rest} />}
 
         {isHovered && showHoverDetails && (
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
@@ -388,11 +476,15 @@ export const Details: React.FC<DetailsProps> = ({
           {...rest}
         />
       )}
+
+      <BidTimerLine {...rest} />
+
       {padForActivePartnerOfferLine && <EmptyLine />}
     </Box>
   )
 }
 
+// TODO: Delete LotCloseInfo when signalsAuctionEnabled is removed
 interface LotCloseInfoProps {
   saleArtwork: NonNullable<Details_artwork$data["sale_artwork"]>
   sale: NonNullable<Details_artwork$data["sale"]>
@@ -482,6 +574,13 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       title
       date
       collectorSignals {
+        auction {
+          bidCount
+          lotClosesAt
+          liveBiddingStarted
+          registrationEndsAt
+          onlineBiddingExtended
+        }
         partnerOffer {
           endAt
           priceWithDiscount {

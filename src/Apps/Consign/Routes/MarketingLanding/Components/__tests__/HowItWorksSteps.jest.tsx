@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
+import { HowItWorksSteps } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HowItWorksSteps"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { HowItWorksSteps } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HowItWorksSteps"
 
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useSystemContext")
@@ -80,7 +80,7 @@ describe("HowItWorksSteps", () => {
 
         expect(link).toBeInTheDocument()
         expect(link).toHaveTextContent("Get Started")
-        expect(link).toHaveAttribute("href", "/sell/submission")
+        expect(link).toHaveAttribute("href", "/sell/intro")
       })
 
       it("tracks click", () => {
@@ -94,7 +94,7 @@ describe("HowItWorksSteps", () => {
           context_module: "sellHowItWorks",
           context_page_owner_type: "sell",
           label: "Get Started",
-          destination_path: "/sell/submission",
+          destination_path: "/sell/intro",
           user_id: "user-id",
         })
       })

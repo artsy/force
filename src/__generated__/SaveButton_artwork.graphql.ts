@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f2e5a272ecaa807bcd9e275f0bec410e>>
+ * @generated SignedSource<<33facbb61c5c5d70fb60e3e927083f85>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaveButton_artwork$data = {
+  readonly collectorSignals: {
+    readonly auction: {
+      readonly liveBiddingStarted: boolean;
+      readonly lotClosesAt: string | null | undefined;
+      readonly lotWatcherCount: number;
+    } | null | undefined;
+  } | null | undefined;
   readonly id: string;
   readonly internalID: string;
   readonly isSaved: boolean | null | undefined;
@@ -63,12 +70,55 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "title",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorSignals",
+      "kind": "LinkedField",
+      "name": "collectorSignals",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "AuctionCollectorSignals",
+          "kind": "LinkedField",
+          "name": "auction",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "lotWatcherCount",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "lotClosesAt",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "liveBiddingStarted",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "836370ea482a504776fb931adf5904cf";
+(node as any).hash = "a2eeca41f4558c959e2dd16180f46b5d";
 
 export default node;
