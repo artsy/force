@@ -50,7 +50,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   // Trigger address verification by setting this to true
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
 
-  const hasSavedAddresses = !!meData.addressConnection?.totalCount
+  const hasSavedAddresses = shippingContext.meData.addressList.length !== 0
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork!
 
@@ -72,12 +72,22 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
    * the rest of its life and reset values
    */
   useEffect(() => {
+    const formLoaded =
+      typeof shippingContext.state.fulfillmentDetailsFormikContext.setValues ===
+      "function"
     if (
-      shippingContext.state.shippingFormMode !== "new_address" &&
+      formLoaded &&
+      shippingContext.state.shippingFormMode === "saved_addresses" &&
       !hasSavedAddresses
     ) {
+      const emptyFormValues = getInitialShippingValues(
+        shippingContext.meData.addressList,
+        shippingContext.orderData.shipsFrom,
+        shippingContext.orderData.availableShippingCountries
+      )
+
       shippingContext.state.fulfillmentDetailsFormikContext.setValues(
-        initialValues
+        emptyFormValues
       )
       shippingContext.actions.setShippingFormMode("new_address")
     }
