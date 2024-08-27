@@ -142,10 +142,13 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     ? INITIAL_STEP
     : (match.location.pathname.split("/").pop() as SellFlowStep)
 
-  // Setting the submission state from the URL query param only for testing purposes
-  const testSubmisionState = match.location.query
-    ?.testSubmisionState as ConsignmentSubmissionStateAggregation
-  const submissionState = testSubmisionState ?? submission?.state
+  // Setting the submission state as the URL query parameter to allow testing the complete Sell flow with different submission states with integrity.
+  const {
+    testSubmissionState,
+    testSubmissionQueryParams,
+  } = useTestSubmissionState()
+
+  const submissionState = testSubmissionState ?? submission?.state
 
   const isExtended =
     !!enablePostApprovalSubmissionFlow &&
@@ -210,11 +213,6 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       match.location.pathname.includes(newStep)
     )
       return
-
-    // Setting the submission state from the URL query param only for testing purposes
-    const testSubmissionQueryParams = testSubmisionState
-      ? `?testSubmisionState=${testSubmisionState}`
-      : ""
 
     router.push(
       `/sell/submissions/${submission?.externalId}/${newStep}` +
@@ -332,4 +330,17 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
 
 export const useSellFlowContext = () => {
   return useContext(SellFlowContext)
+}
+
+export const useTestSubmissionState = () => {
+  const { match } = useRouter()
+  const testSubmissionState = match.location.query?.testSubmissionState as
+    | ConsignmentSubmissionStateAggregation
+    | undefined
+
+  const testSubmissionQueryParams = testSubmissionState
+    ? `?testSubmissionState=${testSubmissionState}`
+    : ""
+
+  return { testSubmissionState, testSubmissionQueryParams }
 }
