@@ -4,9 +4,8 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { ButtonProps, Popover } from "@artsy/palette"
+import { ButtonProps } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "__generated__/FollowArtistButtonMutation.graphql"
-import { FollowArtistPopoverQueryRenderer } from "Components/FollowArtistPopover"
 import * as React from "react"
 import { FollowArtistButton_artist$data } from "__generated__/FollowArtistButton_artist.graphql"
 import { FollowArtistButton_me$data } from "__generated__/FollowArtistButton_me.graphql"
@@ -25,7 +24,6 @@ interface FollowArtistButtonProps extends ButtonProps {
   contextModule?: AuthContextModule
   me: FollowArtistButton_me$data | null | undefined
   onFollow?: (followed: boolean) => void
-  triggerSuggestions?: boolean
 }
 
 const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
@@ -33,7 +31,6 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
   contextModule = ContextModule.artistHeader,
   me,
   onFollow,
-  triggerSuggestions = false,
   ...rest
 }) => {
   const { isLoggedIn } = useSystemContext()
@@ -164,40 +161,17 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
   }
 
   return (
-    <Popover
-      placement="bottom"
-      popover={
-        artist ? (
-          <FollowArtistPopoverQueryRenderer artistID={artist.internalID} />
-        ) : null
-      }
-    >
-      {({ anchorRef, onVisible }) => {
-        const openSuggestions = () => {
-          if (isLoggedIn && triggerSuggestions && !artist.isFollowed) {
-            onVisible()
-          }
-        }
-
-        return (
-          <FollowButton
-            data-test="followArtistButton"
-            ref={anchorRef}
-            isFollowed={!!artist.isFollowed}
-            handleFollow={event => {
-              handleClick(event)
-              openSuggestions()
-            }}
-            aria-label={
-              artist.isFollowed
-                ? `Unfollow ${artist.name}`
-                : `Follow ${artist.name}`
-            }
-            {...rest}
-          />
-        )
+    <FollowButton
+      data-test="followArtistButton"
+      isFollowed={!!artist.isFollowed}
+      handleFollow={event => {
+        handleClick(event)
       }}
-    </Popover>
+      aria-label={
+        artist.isFollowed ? `Unfollow ${artist.name}` : `Follow ${artist.name}`
+      }
+      {...rest}
+    />
   )
 }
 
