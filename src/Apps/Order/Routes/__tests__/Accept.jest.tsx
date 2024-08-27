@@ -25,6 +25,8 @@ import {
 } from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { RouterLink } from "System/Components/RouterLink"
+// eslint-disable-next-line no-restricted-imports
+import { Provider } from "unstated"
 
 jest.unmock("react-relay")
 
@@ -90,15 +92,17 @@ describe("Accept seller offer", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => (
       <MockBoot>
-        <AcceptFragmentContainer
-          router={{ push: pushMock } as any}
-          route={{ onTransition: jest.fn } as any}
-          order={props.order}
-          dialog={{} as any}
-          isCommittingMutation={isCommittingMutation}
-          commitMutation={commitMutation}
-        />
-        <ConnectedModalDialog />
+        <Provider>
+          <AcceptFragmentContainer
+            router={{ push: pushMock } as any}
+            route={{ onTransition: jest.fn } as any}
+            order={props.order}
+            dialog={{} as any}
+            isCommittingMutation={isCommittingMutation}
+            commitMutation={commitMutation}
+          />
+          <ConnectedModalDialog />
+        </Provider>
       </MockBoot>
     ),
     query: graphql`
