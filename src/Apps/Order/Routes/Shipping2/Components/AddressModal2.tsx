@@ -418,7 +418,11 @@ const AddressModalForm: FC<{
 
             <Spacer x={1} />
 
-            <Button size="small" onClick={handleDeleteAddress}>
+            <Button
+              size="small"
+              loading={shippingContext.state.isPerformingOperation || undefined}
+              onClick={handleDeleteAddress}
+            >
               Delete
             </Button>
           </Flex>
