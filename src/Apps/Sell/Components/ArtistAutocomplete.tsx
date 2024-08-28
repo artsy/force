@@ -7,6 +7,7 @@ import {
   Image,
   Text,
 } from "@artsy/palette"
+import { FormValues } from "Apps/Sell/Routes/ArtistRoute"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { extractNodes } from "Utils/extractNodes"
 import {
@@ -17,7 +18,6 @@ import { useFormikContext } from "formik"
 import { debounce } from "lodash"
 import { useEffect, useMemo, useState } from "react"
 import { Environment, fetchQuery, graphql } from "react-relay"
-import { ArtworkDetailsFormModel } from "./ArtworkDetailsForm"
 
 const DEBOUNCE_DELAY = 300
 
@@ -69,7 +69,7 @@ export const ArtistAutoComplete: React.FC<{
     errors,
     touched,
     setFieldTouched,
-  } = useFormikContext<ArtworkDetailsFormModel>()
+  } = useFormikContext<FormValues>()
 
   const [artistNotFoundMessage, setArtistNotFoundMessage] = useState<string>("")
 
