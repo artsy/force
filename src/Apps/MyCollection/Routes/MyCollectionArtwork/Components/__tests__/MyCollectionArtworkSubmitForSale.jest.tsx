@@ -1,6 +1,6 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import { MyCollectionArtworkSubmitForSale } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSubmitForSale"
+import { createOrUpdateConsignSubmission } from "Apps/Sell/Utils/createOrUpdateConsignSubmission"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
@@ -11,17 +11,10 @@ const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 
 jest.unmock("react-relay")
-jest.mock(
-  "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission",
-  () => ({
-    ...jest.requireActual(
-      "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-    ),
-    createOrUpdateConsignSubmission: jest
-      .fn()
-      .mockResolvedValue("submission-id"),
-  })
-)
+jest.mock("Apps/Sell/Utils/createOrUpdateConsignSubmission", () => ({
+  ...jest.requireActual("Apps/Sell/Utils/createOrUpdateConsignSubmission"),
+  createOrUpdateConsignSubmission: jest.fn().mockResolvedValue("submission-id"),
+}))
 jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
 }))
