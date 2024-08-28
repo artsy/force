@@ -1,7 +1,7 @@
-import { Flex, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ConsignmentSubmissionStatus_artwork$data } from "__generated__/ConsignmentSubmissionStatus_artwork.graphql"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
+import { Flex, Text } from "@artsy/palette"
+import { ConsignmentSubmissionStatus_artwork$data } from "__generated__/ConsignmentSubmissionStatus_artwork.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ConsignmentSubmissionStatusProps {
   artwork: ConsignmentSubmissionStatus_artwork$data
@@ -24,7 +24,7 @@ const ConsignmentSubmissionStatus: React.FC<ConsignmentSubmissionStatusProps> = 
         {artwork?.isListed ? "Listed" : submission?.stateLabel}
       </Text>
 
-      {submission?.actionLabel && (
+      {!artwork?.isListed && submission?.actionLabel && (
         <Flex flexDirection="row" alignItems="center">
           <AlertFillIcon width={16} height={16} fill="orange100" />
 
