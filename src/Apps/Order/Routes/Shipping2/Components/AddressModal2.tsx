@@ -90,7 +90,11 @@ export const AddressModal: FC<AddressModalProps> = ({
         isDefault: incomingAddress?.isDefault ?? false,
 
         ...addressWithFallbackValues(
-          addressModalAction.type === "edit" ? addressModalAction.address : {}
+          addressModalAction.type === "edit"
+            ? addressModalAction.address
+            : addressWithFallbackValues({
+                country: shippingContext.orderData.shipsFrom,
+              })
         ),
       },
       setAsDefault: false,
