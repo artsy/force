@@ -49,6 +49,7 @@ describe("MyCollection Artwork SWA Submission Status", () => {
             buttonLabel: "button-label",
           },
           listedArtworksConnection: null,
+          isListed: false,
         }),
       })
 
@@ -62,6 +63,7 @@ describe("MyCollection Artwork SWA Submission Status", () => {
     it("renders the submission status section", () => {
       renderWithRelay({
         Artwork: () => ({
+          isListed: true,
           listedArtworksConnection: {
             edges: [
               {
