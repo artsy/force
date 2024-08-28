@@ -10,14 +10,7 @@ export interface AboutPartnerProps {
 }
 
 export const AboutPartner: React.FC<AboutPartnerProps> = ({
-  partner: {
-    profile,
-    vatNumber,
-    website,
-    displayFullPartnerPage,
-    slug,
-    internalID,
-  },
+  partner: { profile, website, displayFullPartnerPage, slug, internalID },
 }) => {
   const tracking = useTracking()
   const tappedViewTrackingData: ClickedPartnerLink = {
@@ -30,14 +23,13 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
 
   const fullBio = profile?.fullBio
   const limitedBio = profile?.bio
-  const isEmpty = !fullBio && !limitedBio && !vatNumber && !website
+  const isEmpty = !fullBio && !limitedBio && !website
 
   if (isEmpty) {
     return null
   }
 
   const canRenderWebsite = website && displayFullPartnerPage
-  const canRenderVatNumber = vatNumber && displayFullPartnerPage
   const bioDisplayable = fullBio || limitedBio
 
   return (
@@ -75,10 +67,6 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
             {website}
           </Text>
         )}
-
-        {canRenderVatNumber && (
-          <Text variant="sm">{`VAT ID#: ${vatNumber}`}</Text>
-        )}
       </Column>
     </GridColumns>
   )
@@ -94,7 +82,6 @@ export const AboutPartnerFragmentContainer = createFragmentContainer(
           bio
         }
         website
-        vatNumber
         displayFullPartnerPage
         slug
         internalID
