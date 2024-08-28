@@ -8,17 +8,10 @@ const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 
 jest.unmock("react-relay")
-jest.mock(
-  "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission",
-  () => ({
-    ...jest.requireActual(
-      "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-    ),
-    createOrUpdateConsignSubmission: jest
-      .fn()
-      .mockResolvedValue("submission-id"),
-  })
-)
+jest.mock("Apps/Sell/Utils/createOrUpdateConsignSubmission", () => ({
+  ...jest.requireActual("Apps/Sell/Utils/createOrUpdateConsignSubmission"),
+  createOrUpdateConsignSubmission: jest.fn().mockResolvedValue("submission-id"),
+}))
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))

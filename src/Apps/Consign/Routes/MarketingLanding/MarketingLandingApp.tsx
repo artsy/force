@@ -12,7 +12,6 @@ import { SWAStickyFooter } from "Apps/Consign/Routes/MarketingLanding/Components
 import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
 import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/WaysWeSell"
 import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
-import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { Footer } from "Components/Footer/Footer"
 import { useRouter } from "System/Hooks/useRouter"
 import { Media } from "Utils/Responsive"
@@ -96,4 +95,10 @@ export const MarketingLandingApp = () => {
       </Media>
     </>
   )
+}
+
+export interface UtmParams {
+  utmTerm?: string
+  utmMedium?: string
+  utmSource?: string
 }

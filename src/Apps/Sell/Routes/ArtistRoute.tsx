@@ -2,7 +2,7 @@ import { Box, Text, useToasts } from "@artsy/palette"
 import {
   ArtistAutoComplete,
   AutocompleteArtist,
-} from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
+} from "Apps/Sell/Components/ArtistAutocomplete"
 import { ArtistNotEligiblText } from "Apps/Sell/Components/ArtistNotEligibleText"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
@@ -35,13 +35,13 @@ const FRAGMENT = graphql`
   }
 `
 
-const Schema = Yup.object().shape({
+export const Schema = Yup.object().shape({
   artistName: Yup.string().required("Artist is required"),
   artistId: Yup.string().required("Artist is required"),
   isTargetSupply: Yup.boolean().isTrue(),
 })
 
-interface FormValues {
+export interface FormValues {
   artistId: string
   artistName: string
   isTargetSupply: boolean

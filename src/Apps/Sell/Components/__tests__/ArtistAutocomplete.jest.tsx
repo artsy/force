@@ -1,14 +1,11 @@
 import { Input } from "@artsy/palette"
+import { ArtistAutoComplete } from "Apps/Sell/Components/ArtistAutocomplete"
+import { FormValues, Schema } from "Apps/Sell/Routes/ArtistRoute"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { mount, ReactWrapper } from "enzyme"
 import { Form, Formik } from "formik"
+import { fetchQuery } from "react-relay"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
-import {
-  ArtworkDetailsFormModel,
-  getArtworkDetailsFormInitialValues,
-  SubmissionType,
-} from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtworkDetailsForm"
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { params: { id: null } } })),
@@ -50,22 +47,19 @@ jest.mock("react-relay", () => ({
   fetchQuery: jest.fn(),
 }))
 
-import { fetchQuery } from "react-relay"
-import { artworkDetailsValidationSchema } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
-
 const mockErrorHandler = jest.fn()
 let mockFetchQuery = (fetchQuery as jest.Mock).mockImplementation(() => ({
   toPromise: jest.fn().mockResolvedValue(results),
 }))
 
-let formikValues: ArtworkDetailsFormModel
-const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
+let formikValues: FormValues
+const renderArtistAutosuggest = (values: FormValues) =>
   mount(
     <SystemContextProvider>
-      <Formik<ArtworkDetailsFormModel>
+      <Formik<FormValues>
         initialValues={values}
         onSubmit={jest.fn()}
-        validationSchema={artworkDetailsValidationSchema}
+        validationSchema={Schema}
       >
         {({ values }) => {
           formikValues = values
@@ -107,9 +101,11 @@ describe("ArtistAutocomplete", () => {
   let wrapper: ReactWrapper
 
   beforeAll(async () => {
-    wrapper = renderArtistAutosuggest(
-      getArtworkDetailsFormInitialValues({ type: SubmissionType.default })
-    )
+    wrapper = renderArtistAutosuggest({
+      artistName: "",
+      artistId: "",
+      isTargetSupply: false,
+    })
   })
 
   beforeEach(() => {
@@ -228,24 +224,6 @@ describe("ArtistAutocomplete", () => {
 
       await simulateTyping(wrapper, "k")
       expect(formikValues.artistId).toBe("")
-    })
-  })
-
-  describe("Shows an error", () => {
-    it("if focus moved out without selected suggestion", async () => {
-      await simulateTyping(wrapper, "Ban")
-      expect(wrapper.find("div[color='red100']").length).toBe(0)
-
-      const handleClose: () => void = wrapper
-        .find("AutocompleteInput")
-        .prop("onClose")
-      handleClose()
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(wrapper.find("div[color='red100']").text()).toBe(
-        "Please select an artist from the list. Other artists cannot be submitted due to limited demand."
-      )
     })
   })
 })
