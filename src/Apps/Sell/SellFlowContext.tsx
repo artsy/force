@@ -142,10 +142,18 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     ? INITIAL_STEP
     : (match.location.pathname.split("/").pop() as SellFlowStep)
 
+  // Setting the submission state as the URL query parameter to allow testing the complete Sell flow with different submission states with integrity.
+  const {
+    testSubmissionState,
+    testSubmissionQueryParams,
+  } = useTestSubmissionState()
+
+  const submissionState = testSubmissionState ?? submission?.state
+
   const isExtended =
     !!enablePostApprovalSubmissionFlow &&
-    !!submission?.state &&
-    !BASIC_FLOW_STATES.includes(submission?.state)
+    !!submissionState &&
+    !BASIC_FLOW_STATES.includes(submissionState)
 
   const steps = useMemo(
     () => [
@@ -176,11 +184,11 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
   const finishFlow = async () => {
     trackConsignmentSubmitted(submission?.internalID, state.step)
 
-    if (submission?.state === "DRAFT") {
+    if (submissionState === "DRAFT") {
       await updateSubmission({
         state: "SUBMITTED",
       })
-    } else if (submission?.state === "APPROVED") {
+    } else if (submissionState === "APPROVED") {
       await updateSubmission({
         state: "RESUBMITTED",
       })
@@ -206,7 +214,10 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
     )
       return
 
-    router.push(`/sell/submissions/${submission?.externalId}/${newStep}`)
+    router.push(
+      `/sell/submissions/${submission?.externalId}/${newStep}` +
+        testSubmissionQueryParams
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, isNewSubmission, submission, steps])
 
@@ -319,4 +330,17 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
 
 export const useSellFlowContext = () => {
   return useContext(SellFlowContext)
+}
+
+export const useTestSubmissionState = () => {
+  const { match } = useRouter()
+  const testSubmissionState = match?.location?.query?.testSubmissionState as
+    | ConsignmentSubmissionStateAggregation
+    | undefined
+
+  const testSubmissionQueryParams = testSubmissionState
+    ? `?testSubmissionState=${testSubmissionState}`
+    : ""
+
+  return { testSubmissionState, testSubmissionQueryParams }
 }

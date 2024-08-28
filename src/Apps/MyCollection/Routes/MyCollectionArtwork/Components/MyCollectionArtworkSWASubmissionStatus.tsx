@@ -20,6 +20,7 @@ import {
   INITIAL_POST_APPROVAL_STEP,
   INITIAL_STEP,
   PRE_SUBMITTED_STEPS,
+  useTestSubmissionState,
 } from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import React, { useState } from "react"
@@ -35,6 +36,7 @@ interface Props {
 
 export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => {
   const { trackEvent } = useTracking()
+  const { testSubmissionState } = useTestSubmissionState()
   const [
     isSubmissionStatusModalOpen,
     setIsSubmissionStatusModalOpen,
@@ -48,11 +50,14 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
 
   if (!submission) return null
 
+  // Setting the submission state as the URL query parameter to allow testing the complete Sell flow with different submission states with integrity.
+  const submissionState = testSubmissionState ?? submission.state
+
   const isListed = extractNodes(artwork.listedArtworksConnection).length > 0
   const stateLabel = isListed ? "Listed" : submission.stateLabel
   const buttonLabel = isListed ? "View Listing" : submission.buttonLabel
 
-  const buttonVariant = PRE_SUBMITTED_STEPS.includes(submission.state)
+  const buttonVariant = PRE_SUBMITTED_STEPS.includes(submissionState)
     ? "primaryBlack"
     : "secondaryBlack"
   const stateHelpMessage = getStateHelpMessage(submission, isListed)
@@ -64,7 +69,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
       context_page_owner_id: artwork.internalID,
       destination_page_owner_type: OwnerType.consignmentFlow,
       submission_id: submission.internalID,
-      submission_state: submission.state,
+      submission_state: submissionState,
       subject: buttonLabel,
       platform: "web",
     })
@@ -217,8 +222,16 @@ const useGetButtonURL = (
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$data
 ): string | null => {
   const { submissionID, step } = usePreviousSubmission()
+  const {
+    testSubmissionQueryParams,
+    testSubmissionState,
+  } = useTestSubmissionState()
 
   const submission = artwork.consignmentSubmission
+
+  const submissionState = testSubmissionState ?? submission?.state
+
+  if (!submissionState) return null
 
   const listedArtwork = extractNodes(artwork.listedArtworksConnection)[0]
 
@@ -240,15 +253,19 @@ const useGetButtonURL = (
     INITIAL_POST_APPROVAL_STEP
 
   if (
-    ["DRAFT", "SUBMITTED", "RESUBMITTED", "PUBLISHED"].includes(
-      submission.state
-    )
+    ["DRAFT", "SUBMITTED", "RESUBMITTED", "PUBLISHED"].includes(submissionState)
   ) {
-    return `/sell/submissions/${submission.internalID}/${currentStep}`
+    return (
+      `/sell/submissions/${submission.internalID}/${currentStep}` +
+      testSubmissionQueryParams
+    )
   }
 
-  if (["APPROVED"].includes(submission.state)) {
-    return `/sell/submissions/${submission.internalID}/${currentPostApprovalStep}`
+  if (["APPROVED"].includes(submissionState)) {
+    return (
+      `/sell/submissions/${submission.internalID}/${currentPostApprovalStep}` +
+      testSubmissionQueryParams
+    )
   }
 
   return null
