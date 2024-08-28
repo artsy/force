@@ -33,7 +33,6 @@ describe("AboutPartner", () => {
     const { wrapper } = getWrapper({
       Partner: () => ({
         website: "http://www.theunitldn.com",
-        vatNumber: "GB204716728",
         profile: {
           fullBio: "FULL BIO",
         },
@@ -45,7 +44,6 @@ describe("AboutPartner", () => {
 
     expect(html).toContain("FULL BIO")
     expect(html).toContain("http://www.theunitldn.com")
-    expect(html).toContain(`VAT ID#: GB204716728`)
     expect(html).toContain("http://www.theunitldn.com")
   })
 
@@ -76,7 +74,6 @@ describe("AboutPartner", () => {
     const { wrapper } = getWrapper({
       Partner: () => ({
         website: null,
-        vatNumber: null,
         profile: null,
       }),
     })
@@ -90,7 +87,6 @@ describe("AboutPartner", () => {
     const { wrapper } = getWrapper({
       Partner: () => ({
         website: null,
-        vatNumber: null,
         profile: null,
       }),
     })
