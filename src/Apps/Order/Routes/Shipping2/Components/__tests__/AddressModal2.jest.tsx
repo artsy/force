@@ -328,7 +328,7 @@ describe.skip("AddressModal", () => {
 
       await flushPromiseQueue()
       expect(setFieldError).toHaveBeenCalledWith(
-        "phoneNumber",
+        "attributes.phoneNumber",
         "Please enter a valid phone number"
       )
     })

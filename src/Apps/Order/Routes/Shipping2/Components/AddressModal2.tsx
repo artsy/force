@@ -456,10 +456,7 @@ const handleGravityErrors = (
     SERVER_ERROR_MAP[errors[0].message]
 
   if (userMessage) {
-    helpers.setFieldError(
-      `attributes.${userMessage.field}`,
-      userMessage.message
-    )
+    helpers.setFieldError(userMessage.field, userMessage.message)
   } else {
     helpers.setStatus(GENERIC_FAIL_MESSAGE)
   }
