@@ -53,7 +53,7 @@ export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => 
   // Setting the submission state as the URL query parameter to allow testing the complete Sell flow with different submission states with integrity.
   const submissionState = testSubmissionState ?? submission.state
 
-  const isListed = extractNodes(artwork.listedArtworksConnection).length > 0
+  const isListed = artwork?.isListed
   const stateLabel = isListed ? "Listed" : submission.stateLabel
   const buttonLabel = isListed ? "View Listing" : submission.buttonLabel
 
@@ -206,6 +206,7 @@ const submissionStatusFragment = graphql`
         }
       }
     }
+    isListed
     consignmentSubmission {
       actionLabel
       buttonLabel

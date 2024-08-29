@@ -43,14 +43,11 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   const addressVerificationUSEnabled = !!useFeatureFlag(
     "address_verification_us"
   )
-  const addressVerificationIntlEnabled = !!useFeatureFlag(
-    "address_verification_intl"
-  )
 
   // Trigger address verification by setting this to true
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
 
-  const hasSavedAddresses = !!meData.addressConnection?.totalCount
+  const hasSavedAddresses = shippingContext.meData.addressList.length !== 0
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork!
 
@@ -69,13 +66,26 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
   /*
    * If the view ever has no saved addresses, force new address form mode for
-   * the rest of its life
+   * the rest of its life and reset values
    */
   useEffect(() => {
+    const formLoaded =
+      typeof shippingContext.state.fulfillmentDetailsFormikContext.setValues ===
+      "function"
     if (
-      shippingContext.state.shippingFormMode !== "new_address" &&
+      formLoaded &&
+      shippingContext.state.shippingFormMode === "saved_addresses" &&
       !hasSavedAddresses
     ) {
+      const emptyFormValues = getInitialShippingValues(
+        shippingContext.meData.addressList,
+        shippingContext.orderData.shipsFrom,
+        shippingContext.orderData.availableShippingCountries
+      )
+
+      shippingContext.state.fulfillmentDetailsFormikContext.setValues(
+        emptyFormValues
+      )
       shippingContext.actions.setShippingFormMode("new_address")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,9 +135,8 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
    */
   const shouldVerifyAddressOnSubmit = (values: FulfillmentValues) => {
     const enabledForAddress =
-      (values as ShipValues).attributes.country === "US"
-        ? addressVerificationUSEnabled
-        : addressVerificationIntlEnabled
+      (values as ShipValues).attributes.country === "US" &&
+      addressVerificationUSEnabled
 
     return (
       values.fulfillmentType === FulfillmentType.SHIP &&

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95f1b3de199128e9b1264f890edd8db6>>
+ * @generated SignedSource<<53097f48e71d4f490beacbb560d234c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,7 @@ export type MarketingFeaturedArtworksRail_viewer$data = {
         } | null | undefined;
       } | null | undefined> | null | undefined;
     } | null | undefined;
-  } | null | undefined> | null | undefined;
+  }>;
   readonly " $fragmentType": "MarketingFeaturedArtworksRail_viewer";
 };
 export type MarketingFeaturedArtworksRail_viewer$key = {

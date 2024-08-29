@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc7339a7e1c2fbf321cb74476da78dfb>>
+ * @generated SignedSource<<84c5ac1e285f193a3d7d3cdeda506a87>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,7 @@ export type MyCollectionArtworkSWASubmissionStatus_Test_Query$rawResponse = {
     } | null | undefined;
     readonly id: string;
     readonly internalID: string;
+    readonly isListed: boolean;
     readonly listedArtworksConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -154,6 +155,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "isListed",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "ArtworkConsignmentSubmission",
             "kind": "LinkedField",
             "name": "consignmentSubmission",
@@ -212,12 +220,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6cc74d6f71fd40197d17929d7d8ea0f1",
+    "cacheID": "abadfc61c81111f69b098b57de91304f",
     "id": null,
     "metadata": {},
     "name": "MyCollectionArtworkSWASubmissionStatus_Test_Query",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSWASubmissionStatus_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASubmissionStatus_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASubmissionStatus_artwork on Artwork {\n  internalID\n  listedArtworksConnection(first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n  consignmentSubmission {\n    actionLabel\n    buttonLabel\n    externalID\n    internalID\n    state\n    stateLabel\n    stateHelpMessage\n  }\n}\n"
+    "text": "query MyCollectionArtworkSWASubmissionStatus_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASubmissionStatus_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASubmissionStatus_artwork on Artwork {\n  internalID\n  listedArtworksConnection(first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n  isListed\n  consignmentSubmission {\n    actionLabel\n    buttonLabel\n    externalID\n    internalID\n    state\n    stateLabel\n    stateHelpMessage\n  }\n}\n"
   }
 };
 })();

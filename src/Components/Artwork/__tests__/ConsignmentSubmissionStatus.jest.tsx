@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
 import { ConsignmentSubmissionStatusTestQuery } from "__generated__/ConsignmentSubmissionStatusTestQuery.graphql"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
@@ -54,5 +54,6 @@ describe("ConsignmentSubmissionStatus", () => {
     })
 
     expect(screen.getByText("Listed")).toBeInTheDocument()
+    expect(screen.queryByText("Complete Listing")).not.toBeInTheDocument()
   })
 })
