@@ -182,7 +182,7 @@ export const sellRoutes: RouteProps[] = [
         },
       },
 
-      //  Pre-Approval Steps
+      // Sell Flow: Pre-Approval Steps
 
       {
         path: "intro",
@@ -406,7 +406,7 @@ export const sellRoutes: RouteProps[] = [
             },
           },
 
-          // Additional Post-Approval Steps
+          // Sell Flow: Post-Approval Steps
 
           {
             path: "shipping-location",
