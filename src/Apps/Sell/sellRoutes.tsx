@@ -144,10 +144,46 @@ const FrameRoute = loadable(
   }
 )
 
+const MarketingLandingApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/MarketingLanding/MarketingLandingApp"
+    ),
+  {
+    resolveComponent: component => component.MarketingLandingApp,
+  }
+)
+
+const FAQApp = loadable(
+  () => import(/* webpackChunkName: "consignBundle" */ "./Routes/FAQ/FAQApp"),
+  {
+    resolveComponent: component => component.FAQApp,
+  }
+)
+
 export const sellRoutes: RouteProps[] = [
   {
     path: "/sell",
     children: [
+      {
+        path: "/",
+        layout: "FullBleed",
+        getComponent: () => MarketingLandingApp,
+        onClientSideRender: () => {
+          MarketingLandingApp.preload()
+        },
+      },
+      {
+        path: "faq",
+        layout: "NavOnly",
+        getComponent: () => FAQApp,
+        onClientSideRender: () => {
+          FAQApp.preload()
+        },
+      },
+
+      //  Pre-Approval Steps
+
       {
         path: "intro",
         layout: "ContainerOnly",
@@ -370,7 +406,7 @@ export const sellRoutes: RouteProps[] = [
             },
           },
 
-          // Additional Routes
+          // Additional Post-Approval Steps
 
           {
             path: "shipping-location",

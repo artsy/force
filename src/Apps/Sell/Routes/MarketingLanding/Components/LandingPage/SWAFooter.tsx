@@ -1,5 +1,5 @@
 import { Box, Button, Text } from "@artsy/palette"
-import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
+import { useMarketingLandingTracking } from "Apps/Sell/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { RouterLink } from "System/Components/RouterLink"
 
 export const SWAFooter: React.FC = () => {

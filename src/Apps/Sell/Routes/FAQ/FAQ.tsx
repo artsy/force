@@ -1,7 +1,7 @@
-import { Expandable, Join, Spacer, Text } from "@artsy/palette"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useTracking } from "react-tracking"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Expandable, Join, Spacer, Text } from "@artsy/palette"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 
 export interface FAQProps {
@@ -131,8 +131,12 @@ export const FAQ: React.FC<FAQProps> = ({ shouldTrackClickEvent }) => {
         Frequently Asked Questions
       </Text>
       <Join separator={<Spacer y={4} />}>
-        {FAQList.map(({ label, value }) => (
-          <Expandable onFocus={() => trackClickedFAQ(label)} label={label}>
+        {FAQList.map(({ label, value }, index) => (
+          <Expandable
+            onFocus={() => trackClickedFAQ(label)}
+            label={label}
+            key={index}
+          >
             {value}
           </Expandable>
         ))}

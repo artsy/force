@@ -1,5 +1,5 @@
-import { Button, Text, Image, Box } from "@artsy/palette"
-import { TextAndImageLayout } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/TextAndImageLayout"
+import { Box, Button, Image, Text } from "@artsy/palette"
+import { TextAndImageLayout } from "Apps/Sell/Routes/MarketingLanding/Components/LandingPage/TextAndImageLayout"
 import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 

@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { SWAFooter } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
+import { SWAFooter } from "Apps/Sell/Routes/MarketingLanding/Components/LandingPage/SWAFooter"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")

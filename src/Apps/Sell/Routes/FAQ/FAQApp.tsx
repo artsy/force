@@ -1,5 +1,5 @@
 import { Box } from "@artsy/palette"
-import { FAQ } from "Apps/Consign/Routes/SubmissionFlow/FAQ/FAQ"
+import { FAQ } from "Apps/Sell/Routes/FAQ/FAQ"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const FAQApp = () => {
