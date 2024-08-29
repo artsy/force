@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7934ba4c6fbd23179e74d4c09ee039d3>>
+ * @generated SignedSource<<3d700f42d8ecdf300a8fb1c1d8ca3c59>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -75,7 +75,7 @@ export type collectRoutes_ArtworkFilterQuery$data = {
   } | null | undefined;
   readonly marketingCollections: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"Collect_marketingCollections">;
-  }> | null | undefined;
+  }>;
   readonly viewer: {
     readonly artworksConnection: {
       readonly aggregations: ReadonlyArray<{
