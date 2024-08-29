@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
+import { HeaderSWA } from "Apps/Sell/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useTracking } from "react-tracking"
 

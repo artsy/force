@@ -1,7 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Button, Text, useTheme } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
-import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
+import { useMarketingLandingTracking } from "Apps/Sell/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { RouterLink } from "System/Components/RouterLink"
 
 export const SWAStickyFooter = () => {

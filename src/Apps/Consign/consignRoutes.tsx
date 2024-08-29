@@ -33,26 +33,6 @@ const ConsignmentInquiryContainer = loadable(
   }
 )
 
-const MarketingLandingApp = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/MarketingLanding/MarketingLandingApp"
-    ),
-  {
-    resolveComponent: component => component.MarketingLandingApp,
-  }
-)
-
-const FAQApp = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/FAQ/FAQApp"
-    ),
-  {
-    resolveComponent: component => component.FAQApp,
-  }
-)
-
 const renderConsignmentInquiry = ({ Component, props }: RouteRenderArgs) => {
   if (!(Component && props)) {
     return undefined
@@ -61,27 +41,6 @@ const renderConsignmentInquiry = ({ Component, props }: RouteRenderArgs) => {
 }
 
 export const consignRoutes: RouteProps[] = [
-  {
-    path: "/sell",
-    children: [
-      {
-        path: "/",
-        layout: "FullBleed",
-        getComponent: () => MarketingLandingApp,
-        onClientSideRender: () => {
-          MarketingLandingApp.preload()
-        },
-      },
-      {
-        path: "faq",
-        layout: "NavOnly",
-        getComponent: () => FAQApp,
-        onClientSideRender: () => {
-          FAQApp.preload()
-        },
-      },
-    ],
-  },
   {
     path: "/sell/inquiry",
     getComponent: () => ConsignmentInquiryContainer,

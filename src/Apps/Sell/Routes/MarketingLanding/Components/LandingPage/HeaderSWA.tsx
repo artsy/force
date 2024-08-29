@@ -7,8 +7,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { PreviousSubmissionQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviousSubmission"
-import { useMarketingLandingTracking } from "Apps/Consign/Routes/MarketingLanding/Utils/marketingLandingTracking"
+import { PreviousSubmissionQueryRenderer } from "Apps/Sell/Routes/MarketingLanding/Components/LandingPage/PreviousSubmission"
+import { useMarketingLandingTracking } from "Apps/Sell/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"

@@ -52,8 +52,13 @@ const reasons = [
 export const Highlights: React.FC = () => {
   return (
     <GridColumns gridColumnGap={[0, 2, 4]} alignItems="fex-start">
-      {reasons.map(i => (
-        <RowItem icon={i.icon} title={i.title} text={i.text} />
+      {reasons.map((reason, index) => (
+        <RowItem
+          icon={reason.icon}
+          title={reason.title}
+          text={reason.text}
+          key={index}
+        />
       ))}
     </GridColumns>
   )

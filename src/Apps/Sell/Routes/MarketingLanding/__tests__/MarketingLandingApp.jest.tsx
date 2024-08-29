@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react"
-import { MarketingLandingApp } from "Apps/Consign/Routes/MarketingLanding/MarketingLandingApp"
+import { MarketingLandingApp } from "Apps/Sell/Routes/MarketingLanding/MarketingLandingApp"
 import { HeadProvider } from "react-head"
 import { useTracking } from "react-tracking"
 

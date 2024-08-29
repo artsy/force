@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
+import { FAQSWA } from "Apps/Sell/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
 
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useSystemContext")

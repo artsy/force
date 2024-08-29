@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
+import { SpeakToTheTeam } from "Apps/Sell/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
 
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useSystemContext")

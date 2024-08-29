@@ -1,4 +1,4 @@
-import { Text, Box, Flex, Avatar } from "@artsy/palette"
+import { Avatar, Box, Flex, Text } from "@artsy/palette"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
 import React from "react"
 
@@ -37,8 +37,8 @@ export const Reviews: React.FC = () => {
   return (
     <Box py={[0, 6, 12]}>
       <HeroCarousel progressbarVariant="dot" fullBleed={false}>
-        {REVIEWS.map(i => {
-          return <ListItem review={i} />
+        {REVIEWS.map((review, index) => {
+          return <ListItem review={review} key={index} />
         })}
       </HeroCarousel>
     </Box>

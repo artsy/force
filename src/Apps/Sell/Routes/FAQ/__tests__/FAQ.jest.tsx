@@ -1,7 +1,7 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { FAQ } from "Apps/Consign/Routes/SubmissionFlow/FAQ/FAQ"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { fireEvent, render, screen } from "@testing-library/react"
+import { FAQ } from "Apps/Sell/Routes/FAQ/FAQ"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
