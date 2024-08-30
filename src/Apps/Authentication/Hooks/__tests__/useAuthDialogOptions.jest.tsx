@@ -25,7 +25,7 @@ describe("useAuthDialogOptions", () => {
     const dispatch = jest.fn()
 
     mockUseAuthDialogContext.mockImplementation(() => ({
-      state: { mode: "SignUp" },
+      state: { mode: "Welcome" },
       dispatch,
     }))
 
@@ -34,38 +34,9 @@ describe("useAuthDialogOptions", () => {
     expect(dispatch).toHaveBeenCalledWith({
       payload: {
         analytics: { intent: "signup" },
-        mode: "SignUp",
+        mode: "Welcome",
         options: {
-          title: "Sign up to collect art by the world’s leading artists",
-        },
-      },
-      type: "SET",
-    })
-
-    expect(result.current).toEqual({
-      description:
-        "Build your personalized profile. Get art market insights. Buy and sell with confidence.",
-      pageTitle: "Sign up for Artsy",
-      title: "Sign up to collect art by the world’s leading artists",
-    })
-  })
-
-  it("sets and returns defaults for login", () => {
-    const dispatch = jest.fn()
-
-    mockUseAuthDialogContext.mockImplementation(() => ({
-      state: { mode: "Login" },
-      dispatch,
-    }))
-
-    const { result } = renderHook(useAuthDialogOptions)
-
-    expect(dispatch).toHaveBeenCalledWith({
-      payload: {
-        analytics: { intent: "login" },
-        mode: "Login",
-        options: {
-          title: "Log in to collect art by the world’s leading artists",
+          title: "Sign up or log in",
         },
       },
       type: "SET",
@@ -73,8 +44,36 @@ describe("useAuthDialogOptions", () => {
 
     expect(result.current).toEqual({
       description: null,
-      pageTitle: "Log in to Artsy",
-      title: "Log in to collect art by the world’s leading artists",
+      pageTitle: "Sign up or log in",
+      title: "Sign up or log in",
+    })
+  })
+
+  it("sets and returns defaults for welcome", () => {
+    const dispatch = jest.fn()
+
+    mockUseAuthDialogContext.mockImplementation(() => ({
+      state: { mode: "Welcome" },
+      dispatch,
+    }))
+
+    const { result } = renderHook(useAuthDialogOptions)
+
+    expect(dispatch).toHaveBeenCalledWith({
+      payload: {
+        analytics: { intent: "signup" },
+        mode: "Welcome",
+        options: {
+          title: "Sign up or log in",
+        },
+      },
+      type: "SET",
+    })
+
+    expect(result.current).toEqual({
+      description: null,
+      pageTitle: "Sign up or log in",
+      title: "Sign up or log in",
     })
   })
 
@@ -82,7 +81,7 @@ describe("useAuthDialogOptions", () => {
     const dispatch = jest.fn()
 
     mockUseAuthDialogContext.mockImplementation(() => ({
-      state: { mode: "Login" },
+      state: { mode: "Welcome" },
       dispatch,
     }))
 
@@ -108,7 +107,7 @@ describe("useAuthDialogOptions", () => {
           contextModule: "inquiry",
           intent: "inquire",
         },
-        mode: "Login",
+        mode: "Welcome",
         options: {
           title: "Example Title",
           redirectTo: "/example-redirect",
@@ -119,7 +118,7 @@ describe("useAuthDialogOptions", () => {
 
     expect(result.current).toEqual({
       description: "Example Description",
-      pageTitle: "Log in to Artsy",
+      pageTitle: "Sign up or log in",
       title: "Example Title",
     })
   })
@@ -128,7 +127,7 @@ describe("useAuthDialogOptions", () => {
     const dispatch = jest.fn()
 
     mockUseAuthDialogContext.mockImplementation(() => ({
-      state: { mode: "Login" },
+      state: { mode: "Welcome" },
       dispatch,
     }))
 
@@ -151,11 +150,11 @@ describe("useAuthDialogOptions", () => {
     expect(dispatch).toHaveBeenCalledWith({
       payload: {
         analytics: {
-          intent: "login",
+          intent: "signup",
         },
-        mode: "Login",
+        mode: "Welcome",
         options: {
-          title: "Log in to collect art by the world’s leading artists",
+          title: "Sign up or log in",
           afterAuthAction: {
             action: "save",
             kind: "artworks",
@@ -171,7 +170,7 @@ describe("useAuthDialogOptions", () => {
     const dispatch = jest.fn()
 
     mockUseAuthDialogContext.mockImplementation(() => ({
-      state: { mode: "Login" },
+      state: { mode: "Welcome" },
       dispatch,
     }))
 
@@ -190,11 +189,11 @@ describe("useAuthDialogOptions", () => {
     expect(dispatch).toHaveBeenCalledWith({
       payload: {
         analytics: {
-          intent: "login",
+          intent: "signup",
         },
-        mode: "Login",
+        mode: "Welcome",
         options: {
-          title: "Log in to collect art by the world’s leading artists",
+          title: "Sign up or log in",
           afterAuthAction: {
             action: "associateSubmission",
             kind: "submission",

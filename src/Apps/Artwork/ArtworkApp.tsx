@@ -102,12 +102,8 @@ export const ArtworkApp: React.FC<Props> = props => {
     if (expectingPartnerOffer) {
       if (!isLoggedIn) {
         showAuthDialog({
-          mode: "Login",
           options: {
-            title: mode =>
-              mode === "Login"
-                ? "Log in to view gallery offer"
-                : "Sign up to buy art with ease",
+            title: "Log in or sign up to view gallery offer",
           },
           analytics: {
             // TODO: Placeholder - Determine correct tracking - EMI-1783

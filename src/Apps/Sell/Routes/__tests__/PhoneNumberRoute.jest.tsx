@@ -168,9 +168,8 @@ describe("PhoneNumberRoute", () => {
 
             await waitFor(() => {
               expect(showAuthDialog).toBeCalledWith({
-                mode: "SignUp",
                 options: {
-                  title: expect.any(Function),
+                  title: expect.any(String),
                   afterAuthAction: {
                     action: "submitSubmission",
                     kind: "submission",

@@ -103,7 +103,6 @@ export class ArtworkSidebarBidAction extends React.Component<
 
     if (!this.props.me) {
       this.props.showAuthDialog({
-        mode: "Login",
         options: {
           redirectTo,
           title: mode => {
@@ -174,19 +173,23 @@ export class ArtworkSidebarBidAction extends React.Component<
       let PreviewAction: React.FC
 
       if (registrationAttempted) {
+        // FIXME: Extract to a real component
         if (qualifiedForBidding) {
+          // eslint-disable-next-line react/no-unstable-nested-components
           PreviewAction = () => (
             <Button width="100%" size="large" mt={1} disabled>
               Registration complete
             </Button>
           )
         } else if (shouldPromptIdVerification) {
+          // eslint-disable-next-line react/no-unstable-nested-components
           PreviewAction = () => (
             <VerifyIdentityButton
               id={pendingIdentityVerification?.internalID || ""}
             />
           )
         } else {
+          // eslint-disable-next-line react/no-unstable-nested-components
           PreviewAction = () => (
             <Button width="100%" size="large" mt={1} disabled>
               Registration pending
@@ -194,6 +197,7 @@ export class ArtworkSidebarBidAction extends React.Component<
           )
         }
       } else {
+        // eslint-disable-next-line react/no-unstable-nested-components
         PreviewAction = () => (
           <RegisterToBidButton onClick={this.redirectToRegister} />
         )

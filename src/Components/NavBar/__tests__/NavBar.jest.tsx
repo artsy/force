@@ -119,7 +119,6 @@ describe("NavBar", () => {
       wrapper.find("button").at(0).simulate("click")
 
       expect(showAuthDialog).toBeCalledWith({
-        mode: "Login",
         analytics: {
           contextModule: "header",
           intent: "login",
@@ -136,7 +135,6 @@ describe("NavBar", () => {
       wrapper.find("button").at(1).simulate("click")
 
       expect(showAuthDialog).toBeCalledWith({
-        mode: "SignUp",
         analytics: {
           contextModule: "header",
           intent: "signup",

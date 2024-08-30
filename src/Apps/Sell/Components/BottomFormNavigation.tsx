@@ -115,12 +115,8 @@ const BottomFormNextButton = () => {
       await submitForm()
 
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode =>
-            mode === "Login"
-              ? "Log in to complete your submission"
-              : "Sign up to complete your submission",
+          title: "Sign up or log in to complete your submission",
           afterAuthAction: {
             action: "submitSubmission",
             kind: "submission",

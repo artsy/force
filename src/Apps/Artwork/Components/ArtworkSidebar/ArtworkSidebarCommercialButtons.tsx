@@ -238,12 +238,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       }
     } else {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to buy art with ease`
-          },
+          title: "Sign up or log in to buy art with ease",
           afterAuthAction: {
             action: "buyNow",
             kind: "artworks",
@@ -302,12 +298,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       }
     } else {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to make an offer`
-          },
+          title: "Sign up or log in to make an offer",
           afterAuthAction: {
             action: "makeOffer",
             kind: "artworks",

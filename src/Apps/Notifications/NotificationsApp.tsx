@@ -32,12 +32,8 @@ const NotificationsApp: React.FC<NotificationsAppProps> = ({ me }) => {
     if (isLoggedIn) return
 
     showAuthDialog({
-      mode: "Login",
       options: {
-        title: mode => {
-          const action = mode === "Login" ? "Log in" : "Sign up"
-          return `${action} to view your notifications.`
-        },
+        title: "Sign up or log in to view your notifications",
       },
       analytics: {
         contextModule: ContextModule.activity,

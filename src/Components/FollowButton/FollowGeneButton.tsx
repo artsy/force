@@ -68,12 +68,8 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
 
     if (!isLoggedIn) {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to follow ${gene.name}`
-          },
+          title: `Sign up or log in to follow ${gene.name}`,
           afterAuthAction: {
             action: "follow",
             kind: "gene",

@@ -1,7 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { signUp } from "Utils/auth"
 
 jest.mock("Utils/getENV", () => ({
@@ -21,6 +20,18 @@ jest.mock("Utils/auth", () => ({
   signUp: jest.fn(),
 }))
 
+jest.mock("Components/AuthDialog/AuthDialogContext", () => ({
+  useAuthDialogContext: jest.fn().mockReturnValue({
+    state: {
+      analytics: {},
+      options: {},
+      values: {
+        email: "example@example.com",
+      },
+    },
+  }),
+}))
+
 // mocks the module that tells us if the user is on a touch device
 let mockIsTouch = false
 jest.mock("Utils/device", () => ({
@@ -30,13 +41,14 @@ jest.mock("Utils/device", () => ({
 }))
 
 jest.mock("Components/AuthDialog/Hooks/useCountryCode")
+
 jest.mock("System/Hooks/useFeatureFlag")
 
 describe("AuthDialogSignUp", () => {
   beforeAll(() => {
     ;(useCountryCode as jest.Mock).mockImplementation(() => ({
       loading: false,
-      countryCode: "US",
+      isAutomaticallySubscribed: true,
     }))
   })
 
@@ -46,24 +58,15 @@ describe("AuthDialogSignUp", () => {
     expect(screen.getByText("Sign up")).toBeInTheDocument()
   })
 
-  it("renders the social auth buttons", () => {
-    render(<AuthDialogSignUp />)
-
-    expect(screen.getByText("Continue with Facebook")).toBeInTheDocument()
-    expect(screen.getByText("Continue with Google")).toBeInTheDocument()
-    expect(screen.getByText("Continue with Apple")).toBeInTheDocument()
-  })
-
   it("renders a disclaimer", () => {
     render(<AuthDialogSignUp />)
 
     expect(screen.getByTestId("disclaimer")).toHaveTextContent(
-      "By clicking Sign Up or Continue with Apple, Google, or Facebook, you agree to Artsy’s Terms of Use and Privacy Policy and to receiving emails from Artsy."
+      "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
     )
-    expect(screen.getByRole("link", { name: "Terms of Use" })).toHaveAttribute(
-      "href",
-      "/terms"
-    )
+    expect(
+      screen.getByRole("link", { name: "Terms and Conditions" })
+    ).toHaveAttribute("href", "/terms")
     expect(
       screen.getByRole("link", { name: "Privacy Policy" })
     ).toHaveAttribute("href", "/privacy")
@@ -82,7 +85,7 @@ describe("AuthDialogSignUp", () => {
       render(<AuthDialogSignUp />)
 
       expect(screen.getByTestId("disclaimer")).toHaveTextContent(
-        "By tapping Sign Up or Continue with Apple, Google, or Facebook, you agree to Artsy’s Terms of Use and Privacy Policy and to receiving emails from Artsy."
+        "By tapping Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
       )
     })
   })
@@ -91,14 +94,14 @@ describe("AuthDialogSignUp", () => {
     beforeAll(() => {
       ;(useCountryCode as jest.Mock).mockImplementation(() => ({
         loading: false,
-        countryCode: "DE",
+        isAutomaticallySubscribed: false,
       }))
     })
 
     afterAll(() => {
       ;(useCountryCode as jest.Mock).mockImplementation(() => ({
         loading: false,
-        countryCode: "US",
+        isAutomaticallySubscribed: true,
       }))
     })
 
@@ -106,7 +109,7 @@ describe("AuthDialogSignUp", () => {
       render(<AuthDialogSignUp />)
 
       expect(screen.getByTestId("disclaimer")).toHaveTextContent(
-        "By clicking Sign Up or Continue with Apple, Google, or Facebook, you agree to Artsy’s Terms of Use and Privacy Policy."
+        "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy."
       )
     })
   })
@@ -115,14 +118,14 @@ describe("AuthDialogSignUp", () => {
     beforeAll(() => {
       ;(useCountryCode as jest.Mock).mockImplementation(() => ({
         loading: true,
-        countryCode: "US",
+        isAutomaticallySubscribed: true,
       }))
     })
 
     afterAll(() => {
       ;(useCountryCode as jest.Mock).mockImplementation(() => ({
         loading: false,
-        countryCode: "US",
+        isAutomaticallySubscribed: true,
       }))
     })
 
@@ -130,54 +133,8 @@ describe("AuthDialogSignUp", () => {
       render(<AuthDialogSignUp />)
 
       expect(screen.getByTestId("skeleton-disclaimer")).toHaveTextContent(
-        "By clicking Sign Up or Continue with Apple, Google, or Facebook, you agree to Artsy’s Terms of Use and Privacy Policy and to receiving emails from Artsy."
-      )
-    })
-
-    describe("when the new disclaimer is enabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          (f: string) => f === "diamond_new-terms-and-conditions"
-        )
-      })
-
-      afterAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockReset()
-      })
-
-      it("renders a disclaimer with the new text", () => {
-        render(<AuthDialogSignUp />)
-
-        expect(screen.getByTestId("skeleton-disclaimer")).toHaveTextContent(
-          "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
-        )
-      })
-    })
-  })
-
-  describe("when the new disclaimer is enabled", () => {
-    beforeAll(() => {
-      ;(useFeatureFlag as jest.Mock).mockImplementation(
-        (f: string) => f === "diamond_new-terms-and-conditions"
-      )
-    })
-
-    afterAll(() => {
-      ;(useFeatureFlag as jest.Mock).mockReset()
-    })
-
-    it("renders a disclaimer with the new text", () => {
-      render(<AuthDialogSignUp />)
-
-      expect(screen.getByTestId("disclaimer")).toHaveTextContent(
         "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
       )
-      expect(
-        screen.getByRole("link", { name: "Terms and Conditions" })
-      ).toHaveAttribute("href", "/terms")
-      expect(
-        screen.getByRole("link", { name: "Privacy Policy" })
-      ).toHaveAttribute("href", "/privacy")
     })
   })
 
@@ -188,7 +145,6 @@ describe("AuthDialogSignUp", () => {
     ;(signUp as jest.Mock).mockImplementationOnce(signUpMock)
 
     const name = screen.getByPlaceholderText("Enter your full name")
-    const email = screen.getByPlaceholderText("Enter your email address")
     const password = screen.getByPlaceholderText("Enter your password")
 
     const submit = screen.getByText("Sign up")
@@ -199,7 +155,6 @@ describe("AuthDialogSignUp", () => {
     expect(button).toBeDisabled()
 
     fireEvent.change(name, { target: { value: "Test User" } })
-    fireEvent.change(email, { target: { value: "example@example.com" } })
     fireEvent.change(password, { target: { value: "Secret000" } }) // pragma: allowlist secret
 
     expect(button).toBeEnabled()

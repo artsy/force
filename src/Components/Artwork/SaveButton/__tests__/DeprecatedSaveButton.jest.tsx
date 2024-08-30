@@ -132,14 +132,13 @@ describe("Deprecated Save artwork", () => {
 
     expect(showAuthDialog).toBeCalledWith({
       analytics: { contextModule: "worksForSaleRail", intent: "saveArtwork" },
-      mode: "SignUp",
       options: {
         afterAuthAction: {
           action: "save",
           kind: "artworks",
           objectId: "abcd1234",
         },
-        title: expect.any(Function),
+        title: expect.any(String),
       },
     })
   })
