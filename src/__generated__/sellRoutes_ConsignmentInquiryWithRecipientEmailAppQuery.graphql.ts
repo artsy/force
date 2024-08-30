@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afbba52bce60a76487d82a935db239cf>>
+ * @generated SignedSource<<fbac25f3f4be4fa73b0a59b295ba2968>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,8 +10,8 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type consignRoutes_ConsignmentInquiryAppQuery$variables = Record<PropertyKey, never>;
-export type consignRoutes_ConsignmentInquiryAppQuery$data = {
+export type sellRoutes_ConsignmentInquiryWithRecipientEmailAppQuery$variables = Record<PropertyKey, never>;
+export type sellRoutes_ConsignmentInquiryWithRecipientEmailAppQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ConsignmentInquiry_me">;
   } | null | undefined;
@@ -19,9 +19,9 @@ export type consignRoutes_ConsignmentInquiryAppQuery$data = {
     readonly " $fragmentSpreads": FragmentRefs<"ConsignmentInquiry_viewer">;
   } | null | undefined;
 };
-export type consignRoutes_ConsignmentInquiryAppQuery = {
-  response: consignRoutes_ConsignmentInquiryAppQuery$data;
-  variables: consignRoutes_ConsignmentInquiryAppQuery$variables;
+export type sellRoutes_ConsignmentInquiryWithRecipientEmailAppQuery = {
+  response: sellRoutes_ConsignmentInquiryWithRecipientEmailAppQuery$data;
+  variables: sellRoutes_ConsignmentInquiryWithRecipientEmailAppQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -44,7 +44,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "consignRoutes_ConsignmentInquiryAppQuery",
+    "name": "sellRoutes_ConsignmentInquiryWithRecipientEmailAppQuery",
     "selections": [
       {
         "alias": null,
@@ -86,7 +86,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "consignRoutes_ConsignmentInquiryAppQuery",
+    "name": "sellRoutes_ConsignmentInquiryWithRecipientEmailAppQuery",
     "selections": [
       {
         "alias": null,
@@ -185,16 +185,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "56e74d468a19eef2501359f54a7a7511",
+    "cacheID": "0a68df29e9d28678c8e3df5b9aae6b1b",
     "id": null,
     "metadata": {},
-    "name": "consignRoutes_ConsignmentInquiryAppQuery",
+    "name": "sellRoutes_ConsignmentInquiryWithRecipientEmailAppQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_ConsignmentInquiryAppQuery {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n  viewer {\n    ...ConsignmentInquiry_viewer\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ConsignmentInquiry_viewer on Viewer {\n  staticContent {\n    specialistBios {\n      firstName\n      email\n    }\n    id\n  }\n}\n"
+    "text": "query sellRoutes_ConsignmentInquiryWithRecipientEmailAppQuery {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n  viewer {\n    ...ConsignmentInquiry_viewer\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ConsignmentInquiry_viewer on Viewer {\n  staticContent {\n    specialistBios {\n      firstName\n      email\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d8339423c5782b6ac985ee8c569aa539";
+(node as any).hash = "b8f7aa9ebcd816a5c41e0586cbd7e998";
 
 export default node;

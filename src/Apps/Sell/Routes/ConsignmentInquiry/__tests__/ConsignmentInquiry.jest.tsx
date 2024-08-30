@@ -1,11 +1,11 @@
-import { ConsignmentInquiryFragmentContainer } from "Apps/Consign/Routes/ConsignmentInquiry/ConsignmentInquiry"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { ConsignmentInquiryFragmentContainer } from "Apps/Sell/Routes/ConsignmentInquiry/ConsignmentInquiry"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { useMutation } from "Utils/Hooks/useMutation"
 import { useRouter } from "System/Hooks/useRouter"
+import { useMutation } from "Utils/Hooks/useMutation"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

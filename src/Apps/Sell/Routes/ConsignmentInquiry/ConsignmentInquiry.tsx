@@ -1,30 +1,27 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { SentConsignmentInquiry } from "@artsy/cohesion/dist/Schema/Events/Consignments"
 import { Button, Spacer, Text, useToasts } from "@artsy/palette"
-import { COUNTRY_CODES } from "Utils/countries"
-import { Form, Formik } from "formik"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
-import { useRouter } from "System/Hooks/useRouter"
-import createLogger from "Utils/logger"
-import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
+import { ConsignmentInquiry_me$data } from "__generated__/ConsignmentInquiry_me.graphql"
+import { ConsignmentInquiry_viewer$data } from "__generated__/ConsignmentInquiry_viewer.graphql"
+import { CreateConsignmentInquiryMutationInput } from "__generated__/useCreateConsignmentInquiryMutation.graphql"
+import { validateContactInformationValidationSchema } from "Apps/MyCollection/Routes/PriceEstimate/utils/contactInformationValidationSchema"
 import {
   ConsignmentInquiryForm,
   ConsignmentInquiryFormModel,
-} from "Apps/Consign/Routes/ConsignmentInquiry/Components/ConsignmentInquiryForm"
-import { SentConsignmentInquiry } from "@artsy/cohesion/dist/Schema/Events/Consignments"
-import { ConsignmentInquiry_me$data } from "__generated__/ConsignmentInquiry_me.graphql"
-import { ConsignmentInquiry_viewer$data } from "__generated__/ConsignmentInquiry_viewer.graphql"
-
-import { useCreateConsignmentInquiry } from "Apps/Consign/Routes/ConsignmentInquiry/utils/useCreateConsignmentInquiry"
-import {
-  consignmentInquiryValidationSchema,
-  validate,
-} from "Apps/Consign/Routes/ConsignmentInquiry/utils/validation"
-import { CreateConsignmentInquiryMutationInput } from "__generated__/useCreateConsignmentInquiryMutation.graphql"
-import { ConsignmentInquiryFormAbandonEditModal } from "Apps/Consign/Routes/ConsignmentInquiry/Components/ConsignmentInquiryFormAbandonEdit"
-import { useState } from "react"
+} from "Apps/Sell/Routes/ConsignmentInquiry/Components/ConsignmentInquiryForm"
+import { ConsignmentInquiryFormAbandonEditModal } from "Apps/Sell/Routes/ConsignmentInquiry/Components/ConsignmentInquiryFormAbandonEdit"
+import { useCreateConsignmentInquiry } from "Apps/Sell/Routes/ConsignmentInquiry/utils/useCreateConsignmentInquiry"
+import { consignmentInquiryValidationSchema } from "Apps/Sell/Routes/ConsignmentInquiry/utils/validation"
 import { TopContextBar } from "Components/TopContextBar"
+import { Form, Formik } from "formik"
+import { useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import { COUNTRY_CODES } from "Utils/countries"
+import createLogger from "Utils/logger"
+import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
 
 const logger = createLogger("ConsignmentInquiry/ConsignmentInquiry.tsx")
 
@@ -65,7 +62,7 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
   } = useCreateConsignmentInquiry()
 
   const initialValue = getContactInformationFormInitialValues(me)
-  const initialErrors = validate(
+  const initialErrors = validateContactInformationValidationSchema(
     initialValue,
     consignmentInquiryValidationSchema
   )
