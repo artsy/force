@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c18bf6c0e6a643801ffea0817b4c11ec>>
+ * @generated SignedSource<<fe0909f57816310ba48a18bd58cfc70d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type ArtistSeriesApp_artistSeries$data = {
   readonly internalID: string;
   readonly railArtist: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesRail_artist">;
-  } | null | undefined> | null | undefined;
+  }>;
   readonly sidebarAggregations: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
