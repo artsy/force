@@ -14,7 +14,10 @@ export const contactInformationValidationSchema = yup.object().shape({
     .required("Phone Number Country Code is required"),
 })
 
-export const validate = <T>(values: T, validationSchema: yup.AnySchema) => {
+export const validateContactInformationValidationSchema = <T>(
+  values: T,
+  validationSchema: yup.AnySchema
+) => {
   let errors: FormikErrors<T> = {}
 
   try {
