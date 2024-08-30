@@ -150,13 +150,15 @@ export const SavedAddresses2: FC<SavedAddressesProps> = props => {
           Add a new address
         </AddAddressButton>
       )}
-      <AddressModal
-        addressModalAction={addressModalAction}
-        closeModal={() => {
-          setAddressModalAction(null)
-        }}
-        onSuccess={handleAddressModalSuccess}
-      />
+      {addressModalAction && (
+        <AddressModal
+          addressModalAction={addressModalAction}
+          closeModal={() => {
+            setAddressModalAction(null)
+          }}
+          onSuccess={handleAddressModalSuccess}
+        />
+      )}
       <Spacer y={4} />
     </>
   )
