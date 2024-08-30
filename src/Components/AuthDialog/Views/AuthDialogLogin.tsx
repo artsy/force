@@ -12,7 +12,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
-import { AuthDialogSocial } from "Components/AuthDialog/Components/AuthDialogSocial"
 import { Form, Formik } from "formik"
 import { login } from "Utils/auth"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"

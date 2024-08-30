@@ -1,4 +1,4 @@
-import { Button, Join, Spacer, Stack } from "@artsy/palette"
+import { Button, Stack } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"

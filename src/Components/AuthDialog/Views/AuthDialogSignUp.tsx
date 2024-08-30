@@ -3,9 +3,7 @@ import {
   Box,
   Button,
   Checkbox,
-  Clickable,
   Input,
-  Join,
   Message,
   PasswordInput,
   Spacer,
@@ -13,25 +11,21 @@ import {
   Text,
 } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
-import { AuthDialogSocial } from "Components/AuthDialog/Components/AuthDialogSocial"
 import { Form, Formik } from "formik"
 import { FC } from "react"
 import { signUp } from "Utils/auth"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
-import { isTouch } from "Utils/device"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
 import {
   GDPR_COUNTRY_CODES,
   useCountryCode,
 } from "Components/AuthDialog/Hooks/useCountryCode"
-import { RouterLink } from "System/Components/RouterLink"
 import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisclaimer"
 
 export const AuthDialogSignUp: FC = () => {
   const {
-    dispatch,
     state: { options, values },
   } = useAuthDialogContext()
 
