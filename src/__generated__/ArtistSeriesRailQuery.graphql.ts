@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<84fd685ee0b00503ca86ac6a6dcc7f29>>
+ * @generated SignedSource<<e7646f1a4314bea627ca5925fbffe8c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,7 +37,14 @@ v1 = [
     "name": "id",
     "variableName": "id"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -205,7 +212,8 @@ return {
                         "kind": "ScalarField",
                         "name": "featured",
                         "storageKey": null
-                      }
+                      },
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -215,25 +223,19 @@ return {
             ],
             "storageKey": "artistSeriesConnection(first:12)"
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "b85d4401eb0600b69e16a3a6a10623c9",
+    "cacheID": "cea40164bacb7403398d8781235bf1b1",
     "id": null,
     "metadata": {},
     "name": "ArtistSeriesRailQuery",
     "operationKind": "query",
-    "text": "query ArtistSeriesRailQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistSeriesRail_artist\n    id\n  }\n}\n\nfragment ArtistSeriesRail_artist on Artist {\n  href\n  artistSeriesConnection(first: 12) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n        featured\n        slug\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistSeriesRailQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistSeriesRail_artist\n    id\n  }\n}\n\nfragment ArtistSeriesRail_artist on Artist {\n  href\n  artistSeriesConnection(first: 12) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n        featured\n        slug\n        id\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

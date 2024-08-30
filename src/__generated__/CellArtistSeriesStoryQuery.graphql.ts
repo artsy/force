@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c6cee1a87e8075a640b03a4a5cfdbcb>>
+ * @generated SignedSource<<0131a59cd7fc4b0dcfdca9aecff1cee0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -154,6 +154,13 @@ return {
               }
             ],
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -161,12 +168,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "40e3d1b8834fb72e8e2d8c36dfca8e91",
+    "cacheID": "0861d56cb02263928a7b1588d3adb963",
     "id": null,
     "metadata": {},
     "name": "CellArtistSeriesStoryQuery",
     "operationKind": "query",
-    "text": "query CellArtistSeriesStoryQuery(\n  $id: ID!\n) {\n  artistSeries(id: $id) {\n    ...CellArtistSeries_artistSeries\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CellArtistSeriesStoryQuery(\n  $id: ID!\n) {\n  artistSeries(id: $id) {\n    ...CellArtistSeries_artistSeries\n    id\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

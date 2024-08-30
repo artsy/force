@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a03a5cf568397c560d6937a96c373a2>>
+ * @generated SignedSource<<1e1dc0040adface2c90e7ed52d37ca49>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -151,6 +151,13 @@ return {
               }
             ],
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
           }
         ],
         "storageKey": "artistSeries(id:\"example\")"
@@ -158,7 +165,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "16e7a262dcfc416a66efac409ac9a7cd",
+    "cacheID": "f0645bbed9a6c8ddee36997d501ae9a2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -173,6 +180,12 @@ return {
           "nullable": true,
           "plural": false,
           "type": "String"
+        },
+        "artistSeries.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
         },
         "artistSeries.image": {
           "enumValues": null,
@@ -194,7 +207,7 @@ return {
     },
     "name": "CellArtistSeriesFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query CellArtistSeriesFragmentContainer_Test_Query {\n  artistSeries(id: \"example\") {\n    ...CellArtistSeries_artistSeries\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CellArtistSeriesFragmentContainer_Test_Query {\n  artistSeries(id: \"example\") {\n    ...CellArtistSeries_artistSeries\n    id\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
