@@ -71,7 +71,7 @@ export const INITIAL_STATE: State = {
     contextModule: ContextModule.header,
     trigger: "click",
   },
-  mode: "SignUp",
+  mode: "Welcome",
   isVisible: false,
   options: {},
   values: {},

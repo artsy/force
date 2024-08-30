@@ -531,7 +531,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
       fireEvent.click(screen.getByText("Purchase"))
 
       expect(showAuthDialog).toBeCalledWith({
-        mode: "SignUp",
+        mode: "Welcome",
         options: {
           title: expect.any(Function),
           afterAuthAction: {
@@ -570,7 +570,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
       fireEvent.click(screen.getByText("Make an Offer"))
 
       expect(showAuthDialog).toBeCalledWith({
-        mode: "SignUp",
+        mode: "Welcome",
         options: {
           title: expect.any(Function),
           afterAuthAction: {

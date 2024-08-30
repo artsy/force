@@ -58,12 +58,8 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
     if (!user) {
       event.preventDefault()
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to see full auction records — for free`
-          },
+          title: "Sign up or log in to see full auction records — for free",
         },
         analytics: {
           contextModule: ContextModule.auctionResult,
@@ -258,12 +254,8 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
         textDecoration="underline"
         onClick={() => {
           showAuthDialog({
-            mode: "SignUp",
             options: {
-              title: mode => {
-                const action = mode === "SignUp" ? "Sign up" : "Log in"
-                return `${action} to see full auction records — for free`
-              },
+              title: "Sign up or log in to see full auction records — for free",
             },
             analytics: {
               contextModule: ContextModule.auctionResults,

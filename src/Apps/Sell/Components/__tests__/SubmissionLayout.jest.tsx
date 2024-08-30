@@ -212,7 +212,7 @@ describe("SubmissionLayout", () => {
           })
 
           expect(showAuthDialog).toBeCalledWith({
-            mode: "SignUp",
+            mode: "Welcome",
             options: {
               title: expect.any(Function),
               afterAuthAction: {

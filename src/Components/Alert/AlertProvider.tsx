@@ -197,9 +197,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   const onShow = (state: State): State => {
     if (!isLoggedIn) {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: "Sign up to create your alert",
+          title: "Sign up or log in to create your alert",
           afterAuthAction: {
             action: Intent.createAlert,
           },

@@ -127,7 +127,7 @@ describe("ArtworkApp", () => {
         analytics: {
           contextModule: "artworkSidebar",
         },
-        mode: "Login",
+        mode: "Welcome",
         options: {
           title: expect.any(Function),
         },

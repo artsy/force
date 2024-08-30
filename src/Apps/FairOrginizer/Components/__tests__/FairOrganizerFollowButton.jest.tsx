@@ -82,7 +82,7 @@ describe("FairOrganizerFollowButton", () => {
         contextModule: "fairOrganizerHeader",
         intent: "followPartner",
       },
-      mode: "SignUp",
+      mode: "Welcome",
       options: {
         afterAuthAction: {
           action: "follow",

@@ -153,12 +153,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
         // If user is not logged-in, show auth modal, but only if it was never shown before.
         if (!user && !authShownForFiltering) {
           showAuthDialog({
-            mode: "SignUp",
             options: {
-              title: mode => {
-                const action = mode === "SignUp" ? "Sign up" : "Log in"
-                return `${action} to see auction results for ${artist.name}`
-              },
+              title: `Sign up or log in to see auction results for ${artist.name}`,
             },
             analytics: {
               contextModule: ContextModule.auctionResults,

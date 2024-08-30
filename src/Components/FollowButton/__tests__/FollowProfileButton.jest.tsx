@@ -93,14 +93,13 @@ describe("FollowProfileButton", () => {
           contextModule: "partnerHeader",
           intent: "followPartner",
         },
-        mode: "SignUp",
         options: {
           afterAuthAction: {
             action: "follow",
             kind: "profile",
             objectId: "example",
           },
-          title: expect.any(Function),
+          title: expect.any(String),
         },
       })
     })

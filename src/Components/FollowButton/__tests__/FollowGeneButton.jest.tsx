@@ -84,14 +84,13 @@ describe("FollowGeneButton", () => {
 
       expect(showAuthDialog).toBeCalledWith({
         analytics: { contextModule: "geneHeader", intent: "followGene" },
-        mode: "SignUp",
         options: {
           afterAuthAction: {
             action: "follow",
             kind: "gene",
             objectId: "example",
           },
-          title: expect.any(Function),
+          title: expect.any(String),
         },
       })
     })

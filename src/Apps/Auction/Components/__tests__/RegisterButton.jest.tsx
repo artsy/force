@@ -231,7 +231,6 @@ describe("RegisterButton", () => {
       ;(wrapper.find("ButtonAction").props() as any).onClick()
 
       expect(showAuthDialog).toHaveBeenCalledWith({
-        mode: "Login",
         analytics: {
           contextModule: "auctionSidebar",
           intent: "registerToBid",

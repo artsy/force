@@ -25,7 +25,7 @@ describe("useAuthDialogOptions", () => {
     const dispatch = jest.fn()
 
     mockUseAuthDialogContext.mockImplementation(() => ({
-      state: { mode: "SignUp" },
+      state: { mode: "Welcome" },
       dispatch,
     }))
 
@@ -34,7 +34,7 @@ describe("useAuthDialogOptions", () => {
     expect(dispatch).toHaveBeenCalledWith({
       payload: {
         analytics: { intent: "signup" },
-        mode: "SignUp",
+        mode: "Welcome",
         options: {
           title: "Sign up to collect art by the world’s leading artists",
         },
@@ -50,11 +50,11 @@ describe("useAuthDialogOptions", () => {
     })
   })
 
-  it("sets and returns defaults for login", () => {
+  it("sets and returns defaults for welcome", () => {
     const dispatch = jest.fn()
 
     mockUseAuthDialogContext.mockImplementation(() => ({
-      state: { mode: "Login" },
+      state: { mode: "Welcome" },
       dispatch,
     }))
 
@@ -63,7 +63,7 @@ describe("useAuthDialogOptions", () => {
     expect(dispatch).toHaveBeenCalledWith({
       payload: {
         analytics: { intent: "login" },
-        mode: "Login",
+        mode: "Welcome",
         options: {
           title: "Log in to collect art by the world’s leading artists",
         },
@@ -82,7 +82,7 @@ describe("useAuthDialogOptions", () => {
     const dispatch = jest.fn()
 
     mockUseAuthDialogContext.mockImplementation(() => ({
-      state: { mode: "Login" },
+      state: { mode: "Welcome" },
       dispatch,
     }))
 
@@ -108,7 +108,7 @@ describe("useAuthDialogOptions", () => {
           contextModule: "inquiry",
           intent: "inquire",
         },
-        mode: "Login",
+        mode: "Welcome",
         options: {
           title: "Example Title",
           redirectTo: "/example-redirect",
@@ -128,7 +128,7 @@ describe("useAuthDialogOptions", () => {
     const dispatch = jest.fn()
 
     mockUseAuthDialogContext.mockImplementation(() => ({
-      state: { mode: "Login" },
+      state: { mode: "Welcome" },
       dispatch,
     }))
 
@@ -153,7 +153,7 @@ describe("useAuthDialogOptions", () => {
         analytics: {
           intent: "login",
         },
-        mode: "Login",
+        mode: "Welcome",
         options: {
           title: "Log in to collect art by the world’s leading artists",
           afterAuthAction: {
@@ -171,7 +171,7 @@ describe("useAuthDialogOptions", () => {
     const dispatch = jest.fn()
 
     mockUseAuthDialogContext.mockImplementation(() => ({
-      state: { mode: "Login" },
+      state: { mode: "Welcome" },
       dispatch,
     }))
 
@@ -192,7 +192,7 @@ describe("useAuthDialogOptions", () => {
         analytics: {
           intent: "login",
         },
-        mode: "Login",
+        mode: "Welcome",
         options: {
           title: "Log in to collect art by the world’s leading artists",
           afterAuthAction: {

@@ -101,7 +101,7 @@ export const AuthDialogForgotPassword: FC = () => {
                   textDecoration="underline"
                   data-test="login"
                   onClick={() => {
-                    dispatch({ type: "MODE", payload: { mode: "Login" } })
+                    dispatch({ type: "MODE", payload: { mode: "Welcome" } })
                   }}
                 >
                   Log in
@@ -111,7 +111,7 @@ export const AuthDialogForgotPassword: FC = () => {
                   textDecoration="underline"
                   data-test="signup"
                   onClick={() => {
-                    dispatch({ type: "MODE", payload: { mode: "SignUp" } })
+                    dispatch({ type: "MODE", payload: { mode: "Welcome" } })
                   }}
                 >
                   sign up.
