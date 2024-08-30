@@ -77,7 +77,11 @@ export const SavedAddresses2: FC<SavedAddressesProps> = props => {
     }
     automaticallySelectBestAddress()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.active])
+  }, [
+    props.active,
+    addressList.length,
+    shippingContext.state.selectedSavedAddressID,
+  ])
 
   /*
    * Select an address radio button and pass the address to the parent.
