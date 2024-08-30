@@ -7,12 +7,12 @@ import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisc
 import { fetchQuery, graphql } from "react-relay"
 import { AuthDialogWelcomeQuery } from "__generated__/AuthDialogWelcomeQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { recaptcha } from "Utils/auth"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
+import { recaptcha } from "Utils/recaptcha"
 
 interface AuthDialogWelcomeProps {}
 
-export const AuthDialogWelcome: FC<AuthDialogWelcomeProps> = props => {
+export const AuthDialogWelcome: FC<AuthDialogWelcomeProps> = () => {
   const { relayEnvironment } = useSystemContext()
 
   const { dispatch } = useAuthDialogContext()

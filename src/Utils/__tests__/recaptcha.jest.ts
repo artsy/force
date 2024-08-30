@@ -1,4 +1,4 @@
-import { recaptcha } from "../recaptcha"
+import { recaptcha } from "Utils/recaptcha"
 jest.mock("sharify", () => ({ data: jest.fn() }))
 const sd = require("sharify").data
 
@@ -16,45 +16,39 @@ describe("repcaptcha", () => {
     })
   })
 
-  it("fires an action with callback", done => {
+  it("fires an action with callback", async () => {
     const action = jest.fn()
-    const callback = jest.fn(token => {
-      action(token)
-      expect(action).toBeCalledWith("recaptcha-token")
-      done()
-    })
 
-    recaptcha("signup_submit", callback)
+    const token = await recaptcha("signup_submit")
+
+    action(token)
+    expect(action).toBeCalledWith("recaptcha-token")
     expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
       action: "signup_submit",
     })
   })
 
-  it("Still calls the callback if firing action fails", done => {
+  it("Still calls the callback if firing action fails", async () => {
     window.grecaptcha.execute.mockRejectedValueOnce(new Error("google failed"))
     const action = jest.fn()
-    const callback = jest.fn(() => {
-      action()
-      expect(action).toBeCalled()
-      done()
-    })
 
-    recaptcha("signup_submit", callback)
+    await recaptcha("signup_submit")
+
+    action()
+    expect(action).toBeCalled()
     expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
       action: "signup_submit",
     })
   })
 
-  it("Fires the callback but no action if sd.RECAPTCHA_KEY is missing", done => {
+  it("Fires the callback but no action if sd.RECAPTCHA_KEY is missing", async () => {
     sd.RECAPTCHA_KEY = ""
     const action = jest.fn()
-    const callback = jest.fn(() => {
-      action()
-      expect(action).toBeCalled()
-      done()
-    })
 
-    recaptcha("signup_submit", callback)
+    await recaptcha("signup_submit")
+
+    action()
+    expect(action).toBeCalled()
     expect(window.grecaptcha.ready).not.toBeCalled()
     expect(window.grecaptcha.execute).not.toBeCalled()
   })

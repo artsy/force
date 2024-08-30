@@ -21,7 +21,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { COUNTRY_CODES } from "Utils/countries"
 import createLogger from "Utils/logger"
-import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
+import { recaptcha } from "Utils/recaptcha"
 
 const logger = createLogger("ConsignmentInquiry/ConsignmentInquiry.tsx")
 
@@ -67,9 +67,6 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
     consignmentInquiryValidationSchema
   )
 
-  const handleRecaptcha = (action: RecaptchaAction) =>
-    new Promise(resolve => recaptcha(action, resolve))
-
   const recipientEmail = match.params.recipientEmail ?? null
 
   const recipientName =
@@ -83,7 +80,7 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
     phoneNumberCountryCode,
     message,
   }: ConsignmentInquiryFormModel) => {
-    if (!(await handleRecaptcha("consignment_inquiry"))) {
+    if (!(await recaptcha("consignment_inquiry"))) {
       return
     }
 

@@ -73,7 +73,7 @@ export const AuthDialogView: FC = () => {
 }
 
 export const DEFAULT_TITLES: Record<AuthDialogMode, string> = {
-  Login: "Welcome back to Artsy",
+  Login: "Welcome back to Artsy!",
   SignUp: "Welcome to Artsy — Create an account",
   ForgotPassword: "Reset your password", // pragma: allowlist secret
   Welcome: "Sign up or log in",

@@ -3,11 +3,9 @@ import createLogger from "Utils/logger"
 
 const logger = createLogger("recaptcha.ts")
 
-// TODO: Should return a Promise instead of accepting a callback
-export const recaptcha = (
-  action: RecaptchaAction,
-  callback?: RecaptchaCallback
-) => {
+export const recaptcha = async (
+  action: RecaptchaAction
+): Promise<string | undefined> => {
   if (getENV("RECAPTCHA_KEY")) {
     window.grecaptcha?.ready(async () => {
       try {
@@ -15,7 +13,7 @@ export const recaptcha = (
           action,
         })
 
-        callback?.(token)
+        return token
       } catch (err) {
         logger.error(err)
 
@@ -23,7 +21,7 @@ export const recaptcha = (
           logger.warn("Signup submitted without Recaptcha Token")
         }
 
-        callback?.()
+        return
       }
     })
 
@@ -34,7 +32,7 @@ export const recaptcha = (
     logger.warn("Signup submitted without Recaptcha Key")
   }
 
-  callback?.()
+  return
 }
 
 export type RecaptchaAction =
@@ -49,5 +47,3 @@ export type RecaptchaAction =
   | "signup_submit"
   | "submission_submit"
   | "verify_user"
-
-export type RecaptchaCallback = (token?: string) => string | null
