@@ -4,7 +4,22 @@ export const RELAY_CACHE_CONFIG_HEADER_KEY = "x-relay-cache-config"
 export const RELAY_CACHE_PATH_HEADER_KEY = "x-relay-cache-path"
 
 interface CacheHeaderMiddlewareProps {
-  url?: string
+  url: string | null | undefined
+  user: User
+}
+
+export const shouldSkipCDNCache = (req, user) => {
+  const isLoggedIn = !!user
+
+  if (isLoggedIn) {
+    return true
+  }
+
+  if (req.cacheConfig?.force === true) {
+    return true
+  }
+
+  return false
 }
 
 export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
@@ -26,9 +41,14 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
       cacheHeaders[RELAY_CACHE_PATH_HEADER_KEY] = url
     }
 
+    const cacheControlHeader = shouldSkipCDNCache(req, props?.user)
+      ? { "Cache-Control": "no-cache" }
+      : {}
+
     req.fetchOpts.headers = {
       ...req.fetchOpts.headers,
       ...cacheHeaders,
+      ...cacheControlHeader,
     }
 
     const res = await next(req)
