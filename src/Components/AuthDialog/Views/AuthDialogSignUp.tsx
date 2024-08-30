@@ -9,6 +9,7 @@ import {
   Message,
   PasswordInput,
   Spacer,
+  Stack,
   Text,
 } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
@@ -21,14 +22,17 @@ import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessa
 import { isTouch } from "Utils/device"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
-import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
+import {
+  GDPR_COUNTRY_CODES,
+  useCountryCode,
+} from "Components/AuthDialog/Hooks/useCountryCode"
 import { RouterLink } from "System/Components/RouterLink"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisclaimer"
 
 export const AuthDialogSignUp: FC = () => {
   const {
     dispatch,
-    state: { options },
+    state: { options, values },
   } = useAuthDialogContext()
 
   const { runAfterAuthentication } = useAfterAuthentication()
@@ -36,8 +40,6 @@ export const AuthDialogSignUp: FC = () => {
   const track = useAuthDialogTracking()
 
   const { loading, countryCode } = useCountryCode()
-
-  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
 
   const isAutomaticallySubscribed = !!(
     countryCode && !GDPR_COUNTRY_CODES.includes(countryCode)
@@ -52,6 +54,7 @@ export const AuthDialogSignUp: FC = () => {
       validateOnBlur={false}
       initialValues={{
         ...INITIAL_VALUES,
+        email: values.email || "",
         agreedToReceiveEmails: isAutomaticallySubscribed,
       }}
       validationSchema={VALIDATION_SCHEMA}
@@ -98,50 +101,40 @@ export const AuthDialogSignUp: FC = () => {
       }) => {
         return (
           <Form data-test="SignUpForm">
-            <Join separator={<Spacer y={2} />}>
-              <Input
-                name="name"
-                title="Name"
-                placeholder="Enter your full name"
-                value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="name"
-                autoFocus
-                error={touched.name && errors.name}
-              />
-
-              <Input
-                name="email"
-                title="Email"
-                type="email"
-                placeholder="Enter your email address"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="email"
-                error={touched.email && errors.email}
-              />
-
-              <Box>
-                <PasswordInput
-                  name="password"
-                  title="Password"
-                  placeholder="Enter your password"
-                  value={values.password}
+            <Stack gap={4}>
+              <Stack gap={1}>
+                <Input
+                  name="name"
+                  title="Name"
+                  placeholder="Enter your full name"
+                  value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  autoComplete="new-password"
-                  error={touched.password && errors.password}
+                  autoComplete="name"
+                  autoFocus
+                  error={touched.name && errors.name}
                 />
 
-                <Spacer y={0.5} />
+                <Box>
+                  <PasswordInput
+                    name="password"
+                    title="Password"
+                    placeholder="Enter your password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    autoComplete="new-password"
+                    error={touched.password && errors.password}
+                  />
 
-                <Text variant="xs" color="black60">
-                  Password must be at least 8 characters and include a lowercase
-                  letter, uppercase letter, and digit.
-                </Text>
-              </Box>
+                  <Spacer y={0.5} />
+
+                  <Text variant="xs" color="black60">
+                    Password must be at least 8 characters and include a
+                    lowercase letter, uppercase letter, and digit.
+                  </Text>
+                </Box>
+              </Stack>
 
               {!isAutomaticallySubscribed && (
                 <Checkbox
@@ -151,9 +144,9 @@ export const AuthDialogSignUp: FC = () => {
                   }}
                 >
                   <Text variant="xs">
-                    Dive deeper into the art market with Artsy emails. Subscribe
-                    to hear about our products, services, editorials, and other
-                    promotional content. Unsubscribe at any time.
+                    Subscribe to email to hear about our products, services,
+                    editorials, and other promotional content. Unsubscribe at
+                    any time.
                   </Text>
                 </Checkbox>
               )}
@@ -171,69 +164,8 @@ export const AuthDialogSignUp: FC = () => {
                 Sign up
               </Button>
 
-              <Text variant="xs" textAlign="center" color="black60" my={-1}>
-                or
-              </Text>
-
-              <AuthDialogSocial />
-
-              <Text variant="xs" color="black60" textAlign="center">
-                Already have an account?{" "}
-                <Clickable
-                  data-test="login"
-                  textDecoration="underline"
-                  onClick={() => {
-                    dispatch({ type: "MODE", payload: { mode: "Login" } })
-                  }}
-                >
-                  Log in.
-                </Clickable>
-              </Text>
-
-              <Text
-                variant="xs"
-                color="black60"
-                textAlign="center"
-                data-testid="disclaimer"
-              >
-                By {isTouch ? "tapping" : "clicking"} Sign Up or Continue with
-                {showNewDisclaimer ? " Email, " : " "}
-                Apple, Google, or Facebook, you agree to Artsy’s{" "}
-                <RouterLink inline to="/terms" target="_blank">
-                  {showNewDisclaimer ? "Terms and Conditions" : "Terms of Use"}
-                </RouterLink>{" "}
-                and{" "}
-                <RouterLink inline to="/privacy" target="_blank">
-                  Privacy Policy
-                </RouterLink>
-                {isAutomaticallySubscribed && (
-                  <> and to receiving emails from Artsy</>
-                )}
-                .
-              </Text>
-
-              <Text variant="xs" color="black60" textAlign="center">
-                This site is protected by reCAPTCHA and the{" "}
-                <RouterLink
-                  inline
-                  to="https://policies.google.com/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Google Privacy Policy
-                </RouterLink>{" "}
-                and{" "}
-                <RouterLink
-                  inline
-                  to="https://policies.google.com/terms"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Terms of Service
-                </RouterLink>{" "}
-                apply.
-              </Text>
-            </Join>
+              <AuthDialogDisclaimer />
+            </Stack>
           </Form>
         )
       }}
@@ -264,34 +196,3 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     .required("Please enter a valid email."),
   password: passwordValidator,
 })
-
-const GDPR_COUNTRY_CODES = [
-  "AT",
-  "BE",
-  "BG",
-  "CY",
-  "CZ",
-  "DE",
-  "DK",
-  "EE",
-  "ES",
-  "FI",
-  "FR",
-  "GB",
-  "GR",
-  "HR",
-  "HU",
-  "IE",
-  "IT",
-  "LT",
-  "LU",
-  "LV",
-  "MT",
-  "NL",
-  "PL",
-  "PT",
-  "RO",
-  "SE",
-  "SI",
-  "SK",
-]

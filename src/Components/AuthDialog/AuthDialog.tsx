@@ -10,6 +10,7 @@ import { FC, useEffect } from "react"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { resized } from "Utils/resized"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { AuthDialogWelcome } from "Components/AuthDialog/Views/AuthDialogWelcome"
 
 export interface AuthDialogProps {
   onClose: () => void
@@ -66,13 +67,16 @@ export const AuthDialogView: FC = () => {
       return <AuthDialogSignUp />
     case "ForgotPassword":
       return <AuthDialogForgotPassword />
+    case "Welcome":
+      return <AuthDialogWelcome />
   }
 }
 
 export const DEFAULT_TITLES: Record<AuthDialogMode, string> = {
-  Login: "Log in to collect art by the world’s leading artists",
-  SignUp: "Sign up to collect art by the world’s leading artists",
+  Login: "Welcome back to Artsy",
+  SignUp: "Welcome to Artsy — Create an account",
   ForgotPassword: "Reset your password", // pragma: allowlist secret
+  Welcome: "Sign up or log in",
 }
 
 const IMAGE = {

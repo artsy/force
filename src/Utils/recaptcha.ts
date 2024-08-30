@@ -48,5 +48,6 @@ export type RecaptchaAction =
   | "login_submit"
   | "signup_submit"
   | "submission_submit"
+  | "verify_user"
 
-type RecaptchaCallback = (token?: string) => void
+export type RecaptchaCallback = (token?: string) => string | null

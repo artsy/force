@@ -22,7 +22,7 @@ import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialog
 export const AuthDialogLogin: FC = () => {
   const {
     dispatch,
-    state: { options },
+    state: { options, values },
   } = useAuthDialogContext()
 
   const { runAfterAuthentication } = useAfterAuthentication()
@@ -34,7 +34,7 @@ export const AuthDialogLogin: FC = () => {
       validateOnBlur={false}
       validationSchema={VALIDATION_SCHEMA}
       initialValues={{
-        email: "",
+        email: values.email || "",
         password: "",
         authenticationCode: "",
         mode: "Pending",
@@ -97,20 +97,7 @@ export const AuthDialogLogin: FC = () => {
       }) => {
         return (
           <Form data-test="LoginForm">
-            <Join separator={<Spacer y={2} />}>
-              <Input
-                name="email"
-                title="Email"
-                placeholder="Enter your email address"
-                type="email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoFocus
-                autoComplete="email"
-                error={touched.email && errors.email}
-              />
-
+            <Join separator={<Spacer y={4} />}>
               <Box>
                 <PasswordInput
                   name="password"
@@ -120,6 +107,7 @@ export const AuthDialogLogin: FC = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   autoComplete="current-password"
+                  autoFocus
                   error={touched.password && errors.password}
                 />
 
@@ -176,25 +164,6 @@ export const AuthDialogLogin: FC = () => {
               >
                 Log in
               </Button>
-
-              <Text variant="xs" textAlign="center" color="black60" my={-1}>
-                or
-              </Text>
-
-              <AuthDialogSocial />
-
-              <Text variant="xs" textAlign="center" color="black60">
-                Don’t have an account?{" "}
-                <Clickable
-                  data-test="signup"
-                  textDecoration="underline"
-                  onClick={() => {
-                    dispatch({ type: "MODE", payload: { mode: "SignUp" } })
-                  }}
-                >
-                  Sign up.
-                </Clickable>
-              </Text>
             </Join>
           </Form>
         )

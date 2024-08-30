@@ -13,7 +13,12 @@ import { createContext, FC, useContext, useReducer } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
-export const AUTH_DIALOG_MODES = ["Login", "SignUp", "ForgotPassword"] as const
+export const AUTH_DIALOG_MODES = [
+  "Welcome",
+  "Login",
+  "SignUp",
+  "ForgotPassword",
+] as const
 
 export type AuthDialogMode = typeof AUTH_DIALOG_MODES[number]
 
@@ -21,12 +26,14 @@ export const AUTH_MODAL_TYPES: Record<AuthDialogMode, AuthModalType> = {
   ForgotPassword: AuthModalType.forgot,
   Login: AuthModalType.login,
   SignUp: AuthModalType.signup,
+  Welcome: AuthModalType.signup, // FIXME: Replace with new value
 }
 
 export const DEFAULT_AUTH_MODAL_INTENTS: Record<AuthDialogMode, AuthIntent> = {
   ForgotPassword: Intent.forgot,
   Login: Intent.login,
   SignUp: Intent.signup,
+  Welcome: Intent.signup, // FIXME: Replace with new value
 }
 
 export type AuthDialogOptions = {
@@ -54,6 +61,9 @@ type State = {
   isVisible: boolean
   mode: AuthDialogMode
   options: AuthDialogOptions
+  values: {
+    email?: string
+  }
 }
 
 export const INITIAL_STATE: State = {
@@ -64,13 +74,14 @@ export const INITIAL_STATE: State = {
   mode: "SignUp",
   isVisible: false,
   options: {},
+  values: {},
 }
 
 export interface ShowAuthDialogOptions {
   /** Values passed to analytics for tracking */
   analytics: AuthDialogAnalytics
   /** View mode to open dialog in */
-  mode: AuthDialogMode
+  mode?: AuthDialogMode
   options?: AuthDialogOptions
 }
 
@@ -94,20 +105,26 @@ type Action =
 
 export const reducer = (state: State, action: Action) => {
   switch (action.type) {
-    case "MODE":
+    case "MODE": {
       return { ...state, mode: action.payload.mode }
+    }
 
-    case "SET":
+    case "SET": {
       return merge({}, state, action.payload)
+    }
 
-    case "SHOW":
+    case "SHOW": {
       return { ...state, isVisible: true }
+    }
 
-    case "HIDE": // Resets state on close
+    case "HIDE": {
+      // Resets state on close
       return INITIAL_STATE
+    }
 
-    default:
+    default: {
       return state
+    }
   }
 }
 
@@ -125,11 +142,11 @@ export const AuthDialogProvider: FC<Omit<AuthDialogProps, "onClose">> = ({
 
   const showAuthDialog = ({
     analytics,
-    mode,
+    mode = "Welcome",
     options,
   }: {
     analytics: AuthDialogAnalytics
-    mode: AuthDialogMode
+    mode?: AuthDialogMode
     options?: AuthDialogOptions
   }) => {
     if (isLoggedIn) {
