@@ -68,7 +68,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
 }) => {
   if (cultural_maker) {
     return (
-      <Text variant="xs" overflowEllipsis>
+      <Text variant="sm-display" lineHeight="22px" overflowEllipsis>
         {cultural_maker}
       </Text>
     )
@@ -77,7 +77,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
   if (!artists?.length) {
     if (showSaveButton) {
       return (
-        <Text variant="xs" overflowEllipsis>
+        <Text variant="sm-display" lineHeight="22px" overflowEllipsis>
           Artist Unavailable
         </Text>
       )
@@ -87,7 +87,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
   }
 
   return (
-    <Text variant="xs" overflowEllipsis>
+    <Text variant="sm-display" lineHeight="22px" overflowEllipsis>
       {artists.map((artist, i) => {
         if (!artist || !artist.href || !artist.name) return null
 
@@ -108,7 +108,12 @@ const TitleLine: React.FC<DetailsProps> = ({
 }) => {
   return (
     <ConditionalLink includeLinks={includeLinks} to={href}>
-      <Text variant="xs" color="black60" overflowEllipsis>
+      <Text
+        variant="sm-display"
+        lineHeight="22px"
+        color="black60"
+        overflowEllipsis
+      >
         <i>{title}</i>
         {date && `, ${date}`}
       </Text>
@@ -122,7 +127,12 @@ const PartnerLine: React.FC<DetailsProps> = ({
 }) => {
   if (collecting_institution) {
     return (
-      <Text variant="xs" color="black60" overflowEllipsis>
+      <Text
+        variant="sm-display"
+        lineHeight="22px"
+        color="black60"
+        overflowEllipsis
+      >
         {collecting_institution}
       </Text>
     )
@@ -131,7 +141,12 @@ const PartnerLine: React.FC<DetailsProps> = ({
   if (partner) {
     return (
       <ConditionalLink includeLinks={includeLinks} to={partner?.href}>
-        <Text variant="xs" color="black60" overflowEllipsis>
+        <Text
+          variant="sm-display"
+          lineHeight="22px"
+          color="black60"
+          overflowEllipsis
+        >
           {partner.name}
         </Text>
       </ConditionalLink>
@@ -148,7 +163,12 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
 
   if (lotClosesAt && new Date(lotClosesAt) <= new Date()) {
     return (
-      <Text variant="xs" color="black100" fontWeight="bold">
+      <Text
+        variant="sm-display"
+        lineHeight="22px"
+        color="black100"
+        fontWeight="bold"
+      >
         Bidding closed
       </Text>
     )
@@ -156,7 +176,7 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
 
   if (liveBiddingStarted) {
     return (
-      <Text variant="xs" color="blue100">
+      <Text variant="sm-display" lineHeight="22px" color="blue100">
         Bidding live now
       </Text>
     )
@@ -164,7 +184,13 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
 
   return (
     <Flex flexDirection="row" alignItems="center">
-      <Text variant="xs" color="black100" fontWeight="bold" overflowEllipsis>
+      <Text
+        variant="sm-display"
+        lineHeight="22px"
+        color="black100"
+        fontWeight="bold"
+        overflowEllipsis
+      >
         <SaleMessage {...props} /> <BidInfo {...props} />
       </Text>
       {showActivePartnerOfferLine && <ActivePartnerOfferTimer {...props} />}
@@ -214,7 +240,12 @@ const BidTimerLine: React.FC<DetailsProps> = ({
     const formattedRegistrationEndsAt = date.toFormat("MMM d")
 
     return (
-      <Text variant="xs" color="black100" alignSelf="flex-start">
+      <Text
+        variant="sm-display"
+        lineHeight="22px"
+        color="black100"
+        alignSelf="flex-start"
+      >
         Register by {formattedRegistrationEndsAt}
       </Text>
     )
@@ -236,28 +267,42 @@ const BidTimerLine: React.FC<DetailsProps> = ({
 
   if (onlineBiddingExtended) {
     return (
-      <Text variant="xs" color="red100" alignSelf="flex-start">
+      <Text
+        variant="sm-display"
+        lineHeight="22px"
+        color="red100"
+        alignSelf="flex-start"
+      >
         Extended, {renderLotCloseTime} left to bid
       </Text>
     )
   }
 
   return (
-    <Text variant="xs" color={textColor} alignSelf="flex-start">
+    <Text
+      variant="sm-display"
+      lineHeight="22px"
+      color={textColor}
+      alignSelf="flex-start"
+    >
       {renderLotCloseTime} left to bid
     </Text>
   )
 }
 
 const EmptyLine: React.FC = () => {
-  return <Text variant="xs">&nbsp;</Text>
+  return (
+    <Text variant="sm-display" lineHeight="22px">
+      &nbsp;
+    </Text>
+  )
 }
 
 const HighDemandInfo = () => {
   return (
     <Flex flexDirection="row" alignItems="center">
       <HighDemandIcon fill="blue100" />
-      <Text variant="xs" color="blue100" ml={0.3}>
+      <Text variant="sm-display" lineHeight="22px" color="blue100" ml={0.3}>
         &nbsp;High Demand
       </Text>
     </Flex>
@@ -331,7 +376,13 @@ const ActivePartnerOfferTimer: React.FC<DetailsProps> = ({
   const { days, hours } = time
 
   return (
-    <Text variant="xs" color="blue100" px={0.5} alignSelf="flex-start">
+    <Text
+      variant="sm-display"
+      lineHeight="22px"
+      color="blue100"
+      px={0.5}
+      alignSelf="flex-start"
+    >
       Exp.{SEPARATOR}
       {Number(days)}d{SEPARATOR}
       {Number(hours)}h{SEPARATOR}
@@ -425,7 +476,7 @@ export const Details: React.FC<DetailsProps> = ({
         <Flex flexDirection="row">
           <Join separator={<Spacer x={1} />}>
             {!hideLotLabel && (
-              <Text variant="xs" flexShrink={0}>
+              <Text variant="sm-display" lineHeight="22px" flexShrink={0}>
                 LOT {rest.artwork?.sale_artwork?.lotLabel}
               </Text>
             )}
@@ -557,7 +608,12 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   }
 
   return (
-    <Text variant="xs" color={labelColor} overflowEllipsis>
+    <Text
+      variant="sm-display"
+      lineHeight="22px"
+      color={labelColor}
+      overflowEllipsis
+    >
       {lotCloseCopy}
     </Text>
   )
@@ -657,14 +713,26 @@ export const DetailsPlaceholder: React.FC<DetailsPlaceholderProps> = ({
   return (
     <>
       {!hideArtistName && (
-        <SkeletonText variant="sm-display">Artist Name</SkeletonText>
+        <SkeletonText variant="sm-display" lineHeight="22px">
+          Artist Name
+        </SkeletonText>
       )}
 
-      <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
+      <SkeletonText variant="sm-display" lineHeight="22px">
+        Artwork Title
+      </SkeletonText>
 
-      {!hidePartnerName && <SkeletonText variant="xs">Partner</SkeletonText>}
+      {!hidePartnerName && (
+        <SkeletonText variant="sm-display" lineHeight="22px">
+          Partner
+        </SkeletonText>
+      )}
 
-      {!hideSaleInfo && <SkeletonText variant="xs">Price</SkeletonText>}
+      {!hideSaleInfo && (
+        <SkeletonText variant="sm-display" lineHeight="22px">
+          Price
+        </SkeletonText>
+      )}
     </>
   )
 }
