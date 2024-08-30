@@ -1,7 +1,7 @@
 import { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
 import { renderRelayTree } from "DevTools/renderRelayTree"
 import { graphql } from "react-relay"
-import { DetailsFragmentContainer } from "Components/Artwork/Details"
+import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
