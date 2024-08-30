@@ -10,11 +10,11 @@ import {
   THEME,
   Text,
 } from "@artsy/palette"
-import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
 import { SUBMISSION_LAYOUT_TOP_NAV_HEIGHT } from "Apps/Conversations/components/ConversationLayout"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
+import { SellMeta } from "Apps/Sell/Routes/MarketingLanding/Components/SellMeta"
 import { RouterLink } from "System/Components/RouterLink"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { cropped } from "Utils/resized"

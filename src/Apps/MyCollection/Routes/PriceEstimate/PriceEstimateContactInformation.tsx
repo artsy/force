@@ -5,14 +5,14 @@ import { PriceEstimateContactInformation_artwork$data } from "__generated__/Pric
 import { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
 import { AppContainer } from "Apps/Components/AppContainer"
 import {
-  contactInformationValidationSchema,
-  validate,
-} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
-import {
   ContactInformationFormFragmentContainer,
   ContactInformationFormModel,
 } from "Apps/MyCollection/ContactInformation/ContactInformationForm"
 import { useRequestPriceEstimate } from "Apps/MyCollection/Routes/PriceEstimate/Mutations/useRequestPriceEstimate"
+import {
+  contactInformationValidationSchema,
+  validateContactInformationValidationSchema,
+} from "Apps/MyCollection/Routes/PriceEstimate/utils/contactInformationValidationSchema"
 import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
 import { Form, Formik } from "formik"
@@ -55,7 +55,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
   const { submitMutation } = useRequestPriceEstimate()
 
   const initialValue = getContactInformationFormInitialValues(me)
-  const initialErrors = validate(
+  const initialErrors = validateContactInformationValidationSchema(
     initialValue,
     contactInformationValidationSchema
   )

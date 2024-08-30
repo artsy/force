@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { RouteProps } from "System/Router/Route"
 import { getENV } from "Utils/getENV"
+import { RouteRenderArgs } from "found"
 import { graphql } from "react-relay"
 
 const IntroRoute = loadable(
@@ -144,10 +145,76 @@ const FrameRoute = loadable(
   }
 )
 
+const MarketingLandingApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/MarketingLanding/MarketingLandingApp"
+    ),
+  {
+    resolveComponent: component => component.MarketingLandingApp,
+  }
+)
+
+const FAQApp = loadable(
+  () => import(/* webpackChunkName: "consignBundle" */ "./Routes/FAQ/FAQApp"),
+  {
+    resolveComponent: component => component.FAQApp,
+  }
+)
+
+const ConsignmentInquiryApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/ConsignmentInquiry/ConsignmentInquiry"
+    ),
+  {
+    resolveComponent: component =>
+      component.ConsignmentInquiryFragmentContainer,
+  }
+)
+const ConsignmentInquiryConfirmationApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/ConsignmentInquiry/ConsignmentInquiryConfirmation"
+    ),
+  {
+    resolveComponent: component => component.ConsignmentInquiryConfirmation,
+  }
+)
+
+const ConsignmentInquiryContainer = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/ConsignmentInquiry/ConsignmentInquiryContainer"
+    ),
+  {
+    resolveComponent: component => component.ConsignmentInquiryContainer,
+  }
+)
+
 export const sellRoutes: RouteProps[] = [
   {
     path: "/sell",
     children: [
+      {
+        path: "/",
+        layout: "FullBleed",
+        getComponent: () => MarketingLandingApp,
+        onClientSideRender: () => {
+          MarketingLandingApp.preload()
+        },
+      },
+      {
+        path: "faq",
+        layout: "NavOnly",
+        getComponent: () => FAQApp,
+        onClientSideRender: () => {
+          FAQApp.preload()
+        },
+      },
+
+      // Sell Flow: Pre-Approval Steps
+
       {
         path: "intro",
         layout: "ContainerOnly",
@@ -370,7 +437,7 @@ export const sellRoutes: RouteProps[] = [
             },
           },
 
-          // Additional Routes
+          // Sell Flow: Post-Approval Steps
 
           {
             path: "shipping-location",
@@ -469,6 +536,85 @@ export const sellRoutes: RouteProps[] = [
             prepareVariables: ({ id }) => {
               return { id }
             },
+          },
+        ],
+      },
+
+      // Inquiry Routes
+
+      {
+        path: "inquiry",
+        getComponent: () => ConsignmentInquiryContainer,
+        children: [
+          {
+            path: "/",
+            getComponent: () => ConsignmentInquiryApp,
+            layout: "ContainerOnly",
+            onClientSideRender: () => {
+              ConsignmentInquiryApp.preload()
+            },
+            query: graphql`
+              query sellRoutes_ConsignmentInquiryAppQuery {
+                me {
+                  ...ConsignmentInquiry_me
+                }
+                viewer {
+                  ...ConsignmentInquiry_viewer
+                }
+              }
+            `,
+            render: ({ Component, props }: RouteRenderArgs) => {
+              if (!(Component && props)) {
+                return undefined
+              }
+              return <Component {...props} />
+            },
+          },
+          {
+            path: "sent",
+            layout: "ContainerOnly",
+            getComponent: () => ConsignmentInquiryConfirmationApp,
+            onClientSideRender: () => {
+              ConsignmentInquiryConfirmationApp.preload()
+            },
+          },
+          {
+            path: "inquiry/:recipientEmail?",
+            getComponent: () => ConsignmentInquiryContainer,
+            children: [
+              {
+                path: "/",
+                getComponent: () => ConsignmentInquiryApp,
+                layout: "ContainerOnly",
+                onClientSideRender: () => {
+                  ConsignmentInquiryApp.preload()
+                },
+                query: graphql`
+                  query sellRoutes_ConsignmentInquiryWithRecipientEmailAppQuery {
+                    me {
+                      ...ConsignmentInquiry_me
+                    }
+                    viewer {
+                      ...ConsignmentInquiry_viewer
+                    }
+                  }
+                `,
+                render: ({ Component, props }: RouteRenderArgs) => {
+                  if (!(Component && props)) {
+                    return undefined
+                  }
+                  return <Component {...props} />
+                },
+              },
+              {
+                path: "sent",
+                layout: "ContainerOnly",
+                getComponent: () => ConsignmentInquiryConfirmationApp,
+                onClientSideRender: () => {
+                  ConsignmentInquiryConfirmationApp.preload()
+                },
+              },
+            ],
           },
         ],
       },
