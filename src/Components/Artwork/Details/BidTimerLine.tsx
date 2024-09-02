@@ -63,6 +63,7 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
         lineHeight="22px"
         color="red100"
         alignSelf="flex-start"
+        overflowEllipsis
       >
         Extended, {renderLotCloseTime} left to bid
       </Text>
