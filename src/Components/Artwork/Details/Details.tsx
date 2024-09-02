@@ -19,7 +19,7 @@ import { getSignalLabel } from "Utils/getSignalLabel"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useState } from "react"
-import { BidTimerLine } from "./BidTimerLine"
+import { BidTimerLineFragmentContainer } from "./BidTimerLine"
 
 export interface DetailsProps {
   artwork: Details_artwork$data
@@ -421,7 +421,7 @@ export const Details: React.FC<DetailsProps> = ({
         />
       )}
 
-      <BidTimerLine {...rest} />
+      <BidTimerLineFragmentContainer artwork={rest.artwork} />
 
       {padForActivePartnerOfferLine && <EmptyLine />}
     </Box>
@@ -579,6 +579,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       consignmentSubmission @include(if: $includeConsignmentSubmission) {
         internalID
       }
+      ...BidTimerLine_artwork
       ...SaveButton_artwork
       ...SaveArtworkToListsButton_artwork
       ...HoverDetails_artwork
