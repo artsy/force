@@ -100,6 +100,43 @@ describe("Details", () => {
   })
 
   describe("sale info line", () => {
+    it("should render 'Bidding Closed' when the bidding for an auction has ended", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          partnerOffer: null,
+          auction: {
+            ...artworkInAuction?.collectorSignals?.auction,
+            liveBiddingStarted: true,
+            lotClosesAt: "2022-03-12T12:33:37.000Z",
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).toContain("Bidding closed")
+    })
+
+    it("should render 'Bidding live now' when the bidding for an auction is live", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          partnerOffer: null,
+          auction: {
+            ...artworkInAuction?.collectorSignals?.auction,
+            liveBiddingStarted: true,
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).toContain("Bidding live now")
+    })
+
     it("hides the sale info line when hideSaleInfo is true", async () => {
       props = {
         hideSaleInfo: true,
@@ -591,63 +628,6 @@ describe("Details", () => {
       const html = wrapper.html()
 
       expect(html).not.toContain("Limited-Time Offer")
-    })
-  })
-
-  describe("auction signals", () => {
-    it("should render 'Bidding Closed' when the bidding for an auction has ended", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        collectorSignals: {
-          partnerOffer: null,
-          auction: {
-            ...artworkInAuction?.collectorSignals?.auction,
-            liveBiddingStarted: true,
-            lotClosesAt: "2022-03-12T12:33:37.000Z",
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data, props)
-      const html = wrapper.html()
-
-      expect(html).toContain("Bidding closed")
-    })
-
-    it("should render 'Bidding live now' when the bidding for an auction is live", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        collectorSignals: {
-          partnerOffer: null,
-          auction: {
-            ...artworkInAuction?.collectorSignals?.auction,
-            liveBiddingStarted: true,
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data, props)
-      const html = wrapper.html()
-
-      expect(html).toContain("Bidding live now")
-    })
-
-    it("should render register by date when auction is live", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        collectorSignals: {
-          partnerOffer: null,
-          auction: {
-            ...artworkInAuction?.collectorSignals?.auction,
-            liveBiddingStarted: true,
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data, props)
-      const html = wrapper.html()
-
-      expect(html).toContain("Bidding live now")
     })
   })
 })
