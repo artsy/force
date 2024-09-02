@@ -55,7 +55,7 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
   return (
     <Flex alignItems="center">
       {shouldDisplayLotCount && (
-        <Text variant="xs" color="black100">
+        <Text variant="sm-display" lineHeight="22px" color="black100">
           {lotWatcherCount}
         </Text>
       )}

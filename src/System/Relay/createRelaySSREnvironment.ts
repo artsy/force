@@ -122,7 +122,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
     }),
     principalFieldErrorHandlerMiddleware(),
     metaphysicsErrorHandlerMiddleware({ checkStatus }),
-    cacheHeaderMiddleware({ url }),
+    cacheHeaderMiddleware({ url, user }),
     cacheLoggerMiddleware(),
     loggingEnabled && loggerMiddleware(),
     loggingEnabled && metaphysicsExtensionsLoggerMiddleware(),

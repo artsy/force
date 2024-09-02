@@ -43,7 +43,7 @@ export type AddressModalAction =
 export interface AddressModalProps {
   closeModal: () => void
   onSuccess: (address: SavedAddressType) => void
-  addressModalAction: AddressModalAction | null
+  addressModalAction: AddressModalAction
 }
 
 interface FormValues {
@@ -71,30 +71,22 @@ export const AddressModal: FC<AddressModalProps> = ({
 
   const { executeUserAddressAction } = useUserAddressUpdates()
 
-  let initialValues: FormValues
+  const incomingAddress =
+    addressModalAction.type === "edit" ? addressModalAction.address : null
 
-  if (!addressModalAction) {
-    initialValues = {
-      attributes: {
-        isDefault: false,
-        ...addressWithFallbackValues({}),
-      },
-      setAsDefault: false,
-    }
-  } else {
-    const incomingAddress =
-      addressModalAction.type === "edit" ? addressModalAction.address : null
+  const initialValues: FormValues = {
+    attributes: {
+      isDefault: incomingAddress?.isDefault ?? false,
 
-    initialValues = {
-      attributes: {
-        isDefault: incomingAddress?.isDefault ?? false,
-
-        ...addressWithFallbackValues(
-          addressModalAction.type === "edit" ? addressModalAction.address : {}
-        ),
-      },
-      setAsDefault: false,
-    }
+      ...addressWithFallbackValues(
+        addressModalAction.type === "edit"
+          ? addressModalAction.address
+          : {
+              country: shippingContext.orderData.shipsFrom,
+            }
+      ),
+    },
+    setAsDefault: false,
   }
 
   const handleSubmit = async (
@@ -464,10 +456,7 @@ const handleGravityErrors = (
     SERVER_ERROR_MAP[errors[0].message]
 
   if (userMessage) {
-    helpers.setFieldError(
-      `attributes.${userMessage.field}`,
-      userMessage.message
-    )
+    helpers.setFieldError(userMessage.field, userMessage.message)
   } else {
     helpers.setStatus(GENERIC_FAIL_MESSAGE)
   }
