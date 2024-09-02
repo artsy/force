@@ -30,7 +30,12 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
     const formattedRegistrationEndsAt = date.toFormat("MMM d")
 
     return (
-      <Text variant="xs" color="black100" alignSelf="flex-start">
+      <Text
+        variant="sm-display"
+        lineHeight="22px"
+        color="black100"
+        alignSelf="flex-start"
+      >
         Register by {formattedRegistrationEndsAt}
       </Text>
     )
@@ -52,14 +57,24 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
 
   if (onlineBiddingExtended) {
     return (
-      <Text variant="xs" color="red100" alignSelf="flex-start">
+      <Text
+        variant="sm-display"
+        lineHeight="22px"
+        color="red100"
+        alignSelf="flex-start"
+      >
         Extended, {renderLotCloseTime} left to bid
       </Text>
     )
   }
 
   return (
-    <Text variant="xs" color={textColor} alignSelf="flex-start">
+    <Text
+      variant="sm-display"
+      lineHeight="22px"
+      color={textColor}
+      alignSelf="flex-start"
+    >
       {renderLotCloseTime} left to bid
     </Text>
   )
