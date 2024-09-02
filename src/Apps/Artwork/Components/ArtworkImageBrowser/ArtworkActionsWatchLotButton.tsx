@@ -7,8 +7,8 @@ import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsWatchLotButton_artwork$data } from "__generated__/ArtworkActionsWatchLotButton_artwork.graphql"
 import { useTranslation } from "react-i18next"
-import BellFilledIcon from "@artsy/icons/BellFilledIcon"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import HeartFillIcon from "@artsy/icons/HeartFillIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 
 interface ArtworkActionsWatchLotButtonProps {
   isSaved: boolean
@@ -85,8 +85,8 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
         return (
           <UtilButton
             ref={anchorRef}
-            name="bell"
-            Icon={isSaved ? FilledIcon : BellStrokeIcon}
+            name="heart"
+            Icon={isSaved ? FilledIcon : HeartStrokeIcon}
             label={
               isSaved
                 ? t(`artworkPage.actions.watchingLot`)
@@ -100,7 +100,7 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
   )
 }
 
-const FilledIcon = () => <BellFilledIcon fill="blue100" />
+const FilledIcon = () => <HeartFillIcon fill="blue100" />
 
 export const ArtworkActionsWatchLotButtonFragmentContainer = createFragmentContainer(
   ArtworkActionsWatchLotButton,

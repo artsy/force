@@ -35,6 +35,7 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
         lineHeight="22px"
         color="black100"
         alignSelf="flex-start"
+        overflowEllipsis
       >
         Register by {formattedRegistrationEndsAt}
       </Text>
