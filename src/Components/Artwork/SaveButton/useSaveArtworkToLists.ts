@@ -15,7 +15,11 @@ type Artwork = {
   isInAuction: boolean
   isSavedToDefaultList: boolean
   isSavedToCustomLists: boolean
-  lotWatcherCount: number
+  collectorSignals: {
+    auction: {
+      lotWatcherCount: number
+    } | null
+  } | null
 }
 
 export interface SaveArtworkToListsOptions {
@@ -90,7 +94,8 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
             isSaved: !artwork.isSavedToDefaultList,
             collectorSignals: {
               auction: {
-                lotWatcherCount: artwork.lotWatcherCount,
+                lotWatcherCount:
+                  artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
               },
             },
           },

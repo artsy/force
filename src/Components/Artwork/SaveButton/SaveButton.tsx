@@ -98,7 +98,17 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
 
   const { handleSave } = useSaveArtwork({
     isSaved,
-    artwork,
+    artwork: {
+      internalID: artwork.internalID,
+      slug: artwork.slug,
+      collectorSignals: {
+        auction: {
+          lotWatcherCount:
+            artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
+        },
+      },
+      id: artwork.id,
+    },
     contextModule,
     onSave: ({ action, artwork }) => {
       tracking.trackEvent({
