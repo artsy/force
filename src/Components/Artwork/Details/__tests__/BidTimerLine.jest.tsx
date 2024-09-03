@@ -48,7 +48,7 @@ describe("BidTimerLine", () => {
     `,
   })
 
-  it("renders registration message when registration is still open and it is not an auction artwork", () => {
+  it("renders registration message when registration is still open and it is not a lot detail card", () => {
     renderWithRelay({
       Artwork: () => ({
         collectorSignals: {
@@ -63,6 +63,25 @@ describe("BidTimerLine", () => {
 
     const message = screen.getByText(/Register by/i)
     expect(message).toBeInTheDocument()
+  })
+
+  it("does not render registration message when it is a lot detail card", () => {
+    mockUseArtworkGridContext.mockReturnValue({ isAuctionArtwork: true })
+
+    renderWithRelay({
+      Artwork: () => ({
+        collectorSignals: {
+          auction: {
+            lotClosesAt: DateTime.local().plus({ days: 1 }).toString(),
+            onlineBiddingExtended: false,
+            registrationEndsAt: DateTime.local().plus({ days: 1 }).toString(),
+          },
+        },
+      }),
+    })
+    const message = screen.queryByText(/Register by/i)
+
+    expect(message).not.toBeInTheDocument()
   })
 
   it("renders time left to bid when bidding is still open", () => {
@@ -84,7 +103,27 @@ describe("BidTimerLine", () => {
     expect(timeLeft).toBeInTheDocument()
   })
 
-  it("renders extended bidding time when online bidding has been extended", () => {
+  it("renders extended bidding time when online bidding has been extended and is a lot detail card", () => {
+    mockTimer("0", "0", "30")
+    mockUseArtworkGridContext.mockReturnValue({ isAuctionArtwork: true })
+
+    renderWithRelay({
+      Artwork: () => ({
+        collectorSignals: {
+          auction: {
+            lotClosesAt: DateTime.local().plus({ days: 1 }).toString(),
+            onlineBiddingExtended: true,
+            registrationEndsAt: null,
+          },
+        },
+      }),
+    })
+
+    const extendedTime = screen.getByText(/Extended, 30m left/i)
+    expect(extendedTime).toBeInTheDocument()
+  })
+
+  it("renders bidding time without 'Extended' text when online bidding has been extended and is not a lot detail card", () => {
     mockTimer("0", "0", "30")
 
     renderWithRelay({
@@ -99,7 +138,7 @@ describe("BidTimerLine", () => {
       }),
     })
 
-    const extendedTime = screen.getByText(/Extended, 30m left to bid/i)
+    const extendedTime = screen.getByText(/30m left to bid/i)
     expect(extendedTime).toBeInTheDocument()
   })
 })

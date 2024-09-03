@@ -56,7 +56,7 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
 
   const textColor = numHours < 1 && numDays === 0 ? "red100" : "blue100"
 
-  if (onlineBiddingExtended) {
+  if (onlineBiddingExtended && isAuctionArtwork) {
     return (
       <Text
         variant="sm-display"
@@ -65,7 +65,7 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
         alignSelf="flex-start"
         overflowEllipsis
       >
-        Extended, {renderLotCloseTime} left to bid
+        Extended, {renderLotCloseTime} left
       </Text>
     )
   }

@@ -426,7 +426,7 @@ export const Details: React.FC<DetailsProps> = ({
       )}
 
       <Flex justifyContent="space-between" alignItems="flex-start">
-        <Flex flexDirection="column" maxWidth="85%">
+        <Flex flexDirection="column" maxWidth="75%">
           {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
