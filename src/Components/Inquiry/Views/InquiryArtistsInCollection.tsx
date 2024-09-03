@@ -9,13 +9,19 @@ import {
 import { Box, Stack, Text } from "@artsy/palette"
 import { CollectorProfileArtistsAdd } from "Components/CollectorProfile/CollectorProfileArtistsAdd"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
 import { FC } from "react"
+import { Environment } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useOnce } from "Utils/Hooks/useOnce"
 
 export const InquiryArtistsInCollection: FC = () => {
   const { next, relayEnvironment, context } = useInquiryContext()
+
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
+    relayEnvironment: relayEnvironment.current as Environment,
+  })
 
   const {
     contextPageOwnerId,
@@ -25,6 +31,10 @@ export const InquiryArtistsInCollection: FC = () => {
   const { trackEvent } = useTracking()
 
   useOnce(() => {
+    submitUpdateMyUserProfile({
+      promptedForUpdate: true,
+    })
+
     const payload: EditProfileModalViewed = {
       action: ActionType.editProfileModalViewed,
       context_module: ContextModule.inquiry,
