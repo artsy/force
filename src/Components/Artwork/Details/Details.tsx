@@ -644,10 +644,14 @@ export const DetailsPlaceholder: React.FC<DetailsPlaceholderProps> = ({
   return (
     <>
       {!hideArtistName && (
-        <SkeletonText variant="sm-display">Artist Name</SkeletonText>
+        <SkeletonText variant="sm-display" lineHeight="22px">
+          Artist Name
+        </SkeletonText>
       )}
 
-      <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
+      <SkeletonText variant="sm-display" lineHeight="22px">
+        Artwork Title
+      </SkeletonText>
 
       {!hidePartnerName && (
         <SkeletonText variant="sm-display" lineHeight="22px">
