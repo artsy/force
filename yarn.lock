@@ -84,12 +84,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@37.13.4":
-  version "37.13.4"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-37.13.4.tgz#3b6faff7679d13d76750df744560fb0f4875bec8"
-  integrity sha512-jbjmX3RVqcqZoxn639dZ8WZsPb4+Ti0ylP7vlZ7Kl5Fb/kbhUSSfRQaHaPh1zl30hm4lakagDKVPWoF3zvvmhQ==
+"@artsy/palette-charts@37.14.1":
+  version "37.14.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-37.14.1.tgz#94345be18864c434f97a493674e22819a45ee5ed"
+  integrity sha512-TJHjZNCJayRca7WREPod1mDoCMj18tlC1M/RjZvD7nIk3EiV7WKGN7sY4PW3xMcdqor2km0OYWN2oB4xdn1uGw==
   dependencies:
-    "@artsy/palette" "^38.13.4"
+    "@artsy/palette" "^38.14.1"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -101,28 +101,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-6.0.3.tgz#48b5854039e7f494fdef75e2d84682447f447f2d"
   integrity sha512-Iuq3hjvx6O2d1glmuoo1kFnMLOBJFW2OuQ4Q5fXS1Q/DMAvjwrBmmzZE6HVzwR5BwX5Xy6knRiD8FuPrldeo0Q==
 
-"@artsy/palette@38.14.1":
+"@artsy/palette@38.14.1", "@artsy/palette@^38.14.1":
   version "38.14.1"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-38.14.1.tgz#b9dff95f698127940d02ceaad15a399e08e4b85d"
   integrity sha512-1gm2TJuaJVAMC3xMSHP6PPCPt40Iy+yET5s6j5ggxON2eIOMf0DSkvuM6IC0MCsHE418K5xmOm6v/MCK3LUxRw==
-  dependencies:
-    "@artsy/icons" "^3.2.2"
-    "@artsy/palette-tokens" "^6.0.3"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    es-toolkit "^1.16.0"
-    proportional-scale "^4.0.0"
-    react-focus-on "^3.7.0"
-    react-lazy-load-image-component "1.5.5"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-    use-keyboard-list-navigation "2.4.2"
-
-"@artsy/palette@^38.13.4":
-  version "38.13.4"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-38.13.4.tgz#5ac87fbf9c6311224882b889041838cabed00fb1"
-  integrity sha512-Iej4WnDIO02WpctWYLUCz2r00sCkHSEIrWIZlTEVabLnTMbvbvWHHsRMB9QX4AX7jKwnsm3SvICBmvCMzaRRwg==
   dependencies:
     "@artsy/icons" "^3.2.2"
     "@artsy/palette-tokens" "^6.0.3"
