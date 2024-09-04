@@ -21,7 +21,7 @@ import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import { compact } from "lodash"
 import { Router } from "found"
 import { useRouter } from "System/Hooks/useRouter"
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ActionType, ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
 import HelpIcon from "@artsy/icons/HelpIcon"
@@ -84,21 +84,14 @@ export class ArtworkSidebarBidAction extends React.Component<
   }
 
   @track((props: ArtworkSidebarBidActionProps) => ({
-    artwork_slug: props.artwork.slug,
-    products: [
-      {
-        product_id: props.artwork.internalID,
-        quantity: 1,
-        price:
-          props.artwork.myLotStanding &&
-          props.artwork.myLotStanding[0] &&
-          (props.artwork.myLotStanding[0].most_recent_bid?.max_bid?.cents ??
-            0) / 100,
-      },
-    ],
-    auction_slug: props.artwork.sale?.slug,
-    context_page: DeprecatedSchema.PageName.ArtworkPage,
-    action_type: DeprecatedSchema.ActionType.ClickedBid,
+    action: ActionType.clickedBid,
+    context_owner_type: OwnerType.artwork,
+    context_owner_slug: props.artwork.slug,
+    context_owner_id: props.artwork.internalID,
+    signal_lot_watcher_count:
+      props.artwork.collectorSignals?.auction?.lotWatcherCount ?? undefined,
+    signal_bid_count:
+      props.artwork.collectorSignals?.auction?.bidCount ?? undefined,
   }))
   redirectToBid(firstIncrement: number) {
     const { slug, sale } = this.props.artwork
@@ -399,6 +392,12 @@ export const ArtworkSidebarBidActionFragmentContainer = withAuthDialog(
               display
             }
             endedAt
+          }
+          collectorSignals {
+            auction {
+              bidCount
+              lotWatcherCount
+            }
           }
         }
       `,

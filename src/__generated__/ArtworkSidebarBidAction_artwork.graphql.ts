@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<13a9c21a90b44281d74e4dcca28f09f6>>
+ * @generated SignedSource<<00865c4125564b1c2368736721c8e703>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarBidAction_artwork$data = {
+  readonly collectorSignals: {
+    readonly auction: {
+      readonly bidCount: number;
+      readonly lotWatcherCount: number;
+    } | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly myLotStanding: ReadonlyArray<{
     readonly most_recent_bid: {
@@ -223,6 +229,42 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorSignals",
+      "kind": "LinkedField",
+      "name": "collectorSignals",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "AuctionCollectorSignals",
+          "kind": "LinkedField",
+          "name": "auction",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "bidCount",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "lotWatcherCount",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -230,6 +272,6 @@ return {
 };
 })();
 
-(node as any).hash = "ef98ba696c44f0d74e28be6047ea4ce3";
+(node as any).hash = "e849b5aff04538f5a633abd7f229f8eb";
 
 export default node;
