@@ -1,4 +1,5 @@
 import { isServer } from "Server/isServer"
+import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 
 export const RELAY_CACHE_CONFIG_HEADER_KEY = "x-relay-cache-config"
 export const RELAY_CACHE_PATH_HEADER_KEY = "x-relay-cache-path"
@@ -8,7 +9,7 @@ interface CacheHeaderMiddlewareProps {
   user: User
 }
 
-export const shouldSkipCDNCache = (req, user) => {
+export const shouldSkipCDNCache = (req, user, path) => {
   const isLoggedIn = !!user
 
   if (isLoggedIn) {
@@ -17,6 +18,13 @@ export const shouldSkipCDNCache = (req, user) => {
 
   if (req.cacheConfig?.force === true) {
     return true
+  }
+
+  if (path) {
+    const route = findRoutesByPath({ path })[0]
+    if (route?.serverCacheTTL === 0) {
+      return true
+    }
   }
 
   return false
@@ -41,7 +49,7 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
       cacheHeaders[RELAY_CACHE_PATH_HEADER_KEY] = url
     }
 
-    const cacheControlHeader = shouldSkipCDNCache(req, props?.user)
+    const cacheControlHeader = shouldSkipCDNCache(req, props?.user, url)
       ? { "Cache-Control": "no-cache" }
       : {}
 
