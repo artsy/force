@@ -40,7 +40,7 @@ export const AuctionCurrentAuctionsRailFragmentContainer = createFragmentContain
     viewer: graphql`
       fragment AuctionCurrentAuctionsRail_viewer on Viewer {
         salesConnection(
-          first: 99
+          first: 30
           published: true
           live: true
           sort: LICENSED_TIMELY_AT_NAME_DESC
