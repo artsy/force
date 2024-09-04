@@ -1,6 +1,6 @@
 import React from "react"
 import { screen } from "@testing-library/react"
-import { BidTimerLineFragmentContainer } from "Components/Artwork/Details/BidTimerLine"
+import { BidTimerLine } from "Components/Artwork/Details/BidTimerLine"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { DateTime } from "luxon"
@@ -35,7 +35,7 @@ describe("BidTimerLine", () => {
   const { renderWithRelay } = setupTestWrapperTL<BidTimerLineTestQuery>({
     Component: props => {
       if (props.artwork) {
-        return <BidTimerLineFragmentContainer {...(props as any)} />
+        return <BidTimerLine {...(props as any)} />
       }
       return null
     },

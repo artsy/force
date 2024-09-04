@@ -3,15 +3,17 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { useTimer } from "Utils/Hooks/useTimer"
 import { Text } from "@artsy/palette"
 import { DateTime } from "luxon"
-import { createFragmentContainer, graphql } from "react-relay"
-import { BidTimerLine_artwork$data } from "__generated__/BidTimerLine_artwork.graphql"
+import { graphql, useFragment } from "react-relay"
+import { BidTimerLine_artwork$key } from "__generated__/BidTimerLine_artwork.graphql"
 
 interface BidTimerLineProps {
-  artwork: BidTimerLine_artwork$data
+  artwork: BidTimerLine_artwork$key
 }
 
 export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
-  const { collectorSignals } = artwork
+  const data = useFragment(bidTimerLineFragment, artwork)
+
+  const { collectorSignals } = data
   const { lotClosesAt, registrationEndsAt, onlineBiddingExtended } =
     collectorSignals?.auction ?? {}
   const { time } = useTimer(lotClosesAt ?? "")
@@ -82,19 +84,14 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
   )
 }
 
-export const BidTimerLineFragmentContainer = createFragmentContainer(
-  BidTimerLine,
-  {
-    artwork: graphql`
-      fragment BidTimerLine_artwork on Artwork {
-        collectorSignals {
-          auction {
-            lotClosesAt
-            registrationEndsAt
-            onlineBiddingExtended
-          }
-        }
+const bidTimerLineFragment = graphql`
+  fragment BidTimerLine_artwork on Artwork {
+    collectorSignals {
+      auction {
+        lotClosesAt
+        registrationEndsAt
+        onlineBiddingExtended
       }
-    `,
+    }
   }
-)
+`
