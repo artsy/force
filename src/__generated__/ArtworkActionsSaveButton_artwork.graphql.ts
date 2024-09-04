@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa02053425a9b84ea99a0a5edbba7acd>>
+ * @generated SignedSource<<25b38669131f34ff8482990ba48202d4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActionsSaveButton_artwork$data = {
   readonly artistNames: string | null | undefined;
+  readonly collectorSignals: {
+    readonly auction: {
+      readonly lotWatcherCount: number;
+    } | null | undefined;
+  } | null | undefined;
   readonly date: string | null | undefined;
   readonly id: string;
   readonly internalID: string;
@@ -154,6 +159,35 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorSignals",
+      "kind": "LinkedField",
+      "name": "collectorSignals",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "AuctionCollectorSignals",
+          "kind": "LinkedField",
+          "name": "auction",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "lotWatcherCount",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkActionsWatchLotButton_artwork"
@@ -163,6 +197,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e2b65e0567a603e111ee4ea38d708dfd";
+(node as any).hash = "8ac5a7930e72e2bd081149315d4109a9";
 
 export default node;

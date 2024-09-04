@@ -3,7 +3,7 @@ import { Box, BoxProps } from "@artsy/palette"
 import {
   DetailsFragmentContainer,
   DetailsPlaceholder,
-} from "Components/Artwork/Details"
+} from "Components/Artwork/Details/Details"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"

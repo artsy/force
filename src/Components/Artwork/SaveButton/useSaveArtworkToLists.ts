@@ -15,6 +15,11 @@ type Artwork = {
   isInAuction: boolean
   isSavedToDefaultList: boolean
   isSavedToCustomLists: boolean
+  collectorSignals: {
+    auction: {
+      lotWatcherCount: number
+    } | null
+  } | null
 }
 
 export interface SaveArtworkToListsOptions {
@@ -87,6 +92,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
             id: artwork.id,
             slug: artwork.slug,
             isSaved: !artwork.isSavedToDefaultList,
+            collectorSignals: artwork.collectorSignals ?? null,
           },
           /**
            * TODO: We don't _really_ need an optimistic response and

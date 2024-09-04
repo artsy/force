@@ -38,6 +38,12 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
       isInAuction: !!artwork.isInAuction,
       isSavedToDefaultList,
       isSavedToCustomLists: artwork.isSavedToList,
+      collectorSignals: {
+        auction: {
+          lotWatcherCount:
+            artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
+        },
+      },
     },
   })
 

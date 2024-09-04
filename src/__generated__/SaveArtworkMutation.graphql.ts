@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79a59ee687db5d2f9f0b18096d618362>>
+ * @generated SignedSource<<cd54db32e7d1b5c5b7841acf0ec44775>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,11 @@ export type SaveArtworkMutation$variables = {
 export type SaveArtworkMutation$data = {
   readonly saveArtwork: {
     readonly artwork: {
+      readonly collectorSignals: {
+        readonly auction: {
+          readonly lotWatcherCount: number;
+        } | null | undefined;
+      } | null | undefined;
       readonly id: string;
       readonly isSaved: boolean | null | undefined;
       readonly slug: string;
@@ -35,6 +40,11 @@ export type SaveArtworkMutation$data = {
 export type SaveArtworkMutation$rawResponse = {
   readonly saveArtwork: {
     readonly artwork: {
+      readonly collectorSignals: {
+        readonly auction: {
+          readonly lotWatcherCount: number;
+        } | null | undefined;
+      } | null | undefined;
       readonly id: string;
       readonly isSaved: boolean | null | undefined;
       readonly slug: string;
@@ -105,6 +115,35 @@ v2 = [
             "kind": "ScalarField",
             "name": "isSaved",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CollectorSignals",
+            "kind": "LinkedField",
+            "name": "collectorSignals",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "AuctionCollectorSignals",
+                "kind": "LinkedField",
+                "name": "auction",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "lotWatcherCount",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -161,16 +200,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "d4ff555787e7ef52d0fb0780ec0fbf6c",
+    "cacheID": "ce0ddbb8d70edef386c711b28e8a951f",
     "id": null,
     "metadata": {},
     "name": "SaveArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation SaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      isSaved\n    }\n    me {\n      id\n      counts {\n        savedArtworks\n      }\n    }\n  }\n}\n"
+    "text": "mutation SaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      isSaved\n      collectorSignals {\n        auction {\n          lotWatcherCount\n        }\n      }\n    }\n    me {\n      id\n      counts {\n        savedArtworks\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fc926e47dcbd0164ebc7fcf03d15b7b8";
+(node as any).hash = "61927c650e7c9a584b4941326d6a924b";
 
 export default node;
