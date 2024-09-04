@@ -49,7 +49,7 @@ export const AuctionWorksByFollowedArtistsRailFragmentContainer = createFragment
       fragment AuctionWorksByFollowedArtistsRail_viewer on Viewer
         @argumentDefinitions(saleID: { type: "String" }) {
         saleArtworksConnection(
-          first: 99
+          first: 30
           aggregations: [TOTAL]
           saleSlug: $saleID
           includeArtworksByFollowedArtists: true

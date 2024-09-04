@@ -38,7 +38,6 @@ import {
   IP_DENYLIST,
   NODE_ENV,
   SENTRY_PRIVATE_DSN,
-  ENABLE_GRAPHQL_PROXY,
 } from "./Server/config"
 
 // NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
@@ -97,13 +96,11 @@ export function initializeMiddleware(app) {
   app.use(bodyParser.urlencoded({ extended: true }))
 
   /**
-   * Mount GraphQL proxy and cache. If logged in we hit Metaphysics directly.
+   * Mount GraphQL proxy with cache. Support route even when proxying disabled, in the interest of stale clients.
    * @important Body parser middleware must always be above the proxy.
    * @see: System/Relay/getMetaphysicsEndpoint.ts
    */
-  if (ENABLE_GRAPHQL_PROXY) {
-    app.use("/api/metaphysics", graphqlProxyMiddleware)
-  }
+  app.use("/api/metaphysics", graphqlProxyMiddleware)
 
   // Ensure basic security settings
   applySecurityMiddleware(app)
