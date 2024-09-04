@@ -207,8 +207,7 @@ const CollectorSignalLine: React.FC<DetailsProps> = ({
 
   return (
     <Text
-      variant="sm-display"
-      lineHeight="22px"
+      variant="xs"
       color="blue100"
       backgroundColor="blue10"
       px={0.5}
