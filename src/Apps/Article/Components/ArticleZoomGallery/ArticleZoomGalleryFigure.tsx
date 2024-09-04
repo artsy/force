@@ -35,6 +35,9 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
 
   if (!src) return null
 
+  const imageTitle =
+    figure.__typename === "Artwork" ? figure.formattedMetadata : ""
+
   const xl = {
     img: resized(src, { width: 2000, height: 2000 }),
     media: {
@@ -100,7 +103,7 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
             width="100%"
             height="100%"
             src={sm.img.src}
-            alt=""
+            alt={imageTitle ?? ""}
             loading="lazy"
           />
         </picture>
@@ -137,6 +140,7 @@ export const ArticleZoomGalleryFigureFragmentContainer = createFragmentContainer
       fragment ArticleZoomGalleryFigure_figure on ArticleSectionImageCollectionFigure {
         __typename
         ... on Artwork {
+          formattedMetadata
           image {
             width
             height

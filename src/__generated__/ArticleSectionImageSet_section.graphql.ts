@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<85da7964199a420992e6de5379eaa481>>
+ * @generated SignedSource<<0e0b2e8d0ea0fc75e71d1e9a1ea61e58>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,7 @@ export type ArticleSectionImageSet_section$data = {
     } | null | undefined;
   } | {
     readonly __typename: "Artwork";
+    readonly formattedMetadata: string | null | undefined;
     readonly id: string;
     readonly image: {
       readonly large: {
@@ -65,6 +66,13 @@ export type ArticleSectionImageSet_section$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v1 = {
   "kind": "Literal",
   "name": "version",
   "value": [
@@ -74,7 +82,7 @@ var v0 = {
     "large"
   ]
 },
-v1 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -104,65 +112,56 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "id",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "Image",
-    "kind": "LinkedField",
-    "name": "image",
-    "plural": false,
-    "selections": [
-      {
-        "alias": "small",
-        "args": [
-          {
-            "kind": "Literal",
-            "name": "height",
-            "value": 80
-          },
-          (v0/*: any*/),
-          {
-            "kind": "Literal",
-            "name": "width",
-            "value": 80
-          }
-        ],
-        "concreteType": "CroppedImageUrl",
-        "kind": "LinkedField",
-        "name": "cropped",
-        "plural": false,
-        "selections": (v1/*: any*/),
-        "storageKey": "cropped(height:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:80)"
-      },
-      {
-        "alias": "large",
-        "args": [
-          (v0/*: any*/),
-          {
-            "kind": "Literal",
-            "name": "width",
-            "value": 1220
-          }
-        ],
-        "concreteType": "ResizedImageUrl",
-        "kind": "LinkedField",
-        "name": "resized",
-        "plural": false,
-        "selections": (v1/*: any*/),
-        "storageKey": "resized(version:[\"main\",\"normalized\",\"larger\",\"large\"],width:1220)"
-      }
-    ],
-    "storageKey": null
-  }
-];
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Image",
+  "kind": "LinkedField",
+  "name": "image",
+  "plural": false,
+  "selections": [
+    {
+      "alias": "small",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "height",
+          "value": 80
+        },
+        (v1/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "width",
+          "value": 80
+        }
+      ],
+      "concreteType": "CroppedImageUrl",
+      "kind": "LinkedField",
+      "name": "cropped",
+      "plural": false,
+      "selections": (v2/*: any*/),
+      "storageKey": "cropped(height:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:80)"
+    },
+    {
+      "alias": "large",
+      "args": [
+        (v1/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "width",
+          "value": 1220
+        }
+      ],
+      "concreteType": "ResizedImageUrl",
+      "kind": "LinkedField",
+      "name": "resized",
+      "plural": false,
+      "selections": (v2/*: any*/),
+      "storageKey": "resized(version:[\"main\",\"normalized\",\"larger\",\"large\"],width:1220)"
+    }
+  ],
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -218,13 +217,26 @@ return {
         },
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": [
+            (v0/*: any*/),
+            (v3/*: any*/)
+          ],
           "type": "ArticleImageSection",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "formattedMetadata",
+              "storageKey": null
+            },
+            (v0/*: any*/),
+            (v3/*: any*/)
+          ],
           "type": "Artwork",
           "abstractKey": null
         }
@@ -237,6 +249,6 @@ return {
 };
 })();
 
-(node as any).hash = "38946a868f90c71b53c8120b3d841674";
+(node as any).hash = "0b40f6fb7b4e2722eb05fbb39490daae";
 
 export default node;

@@ -39,7 +39,6 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
     }
     showArticleZoomGallery(section.cover.id)
   }
-
   if (
     !(
       section.cover?.__typename === "ArticleImageSection" ||
@@ -48,8 +47,12 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
   ) {
     return null
   }
-
   const image = section.cover.image
+
+  const imageTitle =
+    section.cover?.__typename === "Artwork"
+      ? section.cover.formattedMetadata
+      : ""
 
   if (!image) return null
 
@@ -78,7 +81,7 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
                     width={image.small?.width}
                     height={image.small?.height}
                     lazyLoad
-                    alt=""
+                    alt={imageTitle ?? ""}
                   />
 
                   <Box ml={2}>
@@ -121,7 +124,7 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
                     width="100%"
                     height="100%"
                     lazyLoad
-                    alt=""
+                    alt={imageTitle ?? ""}
                   />
 
                   <Box position="absolute" bottom={2} left={2} right={2}>
@@ -205,6 +208,7 @@ export const ArticleSectionImageSetFragmentContainer = createFragmentContainer(
             }
           }
           ... on Artwork {
+            formattedMetadata
             id
             image {
               small: cropped(
