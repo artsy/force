@@ -55,7 +55,9 @@ describe("HomeNewWorksForYouRail", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      renderWithRelay({ CollectorSignals: () => ({ partnerOffer: null }) })
+      renderWithRelay({
+        CollectorSignals: () => ({ partnerOffer: null, auction: null }),
+      })
 
       fireEvent.click(screen.getByTestId("ShelfArtwork"))
 
@@ -68,6 +70,35 @@ describe("HomeNewWorksForYouRail", () => {
         destination_page_owner_type: "artwork",
         type: "thumbnail",
         signal_label: "",
+        signal_bid_count: undefined,
+        signal_lot_watcher_count: undefined,
+      })
+    })
+
+    it("tracks auction item clicks", () => {
+      renderWithRelay({
+        CollectorSignals: () => ({
+          partnerOffer: null,
+          auction: {
+            lotWatcherCount: 5,
+            bidCount: 1,
+          },
+        }),
+      })
+
+      fireEvent.click(screen.getByTestId("ShelfArtwork"))
+
+      expect(trackEvent).toBeCalledWith({
+        action: "clickedArtworkGroup",
+        context_module: "newWorksForYouRail",
+        context_page_owner_type: "home",
+        destination_page_owner_id: "<Artwork-mock-id-1>",
+        destination_page_owner_slug: "<Artwork-mock-id-2>",
+        destination_page_owner_type: "artwork",
+        type: "thumbnail",
+        signal_label: "",
+        signal_bid_count: 1,
+        signal_lot_watcher_count: 5,
       })
     })
   })
