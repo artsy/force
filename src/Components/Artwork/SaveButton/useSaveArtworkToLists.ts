@@ -92,12 +92,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
             id: artwork.id,
             slug: artwork.slug,
             isSaved: !artwork.isSavedToDefaultList,
-            collectorSignals: {
-              auction: {
-                lotWatcherCount:
-                  artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
-              },
-            },
+            collectorSignals: artwork.collectorSignals ?? null,
           },
           /**
            * TODO: We don't _really_ need an optimistic response and

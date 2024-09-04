@@ -43,12 +43,7 @@ export const useSaveArtwork = ({
                 id: artwork.id ?? "",
                 slug: artwork.slug ?? "",
                 isSaved: !isSaved,
-                collectorSignals: {
-                  auction: {
-                    lotWatcherCount:
-                      artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
-                  },
-                },
+                collectorSignals: artwork.collectorSignals ?? null,
               },
               /**
                * TODO: We don't _really_ need an optimistic response and
