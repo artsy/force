@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<540505c2bc930d4655a0b45792d66571>>
+ * @generated SignedSource<<3763ae1a6d5a172bfd3e45bca3608c2f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,10 @@ export type HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollo
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly collectorSignals: {
+        readonly auction: {
+          readonly bidCount: number;
+          readonly lotWatcherCount: number;
+        } | null | undefined;
         readonly partnerOffer: {
           readonly isAvailable: boolean | null | undefined;
         } | null | undefined;
@@ -91,6 +95,31 @@ const node: ReaderFragment = {
                     }
                   ],
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "AuctionCollectorSignals",
+                  "kind": "LinkedField",
+                  "name": "auction",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "bidCount",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "lotWatcherCount",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -111,6 +140,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d565626c35dd45f925649c029f8d23e3";
+(node as any).hash = "399e93e5892eb17ef3536a061cc55adc";
 
 export default node;

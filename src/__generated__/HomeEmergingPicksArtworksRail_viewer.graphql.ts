@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8fdfca0e04312f675c24a3e7c92f5fc0>>
+ * @generated SignedSource<<d139ea4b03cfc5cc795bda48d6326d12>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,10 @@ export type HomeEmergingPicksArtworksRail_viewer$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly collectorSignals: {
+          readonly auction: {
+            readonly bidCount: number;
+            readonly lotWatcherCount: number;
+          } | null | undefined;
           readonly partnerOffer: {
             readonly isAvailable: boolean | null | undefined;
           } | null | undefined;
@@ -125,6 +129,31 @@ const node: ReaderFragment = {
                         }
                       ],
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "AuctionCollectorSignals",
+                      "kind": "LinkedField",
+                      "name": "auction",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "bidCount",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "lotWatcherCount",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -148,6 +177,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "fc9ba14137cb9d8a952ae0744ad3f9e5";
+(node as any).hash = "c628e73cf028a38af8a25fcc73740e5f";
 
 export default node;

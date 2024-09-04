@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<53edcbeefb266f83dc201ff7a2874ca6>>
+ * @generated SignedSource<<e0b130f85e38123c434f2e7702da0cfb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,10 @@ export type ArtistSeriesArtworkRail_artwork$data = {
           readonly edges: ReadonlyArray<{
             readonly node: {
               readonly collectorSignals: {
+                readonly auction: {
+                  readonly bidCount: number;
+                  readonly lotWatcherCount: number;
+                } | null | undefined;
                 readonly partnerOffer: {
                   readonly isAvailable: boolean | null | undefined;
                 } | null | undefined;
@@ -159,6 +163,31 @@ return {
                                     }
                                   ],
                                   "storageKey": null
+                                },
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "concreteType": "AuctionCollectorSignals",
+                                  "kind": "LinkedField",
+                                  "name": "auction",
+                                  "plural": false,
+                                  "selections": [
+                                    {
+                                      "alias": null,
+                                      "args": null,
+                                      "kind": "ScalarField",
+                                      "name": "bidCount",
+                                      "storageKey": null
+                                    },
+                                    {
+                                      "alias": null,
+                                      "args": null,
+                                      "kind": "ScalarField",
+                                      "name": "lotWatcherCount",
+                                      "storageKey": null
+                                    }
+                                  ],
+                                  "storageKey": null
                                 }
                               ],
                               "storageKey": null
@@ -192,6 +221,6 @@ return {
 };
 })();
 
-(node as any).hash = "8c708dcdb26db9109199d14b39d185e5";
+(node as any).hash = "823c195eed744ac78f438c25c4feaf13";
 
 export default node;
