@@ -204,8 +204,8 @@ describe("ArtworkSidebarArtists", () => {
     })
   })
 
-  describe("Shipping and Taxes section", () => {
-    it("should track click to expand/collapse the Shipping and Taxes section", () => {
+  describe("Shipping and taxes section", () => {
+    it("should track click to expand/collapse the Shipping and taxes section", () => {
       renderWithRelay({
         Artwork: () => ({
           isSold: false,
@@ -213,7 +213,7 @@ describe("ArtworkSidebarArtists", () => {
         }),
       })
 
-      const button = screen.getByText("Shipping and Taxes")
+      const button = screen.getByText("Shipping and taxes")
 
       fireEvent.click(button)
 
@@ -225,7 +225,7 @@ describe("ArtworkSidebarArtists", () => {
             "context_module": "artworkSidebar",
             "context_owner_type": "artwork",
             "expand": true,
-            "subject": "Shipping and Taxes",
+            "subject": "Shipping and taxes",
           },
         ]
       `)
@@ -240,7 +240,7 @@ describe("ArtworkSidebarArtists", () => {
             "context_module": "artworkSidebar",
             "context_owner_type": "artwork",
             "expand": false,
-            "subject": "Shipping and Taxes",
+            "subject": "Shipping and taxes",
           },
         ]
       `)

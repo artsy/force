@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { Text } from "@artsy/palette"
+import { Spacer, Text } from "@artsy/palette"
 import { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
 import { useTranslation } from "react-i18next"
 import { RouterLink } from "System/Components/RouterLink"
@@ -11,7 +11,13 @@ export interface ShippingInformationProps {
 }
 
 const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
-  artwork: { shippingOrigin, shippingInfo, isUnlisted },
+  artwork: {
+    isUnlisted,
+    priceIncludesTaxDisplay,
+    shippingOrigin,
+    shippingInfo,
+    taxInfo,
+  },
 }) => {
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
@@ -19,63 +25,74 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
   if (isUnlisted) {
     return (
       <>
-        {shippingOrigin && (
+        {!!shippingOrigin && (
           <Text variant="sm" color="black60">
             {t`artworkPage.sidebar.shippingAndTaxes.shipsFrom`} {shippingOrigin}
           </Text>
         )}
 
-        <Text variant="xs" color="black60">
-          Shipping and taxes may apply at checkout.{" "}
-          <RouterLink
-            inline
-            to="https://support.artsy.net/s/article/How-are-taxes-customs-VAT-and-import-fees-handled-on-works-listed-with-secure-checkout"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => {
-              const payload: ClickedOnLearnMore = {
-                action: ActionType.clickedOnLearnMore,
-                context_module: "Sidebar",
-                subject: "Learn more",
-                type: "Link",
-                flow: "Shipping",
-              }
+        {!!taxInfo && (
+          <Text variant="xs" color="black60">
+            {taxInfo.displayText}{" "}
+            <RouterLink
+              inline
+              to="https://support.artsy.net/s/article/How-are-taxes-customs-VAT-and-import-fees-handled-on-works-listed-with-secure-checkout"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                const payload: ClickedOnLearnMore = {
+                  action: ActionType.clickedOnLearnMore,
+                  context_module: "Sidebar",
+                  subject: "Learn more",
+                  type: "Link",
+                  flow: "Shipping",
+                }
 
-              trackEvent(payload)
-            }}
-          >
-            {t`artworkPage.sidebar.shippingAndTaxes.taxInformationLearnMore`}
-          </RouterLink>
-        </Text>
+                trackEvent(payload)
+              }}
+            >
+              {taxInfo.moreInfo.displayText}
+            </RouterLink>
+          </Text>
+        )}
       </>
     )
   }
 
   return (
     <>
-      <Text variant="sm" color="black60">
-        {t`artworkPage.sidebar.shippingAndTaxes.taxInformation`}{" "}
-        <RouterLink
-          inline
-          to="https://support.artsy.net/s/article/How-are-taxes-customs-VAT-and-import-fees-handled-on-works-listed-with-secure-checkout"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {t`artworkPage.sidebar.shippingAndTaxes.taxInformationLearnMore`}
-        </RouterLink>
-      </Text>
-
-      {shippingOrigin && (
-        <Text variant="sm" color="black60">
+      {!!shippingOrigin && (
+        <Text variant="sm" color="black60" mb={0.5}>
           {t`artworkPage.sidebar.shippingAndTaxes.shipsFrom`} {shippingOrigin}
         </Text>
       )}
 
-      {shippingInfo && (
-        <Text variant="sm" color="black60" data-testid="shipping-info">
+      {!!shippingInfo && (
+        <Text variant="xs" color="black60" data-testid="shipping-info">
           {shippingInfo}
         </Text>
       )}
+
+      {!!priceIncludesTaxDisplay && (
+        <Text variant="xs" color="black60">
+          {priceIncludesTaxDisplay}
+        </Text>
+      )}
+
+      {!!taxInfo && (
+        <Text variant="xs" color="black60">
+          {taxInfo.displayText}{" "}
+          <RouterLink
+            inline
+            to="https://support.artsy.net/s/article/How-are-taxes-customs-VAT-and-import-fees-handled-on-works-listed-with-secure-checkout"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {taxInfo.moreInfo.displayText}
+          </RouterLink>
+        </Text>
+      )}
+      <Spacer y={1} />
     </>
   )
 }
@@ -86,8 +103,16 @@ export const ArtworkSidebarShippingInformationFragmentContainer = createFragment
     artwork: graphql`
       fragment ArtworkSidebarShippingInformation_artwork on Artwork {
         isUnlisted
+        priceIncludesTaxDisplay
         shippingOrigin
         shippingInfo
+        taxInfo {
+          displayText
+          moreInfo {
+            displayText
+            url
+          }
+        }
       }
     `,
   }
