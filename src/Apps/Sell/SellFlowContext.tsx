@@ -226,6 +226,8 @@ export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = (
       variables: {
         input: {
           sessionID: getENV("SESSION_ID"),
+          source: "WEB_INBOUND",
+          userAgent: `${navigator.userAgent} Artsy-Web Force`,
           ...values,
         },
       },
