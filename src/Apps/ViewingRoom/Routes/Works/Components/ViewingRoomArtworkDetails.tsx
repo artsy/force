@@ -3,7 +3,7 @@ import { Button, GridColumns, Column, Text } from "@artsy/palette"
 import { ViewingRoomArtworkDetails_artwork$data } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { DetailsFragmentContainer } from "Components/Artwork/Details"
+import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
@@ -48,7 +48,7 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
                   DeprecatedAnalyticsSchema.ContextModule
                     .ViewingRoomArtworkRail,
                 subject: DeprecatedAnalyticsSchema.Subject.Rail,
-                destination_path: href!,
+                destination_path: href || "",
               })
             }}
           >

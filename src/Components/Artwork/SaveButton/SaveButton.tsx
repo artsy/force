@@ -32,13 +32,11 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   const title = isSaved ? "Unsave" : "Save"
-  const { lotWatcherCount, lotClosesAt, liveBiddingStarted } =
+  const { lotWatcherCount, lotClosesAt } =
     artwork.collectorSignals?.auction || {}
 
   const shouldDisplayLotCount =
-    !!lotWatcherCount &&
-    !liveBiddingStarted &&
-    (!lotClosesAt || new Date(lotClosesAt) >= new Date())
+    !!lotWatcherCount && (!lotClosesAt || new Date(lotClosesAt) >= new Date())
 
   const handleMouseEnter = () => {
     if (!isTouch) {
@@ -98,7 +96,17 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
 
   const { handleSave } = useSaveArtwork({
     isSaved,
-    artwork,
+    artwork: {
+      internalID: artwork.internalID,
+      slug: artwork.slug,
+      collectorSignals: {
+        auction: {
+          lotWatcherCount:
+            artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
+        },
+      },
+      id: artwork.id,
+    },
     contextModule,
     onSave: ({ action, artwork }) => {
       tracking.trackEvent({
@@ -134,7 +142,6 @@ export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
         auction {
           lotWatcherCount
           lotClosesAt
-          liveBiddingStarted
         }
       }
     }

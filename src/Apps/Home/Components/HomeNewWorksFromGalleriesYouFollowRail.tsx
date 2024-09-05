@@ -78,6 +78,11 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
                 signal_label: artwork.collectorSignals
                   ? getSignalLabel(artwork.collectorSignals)
                   : "",
+                signal_bid_count:
+                  artwork.collectorSignals?.auction?.bidCount ?? undefined,
+                signal_lot_watcher_count:
+                  artwork.collectorSignals?.auction?.lotWatcherCount ??
+                  undefined,
               }
               trackEvent(trackingEvent)
             }}
@@ -100,6 +105,10 @@ export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer = createFra
             collectorSignals {
               partnerOffer {
                 isAvailable
+              }
+              auction {
+                bidCount
+                lotWatcherCount
               }
             }
             ...ShelfArtwork_artwork

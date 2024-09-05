@@ -1,7 +1,7 @@
 import { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
 import { renderRelayTree } from "DevTools/renderRelayTree"
 import { graphql } from "react-relay"
-import { DetailsFragmentContainer } from "Components/Artwork/Details"
+import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -100,6 +100,43 @@ describe("Details", () => {
   })
 
   describe("sale info line", () => {
+    it("should render 'Bidding Closed' when the bidding for an auction has ended", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          partnerOffer: null,
+          auction: {
+            ...artworkInAuction?.collectorSignals?.auction,
+            liveBiddingStarted: true,
+            lotClosesAt: "2022-03-12T12:33:37.000Z",
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).toContain("Bidding closed")
+    })
+
+    it("should render 'Bidding live now' when the bidding for an auction is live", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          partnerOffer: null,
+          auction: {
+            ...artworkInAuction?.collectorSignals?.auction,
+            liveBiddingStarted: true,
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).toContain("Bidding live now")
+    })
+
     it("hides the sale info line when hideSaleInfo is true", async () => {
       props = {
         hideSaleInfo: true,
@@ -591,83 +628,6 @@ describe("Details", () => {
       const html = wrapper.html()
 
       expect(html).not.toContain("Limited-Time Offer")
-    })
-  })
-
-  describe("auction signals", () => {
-    // This test is skipped due to trouble with mocking the current date in the test environment
-
-    it.skip("should render bidding closing timer when bidding is open", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        collectorSignals: {
-          partnerOffer: null,
-          auction: {
-            ...artworkInAuction?.collectorSignals?.auction,
-            lotClosesAt: "2022-03-20T05:22:32.000Z",
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data, props)
-      const html = wrapper.html()
-
-      expect(html).toContain("2d left to bid")
-    })
-
-    it("should render 'Bidding Closed' when the bidding for an auction has ended", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        collectorSignals: {
-          partnerOffer: null,
-          auction: {
-            ...artworkInAuction?.collectorSignals?.auction,
-            liveBiddingStarted: true,
-            lotClosesAt: "2022-03-12T12:33:37.000Z",
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data, props)
-      const html = wrapper.html()
-
-      expect(html).toContain("Bidding closed")
-    })
-
-    it("should render 'Bidding live now' when the bidding for an auction is live", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        collectorSignals: {
-          partnerOffer: null,
-          auction: {
-            ...artworkInAuction?.collectorSignals?.auction,
-            liveBiddingStarted: true,
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data, props)
-      const html = wrapper.html()
-
-      expect(html).toContain("Bidding live now")
-    })
-
-    it("should render register by date when auction is live", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        collectorSignals: {
-          partnerOffer: null,
-          auction: {
-            ...artworkInAuction?.collectorSignals?.auction,
-            liveBiddingStarted: true,
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data, props)
-      const html = wrapper.html()
-
-      expect(html).toContain("Bidding live now")
     })
   })
 })

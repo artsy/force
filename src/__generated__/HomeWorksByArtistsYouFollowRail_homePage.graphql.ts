@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<313dd7047b532bc76115d0e8e5c37f2f>>
+ * @generated SignedSource<<46dd4df11b92128a8587b334d715848a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,10 @@ export type HomeWorksByArtistsYouFollowRail_homePage$data = {
   readonly artworkModule: {
     readonly results: ReadonlyArray<{
       readonly collectorSignals: {
+        readonly auction: {
+          readonly bidCount: number;
+          readonly lotWatcherCount: number;
+        } | null | undefined;
         readonly partnerOffer: {
           readonly isAvailable: boolean | null | undefined;
         } | null | undefined;
@@ -97,6 +101,31 @@ const node: ReaderFragment = {
                     }
                   ],
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "AuctionCollectorSignals",
+                  "kind": "LinkedField",
+                  "name": "auction",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "bidCount",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "lotWatcherCount",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -117,6 +146,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2bf63dff4b86e82a356e038a0d3bc6aa";
+(node as any).hash = "f5d619bf824ca9dc5360cb8d334371a5";
 
 export default node;

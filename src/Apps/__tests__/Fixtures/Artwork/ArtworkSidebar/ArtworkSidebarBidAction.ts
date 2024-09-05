@@ -26,6 +26,12 @@ export const ArtworkFromAuctionPreview: ArtworkSidebarBidAction_Test_Query$rawRe
     ],
   },
   myLotStanding: null,
+  collectorSignals: {
+    auction: {
+      lotWatcherCount: 2,
+      bidCount: 3,
+    },
+  },
 }
 
 export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] = {
@@ -54,6 +60,12 @@ export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidAction_Te
     ],
   },
   myLotStanding: null,
+  collectorSignals: {
+    auction: {
+      lotWatcherCount: 2,
+      bidCount: 3,
+    },
+  },
 }
 
 export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] = {
@@ -82,6 +94,12 @@ export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_
     ],
   },
   myLotStanding: null,
+  collectorSignals: {
+    auction: {
+      lotWatcherCount: 2,
+      bidCount: 3,
+    },
+  },
 }
 
 export const SaleRequiringIDV: Partial<
@@ -137,6 +155,12 @@ export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidAction_Tes
     ],
   },
   myLotStanding: null,
+  collectorSignals: {
+    auction: {
+      lotWatcherCount: 2,
+      bidCount: 3,
+    },
+  },
 }
 
 export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] = {
@@ -165,6 +189,12 @@ export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidAction_T
     ],
   },
   myLotStanding: null,
+  collectorSignals: {
+    auction: {
+      lotWatcherCount: 2,
+      bidCount: 3,
+    },
+  },
 }
 
 export const ArtworkFromClosedAuction: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] = {
@@ -193,6 +223,12 @@ export const ArtworkFromClosedAuction: ArtworkSidebarBidAction_Test_Query$rawRes
     ],
   },
   myLotStanding: null,
+  collectorSignals: {
+    auction: {
+      lotWatcherCount: 2,
+      bidCount: 3,
+    },
+  },
 }
 
 export const NotRegisteredToBid = {

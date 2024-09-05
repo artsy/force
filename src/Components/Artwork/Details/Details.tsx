@@ -10,18 +10,18 @@ import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
-import { HoverDetailsFragmentContainer } from "./HoverDetails"
-import { SaveButtonFragmentContainer } from "./SaveButton"
+import { HoverDetailsFragmentContainer } from "Components/Artwork/HoverDetails"
+import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveButton"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { getSignalLabel } from "Utils/getSignalLabel"
-import { DateTime } from "luxon"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useState } from "react"
+import { BidTimerLine } from "./BidTimerLine"
 
-interface DetailsProps {
+export interface DetailsProps {
   artwork: Details_artwork$data
   contextModule?: AuthContextModule
   includeLinks: boolean
@@ -219,78 +219,7 @@ const CollectorSignalLine: React.FC<DetailsProps> = ({
   )
 }
 
-const BidTimerLine: React.FC<DetailsProps> = ({
-  artwork: { collectorSignals },
-}) => {
-  const { lotClosesAt, registrationEndsAt, onlineBiddingExtended } =
-    collectorSignals?.auction ?? {}
-  const { time } = useTimer(lotClosesAt ?? "")
-  const { days, hours, minutes } = time
-  const { isAuctionArtwork } = useArtworkGridContext()
-  const biddingEnded = lotClosesAt && new Date(lotClosesAt) <= new Date()
-  const registrationEnded =
-    registrationEndsAt && new Date(registrationEndsAt) <= new Date()
-
-  const numDays = Number(days)
-  const numHours = Number(hours)
-  const numMinutes = Number(minutes)
-
-  if (registrationEndsAt && !registrationEnded && !isAuctionArtwork) {
-    const date = DateTime.fromISO(registrationEndsAt)
-    const formattedRegistrationEndsAt = date.toFormat("MMM d")
-
-    return (
-      <Text
-        variant="sm-display"
-        lineHeight="22px"
-        color="black100"
-        alignSelf="flex-start"
-      >
-        Register by {formattedRegistrationEndsAt}
-      </Text>
-    )
-  }
-
-  if (!lotClosesAt || numDays > 5 || biddingEnded) {
-    return <EmptyLine />
-  }
-
-  const renderLotCloseTime = [
-    numDays > 0 && `${numDays}d`,
-    numHours > 0 && `${numHours}h`,
-    numDays === 0 && numHours === 0 && `${numMinutes}m`,
-  ]
-    .filter(Boolean)
-    .join(" ")
-
-  const textColor = numHours < 1 && numDays === 0 ? "red100" : "blue100"
-
-  if (onlineBiddingExtended) {
-    return (
-      <Text
-        variant="sm-display"
-        lineHeight="22px"
-        color="red100"
-        alignSelf="flex-start"
-      >
-        Extended, {renderLotCloseTime} left to bid
-      </Text>
-    )
-  }
-
-  return (
-    <Text
-      variant="sm-display"
-      lineHeight="22px"
-      color={textColor}
-      alignSelf="flex-start"
-    >
-      {renderLotCloseTime} left to bid
-    </Text>
-  )
-}
-
-const EmptyLine: React.FC = () => {
+export const EmptyLine: React.FC = () => {
   return (
     <Text variant="sm-display" lineHeight="22px">
       &nbsp;
@@ -496,7 +425,7 @@ export const Details: React.FC<DetailsProps> = ({
       )}
 
       <Flex justifyContent="space-between" alignItems="flex-start">
-        <Flex flexDirection="column" maxWidth="85%">
+        <Flex flexDirection="column" maxWidth="75%">
           {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
@@ -528,7 +457,7 @@ export const Details: React.FC<DetailsProps> = ({
         />
       )}
 
-      <BidTimerLine {...rest} />
+      <BidTimerLine artwork={rest.artwork} />
 
       {padForActivePartnerOfferLine && <EmptyLine />}
     </Box>
@@ -691,6 +620,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       consignmentSubmission @include(if: $includeConsignmentSubmission) {
         internalID
       }
+      ...BidTimerLine_artwork
       ...SaveButton_artwork
       ...SaveArtworkToListsButton_artwork
       ...HoverDetails_artwork

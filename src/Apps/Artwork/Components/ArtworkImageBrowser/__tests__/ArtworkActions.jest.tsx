@@ -4,7 +4,6 @@ import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { userIsAdmin, userIsTeam } from "Utils/user"
 import { MockBoot } from "DevTools/MockBoot"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import DownloadIcon from "@artsy/icons/DownloadIcon"
 import EditIcon from "@artsy/icons/EditIcon"
 import GenomeIcon from "@artsy/icons/GenomeIcon"
@@ -103,17 +102,15 @@ describe("ArtworkActions", () => {
         const { wrapper } = getWrapper({ Artwork: () => ({ sale: null }) })
 
         expect(wrapper.find(HeartStrokeIcon).length).toBe(1)
-        expect(wrapper.find(BellStrokeIcon).length).toBe(0)
       })
 
       it("renders heart icon when sale is closed", () => {
         const { wrapper } = getWrapper({ Sale: () => ({ isClosed: true }) })
 
         expect(wrapper.find(HeartStrokeIcon).length).toBe(1)
-        expect(wrapper.find(BellStrokeIcon).length).toBe(0)
       })
 
-      it("renders bell icon when sale is open", () => {
+      it("renders heart icon when sale is open", () => {
         const { wrapper } = getWrapper({
           Sale: () => ({
             isAuction: true,
@@ -121,8 +118,7 @@ describe("ArtworkActions", () => {
           }),
         })
 
-        expect(wrapper.find(HeartStrokeIcon).length).toBe(0)
-        expect(wrapper.find(BellStrokeIcon).length).toBe(1)
+        expect(wrapper.find(HeartStrokeIcon).length).toBe(1)
       })
     })
 

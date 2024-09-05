@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<956536ab7ab61517aada04663995e6ef>>
+ * @generated SignedSource<<ef825c1e3576a71f5f74f245cc7d9af7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,6 +28,7 @@ export type ArticleZoomGalleryFigure_figure$data = {
   readonly " $fragmentType": "ArticleZoomGalleryFigure_figure";
 } | {
   readonly __typename: "Artwork";
+  readonly formattedMetadata: string | null | undefined;
   readonly image: {
     readonly height: number | null | undefined;
     readonly url: string | null | undefined;
@@ -46,50 +47,51 @@ export type ArticleZoomGalleryFigure_figure$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "Image",
-    "kind": "LinkedField",
-    "name": "image",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "width",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "height",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": [
-          {
-            "kind": "Literal",
-            "name": "version",
-            "value": [
-              "main",
-              "normalized",
-              "larger",
-              "large"
-            ]
-          }
-        ],
-        "kind": "ScalarField",
-        "name": "url",
-        "storageKey": "url(version:[\"main\",\"normalized\",\"larger\",\"large\"])"
-      }
-    ],
-    "storageKey": null
-  }
+var v0 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Image",
+  "kind": "LinkedField",
+  "name": "image",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "width",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "height",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "version",
+          "value": [
+            "main",
+            "normalized",
+            "larger",
+            "large"
+          ]
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "url",
+      "storageKey": "url(version:[\"main\",\"normalized\",\"larger\",\"large\"])"
+    }
+  ],
+  "storageKey": null
+},
+v1 = [
+  (v0/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -106,19 +108,28 @@ return {
     },
     {
       "kind": "InlineFragment",
-      "selections": (v0/*: any*/),
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "formattedMetadata",
+          "storageKey": null
+        },
+        (v0/*: any*/)
+      ],
       "type": "Artwork",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "type": "ArticleImageSection",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "type": "ArticleUnpublishedArtwork",
       "abstractKey": null
     }
@@ -128,6 +139,6 @@ return {
 };
 })();
 
-(node as any).hash = "e5c4bd87ee7dca7caa838de4caa47719";
+(node as any).hash = "9d914d82af1b09440d1985f142459215";
 
 export default node;

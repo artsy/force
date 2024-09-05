@@ -40,7 +40,7 @@ describe("HomeEmergingPicksArtworksRail", () => {
   it("tracks artwork click", () => {
     renderWithRelay({
       Viewer: () => artworksConnection,
-      CollectorSignals: () => ({ partnerOffer: null }),
+      CollectorSignals: () => ({ partnerOffer: null, auction: null }),
     })
 
     fireEvent.click(screen.getAllByRole("link")[2])
@@ -54,6 +54,36 @@ describe("HomeEmergingPicksArtworksRail", () => {
       destination_page_owner_type: "artwork",
       type: "thumbnail",
       signal_label: "",
+      signal_bid_count: undefined,
+      signal_lot_watcher_count: undefined,
+    })
+  })
+
+  it("tracks auction artwork click", () => {
+    renderWithRelay({
+      Viewer: () => artworksConnection,
+      CollectorSignals: () => ({
+        partnerOffer: null,
+        auction: {
+          lotWatcherCount: 5,
+          bidCount: 1,
+        },
+      }),
+    })
+
+    fireEvent.click(screen.getAllByRole("link")[2])
+
+    expect(trackEvent).toBeCalledWith({
+      action: "clickedArtworkGroup",
+      context_module: "troveArtworksRail",
+      context_page_owner_type: "home",
+      destination_page_owner_id: "artwork-id",
+      destination_page_owner_slug: "artwork-slug",
+      destination_page_owner_type: "artwork",
+      type: "thumbnail",
+      signal_label: "",
+      signal_bid_count: 1,
+      signal_lot_watcher_count: 5,
     })
   })
 

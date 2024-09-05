@@ -44,6 +44,7 @@ describe("ArticleZoomGallery", () => {
           {
             __typename: "Artwork",
             id: "artwork-1", // Active
+            formattedMetadata: "Example Image 1",
             image: { url: "artwork-1" },
           },
           {
@@ -65,6 +66,7 @@ describe("ArticleZoomGallery", () => {
       }),
     })
 
+    expect(screen.getAllByAltText("Example Image 1")[0]).toBeInTheDocument()
     expect(screen.getAllByTestId("artwork-4")[0]).toBeInTheDocument()
     expect(screen.getAllByTestId("artwork-2")[0]).toBeInTheDocument()
     expect(screen.queryAllByTestId("artwork-3")).toEqual([]) // Not in the document

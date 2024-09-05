@@ -46,7 +46,7 @@ const ArticleSectionImageCollectionImage: FC<ArticleSectionImageCollectionImageP
             srcSet={img.srcSet}
             width="100%"
             height="100%"
-            alt=""
+            alt={figure.formattedMetadata ?? ""}
             lazyLoad
           />
         </ArticleZoomButton>
@@ -70,6 +70,7 @@ export const ArticleSectionImageCollectionImageFragmentContainer = createFragmen
         }
         ... on Artwork {
           id
+          formattedMetadata
           image {
             url(version: ["main", "normalized", "larger", "large"])
             width
