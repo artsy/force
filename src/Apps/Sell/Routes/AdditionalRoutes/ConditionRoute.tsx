@@ -99,15 +99,15 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
 
           <Join separator={<Spacer y={4} />}>
             <Text variant={["xs", "sm"]} color="black60">
-              Please specify the{" "}
+              Specifying the{" "}
               <Clickable
                 textDecoration="underline"
                 onClick={() => setIsConditionDefinitionModalOpen(true)}
               >
                 condition
               </Clickable>{" "}
-              of the piece. Note that the seller is liable for providing an
-              accurate description.
+              of your work helps set buyers’ expectations in advance, helping to
+              reduce claims and post-sale concerns.
             </Text>
 
             <Box>
@@ -118,7 +118,7 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
                   textDecoration="underline"
                 >
                   <Text variant="xs" color="black60">
-                    Condition Definition
+                    Condition Definitions
                   </Text>
                 </Clickable>
               </Flex>
@@ -135,7 +135,7 @@ export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
             </Box>
 
             <TextArea
-              title="Add Additional Condition Details (Optional)"
+              title="Additional Details (optional)"
               name="description"
               defaultValue={values.description}
               onChange={({ value }) => {
