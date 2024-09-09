@@ -48,6 +48,7 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFieldError"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 
 export interface FulfillmentDetailsFormProps
   extends FulfillmentDetailsFormLayoutProps {
@@ -91,6 +92,7 @@ const FulfillmentDetailsFormLayout = (
   })
 
   const shippingContext = useShippingContext()
+  const orderTracking = useOrderTracking()
 
   const renderMissingShippingQuotesError = !!(
     shippingContext.orderData.savedFulfillmentDetails?.isArtsyShipping &&
@@ -196,6 +198,7 @@ const FulfillmentDetailsFormLayout = (
   const previousFulfillmentType = usePrevious(values.fulfillmentType)
 
   const handleChangeFulfillmentType = async (newValue: FulfillmentType) => {
+    orderTracking.clickedFulfillmentType(newValue)
     if (newValue === previousFulfillmentType) {
       return
     }
