@@ -60,34 +60,6 @@ export interface Props {
 
 declare const window: any
 
-interface BelowTheFoldArtworkDetailsProps {
-  artists: ArtworkApp_artwork$data["artists"]
-  slug: ArtworkApp_artwork$data["slug"]
-}
-
-const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
-  artists,
-  slug,
-}) => (
-  <>
-    <Spacer y={6} />
-    <Join separator={<Spacer y={2} />}>
-      <ArtworkDetailsQueryRenderer slug={slug} />
-
-      <PricingContextQueryRenderer slug={slug} />
-
-      {!!artists &&
-        artists.map(artist => {
-          if (!artist) return null
-
-          return <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
-        })}
-
-      <ArtworkDetailsPartnerInfoQueryRenderer slug={slug} />
-    </Join>
-  </>
-)
-
 export const ArtworkApp: React.FC<Props> = props => {
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
   const { match, silentPush, silentReplace } = useRouter()
@@ -332,6 +304,34 @@ export const ArtworkApp: React.FC<Props> = props => {
     </SelectedEditionSetProvider>
   )
 }
+
+interface BelowTheFoldArtworkDetailsProps {
+  artists: ArtworkApp_artwork$data["artists"]
+  slug: ArtworkApp_artwork$data["slug"]
+}
+
+const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
+  artists,
+  slug,
+}) => (
+  <>
+    <Spacer y={6} />
+    <Join separator={<Spacer y={2} />}>
+      <ArtworkDetailsQueryRenderer slug={slug} />
+
+      <PricingContextQueryRenderer slug={slug} />
+
+      {!!artists &&
+        artists.map(artist => {
+          if (!artist) return null
+
+          return <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
+        })}
+
+      <ArtworkDetailsPartnerInfoQueryRenderer slug={slug} />
+    </Join>
+  </>
+)
 
 const WrappedArtworkApp: React.FC<Props> = props => {
   const {

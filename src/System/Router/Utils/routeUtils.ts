@@ -1,7 +1,6 @@
-import { compact, isObject, isString, uniq } from "lodash"
+import { compact, uniq } from "lodash"
 import { RouteProps } from "System/Router/Route"
-import { match } from "path-to-regexp"
-import { LocationDescriptor, LocationDescriptorObject } from "found"
+import { match, MatchResult } from "path-to-regexp"
 
 export function getRoutes(): {
   routes: RouteProps[]
@@ -81,40 +80,28 @@ interface FindRoutesByPathProps {
 
 export function findRoutesByPath({
   path,
-}: FindRoutesByPathProps): RouteProps[] {
+}: FindRoutesByPathProps): Array<{
+  route: RouteProps
+  match: MatchResult<any>
+}> {
   const { flatRoutes = [] } = getRoutes()
 
-  const foundRoutes = flatRoutes.filter(route => {
+  const foundRoutes = flatRoutes.reduce((acc, route) => {
     const matcher = match(route.path as string, { decode: decodeURIComponent })
-    return !!matcher(path)
-  })
+    const matched = matcher(path)
+
+    if (!matched) {
+      return acc
+    }
+
+    return [
+      ...acc,
+      {
+        route,
+        match: matched,
+      },
+    ]
+  }, [])
 
   return foundRoutes
-}
-
-export function getRouteForPreloading(
-  to: LocationDescriptor
-): RouteProps | null {
-  const path = (() => {
-    switch (true) {
-      case isString(to):
-        return to
-      case isObject(to):
-        return ((to as unknown) as LocationDescriptorObject).pathname
-      default:
-        return ""
-    }
-  })()
-
-  if (!path) {
-    return null
-  }
-
-  const route = findRoutesByPath({ path })[0]
-
-  if (!route) {
-    return null
-  }
-
-  return route
 }

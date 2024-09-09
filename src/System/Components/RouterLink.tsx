@@ -1,4 +1,4 @@
-import { Link, LinkPropsSimple, LocationDescriptorObject } from "found"
+import { Link, LinkPropsSimple } from "found"
 import * as React from "react"
 import { BoxProps, boxMixin } from "@artsy/palette"
 import styled from "styled-components"
@@ -7,11 +7,10 @@ import { useMemo } from "react"
 import { themeGet } from "@styled-system/theme-get"
 import { useRouter } from "System/Hooks/useRouter"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
-import {
-  findRoutesByPath,
-  getRouteForPreloading,
-} from "System/Router/Utils/routeUtils"
-import { isObject, isString } from "lodash"
+import { findRoutesByPath } from "System/Router/Utils/routeUtils"
+import { fetchQuery, GraphQLTaggedNode } from "react-relay"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { OperationType } from "relay-runtime"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
@@ -33,6 +32,7 @@ export type RouterLinkProps = Omit<
 
 export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
   ({ inline, to, ...rest }, ref) => {
+    const { relayEnvironment } = useSystemContext()
     const context = useRouter()
     const routes = context?.router?.matcher?.routeConfig ?? []
     const matcher = context?.router?.matcher
@@ -47,14 +47,39 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
     const isRouterAware = isSupportedInRouter && isSameBrowsingContext
 
     const handleEnterView = () => {
-      const route = getRouteForPreloading(to)
-      console.log("route", route)
+      const foundRoute = findRoutesByPath({ path: to as string })[0]
 
-      // console.log("entring view")
+      if (!foundRoute) {
+        return
+      }
+
+      // prefetch
+      const query = foundRoute.route?.query as GraphQLTaggedNode
+      const variables = foundRoute.route?.prepareVariables?.(
+        foundRoute.match.params,
+        context.match
+      ) as OperationType["variables"]
+
+      if (query && variables) {
+        console.log("*****************")
+        console.log("PREFETCHING", to, variables)
+        console.log("*****************")
+
+        fetchQuery(relayEnvironment, query, variables)
+          .toPromise()
+          .then(response => {
+            console.log("[Prefetched]", response)
+          })
+          .catch(error => {
+            {
+              console.error("[Prefetch Error]", error)
+            }
+          })
+      }
     }
 
     const handleExitView = () => {
-      console.log("exiting view")
+      // console.log("exiting view")
     }
 
     const { ref: intersectionRef } = useIntersectionObserver({

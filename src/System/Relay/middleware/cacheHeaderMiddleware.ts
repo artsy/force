@@ -21,7 +21,7 @@ export const shouldSkipCDNCache = (req, user, path) => {
   }
 
   if (path) {
-    const route = findRoutesByPath({ path })[0]
+    const { route } = findRoutesByPath({ path })[0]
     if (route?.serverCacheTTL === 0) {
       return true
     }
