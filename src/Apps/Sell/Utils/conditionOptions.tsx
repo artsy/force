@@ -8,8 +8,8 @@ type ConditionOption = {
 
 export const conditionOptions: ConditionOption[] = [
   { text: "Select Condition", value: "" },
-  { text: "Excellent Condition", value: "EXCELLENT" },
-  { text: "Fair Condition", value: "FAIR" },
-  { text: "Good Condition", value: "GOOD" },
-  { text: "Very Good Condition", value: "VERY_GOOD" },
+  { text: "Excellent", value: "EXCELLENT" },
+  { text: "Very Good", value: "VERY_GOOD" },
+  { text: "Good", value: "GOOD" },
+  { text: "Fair", value: "FAIR" },
 ]
