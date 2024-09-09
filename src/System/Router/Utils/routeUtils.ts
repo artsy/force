@@ -1,6 +1,7 @@
-import { compact, uniq } from "lodash"
+import { compact, isObject, isString, uniq } from "lodash"
 import { RouteProps } from "System/Router/Route"
 import { match } from "path-to-regexp"
+import { LocationDescriptor, LocationDescriptorObject } from "found"
 
 export function getRoutes(): {
   routes: RouteProps[]
@@ -89,4 +90,31 @@ export function findRoutesByPath({
   })
 
   return foundRoutes
+}
+
+export function getRouteForPreloading(
+  to: LocationDescriptor
+): RouteProps | null {
+  const path = (() => {
+    switch (true) {
+      case isString(to):
+        return to
+      case isObject(to):
+        return ((to as unknown) as LocationDescriptorObject).pathname
+      default:
+        return ""
+    }
+  })()
+
+  if (!path) {
+    return null
+  }
+
+  const route = findRoutesByPath({ path })[0]
+
+  if (!route) {
+    return null
+  }
+
+  return route
 }

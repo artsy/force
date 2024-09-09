@@ -1,4 +1,4 @@
-import { Link, LinkPropsSimple } from "found"
+import { Link, LinkPropsSimple, LocationDescriptorObject } from "found"
 import * as React from "react"
 import { BoxProps, boxMixin } from "@artsy/palette"
 import styled from "styled-components"
@@ -6,6 +6,12 @@ import { compose, ResponsiveValue, system } from "styled-system"
 import { useMemo } from "react"
 import { themeGet } from "@styled-system/theme-get"
 import { useRouter } from "System/Hooks/useRouter"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import {
+  findRoutesByPath,
+  getRouteForPreloading,
+} from "System/Router/Utils/routeUtils"
+import { isObject, isString } from "lodash"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
@@ -40,8 +46,35 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
     const isSameBrowsingContext = !target || target === "_self"
     const isRouterAware = isSupportedInRouter && isSameBrowsingContext
 
+    const handleEnterView = () => {
+      const route = getRouteForPreloading(to)
+      console.log("route", route)
+
+      // console.log("entring view")
+    }
+
+    const handleExitView = () => {
+      console.log("exiting view")
+    }
+
+    const { ref: intersectionRef } = useIntersectionObserver({
+      once: false,
+      options: {
+        threshold: 0.2,
+      },
+      onIntersection: handleEnterView,
+      onOffIntersection: handleExitView,
+    })
+
     if (isRouterAware) {
-      return <RouterAwareLink inline={inline} to={to ?? ""} {...rest} />
+      return (
+        <RouterAwareLink
+          inline={inline}
+          to={to ?? ""}
+          {...rest}
+          ref={intersectionRef as any}
+        />
+      )
     }
 
     return <RouterUnawareLink inline={inline} href={to ?? ""} {...rest} />
