@@ -164,7 +164,7 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-strategy": "1.x.x",
-    "path-to-regexp": "6.1.0",
+    "path-to-regexp": "8.0.0",
     "prop-types": "15.7.2",
     "proportional-scale": "^4.0.0",
     "qrcode.react": "1.0.0",
