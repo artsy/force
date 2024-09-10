@@ -20,7 +20,7 @@ const redirectToArticle = ({
 
 export const articleRoutes: RouteProps[] = [
   {
-    path: "/article/:id",
+    path: "/article/:id?",
     Component: ArticleApp,
     onClientSideRender: () => {
       ArticleApp.preload()

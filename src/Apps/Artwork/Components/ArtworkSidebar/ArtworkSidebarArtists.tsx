@@ -50,13 +50,14 @@ export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
 
           return (
             <Text variant="lg-display" as="span" key={artist.slug + index}>
-              <StyledArtistLink
+              <RouterLink
                 to={`/artist/${artist.slug}`}
                 textDecoration="none"
+                debug
               >
                 {artist.name}
                 {separator}
-              </StyledArtistLink>
+              </RouterLink>
             </Text>
           )
         })}

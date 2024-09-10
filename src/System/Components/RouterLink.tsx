@@ -1,6 +1,6 @@
 import { Link, LinkPropsSimple } from "found"
 import * as React from "react"
-import { BoxProps, boxMixin } from "@artsy/palette"
+import { Box, BoxProps, boxMixin } from "@artsy/palette"
 import styled from "styled-components"
 import { compose, ResponsiveValue, system } from "styled-system"
 import { useMemo } from "react"
@@ -32,6 +32,7 @@ export type RouterLinkProps = Omit<
 
 export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
   ({ inline, to, ...rest }, ref) => {
+    const [isPrefetched, setIsPrefetched] = React.useState(false)
     const { relayEnvironment } = useSystemContext()
     const context = useRouter()
     const routes = context?.router?.matcher?.routeConfig ?? []
@@ -47,34 +48,61 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
     const isRouterAware = isSupportedInRouter && isSameBrowsingContext
 
     const handleEnterView = () => {
+      if (rest.debug) {
+        console.log("entering view", to)
+      }
+
+      if (isPrefetched) {
+        return
+      }
+
       const foundRoute = findRoutesByPath({ path: to as string })[0]
 
       if (!foundRoute) {
+        console.log("No route found for path:", to)
         return
       }
 
       // prefetch
-      const query = foundRoute.route?.query as GraphQLTaggedNode
-      const variables = foundRoute.route?.prepareVariables?.(
-        foundRoute.match.params,
-        context.match
-      ) as OperationType["variables"]
 
-      if (query && variables) {
-        console.log("*****************")
-        console.log("PREFETCHING", to, variables)
-        console.log("*****************")
+      const prefetch = route => {
+        const query = route?.query as GraphQLTaggedNode
+        const variables = (() => {
+          if (route?.prepareVariables) {
+            return route?.prepareVariables?.(
+              foundRoute.match.params,
+              context.match
+            ) as OperationType["variables"]
+          } else {
+            return foundRoute.match.params
+          }
+        })()
 
-        fetchQuery(relayEnvironment, query, variables)
-          .toPromise()
-          .then(response => {
-            console.log("[Prefetched]", response)
-          })
-          .catch(error => {
-            {
-              console.error("[Prefetch Error]", error)
-            }
-          })
+        if (query && variables) {
+          // console.log("*****************")
+          // console.log("PREFETCHING", to, variables)
+          // console.log("*****************")
+
+          fetchQuery(relayEnvironment, query, variables)
+            .toPromise()
+            .then(response => {
+              console.log("[Prefetched]", to)
+              setIsPrefetched(true)
+            })
+            .catch(error => {
+              {
+                console.error("[Prefetch Error]", error)
+              }
+            })
+        }
+      }
+
+      prefetch(foundRoute.route)
+
+      if (foundRoute.route.children) {
+        if (foundRoute.route.children[0].path === "") {
+          prefetch(foundRoute.route.children[0])
+        }
       }
     }
 
@@ -91,18 +119,51 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
       onOffIntersection: handleExitView,
     })
 
+    if (rest.debug) {
+      console.log("RouterLink", {
+        isRouterAware,
+        isPrefetched,
+        isSupportedInRouter,
+        isSameBrowsingContext,
+        to,
+        target,
+      })
+    }
+
     if (isRouterAware) {
       return (
-        <RouterAwareLink
-          inline={inline}
-          to={to ?? ""}
-          {...rest}
-          ref={intersectionRef as any}
-        />
+        <>
+          <RouterAwareLink
+            inline={inline}
+            to={to ?? ""}
+            {...rest}
+            ref={intersectionRef as any}
+          />
+          {isPrefetched && (
+            <Box
+              position="relative"
+              bottom={0}
+              right={0}
+              backgroundColor="green"
+              width="15px"
+              height="15px"
+              zIndex={1000}
+              top="-15px"
+              right="-15px"
+            />
+          )}
+        </>
       )
     }
 
-    return <RouterUnawareLink inline={inline} href={to ?? ""} {...rest} />
+    return (
+      <RouterUnawareLink
+        inline={inline}
+        href={to ?? ""}
+        ref={intersectionRef as any}
+        {...rest}
+      />
+    )
   }
 )
 

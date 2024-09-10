@@ -84,6 +84,7 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
           // @ts-ignore
           to={viewAllHref}
           onClick={viewAllOnClick}
+          debug={true}
         >
           {viewAllLabel}
         </Text>

@@ -61,7 +61,7 @@ export const collectRoutes: RouteProps[] = [
     `,
   },
   {
-    path: "/collection/:slug",
+    path: "/collection/:slug?",
     serverCacheTTL: serverCacheTTLs.collections,
     getComponent: () => CollectionApp,
     onServerSideRender: redirectCollectionToArtistSeries,
