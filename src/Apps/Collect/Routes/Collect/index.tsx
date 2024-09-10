@@ -1,9 +1,7 @@
 import { Box, Separator, Spacer, Text, Flex } from "@artsy/palette"
 import { Match, Router } from "found"
 import * as React from "react"
-import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { getENV } from "Utils/getENV"
 import { SeoProductsForArtworks } from "Apps/Collect/Components/SeoProductsForArtworks"
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
@@ -20,6 +18,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRouter } from "System/Hooks/useRouter"
+import { MetaTags } from "Components/MetaTags"
 
 export interface CollectAppProps {
   match: Match
@@ -47,11 +46,11 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   let canonicalHref
 
   if (medium) {
-    canonicalHref = `${getENV("APP_URL")}/collect/${medium}`
+    canonicalHref = `collect/${medium}`
   } else if (color) {
-    canonicalHref = `${getENV("APP_URL")}/collect/color/${color}`
+    canonicalHref = `collect/color/${color}`
   } else {
-    canonicalHref = `${getENV("APP_URL")}/collect`
+    canonicalHref = `collect`
   }
 
   const items = [{ name: "Collect", path: "/collect" }]
@@ -65,16 +64,11 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   return (
     <>
       <FrameWithRecentlyViewed>
-        <Title>{title}</Title>
-        <Meta property="og:url" content={`${getENV("APP_URL")}/collect`} />
-        <Meta
-          property="og:image"
-          content={`${getENV("APP_URL")}/images/og_image.jpg`}
+        <MetaTags
+          title={title}
+          description={description}
+          pathname={canonicalHref}
         />
-        <Meta name="description" content={description} />
-        <Meta property="og:description" content={description} />
-        <Meta property="twitter:description" content={description} />
-        <Link rel="canonical" href={canonicalHref} />
 
         <BreadCrumbList items={items} />
 
