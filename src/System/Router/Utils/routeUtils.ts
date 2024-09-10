@@ -1,6 +1,6 @@
 import { compact, uniq } from "lodash"
 import { RouteProps } from "System/Router/Route"
-import { match } from "path-to-regexp"
+import { match, MatchResult } from "path-to-regexp"
 
 export function getRoutes(): {
   routes: RouteProps[]
@@ -80,13 +80,29 @@ interface FindRoutesByPathProps {
 
 export function findRoutesByPath({
   path,
-}: FindRoutesByPathProps): RouteProps[] {
+}: FindRoutesByPathProps): Array<{
+  route: RouteProps
+  match: MatchResult<any>
+}> {
   const { flatRoutes = [] } = getRoutes()
 
-  const foundRoutes = flatRoutes.filter(route => {
+  const foundRoutes = flatRoutes.reduce((acc, route) => {
     const matcher = match(route.path as string, { decode: decodeURIComponent })
-    return !!matcher(path)
-  })
+
+    const matched = matcher(path)
+
+    if (!matched) {
+      return acc
+    }
+
+    return [
+      ...acc,
+      {
+        route,
+        match: matched,
+      },
+    ]
+  }, [])
 
   return foundRoutes
 }

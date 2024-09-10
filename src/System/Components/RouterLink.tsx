@@ -6,6 +6,7 @@ import { compose, ResponsiveValue, system } from "styled-system"
 import { useMemo } from "react"
 import { themeGet } from "@styled-system/theme-get"
 import { useRouter } from "System/Hooks/useRouter"
+import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
@@ -27,24 +28,45 @@ export type RouterLinkProps = Omit<
 
 export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
   ({ inline, to, ...rest }, ref) => {
-    const context = useRouter()
-    const routes = context?.router?.matcher?.routeConfig ?? []
-    const matcher = context?.router?.matcher
+    const { router } = useRouter()
+
+    const { prefetch } = usePrefetchRoute(to as string)
+
+    const routes = router?.matcher?.routeConfig ?? []
+    const matcher = router?.matcher
+
     const isSupportedInRouter = useMemo(
       () => !!matcher?.matchRoutes(routes, to),
       [matcher, routes, to]
     )
 
-    const { target } = rest
     // If displaying the linked URL in the same browsing context, e.g. browser tab.
-    const isSameBrowsingContext = !target || target === "_self"
+    const isSameBrowsingContext = !rest.target || rest.target === "_self"
     const isRouterAware = isSupportedInRouter && isSameBrowsingContext
 
-    if (isRouterAware) {
-      return <RouterAwareLink inline={inline} to={to ?? ""} {...rest} />
+    const handleMouseOver = () => {
+      prefetch()
     }
 
-    return <RouterUnawareLink inline={inline} href={to ?? ""} {...rest} />
+    if (isRouterAware) {
+      return (
+        <RouterAwareLink
+          inline={inline}
+          to={to ?? ""}
+          onMouseOver={handleMouseOver}
+          {...rest}
+        />
+      )
+    }
+
+    return (
+      <RouterUnawareLink
+        inline={inline}
+        href={to ?? ""}
+        onMouseOver={handleMouseOver}
+        {...rest}
+      />
+    )
   }
 )
 

@@ -15,6 +15,7 @@ const ArtworkApp = loadable(
 export const artworkRoutes: RouteProps[] = [
   {
     path: "/artwork/:artworkID/:optional?", // There's a `confirm-bid` nested route.
+    fetchPolicy: "store-and-network",
     getComponent: () => ArtworkApp,
     onClientSideRender: () => {
       ArtworkApp.preload()
@@ -62,13 +63,5 @@ export const artworkRoutes: RouteProps[] = [
         }
       }
     `,
-    getCacheConfig: ({ context, ...rest }) => {
-      const isLoggedIn = !!context.user
-
-      return {
-        // Fetch artwork if logged in, otherwise cache
-        force: isLoggedIn,
-      }
-    },
   },
 ]

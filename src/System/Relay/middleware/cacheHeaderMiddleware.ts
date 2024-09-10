@@ -20,14 +20,15 @@ export const shouldSkipCDNCache = (req, user, path) => {
     return true
   }
 
-  if (path) {
-    const route = findRoutesByPath({ path })[0]
-    if (route?.serverCacheTTL === 0) {
-      return true
-    }
+  if (!path) {
+    return false
   }
 
-  return false
+  const foundRoute = findRoutesByPath({ path })[0]
+
+  if (foundRoute?.route?.serverCacheTTL === 0) {
+    return true
+  }
 }
 
 export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
