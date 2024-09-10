@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f6c3bd32437af0150b8545e58cce7ff>>
+ * @generated SignedSource<<5eec9247b3e1c20d861089a212a0ffe8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,16 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarShippingInformation_artwork$data = {
   readonly isUnlisted: boolean;
+  readonly priceIncludesTaxDisplay: string | null | undefined;
   readonly shippingInfo: string | null | undefined;
   readonly shippingOrigin: string | null | undefined;
+  readonly taxInfo: {
+    readonly displayText: string;
+    readonly moreInfo: {
+      readonly displayText: string;
+      readonly url: string;
+    };
+  } | null | undefined;
   readonly " $fragmentType": "ArtworkSidebarShippingInformation_artwork";
 };
 export type ArtworkSidebarShippingInformation_artwork$key = {
@@ -21,7 +29,15 @@ export type ArtworkSidebarShippingInformation_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarShippingInformation_artwork">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "displayText",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -38,6 +54,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "priceIncludesTaxDisplay",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "shippingOrigin",
       "storageKey": null
     },
@@ -47,12 +70,44 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "shippingInfo",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "TaxInfo",
+      "kind": "LinkedField",
+      "name": "taxInfo",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "TaxMoreInfo",
+          "kind": "LinkedField",
+          "name": "moreInfo",
+          "plural": false,
+          "selections": [
+            (v0/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "f92b47aab191307879a17947bb6845c8";
+(node as any).hash = "41fc822248c0ef2a098f0fb185131c51";
 
 export default node;
