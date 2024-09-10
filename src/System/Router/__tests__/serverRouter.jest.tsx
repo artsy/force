@@ -309,7 +309,7 @@ describe("serverRouter", () => {
     }
 
     mockFindRoutesByPath.mockImplementation(() => {
-      return [route]
+      return [{ route }]
     })
 
     await getWrapper(() => <>Hello</>, {

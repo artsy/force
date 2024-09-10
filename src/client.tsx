@@ -19,3 +19,10 @@ loadableReady().then(() => {
 if (module.hot) {
   module.hot.accept()
 }
+
+// Dev tools
+window.artsy = {
+  enableLoggerInProd: () => {
+    window.artsy.isLoggerEnabled = true
+  },
+}
