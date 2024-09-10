@@ -47,6 +47,38 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
     const isSameBrowsingContext = !target || target === "_self"
     const isRouterAware = isSupportedInRouter && isSameBrowsingContext
 
+    const prefetch = (route, params = {}) => {
+      const query = route?.query as GraphQLTaggedNode
+      const variables = (() => {
+        if (route?.prepareVariables) {
+          return route?.prepareVariables?.(
+            params,
+            context.match
+          ) as OperationType["variables"]
+        } else {
+          return params
+        }
+      })()
+
+      if (query && variables) {
+        // console.log("*****************")
+        // console.log("PREFETCHING", to, variables)
+        // console.log("*****************")
+
+        fetchQuery(relayEnvironment, query, variables)
+          .toPromise()
+          .then(response => {
+            console.log("[Prefetched]", to)
+            setIsPrefetched(true)
+          })
+          .catch(error => {
+            {
+              console.error("[Prefetch Error]", error)
+            }
+          })
+      }
+    }
+
     const handleEnterView = () => {
       if (rest.debug) {
         console.log("entering view", to)
@@ -63,45 +95,32 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
         return
       }
 
-      // prefetch
-
-      const prefetch = route => {
-        const query = route?.query as GraphQLTaggedNode
-        const variables = (() => {
-          if (route?.prepareVariables) {
-            return route?.prepareVariables?.(
-              foundRoute.match.params,
-              context.match
-            ) as OperationType["variables"]
-          } else {
-            return foundRoute.match.params
-          }
-        })()
-
-        if (query && variables) {
-          // console.log("*****************")
-          // console.log("PREFETCHING", to, variables)
-          // console.log("*****************")
-
-          fetchQuery(relayEnvironment, query, variables)
-            .toPromise()
-            .then(response => {
-              console.log("[Prefetched]", to)
-              setIsPrefetched(true)
-            })
-            .catch(error => {
-              {
-                console.error("[Prefetch Error]", error)
-              }
-            })
-        }
-      }
-
-      prefetch(foundRoute.route)
+      prefetch(foundRoute.route, foundRoute.match.params)
 
       if (foundRoute.route.children) {
         if (foundRoute.route.children[0].path === "") {
-          prefetch(foundRoute.route.children[0])
+          prefetch(foundRoute.route.children[0], foundRoute.match.params)
+        }
+      }
+    }
+
+    const handleMouseOver = () => {
+      if (isPrefetched) {
+        return
+      }
+
+      const foundRoute = findRoutesByPath({ path: to as string })[0]
+
+      if (!foundRoute) {
+        console.log("No route found for path:", to)
+        return
+      }
+
+      prefetch(foundRoute.route, foundRoute.match.params)
+
+      if (foundRoute.route.children) {
+        if (foundRoute.route.children[0].path === "") {
+          prefetch(foundRoute.route.children[0], foundRoute.match.params)
         }
       }
     }
@@ -115,8 +134,8 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
       options: {
         threshold: 0.2,
       },
-      onIntersection: handleEnterView,
-      onOffIntersection: handleExitView,
+      // onIntersection: handleEnterView,
+      // onOffIntersection: handleExitView,
     })
 
     if (rest.debug) {
@@ -138,6 +157,7 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
             to={to ?? ""}
             {...rest}
             ref={intersectionRef as any}
+            onMouseOver={handleMouseOver}
           />
           {isPrefetched && (
             <Box
