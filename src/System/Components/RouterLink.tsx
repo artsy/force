@@ -88,10 +88,12 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
         return
       }
 
-      const foundRoute = findRoutesByPath({ path: to as string })[0]
+      const path = to?.replace(/\?.*$/, "") ?? ""
+
+      const foundRoute = findRoutesByPath({ path })[0]
 
       if (!foundRoute) {
-        console.log("No route found for path:", to)
+        console.log("No route found for path:", path)
         return
       }
 
@@ -109,10 +111,12 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
         return
       }
 
-      const foundRoute = findRoutesByPath({ path: to as string })[0]
+      const path = to?.replace(/\?.*$/, "") ?? ""
+
+      const foundRoute = findRoutesByPath({ path })[0]
 
       if (!foundRoute) {
-        console.log("No route found for path:", to)
+        console.log("No route found for path:", path)
         return
       }
 
@@ -134,8 +138,8 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
       options: {
         threshold: 0.2,
       },
-      // onIntersection: handleEnterView,
-      // onOffIntersection: handleExitView,
+      onIntersection: handleEnterView,
+      onOffIntersection: handleExitView,
     })
 
     if (rest.debug) {

@@ -96,6 +96,9 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
 const useReturnTo = (href?: string | null): string | null => {
   const router = useRouter()
 
+  // FIXME: Why is this necessary?
+  return href
+
   if (!href) return null
 
   const referrer = router.match?.location?.pathname
