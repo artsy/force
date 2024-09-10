@@ -22,6 +22,18 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
 
+  const handleMoreInfoClick = () => {
+    const payload: ClickedOnLearnMore = {
+      action: ActionType.clickedOnLearnMore,
+      context_module: "Sidebar",
+      subject: "Learn more",
+      type: "Link",
+      flow: "Shipping",
+    }
+
+    trackEvent(payload)
+  }
+
   if (isUnlisted) {
     return (
       <>
@@ -39,17 +51,7 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
               to="https://support.artsy.net/s/article/How-are-taxes-customs-VAT-and-import-fees-handled-on-works-listed-with-secure-checkout"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => {
-                const payload: ClickedOnLearnMore = {
-                  action: ActionType.clickedOnLearnMore,
-                  context_module: "Sidebar",
-                  subject: "Learn more",
-                  type: "Link",
-                  flow: "Shipping",
-                }
-
-                trackEvent(payload)
-              }}
+              onClick={handleMoreInfoClick}
             >
               {taxInfo.moreInfo.displayText}
             </RouterLink>
@@ -61,32 +63,34 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
 
   return (
     <>
+      <Spacer y={1} />
       {!!shippingOrigin && (
-        <Text variant="sm" color="black60" mb={0.5}>
+        <Text variant="sm" color="black60">
           {t`artworkPage.sidebar.shippingAndTaxes.shipsFrom`} {shippingOrigin}
         </Text>
       )}
 
       {!!shippingInfo && (
-        <Text variant="xs" color="black60" data-testid="shipping-info">
+        <Text variant="sm" color="black60" data-testid="shipping-info">
           {shippingInfo}
         </Text>
       )}
 
       {!!priceIncludesTaxDisplay && (
-        <Text variant="xs" color="black60">
+        <Text variant="sm" color="black60">
           {priceIncludesTaxDisplay}
         </Text>
       )}
 
       {!!taxInfo && (
-        <Text variant="xs" color="black60">
+        <Text variant="sm" color="black60">
           {taxInfo.displayText}{" "}
           <RouterLink
             inline
             to="https://support.artsy.net/s/article/How-are-taxes-customs-VAT-and-import-fees-handled-on-works-listed-with-secure-checkout"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleMoreInfoClick}
           >
             {taxInfo.moreInfo.displayText}
           </RouterLink>
