@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<85fb3a137cd4c5dd084c888ba2f39a04>>
+ * @generated SignedSource<<69e477c940899766d8e208f356f7184d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,6 @@ export type CurrentAuctions_viewer$data = {
         readonly liveStartAt: string | null | undefined;
         readonly name: string | null | undefined;
         readonly slug: string;
-        readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworksRail_sale">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
     readonly totalCount: number | null | undefined;
@@ -147,11 +146,6 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "AuctionArtworksRail_sale"
-                },
-                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -204,6 +198,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "492de60aa16e3326444bdeba6c18854e";
+(node as any).hash = "38c994c7874307977baafd577ec5cb05";
 
 export default node;
