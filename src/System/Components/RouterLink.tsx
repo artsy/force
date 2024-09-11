@@ -30,9 +30,9 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
   ({ inline, to, ...rest }, ref) => {
     const { router } = useRouter()
 
-    const { prefetch } = usePrefetchRoute({ path: to as string })
+    const { prefetch } = usePrefetchRoute(to as string)
 
-    const routes = router.matcher?.routeConfig ?? []
+    const routes = router?.matcher?.routeConfig ?? []
     const matcher = router?.matcher
 
     const isSupportedInRouter = useMemo(

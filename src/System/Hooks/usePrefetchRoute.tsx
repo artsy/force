@@ -1,79 +1,88 @@
-import { RouteProps } from "found"
-import { MatchResult } from "path-to-regexp"
+import { take } from "lodash"
+import { useCallback } from "react"
 import { fetchQuery } from "react-relay"
 import { OperationType, Subscription } from "relay-runtime"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 
-interface UsePrefetchRouteProps {
-  path: string
-}
-
-export interface RouteMatch {
-  route: RouteProps
-  match: MatchResult<any>
-}
-
 export const usePrefetchRoute = (
-  props: UsePrefetchRouteProps
-): { prefetch: () => Array<Subscription | null> } => {
+  initialPath?: string
+): { prefetch: (path?: string) => Array<Subscription | null> | null } => {
   const { relayEnvironment } = useSystemContext()
 
   const { match } = useRouter()
 
-  const prefetch = () => {
-    const routes = findRoutesByPath({ path: props.path })
+  // If we're transitioning routes, we don't want to prefetch
+  const prefetchDisabled = !match?.elements
 
-    const querySubscriptions = routes.map(foundRoute => {
-      if (!foundRoute || !foundRoute.route) {
+  const prefetch = useCallback(
+    (path = initialPath) => {
+      if (prefetchDisabled) {
         return null
       }
 
-      const {
-        match: { params },
-      } = foundRoute
+      if (!path) {
+        return null
+      }
 
-      const {
-        route: { query, prepareVariables },
-      } = foundRoute
+      const routes = take(findRoutesByPath({ path }), 2)
 
-      const variables = (() => {
-        if (!prepareVariables) {
-          return params
+      const querySubscriptions = routes.map(foundRoute => {
+        if (!foundRoute || !foundRoute.route) {
+          return null
         }
 
-        return prepareVariables(params, match) as OperationType["variables"]
-      })()
+        const {
+          match: { params },
+        } = foundRoute
 
-      const isPrefetchable = !!(query && variables)
+        const {
+          route: { query, prepareVariables },
+        } = foundRoute
 
-      if (!isPrefetchable) {
-        return null
-      }
+        const variables = (() => {
+          if (!prepareVariables) {
+            return params
+          }
 
-      const subscription = fetchQuery(relayEnvironment, query, variables, {
-        fetchPolicy: "store-or-network",
-      }).subscribe({
-        start: () => {
-          console.log("[usePrefetchRoute] Starting prefetch:", props.path)
-        },
-        complete: () => {
-          console.log("[usePrefetchRoute] Completed:", props.path)
-        },
-        error: () => {
-          console.error(
-            "[usePrefetchRoute] Error prefetching:",
-            foundRoute.route.path
-          )
-        },
+          return prepareVariables(params, match) as OperationType["variables"]
+        })()
+
+        const isPrefetchable = !!(query && variables)
+
+        if (!isPrefetchable) {
+          return null
+        }
+
+        const subscription = fetchQuery(relayEnvironment, query, variables, {
+          fetchPolicy: "store-or-network",
+          networkCacheConfig: {
+            force: false,
+          },
+        }).subscribe({
+          start: () => {
+            console.log("[usePrefetchRoute] Starting prefetch:", path)
+          },
+          complete: () => {
+            console.log("[usePrefetchRoute] Completed:", path)
+          },
+          error: () => {
+            console.error(
+              "[usePrefetchRoute] Error prefetching:",
+              foundRoute.route.path
+            )
+          },
+        })
+
+        return subscription
       })
 
-      return subscription
-    })
-
-    return querySubscriptions
-  }
+      return querySubscriptions
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [initialPath, prefetchDisabled]
+  )
 
   return { prefetch }
 }

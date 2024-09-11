@@ -48,6 +48,22 @@ export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
   const viewAllMenuItem =
     !("links" in lastMenuItem) && "href" in lastMenuItem ? lastMenuItem : null
 
+  // TODO: Prefetch menu items
+  /**
+  useEffect(() => {
+    menu.links.forEach(subMenu => {
+      if ("menu" in subMenu) {
+        subMenu.menu.links.forEach(menuItem => {
+          if (!("menu" in menuItem)) {
+            prefetch(menuItem.href)
+          }
+        })
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+   */
+
   return (
     <Text width="100vw" variant={["xs", "xs", "sm"]} onClick={onClick}>
       <AppContainer>

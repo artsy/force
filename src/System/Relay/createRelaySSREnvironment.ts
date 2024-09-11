@@ -30,8 +30,7 @@ const isServer = typeof window === "undefined"
 const isDevelopment = getENV("NODE_ENV") === "development"
 
 // Only log on the client during development
-const loggingEnabled =
-  !isServer && (isDevelopment || window.artsy.isLoggerEnabled)
+const loggingEnabled = !isServer && isDevelopment
 
 const USER_AGENT = `Reaction/Migration`
 
