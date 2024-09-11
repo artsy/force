@@ -146,8 +146,8 @@ describe("ArtworkSidebarDetails", () => {
         }),
       })
 
-      expect(screen.queryByText(/cm/)).toBeInTheDocument()
-      expect(screen.queryByText(/in/)).toBeInTheDocument()
+      expect(screen.queryByText(/25.4/)).toBeInTheDocument()
+      expect(screen.queryByText(/10 × 10/)).toBeInTheDocument()
     })
   })
   describe("with edition set size > 1", () => {
@@ -169,8 +169,8 @@ describe("ArtworkSidebarDetails", () => {
         }),
       })
 
-      expect(screen.queryByText(/cm/)).not.toBeInTheDocument()
-      expect(screen.queryByText(/in/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/25.4/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/10 × 10/)).not.toBeInTheDocument()
     })
   })
 

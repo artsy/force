@@ -1,4 +1,4 @@
-import { Flex, Text, Spacer, Stack } from "@artsy/palette"
+import { Flex, Text, Stack } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTranslation } from "react-i18next"
 import { ArtworkSidebarShowingNow_artwork$data } from "__generated__/ArtworkSidebarShowingNow_artwork.graphql"
@@ -34,8 +34,7 @@ export const ArtworkSidebarShowingNow: React.FC<ArtworkSidebarShowingNowProps> =
 
   return (
     <>
-      <Spacer y={4} />
-      <Flex alignItems="top" data-testid="showing-now">
+      <Flex alignItems="top" my={4} data-testid="showing-now">
         <FairIcon mr={1} mt={0.5} />
         <Stack gap={0}>
           <Text variant="sm" color="black100">
@@ -48,7 +47,6 @@ export const ArtworkSidebarShowingNow: React.FC<ArtworkSidebarShowingNowProps> =
           </RouterLink>
         </Stack>
       </Flex>
-      <Spacer y={4} />
     </>
   )
 }
