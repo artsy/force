@@ -197,7 +197,7 @@ export const sellRoutes: RouteProps[] = [
     path: "/sell",
     children: [
       {
-        path: "/",
+        path: "",
         layout: "FullBleed",
         getComponent: () => MarketingLandingApp,
         onClientSideRender: () => {
@@ -547,7 +547,7 @@ export const sellRoutes: RouteProps[] = [
         getComponent: () => ConsignmentInquiryContainer,
         children: [
           {
-            path: "/",
+            path: "",
             getComponent: () => ConsignmentInquiryApp,
             layout: "ContainerOnly",
             onClientSideRender: () => {
@@ -583,7 +583,7 @@ export const sellRoutes: RouteProps[] = [
             getComponent: () => ConsignmentInquiryContainer,
             children: [
               {
-                path: "/",
+                path: "",
                 getComponent: () => ConsignmentInquiryApp,
                 layout: "ContainerOnly",
                 onClientSideRender: () => {
