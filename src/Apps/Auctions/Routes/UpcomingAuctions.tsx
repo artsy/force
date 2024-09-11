@@ -7,7 +7,7 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { UpcomingAuctions_viewer$data } from "__generated__/UpcomingAuctions_viewer.graphql"
-import { AuctionArtworksRailFragmentContainer } from "Apps/Auctions/Components/AuctionArtworksRail"
+import { AuctionArtworkRailQueryRenderer } from "Apps/Auctions/Components/AuctionArtworksRail"
 import { extractNodes } from "Utils/extractNodes"
 import { AuctionsZeroState } from "Apps/Auctions/Components/AuctionsZeroState"
 
@@ -56,8 +56,8 @@ const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
       {nodes.map((node, index) => {
         return (
           <Box my={6} key={index}>
-            <AuctionArtworksRailFragmentContainer
-              sale={node}
+            <AuctionArtworkRailQueryRenderer
+              slug={node.slug}
               tabType="upcoming"
             />
           </Box>
@@ -105,7 +105,6 @@ export const UpcomingAuctionsPaginationContainer = createPaginationContainer(
               formattedStartDateTime
               eventStartAt
               isLiveOpen
-              ...AuctionArtworksRail_sale
             }
           }
         }

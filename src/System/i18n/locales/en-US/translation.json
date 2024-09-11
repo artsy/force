@@ -66,9 +66,8 @@
         }
       },
       "shippingAndTaxes": {
-        "expandableLabel": "Shipping and Taxes",
+        "expandableLabel": "Shipping and taxes",
         "taxInformation": "Taxes may apply at checkout.",
-        "taxInformationLearnMore": "Learn more",
         "shipsFrom": "Ships from"
       },
       "artsyGuarantee": {
