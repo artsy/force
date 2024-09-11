@@ -1,0 +1,172 @@
+import { renderHook } from "@testing-library/react-hooks"
+import { fetchQuery } from "react-relay"
+import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { findRoutesByPath } from "System/Router/Utils/routeUtils"
+import take from "lodash/take"
+
+jest.mock("react-relay", () => ({
+  fetchQuery: jest.fn(),
+}))
+jest.mock("System/Hooks/useRouter", () => ({
+  useRouter: jest.fn(),
+}))
+jest.mock("System/Hooks/useSystemContext", () => ({
+  useSystemContext: jest.fn(),
+}))
+jest.mock("System/Router/Utils/routeUtils", () => ({
+  findRoutesByPath: jest.fn(),
+}))
+jest.mock("lodash/take", () => jest.fn())
+
+describe("usePrefetchRoute", () => {
+  const mockEnvironment = {}
+  const mockMatch = { elements: true }
+  const mockUseSystemContext = useSystemContext as jest.Mock
+  const mockUseRouter = useRouter as jest.Mock
+  const mockFindRoutesByPath = findRoutesByPath as jest.Mock
+  const mockTake = take as jest.Mock
+  const mockFetchQuery = fetchQuery as jest.Mock
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+    mockUseSystemContext.mockReturnValue({ relayEnvironment: mockEnvironment })
+    mockUseRouter.mockReturnValue({ match: mockMatch })
+  })
+
+  it("should return null if prefetchDisabled is true", () => {
+    mockUseRouter.mockReturnValueOnce({ match: { elements: null } })
+    const { result } = renderHook(() => usePrefetchRoute("/test-path"))
+    expect(result.current.prefetch()).toBeNull()
+  })
+
+  it("should return null if no path is provided", () => {
+    const { result } = renderHook(() => usePrefetchRoute())
+    expect(result.current.prefetch()).toBeNull()
+  })
+
+  it("should return an array of subscriptions", () => {
+    const mockRoute = {
+      match: { params: { id: "bar" } },
+      route: {
+        path: "/foo/:id",
+        query: "TestQuery",
+        prepareVariables: jest.fn().mockReturnValue({ id: "bar" }),
+      },
+    }
+    const mockSubscription = { unsubscribe: jest.fn() }
+
+    mockFindRoutesByPath.mockReturnValue([mockRoute])
+    mockTake.mockReturnValue([mockRoute])
+    mockFetchQuery.mockReturnValue({
+      subscribe: jest.fn(() => mockSubscription),
+    })
+
+    const { result } = renderHook(() => usePrefetchRoute("/foo/bar"))
+
+    const subscriptions = result.current.prefetch()
+    expect(subscriptions).toHaveLength(1)
+    expect(subscriptions?.[0]).toEqual(mockSubscription)
+    expect(mockFetchQuery).toHaveBeenCalledWith(
+      mockEnvironment,
+      "TestQuery",
+      { id: "bar" },
+      expect.anything()
+    )
+  })
+
+  it("should prefetch if path is passed into prefetch(path)", () => {
+    const mockRoute = {
+      match: { params: { id: "bar" } },
+      route: {
+        path: "/foo/:id",
+        query: "TestQuery",
+        prepareVariables: jest.fn().mockReturnValue({ id: "bar" }),
+      },
+    }
+    const mockSubscription = { unsubscribe: jest.fn() }
+
+    mockFindRoutesByPath.mockReturnValue([mockRoute])
+    mockTake.mockReturnValue([mockRoute])
+    mockFetchQuery.mockReturnValue({
+      subscribe: jest.fn(() => mockSubscription),
+    })
+
+    const { result } = renderHook(() => usePrefetchRoute())
+
+    const subscriptions = result.current.prefetch("/foo/bar")
+    expect(subscriptions).toHaveLength(1)
+    expect(subscriptions?.[0]).toEqual(mockSubscription)
+    expect(mockFetchQuery).toHaveBeenCalledWith(
+      mockEnvironment,
+      "TestQuery",
+      { id: "bar" },
+      expect.anything()
+    )
+  })
+
+  it("should handle errors during prefetch", () => {
+    const mockRoute = {
+      match: { params: { id: "bar" } },
+      route: {
+        path: "/foo/:id",
+        query: "TestQuery",
+        prepareVariables: jest.fn().mockReturnValue({ id: "bar" }),
+      },
+    }
+    const mockError = new Error("Prefetch error")
+
+    mockFindRoutesByPath.mockReturnValue([mockRoute])
+    mockTake.mockReturnValue([mockRoute])
+    mockFetchQuery.mockReturnValue({
+      subscribe: jest.fn(({ error }) => error(mockError)),
+    })
+
+    console.error = jest.fn()
+
+    const { result } = renderHook(() => usePrefetchRoute("/foo/bar"))
+    result.current.prefetch()
+
+    expect(console.error).toHaveBeenCalledWith(
+      "[usePrefetchRoute] Error prefetching:",
+      "/foo/bar"
+    )
+  })
+
+  it("should log start and complete events", () => {
+    const mockRoute = {
+      match: { params: { id: "bar" } },
+      route: {
+        path: "/foo/:id",
+        query: "TestQuery",
+        prepareVariables: jest.fn().mockReturnValue({ id: "bar" }),
+      },
+    }
+    const mockSubscription = { unsubscribe: jest.fn() }
+
+    mockFindRoutesByPath.mockReturnValue([mockRoute])
+    mockTake.mockReturnValue([mockRoute])
+    mockFetchQuery.mockReturnValue({
+      subscribe: jest.fn(({ start, complete }) => {
+        start()
+        complete()
+        return mockSubscription
+      }),
+    })
+
+    console.log = jest.fn()
+
+    const { result } = renderHook(() => usePrefetchRoute("/foo/bar"))
+    result.current.prefetch()
+
+    expect(console.log).toHaveBeenCalledWith(
+      "[usePrefetchRoute] Starting prefetch:",
+      "/foo/bar"
+    )
+    expect(console.log).toHaveBeenCalledWith(
+      "[usePrefetchRoute] Completed:",
+      "/foo/bar"
+    )
+  })
+})

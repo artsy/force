@@ -1,4 +1,4 @@
-import { take } from "lodash"
+import take from "lodash/take"
 import { useCallback } from "react"
 import { fetchQuery } from "react-relay"
 import { OperationType, Subscription } from "relay-runtime"
@@ -68,10 +68,7 @@ export const usePrefetchRoute = (
             console.log("[usePrefetchRoute] Completed:", path)
           },
           error: () => {
-            console.error(
-              "[usePrefetchRoute] Error prefetching:",
-              foundRoute.route.path
-            )
+            console.error("[usePrefetchRoute] Error prefetching:", path)
           },
         })
 
