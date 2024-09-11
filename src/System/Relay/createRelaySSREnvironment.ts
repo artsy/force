@@ -19,7 +19,6 @@ import { Environment as IEnvironment } from "react-relay"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
-import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmediateResolveMiddleware"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
 import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddleware"
@@ -103,7 +102,6 @@ export function createRelaySSREnvironment(config: Config = {}) {
     : headers
 
   const middlewares = [
-    searchBarImmediateResolveMiddleware(),
     urlMiddleware({
       url: metaphysicsEndpoint,
       headers: authenticatedHeaders,
