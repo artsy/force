@@ -126,12 +126,8 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
 
     if (!isLoggedIn) {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to follow ${artist.name}`
-          },
+          title: `Sign up or log in to follow ${artist.name}`,
           afterAuthAction: {
             action: "follow",
             kind: "artist",

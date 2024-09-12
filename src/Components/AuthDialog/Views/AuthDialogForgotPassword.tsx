@@ -18,7 +18,7 @@ import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialog
 export const AuthDialogForgotPassword: FC = () => {
   const {
     dispatch,
-    state: { options },
+    state: { options, values },
   } = useAuthDialogContext()
 
   const track = useAuthDialogTracking()
@@ -27,7 +27,7 @@ export const AuthDialogForgotPassword: FC = () => {
     <Formik
       validateOnBlur={false}
       validationSchema={VALIDATION_SCHEMA}
-      initialValues={{ email: "", mode: "Pending" }}
+      initialValues={{ email: values.email || "", mode: "Pending" }}
       onSubmit={async ({ email }, { setStatus, setFieldValue }) => {
         setStatus({ error: null })
         setFieldValue("mode", "Loading")
@@ -90,7 +90,7 @@ export const AuthDialogForgotPassword: FC = () => {
                 width="100%"
                 type="submit"
                 loading={isSubmitting}
-                disabled={!isValid || !dirty}
+                disabled={!isValid}
               >
                 Send me reset instructions
               </Button>
@@ -101,7 +101,7 @@ export const AuthDialogForgotPassword: FC = () => {
                   textDecoration="underline"
                   data-test="login"
                   onClick={() => {
-                    dispatch({ type: "MODE", payload: { mode: "Login" } })
+                    dispatch({ type: "MODE", payload: { mode: "Welcome" } })
                   }}
                 >
                   Log in
@@ -111,7 +111,7 @@ export const AuthDialogForgotPassword: FC = () => {
                   textDecoration="underline"
                   data-test="signup"
                   onClick={() => {
-                    dispatch({ type: "MODE", payload: { mode: "SignUp" } })
+                    dispatch({ type: "MODE", payload: { mode: "Welcome" } })
                   }}
                 >
                   sign up.

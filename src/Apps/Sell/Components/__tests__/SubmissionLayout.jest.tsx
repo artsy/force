@@ -212,9 +212,8 @@ describe("SubmissionLayout", () => {
           })
 
           expect(showAuthDialog).toBeCalledWith({
-            mode: "SignUp",
             options: {
-              title: expect.any(Function),
+              title: expect.any(String),
               afterAuthAction: {
                 action: "saveAndExitSubmission",
                 kind: "submission",

@@ -56,12 +56,9 @@ export const MyCollectionEmptyState: React.FC = () => {
                   event.preventDefault()
 
                   showAuthDialog({
-                    mode: "Login",
                     options: {
-                      title: mode => {
-                        const action = mode === "Login" ? "Log in" : "Sign up"
-                        return `${action} to upload works to My Collection`
-                      },
+                      title:
+                        "Sign up or log in to upload works to My Collection",
                     },
                     analytics: {
                       contextModule: ContextModule.myCollectionHome,
@@ -90,12 +87,8 @@ export const MyCollectionEmptyState: React.FC = () => {
                 textDecoration="underline"
                 onClick={() => {
                   showAuthDialog({
-                    mode: "Login",
                     options: {
-                      title: mode => {
-                        const action = mode === "Login" ? "Log in" : "Sign up"
-                        return `${action} to view My Collection`
-                      },
+                      title: "Sign up or log in to view My Collection",
                     },
                     analytics: {
                       contextModule: ContextModule.myCollectionHome,

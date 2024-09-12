@@ -94,6 +94,7 @@ export const useAuthDialogOptions = () => {
 }
 
 const DEFAULT_DESCRIPTIONS: Record<AuthDialogMode, string | null> = {
+  Welcome: null,
   Login: null,
   ForgotPassword: null,
   SignUp:
@@ -101,7 +102,8 @@ const DEFAULT_DESCRIPTIONS: Record<AuthDialogMode, string | null> = {
 }
 
 const PAGE_TITLES: Record<AuthDialogMode, string> = {
-  Login: "Log in to Artsy",
-  SignUp: "Sign up for Artsy",
+  Welcome: "Sign up or log in",
+  Login: "Log in or sign up",
+  SignUp: "Sign up or log in",
   ForgotPassword: "Reset your password", // pragma: allowlist secret
 }

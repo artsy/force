@@ -123,11 +123,7 @@ describe("authenticationRoutes", () => {
         renderClientRoute("/login")
 
         await waitFor(() => {
-          expect(
-            screen.getByText(
-              "Log in to collect art by the world’s leading artists"
-            )
-          ).toBeInTheDocument()
+          expect(screen.getByText("Sign up or log in")).toBeInTheDocument()
         })
       })
     })
@@ -180,11 +176,7 @@ describe("authenticationRoutes", () => {
         renderClientRoute(`/signup`)
 
         await waitFor(() => {
-          expect(
-            screen.getByText(
-              "Sign up to collect art by the world’s leading artists"
-            )
-          ).toBeInTheDocument()
+          expect(screen.getByText("Sign up or log in")).toBeInTheDocument()
         })
       })
     })

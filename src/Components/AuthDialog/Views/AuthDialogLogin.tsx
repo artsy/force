@@ -9,10 +9,10 @@ import {
   Message,
   PasswordInput,
   Spacer,
+  Stack,
   Text,
 } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
-import { AuthDialogSocial } from "Components/AuthDialog/Components/AuthDialogSocial"
 import { Form, Formik } from "formik"
 import { login } from "Utils/auth"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
@@ -20,10 +20,7 @@ import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessa
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 
 export const AuthDialogLogin: FC = () => {
-  const {
-    dispatch,
-    state: { options },
-  } = useAuthDialogContext()
+  const { dispatch, state } = useAuthDialogContext()
 
   const { runAfterAuthentication } = useAfterAuthentication()
 
@@ -34,7 +31,7 @@ export const AuthDialogLogin: FC = () => {
       validateOnBlur={false}
       validationSchema={VALIDATION_SCHEMA}
       initialValues={{
-        email: "",
+        email: state.values.email || "",
         password: "",
         authenticationCode: "",
         mode: "Pending",
@@ -55,7 +52,7 @@ export const AuthDialogLogin: FC = () => {
 
           track.loggedIn({ service: "email", userId: user.id })
 
-          options.onSuccess?.()
+          state.options.onSuccess?.()
         } catch (err) {
           console.error(err)
 
@@ -97,20 +94,7 @@ export const AuthDialogLogin: FC = () => {
       }) => {
         return (
           <Form data-test="LoginForm">
-            <Join separator={<Spacer y={2} />}>
-              <Input
-                name="email"
-                title="Email"
-                placeholder="Enter your email address"
-                type="email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoFocus
-                autoComplete="email"
-                error={touched.email && errors.email}
-              />
-
+            <Join separator={<Spacer y={4} />}>
               <Box>
                 <PasswordInput
                   name="password"
@@ -120,6 +104,7 @@ export const AuthDialogLogin: FC = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   autoComplete="current-password"
+                  autoFocus
                   error={touched.password && errors.password}
                 />
 
@@ -168,33 +153,33 @@ export const AuthDialogLogin: FC = () => {
                 <Message variant="error">{status.error}</Message>
               )}
 
-              <Button
-                type="submit"
-                width="100%"
-                loading={values.mode === "Loading" || values.mode === "Success"}
-                disabled={!isValid || !dirty}
-              >
-                Log in
-              </Button>
-
-              <Text variant="xs" textAlign="center" color="black60" my={-1}>
-                or
-              </Text>
-
-              <AuthDialogSocial />
-
-              <Text variant="xs" textAlign="center" color="black60">
-                Don’t have an account?{" "}
-                <Clickable
-                  data-test="signup"
-                  textDecoration="underline"
-                  onClick={() => {
-                    dispatch({ type: "MODE", payload: { mode: "SignUp" } })
-                  }}
+              <Stack gap={1}>
+                <Button
+                  type="submit"
+                  width="100%"
+                  loading={
+                    values.mode === "Loading" || values.mode === "Success"
+                  }
+                  disabled={!isValid || !dirty}
                 >
-                  Sign up.
-                </Clickable>
-              </Text>
+                  Log in
+                </Button>
+
+                {state.isFallback && (
+                  <Text variant="xs" textAlign="center" color="black60">
+                    Don’t have an account?{" "}
+                    <Clickable
+                      textDecoration="underline"
+                      color="black100"
+                      onClick={() => {
+                        dispatch({ type: "MODE", payload: { mode: "SignUp" } })
+                      }}
+                    >
+                      Sign up.
+                    </Clickable>
+                  </Text>
+                )}
+              </Stack>
             </Join>
           </Form>
         )

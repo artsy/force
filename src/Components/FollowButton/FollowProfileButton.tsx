@@ -92,12 +92,8 @@ const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
 
     if (!isLoggedIn) {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to follow ${profile.name}`
-          },
+          title: `Sign up or log in to follow ${profile.name}`,
           afterAuthAction: {
             action: "follow",
             kind: "profile",
