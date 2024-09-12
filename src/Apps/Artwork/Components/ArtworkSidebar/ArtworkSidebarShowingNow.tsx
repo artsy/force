@@ -1,20 +1,21 @@
 import { Flex, Text, Stack } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { useFragment, graphql } from "react-relay"
 import { useTranslation } from "react-i18next"
-import { ArtworkSidebarShowingNow_artwork$data } from "__generated__/ArtworkSidebarShowingNow_artwork.graphql"
+import { ArtworkSidebarShowingNow_artwork$key } from "__generated__/ArtworkSidebarShowingNow_artwork.graphql"
 import FairIcon from "@artsy/icons/FairIcon"
 import { RouterLink } from "System/Components/RouterLink"
 
 interface ArtworkSidebarShowingNowProps {
-  artwork: ArtworkSidebarShowingNow_artwork$data
+  artwork: ArtworkSidebarShowingNow_artwork$key
 }
 
 export const ArtworkSidebarShowingNow: React.FC<ArtworkSidebarShowingNowProps> = ({
   artwork,
 }) => {
+  const data = useFragment(ArtworkSidebarShowingNowFragmentContainer, artwork)
   const { t } = useTranslation()
 
-  const shouldRenderShowingNow = artwork.collectorSignals?.runningShow ?? false
+  const shouldRenderShowingNow = data.collectorSignals?.runningShow ?? false
 
   if (!shouldRenderShowingNow) {
     return null
@@ -27,10 +28,8 @@ export const ArtworkSidebarShowingNow: React.FC<ArtworkSidebarShowingNowProps> =
     })
   }
 
-  const startAt = formatDate(
-    artwork.collectorSignals?.runningShow?.startAt ?? ""
-  )
-  const endAt = formatDate(artwork.collectorSignals?.runningShow?.endAt ?? "")
+  const startAt = formatDate(data.collectorSignals?.runningShow?.startAt ?? "")
+  const endAt = formatDate(data.collectorSignals?.runningShow?.endAt ?? "")
 
   return (
     <>
@@ -40,10 +39,8 @@ export const ArtworkSidebarShowingNow: React.FC<ArtworkSidebarShowingNowProps> =
           <Text variant="sm" color="black100">
             {t("artworkPage.sidebar.details.showingNow")} • {startAt}-{endAt}
           </Text>
-          <RouterLink to={artwork.collectorSignals?.runningShow?.href}>
-            <Text variant="sm">
-              {artwork.collectorSignals?.runningShow?.name}
-            </Text>
+          <RouterLink to={data.collectorSignals?.runningShow?.href}>
+            <Text variant="sm">{data.collectorSignals?.runningShow?.name}</Text>
           </RouterLink>
         </Stack>
       </Flex>
@@ -51,20 +48,15 @@ export const ArtworkSidebarShowingNow: React.FC<ArtworkSidebarShowingNowProps> =
   )
 }
 
-export const ArtworkSidebarShowingNowFragmentContainer = createFragmentContainer(
-  ArtworkSidebarShowingNow,
-  {
-    artwork: graphql`
-      fragment ArtworkSidebarShowingNow_artwork on Artwork {
-        collectorSignals {
-          runningShow {
-            name
-            href
-            startAt
-            endAt
-          }
-        }
+const ArtworkSidebarShowingNowFragmentContainer = graphql`
+  fragment ArtworkSidebarShowingNow_artwork on Artwork {
+    collectorSignals {
+      runningShow {
+        name
+        href
+        startAt
+        endAt
       }
-    `,
+    }
   }
-)
+`

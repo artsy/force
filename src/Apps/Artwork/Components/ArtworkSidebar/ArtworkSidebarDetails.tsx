@@ -3,7 +3,7 @@ import { ArtworkSidebarDetails_artwork$data } from "__generated__/ArtworkSidebar
 import { Box, Spacer, Text } from "@artsy/palette"
 import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
 import { ArtworkSidebarAuthenticityCertificateFragmentContainer } from "./ArtworkSidebarAuthenticityCertificate"
-import { ArtworkSidebarShowingNowFragmentContainer } from "./ArtworkSidebarShowingNow"
+import { ArtworkSidebarShowingNow } from "./ArtworkSidebarShowingNow"
 import { useTranslation } from "react-i18next"
 
 interface ArtworkSidebarDetailsProps {
@@ -61,7 +61,7 @@ const ArtworkSidebarDetails: React.FC<ArtworkSidebarDetailsProps> = ({
       />
 
       {/* showing now */}
-      <ArtworkSidebarShowingNowFragmentContainer artwork={artwork} />
+      <ArtworkSidebarShowingNow artwork={artwork} />
 
       <Spacer y={2} />
     </Box>
