@@ -1,5 +1,7 @@
 # A/B Testing with Unleash
 
+> 👀 Important! Read [this doc from the Data team](https://www.notion.so/artsy/How-we-run-experiments-at-Artsy-d000ab328e80432e95657eda04463da2) before continuing, as it explains all of the particulars of runnning Experiments at Artsy.
+
 ### Create an A/B test via our Internal Tools app:
 
 - Login to https://tools.artsy.net/feature-flags
