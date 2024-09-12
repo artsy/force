@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1af9e07132c7b8bc2cdf581704fa0d92>>
+ * @generated SignedSource<<bba93236cbed43eeb140257cce4fa831>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Details_artwork$data = {
   readonly artist: {
@@ -36,6 +37,7 @@ export type Details_artwork$data = {
         readonly display: string | null | undefined;
       } | null | undefined;
     } | null | undefined;
+    readonly primaryLabel: LabelSignalEnum | null | undefined;
   } | null | undefined;
   readonly consignmentSubmission?: {
     readonly internalID: string | null | undefined;
@@ -166,6 +168,13 @@ return {
       "name": "collectorSignals",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "primaryLabel",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -513,6 +522,6 @@ return {
 };
 })();
 
-(node as any).hash = "56eabcef62f9988e898b33c64dbcb3f3";
+(node as any).hash = "5fee644da48f1ccd47390fe4baef0045";
 
 export default node;

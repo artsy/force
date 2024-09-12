@@ -15,7 +15,6 @@ import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveB
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
-import { getSignalLabel } from "Utils/getSignalLabel"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useState } from "react"
@@ -37,11 +36,11 @@ export interface DetailsProps {
 }
 
 interface SaleInfoLineProps extends DetailsProps {
-  showActivePartnerOfferLine: boolean
+  showActivePartnerOffer: boolean
 }
 
 interface SaleMessageProps extends DetailsProps {
-  showActivePartnerOfferLine: boolean
+  showActivePartnerOffer: boolean
 }
 
 const StyledConditionalLink = styled(RouterLink)`
@@ -157,7 +156,7 @@ const PartnerLine: React.FC<DetailsProps> = ({
 }
 
 const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
-  const { showActivePartnerOfferLine } = props
+  const { showActivePartnerOffer } = props
   const { lotClosesAt } = props.artwork.collectorSignals?.auction ?? {}
   const { liveBiddingStarted } = props.artwork.collectorSignals?.auction ?? {}
 
@@ -193,38 +192,70 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
       >
         <SaleMessage {...props} /> <BidInfo {...props} />
       </Text>
-      {showActivePartnerOfferLine && <ActivePartnerOfferTimer {...props} />}
+      {showActivePartnerOffer && <ActivePartnerOfferTimer {...props} />}
     </Flex>
   )
 }
 
-const CollectorSignalLine: React.FC<DetailsProps> = ({
+const PrimaryLabelLine: React.FC<DetailsProps> = ({
   artwork: { collectorSignals },
 }) => {
-  if (!collectorSignals) {
+  const primaryLabel = collectorSignals?.primaryLabel
+
+  if (!primaryLabel) {
     return null
   }
 
-  return (
-    <Text
-      variant="xs"
-      color="blue100"
-      backgroundColor="blue10"
-      px={0.5}
-      alignSelf="flex-start"
-      borderRadius={3}
-    >
-      {getSignalLabel(collectorSignals)}
-    </Text>
-  )
+  if (primaryLabel === "PARTNER_OFFER") {
+    return (
+      <Text
+        variant="xs"
+        color="blue100"
+        backgroundColor="blue10"
+        px={0.5}
+        alignSelf="flex-start"
+        borderRadius={3}
+      >
+        Limited-time Offer
+      </Text>
+    )
+  }
+
+  if (primaryLabel === "INCREASED_INTEREST") {
+    return (
+      <Text
+        variant="xs"
+        border="1px solid"
+        borderRadius={3}
+        borderColor="black100"
+        px={0.5}
+        alignSelf="flex-start"
+      >
+        Increased Interest
+      </Text>
+    )
+  }
+
+  if (primaryLabel === "CURATORS_PICK") {
+    return (
+      <Text
+        variant="xs"
+        border="1px solid"
+        borderRadius={3}
+        borderColor="black100"
+        px={0.5}
+        alignSelf="flex-start"
+      >
+        Curators' Pick
+      </Text>
+    )
+  }
+
+  return null
 }
 
 export const EmptyLine: React.FC = () => {
-  return (
-    <Text variant="sm-display" lineHeight="22px">
-      &nbsp;
-    </Text>
-  )
+  return <Text variant="xs">&nbsp;</Text>
 }
 
 const HighDemandInfo = () => {
@@ -243,7 +274,7 @@ const NBSP = " "
 const SaleMessage: React.FC<SaleMessageProps> = props => {
   const {
     artwork: { sale, sale_message, sale_artwork, collectorSignals },
-    showActivePartnerOfferLine,
+    showActivePartnerOffer,
   } = props
 
   if (sale?.is_auction && !sale?.is_closed) {
@@ -253,7 +284,7 @@ const SaleMessage: React.FC<SaleMessageProps> = props => {
     return <>{highestBid_display || openingBid_display || ""}</>
   }
 
-  if (showActivePartnerOfferLine) {
+  if (showActivePartnerOffer) {
     return <>{collectorSignals?.partnerOffer?.priceWithDiscount?.display}</>
   }
 
@@ -361,14 +392,19 @@ export const Details: React.FC<DetailsProps> = ({
   const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
   const isAuction = rest?.artwork?.sale?.is_auction ?? false
 
-  const showActivePartnerOfferLine: boolean =
+  const showActivePartnerOffer: boolean =
     !!signalsPartnerOffersEnabled &&
     !isAuction &&
     !!partnerOffer &&
     contextModule !== "activity"
 
-  const padForActivePartnerOfferLine: boolean =
-    !showActivePartnerOfferLine && contextModule !== "activity"
+  const showPrimaryLabelLine: boolean = !!rest?.artwork?.collectorSignals
+    ?.primaryLabel
+
+  const padForPrimaryLabelLine: boolean =
+    !showActivePartnerOffer &&
+    contextModule !== "activity" &&
+    !showPrimaryLabelLine
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -426,7 +462,7 @@ export const Details: React.FC<DetailsProps> = ({
 
       <Flex justifyContent="space-between" alignItems="flex-start">
         <Flex flexDirection="column" maxWidth="75%">
-          {showActivePartnerOfferLine && <CollectorSignalLine {...rest} />}
+          {showPrimaryLabelLine && <PrimaryLabelLine {...rest} />}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
           )}
@@ -452,14 +488,14 @@ export const Details: React.FC<DetailsProps> = ({
 
       {!hideSaleInfo && (
         <SaleInfoLine
-          showActivePartnerOfferLine={showActivePartnerOfferLine}
+          showActivePartnerOffer={showActivePartnerOffer}
           {...rest}
         />
       )}
 
       <BidTimerLine artwork={rest.artwork} />
 
-      {padForActivePartnerOfferLine && <EmptyLine />}
+      {padForPrimaryLabelLine && <EmptyLine />}
     </Box>
   )
 }
@@ -559,6 +595,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       title
       date
       collectorSignals {
+        primaryLabel
         auction {
           bidCount
           lotClosesAt
