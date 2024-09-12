@@ -288,7 +288,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         {taxPrefix()}
         <RouterLink
           inline
-          to="https://support.artsy.net/s/article/How-are-taxes-customs-VAT-and-import-fees-handled-on-works-listed-with-secure-checkout"
+          to="https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
           target="_blank"
           rel="noopener noreferrer"
         >
