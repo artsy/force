@@ -255,7 +255,11 @@ const PrimaryLabelLine: React.FC<DetailsProps> = ({
 }
 
 export const EmptyLine: React.FC = () => {
-  return <Text variant="xs">&nbsp;</Text>
+  return (
+    <Text variant="xs" lineHeight="22px">
+      &nbsp;
+    </Text>
+  )
 }
 
 const HighDemandInfo = () => {
@@ -398,13 +402,11 @@ export const Details: React.FC<DetailsProps> = ({
     !!partnerOffer &&
     contextModule !== "activity"
 
-  const showPrimaryLabelLine: boolean = !!rest?.artwork?.collectorSignals
-    ?.primaryLabel
+  const showPrimaryLabelLine: boolean =
+    !!rest?.artwork?.collectorSignals?.primaryLabel && !isAuction
 
   const padForPrimaryLabelLine: boolean =
-    !showActivePartnerOffer &&
-    contextModule !== "activity" &&
-    !showPrimaryLabelLine
+    contextModule !== "activity" && !showPrimaryLabelLine
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
