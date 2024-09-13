@@ -7,10 +7,7 @@ import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisc
 import { fetchQuery, graphql } from "react-relay"
 import { AuthDialogWelcomeQuery } from "__generated__/AuthDialogWelcomeQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import {
-  DEFAULT_AUTH_MODAL_INTENTS,
-  useAuthDialogContext,
-} from "Components/AuthDialog/AuthDialogContext"
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { recaptcha } from "Utils/recaptcha"
 
 interface AuthDialogWelcomeProps {}
@@ -18,7 +15,7 @@ interface AuthDialogWelcomeProps {}
 export const AuthDialogWelcome: FC<AuthDialogWelcomeProps> = () => {
   const { relayEnvironment } = useSystemContext()
 
-  const { dispatch, state } = useAuthDialogContext()
+  const { dispatch } = useAuthDialogContext()
 
   return (
     <Formik
@@ -42,10 +39,6 @@ export const AuthDialogWelcome: FC<AuthDialogWelcomeProps> = () => {
             type: "SET",
             payload: {
               values: { email },
-              analytics: {
-                ...state.analytics,
-                intent: DEFAULT_AUTH_MODAL_INTENTS[mode],
-              },
             },
           })
 
@@ -60,10 +53,6 @@ export const AuthDialogWelcome: FC<AuthDialogWelcomeProps> = () => {
             type: "SET",
             payload: {
               values: { email },
-              analytics: {
-                ...state.analytics,
-                intent: DEFAULT_AUTH_MODAL_INTENTS.SignUp,
-              },
             },
           })
 
