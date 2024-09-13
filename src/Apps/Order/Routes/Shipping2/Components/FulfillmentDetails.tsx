@@ -221,6 +221,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           saveFulfillmentDetailsResult.data.requiresArtsyShippingToDestination
         ) {
           shippingContext.actions.setStage("shipping_quotes")
+          // TODO: jumpTo(shipping quotes?)
         } else if (shippingContext.state.shippingFormMode === "new_address") {
           // Advance to payment
           router.push(`/orders/${orderData.internalID}/payment`)
@@ -242,6 +243,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           "Something went wrong. Please try again or contact orders@artsy.net.",
         flow: "user selects a shipping option",
       })
+
       resetSelectedSavedAddress()
       shippingContext.actions.dialog.showErrorDialog()
     } finally {

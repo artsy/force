@@ -654,7 +654,7 @@ describe.skip("Shipping", () => {
         })
       })
 
-      it("shows an error when an exchange mutation throws an error", async () => {
+      it("shows and tracks an error when an exchange mutation throws an error", async () => {
         const { mockRejectLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithoutAddress,
@@ -669,9 +669,20 @@ describe.skip("Shipping", () => {
           mockRejectLastOperation(new Error("##TEST_ERROR## wrong number"))
         )
         await waitFor(() => expect(mockShowErrorDialog).toHaveBeenCalledWith())
+
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: undefined,
+          flow: "user selects a shipping option",
+          message:
+            "Something went wrong. Please try again or contact orders@artsy.net.",
+          title: "An error occurred",
+        })
       })
 
-      it("shows an error when there is a missing_country error from the server", async () => {
+      it("shows and tracks an error when there is a missing_country error from the server", async () => {
         const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithoutAddress,
@@ -699,9 +710,19 @@ describe.skip("Shipping", () => {
               "There was an error processing your address. Please review and try again.",
           })
         )
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: "missing_country",
+          flow: "user submits a shipping option",
+          message:
+            "There was an error processing your address. Please review and try again.",
+          title: "Invalid address",
+        })
       })
 
-      it("shows an error when there is a missing_region error from the server", async () => {
+      it("shows and tracks an error when there is a missing_region error from the server", async () => {
         const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithoutAddress,
@@ -729,9 +750,19 @@ describe.skip("Shipping", () => {
               "There was an error processing your address. Please review and try again.",
           })
         )
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: "missing_region",
+          flow: "user submits a shipping option",
+          message:
+            "There was an error processing your address. Please review and try again.",
+          title: "Invalid address",
+        })
       })
 
-      it("shows an error when there is a destination_could_not_be_geocodederror from the server", async () => {
+      it("shows and tracks an error when there is a destination_could_not_be_geocoded error from the server", async () => {
         const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithoutAddress,
@@ -758,6 +789,82 @@ describe.skip("Shipping", () => {
           message: (
             <ErrorDialogMessage message="Please confirm that your address details are correct and try again. If the issue continues contact orders@artsy.net." />
           ),
+        })
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: "destination_could_not_be_geocoded",
+          flow: "user submits a shipping option",
+          message:
+            "Please confirm that your address details are correct and try again. If the issue continues contact orders@artsy.net.",
+          title: "Cannot calculate shipping",
+        })
+      })
+      it("shows and tracks an error when there is a unsupported_shipping_location error from the server", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await clickSaveAddress()
+
+        await saveAndContinue()
+
+        await resolveSaveFulfillmentDetails(mockResolveLastOperation, {
+          orderOrError: {
+            __typename: "CommerceOrderWithMutationFailure",
+            error: {
+              code: "unsupported_shipping_location",
+              data: '{"failure_code":"domestic_shipping_only"}',
+            },
+          },
+        })
+        expect(mockShowErrorDialog).toHaveBeenLastCalledWith({
+          title: "Can't ship to that address",
+          message: "This work can only be shipped domestically.",
+        })
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: "unsupported_shipping_location",
+          flow: "user submits a shipping option",
+          message: "This work can only be shipped domestically.",
+          title: "Can't ship to that address",
+        })
+      })
+      it("shows and tracks an error when there is an unlisted error from the server", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await clickSaveAddress()
+
+        await saveAndContinue()
+
+        await resolveSaveFulfillmentDetails(mockResolveLastOperation, {
+          orderOrError: {
+            __typename: "CommerceOrderWithMutationFailure",
+            error: {
+              code: "something new",
+              data: "{}",
+            },
+          },
+        })
+        expect(mockShowErrorDialog).toHaveBeenLastCalledWith()
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: "something new",
+          flow: "user submits a shipping option",
+          message:
+            "Something went wrong. Please try again or contact orders@artsy.net.",
+          title: "An error occurred",
         })
       })
 
@@ -1719,6 +1826,69 @@ describe.skip("Shipping", () => {
           },
         })
       })
+      it("shows dialog and tracks error if shipping quote save operation fails", async () => {
+        const {
+          mockResolveLastOperation,
+          mockRejectLastOperation,
+        } = renderWithRelay({
+          CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await saveAndContinue()
+
+        await flushPromiseQueue()
+        const saveAddressOperation = await mockResolveLastOperation({
+          CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
+        })
+
+        expect(saveAddressOperation.operationName).toBe(
+          "useCreateSavedAddressMutation"
+        )
+        await flushPromiseQueue()
+
+        const fulfillmentOperation = await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping,
+          validAddress
+        )
+        expect(fulfillmentOperation.operationName).toBe(
+          "useSaveFulfillmentDetailsMutation"
+        )
+
+        // FIXME: `getByRole` can be slow and cause test to time out.
+        // https://github.com/testing-library/dom-testing-library/issues/552#issuecomment-625172052
+        const premiumShipping = await screen.findByRole("radio", {
+          name: /Premium/,
+        })
+        await userEvent.click(premiumShipping)
+
+        await flushPromiseQueue()
+
+        await saveAndContinue()
+        await flushPromiseQueue()
+
+        const selectShippingOptionOperation = await mockRejectLastOperation(
+          new Error("##TEST_ERROR## shipping quotes failed")
+        )
+
+        expect(selectShippingOptionOperation.operationName).toBe(
+          "useSelectShippingQuoteMutation"
+        )
+
+        await waitFor(() => expect(mockShowErrorDialog).toHaveBeenCalledWith())
+        expect(mockTrackEvent).toHaveBeenCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: undefined,
+          flow: "user sets a shipping quote",
+          message:
+            "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
+          title: "An error occurred",
+        })
+      })
     })
 
     describe("with saved addresses", () => {
@@ -1760,6 +1930,37 @@ describe.skip("Shipping", () => {
 
         await flushPromiseQueue()
         expect(getAllPendingOperationNames(env)).toEqual([])
+      })
+      it("tracks selecting shipping quote", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          CommerceOrder: () => BuyOrderWithArtaShippingDetails,
+          Me: () => meWithoutAddress,
+        })
+
+        await waitFor(() => {
+          const shippingBox = screen.getByTestId("ShippingQuotes_collapse")
+          expect(shippingBox).toHaveStyle({ height: "0px" })
+        })
+
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping
+        )
+
+        // FIXME: `getByRole` can be slow and cause test to time out.
+        // https://github.com/testing-library/dom-testing-library/issues/552#issuecomment-625172052
+        const premiumShipping = await screen.findByRole("radio", {
+          name: /Premium/,
+        })
+        await userEvent.click(premiumShipping)
+
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "clickedSelectShippingOption",
+          context_module: "ordersShipping",
+          context_page_owner_id: "2939023",
+          context_page_owner_type: "orders-shipping",
+          subject: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+        })
       })
 
       // TODO: EMI-1526 https://artsyproduct.atlassian.net/browse/EMI-1526
@@ -2308,6 +2509,24 @@ describe.skip("Shipping", () => {
       // TODO: need a better way to check the input is displayed/expanded (height > 0)
       expect(phoneNumber).toHaveAttribute("tabindex", "0")
       expect(phoneNumber).toHaveValue("")
+    })
+    it("tracks click to switch to pickup", async () => {
+      renderWithRelay({
+        CommerceOrder: () => order,
+        Me: () => meWithAddresses,
+      })
+
+      await userEvent.click(
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
+      )
+
+      await screen.findByTestId("AddressForm_pickupPhoneNumber")
+      expect(mockTrackEvent).toHaveBeenLastCalledWith({
+        action: "Click",
+        flow: "buy now",
+        subject: "arrange for pickup",
+        type: "button",
+      })
     })
 
     it("sets pickup on order and advances to payment", async () => {

@@ -94,7 +94,13 @@ type RenderWithRelay = RTLRenderResult & {
     operationName: string
     operationVariables: Variables
   }
-  mockRejectLastOperation: (error: Error) => void
+  mockRejectLastOperation: (
+    error: Error
+  ) => {
+    operation: OperationDescriptor
+    operationName: string
+    operationVariables: Variables
+  }
 }
 
 export const setupTestWrapperTL = <T extends OperationType>({
