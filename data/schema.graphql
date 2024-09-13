@@ -10958,6 +10958,9 @@ type HomeViewSectionActivity implements HomeViewSectionGeneric & Node {
   # The component that is prescribed for this section
   component: HomeViewComponent
 
+  # An analytics context label for this section
+  contextModule: String!
+
   # A globally unique ID.
   id: ID!
 
@@ -10983,6 +10986,9 @@ type HomeViewSectionArticles implements HomeViewSectionGeneric & Node {
   # The component that is prescribed for this section
   component: HomeViewComponent
 
+  # An analytics context label for this section
+  contextModule: String!
+
   # A globally unique ID.
   id: ID!
 
@@ -11001,6 +11007,9 @@ type HomeViewSectionArtists implements HomeViewSectionGeneric & Node {
 
   # The component that is prescribed for this section
   component: HomeViewComponent
+
+  # An analytics context label for this section
+  contextModule: String!
 
   # A globally unique ID.
   id: ID!
@@ -11021,6 +11030,9 @@ type HomeViewSectionArtworks implements HomeViewSectionGeneric & Node {
   # The component that is prescribed for this section
   component: HomeViewComponent
 
+  # An analytics context label for this section
+  contextModule: String!
+
   # A globally unique ID.
   id: ID!
 
@@ -11039,6 +11051,9 @@ type HomeViewSectionAuctionResults implements HomeViewSectionGeneric & Node {
 
   # The component that is prescribed for this section
   component: HomeViewComponent
+
+  # An analytics context label for this section
+  contextModule: String!
 
   # A globally unique ID.
   id: ID!
@@ -11071,6 +11086,9 @@ type HomeViewSectionEdge {
 type HomeViewSectionFairs implements HomeViewSectionGeneric & Node {
   # The component that is prescribed for this section
   component: HomeViewComponent
+
+  # An analytics context label for this section
+  contextModule: String!
   fairsConnection(
     after: String
     before: String
@@ -11090,6 +11108,9 @@ type HomeViewSectionGalleries implements HomeViewSectionGeneric & Node {
   # The component that is prescribed for this section
   component: HomeViewComponent
 
+  # An analytics context label for this section
+  contextModule: String!
+
   # A globally unique ID.
   id: ID!
 
@@ -11102,6 +11123,9 @@ interface HomeViewSectionGeneric {
   # The component that is prescribed for this section
   component: HomeViewComponent
 
+  # An analytics context label for this section
+  contextModule: String!
+
   # A globally unique ID.
   id: ID!
 
@@ -11113,6 +11137,9 @@ interface HomeViewSectionGeneric {
 type HomeViewSectionHeroUnits implements HomeViewSectionGeneric & Node {
   # The component that is prescribed for this section
   component: HomeViewComponent
+
+  # An analytics context label for this section
+  contextModule: String!
   heroUnitsConnection(
     after: String
     before: String
@@ -11132,6 +11159,9 @@ type HomeViewSectionMarketingCollections implements HomeViewSectionGeneric & Nod
   # The component that is prescribed for this section
   component: HomeViewComponent
 
+  # An analytics context label for this section
+  contextModule: String!
+
   # A globally unique ID.
   id: ID!
 
@@ -11149,6 +11179,9 @@ type HomeViewSectionMarketingCollections implements HomeViewSectionGeneric & Nod
 type HomeViewSectionSales implements HomeViewSectionGeneric & Node {
   # The component that is prescribed for this section
   component: HomeViewComponent
+
+  # An analytics context label for this section
+  contextModule: String!
 
   # A globally unique ID.
   id: ID!
@@ -11168,6 +11201,9 @@ type HomeViewSectionShows implements HomeViewSectionGeneric & Node {
   # The component that is prescribed for this section
   component: HomeViewComponent
 
+  # An analytics context label for this section
+  contextModule: String!
+
   # A globally unique ID.
   id: ID!
 
@@ -11179,6 +11215,9 @@ type HomeViewSectionShows implements HomeViewSectionGeneric & Node {
 type HomeViewSectionViewingRooms implements HomeViewSectionGeneric & Node {
   # The component that is prescribed for this section
   component: HomeViewComponent
+
+  # An analytics context label for this section
+  contextModule: String!
 
   # A globally unique ID.
   id: ID!
