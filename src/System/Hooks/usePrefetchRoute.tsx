@@ -2,6 +2,7 @@ import take from "lodash/take"
 import { useCallback } from "react"
 import { fetchQuery } from "react-relay"
 import { OperationType, Subscription } from "relay-runtime"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
@@ -14,8 +15,10 @@ export const usePrefetchRoute = (
 
   const { match } = useRouter()
 
+  const prefetchFeatureFlagEnabled = useFeatureFlag("diamond_prefetch-hover")
+
   // If we're transitioning routes, we don't want to prefetch
-  const prefetchDisabled = !match?.elements
+  const prefetchDisabled = !prefetchFeatureFlagEnabled || !match?.elements
 
   const prefetch = useCallback(
     (path = initialPath) => {
