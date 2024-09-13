@@ -199,7 +199,6 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                     variant="secondaryBlack"
                     onClick={() => {
                       showAuthDialog({
-                        mode: "SignUp",
                         analytics: {
                           contextModule: ContextModule.fairsHeader,
                           intent: Intent.signup,

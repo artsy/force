@@ -262,7 +262,9 @@ describe("writeCache", () => {
     }
 
     mockFindRoutesByPath.mockReturnValue([
-      { path: "/collect", serverCacheTTL: 1000 },
+      {
+        route: { path: "/collect", serverCacheTTL: 1000 },
+      },
     ])
 
     await writeCache(proxyRes, req, res)

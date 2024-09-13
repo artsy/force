@@ -30,12 +30,8 @@ export const ArtistNotEligibleRoute: React.FC<ArtistNotEligibleRouteProps> = pro
 
   const triggerAuthDialog = () => {
     showAuthDialog({
-      mode: "SignUp",
       options: {
-        title: mode =>
-          mode === "Login"
-            ? "Log in to add to My Collection"
-            : "Sign up to add to My Collection",
+        title: "Sign up or log in to add to My Collection",
         redirectTo: "/collector-profile/my-collection/artworks/new",
       },
       analytics: {

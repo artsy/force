@@ -77,10 +77,9 @@ export const HowItWorksSteps: React.FC = () => {
             event.preventDefault()
 
             showAuthDialog({
-              mode: "Login",
               options: {
                 title: () => {
-                  return "Log in to submit an artwork for sale"
+                  return "Sign up or log in to submit an artwork for sale"
                 },
               },
               analytics: {

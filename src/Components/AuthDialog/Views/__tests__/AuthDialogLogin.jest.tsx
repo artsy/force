@@ -19,6 +19,18 @@ jest.mock("Utils/auth", () => ({
   login: jest.fn(),
 }))
 
+jest.mock("Components/AuthDialog/AuthDialogContext", () => ({
+  useAuthDialogContext: jest.fn().mockReturnValue({
+    state: {
+      analytics: {},
+      options: {},
+      values: {
+        email: "example@example.com",
+      },
+    },
+  }),
+}))
+
 describe("AuthDialogLogin", () => {
   it("renders correctly", () => {
     render(<AuthDialogLogin />)
@@ -26,21 +38,12 @@ describe("AuthDialogLogin", () => {
     expect(screen.getByText("Log in")).toBeInTheDocument()
   })
 
-  it("renders the social auth buttons", () => {
-    render(<AuthDialogLogin />)
-
-    expect(screen.getByText("Continue with Facebook")).toBeInTheDocument()
-    expect(screen.getByText("Continue with Google")).toBeInTheDocument()
-    expect(screen.getByText("Continue with Apple")).toBeInTheDocument()
-  })
-
-  it("submits the email and password", async () => {
+  it("submits the password", async () => {
     render(<AuthDialogLogin />)
 
     const loginMock = jest.fn().mockReturnValue(Promise.resolve())
     ;(login as jest.Mock).mockImplementationOnce(loginMock)
 
-    const email = screen.getByPlaceholderText("Enter your email address")
     const password = screen.getByPlaceholderText("Enter your password")
     const submit = screen.getByText("Log in")
 
@@ -49,7 +52,6 @@ describe("AuthDialogLogin", () => {
 
     expect(button).toBeDisabled()
 
-    fireEvent.change(email, { target: { value: "example@example.com" } })
     fireEvent.change(password, { target: { value: "secret" } })
 
     expect(button).toBeEnabled()
@@ -75,7 +77,6 @@ describe("AuthDialogLogin", () => {
       )
     ;(login as jest.Mock).mockImplementationOnce(loginMock)
 
-    const email = screen.getByPlaceholderText("Enter your email address")
     const password = screen.getByPlaceholderText("Enter your password")
     const submit = screen.getByText("Log in")
 
@@ -84,7 +85,6 @@ describe("AuthDialogLogin", () => {
 
     expect(button).toBeDisabled()
 
-    fireEvent.change(email, { target: { value: "example@example.com" } })
     fireEvent.change(password, { target: { value: "secret" } })
 
     fireEvent.click(button)
@@ -125,7 +125,6 @@ describe("AuthDialogLogin", () => {
       )
     ;(login as jest.Mock).mockImplementationOnce(loginMock)
 
-    const email = screen.getByPlaceholderText("Enter your email address")
     const password = screen.getByPlaceholderText("Enter your password")
     const submit = screen.getByText("Log in")
 
@@ -134,7 +133,6 @@ describe("AuthDialogLogin", () => {
 
     expect(button).toBeDisabled()
 
-    fireEvent.change(email, { target: { value: "example@example.com" } })
     fireEvent.change(password, { target: { value: "secret" } })
 
     fireEvent.click(button)

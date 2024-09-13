@@ -53,12 +53,8 @@ export const SubmissionHeader: React.FC = () => {
       await submitForm()
 
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode =>
-            mode === "Login"
-              ? "Log in to save your submission"
-              : "Sign up to save your submission",
+          title: "Sign up or log in to save your submission",
           afterAuthAction: {
             action: "saveAndExitSubmission",
             kind: "submission",
@@ -95,6 +91,8 @@ export const SubmissionHeader: React.FC = () => {
     } finally {
       setIsSubmitting(false)
     }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitForm, submission, step, routerPush])
 
   const onAfterAuthCallback = useCallback(async () => {

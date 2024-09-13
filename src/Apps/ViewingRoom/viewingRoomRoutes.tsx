@@ -79,7 +79,7 @@ export const viewingRoomRoutes: RouteProps[] = [
     `,
     children: [
       {
-        path: "/",
+        path: "",
         Component: StatementRoute,
         query: graphql`
           query viewingRoomRoutes_ViewingRoomStatementRouteQuery($slug: ID!) {

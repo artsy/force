@@ -478,14 +478,13 @@ describe("Details", () => {
     expect(showAuthDialog.mock.calls[0]).toEqual([
       {
         analytics: { contextModule: "artworkGrid", intent: "saveArtwork" },
-        mode: "SignUp",
         options: {
           afterAuthAction: {
             action: "save",
             kind: "artworks",
             objectId: "opaque-internal-id",
           },
-          title: expect.any(Function),
+          title: "Sign up or log in to save artworks",
         },
       },
     ])

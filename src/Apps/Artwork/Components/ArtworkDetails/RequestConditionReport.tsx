@@ -83,7 +83,6 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
 
   const handleLoginClick = () => {
     showAuthDialog({
-      mode: "Login",
       analytics: {
         contextModule: ContextModule.aboutTheWork,
         intent: Intent.requestConditionReport,

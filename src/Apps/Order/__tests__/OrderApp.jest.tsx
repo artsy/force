@@ -28,7 +28,13 @@ import { mockStripe } from "DevTools/mockStripe"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 import { getENV } from "Utils/getENV"
 
-jest.mock("Utils/getENV")
+jest.mock("Utils/getENV", () => ({
+  getENV: jest.fn(),
+}))
+
+jest.mock("System/Hooks/useSystemContext", () => ({
+  useSystemContext: jest.fn().mockReturnValue({ isEigen: false }),
+}))
 
 jest.mock(
   "Components/BankDebitForm/BankDebitProvider",
@@ -663,6 +669,7 @@ describe("OrderApp", () => {
     it("shows the Salesforce chat integration button", () => {
       mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
       const props = getProps() as any
+
       const subject = getWrapper({ props }) as any
       expect(subject.find("SalesforceWrapper")).toHaveLength(1)
     })

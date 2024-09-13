@@ -30,12 +30,8 @@ export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps>
       }
 
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to follow ${fairOrganizer.name}`
-          },
+          title: `Sign up or log in to follow ${fairOrganizer.name}`,
           afterAuthAction: {
             kind: "profile",
             action: "follow",
@@ -49,11 +45,11 @@ export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps>
       })
     }
 
-    if (isAuthenticated()) {
-      await fairOrganizerFollowMutation(relayEnvironment!, {
-        id: profile!.id,
-        profileID: profile!.internalID,
-        isFollowed: !!profile!.isFollowed,
+    if (isAuthenticated() && profile) {
+      await fairOrganizerFollowMutation(relayEnvironment, {
+        id: profile.id,
+        profileID: profile.internalID,
+        isFollowed: !!profile.isFollowed,
       })
     }
   }

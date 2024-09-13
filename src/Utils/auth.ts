@@ -4,7 +4,7 @@
 
 import Cookies from "cookies-js"
 import { getENV } from "Utils/getENV"
-import { recaptcha as _recaptcha, RecaptchaAction } from "Utils/recaptcha"
+import { recaptcha } from "Utils/recaptcha"
 
 const headers = {
   Accept: "application/json",
@@ -118,10 +118,6 @@ export const resetPassword = async (args: {
   }
 
   return await Promise.reject(new Error(JSON.stringify(err)))
-}
-
-const recaptcha = (action: RecaptchaAction) => {
-  return new Promise(resolve => _recaptcha(action, resolve))
 }
 
 /**

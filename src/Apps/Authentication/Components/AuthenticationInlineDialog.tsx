@@ -1,17 +1,16 @@
-import { Box, Flex, Join, Spacer, Text, useToasts } from "@artsy/palette"
+import { Box, Flex, Stack, Text, useToasts } from "@artsy/palette"
 import { AuthDialogView } from "Components/AuthDialog/AuthDialog"
 import { FC, useEffect } from "react"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
-import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import { useAuthDialogOptions } from "Apps/Authentication/Hooks/useAuthDialogOptions"
 import { MetaTags } from "Components/MetaTags"
 import { AuthenticationInlineDialogProvider } from "Apps/Authentication/Components/AuthenticationInlineDialogProvider"
 import { AuthDialogMode } from "Components/AuthDialog/AuthDialogContext"
 import { useRouter } from "System/Hooks/useRouter"
+import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
 
 const AuthenticationInlineDialogContents: FC = () => {
   useRecaptcha()
-
   const { title, pageTitle, description } = useAuthDialogOptions()
 
   const { sendToast } = useToasts()
@@ -54,15 +53,8 @@ const AuthenticationInlineDialogContents: FC = () => {
         maxWidth={["100%", 450]}
       >
         <Box width="100%">
-          <Join separator={<Spacer y={2} />}>
-            <ArtsyLogoIcon
-              display="block"
-              style={{ width: "75px", height: "26px" }}
-            />
-
-            <Text variant="lg-display" lineClamp={6}>
-              {title}
-            </Text>
+          <Stack gap={2}>
+            <AuthDialogTitle title={title} />
 
             {description && (
               <Text variant="sm-display" lineClamp={6}>
@@ -71,7 +63,7 @@ const AuthenticationInlineDialogContents: FC = () => {
             )}
 
             <AuthDialogView />
-          </Join>
+          </Stack>
         </Box>
       </Flex>
     </>

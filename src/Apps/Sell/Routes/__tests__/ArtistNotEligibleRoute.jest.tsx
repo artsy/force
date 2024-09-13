@@ -110,9 +110,8 @@ describe("ArtistNotEligibleRoute", () => {
 
       await waitFor(() => {
         expect(showAuthDialog).toBeCalledWith({
-          mode: "SignUp",
           options: {
-            title: expect.any(Function),
+            title: expect.any(String),
             redirectTo: "/collector-profile/my-collection/artworks/new",
           },
           analytics: {
