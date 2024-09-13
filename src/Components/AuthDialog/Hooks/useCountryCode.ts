@@ -21,7 +21,9 @@ export const useCountryCode = () => {
       ip: getENV("IP_ADDRESS") || "0.0.0.0",
     },
     cacheConfig: {
-      fetchPolicy: "store-or-network",
+      networkCacheConfig: {
+        force: false,
+      },
     },
     // If the user is logged in, we don't need the country code
     skip: isLoggedIn,
