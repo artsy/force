@@ -16,7 +16,6 @@ import {
   getFarceResult,
 } from "found/server"
 import qs from "qs"
-import { Environment } from "react-relay"
 import React from "react"
 import { executeRouteHooks } from "System/Router/Utils/executeRouteHooks"
 import { Boot } from "System/Boot"
@@ -40,10 +39,6 @@ export interface ServerRouterConfig extends RouterConfig {
   res: ArtsyResponse
   next: NextFunction
   routes: RouteProps[]
-  context?: {
-    injectedData?: any
-    relayEnvironment: Environment
-  }
 }
 
 export const setupServerRouter = async ({

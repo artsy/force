@@ -29,7 +29,7 @@ const isServer = typeof window === "undefined"
 const isDevelopment = getENV("NODE_ENV") === "development"
 
 // Only log on the client during development
-const loggingEnabled = isDevelopment && !isServer
+const loggingEnabled = !isServer && isDevelopment
 
 const USER_AGENT = `Reaction/Migration`
 

@@ -118,7 +118,7 @@ export const searchRoutes: RouteProps[] = [
     prepareVariables,
     children: [
       {
-        path: "/",
+        path: "",
         getComponent: () => SearchResultsArtworks,
         onClientSideRender: () => {
           SearchResultsArtworks.preload()
