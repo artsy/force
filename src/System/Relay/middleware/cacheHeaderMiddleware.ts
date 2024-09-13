@@ -50,9 +50,23 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
       cacheHeaders[RELAY_CACHE_PATH_HEADER_KEY] = url
     }
 
-    const cacheControlHeader = shouldSkipCDNCache(req, props?.user, url)
-      ? { "Cache-Control": "no-cache" }
-      : {}
+    const cacheControlHeader = (() => {
+      const foundRoute = findRoutesByPath({ path: url ?? "" })[0]
+
+      switch (true) {
+        case shouldSkipCDNCache(req, props?.user, url): {
+          return { "Cache-Control": "no-cache" }
+        }
+        case !!foundRoute?.route?.serverCacheTTL: {
+          return {
+            "Cache-Control": `max-age=${foundRoute.route.serverCacheTTL}`,
+          }
+        }
+        default: {
+          return {}
+        }
+      }
+    })()
 
     req.fetchOpts.headers = {
       ...req.fetchOpts.headers,
