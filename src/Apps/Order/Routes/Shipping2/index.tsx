@@ -89,6 +89,8 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
             <FulfillmentDetails me={me} order={order} />
 
             <CollapseDetails>
+              {/* TODO: Move into shipping quotes component and add <Jump/>  */}
+
               <Text variant="sm">Artsy shipping options</Text>
 
               <Text variant="xs" mb="1" color="black60">
@@ -109,7 +111,7 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
 
               {order.lineItems?.edges?.[0]?.node && (
                 <ShippingQuotes2
-                  commerceLineItem={order.lineItems?.edges?.[0]?.node}
+                  commerceLineItem={order.lineItems.edges[0].node}
                 />
               )}
 

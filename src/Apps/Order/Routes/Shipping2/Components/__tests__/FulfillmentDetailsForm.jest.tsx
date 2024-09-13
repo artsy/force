@@ -36,8 +36,6 @@ jest.mock("Utils/getENV", () => ({
 
 const mockTrackEvent = jest.fn()
 
-jest.mock("react-tracking")
-
 const mockOnSubmit = jest.fn()
 const mockOnAddressVerificationComplete = jest.fn()
 const mockScrollIntoView = jest.fn()
