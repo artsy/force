@@ -1,5 +1,5 @@
 const NO_CACHE = 0
-const HOURS_24 = 86400000 // In milliseconds
+const HOURS_24 = 86400 // In seconds
 
 /**
  * This defines non-default cache TTLs for specific routes. Default is typically
