@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe54b03657efe402fff0854bb00f63cb>>
+ * @generated SignedSource<<746787a63a6b090dde81b8e6e5a9a2ea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,7 @@ export type ArtworkSidebarDetails_artwork$data = {
   readonly isEdition: boolean | null | undefined;
   readonly isUnlisted: boolean;
   readonly medium: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuthenticityCertificate_artwork" | "ArtworkSidebarClassification_artwork" | "ArtworkSidebarShowingNow_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuthenticityCertificate_artwork" | "ArtworkSidebarClassification_artwork" | "ArtworkSidebarSignal_artwork">;
   readonly " $fragmentType": "ArtworkSidebarDetails_artwork";
 };
 export type ArtworkSidebarDetails_artwork$key = {
@@ -141,13 +141,13 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarShowingNow_artwork"
+      "name": "ArtworkSidebarSignal_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "46975dc474a3a8c4b27d259b424e9516";
+(node as any).hash = "526ef36a64bc68a4fc12ae44024f0f58";
 
 export default node;

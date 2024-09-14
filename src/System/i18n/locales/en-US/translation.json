@@ -64,7 +64,15 @@
           "readMore": "Read more about artwork authenticity in our ",
           "helpCenterLink": "Help Center"
         },
-        "showingNow": "Showing now"
+        "showingNow": "Showing now",
+        "curatorsPick": {
+          "label": "Curator’s Pick",
+          "description": "Hand selected by Artsy curators this week"
+        },
+        "increasedInterest": {
+          "label": "Increased Interest",
+          "description": "Based on collector activity in the past 14 days"
+        }
       },
       "shippingAndTaxes": {
         "expandableLabel": "Shipping and taxes",
