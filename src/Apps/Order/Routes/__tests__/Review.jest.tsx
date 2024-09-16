@@ -48,8 +48,6 @@ import {
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import { RouterLink } from "System/Components/RouterLink"
 
 jest.unmock("react-relay")
 
@@ -190,46 +188,6 @@ describe("Review", () => {
       const page = new ReviewTestPage(wrapper)
 
       expect(page.buyerGuarantee.length).toBe(1)
-    })
-
-    it("shows the conditions of sale disclaimer", () => {
-      const { wrapper } = getWrapper({
-        CommerceOrder: () => testOrder,
-      })
-      const page = new ReviewTestPage(wrapper)
-
-      expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
-        "By clicking Submit, I agree to Artsy’s Conditions of Sale."
-      )
-      expect(
-        page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
-      ).toEqual("/conditions-of-sale")
-    })
-
-    describe("when the new disclaimer is enabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          (f: string) => f === "diamond_new-terms-and-conditions"
-        )
-      })
-
-      afterAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockReset()
-      })
-
-      it("renders the new disclaimer", () => {
-        const { wrapper } = getWrapper({
-          CommerceOrder: () => testOrder,
-        })
-        const page = new ReviewTestPage(wrapper)
-
-        expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
-          "By clicking Submit, I agree to Artsy’s General Terms and Conditions of Sale."
-        )
-        expect(
-          page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
-        ).toEqual("/terms")
-      })
     })
 
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
@@ -475,43 +433,6 @@ describe("Review", () => {
       expect(pushMock).toBeCalledWith(
         "/artwork/artworkId?order-submitted=offer-order-id"
       )
-    })
-
-    it("shows the conditions of sale disclaimer", () => {
-      const { wrapper } = getWrapper({
-        CommerceOrder: () => testOrder,
-      })
-      const page = new ReviewTestPage(wrapper)
-
-      expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
-        "By clicking Submit, I agree to Artsy’s Conditions of Sale."
-      )
-    })
-
-    describe("when the new disclaimer is enabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          (f: string) => f === "diamond_new-terms-and-conditions"
-        )
-      })
-
-      afterAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockReset()
-      })
-
-      it("renders the new disclaimer", () => {
-        const { wrapper } = getWrapper({
-          CommerceOrder: () => testOrder,
-        })
-        const page = new ReviewTestPage(wrapper)
-
-        expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
-          "By clicking Submit, I agree to Artsy’s General Terms and Conditions of Sale."
-        )
-        expect(
-          page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
-        ).toEqual("/terms")
-      })
     })
 
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
