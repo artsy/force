@@ -1,4 +1,5 @@
 import { isServer } from "Server/isServer"
+import { isRequestCacheable } from "System/Relay/isRequestCacheable"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 
 export const RELAY_CACHE_CONFIG_HEADER_KEY = "x-relay-cache-config"
@@ -54,6 +55,9 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
       const foundRoute = findRoutesByPath({ path: url ?? "" })[0]
 
       switch (true) {
+        case isRequestCacheable(req): {
+          return {}
+        }
         case shouldSkipCDNCache(req, props?.user, url): {
           return { "Cache-Control": "no-cache" }
         }
