@@ -16,6 +16,7 @@ import { Media } from "Utils/Responsive"
 import { HomeHeroUnitCredit } from "./HomeHeroUnitCredit"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeHeroUnit_heroUnit$data } from "__generated__/HomeHeroUnit_heroUnit.graphql"
+import { getInternalHref } from "Utils/url"
 
 interface HomeHeroUnitProps {
   heroUnit: HomeHeroUnit_heroUnit$data
@@ -44,6 +45,7 @@ const HomeHeroUnitSmall: React.FC<HomeHeroUnitProps> = ({
 }) => {
   const imageUrl = heroUnit.image?.imageURL
   const image = imageUrl && cropped(imageUrl, { width: 500, height: 333 })
+  const href = getInternalHref(heroUnit.link.url)
 
   return (
     <RouterLink
@@ -53,7 +55,7 @@ const HomeHeroUnitSmall: React.FC<HomeHeroUnitProps> = ({
       height="100%"
       onClick={onClick}
       textDecoration="none"
-      to={heroUnit.link.url}
+      to={href}
       width="100%"
     >
       <ResponsiveBox
@@ -100,6 +102,7 @@ const HomeHeroUnitLarge: React.FC<HomeHeroUnitProps> = ({
 }) => {
   const imageUrl = heroUnit.image?.imageURL
   const image = imageUrl && cropped(imageUrl, { width: 1270, height: 500 })
+  const href = getInternalHref(heroUnit.link.url)
 
   const { theme } = useTheme()
 
@@ -108,15 +111,13 @@ const HomeHeroUnitLarge: React.FC<HomeHeroUnitProps> = ({
       ? "linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%)"
       : "linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 100%)"
 
-  const url = heroUnit.link.url.replace(/^https?:\/\/[^/]+\.net/, "")
-
   return (
     <RouterLink
       aria-label={`${heroUnit.title} - ${heroUnit.body}`}
       display="block"
       onClick={onClick}
       textDecoration="none"
-      to={url}
+      to={href}
     >
       <GridColumns bg="black5">
         <Column span={6}>

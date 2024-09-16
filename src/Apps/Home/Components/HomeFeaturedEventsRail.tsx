@@ -20,6 +20,7 @@ import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { HomeFeaturedEventsRail_orderedSet$data } from "__generated__/HomeFeaturedEventsRail_orderedSet.graphql"
+import { getInternalHref } from "Utils/url"
 
 interface HomeFeaturedEventsRailProps {
   orderedSet: HomeFeaturedEventsRail_orderedSet$data
@@ -49,10 +50,12 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
         {events.map((event, i) => {
           const image = event.image
 
+          const href = getInternalHref(event.href as string)
+
           return (
             <Column key={event.internalID ?? i} span={3}>
               <RouterLink
-                to={event.href ?? ""}
+                to={href ?? ""}
                 style={{ display: "block", textDecoration: "none" }}
                 onClick={() => {
                   const trackingEvent: ClickedPromoSpace = {

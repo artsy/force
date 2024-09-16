@@ -3,6 +3,7 @@ import * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
+import { getInternalHref } from "Utils/url"
 
 export interface RailHeaderProps {
   countLabel?: number
@@ -26,8 +27,10 @@ export const RailHeaderTitle: React.FC<RailHeaderTitleProps> = ({
 }) => {
   if (!viewAllHref) return <>{title}</>
 
+  const href = getInternalHref(viewAllHref)
+
   return (
-    <RouterLink to={viewAllHref} onClick={viewAllOnClick} textDecoration="none">
+    <RouterLink to={href} onClick={viewAllOnClick} textDecoration="none">
       {title}
     </RouterLink>
   )
