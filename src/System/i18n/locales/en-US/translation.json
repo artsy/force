@@ -63,15 +63,6 @@
           "description2": "COAs typically include the name of the artist, the details (title, date, medium, dimensions) of the work in question, and whenever possible an image of the work.",
           "readMore": "Read more about artwork authenticity in our ",
           "helpCenterLink": "Help Center"
-        },
-        "showingNow": "Showing now",
-        "curatorsPick": {
-          "label": "Curators' Pick",
-          "description": "Hand selected by Artsy curators this week"
-        },
-        "increasedInterest": {
-          "label": "Increased Interest",
-          "description": "Based on collector activity in the past 14 days"
         }
       },
       "shippingAndTaxes": {
