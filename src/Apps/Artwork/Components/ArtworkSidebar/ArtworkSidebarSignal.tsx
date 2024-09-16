@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next"
 import { ArtworkSidebarSignal_artwork$key } from "__generated__/ArtworkSidebarSignal_artwork.graphql"
 import FairIcon from "@artsy/icons/FairIcon"
 import { RouterLink } from "System/Components/RouterLink"
-import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import TrendingIcon from "@artsy/icons/TrendingIcon"
+import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 
 interface ArtworkSidebarSignalProps {
   artwork: ArtworkSidebarSignal_artwork$key
@@ -36,7 +36,7 @@ export const ArtworkSidebarSignal: React.FC<ArtworkSidebarSignalProps> = ({
   if (shouldRenderCuratorsPick) {
     return (
       <Flex alignItems="top" my={4} data-testid="curators_pick">
-        <CheckmarkStrokeIcon color="black100" width={18} mr={1} mt={0.5} />
+        <VerifiedIcon color="black100" width={18} mr={1} mt={0.5} />
         <Stack gap={0}>
           <Text variant="sm" color="black100">
             {t("artworkPage.sidebar.details.curatorsPick.label")}
