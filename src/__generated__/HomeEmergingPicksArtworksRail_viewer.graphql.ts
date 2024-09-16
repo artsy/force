@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d139ea4b03cfc5cc795bda48d6326d12>>
+ * @generated SignedSource<<e7877a34f08a6044b100952e73ec7381>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type HomeEmergingPicksArtworksRail_viewer$data = {
   readonly artworksConnection: {
@@ -22,6 +23,7 @@ export type HomeEmergingPicksArtworksRail_viewer$data = {
           readonly partnerOffer: {
             readonly isAvailable: boolean | null | undefined;
           } | null | undefined;
+          readonly primaryLabel: LabelSignalEnum | null | undefined;
         } | null | undefined;
         readonly href: string | null | undefined;
         readonly internalID: string;
@@ -115,6 +117,13 @@ const node: ReaderFragment = {
                     {
                       "alias": null,
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "primaryLabel",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
                       "concreteType": "PartnerOfferToCollector",
                       "kind": "LinkedField",
                       "name": "partnerOffer",
@@ -177,6 +186,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c628e73cf028a38af8a25fcc73740e5f";
+(node as any).hash = "5d778e1a068d75923234cb378798b7ab";
 
 export default node;

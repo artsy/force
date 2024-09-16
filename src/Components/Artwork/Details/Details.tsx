@@ -201,6 +201,7 @@ const PrimaryLabelLine: React.FC<DetailsProps> = ({
   artwork: { collectorSignals },
 }) => {
   const primaryLabel = collectorSignals?.primaryLabel
+  const { hideSignals } = useArtworkGridContext()
 
   if (!primaryLabel) {
     return null
@@ -221,7 +222,7 @@ const PrimaryLabelLine: React.FC<DetailsProps> = ({
     )
   }
 
-  if (primaryLabel === "INCREASED_INTEREST") {
+  if (primaryLabel === "INCREASED_INTEREST" && !hideSignals) {
     return (
       <Text
         variant="xs"
@@ -236,7 +237,7 @@ const PrimaryLabelLine: React.FC<DetailsProps> = ({
     )
   }
 
-  if (primaryLabel === "CURATORS_PICK") {
+  if (primaryLabel === "CURATORS_PICK" && !hideSignals) {
     return (
       <Text
         variant="xs"
