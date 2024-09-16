@@ -222,9 +222,7 @@ const partnerOfferArtworkFragment = graphql`
       }
     }
     collectorSignals {
-      partnerOffer {
-        isAvailable
-      }
+      primaryLabel
     }
     ...Metadata_artwork
   }
