@@ -245,6 +245,7 @@ const shippingStateReducer = (state: State, action: Action): State => {
 const ORDER_FRAGMENT = graphql`
   fragment ShippingContext_order on CommerceOrder {
     internalID
+    mode
     requestedFulfillment {
       __typename
       ... on CommercePickup {

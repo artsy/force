@@ -5,45 +5,54 @@ import {
   Flex,
   GridColumns,
   RadioGroup,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { ShippingQuotes2_commerceLineItem$key } from "__generated__/ShippingQuotes2_commerceLineItem.graphql"
+import { ShippingQuotes2_order$key } from "__generated__/ShippingQuotes2_order.graphql"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { extractNodes } from "Utils/extractNodes"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useEffect } from "react"
+import { CollapseDetails } from "Apps/Order/Routes/Shipping2/Components/CollapseDetails"
+import { Jump } from "Utils/Hooks/useJump"
 
 export interface ShippingQuotesProps {
-  commerceLineItem: ShippingQuotes2_commerceLineItem$key
+  order: ShippingQuotes2_order$key
 }
 
-export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({
-  commerceLineItem,
-}) => {
+export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({ order }) => {
   const shippingContext = useShippingContext()
   const orderTracking = useOrderTracking()
+  const { orderData } = shippingContext
 
   const data = useFragment(
     graphql`
-      fragment ShippingQuotes2_commerceLineItem on CommerceLineItem {
-        shippingQuoteOptions {
+      fragment ShippingQuotes2_order on CommerceOrder {
+        lineItems {
           edges {
             node {
-              id
-              isSelected
-              price(precision: 2)
-              priceCents
-              typeName
+              shippingQuoteOptions {
+                edges {
+                  node {
+                    id
+                    isSelected
+                    price(precision: 2)
+                    priceCents
+                    typeName
+                  }
+                }
+              }
             }
           }
         }
       }
     `,
-    commerceLineItem
+    order
   )
 
-  const quotes = extractNodes(data.shippingQuoteOptions)
+  const firstLineItem = extractNodes(data.lineItems)[0] ?? {}
+  const quotes = extractNodes(firstLineItem.shippingQuoteOptions) ?? []
 
   useAutoSelectBestShippingQuote(quotes)
 
@@ -57,42 +66,65 @@ export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({
   }
 
   return (
-    <RadioGroup
-      onSelect={handleShippingQuoteSelected}
-      defaultValue={shippingContext.state.selectedShippingQuoteID}
-    >
-      {quotes.map(shippingQuote => {
-        const description =
-          shippingQuoteDescriptions[shippingQuote?.typeName as string]
-        const displayName =
-          shippingQuoteDisplayNames[shippingQuote?.typeName as string]
+    <CollapseDetails>
+      <Jump id="shippingOptionsTop" />
 
-        return (
-          <BorderedRadio
-            data-testid="shipping-quotes"
-            value={shippingQuote?.id}
-            key={shippingQuote?.id}
-            position="relative"
-          >
-            <Flex flexDirection="column" width="100%">
-              <GridColumns>
-                <Column span={10}>
-                  <Text variant="sm-display" textTransform="capitalize">
-                    {displayName}
-                  </Text>
-                  <Text textColor="black60">{description}</Text>
-                </Column>
-                <Column span={2} textAlign={"right"}>
-                  <Text textTransform="capitalize" data-testid="quotePrice">
-                    {shippingQuote?.price}
-                  </Text>
-                </Column>
-              </GridColumns>
-            </Flex>
-          </BorderedRadio>
-        )
-      })}
-    </RadioGroup>
+      <Text variant="sm">Artsy shipping options</Text>
+
+      <Text variant="xs" mb="1" color="black60">
+        {orderData.isOffer ? (
+          <>
+            Please note that these are estimates and may change once offer is
+            finalized. All options are eligible for Artsy’s Buyer Protection
+            policy, which protects against damage and loss.
+          </>
+        ) : (
+          <>
+            All options are eligible for Artsy’s Buyer Protection policy, which
+            protects against damage and loss.
+          </>
+        )}
+      </Text>
+
+      <RadioGroup
+        onSelect={handleShippingQuoteSelected}
+        defaultValue={shippingContext.state.selectedShippingQuoteID}
+      >
+        {quotes.map(shippingQuote => {
+          const description =
+            shippingQuoteDescriptions[shippingQuote?.typeName as string]
+          const displayName =
+            shippingQuoteDisplayNames[shippingQuote?.typeName as string]
+
+          return (
+            <BorderedRadio
+              data-testid="shipping-quotes"
+              value={shippingQuote?.id}
+              key={shippingQuote?.id}
+              position="relative"
+            >
+              <Flex flexDirection="column" width="100%">
+                <GridColumns>
+                  <Column span={10}>
+                    <Text variant="sm-display" textTransform="capitalize">
+                      {displayName}
+                    </Text>
+                    <Text textColor="black60">{description}</Text>
+                  </Column>
+                  <Column span={2} textAlign={"right"}>
+                    <Text textTransform="capitalize" data-testid="quotePrice">
+                      {shippingQuote?.price}
+                    </Text>
+                  </Column>
+                </GridColumns>
+              </Flex>
+            </BorderedRadio>
+          )
+        })}
+      </RadioGroup>
+
+      <Spacer y={4} />
+    </CollapseDetails>
   )
 }
 
