@@ -121,7 +121,7 @@ export const artistRoutes: RouteProps[] = [
       WorksForSaleRoute.preload()
     },
     query: graphql`
-      query artistRoutes_ArtistAppQuery($artistID: String!) {
+      query artistRoutes_ArtistAppQuery($artistID: String!) @cacheable {
         artist(id: $artistID) @principalField {
           ...ArtistApp_artist
         }
