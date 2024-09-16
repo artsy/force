@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<581d4ce06b201fc2ba78563de21eed7a>>
+ * @generated SignedSource<<009817cd8ee7c390ff6d8b7b332e47a6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,12 +9,11 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork$data = {
   readonly collectorSignals: {
-    readonly partnerOffer: {
-      readonly isAvailable: boolean | null | undefined;
-    } | null | undefined;
+    readonly primaryLabel: LabelSignalEnum | null | undefined;
   } | null | undefined;
   readonly internalID: string;
   readonly isInquireable: boolean | null | undefined;
@@ -132,19 +131,8 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "PartnerOfferToCollector",
-          "kind": "LinkedField",
-          "name": "partnerOffer",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isAvailable",
-              "storageKey": null
-            }
-          ],
+          "kind": "ScalarField",
+          "name": "primaryLabel",
           "storageKey": null
         }
       ],
@@ -156,6 +144,6 @@ return {
 };
 })();
 
-(node as any).hash = "cb72e6e7e45ae0a4f310994de91a5ca3";
+(node as any).hash = "f50222afdfd534f55dffad82fb940dea";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e7877a34f08a6044b100952e73ec7381>>
+ * @generated SignedSource<<af246aff6d3fe7ec6de72590e5b0c076>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,9 +19,6 @@ export type HomeEmergingPicksArtworksRail_viewer$data = {
           readonly auction: {
             readonly bidCount: number;
             readonly lotWatcherCount: number;
-          } | null | undefined;
-          readonly partnerOffer: {
-            readonly isAvailable: boolean | null | undefined;
           } | null | undefined;
           readonly primaryLabel: LabelSignalEnum | null | undefined;
         } | null | undefined;
@@ -124,24 +121,6 @@ const node: ReaderFragment = {
                     {
                       "alias": null,
                       "args": null,
-                      "concreteType": "PartnerOfferToCollector",
-                      "kind": "LinkedField",
-                      "name": "partnerOffer",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "isAvailable",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
                       "concreteType": "AuctionCollectorSignals",
                       "kind": "LinkedField",
                       "name": "auction",
@@ -186,6 +165,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5d778e1a068d75923234cb378798b7ab";
+(node as any).hash = "273beac7073f4b05b35ebc47ed9bcd63";
 
 export default node;

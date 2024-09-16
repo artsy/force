@@ -107,9 +107,6 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
               href
               collectorSignals {
                 primaryLabel
-                partnerOffer {
-                  isAvailable
-                }
                 auction {
                   bidCount
                   lotWatcherCount
