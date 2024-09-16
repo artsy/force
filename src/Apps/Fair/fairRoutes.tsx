@@ -43,7 +43,7 @@ const FairArticlesRoute = loadable(
 
 export const fairRoutes: RouteProps[] = [
   {
-    path: "/fair/:slug",
+    path: "/fair/:slug?",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => FairApp,
     onClientSideRender: () => {
