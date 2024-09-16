@@ -60,7 +60,7 @@ const ArtworkSidebarDetails: React.FC<ArtworkSidebarDetailsProps> = ({
         artwork={artwork}
       />
 
-      {/* showing now */}
+      {/* collector signal */}
       <ArtworkSidebarSignal artwork={artwork} />
 
       <Spacer y={2} />
