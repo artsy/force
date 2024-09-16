@@ -97,7 +97,8 @@ export function createRelaySSREnvironment(config: Config = {}) {
     urlMiddleware({
       url: metaphysicsEndpoint,
       headers: req => {
-        // Determine if the request is cacheable
+        // Determine if the request is cacheable based on the opt-in `@cacheable` directive.
+        // If it is, we don't want to send the user's access token even if they are logged in.
         const isCacheable = isRequestCacheable(req)
 
         // Add authenticated headers only if the request is NOT cacheable,

@@ -1,4 +1,3 @@
-// Import the function to be tested
 import { isRequestCacheable } from "System/Relay/isRequestCacheable"
 
 describe("isRequestCacheable", () => {
@@ -7,7 +6,7 @@ describe("isRequestCacheable", () => {
       operation: {
         text: `
           query ArtistQuery @cacheable {
-            artist(id: "andy-warhol) {
+            artist(id: "andy-warhol") {
               name
             }
           }
@@ -23,7 +22,7 @@ describe("isRequestCacheable", () => {
       operation: {
         text: `
           query ArtistQuery {
-            artist(id: "andy-warhol) {
+            artist(id: "andy-warhol") {
               name
             }
           }
