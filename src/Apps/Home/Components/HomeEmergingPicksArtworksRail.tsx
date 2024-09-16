@@ -35,7 +35,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRa
   }
 
   return (
-    <ArtworkGridContextProvider hideSignals={true}>
+    <ArtworkGridContextProvider hideSignals>
       <Rail
         title="Curators’ Picks: Emerging"
         subTitle="The best works by rising talents on Artsy, all available now."

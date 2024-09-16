@@ -21,6 +21,7 @@ import {
   SystemContextProps,
   withSystemContext,
 } from "System/Contexts/SystemContext"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface CollectionAppProps extends SystemContextProps {
   collection: Collection_collection$data
@@ -56,6 +57,14 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
     (fallbackHeaderImage?.edges &&
       fallbackHeaderImage?.edges[0]?.node?.image?.url)
 
+  const HIDE_SIGNAL_SLUGS = [
+    "trending-now",
+    "curators-picks-emerging-artists",
+    "curators-picks-blue-chip-artists",
+  ]
+
+  const hideSignals = HIDE_SIGNAL_SLUGS.includes(collection.slug)
+
   return (
     <>
       <MetaTags
@@ -88,14 +97,16 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
         <Spacer y={6} />
 
-        <CollectionArtworksFilterRefetchContainer
-          collection={collection}
-          aggregations={
-            collection.artworksConnection
-              ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-          }
-          counts={collection.artworksConnection?.counts as Counts}
-        />
+        <ArtworkGridContextProvider hideSignals={hideSignals}>
+          <CollectionArtworksFilterRefetchContainer
+            collection={collection}
+            aggregations={
+              collection.artworksConnection
+                ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+            }
+            counts={collection.artworksConnection?.counts as Counts}
+          />
+        </ArtworkGridContextProvider>
 
         {collection.linkedCollections.length === 0 && (
           <>
