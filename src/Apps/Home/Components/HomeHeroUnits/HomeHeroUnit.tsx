@@ -108,13 +108,15 @@ const HomeHeroUnitLarge: React.FC<HomeHeroUnitProps> = ({
       ? "linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%)"
       : "linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 100%)"
 
+  const url = heroUnit.link.url.replace(/^https?:\/\/[^/]+\.net/, "")
+
   return (
     <RouterLink
       aria-label={`${heroUnit.title} - ${heroUnit.body}`}
       display="block"
       onClick={onClick}
       textDecoration="none"
-      to={heroUnit.link.url}
+      to={url}
     >
       <GridColumns bg="black5">
         <Column span={6}>

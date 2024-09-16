@@ -87,9 +87,10 @@ export function findRoutesByPath({
   const { flatRoutes = [] } = getRoutes()
 
   const foundRoutes = flatRoutes.reduce((acc, route) => {
-    const matcher = match(route.path as string, { decode: decodeURIComponent })
+    const url = path.split("?")[0]
 
-    const matched = matcher(path)
+    const matcher = match(route.path as string, { decode: decodeURIComponent })
+    const matched = matcher(url)
 
     if (!matched) {
       return acc
