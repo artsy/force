@@ -104,6 +104,7 @@ describe("Details", () => {
       const data: any = {
         ...artworkInAuction,
         collectorSignals: {
+          primaryLabel: null,
           partnerOffer: null,
           auction: {
             ...artworkInAuction?.collectorSignals?.auction,
@@ -123,6 +124,7 @@ describe("Details", () => {
       const data: any = {
         ...artworkInAuction,
         collectorSignals: {
+          primaryLabel: null,
           partnerOffer: null,
           auction: {
             ...artworkInAuction?.collectorSignals?.auction,
@@ -558,18 +560,19 @@ describe("Details", () => {
     })
   })
 
-  describe("user has active partner offer on artwork", () => {
+  describe("collector signals", () => {
     const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
     beforeEach(() => {
       mockUseFeatureFlag.mockImplementation(() => true)
     })
 
-    it("should render the active partner offer badge", async () => {
+    it("should render the active partner offer badge when it's the primary label", async () => {
       const data: any = {
         ...artworkNotInAuction,
         collectorSignals: {
           ...artworkInAuction?.collectorSignals,
+          primaryLabel: "PARTNER_OFFER",
           partnerOffer: {
             isActive: true,
             endAt: "2055-03-12T12:33:37.000Z",
@@ -581,7 +584,7 @@ describe("Details", () => {
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
 
-      expect(html).toContain("Limited-Time Offer")
+      expect(html).toContain("Limited-time Offer")
       expect(html).toContain("Exp.")
       expect(html).toContain("$3,500")
     })
@@ -627,6 +630,38 @@ describe("Details", () => {
       const html = wrapper.html()
 
       expect(html).not.toContain("Limited-Time Offer")
+    })
+
+    it("should render the curators pick badge when it's the primary label", async () => {
+      const data: any = {
+        ...artworkNotInAuction,
+        collectorSignals: {
+          ...artworkInAuction?.collectorSignals,
+          primaryLabel: "CURATORS_PICK",
+          partnerOffer: null,
+        },
+      }
+
+      const wrapper = await getWrapper(data)
+      const html = wrapper.html()
+
+      expect(html).toContain("Curators' Pick")
+    })
+
+    it("should render the increased interest badge when it's the primary label", async () => {
+      const data: any = {
+        ...artworkNotInAuction,
+        collectorSignals: {
+          ...artworkInAuction?.collectorSignals,
+          primaryLabel: "INCREASED_INTEREST",
+          partnerOffer: null,
+        },
+      }
+
+      const wrapper = await getWrapper(data)
+      const html = wrapper.html()
+
+      expect(html).toContain("Increased Interest")
     })
   })
 })
@@ -698,6 +733,7 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   isInAuction: true,
   isSavedToList: false,
   collectorSignals: {
+    primaryLabel: null,
     partnerOffer: null,
     auction: {
       bidCount: 2,
@@ -779,6 +815,7 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = 
   isInAuction: true,
   isSavedToList: false,
   collectorSignals: {
+    primaryLabel: null,
     partnerOffer: null,
     auction: null,
   },
@@ -841,6 +878,7 @@ const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
   isInAuction: false,
   isSavedToList: false,
   collectorSignals: {
+    primaryLabel: null,
     partnerOffer: null,
     auction: null,
   },
