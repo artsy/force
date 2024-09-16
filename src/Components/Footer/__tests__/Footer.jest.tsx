@@ -3,7 +3,6 @@ import { mount } from "enzyme"
 import { Footer } from "Components/Footer/Footer"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
 import { useRouter } from "System/Hooks/useRouter"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { fetchQuery } from "react-relay"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
@@ -114,56 +113,20 @@ describe("Footer", () => {
     it("renders footer links", () => {
       const wrapper = getWrapper("lg")
 
-      expect(wrapper.text()).toContain("Terms of Use")
+      expect(wrapper.text()).toContain("Terms and Conditions")
       expect(wrapper.html()).toContain("/terms")
+
+      expect(wrapper.text()).toContain("Auction Supplement")
+      expect(wrapper.html()).toContain("/supplemental-cos")
+
+      expect(wrapper.text()).toContain("Buyer Guarantee")
+      expect(wrapper.html()).toContain("/buyer-guarantee")
 
       expect(wrapper.text()).toContain("Privacy Policy")
       expect(wrapper.html()).toContain("/privacy")
 
       expect(wrapper.text()).toContain("Security")
       expect(wrapper.html()).toContain("/security")
-
-      expect(wrapper.text()).toContain("Conditions of Sale")
-      expect(wrapper.html()).toContain("/conditions-of-sale")
-
-      expect(wrapper.text()).toContain("ACA Seller’s Agreement")
-      expect(wrapper.html()).toContain(
-        "/page/artsy-curated-auctions-listing-agreement"
-      )
-
-      expect(wrapper.text()).toContain("Buyer Guarantee")
-      expect(wrapper.html()).toContain("/buyer-guarantee")
-    })
-
-    describe("when new footer links are enabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          (f: string) => f === "diamond_new-terms-and-conditions"
-        )
-      })
-
-      afterAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockReset()
-      })
-
-      it("renders the new footer links", () => {
-        const wrapper = getWrapper("lg")
-
-        expect(wrapper.text()).toContain("Terms and Conditions")
-        expect(wrapper.html()).toContain("/terms")
-
-        expect(wrapper.text()).toContain("Auction Supplement")
-        expect(wrapper.html()).toContain("/supplemental-cos")
-
-        expect(wrapper.text()).toContain("Buyer Guarantee")
-        expect(wrapper.html()).toContain("/buyer-guarantee")
-
-        expect(wrapper.text()).toContain("Privacy Policy")
-        expect(wrapper.html()).toContain("/privacy")
-
-        expect(wrapper.text()).toContain("Security")
-        expect(wrapper.html()).toContain("/security")
-      })
     })
   })
 
@@ -185,56 +148,20 @@ describe("Footer", () => {
     it("renders footer links", () => {
       const wrapper = getWrapper("xs")
 
-      expect(wrapper.text()).toContain("Terms of Use")
+      expect(wrapper.text()).toContain("Terms and Conditions")
       expect(wrapper.html()).toContain("/terms")
+
+      expect(wrapper.text()).toContain("Auction Supplement")
+      expect(wrapper.html()).toContain("/supplemental-cos")
+
+      expect(wrapper.text()).toContain("Buyer Guarantee")
+      expect(wrapper.html()).toContain("/buyer-guarantee")
 
       expect(wrapper.text()).toContain("Privacy Policy")
       expect(wrapper.html()).toContain("/privacy")
 
       expect(wrapper.text()).toContain("Security")
       expect(wrapper.html()).toContain("/security")
-
-      expect(wrapper.text()).toContain("Conditions of Sale")
-      expect(wrapper.html()).toContain("/conditions-of-sale")
-
-      expect(wrapper.text()).toContain("ACA Seller’s Agreement")
-      expect(wrapper.html()).toContain(
-        "/page/artsy-curated-auctions-listing-agreement"
-      )
-
-      expect(wrapper.text()).toContain("Buyer Guarantee")
-      expect(wrapper.html()).toContain("/buyer-guarantee")
-    })
-
-    describe("when diamond_new-terms-and-conditions is enabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          (f: string) => f === "diamond_new-terms-and-conditions"
-        )
-      })
-
-      afterAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockReset()
-      })
-
-      it("renders the new footer links", () => {
-        const wrapper = getWrapper("xs")
-
-        expect(wrapper.text()).toContain("Terms and Conditions")
-        expect(wrapper.html()).toContain("/terms")
-
-        expect(wrapper.text()).toContain("Auction Supplement")
-        expect(wrapper.html()).toContain("/supplemental-cos")
-
-        expect(wrapper.text()).toContain("Buyer Guarantee")
-        expect(wrapper.html()).toContain("/buyer-guarantee")
-
-        expect(wrapper.text()).toContain("Privacy Policy")
-        expect(wrapper.html()).toContain("/privacy")
-
-        expect(wrapper.text()).toContain("Security")
-        expect(wrapper.html()).toContain("/security")
-      })
     })
   })
 })

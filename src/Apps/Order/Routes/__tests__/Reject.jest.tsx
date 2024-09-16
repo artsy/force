@@ -11,8 +11,6 @@ import { RejectFragmentContainer } from "Apps/Order/Routes/Reject"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import { RouterLink } from "System/Components/RouterLink"
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
@@ -116,38 +114,6 @@ describe("Buyer rejects seller offer", () => {
       expect(page.find(StepSummaryItem).text()).toContain(
         "Declining an offer permanently ends the negotiation process."
       )
-      expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
-        "By clicking Submit, I agree to Artsy’s Conditions of Sale."
-      )
-      expect(
-        page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
-      ).toEqual("/conditions-of-sale")
-    })
-
-    describe("when new disclaimers are enabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          (f: string) => f === "diamond_new-terms-and-conditions"
-        )
-      })
-
-      afterAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockReset()
-      })
-
-      it("renders the new disclaimer", () => {
-        const { wrapper } = getWrapper({
-          CommerceOrder: () => testOrder,
-        })
-        const page = new OrderAppTestPage(wrapper)
-
-        expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
-          "By clicking Submit, I agree to Artsy’s General Terms and Conditions of Sale."
-        )
-        expect(
-          page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
-        ).toEqual("/terms")
-      })
     })
 
     it("Shows a change link that takes the user back to the respond page", () => {
