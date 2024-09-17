@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
 import { Box, Flex, Spacer } from "@artsy/palette"
 import {
@@ -26,6 +26,7 @@ import { FulfillmentDetails } from "Apps/Order/Routes/Shipping2/Components/Fulfi
 import { ShippingContextProvider } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SaveAndContinueButton } from "Apps/Order/Routes/Shipping2/Components/SaveAndContinueButton"
+import { useJump } from "Utils/Hooks/useJump"
 
 export type ShippingStage =
   // User choosing fulfillment type
@@ -67,6 +68,15 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
   order,
 }) => {
   const shippingContext = useShippingContext()
+
+  const { jumpTo } = useJump()
+
+  useEffect(() => {
+    if (shippingContext.state.stage === "shipping_quotes") {
+      jumpTo("shippingOptionsTop", { behavior: "smooth" })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shippingContext.state.stage])
 
   return (
     <Box data-testid="orderShipping">

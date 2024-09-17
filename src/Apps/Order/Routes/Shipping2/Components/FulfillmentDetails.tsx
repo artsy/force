@@ -20,7 +20,6 @@ import { useUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useUser
 import { useRouter } from "System/Hooks/useRouter"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useHandleSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/Hooks/useHandleSaveFulfillmentDetails"
-import { useJump } from "Utils/Hooks/useJump"
 
 const logger = createLogger("Routes/Shipping2/FulfillmentDetails.tsx")
 
@@ -40,7 +39,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   const orderTracking = useOrderTracking()
   const { handleNewUserAddressUpdates } = useUserAddressUpdates()
   const { handleSaveFulfillmentDetails } = useHandleSaveFulfillmentDetails()
-  const { jumpTo } = useJump()
 
   const addressVerificationUSEnabled = !!useFeatureFlag(
     "address_verification_us"
@@ -122,7 +120,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
         if (result) {
           shippingContext.actions.setStage("shipping_quotes")
-          jumpTo("shippingOptionsTop", { behavior: "smooth" })
         }
       }
 
@@ -223,8 +220,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           saveFulfillmentDetailsResult.data.requiresArtsyShippingToDestination
         ) {
           shippingContext.actions.setStage("shipping_quotes")
-
-          jumpTo("shippingOptionsTop", { behavior: "smooth" })
         } else if (shippingContext.state.shippingFormMode === "new_address") {
           // Advance to payment
           router.push(`/orders/${orderData.internalID}/payment`)
