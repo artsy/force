@@ -21,7 +21,10 @@ import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFiel
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
 import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddleware"
-import { isRequestCacheable } from "System/Relay/isRequestCacheable"
+import {
+  hasNoCacheParamPresent,
+  isRequestCacheable,
+} from "System/Relay/isRequestCacheable"
 
 const logger = createLogger("System/Relay/createRelaySSREnvironment")
 
@@ -99,7 +102,8 @@ export function createRelaySSREnvironment(config: Config = {}) {
       headers: req => {
         // Determine if the request is cacheable based on the opt-in `@cacheable` directive.
         // If it is, we don't want to send the user's access token even if they are logged in.
-        const isCacheable = isRequestCacheable(req)
+        const isCacheable =
+          isRequestCacheable(req) && !hasNoCacheParamPresent(url)
 
         // Add authenticated headers only if the request is NOT cacheable,
         // and there's a user, otherwise fallback to standard headers.

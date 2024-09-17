@@ -72,7 +72,7 @@ export const artistsRoutes: RouteProps[] = [
             $letter: String!
             $page: Int
             $size: Int
-          ) {
+          ) @cacheable {
             viewer {
               ...ArtistsByLetter_viewer
                 @arguments(letter: $letter, size: $size, page: $page)

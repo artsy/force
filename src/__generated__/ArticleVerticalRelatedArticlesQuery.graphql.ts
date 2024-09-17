@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7cd8e5faf347eed648dc96049ff8a3e1>>
+ * @generated SignedSource<<a91461f9eb0b2f4f4bd683e06cfcc0e8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -234,16 +234,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "14893f65ce4b4d644c80cde80ec45448",
+    "cacheID": "61bed6898a5a3ca7fd6c7f421f293cd8",
     "id": null,
     "metadata": {},
     "name": "ArticleVerticalRelatedArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticleVerticalRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleVerticalRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleVerticalRelatedArticles_article on Article {\n  vertical\n  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArticleVerticalRelatedArticlesQuery(\n  $id: String!\n) @cacheable {\n  article(id: $id) {\n    ...ArticleVerticalRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleVerticalRelatedArticles_article on Article {\n  vertical\n  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b8e65ed0888ede874380337d360d8c54";
+(node as any).hash = "90c7a0ad9be35d3d3396e16bf5895d6b";
 
 export default node;

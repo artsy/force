@@ -163,6 +163,33 @@ describe("cacheHeaderMiddleware", () => {
         expect(next).toHaveBeenCalledWith(req)
         expect(res).toEqual({ status: 200 })
       })
+
+      it("skips CDN cache if nocache query param present", async () => {
+        req.operation = {
+          text: `
+          query ArtistQuery @cacheable {
+            artist(id: "andy-warhol) {
+              name
+            }
+          }
+        `,
+        }
+
+        jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
+          pathname: "/artists?nocache=1",
+        }))
+
+        next.mockResolvedValue({ status: 200 })
+
+        const middleware = cacheHeaderMiddleware({
+          user: { email: "foo" },
+        })(next)
+        const res = await middleware(req)
+
+        expect(req.fetchOpts.headers["Cache-Control"]).toBe("no-cache")
+        expect(next).toHaveBeenCalledWith(req)
+        expect(res).toEqual({ status: 200 })
+      })
     })
 
     it("sets custom route-level TTLs", async () => {
