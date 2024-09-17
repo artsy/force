@@ -29,8 +29,8 @@ jest.mock("Components/PhotoUpload/Utils/fileUtils", () => ({
   uploadSubmissionPhoto: jest.fn(),
 }))
 
-jest.mock("Apps/Consign/Routes/SubmissionFlow/Mutations", () => ({
-  ...jest.requireActual("Apps/Consign/Routes/SubmissionFlow/Mutations"),
+jest.mock("Apps/Sell/Mutations", () => ({
+  ...jest.requireActual("Apps/Sell/Mutations"),
   useRemoveAssetFromConsignmentSubmission: () => ({
     submitMutation: mockRemoveAsset,
   }),

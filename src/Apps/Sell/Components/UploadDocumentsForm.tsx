@@ -1,5 +1,5 @@
 import { useToasts } from "@artsy/palette"
-import { useAddAssetToConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
+import { useAddAssetToConsignmentSubmission } from "Apps/Sell/Mutations"
 import { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
 import { normalizePhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { useSystemContext } from "System/Hooks/useSystemContext"

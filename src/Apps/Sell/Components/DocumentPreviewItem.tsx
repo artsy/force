@@ -1,7 +1,7 @@
 import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import { Box, Clickable, Flex, ProgressBar, Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
-import { useRemoveAssetFromConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
+import { useRemoveAssetFromConsignmentSubmission } from "Apps/Sell/Mutations"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
