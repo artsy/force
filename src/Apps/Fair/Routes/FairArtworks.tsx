@@ -25,7 +25,6 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { Join, Spacer } from "@artsy/palette"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair$data
@@ -37,8 +36,6 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
   const { filtered_artworks, sidebarAggregations } = fair
-
-  const isAvailabilityFilterEnabled = useFeatureFlag("onyx_availability-filter")
 
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -61,7 +58,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
       <MediumFilter expanded />
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
-      {isAvailabilityFilterEnabled && <AvailabilityFilter expanded />}
+      <AvailabilityFilter expanded />
       <WaysToBuyFilter expanded />
       <MaterialsFilter expanded />
       <ArtistNationalityFilter expanded />

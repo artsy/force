@@ -12,11 +12,8 @@ import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceR
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export const SearchResultsArtworksFilters = () => {
-  const isAvailabilityFilterEnabled = useFeatureFlag("onyx_availability-filter")
-
   return (
     <Join separator={<Spacer y={4} />}>
       <ArtistsFilter expanded />
@@ -24,7 +21,7 @@ export const SearchResultsArtworksFilters = () => {
       <MediumFilter expanded />
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
-      {isAvailabilityFilterEnabled && <AvailabilityFilter expanded />}
+      <AvailabilityFilter expanded />
       <WaysToBuyFilter expanded />
       <MaterialsFilter expanded />
       <ArtistNationalityFilter expanded />

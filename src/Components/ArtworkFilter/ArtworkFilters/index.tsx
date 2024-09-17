@@ -14,7 +14,6 @@ import { ArtistsFilter } from "./ArtistsFilter"
 import { Join, Spacer } from "@artsy/palette"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface ArtworkFiltersProps {
   user?: User
@@ -24,8 +23,6 @@ interface ArtworkFiltersProps {
 export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   const { user } = props
 
-  const isAvailabilityFilterEnabled = useFeatureFlag("onyx_availability-filter")
-
   return (
     <Join separator={<Spacer y={4} />}>
       <KeywordFilter />
@@ -34,7 +31,7 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
       <MediumFilter expanded />
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
-      {isAvailabilityFilterEnabled && <AvailabilityFilter expanded />}
+      <AvailabilityFilter expanded />
       <WaysToBuyFilter expanded />
       <MaterialsFilter expanded />
       <ArtistNationalityFilter expanded />
