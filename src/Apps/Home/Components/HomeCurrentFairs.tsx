@@ -79,7 +79,7 @@ const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {
                   </ResponsiveBox>
                 )}
 
-                <Text variant="lg-display" mt={1}>
+                <Text variant="lg-display" overflowEllipsis mt={1}>
                   {fair.name}
                 </Text>
 
