@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9acca353446dbe52bc1801a2e97ffb5a>>
+ * @generated SignedSource<<61db0cc158f14917d52da5466e1b25b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -192,16 +192,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e75d71d95e16fb9a7350b6f19115a139",
+    "cacheID": "352e6dc55c26eca24f1519f784898d62",
     "id": null,
     "metadata": {},
     "name": "viewingRoomRoutes_ViewingRoomQuery",
     "operationKind": "query",
-    "text": "query viewingRoomRoutes_ViewingRoomQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) @principalField {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  internalID\n  status\n  partner {\n    internalID\n    id\n  }\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  href\n  pullQuote\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n"
+    "text": "query viewingRoomRoutes_ViewingRoomQuery(\n  $slug: ID!\n) @cacheable {\n  viewingRoom(id: $slug) @principalField {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  internalID\n  status\n  partner {\n    internalID\n    id\n  }\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  href\n  pullQuote\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ef9bd45ea7fddd443ff22649736a823d";
+(node as any).hash = "95d412f9d367e85744afe5ff9788034f";
 
 export default node;

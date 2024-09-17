@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9f1946d444d9beab1375203f6db2a2a>>
+ * @generated SignedSource<<cf6a43e98aee77102b2362c02206146b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -343,16 +343,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6f8b9558fc9c4efb5dc728fe449622ad",
+    "cacheID": "f0e9ed8bb41b1a4abc44462deb681925",
     "id": null,
     "metadata": {},
     "name": "partnersRoutes_GalleriesRouteQuery",
     "operationKind": "query",
-    "text": "query partnersRoutes_GalleriesRouteQuery {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_4uWBz4\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query partnersRoutes_GalleriesRouteQuery @cacheable {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_4uWBz4\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e7feb546a82ac4ed2adae49ca1c03d63";
+(node as any).hash = "2c2d58f4864bda7d0bb19606aead1668";
 
 export default node;
