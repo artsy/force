@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1af9e07132c7b8bc2cdf581704fa0d92>>
+ * @generated SignedSource<<b2760fdcccae86641cb336df2a4d3cff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Details_artwork$data = {
   readonly artist: {
@@ -36,6 +37,7 @@ export type Details_artwork$data = {
         readonly display: string | null | undefined;
       } | null | undefined;
     } | null | undefined;
+    readonly primaryLabel: LabelSignalEnum | null | undefined;
   } | null | undefined;
   readonly consignmentSubmission?: {
     readonly internalID: string | null | undefined;
@@ -77,7 +79,7 @@ export type Details_artwork$data = {
   } | null | undefined;
   readonly sale_message: string | null | undefined;
   readonly title: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"BidTimerLine_artwork" | "ConsignmentSubmissionStatus_artwork" | "HoverDetails_artwork" | "SaveArtworkToListsButton_artwork" | "SaveButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"BidTimerLine_artwork" | "ConsignmentSubmissionStatus_artwork" | "HoverDetails_artwork" | "PrimaryLabelLine_artwork" | "SaveArtworkToListsButton_artwork" | "SaveButton_artwork">;
   readonly " $fragmentType": "Details_artwork";
 };
 export type Details_artwork$key = {
@@ -166,6 +168,13 @@ return {
       "name": "collectorSignals",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "primaryLabel",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -490,6 +499,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "PrimaryLabelLine_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "BidTimerLine_artwork"
     },
     {
@@ -513,6 +527,6 @@ return {
 };
 })();
 
-(node as any).hash = "56eabcef62f9988e898b33c64dbcb3f3";
+(node as any).hash = "07bc9ae65477c58fac30d200261bb6e1";
 
 export default node;

@@ -702,9 +702,7 @@ const ARTWORK_FRAGMENT = graphql`
       }
     }
     collectorSignals {
-      partnerOffer {
-        isAvailable
-      }
+      primaryLabel
     }
   }
 `

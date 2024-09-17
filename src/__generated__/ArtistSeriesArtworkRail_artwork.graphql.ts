@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e0b130f85e38123c434f2e7702da0cfb>>
+ * @generated SignedSource<<dbd3e15a9ba65ab6b186ec419242163a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesArtworkRail_artwork$data = {
   readonly artistSeriesConnection: {
@@ -22,9 +23,7 @@ export type ArtistSeriesArtworkRail_artwork$data = {
                   readonly bidCount: number;
                   readonly lotWatcherCount: number;
                 } | null | undefined;
-                readonly partnerOffer: {
-                  readonly isAvailable: boolean | null | undefined;
-                } | null | undefined;
+                readonly primaryLabel: LabelSignalEnum | null | undefined;
               } | null | undefined;
               readonly internalID: string;
               readonly slug: string;
@@ -149,19 +148,8 @@ return {
                                 {
                                   "alias": null,
                                   "args": null,
-                                  "concreteType": "PartnerOfferToCollector",
-                                  "kind": "LinkedField",
-                                  "name": "partnerOffer",
-                                  "plural": false,
-                                  "selections": [
-                                    {
-                                      "alias": null,
-                                      "args": null,
-                                      "kind": "ScalarField",
-                                      "name": "isAvailable",
-                                      "storageKey": null
-                                    }
-                                  ],
+                                  "kind": "ScalarField",
+                                  "name": "primaryLabel",
                                   "storageKey": null
                                 },
                                 {
@@ -221,6 +209,6 @@ return {
 };
 })();
 
-(node as any).hash = "823c195eed744ac78f438c25c4feaf13";
+(node as any).hash = "46b8cf9128b9bc02416fc8ba5a693589";
 
 export default node;

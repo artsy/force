@@ -1,9 +1,18 @@
 export interface CollectorSignals {
-  partnerOffer?: object | null | undefined
+  primaryLabel?: string | null | undefined
 }
 
 export const getSignalLabel = (collectorSignals: CollectorSignals) => {
-  const { partnerOffer } = collectorSignals
+  const { primaryLabel } = collectorSignals
 
-  return partnerOffer ? "Limited-Time Offer" : ""
+  switch (primaryLabel) {
+    case "PARTNER_OFFER":
+      return "Limited-Time Offer"
+    case "INCREASED_INTEREST":
+      return "Increased Interest"
+    case "CURATORS_PICK":
+      return "Curators' Pick"
+    default:
+      return ""
+  }
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18484d511dd227dbe8800ff1adba873d>>
+ * @generated SignedSource<<c8873e02ed48304370be9d22df7c105f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type HomeRecentlyViewedRail_homePage$data = {
   readonly artworkModule: {
@@ -18,9 +19,7 @@ export type HomeRecentlyViewedRail_homePage$data = {
           readonly bidCount: number;
           readonly lotWatcherCount: number;
         } | null | undefined;
-        readonly partnerOffer: {
-          readonly isAvailable: boolean | null | undefined;
-        } | null | undefined;
+        readonly primaryLabel: LabelSignalEnum | null | undefined;
       } | null | undefined;
       readonly internalID: string;
       readonly slug: string;
@@ -87,19 +86,8 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "PartnerOfferToCollector",
-                  "kind": "LinkedField",
-                  "name": "partnerOffer",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "isAvailable",
-                      "storageKey": null
-                    }
-                  ],
+                  "kind": "ScalarField",
+                  "name": "primaryLabel",
                   "storageKey": null
                 },
                 {
@@ -146,6 +134,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b67522e3a0726de57cf52b10a322ea55";
+(node as any).hash = "ff0527007ce4e63e1186a3ddd114c35b";
 
 export default node;

@@ -108,9 +108,7 @@ export const ArtistSeriesArtworkRailFragmentContainer = createFragmentContainer(
                     slug
                     internalID
                     collectorSignals {
-                      partnerOffer {
-                        isAvailable
-                      }
+                      primaryLabel
                       auction {
                         bidCount
                         lotWatcherCount

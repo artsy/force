@@ -3,6 +3,13 @@ import { graphql } from "react-relay"
 import { ArtworkSidebarDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarDetails"
 import { ArtworkSidebarDetails_Test_Query } from "__generated__/ArtworkSidebarDetails_Test_Query.graphql"
 import { screen } from "@testing-library/react"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+
+jest.mock("System/Hooks/useFeatureFlag", () => {
+  return {
+    useFeatureFlag: jest.fn(),
+  }
+})
 
 jest.unmock("react-relay")
 
@@ -150,6 +157,7 @@ describe("ArtworkSidebarDetails", () => {
       expect(screen.queryByText(/10 × 10/)).toBeInTheDocument()
     })
   })
+
   describe("with edition set size > 1", () => {
     it("doesn't render dimensions", () => {
       renderWithRelay({
@@ -205,11 +213,20 @@ describe("ArtworkSidebarDetails", () => {
 
       expect(screen.queryByText(/Frame included/)).toBeInTheDocument()
     })
+  })
 
-    it("renders showing now info when it exists", () => {
+  describe("collector signals", () => {
+    const mockUseFeatureFlag = useFeatureFlag as jest.Mock
+
+    beforeEach(() => {
+      mockUseFeatureFlag.mockImplementation(() => true)
+    })
+
+    it("renders showing now info when the artwork is in a show", () => {
       renderWithRelay({
         Artwork: () => ({
           collectorSignals: {
+            primaryLabel: null,
             runningShow: {
               name: "Art Basel",
               href: "/show/art-basel",
@@ -225,16 +242,49 @@ describe("ArtworkSidebarDetails", () => {
       expect(screen.queryByText(/Art Basel/)).toBeInTheDocument()
     })
 
-    it("doesn't render showing now info when it doesn't exist", () => {
+    it("doesn't render showing now info when the artwork is not in a show", () => {
       renderWithRelay({
         Artwork: () => ({
           collectorSignals: {
+            primaryLabel: null,
             runningShow: null,
           },
         }),
       })
 
       expect(screen.queryByText(/Showing now/)).not.toBeInTheDocument()
+    })
+
+    it("renders curators pick info when it's the primary label", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          collectorSignals: {
+            primaryLabel: "CURATORS_PICK",
+            runningShow: null,
+          },
+        }),
+      })
+
+      expect(screen.queryByText(/Curators' Pick/)).toBeInTheDocument()
+      expect(
+        screen.queryByText(/Hand selected by Artsy curators this week/)
+      ).toBeInTheDocument()
+    })
+
+    it("renders increased interest info when it's the primary label", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          collectorSignals: {
+            primaryLabel: "INCREASED_INTEREST",
+            runningShow: null,
+          },
+        }),
+      })
+
+      expect(screen.queryByText(/Increased Interest/)).toBeInTheDocument()
+      expect(
+        screen.queryByText(/Based on collector activity in the past 14 days/)
+      ).toBeInTheDocument()
     })
   })
 })

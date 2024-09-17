@@ -103,9 +103,7 @@ export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer = createFra
             internalID
             slug
             collectorSignals {
-              partnerOffer {
-                isAvailable
-              }
+              primaryLabel
               auction {
                 bidCount
                 lotWatcherCount

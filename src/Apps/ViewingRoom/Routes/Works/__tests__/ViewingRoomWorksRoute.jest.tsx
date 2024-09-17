@@ -227,6 +227,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               },
             },
             collectorSignals: {
+              primaryLabel: null,
               partnerOffer: null,
               auction: {
                 bidCount: 0,
@@ -386,6 +387,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               },
             },
             collectorSignals: {
+              primaryLabel: null,
               partnerOffer: null,
               auction: {
                 bidCount: 0,

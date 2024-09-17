@@ -56,7 +56,7 @@ describe("HomeWorksByArtistsYouFollowRail", () => {
   describe("tracking", () => {
     it("tracks item clicks", () => {
       renderWithRelay({
-        CollectorSignals: () => ({ partnerOffer: null, auction: null }),
+        CollectorSignals: () => ({ primaryLabel: null, auction: null }),
       })
 
       fireEvent.click(screen.getByTestId("ShelfArtwork"))
@@ -78,7 +78,7 @@ describe("HomeWorksByArtistsYouFollowRail", () => {
     it("tracks auction item clicks", () => {
       renderWithRelay({
         CollectorSignals: () => ({
-          partnerOffer: null,
+          primaryLabel: null,
           auction: {
             lotWatcherCount: 5,
             bidCount: 1,
