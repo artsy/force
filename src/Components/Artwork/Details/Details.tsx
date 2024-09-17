@@ -19,6 +19,7 @@ import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useState } from "react"
 import { BidTimerLine } from "./BidTimerLine"
+import { PrimaryLabelLine } from "Components/Artwork/Details/PrimaryLabelLine"
 
 export interface DetailsProps {
   artwork: Details_artwork$data
@@ -195,64 +196,6 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
       {showActivePartnerOffer && <ActivePartnerOfferTimer {...props} />}
     </Flex>
   )
-}
-
-const PrimaryLabelLine: React.FC<DetailsProps> = ({
-  artwork: { collectorSignals },
-}) => {
-  const primaryLabel = collectorSignals?.primaryLabel
-  const { hideSignals } = useArtworkGridContext()
-
-  if (!primaryLabel) {
-    return null
-  }
-
-  if (primaryLabel === "PARTNER_OFFER") {
-    return (
-      <Text
-        variant="xs"
-        color="blue100"
-        backgroundColor="blue10"
-        px={0.5}
-        alignSelf="flex-start"
-        borderRadius={3}
-      >
-        Limited-time Offer
-      </Text>
-    )
-  }
-
-  if (primaryLabel === "INCREASED_INTEREST" && !hideSignals) {
-    return (
-      <Text
-        variant="xs"
-        border="1px solid"
-        borderRadius={3}
-        borderColor="black100"
-        px={0.5}
-        alignSelf="flex-start"
-      >
-        Increased Interest
-      </Text>
-    )
-  }
-
-  if (primaryLabel === "CURATORS_PICK" && !hideSignals) {
-    return (
-      <Text
-        variant="xs"
-        border="1px solid"
-        borderRadius={3}
-        borderColor="black100"
-        px={0.5}
-        alignSelf="flex-start"
-      >
-        Curators' Pick
-      </Text>
-    )
-  }
-
-  return null
 }
 
 export const EmptyLine: React.FC = () => {
@@ -465,7 +408,7 @@ export const Details: React.FC<DetailsProps> = ({
 
       <Flex justifyContent="space-between" alignItems="flex-start">
         <Flex flexDirection="column" maxWidth="75%">
-          {showPrimaryLabelLine && <PrimaryLabelLine {...rest} />}
+          {showPrimaryLabelLine && <PrimaryLabelLine artwork={rest.artwork} />}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
           )}
@@ -660,6 +603,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       consignmentSubmission @include(if: $includeConsignmentSubmission) {
         internalID
       }
+      ...PrimaryLabelLine_artwork
       ...BidTimerLine_artwork
       ...SaveButton_artwork
       ...SaveArtworkToListsButton_artwork

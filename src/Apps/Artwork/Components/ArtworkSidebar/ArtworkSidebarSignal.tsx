@@ -5,6 +5,7 @@ import FairIcon from "@artsy/icons/FairIcon"
 import { RouterLink } from "System/Components/RouterLink"
 import TrendingIcon from "@artsy/icons/TrendingIcon"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface ArtworkSidebarSignalProps {
   artwork: ArtworkSidebarSignal_artwork$key
@@ -16,26 +17,20 @@ export const ArtworkSidebarSignal: React.FC<ArtworkSidebarSignalProps> = ({
   const data = useFragment(artworkSidebarSignalFragment, artwork)
 
   const isShowingNow = data.collectorSignals?.runningShow ?? false
-  const shouldRenderCuratorsPick =
-    data.collectorSignals?.primaryLabel === "CURATORS_PICK"
-  const shouldRenderIncreasedInterest =
-    data.collectorSignals?.primaryLabel === "INCREASED_INTEREST"
+  const primaryLabel = data.collectorSignals?.primaryLabel
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-    })
-  }
-
-  const startAt = formatDate(data.collectorSignals?.runningShow?.startAt ?? "")
-  const endAt = formatDate(data.collectorSignals?.runningShow?.endAt ?? "")
+  const increasedInterestCuratorsPickEnabled = useFeatureFlag(
+    "emerald_signals-increased-interest-curators-pick"
+  )
 
   if (!data.collectorSignals) {
     return null
   }
 
-  if (shouldRenderCuratorsPick) {
+  if (
+    primaryLabel === "CURATORS_PICK" &&
+    increasedInterestCuratorsPickEnabled
+  ) {
     return (
       <Flex alignItems="top" my={4} data-testid="curators_pick">
         <VerifiedIcon color="black100" width={18} mr={1} mt={0.5} />
@@ -51,7 +46,10 @@ export const ArtworkSidebarSignal: React.FC<ArtworkSidebarSignalProps> = ({
     )
   }
 
-  if (shouldRenderIncreasedInterest) {
+  if (
+    primaryLabel === "INCREASED_INTEREST" &&
+    increasedInterestCuratorsPickEnabled
+  ) {
     return (
       <Flex alignItems="top" my={4} data-testid="increased_interest">
         <TrendingIcon color="black100" width={18} mr={1} mt={0.5} />
@@ -68,6 +66,18 @@ export const ArtworkSidebarSignal: React.FC<ArtworkSidebarSignalProps> = ({
   }
 
   if (isShowingNow) {
+    const formatDate = (dateString: string) => {
+      return new Date(dateString).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      })
+    }
+
+    const startAt = formatDate(
+      data.collectorSignals?.runningShow?.startAt ?? ""
+    )
+    const endAt = formatDate(data.collectorSignals?.runningShow?.endAt ?? "")
+
     return (
       <Flex alignItems="top" my={4} data-testid="showing-now">
         <FairIcon mr={1} mt={0.5} />
