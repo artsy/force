@@ -15,7 +15,6 @@ import { extractNodes } from "Utils/extractNodes"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useEffect } from "react"
 import { CollapseDetails } from "Apps/Order/Routes/Shipping2/Components/CollapseDetails"
-import { Jump } from "Utils/Hooks/useJump"
 
 export interface ShippingQuotesProps {
   order: ShippingQuotes2_order$key
@@ -67,8 +66,6 @@ export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({ order }) => {
 
   return (
     <CollapseDetails>
-      <Jump id="shippingOptionsTop" />
-
       <Text variant="sm">Artsy shipping options</Text>
 
       <Text variant="xs" mb="1" color="black60">

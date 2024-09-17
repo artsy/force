@@ -26,7 +26,7 @@ import { FulfillmentDetails } from "Apps/Order/Routes/Shipping2/Components/Fulfi
 import { ShippingContextProvider } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SaveAndContinueButton } from "Apps/Order/Routes/Shipping2/Components/SaveAndContinueButton"
-import { useJump } from "Utils/Hooks/useJump"
+import { useJump, Jump } from "Utils/Hooks/useJump"
 
 export type ShippingStage =
   // User choosing fulfillment type
@@ -97,6 +97,7 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
           >
             <FulfillmentDetails me={me} order={order} />
 
+            <Jump id="shippingOptionsTop" />
             <ShippingQuotes2 order={order} />
 
             <Media greaterThan="xs">
