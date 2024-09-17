@@ -7,7 +7,7 @@ export const getSignalLabel = (collectorSignals: CollectorSignals) => {
 
   switch (primaryLabel) {
     case "PARTNER_OFFER":
-      return "Limited-time Offer"
+      return "Limited-Time Offer"
     case "INCREASED_INTEREST":
       return "Increased Interest"
     case "CURATORS_PICK":

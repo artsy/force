@@ -33,7 +33,7 @@ export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
         alignSelf="flex-start"
         borderRadius={3}
       >
-        Limited-time Offer
+        Limited-Time Offer
       </Text>
     )
   }

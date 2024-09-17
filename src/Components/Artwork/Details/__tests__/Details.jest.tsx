@@ -584,7 +584,7 @@ describe("Details", () => {
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
 
-      expect(html).toContain("Limited-time Offer")
+      expect(html).toContain("Limited-Time Offer")
       expect(html).toContain("Exp.")
       expect(html).toContain("$3,500")
     })
