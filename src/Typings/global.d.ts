@@ -33,10 +33,7 @@ declare global {
         getTrackingOptions?: object
       ) => void
     }
-    artsy: {
-      enableLoggerInProd: () => void
-      isLoggerEnabled?: boolean
-    }
+    __artsyPageCached: boolean
     __BOOTSTRAP__?: any
     __googleMapsCallback?: () => void
     __RELAY_BOOTSTRAP__: string

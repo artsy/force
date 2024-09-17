@@ -156,7 +156,16 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       // This breaks our automatic global pageview tracking middleware
       // patterns due passing some custom properties to the pageview.
-      window.analytics.page(properties, { integrations: { Marketo: false } })
+      // Add slight delay to account for __artsyPageCached status.
+      setTimeout(() => {
+        window.analytics.page(
+          {
+            ...properties,
+            cached: window.__artsyPageCached,
+          },
+          { integrations: { Marketo: false } }
+        )
+      }, 50)
 
       if (typeof window._sift !== "undefined") {
         window._sift.push(["_trackPageview"])

@@ -94,11 +94,21 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
               trackingData.referrer = getFullReferrerUrl()
             }
 
-            window.analytics?.page(trackingData, {
-              integrations: {
-                Marketo: false,
-              },
-            })
+            // Slight delay to check __artsyPageCached status, which comes from
+            // our relay cacheHeaderMiddleware.
+            setTimeout(() => {
+              window.analytics?.page(
+                {
+                  ...trackingData,
+                  cached: window.__artsyPageCached,
+                },
+                {
+                  integrations: {
+                    Marketo: false,
+                  },
+                }
+              )
+            }, 50)
 
             if (typeof window._sift !== "undefined") {
               window._sift.push(["_trackPageview"])
