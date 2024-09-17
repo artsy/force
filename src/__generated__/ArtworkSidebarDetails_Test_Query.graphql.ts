@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cadfc0c474285bc68465d76f62366fee>>
+ * @generated SignedSource<<ae22af353fcc9b59ffdf2df1aac6f8c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -283,7 +283,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "794e76d502c61042bf8790c39d3df1fa",
+    "cacheID": "2104b99b3f726de7aff33f5f25f77517",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -372,7 +372,7 @@ return {
     },
     "name": "ArtworkSidebarDetails_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarDetails_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarDetails_artwork on Artwork {\n  isUnlisted\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  isEdition\n  editionSets {\n    internalID\n    id\n  }\n  ...ArtworkSidebarClassification_artwork\n  ...ArtworkSidebarAuthenticityCertificate_artwork\n  ...ArtworkSidebarSignal_artwork\n}\n\nfragment ArtworkSidebarSignal_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n    runningShow {\n      name\n      href\n      startAt\n      endAt\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarDetails_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarCollectorSignal_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n    runningShow {\n      name\n      href\n      startAt\n      endAt\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarDetails_artwork on Artwork {\n  isUnlisted\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  isEdition\n  editionSets {\n    internalID\n    id\n  }\n  ...ArtworkSidebarClassification_artwork\n  ...ArtworkSidebarAuthenticityCertificate_artwork\n  ...ArtworkSidebarCollectorSignal_artwork\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<45d65261a48557d6b2defa3442a8a1f2>>
+ * @generated SignedSource<<a42b85b8656cd31ca2c4fccd481bdd84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarSignal_artwork$data = {
+export type ArtworkSidebarCollectorSignal_artwork$data = {
   readonly collectorSignals: {
     readonly primaryLabel: LabelSignalEnum | null | undefined;
     readonly runningShow: {
@@ -21,18 +21,18 @@ export type ArtworkSidebarSignal_artwork$data = {
       readonly startAt: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
-  readonly " $fragmentType": "ArtworkSidebarSignal_artwork";
+  readonly " $fragmentType": "ArtworkSidebarCollectorSignal_artwork";
 };
-export type ArtworkSidebarSignal_artwork$key = {
-  readonly " $data"?: ArtworkSidebarSignal_artwork$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarSignal_artwork">;
+export type ArtworkSidebarCollectorSignal_artwork$key = {
+  readonly " $data"?: ArtworkSidebarCollectorSignal_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCollectorSignal_artwork">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkSidebarSignal_artwork",
+  "name": "ArtworkSidebarCollectorSignal_artwork",
   "selections": [
     {
       "alias": null,
@@ -96,6 +96,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a3490e9888552e3f1f659988aa89166f";
+(node as any).hash = "d96a67b5d8fb964d2a53ed8af0648861";
 
 export default node;

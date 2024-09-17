@@ -1,20 +1,20 @@
 import { Flex, Text, Stack } from "@artsy/palette"
 import { useFragment, graphql } from "react-relay"
-import { ArtworkSidebarSignal_artwork$key } from "__generated__/ArtworkSidebarSignal_artwork.graphql"
+import { ArtworkSidebarCollectorSignal_artwork$key } from "__generated__/ArtworkSidebarCollectorSignal_artwork.graphql"
 import FairIcon from "@artsy/icons/FairIcon"
 import { RouterLink } from "System/Components/RouterLink"
 import TrendingIcon from "@artsy/icons/TrendingIcon"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
-interface ArtworkSidebarSignalProps {
-  artwork: ArtworkSidebarSignal_artwork$key
+interface ArtworkSidebarCollectorSignalProps {
+  artwork: ArtworkSidebarCollectorSignal_artwork$key
 }
 
-export const ArtworkSidebarSignal: React.FC<ArtworkSidebarSignalProps> = ({
+export const ArtworkSidebarCollectorSignal: React.FC<ArtworkSidebarCollectorSignalProps> = ({
   artwork,
 }) => {
-  const data = useFragment(artworkSidebarSignalFragment, artwork)
+  const data = useFragment(artworkSidebarCollectorSignalFragment, artwork)
 
   const isShowingNow = data.collectorSignals?.runningShow ?? false
   const primaryLabel = data.collectorSignals?.primaryLabel
@@ -96,8 +96,8 @@ export const ArtworkSidebarSignal: React.FC<ArtworkSidebarSignalProps> = ({
   return null
 }
 
-const artworkSidebarSignalFragment = graphql`
-  fragment ArtworkSidebarSignal_artwork on Artwork {
+const artworkSidebarCollectorSignalFragment = graphql`
+  fragment ArtworkSidebarCollectorSignal_artwork on Artwork {
     collectorSignals {
       primaryLabel
       runningShow {
