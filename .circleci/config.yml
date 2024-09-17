@@ -4,7 +4,7 @@ orbs:
   artsy-remote-docker: artsy/remote-docker@volatile
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
-  slack: circleci/slack@4.13.3
+  slack: circleci/slack@4.14.0
   yarn: artsy/yarn@6.5.0
 
 jobs:
