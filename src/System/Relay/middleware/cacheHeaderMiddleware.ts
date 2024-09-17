@@ -73,6 +73,12 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
       }
     })()
 
+    // Store global `cached` flag on window to pass over to analytics
+    if (!isServer) {
+      window.__artsyPageCached =
+        cacheControlHeader?.["Cache-Control"] !== "no-cache"
+    }
+
     req.fetchOpts.headers = {
       ...req.fetchOpts.headers,
       ...cacheHeaders,
