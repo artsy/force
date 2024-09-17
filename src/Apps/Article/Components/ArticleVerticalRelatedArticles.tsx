@@ -66,7 +66,7 @@ export const ArticleVerticalRelatedArticlesQueryRenderer: FC<ArticleVerticalRela
       placeholder={<ArticleVerticalRelatedArticlesPlaceholder />}
       variables={{ id }}
       query={graphql`
-        query ArticleVerticalRelatedArticlesQuery($id: String!) {
+        query ArticleVerticalRelatedArticlesQuery($id: String!) @cacheable {
           article(id: $id) {
             ...ArticleVerticalRelatedArticles_article
           }
