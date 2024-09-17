@@ -1,7 +1,7 @@
 import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import { Box, Clickable, Flex, Image, ProgressBar, Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
-import { useRemoveAssetFromConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
+import { useRemoveAssetFromConsignmentSubmission } from "Apps/Sell/Mutations"
 import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
 import { DropzoneFile } from "Components/FileUpload/types"
 import { useSystemContext } from "System/Hooks/useSystemContext"

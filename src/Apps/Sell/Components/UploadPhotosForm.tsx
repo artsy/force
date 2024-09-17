@@ -1,5 +1,5 @@
 import { useToasts } from "@artsy/palette"
-import { useAddAssetToConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
+import { useAddAssetToConsignmentSubmission } from "Apps/Sell/Mutations"
 import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
 import { FileDropzone } from "Components/FileUpload/FileDropzone"
 import { DropzoneFile } from "Components/FileUpload/types"

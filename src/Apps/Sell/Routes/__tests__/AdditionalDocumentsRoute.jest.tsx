@@ -37,8 +37,8 @@ jest.mock("Apps/Sell/Utils/uploadUtils", () => ({
   uploadDocument: jest.fn().mockResolvedValue("sourceKey"),
 }))
 
-jest.mock("Apps/Consign/Routes/SubmissionFlow/Mutations", () => ({
-  ...jest.requireActual("Apps/Consign/Routes/SubmissionFlow/Mutations"),
+jest.mock("Apps/Sell/Mutations", () => ({
+  ...jest.requireActual("Apps/Sell/Mutations"),
   useRemoveAssetFromConsignmentSubmission: () => ({
     submitMutation: mockRemoveAsset,
   }),

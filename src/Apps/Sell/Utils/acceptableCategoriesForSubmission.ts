@@ -7,11 +7,11 @@ type AcceptableValuesMapKey = Exclude<
   "%future added value"
 >
 
-export type AcceptableCategoryValue = AcceptableValuesMapKey
+type AcceptableCategoryValue = AcceptableValuesMapKey
 
 // By having this ACCEPTABLE_VALUES_MAP structure, we are forced to update this list
 // whenever ConsignmentSubmissionCategoryAggregation changes, because yarn tsc will fail
-export const ACCEPTABLE_CATEGORY_VALUES_MAP: Record<
+const ACCEPTABLE_CATEGORY_VALUES_MAP: Record<
   AcceptableValuesMapKey,
   AcceptableCategoryValue
 > = {
@@ -33,7 +33,7 @@ export const ACCEPTABLE_CATEGORY_VALUES_MAP: Record<
   VIDEO_FILM_ANIMATION: "VIDEO_FILM_ANIMATION",
 }
 
-export const formatCategoryValueForSubmission = (categoryValue: string) => {
+const formatCategoryValueForSubmission = (categoryValue: string) => {
   return categoryValue
     .split(/[^A-Za-z]/)
     .reduce((accumulator, current) => {
