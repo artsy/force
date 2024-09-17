@@ -1,34 +1,36 @@
-import { Box } from "@artsy/palette"
-import { Notifications } from "Components/Notifications/Notifications"
-import { useEffect } from "react"
-import { useScrollLock } from "Utils/Hooks/useScrollLock"
+import { Box, Flex, Spinner } from "@artsy/palette"
+import loadable from "@loadable/component"
+
+const Notifications = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "notificationsBundle" */
+      "Components/Notifications/Notifications"
+    ),
+  { resolveComponent: component => component.Notifications }
+)
 
 interface NavBarNotificationsProps {
   unreadCounts: number
   onHide: () => void
 }
 
-export const NavBarNotifications: React.FC<NavBarNotificationsProps> = props => {
-  const { lockScroll, unlockScroll } = useScrollLock()
-
-  useEffect(() => {
-    return () => {
-      /**
-       * unlock parent scroll when component unmounted
-       * for example, when the user clicked on the notification and the dropdown menu was closed
-       */
-      unlockScroll()
-    }
-  }, [unlockScroll])
-
+export const NavBarNotifications: React.FC<NavBarNotificationsProps> = ({
+  onHide,
+  ...rest
+}) => {
   return (
-    <Box
-      width={420}
-      aria-live="assertive"
-      onMouseEnter={lockScroll}
-      onMouseLeave={unlockScroll}
-    >
-      <Notifications mode="dropdown" {...props} />
+    <Box width={420}>
+      <Notifications
+        mode="dropdown"
+        fallback={
+          <Flex height={600}>
+            <Spinner m="auto" />
+          </Flex>
+        }
+        onHide={onHide}
+        {...rest}
+      />
     </Box>
   )
 }
