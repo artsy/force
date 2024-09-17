@@ -6,12 +6,12 @@ import {
   Select,
   Spacer,
 } from "@artsy/palette"
-import { acceptableCategoriesForSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/acceptableCategoriesForSubmission"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useFocusInput } from "Apps/Sell/Hooks/useFocusInput"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { acceptableCategoriesForSubmission } from "Apps/Sell/Utils/acceptableCategoriesForSubmission"
 import { DetailsRoute_submission$key } from "__generated__/DetailsRoute_submission.graphql"
 import { ConsignmentSubmissionCategoryAggregation } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 import { Formik } from "formik"
