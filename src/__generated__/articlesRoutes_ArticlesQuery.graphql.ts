@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4feda5cad43a003d789d318061d51ebc>>
+ * @generated SignedSource<<e38377d8901375146bd56cae0d15e87b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -321,16 +321,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9f6b88922cedacb6f93c9a47fe7989b5",
+    "cacheID": "a9a2fb27a3657bcfe398b65d91086877",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_ArticlesQuery {\n  viewer {\n    ...ArticlesApp_viewer\n  }\n}\n\nfragment ArticlesApp_viewer on Viewer {\n  ...ArticlesIndexNews_viewer\n  ...ArticlesIndexArticles_viewer\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  thumbnailTitle\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer on Viewer {\n  articlesConnection(first: 15, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ArticlesIndexNews_viewer on Viewer {\n  articles(published: true, limit: 3, sort: PUBLISHED_AT_DESC, layout: NEWS) {\n    internalID\n    title\n    href\n    id\n  }\n}\n"
+    "text": "query articlesRoutes_ArticlesQuery @cacheable {\n  viewer {\n    ...ArticlesApp_viewer\n  }\n}\n\nfragment ArticlesApp_viewer on Viewer {\n  ...ArticlesIndexNews_viewer\n  ...ArticlesIndexArticles_viewer\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  thumbnailTitle\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer on Viewer {\n  articlesConnection(first: 15, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ArticlesIndexNews_viewer on Viewer {\n  articles(published: true, limit: 3, sort: PUBLISHED_AT_DESC, layout: NEWS) {\n    internalID\n    title\n    href\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0e45eb8d493b0f51730a98972c5ad64e";
+(node as any).hash = "8481119b3970b712968ad987be59e95f";
 
 export default node;

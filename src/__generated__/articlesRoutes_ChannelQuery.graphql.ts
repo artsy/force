@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<86b833438e4c425f3e05240e4808e7e1>>
+ * @generated SignedSource<<f9d9cc1b0d86265284f3ce387f25eab9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -357,16 +357,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "075d5a51a647e1a37b598998e7c48a77",
+    "cacheID": "734d8e1a58bd89bb44709558210bb488",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_ChannelQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_ChannelQuery(\n  $id: ID!\n) {\n  channel(id: $id) @principalField {\n    ...ChannelApp_channel\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ChannelApp_channel on Channel {\n  ...ChannelArticles_channel\n  name\n  tagline\n  image {\n    url\n  }\n  links {\n    url\n    text\n  }\n}\n\nfragment ChannelArticles_channel on Channel {\n  articlesConnection(first: 9, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query articlesRoutes_ChannelQuery(\n  $id: ID!\n) @cacheable {\n  channel(id: $id) @principalField {\n    ...ChannelApp_channel\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ChannelApp_channel on Channel {\n  ...ChannelArticles_channel\n  name\n  tagline\n  image {\n    url\n  }\n  links {\n    url\n    text\n  }\n}\n\nfragment ChannelArticles_channel on Channel {\n  articlesConnection(first: 9, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4a505d5aed0c0342b5a9ad783eccb876";
+(node as any).hash = "c8a4e0356ea92b66fefd03e3484bbba3";
 
 export default node;

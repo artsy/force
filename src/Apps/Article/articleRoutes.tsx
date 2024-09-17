@@ -26,7 +26,7 @@ export const articleRoutes: RouteProps[] = [
       ArticleApp.preload()
     },
     query: graphql`
-      query articleRoutes_ArticleQuery($id: String!) {
+      query articleRoutes_ArticleQuery($id: String!) @cacheable {
         article(id: $id) @principalField {
           ...ArticleApp_article
         }

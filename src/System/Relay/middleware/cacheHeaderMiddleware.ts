@@ -1,26 +1,33 @@
 import { isServer } from "Server/isServer"
-import { isRequestCacheable } from "System/Relay/isRequestCacheable"
+import {
+  hasNoCacheParamPresent,
+  isRequestCacheable,
+} from "System/Relay/isRequestCacheable"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 
 export const RELAY_CACHE_CONFIG_HEADER_KEY = "x-relay-cache-config"
 export const RELAY_CACHE_PATH_HEADER_KEY = "x-relay-cache-path"
 
 interface CacheHeaderMiddlewareProps {
-  url: string | null | undefined
+  url?: string | null
   user: User
 }
 
-export const shouldSkipCDNCache = (req, user, foundRoute) => {
+export const shouldSkipCDNCache = (req, user, foundRoute, url) => {
   // The order of these checks is important.
-  // We always want to skip the cache no matter what if:
+  // We always want to skip the cache no matter what if any of:
   //   - `force: true` is specified
   //   - `serverCacheTTL` is set to 0
-
+  //   - `nocache` query param is provided
   if (req.cacheConfig?.force === true) {
     return true
   }
 
   if (foundRoute?.route?.serverCacheTTL === 0) {
+    return true
+  }
+
+  if (hasNoCacheParamPresent(url)) {
     return true
   }
 
@@ -34,6 +41,9 @@ export const shouldSkipCDNCache = (req, user, foundRoute) => {
   if (isLoggedIn) {
     return true
   }
+
+  // If none of the above conditions are met, we cache the request.
+  return false
 }
 
 export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
@@ -59,7 +69,7 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
       const foundRoute = findRoutesByPath({ path: url ?? "" })[0]
 
       switch (true) {
-        case shouldSkipCDNCache(req, props?.user, foundRoute): {
+        case shouldSkipCDNCache(req, props?.user, foundRoute, url): {
           return { "Cache-Control": "no-cache" }
         }
         case !!foundRoute?.route?.serverCacheTTL: {
