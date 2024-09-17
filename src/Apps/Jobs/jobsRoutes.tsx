@@ -20,7 +20,7 @@ export const jobsRoutes: RouteProps[] = [
       JobsApp.preload()
     },
     query: graphql`
-      query jobsRoutes_JobsQuery {
+      query jobsRoutes_JobsQuery @cacheable {
         viewer {
           ...JobsApp_viewer
         }

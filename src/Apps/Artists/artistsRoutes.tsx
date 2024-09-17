@@ -42,7 +42,7 @@ export const artistsRoutes: RouteProps[] = [
           return ArtistsIndexRoute.preload()
         },
         query: graphql`
-          query artistsRoutes_ArtistsQuery {
+          query artistsRoutes_ArtistsQuery @cacheable {
             featuredArtists: orderedSets(key: "homepage:featured-artists") {
               ...ArtistsIndex_featuredArtists
             }
