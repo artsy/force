@@ -91,43 +91,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasSavedAddresses])
 
-  /*
-   * Re-save fulfillment details on load if they are already saved &
-   * require artsy shipping
-   */
-  useEffect(() => {
-    const { savedFulfillmentDetails } = shippingContext.orderData
-
-    const isArtsyShippingSaved =
-      savedFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
-      savedFulfillmentDetails.isArtsyShipping
-
-    if (isArtsyShippingSaved) {
-      const refreshShippingQuotes = async () => {
-        // instead of handleSubmit, call the save fulfillment details function
-        // directly
-        const result = await handleSaveFulfillmentDetails({
-          attributes: savedFulfillmentDetails.attributes,
-          fulfillmentType: FulfillmentType.SHIP,
-          meta: {
-            // FIXME: Will clobber previous address verification (but we can't
-            // know what the previous status was until we can read from server)
-            addressVerifiedBy: null,
-          },
-        })
-
-        shippingContext.actions.setIsPerformingOperation(false)
-
-        if (result) {
-          shippingContext.actions.setStage("shipping_quotes")
-        }
-      }
-
-      refreshShippingQuotes()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   /**
    * Handlers
    */
