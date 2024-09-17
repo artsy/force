@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<83213f5102b8b378e31a4c7e2ee036ee>>
+ * @generated SignedSource<<a42b85b8656cd31ca2c4fccd481bdd84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,9 +9,11 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarShowingNow_artwork$data = {
+export type ArtworkSidebarCollectorSignal_artwork$data = {
   readonly collectorSignals: {
+    readonly primaryLabel: LabelSignalEnum | null | undefined;
     readonly runningShow: {
       readonly endAt: string | null | undefined;
       readonly href: string | null | undefined;
@@ -19,18 +21,18 @@ export type ArtworkSidebarShowingNow_artwork$data = {
       readonly startAt: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
-  readonly " $fragmentType": "ArtworkSidebarShowingNow_artwork";
+  readonly " $fragmentType": "ArtworkSidebarCollectorSignal_artwork";
 };
-export type ArtworkSidebarShowingNow_artwork$key = {
-  readonly " $data"?: ArtworkSidebarShowingNow_artwork$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarShowingNow_artwork">;
+export type ArtworkSidebarCollectorSignal_artwork$key = {
+  readonly " $data"?: ArtworkSidebarCollectorSignal_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCollectorSignal_artwork">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkSidebarShowingNow_artwork",
+  "name": "ArtworkSidebarCollectorSignal_artwork",
   "selections": [
     {
       "alias": null,
@@ -40,6 +42,13 @@ const node: ReaderFragment = {
       "name": "collectorSignals",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "primaryLabel",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -87,6 +96,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6bf4be92826714edf338194af9c7dea0";
+(node as any).hash = "d96a67b5d8fb964d2a53ed8af0648861";
 
 export default node;

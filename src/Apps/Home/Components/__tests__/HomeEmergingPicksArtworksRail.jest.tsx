@@ -40,7 +40,10 @@ describe("HomeEmergingPicksArtworksRail", () => {
   it("tracks artwork click", () => {
     renderWithRelay({
       Viewer: () => artworksConnection,
-      CollectorSignals: () => ({ partnerOffer: null, auction: null }),
+      CollectorSignals: () => ({
+        primaryLabel: null,
+        auction: null,
+      }),
     })
 
     fireEvent.click(screen.getAllByRole("link")[2])
@@ -63,7 +66,7 @@ describe("HomeEmergingPicksArtworksRail", () => {
     renderWithRelay({
       Viewer: () => artworksConnection,
       CollectorSignals: () => ({
-        partnerOffer: null,
+        primaryLabel: null,
         auction: {
           lotWatcherCount: 5,
           bidCount: 1,

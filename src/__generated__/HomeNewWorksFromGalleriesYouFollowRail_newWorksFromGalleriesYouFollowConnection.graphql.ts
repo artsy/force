@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3763ae1a6d5a172bfd3e45bca3608c2f>>
+ * @generated SignedSource<<898b737e2ad016c46112210fe81b1c42>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data = {
   readonly edges: ReadonlyArray<{
@@ -18,9 +19,7 @@ export type HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollo
           readonly bidCount: number;
           readonly lotWatcherCount: number;
         } | null | undefined;
-        readonly partnerOffer: {
-          readonly isAvailable: boolean | null | undefined;
-        } | null | undefined;
+        readonly primaryLabel: LabelSignalEnum | null | undefined;
       } | null | undefined;
       readonly internalID: string;
       readonly slug: string;
@@ -81,19 +80,8 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "PartnerOfferToCollector",
-                  "kind": "LinkedField",
-                  "name": "partnerOffer",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "isAvailable",
-                      "storageKey": null
-                    }
-                  ],
+                  "kind": "ScalarField",
+                  "name": "primaryLabel",
                   "storageKey": null
                 },
                 {
@@ -140,6 +128,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "399e93e5892eb17ef3536a061cc55adc";
+(node as any).hash = "3bf93b648ab8593d6352179d90429d90";
 
 export default node;

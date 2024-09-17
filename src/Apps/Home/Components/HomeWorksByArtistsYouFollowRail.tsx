@@ -92,9 +92,7 @@ export const HomeWorksByArtistsYouFollowRailFragmentContainer = createFragmentCo
             internalID
             slug
             collectorSignals {
-              partnerOffer {
-                isAvailable
-              }
+              primaryLabel
               auction {
                 bidCount
                 lotWatcherCount

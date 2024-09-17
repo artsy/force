@@ -92,9 +92,7 @@ export const HomeRecentlyViewedRailFragmentContainer = createFragmentContainer(
             internalID
             slug
             collectorSignals {
-              partnerOffer {
-                isAvailable
-              }
+              primaryLabel
               auction {
                 bidCount
                 lotWatcherCount

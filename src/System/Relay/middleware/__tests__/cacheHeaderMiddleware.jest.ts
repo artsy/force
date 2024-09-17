@@ -52,59 +52,117 @@ describe("cacheHeaderMiddleware", () => {
   })
 
   describe("Cache-Control headers", () => {
-    it("skips CDN cache if logged in", async () => {
-      jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
-        pathname: "/not-found",
-      }))
+    describe("allowing a request to be cached by the CDN", () => {
+      it("allows caching even when logged in if the @cacheable directive was used", async () => {
+        req.operation = {
+          text: `
+          query ArtistQuery @cacheable {
+            artist(id: "andy-warhol) {
+              name
+            }
+          }
+        `,
+        }
 
-      next.mockResolvedValue({ status: 200 })
+        jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
+          pathname: "/artists",
+        }))
 
-      const middleware = cacheHeaderMiddleware({
-        user: { email: "foo" },
-        url: "/bar",
-      })(next)
+        next.mockResolvedValue({ status: 200 })
 
-      const res = await middleware(req)
+        const middleware = cacheHeaderMiddleware({
+          user: { email: "foo" },
+          url: "/foo",
+        })(next)
+        const res = await middleware(req)
 
-      expect(req.fetchOpts.headers["Cache-Control"]).toBe("no-cache")
-      expect(next).toHaveBeenCalledWith(req)
-      expect(res).toEqual({ status: 200 })
+        expect(req.fetchOpts.headers["Cache-Control"]).toBeUndefined()
+        expect(next).toHaveBeenCalledWith(req)
+        expect(res).toEqual({ status: 200 })
+      })
     })
 
-    it("skips CDN cache if invalid path", async () => {
-      jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
-        pathname: "/not-found",
-      }))
+    describe("skipping the cache", () => {
+      it("skips CDN cache if logged in", async () => {
+        jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
+          pathname: "/not-found",
+        }))
 
-      next.mockResolvedValue({ status: 200 })
+        next.mockResolvedValue({ status: 200 })
 
-      const middleware = cacheHeaderMiddleware({
-        url: null,
-        user: null,
-      })(next)
+        const middleware = cacheHeaderMiddleware({
+          user: { email: "foo" },
+          url: "/bar",
+        })(next)
 
-      const res = await middleware(req)
+        const res = await middleware(req)
 
-      expect(req.fetchOpts.headers["Cache-Control"]).toBeUndefined()
-      expect(next).toHaveBeenCalledWith(req)
-      expect(res).toEqual({ status: 200 })
-    })
+        expect(req.fetchOpts.headers["Cache-Control"]).toBe("no-cache")
+        expect(next).toHaveBeenCalledWith(req)
+        expect(res).toEqual({ status: 200 })
+      })
 
-    it("skips CDN cache if force: true", async () => {
-      req.cacheConfig.force = true
+      it("skips CDN cache if invalid path", async () => {
+        jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
+          pathname: "/not-found",
+        }))
 
-      jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
-        pathname: "/not-found",
-      }))
+        next.mockResolvedValue({ status: 200 })
 
-      next.mockResolvedValue({ status: 200 })
+        const middleware = cacheHeaderMiddleware({
+          url: null,
+          user: null,
+        })(next)
 
-      const middleware = cacheHeaderMiddleware()(next)
-      const res = await middleware(req)
+        const res = await middleware(req)
 
-      expect(req.fetchOpts.headers["Cache-Control"]).toBe("no-cache")
-      expect(next).toHaveBeenCalledWith(req)
-      expect(res).toEqual({ status: 200 })
+        expect(req.fetchOpts.headers["Cache-Control"]).toBeUndefined()
+        expect(next).toHaveBeenCalledWith(req)
+        expect(res).toEqual({ status: 200 })
+      })
+
+      it("skips CDN cache if force: true", async () => {
+        req.cacheConfig.force = true
+
+        jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
+          pathname: "/not-found",
+        }))
+
+        next.mockResolvedValue({ status: 200 })
+
+        const middleware = cacheHeaderMiddleware()(next)
+        const res = await middleware(req)
+
+        expect(req.fetchOpts.headers["Cache-Control"]).toBe("no-cache")
+        expect(next).toHaveBeenCalledWith(req)
+        expect(res).toEqual({ status: 200 })
+      })
+
+      it("skips CDN cache if route-level TTL is set to 0", async () => {
+        mockFindRoutesByPath.mockReturnValue([
+          {
+            match: { params: { id: "bar" } },
+            route: {
+              path: "/foo",
+              query: "TestQuery",
+              serverCacheTTL: 0,
+            },
+          },
+        ])
+
+        jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
+          pathname: "/artists",
+        }))
+
+        next.mockResolvedValue({ status: 200 })
+
+        const middleware = cacheHeaderMiddleware()(next)
+        const res = await middleware(req)
+
+        expect(req.fetchOpts.headers["Cache-Control"]).toBe("no-cache")
+        expect(next).toHaveBeenCalledWith(req)
+        expect(res).toEqual({ status: 200 })
+      })
     })
 
     it("sets custom route-level TTLs", async () => {
@@ -129,32 +187,6 @@ describe("cacheHeaderMiddleware", () => {
       const res = await middleware(req)
 
       expect(req.fetchOpts.headers["Cache-Control"]).toBe("max-age=8600")
-      expect(next).toHaveBeenCalledWith(req)
-      expect(res).toEqual({ status: 200 })
-    })
-
-    it("skips CDN cache if route-level TTL is set to 0", async () => {
-      mockFindRoutesByPath.mockReturnValue([
-        {
-          match: { params: { id: "bar" } },
-          route: {
-            path: "/foo",
-            query: "TestQuery",
-            serverCacheTTL: 0,
-          },
-        },
-      ])
-
-      jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
-        pathname: "/artists",
-      }))
-
-      next.mockResolvedValue({ status: 200 })
-
-      const middleware = cacheHeaderMiddleware()(next)
-      const res = await middleware(req)
-
-      expect(req.fetchOpts.headers["Cache-Control"]).toBe("no-cache")
       expect(next).toHaveBeenCalledWith(req)
       expect(res).toEqual({ status: 200 })
     })
