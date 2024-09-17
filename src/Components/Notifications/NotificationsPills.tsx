@@ -1,4 +1,4 @@
-import { Flex, Pill, Skeleton, SkeletonBox } from "@artsy/palette"
+import { Flex, Pill, SkeletonBox } from "@artsy/palette"
 import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
 import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
 import { NotificationType } from "Components/Notifications/types"
@@ -25,7 +25,7 @@ export const NotificationsPills: React.FC = () => {
     { value: "Follows", name: "follows" },
   ])
 
-  if (loading) return <Placeholder />
+  if (loading) return <NotificationsPillsPlaceholder />
 
   return (
     <Flex gap={0.5} flexWrap="wrap">
@@ -62,12 +62,10 @@ const notificationsPillsQuery = graphql`
   }
 `
 
-export const Placeholder: React.FC = () => (
-  <Skeleton>
-    <Flex gap={0.5}>
-      {times(3).map(index => (
-        <SkeletonBox key={`pill-${index}`} width={70} height={30} />
-      ))}
-    </Flex>
-  </Skeleton>
+export const NotificationsPillsPlaceholder: React.FC = () => (
+  <Flex gap={0.5}>
+    {times(3).map(index => (
+      <SkeletonBox key={`pill-${index}`} width={70} height={30} />
+    ))}
+  </Flex>
 )
