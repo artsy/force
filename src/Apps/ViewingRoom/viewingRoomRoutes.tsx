@@ -51,7 +51,7 @@ export const viewingRoomRoutes: RouteProps[] = [
       query viewingRoomRoutes_ViewingRoomsAppQuery(
         $count: Int!
         $after: String
-      ) {
+      ) @cacheable {
         allViewingRooms: viewer {
           ...ViewingRoomsApp_allViewingRooms
             @arguments(count: $count, after: $after)
@@ -71,7 +71,7 @@ export const viewingRoomRoutes: RouteProps[] = [
       ViewingRoomApp.preload()
     },
     query: graphql`
-      query viewingRoomRoutes_ViewingRoomQuery($slug: ID!) {
+      query viewingRoomRoutes_ViewingRoomQuery($slug: ID!) @cacheable {
         viewingRoom(id: $slug) @principalField {
           ...ViewingRoomApp_viewingRoom
         }

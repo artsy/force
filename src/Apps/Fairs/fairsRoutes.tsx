@@ -31,7 +31,7 @@ export const fairsRoutes: RouteProps[] = [
           return FairsIndexRoute.preload()
         },
         query: graphql`
-          query fairsRoutes_FairsQuery {
+          query fairsRoutes_FairsQuery @cacheable {
             featuredFairs: orderedSets(key: "art-fairs:featured") {
               ...FairsIndex_featuredFairs
             }
