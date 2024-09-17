@@ -177,7 +177,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
         values
       )
 
-      console.log("*** result", { saveFulfillmentDetailsResult })
       if (saveFulfillmentDetailsResult.data) {
         if (
           saveFulfillmentDetailsResult.data.requiresArtsyShippingToDestination
