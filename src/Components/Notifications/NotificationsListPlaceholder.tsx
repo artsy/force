@@ -7,9 +7,16 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { times } from "lodash"
+import { FC } from "react"
 
-const NotificationItemPlaceholder = () => {
-  const numberOfImages = Math.floor(Math.random() * 4) + 1
+interface NotificationItemPlaceholderProps {
+  index: number
+}
+
+const NotificationItemPlaceholder: FC<NotificationItemPlaceholderProps> = ({
+  index,
+}) => {
+  const numberOfImages = [2, 1, 3, 4, 3, 2][index % 6]
 
   return (
     <Flex flex={1} flexDirection="column" p={2}>
@@ -33,11 +40,12 @@ const NotificationItemPlaceholder = () => {
 
 export const NotificationsListPlaceholder = () => {
   return (
-    <Join separator={<Separator />}>
+    <Join separator={<Separator borderColor="black5" />}>
       {times(4).map(index => {
         return (
           <NotificationItemPlaceholder
             key={`NotificationItemPlaceholder-${index}`}
+            index={index}
           />
         )
       })}
