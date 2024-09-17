@@ -47,7 +47,7 @@ export const showsRoutes: RouteProps[] = [
           return ShowsIndexRoute.preload()
         },
         query: graphql`
-          query showsRoutes_ShowsIndexQuery {
+          query showsRoutes_ShowsIndexQuery @cacheable {
             viewer {
               ...ShowsIndex_viewer
             }
@@ -64,7 +64,7 @@ export const showsRoutes: RouteProps[] = [
           return ShowsAllCities.preload()
         },
         query: graphql`
-          query showsRoutes_ShowsAllCitiesQuery {
+          query showsRoutes_ShowsAllCitiesQuery @cacheable {
             viewer {
               ...ShowsAllCities_viewer
             }
@@ -91,7 +91,8 @@ export const showsRoutes: RouteProps[] = [
           }
         },
         query: graphql`
-          query showsRoutes_ShowsCityQuery($slug: String!, $page: Int) {
+          query showsRoutes_ShowsCityQuery($slug: String!, $page: Int)
+            @cacheable {
             viewer {
               ...ShowsCity_viewer
             }

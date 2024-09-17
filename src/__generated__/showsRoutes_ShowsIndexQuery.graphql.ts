@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9d8d83436e73e9cb620d2e4515957d0b>>
+ * @generated SignedSource<<6c266bb86fe47688bcebfaccad1f6d83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -407,16 +407,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e263ed487189c4dd9139ca223b888d59",
+    "cacheID": "bf4262c392cd93aa6ff7c1c1a3aae837",
     "id": null,
     "metadata": {},
     "name": "showsRoutes_ShowsIndexQuery",
     "operationKind": "query",
-    "text": "query showsRoutes_ShowsIndexQuery {\n  viewer {\n    ...ShowsIndex_viewer\n  }\n  featuredShows: orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...ShowsIndex_featuredShows\n    id\n  }\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsIndex_featuredShows on OrderedSet {\n  name\n  items {\n    __typename\n    ... on Show {\n      id\n      ...ShowsFeaturedShow_show\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ShowsIndex_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
+    "text": "query showsRoutes_ShowsIndexQuery @cacheable {\n  viewer {\n    ...ShowsIndex_viewer\n  }\n  featuredShows: orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...ShowsIndex_featuredShows\n    id\n  }\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsIndex_featuredShows on OrderedSet {\n  name\n  items {\n    __typename\n    ... on Show {\n      id\n      ...ShowsFeaturedShow_show\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ShowsIndex_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "78a1bbdc471215e91cf6dfcd9ab0345d";
+(node as any).hash = "ae6fad65eb3c7fb17e0bf72bfcdfd0d2";
 
 export default node;
