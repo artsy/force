@@ -1,9 +1,11 @@
 import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { FollowButton, FollowButtonRenderProps } from "./Button"
-import { FollowGeneButton_gene$data } from "__generated__/FollowGeneButton_gene.graphql"
 import { ButtonProps } from "@artsy/palette"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { FollowGeneButtonQuery } from "__generated__/FollowGeneButtonQuery.graphql"
+
 import {
   Intent,
   ContextModule,
@@ -16,23 +18,31 @@ import { useAuthDialog } from "Components/AuthDialog"
 
 interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
   children?: FollowButtonRenderProps
-  gene: FollowGeneButton_gene$data
+  id: string
   contextModule?: AuthContextModule
   onFollow?: (followed: boolean) => void
 }
 
-const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
-  gene,
+export const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
+  id,
   contextModule = ContextModule.geneHeader,
   onFollow,
   ...rest
 }) => {
   const { isLoggedIn } = useSystemContext()
 
+  const { data } = useClientQuery<FollowGeneButtonQuery>({
+    query: QUERY,
+    variables: { id },
+    skip: !isLoggedIn,
+  })
+
+  const gene = data?.gene
+
   const { trackFollow } = useFollowButtonTracking({
     ownerType: OwnerType.gene,
-    ownerId: gene.internalID,
-    ownerSlug: gene.slug,
+    ownerId: gene?.internalID || "",
+    ownerSlug: gene?.slug || "",
     contextModule,
   })
 
@@ -41,6 +51,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
       mutation FollowGeneButtonMutation($input: FollowGeneInput!) {
         followGene(input: $input) {
           gene {
+            internalID
             id
             isFollowed
           }
@@ -50,8 +61,9 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
     optimisticResponse: {
       followGene: {
         gene: {
-          id: gene.id,
-          isFollowed: !gene.isFollowed,
+          id: gene?.id,
+          isFollowed: !!gene?.isFollowed,
+          internalID: gene?.internalID,
         },
       },
     },
@@ -67,11 +79,11 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
     if (!isLoggedIn) {
       showAuthDialog({
         options: {
-          title: `Sign up or log in to follow ${gene.name}`,
+          title: `Sign up or log in to follow ${gene?.name}`,
           afterAuthAction: {
             action: "follow",
             kind: "gene",
-            objectId: gene.slug,
+            objectId: gene?.slug || "",
           },
         },
         analytics: {
@@ -86,39 +98,36 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
     submitMutation({
       variables: {
         input: {
-          geneID: gene.internalID,
-          unfollow: gene.isFollowed,
+          geneID: gene?.internalID,
+          unfollow: gene?.isFollowed,
         },
       },
     })
 
-    onFollow?.(!gene.isFollowed)
-    trackFollow(!!gene.isFollowed)
+    onFollow?.(!gene?.isFollowed)
+    trackFollow(!!gene?.isFollowed)
   }
 
   return (
     <FollowButton
-      isFollowed={!!gene.isFollowed}
+      isFollowed={!!gene?.isFollowed}
       handleFollow={handleClick}
       aria-label={
-        gene.isFollowed ? `Unfollow ${gene.name}` : `Follow ${gene.name}`
+        gene?.isFollowed ? `Unfollow ${gene?.name}` : `Follow ${gene?.name}`
       }
       {...rest}
     />
   )
 }
 
-export const FollowGeneButtonFragmentContainer = createFragmentContainer(
-  FollowGeneButton,
-  {
-    gene: graphql`
-      fragment FollowGeneButton_gene on Gene {
-        id
-        slug
-        name
-        internalID
-        isFollowed
-      }
-    `,
+const QUERY = graphql`
+  query FollowGeneButtonQuery($id: String!) {
+    gene(id: $id) {
+      id
+      slug
+      name
+      internalID
+      isFollowed
+    }
   }
-)
+`

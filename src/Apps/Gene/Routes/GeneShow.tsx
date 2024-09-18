@@ -2,7 +2,7 @@ import { Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
+import { FollowGeneButton } from "Components/FollowButton/FollowGeneButton"
 import { GeneShow_gene$data } from "__generated__/GeneShow_gene.graphql"
 import { GeneArtworkFilterRefetchContainer } from "Apps/Gene/Components/GeneArtworkFilter"
 import { GeneMetaFragmentContainer } from "Apps/Gene/Components/GeneMeta"
@@ -16,6 +16,8 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
   const similar = extractNodes(gene.similar)
   const artists = extractNodes(gene.artistsConnection)
 
+  console.log(gene)
+
   return (
     <>
       <GeneMetaFragmentContainer gene={gene} />
@@ -26,7 +28,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
             {gene.displayName || gene.name}
           </Text>
 
-          <FollowGeneButtonFragmentContainer gene={gene} />
+          <FollowGeneButton id={gene?.internalID} />
         </Column>
 
         <Column span={6}>
@@ -99,7 +101,6 @@ export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
           aggregations: $aggregations
           shouldFetchCounts: $shouldFetchCounts
         )
-      ...FollowGeneButton_gene
       internalID
       name
       displayName
