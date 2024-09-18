@@ -1,5 +1,5 @@
-import { Box, Separator, Spacer, Text, Flex } from "@artsy/palette"
 import StaticContainer from "found/StaticContainer"
+import { Box, Separator, Spacer, Text, Flex } from "@artsy/palette"
 import { Match, Router } from "found"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
