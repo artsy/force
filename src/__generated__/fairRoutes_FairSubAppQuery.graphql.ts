@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<16bdd0cfdc7d517496ded9128bb44e3b>>
+ * @generated SignedSource<<59719769be38c4a533716734671552f0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -164,16 +164,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c457febfab1d8f097ec58370683ef5b6",
+    "cacheID": "2ee21d06ffa979a8044a616f6988c5cf",
     "id": null,
     "metadata": {},
     "name": "fairRoutes_FairSubAppQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairSubAppQuery(\n  $slug: String!\n) {\n  fair(id: $slug) @principalField {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  ...FairMeta_fair\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
+    "text": "query fairRoutes_FairSubAppQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  ...FairMeta_fair\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "306d25f9ff50c67c37d0daced010a042";
+(node as any).hash = "c506ef0625fb58fec14aab04e151bae4";
 
 export default node;

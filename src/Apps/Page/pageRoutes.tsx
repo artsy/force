@@ -40,7 +40,7 @@ const PAGE_ROUTE_CONFIG = {
     PageApp.preload()
   },
   query: graphql`
-    query pageRoutes_PageQuery($id: ID!) {
+    query pageRoutes_PageQuery($id: ID!) @cacheable {
       page(id: $id) @principalField {
         ...PageApp_page
       }
