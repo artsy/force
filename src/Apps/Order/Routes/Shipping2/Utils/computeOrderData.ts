@@ -18,8 +18,9 @@ export interface ComputedOrderData {
   savedFulfillmentDetails: SavedFulfillmentData
   savedShippingQuoteData: SavedShippingQuoteData
   selectedShippingQuoteID?: string
-  shippingQuotes?: Array<{ id: string; isSelected: boolean }>
+  shippingQuotes: Array<{ id: string; isSelected: boolean }>
   shipsFrom: string
+  isOffer: boolean
 }
 
 type SavedFulfillmentData =
@@ -96,6 +97,7 @@ export const computeOrderData = (
 
   return {
     internalID: order.internalID,
+    isOffer: order.mode === "OFFER",
     savedFulfillmentDetails,
     savedShippingQuoteData: {
       selectedShippingQuoteID,

@@ -93,16 +93,14 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
   /*
    * Re-save fulfillment details on load if they are already saved &
-   * require artsy shipping (new address form mode only - saved addresses
-   * handle this separately)
+   * require artsy shipping
    */
   useEffect(() => {
     const { savedFulfillmentDetails } = shippingContext.orderData
 
     const isArtsyShippingSaved =
       savedFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
-      savedFulfillmentDetails.isArtsyShipping &&
-      shippingContext.meData.addressList.length === 0
+      savedFulfillmentDetails.isArtsyShipping
 
     if (isArtsyShippingSaved) {
       const refreshShippingQuotes = async () => {
@@ -221,7 +219,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           saveFulfillmentDetailsResult.data.requiresArtsyShippingToDestination
         ) {
           shippingContext.actions.setStage("shipping_quotes")
-          // TODO: jumpTo(shipping quotes?)
         } else if (shippingContext.state.shippingFormMode === "new_address") {
           // Advance to payment
           router.push(`/orders/${orderData.internalID}/payment`)

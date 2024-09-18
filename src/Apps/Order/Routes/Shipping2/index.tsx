@@ -1,6 +1,6 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
-import { Box, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Spacer } from "@artsy/palette"
 import {
   Shipping2_order$data,
   Shipping2_order$key,
@@ -26,7 +26,7 @@ import { FulfillmentDetails } from "Apps/Order/Routes/Shipping2/Components/Fulfi
 import { ShippingContextProvider } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SaveAndContinueButton } from "Apps/Order/Routes/Shipping2/Components/SaveAndContinueButton"
-import { CollapseDetails } from "Apps/Order/Routes/Shipping2/Components/CollapseDetails"
+import { useJump, Jump } from "Utils/Hooks/useJump"
 
 export type ShippingStage =
   // User choosing fulfillment type
@@ -69,14 +69,23 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
 }) => {
   const shippingContext = useShippingContext()
 
-  const isOffer = order.mode === "OFFER"
+  const { jumpTo } = useJump()
+
+  useEffect(() => {
+    if (shippingContext.state.stage === "shipping_quotes") {
+      jumpTo("shippingOptionsTop", { behavior: "smooth" })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shippingContext.state.stage])
 
   return (
     <Box data-testid="orderShipping">
       <OrderRouteContainer
         order={order}
         currentStep="Shipping"
-        steps={isOffer ? offerFlowSteps : buyNowFlowSteps}
+        steps={
+          shippingContext.orderData.isOffer ? offerFlowSteps : buyNowFlowSteps
+        }
         content={
           <Flex
             flexDirection="column"
@@ -88,35 +97,8 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
           >
             <FulfillmentDetails me={me} order={order} />
 
-            <CollapseDetails>
-              {/* TODO: Move into shipping quotes component and add <Jump/>  */}
-
-              <Text variant="sm">Artsy shipping options</Text>
-
-              <Text variant="xs" mb="1" color="black60">
-                {isOffer ? (
-                  <>
-                    Please note that these are estimates and may change once
-                    offer is finalized. All options are eligible for Artsy’s
-                    Buyer Protection policy, which protects against damage and
-                    loss.
-                  </>
-                ) : (
-                  <>
-                    All options are eligible for Artsy’s Buyer Protection
-                    policy, which protects against damage and loss.
-                  </>
-                )}
-              </Text>
-
-              {order.lineItems?.edges?.[0]?.node && (
-                <ShippingQuotes2
-                  commerceLineItem={order.lineItems.edges[0].node}
-                />
-              )}
-
-              <Spacer y={4} />
-            </CollapseDetails>
+            <Jump id="shippingOptionsTop" />
+            <ShippingQuotes2 order={order} />
 
             <Media greaterThan="xs">
               <SaveAndContinueButton width="50%" order={order} />
@@ -159,15 +141,8 @@ const ORDER_FRAGMENT = graphql`
     ...ArtworkSummaryItem_order
     ...TransactionDetailsSummaryItem_order
     ...OrderStepper_order
-    mode
+    ...ShippingQuotes2_order
     internalID
-    lineItems {
-      edges {
-        node {
-          ...ShippingQuotes2_commerceLineItem
-        }
-      }
-    }
   }
 `
 const ME_FRAGMENT = graphql`
