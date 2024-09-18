@@ -476,10 +476,22 @@ const CreditCardPickerWithInnerRef: React.FC<
   </SystemContextConsumer>
 )
 
+type SellerDetails = Exclude<
+  CreditCardPicker_order$data["sellerDetails"],
+  { __typename: "%other" }
+>
+
+const wrapInStripeElements = props => {
+  const seller = props.order.sellerDetails as SellerDetails
+  const partnerStripeAccountId = seller?.merchantAccount?.externalId
+
+  return createStripeWrapper(CreditCardPickerWithInnerRef, {
+    onBehalfOf: partnerStripeAccountId,
+  })(props)
+}
+
 export const CreditCardPickerFragmentContainer = createFragmentContainer(
-  track()(
-    createStripeWrapper(CreditCardPickerWithInnerRef)
-  ) as typeof CreditCardPickerWithInnerRef,
+  track()(wrapInStripeElements) as typeof CreditCardPickerWithInnerRef,
   {
     me: graphql`
       fragment CreditCardPicker_me on Me {
@@ -514,6 +526,14 @@ export const CreditCardPickerFragmentContainer = createFragmentContainer(
           expirationYear
           lastDigits
           brand
+        }
+        sellerDetails {
+          __typename
+          ... on Partner {
+            merchantAccount {
+              externalId
+            }
+          }
         }
         requestedFulfillment {
           __typename
