@@ -10967,6 +10967,9 @@ type HomeViewSectionActivity implements HomeViewSectionGeneric & Node {
     first: Int
     last: Int
   ): NotificationConnection
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # An articles section in the home view
@@ -10989,6 +10992,9 @@ type HomeViewSectionArticles implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # An artists section in the home view
@@ -11011,6 +11017,9 @@ type HomeViewSectionArtists implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # An artworks section in the home view
@@ -11033,6 +11042,9 @@ type HomeViewSectionArtworks implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # An auction results section in the home view
@@ -11055,6 +11067,9 @@ type HomeViewSectionAuctionResults implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A fairs section in the home view
@@ -11076,6 +11091,9 @@ type HomeViewSectionFairs implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A section containing a list of galleries
@@ -11091,6 +11109,9 @@ type HomeViewSectionGalleries implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # Abstract interface shared by every kind of home view section
@@ -11106,6 +11127,9 @@ interface HomeViewSectionGeneric {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A connection to a list of items.
@@ -11147,6 +11171,9 @@ type HomeViewSectionHeroUnits implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A marketing collections section in the home view
@@ -11168,6 +11195,9 @@ type HomeViewSectionMarketingCollections implements HomeViewSectionGeneric & Nod
     first: Int
     last: Int
   ): MarketingCollectionConnection
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A sales (auctions) section in the home view
@@ -11183,6 +11213,9 @@ type HomeViewSectionSales implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
   salesConnection(
     after: String
     before: String
@@ -11204,6 +11237,9 @@ type HomeViewSectionShows implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A viewing rooms section in the home view
@@ -11219,6 +11255,9 @@ type HomeViewSectionViewingRooms implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # An ISO 8601-encoded datetime
