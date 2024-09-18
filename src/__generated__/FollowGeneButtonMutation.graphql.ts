@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<394f8169e43dcebe96c577b8a0c483e3>>
+ * @generated SignedSource<<ef3a896bdf86b1618925dafd16d40afe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,6 @@ export type FollowGeneButtonMutation$data = {
   readonly followGene: {
     readonly gene: {
       readonly id: string;
-      readonly internalID: string;
       readonly isFollowed: boolean | null | undefined;
     } | null | undefined;
   } | null | undefined;
@@ -66,13 +65,6 @@ v1 = [
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           },
@@ -108,16 +100,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "69ad736d515f8be869602c0d7d978025",
+    "cacheID": "42eda4250d17d91078126d56aacee48f",
     "id": null,
     "metadata": {},
     "name": "FollowGeneButtonMutation",
     "operationKind": "mutation",
-    "text": "mutation FollowGeneButtonMutation(\n  $input: FollowGeneInput!\n) {\n  followGene(input: $input) {\n    gene {\n      internalID\n      id\n      isFollowed\n    }\n  }\n}\n"
+    "text": "mutation FollowGeneButtonMutation(\n  $input: FollowGeneInput!\n) {\n  followGene(input: $input) {\n    gene {\n      id\n      isFollowed\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3019544a29e0648c8c1c016bcebd0569";
+(node as any).hash = "be2ec481552194cc0bbd5b2f4be85ee6";
 
 export default node;

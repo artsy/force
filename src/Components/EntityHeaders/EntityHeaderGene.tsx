@@ -3,7 +3,7 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { EntityHeaderGene_gene$data } from "__generated__/EntityHeaderGene_gene.graphql"
-import { FollowGeneButton } from "Components/FollowButton/FollowGeneButton"
+import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
 
 export interface EntityHeaderGeneProps extends BoxProps {
   gene: EntityHeaderGene_gene$data
@@ -57,7 +57,9 @@ const EntityHeaderGene: FC<EntityHeaderGeneProps> = ({
         </Flex>
       </Flex>
 
-      {FollowButton || <FollowGeneButton id={gene?.internalID} size="small" />}
+      {FollowButton || (
+        <FollowGeneButtonQueryRenderer id={gene.internalID} size="small" />
+      )}
     </Flex>
   )
 }

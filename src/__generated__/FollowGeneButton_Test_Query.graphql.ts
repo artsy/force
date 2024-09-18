@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d56759582d7b006f0a276c759f14c7b9>>
+ * @generated SignedSource<<221d1c615d8183d4d363f60239eaaee4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,14 +9,11 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type FollowGeneButton_Test_Query$variables = Record<PropertyKey, never>;
 export type FollowGeneButton_Test_Query$data = {
   readonly gene: {
-    readonly href: string | null | undefined;
-    readonly id: string;
-    readonly isFollowed: boolean | null | undefined;
-    readonly name: string | null | undefined;
-    readonly slug: string;
+    readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
   } | null | undefined;
 };
 export type FollowGeneButton_Test_Query = {
@@ -27,65 +24,12 @@ export type FollowGeneButton_Test_Query = {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Literal",
-        "name": "id",
-        "value": "example"
-      }
-    ],
-    "concreteType": "Gene",
-    "kind": "LinkedField",
-    "name": "gene",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "slug",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "href",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "name",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "isFollowed",
-        "storageKey": null
-      }
-    ],
-    "storageKey": "gene(id:\"example\")"
+    "kind": "Literal",
+    "name": "id",
+    "value": "example"
   }
 ],
 v1 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v2 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -97,7 +41,30 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "FollowGeneButton_Test_Query",
-    "selections": (v0/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "Gene",
+        "kind": "LinkedField",
+        "name": "gene",
+        "plural": false,
+        "selections": [
+          {
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "isLoggedIn",
+                "value": true
+              }
+            ],
+            "kind": "FragmentSpread",
+            "name": "FollowGeneButton_gene"
+          }
+        ],
+        "storageKey": "gene(id:\"example\")"
+      }
+    ],
     "type": "Query",
     "abstractKey": null
   },
@@ -106,10 +73,57 @@ return {
     "argumentDefinitions": [],
     "kind": "Operation",
     "name": "FollowGeneButton_Test_Query",
-    "selections": (v0/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "Gene",
+        "kind": "LinkedField",
+        "name": "gene",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isFollowed",
+            "storageKey": null
+          }
+        ],
+        "storageKey": "gene(id:\"example\")"
+      }
+    ]
   },
   "params": {
-    "cacheID": "fe9183a7b327b8924c17838cab101f04",
+    "cacheID": "54cf4fae1b4bfb8aa44405e0651d74a8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -119,25 +133,30 @@ return {
           "plural": false,
           "type": "Gene"
         },
-        "gene.href": (v1/*: any*/),
-        "gene.id": (v2/*: any*/),
+        "gene.id": (v1/*: any*/),
+        "gene.internalID": (v1/*: any*/),
         "gene.isFollowed": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
-        "gene.name": (v1/*: any*/),
-        "gene.slug": (v2/*: any*/)
+        "gene.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "gene.slug": (v1/*: any*/)
       }
     },
     "name": "FollowGeneButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    id\n    slug\n    href\n    name\n    isFollowed\n  }\n}\n"
+    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    ...FollowGeneButton_gene_2OV785\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_2OV785 on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
   }
 };
 })();
 
-(node as any).hash = "17f70749ba1de301b75f4642db44762c";
+(node as any).hash = "e30bf14c4d1f3cb99549ba3dcb9a6a9c";
 
 export default node;

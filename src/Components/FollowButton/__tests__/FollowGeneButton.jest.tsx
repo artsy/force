@@ -1,7 +1,7 @@
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import "jest-styled-components"
 import { graphql } from "react-relay"
-import { FollowGeneButton } from "Components/FollowButton/FollowGeneButton"
+import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fireEvent, screen } from "@testing-library/react"
 import { FollowGeneButton_Test_Query } from "__generated__/FollowGeneButton_Test_Query.graphql"
@@ -20,16 +20,17 @@ const onFollow = jest.fn()
 
 const { renderWithRelay } = setupTestWrapperTL<FollowGeneButton_Test_Query>({
   Component: props => {
-    return <FollowGeneButton id={props.gene!.id} onFollow={onFollow} />
+    return (
+      <FollowGeneButtonFragmentContainer
+        gene={props.gene!}
+        onFollow={onFollow}
+      />
+    )
   },
   query: graphql`
     query FollowGeneButton_Test_Query @relay_test_operation {
       gene(id: "example") {
-        id
-        slug
-        href
-        name
-        isFollowed
+        ...FollowGeneButton_gene @arguments(isLoggedIn: true)
       }
     }
   `,

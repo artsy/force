@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a55929832225fce2604934cd580139eb>>
+ * @generated SignedSource<<36122c19af825e664bfef44c45d85d86>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,16 +9,14 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type FollowGeneButtonQuery$variables = {
   id: string;
+  isLoggedIn: boolean;
 };
 export type FollowGeneButtonQuery$data = {
   readonly gene: {
-    readonly id: string;
-    readonly internalID: string;
-    readonly isFollowed: boolean | null | undefined;
-    readonly name: string | null | undefined;
-    readonly slug: string;
+    readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
   } | null | undefined;
 };
 export type FollowGeneButtonQuery = {
@@ -32,60 +30,18 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "isLoggedIn"
   }
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "id",
-        "variableName": "id"
-      }
-    ],
-    "concreteType": "Gene",
-    "kind": "LinkedField",
-    "name": "gene",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "slug",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "name",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "internalID",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "isFollowed",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
   }
 ];
 return {
@@ -94,7 +50,30 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "FollowGeneButtonQuery",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Gene",
+        "kind": "LinkedField",
+        "name": "gene",
+        "plural": false,
+        "selections": [
+          {
+            "args": [
+              {
+                "kind": "Variable",
+                "name": "isLoggedIn",
+                "variableName": "isLoggedIn"
+              }
+            ],
+            "kind": "FragmentSpread",
+            "name": "FollowGeneButton_gene"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Query",
     "abstractKey": null
   },
@@ -103,19 +82,73 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FollowGeneButtonQuery",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Gene",
+        "kind": "LinkedField",
+        "name": "gene",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "condition": "isLoggedIn",
+            "kind": "Condition",
+            "passingValue": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isFollowed",
+                "storageKey": null
+              }
+            ]
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "f3c2546292fdcda08a044a09eb9d2c30",
+    "cacheID": "8c7c5558867414c43413ce9818030b69",
     "id": null,
     "metadata": {},
     "name": "FollowGeneButtonQuery",
     "operationKind": "query",
-    "text": "query FollowGeneButtonQuery(\n  $id: String!\n) {\n  gene(id: $id) {\n    id\n    slug\n    name\n    internalID\n    isFollowed\n  }\n}\n"
+    "text": "query FollowGeneButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  gene(id: $id) {\n    ...FollowGeneButton_gene_4dcqWc\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_4dcqWc on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n}\n"
   }
 };
 })();
 
-(node as any).hash = "09ff43dfa0c181c098e396cfbb61be2c";
+(node as any).hash = "03f266c04c0445d31031110e9942f7d8";
 
 export default node;
