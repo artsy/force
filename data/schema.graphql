@@ -10887,11 +10887,13 @@ type HomePageSalesModule {
 
 # Schema for server-driven home view content
 type HomeView {
-  # A home view section
+  # A single home view section, addressed by internal id
   section(
     # The ID of the section
     id: String!
   ): HomeViewSectionGeneric
+
+  # A paginated list of home view sections
   sectionsConnection(
     after: String
     before: String
@@ -10900,17 +10902,17 @@ type HomeView {
   ): HomeViewSectionGenericConnection!
 }
 
-# A component specification
+# A component specification, to allow for customization of presentation and behavior
 type HomeViewComponent {
   # A background image for this section
   backgroundImageURL(
     version: HomeViewComponentBackgroundImageURLVersion
   ): String
 
-  # Behaviors for the view
+  # Behaviors for this component
   behaviors: HomeViewComponentBehaviors
 
-  # A description for this section
+  # A description or blurb for this section
   description: String
 
   # A screen to navigate to when this component is clicked
@@ -10919,7 +10921,7 @@ type HomeViewComponent {
   # A display title for this section
   title: String
 
-  # How this component should be rendered
+  # The name of the client-side component which should be preferred (when the default component for a given section type is not sufficient)
   type: String
 }
 
@@ -10928,28 +10930,30 @@ enum HomeViewComponentBackgroundImageURLVersion {
   WIDE
 }
 
+# Behaviors for this component
 type HomeViewComponentBehaviors {
-  # Represents the behavior of the view all button
+  # Represents the behavior of the View All button
   viewAll: HomeViewComponentBehaviorsViewAll
 }
 
+# A specification for this section’s View All behavior
 type HomeViewComponentBehaviorsViewAll {
-  # Text for the CTA of the view all button
+  # Text for the CTA of the View All button
   buttonText: String
 
-  # href of the view all button
+  # `href` of the View All button. When present, will result in a navigation to the specified route. When `null`, will result in the client-side component’s default view-all behavior, e.g. a full-screen modal overlay
   href: String
 
-  # [Analytics] `owner type` analytics value, as defined in our schema (artsy/cohesion), for the requested destination
+  # [Analytics] `owner type` analytics value for the requested destination, as defined in our schema (artsy/cohesion)
   ownerType: String
 }
 
 # A user activity section in the home view
 type HomeViewSectionActivity implements HomeViewSectionGeneric & Node {
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
 
   # A globally unique ID.
@@ -10963,6 +10967,9 @@ type HomeViewSectionActivity implements HomeViewSectionGeneric & Node {
     first: Int
     last: Int
   ): NotificationConnection
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # An articles section in the home view
@@ -10974,10 +10981,10 @@ type HomeViewSectionArticles implements HomeViewSectionGeneric & Node {
     last: Int
   ): ArticleConnection
 
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
 
   # A globally unique ID.
@@ -10985,6 +10992,9 @@ type HomeViewSectionArticles implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # An artists section in the home view
@@ -10996,10 +11006,10 @@ type HomeViewSectionArtists implements HomeViewSectionGeneric & Node {
     last: Int
   ): ArtistConnection
 
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
 
   # A globally unique ID.
@@ -11007,6 +11017,9 @@ type HomeViewSectionArtists implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # An artworks section in the home view
@@ -11018,10 +11031,10 @@ type HomeViewSectionArtworks implements HomeViewSectionGeneric & Node {
     last: Int
   ): ArtworkConnection
 
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
 
   # A globally unique ID.
@@ -11029,6 +11042,9 @@ type HomeViewSectionArtworks implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # An auction results section in the home view
@@ -11040,10 +11056,10 @@ type HomeViewSectionAuctionResults implements HomeViewSectionGeneric & Node {
     last: Int
   ): AuctionResultConnection
 
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
 
   # A globally unique ID.
@@ -11051,14 +11067,17 @@ type HomeViewSectionAuctionResults implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A fairs section in the home view
 type HomeViewSectionFairs implements HomeViewSectionGeneric & Node {
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
   fairsConnection(
     after: String
@@ -11072,14 +11091,17 @@ type HomeViewSectionFairs implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A section containing a list of galleries
 type HomeViewSectionGalleries implements HomeViewSectionGeneric & Node {
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
 
   # A globally unique ID.
@@ -11087,14 +11109,17 @@ type HomeViewSectionGalleries implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # Abstract interface shared by every kind of home view section
 interface HomeViewSectionGeneric {
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
 
   # A globally unique ID.
@@ -11102,6 +11127,9 @@ interface HomeViewSectionGeneric {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A connection to a list of items.
@@ -11126,10 +11154,10 @@ type HomeViewSectionGenericEdge {
 
 # A hero units section in the home view
 type HomeViewSectionHeroUnits implements HomeViewSectionGeneric & Node {
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
   heroUnitsConnection(
     after: String
@@ -11143,14 +11171,17 @@ type HomeViewSectionHeroUnits implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A marketing collections section in the home view
 type HomeViewSectionMarketingCollections implements HomeViewSectionGeneric & Node {
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
 
   # A globally unique ID.
@@ -11164,14 +11195,17 @@ type HomeViewSectionMarketingCollections implements HomeViewSectionGeneric & Nod
     first: Int
     last: Int
   ): MarketingCollectionConnection
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A sales (auctions) section in the home view
 type HomeViewSectionSales implements HomeViewSectionGeneric & Node {
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
 
   # A globally unique ID.
@@ -11179,6 +11213,9 @@ type HomeViewSectionSales implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
   salesConnection(
     after: String
     before: String
@@ -11189,10 +11226,10 @@ type HomeViewSectionSales implements HomeViewSectionGeneric & Node {
 
 # A shows section in the home view
 type HomeViewSectionShows implements HomeViewSectionGeneric & Node {
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
 
   # A globally unique ID.
@@ -11200,14 +11237,17 @@ type HomeViewSectionShows implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # A viewing rooms section in the home view
 type HomeViewSectionViewingRooms implements HomeViewSectionGeneric & Node {
-  # The component that is prescribed for this section
+  # Component prescription for this section, for overriding or customizing presentation and behavior
   component: HomeViewComponent
 
-  # An analytics context label for this section
+  # [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
   contextModule: String!
 
   # A globally unique ID.
@@ -11215,6 +11255,9 @@ type HomeViewSectionViewingRooms implements HomeViewSectionGeneric & Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  ownerType: String
 }
 
 # An ISO 8601-encoded datetime

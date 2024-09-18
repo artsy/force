@@ -1,20 +1,12 @@
 import { Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { CuritorialRailsTabBar_viewer$data } from "__generated__/CuritorialRailsTabBar_viewer.graphql"
 import { AuctionsZeroState } from "./AuctionsZeroState"
-import { StandoutLotsRailFragmentContainer } from "./StandoutLotsRail"
-import { TrendingLotsRailFragmentContainer } from "./TrendingLotsRail"
+import { StandoutLotsRailQueryRenderer } from "./StandoutLotsRail"
+import { TrendingLotsRailQueryRenderer } from "./TrendingLotsRail"
 import { HomeAuctionLotsForYouRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsForYouRail"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
-interface CuritorialRailsTabBarProps {
-  viewer: CuritorialRailsTabBar_viewer$data
-}
-
-export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
-  viewer,
-}) => {
+export const CuritorialRailsTabBar: React.FC = ({}) => {
   const { user } = useSystemContext()
 
   return (
@@ -30,26 +22,14 @@ export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
         </Tab>
       )}
       <Tab name="Curators’ Picks">
-        <StandoutLotsRailFragmentContainer viewer={viewer} />
+        <StandoutLotsRailQueryRenderer />
       </Tab>
       <Tab name="Trending Lots">
-        <TrendingLotsRailFragmentContainer viewer={viewer} />
+        <TrendingLotsRailQueryRenderer />
       </Tab>
     </Tabs>
   )
 }
-
-export const CuritorialRailsTabBarFragmentContainer = createFragmentContainer(
-  CuritorialRailsTabBar,
-  {
-    viewer: graphql`
-      fragment CuritorialRailsTabBar_viewer on Viewer {
-        ...TrendingLotsRail_viewer
-        ...StandoutLotsRail_viewer
-      }
-    `,
-  }
-)
 
 export const CuratorialRailsZeroState: React.FC = () => {
   return <AuctionsZeroState>No Works To Show</AuctionsZeroState>

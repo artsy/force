@@ -50,7 +50,7 @@ export const fairRoutes: RouteProps[] = [
       FairApp.preload()
     },
     query: graphql`
-      query fairRoutes_FairQuery($slug: String!) {
+      query fairRoutes_FairQuery($slug: String!) @cacheable {
         fair(id: $slug) @principalField {
           ...FairApp_fair
         }
@@ -64,7 +64,7 @@ export const fairRoutes: RouteProps[] = [
           FairOverviewRoute.preload()
         },
         query: graphql`
-          query fairRoutes_FairOverviewQuery($slug: String!) {
+          query fairRoutes_FairOverviewQuery($slug: String!) @cacheable {
             fair(id: $slug) @principalField {
               ...FairOverview_fair
             }
@@ -78,7 +78,7 @@ export const fairRoutes: RouteProps[] = [
           FairExhibitorsRoute.preload()
         },
         query: graphql`
-          query fairRoutes_FairExhibitorsQuery($slug: String!) {
+          query fairRoutes_FairExhibitorsQuery($slug: String!) @cacheable {
             fair(id: $slug) @principalField {
               ...FairExhibitors_fair
             }
@@ -123,7 +123,7 @@ export const fairRoutes: RouteProps[] = [
       FairSubApp.preload()
     },
     query: graphql`
-      query fairRoutes_FairSubAppQuery($slug: String!) {
+      query fairRoutes_FairSubAppQuery($slug: String!) @cacheable {
         fair(id: $slug) @principalField {
           ...FairSubApp_fair
         }
@@ -137,7 +137,7 @@ export const fairRoutes: RouteProps[] = [
           FairArticlesRoute.preload()
         },
         query: graphql`
-          query fairRoutes_FaiArticlesQuery($slug: String!) {
+          query fairRoutes_FaiArticlesQuery($slug: String!) @cacheable {
             fair(id: $slug) @principalField {
               ...FairArticles_fair
             }
