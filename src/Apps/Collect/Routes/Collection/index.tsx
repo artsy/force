@@ -1,3 +1,4 @@
+import StaticContainer from "found/StaticContainer"
 import { Spacer } from "@artsy/palette"
 import { Collection_collection$data } from "__generated__/Collection_collection.graphql"
 import { CollectionArtworksQuery } from "__generated__/CollectionArtworksQuery.graphql"
@@ -57,7 +58,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
   const hideSignals = HIDE_SIGNAL_SLUGS.includes(collection.slug)
 
   return (
-    <>
+    <StaticContainer shouldUpdate={!!match.elements}>
       <Analytics contextPageOwnerId={context.contextPageOwnerId as string}>
         <MetaTags
           description={metadataDescription}
@@ -155,7 +156,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
           </FrameWithRecentlyViewed>
         </>
       </Analytics>
-    </>
+    </StaticContainer>
   )
 }
 
