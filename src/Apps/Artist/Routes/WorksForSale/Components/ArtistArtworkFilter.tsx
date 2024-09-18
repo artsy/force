@@ -93,10 +93,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
   {
     artist: graphql`
       fragment ArtistArtworkFilter_artist on Artist
-        @argumentDefinitions(
-          includeBlurHash: { type: "Boolean!", defaultValue: true }
-          input: { type: "FilterArtworksInput" }
-        ) {
+        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         name
         counts {
           partner_shows: partnerShows
@@ -112,7 +109,6 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
             total(format: "0,0")
           }
           ...ArtworkFilterArtworkGrid_filtered_artworks
-            @arguments(includeBlurHash: $includeBlurHash)
         }
         internalID
         name
@@ -124,11 +120,9 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
     query ArtistArtworkFilterQuery(
       $artistID: String!
       $input: FilterArtworksInput
-      $includeBlurHash: Boolean!
     ) {
       artist(id: $artistID) {
-        ...ArtistArtworkFilter_artist
-          @arguments(input: $input, includeBlurHash: $includeBlurHash)
+        ...ArtistArtworkFilter_artist @arguments(input: $input)
       }
     }
   `

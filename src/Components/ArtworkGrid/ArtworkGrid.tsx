@@ -441,7 +441,7 @@ interface ArtworkGridPlaceholderProps extends MasonryProps {
 }
 
 export const ArtworkGridPlaceholder: React.FC<ArtworkGridPlaceholderProps> = ({
-  amount = 8,
+  amount = 20,
   ...rest
 }) => {
   return (
