@@ -30,7 +30,7 @@ const { renderWithRelay } = setupTestWrapperTL<FollowGeneButton_Test_Query>({
   query: graphql`
     query FollowGeneButton_Test_Query @relay_test_operation {
       gene(id: "example") {
-        ...FollowGeneButton_gene
+        ...FollowGeneButton_gene @arguments(isLoggedIn: true)
       }
     }
   `,
