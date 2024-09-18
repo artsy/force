@@ -135,7 +135,7 @@ export function initializeVariablesWithFilterState(params, props) {
 
 function getArtworkFilterQuery() {
   return graphql`
-    query collectRoutes_ArtworkFilterQuery($sort: String) {
+    query collectRoutes_ArtworkFilterQuery {
       marketingCollections(
         slugs: [
           "contemporary"
@@ -147,9 +147,6 @@ function getArtworkFilterQuery() {
         ]
       ) {
         ...Collect_marketingCollections
-      }
-      filterArtworks: artworksConnection(sort: $sort, first: 30) {
-        ...SeoProductsForArtworks_artworks
       }
     }
   `

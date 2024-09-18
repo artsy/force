@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<47d6e05583bec37bea770df5b70cc61e>>
+ * @generated SignedSource<<1426f8f471c2831024a2e2bdf0342197>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,6 @@ export type CollectionFeaturedArtists_artworks$data = {
     readonly name: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
   } | null | undefined> | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"DefaultHeader_headerArtworks">;
   readonly " $fragmentType": "CollectionFeaturedArtists_artworks";
 };
 export type CollectionFeaturedArtists_artworks$key = {
@@ -30,11 +29,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "CollectionFeaturedArtists_artworks",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "DefaultHeader_headerArtworks"
-    },
     {
       "alias": null,
       "args": null,
@@ -70,6 +64,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "98bc58a7cfc3ead2d7d01cd401ea8af9";
+(node as any).hash = "27993f0811b89471360629fe78cb6b78";
 
 export default node;

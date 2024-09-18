@@ -81,7 +81,6 @@ export const CollectionFeaturedArtistsFragmentContainer = createFragmentContaine
     `,
     artworks: graphql`
       fragment CollectionFeaturedArtists_artworks on FilterArtworksConnection {
-        ...DefaultHeader_headerArtworks
         merchandisableArtists {
           ...EntityHeaderArtist_artist
           internalID

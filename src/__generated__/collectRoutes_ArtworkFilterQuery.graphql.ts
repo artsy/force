@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c180fb0323ab84fba5c0f49de96de616>>
+ * @generated SignedSource<<f7a220ad608f6d1add5bbd4bfda56b00>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,13 +10,8 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type collectRoutes_ArtworkFilterQuery$variables = {
-  sort?: string | null | undefined;
-};
+export type collectRoutes_ArtworkFilterQuery$variables = Record<PropertyKey, never>;
 export type collectRoutes_ArtworkFilterQuery$data = {
-  readonly filterArtworks: {
-    readonly " $fragmentSpreads": FragmentRefs<"SeoProductsForArtworks_artworks">;
-  } | null | undefined;
   readonly marketingCollections: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"Collect_marketingCollections">;
   }>;
@@ -29,13 +24,6 @@ export type collectRoutes_ArtworkFilterQuery = {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "sort"
-  }
-],
-v1 = [
-  {
     "kind": "Literal",
     "name": "slugs",
     "value": [
@@ -47,81 +35,17 @@ v1 = [
       "20th-century-art"
     ]
   }
-],
-v2 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 30
-  },
-  {
-    "kind": "Variable",
-    "name": "sort",
-    "variableName": "sort"
-  }
-],
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v5 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "display",
-    "storageKey": null
-  }
-],
-v6 = [
-  {
-    "kind": "Literal",
-    "name": "shallow",
-    "value": true
-  }
-],
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v8 = [
-  {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Literal",
-        "name": "version",
-        "value": "larger"
-      }
-    ],
-    "kind": "ScalarField",
-    "name": "url",
-    "storageKey": "url(version:\"larger\")"
-  }
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "collectRoutes_ArtworkFilterQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "MarketingCollection",
         "kind": "LinkedField",
         "name": "marketingCollections",
@@ -134,22 +58,6 @@ return {
           }
         ],
         "storageKey": "marketingCollections(slugs:[\"contemporary\",\"painting\",\"street-art\",\"photography\",\"emerging-art\",\"20th-century-art\"])"
-      },
-      {
-        "alias": "filterArtworks",
-        "args": (v2/*: any*/),
-        "concreteType": "FilterArtworksConnection",
-        "kind": "LinkedField",
-        "name": "artworksConnection",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "SeoProductsForArtworks_artworks"
-          }
-        ],
-        "storageKey": null
       }
     ],
     "type": "Query",
@@ -157,13 +65,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "collectRoutes_ArtworkFilterQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "MarketingCollection",
         "kind": "LinkedField",
         "name": "marketingCollections",
@@ -176,7 +84,13 @@ return {
             "name": "slug",
             "storageKey": null
           },
-          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "title",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -184,288 +98,29 @@ return {
             "name": "thumbnail",
             "storageKey": null
           },
-          (v4/*: any*/)
-        ],
-        "storageKey": "marketingCollections(slugs:[\"contemporary\",\"painting\",\"street-art\",\"photography\",\"emerging-art\",\"20th-century-art\"])"
-      },
-      {
-        "alias": "filterArtworks",
-        "args": (v2/*: any*/),
-        "concreteType": "FilterArtworksConnection",
-        "kind": "LinkedField",
-        "name": "artworksConnection",
-        "plural": false,
-        "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "FilterArtworksEdge",
-            "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Artwork",
-                "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  (v4/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "availability",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "category",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "date",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "href",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": "is_acquireable",
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isAcquireable",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": "is_price_range",
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isPriceRange",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": null,
-                    "kind": "LinkedField",
-                    "name": "listPrice",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "__typename",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": (v5/*: any*/),
-                        "type": "PriceRange",
-                        "abstractKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": (v5/*: any*/),
-                        "type": "Money",
-                        "abstractKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": "price_currency",
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "priceCurrency",
-                    "storageKey": null
-                  },
-                  (v3/*: any*/),
-                  {
-                    "alias": null,
-                    "args": (v6/*: any*/),
-                    "concreteType": "Artist",
-                    "kind": "LinkedField",
-                    "name": "artists",
-                    "plural": true,
-                    "selections": [
-                      (v7/*: any*/),
-                      (v4/*: any*/)
-                    ],
-                    "storageKey": "artists(shallow:true)"
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Image",
-                    "kind": "LinkedField",
-                    "name": "image",
-                    "plural": false,
-                    "selections": (v8/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "ArtworkMeta",
-                    "kind": "LinkedField",
-                    "name": "meta",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "description",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": (v6/*: any*/),
-                    "concreteType": "Partner",
-                    "kind": "LinkedField",
-                    "name": "partner",
-                    "plural": false,
-                    "selections": [
-                      (v7/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "type",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Profile",
-                        "kind": "LinkedField",
-                        "name": "profile",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Image",
-                            "kind": "LinkedField",
-                            "name": "icon",
-                            "plural": false,
-                            "selections": (v8/*: any*/),
-                            "storageKey": null
-                          },
-                          (v4/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "size",
-                            "value": 1
-                          }
-                        ],
-                        "concreteType": "Location",
-                        "kind": "LinkedField",
-                        "name": "locations",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "address",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": "address_2",
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "address2",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "city",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "state",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "country",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": "postal_code",
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "postalCode",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "phone",
-                            "storageKey": null
-                          },
-                          (v4/*: any*/)
-                        ],
-                        "storageKey": "locations(size:1)"
-                      },
-                      (v4/*: any*/)
-                    ],
-                    "storageKey": "partner(shallow:true)"
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
+            "kind": "ScalarField",
+            "name": "id",
             "storageKey": null
-          },
-          (v4/*: any*/)
+          }
         ],
-        "storageKey": null
+        "storageKey": "marketingCollections(slugs:[\"contemporary\",\"painting\",\"street-art\",\"photography\",\"emerging-art\",\"20th-century-art\"])"
       }
     ]
   },
   "params": {
-    "cacheID": "daa7b349f7bd89976da050c9412d8a3e",
+    "cacheID": "b21c427347731dd46b812f2a087622e3",
     "id": null,
     "metadata": {},
     "name": "collectRoutes_ArtworkFilterQuery",
     "operationKind": "query",
-    "text": "query collectRoutes_ArtworkFilterQuery(\n  $sort: String\n) {\n  marketingCollections(slugs: [\"contemporary\", \"painting\", \"street-art\", \"photography\", \"emerging-art\", \"20th-century-art\"]) {\n    ...Collect_marketingCollections\n    id\n  }\n  filterArtworks: artworksConnection(sort: $sort, first: 30) {\n    ...SeoProductsForArtworks_artworks\n    id\n  }\n}\n\nfragment Collect_marketingCollections on MarketingCollection {\n  ...CollectionsHubsNav_marketingCollections\n}\n\nfragment CollectionsHubsNav_marketingCollections on MarketingCollection {\n  slug\n  title\n  thumbnail\n}\n\nfragment SeoProductsForArtworks_artworks on FilterArtworksConnection {\n  edges {\n    node {\n      id\n      availability\n      category\n      date\n      href\n      is_acquireable: isAcquireable\n      is_price_range: isPriceRange\n      listPrice {\n        __typename\n        ... on PriceRange {\n          display\n        }\n        ... on Money {\n          display\n        }\n      }\n      price_currency: priceCurrency\n      title\n      artists(shallow: true) {\n        name\n        id\n      }\n      image {\n        url(version: \"larger\")\n      }\n      meta {\n        description\n      }\n      partner(shallow: true) {\n        name\n        type\n        profile {\n          icon {\n            url(version: \"larger\")\n          }\n          id\n        }\n        locations(size: 1) {\n          address\n          address_2: address2\n          city\n          state\n          country\n          postal_code: postalCode\n          phone\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query collectRoutes_ArtworkFilterQuery {\n  marketingCollections(slugs: [\"contemporary\", \"painting\", \"street-art\", \"photography\", \"emerging-art\", \"20th-century-art\"]) {\n    ...Collect_marketingCollections\n    id\n  }\n}\n\nfragment Collect_marketingCollections on MarketingCollection {\n  ...CollectionsHubsNav_marketingCollections\n}\n\nfragment CollectionsHubsNav_marketingCollections on MarketingCollection {\n  slug\n  title\n  thumbnail\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5b91f559b732730672ee2443fe0944de";
+(node as any).hash = "993a2dc7cffc255512c7a37f83686348";
 
 export default node;

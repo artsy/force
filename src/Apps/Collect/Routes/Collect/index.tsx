@@ -3,13 +3,10 @@ import StaticContainer from "found/StaticContainer"
 import { Match, Router } from "found"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SeoProductsForArtworks } from "Apps/Collect/Components/SeoProductsForArtworks"
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
-import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
 import { getMetadata, Medium, Color } from "./Utils/getMetadata"
 import { Collect_marketingCollections$data } from "__generated__/Collect_marketingCollections.graphql"
-import { collectRoutes_ArtworkFilterQuery$data } from "__generated__/collectRoutes_ArtworkFilterQuery.graphql"
 import { CollectArtworkFilterQuery } from "__generated__/CollectArtworkFilterQuery.graphql"
 import { CollectionsHubsNavFragmentContainer as CollectionsHubsNav } from "Components/CollectionsHubsNav"
 import { ArtworkFilter } from "Components/ArtworkFilter"
@@ -29,11 +26,9 @@ export interface CollectAppProps {
   match: Match
   router: Router
   marketingCollections: Collect_marketingCollections$data
-  filterArtworks: collectRoutes_ArtworkFilterQuery$data["filterArtworks"]
 }
 
 export const CollectApp: React.FC<CollectAppProps> = ({
-  filterArtworks,
   marketingCollections,
   match: { location, params },
 }) => {
@@ -42,7 +37,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
 
   const medium = params?.medium as Medium
   const color = params?.color as Color
-  const { description, breadcrumbTitle, title } = getMetadata({
+  const { description, title } = getMetadata({
     medium,
     color,
   })
@@ -57,14 +52,6 @@ export const CollectApp: React.FC<CollectAppProps> = ({
     canonicalHref = `collect`
   }
 
-  const items = [{ name: "Collect", path: "/collect" }]
-  if (medium) {
-    items.push({
-      name: breadcrumbTitle,
-      path: `/collect/${medium}`,
-    })
-  }
-
   return (
     <>
       <FrameWithRecentlyViewed>
@@ -73,10 +60,6 @@ export const CollectApp: React.FC<CollectAppProps> = ({
           description={description}
           pathname={canonicalHref}
         />
-
-        <BreadCrumbList items={items} />
-
-        {filterArtworks && <SeoProductsForArtworks artworks={filterArtworks} />}
 
         <Box mt={4}>
           <Flex
