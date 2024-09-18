@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8a508a168bf2609fc85e576faa243bb>>
+ * @generated SignedSource<<4dd7dfd92fc72beb9d097d6b1cab4cd5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,11 +38,6 @@ export type ArtistArtworkFilter_artist$key = {
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
-    {
-      "defaultValue": true,
-      "kind": "LocalArgument",
-      "name": "includeBlurHash"
-    },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
@@ -164,13 +159,7 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "args": [
-            {
-              "kind": "Variable",
-              "name": "includeBlurHash",
-              "variableName": "includeBlurHash"
-            }
-          ],
+          "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid_filtered_artworks"
         }
@@ -196,6 +185,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9e213ba7d43235506a9740f104a2041f";
+(node as any).hash = "44474a8e0f69fe658c8e8df3e2bc4ceb";
 
 export default node;
