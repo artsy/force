@@ -193,7 +193,7 @@ export const artistRoutes: RouteProps[] = [
             $createdAfterYear: Int
             $createdBeforeYear: Int
             $allowEmptyCreatedDates: Boolean
-          ) {
+          ) @cacheable {
             artist(id: $artistID) @principalField {
               ...ArtistAuctionResultsRoute_artist
                 @arguments(
@@ -222,7 +222,7 @@ export const artistRoutes: RouteProps[] = [
           OverviewRoute.preload()
         },
         query: graphql`
-          query artistRoutes_OverviewQuery($artistID: String!) {
+          query artistRoutes_OverviewQuery($artistID: String!) @cacheable {
             artist(id: $artistID) @principalField {
               ...ArtistOverviewRoute_artist
             }
@@ -237,7 +237,7 @@ export const artistRoutes: RouteProps[] = [
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => ArtistSubApp,
     query: graphql`
-      query artistRoutes_ArtistSubAppQuery($artistID: String!) {
+      query artistRoutes_ArtistSubAppQuery($artistID: String!) @cacheable {
         artist(id: $artistID) @principalField {
           ...ArtistSubApp_artist
         }
@@ -252,7 +252,7 @@ export const artistRoutes: RouteProps[] = [
           ArticlesRoute.preload()
         },
         query: graphql`
-          query artistRoutes_ArticlesQuery($artistID: String!) {
+          query artistRoutes_ArticlesQuery($artistID: String!) @cacheable {
             artist(id: $artistID) @principalField {
               ...ArtistArticlesRoute_artist
             }
@@ -266,7 +266,7 @@ export const artistRoutes: RouteProps[] = [
           ConsignRoute.preload()
         },
         query: graphql`
-          query artistRoutes_ArtistConsignQuery($artistID: String!) {
+          query artistRoutes_ArtistConsignQuery($artistID: String!) @cacheable {
             artist(id: $artistID) @principalField {
               ...ArtistConsignRoute_artist
               targetSupply {
@@ -299,7 +299,7 @@ export const artistRoutes: RouteProps[] = [
           CVRoute.preload()
         },
         query: graphql`
-          query artistRoutes_CVQuery($artistID: String!) {
+          query artistRoutes_CVQuery($artistID: String!) @cacheable {
             viewer {
               ...ArtistCVRoute_viewer
             }
@@ -314,7 +314,7 @@ export const artistRoutes: RouteProps[] = [
           ArtistSeriesRoute.preload()
         },
         query: graphql`
-          query artistRoutes_ArtistSeriesQuery($artistID: String!) {
+          query artistRoutes_ArtistSeriesQuery($artistID: String!) @cacheable {
             artist(id: $artistID) @principalField {
               ...ArtistArtistSeriesRoute_artist
             }
@@ -329,7 +329,7 @@ export const artistRoutes: RouteProps[] = [
           ShowsRoute.preload()
         },
         query: graphql`
-          query artistRoutes_ShowsQuery($artistID: String!) {
+          query artistRoutes_ShowsQuery($artistID: String!) @cacheable {
             viewer {
               ...ArtistShowsRoute_viewer
             }
@@ -357,7 +357,8 @@ export const artistRoutes: RouteProps[] = [
       AuctionResultRoute.preload()
     },
     query: graphql`
-      query artistRoutes_AuctionResultQuery($auctionResultId: String!) {
+      query artistRoutes_AuctionResultQuery($auctionResultId: String!)
+        @cacheable {
         auctionResult(id: $auctionResultId) @principalField {
           ...AuctionResult_auctionResult
         }
