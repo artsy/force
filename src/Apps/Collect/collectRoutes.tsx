@@ -70,16 +70,26 @@ export const collectRoutes: RouteProps[] = [
     },
     prepareVariables: initializeVariablesWithFilterState,
     query: graphql`
-      query collectRoutes_CollectionQuery($slug: String!) {
+      query collectRoutes_CollectionQuery(
+        $input: FilterArtworksInput
+        $slug: String!
+        $aggregations: [ArtworkAggregation]
+        $shouldFetchCounts: Boolean!
+      ) {
         collection: marketingCollection(slug: $slug) @principalField {
           ...Collection_collection
+            @arguments(
+              input: $input
+              aggregations: $aggregations
+              shouldFetchCounts: $shouldFetchCounts
+            )
         }
       }
     `,
   },
 ]
 
-export function initializeVariablesWithFilterState(params, props) {
+function initializeVariablesWithFilterState(params, props) {
   const initialFilterState = getInitialFilterState(props.location?.query ?? {})
 
   if (params.medium) {
@@ -125,8 +135,8 @@ export function initializeVariablesWithFilterState(params, props) {
   }
 
   return {
-    aggregations,
     input,
+    aggregations,
     slug: collectionSlug,
     sort: "-decayed_merch",
     shouldFetchCounts: !!props.context.user,
@@ -135,7 +145,12 @@ export function initializeVariablesWithFilterState(params, props) {
 
 function getArtworkFilterQuery() {
   return graphql`
-    query collectRoutes_ArtworkFilterQuery($sort: String) {
+    query collectRoutes_ArtworkFilterQuery(
+      $sort: String
+      $input: FilterArtworksInput
+      $aggregations: [ArtworkAggregation]
+      $shouldFetchCounts: Boolean!
+    ) {
       marketingCollections(
         slugs: [
           "contemporary"
@@ -150,6 +165,22 @@ function getArtworkFilterQuery() {
       }
       filterArtworks: artworksConnection(sort: $sort, first: 30) {
         ...SeoProductsForArtworks_artworks
+      }
+      viewer {
+        ...ArtworkFilter_viewer @arguments(input: $input)
+        artworksConnection(aggregations: $aggregations, input: $input) {
+          counts @include(if: $shouldFetchCounts) {
+            followedArtists
+          }
+          aggregations {
+            slice
+            counts {
+              value
+              name
+              count
+            }
+          }
+        }
       }
     }
   `
