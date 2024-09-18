@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff333db2bd713499a5eb30245dd0fd1e>>
+ * @generated SignedSource<<514c3340fd2aa7103ac7d3b5275a4cef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -253,16 +253,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1765a85d82727136a2f766a339103d85",
+    "cacheID": "0b28848008d9961d89e85cfe5479b1c8",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistSeriesQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistSeriesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) @principalField {\n    ...ArtistArtistSeriesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArtistSeriesRoute_artist on Artist {\n  internalID\n  name\n  slug\n  meta(page: ARTIST_SERIES) {\n    description\n    title\n  }\n  artistSeriesConnection(first: 50) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query artistRoutes_ArtistSeriesQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistArtistSeriesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArtistSeriesRoute_artist on Artist {\n  internalID\n  name\n  slug\n  meta(page: ARTIST_SERIES) {\n    description\n    title\n  }\n  artistSeriesConnection(first: 50) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "383f30f1ddf08e0e42a732a227172bfc";
+(node as any).hash = "fd78fa07be8fa473f82b125c2fb95c87";
 
 export default node;
