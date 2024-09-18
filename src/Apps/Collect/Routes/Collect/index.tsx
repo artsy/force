@@ -1,14 +1,13 @@
 import { Box, Separator, Spacer, Text, Flex } from "@artsy/palette"
+import StaticContainer from "found/StaticContainer"
 import { Match, Router } from "found"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SeoProductsForArtworks } from "Apps/Collect/Components/SeoProductsForArtworks"
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
-import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
 import { getMetadata, Medium, Color } from "./Utils/getMetadata"
 import { Collect_marketingCollections$data } from "__generated__/Collect_marketingCollections.graphql"
-import { collectRoutes_ArtworkFilterQuery$data } from "__generated__/collectRoutes_ArtworkFilterQuery.graphql"
+import { CollectArtworkFilterQuery } from "__generated__/CollectArtworkFilterQuery.graphql"
 import { CollectionsHubsNavFragmentContainer as CollectionsHubsNav } from "Components/CollectionsHubsNav"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import { RouterLink } from "System/Components/RouterLink"
@@ -19,26 +18,26 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { MetaTags } from "Components/MetaTags"
+import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 
 export interface CollectAppProps {
   match: Match
   router: Router
   marketingCollections: Collect_marketingCollections$data
-  viewer: collectRoutes_ArtworkFilterQuery$data["viewer"]
-  filterArtworks: collectRoutes_ArtworkFilterQuery$data["filterArtworks"]
 }
 
 export const CollectApp: React.FC<CollectAppProps> = ({
-  filterArtworks,
   marketingCollections,
   match: { location, params },
-  viewer,
 }) => {
-  const { silentReplace } = useRouter()
+  const { silentReplace, match } = useRouter()
   const { userPreferences } = useSystemContext()
+
   const medium = params?.medium as Medium
   const color = params?.color as Color
-  const { description, breadcrumbTitle, title } = getMetadata({
+  const { description, title } = getMetadata({
     medium,
     color,
   })
@@ -53,14 +52,6 @@ export const CollectApp: React.FC<CollectAppProps> = ({
     canonicalHref = `collect`
   }
 
-  const items = [{ name: "Collect", path: "/collect" }]
-  if (medium) {
-    items.push({
-      name: breadcrumbTitle,
-      path: `/collect/${medium}`,
-    })
-  }
-
   return (
     <>
       <FrameWithRecentlyViewed>
@@ -69,10 +60,6 @@ export const CollectApp: React.FC<CollectAppProps> = ({
           description={description}
           pathname={canonicalHref}
         />
-
-        <BreadCrumbList items={items} />
-
-        {filterArtworks && <SeoProductsForArtworks artworks={filterArtworks} />}
 
         <Box mt={4}>
           <Flex
@@ -97,28 +84,78 @@ export const CollectApp: React.FC<CollectAppProps> = ({
         </Box>
 
         <Box>
-          <ArtworkFilter
-            viewer={viewer}
-            aggregations={
-              viewer?.artworksConnection
-                ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-            }
-            counts={viewer?.artworksConnection?.counts as Counts}
-            filters={location.query as any}
-            sortOptions={[
-              { text: "Recommended", value: "-decayed_merch" },
-              { text: "Recently Updated", value: "-partner_updated_at" },
-              { text: "Recently Added", value: "-published_at" },
-              { text: "Artwork Year (Descending)", value: "-year" },
-              { text: "Artwork Year (Ascending)", value: "year" },
-            ]}
-            onChange={filters => {
-              const url = buildUrlForCollectApp(filters)
+          {/* Prevent layout jank when transitioning routes, because that
+              generates new params from `match` and causes rerenders */}
+          <StaticContainer shouldUpdate={!!match.elements}>
+            <SystemQueryRenderer<CollectArtworkFilterQuery>
+              query={graphql`
+                query CollectArtworkFilterQuery(
+                  $input: FilterArtworksInput
+                  $aggregations: [ArtworkAggregation]
+                  $shouldFetchCounts: Boolean!
+                ) {
+                  viewer {
+                    ...ArtworkFilter_viewer @arguments(input: $input)
+                    artworksConnection(
+                      aggregations: $aggregations
+                      input: $input
+                    ) {
+                      counts @include(if: $shouldFetchCounts) {
+                        followedArtists
+                      }
+                      aggregations {
+                        slice
+                        counts {
+                          value
+                          name
+                          count
+                        }
+                      }
+                    }
+                  }
+                }
+              `}
+              variables={initializeVariablesWithFilterState(
+                match.params,
+                match
+              )}
+              fetchPolicy="store-and-network"
+              placeholder={<ArtworkFilterPlaceholder />}
+              render={({ props }) => {
+                if (!props?.viewer) {
+                  return <ArtworkFilterPlaceholder />
+                }
 
-              silentReplace(url)
-            }}
-            userPreferredMetric={userPreferences?.metric}
-          />
+                return (
+                  <ArtworkFilter
+                    viewer={props.viewer}
+                    aggregations={
+                      props.viewer?.artworksConnection
+                        ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                    }
+                    counts={props.viewer?.artworksConnection?.counts as Counts}
+                    filters={location.query as any}
+                    sortOptions={[
+                      { text: "Recommended", value: "-decayed_merch" },
+                      {
+                        text: "Recently Updated",
+                        value: "-partner_updated_at",
+                      },
+                      { text: "Recently Added", value: "-published_at" },
+                      { text: "Artwork Year (Descending)", value: "-year" },
+                      { text: "Artwork Year (Ascending)", value: "year" },
+                    ]}
+                    onChange={filters => {
+                      const url = buildUrlForCollectApp(filters)
+
+                      silentReplace(url)
+                    }}
+                    userPreferredMetric={userPreferences?.metric}
+                  />
+                )
+              }}
+            />
+          </StaticContainer>
         </Box>
       </FrameWithRecentlyViewed>
     </>

@@ -1,7 +1,6 @@
 import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { Collections_marketingCategories$data } from "__generated__/Collections_marketingCategories.graphql"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
-import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CollectionsCategoryFragmentContainer } from "./Components/CollectionsCategory"
 import { RouterLink } from "System/Components/RouterLink"
@@ -25,8 +24,6 @@ export const CollectionsApp: React.FC<CollectionsAppProps> = ({
         description={META_DESCRIPTION}
         pathname="collections"
       />
-
-      <BreadCrumbList items={[{ name: "Collections", path: "/collections" }]} />
 
       <FrameWithRecentlyViewed>
         <GridColumns my={4} gridRowGap={[2, 0]}>
