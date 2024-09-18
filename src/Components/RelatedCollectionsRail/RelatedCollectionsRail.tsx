@@ -108,9 +108,6 @@ export const RelatedCollectionsRailQueryRenderer: React.FC<{
         query RelatedCollectionsRailQuery($slug: String!) {
           marketingCollection(slug: $slug) {
             title
-            linkedCollections {
-              internalID
-            }
             relatedCollections(size: 16) {
               ...RelatedCollectionsRail_collections
             }
@@ -122,13 +119,12 @@ export const RelatedCollectionsRailQueryRenderer: React.FC<{
           console.error(error)
           return null
         }
+
         if (!props) {
           return null
         }
-        if (
-          props.marketingCollection &&
-          props.marketingCollection.linkedCollections.length === 0
-        ) {
+
+        if (props.marketingCollection) {
           return (
             <RelatedCollectionsRailFragmentContainer
               collections={props.marketingCollection.relatedCollections}
