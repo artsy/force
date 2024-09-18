@@ -12,6 +12,8 @@ import {
 } from "@artsy/cohesion"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { FollowGeneButtonQuery } from "__generated__/FollowGeneButtonQuery.graphql"
 import { useAuthDialog } from "Components/AuthDialog"
 
 interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
@@ -112,13 +114,49 @@ export const FollowGeneButtonFragmentContainer = createFragmentContainer(
   FollowGeneButton,
   {
     gene: graphql`
-      fragment FollowGeneButton_gene on Gene {
+      fragment FollowGeneButton_gene on Gene
+        @argumentDefinitions(
+          isLoggedIn: { type: "Boolean", defaultValue: false }
+        ) {
         id
         slug
         name
         internalID
-        isFollowed
+        isFollowed @include(if: $isLoggedIn)
       }
     `,
   }
 )
+
+interface FollowGeneButtonQueryRendererProps
+  extends Omit<FollowGeneButtonProps, "gene"> {
+  id: string
+}
+
+export const FollowGeneButtonQueryRenderer: React.FC<FollowGeneButtonQueryRendererProps> = ({
+  id,
+  ...rest
+}) => {
+  const { isLoggedIn } = useSystemContext()
+  return (
+    <SystemQueryRenderer<FollowGeneButtonQuery>
+      lazyLoad
+      query={graphql`
+        query FollowGeneButtonQuery($id: String!, $isLoggedIn: Boolean!) {
+          gene(id: $id) {
+            ...FollowGeneButton_gene @arguments(isLoggedIn: $isLoggedIn)
+          }
+        }
+      `}
+      placeholder={<FollowButton {...rest} />}
+      variables={{ id, isLoggedIn }}
+      render={({ error, props }) => {
+        if (error || !props?.gene) {
+          return <FollowButton {...rest} />
+        }
+
+        return <FollowGeneButtonFragmentContainer {...rest} gene={props.gene} />
+      }}
+    />
+  )
+}

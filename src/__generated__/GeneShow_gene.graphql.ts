@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b87dee0cc936a7bd3c83791b81072a1f>>
+ * @generated SignedSource<<f6845130f284ad9f5fd131bedf4db127>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,7 @@ export type GeneShow_gene$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene" | "GeneArtworkFilter_gene" | "GeneMeta_gene">;
+  readonly " $fragmentSpreads": FragmentRefs<"GeneArtworkFilter_gene" | "GeneMeta_gene">;
   readonly " $fragmentType": "GeneShow_gene";
 };
 export type GeneShow_gene$key = {
@@ -121,11 +121,6 @@ return {
       ],
       "kind": "FragmentSpread",
       "name": "GeneArtworkFilter_gene"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowGeneButton_gene"
     },
     (v0/*: any*/),
     (v1/*: any*/),
@@ -219,6 +214,6 @@ return {
 };
 })();
 
-(node as any).hash = "845c4b5acf5c137c9e8ed0743b0684c5";
+(node as any).hash = "e8f002f3b327a956207347d0a84533db";
 
 export default node;

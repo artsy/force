@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<221d1c615d8183d4d363f60239eaaee4>>
+ * @generated SignedSource<<36122c19af825e664bfef44c45d85d86>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,41 +10,50 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FollowGeneButton_Test_Query$variables = Record<PropertyKey, never>;
-export type FollowGeneButton_Test_Query$data = {
+export type FollowGeneButtonQuery$variables = {
+  id: string;
+  isLoggedIn: boolean;
+};
+export type FollowGeneButtonQuery$data = {
   readonly gene: {
     readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
   } | null | undefined;
 };
-export type FollowGeneButton_Test_Query = {
-  response: FollowGeneButton_Test_Query$data;
-  variables: FollowGeneButton_Test_Query$variables;
+export type FollowGeneButtonQuery = {
+  response: FollowGeneButtonQuery$data;
+  variables: FollowGeneButtonQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "id",
-    "value": "example"
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "isLoggedIn"
   }
 ],
-v1 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-};
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "FollowGeneButton_Test_Query",
+    "name": "FollowGeneButtonQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Gene",
         "kind": "LinkedField",
         "name": "gene",
@@ -53,16 +62,16 @@ return {
           {
             "args": [
               {
-                "kind": "Literal",
+                "kind": "Variable",
                 "name": "isLoggedIn",
-                "value": true
+                "variableName": "isLoggedIn"
               }
             ],
             "kind": "FragmentSpread",
             "name": "FollowGeneButton_gene"
           }
         ],
-        "storageKey": "gene(id:\"example\")"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -70,13 +79,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "FollowGeneButton_Test_Query",
+    "name": "FollowGeneButtonQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Gene",
         "kind": "LinkedField",
         "name": "gene",
@@ -111,52 +120,35 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isFollowed",
-            "storageKey": null
+            "condition": "isLoggedIn",
+            "kind": "Condition",
+            "passingValue": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isFollowed",
+                "storageKey": null
+              }
+            ]
           }
         ],
-        "storageKey": "gene(id:\"example\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "54cf4fae1b4bfb8aa44405e0651d74a8",
+    "cacheID": "8c7c5558867414c43413ce9818030b69",
     "id": null,
-    "metadata": {
-      "relayTestingSelectionTypeInfo": {
-        "gene": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Gene"
-        },
-        "gene.id": (v1/*: any*/),
-        "gene.internalID": (v1/*: any*/),
-        "gene.isFollowed": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "gene.name": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
-        "gene.slug": (v1/*: any*/)
-      }
-    },
-    "name": "FollowGeneButton_Test_Query",
+    "metadata": {},
+    "name": "FollowGeneButtonQuery",
     "operationKind": "query",
-    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    ...FollowGeneButton_gene_2OV785\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_2OV785 on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
+    "text": "query FollowGeneButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  gene(id: $id) {\n    ...FollowGeneButton_gene_4dcqWc\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_4dcqWc on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e30bf14c4d1f3cb99549ba3dcb9a6a9c";
+(node as any).hash = "03f266c04c0445d31031110e9942f7d8";
 
 export default node;
