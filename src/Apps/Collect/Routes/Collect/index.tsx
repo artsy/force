@@ -84,8 +84,8 @@ export const CollectApp: React.FC<CollectAppProps> = ({
         </Box>
 
         <Box>
-          {/* TODO: Figure out why rerenders trigger refetches here, requiring
-              the static container to freeze rendering during route transitions. */}
+          {/* Prevent layout jank when transitioning routes, because that
+              generates new params from `match` and causes rerenders */}
           <StaticContainer shouldUpdate={!!match.elements}>
             <SystemQueryRenderer<CollectArtworkFilterQuery>
               query={graphql`

@@ -7,9 +7,9 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Rail } from "Components/Rail/Rail"
 import { useTracking } from "react-tracking"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { RelatedCollectionsRailQuery } from "__generated__/RelatedCollectionsRailQuery.graphql"
+import { Spacer } from "@artsy/palette"
 
 interface RelatedCollectionsRailProps {
   collections: RelatedCollectionsRail_collections$data
@@ -46,6 +46,8 @@ export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = ({
   if (collectionsWithArtworks.length > 3) {
     return (
       <>
+        <Spacer y={6} />
+
         <span ref={ref as any} />
 
         <Rail
@@ -98,18 +100,17 @@ export const RelatedCollectionsRailFragmentContainer = createFragmentContainer(
 export const RelatedCollectionsRailQueryRenderer: React.FC<{
   slug: string
 }> = ({ slug }) => {
-  const { relayEnvironment } = useSystemContext()
-
-  // TODO: Placeholder
   return (
     <SystemQueryRenderer<RelatedCollectionsRailQuery>
       lazyLoad
-      environment={relayEnvironment}
       variables={{ slug }}
       query={graphql`
         query RelatedCollectionsRailQuery($slug: String!) {
           marketingCollection(slug: $slug) {
             title
+            linkedCollections {
+              internalID
+            }
             relatedCollections(size: 16) {
               ...RelatedCollectionsRail_collections
             }
@@ -124,7 +125,10 @@ export const RelatedCollectionsRailQueryRenderer: React.FC<{
         if (!props) {
           return null
         }
-        if (props.marketingCollection) {
+        if (
+          props.marketingCollection &&
+          props.marketingCollection.linkedCollections.length === 0
+        ) {
           return (
             <RelatedCollectionsRailFragmentContainer
               collections={props.marketingCollection.relatedCollections}

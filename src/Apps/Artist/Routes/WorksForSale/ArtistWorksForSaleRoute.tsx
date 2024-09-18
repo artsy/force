@@ -1,5 +1,4 @@
 import React from "react"
-import StaticContainer from "found/StaticContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistArtworkFilterRefetchContainer } from "./Components/ArtistArtworkFilter"
 import { ArtistWorksForSaleRoute_artist$data } from "__generated__/ArtistWorksForSaleRoute_artist.graphql"
@@ -28,74 +27,73 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
       <Meta name="title" content={title} />
       <Meta name="description" content={description} />
 
-      {/* TODO: Figure out why rerenders trigger refetches here, requiring
-              the static container to freeze rendering during route transitions. */}
-      <StaticContainer shouldUpdate={!!match.elements}>
-        <SystemQueryRenderer<ArtistWorksForSaleRouteArtworksQuery>
-          query={graphql`
-            query ArtistWorksForSaleRouteArtworksQuery(
-              $artistID: String!
-              $aggregations: [ArtworkAggregation]
-              $input: FilterArtworksInput!
-            ) {
-              artist(id: $artistID) {
-                ...ArtistArtworkFilter_artist @arguments(input: $input)
+      <SystemQueryRenderer<ArtistWorksForSaleRouteArtworksQuery>
+        query={graphql`
+          query ArtistWorksForSaleRouteArtworksQuery(
+            $artistID: String!
+            $aggregations: [ArtworkAggregation]
+            $input: FilterArtworksInput!
+          ) {
+            artist(id: $artistID) {
+              ...ArtistArtworkFilter_artist @arguments(input: $input)
 
-                sidebarAggregations: filterArtworksConnection(
-                  aggregations: $aggregations
-                  first: 1
-                ) {
+              sidebarAggregations: filterArtworksConnection(
+                aggregations: $aggregations
+                first: 1
+              ) {
+                counts {
+                  total
+                }
+                aggregations {
+                  slice
                   counts {
-                    total
-                  }
-                  aggregations {
-                    slice
-                    counts {
-                      name
-                      value
-                      count
-                    }
+                    name
+                    value
+                    count
                   }
                 }
               }
             }
-          `}
-          variables={getWorksForSaleRouteVariables(
+          }
+        `}
+        variables={{
+          ...getWorksForSaleRouteVariables(
             match.params as { artistID: string },
             match
-          )}
-          placeholder={<ArtworkFilterPlaceholder showCreateAlert />}
-          render={({ error, props }) => {
-            if (error) {
-              console.error(
-                "[ArtistWorksForSaleRoute]: Error loading artwork grid",
-                error
-              )
-              return null
-            }
-
-            if (!props || !props.artist) {
-              return <ArtworkFilterPlaceholder showCreateAlert />
-            }
-
-            return (
-              <>
-                {props.artist.sidebarAggregations?.counts?.total === 0 ? (
-                  <ArtistWorksForSaleEmptyFragmentContainer artist={artist} />
-                ) : (
-                  <ArtistArtworkFilterRefetchContainer
-                    artist={props.artist}
-                    aggregations={
-                      props.artist.sidebarAggregations
-                        ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-                    }
-                  />
-                )}
-              </>
+          ),
+          artistID: artist.slug,
+        }}
+        placeholder={<ArtworkFilterPlaceholder showCreateAlert />}
+        render={({ error, props }) => {
+          if (error) {
+            console.error(
+              "[ArtistWorksForSaleRoute]: Error loading artwork grid",
+              error
             )
-          }}
-        />
-      </StaticContainer>
+            return null
+          }
+
+          if (!props || !props.artist) {
+            return <ArtworkFilterPlaceholder showCreateAlert />
+          }
+
+          return (
+            <>
+              {props.artist.sidebarAggregations?.counts?.total === 0 ? (
+                <ArtistWorksForSaleEmptyFragmentContainer artist={artist} />
+              ) : (
+                <ArtistArtworkFilterRefetchContainer
+                  artist={props.artist}
+                  aggregations={
+                    props.artist.sidebarAggregations
+                      ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                  }
+                />
+              )}
+            </>
+          )
+        }}
+      />
     </>
   )
 }
@@ -106,7 +104,7 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistWorksForSaleRoute_artist on Artist {
         ...ArtistWorksForSaleEmpty_artist
-
+        slug
         meta(page: ARTWORKS) {
           description
           title

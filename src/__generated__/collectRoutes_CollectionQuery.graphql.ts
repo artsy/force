@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6dbfbec8939632bc99b5c56f87593340>>
+ * @generated SignedSource<<08efe62bde1356b2123f63db5ba4f3ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -127,6 +127,13 @@ return {
             "kind": "ScalarField",
             "name": "headerImage",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "showFeaturedArtists",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -134,12 +141,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e11ee25de9710bc3b60bc654fdb40410",
+    "cacheID": "4001b13ca012549b75086e23f183b73c",
     "id": null,
     "metadata": {},
     "name": "collectRoutes_CollectionQuery",
     "operationKind": "query",
-    "text": "query collectRoutes_CollectionQuery(\n  $slug: String!\n) {\n  collection: marketingCollection(slug: $slug) @principalField {\n    ...Collection_collection\n    id\n  }\n}\n\nfragment Collection_collection on MarketingCollection {\n  ...Header_collection\n  descriptionMarkdown\n  headerImage\n  slug\n  id\n  title\n}\n\nfragment Header_collection on MarketingCollection {\n  category\n  description\n  id\n  slug\n  title\n}\n"
+    "text": "query collectRoutes_CollectionQuery(\n  $slug: String!\n) {\n  collection: marketingCollection(slug: $slug) @principalField {\n    ...Collection_collection\n    id\n  }\n}\n\nfragment Collection_collection on MarketingCollection {\n  ...Header_collection\n  descriptionMarkdown\n  headerImage\n  slug\n  title\n  showFeaturedArtists\n}\n\nfragment Header_collection on MarketingCollection {\n  category\n  description\n  id\n  slug\n  title\n}\n"
   }
 };
 })();
