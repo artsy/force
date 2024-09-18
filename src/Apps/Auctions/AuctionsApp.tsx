@@ -1,22 +1,16 @@
 import * as React from "react"
-import { AuctionsApp_viewer$data } from "__generated__/AuctionsApp_viewer.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import { RecentlyViewed } from "Components/RecentlyViewed"
 import { RouterLink } from "System/Components/RouterLink"
 import { RouteTabs, RouteTab } from "Components/RouteTabs"
 import { getENV } from "Utils/getENV"
-import { CuritorialRailsTabBarFragmentContainer } from "./Components/CuritorialRailsTabBar"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
+import { CuritorialRailsTabBar } from "Apps/Auctions/Components/CuritorialRailsTabBar"
 
-export interface AuctionsAppProps {
-  viewer: AuctionsApp_viewer$data
-}
-
-const AuctionsApp: React.FC<AuctionsAppProps> = props => {
-  const { children, viewer } = props
+export const AuctionsApp: React.FC = props => {
+  const { children } = props
 
   // FIXME: Remove once new filter launches
   const enableNewAuctionsFilter = getENV("ENABLE_NEW_AUCTIONS_FILTER")
@@ -24,6 +18,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
   return (
     <>
       <AuctionsMeta />
+
       <GridColumns mt={4}>
         <Column span={6}>
           <Text variant="xl" as="h1">
@@ -59,7 +54,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 
       <MyBidsQueryRenderer mb={12} />
 
-      <CuritorialRailsTabBarFragmentContainer viewer={viewer} />
+      <CuritorialRailsTabBar />
 
       <Spacer y={12} />
 
@@ -84,14 +79,3 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
     </>
   )
 }
-
-export const AuctionsAppFragmentContainer = createFragmentContainer(
-  AuctionsApp,
-  {
-    viewer: graphql`
-      fragment AuctionsApp_viewer on Viewer {
-        ...CuritorialRailsTabBar_viewer
-      }
-    `,
-  }
-)
