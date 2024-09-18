@@ -27,8 +27,6 @@ import { ShippingContextProvider } from "Apps/Order/Routes/Shipping2/ShippingCon
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SaveAndContinueButton } from "Apps/Order/Routes/Shipping2/Components/SaveAndContinueButton"
 import { useJump, Jump } from "Utils/Hooks/useJump"
-import { FulfillmentType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
-import { useHandleSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/Hooks/useHandleSaveFulfillmentDetails"
 
 export type ShippingStage =
   // User choosing fulfillment type
@@ -70,7 +68,6 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
   order,
 }) => {
   const shippingContext = useShippingContext()
-  const { handleSaveFulfillmentDetails } = useHandleSaveFulfillmentDetails()
 
   const { jumpTo } = useJump()
 
@@ -80,42 +77,6 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shippingContext.state.stage])
-
-  /*
-   * Re-save fulfillment details on load if they are already saved &
-   * require artsy shipping to advance to shipping quotes
-   */
-  useEffect(() => {
-    const { savedFulfillmentDetails } = shippingContext.orderData
-
-    const isArtsyShippingSaved =
-      savedFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
-      savedFulfillmentDetails.isArtsyShipping
-
-    if (!isArtsyShippingSaved) {
-      return
-    }
-    const refreshShippingQuotes = async () => {
-      const result = await handleSaveFulfillmentDetails({
-        attributes: savedFulfillmentDetails.attributes,
-        fulfillmentType: FulfillmentType.SHIP,
-        meta: {
-          // FIXME: Will clobber previous address verification (but we can't
-          // know what the previous status was until we can read from server)
-          addressVerifiedBy: null,
-        },
-      })
-
-      shippingContext.actions.setIsPerformingOperation(false)
-
-      if (result) {
-        shippingContext.actions.setStage("shipping_quotes")
-      }
-    }
-
-    refreshShippingQuotes()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <Box data-testid="orderShipping">
