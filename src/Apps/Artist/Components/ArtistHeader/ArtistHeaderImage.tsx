@@ -53,11 +53,13 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
           {...rest}
         >
           <Image
+            key={desktop.src}
             src={desktop.src}
             srcSet={desktop.srcSet}
             width="100%"
             height="100%"
             style={{ objectFit: "cover" }}
+            lazyLoad
           />
         </ResponsiveBox>
       </Media>
