@@ -138,9 +138,20 @@ export const artistRoutes: RouteProps[] = [
         },
         prepareVariables: getWorksForSaleRouteVariables,
         query: graphql`
-          query artistRoutes_WorksForSaleQuery($artistID: String!) {
+          query artistRoutes_WorksForSaleQuery(
+            $artistID: String!
+            $input: FilterArtworksInput
+            # TODO:(?) only request the artist series aggregation if user has the Unleash flag enabled?
+            $aggregations: [ArtworkAggregation]
+            $includeBlurHash: Boolean!
+          ) {
             artist(id: $artistID) @principalField {
               ...ArtistWorksForSaleRoute_artist
+                @arguments(
+                  input: $input
+                  aggregations: $aggregations
+                  includeBlurHash: $includeBlurHash
+                )
             }
           }
         `,

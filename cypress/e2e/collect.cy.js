@@ -12,6 +12,7 @@ describe("/collect", () => {
         "Find artworks by subject matter, style/technique, movement, price, and gallery/institution."
       )
     cy.get("h1").should("contain", "Collect art and design online")
+    artworkGridRenders()
   })
 
   it("renders medium-specific content", () => {
