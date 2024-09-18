@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<46cdd110358a0235ba3d36ffb4d4face>>
+ * @generated SignedSource<<18225e52254cd8af43afb84c4fdf52f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,9 +15,6 @@ export type RelatedCollectionsRailQuery$variables = {
 };
 export type RelatedCollectionsRailQuery$data = {
   readonly marketingCollection: {
-    readonly linkedCollections: ReadonlyArray<{
-      readonly internalID: string;
-    }>;
     readonly relatedCollections: ReadonlyArray<{
       readonly " $fragmentSpreads": FragmentRefs<"RelatedCollectionsRail_collections">;
     }>;
@@ -51,32 +48,14 @@ v2 = {
   "name": "title",
   "storageKey": null
 },
-v3 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "MarketingCollectionGroup",
-  "kind": "LinkedField",
-  "name": "linkedCollections",
-  "plural": true,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    }
-  ],
-  "storageKey": null
-},
-v4 = [
+v3 = [
   {
     "kind": "Literal",
     "name": "size",
     "value": 16
   }
 ],
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -99,10 +78,9 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "concreteType": "MarketingCollection",
             "kind": "LinkedField",
             "name": "relatedCollections",
@@ -138,10 +116,9 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "concreteType": "MarketingCollection",
             "kind": "LinkedField",
             "name": "relatedCollections",
@@ -162,7 +139,7 @@ return {
                 "storageKey": null
               },
               (v2/*: any*/),
-              (v5/*: any*/),
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -227,7 +204,7 @@ return {
                                 "name": "name",
                                 "storageKey": null
                               },
-                              (v5/*: any*/)
+                              (v4/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -293,37 +270,37 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v5/*: any*/)
+                          (v4/*: any*/)
                         ],
                         "storageKey": null
                       }
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": "artworksConnection(aggregations:[\"TOTAL\"],first:3,sort:\"-decayed_merch\")"
               }
             ],
             "storageKey": "relatedCollections(size:16)"
           },
-          (v5/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "c4214029bff4a117ec0afa699d6cf644",
+    "cacheID": "43fa759517c419081a10f6974fa31e38",
     "id": null,
     "metadata": {},
     "name": "RelatedCollectionsRailQuery",
     "operationKind": "query",
-    "text": "query RelatedCollectionsRailQuery(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    title\n    linkedCollections {\n      internalID\n    }\n    relatedCollections(size: 16) {\n      ...RelatedCollectionsRail_collections\n      id\n    }\n    id\n  }\n}\n\nfragment RelatedCollectionEntity_collection on MarketingCollection {\n  headerImage\n  slug\n  title\n  id\n  priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        artist {\n          name\n          id\n        }\n        title\n        image {\n          resized(width: 150, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment RelatedCollectionsRail_collections on MarketingCollection {\n  ...RelatedCollectionEntity_collection\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query RelatedCollectionsRailQuery(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    title\n    relatedCollections(size: 16) {\n      ...RelatedCollectionsRail_collections\n      id\n    }\n    id\n  }\n}\n\nfragment RelatedCollectionEntity_collection on MarketingCollection {\n  headerImage\n  slug\n  title\n  id\n  priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        artist {\n          name\n          id\n        }\n        title\n        image {\n          resized(width: 150, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment RelatedCollectionsRail_collections on MarketingCollection {\n  ...RelatedCollectionEntity_collection\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ccba6f6d1b5c2fad348d6ae7486f6080";
+(node as any).hash = "e243db569068d90e027c97213af07369";
 
 export default node;
