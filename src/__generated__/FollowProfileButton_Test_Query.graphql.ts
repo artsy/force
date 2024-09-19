@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bfde6076ae03eb2ca02853ba9366eff4>>
+ * @generated SignedSource<<706d89af650fcf46ab5feddd5360f3e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -87,7 +87,13 @@ return {
             "plural": false,
             "selections": [
               {
-                "args": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "isLoggedIn",
+                    "value": true
+                  }
+                ],
                 "kind": "FragmentSpread",
                 "name": "FollowProfileButton_profile"
               }
@@ -210,7 +216,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b5f4ea518e4a4e683da4ae31e15397aa",
+    "cacheID": "0ba70ed47d0d94efeccf6d376315aa5c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -277,11 +283,11 @@ return {
     },
     "name": "FollowProfileButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowProfileButton_Test_Query {\n  me {\n    ...FollowProfileButton_me\n    id\n  }\n  partner(id: \"example\") {\n    profile {\n      ...FollowProfileButton_profile\n      id\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_me on Me {\n  id\n  counts {\n    followedProfiles\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query FollowProfileButton_Test_Query {\n  me {\n    ...FollowProfileButton_me\n    id\n  }\n  partner(id: \"example\") {\n    profile {\n      ...FollowProfileButton_profile_2OV785\n      id\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_me on Me {\n  id\n  counts {\n    followedProfiles\n  }\n}\n\nfragment FollowProfileButton_profile_2OV785 on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "76221880cb358078228feb98493890ae";
+(node as any).hash = "75391c7f2c0349e3a2b263fa6dc78288";
 
 export default node;
