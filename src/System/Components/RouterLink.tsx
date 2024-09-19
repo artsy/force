@@ -3,10 +3,11 @@ import * as React from "react"
 import { BoxProps, boxMixin } from "@artsy/palette"
 import styled from "styled-components"
 import { compose, ResponsiveValue, system } from "styled-system"
-import { useMemo } from "react"
+import { useCallback, useMemo, useRef } from "react"
 import { themeGet } from "@styled-system/theme-get"
 import { useRouter } from "System/Hooks/useRouter"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
@@ -44,6 +45,23 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
     const isSameBrowsingContext = !rest.target || rest.target === "_self"
     const isRouterAware = isSupportedInRouter && isSameBrowsingContext
 
+    const onEnterView = useCallback(() => {
+      console.log("prefetch, entering")
+      prefetch()
+    }, [])
+
+    const onExitView = () => {}
+
+    const intersectionRef = useRef(null)
+
+    useIntersectionObserver({
+      options: {
+        threshold: 5,
+      },
+      onIntersection: onEnterView,
+      onOffIntersection: onExitView,
+    })
+
     const handleMouseOver = () => {
       prefetch()
     }
@@ -55,6 +73,7 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
           to={to ?? ""}
           onMouseOver={handleMouseOver}
           {...rest}
+          ref={intersectionRef}
         />
       )
     }
