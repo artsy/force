@@ -170,7 +170,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
           href
         }
         collectorSignals {
-          primaryLabel
+          primaryLabel(ignore: [PARTNER_OFFER])
         }
       }
     `,
