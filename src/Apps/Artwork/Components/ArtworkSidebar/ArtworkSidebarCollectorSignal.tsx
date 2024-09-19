@@ -99,7 +99,7 @@ export const ArtworkSidebarCollectorSignal: React.FC<ArtworkSidebarCollectorSign
 const artworkSidebarCollectorSignalFragment = graphql`
   fragment ArtworkSidebarCollectorSignal_artwork on Artwork {
     collectorSignals {
-      primaryLabel
+      primaryLabel(ignore: [PARTNER_OFFER])
       runningShow {
         name
         href

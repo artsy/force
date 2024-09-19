@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<94805f32264156ac55f98eb609e11c02>>
+ * @generated SignedSource<<456d9c1d95f09251f8aa7a81784add22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -325,10 +325,18 @@ return {
       "selections": [
         {
           "alias": null,
-          "args": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "ignore",
+              "value": [
+                "PARTNER_OFFER"
+              ]
+            }
+          ],
           "kind": "ScalarField",
           "name": "primaryLabel",
-          "storageKey": null
+          "storageKey": "primaryLabel(ignore:[\"PARTNER_OFFER\"])"
         }
       ],
       "storageKey": null
@@ -339,6 +347,6 @@ return {
 };
 })();
 
-(node as any).hash = "74e5e7d5ecc11746e0bbbb5bfebf6d88";
+(node as any).hash = "6d01c057c0a26d6a87ccc57daaf7874c";
 
 export default node;
