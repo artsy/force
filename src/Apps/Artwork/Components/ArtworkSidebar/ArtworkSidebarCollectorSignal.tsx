@@ -36,7 +36,7 @@ export const ArtworkSidebarCollectorSignal: React.FC<ArtworkSidebarCollectorSign
         <VerifiedIcon color="black100" width={18} mr={1} mt={0.5} />
         <Stack gap={0}>
           <Text variant="sm" color="black100">
-            Curators' Pick
+            Curators’ Pick
           </Text>
           <Text variant="sm" color="black60">
             Hand selected by Artsy curators this week

@@ -265,7 +265,7 @@ describe("ArtworkSidebarDetails", () => {
         }),
       })
 
-      expect(screen.queryByText(/Curators' Pick/)).toBeInTheDocument()
+      expect(screen.queryByText(/Curators’ Pick/)).toBeInTheDocument()
       expect(
         screen.queryByText(/Hand selected by Artsy curators this week/)
       ).toBeInTheDocument()

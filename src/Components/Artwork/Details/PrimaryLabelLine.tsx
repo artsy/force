@@ -78,7 +78,7 @@ export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
         lineHeight="18px"
         style={{ whiteSpace: "nowrap" }}
       >
-        Curators' Pick
+        Curators’ Pick
       </Text>
     )
   }
