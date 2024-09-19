@@ -407,7 +407,11 @@ export const Details: React.FC<DetailsProps> = ({
       )}
 
       <Flex justifyContent="space-between" alignItems="flex-start">
-        <Flex flexDirection="column" maxWidth="75%">
+        <Flex
+          flexDirection="column"
+          maxWidth={showPrimaryLabelLine ? "95%" : "75%"}
+          overflow="hidden"
+        >
           {showPrimaryLabelLine && <PrimaryLabelLine artwork={rest.artwork} />}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
