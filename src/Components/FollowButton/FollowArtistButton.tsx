@@ -183,12 +183,15 @@ export const FollowArtistButtonFragmentContainer = createFragmentContainer(
       }
     `,
     artist: graphql`
-      fragment FollowArtistButton_artist on Artist {
+      fragment FollowArtistButton_artist on Artist
+        @argumentDefinitions(
+          isLoggedIn: { type: "Boolean!", defaultValue: false }
+        ) {
         id
         slug
         name
         internalID
-        isFollowed
+        isFollowed @include(if: $isLoggedIn)
         counts {
           follows
         }
@@ -206,21 +209,22 @@ export const FollowArtistButtonQueryRenderer: React.FC<FollowArtistButtonQueryRe
   id,
   ...rest
 }) => {
+  const { isLoggedIn } = useSystemContext()
   return (
     <SystemQueryRenderer<FollowArtistButtonQuery>
       lazyLoad
       query={graphql`
-        query FollowArtistButtonQuery($id: String!) {
+        query FollowArtistButtonQuery($id: String!, $isLoggedIn: Boolean!) {
           me {
             ...FollowArtistButton_me
           }
           artist(id: $id) {
-            ...FollowArtistButton_artist
+            ...FollowArtistButton_artist @arguments(isLoggedIn: $isLoggedIn)
           }
         }
       `}
       placeholder={<FollowButton {...rest} />}
-      variables={{ id }}
+      variables={{ id, isLoggedIn }}
       render={({ error, props }) => {
         if (error || !props?.artist) {
           return <FollowButton {...rest} />

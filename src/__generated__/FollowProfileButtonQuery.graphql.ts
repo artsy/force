@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b83db06bb2fec530a3019e1b00b3dd2>>
+ * @generated SignedSource<<34b2aefdaff64b9c3ff53727954a29f4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowProfileButtonQuery$variables = {
   id: string;
+  isLoggedIn: boolean;
 };
 export type FollowProfileButtonQuery$data = {
   readonly me: {
@@ -32,6 +33,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "isLoggedIn"
   }
 ],
 v1 = [
@@ -80,7 +86,13 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": [
+              {
+                "kind": "Variable",
+                "name": "isLoggedIn",
+                "variableName": "isLoggedIn"
+              }
+            ],
             "kind": "FragmentSpread",
             "name": "FollowProfileButton_profile"
           }
@@ -158,11 +170,18 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isFollowed",
-            "storageKey": null
+            "condition": "isLoggedIn",
+            "kind": "Condition",
+            "passingValue": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isFollowed",
+                "storageKey": null
+              }
+            ]
           },
           {
             "alias": null,
@@ -188,16 +207,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cda5fc7f91ea79eb20f6155140bce94c",
+    "cacheID": "460c85ff360d426472ac63b58f052286",
     "id": null,
     "metadata": {},
     "name": "FollowProfileButtonQuery",
     "operationKind": "query",
-    "text": "query FollowProfileButtonQuery(\n  $id: String!\n) {\n  me {\n    ...FollowProfileButton_me\n    id\n  }\n  profile(id: $id) {\n    ...FollowProfileButton_profile\n    id\n  }\n}\n\nfragment FollowProfileButton_me on Me {\n  id\n  counts {\n    followedProfiles\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query FollowProfileButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  me {\n    ...FollowProfileButton_me\n    id\n  }\n  profile(id: $id) {\n    ...FollowProfileButton_profile_4dcqWc\n    id\n  }\n}\n\nfragment FollowProfileButton_me on Me {\n  id\n  counts {\n    followedProfiles\n  }\n}\n\nfragment FollowProfileButton_profile_4dcqWc on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "96fbc691de91f443a017d6d3793c3b49";
+(node as any).hash = "40d55613db927e86fe7d3406914756e9";
 
 export default node;
