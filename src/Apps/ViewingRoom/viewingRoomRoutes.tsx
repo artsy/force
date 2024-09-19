@@ -82,7 +82,8 @@ export const viewingRoomRoutes: RouteProps[] = [
         path: "",
         Component: StatementRoute,
         query: graphql`
-          query viewingRoomRoutes_ViewingRoomStatementRouteQuery($slug: ID!) {
+          query viewingRoomRoutes_ViewingRoomStatementRouteQuery($slug: ID!)
+            @cacheable {
             viewingRoom(id: $slug) @principalField {
               ...ViewingRoomStatementRoute_viewingRoom
             }
