@@ -176,6 +176,7 @@ module.exports.afterSocialAuth = (provider: Provider) =>
     // Determine if we're linking the account and handle any Gravity errors
     // that we can do a better job explaining and redirecting for.
     const linkingAccount = req.user != null
+    const redirectPath = req.user ? opts.settingsPagePath : opts.loginPagePath
 
     passport.authenticate(provider)(req, res, function (err: any) {
       if (
@@ -186,7 +187,7 @@ module.exports.afterSocialAuth = (provider: Provider) =>
         // Log in to Artsy via email and password and link ${providerName} in your settings instead.
         // Redirect back to login page.
         return res.redirect(
-          `${opts.loginPagePath}?error_code=ALREADY_EXISTS&email=${req.socialProfileEmail}&provider=${provider}`
+          `${redirectPath}?error_code=ALREADY_EXISTS&email=${req.socialProfileEmail}&provider=${provider}`
         )
       }
 
@@ -195,21 +196,21 @@ module.exports.afterSocialAuth = (provider: Provider) =>
         // Log in to your Artsy account via email and password and link the provider in your settings instead.
         // Redirect back to login page.
         return res.redirect(
-          `${opts.loginPagePath}?error_code=PREVIOUSLY_LINKED_SETTINGS&provider=${provider}`
+          `${redirectPath}?error_code=PREVIOUSLY_LINKED_SETTINGS&provider=${provider}`
         )
       }
 
       if (err?.response?.body?.error === "Another Account Already Linked") {
         // Provider account previously linked to Artsy. Redirect back to settings page.
         return res.redirect(
-          `${opts.settingsPagePath}?error_code=PREVIOUSLY_LINKED&provider=${provider}`
+          `${redirectPath}?error_code=PREVIOUSLY_LINKED&provider=${provider}`
         )
       }
 
       if (err?.message?.match("Unauthorized source IP address")) {
         // Your IP address was blocked by the provider. Redirect back to login page.
         return res.redirect(
-          `${opts.loginPagePath}?error_code=IP_BLOCKED&provider=${provider}`
+          `${redirectPath}?error_code=IP_BLOCKED&provider=${provider}`
         )
       }
 
@@ -219,7 +220,7 @@ module.exports.afterSocialAuth = (provider: Provider) =>
           (typeof err.toString === "function" ? err.toString() : undefined)
         // Unknown error. Redirect back to login page. Do not show error message to user; log to console.
         return res.redirect(
-          `${opts.loginPagePath}?error_code=UNKNOWN&error=${message}`
+          `${redirectPath}?error_code=UNKNOWN&error=${message}`
         )
       }
 
