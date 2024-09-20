@@ -1,7 +1,6 @@
-const sinon = require("sinon")
+import sinon from "sinon"
 
-let analytics = require("../../lib/app/analytics")
-import options from "Server/passport/lib/options"
+let analytics = require("../analytics")
 
 jest.mock("sharify", () => ({
   data: {

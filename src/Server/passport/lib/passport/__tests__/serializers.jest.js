@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-imports */
 const sinon = require("sinon")
-const serializers = require("../../lib/passport/serializers")
+const serializers = require("../serializers")
 const { serialize, deserialize } = serializers
 
 import options from "Server/passport/lib/options"
