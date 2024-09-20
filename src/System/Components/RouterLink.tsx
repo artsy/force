@@ -7,6 +7,9 @@ import { useMemo } from "react"
 import { themeGet } from "@styled-system/theme-get"
 import { useRouter } from "System/Hooks/useRouter"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
@@ -27,8 +30,14 @@ export type RouterLinkProps = Omit<
   }
 
 export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
-  ({ inline, to, ...rest }, ref) => {
+  ({ inline, to, ...rest }, _ref) => {
+    const systemContext = useSystemContext()
     const { router } = useRouter()
+
+    // Right now, prefetching on viewport enter is only enabled for logged-out users
+    // TODO: Remove feature flag
+    const isPrefetchOnEnterEnabled =
+      useFeatureFlag("diamond_prefetch-on-enter") && !systemContext?.user
 
     const { prefetch } = usePrefetchRoute(to as string)
 
@@ -44,6 +53,18 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
     const isSameBrowsingContext = !rest.target || rest.target === "_self"
     const isRouterAware = isSupportedInRouter && isSameBrowsingContext
 
+    const { ref: intersectionRef } = useIntersectionObserver({
+      once: true,
+      options: {
+        threshold: 0.2,
+      },
+      onIntersection: () => {
+        if (isPrefetchOnEnterEnabled) {
+          prefetch()
+        }
+      },
+    })
+
     const handleMouseOver = () => {
       prefetch()
     }
@@ -54,6 +75,7 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
           inline={inline}
           to={to ?? ""}
           onMouseOver={handleMouseOver}
+          ref={isPrefetchOnEnterEnabled ? (intersectionRef as any) : null}
           {...rest}
         />
       )
