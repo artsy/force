@@ -1,12 +1,12 @@
-const lifecycle = require("../../lib/app/lifecycle")
-
+import * as lifecycle from "Server/passport/lib/app/lifecycle"
 import options from "Server/passport/lib/options"
 // eslint-disable-next-line no-restricted-imports
-import request from "superagent"
+import request, { SuperAgentRequest } from "superagent"
 import passport from "passport"
 
 jest.mock("Server/passport/lib/options", () => ({
   loginPagePath: "/login",
+  settingsPagePath: "/settings",
   afterSignupPagePath: "/",
   APP_URL: "https://www.artsy.net",
   ARTSY_URL: "https://api.artsy.net",
@@ -46,7 +46,9 @@ describe("lifecycle", () => {
     }
 
     for (let method of ["get", "end", "set", "post", "send", "status"]) {
-      request[method] = jest.fn().mockReturnValue(request)
+      ;((request as unknown) as SuperAgentRequest)[
+        method
+      ] = jest.fn().mockReturnValue((request as unknown) as SuperAgentRequest)
     }
   })
 
@@ -169,7 +171,7 @@ describe("lifecycle", () => {
         },
       }
       lifecycle.onLocalSignup(req, res, next)
-      request.end.mock.calls[0][0](err)
+      ;((request as unknown) as any).end.mock.calls[0][0](err)
       expect(send).toHaveBeenCalledWith({
         error:
           "Password must include at least one lowercase letter, one uppercase letter, and one digit.",
@@ -180,7 +182,9 @@ describe("lifecycle", () => {
     it("passes the recaptcha_token through signup", () => {
       req.body.recaptcha_token = "recaptcha_token"
       lifecycle.onLocalSignup(req, res, next)
-      expect(request.send).toHaveBeenCalledWith(
+      expect(
+        ((request as unknown) as SuperAgentRequest).send
+      ).toHaveBeenCalledWith(
         expect.objectContaining({ recaptcha_token: "recaptcha_token" })
       )
     })
@@ -188,7 +192,9 @@ describe("lifecycle", () => {
     it("passes the user agent through signup", () => {
       req.get.mockReturnValue("foo-agent")
       lifecycle.onLocalSignup(req, res, next)
-      expect(request.set).toHaveBeenCalledWith(
+      expect(
+        ((request as unknown) as SuperAgentRequest).set
+      ).toHaveBeenCalledWith(
         expect.objectContaining({ "User-Agent": "foo-agent" })
       )
     })
@@ -241,6 +247,28 @@ describe("lifecycle", () => {
         "/login?error_code=UNKNOWN&error=Facebook authorization failed"
       )
     })
+
+    it("passes errors that may be buried in the error response", () => {
+      req.user = { accessToken: "token" }
+      passport.authenticate.mockReturnValueOnce((req, res, next) => {
+        const err = {
+          message: "Bad Request",
+          response: {
+            body: {
+              message:
+                "Unable to link third-party authentication if account has Artsy two-factor authentication enabled",
+            },
+          },
+        }
+        next(err)
+      })
+
+      lifecycle.afterSocialAuth("facebook")(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(
+        "/settings?error_code=UNKNOWN&error=Unable to link third-party authentication if account has Artsy two-factor authentication enabled"
+      )
+    })
   })
 
   describe("#ensureLoggedInOnAfterSignupPage", () => {
@@ -267,6 +295,7 @@ describe("lifecycle", () => {
       )
     })
 
+    // eslint-disable-next-line jest/no-disabled-tests
     it.skip("single signs on to gravity", () => {
       req.user = { accessToken: "token" }
       req.query["redirect-to"] = "/artwork/andy-warhol-skull"
@@ -274,7 +303,12 @@ describe("lifecycle", () => {
       expect(request.post).toHaveBeenCalledWith(
         expect.stringContaining("me/trust_token")
       )
-      request.end.mock.calls[0][1]({ body: { trust_token: "foo-trust-token" } })
+      const endCallback = (((request as unknown) as jest.Mocked<
+        SuperAgentRequest
+      >).end.mock.calls[0][0] as unknown) as (err: any, res: any) => void
+      if (endCallback) {
+        endCallback(null, { body: { trust_token: "foo-trust-token" } })
+      }
       expect(res.redirect).toHaveBeenCalledWith(
         "https://api.artsy.net/users/sign_in" +
           "?trust_token=foo-trust-token" +

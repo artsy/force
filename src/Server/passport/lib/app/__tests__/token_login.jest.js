@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-imports */
 const sinon = require("sinon")
-const tokenLogin = require("../../lib/app/token_login")
+const tokenLogin = require("../token_login")
 const { headerLogin, trustTokenLogin } = tokenLogin
 
 import request from "superagent"
