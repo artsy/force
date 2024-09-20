@@ -7,6 +7,7 @@ import { ArticleSectionSocialEmbedFragmentContainer } from "./Sections/ArticleSe
 import { ArticleSectionTextFragmentContainer } from "./Sections/ArticleSectionText"
 import { ArticleSectionVideoFragmentContainer } from "./Sections/ArticleSectionVideo"
 import { ArticleSection_section$data } from "__generated__/ArticleSection_section.graphql"
+import { ArticleSectionMarketingCollectionFragmentContainer } from "Apps/Article/Components/Sections/ArticleSectionMarketingCollection"
 
 interface ArticleSectionProps {
   section: ArticleSection_section$data
@@ -52,6 +53,12 @@ const ArticleSection: FC<ArticleSectionProps> = ({
       return <ArticleSectionEmbedFragmentContainer section={section} />
     }
 
+    case "ArticleSectionCollection": {
+      return (
+        <ArticleSectionMarketingCollectionFragmentContainer section={section} />
+      )
+    }
+
     default:
       return null
   }
@@ -69,6 +76,7 @@ export const ArticleSectionFragmentContainer = createFragmentContainer(
         ...ArticleSectionVideo_section
         ...ArticleSectionSocialEmbed_section
         ...ArticleSectionEmbed_section
+        ...ArticleSectionMarketingCollection_section
       }
     `,
   }

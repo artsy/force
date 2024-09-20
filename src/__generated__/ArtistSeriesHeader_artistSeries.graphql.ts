@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<25cf0fbec1de891ae1a186965c6f5039>>
+ * @generated SignedSource<<3148a9477037037c5d0a4ceb2c10496a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type ArtistSeriesHeader_artistSeries$data = {
     readonly internalID: string;
     readonly name: string | null | undefined;
     readonly slug: string;
-  }>;
+  } | null | undefined> | null | undefined;
   readonly artworksCountMessage: string | null | undefined;
   readonly descriptionFormatted: string | null | undefined;
   readonly image: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39c9fb02324a7dcdf9eb4c76716d5757>>
+ * @generated SignedSource<<b73fd0e46a41a4ddeef07d4fdd9c1f18>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,7 @@ export type Header_collection$data = {
   readonly headerImage: string | null | undefined;
   readonly id: string;
   readonly query: {
-    readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;
+    readonly artistIDs: ReadonlyArray<string> | null | undefined;
   };
   readonly showFeaturedArtists: boolean;
   readonly showHeaderArtworksRail: boolean;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff333db2bd713499a5eb30245dd0fd1e>>
+ * @generated SignedSource<<007f883b7de9533c5db5e478f7a5721e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -57,13 +57,6 @@ v4 = {
   "args": null,
   "kind": "ScalarField",
   "name": "title",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
   "storageKey": null
 };
 return {
@@ -235,8 +228,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v2/*: any*/),
-                      (v5/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -246,19 +238,25 @@ return {
             ],
             "storageKey": "artistSeriesConnection(first:50)"
           },
-          (v5/*: any*/)
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "1765a85d82727136a2f766a339103d85",
+    "cacheID": "9be49833130e1fe2f002730aadc29dd6",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistSeriesQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistSeriesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) @principalField {\n    ...ArtistArtistSeriesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArtistSeriesRoute_artist on Artist {\n  internalID\n  name\n  slug\n  meta(page: ARTIST_SERIES) {\n    description\n    title\n  }\n  artistSeriesConnection(first: 50) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query artistRoutes_ArtistSeriesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) @principalField {\n    ...ArtistArtistSeriesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArtistSeriesRoute_artist on Artist {\n  internalID\n  name\n  slug\n  meta(page: ARTIST_SERIES) {\n    description\n    title\n  }\n  artistSeriesConnection(first: 50) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

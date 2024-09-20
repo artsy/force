@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<781bb8e550d5341b20449fdd73dbd6a3>>
+ * @generated SignedSource<<164ab5192c42449f93345b01440332d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,9 +23,8 @@ export type ArtistSeriesMeta_TestQuery$rawResponse = {
     readonly artists: ReadonlyArray<{
       readonly id: string;
       readonly name: string | null | undefined;
-    }>;
+    } | null | undefined> | null | undefined;
     readonly description: string | null | undefined;
-    readonly id: string;
     readonly slug: string;
     readonly title: string;
   } | null | undefined;
@@ -52,25 +51,12 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v3 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v5 = {
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -159,18 +145,23 @@ return {
                 "name": "name",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              }
             ],
             "storageKey": "artists(size:1)"
-          },
-          (v2/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "3481091fc45f362edfbd3ae67c5df81d",
+    "cacheID": "868f3d4385f11ae2bdfc73c06bbae975",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -182,21 +173,25 @@ return {
         },
         "artistSeries.artists": {
           "enumValues": null,
-          "nullable": false,
+          "nullable": true,
           "plural": true,
           "type": "Artist"
         },
-        "artistSeries.artists.id": (v3/*: any*/),
-        "artistSeries.artists.name": (v4/*: any*/),
-        "artistSeries.description": (v4/*: any*/),
-        "artistSeries.id": (v3/*: any*/),
-        "artistSeries.slug": (v5/*: any*/),
-        "artistSeries.title": (v5/*: any*/)
+        "artistSeries.artists.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "artistSeries.artists.name": (v2/*: any*/),
+        "artistSeries.description": (v2/*: any*/),
+        "artistSeries.slug": (v3/*: any*/),
+        "artistSeries.title": (v3/*: any*/)
       }
     },
     "name": "ArtistSeriesMeta_TestQuery",
     "operationKind": "query",
-    "text": "query ArtistSeriesMeta_TestQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesMeta_artistSeries\n    id\n  }\n}\n\nfragment ArtistSeriesMeta_artistSeries on ArtistSeries {\n  title\n  description\n  slug\n  artists(size: 1) {\n    name\n    id\n  }\n}\n"
+    "text": "query ArtistSeriesMeta_TestQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesMeta_artistSeries\n  }\n}\n\nfragment ArtistSeriesMeta_artistSeries on ArtistSeries {\n  title\n  description\n  slug\n  artists(size: 1) {\n    name\n    id\n  }\n}\n"
   }
 };
 })();

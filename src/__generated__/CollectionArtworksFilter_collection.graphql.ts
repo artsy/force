@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<15c244ef40fc4f161e8b56c67e1d09e2>>
+ * @generated SignedSource<<2c7f7756b9ec17a55a175b8f1f2bf6e2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type CollectionArtworksFilter_collection$data = {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
   } | null | undefined;
   readonly query: {
-    readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;
+    readonly artistIDs: ReadonlyArray<string> | null | undefined;
   };
   readonly slug: string;
   readonly " $fragmentType": "CollectionArtworksFilter_collection";
