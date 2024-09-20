@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48f4c31e932bc341c3cc3395ea1c798a>>
+ * @generated SignedSource<<f88dcc94bcc79ba7ca53ef49f41b56d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,7 +27,10 @@ export type NotificationItem_notification$data = {
   readonly objectsCount: number;
   readonly previewImages: ReadonlyArray<{
     readonly blurhashDataURL: string | null | undefined;
-    readonly url: string | null | undefined;
+    readonly internalID: string | null | undefined;
+    readonly resized: {
+      readonly srcSet: string;
+    } | null | undefined;
   }>;
   readonly targetHref: string;
   readonly title: string;
@@ -39,7 +42,15 @@ export type NotificationItem_notification$key = {
   readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_notification">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -52,13 +63,7 @@ const node: ReaderFragment = {
       "name": "id",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -159,6 +164,7 @@ const node: ReaderFragment = {
       "name": "previewImages",
       "plural": true,
       "selections": [
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -171,13 +177,29 @@ const node: ReaderFragment = {
           "args": [
             {
               "kind": "Literal",
+              "name": "height",
+              "value": 58
+            },
+            {
+              "kind": "Literal",
               "name": "version",
-              "value": "thumbnail"
+              "value": "normalized"
             }
           ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:\"thumbnail\")"
+          "concreteType": "ResizedImageUrl",
+          "kind": "LinkedField",
+          "name": "resized",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
+            }
+          ],
+          "storageKey": "resized(height:58,version:\"normalized\")"
         }
       ],
       "storageKey": "previewImages(size:4)"
@@ -198,7 +220,8 @@ const node: ReaderFragment = {
   "type": "Notification",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "d4b93239ed89af7d688f3d87d95c4e96";
+(node as any).hash = "5c1af31cec13f68dad0b185195a12b53";
 
 export default node;

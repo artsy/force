@@ -88,15 +88,14 @@ const NotificationItem: FC<NotificationItemProps> = ({
               <Flex flexDirection="row" alignItems="center" mb={0.5}>
                 <Flex flex={1}>
                   <Join separator={<Spacer x={1} />}>
-                    {notification.previewImages.map(image => {
-                      if (!image.url) return null
+                    {notification.previewImages.map((image, index) => {
+                      if (!image.resized) return null
 
                       return (
                         <Image
-                          key={image.url}
-                          src={image.url}
+                          key={index}
+                          srcSet={image.resized.srcSet}
                           alt=""
-                          width={58}
                           height={58}
                           lazyLoad
                           placeHolderURL={image.blurhashDataURL ?? undefined}
@@ -181,8 +180,11 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
           }
         }
         previewImages(size: 4) {
+          internalID
           blurhashDataURL
-          url(version: "thumbnail")
+          resized(height: 58, version: "normalized") {
+            srcSet
+          }
         }
         title
         ...NotificationTypeLabel_notification
