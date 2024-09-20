@@ -1,5 +1,5 @@
 const sinon = require("sinon")
-const locals = require("../../lib/app/locals")
+const locals = require("../locals")
 
 describe("locals", function () {
   let req

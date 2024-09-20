@@ -13,13 +13,14 @@ import artsyXapp from "@artsy/xapp"
 import { parse, resolve } from "url"
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import { get, isFunction, isString } from "lodash"
 
 interface Req extends ArtsyRequest {
   artsyPassportSignedUp?: boolean
   socialProfileEmail?: string
 }
 
-module.exports.onLocalLogin = function (
+export const onLocalLogin = function (
   req: Req,
   res: ArtsyResponse,
   next: NextFunction
@@ -82,7 +83,7 @@ module.exports.onLocalLogin = function (
   })
 }
 
-module.exports.onLocalSignup = function (
+export const onLocalSignup = function (
   req: Req,
   res: ArtsyResponse,
   next: NextFunction
@@ -144,7 +145,7 @@ module.exports.onLocalSignup = function (
 
 type Provider = "facebook" | "apple" | "google"
 
-module.exports.beforeSocialAuth = (provider: Provider) =>
+export const beforeSocialAuth = (provider: Provider) =>
   function (req: Req, res: ArtsyResponse, next: NextFunction) {
     let options
 
@@ -167,7 +168,7 @@ module.exports.beforeSocialAuth = (provider: Provider) =>
     passport.authenticate(provider, options)(req, res, next)
   }
 
-module.exports.afterSocialAuth = (provider: Provider) =>
+export const afterSocialAuth = (provider: Provider) =>
   function (req: Req, res: ArtsyResponse, next: NextFunction) {
     if (req.query.denied) {
       return next(new Error(`${provider} denied`))
@@ -176,6 +177,7 @@ module.exports.afterSocialAuth = (provider: Provider) =>
     // Determine if we're linking the account and handle any Gravity errors
     // that we can do a better job explaining and redirecting for.
     const linkingAccount = req.user != null
+    const redirectPath = req.user ? opts.settingsPagePath : opts.loginPagePath
 
     passport.authenticate(provider)(req, res, function (err: any) {
       if (
@@ -186,7 +188,7 @@ module.exports.afterSocialAuth = (provider: Provider) =>
         // Log in to Artsy via email and password and link ${providerName} in your settings instead.
         // Redirect back to login page.
         return res.redirect(
-          `${opts.loginPagePath}?error_code=ALREADY_EXISTS&email=${req.socialProfileEmail}&provider=${provider}`
+          `${redirectPath}?error_code=ALREADY_EXISTS&email=${req.socialProfileEmail}&provider=${provider}`
         )
       }
 
@@ -195,31 +197,30 @@ module.exports.afterSocialAuth = (provider: Provider) =>
         // Log in to your Artsy account via email and password and link the provider in your settings instead.
         // Redirect back to login page.
         return res.redirect(
-          `${opts.loginPagePath}?error_code=PREVIOUSLY_LINKED_SETTINGS&provider=${provider}`
+          `${redirectPath}?error_code=PREVIOUSLY_LINKED_SETTINGS&provider=${provider}`
         )
       }
 
       if (err?.response?.body?.error === "Another Account Already Linked") {
         // Provider account previously linked to Artsy. Redirect back to settings page.
         return res.redirect(
-          `${opts.settingsPagePath}?error_code=PREVIOUSLY_LINKED&provider=${provider}`
+          `${redirectPath}?error_code=PREVIOUSLY_LINKED&provider=${provider}`
         )
       }
 
       if (err?.message?.match("Unauthorized source IP address")) {
         // Your IP address was blocked by the provider. Redirect back to login page.
         return res.redirect(
-          `${opts.loginPagePath}?error_code=IP_BLOCKED&provider=${provider}`
+          `${redirectPath}?error_code=IP_BLOCKED&provider=${provider}`
         )
       }
 
       if (err != null) {
-        const message =
-          err.message ||
-          (typeof err.toString === "function" ? err.toString() : undefined)
+        const message = extractError(err)
+
         // Unknown error. Redirect back to login page. Do not show error message to user; log to console.
         return res.redirect(
-          `${opts.loginPagePath}?error_code=UNKNOWN&error=${message}`
+          `${redirectPath}?error_code=UNKNOWN&error=${message}`
         )
       }
 
@@ -232,7 +233,7 @@ module.exports.afterSocialAuth = (provider: Provider) =>
     })
   }
 
-module.exports.ensureLoggedInOnAfterSignupPage = function (
+export const ensureLoggedInOnAfterSignupPage = function (
   req: Req,
   res: ArtsyResponse,
   next: NextFunction
@@ -244,14 +245,14 @@ module.exports.ensureLoggedInOnAfterSignupPage = function (
   next()
 }
 
-module.exports.onError = (
+export const onError = (
   err: Error,
   _req: Req,
   _res: ArtsyResponse,
   next: NextFunction
 ) => next(err)
 
-module.exports.ssoAndRedirectBack = function (
+export const ssoAndRedirectBack = function (
   req: Req,
   res: ArtsyResponse,
   _next: NextFunction
@@ -297,4 +298,30 @@ module.exports.ssoAndRedirectBack = function (
           `&redirect_uri=${parsed.href}`
       )
     })
+}
+
+export const extractError = (err: unknown): string => {
+  if (isString(err)) {
+    return err
+  }
+
+  const response = get(err, "response.body.message", null)
+  if (isString(response)) {
+    return response
+  }
+
+  const message = get(err, "message", null)
+  if (isString(message)) {
+    return message
+  }
+
+  if (err instanceof Error) {
+    return err.message
+  }
+
+  if (isFunction((err as any)?.toString)) {
+    return (err as any).toString()
+  }
+
+  return "Unknown error"
 }

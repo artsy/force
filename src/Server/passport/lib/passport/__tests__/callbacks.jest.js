@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-imports */
 const rewire = require("rewire")
 const sinon = require("sinon")
-const cbs = require("../../lib/passport/callbacks")
+const cbs = require("../callbacks")
 
 import options from "Server/passport/lib/options"
 import request from "superagent"
