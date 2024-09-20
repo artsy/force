@@ -233,16 +233,24 @@ const notification = {
   objectsCount: 0,
   previewImages: [
     {
-      url: "artwork-image-one",
+      resized: {
+        srcSet: "artwork-image-one",
+      },
     },
     {
-      url: "artwork-image-two",
+      resized: {
+        srcSet: "artwork-image-two",
+      },
     },
     {
-      url: "artwork-image-three",
+      resized: {
+        srcSet: "artwork-image-three",
+      },
     },
     {
-      url: "artwork-image-four",
+      resized: {
+        srcSet: "artwork-image-four",
+      },
     },
   ],
 }
