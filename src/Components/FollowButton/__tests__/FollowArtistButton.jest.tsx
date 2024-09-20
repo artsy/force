@@ -34,7 +34,7 @@ const { renderWithRelay } = setupTestWrapperTL<FollowArtistButton_Test_Query>({
         ...FollowArtistButton_me
       }
       artist(id: "example") {
-        ...FollowArtistButton_artist
+        ...FollowArtistButton_artist @arguments(isLoggedIn: true)
       }
     }
   `,

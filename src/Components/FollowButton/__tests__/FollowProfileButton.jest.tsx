@@ -35,7 +35,7 @@ const { renderWithRelay } = setupTestWrapperTL<FollowProfileButton_Test_Query>({
       }
       partner(id: "example") {
         profile {
-          ...FollowProfileButton_profile
+          ...FollowProfileButton_profile @arguments(isLoggedIn: true)
         }
       }
     }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<adb8538ee9e427ceda424c16ce2f638a>>
+ * @generated SignedSource<<77a2b0f33432688b47c0445f6369095d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type FollowProfileButton_profile$data = {
   } | null | undefined;
   readonly id: string;
   readonly internalID: string;
-  readonly isFollowed: boolean | null | undefined;
+  readonly isFollowed?: boolean | null | undefined;
   readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "FollowProfileButton_profile";
@@ -27,7 +27,13 @@ export type FollowProfileButton_profile$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "isLoggedIn"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "FollowProfileButton_profile",
@@ -61,11 +67,18 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isFollowed",
-      "storageKey": null
+      "condition": "isLoggedIn",
+      "kind": "Condition",
+      "passingValue": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isFollowed",
+          "storageKey": null
+        }
+      ]
     },
     {
       "alias": null,
@@ -90,6 +103,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "dc86710f8a7e5d1b087b73a1b940efef";
+(node as any).hash = "a7c566a0831c1c20ca9cbb356074eceb";
 
 export default node;

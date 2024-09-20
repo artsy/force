@@ -702,7 +702,7 @@ const ARTWORK_FRAGMENT = graphql`
       }
     }
     collectorSignals {
-      primaryLabel
+      primaryLabel(ignore: [PARTNER_OFFER])
     }
   }
 `

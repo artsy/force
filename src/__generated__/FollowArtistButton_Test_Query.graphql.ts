@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<58c951045047be9a38f5de2f925f54b4>>
+ * @generated SignedSource<<dfeb42d197c8147237ab3f8523de949b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -77,7 +77,13 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "isLoggedIn",
+                "value": true
+              }
+            ],
             "kind": "FragmentSpread",
             "name": "FollowArtistButton_artist"
           }
@@ -185,7 +191,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4bad1a99aede77247c389cd7b031416a",
+    "cacheID": "ac0e8f342b27a0961260035865e59269",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -245,11 +251,11 @@ return {
     },
     "name": "FollowArtistButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowArtistButton_Test_Query {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: \"example\") {\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
+    "text": "query FollowArtistButton_Test_Query {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: \"example\") {\n    ...FollowArtistButton_artist_2OV785\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_2OV785 on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "95625120d8a36db3933ffffa26e8abbc";
+(node as any).hash = "657979290316d451533b34ce3ba7ef1a";
 
 export default node;

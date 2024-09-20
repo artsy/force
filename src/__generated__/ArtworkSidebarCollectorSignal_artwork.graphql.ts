@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a42b85b8656cd31ca2c4fccd481bdd84>>
+ * @generated SignedSource<<d09e82296b65d8dc1786e022db763ae5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,10 +44,18 @@ const node: ReaderFragment = {
       "selections": [
         {
           "alias": null,
-          "args": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "ignore",
+              "value": [
+                "PARTNER_OFFER"
+              ]
+            }
+          ],
           "kind": "ScalarField",
           "name": "primaryLabel",
-          "storageKey": null
+          "storageKey": "primaryLabel(ignore:[\"PARTNER_OFFER\"])"
         },
         {
           "alias": null,
@@ -96,6 +104,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d96a67b5d8fb964d2a53ed8af0648861";
+(node as any).hash = "6519c75d094bd73720b3820c86d1bb7f";
 
 export default node;
