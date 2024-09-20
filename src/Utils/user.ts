@@ -1,5 +1,4 @@
 import { get } from "./get"
-import jwt_decode from "jwt-decode"
 
 export function getUser(user: User | null | undefined): User | null {
   let _user = user
@@ -41,17 +40,4 @@ export function userIsTeam(user?: User): boolean {
     user && user.roles && user.roles.includes("team") ? true : false
   )
   return isTeam
-}
-
-export function userHasAccessToPartner(user: User, partnerId: string): boolean {
-  const token = get(user, u => u?.accessToken)
-  if (!token) {
-    return false
-  }
-  const decodedToken = jwt_decode(token)
-  return (
-    decodedToken &&
-    decodedToken.partner_ids &&
-    decodedToken.partner_ids.includes(partnerId)
-  )
 }

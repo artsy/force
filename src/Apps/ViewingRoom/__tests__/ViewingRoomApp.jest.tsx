@@ -122,9 +122,9 @@ describe("ViewingRoomApp", () => {
       const wrapper = await getWrapper()
       expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
       expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
-      expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
-      expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(1)
-      expect(wrapper.html()).not.toContain("some child")
+      expect(wrapper.find("ViewingRoomTabBar").length).toBe(1)
+      expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
+      expect(wrapper.html()).toContain("some child")
     })
 
     describe("ViewingRoomHeader", () => {
