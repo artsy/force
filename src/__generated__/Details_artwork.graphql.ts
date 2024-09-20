@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b2760fdcccae86641cb336df2a4d3cff>>
+ * @generated SignedSource<<21e8bc143e1daf57e3bb8b29c7c284c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -79,7 +79,7 @@ export type Details_artwork$data = {
   } | null | undefined;
   readonly sale_message: string | null | undefined;
   readonly title: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"BidTimerLine_artwork" | "ConsignmentSubmissionStatus_artwork" | "HoverDetails_artwork" | "PrimaryLabelLine_artwork" | "SaveArtworkToListsButton_artwork" | "SaveButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"BidTimerLine_artwork" | "ConsignmentSubmissionStatus_artwork" | "HoverDetails_artwork" | "PrimaryLabelLine_artwork">;
   readonly " $fragmentType": "Details_artwork";
 };
 export type Details_artwork$key = {
@@ -509,16 +509,6 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "SaveButton_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SaveArtworkToListsButton_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
       "name": "HoverDetails_artwork"
     }
   ],
@@ -527,6 +517,6 @@ return {
 };
 })();
 
-(node as any).hash = "07bc9ae65477c58fac30d200261bb6e1";
+(node as any).hash = "4a7954578860330b5f4916df6f20111f";
 
 export default node;
