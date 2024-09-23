@@ -163,35 +163,35 @@ jobs:
       - store_artifacts:
           path: cypress/screenshots
 
-  # create_or_update_review_app:
-  #   executor: hokusai/beta
-  #   steps:
-  #     - hokusai/setup
-  #     - add_ssh_keys
-  #     - checkout
-  #     - setup_remote_docker
-  #     - hokusai/install-aws-iam-authenticator
-  #     - hokusai/configure-hokusai
-  #     - run: hokusai registry pull --tag "$CIRCLE_SHA1"
-  #     - run:
-  #         name: Install jq
-  #         command: curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > /usr/local/bin/jq
-  #     - run:
-  #         name: Make jq executable
-  #         command: chmod u+x /usr/local/bin/jq
-  #     - run:
-  #         name: "Create or update review app"
-  #         command: |
-  #           set -x
-  #           review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
-  #           kubectl config use-context staging
-  #           namespaces=$(kubectl get namespace)
-  #           echo
-  #           if echo "$namespaces" | grep -qi "$review_app_name"; then
-  #             ./scripts/update_review_app.sh $review_app_name
-  #           else
-  #             ./scripts/build_review_app.sh $review_app_name
-  #           fi
+  create_or_update_review_app:
+    executor: hokusai/beta
+    steps:
+      - hokusai/setup
+      - add_ssh_keys
+      - checkout
+      - setup_remote_docker
+      - hokusai/install-aws-iam-authenticator
+      - hokusai/configure-hokusai
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+      - run:
+          name: Install jq
+          command: curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > /usr/local/bin/jq
+      - run:
+          name: Make jq executable
+          command: chmod u+x /usr/local/bin/jq
+      - run:
+          name: "Create or update review app"
+          command: |
+            set -x
+            review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
+            kubectl config use-context staging
+            namespaces=$(kubectl get namespace)
+            echo
+            if echo "$namespaces" | grep -qi "$review_app_name"; then
+              ./scripts/update_review_app.sh $review_app_name
+            else
+              ./scripts/build_review_app.sh $review_app_name
+            fi
   # acceptance:
   #   docker:
   #     - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
@@ -252,7 +252,7 @@ workflows:
           yarn-run: bundle-stats
 
       - artsy-remote-docker/build:
-          <<: *not_staging_or_release
+          <<: *not_main_or_staging_or_release
           name: build-and-push-docker
           context:
             - bundle-github
@@ -311,11 +311,12 @@ workflows:
           requires:
             - horizon/block
             - validate_production_schema
-      # - create_or_update_review_app:
-      #     context: hokusai
-      #     filters:
-      #       branches:
-      #         only: /^review-app-.*/
-      #     pre-steps:
-      #       - run:
-      #           command: echo 'export DOCKER_BUILDKIT=1; export BUILDKIT_PROGRESS=plain; export COMPOSE_DOCKER_CLI_BUILD=1;' >> $BASH_ENV
+
+      - create_or_update_review_app:
+          context: hokusai
+          filters:
+            branches:
+              only: /^review-app-.*/
+          pre-steps:
+            - run:
+                command: echo 'export DOCKER_BUILDKIT=1; export BUILDKIT_PROGRESS=plain; export COMPOSE_DOCKER_CLI_BUILD=1;' >> $BASH_ENV
