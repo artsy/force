@@ -60,10 +60,6 @@ export const geneRoutes: RouteProps[] = [
             "ARTIST_NATIONALITY",
           ]
 
-          if (!!props.context.user) {
-            aggregations.push("FOLLOWED_ARTISTS")
-          }
-
           const urlFilterState = props.location ? props.location.query : {}
 
           const filters = {

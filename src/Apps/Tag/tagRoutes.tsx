@@ -31,10 +31,6 @@ export const tagRoutes: RouteProps[] = [
         "ARTIST",
       ]
 
-      if (!!props.context.user) {
-        aggregations.push("FOLLOWED_ARTISTS")
-      }
-
       const urlFilterState = props.location ? props.location.query : {}
 
       const filters = {

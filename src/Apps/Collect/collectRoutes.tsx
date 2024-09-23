@@ -114,10 +114,6 @@ export function initializeVariablesWithFilterState(params, props) {
     "ARTIST",
   ].concat(collectionOnlyAggregations)
 
-  if (!!props.context.user) {
-    aggregations.push("FOLLOWED_ARTISTS")
-  }
-
   const input = {
     sort: "-decayed_merch",
     ...initialFilterState,

@@ -211,10 +211,6 @@ export const partnerRoutes: RouteProps[] = [
             "ARTIST",
           ]
 
-          if (!!props.context.user) {
-            aggregations.push("FOLLOWED_ARTISTS")
-          }
-
           const filterParams = {
             ...initialArtworkFilterState,
             ...paramsToCamelCase(filterStateFromUrl),

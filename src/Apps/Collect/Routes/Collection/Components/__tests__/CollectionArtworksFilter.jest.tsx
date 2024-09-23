@@ -34,9 +34,6 @@ const { getWrapper } = setupTestWrapper<CollectionArtworksFilter_Query>({
   Component: ({ collection }) => (
     <MockBoot user={{ id: "percy-z" }}>
       <CollectionArtworksFilter
-        counts={{
-          followedArtists: 10,
-        }}
         aggregations={[
           artistAggregation,
           partnerAggregation,

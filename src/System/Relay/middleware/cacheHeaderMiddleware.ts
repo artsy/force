@@ -1,6 +1,7 @@
 import { isServer } from "Server/isServer"
 import {
   hasNoCacheParamPresent,
+  hasPersonalizedArguments,
   isRequestCacheable,
 } from "System/Relay/isRequestCacheable"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
@@ -19,6 +20,8 @@ export const shouldSkipCDNCache = (req, user, foundRoute, url) => {
   //   - `force: true` is specified
   //   - `serverCacheTTL` is set to 0
   //   - `nocache` query param is provided
+  //   - a known personalized argument is present in the query
+  //     - `include_artworks_by_followed_artists` is a known one
   if (req.cacheConfig?.force === true) {
     return true
   }
@@ -28,6 +31,10 @@ export const shouldSkipCDNCache = (req, user, foundRoute, url) => {
   }
 
   if (hasNoCacheParamPresent(url)) {
+    return true
+  }
+
+  if (hasPersonalizedArguments(req.variables)) {
     return true
   }
 
