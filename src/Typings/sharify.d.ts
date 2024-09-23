@@ -49,8 +49,6 @@ declare module "sharify" {
       ENABLE_NEW_AUCTIONS_FILTER: boolean
       ENABLE_QUERY_BATCHING: boolean
       ENABLE_SAVED_SEARCH: boolean
-      ENABLE_GRAPHQL_PROXY: string
-      ENABLE_GRAPHQL_CACHE: string
       ENABLE_WEB_CRAWLING: string
       FACEBOOK_APP_NAMESPACE: string
       FACEBOOK_ID: string
