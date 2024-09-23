@@ -65,7 +65,7 @@ export const ViewingRoomsFeaturedRailFragmentContainer = createFragmentContainer
   ViewingRoomsFeaturedRail,
   {
     featuredViewingRooms: graphql`
-      fragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {
+      fragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomsConnection {
         edges {
           node {
             status
