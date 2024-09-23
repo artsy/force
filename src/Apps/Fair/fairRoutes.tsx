@@ -167,7 +167,6 @@ function initializeVariablesWithFilterState({ slug }, props) {
     includeArtworksByFollowedArtists:
       !!props.context.user &&
       initialFilterState["includeArtworksByFollowedArtists"],
-    aggregations: !!props.context.user ? ["FOLLOWED_ARTISTS"] : undefined,
   }
 
   return {

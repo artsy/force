@@ -136,10 +136,6 @@ export const searchRoutes: RouteProps[] = [
           }
           const aggregations = [...sourceAggregations, "ARTIST"]
 
-          if (!!context.user) {
-            aggregations.push("FOLLOWED_ARTISTS")
-          }
-
           return {
             shouldFetchCounts: !!context.user,
             input,
