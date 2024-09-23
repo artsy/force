@@ -645,7 +645,7 @@ describe("Details", () => {
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
 
-      expect(html).toContain("Curators' Pick")
+      expect(html).toContain("Curators’ Pick")
     })
 
     it("should render the increased interest badge when it's the primary label", async () => {

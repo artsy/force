@@ -32,6 +32,7 @@ export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
         px={0.5}
         alignSelf="flex-start"
         borderRadius={3}
+        style={{ whiteSpace: "nowrap" }}
       >
         Limited-Time Offer
       </Text>
@@ -51,6 +52,9 @@ export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
         borderColor="black100"
         px={0.5}
         alignSelf="flex-start"
+        my="1px"
+        lineHeight="18px"
+        style={{ whiteSpace: "nowrap" }}
       >
         Increased Interest
       </Text>
@@ -70,8 +74,11 @@ export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
         borderColor="black100"
         px={0.5}
         alignSelf="flex-start"
+        my="1px"
+        lineHeight="18px"
+        style={{ whiteSpace: "nowrap" }}
       >
-        Curators' Pick
+        Curators’ Pick
       </Text>
     )
   }
