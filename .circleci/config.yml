@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   artsy-remote-docker: artsy/remote-docker@volatile
+  cypress: cypress-io/cypress@3.3.1
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.14.0
@@ -192,20 +193,6 @@ jobs:
             else
               ./scripts/build_review_app.sh $review_app_name
             fi
-  # acceptance:
-  #   docker:
-  #     - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
-  #       aws_auth:
-  #         aws_access_key_id: $AWS_ACCESS_KEY_ID
-  #         aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-  #   working_directory: /app
-  #   parallelism: 6
-  #   steps:
-  #     - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
-  #     - store_artifacts:
-  #         path: cypress/videos
-  #     - store_artifacts:
-  #         path: cypress/screenshots
 
 workflows:
   default:
@@ -250,6 +237,15 @@ workflows:
           context: hokusai
           pkg-manager: yarn
           yarn-run: bundle-stats
+
+      # Smoke tests
+      - cypress/run:
+          <<: *not_main_or_staging_or_release
+          name: smoke-tests
+          package-manager: yarn
+          start-command: "yarn test:smoke"
+          cypress-command: "npx cypress run --parallel --record --group 4 machines"
+          parallelism: 4
 
       - artsy-remote-docker/build:
           <<: *not_main_or_staging_or_release
