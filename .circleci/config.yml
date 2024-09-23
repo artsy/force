@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   artsy-remote-docker: artsy/remote-docker@volatile
+  cypress: cypress-io/cypress@3.3.1
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.14.0
@@ -72,6 +73,52 @@ jobs:
           path: /app/reports/junit/
       - store_test_results:
           path: /app/reports/junit/
+
+  smoke-tests:
+    executor: cypress/default
+    working_directory: ~/app
+    parallelism: 6
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
+      - node/install-packages:
+          pkg-manager: yarn
+      - restore_cache:
+          keys:
+            - cypress-cache-{{ .Branch }}-{{ checksum "package.json" }}
+            - cypress-cache-
+      - run:
+          name: Install Cypress
+          command: |
+            npx cypress install
+      - save_cache:
+          paths:
+            - ~/.cache/Cypress
+          key: cypress-cache-{{ .Branch }}-{{ checksum "package.json" }}
+      - run:
+          name: Run Smoke Tests
+          command: |
+            if [ ! -f ".env" ]; then
+              echo "Using .env.oss as .env"
+              cp .env.oss .env
+            fi
+
+            # Remove `nohup` to diagnose server start issues
+            nohup yarn start &
+
+            while ! curl --output /dev/null --silent --head --fail http://localhost:4000; do
+              sleep 1
+            done
+
+            TESTS=$(circleci tests glob "cypress/e2e/**/*" | circleci tests split | paste -sd ',')
+            npx cypress run --spec $TESTS
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
 
   validate_production_schema:
     executor: node-executor
@@ -163,49 +210,35 @@ jobs:
       - store_artifacts:
           path: cypress/screenshots
 
-  create_or_update_review_app:
-    executor: hokusai/beta
-    steps:
-      - hokusai/setup
-      - add_ssh_keys
-      - checkout
-      - setup_remote_docker
-      - hokusai/install-aws-iam-authenticator
-      - hokusai/configure-hokusai
-      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
-      - run:
-          name: Install jq
-          command: curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > /usr/local/bin/jq
-      - run:
-          name: Make jq executable
-          command: chmod u+x /usr/local/bin/jq
-      - run:
-          name: "Create or update review app"
-          command: |
-            set -x
-            review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
-            kubectl config use-context staging
-            namespaces=$(kubectl get namespace)
-            echo
-            if echo "$namespaces" | grep -qi "$review_app_name"; then
-              ./scripts/update_review_app.sh $review_app_name
-            else
-              ./scripts/build_review_app.sh $review_app_name
-            fi
-  # acceptance:
-  #   docker:
-  #     - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
-  #       aws_auth:
-  #         aws_access_key_id: $AWS_ACCESS_KEY_ID
-  #         aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-  #   working_directory: /app
-  #   parallelism: 6
+  # create_or_update_review_app:
+  #   executor: hokusai/beta
   #   steps:
-  #     - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
-  #     - store_artifacts:
-  #         path: cypress/videos
-  #     - store_artifacts:
-  #         path: cypress/screenshots
+  #     - hokusai/setup
+  #     - add_ssh_keys
+  #     - checkout
+  #     - setup_remote_docker
+  #     - hokusai/install-aws-iam-authenticator
+  #     - hokusai/configure-hokusai
+  #     - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+  #     - run:
+  #         name: Install jq
+  #         command: curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > /usr/local/bin/jq
+  #     - run:
+  #         name: Make jq executable
+  #         command: chmod u+x /usr/local/bin/jq
+  #     - run:
+  #         name: "Create or update review app"
+  #         command: |
+  #           set -x
+  #           review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
+  #           kubectl config use-context staging
+  #           namespaces=$(kubectl get namespace)
+  #           echo
+  #           if echo "$namespaces" | grep -qi "$review_app_name"; then
+  #             ./scripts/update_review_app.sh $review_app_name
+  #           else
+  #             ./scripts/build_review_app.sh $review_app_name
+  #           fi
 
 workflows:
   default:
@@ -251,8 +284,12 @@ workflows:
           pkg-manager: yarn
           yarn-run: bundle-stats
 
+      # Cypress e2e tests
+      - smoke-tests:
+          <<: *not_staging_or_release
+
       - artsy-remote-docker/build:
-          <<: *not_main_or_staging_or_release
+          <<: *not_staging_or_release
           name: build-and-push-docker
           context:
             - bundle-github
@@ -311,12 +348,11 @@ workflows:
           requires:
             - horizon/block
             - validate_production_schema
-
-      - create_or_update_review_app:
-          context: hokusai
-          filters:
-            branches:
-              only: /^review-app-.*/
-          pre-steps:
-            - run:
-                command: echo 'export DOCKER_BUILDKIT=1; export BUILDKIT_PROGRESS=plain; export COMPOSE_DOCKER_CLI_BUILD=1;' >> $BASH_ENV
+      # - create_or_update_review_app:
+      #     context: hokusai
+      #     filters:
+      #       branches:
+      #         only: /^review-app-.*/
+      #     pre-steps:
+      #       - run:
+      #           command: echo 'export DOCKER_BUILDKIT=1; export BUILDKIT_PROGRESS=plain; export COMPOSE_DOCKER_CLI_BUILD=1;' >> $BASH_ENV
