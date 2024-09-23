@@ -11,7 +11,7 @@ export const getSignalLabel = (collectorSignals: CollectorSignals) => {
     case "INCREASED_INTEREST":
       return "Increased Interest"
     case "CURATORS_PICK":
-      return "Curators' Pick"
+      return "Curators’ Pick"
     default:
       return ""
   }

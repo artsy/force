@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f6eb23ab66ad1f77c819520aaaa49a99>>
+ * @generated SignedSource<<a38debd6d792fb72eb204965e0acf7ea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,7 +52,7 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "ViewingRoomEdge",
+      "concreteType": "ViewingRoomsEdge",
       "kind": "LinkedField",
       "name": "edges",
       "plural": true,
@@ -154,11 +154,11 @@ return {
       "storageKey": null
     }
   ],
-  "type": "ViewingRoomConnection",
+  "type": "ViewingRoomsConnection",
   "abstractKey": null
 };
 })();
 
-(node as any).hash = "9dd834600e28760b97b9b24b16f60122";
+(node as any).hash = "31c1c6e0cecf8dbb067bcda13c739aee";
 
 export default node;

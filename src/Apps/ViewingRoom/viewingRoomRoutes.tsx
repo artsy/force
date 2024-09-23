@@ -57,7 +57,7 @@ export const viewingRoomRoutes: RouteProps[] = [
             @arguments(count: $count, after: $after)
         }
 
-        featuredViewingRooms: viewingRooms(featured: true) {
+        featuredViewingRooms: viewingRoomsConnection(featured: true) {
           ...ViewingRoomsApp_featuredViewingRooms
         }
       }

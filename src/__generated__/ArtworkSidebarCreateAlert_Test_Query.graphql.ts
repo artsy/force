@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0d63b5e8faa4023d284a870ab793b8e3>>
+ * @generated SignedSource<<c836ae6caea70038c974799055d0fe23>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,47 +28,7 @@ var v0 = [
     "name": "id",
     "value": "test-artwork-id"
   }
-],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v5 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -110,15 +70,6 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "title",
-            "storageKey": null
-          },
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -129,64 +80,17 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artists",
-            "plural": true,
-            "selections": [
-              (v1/*: any*/),
-              (v3/*: any*/),
-              (v2/*: any*/),
-              (v4/*: any*/)
-            ],
+            "kind": "ScalarField",
+            "name": "id",
             "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "AttributionClass",
-            "kind": "LinkedField",
-            "name": "attributionClass",
-            "plural": false,
-            "selections": [
-              (v1/*: any*/),
-              (v4/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ArtworkMedium",
-            "kind": "LinkedField",
-            "name": "mediumType",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Gene",
-                "kind": "LinkedField",
-                "name": "filterGene",
-                "plural": false,
-                "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          (v4/*: any*/)
+          }
         ],
         "storageKey": "artwork(id:\"test-artwork-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "9ae521387ac6a67cd271d4e215a11aca",
+    "cacheID": "3f06f72e2ea9ac8596233583ba61b790",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -196,54 +100,23 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.artists": {
+        "artwork.id": {
           "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "Artist"
-        },
-        "artwork.artists.id": (v5/*: any*/),
-        "artwork.artists.internalID": (v5/*: any*/),
-        "artwork.artists.name": (v6/*: any*/),
-        "artwork.artists.slug": (v5/*: any*/),
-        "artwork.attributionClass": {
-          "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
-          "type": "AttributionClass"
+          "type": "ID"
         },
-        "artwork.attributionClass.id": (v5/*: any*/),
-        "artwork.attributionClass.internalID": (v5/*: any*/),
-        "artwork.id": (v5/*: any*/),
-        "artwork.internalID": (v5/*: any*/),
         "artwork.isEligibleToCreateAlert": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Boolean"
-        },
-        "artwork.mediumType": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkMedium"
-        },
-        "artwork.mediumType.filterGene": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Gene"
-        },
-        "artwork.mediumType.filterGene.id": (v5/*: any*/),
-        "artwork.mediumType.filterGene.name": (v6/*: any*/),
-        "artwork.mediumType.filterGene.slug": (v5/*: any*/),
-        "artwork.slug": (v5/*: any*/),
-        "artwork.title": (v6/*: any*/)
+        }
       }
     },
     "name": "ArtworkSidebarCreateAlert_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCreateAlert_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...ArtworkSidebarCreateAlert_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCreateAlert_artwork on Artwork {\n  internalID\n  title\n  slug\n  isEligibleToCreateAlert\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarCreateAlert_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...ArtworkSidebarCreateAlert_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCreateAlert_artwork on Artwork {\n  isEligibleToCreateAlert\n}\n"
   }
 };
 })();

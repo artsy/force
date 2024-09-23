@@ -41,7 +41,7 @@ describe("ViewingRoomsApp", () => {
             allViewingRooms: viewer {
               ...ViewingRoomsApp_allViewingRooms
             }
-            featuredViewingRooms: viewingRooms(featured: true) {
+            featuredViewingRooms: viewingRoomsConnection(featured: true) {
               ...ViewingRoomsApp_featuredViewingRooms
             }
           }
