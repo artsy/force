@@ -34,7 +34,7 @@ interface Route extends RouteObjectBase {
    * Cache configuration
    */
 
-  /** Configures how long the server should cache the response in Redis */
+  /** Configures how long the server should cache the response */
   serverCacheTTL?: number
   /** Relay fetch policy; use store-and-network to cache and then refetch */
   fetchPolicy?: FetchPolicy

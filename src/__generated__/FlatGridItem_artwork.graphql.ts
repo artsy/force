@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ac22b4501a9614fe7e48e53e65b668b>>
+ * @generated SignedSource<<4b8d8e590ea625272998df303f9258f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,6 @@ export type FlatGridItem_artwork$data = {
   } | null | undefined;
   readonly image_title: string | null | undefined;
   readonly internalID: string;
-  readonly isSaved: boolean | null | undefined;
   readonly sale: {
     readonly extendedBiddingIntervalMinutes: number | null | undefined;
     readonly extendedBiddingPeriodMinutes: number | null | undefined;
@@ -36,7 +35,7 @@ export type FlatGridItem_artwork$data = {
     readonly lotID: string | null | undefined;
   } | null | undefined;
   readonly title: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"DeprecatedSaveButton_artwork" | "Metadata_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
   readonly " $fragmentType": "FlatGridItem_artwork";
 };
 export type FlatGridItem_artwork$key = {
@@ -76,11 +75,6 @@ const node: ReaderFragment = {
       ],
       "kind": "FragmentSpread",
       "name": "Metadata_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "DeprecatedSaveButton_artwork"
     },
     {
       "alias": null,
@@ -264,19 +258,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "href",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isSaved",
-      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "d6895c2f799b81b18420a55a54c4a89d";
+(node as any).hash = "f642a14fa9fb0e878754f4759b12d729";
 
 export default node;

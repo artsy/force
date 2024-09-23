@@ -10,6 +10,8 @@ import { isTouch } from "Utils/device"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import HeartFillIcon from "@artsy/icons/HeartFillIcon"
 import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { SaveButtonQuery } from "__generated__/SaveButtonQuery.graphql"
 
 export interface SaveButtonProps {
   artwork: SaveButton_artwork$data
@@ -18,8 +20,12 @@ export interface SaveButtonProps {
 
 interface SaveButtonBaseProps {
   isSaved: boolean
-  artwork: SaveArtworkToListsButton_artwork$data | SaveButton_artwork$data
-  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  artwork:
+    | SaveArtworkToListsButton_artwork$data
+    | SaveButton_artwork$data
+    | { collectorSignals: null } // when used as a placeholder
+  // `onClick` is optional when used as a placeholder
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 const BTN_HEIGHT = 18
@@ -147,3 +153,46 @@ export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
     }
   `,
 })
+
+interface SaveButtonQueryRendererProps
+  extends Omit<SaveButtonProps, "artwork"> {
+  id: string
+}
+
+export const SaveButtonQueryRenderer: React.FC<SaveButtonQueryRendererProps> = ({
+  id,
+  contextModule,
+}) => {
+  const placeholderArtwork = {
+    collectorSignals: null,
+  }
+
+  return (
+    <SystemQueryRenderer<SaveButtonQuery>
+      lazyLoad
+      query={graphql`
+        query SaveButtonQuery($id: String!) {
+          artwork(id: $id) {
+            ...SaveButton_artwork
+          }
+        }
+      `}
+      placeholder={
+        <SaveButtonBase isSaved={false} artwork={placeholderArtwork} />
+      }
+      variables={{ id }}
+      render={({ error, props }) => {
+        if (error || !props?.artwork) {
+          return <SaveButtonBase isSaved={false} artwork={placeholderArtwork} />
+        }
+
+        return (
+          <SaveButtonFragmentContainer
+            artwork={props.artwork}
+            contextModule={contextModule}
+          />
+        )
+      }}
+    />
+  )
+}

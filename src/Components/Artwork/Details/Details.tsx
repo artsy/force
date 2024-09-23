@@ -1,7 +1,7 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
+import { SaveArtworkToListsButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { isFunction } from "lodash"
 import * as React from "react"
@@ -11,7 +11,7 @@ import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "Components/Artwork/HoverDetails"
-import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveButton"
+import { SaveButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveButton"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
@@ -366,17 +366,17 @@ export const Details: React.FC<DetailsProps> = ({
 
     if (!saveOnlyToDefaultList) {
       return (
-        <SaveArtworkToListsButtonFragmentContainer
+        <SaveArtworkToListsButtonQueryRenderer
           contextModule={contextModule}
-          artwork={rest.artwork}
+          id={rest.artwork.internalID}
         />
       )
     }
 
     return (
-      <SaveButtonFragmentContainer
+      <SaveButtonQueryRenderer
         contextModule={contextModule}
-        artwork={rest.artwork}
+        id={rest.artwork.internalID}
       />
     )
   }
@@ -609,8 +609,6 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       }
       ...PrimaryLabelLine_artwork
       ...BidTimerLine_artwork
-      ...SaveButton_artwork
-      ...SaveArtworkToListsButton_artwork
       ...HoverDetails_artwork
       ...ConsignmentSubmissionStatus_artwork
         @include(if: $includeConsignmentSubmission)

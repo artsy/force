@@ -83,15 +83,5 @@ describe("AuctionArtworkFilter", () => {
         first: 39,
       })
     })
-
-    it("returns additional aggregation FOLLOWED_ARTISTS for logged in users", () => {
-      expect(getArtworkFilterInputArgs({ id: "foo" }).aggregations).toEqual([
-        "ARTIST",
-        "MEDIUM",
-        "TOTAL",
-        "MATERIALS_TERMS",
-        "FOLLOWED_ARTISTS",
-      ])
-    })
   })
 })

@@ -119,7 +119,6 @@ export interface Counts {
   auction_artworks?: number
   artworks?: number
   has_make_offer_artworks?: boolean
-  followedArtists?: number
 }
 
 export type FollowedArtists = Array<{

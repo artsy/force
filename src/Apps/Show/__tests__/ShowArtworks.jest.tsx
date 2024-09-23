@@ -36,9 +36,6 @@ const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
           materialsTermsAggregation,
           artistNationalityAggregation,
         ]}
-        counts={{
-          followedArtists: 10,
-        }}
         show={show!}
       />
     </MockBoot>
