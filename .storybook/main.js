@@ -28,7 +28,6 @@ module.exports = {
       })
     )
     config.externals = {
-      redis: "redis",
       request: "request",
       async_hooks: "async_hooks",
     }
