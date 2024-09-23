@@ -1,23 +1,88 @@
 version: 2.1
 
 orbs:
-  artsy-remote-docker: artsy/remote-docker@volatile
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.14.0
-  yarn: artsy/yarn@6.5.0
+  node: circleci/node@5.2.0
+
+executors:
+  node-executor:
+    docker:
+      - image: cimg/node:18.15.0
+
+not_main_or_staging_or_release: &not_main_or_staging_or_release
+  filters:
+    branches:
+      ignore:
+        - main2
+        - staging
+        - release
+
+not_staging_or_release: &not_staging_or_release
+  filters:
+    branches:
+      ignore:
+        - staging
+        - release
+
+only_main: &only_main
+  context:
+    - hokusai
+    - slack-orb
+  filters:
+    branches:
+      only: main2
+
+only_release: &only_release
+  context:
+    - hokusai
+    - slack-orb
+  filters:
+    branches:
+      only: release
 
 jobs:
-  validate_production_schema:
+  detect-secrets:
     docker:
-      - image: cimg/node:18.20.4
+      - image: artsy/detect-secrets:ci # pragma: allowlist secret
+    resource_class: small
+    working_directory: /usr/src/app
+    steps:
+      - checkout
+      - run: git ls-files -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline --verbose
+
+  test:
+    executor: node-executor
+    working_directory: ~/app
+    parallelism: 6
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Run Jest Tests
+          command: |
+            yarn test --reporters=default --reporters=jest-junit --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: reports
+            JEST_JUNIT_ADD_FILE_ATTRIBUTE: "true"
+      - store_artifacts:
+          path: /app/reports/junit/
+      - store_test_results:
+          path: /app/reports/junit/
+
+  validate_production_schema:
+    executor: node-executor
     parameters:
       # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
       dev:
         type: string
         default: C02BC3HEJ
     steps:
-      - yarn/setup
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
           name: Validate Production Schema
           command: node scripts/validateSchemas.js production
@@ -79,131 +144,12 @@ jobs:
               ]
             }
 
-  create_or_update_review_app:
-    executor: hokusai/beta
-    parameters:
-      artsy_docker_host:
-        type: string
-        default: docker.artsy.net
-      artsy_docker_port:
-        type: integer
-        default: 2376
-      artsy_s3_path_root:
-        type: string
-        default: artsy-dockerd
-    steps:
-      - hokusai/setup
-      - artsy-remote-docker/setup-artsy-remote-docker:
-          artsy_docker_host: << parameters.artsy_docker_host >>
-          artsy_docker_port: << parameters.artsy_docker_port >>
-          artsy_s3_path_root: << parameters.artsy_s3_path_root >>
-      - hokusai/install-aws-iam-authenticator
-      - hokusai/configure-hokusai
-      - run:
-          name: Install jq
-          command: curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > /usr/local/bin/jq
-      - run:
-          name: Make jq executable
-          command: chmod u+x /usr/local/bin/jq
-      - run:
-          name: "Create or update review app"
-          command: |
-            set -x
-            review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
-            kubectl config use-context staging
-            namespaces=$(kubectl get namespace)
-            echo
-            if echo "$namespaces" | grep -qi "$review_app_name"; then
-              ./scripts/update_review_app.sh $review_app_name
-            else
-              ./scripts/build_review_app.sh $review_app_name
-            fi
-
-  # TODO: Experiment. Remove when done testing SWC compiler
-  test:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    parallelism: 6
-    environment:
-      JEST_JUNIT_OUTPUT_DIR: /app/reports/junit/
-      JEST_JUNIT_UNIQUE_OUTPUT_NAME: true
-      # TODO: Remove this flag once things have stabilized
-      EXPERIMENTAL_SWC_COMPILER_ENABLED: false
-    steps:
-      - run: yarn test --reporters=default --reporters=jest-junit --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
-      - store_artifacts:
-          path: /app/reports/junit/
-      - store_test_results:
-          path: /app/reports/junit/
-
-  type-check:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    environment:
-      - NODE_ENV: test
-    steps:
-      - run: yarn type-check
-
-  check-pr:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    steps:
-      - run:
-          name: Danger
-          command: yarn danger ci --verbose
-
-  relay-check:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    steps:
-      - run: yarn relay
-
-  acceptance:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    parallelism: 6
-    steps:
-      - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
-      - store_artifacts:
-          path: cypress/videos
-      - store_artifacts:
-          path: cypress/screenshots
-
-  detect-secrets:
-    docker:
-      - image: artsy/detect-secrets:ci # pragma: allowlist secret
-    resource_class: small
-    working_directory: /usr/src/app
-    steps:
-      - checkout
-      - run: git ls-files -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline --verbose
-
   smoke-test-on-live-env:
     docker:
       - image: cypress/included:12.17.4
         environment:
           TERM: xterm
-    working_directory: ~/app
+    working_directory: /usr/src/app
     parallelism: 6
     steps:
       - checkout
@@ -216,47 +162,49 @@ jobs:
       - store_artifacts:
           path: cypress/screenshots
 
-  bundle-stats:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    steps:
-      - run: yarn bundle-report:client --json webpack-stats.json
-      - run: npx relative-ci-agent
-
-not_main_or_staging_or_release: &not_main_or_staging_or_release
-  filters:
-    branches:
-      ignore:
-        - main
-        - staging
-        - release
-
-not_staging_or_release: &not_staging_or_release
-  filters:
-    branches:
-      ignore:
-        - staging
-        - release
-
-only_main: &only_main
-  context:
-    - hokusai
-    - slack-orb
-  filters:
-    branches:
-      only: main
-
-only_release: &only_release
-  context:
-    - hokusai
-    - slack-orb
-  filters:
-    branches:
-      only: release
+  # create_or_update_review_app:
+  #   executor: hokusai/beta
+  #   steps:
+  #     - hokusai/setup
+  #     - add_ssh_keys
+  #     - checkout
+  #     - setup_remote_docker
+  #     - hokusai/install-aws-iam-authenticator
+  #     - hokusai/configure-hokusai
+  #     - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+  #     - run:
+  #         name: Install jq
+  #         command: curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > /usr/local/bin/jq
+  #     - run:
+  #         name: Make jq executable
+  #         command: chmod u+x /usr/local/bin/jq
+  #     - run:
+  #         name: "Create or update review app"
+  #         command: |
+  #           set -x
+  #           review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
+  #           kubectl config use-context staging
+  #           namespaces=$(kubectl get namespace)
+  #           echo
+  #           if echo "$namespaces" | grep -qi "$review_app_name"; then
+  #             ./scripts/update_review_app.sh $review_app_name
+  #           else
+  #             ./scripts/build_review_app.sh $review_app_name
+  #           fi
+  # acceptance:
+  #   docker:
+  #     - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
+  #       aws_auth:
+  #         aws_access_key_id: $AWS_ACCESS_KEY_ID
+  #         aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+  #   working_directory: /app
+  #   parallelism: 6
+  #   steps:
+  #     - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
+  #     - store_artifacts:
+  #         path: cypress/videos
+  #     - store_artifacts:
+  #         path: cypress/screenshots
 
 workflows:
   default:
@@ -264,110 +212,43 @@ workflows:
       - detect-secrets:
           <<: *not_main_or_staging_or_release
 
-      # Main build
-      - artsy-remote-docker/buildkit-build:
-          <<: *not_staging_or_release
-          context: hokusai
-          executor: hokusai/beta
-          name: builder-image-build
-          pre-steps:
-            - run:
-                command: echo 'export BUILD_TARGET="builder";' >> $BASH_ENV
-
-      - artsy-remote-docker/buildkit-push:
-          <<: *not_staging_or_release
-          context: hokusai
-          executor: hokusai/beta
-          name: builder-image-push
-          requires:
-            - builder-image-build
-          pre-steps:
-            - run:
-                command: echo 'export BUILD_TARGET="builder";' >> $BASH_ENV
-
-      # Electron Runner build
-      - artsy-remote-docker/buildkit-build:
-          <<: *not_staging_or_release
-          context: hokusai
-          executor: hokusai/beta
-          name: electron-runner-image-build
-          requires:
-            - builder-image-build
-          pre-steps:
-            - run:
-                command: echo 'export BUILD_TARGET="electron-runner";' >> $BASH_ENV
-
-      - artsy-remote-docker/buildkit-push:
-          <<: *not_staging_or_release
-          context: hokusai
-          executor: hokusai/beta
-          name: electron-runner-image-push
-          requires:
-            - electron-runner-image-build
-          pre-steps:
-            - run:
-                command: echo 'export BUILD_TARGET="electron-runner";' >> $BASH_ENV
-
-      # Test steps
-      - test:
-          <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - builder-image-push
-
-      - type-check:
-          <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - builder-image-push
-
-      - check-pr:
+      # Danger
+      - node/run:
           <<: *not_staging_or_release
           context:
-            - hokusai
             - danger-github-oss
-          requires:
-            - builder-image-push
+          name: check-pr
+          pkg-manager: yarn
+          yarn-run: danger:ci
+          version: 18.15.0
 
-      - relay-check:
+      # Relay
+      - node/run:
           <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - builder-image-push
+          name: relay
+          pkg-manager: yarn
+          yarn-run: relay
+          version: 18.15.0
 
-      - acceptance:
+      # Type-check
+      - node/run:
           <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - electron-runner-image-push
+          name: type-check
+          pkg-manager: yarn
+          yarn-run: type-check
+          version: 18.15.0
 
-      - bundle-stats:
+      # Jest Tests
+      - test:
           <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - builder-image-push
 
-      # Staging
-      - artsy-remote-docker/buildkit-build:
-          <<: *only_main
+      # Bundle stats for PRs
+      - node/run:
+          <<: *not_staging_or_release
+          name: bundle-stats
           context: hokusai
-          executor: hokusai/beta
-          name: production-image-build
-          requires:
-            - builder-image-build
-
-      - artsy-remote-docker/buildkit-push:
-          <<: *only_main
-          context: hokusai
-          executor: hokusai/beta
-          name: production-image-push
-          requires:
-            - test
-            - type-check
-            - relay-check
-            - acceptance
-            - bundle-stats
-            - production-image-build
+          pkg-manager: yarn
+          yarn-run: bundle-stats
 
       - hokusai/deploy-staging:
           <<: *only_main
@@ -375,7 +256,11 @@ workflows:
           project-name: force
           executor: hokusai/beta
           requires:
-            - production-image-push
+            - check-pr
+            - detect-secrets
+            - relay
+            - type-check
+            - test
           post-steps:
             - slack/notify:
                 event: fail
@@ -420,12 +305,11 @@ workflows:
           requires:
             - horizon/block
             - validate_production_schema
-
-      - create_or_update_review_app:
-          context: hokusai
-          filters:
-            branches:
-              only: /^review-app-.*/
-          pre-steps:
-            - run:
-                command: echo 'export DOCKER_BUILDKIT=1; export BUILDKIT_PROGRESS=plain; export COMPOSE_DOCKER_CLI_BUILD=1;' >> $BASH_ENV
+      # - create_or_update_review_app:
+      #     context: hokusai
+      #     filters:
+      #       branches:
+      #         only: /^review-app-.*/
+      #     pre-steps:
+      #       - run:
+      #           command: echo 'export DOCKER_BUILDKIT=1; export BUILDKIT_PROGRESS=plain; export COMPOSE_DOCKER_CLI_BUILD=1;' >> $BASH_ENV
