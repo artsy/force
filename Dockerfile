@@ -88,7 +88,7 @@ RUN chown deploy:deploy $(pwd)
 USER deploy
 
 # Production node modules.
-COPY --chown=deploy:deploy --from=yarn-deps-prod /app/node_modules ./node_modules
+COPY --chown=deploy:deploy --from=builder-base /opt/node_modules.prod ./node_modules
 
 # Base code
 COPY --chown=deploy:deploy --from=builder-base /app/data ./data

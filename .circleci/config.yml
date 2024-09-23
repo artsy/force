@@ -1,6 +1,7 @@
 version: 2.1
 
 orbs:
+  artsy-remote-docker: artsy/remote-docker@volatile
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.14.0
@@ -250,17 +251,32 @@ workflows:
           pkg-manager: yarn
           yarn-run: bundle-stats
 
-      - hokusai/deploy-staging:
-          <<: *only_main
-          name: deploy-staging
-          project-name: force
+      - artsy-remote-docker/build:
+          <<: *not_staging_or_release
+          name: build
+          context:
+            - bundle-github
+            - hokusai
           executor: hokusai/beta
+
+      # Staging
+      - hokusai/push:
+          name: push-staging-image
+          <<: *only_main
           requires:
             - check-pr
             - detect-secrets
             - relay
             - type-check
             - test
+
+      - hokusai/deploy-staging:
+          <<: *only_main
+          name: deploy-staging
+          project-name: force
+          executor: hokusai/beta
+          requires:
+            - push-staging-image
           post-steps:
             - slack/notify:
                 event: fail
