@@ -140,7 +140,6 @@ export const SaveArtworkToListsButtonQueryRenderer: FC<SaveArtworkToListsButtonQ
         }
       `}
       placeholder={
-        // TODO: This should be a better placeholder, rather than reusing `SaveButtonBase`
         <SaveButtonBase
           isSaved={false}
           artwork={{} as SaveArtworkToListsButton_artwork$data}

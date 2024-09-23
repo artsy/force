@@ -12,6 +12,9 @@ jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("Utils/getCurrentTimeAsIsoString")
 jest.mock("Components/AuthDialog/useAuthDialog")
+jest.mock("Components/Artwork/SaveButton/SaveButton", () => ({
+  SaveButtonQueryRenderer: () => <div>SaveButtonQueryRenderer</div>,
+}))
 
 jest.mock("System/Hooks/useFeatureFlag", () => {
   return {
@@ -452,45 +455,14 @@ describe("Details", () => {
     })
   })
 
-  it.skip("should display save artwork button by default when showSaveButton prop is passed", async () => {
+  it("should display save artwork button by default when showSaveButton prop is passed", async () => {
     props = {
       showSaveButton: true,
       contextModule: ContextModule.artworkGrid,
     }
     const wrapper = await getWrapper(artworkInAuction, props)
 
-    console.log(wrapper.html())
-    expect(wrapper.find("button[data-test='saveButton']").length).toBe(1)
-  })
-
-  it.skip("should pass correct analytics data to the auth modal when save button is pressed and user is not logged in", async () => {
-    const showAuthDialog = jest.fn()
-
-    mockUseAuthDialog.mockImplementation(() => ({
-      showAuthDialog,
-    }))
-
-    props = {
-      showSaveButton: true,
-      contextModule: ContextModule.artworkGrid,
-    }
-    const wrapper = await getWrapper(artworkInAuction, props)
-
-    wrapper.find("button[data-test='saveButton']").simulate("click")
-
-    expect(showAuthDialog.mock.calls[0]).toEqual([
-      {
-        analytics: { contextModule: "artworkGrid", intent: "saveArtwork" },
-        options: {
-          afterAuthAction: {
-            action: "save",
-            kind: "artworks",
-            objectId: "opaque-internal-id",
-          },
-          title: "Sign up or log in to save artworks",
-        },
-      },
-    ])
+    expect(wrapper.find("SaveButtonQueryRenderer").length).toBe(1)
   })
 
   describe("alternate metadata when hovering", () => {
