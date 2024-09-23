@@ -252,7 +252,7 @@ workflows:
           yarn-run: bundle-stats
 
       - artsy-remote-docker/build:
-          <<: *not_main_or_staging_or_release
+          <<: *not_staging_or_release
           name: build-and-push-docker
           context:
             - bundle-github
