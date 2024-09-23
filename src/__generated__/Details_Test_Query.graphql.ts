@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8cc516680ebc98273ed462f721916d6>>
+ * @generated SignedSource<<818a450917f773113df171fc1c334efc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,6 @@ export type Details_Test_Query$rawResponse = {
         readonly isP1: boolean | null | undefined;
       };
     } | null | undefined;
-    readonly artistNames: string | null | undefined;
     readonly artists: ReadonlyArray<{
       readonly href: string | null | undefined;
       readonly id: string;
@@ -44,7 +43,6 @@ export type Details_Test_Query$rawResponse = {
         readonly bidCount: number;
         readonly liveBiddingStarted: boolean;
         readonly lotClosesAt: string | null | undefined;
-        readonly lotWatcherCount: number;
         readonly onlineBiddingExtended: boolean;
         readonly registrationEndsAt: string | null | undefined;
       } | null | undefined;
@@ -69,10 +67,7 @@ export type Details_Test_Query$rawResponse = {
     readonly href: string | null | undefined;
     readonly id: string;
     readonly internalID: string;
-    readonly isInAuction: boolean | null | undefined;
     readonly isListed: boolean;
-    readonly isSaved: boolean | null | undefined;
-    readonly isSavedToList: boolean;
     readonly marketPriceInsights: {
       readonly demandRank: number | null | undefined;
     } | null | undefined;
@@ -86,9 +81,6 @@ export type Details_Test_Query$rawResponse = {
       readonly href: string | null | undefined;
       readonly id: string;
       readonly name: string | null | undefined;
-    } | null | undefined;
-    readonly preview: {
-      readonly url: string | null | undefined;
     } | null | undefined;
     readonly sale: {
       readonly cascadingEndTimeIntervalMinutes: number | null | undefined;
@@ -117,7 +109,6 @@ export type Details_Test_Query$rawResponse = {
       } | null | undefined;
     } | null | undefined;
     readonly sale_message: string | null | undefined;
-    readonly slug: string;
     readonly title: string | null | undefined;
   } | null | undefined;
 };
@@ -219,15 +210,9 @@ v13 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "Int"
-},
-v14 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
   "type": "Boolean"
 },
-v15 = {
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -352,13 +337,6 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "onlineBiddingExtended",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "lotWatcherCount",
                     "storageKey": null
                   }
                 ],
@@ -614,66 +592,6 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isSaved",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "artistNames",
-            "storageKey": null
-          },
-          {
-            "alias": "preview",
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "square"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"square\")"
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isInAuction",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isSavedToList",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -705,6 +623,7 @@ return {
             ],
             "storageKey": null
           },
+          (v6/*: any*/),
           {
             "condition": "includeConsignmentSubmission",
             "kind": "Condition",
@@ -765,7 +684,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e3d4dbdf35101abf9c176ecf0e1088dc",
+    "cacheID": "bcb9628ae5a17eb02057181cb14e630c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -789,7 +708,6 @@ return {
           "type": "ArtistTargetSupply"
         },
         "artwork.artist.targetSupply.isP1": (v11/*: any*/),
-        "artwork.artistNames": (v12/*: any*/),
         "artwork.artists": {
           "enumValues": null,
           "nullable": true,
@@ -820,11 +738,15 @@ return {
           "plural": false,
           "type": "AuctionCollectorSignals"
         },
-        "artwork.collectorSignals.auction.bidCount": (v13/*: any*/),
-        "artwork.collectorSignals.auction.liveBiddingStarted": (v14/*: any*/),
+        "artwork.collectorSignals.auction.bidCount": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Int"
+        },
+        "artwork.collectorSignals.auction.liveBiddingStarted": (v13/*: any*/),
         "artwork.collectorSignals.auction.lotClosesAt": (v12/*: any*/),
-        "artwork.collectorSignals.auction.lotWatcherCount": (v13/*: any*/),
-        "artwork.collectorSignals.auction.onlineBiddingExtended": (v14/*: any*/),
+        "artwork.collectorSignals.auction.onlineBiddingExtended": (v13/*: any*/),
         "artwork.collectorSignals.auction.registrationEndsAt": (v12/*: any*/),
         "artwork.collectorSignals.partnerOffer": {
           "enumValues": null,
@@ -881,10 +803,7 @@ return {
         "artwork.href": (v12/*: any*/),
         "artwork.id": (v10/*: any*/),
         "artwork.internalID": (v10/*: any*/),
-        "artwork.isInAuction": (v11/*: any*/),
-        "artwork.isListed": (v14/*: any*/),
-        "artwork.isSaved": (v11/*: any*/),
-        "artwork.isSavedToList": (v14/*: any*/),
+        "artwork.isListed": (v13/*: any*/),
         "artwork.marketPriceInsights": {
           "enumValues": null,
           "nullable": true,
@@ -920,22 +839,15 @@ return {
         "artwork.partner.href": (v12/*: any*/),
         "artwork.partner.id": (v10/*: any*/),
         "artwork.partner.name": (v12/*: any*/),
-        "artwork.preview": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "artwork.preview.url": (v12/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.cascadingEndTimeIntervalMinutes": (v15/*: any*/),
+        "artwork.sale.cascadingEndTimeIntervalMinutes": (v14/*: any*/),
         "artwork.sale.endAt": (v12/*: any*/),
-        "artwork.sale.extendedBiddingIntervalMinutes": (v15/*: any*/),
+        "artwork.sale.extendedBiddingIntervalMinutes": (v14/*: any*/),
         "artwork.sale.id": (v10/*: any*/),
         "artwork.sale.is_auction": (v11/*: any*/),
         "artwork.sale.is_closed": (v11/*: any*/),
@@ -979,13 +891,12 @@ return {
         },
         "artwork.sale_artwork.opening_bid.display": (v12/*: any*/),
         "artwork.sale_message": (v12/*: any*/),
-        "artwork.slug": (v10/*: any*/),
         "artwork.title": (v12/*: any*/)
       }
     },
     "name": "Details_Test_Query",
     "operationKind": "query",
-    "text": "query Details_Test_Query(\n  $includeConsignmentSubmission: Boolean!\n) {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork_2UNTrk\n    id\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment ConsignmentSubmissionStatus_artwork on Artwork {\n  internalID\n  isListed\n  consignmentSubmission {\n    internalID\n    state\n    stateLabel\n    actionLabel\n    stateLabelColor\n  }\n}\n\nfragment Details_artwork_2UNTrk on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  consignmentSubmission @include(if: $includeConsignmentSubmission) {\n    internalID\n  }\n  ...ConsignmentSubmissionStatus_artwork @include(if: $includeConsignmentSubmission)\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
+    "text": "query Details_Test_Query(\n  $includeConsignmentSubmission: Boolean!\n) {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork_2UNTrk\n    id\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment ConsignmentSubmissionStatus_artwork on Artwork {\n  internalID\n  isListed\n  consignmentSubmission {\n    internalID\n    state\n    stateLabel\n    actionLabel\n    stateLabelColor\n  }\n}\n\nfragment Details_artwork_2UNTrk on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  consignmentSubmission @include(if: $includeConsignmentSubmission) {\n    internalID\n  }\n  ...ConsignmentSubmissionStatus_artwork @include(if: $includeConsignmentSubmission)\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n  }\n}\n"
   }
 };
 })();
