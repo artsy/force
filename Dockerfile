@@ -1,185 +1,72 @@
-# syntax=docker/dockerfile:1.3
-#              +------------------+
-#              |                  |
-#              |  builder-base    |
-#              |                  |
-#              +---------+--------+
-#                        ^
-#                        |
-#                        |
-#              +---------+--------+
-#              |                  |
-#              |  yarn-base       +<------------------------------------------------+
-#              |                  |                                                 |
-#              +---------+--------+                                                 |
-#                        ^                                                          |
-#                        |                                                          |
-#                        |                                                          |
-#              +---------+--------+                                      +----------+-------+
-#              |                  |                                      |                  |
-#              |  yarn-deps       |                                      |  yarn-deps-prod  |
-#              |                  |                                      |                  |
-#              +---------+--------+                                      +----------+-------+
-#                        ^                                                          ^
-#                        |                                                          |
-#                        |                                                          |
-#              +---------+--------+                                                 |
-#              |                  |                                                 |
-#              |  builder-src     |<------------------------------+                 |
-#              |                  |                               |                 |
-#              +---+-----------+--+                               |                 |
-#                  ^           ^                                  |                 |
-#                  |           |                                  |                 |
-#                  |           |                                  |                 |
-#  +---------------+--+    +---+--------------+                                     |
-#  |                  |    |                  |                                     |
-#  |  builder-client  |    |  builder-server  |                                     |
-#  |                  |    |                  |                                     |
-#  +---------------+--+    +---+--------------+                                     |
-#                  ^           ^                                  ^                 |
-#                  |           |                                  |                 |
-#                  |           |                                  |                 |
-#              +---+-----------+--+                               |                 |
-#              |                  |-------------------------------+                 |
-#              |  builder         +<------------------------------------------+     |
-#              |                  |                                           |     |
-#              +--------+---------+                                           |     |
-#                       ^                                                     |     |
-#                       |                                                     |     |
-#                       |                                                     |     |
-#              +--------+---------+                                       +---+-----+--------+
-#              |                  |                                       |                  |
-#              |  electron-runner |                                       |  production      |
-#              |                  |                                       |                  |
-#              +------------------+                                       +------------------+
-
 # ---------------------------------------------------------
 # Base build dependencies
 # ---------------------------------------------------------
-FROM node:18.15.0-alpine3.17 as builder-base
+FROM node:18.15-alpine as builder-base
 
 WORKDIR /app
 
-# Install system dependencies
 RUN apk --no-cache --quiet add \
   bash \
   build-base \
-  curl \
+  dumb-init \
   git
 
-# ---------------------------------------------------------
-# Yarn base
-# ---------------------------------------------------------
-FROM builder-base as yarn-base
-
-# Copy files required for installation of application dependencies
+# Copy files required to install application dependencies
 COPY package.json yarn.lock ./
 COPY patches ./patches
 
-# ---------------------------------------------------------
-# Yarn dependencies
-# ---------------------------------------------------------
-FROM yarn-base as yarn-deps
-
-RUN --mount=type=cache,id=yarndev,target=/usr/local/share/.cache \
-  --mount=type=cache,id=cypress,sharing=locked,target=/root/.cache/Cypress \
-  yarn install --frozen-lockfile --quiet
-
-# ---------------------------------------------------------
-# Yarn dependencies
-# ---------------------------------------------------------
-FROM yarn-base as yarn-deps-prod
-
-RUN --mount=type=cache,id=yarnprod,target=/usr/local/share/.cache \
-  --mount=type=cache,id=cypress,sharing=locked,target=/root/.cache/Cypress \
-  yarn install --production --frozen-lockfile --quiet
-
-# ---------------------------------------------------------
-# Builder with source code
-# ---------------------------------------------------------
-FROM yarn-deps as builder-src
+# Install packages
+RUN yarn install --production --frozen-lockfile --quiet && \
+  mv node_modules /opt/node_modules.prod && \
+  yarn install --frozen-lockfile --quiet && \
+  yarn cache clean --force
 
 # Copy application code
-COPY __mocks__ ./__mocks__
-COPY cypress ./cypress
-COPY data ./data
-COPY patches ./patches
-COPY src ./src
-COPY webpack ./webpack
-COPY .git ./.git
-COPY .env.oss \
-  .env.test \
-  .eslintrc.js \
-  .nvmrc \
-  .prettierignore \
-  .swcrc.js \
-  babel.config.js \
-  cypress.config.ts \
-  dangerfile.ts \
-  jest.config.js \
-  package.json \
-  relay.config.js \
-  relativeci.config.js \
-  tsconfig.json \
-  yarn.lock \
-  ./
+COPY  . ./
 
-# ---------------------------------------------------------
-# Compile client
-# ---------------------------------------------------------
-FROM builder-src as builder-client
+RUN yarn build
 
-RUN yarn build:client:prod
+# # Copy application code
+# COPY __mocks__ ./__mocks__
+# COPY cypress ./cypress
+# COPY data ./data
+# COPY patches ./patches
+# COPY src ./src
+# COPY webpack ./webpack
+# COPY .git ./.git
+# COPY .env.oss \
+#   .env.test \
+#   .eslintrc.js \
+#   .nvmrc \
+#   .prettierignore \
+#   .swcrc.js \
+#   babel.config.js \
+#   cypress.config.ts \
+#   dangerfile.ts \
+#   jest.config.js \
+#   package.json \
+#   relay.config.js \
+#   relativeci.config.js \
+#   tsconfig.json \
+#   yarn.lock \
+#   ./
 
-# ---------------------------------------------------------
-# Compile server
-# ---------------------------------------------------------
-FROM builder-src as builder-server
+# # ---------------------------------------------------------
+# # All development assets
+# # ---------------------------------------------------------
+# FROM builder-src as builder
 
-# Build application
-RUN yarn build:server:prod
+# # Scripts
+# COPY ./scripts ./scripts
 
-# ---------------------------------------------------------
-# All development assets
-# ---------------------------------------------------------
-FROM builder-src as builder
+# # Client assets
+# COPY --from=builder-client /app/manifest.json .
+# COPY --from=builder-client /app/public ./public
+# COPY --from=builder-client /app/src ./src
 
-# Scripts
-COPY ./scripts ./scripts
-
-# Client assets
-COPY --from=builder-client /app/manifest.json .
-COPY --from=builder-client /app/public ./public
-COPY --from=builder-client /app/src ./src
-
-# Server assets
-COPY --from=builder-server /app/server.dist.js .
-COPY --from=builder-server /app/server.dist.js.map .
-
-# ---------------------------------------------------------
-# Image with xvfb to run Electron with a virtual display
-# ---------------------------------------------------------
-FROM node:18.15.0-bullseye-slim as electron-runner
-
-WORKDIR /app
-
-# Install electron deps
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  curl \
-  libgtk2.0-0 \
-  libgtk-3-0 \
-  libgbm-dev \
-  libnotify-dev \
-  libgconf-2-4 \
-  libnss3 \
-  libxss1 \
-  libasound2 \
-  libxtst6 \
-  xauth \
-  xvfb \
-  && rm -rf /var/lib/apt/lists/*
-
-COPY --from=builder /app /app
+# # Server assets
+# COPY --from=builder-server /app/server.dist.js .
+# COPY --from=builder-server /app/server.dist.js.map .
 
 # ---------------------------------------------------------
 # Release image
@@ -204,20 +91,20 @@ USER deploy
 COPY --chown=deploy:deploy --from=yarn-deps-prod /app/node_modules ./node_modules
 
 # Base code
-COPY --chown=deploy:deploy --from=builder /app/data ./data
-COPY --chown=deploy:deploy --from=builder /app/package.json .
-COPY --chown=deploy:deploy --from=builder /app/scripts ./scripts
-COPY --chown=deploy:deploy --from=builder /app/webpack ./webpack
-COPY --chown=deploy:deploy --from=builder /app/yarn.lock .
+COPY --chown=deploy:deploy --from=builder-base /app/data ./data
+COPY --chown=deploy:deploy --from=builder-base /app/package.json .
+COPY --chown=deploy:deploy --from=builder-base /app/scripts ./scripts
+COPY --chown=deploy:deploy --from=builder-base /app/webpack ./webpack
+COPY --chown=deploy:deploy --from=builder-base /app/yarn.lock .
 
 # Client assets
-COPY --chown=deploy:deploy --from=builder /app/manifest.json .
-COPY --chown=deploy:deploy --from=builder /app/public ./public
-COPY --chown=deploy:deploy --from=builder /app/src ./src
+COPY --chown=deploy:deploy --from=builder-base /app/manifest.json .
+COPY --chown=deploy:deploy --from=builder-base /app/public ./public
+COPY --chown=deploy:deploy --from=builder-base /app/src ./src
 
 # Server assets
-COPY --chown=deploy:deploy --from=builder /app/server.dist.js .
-COPY --chown=deploy:deploy --from=builder /app/server.dist.js.map .
+COPY --chown=deploy:deploy --from=builder-base /app/server.dist.js .
+COPY --chown=deploy:deploy --from=builder-base /app/server.dist.js.map .
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
