@@ -253,22 +253,11 @@ workflows:
 
       - artsy-remote-docker/build:
           <<: *not_staging_or_release
-          name: build
+          name: build-and-push-docker
           context:
             - bundle-github
             - hokusai
           executor: hokusai/beta
-
-      # Staging
-      - hokusai/push:
-          name: push-staging-image
-          <<: *only_main
-          requires:
-            - check-pr
-            - detect-secrets
-            - relay
-            - type-check
-            - test
 
       - hokusai/deploy-staging:
           <<: *only_main
@@ -276,7 +265,8 @@ workflows:
           project-name: force
           executor: hokusai/beta
           requires:
-            - push-staging-image
+            - type-check
+            - test
           post-steps:
             - slack/notify:
                 event: fail
