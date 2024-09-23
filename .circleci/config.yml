@@ -215,7 +215,7 @@ workflows:
 
       # Danger
       - node/run:
-          <<: *not_staging_or_release
+          <<: *not_main_or_staging_or_release
           context:
             - danger-github-oss
           name: check-pr
@@ -225,7 +225,7 @@ workflows:
 
       # Relay
       - node/run:
-          <<: *not_staging_or_release
+          <<: *not_main_or_staging_or_release
           name: relay
           pkg-manager: yarn
           yarn-run: relay
@@ -245,14 +245,14 @@ workflows:
 
       # Bundle stats for PRs
       - node/run:
-          <<: *not_staging_or_release
+          <<: *not_main_or_staging_or_release
           name: bundle-stats
           context: hokusai
           pkg-manager: yarn
           yarn-run: bundle-stats
 
       - artsy-remote-docker/build:
-          <<: *not_staging_or_release
+          <<: *not_main_or_staging_or_release
           name: build-and-push-docker
           context:
             - bundle-github
