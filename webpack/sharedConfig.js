@@ -44,8 +44,6 @@ export const resolve = {
 }
 
 export const externals = {
-  // Required because the cacheMiddleware include redis
-  redis: "redis",
   // TODO: Needs research to determine if if this is still required
   request: "request",
   // Required because getAsyncStorage isn't using async import()

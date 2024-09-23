@@ -59,7 +59,7 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
      * only have access to the initial req.url _entrypoint_; from there our
      * client-side SPA intializes, which manages URL updates. Setting headers
      * at the relay network level lets us configure queries to be sent to the
-     * graphql proxy (and redis cache).
+     * graphql backend and CDN.
      */
     if (url) {
       cacheHeaders[RELAY_CACHE_PATH_HEADER_KEY] = url
