@@ -74,6 +74,10 @@ describe("SuggestedArtworksShelf", () => {
       }),
     })
     expect(screen.queryByTestId("ShelfSuggestedArtworks")).toBeInTheDocument()
+    expect(
+      screen.queryByText(/You may be interested in these similar works/)
+    ).toBeInTheDocument()
+    expect(screen.getByText("See more")).toBeInTheDocument()
   })
 
   it("renders nothing if there are no related artworks", () => {
@@ -85,5 +89,11 @@ describe("SuggestedArtworksShelf", () => {
     expect(
       screen.queryByTestId("ShelfSuggestedArtworks")
     ).not.toBeInTheDocument()
+    expect(screen.queryByText("See more")).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(/You may be interested in these similar works/)
+    ).not.toBeInTheDocument()
   })
+
+  describe("suggested artworks section", () => {})
 })

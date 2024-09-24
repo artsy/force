@@ -2,22 +2,135 @@ version: 2.1
 
 orbs:
   artsy-remote-docker: artsy/remote-docker@volatile
+  cypress: cypress-io/cypress@3.4.0
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.14.0
-  yarn: artsy/yarn@6.5.0
+  node: circleci/node@5.3.0
+
+executors:
+  node-executor:
+    docker:
+      - image: cimg/node:18.15.0
+
+not_main_or_staging_or_release: &not_main_or_staging_or_release
+  filters:
+    branches:
+      ignore:
+        - main
+        - staging
+        - release
+
+not_staging_or_release: &not_staging_or_release
+  filters:
+    branches:
+      ignore:
+        - staging
+        - release
+
+only_main: &only_main
+  context:
+    - hokusai
+    - slack-orb
+  filters:
+    branches:
+      only: main
+
+only_release: &only_release
+  context:
+    - hokusai
+    - slack-orb
+  filters:
+    branches:
+      only: release
 
 jobs:
-  validate_production_schema:
+  detect-secrets:
     docker:
-      - image: cimg/node:18.20.4
+      - image: artsy/detect-secrets:ci # pragma: allowlist secret
+    resource_class: small
+    working_directory: /usr/src/app
+    steps:
+      - checkout
+      - run: git ls-files -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline --verbose
+
+  test:
+    executor: node-executor
+    working_directory: ~/app
+    parallelism: 6
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Run Jest Tests
+          command: |
+            yarn test --reporters=default --reporters=jest-junit --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: reports/junit
+            JEST_JUNIT_ADD_FILE_ATTRIBUTE: "true"
+      - store_artifacts:
+          path: ./reports/junit/
+      - store_test_results:
+          path: ./reports/junit/
+
+  smoke-tests:
+    executor: cypress/default
+    working_directory: ~/app
+    parallelism: 6
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
+      - node/install-packages:
+          pkg-manager: yarn
+      - restore_cache:
+          keys:
+            - cypress-cache-{{ .Branch }}-{{ checksum "package.json" }}
+            - cypress-cache-
+      - run:
+          name: Install Cypress
+          command: |
+            npx cypress install
+      - save_cache:
+          paths:
+            - ~/.cache/Cypress
+          key: cypress-cache-{{ .Branch }}-{{ checksum "package.json" }}
+      - run:
+          name: Run Smoke Tests
+          command: |
+            if [ ! -f ".env" ]; then
+              echo "Using .env.oss as .env"
+              cp .env.oss .env
+            fi
+
+            # Remove `nohup` to diagnose server start issues
+            nohup yarn start &
+
+            while ! curl --output /dev/null --silent --head --fail http://localhost:4000; do
+              sleep 1
+            done
+
+            TESTS=$(circleci tests glob "cypress/e2e/**/*" | circleci tests split | paste -sd ',')
+            npx cypress run --spec $TESTS
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
+
+  validate_production_schema:
+    executor: node-executor
     parameters:
       # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
       dev:
         type: string
         default: C02BC3HEJ
     steps:
-      - yarn/setup
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
           name: Validate Production Schema
           command: node scripts/validateSchemas.js production
@@ -79,24 +192,31 @@ jobs:
               ]
             }
 
+  smoke-test-on-live-env:
+    docker:
+      - image: cypress/included:12.17.4
+        environment:
+          TERM: xterm
+    working_directory: /usr/src/app
+    parallelism: 6
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      - run: |
+          TESTS=$(circleci tests glob "cypress/e2e/**/*" | circleci tests split | paste -sd ',')
+          ./node_modules/.bin/cypress run --config baseUrl=$SMOKE_TEST_TARGET --spec $TESTS
+      - store_artifacts:
+          path: cypress/screenshots
+
   create_or_update_review_app:
     executor: hokusai/beta
-    parameters:
-      artsy_docker_host:
-        type: string
-        default: docker.artsy.net
-      artsy_docker_port:
-        type: integer
-        default: 2376
-      artsy_s3_path_root:
-        type: string
-        default: artsy-dockerd
     steps:
       - hokusai/setup
-      - artsy-remote-docker/setup-artsy-remote-docker:
-          artsy_docker_host: << parameters.artsy_docker_host >>
-          artsy_docker_port: << parameters.artsy_docker_port >>
-          artsy_s3_path_root: << parameters.artsy_s3_path_root >>
+      - add_ssh_keys
+      - checkout
+      - setup_remote_docker
       - hokusai/install-aws-iam-authenticator
       - hokusai/configure-hokusai
       - run:
@@ -119,255 +239,61 @@ jobs:
               ./scripts/build_review_app.sh $review_app_name
             fi
 
-  # TODO: Experiment. Remove when done testing SWC compiler
-  test:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    parallelism: 6
-    environment:
-      JEST_JUNIT_OUTPUT_DIR: /app/reports/junit/
-      JEST_JUNIT_UNIQUE_OUTPUT_NAME: true
-      # TODO: Remove this flag once things have stabilized
-      EXPERIMENTAL_SWC_COMPILER_ENABLED: false
-    steps:
-      - run: yarn test --reporters=default --reporters=jest-junit --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
-      - store_artifacts:
-          path: /app/reports/junit/
-      - store_test_results:
-          path: /app/reports/junit/
-
-  type-check:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    environment:
-      - NODE_ENV: test
-    steps:
-      - run: yarn type-check
-
-  check-pr:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    steps:
-      - run:
-          name: Danger
-          command: yarn danger ci --verbose
-
-  relay-check:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    steps:
-      - run: yarn relay
-
-  acceptance:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    parallelism: 6
-    steps:
-      - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
-      - store_artifacts:
-          path: cypress/videos
-      - store_artifacts:
-          path: cypress/screenshots
-
-  detect-secrets:
-    docker:
-      - image: artsy/detect-secrets:ci # pragma: allowlist secret
-    resource_class: small
-    working_directory: /usr/src/app
-    steps:
-      - checkout
-      - run: git ls-files -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline --verbose
-
-  smoke-test-on-live-env:
-    docker:
-      - image: cypress/included:12.17.4
-        environment:
-          TERM: xterm
-    working_directory: ~/app
-    parallelism: 6
-    steps:
-      - checkout
-      - run:
-          name: Install Dependencies
-          command: yarn install
-      - run: |
-          TESTS=$(circleci tests glob "cypress/e2e/**/*" | circleci tests split | paste -sd ',')
-          ./node_modules/.bin/cypress run --config baseUrl=$SMOKE_TEST_TARGET --spec $TESTS
-      - store_artifacts:
-          path: cypress/screenshots
-
-  bundle-stats:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    steps:
-      - run: yarn bundle-report:client --json webpack-stats.json
-      - run: npx relative-ci-agent
-
-not_main_or_staging_or_release: &not_main_or_staging_or_release
-  filters:
-    branches:
-      ignore:
-        - main
-        - staging
-        - release
-
-not_staging_or_release: &not_staging_or_release
-  filters:
-    branches:
-      ignore:
-        - staging
-        - release
-
-only_main: &only_main
-  context:
-    - hokusai
-    - slack-orb
-  filters:
-    branches:
-      only: main
-
-only_release: &only_release
-  context:
-    - hokusai
-    - slack-orb
-  filters:
-    branches:
-      only: release
-
 workflows:
   default:
     jobs:
       - detect-secrets:
           <<: *not_main_or_staging_or_release
 
-      # Main build
-      - artsy-remote-docker/buildkit-build:
-          <<: *not_staging_or_release
-          context: hokusai
-          executor: hokusai/beta
-          name: builder-image-build
-          pre-steps:
-            - run:
-                command: echo 'export BUILD_TARGET="builder";' >> $BASH_ENV
+      # Danger
+      - node/run:
+          <<: *not_main_or_staging_or_release
+          context:
+            - danger-github-oss
+          name: check-pr
+          pkg-manager: yarn
+          yarn-run: danger:ci
+          version: 18.15.0
 
-      - artsy-remote-docker/buildkit-push:
-          <<: *not_staging_or_release
-          context: hokusai
-          executor: hokusai/beta
-          name: builder-image-push
-          requires:
-            - builder-image-build
-          pre-steps:
-            - run:
-                command: echo 'export BUILD_TARGET="builder";' >> $BASH_ENV
+      # Relay
+      - node/run:
+          <<: *not_main_or_staging_or_release
+          name: relay
+          pkg-manager: yarn
+          yarn-run: relay
+          version: 18.15.0
 
-      # Electron Runner build
-      - artsy-remote-docker/buildkit-build:
+      # Type-check
+      - node/run:
           <<: *not_staging_or_release
-          context: hokusai
-          executor: hokusai/beta
-          name: electron-runner-image-build
-          requires:
-            - builder-image-build
-          pre-steps:
-            - run:
-                command: echo 'export BUILD_TARGET="electron-runner";' >> $BASH_ENV
+          name: type-check
+          pkg-manager: yarn
+          yarn-run: type-check
+          version: 18.15.0
 
-      - artsy-remote-docker/buildkit-push:
-          <<: *not_staging_or_release
-          context: hokusai
-          executor: hokusai/beta
-          name: electron-runner-image-push
-          requires:
-            - electron-runner-image-build
-          pre-steps:
-            - run:
-                command: echo 'export BUILD_TARGET="electron-runner";' >> $BASH_ENV
-
-      # Test steps
+      # Jest Tests
       - test:
           <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - builder-image-push
 
-      - type-check:
-          <<: *not_staging_or_release
+      # Bundle stats for PRs
+      - node/run:
+          <<: *not_main_or_staging_or_release
+          name: bundle-stats
           context: hokusai
-          requires:
-            - builder-image-push
+          pkg-manager: yarn
+          yarn-run: bundle-stats
 
-      - check-pr:
+      # Cypress e2e tests
+      - smoke-tests:
           <<: *not_staging_or_release
+
+      - artsy-remote-docker/build:
+          <<: *not_staging_or_release
+          name: build-and-push-docker
           context:
+            - bundle-github
             - hokusai
-            - danger-github-oss
-          requires:
-            - builder-image-push
-
-      - relay-check:
-          <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - builder-image-push
-
-      - acceptance:
-          <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - electron-runner-image-push
-
-      - bundle-stats:
-          <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - builder-image-push
-
-      # Staging
-      - artsy-remote-docker/buildkit-build:
-          <<: *only_main
-          context: hokusai
           executor: hokusai/beta
-          name: production-image-build
-          requires:
-            - builder-image-build
-
-      - artsy-remote-docker/buildkit-push:
-          <<: *only_main
-          context: hokusai
-          executor: hokusai/beta
-          name: production-image-push
-          requires:
-            - test
-            - type-check
-            - relay-check
-            - acceptance
-            - bundle-stats
-            - production-image-build
 
       - hokusai/deploy-staging:
           <<: *only_main
@@ -375,7 +301,10 @@ workflows:
           project-name: force
           executor: hokusai/beta
           requires:
-            - production-image-push
+            - build-and-push-docker
+            - type-check
+            - test
+            - smoke-tests
           post-steps:
             - slack/notify:
                 event: fail

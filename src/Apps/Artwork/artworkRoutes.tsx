@@ -1,9 +1,7 @@
 import loadable from "@loadable/component"
-import { HttpError } from "found"
 import { graphql } from "react-relay"
 import { updateContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 import { RouteProps } from "System/Router/Route"
-import { getFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const ArtworkApp = loadable(
   () => import(/* webpackChunkName: "artworkBundle" */ "./ArtworkApp"),
@@ -33,16 +31,8 @@ export const artworkRoutes: RouteProps[] = [
       const requestError = (props as any).artworkResult?.requestError
       const requestErrorStatusCode = requestError?.statusCode
 
-      const enableCustomErrorPage = getFeatureFlag(
-        "onyx_custom_artwork_error_page"
-      )
-
       if (requestErrorStatusCode) {
-        if (enableCustomErrorPage) {
-          updateContext("statusCode", requestErrorStatusCode)
-        } else {
-          throw new HttpError(requestErrorStatusCode)
-        }
+        updateContext("statusCode", requestErrorStatusCode)
       }
 
       return <Component {...props} />

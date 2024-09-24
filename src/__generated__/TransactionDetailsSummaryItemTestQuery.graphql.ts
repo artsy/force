@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7fc934c591da9260bfbbf5a756984296>>
+ * @generated SignedSource<<3b7b401ab61f6310dc65d8c2d9392342>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
+export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PAYMENT_FAILED" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
@@ -562,6 +562,7 @@ return {
             "CANCELED",
             "FULFILLED",
             "IN_TRANSIT",
+            "PAYMENT_FAILED",
             "PENDING",
             "PROCESSING",
             "PROCESSING_APPROVAL",

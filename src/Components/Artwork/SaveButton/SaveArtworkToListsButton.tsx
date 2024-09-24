@@ -143,6 +143,7 @@ export const SaveArtworkToListsButtonQueryRenderer: FC<SaveArtworkToListsButtonQ
         <SaveButtonBase
           isSaved={false}
           artwork={{} as SaveArtworkToListsButton_artwork$data}
+          testID="saveButtonPlaceholder"
         />
       }
       variables={{ id }}
@@ -152,6 +153,7 @@ export const SaveArtworkToListsButtonQueryRenderer: FC<SaveArtworkToListsButtonQ
             <SaveButtonBase
               isSaved={false}
               artwork={{} as SaveArtworkToListsButton_artwork$data}
+              testID="saveButtonPlaceholder"
             />
           )
         }

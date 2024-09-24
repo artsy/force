@@ -1,5 +1,4 @@
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { getFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export function getWorksForSaleRouteVariables({ artistID }, { location }) {
   // FIXME: The initial render includes `location` in props, but subsequent
@@ -22,12 +21,10 @@ export function getWorksForSaleRouteVariables({ artistID }, { location }) {
     "ARTIST_SERIES",
   ]
 
-  const includeBlurHash = !!getFeatureFlag("diamond_blurhash-on-artist-pages")
-
   return {
     input: filterParams,
     aggregations,
     artistID,
-    includeBlurHash,
+    includeBlurHash: false,
   }
 }

@@ -317,7 +317,6 @@ type Alert {
   ): String!
   forSale: Boolean
   formattedPriceRange: String
-  hasRecentlyEnabledUserSearchCriteria: Boolean
   height: String
   href: String
 
@@ -348,7 +347,6 @@ type Alert {
   settings: AlertSettings!
   sizes: [String]
   summary: JSON
-  totalUserSearchCriteriaCount: Int
   width: String
 }
 
@@ -427,38 +425,6 @@ enum AlertsConnectionSortEnum {
 
 type AlertsCounts {
   totalUserSearchCriteriaCount: Int
-}
-
-# A connection to a list of items.
-type AlertsSummaryArtistConnection {
-  # A list of edges.
-  edges: [AlertsSummaryArtistEdge]
-  pageCursors: PageCursors!
-
-  # Information to aid in pagination.
-  pageInfo: PageInfo!
-  totalCount: Int
-}
-
-# An edge in a connection.
-type AlertsSummaryArtistEdge {
-  counts: AlertsSummaryCounts
-
-  # A cursor for use in pagination
-  cursor: String!
-  isRecentlyEnabled: Boolean
-
-  # The item at the end of the edge
-  node: Artist
-  topHit: Alert
-}
-
-type AlertsSummaryCounts {
-  totalUserSearchCriteriaCount: Int
-  totalWithAdditionalGeneIdsCount: Int
-  totalWithAttributionClassCount: Int
-  totalWithOtherMetadataCount: Int
-  totalWithPriceRangeCount: Int
 }
 
 type Algolia {
@@ -1505,15 +1471,6 @@ type ArticleUnpublishedArtworkPartner {
 }
 
 type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Searchable {
-  alertsConnection(
-    after: String
-    before: String
-    first: Int
-    last: Int
-    page: Int
-    size: Int
-    sort: String
-  ): AlertConnection
   alternateNames: [String]
   articlesConnection(
     after: String
@@ -5569,6 +5526,98 @@ type CommerceOfferSubmittedEvent implements CommerceEventInterface {
   offer: CommerceOffer!
 }
 
+type CommerceOptInFailure {
+  mutationError: GravityMutationError
+}
+
+input CommerceOptInMutationInput {
+  # whether or not there is a CoA
+  certificateOfAuthenticity: Boolean
+  clientMutationId: String
+
+  # whether or not the CoA is by an authenticating body
+  coaByAuthenticatingBody: Boolean
+
+  # whether or not the CoA is by the gallery
+  coaByGallery: Boolean
+
+  # whether or not the artwork is set to exact price
+  exactPrice: Boolean
+
+  # whether or not it is framed
+  framed: Boolean
+
+  # ID of the partner
+  id: String!
+
+  # whether or not pick up it is pick up available
+  pickupAvailable: Boolean
+}
+
+type CommerceOptInMutationPayload {
+  clientMutationId: String
+  commerceOptInMutationOrError: CommerceOptInMutationType
+}
+
+union CommerceOptInMutationType = CommerceOptInFailure | CommerceOptInSuccess
+
+type CommerceOptInReportFailure {
+  mutationError: GravityMutationError
+}
+
+input CommerceOptInReportMutationInput {
+  # whether it should be updated to CoA
+  certificateOfAuthenticity: Boolean
+  clientMutationId: String
+
+  # whether or not the CoA is by an authenticating body
+  coaByAuthenticatingBody: Boolean
+
+  # whether or not the CoA is by the gallery
+  coaByGallery: Boolean
+
+  # whether the report will contain data for eligible or non-eligible artworks.
+  eligible: Boolean
+
+  # whether or not the artworks should be set to exact price
+  exactPrice: Boolean
+
+  # whether or not it should be set to framed
+  framed: Boolean
+
+  # ID of the partner
+  id: String!
+
+  # whether or not pick up should be available
+  pickupAvailable: Boolean
+}
+
+type CommerceOptInReportMutationPayload {
+  clientMutationId: String
+  commerceOptInReportMutationOrError: CommerceOptInReportMutationType
+}
+
+union CommerceOptInReportMutationType =
+    CommerceOptInReportFailure
+  | CommerceOptInReportSuccess
+
+type CommerceOptInReportResponse {
+  message: String
+}
+
+type CommerceOptInReportSuccess {
+  createdCommerceOptInReport: CommerceOptInReportResponse
+}
+
+type CommerceOptInResponse {
+  count: Int
+  ids: [String]
+}
+
+type CommerceOptInSuccess {
+  updatedCommerceOptIn: CommerceOptInResponse
+}
+
 # Order
 interface CommerceOrder {
   # Whether Artsy collects taxes (e.g., sales tax or VAT) on this order.
@@ -5810,6 +5859,9 @@ enum CommerceOrderDisplayStateEnum {
 
   # order has been collected and is with shipper
   IN_TRANSIT
+
+  # order is submitted by buyer but payment processing failed
+  PAYMENT_FAILED
 
   # order is still pending submission by buyer
   PENDING
@@ -13246,6 +13298,16 @@ type Mutation {
     input: CommerceFulfillAtOnceInput!
   ): CommerceFulfillAtOncePayload
 
+  # Opt all eligible artworks into BNMO
+  commerceOptIn(
+    input: CommerceOptInMutationInput!
+  ): CommerceOptInMutationPayload
+
+  # Generate CommerceOptIn report about artworks eligibility for a given partner
+  commerceOptInReport(
+    input: CommerceOptInReportMutationInput!
+  ): CommerceOptInReportMutationPayload
+
   # Selects an ARTA shipping option for an order, updating the LineItem#selected_shipping_quote_id.
   commerceSelectShippingOption(
     # Parameters for SelectShippingOption
@@ -14504,19 +14566,6 @@ type Partner implements Node {
     page: Int
     size: Int
   ): PartnerAlertsConnection
-  alertsSummaryArtistsConnection(
-    activeInventory: Boolean
-    after: String
-    before: String
-    first: Int
-    hasMedium: Boolean
-    hasPrice: Boolean
-    hasRarity: Boolean
-    last: Int
-    page: Int
-    represented: Boolean
-    size: Int
-  ): AlertsSummaryArtistConnection
 
   # A connection of all artists from a Partner.
   allArtistsConnection(
