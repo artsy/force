@@ -67,7 +67,7 @@ jobs:
           command: |
             yarn test --reporters=default --reporters=jest-junit --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
           environment:
-            JEST_JUNIT_OUTPUT_DIR: reports
+            JEST_JUNIT_OUTPUT_DIR: reports/junit
             JEST_JUNIT_ADD_FILE_ATTRIBUTE: "true"
       - store_artifacts:
           path: ./reports/junit/
@@ -301,8 +301,10 @@ workflows:
           project-name: force
           executor: hokusai/beta
           requires:
+            - build-and-push-docker
             - type-check
             - test
+            - smoke-tests
           post-steps:
             - slack/notify:
                 event: fail
