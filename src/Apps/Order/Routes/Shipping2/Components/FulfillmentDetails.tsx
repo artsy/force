@@ -215,16 +215,21 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
       )
 
       if (saveFulfillmentDetailsResult.data) {
-        if (
+        const requiresShippingQuotes =
           saveFulfillmentDetailsResult.data.requiresArtsyShippingToDestination
-        ) {
+
+        const isAutomaticSave =
+          values.fulfillmentType === FulfillmentType.SHIP &&
+          shippingContext.state.shippingFormMode === "saved_addresses"
+
+        if (requiresShippingQuotes) {
           shippingContext.actions.setStage("shipping_quotes")
-        } else if (shippingContext.state.shippingFormMode === "new_address") {
-          // Advance to payment
-          router.push(`/orders/${orderData.internalID}/payment`)
-        } else {
+        } else if (isAutomaticSave) {
           // Don't advance if we're using saved addresses; instead wait for click
           shippingContext.actions.setStage("fulfillment_details_saved")
+        } else {
+          // Advance to payment
+          router.push(`/orders/${orderData.internalID}/payment`)
         }
       } else {
         resetSelectedSavedAddress()
