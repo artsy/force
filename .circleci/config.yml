@@ -17,7 +17,7 @@ not_main_or_staging_or_release: &not_main_or_staging_or_release
   filters:
     branches:
       ignore:
-        - main2
+        - main
         - staging
         - release
 
@@ -34,7 +34,7 @@ only_main: &only_main
     - slack-orb
   filters:
     branches:
-      only: main2
+      only: main
 
 only_release: &only_release
   context:
@@ -219,7 +219,6 @@ jobs:
       - setup_remote_docker
       - hokusai/install-aws-iam-authenticator
       - hokusai/configure-hokusai
-      # - run: hokusai registry pull --tag "$CIRCLE_SHA1"
       - run:
           name: Install jq
           command: curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > /usr/local/bin/jq

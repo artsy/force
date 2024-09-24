@@ -1,6 +1,3 @@
-# ---------------------------------------------------------
-# Base build dependencies
-# ---------------------------------------------------------
 FROM node:18.15-alpine as builder-base
 
 WORKDIR /app
@@ -25,48 +22,6 @@ RUN yarn install --production --frozen-lockfile --quiet && \
 COPY  . ./
 
 RUN yarn build
-
-# # Copy application code
-# COPY __mocks__ ./__mocks__
-# COPY cypress ./cypress
-# COPY data ./data
-# COPY patches ./patches
-# COPY src ./src
-# COPY webpack ./webpack
-# COPY .git ./.git
-# COPY .env.oss \
-#   .env.test \
-#   .eslintrc.js \
-#   .nvmrc \
-#   .prettierignore \
-#   .swcrc.js \
-#   babel.config.js \
-#   cypress.config.ts \
-#   dangerfile.ts \
-#   jest.config.js \
-#   package.json \
-#   relay.config.js \
-#   relativeci.config.js \
-#   tsconfig.json \
-#   yarn.lock \
-#   ./
-
-# # ---------------------------------------------------------
-# # All development assets
-# # ---------------------------------------------------------
-# FROM builder-src as builder
-
-# # Scripts
-# COPY ./scripts ./scripts
-
-# # Client assets
-# COPY --from=builder-client /app/manifest.json .
-# COPY --from=builder-client /app/public ./public
-# COPY --from=builder-client /app/src ./src
-
-# # Server assets
-# COPY --from=builder-server /app/server.dist.js .
-# COPY --from=builder-server /app/server.dist.js.map .
 
 # ---------------------------------------------------------
 # Release image
