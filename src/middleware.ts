@@ -1,7 +1,3 @@
-// Required for @artsy/react-html-parser which is included by @artsy/reaction
-// TODO: Find a way to remove JSDOM from our server.
-import "./Server/DOMParser"
-
 // Setup sharify
 // TODO: Export a function instead of loading on import.
 import "./Server/setup_sharify"
