@@ -46,6 +46,10 @@ export const CookieConsentManager: FC<CookieConsentManagerProps> = ({
     setMode("Idle")
   }
 
+  if (!getENV("SEGMENT_WRITE_KEY")) {
+    return <>{children}</>
+  }
+
   return (
     <CookieConsentManagerProvider openConsentManager={handleManage}>
       {children}
