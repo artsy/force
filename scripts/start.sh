@@ -11,7 +11,14 @@ if [ "${NODE_ENV}" != "production" ]; then
   fi
   OPT+=(--preserve-symlinks)
 
-  yarn concurrently --kill-others 'yarn relay --watch' 'node --max_old_space_size=3072 ./src/dev.js'
+  # Smoke Tests
+  if [ "$CIRCLECI" = "true" ]; then
+    exec node --max_old_space_size=3072 ./src/dev.js
+  # Dev
+  else
+    yarn concurrently --kill-others 'yarn relay --watch' 'node --max_old_space_size=3072 ./src/dev.js'
+  fi
+# Prod
 else
   exec node "${OPT[@]}" --no-experimental-fetch ./server.dist.js
 fi

@@ -1,7 +1,9 @@
 const Analytics = require("analytics-node")
 const { data: sd } = require("sharify")
 
-export const analytics = new Analytics(sd.SEGMENT_WRITE_KEY)
+export const analytics = sd.SEGMENT_WRITE_KEY
+  ? new Analytics(sd.SEGMENT_WRITE_KEY)
+  : null
 
 module.exports.setCampaign = function (req, _res, next) {
   if (!sd.SEGMENT_WRITE_KEY) {
