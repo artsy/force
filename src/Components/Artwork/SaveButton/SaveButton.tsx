@@ -56,6 +56,14 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
     }
   }
 
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault()
+
+    onClick?.(event)
+  }
+
   return (
     <Flex alignItems="center">
       {shouldDisplayLotCount && (
@@ -71,7 +79,7 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
         width={BTN_WIDTH}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        onClick={onClick}
+        onClick={handleClick}
       >
         {isSaved || isHovered ? (
           <HeartFillIcon
