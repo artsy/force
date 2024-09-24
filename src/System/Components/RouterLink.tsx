@@ -34,10 +34,10 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
     const systemContext = useSystemContext()
     const { router } = useRouter()
 
-    // Right now, prefetching on viewport enter is only enabled for logged-out users
+    // Right now, prefetching on viewport enter is only enabled for logged-in users
     // TODO: Remove feature flag
     const isPrefetchOnEnterEnabled =
-      useFeatureFlag("diamond_prefetch-on-enter") && !systemContext?.user
+      useFeatureFlag("diamond_prefetch-on-enter") && !!systemContext?.user
 
     const { prefetch } = usePrefetchRoute(to as string)
 
