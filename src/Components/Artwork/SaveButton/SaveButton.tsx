@@ -26,6 +26,7 @@ interface SaveButtonBaseProps {
     | { collectorSignals: null } // when used as a placeholder
   // `onClick` is optional when used as a placeholder
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  testID?: string
 }
 
 const BTN_HEIGHT = 18
@@ -35,6 +36,7 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
   isSaved,
   onClick,
   artwork,
+  testID = "saveButton",
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   const title = isSaved ? "Unsave" : "Save"
@@ -66,7 +68,7 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
 
       <Clickable
         aria-label={isSaved ? "Unsave" : "Save"}
-        data-test="saveButton"
+        data-test={testID}
         height={BTN_HEIGHT}
         width={BTN_WIDTH}
         onMouseEnter={handleMouseEnter}
@@ -178,14 +180,23 @@ export const SaveButtonQueryRenderer: React.FC<SaveButtonQueryRendererProps> = (
         }
       `}
       placeholder={
-        <SaveButtonBase isSaved={false} artwork={placeholderArtwork} />
+        <SaveButtonBase
+          isSaved={false}
+          artwork={placeholderArtwork}
+          testID="saveButtonPlaceholder"
+        />
       }
       variables={{ id }}
       render={({ error, props }) => {
         if (error || !props?.artwork) {
-          return <SaveButtonBase isSaved={false} artwork={placeholderArtwork} />
+          return (
+            <SaveButtonBase
+              isSaved={false}
+              artwork={placeholderArtwork}
+              testID="saveButtonPlaceholder"
+            />
+          )
         }
-
         return (
           <SaveButtonFragmentContainer
             artwork={props.artwork}
