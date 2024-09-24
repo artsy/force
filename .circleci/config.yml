@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   artsy-remote-docker: artsy/remote-docker@volatile
-  cypress: cypress-io/cypress@3.3.1
+  cypress: cypress-io/cypress@3.4.0
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.14.0
