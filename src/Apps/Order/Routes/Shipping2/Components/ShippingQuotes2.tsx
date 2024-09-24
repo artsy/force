@@ -85,6 +85,7 @@ export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({ order }) => {
 
       <RadioGroup
         onSelect={handleShippingQuoteSelected}
+        data-testid="shipping-quotes"
         defaultValue={shippingContext.state.selectedShippingQuoteID}
       >
         {quotes.map(shippingQuote => {
@@ -95,7 +96,6 @@ export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({ order }) => {
 
           return (
             <BorderedRadio
-              data-testid="shipping-quotes"
               value={shippingQuote?.id}
               key={shippingQuote?.id}
               position="relative"
