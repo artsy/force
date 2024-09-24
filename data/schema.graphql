@@ -5812,6 +5812,9 @@ enum CommerceOrderDisplayStateEnum {
   # order has been collected and is with shipper
   IN_TRANSIT
 
+  # order is submitted by buyer but payment processing failed
+  PAYMENT_FAILED
+
   # order is still pending submission by buyer
   PENDING
 
