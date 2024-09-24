@@ -70,9 +70,9 @@ jobs:
             JEST_JUNIT_OUTPUT_DIR: reports
             JEST_JUNIT_ADD_FILE_ATTRIBUTE: "true"
       - store_artifacts:
-          path: /app/reports/junit/
+          path: ./reports/junit/
       - store_test_results:
-          path: /app/reports/junit/
+          path: ./reports/junit/
 
   smoke-tests:
     executor: cypress/default

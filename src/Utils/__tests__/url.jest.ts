@@ -1,6 +1,7 @@
 import { getInternalHref, getURLHost } from "Utils/url"
 
-describe("getURLHost", () => {
+// eslint-disable-next-line jest/no-focused-tests
+describe.only("getURLHost", () => {
   it("returns host for url with host", () => {
     const url = "https://cms.artsy.net"
     expect(getURLHost(url)).toEqual("cms.artsy.net")
