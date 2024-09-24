@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd8ad75b2825aa9631c917525b17798b>>
+ * @generated SignedSource<<e8f1e1b05912806e8fd11f392a547c94>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,11 +40,6 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
     readonly endAt: string | null | undefined;
     readonly endedAt: string | null | undefined;
     readonly extendedBiddingEndAt: string | null | undefined;
-  } | null | undefined;
-  readonly savedSearch: {
-    readonly suggestedArtworksConnection: {
-      readonly totalCount: number | null | undefined;
-    } | null | undefined;
   } | null | undefined;
   readonly slug: string;
   readonly title: string | null | undefined;
@@ -221,35 +216,6 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtworkSavedSearch",
-      "kind": "LinkedField",
-      "name": "savedSearch",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArtworkConnection",
-          "kind": "LinkedField",
-          "name": "suggestedArtworksConnection",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "totalCount",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
       "alias": "myLotStandingManageAlerts",
       "args": null,
       "concreteType": "LotStanding",
@@ -273,6 +239,6 @@ return {
 };
 })();
 
-(node as any).hash = "2fcdc3df0c2513055399fe2990f25627";
+(node as any).hash = "4d2ae7bc1600789f93d042786b6b1f27";
 
 export default node;

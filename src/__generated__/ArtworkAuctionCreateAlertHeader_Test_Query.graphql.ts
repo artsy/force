@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7aee9d8d3434583db1d596614c56af21>>
+ * @generated SignedSource<<08dab0ed5bb32d70783bef516c6b32c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -259,35 +259,6 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "ArtworkSavedSearch",
-            "kind": "LinkedField",
-            "name": "savedSearch",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "ArtworkConnection",
-                "kind": "LinkedField",
-                "name": "suggestedArtworksConnection",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "totalCount",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
             "alias": "myLotStandingManageAlerts",
             "args": null,
             "concreteType": "LotStanding",
@@ -312,7 +283,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0ad3cea1aa902a8a74015373c6ac3a37",
+    "cacheID": "8325ea9e0655663de8b1b221516efe20",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -391,31 +362,13 @@ return {
         "artwork.saleArtwork.endedAt": (v5/*: any*/),
         "artwork.saleArtwork.extendedBiddingEndAt": (v5/*: any*/),
         "artwork.saleArtwork.id": (v6/*: any*/),
-        "artwork.savedSearch": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkSavedSearch"
-        },
-        "artwork.savedSearch.suggestedArtworksConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkConnection"
-        },
-        "artwork.savedSearch.suggestedArtworksConnection.totalCount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Int"
-        },
         "artwork.slug": (v6/*: any*/),
         "artwork.title": (v5/*: any*/)
       }
     },
     "name": "ArtworkAuctionCreateAlertHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isEligibleToCreateAlert\n  isInAuction\n  artistNames\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  savedSearch {\n    suggestedArtworksConnection {\n      totalCount\n    }\n  }\n  myLotStandingManageAlerts: myLotStanding {\n    isHighestBidder\n  }\n}\n"
+    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isEligibleToCreateAlert\n  isInAuction\n  artistNames\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  myLotStandingManageAlerts: myLotStanding {\n    isHighestBidder\n  }\n}\n"
   }
 };
 })();
