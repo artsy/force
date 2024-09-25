@@ -1,6 +1,5 @@
-import { Shelf, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette"
 import { ArtworkListsHeader } from "./Components/ArtworkListsHeader"
-import { ArtworkListItemFragmentContainer } from "./Components/ArtworkListItem"
 import { FC, useEffect, useMemo, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
@@ -15,6 +14,11 @@ import { Jump } from "Utils/Hooks/useJump"
 import { ArtworkListVisibilityProvider } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
 import { SavesArtworks } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworks"
 import { SavesArtworksHeaderQueryRenderer } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworksHeader"
+import {
+  ArtworkListItemsList,
+  ArtworkListItemsListPlaceholder,
+} from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListItemsList"
+import { ClientSuspense } from "Components/ClientSuspense"
 
 export const ARTWORK_LIST_SCROLL_TARGET_ID = "ArtworkListScrollTarget"
 
@@ -106,21 +110,9 @@ const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
 
       <Spacer y={4} />
 
-      <Shelf>
-        {artworkLists.map(artworkList => {
-          const isDefaultArtworkList =
-            artworkList.internalID === savedArtworksArtworkList?.internalID
-
-          return (
-            <ArtworkListItemFragmentContainer
-              key={artworkList.internalID}
-              item={artworkList}
-              isSelected={artworkList.internalID === selectedArtworkListId}
-              imagesLayout={isDefaultArtworkList ? "grid" : "stacked"}
-            />
-          )
-        })}
-      </Shelf>
+      <ClientSuspense fallback={<ArtworkListItemsListPlaceholder />}>
+        <ArtworkListItemsList />
+      </ClientSuspense>
 
       <Spacer y={4} />
 
