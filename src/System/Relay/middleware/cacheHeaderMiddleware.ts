@@ -75,13 +75,21 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
     const cacheControlHeader = (() => {
       const foundRoute = findRoutesByPath({ path: url ?? "" })[0]
 
+      // In a prefetch context, the custom TTL should come from the found route
+      // that is being prefetched, and not the current route.
+      // During a prefetch, the custom TTL of that found route, if any, is injected into
+      // the metadata. Thus, if metadata is present, we should use that TTL (even if undefined).
+      const ttl = req.cacheConfig.metadata
+        ? req.cacheConfig.metadata.maxAge
+        : foundRoute?.route?.serverCacheTTL
+
       switch (true) {
         case shouldSkipCDNCache(req, props?.user, foundRoute, url): {
           return { "Cache-Control": "no-cache" }
         }
-        case !!foundRoute?.route?.serverCacheTTL: {
+        case !!ttl: {
           return {
-            "Cache-Control": `max-age=${foundRoute.route.serverCacheTTL}`,
+            "Cache-Control": `max-age=${ttl}`,
           }
         }
         default: {
