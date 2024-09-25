@@ -1,5 +1,8 @@
-import { init, browserTracingIntegration } from "@sentry/browser"
-import { dedupeIntegration } from "@sentry/integrations"
+import {
+  init,
+  browserTracingIntegration,
+  dedupeIntegration,
+} from "@sentry/browser"
 import {
   ALLOWED_URLS,
   DENIED_URLS,

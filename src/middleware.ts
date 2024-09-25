@@ -39,7 +39,7 @@ import {
 // NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
 // see errors like "`CURRENT_USER` is undefined". We need more investigation
 // because this only appears in prod, under load, and seems fine on staging.
-import * as Sentry from "@sentry/node"
+import { init } from "@sentry/node"
 
 import { morganMiddleware } from "./Server/middleware/morgan"
 import { ensureSslMiddleware } from "./Server/middleware/ensureSsl"
@@ -73,12 +73,10 @@ export function initializeMiddleware(app) {
 
   // Setup error handling
   if (SENTRY_PRIVATE_DSN) {
-    Sentry.init({
+    init({
       dsn: SENTRY_PRIVATE_DSN,
       ignoreErrors: IGNORED_ERRORS,
     })
-
-    app.use(Sentry.Handlers.requestHandler())
   }
 
   // Cookie parser
