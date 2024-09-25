@@ -42,11 +42,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     const { viewer } = this.props
     const { searchConnection } = viewer
 
-    const {
-      pageInfo: { hasNextPage },
-    } = searchConnection!
-
-    if (hasNextPage) {
+    if (searchConnection?.pageInfo?.hasNextPage) {
       this.loadPage(this.state.page + 1)
     }
   }
@@ -61,7 +57,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
 
   getArtists = () => {
     const { viewer } = this.props
-    const artists = (viewer?.searchConnection?.edges ?? []).map(e => e!.node)
+    const artists = (viewer?.searchConnection?.edges ?? []).map(e => e?.node)
     return artists
   }
 
@@ -104,7 +100,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     return (
       <>
         {artists?.map((artist, index) => {
-          const { name, bio, imageUrl, internalID } = artist || {}
+          const { name, bio, imageUrl, coverArtwork, internalID } = artist || {}
 
           if (!name || !internalID) {
             return null
@@ -115,9 +111,9 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
               <GenericSearchResultItem
                 name={name}
                 description={bio ?? ""}
-                imageUrl={imageUrl ?? ""}
+                imageUrl={coverArtwork?.image?.src ?? imageUrl ?? ""}
                 entityType="Artist"
-                href={artist?.href!}
+                href={artist?.href as string}
                 index={index}
                 term={term}
                 id={internalID}
@@ -128,11 +124,11 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
         })}
 
         <Pagination
-          pageCursors={searchConnection!.pageCursors}
+          pageCursors={searchConnection?.pageCursors}
           onClick={(_cursor, page) => this.loadPage(page)}
           onNext={this.loadNext}
           scrollTo="searchResultTabs"
-          hasNextPage={searchConnection!.pageInfo.hasNextPage}
+          hasNextPage={!!searchConnection?.pageInfo.hasNextPage}
         />
       </>
     )
@@ -144,7 +140,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
 
     return (
       <LoadingArea isLoading={this.state.isLoading}>
-        {artists!.length === 0 ? (
+        {artists?.length === 0 ? (
           <Box mt={3}>
             <ZeroState term={term} />
           </Box>
@@ -184,8 +180,13 @@ export const SearchResultsArtistsRouteFragmentContainer = createRefetchContainer
                 name
                 internalID
                 href
-                imageUrl
                 bio
+                imageUrl
+                coverArtwork {
+                  image {
+                    src: url(version: ["square"])
+                  }
+                }
               }
             }
           }

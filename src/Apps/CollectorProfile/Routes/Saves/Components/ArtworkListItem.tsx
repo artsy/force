@@ -12,7 +12,6 @@ import styled, { css } from "styled-components"
 import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
 import { themeGet } from "@styled-system/theme-get"
 import HideIcon from "@artsy/icons/HideIcon"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface ArtworkListItemProps {
   isSelected?: boolean
@@ -34,10 +33,6 @@ const ArtworkListItem: FC<ArtworkListItemProps> = props => {
 
     return `${BASE_SAVES_PATH}/${item.internalID}`
   }
-
-  const shareableWithPartnersEnabled = useFeatureFlag(
-    "emerald_artwork-list-offerability"
-  )
 
   return (
     <ArtworkListItemLink
@@ -65,7 +60,7 @@ const ArtworkListItem: FC<ArtworkListItemProps> = props => {
             <Text variant={["xs", "sm-display"]} overflowEllipsis>
               {item.name}
             </Text>
-            {shareableWithPartnersEnabled && !item.shareableWithPartners && (
+            {!item.shareableWithPartners && (
               <Tooltip
                 pointer
                 variant="defaultDark"

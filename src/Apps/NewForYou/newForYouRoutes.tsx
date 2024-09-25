@@ -2,9 +2,12 @@ import { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 import loadable from "@loadable/component"
 
-const NewForYouApp = loadable(() => import("./NewForYouApp"), {
-  resolveComponent: component => component.NewForYouAppFragmentContainer,
-})
+const NewForYouApp = loadable(
+  () => import(/* webpackChunkName: "newForYouBundle" */ "./NewForYouApp"),
+  {
+    resolveComponent: component => component.NewForYouAppFragmentContainer,
+  }
+)
 
 export const DEFAULT_NWFY_RECS_MODEL = "C"
 

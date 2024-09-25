@@ -4,6 +4,7 @@ import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { DetailsRoute_Test_Query$rawResponse } from "__generated__/DetailsRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
@@ -18,26 +19,41 @@ jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 jest.mock("Utils/Hooks/useMutation")
+jest.mock("System/Hooks/useSystemContext")
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
 
 const submissionMock: Partial<
   DetailsRoute_Test_Query$rawResponse["submission"]
 > = {
   category: "Painting",
+  state: "DRAFT",
 }
 
 beforeEach(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => {
+    return { isLoggedIn: true }
+  })
+
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "submissions/submission-id/details" } },
+    match: {
+      location: { pathname: "/sell/submissions/submission-id/details" },
+    },
   }))
 
   submitMutation = jest.fn(() => ({ catch: () => {} }))
   ;(useMutation as jest.Mock).mockImplementation(() => {
     return { submitMutation }
   })
+
+  submitMutation.mockClear()
+  mockPush.mockClear()
+  mockReplace.mockClear()
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -94,7 +110,7 @@ describe("DetailsRoute", () => {
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/details'
+        '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
       )
 
       expect(submitMutation).toHaveBeenCalledWith(
@@ -121,7 +137,7 @@ describe("DetailsRoute", () => {
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/photos'
+        '/sell/submissions/<mock-value-for-field-"externalId">/photos'
       )
 
       expect(submitMutation).toHaveBeenCalledWith(
@@ -156,6 +172,57 @@ describe("DetailsRoute", () => {
 
       await waitFor(() => {
         expect(submitMutation).not.toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe("navigation", () => {
+    describe("in DRAFT state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+          )
+        })
+      })
+
+      it("navigates to the previous step when the Back button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/photos'
+          )
+        })
+      })
+    })
+
+    describe("in APPROVED state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+          )
+        })
       })
     })
   })

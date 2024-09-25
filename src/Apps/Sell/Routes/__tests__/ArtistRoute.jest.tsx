@@ -3,26 +3,34 @@ import { ArtistRoute } from "Apps/Sell/Routes/ArtistRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 
+jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
-jest.unmock("react-relay")
-
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
   fetchQuery: jest.fn(),
+}))
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
 }))
 
 let pathnameMock: string
 
 beforeAll(() => {
-  pathnameMock = "/submissions/submission-id/artist"
+  ;(useSystemContext as jest.Mock).mockImplementation(() => {
+    return { isLoggedIn: true }
+  })
+
+  pathnameMock = "/sell/submissions/submission-id/artist"
 
   mockUseRouter.mockImplementation(() => ({
     router: {
@@ -96,7 +104,7 @@ describe("ArtistRoute", () => {
 
   describe("when creating a new submission", () => {
     beforeAll(() => {
-      pathnameMock = "/submissions/new"
+      pathnameMock = "/sell/submissions/new"
     })
 
     it("calls createSubmission when a new artist is selected", async () => {

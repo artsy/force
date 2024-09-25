@@ -34,7 +34,7 @@ const { renderWithRelay } = setupTestWrapperTL<FollowArtistButton_Test_Query>({
         ...FollowArtistButton_me
       }
       artist(id: "example") {
-        ...FollowArtistButton_artist
+        ...FollowArtistButton_artist @arguments(isLoggedIn: true)
       }
     }
   `,
@@ -88,14 +88,13 @@ describe("FollowArtistButton", () => {
 
       expect(showAuthDialog).toBeCalledWith({
         analytics: { contextModule: "artistHeader", intent: "followArtist" },
-        mode: "SignUp",
         options: {
           afterAuthAction: {
             action: "follow",
             kind: "artist",
             objectId: "example",
           },
-          title: expect.any(Function),
+          title: expect.any(String),
         },
       })
     })

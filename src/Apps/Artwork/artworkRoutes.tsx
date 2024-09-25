@@ -1,9 +1,7 @@
 import loadable from "@loadable/component"
-import { HttpError } from "found"
 import { graphql } from "react-relay"
 import { updateContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 import { RouteProps } from "System/Router/Route"
-import { getFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const ArtworkApp = loadable(
   () => import(/* webpackChunkName: "artworkBundle" */ "./ArtworkApp"),
@@ -15,6 +13,7 @@ const ArtworkApp = loadable(
 export const artworkRoutes: RouteProps[] = [
   {
     path: "/artwork/:artworkID/:optional?", // There's a `confirm-bid` nested route.
+    fetchPolicy: "store-and-network",
     getComponent: () => ArtworkApp,
     onClientSideRender: () => {
       ArtworkApp.preload()
@@ -32,16 +31,8 @@ export const artworkRoutes: RouteProps[] = [
       const requestError = (props as any).artworkResult?.requestError
       const requestErrorStatusCode = requestError?.statusCode
 
-      const enableCustomErrorPage = getFeatureFlag(
-        "onyx_custom_artwork_error_page"
-      )
-
       if (requestErrorStatusCode) {
-        if (enableCustomErrorPage) {
-          updateContext("statusCode", requestErrorStatusCode)
-        } else {
-          throw new HttpError(requestErrorStatusCode)
-        }
+        updateContext("statusCode", requestErrorStatusCode)
       }
 
       return <Component {...props} />
@@ -62,13 +53,5 @@ export const artworkRoutes: RouteProps[] = [
         }
       }
     `,
-    getCacheConfig: ({ context }) => {
-      return {
-        force: true,
-
-        // TODO: In the future, we might want to only cache for logged out users
-        // force: !!context.user,
-      }
-    },
   },
 ]

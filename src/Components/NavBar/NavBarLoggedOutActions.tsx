@@ -15,7 +15,6 @@ export const NavBarLoggedOutActions = () => {
         size="small"
         onClick={() => {
           showAuthDialog({
-            mode: "Login",
             analytics: {
               contextModule: ContextModule.header,
               intent: Intent.login,
@@ -32,7 +31,6 @@ export const NavBarLoggedOutActions = () => {
         size="small"
         onClick={() => {
           showAuthDialog({
-            mode: "SignUp",
             analytics: {
               contextModule: ContextModule.header,
               intent: Intent.signup,

@@ -9,7 +9,6 @@ import { Resolver } from "found-relay"
 import { createFarceRouter, createRender } from "found"
 import { ScrollManager, ScrollManagerProps } from "found-scroll"
 import { renderStates } from "System/Router/RenderStates"
-import { Environment } from "react-relay"
 import { RouteProps } from "System/Router/Route"
 import { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import { getUser } from "Utils/user"
@@ -24,7 +23,7 @@ import { loadingIndicatorMiddleware } from "System/Router/Middleware/loadingIndi
 import { trackingMiddleware } from "System/Router/Middleware/trackingMiddleware"
 
 export interface RouterConfig {
-  context?: SystemContextProps & { relayEnvironment?: Environment }
+  context?: SystemContextProps
   featureFlags?: FeatureFlags
   history?: {
     protocol?: "browser" | "hash" | "memory"

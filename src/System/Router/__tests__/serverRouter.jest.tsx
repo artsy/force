@@ -174,12 +174,10 @@ describe("serverRouter", () => {
               "featureFlags",
               "initialMatchingMediaQueries",
               "isEigen",
-              "isFetching",
               "isLoggedIn",
               "relayEnvironment",
               "router",
               "routes",
-              "setFetching",
               "setRouter",
               "setUser",
               "user",
@@ -311,7 +309,7 @@ describe("serverRouter", () => {
     }
 
     mockFindRoutesByPath.mockImplementation(() => {
-      return [route]
+      return [{ route }]
     })
 
     await getWrapper(() => <>Hello</>, {

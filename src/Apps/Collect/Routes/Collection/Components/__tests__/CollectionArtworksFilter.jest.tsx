@@ -12,6 +12,7 @@ import {
   mediumAggregation,
   partnerAggregation,
 } from "Apps/__tests__/Fixtures/aggregations"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
@@ -25,14 +26,14 @@ jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => false),
+}))
 
 const { getWrapper } = setupTestWrapper<CollectionArtworksFilter_Query>({
   Component: ({ collection }) => (
     <MockBoot user={{ id: "percy-z" }}>
       <CollectionArtworksFilter
-        counts={{
-          followedArtists: 10,
-        }}
         aggregations={[
           artistAggregation,
           partnerAggregation,
@@ -60,6 +61,7 @@ const { getWrapper } = setupTestWrapper<CollectionArtworksFilter_Query>({
 
 describe("CollectionArtworksFilter", () => {
   const trackEvent = jest.fn()
+  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -67,6 +69,7 @@ describe("CollectionArtworksFilter", () => {
         trackEvent,
       }
     })
+    mockUseFeatureFlag.mockImplementation(() => true)
   })
 
   it("renders correctly", () => {
@@ -101,6 +104,10 @@ describe("CollectionArtworksFilter", () => {
       },
       {
         label: "Size",
+        expanded: true,
+      },
+      {
+        label: "Availability",
         expanded: true,
       },
       {
@@ -163,6 +170,10 @@ describe("CollectionArtworksFilter", () => {
       },
       {
         label: "Size",
+        expanded: true,
+      },
+      {
+        label: "Availability",
         expanded: true,
       },
       {

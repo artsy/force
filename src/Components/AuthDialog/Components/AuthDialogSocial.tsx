@@ -1,4 +1,4 @@
-import { Button, Join, Message, Spacer, Text } from "@artsy/palette"
+import { Button, Stack } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
@@ -46,53 +46,45 @@ export const AuthDialogSocial: FC = () => {
   }
 
   return (
-    <Join separator={<Spacer y={1} />}>
-      {/* TODO: remove the message and reenable the social login buttons before
-                merging the review app into main */}
-      <Message variant="info">
-        <Text>Social login not supported in this review app</Text>
-      </Message>
+    <Stack gap={1} flexDirection="row">
       <Button
         variant="secondaryBlack"
         width="100%"
-        Icon={AppleIcon as any}
         // @ts-ignore
         as="a"
         href={`${applePath}?${query}`}
         onClick={handleClick("apple")}
         rel="nofollow"
-        disabled
+        title="Continue with Apple"
       >
-        Continue with Apple
+        <AppleIcon />
       </Button>
 
       <Button
         variant="secondaryBlack"
         width="100%"
-        Icon={GoogleIcon as any}
         // @ts-ignore
         as="a"
         href={`${googlePath}?${query}`}
         onClick={handleClick("google")}
         rel="nofollow"
-        disabled
+        title="Continue with Google"
       >
-        Continue with Google
+        <GoogleIcon />
       </Button>
 
       <Button
         variant="secondaryBlack"
         width="100%"
-        Icon={FacebookIcon}
         // @ts-ignore
         as="a"
         href={`${facebookPath}?${query}`}
         onClick={handleClick("facebook")}
         rel="nofollow"
-        disabled
+        title="Continue with Facebook"
       >
-        Continue with Facebook
+        <FacebookIcon />
       </Button>
-    </Join>
+    </Stack>
   )
 }

@@ -1,23 +1,30 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { NewRoute } from "Apps/Sell/Routes/NewRoute"
+import { render } from "DevTools/renderWithMockBoot"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 
+jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { location: { query: {} } } })),
 }))
-jest.unmock("react-relay")
+jest.mock("System/Hooks/useSystemContext")
 
 beforeEach(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => {
+    return { isLoggedIn: true }
+  })
+
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "/submissions/new" } },
+    match: { location: { pathname: "/sell/submissions/new" } },
   }))
 })
 

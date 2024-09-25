@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<551a738b73d09d57d4257ba273ffd7b7>>
+ * @generated SignedSource<<5f658b3a153e3846d5a0bcbfded16649>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,16 +13,16 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistCVRoute_viewer$data = {
   readonly fairBooths: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
-  } | null | undefined;
+  };
   readonly groupShows: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
-  } | null | undefined;
+  };
   readonly soloShows: {
     readonly name: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
-  } | null | undefined;
+  };
   readonly " $fragmentType": "ArtistCVRoute_viewer";
-};
+} | null | undefined;
 export type ArtistCVRoute_viewer$key = {
   readonly " $data"?: ArtistCVRoute_viewer$data;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistCVRoute_viewer">;
@@ -53,79 +53,94 @@ return {
   "name": "ArtistCVRoute_viewer",
   "selections": [
     {
-      "alias": "soloShows",
-      "args": (v0/*: any*/),
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artist",
-      "plural": false,
-      "selections": [
-        {
-          "args": [
-            (v1/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "soloShow",
-              "value": true
-            }
-          ],
-          "kind": "FragmentSpread",
-          "name": "ArtistCVGroup_artist"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
+      "kind": "RequiredField",
+      "field": {
+        "alias": "soloShows",
+        "args": (v0/*: any*/),
+        "concreteType": "Artist",
+        "kind": "LinkedField",
+        "name": "artist",
+        "plural": false,
+        "selections": [
+          {
+            "args": [
+              (v1/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "soloShow",
+                "value": true
+              }
+            ],
+            "kind": "FragmentSpread",
+            "name": "ArtistCVGroup_artist"
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
+      "action": "NONE",
+      "path": "soloShows"
     },
     {
-      "alias": "groupShows",
-      "args": (v0/*: any*/),
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artist",
-      "plural": false,
-      "selections": [
-        {
-          "args": [
-            (v1/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "soloShow",
-              "value": false
-            }
-          ],
-          "kind": "FragmentSpread",
-          "name": "ArtistCVGroup_artist"
-        }
-      ],
-      "storageKey": null
+      "kind": "RequiredField",
+      "field": {
+        "alias": "groupShows",
+        "args": (v0/*: any*/),
+        "concreteType": "Artist",
+        "kind": "LinkedField",
+        "name": "artist",
+        "plural": false,
+        "selections": [
+          {
+            "args": [
+              (v1/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "soloShow",
+                "value": false
+              }
+            ],
+            "kind": "FragmentSpread",
+            "name": "ArtistCVGroup_artist"
+          }
+        ],
+        "storageKey": null
+      },
+      "action": "NONE",
+      "path": "groupShows"
     },
     {
-      "alias": "fairBooths",
-      "args": (v0/*: any*/),
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artist",
-      "plural": false,
-      "selections": [
-        {
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "atAFair",
-              "value": true
-            }
-          ],
-          "kind": "FragmentSpread",
-          "name": "ArtistCVGroup_artist"
-        }
-      ],
-      "storageKey": null
+      "kind": "RequiredField",
+      "field": {
+        "alias": "fairBooths",
+        "args": (v0/*: any*/),
+        "concreteType": "Artist",
+        "kind": "LinkedField",
+        "name": "artist",
+        "plural": false,
+        "selections": [
+          {
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "atAFair",
+                "value": true
+              }
+            ],
+            "kind": "FragmentSpread",
+            "name": "ArtistCVGroup_artist"
+          }
+        ],
+        "storageKey": null
+      },
+      "action": "NONE",
+      "path": "fairBooths"
     }
   ],
   "type": "Viewer",
@@ -133,6 +148,6 @@ return {
 };
 })();
 
-(node as any).hash = "238e15474108e4de0c916a2b6fe2dddf";
+(node as any).hash = "adc344e57b79d7e1f429b6bf4f955b67";
 
 export default node;

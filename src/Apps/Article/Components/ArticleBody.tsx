@@ -189,6 +189,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                               <Box mr={2} flexShrink={0}>
                                 {img ? (
                                   <Image
+                                    key={img.src}
                                     width={100}
                                     height={100}
                                     src={img.src}

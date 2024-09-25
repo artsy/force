@@ -167,7 +167,6 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
             date: "2015",
             additionalInformation: "some description",
             href: "/artwork/bill-miles-beep-beep",
-            artistNames: "Artist Name",
             artist: {
               id: "artist-id",
               targetSupply: {
@@ -184,8 +183,6 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
                 name: "Bill Miles",
               },
             ],
-            slug: "bill-miles-tulips-p17-14",
-            isSaved: false,
             sale_message: "$500",
             cultural_maker: null,
             collecting_institution: "This Really Great Gallery",
@@ -224,8 +221,17 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
                 name: "Prints",
               },
             },
-            preview: null,
-            isSavedToList: false,
+            collectorSignals: {
+              primaryLabel: null,
+              partnerOffer: null,
+              auction: {
+                bidCount: 0,
+                liveBiddingStarted: false,
+                lotClosesAt: new Date(Date.now() + 60 * 1000).toISOString(),
+                onlineBiddingExtended: false,
+                registrationEndsAt: "2022-03-5T12:33:37.000Z",
+              },
+            },
           },
         },
         {
@@ -314,7 +320,6 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
             date: "2018",
             additionalInformation: "some description",
             href: "/artwork/emma-johnson-please-do-not-touch",
-            artistNames: "Artist Name",
             artist: {
               id: "artist-id",
               targetSupply: {
@@ -331,8 +336,6 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
                 name: "Bill Miles",
               },
             ],
-            slug: "bill-miles-tulips-p17-14",
-            isSaved: false,
             sale_message: "$450",
             cultural_maker: null,
             collecting_institution: "This Really Great Gallery",
@@ -371,8 +374,17 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
                 name: "Prints",
               },
             },
-            preview: null,
-            isSavedToList: false,
+            collectorSignals: {
+              primaryLabel: null,
+              partnerOffer: null,
+              auction: {
+                bidCount: 0,
+                liveBiddingStarted: false,
+                lotClosesAt: new Date(Date.now() + 60 * 1000).toISOString(),
+                onlineBiddingExtended: false,
+                registrationEndsAt: "2022-03-5T12:33:37.000Z",
+              },
+            },
           },
         },
       ],

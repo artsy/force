@@ -1,15 +1,121 @@
+import { AuthIntent, ContextModule } from "@artsy/cohesion"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
-import { Flex, FullBleed } from "@artsy/palette"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import { Button, Flex, FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
+import { useAssociateSubmission } from "Apps/Sell/Mutations/useAssociateSubmission"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { storePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
+import { useAuthDialog } from "Components/AuthDialog"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
+import { Media } from "Utils/Responsive"
+import createLogger from "Utils/logger"
+import { useFormikContext } from "formik"
+import { useCallback, useEffect, useState } from "react"
+
+const HEADER_HEIGHT = 40
+const logger = createLogger("BottomFormNavigation.tsx")
 
 export const SubmissionHeader: React.FC = () => {
+  const {
+    router: { push: routerPush },
+  } = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { trackTappedSubmissionSaveExit } = useSubmissionTracking()
+  const { isLoggedIn } = useSystemContext()
+  const { showAuthDialog } = useAuthDialog()
+  const { value, clearValue } = useAuthIntent()
+  const {
+    submitMutation: associateSubmissionMutation,
+  } = useAssociateSubmission()
   const context = useSellFlowContext()
+  const formik = useFormikContext()
+  const { isLastStep, submission, step } = context?.state || {}
 
-  const submissionID = context?.state?.submissionID
+  const exitURL = submission?.myCollectionArtworkID
+    ? `/my-collection/artwork/${submission?.myCollectionArtworkID}`
+    : "/sell"
+
+  const handleSaveAndExit = async () => {
+    if (!submission?.externalId) return
+
+    trackTappedSubmissionSaveExit(submission?.internalID, step)
+
+    if (isLoggedIn) {
+      await submitAndSaveCallback()
+    } else {
+      await submitForm()
+
+      showAuthDialog({
+        options: {
+          title: "Sign up or log in to save your submission",
+          afterAuthAction: {
+            action: "saveAndExitSubmission",
+            kind: "submission",
+            objectId: submission?.externalId as string,
+            step,
+          },
+        },
+        analytics: {
+          contextModule: ContextModule.sell,
+          // TODO: Add to artsy/cohesion to use Intent.saveAndExit here
+          intent: "saveAndExitSubmission" as AuthIntent,
+          trigger: "click",
+        },
+      })
+    }
+  }
+
+  const submitForm = formik?.submitForm
+
+  const submitAndSaveCallback = useCallback(async () => {
+    if (!submission) return
+
+    setIsSubmitting(true)
+
+    try {
+      await submitForm()
+
+      // Save the submission and current step to local storage
+      storePreviousSubmission(submission?.externalId as string, step)
+
+      routerPush(exitURL)
+    } catch (error) {
+      logger.error("Something went wrong.", error)
+    } finally {
+      setIsSubmitting(false)
+    }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitForm, submission, step, routerPush])
+
+  const onAfterAuthCallback = useCallback(async () => {
+    try {
+      setIsSubmitting(true)
+      await associateSubmissionMutation({
+        variables: { input: { id: submission?.externalId as string } },
+      })
+      await submitAndSaveCallback()
+    } catch (error) {
+      logger.error("Something went wrong.", error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }, [associateSubmissionMutation, submitAndSaveCallback, submission])
+
+  useEffect(() => {
+    if (value?.action === "saveAndExitSubmission") {
+      clearValue()
+
+      onAfterAuthCallback()
+    }
+  }, [value, clearValue, onAfterAuthCallback])
 
   return (
     <Sticky withoutHeaderOffset>
@@ -20,22 +126,69 @@ export const SubmissionHeader: React.FC = () => {
               <HorizontalPadding>
                 <Flex
                   flexDirection="row"
-                  justifyContent="space-between"
-                  minHeight={[70, 90]}
+                  justifyContent={[
+                    submission?.externalId ? "end" : "space-between",
+                    "space-between",
+                  ]}
                   alignItems="center"
+                  my={[0.5, 4]}
+                  pt={[1, 0]}
+                  height={HEADER_HEIGHT}
                 >
-                  <RouterLink to={"/sell"} display="block">
+                  <Media greaterThan="xs">
                     <ArtsyLogoIcon display="block" />
-                  </RouterLink>
+                  </Media>
 
-                  {submissionID ? (
-                    <RouterLink to={"/sell"} display="block">
-                      Save & Exit
-                    </RouterLink>
+                  {submission?.externalId && !isLastStep ? (
+                    <>
+                      <Media at="xs">
+                        <RouterLink
+                          to={null}
+                          textDecoration={["none", "underline"]}
+                          onClick={handleSaveAndExit}
+                          display="block"
+                        >
+                          Save & Exit
+                        </RouterLink>
+                      </Media>
+                      <Media greaterThan="xs">
+                        <Button
+                          variant="tertiary"
+                          // @ts-ignore
+                          as={RouterLink}
+                          to={null}
+                          onClick={handleSaveAndExit}
+                          loading={isSubmitting}
+                        >
+                          Save & Exit
+                        </Button>
+                      </Media>
+                    </>
                   ) : (
-                    <RouterLink to={"/sell"} display="block">
-                      Exit
-                    </RouterLink>
+                    <>
+                      <Media at="xs">
+                        <RouterLink
+                          to={exitURL}
+                          display="block"
+                          textDecoration={["none", "underline"]}
+                          data-testid="exit-link"
+                        >
+                          {isLastStep ? "Exit" : <CloseIcon />}
+                        </RouterLink>
+                      </Media>
+
+                      <Media greaterThan="xs">
+                        <Button
+                          variant="tertiary"
+                          // @ts-ignore
+                          as={RouterLink}
+                          to={exitURL}
+                          data-testid="exit-link"
+                        >
+                          {isLastStep || !submission?.externalId ? "Exit" : ""}
+                        </Button>
+                      </Media>
+                    </>
                   )}
                 </Flex>
               </HorizontalPadding>

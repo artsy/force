@@ -31,17 +31,13 @@ export const useScrollToOpenArtistAuthModal = ({
     const handleScroll = () => {
       timeout = setTimeout(() => {
         showAuthDialog({
-          mode: "SignUp",
           options: {
             image: true,
             onClose: dismiss,
             onSuccess: dismiss,
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to discover new works by ${
-                name || "this artist"
-              } and more artists you love`
-            },
+            title: `Sign up or log in to discover new works by ${
+              name || "this artist"
+            } and more artists you love`,
           },
           analytics: {
             contextModule: ContextModule.popUpModal,

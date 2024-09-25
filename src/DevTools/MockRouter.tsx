@@ -10,6 +10,7 @@ import { Environment } from "react-relay"
 import { RouteProps } from "System/Router/Route"
 import { HistoryEnhancerOptions } from "farce"
 import { RouterConfig, setupClientRouter } from "System/Router/clientRouter"
+import { SystemContextProps } from "System/Contexts/SystemContext"
 
 interface MockRouterProps {
   context?: RouterConfig["context"]
@@ -62,7 +63,7 @@ export const MockRouter: React.FC<MockRouterProps> = ({
             ...context,
             user,
             relayEnvironment: (relayEnvironment as unknown) as Environment,
-          },
+          } as SystemContextProps,
         })
 
         setMockRouterApp((<ClientRouter />) as any)

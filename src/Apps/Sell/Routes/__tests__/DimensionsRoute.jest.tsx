@@ -4,34 +4,50 @@ import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { DimensionsRoute_Test_Query$rawResponse } from "__generated__/DimensionsRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
 let submitMutation: jest.Mock
+const trackEvent = jest.fn()
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 jest.mock("Utils/Hooks/useMutation")
+jest.mock("System/Hooks/useSystemContext")
 
 const submissionMock: Partial<
   DimensionsRoute_Test_Query$rawResponse["submission"]
 > = {
   dimensionsMetric: "in",
+  state: "DRAFT",
 }
 
 beforeEach(() => {
+  ;(useTracking as jest.Mock).mockImplementation(() => {
+    return {
+      trackEvent,
+    }
+  })
+  ;(useSystemContext as jest.Mock).mockImplementation(() => {
+    return { isLoggedIn: true }
+  })
+
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "submissions/submission-id/dimensions" } },
+    match: {
+      location: { pathname: "/sell/submissions/submission-id/dimensions" },
+    },
   }))
 
   submitMutation = jest.fn(() => ({ catch: () => {} }))
@@ -66,7 +82,7 @@ describe("DimensionsRoute", () => {
 
     expect(screen.getByText("Artwork dimensions")).toBeInTheDocument()
     expect(screen.getByText("Back")).toBeInTheDocument()
-    expect(screen.getByText("Submit")).toBeInTheDocument()
+    expect(screen.getByText("Continue")).toBeInTheDocument()
     expect(screen.getByText("Save & Exit")).toBeInTheDocument()
   })
 
@@ -88,60 +104,79 @@ describe("DimensionsRoute", () => {
     })
   })
 
-  it("saves the submission & navigates to the confirmation step when Submit button is clicked", async () => {
-    renderWithRelay({
-      ConsignmentSubmission: () => submissionMock,
-    })
+  describe("when clicking the Continue button", () => {
+    it("saves the submission and navigates to the phone number step", async () => {
+      renderWithRelay({
+        ConsignmentSubmission: () => submissionMock,
+      })
 
-    screen.getByText("Submit").click()
+      mockPush.mockClear()
+      trackEvent.mockClear()
+      submitMutation.mockClear()
 
-    await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/thank-you'
-      )
+      screen.getByText("Continue").click()
 
-      expect(submitMutation).toHaveBeenCalledWith(
-        expect.objectContaining({
-          variables: {
-            input: {
-              externalId: '<mock-value-for-field-"externalId">',
-              height: '<mock-value-for-field-"height">',
-              width: '<mock-value-for-field-"width">',
-              depth: '<mock-value-for-field-"depth">',
-              dimensionsMetric: "in",
-              state: "SUBMITTED",
-            },
-          },
+      await waitFor(() => {
+        expect(trackEvent).toHaveBeenCalledWith({
+          action: "tappedContinueSubmission",
+          context_module: "sell",
+          context_owner_type: "sell",
+          submission_id: '<mock-value-for-field-"internalID">',
+          destination_step: "phone-number",
         })
-      )
+
+        expect(submitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                depth: '<mock-value-for-field-"depth">',
+                dimensionsMetric: "in",
+                externalId: '<mock-value-for-field-"externalId">',
+                height: '<mock-value-for-field-"height">',
+                width: '<mock-value-for-field-"width">',
+              },
+            },
+          })
+        )
+
+        expect(mockPush).toHaveBeenCalledWith(
+          '/sell/submissions/<mock-value-for-field-"externalId">/phone-number'
+        )
+      })
     })
   })
-  it("does not save the submission & navigates to the previous step when the back button is clicked", async () => {
-    renderWithRelay({
-      ConsignmentSubmission: () => submissionMock,
-    })
 
-    screen.getByText("Back").click()
+  describe("when the back button is clicked", () => {
+    it("saves the submission & navigates to the previous step", async () => {
+      renderWithRelay({
+        ConsignmentSubmission: () => submissionMock,
+      })
 
-    await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/purchase-history'
-      )
+      mockPush.mockClear()
+      trackEvent.mockClear()
+      submitMutation.mockClear()
 
-      expect(submitMutation).toHaveBeenCalledWith(
-        expect.objectContaining({
-          variables: {
-            input: {
-              externalId: '<mock-value-for-field-"externalId">',
-              height: '<mock-value-for-field-"height">',
-              width: '<mock-value-for-field-"width">',
-              depth: '<mock-value-for-field-"depth">',
-              dimensionsMetric: "in",
-              state: "SUBMITTED",
+      screen.getByText("Back").click()
+
+      await waitFor(() => {
+        expect(mockPush).toHaveBeenCalledWith(
+          '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+        )
+
+        expect(submitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                externalId: '<mock-value-for-field-"externalId">',
+                height: '<mock-value-for-field-"height">',
+                width: '<mock-value-for-field-"width">',
+                depth: '<mock-value-for-field-"depth">',
+                dimensionsMetric: "in",
+              },
             },
-          },
-        })
-      )
+          })
+        )
+      })
     })
   })
 
@@ -162,6 +197,57 @@ describe("DimensionsRoute", () => {
 
       await waitFor(() => {
         expect(submitMutation).not.toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe("navigation", () => {
+    describe("in DRAFT state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/phone-number'
+          )
+        })
+      })
+
+      it("navigates to the previous step when the Back button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+          )
+        })
+      })
+    })
+
+    describe("in APPROVED state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/phone-number'
+          )
+        })
       })
     })
   })

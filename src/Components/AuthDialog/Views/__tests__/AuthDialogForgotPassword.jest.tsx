@@ -36,8 +36,6 @@ describe("AuthDialogForgotPassword", () => {
     // eslint-disable-next-line testing-library/no-node-access
     const button = submit.parentElement!
 
-    expect(button).toBeDisabled()
-
     fireEvent.change(input, { target: { value: "example@example.com" } })
 
     expect(button).toBeEnabled()

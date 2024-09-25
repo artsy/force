@@ -1,5 +1,5 @@
 project-name: force
-pre-deploy: yarn publish-assets
+pre-deploy: yarn pre-deploy
 hokusai-required-version: ">=0.5.8"
 git-remote: git@github.com:artsy/force.git
 template-config-files:

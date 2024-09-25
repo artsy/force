@@ -231,13 +231,12 @@ describe("RegisterButton", () => {
       ;(wrapper.find("ButtonAction").props() as any).onClick()
 
       expect(showAuthDialog).toHaveBeenCalledWith({
-        mode: "Login",
         analytics: {
           contextModule: "auctionSidebar",
           intent: "registerToBid",
         },
         options: {
-          title: expect.any(Function),
+          title: expect.any(String),
           redirectTo: "/auction/sale-slug/register",
         },
       })

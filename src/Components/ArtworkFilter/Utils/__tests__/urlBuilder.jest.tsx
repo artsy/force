@@ -1,7 +1,7 @@
 import {
   paramsToCamelCase,
   paramsToSnakeCase,
-} from "Components/ArtworkFilter/Utils/urlBuilder"
+} from "Components/ArtworkFilter/Utils/paramsCasing"
 
 describe(paramsToSnakeCase, () => {
   it("converts camel cased filter arguments to snake case", () => {

@@ -1,15 +1,13 @@
+import { MyCollectionArtworkMeta_artwork$key } from "__generated__/MyCollectionArtworkMeta_artwork.graphql"
 import { MetaTags } from "Components/MetaTags"
-import { createFragmentContainer, graphql } from "react-relay"
-import { MyCollectionArtworkMeta_artwork$data } from "__generated__/MyCollectionArtworkMeta_artwork.graphql"
+import { graphql, useFragment } from "react-relay"
 
 interface MyCollectionArtworkMetaProps {
-  artwork: MyCollectionArtworkMeta_artwork$data
+  artwork: MyCollectionArtworkMeta_artwork$key
 }
 
-const MyCollectionArtworkMeta: React.FC<MyCollectionArtworkMetaProps> = ({
-  artwork,
-}) => {
-  const { artistNames, title } = artwork
+export const MyCollectionArtworkMeta: React.FC<MyCollectionArtworkMetaProps> = props => {
+  const { artistNames, title } = useFragment(FRAGMENT, props.artwork)
 
   return (
     <>
@@ -18,14 +16,9 @@ const MyCollectionArtworkMeta: React.FC<MyCollectionArtworkMetaProps> = ({
   )
 }
 
-export const MyCollectionArtworkMetaFragmentContainer = createFragmentContainer(
-  MyCollectionArtworkMeta,
-  {
-    artwork: graphql`
-      fragment MyCollectionArtworkMeta_artwork on Artwork {
-        artistNames
-        title
-      }
-    `,
+const FRAGMENT = graphql`
+  fragment MyCollectionArtworkMeta_artwork on Artwork {
+    artistNames
+    title
   }
-)
+`

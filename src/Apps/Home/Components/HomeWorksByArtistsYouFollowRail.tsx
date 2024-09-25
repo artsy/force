@@ -16,6 +16,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface HomeWorksByArtistsYouFollowRailProps {
   homePage: HomeWorksByArtistsYouFollowRail_homePage$data
@@ -53,6 +54,14 @@ const HomeWorksByArtistsYouFollowRail: React.FC<HomeWorksByArtistsYouFollowRailP
                 destination_page_owner_slug: artwork.slug,
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
+                signal_label: artwork.collectorSignals
+                  ? getSignalLabel(artwork.collectorSignals)
+                  : "",
+                signal_bid_count:
+                  artwork.collectorSignals?.auction?.bidCount ?? undefined,
+                signal_lot_watcher_count:
+                  artwork.collectorSignals?.auction?.lotWatcherCount ??
+                  undefined,
               }
               trackEvent(trackingEvent)
             }}
@@ -82,6 +91,13 @@ export const HomeWorksByArtistsYouFollowRailFragmentContainer = createFragmentCo
           results {
             internalID
             slug
+            collectorSignals {
+              primaryLabel
+              auction {
+                bidCount
+                lotWatcherCount
+              }
+            }
             ...ShelfArtwork_artwork
           }
         }

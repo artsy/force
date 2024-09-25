@@ -22,6 +22,8 @@ export const ArtworkFilterSort: FC<ArtworkFilterSortProps> = props => {
     return value === (filters?.sort ?? "-decayed_merch")
   }) || { text: "Default", value: "-decayed_merch" }
 
+  let hideDropdown
+
   return (
     <Dropdown
       dropdown={
@@ -29,6 +31,7 @@ export const ArtworkFilterSort: FC<ArtworkFilterSortProps> = props => {
           defaultValue={filters?.sort}
           onSelect={option => {
             setFilter("sort", option)
+            hideDropdown?.()
           }}
           p={2}
           gap={2}
@@ -42,7 +45,10 @@ export const ArtworkFilterSort: FC<ArtworkFilterSortProps> = props => {
       placement="bottom-end"
       {...props}
     >
-      {({ anchorRef, anchorProps }) => {
+      {({ anchorRef, anchorProps, onHide }) => {
+        // Store ref to hide action to access up above
+        hideDropdown = onHide
+
         return (
           <Button ref={anchorRef as any} {...anchorProps}>
             <SortIcon />

@@ -28,7 +28,6 @@ import TikTokIcon from "@artsy/icons/TikTokIcon"
 import SpotifyIcon from "@artsy/icons/SpotifyIcon"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 import { themeGet } from "@styled-system/theme-get"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
@@ -363,7 +362,6 @@ const ThemeSelectOption = styled(Text).attrs({
 
 const PolicyLinks = () => {
   const { CCPARequestComponent, showCCPARequest } = useCCPARequest()
-  const showNewDisclaimer = useFeatureFlag("diamond_new-terms-and-conditions")
 
   return (
     <>
@@ -378,59 +376,25 @@ const PolicyLinks = () => {
       >
         <Flex mr={1}>© {new Date().getFullYear()} Artsy</Flex>
 
-        {showNewDisclaimer ? (
-          <>
-            <FooterLink color="black60" mr={1} to="/terms">
-              Terms and Conditions
-            </FooterLink>
+        <FooterLink color="black60" mr={1} to="/terms">
+          Terms and Conditions
+        </FooterLink>
 
-            <FooterLink color="black60" mr={1} to="/supplemental-cos">
-              Auction Supplement
-            </FooterLink>
+        <FooterLink color="black60" mr={1} to="/supplemental-cos">
+          Auction Supplement
+        </FooterLink>
 
-            <FooterLink color="black60" mr={1} to="/buyer-guarantee">
-              Buyer Guarantee
-            </FooterLink>
+        <FooterLink color="black60" mr={1} to="/buyer-guarantee">
+          Buyer Guarantee
+        </FooterLink>
 
-            <FooterLink color="black60" mr={1} to="/privacy">
-              Privacy Policy
-            </FooterLink>
+        <FooterLink color="black60" mr={1} to="/privacy">
+          Privacy Policy
+        </FooterLink>
 
-            <FooterLink color="black60" mr={1} to="/security">
-              Security
-            </FooterLink>
-          </>
-        ) : (
-          <>
-            <FooterLink color="black60" mr={1} to="/terms">
-              Terms of Use
-            </FooterLink>
-
-            <FooterLink color="black60" mr={1} to="/privacy">
-              Privacy Policy
-            </FooterLink>
-
-            <FooterLink color="black60" mr={1} to="/security">
-              Security
-            </FooterLink>
-
-            <FooterLink color="black60" mr={1} to="/conditions-of-sale">
-              Conditions of Sale
-            </FooterLink>
-
-            <FooterLink
-              color="black60"
-              mr={1}
-              to="/page/artsy-curated-auctions-listing-agreement"
-            >
-              ACA Seller’s Agreement
-            </FooterLink>
-
-            <FooterLink color="black60" mr={1} to="/buyer-guarantee">
-              Buyer Guarantee
-            </FooterLink>
-          </>
-        )}
+        <FooterLink color="black60" mr={1} to="/security">
+          Security
+        </FooterLink>
 
         <Clickable onClick={showCCPARequest} mr={1}>
           Do not sell my personal information

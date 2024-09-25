@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
 import { NotificationsListFragmentContainer } from "Components/Notifications/NotificationsList"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { NotificationsList_test_Query } from "__generated__/NotificationsList_test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
@@ -33,6 +33,18 @@ describe("NotificationsList", () => {
   it("should render notification items", () => {
     renderWithRelay({
       NotificationConnection: () => notifications,
+    })
+
+    expect(screen.getByText("Notification One")).toBeInTheDocument()
+    expect(screen.getByText("Notification Two")).toBeInTheDocument()
+    expect(screen.getByText("Notification Three")).toBeInTheDocument()
+  })
+
+  it("does not fail if a notification is null", () => {
+    renderWithRelay({
+      NotificationConnection: () => ({
+        edges: [...notifications.edges, { node: null }],
+      }),
     })
 
     expect(screen.getByText("Notification One")).toBeInTheDocument()

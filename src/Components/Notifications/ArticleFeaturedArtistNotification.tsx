@@ -40,7 +40,7 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
   }
 
   return (
-    <Box>
+    <>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1}>
           <Text variant="lg-display">{headline}</Text>
@@ -129,7 +129,7 @@ export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotifica
           </Button>
         </Box>
       </Flex>
-    </Box>
+    </>
   )
 }
 

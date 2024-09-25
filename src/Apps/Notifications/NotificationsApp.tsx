@@ -6,15 +6,16 @@ import { Media } from "Utils/Responsive"
 import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
 import { NotificationQueryRenderer } from "Components/Notifications/Notification"
 import { useRouter } from "found"
-import { GridColumns, Column, Flex, FullBleed } from "@artsy/palette"
-import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
+import { GridColumns, Column, FullBleed, Box } from "@artsy/palette"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useEffect } from "react"
-
-const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
-const MIN_LIST_WIDTH = 370
+import {
+  DESKTOP_HEIGHT,
+  MIN_LIST_WIDTH,
+} from "Apps/Notifications/notificationsutils"
+import { useOnce } from "Utils/Hooks/useOnce"
+import { useEffect, useRef } from "react"
 
 interface NotificationsAppProps {
   me: NotificationsApp_me$data
@@ -25,28 +26,29 @@ const NotificationsApp: React.FC<NotificationsAppProps> = ({ me }) => {
   const { showAuthDialog } = useAuthDialog()
   const { isLoggedIn } = useSystemContext()
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      showAuthDialog({
-        mode: "Login",
-        options: {
-          title: mode => {
-            const action = mode === "Login" ? "Log in" : "Sign up"
-            return `${action} to view your notifications.`
-          },
-        },
-        analytics: {
-          contextModule: ContextModule.activity,
-          intent: Intent.login,
-        },
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const contentRef = useRef<HTMLDivElement | null>(null)
 
-  const isNotificationsPage = match.location.pathname.startsWith(
-    "/notifications"
-  )
+  useOnce(() => {
+    if (isLoggedIn) return
+
+    showAuthDialog({
+      options: {
+        title: "Sign up or log in to view your notifications",
+      },
+      analytics: {
+        contextModule: ContextModule.activity,
+        intent: Intent.login,
+      },
+    })
+  })
+
+  const pathname = match.location.pathname
+  const isNotificationsPage = pathname.startsWith("/notifications")
+
+  // Scroll to top of content pane when route changes
+  useEffect(() => {
+    contentRef.current?.scrollTo(0, 0)
+  }, [pathname])
 
   return (
     <FullBleed>
@@ -57,29 +59,28 @@ const NotificationsApp: React.FC<NotificationsAppProps> = ({ me }) => {
         />
 
         <Media greaterThan="xs">
-          <GridColumns>
+          <GridColumns height="100%">
             <Column
               span={3}
               borderRight="1px solid"
               borderColor="black10"
               minWidth={MIN_LIST_WIDTH}
+              height="100%"
             >
-              <Flex height={DESKTOP_HEIGHT} flexDirection="column">
-                <Notifications
-                  mode="page"
-                  unreadCounts={me?.unreadNotificationsCount ?? 0}
-                />
-              </Flex>
+              <Notifications
+                mode="page"
+                unreadCounts={me?.unreadNotificationsCount ?? 0}
+              />
             </Column>
 
             <Column span={9}>
-              <Flex
-                flexDirection="column"
-                height={DESKTOP_HEIGHT}
+              <Box
+                ref={contentRef as any}
+                maxHeight={DESKTOP_HEIGHT}
                 overflow="auto"
               >
                 <NotificationQueryRenderer />
-              </Flex>
+              </Box>
             </Column>
           </GridColumns>
         </Media>

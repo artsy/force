@@ -20,6 +20,11 @@ export const SaveArtwork = (
               id
               slug
               isSaved
+              collectorSignals {
+                auction {
+                  lotWatcherCount
+                }
+              }
             }
             me {
               id

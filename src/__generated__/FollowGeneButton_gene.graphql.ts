@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a9bb0a6577bbc947b9762a1345c8adf>>
+ * @generated SignedSource<<eaf82dadf6f5457e8816600eb107d4d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FollowGeneButton_gene$data = {
   readonly id: string;
   readonly internalID: string;
-  readonly isFollowed: boolean | null | undefined;
+  readonly isFollowed?: boolean | null | undefined;
   readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "FollowGeneButton_gene";
@@ -24,7 +24,13 @@ export type FollowGeneButton_gene$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "isLoggedIn"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "FollowGeneButton_gene",
@@ -58,17 +64,24 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isFollowed",
-      "storageKey": null
+      "condition": "isLoggedIn",
+      "kind": "Condition",
+      "passingValue": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isFollowed",
+          "storageKey": null
+        }
+      ]
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
 
-(node as any).hash = "0f37f40727c4b161b6e595176e33df86";
+(node as any).hash = "8ecc9c427f3f441fba5fb3c2aae9dee7";
 
 export default node;

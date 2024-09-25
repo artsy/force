@@ -4,9 +4,8 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { ButtonProps, Popover } from "@artsy/palette"
+import { ButtonProps } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "__generated__/FollowArtistButtonMutation.graphql"
-import { FollowArtistPopoverQueryRenderer } from "Components/FollowArtistPopover"
 import * as React from "react"
 import { FollowArtistButton_artist$data } from "__generated__/FollowArtistButton_artist.graphql"
 import { FollowArtistButton_me$data } from "__generated__/FollowArtistButton_me.graphql"
@@ -25,7 +24,6 @@ interface FollowArtistButtonProps extends ButtonProps {
   contextModule?: AuthContextModule
   me: FollowArtistButton_me$data | null | undefined
   onFollow?: (followed: boolean) => void
-  triggerSuggestions?: boolean
 }
 
 const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
@@ -33,7 +31,6 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
   contextModule = ContextModule.artistHeader,
   me,
   onFollow,
-  triggerSuggestions = false,
   ...rest
 }) => {
   const { isLoggedIn } = useSystemContext()
@@ -129,12 +126,8 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
 
     if (!isLoggedIn) {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to follow ${artist.name}`
-          },
+          title: `Sign up or log in to follow ${artist.name}`,
           afterAuthAction: {
             action: "follow",
             kind: "artist",
@@ -164,40 +157,17 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
   }
 
   return (
-    <Popover
-      placement="bottom"
-      popover={
-        artist ? (
-          <FollowArtistPopoverQueryRenderer artistID={artist.internalID} />
-        ) : null
-      }
-    >
-      {({ anchorRef, onVisible }) => {
-        const openSuggestions = () => {
-          if (isLoggedIn && triggerSuggestions && !artist.isFollowed) {
-            onVisible()
-          }
-        }
-
-        return (
-          <FollowButton
-            data-test="followArtistButton"
-            ref={anchorRef}
-            isFollowed={!!artist.isFollowed}
-            handleFollow={event => {
-              handleClick(event)
-              openSuggestions()
-            }}
-            aria-label={
-              artist.isFollowed
-                ? `Unfollow ${artist.name}`
-                : `Follow ${artist.name}`
-            }
-            {...rest}
-          />
-        )
+    <FollowButton
+      data-test="followArtistButton"
+      isFollowed={!!artist.isFollowed}
+      handleFollow={event => {
+        handleClick(event)
       }}
-    </Popover>
+      aria-label={
+        artist.isFollowed ? `Unfollow ${artist.name}` : `Follow ${artist.name}`
+      }
+      {...rest}
+    />
   )
 }
 
@@ -213,12 +183,15 @@ export const FollowArtistButtonFragmentContainer = createFragmentContainer(
       }
     `,
     artist: graphql`
-      fragment FollowArtistButton_artist on Artist {
+      fragment FollowArtistButton_artist on Artist
+        @argumentDefinitions(
+          isLoggedIn: { type: "Boolean!", defaultValue: false }
+        ) {
         id
         slug
         name
         internalID
-        isFollowed
+        isFollowed @include(if: $isLoggedIn)
         counts {
           follows
         }
@@ -236,21 +209,22 @@ export const FollowArtistButtonQueryRenderer: React.FC<FollowArtistButtonQueryRe
   id,
   ...rest
 }) => {
+  const { isLoggedIn } = useSystemContext()
   return (
     <SystemQueryRenderer<FollowArtistButtonQuery>
       lazyLoad
       query={graphql`
-        query FollowArtistButtonQuery($id: String!) {
+        query FollowArtistButtonQuery($id: String!, $isLoggedIn: Boolean!) {
           me {
             ...FollowArtistButton_me
           }
           artist(id: $id) {
-            ...FollowArtistButton_artist
+            ...FollowArtistButton_artist @arguments(isLoggedIn: $isLoggedIn)
           }
         }
       `}
       placeholder={<FollowButton {...rest} />}
-      variables={{ id }}
+      variables={{ id, isLoggedIn }}
       render={({ error, props }) => {
         if (error || !props?.artist) {
           return <FollowButton {...rest} />

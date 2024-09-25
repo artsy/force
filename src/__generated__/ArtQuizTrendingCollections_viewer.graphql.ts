@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<310e955ad964a985e86c57fd9b39fcd4>>
+ * @generated SignedSource<<39e29f79f8e8df8ad23436358feb360b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type ArtQuizTrendingCollections_viewer$data = {
   readonly marketingCollections: ReadonlyArray<{
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtQuizTrendingCollection_collection">;
-  } | null | undefined> | null | undefined;
+  }>;
   readonly " $fragmentType": "ArtQuizTrendingCollections_viewer";
 };
 export type ArtQuizTrendingCollections_viewer$key = {

@@ -41,7 +41,6 @@ const YourComponent = () => {
     <Button
       onClick={() => {
         showAuthDialog({
-          mode: "Login",
           options: {
             title: "Login to save artworks",
           },

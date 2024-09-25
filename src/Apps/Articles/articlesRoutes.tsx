@@ -24,7 +24,7 @@ export const articlesRoutes: RouteProps[] = [
       ArticlesApp.preload()
     },
     query: graphql`
-      query articlesRoutes_ArticlesQuery {
+      query articlesRoutes_ArticlesQuery @cacheable {
         viewer {
           ...ArticlesApp_viewer
         }
@@ -38,7 +38,7 @@ export const articlesRoutes: RouteProps[] = [
       NewsApp.preload()
     },
     query: graphql`
-      query articlesRoutes_NewsQuery {
+      query articlesRoutes_NewsQuery @cacheable {
         viewer {
           ...NewsApp_viewer
         }
@@ -52,7 +52,7 @@ export const articlesRoutes: RouteProps[] = [
       ChannelApp.preload()
     },
     query: graphql`
-      query articlesRoutes_ChannelQuery($id: ID!) {
+      query articlesRoutes_ChannelQuery($id: ID!) @cacheable {
         channel(id: $id) @principalField {
           ...ChannelApp_channel
         }

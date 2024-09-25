@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<76c98dbbe5016b7c03c171eb857ea729>>
+ * @generated SignedSource<<d4cddbdc27723f1e4efddb6eb64a6628>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
+export type ArtworkConditionEnumType = "EXCELLENT" | "FAIR" | "GOOD" | "VERY_GOOD" | "%future added value";
 export type ArtworkSignatureTypeEnum = "HAND_SIGNED_BY_ARTIST" | "NOT_SIGNED" | "OTHER" | "SIGNED_IN_PLATE" | "STAMPED_BY_ARTIST_ESTATE" | "STICKER_LABEL" | "%future added value";
 export type MyCollectionUpdateArtworkInput = {
   additionalInformation?: string | null | undefined;
@@ -22,6 +23,7 @@ export type MyCollectionUpdateArtworkInput = {
   coaByAuthenticatingBody?: boolean | null | undefined;
   coaByGallery?: boolean | null | undefined;
   collectorLocation?: EditableLocation | null | undefined;
+  condition?: ArtworkConditionEnumType | null | undefined;
   conditionDescription?: string | null | undefined;
   confidentialNotes?: string | null | undefined;
   costCurrencyCode?: string | null | undefined;

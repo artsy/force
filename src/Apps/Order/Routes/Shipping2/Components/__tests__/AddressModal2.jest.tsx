@@ -150,7 +150,8 @@ describe.skip("AddressModal", () => {
     expect(wrapper.find("Button[data-testid='saveButton']").length).toBe(1)
   })
 
-  it("clicking the delete button spawns a correct dialog", async () => {
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip("clicking the delete button spawns a correct dialog", async () => {
     const { wrapper } = getWrapper()
     const deleteButton = wrapper.find("Clickable[data-testid='deleteButton']")
     deleteButton.simulate("click")
@@ -170,7 +171,8 @@ describe.skip("AddressModal", () => {
     expect(dialogCancel.text()).toContain("Cancel")
   })
 
-  it("when the dialog is confirmed, the delete action happens", async () => {
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip("when the dialog is confirmed, the delete action happens", async () => {
     const { mockResolveLastOperation, wrapper } = getWrapper()
 
     const deleteButton = wrapper.find("Clickable[data-testid='deleteButton']")
@@ -326,7 +328,7 @@ describe.skip("AddressModal", () => {
 
       await flushPromiseQueue()
       expect(setFieldError).toHaveBeenCalledWith(
-        "phoneNumber",
+        "attributes.phoneNumber",
         "Please enter a valid phone number"
       )
     })

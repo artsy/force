@@ -14,8 +14,12 @@ import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesSe
 import { setupServerRouter } from "System/Router/serverRouter"
 import { getRoutes } from "System/Router/Utils/routeUtils"
 import { artAdvisorServerRoutes } from "Apps/ArtAdvisor/ArtAdvisorServerRoutes"
+import { initializeMiddleware } from "middleware"
 
 const app = express()
+
+// Mount middleware
+initializeMiddleware(app)
 
 const { routes, routePaths } = getRoutes()
 

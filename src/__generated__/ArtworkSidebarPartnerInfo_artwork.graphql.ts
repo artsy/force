@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3728b482d28826af723dc456a864e888>>
+ * @generated SignedSource<<978b2b23a3a1ad556408e433b4e155fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,8 +9,12 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork$data = {
+  readonly collectorSignals: {
+    readonly primaryLabel: LabelSignalEnum | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly isInquireable: boolean | null | undefined;
   readonly isUnlisted: boolean;
@@ -115,6 +119,32 @@ return {
         (v2/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorSignals",
+      "kind": "LinkedField",
+      "name": "collectorSignals",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "ignore",
+              "value": [
+                "PARTNER_OFFER"
+              ]
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "primaryLabel",
+          "storageKey": "primaryLabel(ignore:[\"PARTNER_OFFER\"])"
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -122,6 +152,6 @@ return {
 };
 })();
 
-(node as any).hash = "a7ca3ed8d431bf9fabce88e4478c76f3";
+(node as any).hash = "f060c1b5ce683b88cc2eadd546404c51";
 
 export default node;

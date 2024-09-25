@@ -1,10 +1,8 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import {
-  AuctionArtworkFilterRefetchContainer,
-  getArtworkFilterInputArgs,
-} from "Apps/Auction/Components/AuctionArtworkFilter"
+import { AuctionArtworkFilterRefetchContainer } from "Apps/Auction/Components/AuctionArtworkFilter"
 import { AuctionArtworkFilterTestQuery } from "__generated__/AuctionArtworkFilterTestQuery.graphql"
+import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 
 jest.unmock("react-relay")
 
@@ -37,7 +35,8 @@ describe("AuctionArtworkFilter", () => {
     query: graphql`
       query AuctionArtworkFilterTestQuery($input: FilterArtworksInput!) {
         viewer {
-          ...AuctionArtworkFilter_viewer @arguments(input: $input)
+          ...AuctionArtworkFilter_viewer
+            @arguments(input: $input, saleID: "test-sale", isLoggedIn: false)
         }
       }
     `,
@@ -80,18 +79,9 @@ describe("AuctionArtworkFilter", () => {
   describe("#getArtworkFilterInputArgs", () => {
     it("returns default arguments", () => {
       expect(getArtworkFilterInputArgs()).toEqual({
-        aggregations: ["ARTIST", "MEDIUM", "TOTAL"],
+        aggregations: ["ARTIST", "MEDIUM", "TOTAL", "MATERIALS_TERMS"],
         first: 39,
       })
-    })
-
-    it("returns additional aggregation FOLLOWED_ARTISTS for logged in users", () => {
-      expect(getArtworkFilterInputArgs({ id: "foo" }).aggregations).toEqual([
-        "ARTIST",
-        "MEDIUM",
-        "TOTAL",
-        "FOLLOWED_ARTISTS",
-      ])
     })
   })
 })

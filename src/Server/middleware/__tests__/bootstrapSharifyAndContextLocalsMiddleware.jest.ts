@@ -11,6 +11,7 @@ describe("locals middleware", () => {
       get: jest.fn(),
       session: {},
       url: "localhost:3000",
+      query: {},
     }
     res = { locals: { sd: {}, asset: () => {} } }
   })

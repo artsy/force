@@ -78,6 +78,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
     id: "xxx",
     slug: "cool-fair",
     internalID: "bson-fair",
+    featuredKeywords: ["cats", "dogs"],
     filtered_artworks: {
       __isArtworkConnectionInterface: "FilterArtworksConnection",
       id: "filteredartworksabc123",
@@ -181,7 +182,6 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
               formattedEndDateTime: "Mar 12 • 12:33pm GMT",
               extendedBiddingEndAt: null,
             },
-            isSaved: false,
             is_biddable: true,
             attributionClass: null,
             mediumType: null,
@@ -230,7 +230,6 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
             sale: null,
             sale_artwork: null,
             saleArtwork: null,
-            isSaved: false,
             is_biddable: false,
             attributionClass: null,
             mediumType: null,

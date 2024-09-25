@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e1beb4a82295a5a1cbff99f5e5e1add>>
+ * @generated SignedSource<<769bcd936c62db4ee779c08655f196cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -110,6 +110,35 @@ return {
             "kind": "ScalarField",
             "name": "title",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CollectorSignals",
+            "kind": "LinkedField",
+            "name": "collectorSignals",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "AuctionCollectorSignals",
+                "kind": "LinkedField",
+                "name": "auction",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "lotWatcherCount",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": "artwork(id:\"example-artwork-id\")"
@@ -117,7 +146,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5689843edccd1cf8f38d68c5974b0b91",
+    "cacheID": "7c3631fca548e1b68cc179a87cb0eb4b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -126,6 +155,24 @@ return {
           "nullable": true,
           "plural": false,
           "type": "Artwork"
+        },
+        "artwork.collectorSignals": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CollectorSignals"
+        },
+        "artwork.collectorSignals.auction": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "AuctionCollectorSignals"
+        },
+        "artwork.collectorSignals.auction.lotWatcherCount": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Int"
         },
         "artwork.id": (v1/*: any*/),
         "artwork.internalID": (v1/*: any*/),
@@ -146,7 +193,7 @@ return {
     },
     "name": "DeprecatedSaveButtonTestQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonTestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n"
+    "text": "query DeprecatedSaveButtonTestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
   }
 };
 })();

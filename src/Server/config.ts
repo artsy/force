@@ -5,6 +5,8 @@
 // on process.env and sharify.
 //
 
+import { tryParse } from "Utils/tryParse"
+
 // Warn if this file is included client-side
 if (process.env.NODE_ENV !== "test") {
   if (typeof window !== "undefined" && window !== null) {
@@ -53,8 +55,10 @@ export const ENABLE_MEMORY_PROFILING: any = false
 export const ENABLE_NEW_AUCTIONS_FILTER: any = false
 export const ENABLE_QUERY_BATCHING: any = false
 export const ENABLE_SAVED_SEARCH: any = false
-export const ENABLE_SERVER_SIDE_CACHE: any = false
+export const ENABLE_GRAPHQL_PROXY: any = false
 export const ENABLE_WEB_CRAWLING: any = false
+export const GRAPHQL_CACHE_TTL: any = 1000000000
+export const GRAPHQL_CACHE_SIZE: any = 1000000000
 export const FACEBOOK_APP_NAMESPACE: any = "artsyinc"
 export const FACEBOOK_ID: any = null
 export const FACEBOOK_SECRET: any = null
@@ -77,13 +81,6 @@ export const IP_DENYLIST: any = ""
 export const METAPHYSICS_ENDPOINT: any =
   "https://metaphysics-production.artsy.net"
 export const NODE_ENV: any = "development"
-export const OPENREDIS_URL: any = null
-export const PAGE_CACHE_ENABLED: any = false
-export const PAGE_CACHE_EXPIRY_SECONDS: any = 600
-export const PAGE_CACHE_NAMESPACE: any = "page-cache"
-export const PAGE_CACHE_RETRIEVAL_TIMEOUT_MS: any = 400
-export const PAGE_CACHE_TYPES: any = "artist"
-export const PAGE_CACHE_VERSION: any = "1"
 export const POSITRON_URL: any = "http://writer.artsy.net"
 export const PREDICTION_URL: any = "https://live.artsy.net"
 export const PUBLIC_GOOGLE_MAPS_API_KEY: any = null
@@ -107,7 +104,7 @@ export const SALESFORCE_CHAT_AUCTION_ESW_LIVE_AGENT_DEV_NAME: any = null
 export const SECURE_IMAGES_URL: any = "https://d1ycxz9plii3tb.cloudfront.net"
 export const SEGMENT_AMP_WRITE_KEY: any = null
 export const SEGMENT_WRITE_KEY_SERVER: any = null
-export const SEGMENT_WRITE_KEY: any = "replace-me"
+export const SEGMENT_WRITE_KEY: any = null
 export const SENTRY_PRIVATE_DSN: any = null
 export const SENTRY_PUBLIC_DSN: any = null
 export const SESSION_COOKIE_KEY: any = "force.sess"
@@ -141,13 +138,5 @@ for (let key in module.exports) {
   module.exports = {
     ...module.exports,
     [key]: tryParse(val),
-  }
-}
-
-function tryParse(val) {
-  try {
-    return JSON.parse(val)
-  } catch (error) {
-    return val
   }
 }

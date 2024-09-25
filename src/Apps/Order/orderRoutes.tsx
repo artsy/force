@@ -5,7 +5,6 @@ import { ErrorPage } from "Components/ErrorPage"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 import { RouteProps } from "System/Router/Route"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const RespondRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Respond"),
@@ -21,28 +20,13 @@ const OfferRoute = loadable(
   }
 )
 
-const ShippingRouteLegacy = loadable(
-  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Shipping"),
-  {
-    resolveComponent: component => component.ShippingFragmentContainer,
-  }
+const ShippingRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "orderBundle" */ "./Routes/Shipping2/ShippingRoute"
+    ),
+  { resolveComponent: component => component.ShippingRoute }
 )
-const ShippingRoute2 = loadable(
-  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Shipping2"),
-  {
-    resolveComponent: component => component.ShippingRouteWithDialog,
-  }
-)
-
-const ShippingRoute = props => {
-  const newShippingRoute = useFeatureFlag("refactor-shipping-route")
-
-  if (newShippingRoute) {
-    return <ShippingRoute2 {...props} />
-  }
-
-  return <ShippingRouteLegacy {...props} />
-}
 
 const PaymentRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Payment"),

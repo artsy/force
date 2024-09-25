@@ -10,6 +10,8 @@ import { useSaveArtwork } from "./useSaveArtwork"
 import { useTracking } from "react-tracking"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { DeprecatedSaveButtonQuery } from "__generated__/DeprecatedSaveButtonQuery.graphql"
 
 export interface DeprecatedSaveButtonProps {
   artwork: DeprecatedSaveButton_artwork$data
@@ -27,7 +29,17 @@ export const DeprecatedSaveButton: React.FC<DeprecatedSaveButtonProps> = ({
 
   const { handleSave } = useSaveArtwork({
     isSaved,
-    artwork,
+    artwork: {
+      internalID: artwork.internalID,
+      slug: artwork.slug,
+      collectorSignals: {
+        auction: {
+          lotWatcherCount:
+            artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
+        },
+      },
+      id: artwork.id,
+    },
     contextModule,
     onSave: ({ action, artwork }) => {
       tracking.trackEvent({
@@ -110,7 +122,57 @@ export const DeprecatedSaveButtonFragmentContainer = createFragmentContainer(
         slug
         isSaved
         title
+        collectorSignals {
+          auction {
+            lotWatcherCount
+          }
+        }
       }
     `,
   }
 )
+
+interface DeprecatedSaveButtonQueryRendererProps
+  extends Omit<DeprecatedSaveButtonProps, "artwork"> {
+  id: string
+}
+
+export const DeprecatedSaveButtonQueryRenderer: React.FC<DeprecatedSaveButtonQueryRendererProps> = ({
+  id,
+  contextModule,
+}) => {
+  return (
+    <SystemQueryRenderer<DeprecatedSaveButtonQuery>
+      lazyLoad
+      query={graphql`
+        query DeprecatedSaveButtonQuery($id: String!) {
+          artwork(id: $id) {
+            ...DeprecatedSaveButton_artwork
+          }
+        }
+      `}
+      placeholder={
+        <Clickable onClick={() => {}}>
+          <HeartStrokeIcon fill="white100" width={24} height={24} />
+        </Clickable>
+      }
+      variables={{ id }}
+      render={({ error, props }) => {
+        if (error || !props?.artwork) {
+          return (
+            <Clickable onClick={() => {}}>
+              <HeartStrokeIcon fill="white100" width={24} height={24} />
+            </Clickable>
+          )
+        }
+
+        return (
+          <DeprecatedSaveButtonFragmentContainer
+            artwork={props.artwork}
+            contextModule={contextModule}
+          />
+        )
+      }}
+    />
+  )
+}

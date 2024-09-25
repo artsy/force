@@ -1,7 +1,7 @@
 import { injectGlobalStyles, Theme } from "@artsy/palette"
 import { MediaContextProvider } from "Utils/Responsive"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { SystemContextProvider } from "System/Hooks/useSystemContext"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { track } from "react-tracking"
 
 const { GlobalStyles } = injectGlobalStyles()
@@ -17,12 +17,12 @@ export const decorators = [
 
     return (
       <SystemContextProvider relayEnvironment={relayEnvironment}>
-        <MediaContextProvider>
-          <Theme>
+        <Theme>
+          <MediaContextProvider>
             <GlobalStyles />
             <Tracked />
-          </Theme>
-        </MediaContextProvider>
+          </MediaContextProvider>
+        </Theme>
       </SystemContextProvider>
     )
   },

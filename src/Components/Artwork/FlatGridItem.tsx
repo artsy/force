@@ -11,10 +11,8 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { userIsTeam } from "Utils/user"
 import { FlatGridItem_artwork$data } from "__generated__/FlatGridItem_artwork.graphql"
 import Metadata from "./Metadata"
-import {
-  DeprecatedSaveButtonFragmentContainer,
-  useSaveButton,
-} from "./SaveButton"
+import { useSaveButton } from "./SaveButton"
+import { DeprecatedSaveButtonQueryRenderer } from "Components/Artwork/SaveButton/DeprecatedSaveButton"
 
 interface FlatGridItemProps {
   artwork: FlatGridItem_artwork$data
@@ -25,7 +23,7 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
   const { containerProps, isSaveButtonVisible } = useSaveButton({
-    isSaved: !!artwork.isSaved,
+    isSaved: false,
   })
 
   const image = artwork.image?.resized
@@ -95,9 +93,9 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
           )}
 
           {isSaveButtonVisible && (
-            <DeprecatedSaveButtonFragmentContainer
+            <DeprecatedSaveButtonQueryRenderer
               contextModule={ContextModule.artworkGrid}
-              artwork={artwork}
+              id={artwork.internalID}
             />
           )}
         </RouterLink>
@@ -127,9 +125,12 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         @argumentDefinitions(
           includeBlurHash: { type: "Boolean", defaultValue: true }
           includeAllImages: { type: "Boolean", defaultValue: false }
+          includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
         ) {
         ...Metadata_artwork
-        ...DeprecatedSaveButton_artwork
+          @arguments(
+            includeConsignmentSubmission: $includeConsignmentSubmission
+          )
 
         sale {
           extendedBiddingPeriodMinutes
@@ -155,7 +156,6 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         }
         artistNames
         href
-        isSaved
       }
     `,
   }

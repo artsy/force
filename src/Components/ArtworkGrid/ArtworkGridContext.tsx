@@ -13,12 +13,15 @@ interface ArtworkGridContextProps {
   hideLotLabel?: boolean
 
   saveOnlyToDefaultList?: boolean
+
+  hideSignals?: boolean
 }
 
 const ArtworkGridContext = createContext<ArtworkGridContextProps>({
   isAuctionArtwork: false,
   hideLotLabel: false,
   saveOnlyToDefaultList: false,
+  hideSignals: false,
 })
 
 export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProps> = ({

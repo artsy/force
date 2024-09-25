@@ -3,6 +3,7 @@ import { ArtistNationalityFilter } from "Components/ArtworkFilter/ArtworkFilters
 import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
 import { AttributionClassFilter } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
@@ -20,6 +21,7 @@ export const SearchResultsArtworksFilters = () => {
       <MediumFilter expanded />
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
+      <AvailabilityFilter expanded />
       <WaysToBuyFilter expanded />
       <MaterialsFilter expanded />
       <ArtistNationalityFilter expanded />

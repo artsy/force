@@ -1,22 +1,23 @@
-import * as React from "react"
-import * as Yup from "yup"
-import { DimensionsRoute_submission$key } from "__generated__/DimensionsRoute_submission.graphql"
 import {
   Column,
   GridColumns,
-  Input,
   Join,
+  LabeledInput,
   Radio,
   RadioGroup,
   Spacer,
 } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import { Formik } from "formik"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
-import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
+import { useFocusInput } from "Apps/Sell/Hooks/useFocusInput"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { DimensionsRoute_submission$key } from "__generated__/DimensionsRoute_submission.graphql"
+import { Formik } from "formik"
+import * as React from "react"
+import { graphql, useFragment } from "react-relay"
+import * as Yup from "yup"
 
 const FRAGMENT = graphql`
   fragment DimensionsRoute_submission on ConsignmentSubmission {
@@ -50,6 +51,7 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const { userPreferences } = useSystemContext()
   const userPreferredMetric = userPreferences?.metric
+  const focusedInputRef = useFocusInput()
 
   const onSubmit = async (values: FormValues) => {
     return actions.updateSubmission(values)
@@ -93,7 +95,9 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
 
             <GridColumns>
               <Column span={[6, 6]}>
-                <Input
+                <LabeledInput
+                  label={values.dimensionsMetric}
+                  ref={focusedInputRef}
                   onChange={handleChange}
                   name="width"
                   title="Width"
@@ -103,7 +107,8 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
               </Column>
 
               <Column span={[6, 6]}>
-                <Input
+                <LabeledInput
+                  label={values.dimensionsMetric}
                   onChange={handleChange}
                   name="height"
                   title="Height"
@@ -113,7 +118,8 @@ export const DimensionsRoute: React.FC<DimensionsRouteProps> = props => {
               </Column>
 
               <Column span={[6, 6]}>
-                <Input
+                <LabeledInput
+                  label={values.dimensionsMetric}
                   onChange={handleChange}
                   name="depth"
                   title="Depth"

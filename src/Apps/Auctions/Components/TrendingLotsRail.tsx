@@ -3,13 +3,20 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { AuthContextModule } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
+import { TrendingLotsRailQuery } from "__generated__/TrendingLotsRailQuery.graphql"
 import { TrendingLotsRail_viewer$data } from "__generated__/TrendingLotsRail_viewer.graphql"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
 import { Rail } from "Components/Rail/Rail"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { Skeleton } from "@artsy/palette"
 export interface TrendingLotsRailProps {
   viewer: TrendingLotsRail_viewer$data
 }
@@ -42,7 +49,7 @@ const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {
                 trackEvent(
                   trackHelpers.clickedArtworkGroup(
                     contextModule,
-                    contextPageOwnerType!,
+                    contextPageOwnerType,
                     node.internalID,
                     node.slug,
                     index
@@ -85,4 +92,54 @@ export const TrendingLotsRailFragmentContainer = createFragmentContainer(
       }
     `,
   }
+)
+
+export const TrendingLotsRailQueryRenderer: React.FC = () => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<TrendingLotsRailQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      query={graphql`
+        query TrendingLotsRailQuery {
+          viewer {
+            ...TrendingLotsRail_viewer
+          }
+        }
+      `}
+      placeholder={PLACEHOLDER}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!props) {
+          return PLACEHOLDER
+        }
+
+        if (props.viewer) {
+          return <TrendingLotsRailFragmentContainer viewer={props.viewer} />
+        }
+
+        return null
+      }}
+    />
+  )
+}
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <Rail
+      isLoading
+      title="Some title"
+      subTitle="Some subtitle"
+      getItems={() => {
+        return [...new Array(10)].map((_, i) => {
+          return <ShelfArtworkPlaceholder key={i} index={i} />
+        })
+      }}
+    />
+  </Skeleton>
 )

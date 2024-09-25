@@ -242,7 +242,16 @@ describe("routeUtils", () => {
           return routes
         })
 
-        expect(findRoutesByPath({ path: "artist/andy-warhol" })).toEqual(routes)
+        expect(findRoutesByPath({ path: "artist/andy-warhol" })).toEqual([
+          {
+            match: {
+              index: 0,
+              params: { slug: "andy-warhol" },
+              path: "artist/andy-warhol",
+            },
+            route: routes[0],
+          },
+        ])
       })
     })
   })

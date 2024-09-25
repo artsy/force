@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<718bc9f80a882f48d72f47f715c54b2e>>
+ * @generated SignedSource<<47ed0a4196c02bf7576d24006f859026>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -358,16 +358,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c31794c0cdf10d4b5f464afdd75ea9c3",
+    "cacheID": "388473fdabfbbf2f2483f2897aea955a",
     "id": null,
     "metadata": {},
     "name": "fairRoutes_FaiArticlesQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FaiArticlesQuery(\n  $slug: String!\n) {\n  fair(id: $slug) @principalField {\n    ...FairArticles_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairArticles_fair on Fair {\n  slug\n  articlesConnection(page: 1, size: 12) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query fairRoutes_FaiArticlesQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairArticles_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairArticles_fair on Fair {\n  slug\n  articlesConnection(page: 1, size: 12) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3a804b0eed7cc5ae52329dc763f9773a";
+(node as any).hash = "c668e25dabda872b32426958e01d8530";
 
 export default node;

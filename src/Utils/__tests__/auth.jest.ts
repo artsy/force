@@ -20,6 +20,12 @@ jest.mock("sharify", () => ({
   },
 }))
 
+jest.mock("Utils/recaptcha", () => ({
+  recaptcha: jest
+    .fn()
+    .mockReturnValue(Promise.resolve("EXAMPLE_RECAPTCHA_KEY")),
+}))
+
 describe("login", () => {
   it("makes the correct request", async () => {
     const mockFetch = jest.fn(() =>
@@ -162,7 +168,7 @@ describe("signUp", () => {
 
     expect(mockFetch).toBeCalledWith("https://www.artsy.net/signup", {
       body:
-        '{"agreed_to_receive_emails":true,"accepted_terms_of_service":true,"email":"example@example.com","name":"Example Example","password":"secret","session_id":"session_id"}',
+        '{"agreed_to_receive_emails":true,"accepted_terms_of_service":true,"email":"example@example.com","name":"Example Example","password":"secret","recaptcha_token":"EXAMPLE_RECAPTCHA_KEY","session_id":"session_id"}',
       credentials: "same-origin",
       headers: {
         Accept: "application/json",

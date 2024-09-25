@@ -10,10 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
-import {
-  paramsToCamelCase,
-  updateUrl,
-} from "Components/ArtworkFilter/Utils/urlBuilder"
+import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
@@ -35,7 +32,6 @@ import useDeepCompareEffect from "use-deep-compare-effect"
 import { ArtistAuctionResultItemFragmentContainer } from "./ArtistAuctionResultItem"
 import {
   AuctionResultsFilterContextProvider,
-  initialAuctionResultsFilterState,
   SharedAuctionResultsFilterContextProps,
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
@@ -50,6 +46,8 @@ import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResult
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
 import { SystemContext } from "System/Contexts/SystemContext"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -155,12 +153,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
         // If user is not logged-in, show auth modal, but only if it was never shown before.
         if (!user && !authShownForFiltering) {
           showAuthDialog({
-            mode: "SignUp",
             options: {
-              title: mode => {
-                const action = mode === "SignUp" ? "Sign up" : "Log in"
-                return `${action} to see auction results for ${artist.name}`
-              },
+              title: `Sign up or log in to see auction results for ${artist.name}`,
             },
             analytics: {
               contextModule: ContextModule.auctionResults,

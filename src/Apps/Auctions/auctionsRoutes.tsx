@@ -27,7 +27,7 @@ const UpcomingAuctionsPaginationContainer = loadable(
 const AuctionsApp = loadable(
   () => import(/* webpackChunkName: "auctionBundle" */ "./AuctionsApp"),
   {
-    resolveComponent: component => component.AuctionsAppFragmentContainer,
+    resolveComponent: component => component.AuctionsApp,
   }
 )
 const AuctionsRoute = loadable(
@@ -57,14 +57,6 @@ export const auctionsRoutes: RouteProps[] = [
     onClientSideRender: () => {
       AuctionsApp.preload()
     },
-
-    query: graphql`
-      query auctionsRoutes_AuctionsQuery {
-        viewer {
-          ...AuctionsApp_viewer
-        }
-      }
-    `,
     children: [
       {
         path: "", // represents current auctions aka /auctions/current

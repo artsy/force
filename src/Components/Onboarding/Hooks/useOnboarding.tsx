@@ -1,7 +1,14 @@
-import { OnboardingModal } from "Components/Onboarding/Components/OnboardingModal"
-import { OnboardingSteps } from "Components/Onboarding/Components/OnboardingSteps"
-import { OnboardingProvider } from "./useOnboardingContext"
 import { useMemo, useState } from "react"
+import loadable from "@loadable/component"
+
+const OnboardingDialog = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "onboardingBundle" */
+      "Components/Onboarding/Components/OnboardingDialog"
+    ),
+  { resolveComponent: component => component.OnboardingDialog }
+)
 
 interface UseOnboarding {
   onClose(): void
@@ -22,11 +29,7 @@ export const useOnboarding = ({ onClose }: UseOnboarding) => {
     return (
       <>
         {isVisible && (
-          <OnboardingProvider onClose={onClose}>
-            <OnboardingModal onClose={hideDialog}>
-              <OnboardingSteps />
-            </OnboardingModal>
-          </OnboardingProvider>
+          <OnboardingDialog onClose={onClose} onHide={hideDialog} />
         )}
       </>
     )

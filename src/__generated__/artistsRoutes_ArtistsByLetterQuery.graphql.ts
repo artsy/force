@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f85ac0c5cfa7ce524311dcc13f7f064a>>
+ * @generated SignedSource<<3652d5e57f5d10eb05ef4b7e4122cd2f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -272,16 +272,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "829114d7b6d0ffd45884485b589c509f",
+    "cacheID": "197f11186a8543619ad38bbe9290b916",
     "id": null,
     "metadata": {},
     "name": "artistsRoutes_ArtistsByLetterQuery",
     "operationKind": "query",
-    "text": "query artistsRoutes_ArtistsByLetterQuery(\n  $letter: String!\n  $page: Int\n  $size: Int\n) {\n  viewer {\n    ...ArtistsByLetter_viewer_qU0ud\n  }\n}\n\nfragment ArtistsByLetter_viewer_qU0ud on Viewer {\n  artistsConnection(letter: $letter, page: $page, size: $size) {\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    artists: edges {\n      artist: node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query artistsRoutes_ArtistsByLetterQuery(\n  $letter: String!\n  $page: Int\n  $size: Int\n) @cacheable {\n  viewer {\n    ...ArtistsByLetter_viewer_qU0ud\n  }\n}\n\nfragment ArtistsByLetter_viewer_qU0ud on Viewer {\n  artistsConnection(letter: $letter, page: $page, size: $size) {\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    artists: edges {\n      artist: node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e66cbc7173a7c220d1bbaaae344ae36e";
+(node as any).hash = "d1032ce1d803a0c70147dc8fef9bf85c";
 
 export default node;

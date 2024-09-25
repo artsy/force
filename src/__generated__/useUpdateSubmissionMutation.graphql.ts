@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ec4c47a760afbf25cfffec824c630411>>
+ * @generated SignedSource<<b4acad9c9d9f2817df53f5d43ee1b880>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type ConsignmentSubmissionCategoryAggregation = "ARCHITECTURE" | "DESIGN_DECORATIVE_ART" | "DRAWING_COLLAGE_OR_OTHER_WORK_ON_PAPER" | "FASHION_DESIGN_AND_WEARABLE_ART" | "INSTALLATION" | "JEWELRY" | "MIXED_MEDIA" | "OTHER" | "PAINTING" | "PERFORMANCE_ART" | "PHOTOGRAPHY" | "PRINT" | "SCULPTURE" | "TEXTILE_ARTS" | "VIDEO_FILM_ANIMATION" | "%future added value";
-export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 export type UpdateSubmissionMutationInput = {
   additionalInfo?: string | null | undefined;
   artistID?: string | null | undefined;
@@ -29,6 +29,8 @@ export type UpdateSubmissionMutationInput = {
   externalId?: string | null | undefined;
   height?: string | null | undefined;
   id?: string | null | undefined;
+  locationAddress?: string | null | undefined;
+  locationAddress2?: string | null | undefined;
   locationCity?: string | null | undefined;
   locationCountry?: string | null | undefined;
   locationCountryCode?: string | null | undefined;

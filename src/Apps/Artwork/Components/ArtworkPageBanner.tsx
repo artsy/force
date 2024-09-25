@@ -7,6 +7,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { useRouter } from "System/Hooks/useRouter"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface ArtworkPageBannerProps {
   artwork: ArtworkPageBanner_artwork$key
@@ -16,6 +17,9 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
   const { match } = useRouter()
+  const allowExpiredPartnerOffers = useFeatureFlag(
+    "emerald_allow-expired-partner-offers"
+  )
 
   const expectedPartnerOfferID = match?.location?.query?.partner_offer_id as
     | string
@@ -49,7 +53,18 @@ export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
       return <ArtworkUnavailableBanner />
     }
 
-    if (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID) {
+    if (allowExpiredPartnerOffers) {
+      if (
+        partnerOffer &&
+        partnerOffer.internalID == expectedPartnerOfferID &&
+        !partnerOffer.isActive
+      ) {
+        return <ExpiredOfferBanner />
+      }
+    } else if (
+      me &&
+      (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID)
+    ) {
       return <ExpiredOfferBanner />
     }
   }
@@ -88,6 +103,7 @@ const ME_FRAGMENT = graphql`
       edges {
         node {
           internalID
+          isActive
         }
       }
     }

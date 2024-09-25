@@ -58,6 +58,11 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
   updateSharifyAndContext(res, "IP_ADDRESS", req.ip || "")
   updateSharifyAndContext(res, "AP", res.locals.sd.AP)
   updateSharifyAndContext(res, "REQUEST_ID", req.id)
+  updateSharifyAndContext(
+    res,
+    "THIRD_PARTIES_DISABLED",
+    req.query["disable_third_parties"] === "true"
+  )
 
   next()
 }

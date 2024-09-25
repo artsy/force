@@ -4,6 +4,7 @@ import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { PurchaseHistoryRoute_Test_Query$rawResponse } from "__generated__/PurchaseHistoryRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
@@ -18,6 +19,10 @@ jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 jest.mock("Utils/Hooks/useMutation")
+jest.mock("System/Hooks/useSystemContext")
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
 
 const submissionMock: Partial<
   PurchaseHistoryRoute_Test_Query$rawResponse["submission"]
@@ -32,14 +37,20 @@ const submissionMock2: Partial<
   provenance: "",
 }
 
-beforeEach(() => {
+beforeAll(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => {
+    return { isLoggedIn: true }
+  })
+
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
       replace: mockReplace,
     },
     match: {
-      location: { pathname: "submissions/submission-id/purchase-history" },
+      location: {
+        pathname: "/sell/submissions/submission-id/purchase-history",
+      },
     },
   }))
 
@@ -87,7 +98,7 @@ describe("PurchaseHistoryRoute", () => {
     })
 
     await waitFor(() => {
-      expect(screen.getByTestId("provenance-input")).toHaveValue(undefined)
+      expect(screen.getByTestId("provenance-input")).toHaveValue("")
       expect(screen.getByTestId("signature-radio-no")).not.toBeChecked()
       expect(screen.getByTestId("signature-radio-yes")).not.toBeChecked()
     })
@@ -114,7 +125,7 @@ describe("PurchaseHistoryRoute", () => {
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/dimensions'
+        '/sell/submissions/<mock-value-for-field-"externalId">/dimensions'
       )
 
       expect(submitMutation).toHaveBeenCalledWith(
@@ -140,7 +151,7 @@ describe("PurchaseHistoryRoute", () => {
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(
-        '/sell2/submissions/<mock-value-for-field-"externalId">/details'
+        '/sell/submissions/<mock-value-for-field-"externalId">/details'
       )
 
       expect(submitMutation).toHaveBeenCalledWith(
@@ -169,6 +180,63 @@ describe("PurchaseHistoryRoute", () => {
 
       await waitFor(() => {
         expect(submitMutation).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe("navigation", () => {
+    describe("in DRAFT state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        mockPush.mockClear()
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/dimensions'
+          )
+        })
+      })
+
+      it("navigates to the previous step when the Back button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ ...submissionMock, state: "DRAFT" }),
+        })
+
+        mockPush.mockClear()
+
+        screen.getByText("Back").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/details'
+          )
+        })
+      })
+    })
+
+    describe("in APPROVED state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...submissionMock,
+            state: "APPROVED",
+          }),
+        })
+
+        mockPush.mockClear()
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/dimensions'
+          )
+        })
       })
     })
   })

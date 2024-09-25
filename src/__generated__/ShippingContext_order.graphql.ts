@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c547d240fddb31607a344bbb3528916>>
+ * @generated SignedSource<<36a6b885638c6e753cf7cd930bcbb6bc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ShippingContext_order$data = {
   readonly internalID: string;
@@ -33,6 +34,7 @@ export type ShippingContext_order$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly requestedFulfillment: {
     readonly __typename: "CommercePickup";
     readonly phoneNumber: string | null | undefined;
@@ -139,6 +141,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "mode",
       "storageKey": null
     },
     {
@@ -311,6 +320,6 @@ return {
 };
 })();
 
-(node as any).hash = "b78fdff211d54d644f9a5f078a23452f";
+(node as any).hash = "11f4570a1618cdab936ad34ddd2a5364";
 
 export default node;

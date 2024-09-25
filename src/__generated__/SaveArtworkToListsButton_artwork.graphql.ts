@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0d1f7b306d3170c460651ebf0fdf487>>
+ * @generated SignedSource<<92e5bbe6bf2c837373f77be02c860761>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,17 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaveArtworkToListsButton_artwork$data = {
   readonly artistNames: string | null | undefined;
+  readonly collectorSignals: {
+    readonly auction: {
+      readonly liveBiddingStarted: boolean;
+      readonly lotClosesAt: string | null | undefined;
+      readonly lotWatcherCount: number;
+    } | null | undefined;
+  } | null | undefined;
   readonly date: string | null | undefined;
   readonly id: string;
   readonly internalID: string;
+  readonly isInAuction: boolean | null | undefined;
   readonly isSaved: boolean | null | undefined;
   readonly isSavedToList: boolean;
   readonly preview: {
@@ -112,7 +120,57 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "isInAuction",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "isSavedToList",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorSignals",
+      "kind": "LinkedField",
+      "name": "collectorSignals",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "AuctionCollectorSignals",
+          "kind": "LinkedField",
+          "name": "auction",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "lotWatcherCount",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "lotClosesAt",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "liveBiddingStarted",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
@@ -120,6 +178,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b42bf2986d5dd54e55bb372b4b4f15d8";
+(node as any).hash = "32b66f45b583117302b4a1c85b90ff4f";
 
 export default node;

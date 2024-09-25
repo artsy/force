@@ -1,12 +1,10 @@
 import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { Collections_marketingCategories$data } from "__generated__/Collections_marketingCategories.graphql"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
-import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
-import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CollectionsCategoryFragmentContainer } from "./Components/CollectionsCategory"
 import { RouterLink } from "System/Components/RouterLink"
-import { getENV } from "Utils/getENV"
+import { MetaTags } from "Components/MetaTags"
 
 interface CollectionsAppProps {
   marketingCategories: Collections_marketingCategories$data
@@ -21,12 +19,11 @@ export const CollectionsApp: React.FC<CollectionsAppProps> = ({
 
   return (
     <>
-      <Title>Collections | Artsy</Title>
-      <Meta property="og:url" content={`${getENV("APP_URL")}/collections`} />
-      <Meta name="description" content={META_DESCRIPTION} />
-      <Meta property="og:description" content={META_DESCRIPTION} />
-      <Meta property="twitter:description" content={META_DESCRIPTION} />
-      <BreadCrumbList items={[{ name: "Collections", path: "/collections" }]} />
+      <MetaTags
+        title="Collections | Artsy"
+        description={META_DESCRIPTION}
+        pathname="collections"
+      />
 
       <FrameWithRecentlyViewed>
         <GridColumns my={4} gridRowGap={[2, 0]}>

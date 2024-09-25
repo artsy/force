@@ -1,65 +1,10 @@
 import { Box, BoxProps, Button, Text } from "@artsy/palette"
-import { cloneDeep } from "lodash"
+import { concatDropzoneErrors } from "Components/FileUpload/utils/concatDropzoneErrors"
+import { validateTotalMaxSize } from "Components/FileUpload/utils/validateTotalMaxSize"
+import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import { Media } from "Utils/Responsive"
 import React, { useEffect, useRef, useState } from "react"
 import { FileRejection, useDropzone } from "react-dropzone"
-import { Media } from "Utils/Responsive"
-import { CustomErrorCode, MBSize, Photo } from "../Utils/fileUtils"
-
-const validateTotalMaxSize = (
-  currentFiles: Array<Photo>,
-  filesToAdd: Array<File>,
-  maxTotalSize: number
-): [Array<File>, FileRejection[]] => {
-  const acceptedFiles: Array<File> = []
-  const fileRejections: Array<FileRejection> = []
-  const totalSize = maxTotalSize * MBSize
-  const currentFilesSize = currentFiles.reduce((acc, photo) => {
-    return acc + (photo.size || 0)
-  }, 0)
-
-  filesToAdd
-    .sort((a, b) => a.size - b.size)
-    .forEach(file => {
-      const acceptedFilesSize = acceptedFiles.reduce((acc, photo) => {
-        return acc + photo.size
-      }, 0)
-
-      if (currentFilesSize + acceptedFilesSize + file.size > totalSize) {
-        fileRejections.push({
-          file,
-          errors: [
-            {
-              code: CustomErrorCode.TotalSizeLimit,
-              message: "",
-            },
-          ],
-        })
-      } else {
-        acceptedFiles.push(file)
-      }
-    })
-
-  return [acceptedFiles, fileRejections]
-}
-
-const concatErrors = (
-  errors: FileRejection[],
-  customErrors: FileRejection[]
-) => {
-  const result: FileRejection[] = errors.map(cloneDeep)
-
-  customErrors.forEach(error => {
-    const err = result.find(err => err.file === error.file)
-
-    if (err) {
-      err.errors.concat(error.errors)
-    } else {
-      result.push(error)
-    }
-  })
-
-  return result
-}
 
 export interface PhotoDropzoneProps extends BoxProps {
   allPhotos: Photo[]
@@ -68,6 +13,10 @@ export interface PhotoDropzoneProps extends BoxProps {
   onReject: (rejections: FileRejection[]) => void
 }
 
+/**
+ * @deprecated Deprecated - prefer using FileDropzone, which is a more generic version of this component
+ * Also probably safe to remove this component entirely when cleaning up old sell flow
+ */
 export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
   allPhotos,
   maxTotalSize,
@@ -98,14 +47,14 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
     onDropRejected: () => {
       buttonRef.current?.blur()
     },
-    accept: ["image/jpeg", "image/png"],
+    accept: ["image/jpeg", "image/png", "image/heic"],
     noClick: true,
     noKeyboard: true,
     multiple: true,
   })
 
   useEffect(() => {
-    const errors = concatErrors(fileRejections, customErrors)
+    const errors = concatDropzoneErrors(fileRejections, customErrors)
 
     onReject(errors)
     // FIXME: Remove this disable
@@ -114,34 +63,45 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
 
   return (
     <>
-      <Box {...rest} data-test-id="image-dropzone" {...getRootProps()}>
-        <input data-testid="image-dropzone-input" {...getInputProps()} />
+      <Media greaterThan="xs">
+        <Box {...rest} data-test-id="image-dropzone" {...getRootProps()}>
+          <input data-testid="image-dropzone-input" {...getInputProps()} />
 
-        <Media greaterThan="xs">
           <Text variant="lg-display">Drag and drop photos here</Text>
-        </Media>
-        <Media at="xs">
-          <Text variant="lg-display">Add photos here</Text>
-        </Media>
+          <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
+            Files Supported: JPG, PNG, HEIC <br />
+            Total maximum size: {maxTotalSize} MB
+          </Text>
+          <Button
+            ref={buttonRef}
+            width={["100%", "auto"]}
+            type="button"
+            mt={[2, 2]}
+            variant="secondaryBlack"
+            onClick={open}
+          >
+            Or Add Photos
+          </Button>
+        </Box>
+      </Media>
 
-        <Text variant="sm-display" color="black60" mt={1}>
-          Files supported: JPG, PNG
-        </Text>
-        <Text variant="sm-display" color="black60" mt={1}>
-          Total maximum size: {maxTotalSize} MB
-        </Text>
+      <Media at="xs">
+        <input data-testid="image-dropzone-input" {...getInputProps()} />
 
         <Button
           ref={buttonRef}
           width={["100%", "auto"]}
           type="button"
-          mt={4}
           variant="secondaryBlack"
           onClick={open}
         >
-          Add Photo
+          Add Photos
         </Button>
-      </Box>
+        <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
+          Files Supported: JPG, PNG, HEIC <br />
+          Total maximum size: {maxTotalSize} MB
+        </Text>
+      </Media>
     </>
   )
 }

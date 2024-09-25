@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c9638769ce2c73e62a667d9e5a86ea82>>
+ * @generated SignedSource<<b6e8a122d5bf17bb9e65972b28dd35a3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -384,16 +384,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ae973f8fcc131de9d96c6bf3d0d1fa3f",
+    "cacheID": "0ebeaab2383d18af9ceb2f94edc7f7e3",
     "id": null,
     "metadata": {},
     "name": "partnerRoutes_ViewingRoomsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ViewingRoomsQuery(\n  $partnerId: String!\n) {\n  currentViewingRooms: partner(id: $partnerId) @principalField {\n    ...PartnerViewingRooms_currentViewingRooms\n    id\n  }\n  upcomingViewingRooms: partner(id: $partnerId) {\n    ...PartnerViewingRooms_upcomingViewingRooms\n    id\n  }\n  pastViewingRooms: partner(id: $partnerId) {\n    ...PartnerViewingRooms_pastViewingRooms\n    id\n  }\n}\n\nfragment PartnerViewingRoomsGrid_viewingRoomsConnection_3eUKbK on Partner {\n  viewingRoomsConnection(first: 12, statuses: [scheduled]) {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCard_viewingRoom\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PartnerViewingRoomsGrid_viewingRoomsConnection_MnbZx on Partner {\n  viewingRoomsConnection(first: 12, statuses: [closed]) {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCard_viewingRoom\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PartnerViewingRoomsGrid_viewingRoomsConnection_tlCQk on Partner {\n  viewingRoomsConnection(first: 12, statuses: [live]) {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCard_viewingRoom\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PartnerViewingRooms_currentViewingRooms on Partner {\n  ...PartnerViewingRoomsGrid_viewingRoomsConnection_tlCQk\n}\n\nfragment PartnerViewingRooms_pastViewingRooms on Partner {\n  ...PartnerViewingRoomsGrid_viewingRoomsConnection_MnbZx\n}\n\nfragment PartnerViewingRooms_upcomingViewingRooms on Partner {\n  ...PartnerViewingRoomsGrid_viewingRoomsConnection_3eUKbK\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n"
+    "text": "query partnerRoutes_ViewingRoomsQuery(\n  $partnerId: String!\n) @cacheable {\n  currentViewingRooms: partner(id: $partnerId) @principalField {\n    ...PartnerViewingRooms_currentViewingRooms\n    id\n  }\n  upcomingViewingRooms: partner(id: $partnerId) {\n    ...PartnerViewingRooms_upcomingViewingRooms\n    id\n  }\n  pastViewingRooms: partner(id: $partnerId) {\n    ...PartnerViewingRooms_pastViewingRooms\n    id\n  }\n}\n\nfragment PartnerViewingRoomsGrid_viewingRoomsConnection_3eUKbK on Partner {\n  viewingRoomsConnection(first: 12, statuses: [scheduled]) {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCard_viewingRoom\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PartnerViewingRoomsGrid_viewingRoomsConnection_MnbZx on Partner {\n  viewingRoomsConnection(first: 12, statuses: [closed]) {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCard_viewingRoom\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PartnerViewingRoomsGrid_viewingRoomsConnection_tlCQk on Partner {\n  viewingRoomsConnection(first: 12, statuses: [live]) {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCard_viewingRoom\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PartnerViewingRooms_currentViewingRooms on Partner {\n  ...PartnerViewingRoomsGrid_viewingRoomsConnection_tlCQk\n}\n\nfragment PartnerViewingRooms_pastViewingRooms on Partner {\n  ...PartnerViewingRoomsGrid_viewingRoomsConnection_MnbZx\n}\n\nfragment PartnerViewingRooms_upcomingViewingRooms on Partner {\n  ...PartnerViewingRoomsGrid_viewingRoomsConnection_3eUKbK\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ccd6ccfc0accbde4aebf4dac3c09ddbc";
+(node as any).hash = "2736c0d43f37598040dbab4f1be81c53";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebac4965c08048f6ea3d683193b5d3e0>>
+ * @generated SignedSource<<91f5de9da1f720a5b92d24925cbbf45e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 export type DetailsRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type DetailsRoute_Test_Query$data = {
   readonly submission: {
@@ -23,6 +24,8 @@ export type DetailsRoute_Test_Query$rawResponse = {
     readonly id: string;
     readonly internalID: string | null | undefined;
     readonly medium: string | null | undefined;
+    readonly myCollectionArtworkID: string | null | undefined;
+    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
     readonly year: string | null | undefined;
   } | null | undefined;
 };
@@ -104,6 +107,20 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "myCollectionArtworkID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "year",
             "storageKey": null
           },
@@ -134,12 +151,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fc488fa7f814f16e03fa6cdabee52b63",
+    "cacheID": "6facb5d5928a33ffd714f88cae1b0098",
     "id": null,
     "metadata": {},
     "name": "DetailsRoute_Test_Query",
     "operationKind": "query",
-    "text": "query DetailsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...DetailsRoute_submission\n    id\n  }\n}\n\nfragment DetailsRoute_submission on ConsignmentSubmission {\n  year\n  category\n  medium\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
+    "text": "query DetailsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...DetailsRoute_submission\n    id\n  }\n}\n\nfragment DetailsRoute_submission on ConsignmentSubmission {\n  year\n  category\n  medium\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();

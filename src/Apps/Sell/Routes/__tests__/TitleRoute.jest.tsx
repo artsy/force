@@ -1,34 +1,45 @@
-import { screen } from "@testing-library/react"
-import { fireEvent, waitFor } from "@testing-library/react"
-import { TitleRoute } from "Apps/Sell/Routes/TitleRoute"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
+import { TitleRoute } from "Apps/Sell/Routes/TitleRoute"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
 const mockReplace = jest.fn()
+let submitMutation: jest.Mock
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
 }))
-
-jest.unmock("react-relay")
-
+jest.mock("Utils/Hooks/useMutation")
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
   fetchQuery: jest.fn(),
 }))
 
 beforeEach(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => {
+    return { isLoggedIn: true }
+  })
+
   mockUseRouter.mockImplementation(() => ({
     router: {
       push: mockPush,
       replace: mockReplace,
     },
-    match: { location: { pathname: "/submissions/submission-id/title" } },
+    match: { location: { pathname: "/sell/submissions/submission-id/title" } },
   }))
+
+  submitMutation = jest.fn(() => ({ catch: () => {} }))
+  ;(useMutation as jest.Mock).mockImplementation(() => {
+    return { submitMutation }
+  })
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -58,8 +69,8 @@ describe("TitleRoute", () => {
     })
   })
 
-  describe("artist title input", () => {
-    it("is required", async () => {
+  describe("when form is valid", () => {
+    it("updates the submission", async () => {
       renderWithRelay({})
 
       await waitFor(async () => {
@@ -70,6 +81,87 @@ describe("TitleRoute", () => {
         expect(artistTitleInput).toBeInTheDocument()
 
         expect(artistTitleInput).toHaveValue("Banksy")
+
+        screen.getByText("Continue").click()
+
+        await flushPromiseQueue()
+
+        expect(submitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              externalId: '<mock-value-for-field-"externalId">',
+              title: "Banksy",
+            },
+          },
+        })
+      })
+    })
+  })
+
+  describe("when form is not valid", () => {
+    it("does not update the submission", async () => {
+      renderWithRelay({})
+
+      await waitFor(async () => {
+        const artistTitleInput = screen.getByPlaceholderText("Artwork Title")
+
+        fireEvent.change(artistTitleInput, { target: { value: null } })
+
+        expect(artistTitleInput).toBeInTheDocument()
+
+        expect(artistTitleInput).toHaveValue("")
+
+        expect(submitMutation).not.toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe("navigation", () => {
+    describe("in DRAFT state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ state: "DRAFT" }),
+        })
+
+        mockPush.mockClear()
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/photos'
+          )
+        })
+      })
+
+      it("Back button isn't visible", () => {
+        renderWithRelay({})
+
+        expect(screen.queryByText("Back")).not.toBeInTheDocument()
+      })
+    })
+
+    describe("in APPROVED state", () => {
+      it("navigates to next step when the Continue button is clicked", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => ({ state: "APPROVED" }),
+        })
+
+        mockPush.mockClear()
+
+        screen.getByText("Continue").click()
+
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledWith(
+            '/sell/submissions/<mock-value-for-field-"externalId">/photos'
+          )
+        })
+      })
+
+      it("Back button isn't visible", () => {
+        renderWithRelay({})
+
+        expect(screen.queryByText("Back")).not.toBeInTheDocument()
       })
     })
   })

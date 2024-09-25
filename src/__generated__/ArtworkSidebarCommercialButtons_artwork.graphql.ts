@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2b12e4cdaf2d89de9ac9d0cfcbe8ff20>>
+ * @generated SignedSource<<456d9c1d95f09251f8aa7a81784add22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCommercialButtons_artwork$data = {
   readonly artists: ReadonlyArray<{
@@ -16,6 +17,9 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
   } | null | undefined> | null | undefined;
   readonly attributionClass: {
     readonly internalID: string;
+  } | null | undefined;
+  readonly collectorSignals: {
+    readonly primaryLabel: LabelSignalEnum | null | undefined;
   } | null | undefined;
   readonly editionSets: ReadonlyArray<{
     readonly dimensions: {
@@ -310,6 +314,32 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorSignals",
+      "kind": "LinkedField",
+      "name": "collectorSignals",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "ignore",
+              "value": [
+                "PARTNER_OFFER"
+              ]
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "primaryLabel",
+          "storageKey": "primaryLabel(ignore:[\"PARTNER_OFFER\"])"
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -317,6 +347,6 @@ return {
 };
 })();
 
-(node as any).hash = "56f07625bc892159701ee61bd68fc827";
+(node as any).hash = "6d01c057c0a26d6a87ccc57daaf7874c";
 
 export default node;

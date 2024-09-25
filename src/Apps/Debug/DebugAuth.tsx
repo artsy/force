@@ -23,7 +23,7 @@ export const DebugAuth: FC = () => {
   const [state, setState] = useState<
     Required<Parameters<typeof showAuthDialog>[0]>
   >({
-    mode: "Login",
+    mode: "Welcome",
     options: {},
     analytics: {
       contextModule: ContextModule.header,

@@ -3,6 +3,7 @@ import { ArtworkSidebarDetails_artwork$data } from "__generated__/ArtworkSidebar
 import { Box, Spacer, Text } from "@artsy/palette"
 import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
 import { ArtworkSidebarAuthenticityCertificateFragmentContainer } from "./ArtworkSidebarAuthenticityCertificate"
+import { ArtworkSidebarCollectorSignal } from "./ArtworkSidebarCollectorSignal"
 import { useTranslation } from "react-i18next"
 
 interface ArtworkSidebarDetailsProps {
@@ -59,6 +60,9 @@ const ArtworkSidebarDetails: React.FC<ArtworkSidebarDetailsProps> = ({
         artwork={artwork}
       />
 
+      {/* collector signal */}
+      <ArtworkSidebarCollectorSignal artwork={artwork} />
+
       <Spacer y={2} />
     </Box>
   )
@@ -85,6 +89,7 @@ export const ArtworkSidebarDetailsFragmentContainer = createFragmentContainer(
         }
         ...ArtworkSidebarClassification_artwork
         ...ArtworkSidebarAuthenticityCertificate_artwork
+        ...ArtworkSidebarCollectorSignal_artwork
       }
     `,
   }

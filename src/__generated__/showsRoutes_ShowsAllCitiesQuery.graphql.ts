@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<64f4e5f09d5f2ca94fefad25c2b34835>>
+ * @generated SignedSource<<863cefad3b55c01c658b35c16d6a9f22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -100,15 +100,15 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "4e5a24ea83d5ba74a1cc669331557472",
+    "cacheID": "57b8a6a1300857be760a3d5691d145a8",
     "id": null,
     "metadata": {},
     "name": "showsRoutes_ShowsAllCitiesQuery",
     "operationKind": "query",
-    "text": "query showsRoutes_ShowsAllCitiesQuery {\n  viewer {\n    ...ShowsAllCities_viewer\n  }\n}\n\nfragment ShowsAllCities_viewer on Viewer {\n  cities {\n    fullName\n    name\n    slug\n  }\n}\n"
+    "text": "query showsRoutes_ShowsAllCitiesQuery @cacheable {\n  viewer {\n    ...ShowsAllCities_viewer\n  }\n}\n\nfragment ShowsAllCities_viewer on Viewer {\n  cities {\n    fullName\n    name\n    slug\n  }\n}\n"
   }
 };
 
-(node as any).hash = "7afb036b1da4a784deabe0bd23acc9a4";
+(node as any).hash = "51f6281080a3ff3fb15d4539b8528305";
 
 export default node;

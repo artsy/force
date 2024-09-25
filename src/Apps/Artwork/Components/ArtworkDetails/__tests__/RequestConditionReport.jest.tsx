@@ -156,7 +156,6 @@ describe("RequestConditionReport", () => {
       await page.clickLogInButton()
 
       expect(showAuthDialog).toHaveBeenCalledWith({
-        mode: "Login",
         analytics: {
           contextModule: "aboutTheWork",
           intent: "requestConditionReport",

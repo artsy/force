@@ -5,7 +5,6 @@ import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/Artw
 import { useTimer } from "Utils/Hooks/useTimer"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { FC } from "react"
-import { SuggestedArtworksButton } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksButton"
 import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { compact } from "lodash"
@@ -16,7 +15,6 @@ import {
 } from "Components/SavedSearchAlert/types"
 import { OwnerType } from "@artsy/cohesion"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Components/RouterLink"
@@ -93,10 +91,6 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
   }
   const allowedCriteria = getAllowedSearchCriteria(criteria)
 
-  const suggestedArtworksCount =
-    artwork?.savedSearch?.suggestedArtworksConnection?.totalCount ?? 0
-  const displaySuggestedArtworksSection = suggestedArtworksCount > 0
-  const displaySeeMoreButton = suggestedArtworksCount > 5
   const isBidder = artwork.myLotStandingManageAlerts?.[0]
   const isHighest = artwork.myLotStandingManageAlerts?.[0]?.isHighestBidder
   const hasLostBid = isBidder && !isHighest
@@ -161,24 +155,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
           </Box>
         </Column>
 
-        {!!displaySuggestedArtworksSection && (
-          <>
-            <Column span={12} display={["none", "block"]}>
-              <Spacer y={4} />
-              <ArtworkAuctionCreateAlertTooltip />
-            </Column>
-
-            <Column span={12} display={["none", "block"]}>
-              <SuggestedArtworksShelfQueryRenderer {...criteria} />
-            </Column>
-
-            {!!displaySeeMoreButton && (
-              <Column span={2} start={6}>
-                <SuggestedArtworksButton />
-              </Column>
-            )}
-          </>
-        )}
+        <SuggestedArtworksShelfQueryRenderer {...criteria} />
       </GridColumns>
     </SavedSearchAlertContextProvider>
   )
@@ -216,11 +193,6 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
           filterGene {
             slug
             name
-          }
-        }
-        savedSearch {
-          suggestedArtworksConnection {
-            totalCount
           }
         }
         myLotStandingManageAlerts: myLotStanding {

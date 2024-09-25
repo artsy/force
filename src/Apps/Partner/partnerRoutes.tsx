@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { RouteProps } from "System/Router/Route"
 import { getMerchandisingPartnerSlugs } from "./Utils/getMerchandisingPartnerSlugs"
@@ -76,7 +76,7 @@ export const partnerRoutes: RouteProps[] = [
       PartnerApp.preload()
     },
     query: graphql`
-      query partnerRoutes_PartnerQuery($partnerId: String!) {
+      query partnerRoutes_PartnerQuery($partnerId: String!) @cacheable {
         partner(id: $partnerId) @principalField {
           partnerType
           displayFullPartnerPage
@@ -115,7 +115,7 @@ export const partnerRoutes: RouteProps[] = [
           OverviewRoute.preload()
         },
         query: graphql`
-          query partnerRoutes_OverviewQuery($partnerId: String!) {
+          query partnerRoutes_OverviewQuery($partnerId: String!) @cacheable {
             partner(id: $partnerId) @principalField {
               ...Overview_partner
             }
@@ -138,7 +138,7 @@ export const partnerRoutes: RouteProps[] = [
           ShowsRoute.preload()
         },
         query: graphql`
-          query partnerRoutes_ShowsQuery($partnerId: String!) {
+          query partnerRoutes_ShowsQuery($partnerId: String!) @cacheable {
             partner(id: $partnerId) @principalField {
               counts {
                 displayableShows
@@ -179,7 +179,8 @@ export const partnerRoutes: RouteProps[] = [
           ViewingRoomsRoute.preload()
         },
         query: graphql`
-          query partnerRoutes_ViewingRoomsQuery($partnerId: String!) {
+          query partnerRoutes_ViewingRoomsQuery($partnerId: String!)
+            @cacheable {
             currentViewingRooms: partner(id: $partnerId) @principalField {
               ...PartnerViewingRooms_currentViewingRooms
             }
@@ -209,10 +210,6 @@ export const partnerRoutes: RouteProps[] = [
             "ARTIST_NATIONALITY",
             "ARTIST",
           ]
-
-          if (!!props.context.user) {
-            aggregations.push("FOLLOWED_ARTISTS")
-          }
 
           const filterParams = {
             ...initialArtworkFilterState,
@@ -289,7 +286,7 @@ export const partnerRoutes: RouteProps[] = [
           ArtistsRoute.preload()
         },
         query: graphql`
-          query partnerRoutes_ArtistsQuery($partnerId: String!) {
+          query partnerRoutes_ArtistsQuery($partnerId: String!) @cacheable {
             partner(id: $partnerId) @principalField {
               ...ArtistsRoute_partner
               displayArtistsSection
@@ -336,7 +333,8 @@ export const partnerRoutes: RouteProps[] = [
           }
         },
         query: graphql`
-          query partnerRoutes_ArticlesQuery($partnerId: String!, $page: Int) {
+          query partnerRoutes_ArticlesQuery($partnerId: String!, $page: Int)
+            @cacheable {
             partner(id: $partnerId) @principalField {
               articles: articlesConnection(first: 0) {
                 totalCount
@@ -377,7 +375,7 @@ export const partnerRoutes: RouteProps[] = [
           ContactRoute.preload()
         },
         query: graphql`
-          query partnerRoutes_ContactQuery($partnerId: String!) {
+          query partnerRoutes_ContactQuery($partnerId: String!) @cacheable {
             partner(id: $partnerId) @principalField {
               ...Contact_partner
               locations: locationsConnection(first: 50) {

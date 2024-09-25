@@ -1,32 +1,29 @@
 import { MockBoot } from "DevTools/MockBoot"
-import { AuctionsAppFragmentContainer } from "Apps/Auctions/AuctionsApp"
-import { graphql } from "react-relay"
-import { AuctionsApp_Test_Query } from "__generated__/AuctionsApp_Test_Query.graphql"
 import { useTracking as baseUseTracking } from "react-tracking"
 import { useSystemContext as baseUseSystemContext } from "System/Hooks/useSystemContext"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
-
-jest.unmock("react-relay")
+import { AuctionsApp } from "Apps/Auctions/AuctionsApp"
+import { mount } from "enzyme"
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useSystemContext")
 
+jest.mock("Apps/Auctions/Components/TrendingLotsRail", () => ({
+  TrendingLotsRailQueryRenderer: () => <div>Trending Lots</div>,
+}))
+
+jest.mock("Apps/Auctions/Components/StandoutLotsRail", () => ({
+  StandoutLotsRailQueryRenderer: () => <div>Standout Lots</div>,
+}))
+
 describe("AuctionsApp", () => {
-  const { getWrapper } = setupTestWrapper<AuctionsApp_Test_Query>({
-    Component: (props: any) => {
-      return (
-        <MockBoot>
-          <AuctionsAppFragmentContainer viewer={props.viewer} />
-        </MockBoot>
-      )
-    },
-    query: graphql`
-      query AuctionsApp_Test_Query @relay_test_operation {
-        viewer {
-          ...AuctionsApp_viewer
-        }
-      }
-    `,
-  })
+  const getWrapper = () => {
+    const wrapper = mount(
+      <MockBoot>
+        <AuctionsApp />
+      </MockBoot>
+    )
+
+    return { wrapper }
+  }
 
   const useTracking = baseUseTracking as jest.Mock
   let useSystemContext = baseUseSystemContext as jest.Mock
@@ -102,9 +99,7 @@ describe("AuctionsApp", () => {
   })
 
   it("does not render auctions if they are not present", () => {
-    const { wrapper } = getWrapper({
-      salesConnection: () => ({ edges: [] }),
-    })
+    const { wrapper } = getWrapper()
 
     const html = wrapper.html()
 

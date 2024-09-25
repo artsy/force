@@ -10,29 +10,44 @@ import {
   THEME,
   Text,
 } from "@artsy/palette"
+import { SUBMISSION_LAYOUT_TOP_NAV_HEIGHT } from "Apps/Conversations/components/ConversationLayout"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
+import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
+import { SellMeta } from "Apps/Sell/Routes/MarketingLanding/Components/SellMeta"
 import { RouterLink } from "System/Components/RouterLink"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { resized } from "Utils/resized"
+import { cropped } from "Utils/resized"
 import * as React from "react"
 
 export const IntroRoute: React.FC = () => {
+  const { trackTappedNewSubmission } = useSubmissionTracking()
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   return (
     <FullBleed>
+      <SellMeta />
+
       <SubmissionLayout hideNavigation>
         <Flex
           height={isMobile ? "100%" : undefined}
           flexDirection="column"
           overflowY="auto"
+          overflow="scroll"
         >
-          <Flex flex={1} overflowY="auto" flexDirection="column">
-            <Text variant={["lg-display", "xl"]}>
+          <Flex
+            flex={1}
+            overflowY="auto"
+            flexDirection="column"
+            maxHeight={`calc(100vh - ${SUBMISSION_LAYOUT_TOP_NAV_HEIGHT}px)`}
+            px={1}
+            pb={[2, 4]}
+          >
+            <SubmissionStepTitle>
               It’s easy to sell on Artsy
-            </Text>
+            </SubmissionStepTitle>
 
-            <Spacer y={4} />
+            <Spacer y={2} />
 
             <Join separator={<Separator my={2} color="black5" />}>
               {introData.map((intro, index) => (
@@ -49,11 +64,10 @@ export const IntroRoute: React.FC = () => {
 
                   <Flex width={[70, 100]} height={[70, 100]}>
                     <Image
-                      {...resized(intro.image, { width: 100, height: 100 })}
+                      {...cropped(intro.image, { width: 100, height: 100 })}
                       alt={`Step ${index + 1}`}
                       width={[70, 100]}
                       height={[70, 100]}
-                      style={{ objectFit: "cover" }}
                     />
                   </Flex>
                 </Flex>
@@ -61,11 +75,14 @@ export const IntroRoute: React.FC = () => {
             </Join>
           </Flex>
 
-          <Flex gap="2" width="100%" pt={[2, 6]}>
+          <Flex gap="2" width="100%" pt={2} px={1}>
             <Button
               // @ts-ignore
               as={RouterLink}
-              to="/sell2/submissions/new"
+              onClick={() => {
+                trackTappedNewSubmission()
+              }}
+              to="/sell/submissions/new"
               width="100%"
               data-testid="start-new-submission"
             >
@@ -73,10 +90,15 @@ export const IntroRoute: React.FC = () => {
             </Button>
 
             {/* TODO: uncomment when ChooseFromMyCollection feature is ready */}
+            {/* TODO : Add tests for the button */}
+            {/* TODO : Add tracking */}
             {/* <Button
                   // @ts-ignore
                   as={RouterLink}
-                  to="/sell2/submissions/new/collection"
+                  onClick={() => {
+                    trackTappedStartMyCollection()
+                  }
+                  to="/sell/submissions/new/collection"
                   width="100%"
                 >
                   New from My Collection
@@ -93,18 +115,18 @@ const introData = [
     title: "Tell us about your work",
     description:
       "Start by adding an artist from our list of high demand artists. Include information such as year, medium, dimensions and materials.",
-    image: "https://files.artsy.net/images/01_submission_intro_artwork.png",
+    image: "https://files.artsy.net/images/01_submission_intro_artwork.jpg",
   },
   {
     title: "Upload artwork images",
     description:
       "Improve your chances of selling by including photographs of the front, back, frame, signature, and other details.",
-    image: "https://files.artsy.net/images/02_submission_intro_upload.png",
+    image: "https://files.artsy.net/images/02_submission_intro_upload.jpg",
   },
   {
     title: "Complete submission",
     description:
       "Your work will be submitted to an Artsy advisor who will assess whether your work is eligible and help guide you on next steps.",
-    image: "https://files.artsy.net/images/03_submission_intro_advisor.png",
+    image: "https://files.artsy.net/images/03_submission_intro_advisor.jpg",
   },
 ]

@@ -48,15 +48,15 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
 
   return (
     <Rail
-      title={sale.name!}
-      subTitle={sale.formattedStartDateTime!}
+      title={sale.name as string}
+      subTitle={sale.formattedStartDateTime as string}
       viewAllLabel="View All"
-      viewAllHref={sale.href!}
+      viewAllHref={sale.href as string}
       viewAllOnClick={() => {
         trackEvent(
           tracks.clickedArtworkGroupHeader(
             contextModule,
-            contextPageOwnerType!,
+            contextPageOwnerType,
             sale.internalID,
             sale.slug
           )
@@ -74,7 +74,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
                 trackEvent(
                   trackHelpers.clickedArtworkGroup(
                     contextModule,
-                    contextPageOwnerType!,
+                    contextPageOwnerType,
                     node.internalID,
                     node.slug,
                     index

@@ -44,6 +44,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
     <>
       <Dropdown
         zIndex={Z.dropdown}
+        // eslint-disable-next-line react/no-unstable-nested-components
         dropdown={({ onHide }) => {
           return (
             <NavBarNotifications

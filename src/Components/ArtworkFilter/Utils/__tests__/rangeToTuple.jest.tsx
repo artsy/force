@@ -1,8 +1,6 @@
-import {
-  ArtworkFilters,
-  initialArtworkFilterState,
-} from "../../ArtworkFilterContext"
-import { rangeToTuple } from "../rangeToTuple"
+import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { rangeToTuple } from "Components/ArtworkFilter/Utils/rangeToTuple"
 
 describe("rangeToTuple", () => {
   const artworkFilterState: ArtworkFilters = {

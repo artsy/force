@@ -2,5 +2,5 @@ import { AuthenticationInlineDialog } from "Apps/Authentication/Components/Authe
 import { FC } from "react"
 
 export const AuthenticationLoginRoute: FC = () => {
-  return <AuthenticationInlineDialog mode="Login" />
+  return <AuthenticationInlineDialog mode="Welcome" />
 }
