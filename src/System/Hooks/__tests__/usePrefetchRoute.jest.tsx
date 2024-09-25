@@ -175,4 +175,33 @@ describe("usePrefetchRoute", () => {
       "/foo/bar"
     )
   })
+
+  it("should pass along route TTLs to fetchQuery metadata", () => {
+    const mockRoute = {
+      match: { params: { id: "bar" } },
+      route: {
+        path: "/foo/:id",
+        query: "TestQuery",
+        prepareVariables: jest.fn().mockReturnValue({ id: "bar" }),
+        serverCacheTTL: 1000,
+      },
+    }
+
+    mockFindRoutesByPath.mockReturnValue([mockRoute])
+    mockTake.mockReturnValue([mockRoute])
+    console.log = jest.fn()
+
+    const { result } = renderHook(() => usePrefetchRoute("/foo/bar"))
+    result.current.prefetch()
+
+    expect(mockFetchQuery).toHaveBeenCalledWith(
+      {},
+      "TestQuery",
+      { id: "bar" },
+      {
+        fetchPolicy: "store-or-network",
+        networkCacheConfig: { force: false, metadata: { maxAge: 1000 } },
+      }
+    )
+  })
 })
