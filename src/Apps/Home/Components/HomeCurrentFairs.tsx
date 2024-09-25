@@ -39,7 +39,7 @@ const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {
   return (
     <HomeCurrentFairsContainer>
       <GridColumns gridRowGap={4}>
-        {viewer.fairs!.map((fair, index) => {
+        {viewer.fairs.map((fair, index) => {
           if (!fair) return null
 
           return (
@@ -79,7 +79,7 @@ const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {
                   </ResponsiveBox>
                 )}
 
-                <Text variant="lg-display" mt={1}>
+                <Text variant="lg-display" overflowEllipsis mt={1}>
                   {fair.name}
                 </Text>
 
@@ -183,7 +183,11 @@ export const HomeCurrentFairsFragmentContainer = createFragmentContainer(
           bannerSize
           image {
             # 4:3 aspect ratio
-            cropped(width: 600, height: 450) {
+            cropped(
+              width: 600
+              height: 450
+              version: ["wide", "large_rectangle"]
+            ) {
               src
               srcSet
               width

@@ -82,14 +82,13 @@ describe("FairOrganizerFollowButton", () => {
         contextModule: "fairOrganizerHeader",
         intent: "followPartner",
       },
-      mode: "SignUp",
       options: {
         afterAuthAction: {
           action: "follow",
           kind: "profile",
           objectId: "faiOrganizerSlug",
         },
-        title: expect.any(Function),
+        title: expect.any(String),
       },
     })
   })

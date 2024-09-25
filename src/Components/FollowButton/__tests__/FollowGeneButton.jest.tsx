@@ -30,7 +30,7 @@ const { renderWithRelay } = setupTestWrapperTL<FollowGeneButton_Test_Query>({
   query: graphql`
     query FollowGeneButton_Test_Query @relay_test_operation {
       gene(id: "example") {
-        ...FollowGeneButton_gene
+        ...FollowGeneButton_gene @arguments(isLoggedIn: true)
       }
     }
   `,
@@ -84,14 +84,13 @@ describe("FollowGeneButton", () => {
 
       expect(showAuthDialog).toBeCalledWith({
         analytics: { contextModule: "geneHeader", intent: "followGene" },
-        mode: "SignUp",
         options: {
           afterAuthAction: {
             action: "follow",
             kind: "gene",
             objectId: "example",
           },
-          title: expect.any(Function),
+          title: expect.any(String),
         },
       })
     })

@@ -13,6 +13,7 @@ import { PartnersFilter } from "./PartnersFilter"
 import { ArtistsFilter } from "./ArtistsFilter"
 import { Join, Spacer } from "@artsy/palette"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
+import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 
 interface ArtworkFiltersProps {
   user?: User
@@ -30,6 +31,7 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
       <MediumFilter expanded />
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
+      <AvailabilityFilter expanded />
       <WaysToBuyFilter expanded />
       <MaterialsFilter expanded />
       <ArtistNationalityFilter expanded />

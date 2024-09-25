@@ -55,6 +55,51 @@ describe("ArticleBody", () => {
     expect(screen.getByTestId("ArticleSectionVideo")).toBeInTheDocument()
   })
 
+  it("renders an image set", () => {
+    renderWithRelay({
+      Article: () => ({
+        sections: [
+          {
+            __typename: "ArticleSectionImageSet",
+            title: "Example Image Set",
+            cover: {
+              __typename: "Artwork",
+              formattedMetadata: "Example Artwork, 2025",
+            },
+          },
+        ],
+      }),
+    })
+
+    expect(screen.getByAltText("Example Artwork, 2025")).toBeInTheDocument()
+  })
+
+  it("renders an image collection", () => {
+    renderWithRelay({
+      Article: () => ({
+        sections: [
+          {
+            __typename: "ArticleSectionImageCollection",
+            figures: [
+              {
+                __typename: "Artwork",
+                formattedMetadata: "Example Artwork, 2025",
+                image: {
+                  cropped: {
+                    src: "https://example.com/image.jpg",
+                    srcSet: "https://example.com/image.jpg 1x",
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      }),
+    })
+
+    expect(screen.getByAltText("Example Artwork, 2025")).toBeInTheDocument()
+  })
+
   it("renders a social embed", () => {
     renderWithRelay({
       Article: () => ({

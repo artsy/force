@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d38c8dba8f5c8bcc056a792de9fb6699>>
+ * @generated SignedSource<<cfdd2dfcf31fe2da0a05d3ca95975d9b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -126,16 +126,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f3e62a2ddb6575a2d04aaeba07a2eb55",
+    "cacheID": "ba9753ca155a5b69e1844edeaef0fbdb",
     "id": null,
     "metadata": {},
     "name": "pageRoutes_PageQuery",
     "operationKind": "query",
-    "text": "query pageRoutes_PageQuery(\n  $id: ID!\n) {\n  page(id: $id) @principalField {\n    ...PageApp_page\n    id\n  }\n}\n\nfragment PageApp_page on Page {\n  internalID\n  content(format: HTML)\n  name\n  published\n}\n"
+    "text": "query pageRoutes_PageQuery(\n  $id: ID!\n) @cacheable {\n  page(id: $id) @principalField {\n    ...PageApp_page\n    id\n  }\n}\n\nfragment PageApp_page on Page {\n  internalID\n  content(format: HTML)\n  name\n  published\n}\n"
   }
 };
 })();
 
-(node as any).hash = "45e5b86c54cb7b4e6e24703a746af08b";
+(node as any).hash = "f2f39a330ff003600ba7484baf012ad0";
 
 export default node;

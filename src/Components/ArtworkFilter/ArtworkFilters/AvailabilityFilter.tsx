@@ -7,7 +7,11 @@ import {
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 
-export const AvailabilityFilter: React.FC = () => {
+interface AvailabilityFilterProps {
+  expanded?: boolean
+}
+
+export const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ expanded }) => {
   const { setFilter } = useArtworkFilterContext()
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
@@ -16,8 +20,10 @@ export const AvailabilityFilter: React.FC = () => {
   )
   const label = `Availability${filtersCount}`
 
+  const isSelected = currentSelectedFilters?.forSale
+
   return (
-    <FilterExpandable label={label} expanded>
+    <FilterExpandable label={label} expanded={isSelected || expanded}>
       <Checkbox
         selected={!!currentSelectedFilters?.forSale}
         onSelect={selected => setFilter("forSale", selected)}

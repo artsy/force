@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ff3e3cb17611776054009114ee22265>>
+ * @generated SignedSource<<141dcb1f6f629ce12ba3b7493ff20253>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,18 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type HomeWorksByArtistsYouFollowRail_homePage$data = {
   readonly artworkModule: {
     readonly results: ReadonlyArray<{
+      readonly collectorSignals: {
+        readonly auction: {
+          readonly bidCount: number;
+          readonly lotWatcherCount: number;
+        } | null | undefined;
+        readonly primaryLabel: LabelSignalEnum | null | undefined;
+      } | null | undefined;
       readonly internalID: string;
       readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
@@ -68,6 +76,49 @@ const node: ReaderFragment = {
               "storageKey": null
             },
             {
+              "alias": null,
+              "args": null,
+              "concreteType": "CollectorSignals",
+              "kind": "LinkedField",
+              "name": "collectorSignals",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "primaryLabel",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "AuctionCollectorSignals",
+                  "kind": "LinkedField",
+                  "name": "auction",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "bidCount",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "lotWatcherCount",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
               "args": null,
               "kind": "FragmentSpread",
               "name": "ShelfArtwork_artwork"
@@ -83,6 +134,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d64f7d6d4c9d33d55ac3d8b15e1de791";
+(node as any).hash = "9dae270ffa96af47e03577ba6d4ac907";
 
 export default node;

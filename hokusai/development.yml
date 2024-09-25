@@ -14,9 +14,3 @@ services:
       - ../:/app
       # prevents bind mount from overwriting node_modules in docker image.
       - /app/node_modules
-    depends_on:
-      - force-redis
-  force-redis:
-    image: redis:5.0.6-alpine
-    ports:
-      - 6379:6379

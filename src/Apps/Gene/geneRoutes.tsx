@@ -2,10 +2,11 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException } from "found"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { RouteProps } from "System/Router/Route"
 import { redirectGeneToCollection } from "./Server/redirectGeneToCollection"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 
 const GeneApp = loadable(
   () => import(/* webpackChunkName: "geneBundle" */ "./GeneApp"),
@@ -24,6 +25,7 @@ const GeneShowRoute = loadable(
 export const geneRoutes: RouteProps[] = [
   {
     path: "/gene/:slug",
+    serverCacheTTL: serverCacheTTLs.gene,
     getComponent: () => GeneApp,
     onServerSideRender: redirectGeneToCollection,
     onClientSideRender: () => {
@@ -42,6 +44,7 @@ export const geneRoutes: RouteProps[] = [
       },
       {
         path: "",
+        serverCacheTTL: serverCacheTTLs.gene,
         getComponent: () => GeneShowRoute,
         onClientSideRender: () => {
           return GeneShowRoute.preload()
@@ -56,10 +59,6 @@ export const geneRoutes: RouteProps[] = [
             "PARTNER",
             "ARTIST_NATIONALITY",
           ]
-
-          if (!!props.context.user) {
-            aggregations.push("FOLLOWED_ARTISTS")
-          }
 
           const urlFilterState = props.location ? props.location.query : {}
 

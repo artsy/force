@@ -7,6 +7,9 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Rail } from "Components/Rail/Rail"
 import { useTracking } from "react-tracking"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { RelatedCollectionsRailQuery } from "__generated__/RelatedCollectionsRailQuery.graphql"
+import { Spacer } from "@artsy/palette"
 
 interface RelatedCollectionsRailProps {
   collections: RelatedCollectionsRail_collections$data
@@ -43,6 +46,8 @@ export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = ({
   if (collectionsWithArtworks.length > 3) {
     return (
       <>
+        <Spacer y={6} />
+
         <span ref={ref as any} />
 
         <Rail
@@ -91,3 +96,44 @@ export const RelatedCollectionsRailFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+export const RelatedCollectionsRailQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  return (
+    <SystemQueryRenderer<RelatedCollectionsRailQuery>
+      lazyLoad
+      variables={{ slug }}
+      query={graphql`
+        query RelatedCollectionsRailQuery($slug: String!) {
+          marketingCollection(slug: $slug) {
+            title
+            relatedCollections(size: 16) {
+              ...RelatedCollectionsRail_collections
+            }
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!props) {
+          return null
+        }
+
+        if (props.marketingCollection) {
+          return (
+            <RelatedCollectionsRailFragmentContainer
+              collections={props.marketingCollection.relatedCollections}
+              title={props.marketingCollection.title}
+              lazyLoadImages
+            />
+          )
+        }
+      }}
+    />
+  )
+}

@@ -9,15 +9,15 @@ import {
   Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
-import {
-  ArtistAutoComplete,
-  AutocompleteArtist,
-} from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
 import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
+import {
+  ArtistAutoComplete,
+  AutocompleteArtist,
+} from "Apps/Sell/Components/ArtistAutocomplete"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { extractNodes } from "Utils/extractNodes"
 import { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"

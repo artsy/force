@@ -17,7 +17,7 @@ export const ArtworkGridEmptyState: React.FC<ArtworkGridEmptyStateProps> = ({
         return (
           <Box pt={stuck ? 1 : 0}>
             <Message width="100%">
-              There aren't any works available that meet the following criteria
+              There aren‘t any works available that meet the following criteria
               at this time.{" "}
               {onClearFilters && (
                 <>

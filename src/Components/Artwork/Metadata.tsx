@@ -3,7 +3,7 @@ import { Box, BoxProps } from "@artsy/palette"
 import {
   DetailsFragmentContainer,
   DetailsPlaceholder,
-} from "Components/Artwork/Details"
+} from "Components/Artwork/Details/Details"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -23,6 +23,7 @@ export interface MetadataProps
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
+  showSubmissionStatus?: boolean
   to?: string | null
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
@@ -39,6 +40,7 @@ export const Metadata: React.FC<MetadataProps> = ({
   showHighDemandIcon = false,
   showHoverDetails,
   showSaveButton,
+  showSubmissionStatus,
   renderSaveButton,
   ...rest
 }) => {
@@ -59,6 +61,7 @@ export const Metadata: React.FC<MetadataProps> = ({
         showHighDemandIcon={showHighDemandIcon}
         showHoverDetails={showHoverDetails}
         showSaveButton={showSaveButton}
+        showSubmissionStatus={showSubmissionStatus}
         contextModule={contextModule}
         renderSaveButton={renderSaveButton}
       />
@@ -100,8 +103,12 @@ const DisabledLink = styled(Box)`
 
 export default createFragmentContainer(Metadata, {
   artwork: graphql`
-    fragment Metadata_artwork on Artwork {
+    fragment Metadata_artwork on Artwork
+      @argumentDefinitions(
+        includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+      ) {
       ...Details_artwork
+        @arguments(includeConsignmentSubmission: $includeConsignmentSubmission)
       internalID
       href
     }

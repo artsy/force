@@ -3,7 +3,10 @@ import { graphql } from "react-relay"
 import loadable from "@loadable/component"
 
 const NewWorksFromGalleriesYouFollowApp = loadable(
-  () => import("./NewWorksFromGalleriesYouFollowApp"),
+  () =>
+    import(
+      /* webpackChunkName: "newWorksFromGalleriesYouFollowBundle" */ "./NewWorksFromGalleriesYouFollowApp"
+    ),
   {
     resolveComponent: component =>
       component.NewWorksFromGalleriesYouFollowAppPaginationContainer,

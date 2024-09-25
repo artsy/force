@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b4746f75f14aa5ff5704af0bb9628508>>
+ * @generated SignedSource<<f1977bb42dd14b829377e5aac0a2efb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
-export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
+export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkGrid_artworks$data = {
   readonly edges: ReadonlyArray<{
@@ -45,6 +45,11 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "includeAllImages",
+    "value": true
+  },
+  {
+    "kind": "Literal",
+    "name": "includeConsignmentSubmission",
     "value": true
   }
 ];
@@ -124,7 +129,13 @@ return {
             },
             {
               "alias": null,
-              "args": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "shallow",
+                  "value": true
+                }
+              ],
               "concreteType": "Artist",
               "kind": "LinkedField",
               "name": "artist",
@@ -149,7 +160,7 @@ return {
                   "storageKey": null
                 }
               ],
-              "storageKey": null
+              "storageKey": "artist(shallow:true)"
             },
             {
               "alias": null,
@@ -191,6 +202,6 @@ return {
 };
 })();
 
-(node as any).hash = "7af70d288b96fac16ee9cd2e65df57d8";
+(node as any).hash = "c52e6cfed2fe497274b8f532e8245592";
 
 export default node;

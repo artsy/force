@@ -16,6 +16,8 @@ import { extractNodes } from "Utils/extractNodes"
 import { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
 import { HomeEmergingPicksArtworksRailQuery } from "__generated__/HomeEmergingPicksArtworksRailQuery.graphql"
 import { useTracking } from "react-tracking"
+import { getSignalLabel } from "Utils/getSignalLabel"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface HomeEmergingPicksArtworksRailProps {
   viewer: HomeEmergingPicksArtworksRail_viewer$data
@@ -33,48 +35,58 @@ export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRa
   }
 
   return (
-    <Rail
-      title="Curators’ Picks: Emerging"
-      subTitle="The best works by rising talents on Artsy, all available now."
-      viewAllLabel="View All Works"
-      viewAllHref="/collection/curators-picks-emerging"
-      viewAllOnClick={() => {
-        const trackingEvent: ClickedArtworkGroup = {
-          action: ActionType.clickedArtworkGroup,
-          context_module: ContextModule.troveArtworksRail,
-          context_page_owner_type: OwnerType.home,
-          destination_page_owner_type: OwnerType.collection,
-          destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
-          destination_page_owner_slug: "curators-picks-emerging",
-          type: "viewAll",
-        }
-        trackEvent(trackingEvent)
-      }}
-      getItems={() => {
-        return artworks.map(artwork => (
-          <ShelfArtworkFragmentContainer
-            artwork={artwork}
-            key={artwork.internalID}
-            lazyLoad
-            // TODO: add troveArtworksRail to the union type of auth context module
-            // @ts-ignore
-            contextModule={ContextModule.troveArtworksRail}
-            onClick={() => {
-              const trackingEvent: ClickedArtworkGroup = {
-                action: ActionType.clickedArtworkGroup,
-                context_module: ContextModule.troveArtworksRail,
-                context_page_owner_type: OwnerType.home,
-                destination_page_owner_type: OwnerType.artwork,
-                destination_page_owner_id: artwork.internalID,
-                destination_page_owner_slug: artwork.slug,
-                type: "thumbnail",
-              }
-              trackEvent(trackingEvent)
-            }}
-          />
-        ))
-      }}
-    />
+    <ArtworkGridContextProvider hideSignals>
+      <Rail
+        title="Curators’ Picks: Emerging"
+        subTitle="The best works by rising talents on Artsy, all available now."
+        viewAllLabel="View All Works"
+        viewAllHref="/collection/curators-picks-emerging"
+        viewAllOnClick={() => {
+          const trackingEvent: ClickedArtworkGroup = {
+            action: ActionType.clickedArtworkGroup,
+            context_module: ContextModule.troveArtworksRail,
+            context_page_owner_type: OwnerType.home,
+            destination_page_owner_type: OwnerType.collection,
+            destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
+            destination_page_owner_slug: "curators-picks-emerging",
+            type: "viewAll",
+          }
+          trackEvent(trackingEvent)
+        }}
+        getItems={() => {
+          return artworks.map(artwork => (
+            <ShelfArtworkFragmentContainer
+              artwork={artwork}
+              key={artwork.internalID}
+              lazyLoad
+              // TODO: add troveArtworksRail to the union type of auth context module
+              // @ts-ignore
+              contextModule={ContextModule.troveArtworksRail}
+              onClick={() => {
+                const trackingEvent: ClickedArtworkGroup = {
+                  action: ActionType.clickedArtworkGroup,
+                  context_module: ContextModule.troveArtworksRail,
+                  context_page_owner_type: OwnerType.home,
+                  destination_page_owner_type: OwnerType.artwork,
+                  destination_page_owner_id: artwork.internalID,
+                  destination_page_owner_slug: artwork.slug,
+                  type: "thumbnail",
+                  signal_label: artwork.collectorSignals
+                    ? getSignalLabel(artwork.collectorSignals)
+                    : "",
+                  signal_bid_count:
+                    artwork.collectorSignals?.auction?.bidCount ?? undefined,
+                  signal_lot_watcher_count:
+                    artwork.collectorSignals?.auction?.lotWatcherCount ??
+                    undefined,
+                }
+                trackEvent(trackingEvent)
+              }}
+            />
+          ))
+        }}
+      />
+    </ArtworkGridContextProvider>
   )
 }
 
@@ -90,10 +102,17 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
         ) {
           edges {
             node {
-              ...ShelfArtwork_artwork
               internalID
               slug
               href
+              collectorSignals {
+                primaryLabel
+                auction {
+                  bidCount
+                  lotWatcherCount
+                }
+              }
+              ...ShelfArtwork_artwork
             }
           }
         }

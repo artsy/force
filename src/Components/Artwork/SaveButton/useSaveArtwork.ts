@@ -7,6 +7,11 @@ type Artwork = {
   internalID: string
   id: string | null
   slug: string | null
+  collectorSignals: {
+    auction: {
+      lotWatcherCount: number
+    } | null
+  } | null
 }
 
 interface UseSaveArtwork {
@@ -38,6 +43,7 @@ export const useSaveArtwork = ({
                 id: artwork.id ?? "",
                 slug: artwork.slug ?? "",
                 isSaved: !isSaved,
+                collectorSignals: artwork.collectorSignals ?? null,
               },
               /**
                * TODO: We don't _really_ need an optimistic response and
@@ -69,12 +75,8 @@ export const useSaveArtwork = ({
       }
     } else {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to save artworks`
-          },
+          title: "Sign up or log in to save artworks",
           afterAuthAction: {
             action: "save",
             kind: "artworks",

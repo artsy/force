@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<82983b3abacdb66ba52807cca4a8c0b8>>
+ * @generated SignedSource<<fab98e750d5faefd525338da6d55143e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,10 +31,10 @@ const node: ReaderFragment = {
       "name": "ViewingRoomsFeaturedRail_featuredViewingRooms"
     }
   ],
-  "type": "ViewingRoomConnection",
+  "type": "ViewingRoomsConnection",
   "abstractKey": null
 };
 
-(node as any).hash = "25c9423c629024672425973f7b3d17ac";
+(node as any).hash = "22496eadfb02ab912add5fd7821bcb7f";
 
 export default node;

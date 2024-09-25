@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b4b81a120a8ddba4d04f593b696d6fae>>
+ * @generated SignedSource<<e30a72e9e748dcb18cf293c4240139b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -133,6 +133,7 @@ return {
             "CANCELED",
             "FULFILLED",
             "IN_TRANSIT",
+            "PAYMENT_FAILED",
             "PENDING",
             "PROCESSING",
             "PROCESSING_APPROVAL",

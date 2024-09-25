@@ -18,10 +18,8 @@ import {
   initialBoothFilterState,
   useBoothsFilterContext,
 } from "Apps/Fair/Components/BoothFilterContext"
-import {
-  paramsToSnakeCase,
-  removeDefaultValues,
-} from "Components/ArtworkFilter/Utils/urlBuilder"
+import { removeDefaultValues } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import qs from "qs"
 import { useRouter } from "System/Hooks/useRouter"
 
@@ -57,6 +55,7 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
   }
 
   if (show.href) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const params = removeDefaultValues(filters!, {
       defaultValues: initialBoothFilterState,
     })

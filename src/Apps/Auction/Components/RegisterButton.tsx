@@ -32,13 +32,9 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
 
     if (!me?.internalID) {
       showAuthDialog({
-        mode: "Login",
         options: {
           redirectTo: `${saleURL}/register`,
-          title: mode => {
-            const action = mode === "Login" ? "Log in" : "Sign up"
-            return `${action} to bid on artworks`
-          },
+          title: "Sign up or log in to bid on artworks",
         },
         analytics: {
           contextModule: ContextModule.auctionSidebar,
@@ -68,7 +64,7 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
     }
 
     case conditions.LIVE_OPEN: {
-      const liveUrl = sale.liveURLIfOpen!
+      const liveUrl = `${sale.liveURLIfOpen}`
       const href = me ? liveUrl + "/login" : liveUrl
 
       return (

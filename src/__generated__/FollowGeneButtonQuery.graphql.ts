@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<456d9c76bdcafdb169d851dfb7678dfe>>
+ * @generated SignedSource<<36122c19af825e664bfef44c45d85d86>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowGeneButtonQuery$variables = {
   id: string;
+  isLoggedIn: boolean;
 };
 export type FollowGeneButtonQuery$data = {
   readonly gene: {
@@ -29,6 +30,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "isLoggedIn"
   }
 ],
 v1 = [
@@ -54,7 +60,13 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": [
+              {
+                "kind": "Variable",
+                "name": "isLoggedIn",
+                "variableName": "isLoggedIn"
+              }
+            ],
             "kind": "FragmentSpread",
             "name": "FollowGeneButton_gene"
           }
@@ -108,11 +120,18 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isFollowed",
-            "storageKey": null
+            "condition": "isLoggedIn",
+            "kind": "Condition",
+            "passingValue": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isFollowed",
+                "storageKey": null
+              }
+            ]
           }
         ],
         "storageKey": null
@@ -120,16 +139,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0c2366e98a5c578239a09cf112f8c5cd",
+    "cacheID": "8c7c5558867414c43413ce9818030b69",
     "id": null,
     "metadata": {},
     "name": "FollowGeneButtonQuery",
     "operationKind": "query",
-    "text": "query FollowGeneButtonQuery(\n  $id: String!\n) {\n  gene(id: $id) {\n    ...FollowGeneButton_gene\n    id\n  }\n}\n\nfragment FollowGeneButton_gene on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
+    "text": "query FollowGeneButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  gene(id: $id) {\n    ...FollowGeneButton_gene_4dcqWc\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_4dcqWc on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4b40f8987e3538d3a212df3b3a294f2c";
+(node as any).hash = "03f266c04c0445d31031110e9942f7d8";
 
 export default node;

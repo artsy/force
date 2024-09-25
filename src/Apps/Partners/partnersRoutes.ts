@@ -26,7 +26,7 @@ export const partnersRoutes: RouteProps[] = [
       return GalleriesRoute.preload()
     },
     query: graphql`
-      query partnersRoutes_GalleriesRouteQuery {
+      query partnersRoutes_GalleriesRouteQuery @cacheable {
         viewer {
           ...GalleriesRoute_viewer
         }
@@ -40,7 +40,7 @@ export const partnersRoutes: RouteProps[] = [
       return InstitutionsRoute.preload()
     },
     query: graphql`
-      query partnersRoutes_InstitutionsRouteQuery {
+      query partnersRoutes_InstitutionsRouteQuery @cacheable {
         viewer {
           ...InstitutionsRoute_viewer
         }

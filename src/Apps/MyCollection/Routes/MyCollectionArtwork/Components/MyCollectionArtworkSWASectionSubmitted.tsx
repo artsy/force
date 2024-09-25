@@ -1,4 +1,11 @@
-import { Button, Clickable, Flex, ModalDialog, Text } from "@artsy/palette"
+import {
+  Button,
+  Clickable,
+  Flex,
+  ModalDialog,
+  Separator,
+  Text,
+} from "@artsy/palette"
 
 import { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__generated__/MyCollectionArtworkSWASectionSubmitted_submissionState.graphql"
 
@@ -32,15 +39,9 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
   if (["APPROVED", "REJECTED", "CLOSED", "PUBLISHED"].includes(state))
     stateLabelColor = "orange150"
 
-  const article =
-    "https://support.artsy.net/s/topic/0TO3b000000UevOGAS/sell-with-artsy"
-
   return (
     <>
-      <SubmissionStatusModal
-        show={isSubmissionStatusModalOpen}
-        onClose={() => setIsSubmissionStatusModalOpen(false)}
-      />
+      <Separator my={4} />
 
       <Flex
         flexDirection={["column", "row"]}
@@ -79,18 +80,12 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
         <Text mb={2} color="black60" variant="xs">
           {stateHelpMessage}
         </Text>
-
-        <Text mb={2} color="black60" variant="xs">
-          Have a question? Visit our{" "}
-          <RouterLink to={article} target="_blank" color="black100">
-            help center
-          </RouterLink>{" "}
-          or get in touch with one of our specialists at{" "}
-          <RouterLink to={"mailto:sell@artsy.net"} color="black100">
-            sell@artsy.net
-          </RouterLink>
-        </Text>
       </Media>
+
+      <SubmissionStatusModal
+        show={isSubmissionStatusModalOpen}
+        onClose={() => setIsSubmissionStatusModalOpen(false)}
+      />
     </>
   )
 }
@@ -98,6 +93,7 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
 const submissionStateFragment = graphql`
   fragment MyCollectionArtworkSWASectionSubmitted_submissionState on Artwork {
     consignmentSubmission {
+      internalID
       state
       stateLabel
       stateHelpMessage

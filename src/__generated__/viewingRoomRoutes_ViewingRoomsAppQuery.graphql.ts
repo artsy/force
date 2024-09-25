@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f6e12ac758d2f381763ad256625c0a01>>
+ * @generated SignedSource<<3e8b6800bff407d5f21a33aca20f323b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -190,9 +190,9 @@ return {
       {
         "alias": "featuredViewingRooms",
         "args": (v3/*: any*/),
-        "concreteType": "ViewingRoomConnection",
+        "concreteType": "ViewingRoomsConnection",
         "kind": "LinkedField",
-        "name": "viewingRooms",
+        "name": "viewingRoomsConnection",
         "plural": false,
         "selections": [
           {
@@ -201,7 +201,7 @@ return {
             "name": "ViewingRoomsApp_featuredViewingRooms"
           }
         ],
-        "storageKey": "viewingRooms(featured:true)"
+        "storageKey": "viewingRoomsConnection(featured:true)"
       }
     ],
     "type": "Query",
@@ -318,15 +318,15 @@ return {
       {
         "alias": "featuredViewingRooms",
         "args": (v3/*: any*/),
-        "concreteType": "ViewingRoomConnection",
+        "concreteType": "ViewingRoomsConnection",
         "kind": "LinkedField",
-        "name": "viewingRooms",
+        "name": "viewingRoomsConnection",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "ViewingRoomEdge",
+            "concreteType": "ViewingRoomsEdge",
             "kind": "LinkedField",
             "name": "edges",
             "plural": true,
@@ -353,21 +353,21 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "viewingRooms(featured:true)"
+        "storageKey": "viewingRoomsConnection(featured:true)"
       }
     ]
   },
   "params": {
-    "cacheID": "06bc46d4e79ef1470f986f7a6c7dbbc4",
+    "cacheID": "e30762de4830b7adafec1ac4cbaf9c5e",
     "id": null,
     "metadata": {},
     "name": "viewingRoomRoutes_ViewingRoomsAppQuery",
     "operationKind": "query",
-    "text": "query viewingRoomRoutes_ViewingRoomsAppQuery(\n  $count: Int!\n  $after: String\n) {\n  allViewingRooms: viewer {\n    ...ViewingRoomsApp_allViewingRooms_2QE1um\n  }\n  featuredViewingRooms: viewingRooms(featured: true) {\n    ...ViewingRoomsApp_featuredViewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_allViewingRooms_2QE1um on Viewer {\n  ...ViewingRoomsLatestGrid_viewingRooms_2QE1um\n}\n\nfragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {\n  ...ViewingRoomsFeaturedRail_featuredViewingRooms\n}\n\nfragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      status\n      slug\n      title\n      image {\n        imageURLs {\n          normalized\n        }\n      }\n      distanceToOpen(short: true)\n      distanceToClose(short: true)\n      partner {\n        name\n        id\n      }\n    }\n  }\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms_2QE1um on Viewer {\n  viewingRoomsConnection(first: $count, after: $after) {\n    edges {\n      node {\n        slug\n        status\n        title\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        partner {\n          name\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query viewingRoomRoutes_ViewingRoomsAppQuery(\n  $count: Int!\n  $after: String\n) @cacheable {\n  allViewingRooms: viewer {\n    ...ViewingRoomsApp_allViewingRooms_2QE1um\n  }\n  featuredViewingRooms: viewingRoomsConnection(featured: true) {\n    ...ViewingRoomsApp_featuredViewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_allViewingRooms_2QE1um on Viewer {\n  ...ViewingRoomsLatestGrid_viewingRooms_2QE1um\n}\n\nfragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomsConnection {\n  ...ViewingRoomsFeaturedRail_featuredViewingRooms\n}\n\nfragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomsConnection {\n  edges {\n    node {\n      status\n      slug\n      title\n      image {\n        imageURLs {\n          normalized\n        }\n      }\n      distanceToOpen(short: true)\n      distanceToClose(short: true)\n      partner {\n        name\n        id\n      }\n    }\n  }\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms_2QE1um on Viewer {\n  viewingRoomsConnection(first: $count, after: $after) {\n    edges {\n      node {\n        slug\n        status\n        title\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        partner {\n          name\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f2168552d83a3b86d1ec43cad3e9db67";
+(node as any).hash = "470ab6c46d06cc99a6625390d3d40719";
 
 export default node;

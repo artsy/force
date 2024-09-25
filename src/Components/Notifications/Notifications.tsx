@@ -1,15 +1,20 @@
-import { useEffect } from "react"
 import { DateTime } from "luxon"
 import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import { NotificationsWrapperProps } from "./NotificationsWrapper"
-import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
-import { Box, Flex, Separator, useTheme } from "@artsy/palette"
-import { NotificationsHeader } from "Components/Notifications/NotificationsHeader"
+import { Box, Flex, Separator, Skeleton } from "@artsy/palette"
+import {
+  NotificationsHeader,
+  NotificationsHeaderPlaceholder,
+} from "Components/Notifications/NotificationsHeader"
 import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
 import Sticky from "react-stickynode"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
+import { useOnce } from "Utils/Hooks/useOnce"
+import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
+import { FC } from "react"
+import { NotificationsListPlaceholder } from "Components/Notifications/NotificationsListPlaceholder"
 
 const DROPDOWN_HEADER_HEIGHT = 113
 const VERTICAL_OFFSET = 10
@@ -31,7 +36,6 @@ export const Notifications: React.FC<NotificationsProps> = ({
   unreadCounts,
 }) => {
   const { relayEnvironment } = useSystemContext()
-  const { theme } = useTheme()
 
   const markAsSeen = async () => {
     if (!relayEnvironment) {
@@ -53,16 +57,13 @@ export const Notifications: React.FC<NotificationsProps> = ({
     }
   }
 
-  useEffect(() => {
-    markAsSeen()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  useOnce(markAsSeen)
 
   return (
     <NotificationsContextProvider>
       <Box>
         {mode === "dropdown" ? (
-          <Box style={{ boxShadow: theme.effects.dropShadow }}>
+          <>
             <Flex flex={1} overflow="hidden">
               <NotificationsHeader
                 mode="dropdown"
@@ -79,7 +80,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
             >
               <NotificationsListQueryRenderer mode={mode} />
             </Box>
-          </Box>
+          </>
         ) : (
           <>
             <Sticky>
@@ -103,5 +104,28 @@ export const Notifications: React.FC<NotificationsProps> = ({
         )}
       </Box>
     </NotificationsContextProvider>
+  )
+}
+
+interface NotificationsDropdownPlaceholderProps {
+  onHide(): void
+}
+
+export const NotificationsDropdownPlaceholder: FC<NotificationsDropdownPlaceholderProps> = ({
+  onHide,
+}) => {
+  return (
+    <Skeleton>
+      <NotificationsHeaderPlaceholder onHide={onHide} />
+
+      <Separator borderColor="black5" />
+
+      <Box
+        maxHeight={`calc(100vh - ${DROPDOWN_CONTENT_HEIGHT}px)`}
+        overflowY="scroll"
+      >
+        <NotificationsListPlaceholder />
+      </Box>
+    </Skeleton>
   )
 }

@@ -3,6 +3,7 @@ import { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 import { redirectCollectionToArtistSeries } from "./Server/redirectCollectionToArtistSeries"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 
 const CollectApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collect"),
@@ -26,6 +27,7 @@ const CollectionApp = loadable(
 export const collectRoutes: RouteProps[] = [
   {
     path: "/collect/:medium?",
+    serverCacheTTL: serverCacheTTLs.collect,
     getComponent: () => CollectApp,
     onClientSideRender: () => {
       CollectApp.preload()
@@ -35,6 +37,7 @@ export const collectRoutes: RouteProps[] = [
   },
   {
     path: "/collect/color/:color?",
+    serverCacheTTL: serverCacheTTLs.collect,
     getComponent: () => CollectApp,
     onClientSideRender: () => {
       CollectApp.preload()
@@ -44,6 +47,7 @@ export const collectRoutes: RouteProps[] = [
   },
   {
     path: "/collections",
+    serverCacheTTL: serverCacheTTLs.collections,
     getComponent: () => CollectionsApp,
     onClientSideRender: () => {
       CollectionsApp.preload()
@@ -58,6 +62,7 @@ export const collectRoutes: RouteProps[] = [
   },
   {
     path: "/collection/:slug",
+    serverCacheTTL: serverCacheTTLs.collections,
     getComponent: () => CollectionApp,
     onServerSideRender: redirectCollectionToArtistSeries,
     onClientSideRender: () => {
@@ -65,26 +70,16 @@ export const collectRoutes: RouteProps[] = [
     },
     prepareVariables: initializeVariablesWithFilterState,
     query: graphql`
-      query collectRoutes_CollectionQuery(
-        $input: FilterArtworksInput
-        $slug: String!
-        $aggregations: [ArtworkAggregation]
-        $shouldFetchCounts: Boolean!
-      ) {
+      query collectRoutes_CollectionQuery($slug: String!) {
         collection: marketingCollection(slug: $slug) @principalField {
           ...Collection_collection
-            @arguments(
-              input: $input
-              aggregations: $aggregations
-              shouldFetchCounts: $shouldFetchCounts
-            )
         }
       }
     `,
   },
 ]
 
-function initializeVariablesWithFilterState(params, props) {
+export function initializeVariablesWithFilterState(params, props) {
   const initialFilterState = getInitialFilterState(props.location?.query ?? {})
 
   if (params.medium) {
@@ -119,10 +114,6 @@ function initializeVariablesWithFilterState(params, props) {
     "ARTIST",
   ].concat(collectionOnlyAggregations)
 
-  if (!!props.context.user) {
-    aggregations.push("FOLLOWED_ARTISTS")
-  }
-
   const input = {
     sort: "-decayed_merch",
     ...initialFilterState,
@@ -130,8 +121,8 @@ function initializeVariablesWithFilterState(params, props) {
   }
 
   return {
-    input,
     aggregations,
+    input,
     slug: collectionSlug,
     sort: "-decayed_merch",
     shouldFetchCounts: !!props.context.user,
@@ -140,12 +131,7 @@ function initializeVariablesWithFilterState(params, props) {
 
 function getArtworkFilterQuery() {
   return graphql`
-    query collectRoutes_ArtworkFilterQuery(
-      $sort: String
-      $input: FilterArtworksInput
-      $aggregations: [ArtworkAggregation]
-      $shouldFetchCounts: Boolean!
-    ) {
+    query collectRoutes_ArtworkFilterQuery {
       marketingCollections(
         slugs: [
           "contemporary"
@@ -157,25 +143,6 @@ function getArtworkFilterQuery() {
         ]
       ) {
         ...Collect_marketingCollections
-      }
-      filterArtworks: artworksConnection(sort: $sort, first: 30) {
-        ...SeoProductsForArtworks_artworks
-      }
-      viewer {
-        ...ArtworkFilter_viewer @arguments(input: $input)
-        artworksConnection(aggregations: $aggregations, input: $input) {
-          counts @include(if: $shouldFetchCounts) {
-            followedArtists
-          }
-          aggregations {
-            slice
-            counts {
-              value
-              name
-              count
-            }
-          }
-        }
       }
     }
   `

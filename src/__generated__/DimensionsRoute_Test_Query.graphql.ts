@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f92aa7bcf36c4bf2f063a4799a9512e>>
+ * @generated SignedSource<<f15a373832e57d437b8722ca57844229>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 export type DimensionsRoute_Test_Query$variables = Record<PropertyKey, never>;
 export type DimensionsRoute_Test_Query$data = {
   readonly submission: {
@@ -24,6 +25,8 @@ export type DimensionsRoute_Test_Query$rawResponse = {
     readonly height: string | null | undefined;
     readonly id: string;
     readonly internalID: string | null | undefined;
+    readonly myCollectionArtworkID: string | null | undefined;
+    readonly state: ConsignmentSubmissionStateAggregation | null | undefined;
     readonly width: string | null | undefined;
   } | null | undefined;
 };
@@ -105,6 +108,20 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "myCollectionArtworkID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "width",
             "storageKey": null
           },
@@ -142,12 +159,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3ad249d6845805f20627f5ab271251e3",
+    "cacheID": "f149fc467f69a8f9c052822c4a66893b",
     "id": null,
     "metadata": {},
     "name": "DimensionsRoute_Test_Query",
     "operationKind": "query",
-    "text": "query DimensionsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...DimensionsRoute_submission\n    id\n  }\n}\n\nfragment DimensionsRoute_submission on ConsignmentSubmission {\n  width\n  height\n  depth\n  dimensionsMetric\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n}\n"
+    "text": "query DimensionsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...DimensionsRoute_submission\n    id\n  }\n}\n\nfragment DimensionsRoute_submission on ConsignmentSubmission {\n  width\n  height\n  depth\n  dimensionsMetric\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
   }
 };
 })();

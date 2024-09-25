@@ -1,8 +1,7 @@
-import { Box, BoxProps, THEME, useDidMount } from "@artsy/palette"
+import { Box, BoxProps, THEME } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import styled from "styled-components"
-import reactHtmlParser from "@artsy/react-html-parser"
 import { ArticleTooltip, isSupportedArticleTooltip } from "./ArticleTooltip"
 import { toStyle } from "Utils/toStyle"
 
@@ -11,8 +10,6 @@ interface ArticleHTMLProps extends BoxProps {
 }
 
 export const ArticleHTML: FC<ArticleHTMLProps> = ({ children, ...rest }) => {
-  const isMounted = useDidMount()
-
   // Looks for links and if they are internal and a supported entity type,
   // inserts the relevant tooltip.
   const transform = (node: Element, i: number) => {
@@ -45,12 +42,17 @@ export const ArticleHTML: FC<ArticleHTMLProps> = ({ children, ...rest }) => {
     }
   }
 
-  if (isMounted) {
-    return (
-      <Container {...rest}>
-        {reactHtmlParser(children, { transform })}
-      </Container>
-    )
+  const [transformed, setTransformed] = useState<string | null>(null)
+
+  useEffect(() => {
+    // Relies on the DOMParser global being available in the browser.
+    import("@artsy/react-html-parser").then(({ default: reactHtmlParser }) => {
+      setTransformed(reactHtmlParser(children, { transform }))
+    })
+  }, [children])
+
+  if (transformed) {
+    return <Container {...rest}>{transformed}</Container>
   }
 
   return <Container dangerouslySetInnerHTML={{ __html: children }} {...rest} />

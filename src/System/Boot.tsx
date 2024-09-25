@@ -6,11 +6,8 @@ import { HeadProvider } from "react-head"
 import { Environment, RelayEnvironmentProvider } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
-// eslint-disable-next-line no-restricted-imports
-import { Provider as StateProvider } from "unstated"
 import Events from "Utils/Events"
 import { getENV } from "Utils/getENV"
-import { FocusVisible } from "Components/FocusVisible"
 import { MatchingMediaQueries, MediaContextProvider } from "Utils/Responsive"
 import { SiftContainer } from "Utils/SiftContainer"
 import { setupSentryClient } from "Server/setupSentryClient"
@@ -76,35 +73,32 @@ export const Boot = track(undefined, {
         <GlobalStyles />
 
         <HeadProvider headTags={headTags}>
-          <StateProvider>
-            <SystemContextProvider {...contextProps}>
-              <EnvironmentProvider environment={props.relayEnvironment}>
-                <ErrorBoundary>
-                  <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                    <ToastsProvider>
-                      <StickyProvider>
-                        <AuthIntentProvider>
-                          <AuthDialogProvider>
-                            <DismissibleProvider
-                              userID={props.user?.id}
-                              keys={PROGRESSIVE_ONBOARDING_KEYS}
-                            >
-                              <CookieConsentManager>
-                                <FocusVisible />
-                                <SiftContainer />
+          <SystemContextProvider {...contextProps}>
+            <EnvironmentProvider environment={props.relayEnvironment}>
+              <ErrorBoundary>
+                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                  <ToastsProvider>
+                    <StickyProvider>
+                      <AuthIntentProvider>
+                        <AuthDialogProvider>
+                          <DismissibleProvider
+                            userID={props.user?.id}
+                            keys={PROGRESSIVE_ONBOARDING_KEYS}
+                          >
+                            <CookieConsentManager>
+                              <SiftContainer />
 
-                                {children}
-                              </CookieConsentManager>
-                            </DismissibleProvider>
-                          </AuthDialogProvider>
-                        </AuthIntentProvider>
-                      </StickyProvider>
-                    </ToastsProvider>
-                  </MediaContextProvider>
-                </ErrorBoundary>
-              </EnvironmentProvider>
-            </SystemContextProvider>
-          </StateProvider>
+                              {children}
+                            </CookieConsentManager>
+                          </DismissibleProvider>
+                        </AuthDialogProvider>
+                      </AuthIntentProvider>
+                    </StickyProvider>
+                  </ToastsProvider>
+                </MediaContextProvider>
+              </ErrorBoundary>
+            </EnvironmentProvider>
+          </SystemContextProvider>
         </HeadProvider>
       </ThemeProvider>
     </AppPreferencesProvider>

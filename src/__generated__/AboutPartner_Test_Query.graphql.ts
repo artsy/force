@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<168c7d11b9a55aa863c244ec1506e788>>
+ * @generated SignedSource<<74a92b98b8ca1764452f5d0c09e01a30>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -126,13 +126,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "vatNumber",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "displayFullPartnerPage",
             "storageKey": null
           },
@@ -157,7 +150,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8976284eb30d3ed62a610b15d83a157d",
+    "cacheID": "47a02d5911a4658ddccc4bfda833a1b7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -185,13 +178,12 @@ return {
         "partner.profile.fullBio": (v3/*: any*/),
         "partner.profile.id": (v2/*: any*/),
         "partner.slug": (v2/*: any*/),
-        "partner.vatNumber": (v3/*: any*/),
         "partner.website": (v3/*: any*/)
       }
     },
     "name": "AboutPartner_Test_Query",
     "operationKind": "query",
-    "text": "query AboutPartner_Test_Query {\n  partner(id: \"unit-london\") @principalField {\n    ...AboutPartner_partner\n    id\n  }\n}\n\nfragment AboutPartner_partner on Partner {\n  profile {\n    fullBio\n    bio\n    id\n  }\n  website\n  vatNumber\n  displayFullPartnerPage\n  slug\n  internalID\n}\n"
+    "text": "query AboutPartner_Test_Query {\n  partner(id: \"unit-london\") @principalField {\n    ...AboutPartner_partner\n    id\n  }\n}\n\nfragment AboutPartner_partner on Partner {\n  profile {\n    fullBio\n    bio\n    id\n  }\n  website\n  displayFullPartnerPage\n  slug\n  internalID\n}\n"
   }
 };
 })();

@@ -101,10 +101,6 @@ function initializeVariablesWithFilterState({ slug }, props) {
     "ARTIST",
   ]
 
-  if (!!props.context.user) {
-    aggregations.push("FOLLOWED_ARTISTS")
-  }
-
   const input = {
     sort: "partner_show_position",
     ...initialFilterState,

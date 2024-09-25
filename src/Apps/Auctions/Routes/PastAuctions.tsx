@@ -7,7 +7,7 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { PastAuctions_viewer$data } from "__generated__/PastAuctions_viewer.graphql"
-import { AuctionArtworksRailFragmentContainer } from "Apps/Auctions/Components/AuctionArtworksRail"
+import { AuctionArtworkRailQueryRenderer } from "Apps/Auctions/Components/AuctionArtworksRail"
 import { extractNodes } from "Utils/extractNodes"
 import { AuctionsZeroState } from "Apps/Auctions/Components/AuctionsZeroState"
 
@@ -53,7 +53,7 @@ const PastAuctions: React.FC<PastAuctionsProps> = ({ viewer, relay }) => {
       {nodes.map((node, index) => {
         return (
           <Box my={6} key={index}>
-            <AuctionArtworksRailFragmentContainer sale={node} tabType="past" />
+            <AuctionArtworkRailQueryRenderer slug={node.slug} tabType="past" />
           </Box>
         )
       })}
@@ -97,7 +97,6 @@ export const PastAuctionsPaginationContainer = createPaginationContainer(
               name
               href
               endAt
-              ...AuctionArtworksRail_sale
             }
           }
         }

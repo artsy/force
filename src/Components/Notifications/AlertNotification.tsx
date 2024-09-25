@@ -1,11 +1,11 @@
-import { Flex, Spacer, Text, Box, Pill } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import { FC } from "react"
-import { useFragment, graphql } from "react-relay"
-import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
+import { Flex, Pill, Spacer, Text } from "@artsy/palette"
 import { NotificationArtworkList } from "Components/Notifications/NotificationArtworkList"
-import { AlertNotification_notification$key } from "__generated__/AlertNotification_notification.graphql"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
+import { RouterLink } from "System/Components/RouterLink"
+import { AlertNotification_notification$key } from "__generated__/AlertNotification_notification.graphql"
+import { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface AlertNotificationProps {
   notification: AlertNotification_notification$key
@@ -26,7 +26,7 @@ export const AlertNotification: FC<AlertNotificationProps> = ({
   }
 
   return (
-    <Box>
+    <>
       <Flex width="100%" justifyContent="space-between">
         <Flex flex={1} mr={1}>
           <Text variant="lg-display">{headline}</Text>
@@ -68,7 +68,7 @@ export const AlertNotification: FC<AlertNotificationProps> = ({
       <RouterLink to={`/artist/${artist?.slug}/works-for-sale`}>
         <Text fontWeight="bold">View all works by {artist.name}</Text>
       </RouterLink>
-    </Box>
+    </>
   )
 }
 

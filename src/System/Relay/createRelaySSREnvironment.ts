@@ -7,7 +7,7 @@ import RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
 import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import {
   RelayNetworkLayer,
-  batchMiddleware,
+  cacheMiddleware,
   errorMiddleware,
   loggerMiddleware,
   urlMiddleware,
@@ -15,11 +15,17 @@ import {
 import "regenerator-runtime/runtime"
 import { Environment, INetwork, RecordSource, Store } from "relay-runtime"
 import { Environment as IEnvironment } from "react-relay"
-import { cacheMiddleware } from "./middleware/cache/cacheMiddleware"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
-import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmediateResolveMiddleware"
+import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
+import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
+import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddleware"
+import {
+  hasNoCacheParamPresent,
+  hasPersonalizedArguments,
+  isRequestCacheable,
+} from "System/Relay/isRequestCacheable"
 
 const logger = createLogger("System/Relay/createRelaySSREnvironment")
 
@@ -27,18 +33,18 @@ const isServer = typeof window === "undefined"
 const isDevelopment = getENV("NODE_ENV") === "development"
 
 // Only log on the client during development
-const loggingEnabled = isDevelopment && !isServer
+const loggingEnabled = !isServer && isDevelopment
 
-const METAPHYSICS_ENDPOINT = `${getENV("METAPHYSICS_ENDPOINT")}/v2`
 const USER_AGENT = `Reaction/Migration`
 
 interface Config {
   cache?: object
-  user?: User | null
   checkStatus?: boolean
-  relayNetwork?: INetwork
-  userAgent?: string
   metaphysicsEndpoint?: string
+  relayNetwork?: INetwork
+  url?: string
+  user?: User | null
+  userAgent?: string
 }
 
 export interface RelaySSREnvironment extends Environment {
@@ -50,10 +56,11 @@ export function createRelaySSREnvironment(config: Config = {}) {
   const {
     cache = {},
     checkStatus,
-    user,
+    metaphysicsEndpoint = getMetaphysicsEndpoint(),
     relayNetwork,
+    url,
+    user,
     userAgent,
-    metaphysicsEndpoint = METAPHYSICS_ENDPOINT,
   } = config
 
   /**
@@ -90,26 +97,37 @@ export function createRelaySSREnvironment(config: Config = {}) {
     logger.warn("Browser does not support i18n API, not setting TZ header.")
   }
 
-  const authenticatedHeaders = !!user
-    ? {
-        ...headers,
-        "X-USER-ID": user && (user.id as string),
-        "X-ACCESS-TOKEN": user && (user.accessToken as string),
-      }
-    : headers
-
   const middlewares = [
-    searchBarImmediateResolveMiddleware(),
     urlMiddleware({
       url: metaphysicsEndpoint,
-      headers: authenticatedHeaders,
+      headers: req => {
+        // Determine if the request is cacheable based on the opt-in `@cacheable` directive.
+        // If it is, we don't want to send the user's access token even if they are logged in.
+        const isCacheable =
+          isRequestCacheable(req) &&
+          !hasNoCacheParamPresent(url) &&
+          !hasPersonalizedArguments(req.variables)
+
+        // Add authenticated headers only if the request is NOT cacheable,
+        // and there's a user, otherwise fallback to standard headers.
+        const authenticatedHeaders =
+          !!user && !isCacheable
+            ? {
+                ...headers,
+                "X-USER-ID": user && (user.id as string),
+                "X-ACCESS-TOKEN": user && (user.accessToken as string),
+              }
+            : headers
+
+        return authenticatedHeaders
+      },
+      method: "POST",
     }),
     relaySSRMiddleware.getMiddleware(),
     cacheMiddleware({
-      size: Number(getENV("NETWORK_CACHE_SIZE")) ?? 2000, // max 2000 requests
-      ttl: Number(getENV("NETWORK_CACHE_TTL")) ?? 3600000, // 1 hour
+      size: Number(getENV("GRAPHQL_CACHE_SIZE")) ?? 2000, // max 2000 requests
+      ttl: Number(getENV("GRAPHQL_CACHE_TTL")) ?? 3600000, // 1 hour
       clearOnMutation: true,
-      disableServerSideCache: !!user, // disable server-side cache if logged in
       onInit: queryResponseCache => {
         if (!isServer) {
           hydrateCacheFromSSR(queryResponseCache)
@@ -118,23 +136,11 @@ export function createRelaySSREnvironment(config: Config = {}) {
     }),
     principalFieldErrorHandlerMiddleware(),
     metaphysicsErrorHandlerMiddleware({ checkStatus }),
+    cacheHeaderMiddleware({ url, user }),
+    cacheLoggerMiddleware(),
     loggingEnabled && loggerMiddleware(),
     loggingEnabled && metaphysicsExtensionsLoggerMiddleware(),
     loggingEnabled && errorMiddleware({ disableServerMiddlewareTip: true }),
-
-    ...(getENV("ENABLE_QUERY_BATCHING")
-      ? [
-          batchMiddleware({
-            headers: authenticatedHeaders,
-            batchUrl: `${METAPHYSICS_ENDPOINT}/batch`,
-            // Period of time (integer in milliseconds) for gathering multiple requests
-            // before sending them to the server.
-            // Will delay sending of the requests on specified in this option period of time,
-            // so be careful and keep this value small. (default: 0)
-            batchTimeout: 0,
-          }),
-        ]
-      : []),
   ]
 
   // TODO: The `noThrow` option is used since we do our own error handling,

@@ -1,9 +1,10 @@
 import loadable from "@loadable/component"
 import { Redirect } from "found"
 import { graphql } from "react-relay"
-import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { RouteProps } from "System/Router/Route"
-import { getArtworkFilterInputArgs } from "./Components/AuctionArtworkFilter"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
+import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
+import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 
 const AuctionApp = loadable(
   () => import(/* webpackChunkName: "auctionBundle" */ "./AuctionApp"),
@@ -52,6 +53,7 @@ export const auctionRoutes: RouteProps[] = [
   {
     path: "/auction/:slug?",
     getComponent: () => AuctionApp,
+    serverCacheTTL: serverCacheTTLs.auction,
     onClientSideRender: () => {
       AuctionApp.preload()
     },
@@ -59,6 +61,7 @@ export const auctionRoutes: RouteProps[] = [
       query auctionRoutes_TopLevelQuery(
         $input: FilterArtworksInput
         $slug: String!
+        $isLoggedIn: Boolean!
       ) {
         me {
           ...AuctionApp_me @arguments(saleID: $slug)
@@ -67,7 +70,8 @@ export const auctionRoutes: RouteProps[] = [
           ...AuctionApp_sale
         }
         viewer {
-          ...AuctionApp_viewer @arguments(input: $input, saleID: $slug)
+          ...AuctionApp_viewer
+            @arguments(input: $input, saleID: $slug, isLoggedIn: $isLoggedIn)
         }
       }
     `,
@@ -86,6 +90,7 @@ export const auctionRoutes: RouteProps[] = [
 
       const variables = {
         slug: params.slug,
+        isLoggedIn: !!props.context.user,
         input: {
           ...auctionFilterDefaults,
           ...initialFilterStateFromUrl,

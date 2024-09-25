@@ -1,8 +1,6 @@
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterContext"
-import {
-  paramsToSnakeCase,
-  removeDefaultValues,
-} from "Components/ArtworkFilter/Utils/urlBuilder"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { removeDefaultValues } from "Components/ArtworkFilter/Utils/urlBuilder"
 import qs from "qs"
 
 export const buildUrlForCollectApp = (state: ArtworkFilters): string => {

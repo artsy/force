@@ -136,7 +136,11 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
           as={RouterLink}
           to={href}
           onClick={() => {
-            tracking.clickBuyNow(artwork.internalID, artwork.slug)
+            tracking.clickBuyNow(
+              artwork.internalID,
+              artwork.slug,
+              artwork.collectorSignals ?? undefined
+            )
           }}
           data-testid="partner-offer-artwork-button"
           flex={fullyAvailable ? 1 : [1, 0.5]}
@@ -216,6 +220,9 @@ const partnerOfferArtworkFragment = graphql`
           url(version: "square140")
         }
       }
+    }
+    collectorSignals {
+      primaryLabel
     }
     ...Metadata_artwork
   }

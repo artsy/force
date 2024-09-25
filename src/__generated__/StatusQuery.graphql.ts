@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc1f66c5c7754d5656f35108a72a25cf>>
+ * @generated SignedSource<<06ba0b190ea0dbef9e5bb1ce682b140f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
+export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PAYMENT_FAILED" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
@@ -86,7 +86,7 @@ export type StatusQuery$rawResponse = {
             readonly edges: ReadonlyArray<{
               readonly node: {
                 readonly courier: string;
-                readonly estimatedDelivery: string | null | undefined;
+                readonly estimatedDelivery: string;
                 readonly id: string;
                 readonly trackingId: string | null | undefined;
               } | null | undefined;
@@ -233,7 +233,7 @@ export type StatusQuery$rawResponse = {
             readonly edges: ReadonlyArray<{
               readonly node: {
                 readonly courier: string;
-                readonly estimatedDelivery: string | null | undefined;
+                readonly estimatedDelivery: string;
                 readonly id: string;
                 readonly trackingId: string | null | undefined;
               } | null | undefined;
@@ -1160,6 +1160,7 @@ return {
             "CANCELED",
             "FULFILLED",
             "IN_TRANSIT",
+            "PAYMENT_FAILED",
             "PENDING",
             "PROCESSING",
             "PROCESSING_APPROVAL",
@@ -1266,7 +1267,7 @@ return {
           "type": "CommerceFulfillment"
         },
         "order.lineItems.edges.node.fulfillments.edges.node.courier": (v15/*: any*/),
-        "order.lineItems.edges.node.fulfillments.edges.node.estimatedDelivery": (v16/*: any*/),
+        "order.lineItems.edges.node.fulfillments.edges.node.estimatedDelivery": (v15/*: any*/),
         "order.lineItems.edges.node.fulfillments.edges.node.id": (v17/*: any*/),
         "order.lineItems.edges.node.fulfillments.edges.node.trackingId": (v16/*: any*/),
         "order.lineItems.edges.node.id": (v17/*: any*/),

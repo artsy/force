@@ -8,8 +8,8 @@ import {
 } from "react-relay"
 import { CurrentAuctions_viewer$data } from "__generated__/CurrentAuctions_viewer.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { AuctionArtworkRailQueryRenderer } from "../Components/AuctionArtworksRail"
-import { AuctionsZeroState } from "../Components/AuctionsZeroState"
+import { AuctionArtworkRailQueryRenderer } from "Apps/Auctions/Components/AuctionArtworksRail"
+import { AuctionsZeroState } from "Apps/Auctions/Components/AuctionsZeroState"
 
 export interface CurrentAuctionsProps {
   viewer: CurrentAuctions_viewer$data
@@ -102,7 +102,6 @@ export const CurrentAuctionsPaginationContainer = createPaginationContainer(
               href
               liveStartAt
               isLiveOpen
-              ...AuctionArtworksRail_sale
             }
           }
         }

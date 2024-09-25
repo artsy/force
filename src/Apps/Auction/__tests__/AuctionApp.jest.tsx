@@ -70,7 +70,8 @@ describe("AuctionApp", () => {
           ...AuctionApp_sale
         }
         viewer {
-          ...AuctionApp_viewer @arguments(input: $input, saleID: $slug)
+          ...AuctionApp_viewer
+            @arguments(input: $input, saleID: $slug, isLoggedIn: true)
         }
       }
     `,

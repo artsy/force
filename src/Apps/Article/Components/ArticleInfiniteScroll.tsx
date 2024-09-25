@@ -91,7 +91,7 @@ const ARTICLE_NEXT_QUERY = graphql`
     $after: String
     $channelID: String!
     $articleID: String!
-  ) {
+  ) @cacheable {
     viewer {
       ...ArticleInfiniteScroll_viewer
         @arguments(after: $after, channelID: $channelID, articleID: $articleID)

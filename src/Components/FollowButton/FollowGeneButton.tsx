@@ -68,12 +68,8 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
 
     if (!isLoggedIn) {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to follow ${gene.name}`
-          },
+          title: `Sign up or log in to follow ${gene.name}`,
           afterAuthAction: {
             action: "follow",
             kind: "gene",
@@ -118,12 +114,15 @@ export const FollowGeneButtonFragmentContainer = createFragmentContainer(
   FollowGeneButton,
   {
     gene: graphql`
-      fragment FollowGeneButton_gene on Gene {
+      fragment FollowGeneButton_gene on Gene
+        @argumentDefinitions(
+          isLoggedIn: { type: "Boolean", defaultValue: false }
+        ) {
         id
         slug
         name
         internalID
-        isFollowed
+        isFollowed @include(if: $isLoggedIn)
       }
     `,
   }
@@ -138,18 +137,19 @@ export const FollowGeneButtonQueryRenderer: React.FC<FollowGeneButtonQueryRender
   id,
   ...rest
 }) => {
+  const { isLoggedIn } = useSystemContext()
   return (
     <SystemQueryRenderer<FollowGeneButtonQuery>
       lazyLoad
       query={graphql`
-        query FollowGeneButtonQuery($id: String!) {
+        query FollowGeneButtonQuery($id: String!, $isLoggedIn: Boolean!) {
           gene(id: $id) {
-            ...FollowGeneButton_gene
+            ...FollowGeneButton_gene @arguments(isLoggedIn: $isLoggedIn)
           }
         }
       `}
       placeholder={<FollowButton {...rest} />}
-      variables={{ id }}
+      variables={{ id, isLoggedIn }}
       render={({ error, props }) => {
         if (error || !props?.gene) {
           return <FollowButton {...rest} />

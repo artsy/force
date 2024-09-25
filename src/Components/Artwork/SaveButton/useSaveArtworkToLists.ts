@@ -12,8 +12,14 @@ type Artwork = {
   year: string | null | undefined
   artistNames: string | null | undefined
   imageURL: string | null
+  isInAuction: boolean
   isSavedToDefaultList: boolean
   isSavedToCustomLists: boolean
+  collectorSignals: {
+    auction: {
+      lotWatcherCount: number
+    } | null
+  } | null
 }
 
 export interface SaveArtworkToListsOptions {
@@ -38,12 +44,8 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
 
   const showAuthDialog = () => {
     _showAuthDialog({
-      mode: "SignUp",
       options: {
-        title: mode => {
-          const action = mode === "SignUp" ? "Sign up" : "Log in"
-          return `${action} to save artworks`
-        },
+        title: "Sign up or log in to save artworks",
         afterAuthAction: {
           action: "saveArtworkToLists",
           kind: "artworks",
@@ -86,6 +88,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
             id: artwork.id,
             slug: artwork.slug,
             isSaved: !artwork.isSavedToDefaultList,
+            collectorSignals: artwork.collectorSignals ?? null,
           },
           /**
            * TODO: We don't _really_ need an optimistic response and

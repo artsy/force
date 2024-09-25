@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5f20cdf8ad99820b64dcd3bc84ee414>>
+ * @generated SignedSource<<cd2c7606b98215d551dff0fc6547bba5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ARTIST_SERIES" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type AuctionArtworkFilter_viewer$data = {
+  readonly sale: {
+    readonly featuredKeywords: ReadonlyArray<string>;
+  } | null | undefined;
   readonly sidebarAggregations: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
@@ -21,7 +24,7 @@ export type AuctionArtworkFilter_viewer$data = {
       } | null | undefined> | null | undefined;
       readonly slice: ArtworkAggregation | null | undefined;
     } | null | undefined> | null | undefined;
-    readonly counts: {
+    readonly counts?: {
       readonly followedArtists: any | null | undefined;
     } | null | undefined;
   } | null | undefined;
@@ -45,6 +48,16 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "input"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "isLoggedIn"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "saleID"
     }
   ],
   "kind": "Fragment",
@@ -57,6 +70,30 @@ return {
       ],
       "kind": "FragmentSpread",
       "name": "ArtworkFilter_viewer"
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "id",
+          "variableName": "saleID"
+        }
+      ],
+      "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "featuredKeywords",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     },
     {
       "alias": "sidebarAggregations",
@@ -74,22 +111,29 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "FilterArtworksCounts",
-          "kind": "LinkedField",
-          "name": "counts",
-          "plural": false,
+          "condition": "isLoggedIn",
+          "kind": "Condition",
+          "passingValue": true,
           "selections": [
             {
               "alias": null,
               "args": null,
-              "kind": "ScalarField",
-              "name": "followedArtists",
+              "concreteType": "FilterArtworksCounts",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "followedArtists",
+                  "storageKey": null
+                }
+              ],
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
           "alias": null,
@@ -150,6 +194,6 @@ return {
 };
 })();
 
-(node as any).hash = "5fba4c2b4f9d24038de90ae2bae9c11b";
+(node as any).hash = "fe86a017742f36987c61b0b1fe544538";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51b0cc590db299075c5a8937557fd919>>
+ * @generated SignedSource<<2e7e6a38c2782bf0e9b240a6e08821ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type UpdateCollectorProfileInput = {
   intents?: ReadonlyArray<Intents | null | undefined> | null | undefined;
   loyaltyApplicant?: boolean | null | undefined;
   professionalBuyer?: boolean | null | undefined;
+  promptedForUpdate?: boolean | null | undefined;
   selfReportedPurchases?: string | null | undefined;
 };
 export type useUpdateCollectorProfileMutation$variables = {
@@ -46,38 +47,37 @@ var v0 = [
 ],
 v1 = [
   {
-    "kind": "Variable",
-    "name": "input",
-    "variableName": "input"
+    "alias": null,
+    "args": [
+      {
+        "kind": "Variable",
+        "name": "input",
+        "variableName": "input"
+      }
+    ],
+    "concreteType": "UpdateCollectorProfilePayload",
+    "kind": "LinkedField",
+    "name": "updateCollectorProfile",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "clientMutationId",
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
   }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "clientMutationId",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "useUpdateCollectorProfileMutation",
-    "selections": [
-      {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "UpdateCollectorProfilePayload",
-        "kind": "LinkedField",
-        "name": "updateCollectorProfile",
-        "plural": false,
-        "selections": [
-          (v2/*: any*/)
-        ],
-        "storageKey": null
-      }
-    ],
+    "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -86,35 +86,15 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "useUpdateCollectorProfileMutation",
-    "selections": [
-      {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "UpdateCollectorProfilePayload",
-        "kind": "LinkedField",
-        "name": "updateCollectorProfile",
-        "plural": false,
-        "selections": [
-          (v2/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ]
+    "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "725af792eb48403e9c0e1dce39d30b34",
+    "cacheID": "0296f8d2fba205e2470b55dc43677e1c",
     "id": null,
     "metadata": {},
     "name": "useUpdateCollectorProfileMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateCollectorProfileMutation(\n  $input: UpdateCollectorProfileInput!\n) {\n  updateCollectorProfile(input: $input) {\n    clientMutationId\n    id\n  }\n}\n"
+    "text": "mutation useUpdateCollectorProfileMutation(\n  $input: UpdateCollectorProfileInput!\n) {\n  updateCollectorProfile(input: $input) {\n    clientMutationId\n  }\n}\n"
   }
 };
 })();

@@ -4,7 +4,6 @@ import { ArtworkSidebarLinksFragmentContainer } from "Apps/Artwork/Components/Ar
 import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkSidebarLinks_Test_Query } from "__generated__/ArtworkSidebarLinks_Test_Query.graphql"
 import { useTracking } from "react-tracking"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
@@ -84,22 +83,12 @@ describe("ArtworkSidebarLinks", () => {
         ).toBeInTheDocument()
         expect(
           screen.getByRole("link", {
-            name: "Conditions of Sale",
+            name: "General Terms and Conditions of Sale",
           })
-        ).toHaveAttribute("href", "/conditions-of-sale")
+        ).toHaveAttribute("href", "/terms")
       })
 
       describe("new disclaimer is shown", () => {
-        beforeAll(() => {
-          ;(useFeatureFlag as jest.Mock).mockImplementation(
-            (f: string) => f === "diamond_new-terms-and-conditions"
-          )
-        })
-
-        afterAll(() => {
-          ;(useFeatureFlag as jest.Mock).mockReset()
-        })
-
         it("shows general terms and conditions of sale link", () => {
           expect(
             screen.getByRole("link", {

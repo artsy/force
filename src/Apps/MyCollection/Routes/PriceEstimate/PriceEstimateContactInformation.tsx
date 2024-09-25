@@ -1,7 +1,18 @@
 import { ActionType } from "@artsy/cohesion"
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import { Button, Flex, Spacer, Text, useToasts } from "@artsy/palette"
+import { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
+import { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
 import { AppContainer } from "Apps/Components/AppContainer"
+import {
+  ContactInformationFormFragmentContainer,
+  ContactInformationFormModel,
+} from "Apps/MyCollection/ContactInformation/ContactInformationForm"
 import { useRequestPriceEstimate } from "Apps/MyCollection/Routes/PriceEstimate/Mutations/useRequestPriceEstimate"
+import {
+  contactInformationValidationSchema,
+  validateContactInformationValidationSchema,
+} from "Apps/MyCollection/Routes/PriceEstimate/utils/contactInformationValidationSchema"
 import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
 import { Form, Formik } from "formik"
@@ -10,17 +21,6 @@ import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { COUNTRY_CODES } from "Utils/countries"
-import { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
-import { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
-import {
-  contactInformationValidationSchema,
-  validate,
-} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
-import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
-import {
-  ContactInformationFormFragmentContainer,
-  ContactInformationFormModel,
-} from "Apps/MyCollection/ContactInformation/ContactInformationForm"
 
 const getContactInformationFormInitialValues = (
   me: PriceEstimateContactInformation_me$data
@@ -55,7 +55,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
   const { submitMutation } = useRequestPriceEstimate()
 
   const initialValue = getContactInformationFormInitialValues(me)
-  const initialErrors = validate(
+  const initialErrors = validateContactInformationValidationSchema(
     initialValue,
     contactInformationValidationSchema
   )

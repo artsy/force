@@ -56,6 +56,41 @@ export function getAppRoutes() {
 - Done! Now, when you visit `http://localhost:5000/new-app` you should see your newly created content above.
 - An example app is available to view and use as a starting point in [Example App](https://github.com/artsy/force/tree/main/src/Apps/Example)
 
+### Fetching data with Relay
+
+Most apps rely on GraphQL data at Artsy. Thankfully, our router makes it easy to access it!
+
+Lets fetch an artist name and render it on the page:
+
+```tsx
+export const myNewAppRoutes: AppRouteConfig[] = [
+  {
+    path: "/new-app",
+    // How long should we cache the query on the server? Default is .env GRAPHQL_CACHE_TTL
+    serverCacheTTL: 1000,
+    // Relay config to always force a fetch; use very deliberately! We want
+    // caching, but some pages should never be cached.
+    cacheConfig: {
+      force: true
+    }
+    Component: props => {
+      return (
+        <div>
+          <h1>Hello new {props.artist.name}</h1>
+        </div>
+      )
+    },
+    query: graphql`
+      query myNewAppRoutesQuery {
+        artist(id: "andy-warhol") {
+          name
+        }
+      }
+    `,
+  },
+]
+```
+
 ### Advanced Setup
 
 For most apps we don't need more than the above to get a new route and SSR rendering out of the box. However, sometimes we need additional server-side functionality, be it redirects or something else that interacts directly with the request / response cycle. For that, we can leverage express.js middleware.

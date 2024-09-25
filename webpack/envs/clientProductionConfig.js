@@ -4,10 +4,9 @@ import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 import { WebpackManifestPlugin } from "webpack-manifest-plugin"
-import { basePath, webpackEnv } from "../webpackEnv"
+import { basePath } from "../webpackEnv"
 import { sharedPlugins } from "../sharedPlugins"
 import { splitChunks } from "../bundleSplitting"
-
 import { babelLoader, ejsLoader, mjsLoader } from "../sharedLoaders"
 
 import {
@@ -43,10 +42,18 @@ const clientProductionConfig = () => {
       path: path.resolve(basePath, "public/assets"),
       publicPath: "/assets/",
     },
+    stats: process.env.RELATIVE_CI_KEY
+      ? {
+          assets: true,
+          chunks: true,
+          modules: true,
+        }
+      : stats,
     plugins: [
       ...sharedPlugins(),
       new LoadablePlugin({
         filename: "loadable-stats.json",
+        // @ts-ignore
         path: path.resolve(basePath, "public", "assets"),
       }),
       new WebpackManifestPlugin({
@@ -63,7 +70,6 @@ const clientProductionConfig = () => {
         },
         template: path.resolve(basePath, "src/html.ejs"),
       }),
-
       process.env.WEBPACK_BUNDLE_REPORT &&
         new BundleAnalyzerPlugin({
           analyzerMode: "static",
@@ -71,7 +77,6 @@ const clientProductionConfig = () => {
         }),
     ].filter(Boolean),
     resolve,
-    stats,
   }
 }
 

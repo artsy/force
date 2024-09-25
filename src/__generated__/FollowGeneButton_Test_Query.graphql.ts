@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<27e410299c85bc2ccecb35e4ac8f31b0>>
+ * @generated SignedSource<<221d1c615d8183d4d363f60239eaaee4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,7 +51,13 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "isLoggedIn",
+                "value": true
+              }
+            ],
             "kind": "FragmentSpread",
             "name": "FollowGeneButton_gene"
           }
@@ -117,7 +123,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "400ec25326a33f1da5029ba13e220fff",
+    "cacheID": "54cf4fae1b4bfb8aa44405e0651d74a8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -146,11 +152,11 @@ return {
     },
     "name": "FollowGeneButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    ...FollowGeneButton_gene\n    id\n  }\n}\n\nfragment FollowGeneButton_gene on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
+    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    ...FollowGeneButton_gene_2OV785\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_2OV785 on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ad227555fabebd93865ebe16a7adf77c";
+(node as any).hash = "e30bf14c4d1f3cb99549ba3dcb9a6a9c";
 
 export default node;

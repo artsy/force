@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89d621c21d217d88d192a7c0335de07a>>
+ * @generated SignedSource<<4495522d5aed629521d6385a60a851e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,10 +52,15 @@ var v0 = {
 },
 v1 = {
   "kind": "Literal",
+  "name": "quality",
+  "value": 85
+},
+v2 = {
+  "kind": "Literal",
   "name": "version",
   "value": "normalized"
 },
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -136,6 +141,7 @@ return {
                       "alias": "solo",
                       "args": [
                         (v1/*: any*/),
+                        (v2/*: any*/),
                         {
                           "kind": "Literal",
                           "name": "width",
@@ -146,8 +152,8 @@ return {
                       "kind": "LinkedField",
                       "name": "resized",
                       "plural": false,
-                      "selections": (v2/*: any*/),
-                      "storageKey": "resized(version:\"normalized\",width:600)"
+                      "selections": (v3/*: any*/),
+                      "storageKey": "resized(quality:85,version:\"normalized\",width:600)"
                     },
                     {
                       "alias": null,
@@ -157,14 +163,15 @@ return {
                           "name": "height",
                           "value": 550
                         },
-                        (v1/*: any*/)
+                        (v1/*: any*/),
+                        (v2/*: any*/)
                       ],
                       "concreteType": "ResizedImageUrl",
                       "kind": "LinkedField",
                       "name": "resized",
                       "plural": false,
-                      "selections": (v2/*: any*/),
-                      "storageKey": "resized(height:550,version:\"normalized\")"
+                      "selections": (v3/*: any*/),
+                      "storageKey": "resized(height:550,quality:85,version:\"normalized\")"
                     }
                   ],
                   "storageKey": null
@@ -189,6 +196,6 @@ return {
 };
 })();
 
-(node as any).hash = "ec3ae2365d5c3b73112c59e847447b20";
+(node as any).hash = "142035b04d50d64b6b605a0bba0561e0";
 
 export default node;

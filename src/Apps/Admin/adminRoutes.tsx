@@ -1,36 +1,28 @@
 import loadable from "@loadable/component"
-import { HttpError } from "found"
 import { RouteProps } from "System/Router/Route"
-import { getUser } from "Utils/user"
 
-const AdminClearCacheApp = loadable(
-  () => import(/* webpackChunkName: "adminBundle" */ "./AdminClearCacheApp"),
-  { resolveComponent: component => component.AdminClearCacheApp }
+const AdminApp = loadable(
+  () => import(/* webpackChunkName: "adminBundle" */ "./AdminApp"),
+  { resolveComponent: component => component.AdminApp }
 )
 
-const NavigateToRoute = loadable(
-  () => import(/* webpackChunkName: "adminBundle" */ "./NavigateToRoute"),
-  { resolveComponent: component => component.NavigateToRoute }
+const AdminNavigateToRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "adminBundle" */ "./Routes/AdminNavigateToRoute"
+    ),
+  { resolveComponent: component => component.AdminNavigateToRoute }
 )
 
 export const adminRoutes: RouteProps[] = [
   {
     path: "/admin",
-    Component: ({ children }) => children,
+    layout: "NavOnly",
+    getComponent: () => AdminApp,
     children: [
       {
-        path: "clear-cache",
-        Component: AdminClearCacheApp,
-        onServerSideRender: ({ req }) => {
-          const user = getUser(req.user)
-          if (user?.type !== "Admin") {
-            throw new HttpError(403)
-          }
-        },
-      },
-      {
         path: "navigate-to-route",
-        Component: NavigateToRoute,
+        getComponent: () => AdminNavigateToRoute,
         layout: "NavOnly",
       },
     ],

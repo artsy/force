@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0b05fb6ef4443efef964a7403a29246>>
+ * @generated SignedSource<<64029838f791e211f1f4c44df02f541f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -506,16 +506,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "700661f000483136350b1979f681469d",
+    "cacheID": "69b7cf1247841d6bec0f48025ae1f602",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ShowsQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ShowsQuery(\n  $artistID: String!\n) {\n  viewer {\n    ...ArtistShowsRoute_viewer\n  }\n}\n\nfragment ArtistShowsGroup_artist_12Fjro on Artist {\n  slug\n  showsConnection(first: 12, page: 1, sort: START_AT_ASC, status: \"upcoming\") {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsGroup_artist_43oec1 on Artist {\n  slug\n  showsConnection(first: 12, page: 1, sort: END_AT_ASC, status: \"running\") {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsRoute_viewer on Viewer {\n  artist(id: $artistID) {\n    name\n    currentShowsCount: showsConnection(first: 1, status: \"running\") {\n      totalCount\n    }\n    upcomingShowsCount: showsConnection(first: 1, status: \"upcoming\") {\n      totalCount\n    }\n    id\n  }\n  currentShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_43oec1\n    name\n    id\n  }\n  upcomingShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_12Fjro\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query artistRoutes_ShowsQuery(\n  $artistID: String!\n) @cacheable {\n  viewer {\n    ...ArtistShowsRoute_viewer\n  }\n}\n\nfragment ArtistShowsGroup_artist_12Fjro on Artist {\n  slug\n  showsConnection(first: 12, page: 1, sort: START_AT_ASC, status: \"upcoming\") {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsGroup_artist_43oec1 on Artist {\n  slug\n  showsConnection(first: 12, page: 1, sort: END_AT_ASC, status: \"running\") {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsRoute_viewer on Viewer {\n  artist(id: $artistID) @principalField {\n    name\n    currentShowsCount: showsConnection(first: 1, status: \"running\") {\n      totalCount\n    }\n    upcomingShowsCount: showsConnection(first: 1, status: \"upcoming\") {\n      totalCount\n    }\n    id\n  }\n  currentShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_43oec1\n    name\n    id\n  }\n  upcomingShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_12Fjro\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "634807912343139c14caeabde6688a5b";
+(node as any).hash = "5795ee320f848daa55a373f3700c5e15";
 
 export default node;

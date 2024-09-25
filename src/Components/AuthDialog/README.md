@@ -14,9 +14,8 @@ const YourComponent = () => {
     <Button
       onClick={() => {
         showAuthDialog({
-          mode: "Login",
           options: {
-            title: "Login to save artworks",
+            title: "Sign up or log in to save artworks",
           },
           analytics: {
             contextModule: ContextModule.header,

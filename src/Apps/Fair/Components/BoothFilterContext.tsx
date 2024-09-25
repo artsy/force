@@ -2,8 +2,8 @@ import { createContext, useReducer, useContext } from "react"
 import * as React from "react"
 import { omit } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { SortOptions } from "Components/SortFilter"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 
 export interface BoothFilters {
   sort?: string

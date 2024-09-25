@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ca9c47b16cc163c6ead745805027b4c7>>
+ * @generated SignedSource<<9fc4b8f9812278ddf3e6e451a0409642>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -75,7 +75,14 @@ v7 = [
     "name": "isCurrent",
     "storageKey": null
   }
-];
+],
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -279,14 +286,52 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "imageUrl",
+                            "name": "bio",
                             "storageKey": null
                           },
                           {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "bio",
+                            "name": "imageUrl",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Artwork",
+                            "kind": "LinkedField",
+                            "name": "coverArtwork",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Image",
+                                "kind": "LinkedField",
+                                "name": "image",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": "src",
+                                    "args": [
+                                      {
+                                        "kind": "Literal",
+                                        "name": "version",
+                                        "value": [
+                                          "square"
+                                        ]
+                                      }
+                                    ],
+                                    "kind": "ScalarField",
+                                    "name": "url",
+                                    "storageKey": "url(version:[\"square\"])"
+                                  }
+                                ],
+                                "storageKey": null
+                              },
+                              (v8/*: any*/)
+                            ],
                             "storageKey": null
                           }
                         ],
@@ -296,13 +341,7 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "id",
-                            "storageKey": null
-                          }
+                          (v8/*: any*/)
                         ],
                         "type": "Node",
                         "abstractKey": "__isNode"
@@ -322,12 +361,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1f63996a762e7a565c2c8ba7909eecfd",
+    "cacheID": "6869334e3263c2dcbc4cea19b12f8349",
     "id": null,
     "metadata": {},
     "name": "SearchResultsArtistsQuery",
     "operationKind": "query",
-    "text": "query SearchResultsArtistsQuery(\n  $first: Int\n  $term: String!\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsArtists_viewer_2aqsc5\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsArtists_viewer_2aqsc5 on Viewer {\n  searchConnection(query: $term, first: $first, page: $page, entities: [ARTIST]) @principalField {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          href\n          imageUrl\n          bio\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query SearchResultsArtistsQuery(\n  $first: Int\n  $term: String!\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsArtists_viewer_2aqsc5\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsArtists_viewer_2aqsc5 on Viewer {\n  searchConnection(query: $term, first: $first, page: $page, entities: [ARTIST]) @principalField {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          href\n          bio\n          imageUrl\n          coverArtwork {\n            image {\n              src: url(version: [\"square\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

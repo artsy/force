@@ -164,16 +164,20 @@ describe("ArtworkSidebarPartnerInfo", () => {
           partner: {
             isInquireable: true,
           },
+          collectorSignals: {
+            primaryLabel: null,
+          },
         }),
       })
 
       fireEvent.click(screen.getByText("Contact Gallery"))
+
       expect(trackEvent).toBeCalledWith({
-        action_type: 'Clicked "Contact Gallery"',
-        artwork_id: "artwork_from_partner_with_locations",
-        artwork_slug: "test-slug",
-        context_module: "Sidebar",
-        subject: "Contact Gallery",
+        action: "clickedContactGallery",
+        context_owner_id: "artwork_from_partner_with_locations",
+        context_owner_slug: "test-slug",
+        context_owner_type: "artwork",
+        signal_label: "",
       })
     })
   })

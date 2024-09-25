@@ -1,4 +1,4 @@
-import { Flex, Spacer, Text, Box } from "@artsy/palette"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 import { useFragment, graphql } from "react-relay"
 import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
@@ -33,7 +33,7 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
   }
 
   return (
-    <Box>
+    <>
       <Text variant="lg-display">{headline}</Text>
 
       <Spacer y={1} />
@@ -65,7 +65,7 @@ export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProp
           <NotificationPartnerShow show={show} key={show.internalID} />
         ))}
       </Flex>
-    </Box>
+    </>
   )
 }
 

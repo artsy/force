@@ -51,20 +51,17 @@ export const viewingRoomRoutes: RouteProps[] = [
       query viewingRoomRoutes_ViewingRoomsAppQuery(
         $count: Int!
         $after: String
-      ) {
+      ) @cacheable {
         allViewingRooms: viewer {
           ...ViewingRoomsApp_allViewingRooms
             @arguments(count: $count, after: $after)
         }
 
-        featuredViewingRooms: viewingRooms(featured: true) {
+        featuredViewingRooms: viewingRoomsConnection(featured: true) {
           ...ViewingRoomsApp_featuredViewingRooms
         }
       }
     `,
-    cacheConfig: {
-      force: true,
-    },
   },
   {
     path: "/viewing-room/:slug",
@@ -74,7 +71,7 @@ export const viewingRoomRoutes: RouteProps[] = [
       ViewingRoomApp.preload()
     },
     query: graphql`
-      query viewingRoomRoutes_ViewingRoomQuery($slug: ID!) {
+      query viewingRoomRoutes_ViewingRoomQuery($slug: ID!) @cacheable {
         viewingRoom(id: $slug) @principalField {
           ...ViewingRoomApp_viewingRoom
         }
@@ -82,10 +79,11 @@ export const viewingRoomRoutes: RouteProps[] = [
     `,
     children: [
       {
-        path: "/",
+        path: "",
         Component: StatementRoute,
         query: graphql`
-          query viewingRoomRoutes_ViewingRoomStatementRouteQuery($slug: ID!) {
+          query viewingRoomRoutes_ViewingRoomStatementRouteQuery($slug: ID!)
+            @cacheable {
             viewingRoom(id: $slug) @principalField {
               ...ViewingRoomStatementRoute_viewingRoom
             }

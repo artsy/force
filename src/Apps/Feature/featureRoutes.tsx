@@ -17,7 +17,7 @@ export const featureRoutes: RouteProps[] = [
       FeatureApp.preload()
     },
     query: graphql`
-      query featureRoutes_FeatureQuery($slug: ID!) {
+      query featureRoutes_FeatureQuery($slug: ID!) @cacheable {
         feature(id: $slug) @principalField {
           ...FeatureApp_feature
         }

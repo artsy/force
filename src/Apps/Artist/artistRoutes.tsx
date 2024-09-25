@@ -1,13 +1,14 @@
 import loadable from "@loadable/component"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { RouteProps } from "System/Router/Route"
-import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
-import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
 import { redirectWithCanonicalParams } from "./Server/redirect"
 import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
+import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
@@ -111,6 +112,7 @@ export const artistRoutes: RouteProps[] = [
   {
     path: "/artist/:artistID",
     ignoreScrollBehaviorBetweenChildren: true,
+    serverCacheTTL: serverCacheTTLs.artist,
     getComponent: () => ArtistApp,
     onServerSideRender: enableArtistPageCTA,
     onClientSideRender: () => {
@@ -119,7 +121,7 @@ export const artistRoutes: RouteProps[] = [
       WorksForSaleRoute.preload()
     },
     query: graphql`
-      query artistRoutes_ArtistAppQuery($artistID: String!) {
+      query artistRoutes_ArtistAppQuery($artistID: String!) @cacheable {
         artist(id: $artistID) @principalField {
           ...ArtistApp_artist
         }
@@ -128,6 +130,7 @@ export const artistRoutes: RouteProps[] = [
     children: [
       {
         path: "",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => WorksForSaleRoute,
         onServerSideRender: redirectWithCanonicalParams,
         onClientSideRender: () => {
@@ -135,26 +138,16 @@ export const artistRoutes: RouteProps[] = [
         },
         prepareVariables: getWorksForSaleRouteVariables,
         query: graphql`
-          query artistRoutes_WorksForSaleQuery(
-            $artistID: String!
-            $input: FilterArtworksInput
-            # TODO:(?) only request the artist series aggregation if user has the Unleash flag enabled?
-            $aggregations: [ArtworkAggregation]
-            $includeBlurHash: Boolean!
-          ) {
-            artist(id: $artistID) {
+          query artistRoutes_WorksForSaleQuery($artistID: String!) {
+            artist(id: $artistID) @principalField {
               ...ArtistWorksForSaleRoute_artist
-                @arguments(
-                  input: $input
-                  aggregations: $aggregations
-                  includeBlurHash: $includeBlurHash
-                )
             }
           }
         `,
       },
       {
         path: "auction-results",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => AuctionResultsRoute,
         onClientSideRender: () => {
           AuctionResultsRoute.preload()
@@ -189,8 +182,8 @@ export const artistRoutes: RouteProps[] = [
             $createdAfterYear: Int
             $createdBeforeYear: Int
             $allowEmptyCreatedDates: Boolean
-          ) {
-            artist(id: $artistID) {
+          ) @cacheable {
+            artist(id: $artistID) @principalField {
               ...ArtistAuctionResultsRoute_artist
                 @arguments(
                   page: $page
@@ -211,14 +204,15 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "about",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => OverviewRoute,
         onServerSideRender: enableArtistPageCTA,
         onClientSideRender: () => {
           OverviewRoute.preload()
         },
         query: graphql`
-          query artistRoutes_OverviewQuery($artistID: String!) {
-            artist(id: $artistID) {
+          query artistRoutes_OverviewQuery($artistID: String!) @cacheable {
+            artist(id: $artistID) @principalField {
               ...ArtistOverviewRoute_artist
             }
           }
@@ -228,11 +222,12 @@ export const artistRoutes: RouteProps[] = [
   },
   {
     path: "/artist/:artistID",
+    serverCacheTTL: serverCacheTTLs.artist,
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => ArtistSubApp,
     query: graphql`
-      query artistRoutes_ArtistSubAppQuery($artistID: String!) {
-        artist(id: $artistID) {
+      query artistRoutes_ArtistSubAppQuery($artistID: String!) @cacheable {
+        artist(id: $artistID) @principalField {
           ...ArtistSubApp_artist
         }
       }
@@ -240,13 +235,14 @@ export const artistRoutes: RouteProps[] = [
     children: [
       {
         path: "articles/:artworkId?",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ArticlesRoute,
         onClientSideRender: () => {
           ArticlesRoute.preload()
         },
         query: graphql`
-          query artistRoutes_ArticlesQuery($artistID: String!) {
-            artist(id: $artistID) {
+          query artistRoutes_ArticlesQuery($artistID: String!) @cacheable {
+            artist(id: $artistID) @principalField {
               ...ArtistArticlesRoute_artist
             }
           }
@@ -259,8 +255,8 @@ export const artistRoutes: RouteProps[] = [
           ConsignRoute.preload()
         },
         query: graphql`
-          query artistRoutes_ArtistConsignQuery($artistID: String!) {
-            artist(id: $artistID) {
+          query artistRoutes_ArtistConsignQuery($artistID: String!) @cacheable {
+            artist(id: $artistID) @principalField {
               ...ArtistConsignRoute_artist
               targetSupply {
                 isInMicrofunnel
@@ -286,12 +282,13 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "cv",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => CVRoute,
         onClientSideRender: () => {
           CVRoute.preload()
         },
         query: graphql`
-          query artistRoutes_CVQuery($artistID: String!) {
+          query artistRoutes_CVQuery($artistID: String!) @cacheable {
             viewer {
               ...ArtistCVRoute_viewer
             }
@@ -300,13 +297,14 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "series",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ArtistSeriesRoute,
         onClientSideRender: () => {
           ArtistSeriesRoute.preload()
         },
         query: graphql`
-          query artistRoutes_ArtistSeriesQuery($artistID: String!) {
-            artist(id: $artistID) {
+          query artistRoutes_ArtistSeriesQuery($artistID: String!) @cacheable {
+            artist(id: $artistID) @principalField {
               ...ArtistArtistSeriesRoute_artist
             }
           }
@@ -314,12 +312,13 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "shows",
+        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ShowsRoute,
         onClientSideRender: () => {
           ShowsRoute.preload()
         },
         query: graphql`
-          query artistRoutes_ShowsQuery($artistID: String!) {
+          query artistRoutes_ShowsQuery($artistID: String!) @cacheable {
             viewer {
               ...ArtistShowsRoute_viewer
             }
@@ -340,13 +339,15 @@ export const artistRoutes: RouteProps[] = [
   },
   {
     path: "/auction-result/:auctionResultId",
+    serverCacheTTL: serverCacheTTLs.artist,
     getComponent: () => AuctionResultRoute,
     onServerSideRender: enableArtistPageCTA,
     onClientSideRender: () => {
       AuctionResultRoute.preload()
     },
     query: graphql`
-      query artistRoutes_AuctionResultQuery($auctionResultId: String!) {
+      query artistRoutes_AuctionResultQuery($auctionResultId: String!)
+        @cacheable {
         auctionResult(id: $auctionResultId) @principalField {
           ...AuctionResult_auctionResult
         }

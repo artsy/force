@@ -16,6 +16,7 @@ import { useHoverMetadata } from "./useHoverMetadata"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
 import { Z } from "Apps/Components/constants"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
 
@@ -29,6 +30,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
+  showSubmissionStatus?: boolean
   to?: string | null
   savedListId?: string
   popoverContent?: React.ReactNode | null
@@ -46,6 +48,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   showHighDemandIcon = false,
   showHoverDetails,
   showSaveButton = true,
+  showSubmissionStatus,
   to,
   savedListId,
   renderSaveButton,
@@ -55,6 +58,10 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
 }) => {
   const localImage = useLocalImage(artwork.image)
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
+
+  const signalsAuctionEnabled = useFeatureFlag(
+    "emerald_signals-auction-improvements"
+  )
 
   const handleClick = () => {
     onClick?.()
@@ -113,7 +120,8 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
             />
           </LinkContainer>
           <ExclusiveAccessBadge artwork={artwork} />
-          <Badge artwork={artwork} />
+          {/* TODO: Delete when signalsAuctionEnabled is removed */}
+          {!signalsAuctionEnabled && <Badge artwork={artwork} />}
         </Box>
         <Metadata
           artwork={artwork}
@@ -127,6 +135,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           disableRouterLinking={disableRouterLinking}
           to={to}
           renderSaveButton={renderSaveButton}
+          showSubmissionStatus={showSubmissionStatus}
         />
       </div>
     </ManageArtworkForSavesProvider>
@@ -297,6 +306,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         @argumentDefinitions(
           includeAllImages: { type: "Boolean", defaultValue: false }
           includeBlurHash: { type: "Boolean", defaultValue: true }
+          includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
         ) {
         internalID
         title
@@ -312,6 +322,9 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         artistNames
         href
         ...Metadata_artwork
+          @arguments(
+            includeConsignmentSubmission: $includeConsignmentSubmission
+          )
         ...ExclusiveAccessBadge_artwork
         ...Badge_artwork
       }

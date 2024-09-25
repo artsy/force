@@ -36,8 +36,6 @@ jest.mock("Utils/getENV", () => ({
 
 const mockTrackEvent = jest.fn()
 
-jest.mock("react-tracking")
-
 const mockOnSubmit = jest.fn()
 const mockOnAddressVerificationComplete = jest.fn()
 const mockScrollIntoView = jest.fn()
@@ -68,6 +66,7 @@ const submitForm = async () => {
 
 beforeEach(() => {
   mockOnSubmit.mockReset()
+  mockTrackEvent.mockReset()
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: mockTrackEvent,
   }))
@@ -99,10 +98,13 @@ beforeEach(() => {
   mockShippingContext = ({
     actions: {
       setFulfillmentDetailsFormikContext: jest.fn(),
+      goBackToFulfillmentDetails: jest.fn(),
     },
     orderData: {
       shippingQuotes: [],
     },
+    meData: { addressList: [] },
+
     state: {
       shippingFormMode: "saved_addresses",
     },
@@ -157,14 +159,26 @@ describe("FulfillmentDetailsForm", () => {
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
 
-      const phoneNumberField = await screen.findByPlaceholderText(
-        "Add phone number including country code"
+      const phoneNumberField = await screen.findByTestId(
+        "AddressForm_pickupPhoneNumber"
       )
 
       expect(phoneNumberField).toBeVisible()
       expect(
         screen.getByText("Required for pickup logistics")
       ).toBeInTheDocument()
+    })
+
+    it("tries to go back to fulfillment details when the user clicks pickup", async () => {
+      renderTree(testProps)
+
+      await userEvent.click(
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
+      )
+
+      expect(
+        mockShippingContext.actions.goBackToFulfillmentDetails
+      ).toHaveBeenCalled()
     })
 
     it("will not submit without required fields", async () => {
@@ -196,8 +210,8 @@ describe("FulfillmentDetailsForm", () => {
       await userEvent.click(
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
-      const phoneNumberField = await screen.findByPlaceholderText(
-        "Add phone number including country code"
+      const phoneNumberField = await screen.findByTestId(
+        "AddressForm_pickupPhoneNumber"
       )
 
       await userEvent.type(phoneNumberField, "1234567890")
@@ -242,6 +256,29 @@ describe("FulfillmentDetailsForm", () => {
       await userEvent.click(screen.getByRole("radio", { name: "Shipping" }))
 
       // find address form fields
+      await waitFor(() => {
+        expect(screen.getByPlaceholderText("City")).toBeVisible()
+      })
+    })
+
+    it("user can select shipping if pickup fulfillment is already saved to order", async () => {
+      testProps.initialValues!.fulfillmentType = FulfillmentType.PICKUP
+      testProps.initialValues!.attributes = {
+        name: "John Doe",
+        phoneNumber: "1234567890",
+        addressLine1: "401 Broadway",
+        city: "New York",
+        region: "NY",
+        postalCode: "10013",
+        country: "US",
+      }
+      renderTree(testProps)
+
+      let shippingRadio: HTMLElement = await screen.findByRole("radio", {
+        name: "Shipping",
+      })
+
+      await userEvent.click(shippingRadio)
       await waitFor(() => {
         expect(screen.getByPlaceholderText("City")).toBeVisible()
       })
@@ -484,6 +521,30 @@ describe("FulfillmentDetailsForm", () => {
       )
     })
 
+    it("tries to go back to fulfillment details when the user selects an autocomplete address", async () => {
+      renderTree(testProps)
+      await waitFor(async () => {
+        const line1Input = screen.getByPlaceholderText("Street address")
+        expect(line1Input).toBeEnabled()
+      })
+      await userEvent.paste(
+        screen.getByPlaceholderText("Street address"),
+        "401 Broadway"
+      )
+
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      const option = within(dropdown).getByText(
+        "401 Broadway, New York NY 10013"
+      )
+
+      await userEvent.click(option)
+      await flushPromiseQueue()
+
+      expect(
+        mockShippingContext.actions.goBackToFulfillmentDetails
+      ).toHaveBeenCalled()
+    })
+
     it("tracks when a user selects an address and the first time they edit it", async () => {
       renderTree(testProps)
       await waitFor(async () => {
@@ -502,7 +563,9 @@ describe("FulfillmentDetailsForm", () => {
 
       await userEvent.click(option)
       await flushPromiseQueue()
+
       expect(mockTrackEvent).toHaveBeenCalledTimes(2)
+
       expect(mockTrackEvent).toHaveBeenNthCalledWith(1, {
         action: "addressAutoCompletionResult",
         context_module: "ordersShipping",
@@ -519,7 +582,6 @@ describe("FulfillmentDetailsForm", () => {
         input: "401 Broadway",
         item: "401 Broadway, New York NY 10013",
       })
-      mockTrackEvent.mockClear()
 
       // Make 2 edits to the address; track the 1st
       const line2Input = screen.getByPlaceholderText("Apt, floor, suite, etc.")
@@ -529,8 +591,8 @@ describe("FulfillmentDetailsForm", () => {
       await userEvent.type(postalCode, "-4456")
 
       await flushPromiseQueue()
-      expect(mockTrackEvent).toHaveBeenCalledTimes(1)
-      expect(mockTrackEvent).toHaveBeenCalledWith({
+      expect(mockTrackEvent).toHaveBeenCalledTimes(3)
+      expect(mockTrackEvent).toHaveBeenNthCalledWith(3, {
         action: "editedAutocompletedAddress",
         context_module: "ordersShipping",
         context_owner_id: "",

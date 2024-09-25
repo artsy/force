@@ -1,7 +1,8 @@
-import { debounce } from "lodash"
-import { fetchQuery, graphql } from "react-relay"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { validatePhoneNumberQuery } from "__generated__/validatePhoneNumberQuery.graphql"
+import { debounce } from "lodash"
+import { useCallback, useEffect, useState } from "react"
+import { fetchQuery, graphql } from "react-relay"
 
 const relayEnvironment = createRelaySSREnvironment()
 
@@ -58,4 +59,23 @@ export const validatePhoneNumber = (
   return new Promise(resolve => {
     validator(phoneNumber, resolve)
   })
+}
+
+export const useValidatePhoneNumber = ({ national, regionCode }) => {
+  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true)
+
+  const validate = useCallback(async () => {
+    const isValid = await validatePhoneNumber({
+      national,
+      regionCode,
+    })
+
+    setIsPhoneNumberValid(isValid)
+  }, [national, regionCode])
+
+  useEffect(() => {
+    validate()
+  }, [national, regionCode, validate])
+
+  return isPhoneNumberValid
 }

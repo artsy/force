@@ -41,12 +41,8 @@ const PageApp: FC<PageAppProps> = ({ page }) => {
   useEffect(() => {
     if (PAGE_SLUGS_WITH_AUTH_REQUIRED.includes(page.internalID) && !user?.id) {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to view ${page.name}`
-          },
+          title: `Sign up or log in to view ${page.name}`,
           redirectTo: match.location.pathname,
         },
         analytics: {

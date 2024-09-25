@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<303f843ea74a365f11b88618251e6beb>>
+ * @generated SignedSource<<6c45d4b14f2b48b07aadc527cdceb93d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,6 @@ export type UpcomingAuctions_viewer$data = {
         readonly name: string | null | undefined;
         readonly slug: string;
         readonly status: string | null | undefined;
-        readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworksRail_sale">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
     readonly totalCount: number | null | undefined;
@@ -153,11 +152,6 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "AuctionArtworksRail_sale"
-                },
-                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -210,6 +204,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2875ec4a03832fe0d075fa608daacfdc";
+(node as any).hash = "faf995cb34fea2e00c9cdef8c6706271";
 
 export default node;

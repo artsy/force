@@ -191,10 +191,14 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
     fragment AuctionApp_viewer on Viewer
       @argumentDefinitions(
         input: { type: "FilterArtworksInput" }
-        saleID: { type: "String" }
+        saleID: { type: "String!" }
+        isLoggedIn: { type: "Boolean!" }
       ) {
-      ...AuctionArtworkFilter_viewer @arguments(input: $input)
-      ...AuctionWorksByFollowedArtistsRail_viewer @arguments(saleID: $saleID)
+      ...AuctionArtworkFilter_viewer
+        @arguments(input: $input, saleID: $saleID, isLoggedIn: $isLoggedIn)
+      ...AuctionWorksByFollowedArtistsRail_viewer
+        @arguments(saleID: $saleID)
+        @include(if: $isLoggedIn)
       ...AuctionCurrentAuctionsRail_viewer
 
       showFollowedArtistsTab: saleArtworksConnection(
@@ -202,7 +206,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
         aggregations: [TOTAL]
         saleSlug: $saleID
         includeArtworksByFollowedArtists: true
-      ) {
+      ) @include(if: $isLoggedIn) {
         edges {
           node {
             internalID

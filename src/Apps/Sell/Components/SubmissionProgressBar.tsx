@@ -2,7 +2,7 @@ import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import { Flex, ProgressBar } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { STEPS, useSellFlowContext } from "Apps/Sell/SellFlowContext"
+import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 
 const PROGRESS_BAR_CONTAINER_HEIGHT = 22
 const PROGRESS_BAR_HEIGHT = 4
@@ -16,9 +16,9 @@ export const SubmissionProgressBar: React.FC = ({}) => {
     return <Flex height={PROGRESS_BAR_CONTAINER_HEIGHT} />
   }
 
-  const { step, isLastStep } = state
+  const { step, isLastStep, steps } = state
 
-  const percentComplete = ((STEPS.indexOf(step) + 1) / STEPS.length) * 100
+  const percentComplete = ((steps.indexOf(step) + 1) / steps.length) * 100
   const highlight = isLastStep ? "green100" : "blue100"
 
   return (
@@ -33,6 +33,7 @@ export const SubmissionProgressBar: React.FC = ({}) => {
               width="100%"
               height={PROGRESS_BAR_HEIGHT}
               borderRadius={PROGRESS_BAR_HEIGHT / 2}
+              my={0}
             />
           </Flex>
 

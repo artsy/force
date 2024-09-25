@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { graphql } from "react-relay"
 import { RouteProps } from "System/Router/Route"
 
@@ -27,6 +28,7 @@ const ArtistsByLetterRoute = loadable(
 export const artistsRoutes: RouteProps[] = [
   {
     path: "/artists",
+    serverCacheTTL: serverCacheTTLs.artists,
     getComponent: () => ArtistsApp,
     onClientSideRender: () => {
       return ArtistsApp.preload()
@@ -34,12 +36,13 @@ export const artistsRoutes: RouteProps[] = [
     children: [
       {
         path: "",
+        serverCacheTTL: serverCacheTTLs.artists,
         getComponent: () => ArtistsIndexRoute,
         onClientSideRender: () => {
           return ArtistsIndexRoute.preload()
         },
         query: graphql`
-          query artistsRoutes_ArtistsQuery {
+          query artistsRoutes_ArtistsQuery @cacheable {
             featuredArtists: orderedSets(key: "homepage:featured-artists") {
               ...ArtistsIndex_featuredArtists
             }
@@ -51,6 +54,7 @@ export const artistsRoutes: RouteProps[] = [
       },
       {
         path: "artists-starting-with-:letter([a-zA-Z])",
+        serverCacheTTL: serverCacheTTLs.artists,
         getComponent: () => ArtistsByLetterRoute,
         onClientSideRender: () => {
           return ArtistsByLetterRoute.preload()
@@ -68,7 +72,7 @@ export const artistsRoutes: RouteProps[] = [
             $letter: String!
             $page: Int
             $size: Int
-          ) {
+          ) @cacheable {
             viewer {
               ...ArtistsByLetter_viewer
                 @arguments(letter: $letter, size: $size, page: $page)

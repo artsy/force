@@ -3,7 +3,7 @@ import { omit } from "lodash"
 import { graphql } from "react-relay"
 import loadable from "@loadable/component"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { redirectQueryToTerm } from "./Server/redirectQueryToTerm"
 
 const SearchResultsArtists = loadable(
@@ -118,7 +118,7 @@ export const searchRoutes: RouteProps[] = [
     prepareVariables,
     children: [
       {
-        path: "/",
+        path: "",
         getComponent: () => SearchResultsArtworks,
         onClientSideRender: () => {
           SearchResultsArtworks.preload()
@@ -135,10 +135,6 @@ export const searchRoutes: RouteProps[] = [
             first: 30,
           }
           const aggregations = [...sourceAggregations, "ARTIST"]
-
-          if (!!context.user) {
-            aggregations.push("FOLLOWED_ARTISTS")
-          }
 
           return {
             shouldFetchCounts: !!context.user,

@@ -5,7 +5,7 @@ export const executeRouteHooks = async (req, res, next) => {
     path: req.path,
   })
 
-  for await (const route of matchedRoutes) {
+  for await (const { route } of matchedRoutes) {
     await route.onServerSideRender?.({
       req,
       res,

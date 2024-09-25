@@ -20,6 +20,7 @@ import {
 } from "@artsy/cohesion"
 import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface HomeNewWorksFromGalleriesYouFollowRailProps {
   newWorksFromGalleriesYouFollowConnection: HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data
@@ -52,7 +53,7 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
             contextModule: ContextModule.newWorksByGalleriesYouFollowRail,
             contextPageOwnerId,
             contextPageOwnerSlug,
-            contextPageOwnerType: contextPageOwnerType!,
+            contextPageOwnerType: contextPageOwnerType,
             destinationPageOwnerType: OwnerType.newWorksFromGalleriesYouFollow,
             type: "viewAll",
           })
@@ -74,6 +75,14 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
                 destination_page_owner_id: artwork.internalID,
                 destination_page_owner_slug: artwork.slug,
                 type: "thumbnail",
+                signal_label: artwork.collectorSignals
+                  ? getSignalLabel(artwork.collectorSignals)
+                  : "",
+                signal_bid_count:
+                  artwork.collectorSignals?.auction?.bidCount ?? undefined,
+                signal_lot_watcher_count:
+                  artwork.collectorSignals?.auction?.lotWatcherCount ??
+                  undefined,
               }
               trackEvent(trackingEvent)
             }}
@@ -93,6 +102,13 @@ export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer = createFra
           node {
             internalID
             slug
+            collectorSignals {
+              primaryLabel
+              auction {
+                bidCount
+                lotWatcherCount
+              }
+            }
             ...ShelfArtwork_artwork
           }
         }

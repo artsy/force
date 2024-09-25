@@ -92,12 +92,8 @@ const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
 
     if (!isLoggedIn) {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to follow ${profile.name}`
-          },
+          title: `Sign up or log in to follow ${profile.name}`,
           afterAuthAction: {
             action: "follow",
             kind: "profile",
@@ -152,12 +148,15 @@ export const FollowProfileButtonFragmentContainer = createFragmentContainer(
       }
     `,
     profile: graphql`
-      fragment FollowProfileButton_profile on Profile {
+      fragment FollowProfileButton_profile on Profile
+        @argumentDefinitions(
+          isLoggedIn: { type: "Boolean", defaultValue: false }
+        ) {
         id
         slug
         name
         internalID
-        isFollowed
+        isFollowed @include(if: $isLoggedIn)
         counts {
           follows
         }
@@ -175,21 +174,23 @@ export const FollowProfileButtonQueryRenderer: React.FC<FollowProfileButtonQuery
   id,
   ...rest
 }) => {
+  const { isLoggedIn } = useSystemContext()
+
   return (
     <SystemQueryRenderer<FollowProfileButtonQuery>
       lazyLoad
       query={graphql`
-        query FollowProfileButtonQuery($id: String!) {
+        query FollowProfileButtonQuery($id: String!, $isLoggedIn: Boolean!) {
           me {
             ...FollowProfileButton_me
           }
           profile(id: $id) {
-            ...FollowProfileButton_profile
+            ...FollowProfileButton_profile @arguments(isLoggedIn: $isLoggedIn)
           }
         }
       `}
       placeholder={<FollowButton {...rest} />}
-      variables={{ id }}
+      variables={{ id, isLoggedIn }}
       render={({ error, props }) => {
         if (error || !props?.profile) {
           return <FollowButton {...rest} />

@@ -31,14 +31,31 @@ export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
       year: artwork.date,
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
+      isInAuction: !!artwork.isInAuction,
       isSavedToDefaultList: !!artwork.isSaved,
       isSavedToCustomLists: artwork.isSavedToList,
+      collectorSignals: {
+        auction: {
+          lotWatcherCount:
+            artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
+        },
+      },
     },
   })
 
   const { handleSave: saveToDefaultCollection } = useSaveArtwork({
     isSaved: !!artwork.isSaved,
-    artwork,
+    artwork: {
+      internalID: artwork.internalID,
+      id: artwork.id,
+      slug: artwork.slug,
+      collectorSignals: {
+        auction: {
+          lotWatcherCount:
+            artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
+        },
+      },
+    },
     contextModule: ContextModule.artworkImage,
   })
 
@@ -91,10 +108,16 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
         preview: image {
           url(version: "square")
         }
+        isInAuction
         isSavedToList
         sale {
           isAuction
           isClosed
+        }
+        collectorSignals {
+          auction {
+            lotWatcherCount
+          }
         }
         ...ArtworkActionsWatchLotButton_artwork
       }

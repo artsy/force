@@ -21,15 +21,55 @@ export const useCountryCode = () => {
       ip: getENV("IP_ADDRESS") || "0.0.0.0",
     },
     cacheConfig: {
-      fetchPolicy: "store-or-network",
+      networkCacheConfig: {
+        force: false,
+      },
     },
     // If the user is logged in, we don't need the country code
     skip: isLoggedIn,
   })
 
+  const countryCode = data?.requestLocation?.countryCode
+
+  const isAutomaticallySubscribed = !!(
+    countryCode && !GDPR_COUNTRY_CODES.includes(countryCode)
+  )
+
   return {
-    countryCode: data?.requestLocation?.countryCode,
-    loading,
+    countryCode,
     error,
+    isAutomaticallySubscribed,
+    loading,
   }
 }
+
+export const GDPR_COUNTRY_CODES = [
+  "AT",
+  "BE",
+  "BG",
+  "CY",
+  "CZ",
+  "DE",
+  "DK",
+  "EE",
+  "ES",
+  "FI",
+  "FR",
+  "GB",
+  "GR",
+  "HR",
+  "HU",
+  "IE",
+  "IT",
+  "LT",
+  "LU",
+  "LV",
+  "MT",
+  "NL",
+  "PL",
+  "PT",
+  "RO",
+  "SE",
+  "SI",
+  "SK",
+]

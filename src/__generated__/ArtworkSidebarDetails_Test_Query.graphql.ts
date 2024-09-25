@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afe067093dcf18b3ba2fe106feec86b6>>
+ * @generated SignedSource<<c9c1c62ef78d0cdfcc0fa8d8f65faf64>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -218,6 +218,72 @@ return {
             "name": "isBiddable",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CollectorSignals",
+            "kind": "LinkedField",
+            "name": "collectorSignals",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "ignore",
+                    "value": [
+                      "PARTNER_OFFER"
+                    ]
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "primaryLabel",
+                "storageKey": "primaryLabel(ignore:[\"PARTNER_OFFER\"])"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Show",
+                "kind": "LinkedField",
+                "name": "runningShow",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "href",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "startAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endAt",
+                    "storageKey": null
+                  },
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           (v1/*: any*/)
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
@@ -225,7 +291,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1666489ea16f25803ce37ead083a3bc5",
+    "cacheID": "600eb317f8b7b40d483b04c150345e85",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -248,6 +314,33 @@ return {
           "plural": true,
           "type": "String"
         },
+        "artwork.collectorSignals": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CollectorSignals"
+        },
+        "artwork.collectorSignals.primaryLabel": {
+          "enumValues": [
+            "CURATORS_PICK",
+            "INCREASED_INTEREST",
+            "PARTNER_OFFER"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "LabelSignalEnum"
+        },
+        "artwork.collectorSignals.runningShow": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Show"
+        },
+        "artwork.collectorSignals.runningShow.endAt": (v3/*: any*/),
+        "artwork.collectorSignals.runningShow.href": (v3/*: any*/),
+        "artwork.collectorSignals.runningShow.id": (v2/*: any*/),
+        "artwork.collectorSignals.runningShow.name": (v3/*: any*/),
+        "artwork.collectorSignals.runningShow.startAt": (v3/*: any*/),
         "artwork.dimensions": {
           "enumValues": null,
           "nullable": true,
@@ -287,7 +380,7 @@ return {
     },
     "name": "ArtworkSidebarDetails_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarDetails_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarDetails_artwork on Artwork {\n  isUnlisted\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  isEdition\n  editionSets {\n    internalID\n    id\n  }\n  ...ArtworkSidebarClassification_artwork\n  ...ArtworkSidebarAuthenticityCertificate_artwork\n}\n"
+    "text": "query ArtworkSidebarDetails_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarCollectorSignal_artwork on Artwork {\n  collectorSignals {\n    primaryLabel(ignore: [PARTNER_OFFER])\n    runningShow {\n      name\n      href\n      startAt\n      endAt\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarDetails_artwork on Artwork {\n  isUnlisted\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  isEdition\n  editionSets {\n    internalID\n    id\n  }\n  ...ArtworkSidebarClassification_artwork\n  ...ArtworkSidebarAuthenticityCertificate_artwork\n  ...ArtworkSidebarCollectorSignal_artwork\n}\n"
   }
 };
 })();

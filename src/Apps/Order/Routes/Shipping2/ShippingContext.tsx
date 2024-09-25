@@ -37,6 +37,7 @@ export interface State {
 
 interface Actions {
   dialog: Dialog
+  goBackToFulfillmentDetails: () => void
   handleExchangeError: (
     error: {
       code: string
@@ -124,7 +125,7 @@ export const ShippingContextProvider: FC<{
     orderData,
   })
 
-  const actions = {
+  const dispatchActions = {
     setFulfillmentDetailsFormikContext: (
       formHelpers: FormikProps<FulfillmentValues>
     ) => {
@@ -148,9 +149,18 @@ export const ShippingContextProvider: FC<{
     setStage: (payload: ShippingStage) => {
       dispatch({ type: "SET_STAGE", payload })
     },
+  }
 
-    handleExchangeError,
+  const goBackToFulfillmentDetails = () => {
+    if (state.stage !== "fulfillment_details") {
+      actions.setStage("fulfillment_details")
+    }
+  }
+  const actions = {
+    ...dispatchActions,
+    goBackToFulfillmentDetails,
     dialog: props.dialog,
+    handleExchangeError,
   }
 
   const contextProps = {
@@ -235,6 +245,7 @@ const shippingStateReducer = (state: State, action: Action): State => {
 const ORDER_FRAGMENT = graphql`
   fragment ShippingContext_order on CommerceOrder {
     internalID
+    mode
     requestedFulfillment {
       __typename
       ... on CommercePickup {

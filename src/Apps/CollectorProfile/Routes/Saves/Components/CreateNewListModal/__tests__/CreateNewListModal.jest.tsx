@@ -183,6 +183,7 @@ describe("CreateNewListModal", () => {
           variables: {
             input: {
               name: "Foo Bar",
+              shareableWithPartners: true,
             },
           },
         })

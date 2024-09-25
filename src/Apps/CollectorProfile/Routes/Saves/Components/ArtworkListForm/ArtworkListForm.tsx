@@ -3,7 +3,6 @@ import * as Yup from "yup"
 import { useTranslation } from "react-i18next"
 import { Input, Spacer, Text, Flex, Button, Toggle } from "@artsy/palette"
 import i18n from "System/i18n/i18n"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export interface ArtworkListFormikValues {
   name: string
@@ -38,7 +37,6 @@ interface ArtworkListFormProps {
 export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
   const { formik, mode, onClose, cancelMode } = props
   const { t } = useTranslation()
-  const sharedListEnabled = useFeatureFlag("emerald_artwork-list-offerability")
 
   return (
     <Form>
@@ -63,27 +61,25 @@ export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
 
       <Spacer y={4} />
 
-      {sharedListEnabled && (
-        <>
-          <Text variant="sm">Shared list</Text>
-          <Spacer y={1} />
-          <Flex>
-            <Text variant="xs" color="black60">
-              Shared lists are eligible to receive offers from galleries.
-              Switching sharing off will make them visible only to you, and you
-              won't receive offers. List names are always private.
-            </Text>
-            <Spacer x={1} />
-            <Toggle
-              selected={formik.values.shareableWithPartners}
-              onSelect={value =>
-                formik.setFieldValue("shareableWithPartners", value)
-              }
-            />
-          </Flex>
-          <Spacer y={4} />
-        </>
-      )}
+      <>
+        <Text variant="sm">Shared list</Text>
+        <Spacer y={1} />
+        <Flex>
+          <Text variant="xs" color="black60">
+            Shared lists are eligible to receive offers from galleries.
+            Switching sharing off will make them visible only to you, and you
+            won't receive offers. List names are always private.
+          </Text>
+          <Spacer x={1} />
+          <Toggle
+            selected={formik.values.shareableWithPartners}
+            onSelect={value =>
+              formik.setFieldValue("shareableWithPartners", value)
+            }
+          />
+        </Flex>
+        <Spacer y={4} />
+      </>
 
       <Flex
         justifyContent={["flex-start", "space-between"]}

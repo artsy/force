@@ -61,6 +61,7 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   // Root-level variables passed to Relay query
   relayVariables?: object
   viewer
+  featuredKeywords?: readonly string[] | null | undefined
 }
 
 /**
@@ -110,6 +111,7 @@ export const BaseArtworkFilter: React.FC<
   relayRefetchInputVariables = {},
   relayVariables = {},
   viewer,
+  featuredKeywords,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -387,6 +389,7 @@ export const BaseArtworkFilter: React.FC<
                           </Flex>
 
                           <ArtworkFiltersQuick
+                            featuredKeywords={featuredKeywords}
                             {...(stuck ? { offset: 20 } : {})}
                           />
                         </Flex>

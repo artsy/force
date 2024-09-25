@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Clickable,
   Dropdown,
   Flex,
@@ -30,7 +29,6 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { Z } from "Apps/Components/constants"
 import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
-import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import Events from "Utils/Events"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
@@ -52,6 +50,9 @@ import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding
 import { SearchBar } from "Components/Search/SearchBar"
 import { NavBarMobileMenuProfile } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuProfile"
 import styled from "styled-components"
+import { AppDownloadBanner } from "Components/AppDownloadBanner"
+import { Media } from "Utils/Responsive"
+import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -69,6 +70,8 @@ export const NavBar: React.FC = track(
   }
 )(() => {
   const { user, isEigen } = useSystemContext()
+
+  const { prefetch } = usePrefetchRoute()
 
   const { trackEvent } = useTracking()
   const { t } = useTranslation()
@@ -91,6 +94,15 @@ export const NavBar: React.FC = track(
       setMode("Idle")
     }
   }, [isMobile])
+
+  // Prefetch most clicked links.
+  // See: https://artsy.slack.com/archives/C05EEBNEF71/p1726074422149369?thread_ts=1726073316.088559&cid=C05EEBNEF71
+  useEffect(() => {
+    const PREFETCH_NAVBAR_LINKS = ["/artists", "/collect"]
+
+    PREFETCH_NAVBAR_LINKS.forEach(prefetch)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleMobileNavClick = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
@@ -153,40 +165,17 @@ export const NavBar: React.FC = track(
         borderColor="black30"
         height={height}
       >
-        <AppContainer height="100%">
+        <Media at="xs">
+          <AppDownloadBanner />
+        </Media>
+
+        <AppContainer height={[null, "100%"]}>
           <HorizontalPadding
             as="nav"
             display="flex"
             flexDirection="column"
             height="100%"
           >
-            {/* Mobile authentication banner */}
-            {!isLoggedIn && (
-              <Flex display={["flex", "none"]} py={1}>
-                <Button
-                  // @ts-ignore
-                  as={RouterLink}
-                  to="/signup"
-                  variant="secondaryBlack"
-                  flex={1}
-                  size="small"
-                >
-                  {t`navbar.signup`}
-                </Button>
-
-                <Button
-                  // @ts-ignore
-                  as={RouterLink}
-                  to="/login"
-                  flex={1}
-                  ml={1}
-                  size="small"
-                >
-                  {t`navbar.login`}
-                </Button>
-              </Flex>
-            )}
-
             {/* Top-tier */}
             <Flex pt={1} pb={[1, 0]} alignItems="stretch" flex={1}>
               <NavBarPrimaryLogo mr={[1, 2]} />
@@ -225,6 +214,7 @@ export const NavBar: React.FC = track(
                   <Flex alignItems="center" display={["none", "none", "flex"]}>
                     <NavBarItemLink
                       href="/collect"
+                      onMouseOver={() => prefetch("/collect")}
                       textDecoration="none"
                       onClick={handleClick}
                       data-label="Buy"
@@ -235,6 +225,7 @@ export const NavBar: React.FC = track(
 
                   <NavBarItemLink
                     href="/sell"
+                    onMouseOver={() => prefetch("/sell")}
                     textDecoration="none"
                     onClick={handleClick}
                     data-label="Consign"
@@ -244,6 +235,7 @@ export const NavBar: React.FC = track(
 
                   <NavBarItemLink
                     href="/price-database"
+                    onMouseOver={() => prefetch("/price-database")}
                     textDecoration="none"
                     onClick={handleClick}
                     data-label="Price Database"
@@ -254,6 +246,7 @@ export const NavBar: React.FC = track(
                   <Flex alignItems="center" display={["none", "flex"]}>
                     <NavBarItemLink
                       href="/articles"
+                      onMouseOver={() => prefetch("/articles")}
                       textDecoration="none"
                       onClick={handleClick}
                       data-label="Articles"
@@ -276,7 +269,7 @@ export const NavBar: React.FC = track(
 
               {/* Mobile. Triggers at the `xs` breakpoint. */}
               <Flex display={["flex", "none"]}>
-                {isLoggedIn && (
+                {isLoggedIn ? (
                   <>
                     <NavBarItemButton
                       display="flex"
@@ -318,6 +311,16 @@ export const NavBar: React.FC = track(
                       </ProgressiveOnboardingFollowFind>
                     </ProgressiveOnboardingAlertFind>
                   </>
+                ) : (
+                  <NavBarItemLink
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    aria-label="Login"
+                    href="/login"
+                  >
+                    <PersonIcon aria-hidden="true" height={22} width={22} />
+                  </NavBarItemLink>
                 )}
 
                 <NavBarItemButton
@@ -384,6 +387,9 @@ export const NavBar: React.FC = track(
                     >
                       <NavBarItemUnfocusableAnchor
                         href="/collection/new-this-week"
+                        onMouseOver={() =>
+                          prefetch("/collection/new-this-week")
+                        }
                         onClick={event => {
                           handleClick(event)
 
@@ -423,6 +429,7 @@ export const NavBar: React.FC = track(
                     >
                       <NavBarItemUnfocusableAnchor
                         href="/artists"
+                        onMouseOver={() => prefetch("/artists")}
                         onClick={event => {
                           handleClick(event)
 
@@ -462,6 +469,7 @@ export const NavBar: React.FC = track(
                     >
                       <NavBarItemUnfocusableAnchor
                         href="/collect"
+                        onMouseOver={() => prefetch("/collect")}
                         onClick={event => {
                           handleClick(event)
 
@@ -479,6 +487,7 @@ export const NavBar: React.FC = track(
 
                 <NavBarItemLink
                   href="/auctions"
+                  onMouseOver={() => prefetch("/auctions")}
                   onClick={handleClick}
                   data-label="Auctions"
                 >
@@ -487,6 +496,7 @@ export const NavBar: React.FC = track(
 
                 <NavBarItemLink
                   href="/viewing-rooms"
+                  onMouseOver={() => prefetch("/viewing-rooms")}
                   onClick={handleClick}
                   data-label="Viewing Rooms"
                 >
@@ -495,6 +505,7 @@ export const NavBar: React.FC = track(
 
                 <NavBarItemLink
                   href="/galleries"
+                  onMouseOver={() => prefetch("/galleries")}
                   onClick={handleClick}
                   data-label="Galleries"
                 >
@@ -503,6 +514,7 @@ export const NavBar: React.FC = track(
 
                 <NavBarItemLink
                   href="/art-fairs"
+                  onMouseOver={() => prefetch("/art-fairs")}
                   onClick={handleClick}
                   data-label="Fairs & Events"
                 >
@@ -511,6 +523,7 @@ export const NavBar: React.FC = track(
 
                 <NavBarItemLink
                   href="/shows"
+                  onMouseOver={() => prefetch("/shows")}
                   onClick={handleClick}
                   data-label="Shows"
                 >
@@ -519,6 +532,7 @@ export const NavBar: React.FC = track(
 
                 <NavBarItemInstitutionsLink
                   href="/institutions"
+                  onMouseOver={() => prefetch("/institutions")}
                   onClick={handleClick}
                   data-label="Institutions"
                 >

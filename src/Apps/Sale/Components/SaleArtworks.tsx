@@ -9,15 +9,18 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { SaleArtworksFilter_viewer$data } from "__generated__/SaleArtworksFilter_viewer.graphql"
+import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 
 interface SaleArtworkFilterProps {
   relay: RelayRefetchProp
   viewer: SaleArtworksFilter_viewer$data
+  featuredKeywords?: readonly string[]
 }
 
 const SaleArtworkFilter: React.FC<SaleArtworkFilterProps> = ({
   relay,
   viewer,
+  featuredKeywords,
   ...rest
 }) => {
   const { user, userPreferences } = useSystemContext()
@@ -46,6 +49,7 @@ const SaleArtworkFilter: React.FC<SaleArtworkFilterProps> = ({
         mt={0}
         relay={relay}
         viewer={viewer}
+        featuredKeywords={featuredKeywords}
         relayRefetchInputVariables={{
           ...getArtworkFilterInputArgs(user),
           saleID: match && match.params.slug,
@@ -97,17 +101,3 @@ export const SaleArtworkFilterRefetchContainer = createRefetchContainer(
     }
   `
 )
-
-export const getArtworkFilterInputArgs = (user?: User) => {
-  const aggregations = ["ARTIST", "MEDIUM", "TOTAL"]
-
-  if (user) {
-    aggregations.push("FOLLOWED_ARTISTS")
-  }
-
-  // Shared with saleRoutes
-  return {
-    aggregations,
-    first: 39,
-  }
-}

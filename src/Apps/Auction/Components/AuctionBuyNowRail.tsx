@@ -24,9 +24,12 @@ const AuctionBuyNowRail: React.FC<AuctionBuyNowRailProps> = ({ sale }) => {
       title="Buy Now"
       getItems={() => {
         return nodes.map((node, index) => {
+          if (!node.artwork) {
+            return <></>
+          }
           return (
             <ShelfArtworkFragmentContainer
-              artwork={node.artwork!}
+              artwork={node.artwork}
               key={index}
               lazyLoad
               // TODO
@@ -48,7 +51,7 @@ export const AuctionBuyNowRailFragmentContainer = createFragmentContainer(
           href
           internalID
           name
-          saleArtworksConnection(first: 99) {
+          saleArtworksConnection(first: 30) {
             edges {
               node {
                 artwork {

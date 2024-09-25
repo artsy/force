@@ -8,7 +8,7 @@ interface ArtworkSidebarCreateAlertProps {
   artwork: ArtworkSidebarCreateAlert_artwork$data
 }
 
-const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps> = ({
+export const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps> = ({
   artwork,
 }) => {
   const { t } = useTranslation()
@@ -38,24 +38,7 @@ export const ArtworkSidebarCreateAlertFragmentContainer = createFragmentContaine
   {
     artwork: graphql`
       fragment ArtworkSidebarCreateAlert_artwork on Artwork {
-        internalID
-        title
-        slug
         isEligibleToCreateAlert
-        artists {
-          internalID
-          name
-          slug
-        }
-        attributionClass {
-          internalID
-        }
-        mediumType {
-          filterGene {
-            slug
-            name
-          }
-        }
       }
     `,
   }

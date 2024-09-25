@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<57496b27864b2ff83cd0d4a589eda54e>>
+ * @generated SignedSource<<af246aff6d3fe7ec6de72590e5b0c076>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,19 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type HomeEmergingPicksArtworksRail_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly collectorSignals: {
+          readonly auction: {
+            readonly bidCount: number;
+            readonly lotWatcherCount: number;
+          } | null | undefined;
+          readonly primaryLabel: LabelSignalEnum | null | undefined;
+        } | null | undefined;
         readonly href: string | null | undefined;
         readonly internalID: string;
         readonly slug: string;
@@ -75,11 +83,6 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ShelfArtwork_artwork"
-                },
-                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -99,6 +102,54 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "href",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CollectorSignals",
+                  "kind": "LinkedField",
+                  "name": "collectorSignals",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "primaryLabel",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "AuctionCollectorSignals",
+                      "kind": "LinkedField",
+                      "name": "auction",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "bidCount",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "lotWatcherCount",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ShelfArtwork_artwork"
                 }
               ],
               "storageKey": null
@@ -114,6 +165,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "ead3b6ec0a4dc2beac44ff1ebd71ba96";
+(node as any).hash = "273beac7073f4b05b35ebc47ed9bcd63";
 
 export default node;

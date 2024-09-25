@@ -29,6 +29,7 @@ import { useTracking } from "react-tracking"
 import {
   ActionType,
   ClickedBuyNow,
+  ClickedContactGallery,
   ContextModule,
   Intent,
   OwnerType,
@@ -45,6 +46,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { ResponsiveValue } from "styled-system"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
@@ -65,7 +67,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
 
-  // Get the first not-ended partner offer, if available
+  // Get the first partner offer
   const partnerOffer =
     (me?.partnerOffersConnection &&
       extractNodes(me.partnerOffersConnection)[0]) ||
@@ -83,7 +85,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
 
   const { t } = useTranslation()
 
-  const tracking = useTracking()
+  const { trackEvent } = useTracking()
 
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false)
 
@@ -119,13 +121,17 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const handleInquiry = () => {
-    tracking.trackEvent({
-      context_module: DeprecatedSchema.ContextModule.Sidebar,
-      action_type: DeprecatedSchema.ActionType.ClickedContactGallery,
-      subject: DeprecatedSchema.Subject.ContactGallery,
-      artwork_id: artwork.internalID,
-      artwork_slug: artwork.slug,
-    })
+    const event: ClickedContactGallery = {
+      action: ActionType.clickedContactGallery,
+      context_owner_type: OwnerType.artwork,
+      context_owner_slug: artwork.slug,
+      context_owner_id: artwork.internalID,
+      signal_label: artwork.collectorSignals
+        ? getSignalLabel(artwork.collectorSignals)
+        : "",
+    }
+    trackEvent(event)
+
     showInquiry({ enableCreateAlert: true })
   }
 
@@ -136,9 +142,12 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Partner offer",
+      signal_label: artwork.collectorSignals
+        ? getSignalLabel(artwork.collectorSignals)
+        : "",
     }
 
-    tracking.trackEvent(event)
+    trackEvent(event)
 
     if (!activePartnerOffer?.internalID) {
       throw new ErrorWithMetadata(
@@ -191,9 +200,12 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Buy now",
+      signal_label: artwork.collectorSignals
+        ? getSignalLabel(artwork.collectorSignals)
+        : "",
     }
 
-    tracking.trackEvent(event)
+    trackEvent(event)
 
     if (!!user?.id) {
       try {
@@ -226,12 +238,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       }
     } else {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to buy art with ease`
-          },
+          title: "Sign up or log in to buy art with ease",
           afterAuthAction: {
             action: "buyNow",
             kind: "artworks",
@@ -249,7 +257,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
   }
 
   const handleCreateOfferOrder = async () => {
-    tracking.trackEvent({
+    trackEvent({
       action_type: DeprecatedSchema.ActionType.ClickedMakeOffer,
       flow: DeprecatedSchema.Flow.MakeOffer,
       type: DeprecatedSchema.Type.Button,
@@ -290,12 +298,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       }
     } else {
       showAuthDialog({
-        mode: "SignUp",
         options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to make an offer`
-          },
+          title: "Sign up or log in to make an offer",
           afterAuthAction: {
             action: "makeOffer",
             kind: "artworks",
@@ -390,7 +394,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
           </>
         ) : (
           <>
-            {partnerOffer?.isAvailable ? (
+            {activePartnerOffer && partnerOffer?.isAvailable ? (
               <OfferDisplay
                 originalPrice={artwork.priceListedDisplay}
                 offerPrice={partnerOffer.priceWithDiscount?.display}
@@ -457,7 +461,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
               )}
             </Join>
           </Flex>
-          {partnerOffer?.note && (
+          {activePartnerOffer && partnerOffer?.note && (
             <>
               <Spacer y={2} />
               <Box
@@ -696,6 +700,9 @@ const ARTWORK_FRAGMENT = graphql`
           url(version: "square140")
         }
       }
+    }
+    collectorSignals {
+      primaryLabel(ignore: [PARTNER_OFFER])
     }
   }
 `

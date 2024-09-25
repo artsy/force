@@ -221,7 +221,7 @@ const NextPrevious = styled(Clickable).attrs({
 
   &:hover,
   &:focus,
-  &.focus-visible {
+  &:focus-visible {
     outline: none;
     color: ${themeGet("colors.black100")};
   }

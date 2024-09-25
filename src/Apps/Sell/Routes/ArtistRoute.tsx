@@ -2,7 +2,7 @@ import { Box, Text, useToasts } from "@artsy/palette"
 import {
   ArtistAutoComplete,
   AutocompleteArtist,
-} from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
+} from "Apps/Sell/Components/ArtistAutocomplete"
 import { ArtistNotEligiblText } from "Apps/Sell/Components/ArtistNotEligibleText"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
@@ -35,13 +35,13 @@ const FRAGMENT = graphql`
   }
 `
 
-const Schema = Yup.object().shape({
+export const Schema = Yup.object().shape({
   artistName: Yup.string().required("Artist is required"),
   artistId: Yup.string().required("Artist is required"),
   isTargetSupply: Yup.boolean().isTrue(),
 })
 
-interface FormValues {
+export interface FormValues {
   artistId: string
   artistName: string
   isTargetSupply: boolean
@@ -66,15 +66,13 @@ export const ArtistRoute: React.FC<{
 
   const isNewSubmission = !submission?.internalID
 
-  const onSubmit = async () => {}
-
   const createSubmission = async (artist: AutocompleteArtist) => {
     if (!artist?.internalID) return
 
     const isTargetSupply = artist?.targetSupply?.isTargetSupply
 
     if (!isTargetSupply) {
-      router.push(`/sell2/artist-not-eligible/${artist.internalID}`)
+      router.push(`/sell/artist-not-eligible/${artist.internalID}`)
       return
     }
 
@@ -94,8 +92,8 @@ export const ArtistRoute: React.FC<{
         throw new Error("Submission ID not found.")
       }
 
-      router.replace(`/sell2/submissions/${submissionID}/artist`)
-      router.push(`/sell2/submissions/${submissionID}/title`)
+      router.replace(`/sell/submissions/${submissionID}/artist`)
+      router.push(`/sell/submissions/${submissionID}/title`)
     } catch (error) {
       logger.error("Error creating submission.", error)
     }
@@ -132,7 +130,7 @@ export const ArtistRoute: React.FC<{
 
     if (isNewSubmission) {
       if (!isTargetSupply) {
-        router.push(`/sell2/artist-not-eligible/${artist.internalID}`)
+        router.push(`/sell/artist-not-eligible/${artist.internalID}`)
         return
       }
 
@@ -151,7 +149,7 @@ export const ArtistRoute: React.FC<{
   return (
     <Formik<FormValues>
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={() => {}}
       validateOnMount
       validationSchema={Schema}
     >
@@ -170,12 +168,18 @@ export const ArtistRoute: React.FC<{
             title="Artist"
           />
 
-          <Text mt={2} variant="sm" color="black60">
-            Currently, artists can not sell their own work on Artsy.{" "}
-            <RouterLink to="https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell">
-              Learn more.
-            </RouterLink>
-          </Text>
+          {!formik.values.artistName && (
+            <Text mt={2} variant="sm" color="black60">
+              Currently, artists can not sell their own work on Artsy.{" "}
+              <RouterLink
+                to="https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn more.
+              </RouterLink>
+            </Text>
+          )}
 
           {!isNewSubmission &&
             formik.values.artistId &&

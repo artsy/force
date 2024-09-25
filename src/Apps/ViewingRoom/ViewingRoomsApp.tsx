@@ -55,7 +55,7 @@ export const ViewingRoomsAppFragmentContainer = createFragmentContainer(
       }
     `,
     featuredViewingRooms: graphql`
-      fragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {
+      fragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomsConnection {
         ...ViewingRoomsFeaturedRail_featuredViewingRooms
       }
     `,

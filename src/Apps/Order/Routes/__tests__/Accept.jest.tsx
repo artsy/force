@@ -23,8 +23,8 @@ import {
   acceptOfferInsufficientInventoryFailure,
   acceptOfferWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import { RouterLink } from "System/Components/RouterLink"
+// eslint-disable-next-line no-restricted-imports
+import { Provider } from "unstated"
 
 jest.unmock("react-relay")
 
@@ -90,15 +90,17 @@ describe("Accept seller offer", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => (
       <MockBoot>
-        <AcceptFragmentContainer
-          router={{ push: pushMock } as any}
-          route={{ onTransition: jest.fn } as any}
-          order={props.order}
-          dialog={{} as any}
-          isCommittingMutation={isCommittingMutation}
-          commitMutation={commitMutation}
-        />
-        <ConnectedModalDialog />
+        <Provider>
+          <AcceptFragmentContainer
+            router={{ push: pushMock } as any}
+            route={{ onTransition: jest.fn } as any}
+            order={props.order}
+            dialog={{} as any}
+            isCommittingMutation={isCommittingMutation}
+            commitMutation={commitMutation}
+          />
+          <ConnectedModalDialog />
+        </Provider>
       </MockBoot>
     ),
     query: graphql`
@@ -166,38 +168,6 @@ describe("Accept seller offer", () => {
       )
       expect(page.buyerGuarantee.length).toBe(1)
       expect(page.submitButton.text()).toBe("Submit")
-      expect(page.conditionsOfSaleDisclaimer.text()).toMatchInlineSnapshot(
-        `"By clicking Submit, I agree to Artsy’s Conditions of Sale."`
-      )
-      expect(
-        page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
-      ).toEqual("/conditions-of-sale")
-    })
-
-    describe("when the new disclaimer is enabled", () => {
-      beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
-          (f: string) => f === "diamond_new-terms-and-conditions"
-        )
-      })
-
-      afterAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockReset()
-      })
-
-      it("renders the new disclaimer", () => {
-        const { wrapper } = getWrapper({
-          CommerceOrder: () => testOrder,
-        })
-        const page = new OrderAppTestPage(wrapper)
-
-        expect(page.conditionsOfSaleDisclaimer.text()).toMatch(
-          "By clicking Submit, I agree to Artsy’s General Terms and Conditions of Sale."
-        )
-        expect(
-          page.conditionsOfSaleDisclaimer.find(RouterLink).props().to
-        ).toEqual("/terms")
-      })
     })
   })
 

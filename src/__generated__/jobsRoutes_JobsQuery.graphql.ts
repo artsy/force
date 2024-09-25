@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a378a44c1be79464fcf38000dc61e6f>>
+ * @generated SignedSource<<d9c295c20d65490fddc008c11a3c1801>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -123,16 +123,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b30414b05e340d2dee080de602d47be7",
+    "cacheID": "e6485e2c892b1917180aa09814990f2c",
     "id": null,
     "metadata": {},
     "name": "jobsRoutes_JobsQuery",
     "operationKind": "query",
-    "text": "query jobsRoutes_JobsQuery {\n  viewer {\n    ...JobsApp_viewer\n  }\n}\n\nfragment JobLink_job on Job {\n  id\n  title\n  location\n}\n\nfragment JobsApp_viewer on Viewer {\n  ...JobsFilter_viewer\n}\n\nfragment JobsFilter_viewer on Viewer {\n  jobs {\n    ...JobLink_job\n    id\n    location\n  }\n  departments {\n    id\n    name\n    jobs {\n      ...JobLink_job\n      id\n    }\n  }\n}\n"
+    "text": "query jobsRoutes_JobsQuery @cacheable {\n  viewer {\n    ...JobsApp_viewer\n  }\n}\n\nfragment JobLink_job on Job {\n  id\n  title\n  location\n}\n\nfragment JobsApp_viewer on Viewer {\n  ...JobsFilter_viewer\n}\n\nfragment JobsFilter_viewer on Viewer {\n  jobs {\n    ...JobLink_job\n    id\n    location\n  }\n  departments {\n    id\n    name\n    jobs {\n      ...JobLink_job\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "12575517b4d2656d8cc49a592a3d093a";
+(node as any).hash = "f111bf42d552fb795ffe2d669568297c";
 
 export default node;

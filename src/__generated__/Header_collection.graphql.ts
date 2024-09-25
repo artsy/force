@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b73fd0e46a41a4ddeef07d4fdd9c1f18>>
+ * @generated SignedSource<<8c989962d1ca18bb435e74202d1c9e62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Header_collection$data = {
   readonly category: string;
-  readonly credit: string | null | undefined;
   readonly description: string | null | undefined;
-  readonly featuredArtistExclusionIds: ReadonlyArray<string>;
-  readonly headerImage: string | null | undefined;
   readonly id: string;
-  readonly query: {
-    readonly artistIDs: ReadonlyArray<string> | null | undefined;
-  };
-  readonly showFeaturedArtists: boolean;
-  readonly showHeaderArtworksRail: boolean;
   readonly slug: string;
   readonly title: string;
   readonly " $fragmentType": "Header_collection";
@@ -48,13 +40,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "credit",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "description",
       "storageKey": null
     },
@@ -62,39 +47,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "featuredArtistExclusionIds",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "headerImage",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "id",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "MarketingCollectionQuery",
-      "kind": "LinkedField",
-      "name": "query",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "artistIDs",
-          "storageKey": null
-        }
-      ],
       "storageKey": null
     },
     {
@@ -110,26 +63,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "title",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "showHeaderArtworksRail",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "showFeaturedArtists",
-      "storageKey": null
     }
   ],
   "type": "MarketingCollection",
   "abstractKey": null
 };
 
-(node as any).hash = "6aaa6eaf8c8d7070bf81c8b6e113fa1f";
+(node as any).hash = "c6b370ceb658f3c90555b3f2b2f9224d";
 
 export default node;

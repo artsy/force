@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d86aa378f4c98fb3a154df0d570a813>>
+ * @generated SignedSource<<2e5581cc8b2dfe1ce2634063b1526ea3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,7 +37,7 @@ const node: ReaderFragment = {
       "name": "after"
     },
     {
-      "defaultValue": 3,
+      "defaultValue": 10,
       "kind": "LocalArgument",
       "name": "first"
     }
@@ -189,6 +189,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5d4d6e70b06363b805148e223f96606d";
+(node as any).hash = "af9c4c3e0383de29ee45e0c4c7aad63a";
 
 export default node;

@@ -13,12 +13,8 @@ export const LogInPrompt: React.FC<LogInPromptProps> = ({ contextModule }) => {
 
   const handleClick = () => {
     showAuthDialog({
-      mode: "Login",
       options: {
-        title: mode => {
-          const action = mode === "Login" ? "Log in" : "Sign up"
-          return `${action} to see your personalized recommendations`
-        },
+        title: "Sign up or log in to see your personalized recommendations",
       },
       analytics: {
         contextModule: contextModule,

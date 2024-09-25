@@ -54,30 +54,33 @@ export const SavedAddresses2: FC<SavedAddressesProps> = props => {
 
   const addressSavedToOrderID = savedAddressOnOrder?.internalID
 
-  // TODO: Make sure this can't create an infinite loop if submitting fails
+  // Automatically select (save) best available address ID if it isn't present
   useEffect(() => {
-    // Automatically select (save) best available address ID if it isn't present
-    const automaticallySelectBestAddress = async () => {
-      if (
-        props.active &&
-        !shippingContext.state.isPerformingOperation &&
-        !formikContext.isSubmitting &&
-        !shippingContext.state.selectedSavedAddressID &&
-        addressList.length > 0
-      ) {
-        const bestAddress = getBestAvailableAddress(
-          addressList,
-          addressSavedToOrderID,
-          shippingContext.orderData.availableShippingCountries
-        )
-        if (bestAddress) {
-          selectAndSubmitAddress(bestAddress)
-        }
-      }
+    const activeAndNoAddressSaved =
+      props.active &&
+      !shippingContext.state.isPerformingOperation &&
+      !formikContext.isSubmitting &&
+      !shippingContext.state.selectedSavedAddressID &&
+      addressList.length > 0
+
+    if (!activeAndNoAddressSaved) {
+      return
     }
-    automaticallySelectBestAddress()
+
+    const bestAddress = getBestAvailableAddress(
+      addressList,
+      addressSavedToOrderID,
+      shippingContext.orderData.availableShippingCountries
+    )
+    if (bestAddress) {
+      selectAndSubmitAddress(bestAddress)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.active])
+  }, [
+    props.active,
+    addressList.length,
+    shippingContext.state.selectedSavedAddressID,
+  ])
 
   /*
    * Select an address radio button and pass the address to the parent.
@@ -150,13 +153,15 @@ export const SavedAddresses2: FC<SavedAddressesProps> = props => {
           Add a new address
         </AddAddressButton>
       )}
-      <AddressModal
-        addressModalAction={addressModalAction}
-        closeModal={() => {
-          setAddressModalAction(null)
-        }}
-        onSuccess={handleAddressModalSuccess}
-      />
+      {addressModalAction && (
+        <AddressModal
+          addressModalAction={addressModalAction}
+          closeModal={() => {
+            setAddressModalAction(null)
+          }}
+          onSuccess={handleAddressModalSuccess}
+        />
+      )}
       <Spacer y={4} />
     </>
   )

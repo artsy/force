@@ -1,10 +1,10 @@
 import { Breakpoint } from "@artsy/palette"
 import { screen } from "@testing-library/react"
+import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
 import { MyCollectionArtworkFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtwork"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
 
 jest.unmock("react-relay")
 
@@ -74,6 +74,7 @@ describe("MyCollectionArtwork", () => {
       // eslint-disable-next-line jest/valid-expect
       expect(screen.getByText("Interested in Selling This Work?"))
     })
+
     it("not P1 artist: the section is not rendered", () => {
       const { renderWithRelay } = getWrapper("lg")
       renderWithRelay(mockResolversNotP1)
@@ -180,7 +181,7 @@ const mockResolversWithoutInsights = {
     artist: {
       auctionResults: null,
       targetSupply: {
-        isP1: true,
+        priority: true,
       },
     },
     consignmentSubmission: null,

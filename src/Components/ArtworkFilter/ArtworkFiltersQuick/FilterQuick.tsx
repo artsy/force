@@ -12,12 +12,12 @@ import { FC, useMemo } from "react"
 import ChevronSmallDownIcon from "@artsy/icons/ChevronSmallDownIcon"
 import ChevronSmallUpIcon from "@artsy/icons/ChevronSmallUpIcon"
 import {
-  MultiSelectArtworkFilters,
   Slice,
   initialArtworkFilterState,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { MultiSelectArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 interface FilterQuickProps
   extends Omit<DropdownProps, "dropdown" | "children"> {
@@ -69,6 +69,7 @@ export const FilterQuick: FC<FilterQuickProps> = ({
 
   return (
     <Dropdown
+      // eslint-disable-next-line react/no-unstable-nested-components
       dropdown={({ onHide }) => {
         return (
           <FilterQuickDropdownPanel

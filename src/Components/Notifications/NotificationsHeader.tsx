@@ -1,22 +1,27 @@
-import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Clickable, Flex, Stack, Text } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
-import { NotificationsPills } from "Components/Notifications/NotificationsPills"
+import {
+  NotificationsPills,
+  NotificationsPillsPlaceholder,
+} from "Components/Notifications/NotificationsPills"
 import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
 import { NotificationsContextualMenu } from "Components/Notifications/NotificationsContextualMenu"
 import { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
+import { FC } from "react"
+import styled from "styled-components"
 
 export interface NotificationsHeaderProps extends MarkAllAsReadPanelProps {
   mode: NotificationListMode
   onHide?: () => void
 }
 
-export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
+export const NotificationsHeader: FC<NotificationsHeaderProps> = ({
   mode,
   onHide,
   unreadCounts,
 }) => {
   return (
-    <Box backgroundColor="white100" width="100%" px={2} pt={2} pb={1}>
+    <NotificationsHeaderContainer>
       <Flex
         flexDirection="row"
         justifyContent="space-between"
@@ -25,24 +30,64 @@ export const NotificationsHeader: React.FC<NotificationsHeaderProps> = ({
         <Flex justifyContent="flex-start">
           <Text variant="lg-display">Activity</Text>
         </Flex>
-        <Flex justifyContent="flex-end" gap={4} alignItems="center">
+
+        <Flex justifyContent="flex-end" gap={1} alignItems="center">
           <NotificationsContextualMenu
             unreadCounts={unreadCounts}
             onHide={onHide}
           />
+
           {mode === "dropdown" && (
-            <Clickable as="a">
-              <CloseIcon display="block" />
+            <Clickable onClick={onHide} p={1}>
+              <CloseIcon />
             </Clickable>
           )}
         </Flex>
       </Flex>
 
-      <Spacer y={2} />
-
       <Flex flexDirection="row">
         <NotificationsPills />
       </Flex>
-    </Box>
+    </NotificationsHeaderContainer>
+  )
+}
+
+const NotificationsHeaderContainer = styled(Box).attrs({
+  bg: "white100",
+  width: "100%",
+  pt: 2,
+  pr: 1,
+  pb: 1,
+  pl: 2,
+  gap: 2,
+})`
+  display: flex;
+  flex-direction: column;
+`
+
+interface NotificationsHeaderPlaceholderProps {
+  onHide(): void
+}
+
+export const NotificationsHeaderPlaceholder: FC<NotificationsHeaderPlaceholderProps> = ({
+  onHide,
+}) => {
+  return (
+    <NotificationsHeaderContainer>
+      <Stack
+        gap={2}
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Text variant="lg-display">Activity</Text>
+
+        <Clickable onClick={onHide} p={1}>
+          <CloseIcon />
+        </Clickable>
+      </Stack>
+
+      <NotificationsPillsPlaceholder />
+    </NotificationsHeaderContainer>
   )
 }

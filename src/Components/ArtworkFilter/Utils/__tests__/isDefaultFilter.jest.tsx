@@ -1,8 +1,6 @@
-import {
-  ArtworkFilters,
-  initialArtworkFilterState,
-} from "../../ArtworkFilterContext"
-import { isDefaultFilter } from "../isDefaultFilter"
+import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { isDefaultFilter } from "Components/ArtworkFilter/Utils/isDefaultFilter"
 
 describe("isDefaultFilter", () => {
   it("returns true if filter is present in defaults", () => {

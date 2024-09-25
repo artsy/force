@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b3da94ca593619b9b8e136ca4689056>>
+ * @generated SignedSource<<25b38669131f34ff8482990ba48202d4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,15 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActionsSaveButton_artwork$data = {
   readonly artistNames: string | null | undefined;
+  readonly collectorSignals: {
+    readonly auction: {
+      readonly lotWatcherCount: number;
+    } | null | undefined;
+  } | null | undefined;
   readonly date: string | null | undefined;
   readonly id: string;
   readonly internalID: string;
+  readonly isInAuction: boolean | null | undefined;
   readonly isSaved: boolean | null | undefined;
   readonly isSavedToList: boolean;
   readonly preview: {
@@ -117,6 +123,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "isInAuction",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "isSavedToList",
       "storageKey": null
     },
@@ -146,6 +159,35 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorSignals",
+      "kind": "LinkedField",
+      "name": "collectorSignals",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "AuctionCollectorSignals",
+          "kind": "LinkedField",
+          "name": "auction",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "lotWatcherCount",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkActionsWatchLotButton_artwork"
@@ -155,6 +197,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "95cc4686f70f62078546027b939618ff";
+(node as any).hash = "8ac5a7930e72e2bd081149315d4109a9";
 
 export default node;

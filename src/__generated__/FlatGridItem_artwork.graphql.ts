@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd38efa6cfc19570fab90e8ff261321d>>
+ * @generated SignedSource<<4b8d8e590ea625272998df303f9258f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,6 @@ export type FlatGridItem_artwork$data = {
   } | null | undefined;
   readonly image_title: string | null | undefined;
   readonly internalID: string;
-  readonly isSaved: boolean | null | undefined;
   readonly sale: {
     readonly extendedBiddingIntervalMinutes: number | null | undefined;
     readonly extendedBiddingPeriodMinutes: number | null | undefined;
@@ -36,7 +35,7 @@ export type FlatGridItem_artwork$data = {
     readonly lotID: string | null | undefined;
   } | null | undefined;
   readonly title: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"DeprecatedSaveButton_artwork" | "Metadata_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
   readonly " $fragmentType": "FlatGridItem_artwork";
 };
 export type FlatGridItem_artwork$key = {
@@ -55,6 +54,11 @@ const node: ReaderFragment = {
       "defaultValue": true,
       "kind": "LocalArgument",
       "name": "includeBlurHash"
+    },
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeConsignmentSubmission"
     }
   ],
   "kind": "Fragment",
@@ -62,14 +66,15 @@ const node: ReaderFragment = {
   "name": "FlatGridItem_artwork",
   "selections": [
     {
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "includeConsignmentSubmission",
+          "variableName": "includeConsignmentSubmission"
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "Metadata_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "DeprecatedSaveButton_artwork"
     },
     {
       "alias": null,
@@ -253,19 +258,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "href",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isSaved",
-      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "8b48cba2a0ba28909467c170d082d6f5";
+(node as any).hash = "f642a14fa9fb0e878754f4759b12d729";
 
 export default node;

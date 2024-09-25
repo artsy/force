@@ -5,6 +5,7 @@ import { getENV } from "Utils/getENV"
 import { pathToOwnerType } from "System/Contexts/AnalyticsContext"
 import { useRef } from "react"
 import { useRouter } from "System/Hooks/useRouter"
+import { warnInDevelopment } from "Utils/warnInDevelopment"
 
 export type FeatureFlags = Record<string, FeatureFlagDetails>
 
@@ -73,22 +74,6 @@ export const getFeatureVariant = (
   return variant
 }
 
-export const getFeatureFlag = (featureName: string): boolean | null => {
-  const featureFlags = getENV("FEATURE_FLAGS")
-  const flagEnabled = featureFlags?.[featureName]?.flagEnabled
-
-  if (flagEnabled === undefined) {
-    warnInDevelopment(
-      `[Force] Warning: cannot find ${featureName} in featureFlags: `,
-      featureFlags
-    )
-
-    return null
-  }
-
-  return flagEnabled
-}
-
 export function useTrackFeatureVariant({
   experimentName,
   variantName,
@@ -126,10 +111,4 @@ export function useTrackFeatureVariant({
   }
 
   return { trackFeatureVariant }
-}
-
-const warnInDevelopment = (...args: Parameters<typeof console.warn>) => {
-  if (getENV("NODE_ENV") === "development") {
-    console.warn(...args)
-  }
 }

@@ -3,16 +3,23 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
+import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
 const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
-  Component: props => {
+  Component: (props: any) => {
     const notification = props.notificationsConnection?.edges?.[0]?.node
+    const mode = props.mode || "page"
 
     if (notification) {
-      return <NotificationItemFragmentContainer item={notification} />
+      return (
+        <NotificationItemFragmentContainer
+          notification={notification}
+          mode={mode}
+        />
+      )
     }
 
     return null
@@ -22,7 +29,7 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
       notificationsConnection(first: 1) {
         edges {
           node {
-            ...NotificationItem_item
+            ...NotificationItem_notification
           }
         }
       }
@@ -88,7 +95,7 @@ describe("NotificationItem", () => {
         Notification: () => notification,
       })
 
-      const indicator = screen.queryByLabelText("Unread notification indicator")
+      const indicator = screen.queryByLabelText("Unread")
       expect(indicator).not.toBeInTheDocument()
     })
 
@@ -100,7 +107,7 @@ describe("NotificationItem", () => {
         }),
       })
 
-      const indicator = screen.queryByLabelText("Unread notification indicator")
+      const indicator = screen.queryByLabelText("Unread")
       expect(indicator).toBeInTheDocument()
     })
   })
@@ -142,9 +149,81 @@ describe("NotificationItem", () => {
       expect(label).toBeInTheDocument()
     })
   })
+
+  describe("notification url", () => {
+    describe("dropdown mode with single-object notifications", () => {
+      describe("partner show notification", () => {
+        it("returns notification page url", () => {
+          renderWithRelay(
+            {
+              Notification: () => ({
+                ...notification,
+                notificationType: "PARTNER_OFFER_CREATED",
+                objectsCount: 1,
+                targetHref: "/partner-offer-url",
+              }),
+            },
+            { mode: "dropdown" }
+          )
+
+          expect(screen.getByRole("link")).toHaveAttribute(
+            "href",
+            "/notification/notification-internal-id"
+          )
+        })
+      })
+
+      describe("other notifications", () => {
+        it.each(
+          SUPPORTED_NOTIFICATION_TYPES.filter(
+            type => type !== "PARTNER_OFFER_CREATED"
+          )
+        )("navigates to targetHref for %s", notificationType => {
+          renderWithRelay(
+            {
+              Notification: () => ({
+                ...notification,
+                notificationType: notificationType,
+                objectsCount: 1,
+                targetHref: "/target-href",
+              }),
+            },
+            { mode: "dropdown" }
+          )
+
+          expect(screen.getByRole("link")).toHaveAttribute(
+            "href",
+            "/target-href"
+          )
+        })
+      })
+    })
+
+    describe("supported notification types", () => {
+      it.each(SUPPORTED_NOTIFICATION_TYPES)(
+        "returns notification page url",
+        notificationType => {
+          renderWithRelay({
+            Notification: () => ({
+              ...notification,
+              notificationType: notificationType,
+              objectsCount: 2,
+              targetHref: "/target-href",
+            }),
+          })
+
+          expect(screen.getByRole("link")).toHaveAttribute(
+            "href",
+            "/notification/notification-internal-id"
+          )
+        }
+      )
+    })
+  })
 })
 
 const notification = {
+  internalID: "notification-internal-id",
   title: "Notification Title",
   message: "Notification Message",
   headline: "Notification Headline",
@@ -154,16 +233,24 @@ const notification = {
   objectsCount: 0,
   previewImages: [
     {
-      url: "artwork-image-one",
+      resized: {
+        srcSet: "artwork-image-one",
+      },
     },
     {
-      url: "artwork-image-two",
+      resized: {
+        srcSet: "artwork-image-two",
+      },
     },
     {
-      url: "artwork-image-three",
+      resized: {
+        srcSet: "artwork-image-three",
+      },
     },
     {
-      url: "artwork-image-four",
+      resized: {
+        srcSet: "artwork-image-four",
+      },
     },
   ],
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be22ad22e9b1bf1fc6ef1925b0a38900>>
+ * @generated SignedSource<<a55b1a18076ea738e8fde7cf5d40b4d8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -174,6 +174,32 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CollectorSignals",
+            "kind": "LinkedField",
+            "name": "collectorSignals",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "ignore",
+                    "value": [
+                      "PARTNER_OFFER"
+                    ]
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "primaryLabel",
+                "storageKey": "primaryLabel(ignore:[\"PARTNER_OFFER\"])"
+              }
+            ],
+            "storageKey": null
+          },
           (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"artwork_from_partner_with_locations\")"
@@ -181,7 +207,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3577526261dd704cce867ac2c7bf668e",
+    "cacheID": "3e50fbf1f0fd0bb8c957874a7af447ac",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -190,6 +216,22 @@ return {
           "nullable": true,
           "plural": false,
           "type": "Artwork"
+        },
+        "artwork.collectorSignals": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CollectorSignals"
+        },
+        "artwork.collectorSignals.primaryLabel": {
+          "enumValues": [
+            "CURATORS_PICK",
+            "INCREASED_INTEREST",
+            "PARTNER_OFFER"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "LabelSignalEnum"
         },
         "artwork.id": (v5/*: any*/),
         "artwork.internalID": (v5/*: any*/),
@@ -230,7 +272,7 @@ return {
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isUnlisted\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isUnlisted\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n  collectorSignals {\n    primaryLabel(ignore: [PARTNER_OFFER])\n  }\n}\n"
   }
 };
 })();

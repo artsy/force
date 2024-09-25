@@ -8,6 +8,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import createLogger from "Utils/logger"
 import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { SaveArtworkToListsButtonQuery } from "__generated__/SaveArtworkToListsButtonQuery.graphql"
 
 const logger = createLogger("SaveArtworkToListsButton")
 
@@ -35,8 +37,15 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
       year: artwork.date,
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
+      isInAuction: !!artwork.isInAuction,
       isSavedToDefaultList,
       isSavedToCustomLists: artwork.isSavedToList,
+      collectorSignals: {
+        auction: {
+          lotWatcherCount:
+            artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
+        },
+      },
     },
   })
 
@@ -72,6 +81,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     <SaveButtonBase
       isSaved={savedListId ? isSavedToList : isSaved}
       onClick={handleClick}
+      artwork={artwork}
     />
   )
 }
@@ -91,7 +101,15 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
         preview: image {
           url(version: "square")
         }
+        isInAuction
         isSavedToList
+        collectorSignals {
+          auction {
+            lotWatcherCount
+            lotClosesAt
+            liveBiddingStarted
+          }
+        }
       }
     `,
   }
@@ -100,4 +118,53 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
 const labelByResultAction = {
   [ResultAction.SavedToDefaultList]: "Saved Artwork",
   [ResultAction.RemovedFromDefaultList]: "Removed Artwork",
+}
+
+interface SaveArtworkToListsButtonQueryRendererProps
+  extends Omit<SaveArtworkToListsButtonProps, "artwork"> {
+  id: string
+}
+
+export const SaveArtworkToListsButtonQueryRenderer: FC<SaveArtworkToListsButtonQueryRendererProps> = ({
+  id,
+  contextModule,
+}) => {
+  return (
+    <SystemQueryRenderer<SaveArtworkToListsButtonQuery>
+      lazyLoad
+      query={graphql`
+        query SaveArtworkToListsButtonQuery($id: String!) {
+          artwork(id: $id) {
+            ...SaveArtworkToListsButton_artwork
+          }
+        }
+      `}
+      placeholder={
+        <SaveButtonBase
+          isSaved={false}
+          artwork={{} as SaveArtworkToListsButton_artwork$data}
+          testID="saveButtonPlaceholder"
+        />
+      }
+      variables={{ id }}
+      render={({ error, props }) => {
+        if (error || !props?.artwork) {
+          return (
+            <SaveButtonBase
+              isSaved={false}
+              artwork={{} as SaveArtworkToListsButton_artwork$data}
+              testID="saveButtonPlaceholder"
+            />
+          )
+        }
+
+        return (
+          <SaveArtworkToListsButtonFragmentContainer
+            artwork={props.artwork}
+            contextModule={contextModule}
+          />
+        )
+      }}
+    />
+  )
 }

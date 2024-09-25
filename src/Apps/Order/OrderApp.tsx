@@ -19,6 +19,8 @@ import { OrderPaymentContextProvider } from "./Routes/Payment/PaymentContext/Ord
 import { SalesforceWrapper } from "Components/SalesforceWrapper"
 import { Media } from "Utils/Responsive"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
+// eslint-disable-next-line no-restricted-imports
+import { Provider } from "unstated"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -108,37 +110,39 @@ const OrderApp: FC<OrderAppProps> = props => {
   const artwork = extractNodes(order.lineItems)[0].artwork
 
   return (
-    <Box>
-      <Title>Checkout | Artsy</Title>
-      <Meta
-        name="viewport"
-        content={
-          isEigen
-            ? "width=device-width, user-scalable=no"
-            : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
-        }
-      />
-
-      {!isEigen && !isModal && renderChatSupportScript()}
-
-      <SafeAreaContainer>
-        <OrderPaymentContextProvider>
-          <Elements stripe={stripePromise}>
-            <AppContainer>{children}</AppContainer>
-          </Elements>
-        </OrderPaymentContextProvider>
-      </SafeAreaContainer>
-
-      {!isModal && (
-        <StickyFooterWithInquiry
-          orderType={order.mode}
-          orderSource={order.source}
-          artworkID={artwork?.slug as string}
+    <Provider>
+      <Box>
+        <Title>Checkout | Artsy</Title>
+        <Meta
+          name="viewport"
+          content={
+            isEigen
+              ? "width=device-width, user-scalable=no"
+              : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
+          }
         />
-      )}
 
-      <ConnectedModalDialog />
-    </Box>
+        {!isEigen && !isModal && renderChatSupportScript()}
+
+        <SafeAreaContainer>
+          <OrderPaymentContextProvider>
+            <Elements stripe={stripePromise}>
+              <AppContainer>{children}</AppContainer>
+            </Elements>
+          </OrderPaymentContextProvider>
+        </SafeAreaContainer>
+
+        {!isModal && (
+          <StickyFooterWithInquiry
+            orderType={order.mode}
+            orderSource={order.source}
+            artworkID={artwork?.slug as string}
+          />
+        )}
+
+        <ConnectedModalDialog />
+      </Box>
+    </Provider>
   )
 }
 

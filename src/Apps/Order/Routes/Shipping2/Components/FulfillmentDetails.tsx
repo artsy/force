@@ -10,7 +10,7 @@ import {
   FulfillmentValues,
   ShipValues,
   addressWithFallbackValues,
-  getDefaultUserAddress,
+  getInitialShippingValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { FulfillmentDetailsForm_me$key } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import createLogger from "Utils/logger"
@@ -43,14 +43,11 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   const addressVerificationUSEnabled = !!useFeatureFlag(
     "address_verification_us"
   )
-  const addressVerificationIntlEnabled = !!useFeatureFlag(
-    "address_verification_intl"
-  )
 
   // Trigger address verification by setting this to true
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
 
-  const hasSavedAddresses = !!meData.addressConnection?.totalCount
+  const hasSavedAddresses = shippingContext.meData.addressList.length !== 0
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork!
 
@@ -69,40 +66,52 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
   /*
    * If the view ever has no saved addresses, force new address form mode for
-   * the rest of its life
+   * the rest of its life and reset values
    */
   useEffect(() => {
+    const formLoaded =
+      typeof shippingContext.state.fulfillmentDetailsFormikContext.setValues ===
+      "function"
     if (
-      shippingContext.state.shippingFormMode !== "new_address" &&
+      formLoaded &&
+      shippingContext.state.shippingFormMode === "saved_addresses" &&
       !hasSavedAddresses
     ) {
+      const emptyFormValues = getInitialShippingValues(
+        shippingContext.meData.addressList,
+        shippingContext.orderData.shipsFrom,
+        shippingContext.orderData.availableShippingCountries
+      )
+
+      shippingContext.state.fulfillmentDetailsFormikContext.setValues(
+        emptyFormValues
+      )
       shippingContext.actions.setShippingFormMode("new_address")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasSavedAddresses])
 
   /*
-   * Re-save fulfillment details on load if they are already saved
-   * and shipping quotes need refreshing for new address mode only
+   * Re-save fulfillment details on load if they are already saved &
+   * require artsy shipping
    */
   useEffect(() => {
-    const existingFulfillmentDetails =
-      shippingContext.orderData.savedFulfillmentDetails
-    if (
-      existingFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
-      shippingContext.orderData.requiresArtsyShippingTo(
-        existingFulfillmentDetails.attributes.country
-      )
-    ) {
+    const { savedFulfillmentDetails } = shippingContext.orderData
+
+    const isArtsyShippingSaved =
+      savedFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
+      savedFulfillmentDetails.isArtsyShipping
+
+    if (isArtsyShippingSaved) {
       const refreshShippingQuotes = async () => {
         // instead of handleSubmit, call the save fulfillment details function
         // directly
         const result = await handleSaveFulfillmentDetails({
-          attributes: existingFulfillmentDetails.attributes,
+          attributes: savedFulfillmentDetails.attributes,
           fulfillmentType: FulfillmentType.SHIP,
           meta: {
             // FIXME: Will clobber previous address verification (but we can't
-            // know what the previous status was unless we read from server)
+            // know what the previous status was until we can read from server)
             addressVerifiedBy: null,
           },
         })
@@ -124,9 +133,8 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
    */
   const shouldVerifyAddressOnSubmit = (values: FulfillmentValues) => {
     const enabledForAddress =
-      (values as ShipValues).attributes.country === "US"
-        ? addressVerificationUSEnabled
-        : addressVerificationIntlEnabled
+      (values as ShipValues).attributes.country === "US" &&
+      addressVerificationUSEnabled
 
     return (
       values.fulfillmentType === FulfillmentType.SHIP &&
@@ -207,16 +215,21 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
       )
 
       if (saveFulfillmentDetailsResult.data) {
-        if (
+        const requiresShippingQuotes =
           saveFulfillmentDetailsResult.data.requiresArtsyShippingToDestination
-        ) {
+
+        const isAutomaticSave =
+          values.fulfillmentType === FulfillmentType.SHIP &&
+          shippingContext.state.shippingFormMode === "saved_addresses"
+
+        if (requiresShippingQuotes) {
           shippingContext.actions.setStage("shipping_quotes")
-        } else if (shippingContext.state.shippingFormMode === "new_address") {
-          // Advance to payment
-          router.push(`/orders/${orderData.internalID}/payment`)
-        } else {
+        } else if (isAutomaticSave) {
           // Don't advance if we're using saved addresses; instead wait for click
           shippingContext.actions.setStage("fulfillment_details_saved")
+        } else {
+          // Advance to payment
+          router.push(`/orders/${orderData.internalID}/payment`)
         }
       } else {
         resetSelectedSavedAddress()
@@ -232,6 +245,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           "Something went wrong. Please try again or contact orders@artsy.net.",
         flow: "user selects a shipping option",
       })
+
       resetSelectedSavedAddress()
       shippingContext.actions.dialog.showErrorDialog()
     } finally {
@@ -299,8 +313,7 @@ const ME_FRAGMENT = graphql`
  */
 const getInitialValues = (
   meData: ShippingContextProps["meData"],
-  orderData: ShippingContextProps["orderData"],
-  forceNewAddressFormMode?: boolean
+  orderData: ShippingContextProps["orderData"]
 ): FulfillmentValues => {
   if (orderData.savedFulfillmentDetails) {
     return {
@@ -311,6 +324,7 @@ const getInitialValues = (
         ),
       },
       meta: {
+        saveAddress: true,
         userAddressAction: null,
         addressVerifiedBy: null,
       },
@@ -319,40 +333,9 @@ const getInitialValues = (
 
   const savedAddresses = meData.addressList
 
-  // The default ship-to address should be the first one that
-  // can be shipped-to, preferring the default
-
-  const defaultUserAddress = getDefaultUserAddress(
+  return getInitialShippingValues(
     savedAddresses,
+    orderData.shipsFrom,
     orderData.availableShippingCountries
   )
-
-  if (defaultUserAddress) {
-    return {
-      fulfillmentType: FulfillmentType.SHIP,
-      attributes: addressWithFallbackValues(defaultUserAddress),
-      meta: {
-        saveAddress: false,
-        addressVerifiedBy: null,
-      },
-    }
-  }
-
-  // The user doesn't have a valid ship-to address, so we'll return empty values.
-  // TODO: This doesn't account for matching the saved address id
-  // (that is still in parsedOrderData). In addition the initial values
-  // are less relevant if the user has saved addresses - Setting country
-  // doesn't matter.
-  const initialFulfillmentValues: ShipValues["attributes"] = addressWithFallbackValues(
-    { country: orderData.shipsFrom }
-  )
-
-  return {
-    fulfillmentType: FulfillmentType.SHIP,
-    attributes: initialFulfillmentValues,
-    meta: {
-      addressVerifiedBy: null,
-      saveAddress: true,
-    },
-  }
 }
