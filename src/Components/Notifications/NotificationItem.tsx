@@ -182,7 +182,10 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         previewImages(size: 4) {
           internalID
           blurhashDataURL
-          resized(height: 58, version: "normalized") {
+          resized(
+            height: 58
+            version: ["main", "normalized", "larger", "large"]
+          ) {
             srcSet
           }
         }
