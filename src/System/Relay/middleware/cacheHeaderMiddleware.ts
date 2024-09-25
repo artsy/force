@@ -14,12 +14,12 @@ interface CacheHeaderMiddlewareProps {
   user: User
 }
 
-export const shouldSkipCDNCache = (req, user, foundRoute, url) => {
+export const shouldSkipCDNCache = (req, user, ttl, url) => {
   /**
    * The order of these checks is important.
    * We always want to skip the cache no matter what if any of:
    *   - `force: true` is specified
-   *   - `serverCacheTTL` is set to 0
+   *   - `serverCacheTTL` is explicitly set to 0
    *   - `nocache` query param is provided
    *   - a known personalized argument is present in the query
    *   - `include_artworks_by_followed_artists` is a known one
@@ -28,7 +28,7 @@ export const shouldSkipCDNCache = (req, user, foundRoute, url) => {
     return true
   }
 
-  if (foundRoute?.route?.serverCacheTTL === 0) {
+  if (ttl === 0) {
     return true
   }
 
@@ -86,7 +86,7 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
         : foundRoute?.route?.serverCacheTTL
 
       switch (true) {
-        case shouldSkipCDNCache(req, props?.user, foundRoute, url): {
+        case shouldSkipCDNCache(req, props?.user, ttl, url): {
           return { "Cache-Control": "no-cache" }
         }
         case !!ttl: {
