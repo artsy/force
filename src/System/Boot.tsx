@@ -50,7 +50,7 @@ export const Boot = track(undefined, {
     document.body.setAttribute("data-test", "AppReady") //
 
     if (getENV("NODE_ENV") === "production") {
-      setupSentryClient(sd)
+      setupSentryClient(sd.SENTRY_PUBLIC_DSN)
     }
   }, [])
 
