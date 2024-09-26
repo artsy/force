@@ -84,6 +84,7 @@ export const ReviewOrderButton: React.FC<ReviewOrderButtonProps> = ({
   return (
     <RouterLink
       to={`/orders/${data.id}/status?backToConversationId=${match.params.conversationId}`}
+      enablePrefetch={false}
       onClick={() =>
         trackEvent({
           action: "Click",

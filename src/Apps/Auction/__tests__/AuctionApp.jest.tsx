@@ -288,7 +288,7 @@ describe("AuctionApp", () => {
             showActiveBids: [1],
           }),
         })
-        expect(wrapper.text()).toContain("Buy Now")
+        expect(wrapper.text()).toContain("Inquire")
         wrapper.find("Tabs Clickable").at(3).simulate("click")
         wrapper.update()
         expect(
@@ -302,7 +302,7 @@ describe("AuctionApp", () => {
             showBuyNowTab: null,
           }),
         })
-        expect(wrapper.text()).not.toContain("Buy Now")
+        expect(wrapper.text()).not.toContain("Inquire")
         expect(
           wrapper.find("AuctionBuyNowRailFragmentContainer").exists()
         ).toBeFalsy()
