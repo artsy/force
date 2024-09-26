@@ -24,10 +24,7 @@ import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
-import createLogger from "Utils/logger"
 import { FallbackErrorBoundary } from "System/Components/FallbackErrorBoundary"
-
-const logger = createLogger("NavBarLoggedInActions.tsx")
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -201,17 +198,7 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
             }
           }
         `}
-        placeholder={<Placeholder />}
-        render={({ error, props }) => {
-          if (error) {
-            logger.error(error)
-            return <Placeholder />
-          }
-
-          if (!props || !props.me) {
-            return <Placeholder />
-          }
-
+        render={({ props }) => {
           return <NavBarLoggedInActions {...props} />
         }}
       />
@@ -219,10 +206,12 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
   )
 }
 
-const Placeholder = () => (
-  <Flex gap={2} alignItems="center" ml={1}>
-    <BellStrokeIcon fill="currentColor" />
-    <EnvelopeIcon fill="currentColor" />
-    <PersonIcon fill="currentColor" />
-  </Flex>
-)
+const Placeholder: React.FC = () => {
+  return (
+    <Flex gap={2} alignItems="center" ml={1}>
+      <BellStrokeIcon fill="currentColor" />
+      <EnvelopeIcon fill="currentColor" />
+      <PersonIcon fill="currentColor" />
+    </Flex>
+  )
+}
