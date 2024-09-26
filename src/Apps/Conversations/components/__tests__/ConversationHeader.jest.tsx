@@ -33,7 +33,7 @@ jest.mock("System/Hooks/useRouter", () => ({
 }))
 
 describe("ConversationDetails", () => {
-  let breakpoint: "md" | "sm"
+  let breakpoint: "md" | "sm" | "xs"
   const mockUseMobileLayoutActions = useMobileLayoutActions as jest.Mock
   const onGoToDetails = jest.fn()
   const mockTracking = useTracking as jest.Mock
@@ -120,7 +120,7 @@ describe("ConversationDetails", () => {
 
   describe("sm breakpoint", () => {
     beforeEach(() => {
-      breakpoint = "sm"
+      breakpoint = "xs"
     })
 
     it("clicking collector's name goes to the conversations list", () => {

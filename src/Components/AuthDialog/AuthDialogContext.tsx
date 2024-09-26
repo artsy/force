@@ -121,7 +121,7 @@ export const reducer = (state: State, action: Action): State => {
     }
 
     case "FALLBACK": {
-      return { ...state, mode: "SignUp", isFallback: true }
+      return { ...state, mode: "Login", isFallback: true }
     }
 
     default: {
