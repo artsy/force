@@ -27,17 +27,20 @@ export type RouterLinkProps = Omit<
     to: string | null | undefined
     textDecoration?: ResponsiveValue<string>
     inline?: boolean
+    enablePrefetch?: boolean
   }
 
 export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
-  ({ inline, to, ...rest }, _ref) => {
+  ({ inline, to, enablePrefetch = true, ...rest }, _ref) => {
     const systemContext = useSystemContext()
     const { router } = useRouter()
 
     // Right now, prefetching on viewport enter is only enabled for logged-in users
     // TODO: Remove feature flag
     const isPrefetchOnEnterEnabled =
-      useFeatureFlag("diamond_prefetch-on-enter") && !!systemContext?.user
+      useFeatureFlag("diamond_prefetch-on-enter") &&
+      enablePrefetch &&
+      !!systemContext?.user
 
     const { prefetch } = usePrefetchRoute(to as string)
 
@@ -66,7 +69,9 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
     })
 
     const handleMouseOver = () => {
-      prefetch()
+      if (enablePrefetch) {
+        prefetch()
+      }
     }
 
     if (isRouterAware) {

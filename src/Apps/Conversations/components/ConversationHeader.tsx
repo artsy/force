@@ -91,7 +91,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
   return (
     <>
       {/* Desktop view */}
-      <Media greaterThan="sm">
+      <Media greaterThan="xs">
         <Box
           p={2}
           borderBottom="1px solid"
@@ -146,7 +146,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
       </Media>
 
       {/* Mobile view */}
-      <Media lessThan="md">
+      <Media lessThan="sm">
         <Box
           px={2}
           py={1}

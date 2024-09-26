@@ -66,6 +66,7 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
           aria-label="View your collected artworks"
           to="/collector-profile/my-collection"
           onClick={trackClick}
+          enablePrefetch={false}
           gap={1}
         >
           <Suspense fallback={<NavBarUserMenuAvatarSkeleton />}>
@@ -94,6 +95,7 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
         aria-label="View your collected artworks"
         to="/collector-profile/my-collection"
         onClick={trackClick}
+        enablePrefetch={false}
       >
         <ArtworkIcon mr={1} aria-hidden="true" /> Artworks
       </NavBarMenuItemLink>
@@ -102,6 +104,7 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
         aria-label="View your collected artists"
         to="/collector-profile/artists"
         onClick={trackClick}
+        enablePrefetch={false}
       >
         <GroupIcon mr={1} aria-hidden="true" /> Artists
       </NavBarMenuItemLink>
@@ -110,6 +113,7 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
         aria-label="View your collection's insights"
         to="/collector-profile/insights"
         onClick={trackClick}
+        enablePrefetch={false}
       >
         <GraphIcon mr={1} aria-hidden="true" /> Insights
       </NavBarMenuItemLink>
@@ -127,6 +131,7 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
           aria-label="View your Saves"
           to={BASE_SAVES_PATH}
           onClick={trackClick}
+          enablePrefetch={false}
         >
           <HeartStrokeIcon mr={1} aria-hidden="true" /> Saves
         </NavBarMenuItemLink>
@@ -139,6 +144,7 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
           aria-label="View your Follows"
           to="/favorites/follows"
           onClick={trackClick}
+          enablePrefetch={false}
         >
           <CheckmarkStrokeIcon mr={1} aria-hidden="true" /> Follows
         </NavBarMenuItemLink>
@@ -151,6 +157,7 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
           aria-label="View your alerts"
           to="/favorites/alerts"
           onClick={trackClick}
+          enablePrefetch={false}
         >
           <BellStrokeIcon mr={1} aria-hidden="true" /> Alerts
         </NavBarMenuItemLink>
@@ -159,14 +166,22 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
       <Separator my={1} />
 
       {isAdmin && (
-        <NavBarMenuItemLink to={getENV("ADMIN_URL")} onClick={trackClick}>
+        <NavBarMenuItemLink
+          to={getENV("ADMIN_URL")}
+          onClick={trackClick}
+          enablePrefetch={false}
+        >
           <LockIcon mr={1} aria-hidden="true" />
           Admin
         </NavBarMenuItemLink>
       )}
 
       {(isAdmin || hasPartnerAccess) && (
-        <NavBarMenuItemLink to={getENV("CMS_URL")} onClick={trackClick}>
+        <NavBarMenuItemLink
+          to={getENV("CMS_URL")}
+          onClick={trackClick}
+          enablePrefetch={false}
+        >
           <LockIcon mr={1} aria-hidden="true" />
           CMS
         </NavBarMenuItemLink>
@@ -176,6 +191,7 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
         aria-label="Edit your settings"
         to="/settings/edit-profile"
         onClick={trackClick}
+        enablePrefetch={false}
       >
         <SettingsIcon mr={1} aria-hidden="true" /> Settings
       </NavBarMenuItemLink>
@@ -184,6 +200,7 @@ export const NavBarUserMenu: React.FC<NavBarUserMenuProps> = props => {
         aria-label="View your purchases"
         to="/settings/purchases"
         onClick={trackClick}
+        enablePrefetch={false}
       >
         <BagIcon mr={1} aria-hidden="true" />
         Order History

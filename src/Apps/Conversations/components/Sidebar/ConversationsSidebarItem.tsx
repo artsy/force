@@ -67,6 +67,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
             ? `sidebarTotal=${getSidebarTotal()}`
             : ""
         }`}
+        enablePrefetch={false}
         display="block"
         p={2}
         textDecoration="none"
