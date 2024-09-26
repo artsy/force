@@ -112,7 +112,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
                     </Tab>
                   )}
                   {tabBar.showBuyNowTab && (
-                    <Tab name="Buy Now">
+                    <Tab name="Inquire">
                       <AuctionBuyNowRailFragmentContainer sale={sale} />
                     </Tab>
                   )}

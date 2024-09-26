@@ -21,7 +21,7 @@ const AuctionBuyNowRail: React.FC<AuctionBuyNowRailProps> = ({ sale }) => {
 
   return (
     <Rail
-      title="Buy Now"
+      title="Inquire"
       getItems={() => {
         return nodes.map((node, index) => {
           if (!node.artwork) {
