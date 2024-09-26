@@ -6,20 +6,17 @@ import {
 } from "System/Relay/isRequestCacheable"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 
-export const RELAY_CACHE_CONFIG_HEADER_KEY = "x-relay-cache-config"
-export const RELAY_CACHE_PATH_HEADER_KEY = "x-relay-cache-path"
-
 interface CacheHeaderMiddlewareProps {
   url?: string | null
   user: User
 }
 
-export const shouldSkipCDNCache = (req, user, foundRoute, url) => {
+export const shouldSkipCDNCache = (req, user, ttl, url) => {
   /**
    * The order of these checks is important.
    * We always want to skip the cache no matter what if any of:
    *   - `force: true` is specified
-   *   - `serverCacheTTL` is set to 0
+   *   - `serverCacheTTL` is explicitly set to 0
    *   - `nocache` query param is provided
    *   - a known personalized argument is present in the query
    *   - `include_artworks_by_followed_artists` is a known one
@@ -28,7 +25,7 @@ export const shouldSkipCDNCache = (req, user, foundRoute, url) => {
     return true
   }
 
-  if (foundRoute?.route?.serverCacheTTL === 0) {
+  if (ttl === 0) {
     return true
   }
 
@@ -59,21 +56,6 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
   return next => async req => {
     const url = isServer ? props?.url : window.location.pathname
 
-    const cacheHeaders = {
-      [RELAY_CACHE_CONFIG_HEADER_KEY]: JSON.stringify(req.cacheConfig),
-    }
-
-    /**
-     * We need to dynamically set a path header, because after the SSR pass we
-     * only have access to the initial req.url _entrypoint_; from there our
-     * client-side SPA intializes, which manages URL updates. Setting headers
-     * at the relay network level lets us configure queries to be sent to the
-     * graphql backend and CDN.
-     */
-    if (url) {
-      cacheHeaders[RELAY_CACHE_PATH_HEADER_KEY] = url
-    }
-
     const cacheControlHeader = (() => {
       const foundRoute = findRoutesByPath({ path: url ?? "" })[0]
 
@@ -86,7 +68,7 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
         : foundRoute?.route?.serverCacheTTL
 
       switch (true) {
-        case shouldSkipCDNCache(req, props?.user, foundRoute, url): {
+        case shouldSkipCDNCache(req, props?.user, ttl, url): {
           return { "Cache-Control": "no-cache" }
         }
         case !!ttl: {
@@ -102,7 +84,6 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
 
     req.fetchOpts.headers = {
       ...req.fetchOpts.headers,
-      ...cacheHeaders,
       ...cacheControlHeader,
     }
 
