@@ -24,6 +24,10 @@ import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
+import createLogger from "Utils/logger"
+import { FallbackErrorBoundary } from "System/Components/FallbackErrorBoundary"
+
+const logger = createLogger("NavBarLoggedInActions.tsx")
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -156,37 +160,39 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
   return isServer ? (
     <NavBarLoggedInActions />
   ) : (
-    <SystemQueryRenderer<NavBarLoggedInActionsQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query NavBarLoggedInActionsQuery {
-          me {
-            unreadNotificationsCount
-            unseenNotificationsCount
-            unreadConversationCount
+    <FallbackErrorBoundary FallbackComponent={Placeholder}>
+      <SystemQueryRenderer<NavBarLoggedInActionsQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query NavBarLoggedInActionsQuery {
+            me {
+              unreadNotificationsCount
+              unseenNotificationsCount
+              unreadConversationCount
 
-            firstConversationConnection: conversationsConnection(first: 1) {
-              edges {
-                node {
-                  internalID
-                }
-              }
-            }
-
-            followsAndSaves {
-              notifications: bundledArtworksByArtistConnection(
-                sort: PUBLISHED_AT_DESC
-                first: 10
-              ) @connection(key: "WorksForYou_notifications") {
+              firstConversationConnection: conversationsConnection(first: 1) {
                 edges {
                   node {
-                    href
-                    summary
-                    artists
-                    published_at: publishedAt(format: "MMM DD")
-                    image {
-                      resized(height: 40, width: 40) {
-                        url
+                    internalID
+                  }
+                }
+              }
+
+              followsAndSaves {
+                notifications: bundledArtworksByArtistConnection(
+                  sort: PUBLISHED_AT_DESC
+                  first: 10
+                ) @connection(key: "WorksForYou_notifications") {
+                  edges {
+                    node {
+                      href
+                      summary
+                      artists
+                      published_at: publishedAt(format: "MMM DD")
+                      image {
+                        resized(height: 40, width: 40) {
+                          url
+                        }
                       }
                     }
                   }
@@ -194,11 +200,29 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
               }
             }
           }
-        }
-      `}
-      render={({ props }) => {
-        return <NavBarLoggedInActions {...props} />
-      }}
-    />
+        `}
+        placeholder={<Placeholder />}
+        render={({ error, props }) => {
+          if (error) {
+            logger.error(error)
+            return <Placeholder />
+          }
+
+          if (!props || !props.me) {
+            return <Placeholder />
+          }
+
+          return <NavBarLoggedInActions {...props} />
+        }}
+      />
+    </FallbackErrorBoundary>
   )
 }
+
+const Placeholder = () => (
+  <Flex gap={2} alignItems="center" ml={1}>
+    <BellStrokeIcon fill="currentColor" />
+    <EnvelopeIcon fill="currentColor" />
+    <PersonIcon fill="currentColor" />
+  </Flex>
+)
