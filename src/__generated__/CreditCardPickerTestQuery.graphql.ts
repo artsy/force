@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2220f42dbf81c4f8859d948f22a01257>>
+ * @generated SignedSource<<708a87f0533a91aeb2557172d2e474ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -92,6 +92,18 @@ export type CreditCardPickerTestQuery$rawResponse = {
       readonly region: string | null | undefined;
     } | {
       readonly __typename: string;
+    } | null | undefined;
+    readonly sellerDetails: {
+      readonly __typename: "Partner";
+      readonly __isNode: "Partner";
+      readonly id: string;
+      readonly merchantAccount: {
+        readonly externalId: string;
+      } | null | undefined;
+    } | {
+      readonly __typename: string;
+      readonly __isNode: string;
+      readonly id: string;
     } | null | undefined;
     readonly state: CommerceOrderStateEnum;
   } | null | undefined;
@@ -420,6 +432,51 @@ return {
             "args": null,
             "concreteType": null,
             "kind": "LinkedField",
+            "name": "sellerDetails",
+            "plural": false,
+            "selections": [
+              (v7/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PartnerMerchantAccount",
+                    "kind": "LinkedField",
+                    "name": "merchantAccount",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "externalId",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "type": "Partner",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v6/*: any*/)
+                ],
+                "type": "Node",
+                "abstractKey": "__isNode"
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": null,
+            "kind": "LinkedField",
             "name": "requestedFulfillment",
             "plural": false,
             "selections": [
@@ -513,7 +570,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "68f5203d6806213973dd3e6f13f60270",
+    "cacheID": "968fbd9bcd9770453d7a311a3bb3b7d2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -618,6 +675,22 @@ return {
         "order.requestedFulfillment.name": (v18/*: any*/),
         "order.requestedFulfillment.postalCode": (v18/*: any*/),
         "order.requestedFulfillment.region": (v18/*: any*/),
+        "order.sellerDetails": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "OrderParty"
+        },
+        "order.sellerDetails.__isNode": (v15/*: any*/),
+        "order.sellerDetails.__typename": (v15/*: any*/),
+        "order.sellerDetails.id": (v17/*: any*/),
+        "order.sellerDetails.merchantAccount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerMerchantAccount"
+        },
+        "order.sellerDetails.merchantAccount.externalId": (v15/*: any*/),
         "order.state": {
           "enumValues": [
             "ABANDONED",
@@ -638,7 +711,7 @@ return {
     },
     "name": "CreditCardPickerTestQuery",
     "operationKind": "query",
-    "text": "query CreditCardPickerTestQuery {\n  me {\n    ...CreditCardPicker_me\n    id\n  }\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...CreditCardPicker_order\n    id\n  }\n}\n\nfragment CreditCardPicker_me on Me {\n  creditCards(first: 100) {\n    edges {\n      node {\n        internalID\n        brand\n        lastDigits\n        expirationMonth\n        expirationYear\n        id\n      }\n    }\n  }\n}\n\nfragment CreditCardPicker_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  creditCard {\n    internalID\n    name\n    street1\n    street2\n    city\n    state\n    country\n    postalCode\n    expirationMonth\n    expirationYear\n    lastDigits\n    brand\n    id\n  }\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommerceShipArta {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommercePickup {\n      fulfillmentType\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query CreditCardPickerTestQuery {\n  me {\n    ...CreditCardPicker_me\n    id\n  }\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...CreditCardPicker_order\n    id\n  }\n}\n\nfragment CreditCardPicker_me on Me {\n  creditCards(first: 100) {\n    edges {\n      node {\n        internalID\n        brand\n        lastDigits\n        expirationMonth\n        expirationYear\n        id\n      }\n    }\n  }\n}\n\nfragment CreditCardPicker_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  creditCard {\n    internalID\n    name\n    street1\n    street2\n    city\n    state\n    country\n    postalCode\n    expirationMonth\n    expirationYear\n    lastDigits\n    brand\n    id\n  }\n  sellerDetails {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommerceShipArta {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommercePickup {\n      fulfillmentType\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
