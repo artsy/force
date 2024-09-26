@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Column,
   EntityHeader,
   Flex,
@@ -77,7 +78,7 @@ const getPaymentMethodText = (
 }
 
 const getOrderLink = order => {
-  const isOrderActive = order.state !== "CANCELED" && order.state !== "REFUNDED"
+  const isOrderActive = !["CANCELED", "REFUNDED"].includes(order.state)
   const isOrderPaymentFailed = order.displayState === "PAYMENT_FAILED"
 
   if (isOrderPaymentFailed) {
@@ -199,17 +200,37 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
         </Column>
 
         <Column span={6}>
-          <EntityHeader
-            href={artwork?.partner?.href ?? ""}
-            image={{
-              ...(artwork?.partner?.profile?.icon?.cropped ?? {}),
-              alt: "",
-              lazyLoad: true,
-            }}
-            initials={artwork?.partner?.initials ?? ""}
-            meta={artwork?.shippingOrigin?.replace(/, US/g, "")}
-            name={artwork?.partner?.name ?? ""}
-          />
+          <Flex
+            justifyContent="space-between"
+            alignItems={"left"}
+            flexDirection={["column", "row"]}
+          >
+            <EntityHeader
+              href={artwork?.partner?.href ?? ""}
+              image={{
+                ...(artwork?.partner?.profile?.icon?.cropped ?? {}),
+                alt: "",
+                lazyLoad: true,
+              }}
+              initials={artwork?.partner?.initials ?? ""}
+              meta={artwork?.shippingOrigin?.replace(/, US/g, "")}
+              name={artwork?.partner?.name ?? ""}
+            />
+
+            {order.displayState === "PAYMENT_FAILED" && (
+              <Button
+                // @ts-ignore
+                as={RouterLink}
+                to={`/orders/${order.internalID}/payment/new`}
+                variant="primaryBlack"
+                size="large"
+                width="50%"
+                mt={[1, 0]}
+              >
+                Update Payment Method
+              </Button>
+            )}
+          </Flex>
         </Column>
 
         <Column span={12}>
