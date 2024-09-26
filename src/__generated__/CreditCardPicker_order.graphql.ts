@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77c9a4740f33c5949715cf5d263b2ca2>>
+ * @generated SignedSource<<600d066f4133311a5e2d6e5cd90d5137>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -64,6 +64,16 @@ export type CreditCardPicker_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined;
+  readonly sellerDetails: {
+    readonly __typename: "Partner";
+    readonly merchantAccount: {
+      readonly externalId: string;
+    } | null | undefined;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null | undefined;
   readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "CreditCardPicker_order";
 };
@@ -115,7 +125,14 @@ v5 = {
   "name": "postalCode",
   "storageKey": null
 },
-v6 = [
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v7 = [
   (v2/*: any*/),
   {
     "alias": null,
@@ -221,25 +238,56 @@ return {
       "args": null,
       "concreteType": null,
       "kind": "LinkedField",
+      "name": "sellerDetails",
+      "plural": false,
+      "selections": [
+        (v6/*: any*/),
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "PartnerMerchantAccount",
+              "kind": "LinkedField",
+              "name": "merchantAccount",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "externalId",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "type": "Partner",
+          "abstractKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
       "name": "requestedFulfillment",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        },
+        (v6/*: any*/),
         {
           "kind": "InlineFragment",
-          "selections": (v6/*: any*/),
+          "selections": (v7/*: any*/),
           "type": "CommerceShip",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v6/*: any*/),
+          "selections": (v7/*: any*/),
           "type": "CommerceShipArta",
           "abstractKey": null
         },
@@ -317,6 +365,6 @@ return {
 };
 })();
 
-(node as any).hash = "458cdcd3fcb5c7f8aa87d89b0a7913df";
+(node as any).hash = "d32bf7e0f2bdcf68394f029d501ab4bc";
 
 export default node;

@@ -39,6 +39,7 @@ export const usePrefetchRoute = (
 
         const {
           match: { params },
+          route: { serverCacheTTL },
         } = foundRoute
 
         const {
@@ -63,6 +64,9 @@ export const usePrefetchRoute = (
           fetchPolicy: "store-or-network",
           networkCacheConfig: {
             force: false,
+            metadata: {
+              maxAge: serverCacheTTL,
+            },
           },
         }).subscribe({
           start: () => {

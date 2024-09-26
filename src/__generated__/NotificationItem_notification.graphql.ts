@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f88dcc94bcc79ba7ca53ef49f41b56d0>>
+ * @generated SignedSource<<8f30d31567eec2fe2a54053749a96ac5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -183,7 +183,12 @@ return {
             {
               "kind": "Literal",
               "name": "version",
-              "value": "normalized"
+              "value": [
+                "main",
+                "normalized",
+                "larger",
+                "large"
+              ]
             }
           ],
           "concreteType": "ResizedImageUrl",
@@ -199,7 +204,7 @@ return {
               "storageKey": null
             }
           ],
-          "storageKey": "resized(height:58,version:\"normalized\")"
+          "storageKey": "resized(height:58,version:[\"main\",\"normalized\",\"larger\",\"large\"])"
         }
       ],
       "storageKey": "previewImages(size:4)"
@@ -222,6 +227,6 @@ return {
 };
 })();
 
-(node as any).hash = "5c1af31cec13f68dad0b185195a12b53";
+(node as any).hash = "19d6409e35b65b09ecf22aa2aa931a1a";
 
 export default node;

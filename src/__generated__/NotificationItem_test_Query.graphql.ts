@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c4de1c0fd4718644e99aa4b6743efb3>>
+ * @generated SignedSource<<c5da08db76594eebaaaad154fc512b40>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -309,7 +309,12 @@ return {
                           {
                             "kind": "Literal",
                             "name": "version",
-                            "value": "normalized"
+                            "value": [
+                              "main",
+                              "normalized",
+                              "larger",
+                              "large"
+                            ]
                           }
                         ],
                         "concreteType": "ResizedImageUrl",
@@ -325,7 +330,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "storageKey": "resized(height:58,version:\"normalized\")"
+                        "storageKey": "resized(height:58,version:[\"main\",\"normalized\",\"larger\",\"large\"])"
                       }
                     ],
                     "storageKey": "previewImages(size:4)"
@@ -362,7 +367,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8274296fb956a0a8f56fa5a29afc64e8",
+    "cacheID": "74621c1ba02fc130909f1c043db3abfb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -475,7 +480,7 @@ return {
     },
     "name": "NotificationItem_test_Query",
     "operationKind": "query",
-    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItemCollectorProfileUpdatePrompt_notificationItem on NotificationItem {\n  __isNotificationItem: __typename\n  ... on CollectorProfileUpdatePromptNotificationItem {\n    me {\n      userInterestsConnection(interestType: ARTIST, first: 1) {\n        totalCount\n      }\n      id\n    }\n  }\n}\n\nfragment NotificationItem_notification on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    ...NotificationItemCollectorProfileUpdatePrompt_notificationItem\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    internalID\n    blurhashDataURL\n    resized(height: 58, version: \"normalized\") {\n      srcSet\n    }\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n"
+    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItemCollectorProfileUpdatePrompt_notificationItem on NotificationItem {\n  __isNotificationItem: __typename\n  ... on CollectorProfileUpdatePromptNotificationItem {\n    me {\n      userInterestsConnection(interestType: ARTIST, first: 1) {\n        totalCount\n      }\n      id\n    }\n  }\n}\n\nfragment NotificationItem_notification on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    ...NotificationItemCollectorProfileUpdatePrompt_notificationItem\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    internalID\n    blurhashDataURL\n    resized(height: 58, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      srcSet\n    }\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n"
   }
 };
 })();
