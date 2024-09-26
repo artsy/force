@@ -15,14 +15,19 @@ interface AuthDialogWelcomeProps {}
 export const AuthDialogWelcome: FC<AuthDialogWelcomeProps> = () => {
   const { relayEnvironment } = useSystemContext()
 
-  const { dispatch } = useAuthDialogContext()
+  const {
+    dispatch,
+    state: { values },
+  } = useAuthDialogContext()
 
   return (
     <Formik
       validateOnBlur={false}
       validationSchema={VALIDATION_SCHEMA}
-      initialValues={{ email: "", mode: "Pending" }}
+      initialValues={{ email: values.email || "", mode: "Pending" }}
       onSubmit={async ({ email }) => {
+        dispatch({ type: "SET", payload: { values: { email } } })
+
         try {
           const recaptchaToken = await recaptcha("verify_user")
 
@@ -32,36 +37,22 @@ export const AuthDialogWelcome: FC<AuthDialogWelcomeProps> = () => {
             { email, recaptchaToken: recaptchaToken ?? "" }
           ).toPromise()
 
-          const exists = !!res?.verifyUser?.exists
-          const mode = exists ? "Login" : "SignUp"
+          const verifyUser = res?.verifyUser
 
-          dispatch({
-            type: "SET",
-            payload: {
-              values: { email },
-            },
-          })
+          if (!verifyUser) {
+            throw new Error("Failed to verify user.")
+          }
 
-          dispatch({
-            type: "MODE",
-            payload: { mode },
-          })
+          const mode = verifyUser.exists ? "Login" : "SignUp"
+
+          dispatch({ type: "MODE", payload: { mode } })
         } catch (error) {
           console.error(error)
-
-          dispatch({
-            type: "SET",
-            payload: {
-              values: { email },
-            },
-          })
-
           dispatch({ type: "FALLBACK" })
         }
       }}
     >
       {({
-        dirty,
         errors,
         handleBlur,
         handleChange,
@@ -91,7 +82,7 @@ export const AuthDialogWelcome: FC<AuthDialogWelcomeProps> = () => {
                 type="submit"
                 width="100%"
                 loading={isSubmitting}
-                disabled={!isValid || !dirty}
+                disabled={!isValid}
               >
                 Continue
               </Button>
