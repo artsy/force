@@ -75,7 +75,7 @@ describe("SettingsPurchases", () => {
       expect(screen.getByText("Payment failed")).toBeInTheDocument()
     })
 
-    it("renders link to enter new payment", () => {
+    it("renders the order number with a link to enter new payment", () => {
       renderWithRelay({
         Me: () => ({
           orders: {
@@ -96,6 +96,31 @@ describe("SettingsPurchases", () => {
       const link = screen.getByRole("link", { name: /123/i })
       expect(link).toBeInTheDocument()
       expect(link).toHaveAttribute("href", "/orders/123/payment/new")
+    })
+
+    it("renders a button to update payment method", () => {
+      renderWithRelay({
+        Me: () => ({
+          orders: {
+            edges: [
+              {
+                node: {
+                  code: "123",
+                  internalID: "123",
+                  state: "SUBMITTED",
+                  displayState: "PAYMENT_FAILED",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      const button = screen.getByRole("link", {
+        name: /Update Payment Method/i,
+      })
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveAttribute("href", "/orders/123/payment/new")
     })
   })
 })
