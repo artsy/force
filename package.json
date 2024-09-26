@@ -103,6 +103,7 @@
     "@segment/consent-manager": "5.7.0",
     "@sentry/browser": "^8.32.0",
     "@sentry/node": "^8.32.0",
+    "@sentry/profiling-node": "^8.32.0",
     "@stripe/react-stripe-js": "1.10.0",
     "@stripe/stripe-js": "^4.1.0",
     "@styled-system/theme-get": "5.1.2",

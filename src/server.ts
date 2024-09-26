@@ -1,3 +1,5 @@
+import "instrument"
+
 import { renderServerApp } from "System/Router/renderServerApp"
 import express from "express"
 import type {

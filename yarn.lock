@@ -3515,7 +3515,7 @@
     "@sentry/types" "8.32.0"
     "@sentry/utils" "8.32.0"
 
-"@sentry/node@^8.32.0":
+"@sentry/node@8.32.0", "@sentry/node@^8.32.0":
   version "8.32.0"
   resolved "https://registry.yarnpkg.com/@sentry/node/-/node-8.32.0.tgz#68822b3246fb2ed7418f21795ed539a18058cfa8"
   integrity sha512-a2PoFA9j/HmJVGF/zXJhLP6QhRHGye/2EznQdHOELsH1BkeMgBaXl7D52r2E/b7qki647lXrdbspB6jid8NycA==
@@ -3563,6 +3563,18 @@
     "@sentry/core" "8.32.0"
     "@sentry/types" "8.32.0"
     "@sentry/utils" "8.32.0"
+
+"@sentry/profiling-node@^8.32.0":
+  version "8.32.0"
+  resolved "https://registry.yarnpkg.com/@sentry/profiling-node/-/profiling-node-8.32.0.tgz#cb4bf0512dc7a6f0a9058529f3c4dbb8963a597d"
+  integrity sha512-wKE2JAvDM3DjVNFKd2YLzwhXFS3SurLxDPpvA1EjMQ9Me7sR5ssO9jFn3e6et5oT3e3EzGDyTfbrJ81BNQuZhQ==
+  dependencies:
+    "@sentry/core" "8.32.0"
+    "@sentry/node" "8.32.0"
+    "@sentry/types" "8.32.0"
+    "@sentry/utils" "8.32.0"
+    detect-libc "^2.0.2"
+    node-abi "^3.61.0"
 
 "@sentry/types@8.32.0":
   version "8.32.0"
@@ -9908,6 +9920,11 @@ detab@2.0.4:
   integrity sha512-8zdsQA5bIkoRECvCrNKPla84lyoR7DSAyf7p0YgXzBO9PDJx8KntPUay7NS6yp+KdxdVtiE5SpHKtbp2ZQyA9g==
   dependencies:
     repeat-string "^1.5.4"
+
+detect-libc@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-2.0.3.tgz#f0cd503b40f9939b894697d19ad50895e30cf700"
+  integrity sha512-bwy0MGW55bG41VqxxypOsdSdGqLwXPI/focwgTYCFMbdUiBAxLg9CFzG08sz2aqzknwiX7Hkl0bQENjg8iLByw==
 
 detect-newline@^3.0.0:
   version "3.1.0"
@@ -17257,6 +17274,13 @@ nocache@1.0.1:
   integrity sha1-aVyfc2kmp1VPc2X6JeCHlBBlvTY=
   dependencies:
     depd "1.1.0"
+
+node-abi@^3.61.0:
+  version "3.68.0"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-3.68.0.tgz#8f37fb02ecf4f43ebe694090dcb52e0c4cc4ba25"
+  integrity sha512-7vbj10trelExNjFSBm5kTvZXXa7pZyKWx9RCKIyqe6I9Ev3IzGpQoqBP3a+cOdxY+pWj6VkP28n/2wWysBHD/A==
+  dependencies:
+    semver "^7.3.5"
 
 node-abort-controller@^3.0.1:
   version "3.1.1"

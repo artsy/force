@@ -33,13 +33,7 @@ import {
   SEGMENT_WRITE_KEY_SERVER,
   IP_DENYLIST,
   NODE_ENV,
-  SENTRY_PRIVATE_DSN,
 } from "./Server/config"
-
-// NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
-// see errors like "`CURRENT_USER` is undefined". We need more investigation
-// because this only appears in prod, under load, and seems fine on staging.
-import { init } from "@sentry/node"
 
 import { morganMiddleware } from "./Server/middleware/morgan"
 import { ensureSslMiddleware } from "./Server/middleware/ensureSsl"
@@ -56,7 +50,6 @@ import { hardcodedRedirectsMiddleware } from "./Server/middleware/hardcodedRedir
 import { localsMiddleware } from "./Server/middleware/locals"
 import { sameOriginMiddleware } from "./Server/middleware/sameOrigin"
 import { serverTimingHeaders } from "./Server/middleware/serverTimingHeaders"
-import { IGNORED_ERRORS } from "./Server/analytics/sentryFilters"
 import { featureFlagMiddleware } from "./Server/middleware/featureFlagMiddleware"
 import {
   UnleashFeatureFlagService,
@@ -70,14 +63,6 @@ export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)
 
   app.set("trust proxy", true)
-
-  // Setup error handling
-  if (SENTRY_PRIVATE_DSN) {
-    init({
-      dsn: SENTRY_PRIVATE_DSN,
-      ignoreErrors: IGNORED_ERRORS,
-    })
-  }
 
   // Cookie parser
   app.use(cookieParser())
