@@ -21,6 +21,7 @@ import {
   CreditCardPickerFragmentContainer,
 } from "Apps/Order/Components/CreditCardPicker"
 import type { Token, StripeError } from "@stripe/stripe-js"
+import { Elements } from "@stripe/react-stripe-js"
 import { mockStripe } from "DevTools/mockStripe"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
@@ -148,6 +149,14 @@ const defaultData: CreditCardPickerTestQuery$rawResponse = {
   order: {
     ...BuyOrderWithShippingDetails,
     creditCard: null,
+    sellerDetails: {
+      __typename: "Partner",
+      __isNode: "Partner",
+      id: "p1",
+      merchantAccount: {
+        externalId: "acct_123",
+      },
+    },
   },
 }
 
@@ -210,6 +219,17 @@ describe("CreditCardPickerFragmentContainer", () => {
       const page = new CreditCardPickerTestPage(wrapper)
 
       expect(page.find(Link)).toHaveLength(0)
+    })
+
+    it("passes onBehalfOf parameter to Stripe Elements", () => {
+      const { wrapper } = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+
+      expect(wrapper.find(Elements).props()).toMatchObject({
+        options: { onBehalfOf: "acct_123" },
+      })
     })
   })
 
