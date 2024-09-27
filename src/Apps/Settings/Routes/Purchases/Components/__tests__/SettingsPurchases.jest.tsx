@@ -53,4 +53,74 @@ describe("SettingsPurchases", () => {
       expect(screen.getByText("privatesales@artsy.net")).toBeInTheDocument()
     })
   })
+
+  describe("order payment failed", () => {
+    it("renders payment failed status", () => {
+      renderWithRelay({
+        Me: () => ({
+          orders: {
+            edges: [
+              {
+                node: {
+                  code: "123",
+                  state: "SUBMITTED",
+                  displayState: "PAYMENT_FAILED",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.getByText("Payment failed")).toBeInTheDocument()
+    })
+
+    it("renders the order number with a link to enter new payment", () => {
+      renderWithRelay({
+        Me: () => ({
+          orders: {
+            edges: [
+              {
+                node: {
+                  code: "123",
+                  internalID: "123",
+                  state: "SUBMITTED",
+                  displayState: "PAYMENT_FAILED",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      const link = screen.getByRole("link", { name: /123/i })
+      expect(link).toBeInTheDocument()
+      expect(link).toHaveAttribute("href", "/orders/123/payment/new")
+    })
+
+    it("renders a button to update payment method", () => {
+      renderWithRelay({
+        Me: () => ({
+          orders: {
+            edges: [
+              {
+                node: {
+                  code: "123",
+                  internalID: "123",
+                  state: "SUBMITTED",
+                  displayState: "PAYMENT_FAILED",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      const button = screen.getByRole("link", {
+        name: /Update Payment Method/i,
+      })
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveAttribute("href", "/orders/123/payment/new")
+    })
+  })
 })
