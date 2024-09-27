@@ -8,6 +8,8 @@ const HOURS_24 = 86400 // In seconds
  */
 export const serverCacheTTLs = {
   artist: HOURS_24,
+  article: NO_CACHE,
+  articles: NO_CACHE,
   artists: HOURS_24,
   artistSeries: HOURS_24,
   auction: NO_CACHE,

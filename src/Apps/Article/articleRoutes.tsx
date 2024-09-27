@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { RedirectException, RouteRenderArgs } from "found"
 import { graphql } from "react-relay"
 import { RouteProps } from "System/Router/Route"
@@ -26,12 +27,13 @@ export const articleRoutes: RouteProps[] = [
       ArticleApp.preload()
     },
     query: graphql`
-      query articleRoutes_ArticleQuery($id: String!) @cacheable {
+      query articleRoutes_ArticleQuery($id: String!) {
         article(id: $id) @principalField {
           ...ArticleApp_article
         }
       }
     `,
+    serverCacheTTL: serverCacheTTLs.article,
   },
   { path: "/news/:id", render: redirectToArticle },
   { path: "/video/:id", render: redirectToArticle },
