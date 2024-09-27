@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Column,
   EntityHeader,
   Flex,
@@ -34,6 +35,7 @@ const ORDER_LABELS = {
   REFUNDED: "Refunded",
   SUBMITTED: "Pending",
   PROCESSING_APPROVAL: "Payment processing",
+  PAYMENT_FAILED: "Payment failed",
 } as const
 
 const ORDER_ICONS = {
@@ -45,6 +47,7 @@ const ORDER_ICONS = {
   REFUNDED: <CloseStrokeIcon fill="red100" />,
   SUBMITTED: <PendingIcon fill="black60" />,
   PROCESSING_APPROVAL: <PendingIcon fill="black60" />,
+  PAYMENT_FAILED: null,
 } as const
 
 const ORDER_COLORS = {
@@ -56,6 +59,7 @@ const ORDER_COLORS = {
   REFUNDED: "red100",
   SUBMITTED: "black60",
   PROCESSING_APPROVAL: "black60",
+  PAYMENT_FAILED: "red100",
 } as const
 
 const getPaymentMethodText = (
@@ -73,6 +77,29 @@ const getPaymentMethodText = (
   }
 }
 
+const getOrderLink = order => {
+  const isOrderActive = !["CANCELED", "REFUNDED"].includes(order.state)
+  const isOrderPaymentFailed = order.displayState === "PAYMENT_FAILED"
+
+  if (isOrderPaymentFailed) {
+    return (
+      <RouterLink inline to={`/orders/${order.internalID}/payment/new`}>
+        {order.code}
+      </RouterLink>
+    )
+  }
+
+  if (isOrderActive) {
+    return (
+      <RouterLink inline to={`/orders/${order.internalID}/status`}>
+        {order.code}
+      </RouterLink>
+    )
+  }
+
+  return <>{order.code}</>
+}
+
 interface SettingsPurchasesRowProps {
   order: SettingsPurchasesRow_order$data
 }
@@ -83,7 +110,6 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
   const { requestedFulfillment } = order
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
-  const isOrderActive = order.state !== "CANCELED" && order.state !== "REFUNDED"
   const trackingId = fulfillments?.edges?.[0]?.node?.trackingId
   const image = artworkVersion?.image?.cropped
 
@@ -148,7 +174,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
           <Box ml={1}>
             <Text variant="sm-display">
               <RouterLink
-                to={artwork?.artists?.[0]?.href!}
+                to={artwork?.artists?.[0]?.href}
                 display="block"
                 textDecoration="none"
               >
@@ -161,7 +187,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
                 artwork?.title
               ) : (
                 <RouterLink
-                  to={artwork?.href!}
+                  to={artwork?.href}
                   display="block"
                   color="black60"
                   textDecoration="none"
@@ -174,17 +200,37 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
         </Column>
 
         <Column span={6}>
-          <EntityHeader
-            href={artwork?.partner?.href!}
-            image={{
-              ...(artwork?.partner?.profile?.icon?.cropped ?? {}),
-              alt: "",
-              lazyLoad: true,
-            }}
-            initials={artwork?.partner?.initials!}
-            meta={artwork?.shippingOrigin?.replace(/, US/g, "")}
-            name={artwork?.partner?.name!}
-          />
+          <Flex
+            justifyContent="space-between"
+            alignItems={"left"}
+            flexDirection={["column", "row"]}
+          >
+            <EntityHeader
+              href={artwork?.partner?.href ?? ""}
+              image={{
+                ...(artwork?.partner?.profile?.icon?.cropped ?? {}),
+                alt: "",
+                lazyLoad: true,
+              }}
+              initials={artwork?.partner?.initials ?? ""}
+              meta={artwork?.shippingOrigin?.replace(/, US/g, "")}
+              name={artwork?.partner?.name ?? ""}
+            />
+
+            {order.displayState === "PAYMENT_FAILED" && (
+              <Button
+                // @ts-ignore
+                as={RouterLink}
+                to={`/orders/${order.internalID}/payment/new`}
+                variant="primaryBlack"
+                size="large"
+                width="50%"
+                mt={[1, 0]}
+              >
+                Update Payment Method
+              </Button>
+            )}
+          </Flex>
         </Column>
 
         <Column span={12}>
@@ -195,13 +241,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
           <Text variant="sm-display">Order No.</Text>
 
           <Text variant="sm-display" color="black60">
-            {isOrderActive ? (
-              <RouterLink inline to={`/orders/${order.internalID}/status`}>
-                {order.code}
-              </RouterLink>
-            ) : (
-              order.code
-            )}
+            {getOrderLink(order)}
           </Text>
         </Column>
 

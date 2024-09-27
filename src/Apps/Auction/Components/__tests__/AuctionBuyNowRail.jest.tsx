@@ -26,6 +26,6 @@ describe("AuctionBuyNowRail", () => {
 
   it("renders correct title", () => {
     const { wrapper } = getWrapper()
-    expect(wrapper.text()).toContain("Buy Now")
+    expect(wrapper.text()).toContain("Inquire")
   })
 })

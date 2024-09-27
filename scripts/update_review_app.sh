@@ -12,5 +12,5 @@ if test -z "$NAME"; then
 fi
 
 hokusai registry push --force --skip-latest --overwrite --verbose --tag "$NAME"
-hokusai review_app setup "$NAME"
+hokusai review_app create-yaml "$NAME"
 hokusai review_app deploy "$NAME" "$NAME"
