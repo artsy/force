@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { graphql } from "react-relay"
 import { RouteProps } from "System/Router/Route"
 
@@ -24,12 +25,13 @@ export const articlesRoutes: RouteProps[] = [
       ArticlesApp.preload()
     },
     query: graphql`
-      query articlesRoutes_ArticlesQuery @cacheable {
+      query articlesRoutes_ArticlesQuery {
         viewer {
           ...ArticlesApp_viewer
         }
       }
     `,
+    serverCacheTTL: serverCacheTTLs.articles,
   },
   {
     path: "/news",
@@ -38,12 +40,13 @@ export const articlesRoutes: RouteProps[] = [
       NewsApp.preload()
     },
     query: graphql`
-      query articlesRoutes_NewsQuery @cacheable {
+      query articlesRoutes_NewsQuery {
         viewer {
           ...NewsApp_viewer
         }
       }
     `,
+    serverCacheTTL: serverCacheTTLs.articles,
   },
   {
     path: "/channel/:id",
@@ -52,11 +55,12 @@ export const articlesRoutes: RouteProps[] = [
       ChannelApp.preload()
     },
     query: graphql`
-      query articlesRoutes_ChannelQuery($id: ID!) @cacheable {
+      query articlesRoutes_ChannelQuery($id: ID!) {
         channel(id: $id) @principalField {
           ...ChannelApp_channel
         }
       }
     `,
+    serverCacheTTL: serverCacheTTLs.articles,
   },
 ]
