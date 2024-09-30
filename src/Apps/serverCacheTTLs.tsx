@@ -1,5 +1,6 @@
 const NO_CACHE = 0
 const HOURS_24 = 86400 // In seconds
+const MINUTES_5 = 300 // In seconds
 
 /**
  * This defines non-default cache TTLs for specific routes. Default is typically
@@ -8,6 +9,8 @@ const HOURS_24 = 86400 // In seconds
  */
 export const serverCacheTTLs = {
   artist: HOURS_24,
+  article: MINUTES_5,
+  articles: MINUTES_5,
   artists: HOURS_24,
   artistSeries: HOURS_24,
   auction: NO_CACHE,

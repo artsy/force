@@ -25,6 +25,7 @@ import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
 import HelpIcon from "@artsy/icons/HelpIcon"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import PendingIcon from "@artsy/icons/PendingIcon"
+import AlertStrokeIcon from "@artsy/icons/AlertStrokeIcon"
 
 const ORDER_LABELS = {
   APPROVED: "Confirmed",
@@ -47,7 +48,7 @@ const ORDER_ICONS = {
   REFUNDED: <CloseStrokeIcon fill="red100" />,
   SUBMITTED: <PendingIcon fill="black60" />,
   PROCESSING_APPROVAL: <PendingIcon fill="black60" />,
-  PAYMENT_FAILED: null,
+  PAYMENT_FAILED: <AlertStrokeIcon fill="red100" />,
 } as const
 
 const ORDER_COLORS = {
