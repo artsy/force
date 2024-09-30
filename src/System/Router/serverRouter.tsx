@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { RouteProps } from "System/Router/Route"
@@ -123,6 +124,16 @@ export const setupServerRouter = async ({
     relayEnvironment,
   })
 
+  // Sentry names transactions according to their Express route.
+  // Overwrite this with the matched React route.
+  const pathname = farceResult.element.props?.renderArgs?.location?.pathname
+  const params = farceResult.element.props?.renderArgs?.params
+  const transactionName =
+    pathname && params ? nameSentryTransaction(pathname, params) : undefined
+  if (transactionName) {
+    Sentry.getCurrentScope().setTransactionName(transactionName)
+  }
+
   const result = {
     headTags,
     html,
@@ -149,3 +160,19 @@ const isRedirect = (
 
 export const __TEST_INTERNAL_SERVER_APP__ =
   typeof jest !== "undefined" ? Symbol() : null
+
+const nameSentryTransaction = <T extends Record<string, string>>(
+  path: string,
+  params: T
+): string | undefined => {
+  try {
+    return Object.entries(params).reduce((result, [key, value]) => {
+      if (!value) return result
+      const regex = new RegExp(value, "g")
+      return result.replace(regex, `:${key}`)
+    }, path)
+  } catch (error) {
+    console.error(error)
+    return undefined
+  }
+}
