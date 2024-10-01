@@ -12282,7 +12282,9 @@ type MarketingCollection implements Node {
   ): String
   credit: String
   description: String
+    @deprecated(reason: "Use `markdownDescription` field instead")
   descriptionMarkdown: String
+    @deprecated(reason: "Use `markdownDescription` field instead")
   featuredArtistExclusionIds: [String!]!
   geneIds: [String]
   headerImage: String
@@ -12298,6 +12300,7 @@ type MarketingCollection implements Node {
 
   # Linked Collections
   linkedCollections: [MarketingCollectionGroup!]!
+  markdownDescription(format: Format): String
   priceGuidance: Float
   query: MarketingCollectionQuery!
 
