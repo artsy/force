@@ -205,7 +205,6 @@ export const redirects: RedirectRecord<OrderQuery> = {
       path: "payment/new",
       rules: [
         goToStatusIfBuyNowCreditCardOrder,
-        goToStatusIfOrderIsNotSubmitted,
         goToStatusIfNotLastTransactionFailed,
       ],
     },
