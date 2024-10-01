@@ -118,12 +118,16 @@ const goToStatusIfOrderIsNotSubmitted = goToStatusIf(
 )
 
 const goToStatusIfNotLastTransactionFailed = goToStatusIf(
-  order => !order.lastTransactionFailed,
-  "Order's lastTransactionFailed must be true"
+  order => !(order.lastTransactionFailed && order.state === "SUBMITTED"),
+  "Order's lastTransactionFailed must be true + state submitted"
 )
 
 const goToNewPaymentIfOfferLastTransactionFailed = ({ order }) => {
-  if (order.mode === "OFFER" && order.lastTransactionFailed) {
+  if (
+    order.mode === "OFFER" &&
+    order.lastTransactionFailed &&
+    order.state === "SUBMITTED"
+  ) {
     return {
       path: `/orders/${order.internalID}/payment/new`,
       reason: "No payment has been successfully made",
