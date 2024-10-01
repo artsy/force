@@ -59,7 +59,7 @@ export const CollectionHeaderFragmentContainer = createFragmentContainer(
     collection: graphql`
       fragment Header_collection on MarketingCollection {
         category
-        description
+        description: markdownDescription(format: HTML)
         id
         slug
         title

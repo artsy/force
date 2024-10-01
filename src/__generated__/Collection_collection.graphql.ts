@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da402d0bd02e79b8cc21f065313ea9ec>>
+ * @generated SignedSource<<6883bc72872d0bbe893d14906c1a9467>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Collection_collection$data = {
-  readonly descriptionMarkdown: string | null | undefined;
   readonly headerImage: string | null | undefined;
+  readonly metaDescription: string | null | undefined;
   readonly showFeaturedArtists: boolean;
   readonly slug: string;
   readonly title: string;
@@ -36,11 +36,17 @@ const node: ReaderFragment = {
       "name": "Header_collection"
     },
     {
-      "alias": null,
-      "args": null,
+      "alias": "metaDescription",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "PLAIN"
+        }
+      ],
       "kind": "ScalarField",
-      "name": "descriptionMarkdown",
-      "storageKey": null
+      "name": "markdownDescription",
+      "storageKey": "markdownDescription(format:\"PLAIN\")"
     },
     {
       "alias": null,
@@ -75,6 +81,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "0073995c658314c7475a9c2040915ab0";
+(node as any).hash = "905f79e256cd1be111ff963a159fa30d";
 
 export default node;

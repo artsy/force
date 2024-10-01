@@ -38,13 +38,12 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
   if (!collection) return <ErrorPage code={404} />
 
-  const { title, slug, headerImage, descriptionMarkdown } = collection
+  const { title, slug, headerImage, metaDescription } = collection
 
-  const metadataDescription = descriptionMarkdown
-    ? `Buy, bid, and inquire on ${title} on Artsy. ${truncate(
-        descriptionMarkdown,
-        { length: 158 }
-      )}`
+  const metadataDescription = metaDescription
+    ? `Buy, bid, and inquire on ${title} on Artsy. ${truncate(metaDescription, {
+        length: 158,
+      })}`
     : `Buy, bid, and inquire on ${title} on Artsy.`
 
   const socialImage = headerImage
@@ -166,7 +165,7 @@ export const CollectionFragmentContainer = createFragmentContainer(
     collection: graphql`
       fragment Collection_collection on MarketingCollection {
         ...Header_collection
-        descriptionMarkdown
+        metaDescription: markdownDescription(format: PLAIN)
         headerImage
         slug
         title
