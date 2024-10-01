@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08efe62bde1356b2123f63db5ba4f3ca>>
+ * @generated SignedSource<<7decebe18a81246743eef915d83eeafc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -87,11 +87,17 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
+            "alias": "description",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "HTML"
+              }
+            ],
             "kind": "ScalarField",
-            "name": "description",
-            "storageKey": null
+            "name": "markdownDescription",
+            "storageKey": "markdownDescription(format:\"HTML\")"
           },
           {
             "alias": null,
@@ -115,11 +121,17 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
+            "alias": "metaDescription",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "PLAIN"
+              }
+            ],
             "kind": "ScalarField",
-            "name": "descriptionMarkdown",
-            "storageKey": null
+            "name": "markdownDescription",
+            "storageKey": "markdownDescription(format:\"PLAIN\")"
           },
           {
             "alias": null,
@@ -141,12 +153,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4001b13ca012549b75086e23f183b73c",
+    "cacheID": "ba5f3b408393f1fe8869e50d1d1c3531",
     "id": null,
     "metadata": {},
     "name": "collectRoutes_CollectionQuery",
     "operationKind": "query",
-    "text": "query collectRoutes_CollectionQuery(\n  $slug: String!\n) {\n  collection: marketingCollection(slug: $slug) @principalField {\n    ...Collection_collection\n    id\n  }\n}\n\nfragment Collection_collection on MarketingCollection {\n  ...Header_collection\n  descriptionMarkdown\n  headerImage\n  slug\n  title\n  showFeaturedArtists\n}\n\nfragment Header_collection on MarketingCollection {\n  category\n  description\n  id\n  slug\n  title\n}\n"
+    "text": "query collectRoutes_CollectionQuery(\n  $slug: String!\n) {\n  collection: marketingCollection(slug: $slug) @principalField {\n    ...Collection_collection\n    id\n  }\n}\n\nfragment Collection_collection on MarketingCollection {\n  ...Header_collection\n  metaDescription: markdownDescription(format: PLAIN)\n  headerImage\n  slug\n  title\n  showFeaturedArtists\n}\n\nfragment Header_collection on MarketingCollection {\n  category\n  description: markdownDescription(format: HTML)\n  id\n  slug\n  title\n}\n"
   }
 };
 })();
