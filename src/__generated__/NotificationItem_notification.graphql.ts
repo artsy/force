@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f30d31567eec2fe2a54053749a96ac5>>
+ * @generated SignedSource<<82fe7e090d5d505fd2d7e0113ea9254e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,10 +17,13 @@ export type NotificationItem_notification$data = {
   readonly internalID: string;
   readonly isUnread: boolean;
   readonly item: {
-    readonly __typename: string;
-    readonly available?: boolean | null | undefined;
-    readonly expiresAt?: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"NotificationItemCollectorProfileUpdatePrompt_notificationItem">;
+    readonly __typename: "PartnerOfferCreatedNotificationItem";
+    readonly available: boolean | null | undefined;
+    readonly expiresAt: string | null | undefined;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
   } | null | undefined;
   readonly message: string;
   readonly notificationType: NotificationTypesEnum;
@@ -114,11 +117,6 @@ return {
       "name": "item",
       "plural": false,
       "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "NotificationItemCollectorProfileUpdatePrompt_notificationItem"
-        },
         {
           "alias": null,
           "args": null,
@@ -227,6 +225,6 @@ return {
 };
 })();
 
-(node as any).hash = "19d6409e35b65b09ecf22aa2aa931a1a";
+(node as any).hash = "b2e1725decadccbf37ef770c67b23c96";
 
 export default node;

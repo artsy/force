@@ -26,7 +26,6 @@ import createLogger from "Utils/logger"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
-import { NotificationCollectorProfileUpdatePrompt } from "Components/Notifications/NotificationCollectorProfileUpdatePrompt"
 
 const logger = createLogger("NotificationItem")
 
@@ -125,11 +124,6 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
     case "VIEWING_ROOM_PUBLISHED":
       return <ViewingRoomPublishedNotification notification={notification} />
 
-    case "COLLECTOR_PROFILE_UPDATE_PROMPT":
-      return (
-        <NotificationCollectorProfileUpdatePrompt notification={notification} />
-      )
-
     default:
       return null
   }
@@ -160,7 +154,6 @@ const notificationQuery = graphql`
         ...PartnerOfferCreatedNotification_notification
         ...PartnerShowOpenedNotification_notification
         ...ViewingRoomPublishedNotification_notification
-        ...NotificationCollectorProfileUpdatePrompt_notification
         id
         internalID
         notificationType
