@@ -3,8 +3,8 @@ import withGracefulShutdown from "http-shutdown"
 import { once } from "lodash"
 import { initializeArtsyXapp } from "./artsyXapp"
 import { errorHandlerMiddleware } from "./middleware/errorHandler"
-import * as Sentry from "@sentry/node"
 import { APP_URL, NODE_ENV, PORT } from "Server/config"
+import { setupExpressErrorHandler } from "@sentry/node"
 
 const { HEADERS_TIMEOUT_SECONDS, KEEPALIVE_TIMEOUT_SECONDS } = process.env
 
@@ -55,7 +55,7 @@ export async function startServer(app) {
 
 function setupErrorHandling(app) {
   // Setup exception reporting
-  app.use(Sentry.Handlers.errorHandler())
+  setupExpressErrorHandler(app)
 
   // And error handling
   app.get("*", (req, res, next) => {

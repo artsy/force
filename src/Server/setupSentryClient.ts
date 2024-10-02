@@ -1,18 +1,20 @@
-import * as Sentry from "@sentry/browser"
-import { Integrations } from "@sentry/tracing"
-import { Dedupe } from "@sentry/integrations"
+import {
+  init,
+  browserTracingIntegration,
+  dedupeIntegration,
+} from "@sentry/browser"
 import {
   ALLOWED_URLS,
   DENIED_URLS,
   IGNORED_ERRORS,
 } from "./analytics/sentryFilters"
 
-export function setupSentryClient(sd) {
-  Sentry.init({
+export function setupSentryClient(sentryPublicDSN: string) {
+  init({
     allowUrls: ALLOWED_URLS,
     denyUrls: DENIED_URLS,
-    dsn: sd.SENTRY_PUBLIC_DSN,
+    dsn: sentryPublicDSN,
     ignoreErrors: IGNORED_ERRORS,
-    integrations: [new Integrations.BrowserTracing(), new Dedupe()],
+    integrations: [browserTracingIntegration(), dedupeIntegration()],
   })
 }

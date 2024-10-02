@@ -35,6 +35,10 @@ export const shouldDisplayNotification = (
     return !!notification.item?.article?.internalID
   }
 
+  if (notification.notificationType === "COLLECTOR_PROFILE_UPDATE_PROMPT") {
+    return false
+  }
+
   return true
 }
 
