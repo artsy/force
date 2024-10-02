@@ -394,7 +394,7 @@ describe("OrderApp routing redirects", () => {
     expect(redirect.url).toBe("/orders/2939023/status")
   })
 
-  it("redirects to the new payment route if lastTransactionFailed failed on offer", async () => {
+  it("redirects to the new payment route if lastTransactionFailed failed on offer and state is submitted", async () => {
     const res = await render(
       "/orders/2939023/respond",
       mockResolver({
