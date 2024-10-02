@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b63610d4a9c07e01ebab0671ec73978c>>
+ * @generated SignedSource<<e4498eace4129a1aee6a15eef00a798e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -85,11 +85,6 @@ v4 = {
   "storageKey": null
 },
 v5 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 1
-},
-v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -239,47 +234,7 @@ return {
                         "name": "item",
                         "plural": false,
                         "selections": [
-                          {
-                            "kind": "TypeDiscriminator",
-                            "abstractKey": "__isNotificationItem"
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Me",
-                                "kind": "LinkedField",
-                                "name": "me",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": [
-                                      (v5/*: any*/),
-                                      {
-                                        "kind": "Literal",
-                                        "name": "interestType",
-                                        "value": "ARTIST"
-                                      }
-                                    ],
-                                    "concreteType": "UserInterestConnection",
-                                    "kind": "LinkedField",
-                                    "name": "userInterestsConnection",
-                                    "plural": false,
-                                    "selections": (v3/*: any*/),
-                                    "storageKey": "userInterestsConnection(first:1,interestType:\"ARTIST\")"
-                                  },
-                                  (v4/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "type": "CollectorProfileUpdatePromptNotificationItem",
-                            "abstractKey": null
-                          },
-                          (v6/*: any*/),
+                          (v5/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
@@ -307,7 +262,11 @@ return {
                               {
                                 "alias": null,
                                 "args": [
-                                  (v5/*: any*/)
+                                  {
+                                    "kind": "Literal",
+                                    "name": "first",
+                                    "value": 1
+                                  }
                                 ],
                                 "concreteType": "ViewingRoomsConnection",
                                 "kind": "LinkedField",
@@ -422,7 +381,7 @@ return {
                         "name": "publishedAt",
                         "storageKey": "publishedAt(format:\"RELATIVE\")"
                       },
-                      (v6/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -479,12 +438,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e26ae6a78be0945f6bd5f3def1a75906",
+    "cacheID": "41ac9bd3c03675d0b405c601a87be21a",
     "id": null,
     "metadata": {},
     "name": "NotificationsListNextQuery",
     "operationKind": "query",
-    "text": "query NotificationsListNextQuery(\n  $count: Int!\n  $cursor: String\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_2TJroH\n  }\n}\n\nfragment NotificationItemCollectorProfileUpdatePrompt_notificationItem on NotificationItem {\n  __isNotificationItem: __typename\n  ... on CollectorProfileUpdatePromptNotificationItem {\n    me {\n      userInterestsConnection(interestType: ARTIST, first: 1) {\n        totalCount\n      }\n      id\n    }\n  }\n}\n\nfragment NotificationItem_notification on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    ...NotificationItemCollectorProfileUpdatePrompt_notificationItem\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    internalID\n    blurhashDataURL\n    resized(height: 58, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      srcSet\n    }\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment NotificationsList_viewer_2TJroH on Viewer {\n  notifications: notificationsConnection(first: $count, after: $cursor, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_notification\n        item {\n          __typename\n          ... on ViewingRoomPublishedNotificationItem {\n            viewingRoomsConnection(first: 1) {\n              totalCount\n            }\n          }\n          ... on ArticleFeaturedArtistNotificationItem {\n            article {\n              internalID\n              id\n            }\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsListNextQuery(\n  $count: Int!\n  $cursor: String\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_2TJroH\n  }\n}\n\nfragment NotificationItem_notification on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    internalID\n    blurhashDataURL\n    resized(height: 58, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      srcSet\n    }\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment NotificationsList_viewer_2TJroH on Viewer {\n  notifications: notificationsConnection(first: $count, after: $cursor, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_notification\n        item {\n          __typename\n          ... on ViewingRoomPublishedNotificationItem {\n            viewingRoomsConnection(first: 1) {\n              totalCount\n            }\n          }\n          ... on ArticleFeaturedArtistNotificationItem {\n            article {\n              internalID\n              id\n            }\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

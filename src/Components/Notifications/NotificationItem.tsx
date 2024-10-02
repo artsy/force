@@ -16,7 +16,6 @@ import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { Media } from "Utils/Responsive"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-import { NotificationItemCollectorProfileUpdatePrompt } from "Components/Notifications/NotificationItemCollectorProfileUpdatePrompt"
 import { NotificationItemUnreadIndicator } from "Components/Notifications/NotificationItemUnreadIndicator"
 
 const logger = createLogger("NotificationItem")
@@ -30,9 +29,6 @@ const NotificationItem: FC<NotificationItemProps> = ({
   notification,
   mode,
 }) => {
-  const {
-    state: { currentNotificationId },
-  } = useNotificationsContext()
   const { tracking } = useNotificationsTracking()
   const { markAsRead } = useMarkNotificationAsRead()
 
@@ -45,117 +41,99 @@ const NotificationItem: FC<NotificationItemProps> = ({
     tracking.clickedActivityPanelNotificationItem(notification.notificationType)
   }
 
-  const isActive = currentNotificationId === notification.internalID
-
   if (!notification.item) return null
 
-  switch (notification.item.__typename) {
-    case "CollectorProfileUpdatePromptNotificationItem": {
-      return (
-        <NotificationItemCollectorProfileUpdatePrompt
-          isActive={isActive}
-          isUnread={notification.isUnread}
-          notificationItem={notification.item}
-          onClick={handleClick}
-        />
-      )
-    }
+  const remainingArtworksCount = notification.objectsCount - 4
+  const shouldDisplayCounts =
+    isArtworksBasedNotification(notification.notificationType) &&
+    remainingArtworksCount > 0
 
-    // FIXME: Simplify by returning unique components for each notification type
-    default: {
-      const remainingArtworksCount = notification.objectsCount - 4
-      const shouldDisplayCounts =
-        isArtworksBasedNotification(notification.notificationType) &&
-        remainingArtworksCount > 0
+  const subTitle = getNotificationSubTitle(notification)
 
-      const subTitle = getNotificationSubTitle(notification)
+  return (
+    <NotificationItemWrapper
+      item={notification}
+      mode={mode}
+      onClick={handleClick}
+    >
+      <Flex
+        flex={1}
+        flexDirection={
+          notification.notificationType === "PARTNER_OFFER_CREATED"
+            ? "row"
+            : "column"
+        }
+      >
+        {!!notification.previewImages.length && (
+          <Flex flexDirection="row" alignItems="center" mb={0.5}>
+            <Flex flex={1}>
+              <Join separator={<Spacer x={1} />}>
+                {notification.previewImages.map((image, index) => {
+                  if (!image.resized) return null
 
-      return (
-        <NotificationItemWrapper
-          item={notification}
-          mode={mode}
-          onClick={handleClick}
-        >
-          <Flex
-            flex={1}
-            flexDirection={
-              notification.notificationType === "PARTNER_OFFER_CREATED"
-                ? "row"
-                : "column"
-            }
-          >
-            {!!notification.previewImages.length && (
-              <Flex flexDirection="row" alignItems="center" mb={0.5}>
-                <Flex flex={1}>
-                  <Join separator={<Spacer x={1} />}>
-                    {notification.previewImages.map((image, index) => {
-                      if (!image.resized) return null
+                  return (
+                    <Image
+                      key={index}
+                      srcSet={image.resized.srcSet}
+                      alt=""
+                      height={58}
+                      lazyLoad
+                      placeHolderURL={image.blurhashDataURL ?? undefined}
+                    />
+                  )
+                })}
+              </Join>
+              <Spacer x={1} />
+            </Flex>
 
-                      return (
-                        <Image
-                          key={index}
-                          srcSet={image.resized.srcSet}
-                          alt=""
-                          height={58}
-                          lazyLoad
-                          placeHolderURL={image.blurhashDataURL ?? undefined}
-                        />
-                      )
-                    })}
-                  </Join>
-                  <Spacer x={1} />
-                </Flex>
-
-                {shouldDisplayCounts && (
-                  <Text
-                    variant="xs"
-                    color="black60"
-                    aria-label="Remaining artworks count"
-                    ml={1}
-                  >
-                    + {remainingArtworksCount}
-                  </Text>
-                )}
-              </Flex>
-            )}
-
-            <Flex flexDirection="column">
+            {shouldDisplayCounts && (
               <Text
                 variant="xs"
-                color="blue100"
-                backgroundColor="blue10"
-                px={0.5}
-                alignSelf="flex-start"
-                borderRadius={3}
+                color="black60"
+                aria-label="Remaining artworks count"
+                ml={1}
               >
-                {getNotificationPrelude(notification)}
+                + {remainingArtworksCount}
               </Text>
-
-              <Text fontWeight="bold" variant="sm-display">
-                {notification.headline}
-              </Text>
-
-              {!!subTitle && <Text variant="xs">{subTitle}</Text>}
-
-              <Flex flexDirection="row" gap={0.5}>
-                <NotificationTypeLabel notification={notification} />
-                {notification.item?.__typename ===
-                  "PartnerOfferCreatedNotificationItem" &&
-                  notification.item.expiresAt && (
-                    <ExpiresInTimer
-                      expiresAt={notification.item.expiresAt}
-                      available={notification.item.available}
-                    />
-                  )}
-              </Flex>
-            </Flex>
+            )}
           </Flex>
+        )}
 
-          {notification.isUnread && <NotificationItemUnreadIndicator ml={1} />}
-        </NotificationItemWrapper>
-      )
-    }
-  }
+        <Flex flexDirection="column">
+          <Text
+            variant="xs"
+            color="blue100"
+            backgroundColor="blue10"
+            px={0.5}
+            alignSelf="flex-start"
+            borderRadius={3}
+          >
+            {getNotificationPrelude(notification)}
+          </Text>
+
+          <Text fontWeight="bold" variant="sm-display">
+            {notification.headline}
+          </Text>
+
+          {!!subTitle && <Text variant="xs">{subTitle}</Text>}
+
+          <Flex flexDirection="row" gap={0.5}>
+            <NotificationTypeLabel notification={notification} />
+            {notification.item?.__typename ===
+              "PartnerOfferCreatedNotificationItem" &&
+              notification.item.expiresAt && (
+                <ExpiresInTimer
+                  expiresAt={notification.item.expiresAt}
+                  available={notification.item.available}
+                />
+              )}
+          </Flex>
+        </Flex>
+      </Flex>
+
+      {notification.isUnread && <NotificationItemUnreadIndicator ml={1} />}
+    </NotificationItemWrapper>
+  )
 }
 
 export const NotificationItemFragmentContainer = createFragmentContainer(
@@ -172,7 +150,6 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         notificationType
         objectsCount
         item {
-          ...NotificationItemCollectorProfileUpdatePrompt_notificationItem
           __typename
           ... on PartnerOfferCreatedNotificationItem {
             available
