@@ -194,7 +194,6 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
   }) => {
     const { confirmed } = await dialog.showConfirmDialog({
       ...props,
-      cancelButtonText: "OK",
       confirmButtonText: "Use new card",
     })
     if (confirmed) {
