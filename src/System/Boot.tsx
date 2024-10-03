@@ -4,13 +4,9 @@ import { FC, useEffect } from "react"
 import * as React from "react"
 import { HeadProvider } from "react-head"
 import { Environment, RelayEnvironmentProvider } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
-import { data as sd } from "sharify"
 import Events from "Utils/Events"
-import { getENV } from "Utils/getENV"
 import { MatchingMediaQueries, MediaContextProvider } from "Utils/Responsive"
 import { SiftContainer } from "Utils/SiftContainer"
-import { setupSentryClient } from "Server/setupSentryClient"
 import "System/i18n/i18n"
 import track from "react-tracking"
 import { StickyProvider } from "Components/Sticky"
@@ -48,10 +44,6 @@ export const Boot = track(undefined, {
    */
   useEffect(() => {
     document.body.setAttribute("data-test", "AppReady") //
-
-    if (getENV("NODE_ENV") === "production") {
-      setupSentryClient(sd.SENTRY_PUBLIC_DSN)
-    }
   }, [])
 
   const {
