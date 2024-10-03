@@ -13,7 +13,6 @@
   <link rel="preload" href="<%%= fontUrl %>/ll-unica77_italic.woff2" as="font" type="font/woff2" crossorigin />
 
   <%% if (!disable.scripts) { %>
-    <!-- Create preload tags for dynamic chunks -->
     <%- htmlWebpackPlugin.tags.headTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.attributes['src'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; return tag; }) %>
   <%% } %>
 
@@ -45,10 +44,8 @@
   <div id="react-root"><%%- content.body %></div>
 
   <%% if (!disable.scripts) { %>
-    <!-- String concatenation is needed allow outputting a template tag -->
     <%- htmlWebpackPlugin.tags.bodyTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.attributes['src'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; tag.attributes['async'] = true; return tag; }) %>
   <%% } %>
-
 
   <%% if (!disable.segment && !sd.THIRD_PARTIES_DISABLED && sd.SEGMENT_WRITE_KEY) { %>
   <script type="text/javascript" defer>

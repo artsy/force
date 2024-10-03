@@ -81,6 +81,8 @@ export const collectAssets = async ({
           return script
         }
       })
+      // Add defer tag
+      .map(script => script.replace("></script>", " defer></script>"))
       .filter(script => {
         return !(
           /**
