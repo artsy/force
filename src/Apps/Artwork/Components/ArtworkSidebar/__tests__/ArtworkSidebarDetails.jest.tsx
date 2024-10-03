@@ -238,7 +238,7 @@ describe("ArtworkSidebarDetails", () => {
       })
 
       expect(screen.queryByText(/Showing now/)).toBeInTheDocument()
-      expect(screen.queryByText(/Jun 17-Jun 20/)).toBeInTheDocument()
+      expect(screen.queryByText(/Jun 17–Jun 20/)).toBeInTheDocument()
       expect(screen.queryByText(/Art Basel/)).toBeInTheDocument()
     })
 
