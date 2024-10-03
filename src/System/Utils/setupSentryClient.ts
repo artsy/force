@@ -14,9 +14,9 @@ import {
   DENIED_URLS,
   IGNORED_ERRORS,
 } from "Server/analytics/sentryFilters"
-import { Client } from "@sentry/types/build/types/client"
 import { Match } from "found"
 import { getENV } from "Utils/getENV"
+import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 
 let initialPageLoadSpan: Span | undefined | null
 
@@ -54,8 +54,11 @@ export function setupSentryClient() {
 export const setupSentryRouterTracing = sentryClient => {
   return {
     initialPageloadStart: () => {
-      return startBrowserTracingPageLoadSpan(sentryClient as Client, {
-        name: window.location.pathname,
+      const foundRoute = findRoutesByPath({ path: window.location.pathname })
+      const routeId = foundRoute[0].route.path || "/"
+
+      return startBrowserTracingPageLoadSpan(sentryClient, {
+        name: routeId,
         attributes: {
           [SEMANTIC_ATTRIBUTE_SENTRY_OP]: "pageload",
           [SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN]:
@@ -67,11 +70,15 @@ export const setupSentryRouterTracing = sentryClient => {
 
     initialPageloadComplete: (match: Match) => {
       if (initialPageLoadSpan) {
-        initialPageLoadSpan.updateName(match.location.pathname)
+        const foundRoute = findRoutesByPath({ path: window.location.pathname })
+        const routeId = foundRoute[0].route.path as string
+
+        initialPageLoadSpan.updateName(routeId)
         initialPageLoadSpan.setAttribute(
           SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
           "route"
         )
+
         initialPageLoadSpan = null
         return
       }
@@ -80,15 +87,21 @@ export const setupSentryRouterTracing = sentryClient => {
     navigation: (match: Match) => {
       sentryRouterTracing?.initialPageloadComplete(match)
 
+      const foundRoute = findRoutesByPath({ path: window.location.pathname })
+      const routeId = foundRoute[0].route.path as string
+
       startBrowserTracingNavigationSpan(sentryClient, {
         op: "navigation",
-        name: match.location.pathname,
+        // Matches by path ID: /artist/:slug
+        name: routeId,
         attributes: {
           [SEMANTIC_ATTRIBUTE_SENTRY_OP]: "navigation",
           [SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN]:
             "auto.navigation.react.client_router",
           [SEMANTIC_ATTRIBUTE_SENTRY_SOURCE]: "route",
           ...routeMatchToParamSpanAttributes(match.params),
+          // TODO:
+          // SEMANTIC_ATTRIBUTE_CACHE_HIT
         },
       })
     },
