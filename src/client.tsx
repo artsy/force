@@ -4,8 +4,10 @@ import { getAppRoutes } from "routes"
 import { loadableReady } from "@loadable/component"
 import { setupAnalytics } from "Server/analytics/helpers"
 import { setupClientRouter } from "System/Router/clientRouter"
+import { setupSentryClient } from "System/Utils/setupSentryClient"
 
 setupAnalytics()
+setupSentryClient()
 
 const { ClientRouter } = setupClientRouter({
   routes: getAppRoutes(),
