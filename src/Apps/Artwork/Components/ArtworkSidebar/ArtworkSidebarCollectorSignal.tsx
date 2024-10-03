@@ -83,7 +83,7 @@ export const ArtworkSidebarCollectorSignal: React.FC<ArtworkSidebarCollectorSign
         <FairIcon mr={1} mt={0.5} />
         <Stack gap={0}>
           <Text variant="sm" color="black100">
-            Showing now • {startAt}-{endAt}
+            Showing now • {startAt}–{endAt}
           </Text>
           <RouterLink to={data.collectorSignals?.runningShow?.href}>
             <Text variant="sm">{data.collectorSignals?.runningShow?.name}</Text>
