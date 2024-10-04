@@ -45,6 +45,7 @@ export const ArtworkLightboxPlaceholder: React.FC<ArtworkLightboxPlaceholderProp
           alt="Loading"
           lazyLoad={lazyLoad}
           style={{ filter: "blur(10px)" }}
+          {...(preload ? { fetchPriority: "high" } : {})}
         />
       </Box>
     </>

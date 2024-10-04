@@ -1,4 +1,5 @@
 import Braze from "@braze/web-sdk"
+import React from "react"
 
 declare global {
   interface Document {
@@ -51,6 +52,12 @@ declare global {
     // Zendesk properties
     zEmbed: { show: () => void; hide: () => void }
     zESettings: object
+  }
+}
+
+declare module "react" {
+  interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
+    fetchPriority?: "high" | "low" | "auto"
   }
 }
 
