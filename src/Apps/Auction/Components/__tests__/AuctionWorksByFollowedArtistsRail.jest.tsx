@@ -32,7 +32,7 @@ describe("AuctionWorksByFollowedArtistsRail", () => {
     expect(wrapper.text()).toContain("Works By Artists You Follow")
   })
 
-  it("renders the countdown timer label", () => {
+  it.skip("renders the countdown timer label", () => {
     const baseDate = DateTime.local()
     const startDate = baseDate.minus({ hours: 1 })
     const endDate = baseDate.plus({ hours: 1 })

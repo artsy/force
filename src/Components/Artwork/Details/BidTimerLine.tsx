@@ -5,6 +5,8 @@ import { Text } from "@artsy/palette"
 import { DateTime } from "luxon"
 import { graphql, useFragment } from "react-relay"
 import { BidTimerLine_artwork$key } from "__generated__/BidTimerLine_artwork.graphql"
+import { useState } from "react"
+import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 
 interface BidTimerLineProps {
   artwork: BidTimerLine_artwork$key
@@ -13,22 +15,38 @@ interface BidTimerLineProps {
 export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
   const data = useFragment(bidTimerLineFragment, artwork)
 
-  const { collectorSignals } = data
+  const { collectorSignals, saleArtwork } = data
   const { lotClosesAt, registrationEndsAt, onlineBiddingExtended } =
     collectorSignals?.auction ?? {}
-  const { time } = useTimer(lotClosesAt ?? "")
+
+  // Local state for webhook updates. Initialize with values coming from props.
+  // Then, update these values when the websocket sends a new event.
+  // Use these updated values for timer/rendering.
+  const [updatedLotClosesAt, setUpdatedLotClosesAt] = useState(lotClosesAt)
+  const [
+    updatedOnlineBiddingExtended,
+    setUpdatedOnlineBiddingExtended,
+  ] = useState(onlineBiddingExtended)
+
+  useAuctionWebsocket({
+    lotID: saleArtwork?.lotID!,
+    onChange: ({ extended_bidding_end_at }) => {
+      setUpdatedLotClosesAt(extended_bidding_end_at)
+      setUpdatedOnlineBiddingExtended(true)
+    },
+  })
+
+  const { time, hasEnded: hasBiddingEnded } = useTimer(updatedLotClosesAt!)
   const { days, hours, minutes, seconds } = time
   const { isAuctionArtwork } = useArtworkGridContext()
-  const biddingEnded = lotClosesAt && new Date(lotClosesAt) <= new Date()
-  const registrationEnded =
-    registrationEndsAt && new Date(registrationEndsAt) <= new Date()
+  const { hasEnded: hasRegistrationEnded } = useTimer(registrationEndsAt!)
 
   const numDays = Number(days)
   const numHours = Number(hours)
   const numMinutes = Number(minutes)
   const numSeconds = Number(seconds)
 
-  if (registrationEndsAt && !registrationEnded && !isAuctionArtwork) {
+  if (registrationEndsAt && !hasRegistrationEnded && !isAuctionArtwork) {
     const date = DateTime.fromISO(registrationEndsAt)
     const formattedRegistrationEndsAt = date.toFormat("MMM d")
 
@@ -45,7 +63,7 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
     )
   }
 
-  if (!lotClosesAt || numDays > 5 || biddingEnded) {
+  if (!lotClosesAt || numDays > 5 || hasBiddingEnded) {
     return <EmptyLine />
   }
 
@@ -53,14 +71,14 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
     numDays > 0 && `${numDays}d`,
     numHours > 0 && `${numHours}h`,
     numDays === 0 && numHours === 0 && numMinutes > 0 && `${numMinutes}m`,
-    numDays === 0 && numHours === 0 && numMinutes === 0 && `${numSeconds}s`,
+    numDays === 0 && numHours === 0 && numMinutes <= 1 && `${numSeconds}s`,
   ]
     .filter(Boolean)
     .join(" ")
 
   const textColor = numHours < 1 && numDays === 0 ? "red100" : "blue100"
 
-  if (onlineBiddingExtended && isAuctionArtwork) {
+  if (updatedOnlineBiddingExtended && isAuctionArtwork) {
     return (
       <Text
         variant="sm-display"
@@ -88,6 +106,9 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
 
 const bidTimerLineFragment = graphql`
   fragment BidTimerLine_artwork on Artwork {
+    saleArtwork {
+      lotID
+    }
     collectorSignals {
       auction {
         lotClosesAt
