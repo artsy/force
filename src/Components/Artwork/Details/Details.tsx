@@ -253,24 +253,17 @@ const BidInfo: React.FC<DetailsProps> = ({
     return null
   }
 
-  const bidderPositionCounts = sale_artwork?.counts?.bidder_positions ?? 0
-  const bidCount = collectorSignals?.auction?.bidCount ?? 0
+  const bidCount = signalsAuctionEnabled
+    ? collectorSignals?.auction?.bidCount ?? 0
+    : sale_artwork?.counts?.bidder_positions ?? 0
 
-  if (bidCount === 0 && bidderPositionCounts === 0) {
+  if (bidCount === 0) {
     return null
   }
 
   return (
     <>
-      {signalsAuctionEnabled ? (
-        <>
-          ({bidCount} bid{bidCount === 1 ? "" : "s"})
-        </>
-      ) : (
-        <>
-          ({bidderPositionCounts} bid{bidderPositionCounts === 1 ? "" : "s"})
-        </>
-      )}
+      ({bidCount} bid{bidCount === 1 ? "" : "s"})
     </>
   )
 }
