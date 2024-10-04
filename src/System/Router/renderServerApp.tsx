@@ -8,7 +8,7 @@ import { ServerAppResults } from "System/Router/serverRouter"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
-const { CDN_URL, NODE_ENV } = process.env
+const { CDN_URL, NODE_ENV, GEMINI_CLOUDFRONT_URL } = process.env
 
 const PUBLIC_DIR = path.resolve(process.cwd(), "public")
 
@@ -60,6 +60,7 @@ export const renderServerApp = ({
     },
     env: NODE_ENV,
     fontUrl: WEBFONT_URL,
+    imageCdnUrl: GEMINI_CLOUDFRONT_URL,
     icons: {
       // TODO: Move to new assset pipeline, this adds the CDN for images.
       favicon: res.locals.asset("/images/favicon.ico"),
