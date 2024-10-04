@@ -81,16 +81,24 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
           aspectWidth={image.width || 1}
           aspectHeight={image.height || 1}
         >
-          <ArtworkLightboxPlaceholder
-            key={placeholder!}
-            src={placeholder!}
-            preload={!!isDefault}
-            lazyLoad={!!lazyLoad}
-          />
+          {placeholder && (
+            <ArtworkLightboxPlaceholder
+              key={placeholder}
+              src={placeholder}
+              preload={!!isDefault}
+              lazyLoad={!!lazyLoad}
+            />
+          )}
+
           <Image
             data-testid="artwork-lightbox-image"
-            id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
             key={`${internalID}`}
+            {...(isDefault
+              ? {
+                  id: "transitionFrom--ViewInRoom",
+                  fetchPriority: "high",
+                }
+              : {})}
             width="100%"
             height={"100%"}
             src={image.src}

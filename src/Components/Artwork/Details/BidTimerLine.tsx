@@ -17,7 +17,7 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
   const { lotClosesAt, registrationEndsAt, onlineBiddingExtended } =
     collectorSignals?.auction ?? {}
   const { time } = useTimer(lotClosesAt ?? "")
-  const { days, hours, minutes } = time
+  const { days, hours, minutes, seconds } = time
   const { isAuctionArtwork } = useArtworkGridContext()
   const biddingEnded = lotClosesAt && new Date(lotClosesAt) <= new Date()
   const registrationEnded =
@@ -26,6 +26,7 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
   const numDays = Number(days)
   const numHours = Number(hours)
   const numMinutes = Number(minutes)
+  const numSeconds = Number(seconds)
 
   if (registrationEndsAt && !registrationEnded && !isAuctionArtwork) {
     const date = DateTime.fromISO(registrationEndsAt)
@@ -51,7 +52,8 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
   const renderLotCloseTime = [
     numDays > 0 && `${numDays}d`,
     numHours > 0 && `${numHours}h`,
-    numDays === 0 && numHours === 0 && `${numMinutes}m`,
+    numDays === 0 && numHours === 0 && numMinutes > 0 && `${numMinutes}m`,
+    numDays === 0 && numHours === 0 && numMinutes === 0 && `${numSeconds}s`,
   ]
     .filter(Boolean)
     .join(" ")
