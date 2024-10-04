@@ -15,9 +15,14 @@ jest.unmock("react-relay")
 const mockUseArtworkGridContext = useArtworkGridContext as jest.Mock
 const mockUseTimer = useTimer as jest.Mock
 
-const mockTimer = (days: string, hours: string, minutes: string) => {
+const mockTimer = (
+  days: string,
+  hours: string,
+  minutes: string,
+  seconds: string
+) => {
   mockUseTimer.mockReturnValue({
-    time: { days, hours, minutes },
+    time: { days, hours, minutes, seconds },
   })
 }
 
@@ -28,7 +33,7 @@ const mockArtworkGridContext = (isAuctionArtwork: boolean) => {
 describe("BidTimerLine", () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    mockTimer("0", "5", "30")
+    mockTimer("0", "5", "30", "12")
     mockArtworkGridContext(false)
   })
 
@@ -97,14 +102,14 @@ describe("BidTimerLine", () => {
       }),
     })
 
-    mockTimer("0", "5", "30")
+    mockTimer("0", "5", "30", "25")
 
     const timeLeft = screen.getByText(/5h left to bid/i)
     expect(timeLeft).toBeInTheDocument()
   })
 
   it("renders extended bidding time when online bidding has been extended and is a lot detail card", () => {
-    mockTimer("0", "0", "30")
+    mockTimer("0", "0", "30", "56")
     mockUseArtworkGridContext.mockReturnValue({ isAuctionArtwork: true })
 
     renderWithRelay({
@@ -124,7 +129,7 @@ describe("BidTimerLine", () => {
   })
 
   it("renders bidding time without 'Extended' text when online bidding has been extended and is not a lot detail card", () => {
-    mockTimer("0", "0", "30")
+    mockTimer("0", "0", "30", "1")
 
     renderWithRelay({
       Artwork: () => ({
@@ -139,6 +144,45 @@ describe("BidTimerLine", () => {
     })
 
     const extendedTime = screen.getByText(/30m left to bid/i)
+    expect(extendedTime).toBeInTheDocument()
+  })
+
+  it("renders extended bidding time less than 1 minute", () => {
+    mockTimer("0", "0", "0", "56")
+    mockUseArtworkGridContext.mockReturnValue({ isAuctionArtwork: true })
+
+    renderWithRelay({
+      Artwork: () => ({
+        collectorSignals: {
+          auction: {
+            lotClosesAt: DateTime.local().plus({ days: 1 }).toString(),
+            onlineBiddingExtended: true,
+            registrationEndsAt: null,
+          },
+        },
+      }),
+    })
+
+    const extendedTime = screen.getByText(/Extended, 56s left/i)
+    expect(extendedTime).toBeInTheDocument()
+  })
+
+  it("renders time left to bid when it's less than 1 minute", () => {
+    mockTimer("0", "0", "0", "7")
+
+    renderWithRelay({
+      Artwork: () => ({
+        collectorSignals: {
+          auction: {
+            lotClosesAt: DateTime.local().plus({ days: 1 }).toString(),
+            onlineBiddingExtended: true,
+            registrationEndsAt: null,
+          },
+        },
+      }),
+    })
+
+    const extendedTime = screen.getByText(/^7s left to bid/i)
     expect(extendedTime).toBeInTheDocument()
   })
 })
