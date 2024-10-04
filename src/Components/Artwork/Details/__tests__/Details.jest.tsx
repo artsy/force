@@ -636,6 +636,28 @@ describe("Details", () => {
 
       expect(html).toContain("Increased Interest")
     })
+
+    it("does not show the number of bids when there are bids on the sale artwork but no auction signals", async () => {
+      const data: any = {
+        ...artworkInAuction,
+        collectorSignals: {
+          ...artworkInAuction?.collectorSignals,
+          auction: null,
+        },
+        sale_artwork: {
+          ...artworkInAuction?.sale_artwork,
+          counts: {
+            ...artworkInAuction?.sale_artwork?.counts,
+            bidder_positions: 2,
+          },
+        },
+      }
+
+      const wrapper = await getWrapper(data)
+      const html = wrapper.html()
+      expect(html).toContain("$2,600")
+      expect(html).not.toMatch(/\d+ bids?/)
+    })
   })
 })
 
