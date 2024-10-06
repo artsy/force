@@ -86,13 +86,16 @@ export const HomeWorksByArtistsYouFollowRailFragmentContainer = createFragmentCo
   HomeWorksByArtistsYouFollowRail,
   {
     homePage: graphql`
-      fragment HomeWorksByArtistsYouFollowRail_homePage on HomePage {
+      fragment HomeWorksByArtistsYouFollowRail_homePage on HomePage # @argumentDefinitions(
+      #   ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
+      # )
+      {
         artworkModule(key: FOLLOWED_ARTISTS) {
           results {
             internalID
             slug
             collectorSignals {
-              primaryLabel
+              primaryLabel #(ignore: $ignorePrimaryLabelSignals)
               auction {
                 bidCount
                 lotWatcherCount

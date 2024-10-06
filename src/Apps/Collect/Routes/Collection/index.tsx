@@ -17,7 +17,10 @@ import {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { MetaTags } from "Components/MetaTags"
-import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
+import {
+  ArtworkGridContextProvider,
+  CollectorSignalsConfig,
+} from "Components/ArtworkGrid/ArtworkGridContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { useRouter } from "System/Hooks/useRouter"
@@ -27,6 +30,26 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface CollectionAppProps {
   collection: Collection_collection$data
+}
+
+enum SuppressSignalSlug {
+  TRENDING_NOW = "trending-now",
+  CURATORS_PICKS_EMERGING_ARTISTS = "curators-picks-emerging-artists",
+  CURATORS_PICKS_BLUE_CHIP_ARTISTS = "curators-picks-blue-chip-artists",
+}
+
+const generateSignalConfig = ({
+  slug,
+}: {
+  slug: string
+}): CollectorSignalsConfig => {
+  return {
+    disableTrendingNow: slug === SuppressSignalSlug.TRENDING_NOW,
+    disableCuratorsPick: [
+      SuppressSignalSlug.CURATORS_PICKS_EMERGING_ARTISTS,
+      SuppressSignalSlug.CURATORS_PICKS_BLUE_CHIP_ARTISTS,
+    ].includes(slug as SuppressSignalSlug),
+  }
 }
 
 export const CollectionApp: React.FC<CollectionAppProps> = props => {
@@ -48,13 +71,11 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
   const socialImage = headerImage
 
-  const HIDE_SIGNAL_SLUGS = [
-    "trending-now",
-    "curators-picks-emerging-artists",
-    "curators-picks-blue-chip-artists",
-  ]
-
-  const hideSignals = HIDE_SIGNAL_SLUGS.includes(collection.slug)
+  const signalConfig = generateSignalConfig({ slug })
+  const ignorePrimaryLabelSignals = [
+    signalConfig.disableTrendingNow ? "TRENDING_NOW" : null,
+    signalConfig.disableCuratorsPick ? "CURATORS_PICKS" : null,
+  ].filter(Boolean) as string[]
 
   return (
     <StaticContainer shouldUpdate={!!match.elements}>
@@ -76,7 +97,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
           <CollectionsHubRailsQueryRenderer slug={slug} />
 
           <FrameWithRecentlyViewed>
-            <ArtworkGridContextProvider hideSignals={hideSignals}>
+            <ArtworkGridContextProvider collectorSignalsConfig={signalConfig}>
               {/* TODO: Figure out why rerenders trigger refetches here, requiring
               the static container to freeze rendering during route transitions. */}
               <SystemQueryRenderer<CollectionArtworksQuery>
@@ -86,10 +107,14 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
                     $aggregations: [ArtworkAggregation]
                     $input: FilterArtworksInput!
                     $shouldFetchCounts: Boolean!
-                  ) {
+                  ) # $ignorePrimaryLabelSignals: [LabelSignalEnum!]
+                  {
                     marketingCollection(slug: $slug) {
                       ...CollectionArtworksFilter_collection
-                        @arguments(input: $input)
+                        @arguments(
+                          input: $input
+                          # ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
+                        )
 
                       artworksConnection(
                         aggregations: $aggregations
@@ -115,6 +140,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
                 variables={{
                   ...initializeVariablesWithFilterState(match.params, match),
                   slug,
+                  ignorePrimaryLabelSignals,
                 }}
                 placeholder={<ArtworkFilterPlaceholder pt={6} />}
                 render={({ error, props }) => {

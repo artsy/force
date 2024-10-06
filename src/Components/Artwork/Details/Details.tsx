@@ -61,15 +61,20 @@ const ConditionalLink: React.FC<
   return <LinkComponent {...rest}>{children}</LinkComponent>
 }
 
-const ArtistLine: React.FC<DetailsProps> = ({
-  artwork: { cultural_maker, artists },
+interface ArtistLineProps {
+  includeLinks: boolean
+  showSaveButton: boolean
+  artwork: Details_artwork$data
+}
+const ArtistLine: React.FC<ArtistLineProps> = ({
+  artwork: { culturalMaker, artists },
   includeLinks,
   showSaveButton,
 }) => {
-  if (cultural_maker) {
+  if (culturalMaker) {
     return (
       <Text variant="sm-display" lineHeight="22px" overflowEllipsis>
-        {cultural_maker}
+        {culturalMaker}
       </Text>
     )
   }
@@ -123,9 +128,9 @@ const TitleLine: React.FC<DetailsProps> = ({
 
 const PartnerLine: React.FC<DetailsProps> = ({
   includeLinks,
-  artwork: { collecting_institution, partner },
+  artwork: { collectingInstitution, partner },
 }) => {
-  if (collecting_institution) {
+  if (collectingInstitution) {
     return (
       <Text
         variant="sm-display"
@@ -133,7 +138,7 @@ const PartnerLine: React.FC<DetailsProps> = ({
         color="black60"
         overflowEllipsis
       >
-        {collecting_institution}
+        {collectingInstitution}
       </Text>
     )
   }
@@ -221,13 +226,13 @@ const NBSP = " "
 
 const SaleMessage: React.FC<SaleMessageProps> = props => {
   const {
-    artwork: { sale, sale_message, sale_artwork, collectorSignals },
+    artwork: { sale, saleMessage, saleArtwork, collectorSignals },
     showActivePartnerOffer,
   } = props
 
-  if (sale?.is_auction && !sale?.is_closed) {
-    const highestBid_display = sale_artwork?.highest_bid?.display
-    const openingBid_display = sale_artwork?.opening_bid?.display
+  if (sale?.isAuction && !sale?.isClosed) {
+    const highestBid_display = saleArtwork?.highestBid?.display
+    const openingBid_display = saleArtwork?.openingBid?.display
 
     return <>{highestBid_display || openingBid_display || ""}</>
   }
@@ -237,17 +242,17 @@ const SaleMessage: React.FC<SaleMessageProps> = props => {
   }
 
   // NBSP is used to prevent un-aligned carousels
-  return <>{sale_message ?? NBSP}</>
+  return <>{saleMessage ?? NBSP}</>
 }
 
 const BidInfo: React.FC<DetailsProps> = ({
-  artwork: { collectorSignals, sale, sale_artwork },
+  artwork: { collectorSignals, sale, saleArtwork },
 }) => {
   const signalsAuctionEnabled = useFeatureFlag(
     "emerald_signals-auction-improvements"
   )
 
-  const inRunningAuction = sale?.is_auction && !sale?.is_closed
+  const inRunningAuction = sale?.isAuction && !sale?.isClosed
 
   if (!inRunningAuction) {
     return null
@@ -255,7 +260,7 @@ const BidInfo: React.FC<DetailsProps> = ({
 
   const bidCount = signalsAuctionEnabled
     ? collectorSignals?.auction?.bidCount ?? 0
-    : sale_artwork?.counts?.bidder_positions ?? 0
+    : saleArtwork?.counts?.bidderPositions ?? 0
 
   if (bidCount === 0) {
     return null
@@ -299,7 +304,7 @@ export const Details: React.FC<DetailsProps> = ({
   isHovered,
   showHighDemandIcon = false,
   showHoverDetails = true,
-  showSaveButton,
+  showSaveButton = false,
   showSubmissionStatus,
   renderSaveButton,
   ...rest
@@ -308,7 +313,17 @@ export const Details: React.FC<DetailsProps> = ({
     isAuctionArtwork,
     hideLotLabel,
     saveOnlyToDefaultList,
+    collectorSignalsConfig,
   } = useArtworkGridContext()
+
+  const increasedInterestCuratorsPickEnabled = useFeatureFlag(
+    "emerald_signals-increased-interest-curators-pick"
+  )
+
+  if (!increasedInterestCuratorsPickEnabled) {
+    collectorSignalsConfig.disableCuratorsPick = false
+    collectorSignalsConfig.disableTrendingNow = false
+  }
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =
@@ -331,7 +346,11 @@ export const Details: React.FC<DetailsProps> = ({
   )
 
   const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
-  const isAuction = rest?.artwork?.sale?.is_auction ?? false
+  const isAuction = rest?.artwork?.sale?.isAuction ?? false
+
+  // TODO: skip primaryLable in query if it is in auction
+  const primaryLabel =
+    (!isAuction && rest?.artwork?.collectorSignals?.primaryLabel) || null
 
   const showActivePartnerOffer: boolean =
     !!signalsPartnerOffersEnabled &&
@@ -339,11 +358,8 @@ export const Details: React.FC<DetailsProps> = ({
     !!partnerOffer &&
     contextModule !== "activity"
 
-  const showPrimaryLabelLine: boolean =
-    !!rest?.artwork?.collectorSignals?.primaryLabel && !isAuction
-
   const padForPrimaryLabelLine: boolean =
-    contextModule !== "activity" && !showPrimaryLabelLine
+    contextModule !== "activity" && !primaryLabel
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -381,16 +397,16 @@ export const Details: React.FC<DetailsProps> = ({
           <Join separator={<Spacer x={1} />}>
             {!hideLotLabel && (
               <Text variant="sm-display" lineHeight="22px" flexShrink={0}>
-                LOT {rest.artwork?.sale_artwork?.lotLabel}
+                LOT {rest.artwork?.saleArtwork?.lotLabel}
               </Text>
             )}
 
             {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
-              rest?.artwork?.sale_artwork &&
+              rest?.artwork?.saleArtwork &&
               !signalsAuctionEnabled && (
                 <>
                   <LotCloseInfo
-                    saleArtwork={rest.artwork.sale_artwork}
+                    saleArtwork={rest.artwork.saleArtwork}
                     sale={rest.artwork.sale}
                   />
                 </>
@@ -402,10 +418,10 @@ export const Details: React.FC<DetailsProps> = ({
       <Flex justifyContent="space-between" alignItems="flex-start">
         <Flex
           flexDirection="column"
-          maxWidth={showPrimaryLabelLine ? "95%" : "75%"}
+          maxWidth={primaryLabel ? "95%" : "75%"}
           overflow="hidden"
         >
-          {showPrimaryLabelLine && <PrimaryLabelLine artwork={rest.artwork} />}
+          {primaryLabel && <PrimaryLabelLine primaryLabel={primaryLabel} />}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
           )}
@@ -445,7 +461,7 @@ export const Details: React.FC<DetailsProps> = ({
 
 // TODO: Delete LotCloseInfo when signalsAuctionEnabled is removed
 interface LotCloseInfoProps {
-  saleArtwork: NonNullable<Details_artwork$data["sale_artwork"]>
+  saleArtwork: NonNullable<Details_artwork$data["saleArtwork"]>
   sale: NonNullable<Details_artwork$data["sale"]>
 }
 
@@ -532,13 +548,18 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
     fragment Details_artwork on Artwork
       @argumentDefinitions(
         includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+
+        ignorePrimaryLabelSignals: {
+          type: "[LabelSignalEnum]"
+          defaultValue: null
+        }
       ) {
       internalID
       href
       title
       date
       collectorSignals {
-        primaryLabel
+        primaryLabel(ignore: $ignorePrimaryLabelSignals)
         auction {
           bidCount
           lotClosesAt
@@ -553,8 +574,8 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           }
         }
       }
-      sale_message: saleMessage
-      cultural_maker: culturalMaker
+      saleMessage
+      culturalMaker
       artist(shallow: true) {
         targetSupply {
           isP1
@@ -568,7 +589,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         href
         name
       }
-      collecting_institution: collectingInstitution
+      collectingInstitution
       partner(shallow: true) {
         name
         href
@@ -578,29 +599,28 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         cascadingEndTimeIntervalMinutes
         extendedBiddingIntervalMinutes
         startAt
-        is_auction: isAuction
-        is_closed: isClosed
+        isAuction
+        isClosed
       }
-      sale_artwork: saleArtwork {
+      saleArtwork {
         lotID
         lotLabel
         endAt
         extendedBiddingEndAt
         formattedEndDateTime
         counts {
-          bidder_positions: bidderPositions
+          bidderPositions
         }
-        highest_bid: highestBid {
+        highestBid {
           display
         }
-        opening_bid: openingBid {
+        openingBid {
           display
         }
       }
       consignmentSubmission @include(if: $includeConsignmentSubmission) {
         internalID
       }
-      ...PrimaryLabelLine_artwork
       ...BidTimerLine_artwork
       ...HoverDetails_artwork
       ...ConsignmentSubmissionStatus_artwork

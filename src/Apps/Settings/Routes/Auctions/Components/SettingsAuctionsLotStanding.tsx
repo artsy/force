@@ -118,7 +118,7 @@ export const SettingsAuctionsLotStandingFragmentContainer = createFragmentContai
             isClosed
           }
           artwork {
-            ...Details_artwork
+            ...Details_artwork @arguments(ignorePrimaryLabelSignals: [])
             href
             image {
               cropped(height: 100, width: 100) {

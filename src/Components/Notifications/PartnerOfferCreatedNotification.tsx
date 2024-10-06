@@ -112,7 +112,10 @@ export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotification
 }
 
 export const PartnerOfferCreatedNotificationFragment = graphql`
-  fragment PartnerOfferCreatedNotification_notification on Notification {
+  fragment PartnerOfferCreatedNotification_notification on Notification # @argumentDefinitions(
+  #   ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
+  # )
+  {
     headline
     targetHref
     item {
@@ -133,6 +136,7 @@ export const PartnerOfferCreatedNotificationFragment = graphql`
       edges {
         node {
           ...PartnerOfferArtwork_artwork
+          # @arguments(ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals)
         }
       }
     }

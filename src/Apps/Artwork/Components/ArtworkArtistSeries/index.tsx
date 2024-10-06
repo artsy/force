@@ -48,8 +48,12 @@ export const ArtworkArtistSeriesFragmentContainer = createFragmentContainer(
   withSystemContext(ArtworkArtistSeries),
   {
     artwork: graphql`
-      fragment ArtworkArtistSeries_artwork on Artwork {
+      fragment ArtworkArtistSeries_artwork on Artwork # @argumentDefinitions(
+      #   ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
+      # )
+      {
         ...ArtistSeriesArtworkRail_artwork
+        # @arguments(ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals)
         internalID
         slug
         seriesArtist: artist(shallow: true) {

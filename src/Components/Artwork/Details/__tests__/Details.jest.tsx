@@ -47,7 +47,11 @@ describe("Details", () => {
   ) => {
     return await renderRelayTree({
       Component: props => (
-        <ArtworkGridContextProvider isAuctionArtwork saveOnlyToDefaultList>
+        <ArtworkGridContextProvider
+          collectorSignalsConfig={{}}
+          isAuctionArtwork
+          saveOnlyToDefaultList
+        >
           <DetailsFragmentContainer {...(props as any)} {...restProps} />
         </ArtworkGridContextProvider>
       ),
@@ -59,6 +63,7 @@ describe("Details", () => {
             ...Details_artwork
               @arguments(
                 includeConsignmentSubmission: $includeConsignmentSubmission
+                ignorePrimaryLabelSignals: []
               )
           }
         }
@@ -160,11 +165,11 @@ describe("Details", () => {
       expect(html).toContain("$2,600")
     })
 
-    it("shows sale_message if in closed auction", async () => {
+    it("shows saleMessage if in closed auction", async () => {
       const data: any = {
         ...artworkInAuction,
-        sale_message: "Bidding closed",
-        sale: { ...artworkInAuction?.sale, is_closed: true },
+        saleMessage: "Bidding closed",
+        sale: { ...artworkInAuction?.sale, isClosed: true },
       }
 
       const wrapper = await getWrapper(data)
@@ -174,10 +179,10 @@ describe("Details", () => {
     it("shows opening bid if sale open and no highest bid", async () => {
       const data: any = {
         ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
-          highest_bid: {
-            ...artworkInAuction?.sale_artwork?.highest_bid,
+        saleArtwork: {
+          ...artworkInAuction?.saleArtwork,
+          highestBid: {
+            ...artworkInAuction?.saleArtwork?.highestBid,
             display: null,
           },
         },
@@ -188,13 +193,13 @@ describe("Details", () => {
       expect(html).toContain("$2,400")
     })
 
-    it("shows sale_message", async () => {
+    it("shows saleMessage", async () => {
       const data: any = {
         ...artworkInAuction,
-        sale_message: "Price on request",
+        saleMessage: "Price on request",
         sale: {
           ...artworkInAuction?.sale,
-          is_auction: false,
+          isAuction: false,
         },
       }
 
@@ -208,16 +213,16 @@ describe("Details", () => {
         ...artworkInAuction,
         sale: {
           ...artworkInAuction?.sale,
-          is_auction: false,
+          isAuction: false,
         },
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
-          highest_bid: {
-            ...artworkInAuction?.sale_artwork?.highest_bid,
+        saleArtwork: {
+          ...artworkInAuction?.saleArtwork,
+          highestBid: {
+            ...artworkInAuction?.saleArtwork?.highestBid,
             display: null,
           },
-          opening_bid: {
-            ...artworkInAuction?.sale_artwork?.highest_bid,
+          openingBid: {
+            ...artworkInAuction?.saleArtwork?.highestBid,
             display: null,
           },
         },
@@ -231,11 +236,11 @@ describe("Details", () => {
     it("shows the number of bids in the message if sale open and are bids", async () => {
       const data: any = {
         ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
+        saleArtwork: {
+          ...artworkInAuction?.saleArtwork,
           counts: {
-            ...artworkInAuction?.sale_artwork?.counts,
-            bidder_positions: 2,
+            ...artworkInAuction?.saleArtwork?.counts,
+            bidderPositions: 2,
           },
         },
       }
@@ -268,8 +273,8 @@ describe("Details", () => {
     it("shows the lot is closed if the lot end time has passed and if the sale has cascading end times enabled", async () => {
       const data: any = {
         ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
+        saleArtwork: {
+          ...artworkInAuction?.saleArtwork,
           endAt: "2022-03-11T12:33:37.000Z",
         },
         sale: {
@@ -285,8 +290,8 @@ describe("Details", () => {
     it("shows the lot is closing with the days countdown if lots have started closing and the sale has cascading end times enabled", async () => {
       const data: any = {
         ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
+        saleArtwork: {
+          ...artworkInAuction?.saleArtwork,
           endAt: "2026-03-11T12:33:37.000Z",
         },
         sale: {
@@ -304,8 +309,8 @@ describe("Details", () => {
     it("shows the lot is closing with the hours countdown if lots are hours from closing and the sale has cascading end times enabled", async () => {
       const data: any = {
         ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
+        saleArtwork: {
+          ...artworkInAuction?.saleArtwork,
           endAt: "2022-03-18T16:33:37.000Z",
         },
         sale: {
@@ -323,8 +328,8 @@ describe("Details", () => {
     it("shows the lot is closing with the formatted end time of the sale if the lots have not started closing and the sale has cascading end times enabled", async () => {
       const data: any = {
         ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
+        saleArtwork: {
+          ...artworkInAuction?.saleArtwork,
           endAt: "2026-03-11T12:33:37.000Z",
         },
         sale: {
@@ -354,8 +359,8 @@ describe("Details", () => {
     it("does not show the lot close info if sale is not yet open", async () => {
       const data: any = {
         ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
+        saleArtwork: {
+          ...artworkInAuction?.saleArtwork,
         },
         sale: {
           ...artworkInAuction?.sale,
@@ -373,8 +378,8 @@ describe("Details", () => {
         it("shows the extended label and the timer reflects the extendedBiddingEndAt", async () => {
           const data: any = {
             ...artworkInAuction,
-            sale_artwork: {
-              ...artworkInAuction?.sale_artwork,
+            saleArtwork: {
+              ...artworkInAuction?.saleArtwork,
               endAt: "2022-03-18T05:23:37.000Z",
               extendedBiddingEndAt: "2022-03-18T05:24:32.000Z",
             },
@@ -396,8 +401,8 @@ describe("Details", () => {
         it("shows the normal cascading timer copy", async () => {
           const data: any = {
             ...artworkInAuction,
-            sale_artwork: {
-              ...artworkInAuction?.sale_artwork,
+            saleArtwork: {
+              ...artworkInAuction?.saleArtwork,
               endAt: "2022-03-18T05:23:37.000Z",
               extendedBiddingEndAt: null,
             },
@@ -644,11 +649,11 @@ describe("Details", () => {
           ...artworkInAuction?.collectorSignals,
           auction: null,
         },
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
+        saleArtwork: {
+          ...artworkInAuction?.saleArtwork,
           counts: {
-            ...artworkInAuction?.sale_artwork?.counts,
-            bidder_positions: 2,
+            ...artworkInAuction?.saleArtwork?.counts,
+            bidderPositions: 2,
           },
         },
       }
@@ -686,10 +691,10 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   ],
   href: "/artwork/gerhard-richter-tulips-p17-14",
   date: "2017",
-  sale_message: "$450",
-  cultural_maker: null,
+  saleMessage: "$450",
+  culturalMaker: null,
   title: "Tulips (P17)",
-  collecting_institution: "This Really Great Gallery",
+  collectingInstitution: "This Really Great Gallery",
   partner: {
     id: "opaque-partner-id",
     name: "Forum Auctions",
@@ -697,20 +702,20 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   },
   sale: {
     id: "opaque-sale-id",
-    is_auction: true,
-    is_closed: false,
+    isAuction: true,
+    isClosed: false,
     cascadingEndTimeIntervalMinutes: null,
     extendedBiddingIntervalMinutes: null,
     startAt: "2022-03-11T12:33:37.000Z",
     endAt: "2022-03-12T12:33:37.000Z",
   },
-  sale_artwork: {
+  saleArtwork: {
     lotID: "lot-id",
     lotLabel: "0",
     id: "opaque-sale-artwork-id",
-    highest_bid: { display: "$2,600" },
-    opening_bid: { display: "$2,400" },
-    counts: { bidder_positions: 0 },
+    highestBid: { display: "$2,600" },
+    openingBid: { display: "$2,400" },
+    counts: { bidderPositions: 0 },
     endAt: "2022-03-12T12:33:37.000Z",
     formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
     extendedBiddingEndAt: null,
@@ -765,10 +770,10 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = 
   ],
   href: "/artwork/gerhard-richter-tulips-p17-14",
   date: "2017",
-  sale_message: "$450",
-  cultural_maker: null,
+  saleMessage: "$450",
+  culturalMaker: null,
   title: "Tulips (P17)",
-  collecting_institution: "This Really Great Gallery",
+  collectingInstitution: "This Really Great Gallery",
   partner: {
     id: "opaque-partner-id",
     name: "Forum Auctions",
@@ -776,20 +781,20 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = 
   },
   sale: {
     id: "opaque-sale-id",
-    is_auction: true,
-    is_closed: false,
+    isAuction: true,
+    isClosed: false,
     cascadingEndTimeIntervalMinutes: null,
     extendedBiddingIntervalMinutes: null,
     startAt: "2022-03-11T12:33:37.000Z",
     endAt: "2022-03-12T12:33:37.000Z",
   },
-  sale_artwork: {
+  saleArtwork: {
     lotID: "lot-id",
     lotLabel: "0",
     id: "opaque-sale-artwork-id",
-    highest_bid: { display: "$2,600" },
-    opening_bid: { display: "$2,400" },
-    counts: { bidder_positions: 0 },
+    highestBid: { display: "$2,600" },
+    openingBid: { display: "$2,400" },
+    counts: { bidderPositions: 0 },
     endAt: "2022-03-12T12:33:37.000Z",
     formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
     extendedBiddingEndAt: null,
@@ -840,13 +845,13 @@ const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
     },
   ],
   sale: null,
-  sale_artwork: null,
+  saleArtwork: null,
   href: "/artwork/gerhard-richter-tulips-p17-14",
   date: "2017",
-  sale_message: "$4000",
-  cultural_maker: null,
+  saleMessage: "$4000",
+  culturalMaker: null,
   title: "Tulips (P17)",
-  collecting_institution: "This Really Great Gallery",
+  collectingInstitution: "This Really Great Gallery",
   partner: {
     id: "opaque-partner-id",
     name: "Forum Auctions",

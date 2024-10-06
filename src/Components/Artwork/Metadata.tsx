@@ -106,9 +106,13 @@ export default createFragmentContainer(Metadata, {
     fragment Metadata_artwork on Artwork
       @argumentDefinitions(
         includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+        # ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
       ) {
       ...Details_artwork
-        @arguments(includeConsignmentSubmission: $includeConsignmentSubmission)
+        @arguments(
+          includeConsignmentSubmission: $includeConsignmentSubmission
+          # ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
+        )
       internalID
       href
     }

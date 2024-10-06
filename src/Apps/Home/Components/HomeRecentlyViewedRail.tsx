@@ -86,13 +86,16 @@ export const HomeRecentlyViewedRailFragmentContainer = createFragmentContainer(
   HomeRecentlyViewedRail,
   {
     homePage: graphql`
-      fragment HomeRecentlyViewedRail_homePage on HomePage {
+      fragment HomeRecentlyViewedRail_homePage on HomePage
+        @argumentDefinitions(
+          ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
+        ) {
         artworkModule(key: RECENTLY_VIEWED_WORKS) {
           results {
             internalID
             slug
             collectorSignals {
-              primaryLabel
+              primaryLabel(ignore: $ignorePrimaryLabelSignals)
               auction {
                 bidCount
                 lotWatcherCount

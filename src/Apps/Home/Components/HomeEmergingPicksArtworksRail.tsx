@@ -35,7 +35,12 @@ export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRa
   }
 
   return (
-    <ArtworkGridContextProvider hideSignals>
+    <ArtworkGridContextProvider
+      collectorSignalsConfig={{
+        disableCuratorsPick: true,
+        disableTrendingNow: true,
+      }}
+    >
       <Rail
         title="Curators’ Picks: Emerging"
         subTitle="The best works by rising talents on Artsy, all available now."
@@ -94,7 +99,9 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
   HomeEmergingPicksArtworksRail,
   {
     viewer: graphql`
-      fragment HomeEmergingPicksArtworksRail_viewer on Viewer {
+      fragment HomeEmergingPicksArtworksRail_viewer on Viewer #   ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" } # @argumentDefinitions(
+      # )
+      {
         artworksConnection(
           first: 20
           marketingCollectionID: "curators-picks-emerging"
@@ -106,7 +113,7 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
               slug
               href
               collectorSignals {
-                primaryLabel
+                primaryLabel #(ignore: $ignorePrimaryLabelSignals)
                 auction {
                   bidCount
                   lotWatcherCount

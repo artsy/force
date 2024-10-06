@@ -126,10 +126,12 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
           includeBlurHash: { type: "Boolean", defaultValue: true }
           includeAllImages: { type: "Boolean", defaultValue: false }
           includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+          # ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
         ) {
         ...Metadata_artwork
           @arguments(
             includeConsignmentSubmission: $includeConsignmentSubmission
+            # ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
           )
 
         sale {

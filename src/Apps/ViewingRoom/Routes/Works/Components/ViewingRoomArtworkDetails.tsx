@@ -71,7 +71,7 @@ export const ViewingRoomArtworkDetailsFragmentContainer = createFragmentContaine
   {
     artwork: graphql`
       fragment ViewingRoomArtworkDetails_artwork on Artwork {
-        ...Details_artwork
+        ...Details_artwork @arguments(ignorePrimaryLabelSignals: [])
         id
         additionalInformation
         href

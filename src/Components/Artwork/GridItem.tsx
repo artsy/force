@@ -307,6 +307,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
           includeAllImages: { type: "Boolean", defaultValue: false }
           includeBlurHash: { type: "Boolean", defaultValue: true }
           includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+          # ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
         ) {
         internalID
         title
@@ -323,6 +324,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         href
         ...Metadata_artwork
           @arguments(
+            # ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
             includeConsignmentSubmission: $includeConsignmentSubmission
           )
         ...ExclusiveAccessBadge_artwork

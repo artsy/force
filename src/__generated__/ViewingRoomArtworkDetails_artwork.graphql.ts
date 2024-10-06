@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<abc26de588038f951f32247bd26e69d0>>
+ * @generated SignedSource<<4d672adf3ae5ddc25bceab68b973d1bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,7 +29,13 @@ const node: ReaderFragment = {
   "name": "ViewingRoomArtworkDetails_artwork",
   "selections": [
     {
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "ignorePrimaryLabelSignals",
+          "value": []
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "Details_artwork"
     },
@@ -59,6 +65,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "591548577ce680c3c23e8c4c03f59f29";
+(node as any).hash = "0ab3d11e376e55f650c30736987159eb";
 
 export default node;

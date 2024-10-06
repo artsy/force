@@ -94,7 +94,8 @@ export const ArtistSeriesArtworkRailFragmentContainer = createFragmentContainer(
   ArtistSeriesArtworkRail,
   {
     artwork: graphql`
-      fragment ArtistSeriesArtworkRail_artwork on Artwork {
+      fragment ArtistSeriesArtworkRail_artwork on Artwork # ) # ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" } # @argumentDefinitions(
+      {
         internalID
         slug
         artistSeriesConnection(first: 1) {
@@ -108,7 +109,7 @@ export const ArtistSeriesArtworkRailFragmentContainer = createFragmentContainer(
                     slug
                     internalID
                     collectorSignals {
-                      primaryLabel
+                      primaryLabel #(ignore: $ignorePrimaryLabelSignals)
                       auction {
                         bidCount
                         lotWatcherCount

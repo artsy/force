@@ -14,22 +14,31 @@ interface ArtworkGridContextProps {
 
   saveOnlyToDefaultList?: boolean
 
-  hideSignals?: boolean
+  collectorSignalsConfig: CollectorSignalsConfig
+}
+
+export interface CollectorSignalsConfig {
+  disableTrendingNow?: boolean
+  disableCuratorsPick?: boolean
+  disablePartnerOffer?: boolean
 }
 
 const ArtworkGridContext = createContext<ArtworkGridContextProps>({
   isAuctionArtwork: false,
   hideLotLabel: false,
   saveOnlyToDefaultList: false,
-  hideSignals: false,
+  collectorSignalsConfig: {},
 })
 
 export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProps> = ({
   children,
+  collectorSignalsConfig: signalConfig = {},
   ...rest
 }) => {
   return (
-    <ArtworkGridContext.Provider value={rest}>
+    <ArtworkGridContext.Provider
+      value={{ collectorSignalsConfig: signalConfig, ...rest }}
+    >
       {children}
     </ArtworkGridContext.Provider>
   )
