@@ -99,9 +99,10 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
   HomeEmergingPicksArtworksRail,
   {
     viewer: graphql`
-      fragment HomeEmergingPicksArtworksRail_viewer on Viewer #   ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" } # @argumentDefinitions(
-      # )
-      {
+      fragment HomeEmergingPicksArtworksRail_viewer on Viewer
+        @argumentDefinitions(
+          ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
+        ) {
         artworksConnection(
           first: 20
           marketingCollectionID: "curators-picks-emerging"
@@ -113,7 +114,7 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
               slug
               href
               collectorSignals {
-                primaryLabel #(ignore: $ignorePrimaryLabelSignals)
+                primaryLabel(ignore: $ignorePrimaryLabelSignals)
                 auction {
                   bidCount
                   lotWatcherCount

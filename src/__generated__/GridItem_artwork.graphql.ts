@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<929e5edacf36b439e7ba7171f39cca4e>>
+ * @generated SignedSource<<e70cbe9a6afd426c5ab309ef54b4c4df>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,6 +42,11 @@ var v0 = {
 };
 return {
   "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "ignorePrimaryLabelSignals"
+    },
     {
       "defaultValue": false,
       "kind": "LocalArgument",
@@ -164,6 +169,11 @@ return {
       "args": [
         {
           "kind": "Variable",
+          "name": "ignorePrimaryLabelSignals",
+          "variableName": "ignorePrimaryLabelSignals"
+        },
+        {
+          "kind": "Variable",
           "name": "includeConsignmentSubmission",
           "variableName": "includeConsignmentSubmission"
         }
@@ -187,6 +197,6 @@ return {
 };
 })();
 
-(node as any).hash = "0793c509a509ac54ccc7ef52ea3453a2";
+(node as any).hash = "c46a2c0a71ac38858c960f235de969be";
 
 export default node;

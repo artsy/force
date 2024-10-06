@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<141dcb1f6f629ce12ba3b7493ff20253>>
+ * @generated SignedSource<<e0e37bb94dd20f4e650a788eb849fcff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,7 +34,13 @@ export type HomeWorksByArtistsYouFollowRail_homePage$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "ignorePrimaryLabelSignals"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "HomeWorksByArtistsYouFollowRail_homePage",
@@ -85,7 +91,13 @@ const node: ReaderFragment = {
               "selections": [
                 {
                   "alias": null,
-                  "args": null,
+                  "args": [
+                    {
+                      "kind": "Variable",
+                      "name": "ignore",
+                      "variableName": "ignorePrimaryLabelSignals"
+                    }
+                  ],
                   "kind": "ScalarField",
                   "name": "primaryLabel",
                   "storageKey": null
@@ -134,6 +146,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9dae270ffa96af47e03577ba6d4ac907";
+(node as any).hash = "3ee656df19d5b040d4b5bc4fdcc0a7b3";
 
 export default node;

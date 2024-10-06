@@ -47,12 +47,14 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
   const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
 
   useAuctionWebsocket({
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     lotID: saleArtwork?.lotID!,
     onChange: ({ extended_bidding_end_at }) => {
       setUpdatedBiddingEndAt(extended_bidding_end_at)
     },
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const { time, hasEnded } = useTimer(updatedBiddingEndAt!, startAt!)
 
   const { isAuctionArtwork } = useArtworkGridContext()
@@ -104,7 +106,9 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
       {shouldRenderProgressBar && (
         <ArtworkSidebarAuctionProgressBar
           time={time}
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           extendedBiddingPeriodMinutes={extendedBiddingPeriodMinutes!}
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           extendedBiddingIntervalMinutes={extendedBiddingIntervalMinutes!}
           hasBeenExtended={!!extendedBiddingEndAt}
           mb={0}
@@ -126,12 +130,12 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
           includeBlurHash: { type: "Boolean", defaultValue: true }
           includeAllImages: { type: "Boolean", defaultValue: false }
           includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
-          # ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
+          ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
         ) {
         ...Metadata_artwork
           @arguments(
             includeConsignmentSubmission: $includeConsignmentSubmission
-            # ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
+            ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
           )
 
         sale {

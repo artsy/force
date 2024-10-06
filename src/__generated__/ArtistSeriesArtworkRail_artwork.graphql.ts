@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dbd3e15a9ba65ab6b186ec419242163a>>
+ * @generated SignedSource<<4911e0af699db0cd8c6accd5a5de59c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -61,7 +61,13 @@ v1 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "ignorePrimaryLabelSignals"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistSeriesArtworkRail_artwork",
@@ -147,7 +153,13 @@ return {
                               "selections": [
                                 {
                                   "alias": null,
-                                  "args": null,
+                                  "args": [
+                                    {
+                                      "kind": "Variable",
+                                      "name": "ignore",
+                                      "variableName": "ignorePrimaryLabelSignals"
+                                    }
+                                  ],
                                   "kind": "ScalarField",
                                   "name": "primaryLabel",
                                   "storageKey": null
@@ -209,6 +221,6 @@ return {
 };
 })();
 
-(node as any).hash = "46b8cf9128b9bc02416fc8ba5a693589";
+(node as any).hash = "8d013b95ce8e0417d8b3bc12b2bebc4c";
 
 export default node;

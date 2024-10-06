@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<898b737e2ad016c46112210fe81b1c42>>
+ * @generated SignedSource<<f1955ee063a5e983092b41f931c173af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,7 +34,13 @@ export type HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollo
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "ignorePrimaryLabelSignals"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection",
@@ -79,7 +85,13 @@ const node: ReaderFragment = {
               "selections": [
                 {
                   "alias": null,
-                  "args": null,
+                  "args": [
+                    {
+                      "kind": "Variable",
+                      "name": "ignore",
+                      "variableName": "ignorePrimaryLabelSignals"
+                    }
+                  ],
                   "kind": "ScalarField",
                   "name": "primaryLabel",
                   "storageKey": null
@@ -128,6 +140,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3bf93b648ab8593d6352179d90429d90";
+(node as any).hash = "1815e6ad90c66d3b9a6beda8728043f3";
 
 export default node;

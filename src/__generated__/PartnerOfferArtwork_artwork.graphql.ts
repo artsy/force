@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<93e624a07944c740dc8604bba35d6848>>
+ * @generated SignedSource<<938fe8693a719a05e41c2e04d4fe11f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,7 +42,13 @@ export type PartnerOfferArtwork_artwork$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "ignorePrimaryLabelSignals"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "PartnerOfferArtwork_artwork",
@@ -192,7 +198,13 @@ const node: ReaderFragment = {
       "selections": [
         {
           "alias": null,
-          "args": null,
+          "args": [
+            {
+              "kind": "Variable",
+              "name": "ignore",
+              "variableName": "ignorePrimaryLabelSignals"
+            }
+          ],
           "kind": "ScalarField",
           "name": "primaryLabel",
           "storageKey": null
@@ -201,7 +213,13 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "ignorePrimaryLabelSignals",
+          "variableName": "ignorePrimaryLabelSignals"
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "Metadata_artwork"
     }
@@ -210,6 +228,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "4f4a1d7e28d956aed494521ba54890b2";
+(node as any).hash = "c098d4727e179c64284295007837a540";
 
 export default node;

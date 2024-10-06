@@ -127,9 +127,13 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
   ShelfArtwork,
   {
     artwork: graphql`
-      fragment ShelfArtwork_artwork on Artwork {
+      fragment ShelfArtwork_artwork on Artwork
+        @argumentDefinitions(
+          ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
+        ) {
         ...ExclusiveAccessBadge_artwork
         ...Metadata_artwork
+          @arguments(ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals)
         title
         href
         artistNames

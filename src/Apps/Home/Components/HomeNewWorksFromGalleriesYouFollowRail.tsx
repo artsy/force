@@ -97,16 +97,16 @@ export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer = createFra
   HomeNewWorksFromGalleriesYouFollowRail,
   {
     newWorksFromGalleriesYouFollowConnection: graphql`
-      fragment HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection on ArtworkConnection # @argumentDefinitions(
-      #   ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
-      # )
-      {
+      fragment HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection on ArtworkConnection
+        @argumentDefinitions(
+          ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
+        ) {
         edges {
           node {
             internalID
             slug
             collectorSignals {
-              primaryLabel #(ignore: $ignorePrimaryLabelSignals)
+              primaryLabel(ignore: $ignorePrimaryLabelSignals)
               auction {
                 bidCount
                 lotWatcherCount
