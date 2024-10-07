@@ -61,7 +61,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [sort, setSort] = useState("ENABLED_AT_DESC")
   const [loading, setLoading] = useState(false)
-  const alerts = extractNodes(me.alertsConnection)
+  const alerts = extractNodes(me?.alertsConnection)
 
   const xs = __internal__useMatchMedia(THEME.mediaQueries.xs)
   const sm = __internal__useMatchMedia(THEME.mediaQueries.sm)
