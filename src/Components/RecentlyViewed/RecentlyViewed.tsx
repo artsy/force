@@ -8,7 +8,7 @@ import { useContext } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { ShelfArtwork } from "Components/Artwork/ShelfArtwork"
 import { RecentlyViewedPlaceholder } from "./RecentlyViewedPlaceholder"
 import { Rail } from "Components/Rail/Rail"
 import { useTracking } from "react-tracking"
@@ -40,7 +40,7 @@ export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ me }) => {
       getItems={() => {
         return artworks.map(artwork => {
           return (
-            <ShelfArtworkFragmentContainer
+            <ShelfArtwork
               key={artwork.id}
               lazyLoad={true}
               artwork={artwork}

@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { ShelfArtwork } from "Components/Artwork/ShelfArtwork"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 

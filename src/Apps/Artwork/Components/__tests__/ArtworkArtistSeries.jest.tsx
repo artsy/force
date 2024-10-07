@@ -9,9 +9,7 @@ jest.unmock("react-relay")
 jest.mock(
   "Apps/Artwork/Components/ArtworkArtistSeries/ArtistSeriesArtworkRail",
   () => ({
-    ArtistSeriesArtworkRailFragmentContainer: () => (
-      <div>ArtistSeriesArtworkRail</div>
-    ),
+    ArtistSeriesArtworkRail: () => <div>ArtistSeriesArtworkRail</div>,
   })
 )
 jest.mock("Components/ArtistSeriesRail/ArtistSeriesRail", () => ({

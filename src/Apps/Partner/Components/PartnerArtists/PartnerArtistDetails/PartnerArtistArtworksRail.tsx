@@ -2,7 +2,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerArtistArtworksRail_partnerArtist$data } from "__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { ShelfArtwork } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
 
 export interface PartnerArtistArtworksRailProps {
@@ -27,11 +27,7 @@ export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps>
       viewAllHref={`/partner/${partnerId}/works?artist_ids%5B0%5D=${artistId}`}
       getItems={() => {
         return artworks.map(artwork => (
-          <ShelfArtworkFragmentContainer
-            key={artwork.internalID}
-            artwork={artwork}
-            lazyLoad
-          />
+          <ShelfArtwork key={artwork.internalID} artwork={artwork} lazyLoad />
         ))
       }}
     />

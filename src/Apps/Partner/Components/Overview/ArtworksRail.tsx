@@ -7,7 +7,7 @@ import { ArtworksRailPlaceholder } from "./ArtworkRailPlaceholder"
 import { ViewAllButton } from "./ViewAllButton"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { ShelfArtwork } from "Components/Artwork/ShelfArtwork"
 
 interface ArtworksRailProps extends BoxProps {
   partner: ArtworksRail_partner$data
@@ -40,11 +40,7 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
       <Shelf>
         {artworks.map(artwork => {
           return (
-            <ShelfArtworkFragmentContainer
-              key={artwork.internalID}
-              artwork={artwork}
-              lazyLoad
-            />
+            <ShelfArtwork key={artwork.internalID} artwork={artwork} lazyLoad />
           )
         })}
       </Shelf>

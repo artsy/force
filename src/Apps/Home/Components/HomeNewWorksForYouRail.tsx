@@ -7,7 +7,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { HomeNewWorksForYouRail_artworksForUser$data } from "__generated__/HomeNewWorksForYouRail_artworksForUser.graphql"
 import { HomeNewWorksForYouRailQuery } from "__generated__/HomeNewWorksForYouRailQuery.graphql"
 import {
-  ShelfArtworkFragmentContainer,
+  ShelfArtwork,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
@@ -41,7 +41,7 @@ const HomeNewWorksForYouRail: React.FC<HomeNewWorksForYouRailProps> = ({
         }
 
         return (
-          <ShelfArtworkFragmentContainer
+          <ShelfArtwork
             artwork={artwork}
             key={index}
             contextModule={ContextModule.newWorksForYouRail}

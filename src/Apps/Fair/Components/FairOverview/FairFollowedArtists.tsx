@@ -12,7 +12,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { ShelfArtwork } from "Components/Artwork/ShelfArtwork"
 
 interface FairFollowedArtistsProps extends BoxProps {
   fair: FairFollowedArtists_fair$data
@@ -32,7 +32,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
 
   const tappedViewTrackingData: ClickedArtworkGroup = {
     context_module: ContextModule.worksByArtistsYouFollowRail,
-    context_page_owner_type: contextPageOwnerType!,
+    context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
     destination_page_owner_type: OwnerType.fair,
@@ -49,7 +49,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
   }): ClickedArtworkGroup => {
     return {
       context_module: ContextModule.worksByArtistsYouFollowRail,
-      context_page_owner_type: contextPageOwnerType!,
+      context_page_owner_type: contextPageOwnerType,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
       destination_page_owner_type: OwnerType.artwork,
@@ -89,7 +89,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
       <Shelf>
         {artworks.map((artwork, index) => {
           return (
-            <ShelfArtworkFragmentContainer
+            <ShelfArtwork
               key={artwork.internalID}
               contextModule={ContextModule.fairRail}
               artwork={artwork}

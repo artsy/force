@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { ShelfArtwork } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
 import { extractNodes } from "Utils/extractNodes"
 import { AuctionWorksByFollowedArtistsRail_viewer$data } from "__generated__/AuctionWorksByFollowedArtistsRail_viewer.graphql"
@@ -19,7 +19,15 @@ const AuctionWorksByFollowedArtistsRail: React.FC<AuctionWorksByFollowedArtistsR
   }
 
   return (
-    <ArtworkGridContextProvider isAuctionArtwork hideLotLabel>
+    <ArtworkGridContextProvider
+      collectorSignalsConfig={{
+        disableCuratorsPick: true,
+        disablePartnerOffer: true,
+        disableTrendingNow: true,
+      }}
+      isAuctionArtwork
+      hideLotLabel
+    >
       <Rail
         title="Works By Artists You Follow"
         viewAllOnClick={() => {
@@ -28,13 +36,7 @@ const AuctionWorksByFollowedArtistsRail: React.FC<AuctionWorksByFollowedArtistsR
         }}
         getItems={() => {
           return nodes.map((node, index) => {
-            return (
-              <ShelfArtworkFragmentContainer
-                artwork={node}
-                key={index}
-                lazyLoad
-              />
-            )
+            return <ShelfArtwork artwork={node} key={index} lazyLoad />
           })
         }}
       />

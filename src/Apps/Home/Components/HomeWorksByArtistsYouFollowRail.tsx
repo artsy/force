@@ -7,7 +7,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { HomeWorksByArtistsYouFollowRail_homePage$data } from "__generated__/HomeWorksByArtistsYouFollowRail_homePage.graphql"
 import { HomeWorksByArtistsYouFollowRailQuery } from "__generated__/HomeWorksByArtistsYouFollowRailQuery.graphql"
 import {
-  ShelfArtworkFragmentContainer,
+  ShelfArtwork,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import {
@@ -40,7 +40,7 @@ const HomeWorksByArtistsYouFollowRail: React.FC<HomeWorksByArtistsYouFollowRailP
         }
 
         return (
-          <ShelfArtworkFragmentContainer
+          <ShelfArtwork
             artwork={artwork}
             key={index}
             contextModule={ContextModule.worksByArtistsYouFollowRail}

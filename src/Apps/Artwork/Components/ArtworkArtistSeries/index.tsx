@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
-import { ArtistSeriesArtworkRailFragmentContainer as ArtistSeriesArtworkRail } from "Apps/Artwork/Components/ArtworkArtistSeries/ArtistSeriesArtworkRail"
+import { ArtistSeriesArtworkRail } from "Apps/Artwork/Components/ArtworkArtistSeries/ArtistSeriesArtworkRail"
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ArtworkArtistSeries_artwork$data } from "__generated__/ArtworkArtistSeries_artwork.graphql"
 import { Skeleton, SkeletonBox, SkeletonText, Spacer } from "@artsy/palette"
@@ -48,10 +48,7 @@ export const ArtworkArtistSeriesFragmentContainer = createFragmentContainer(
   withSystemContext(ArtworkArtistSeries),
   {
     artwork: graphql`
-      fragment ArtworkArtistSeries_artwork on Artwork # @argumentDefinitions(
-      #   ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
-      # )
-      {
+      fragment ArtworkArtistSeries_artwork on Artwork { # ) #   ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" } # @argumentDefinitions(
         ...ArtistSeriesArtworkRail_artwork
         # @arguments(ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals)
         internalID

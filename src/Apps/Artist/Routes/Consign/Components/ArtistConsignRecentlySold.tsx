@@ -6,7 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
 import { extractNodes } from "Utils/extractNodes"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { ShelfArtwork } from "Components/Artwork/ShelfArtwork"
 
 interface ArtistConsignRecentlySoldProps {
   artist: ArtistConsignRecentlySold_artist$data
@@ -32,7 +32,7 @@ export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps>
       <Shelf>
         {artworks.map(artwork => (
           <>
-            <ShelfArtworkFragmentContainer
+            <ShelfArtwork
               key={artwork.internalID}
               artwork={artwork}
               contextModule={ContextModule.artistRecentlySold}

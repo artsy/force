@@ -7,7 +7,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data } from "__generated__/HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection.graphql"
 import { HomeNewWorksFromGalleriesYouFollowRailQuery } from "__generated__/HomeNewWorksFromGalleriesYouFollowRailQuery.graphql"
 import {
-  ShelfArtworkFragmentContainer,
+  ShelfArtwork,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
@@ -61,7 +61,7 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
       }}
       getItems={() => {
         return artworks.map(artwork => (
-          <ShelfArtworkFragmentContainer
+          <ShelfArtwork
             artwork={artwork}
             key={artwork.internalID}
             lazyLoad

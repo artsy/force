@@ -7,7 +7,7 @@ import {
 import { Skeleton } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
-  ShelfArtworkFragmentContainer,
+  ShelfArtwork,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
@@ -60,7 +60,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRa
         }}
         getItems={() => {
           return artworks.map(artwork => (
-            <ShelfArtworkFragmentContainer
+            <ShelfArtwork
               artwork={artwork}
               key={artwork.internalID}
               lazyLoad

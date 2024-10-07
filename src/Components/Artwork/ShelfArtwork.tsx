@@ -1,7 +1,7 @@
 import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { ShelfArtwork_artwork$data } from "__generated__/ShelfArtwork_artwork.graphql"
+import { ShelfArtwork_artwork$key } from "__generated__/ShelfArtwork_artwork.graphql"
 import { Metadata, MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image, SkeletonBox } from "@artsy/palette"
@@ -18,7 +18,7 @@ export interface ShelfArtworkProps
   extends Omit<RouterLinkProps, "to" | "width"> {
   // Target number of pixels for image to occupy
   area?: number
-  artwork: ShelfArtwork_artwork$data
+  artwork: ShelfArtwork_artwork$key
   children?: React.ReactNode
   contextModule?: AuthContextModule
   hideSaleInfo?: boolean
@@ -27,7 +27,7 @@ export interface ShelfArtworkProps
   onClick?: () => void
 }
 
-const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
+export const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   area = DEFAULT_AREA,
   artwork,
   children,
@@ -40,28 +40,32 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   ...rest
 }) => {
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
-
-  if (!artwork.image?.src || !artwork.image.width || !artwork.image.height) {
+  const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
+  if (
+    !artworkData.image?.src ||
+    !artworkData.image.width ||
+    !artworkData.image.height
+  ) {
     return null
   }
 
   const { width } = maxDimensionsByArea({
     area,
-    height: artwork.image.height,
-    width: artwork.image.width,
+    height: artworkData.image.height,
+    width: artworkData.image.width,
   })
 
-  const image = resized(artwork.image.src, { width })
-  const blurHashDataURL = artwork.image.blurhashDataURL
+  const image = resized(artworkData.image.src, { width })
+  const blurHashDataURL = artworkData.image.blurhashDataURL
 
   const label =
-    (artwork.title ?? "Artwork") +
-    (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
+    (artworkData.title ?? "Artwork") +
+    (artworkData.artistNames ? ` by ${artworkData.artistNames}` : "")
 
   return (
     <ManageArtworkForSavesProvider>
       <RouterLink
-        to={artwork?.href}
+        to={artworkData?.href}
         onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
@@ -86,8 +90,8 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           <Box
             width="100%"
             style={{
-              aspectRatio: `${artwork.image?.width ?? 1} / ${
-                artwork.image?.height ?? 1
+              aspectRatio: `${artworkData.image?.width ?? 1} / ${
+                artworkData.image?.height ?? 1
               }`,
             }}
             bg="black10"
@@ -104,11 +108,11 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
             />
           </Box>
 
-          <ExclusiveAccessBadge artwork={artwork} />
+          <ExclusiveAccessBadge artwork={artworkData} />
         </Box>
 
         <Metadata
-          artwork={artwork}
+          artwork={artworkData}
           hideSaleInfo={hideSaleInfo}
           isHovered={isHovered}
           contextModule={contextModule}
@@ -123,31 +127,26 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   )
 }
 
-export const ShelfArtworkFragmentContainer = createFragmentContainer(
-  ShelfArtwork,
-  {
-    artwork: graphql`
-      fragment ShelfArtwork_artwork on Artwork
-        @argumentDefinitions(
-          ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
-        ) {
-        ...ExclusiveAccessBadge_artwork
-        ...Metadata_artwork
-          @arguments(ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals)
-        title
-        href
-        artistNames
-        isUnlisted
-        image {
-          src: url(version: ["larger", "large"])
-          width
-          height
-          blurhashDataURL
-        }
-      }
-    `,
+const ARTWORK_FRAGMENT = graphql`
+  fragment ShelfArtwork_artwork on Artwork
+    @argumentDefinitions(
+      ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
+    ) {
+    ...ExclusiveAccessBadge_artwork
+    ...Metadata_artwork
+      @arguments(ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals)
+    title
+    href
+    artistNames
+    isUnlisted
+    image {
+      src: url(version: ["larger", "large"])
+      width
+      height
+      blurhashDataURL
+    }
   }
-)
+`
 
 interface ShelfArtworkPlaceholderProps
   extends Pick<
