@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d274558a06f3607e2ac00a6397544798>>
+ * @generated SignedSource<<1b7c1171765a698773b464ee00502ca6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,10 +30,23 @@ var v0 = [
   }
 ],
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -79,6 +92,25 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "SaleArtwork",
+            "kind": "LinkedField",
+            "name": "saleArtwork",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "lotID",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "CollectorSignals",
             "kind": "LinkedField",
             "name": "collectorSignals",
@@ -119,20 +151,14 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v1/*: any*/)
         ],
         "storageKey": "artwork(id:\"artwork-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "8955b875a63b7920057b7a2544b3eaa2",
+    "cacheID": "e74f91d14867e856663c782f8ce05d6b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -154,25 +180,28 @@ return {
           "plural": false,
           "type": "AuctionCollectorSignals"
         },
-        "artwork.collectorSignals.auction.lotClosesAt": (v1/*: any*/),
+        "artwork.collectorSignals.auction.lotClosesAt": (v2/*: any*/),
         "artwork.collectorSignals.auction.onlineBiddingExtended": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
-        "artwork.collectorSignals.auction.registrationEndsAt": (v1/*: any*/),
-        "artwork.id": {
+        "artwork.collectorSignals.auction.registrationEndsAt": (v2/*: any*/),
+        "artwork.id": (v3/*: any*/),
+        "artwork.saleArtwork": {
           "enumValues": null,
-          "nullable": false,
+          "nullable": true,
           "plural": false,
-          "type": "ID"
-        }
+          "type": "SaleArtwork"
+        },
+        "artwork.saleArtwork.id": (v3/*: any*/),
+        "artwork.saleArtwork.lotID": (v2/*: any*/)
       }
     },
     "name": "BidTimerLineTestQuery",
     "operationKind": "query",
-    "text": "query BidTimerLineTestQuery {\n  artwork(id: \"artwork-id\") {\n    ...BidTimerLine_artwork\n    id\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n"
+    "text": "query BidTimerLineTestQuery {\n  artwork(id: \"artwork-id\") {\n    ...BidTimerLine_artwork\n    id\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n"
   }
 };
 })();

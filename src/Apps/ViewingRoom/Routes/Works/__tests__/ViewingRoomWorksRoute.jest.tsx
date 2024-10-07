@@ -102,6 +102,10 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
       edges: [
         {
           node: {
+            saleArtwork: {
+              id: "opaque-sale-artwork-id",
+              lotID: "lot-id",
+            },
             internalID: "5de6b49aa665fc000db78197",
             images: [
               {
@@ -237,6 +241,10 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
         {
           node: {
             internalID: "5de6b3a46882b7000eee31f8",
+            saleArtwork: {
+              id: "opaque-sale-artwork-id-2",
+              lotID: "lot-id-2",
+            },
             images: [
               {
                 internalID: "5de6b3a4a665fc000db78117",
