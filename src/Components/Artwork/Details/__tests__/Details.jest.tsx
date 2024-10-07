@@ -1,7 +1,7 @@
 import { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
 import { renderRelayTree } from "DevTools/renderRelayTree"
 import { graphql } from "react-relay"
-import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
+import { Details } from "Components/Artwork/Details/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -52,7 +52,7 @@ describe("Details", () => {
           isAuctionArtwork
           saveOnlyToDefaultList
         >
-          <DetailsFragmentContainer {...(props as any)} {...restProps} />
+          <Details {...(props as any)} {...restProps} />
         </ArtworkGridContextProvider>
       ),
       query: graphql`
@@ -669,10 +669,7 @@ describe("Details", () => {
 const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   id: "opaque-artwork-id",
   internalID: "opaque-internal-id",
-  saleArtwork: {
-    lotID: "lot-id",
-    id: "opaque-sale-artwork-id",
-  },
+
   artist: {
     id: "artist-id",
     targetSupply: {
@@ -747,10 +744,6 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
 
 const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = {
   id: "opaque-artwork-id",
-  saleArtwork: {
-    lotID: "lot-id",
-    id: "opaque-sale-artwork-id",
-  },
   internalID: "opaque-internal-id",
   artist: {
     id: "artist-id",
@@ -790,8 +783,8 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = 
   },
   saleArtwork: {
     lotID: "lot-id",
-    lotLabel: "0",
     id: "opaque-sale-artwork-id",
+    lotLabel: "0",
     highestBid: { display: "$2,600" },
     openingBid: { display: "$2,400" },
     counts: { bidderPositions: 0 },
@@ -827,7 +820,6 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = 
 const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
   id: "opaque-artwork-id",
   internalID: "opaque-internal-id",
-  saleArtwork: null,
   artist: {
     id: "artist-id",
     targetSupply: {

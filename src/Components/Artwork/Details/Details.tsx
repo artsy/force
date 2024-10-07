@@ -5,11 +5,14 @@ import { SaveArtworkToListsButtonQueryRenderer } from "Components/Artwork/SaveBu
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { isFunction } from "lodash"
 import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
-import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
+import {
+  Details_artwork$data,
+  Details_artwork$key,
+} from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "Components/Artwork/HoverDetails"
 import { SaveButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveButton"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
@@ -22,7 +25,7 @@ import { BidTimerLine } from "./BidTimerLine"
 import { PrimaryLabelLine } from "Components/Artwork/Details/PrimaryLabelLine"
 
 export interface DetailsProps {
-  artwork: Details_artwork$data
+  artwork: Details_artwork$key
   contextModule?: AuthContextModule
   includeLinks: boolean
   hideSaleInfo?: boolean
@@ -36,12 +39,14 @@ export interface DetailsProps {
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
-interface SaleInfoLineProps extends DetailsProps {
+interface SaleInfoLineProps extends Omit<DetailsProps, "artwork"> {
   showActivePartnerOffer: boolean
+  artwork: Details_artwork$data
 }
 
-interface SaleMessageProps extends DetailsProps {
+interface SaleMessageProps extends Omit<DetailsProps, "artwork"> {
   showActivePartnerOffer: boolean
+  artwork: Details_artwork$data
 }
 
 const StyledConditionalLink = styled(RouterLink)`
@@ -107,10 +112,9 @@ const ArtistLine: React.FC<ArtistLineProps> = ({
   )
 }
 
-const TitleLine: React.FC<DetailsProps> = ({
-  includeLinks,
-  artwork: { title, date, href },
-}) => {
+const TitleLine: React.FC<
+  Omit<DetailsProps, "artwork"> & { artwork: Details_artwork$data }
+> = ({ includeLinks, artwork: { title, date, href } }) => {
   return (
     <ConditionalLink includeLinks={includeLinks} to={href}>
       <Text
@@ -126,10 +130,9 @@ const TitleLine: React.FC<DetailsProps> = ({
   )
 }
 
-const PartnerLine: React.FC<DetailsProps> = ({
-  includeLinks,
-  artwork: { collectingInstitution, partner },
-}) => {
+const PartnerLine: React.FC<
+  Omit<DetailsProps, "artwork"> & { artwork: Details_artwork$data }
+> = ({ includeLinks, artwork: { collectingInstitution, partner } }) => {
   if (collectingInstitution) {
     return (
       <Text
@@ -245,9 +248,9 @@ const SaleMessage: React.FC<SaleMessageProps> = props => {
   return <>{saleMessage ?? NBSP}</>
 }
 
-const BidInfo: React.FC<DetailsProps> = ({
-  artwork: { collectorSignals, sale, saleArtwork },
-}) => {
+const BidInfo: React.FC<
+  Omit<DetailsProps, "artwork"> & { artwork: Details_artwork$data }
+> = ({ artwork: { collectorSignals, sale, saleArtwork } }) => {
   const signalsAuctionEnabled = useFeatureFlag(
     "emerald_signals-auction-improvements"
   )
@@ -273,9 +276,9 @@ const BidInfo: React.FC<DetailsProps> = ({
   )
 }
 
-const ActivePartnerOfferTimer: React.FC<DetailsProps> = ({
-  artwork: { collectorSignals },
-}) => {
+const ActivePartnerOfferTimer: React.FC<
+  Omit<DetailsProps, "artwork"> & { artwork: Details_artwork$data }
+> = ({ artwork: { collectorSignals } }) => {
   const SEPARATOR = <>&nbsp;</>
   const { endAt } = collectorSignals?.partnerOffer ?? {}
   const { time } = useTimer(endAt ?? "")
@@ -307,6 +310,7 @@ export const Details: React.FC<DetailsProps> = ({
   showSaveButton = false,
   showSubmissionStatus,
   renderSaveButton,
+  artwork: artworkFragment,
   ...rest
 }) => {
   const {
@@ -315,6 +319,7 @@ export const Details: React.FC<DetailsProps> = ({
     saveOnlyToDefaultList,
     collectorSignalsConfig,
   } = useArtworkGridContext()
+  const artworkData = useFragment(ARTWORK_FRAGMENT, artworkFragment)
 
   const increasedInterestCuratorsPickEnabled = useFeatureFlag(
     "emerald_signals-increased-interest-curators-pick"
@@ -325,10 +330,10 @@ export const Details: React.FC<DetailsProps> = ({
     collectorSignalsConfig.disableTrendingNow = false
   }
 
-  const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
+  const isP1Artist = artworkData.artist?.targetSupply?.isP1
   const isHighDemand =
-    Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
-  const isConsignmentSubmission = !!rest?.artwork.consignmentSubmission
+    Number((artworkData.marketPriceInsights?.demandRank || 0) * 10) >= 9
+  const isConsignmentSubmission = !!artworkData.consignmentSubmission
     ?.internalID
 
   const showHighDemandInfo =
@@ -345,12 +350,12 @@ export const Details: React.FC<DetailsProps> = ({
     "emerald_signals-auction-improvements"
   )
 
-  const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
-  const isAuction = rest?.artwork?.sale?.isAuction ?? false
+  const partnerOffer = artworkData.collectorSignals?.partnerOffer
+  const isAuction = artworkData.sale?.isAuction ?? false
 
   // TODO: skip primaryLable in query if it is in auction
   const primaryLabel =
-    (!isAuction && rest?.artwork?.collectorSignals?.primaryLabel) || null
+    (!isAuction && artworkData.collectorSignals?.primaryLabel) || null
 
   const showActivePartnerOffer: boolean =
     !!signalsPartnerOffersEnabled &&
@@ -370,14 +375,14 @@ export const Details: React.FC<DetailsProps> = ({
     }
 
     if (isFunction(renderSaveButton)) {
-      return renderSaveButton(rest.artwork.internalID)
+      return renderSaveButton(artworkData.internalID)
     }
 
     if (!saveOnlyToDefaultList) {
       return (
         <SaveArtworkToListsButtonQueryRenderer
           contextModule={contextModule}
-          id={rest.artwork.internalID}
+          id={artworkData.internalID}
         />
       )
     }
@@ -385,7 +390,7 @@ export const Details: React.FC<DetailsProps> = ({
     return (
       <SaveButtonQueryRenderer
         contextModule={contextModule}
-        id={rest.artwork.internalID}
+        id={artworkData.internalID}
       />
     )
   }
@@ -397,17 +402,17 @@ export const Details: React.FC<DetailsProps> = ({
           <Join separator={<Spacer x={1} />}>
             {!hideLotLabel && (
               <Text variant="sm-display" lineHeight="22px" flexShrink={0}>
-                LOT {rest.artwork?.saleArtwork?.lotLabel}
+                LOT {artworkData?.saleArtwork?.lotLabel}
               </Text>
             )}
 
-            {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
-              rest?.artwork?.saleArtwork &&
+            {artworkData.sale?.cascadingEndTimeIntervalMinutes &&
+              artworkData.saleArtwork &&
               !signalsAuctionEnabled && (
                 <>
                   <LotCloseInfo
-                    saleArtwork={rest.artwork.saleArtwork}
-                    sale={rest.artwork.sale}
+                    saleArtwork={artworkData.saleArtwork}
+                    sale={artworkData.sale}
                   />
                 </>
               )}
@@ -423,36 +428,43 @@ export const Details: React.FC<DetailsProps> = ({
         >
           {primaryLabel && <PrimaryLabelLine primaryLabel={primaryLabel} />}
           {!hideArtistName && (
-            <ArtistLine showSaveButton={showSaveButton} {...rest} />
+            <ArtistLine
+              artwork={artworkData}
+              showSaveButton={showSaveButton}
+              {...rest}
+            />
           )}
         </Flex>
         {renderSaveButtonComponent()}
       </Flex>
 
       <Box position="relative">
-        <TitleLine {...rest} />
+        <TitleLine artwork={artworkData} {...rest} />
 
         {showHighDemandInfo && <HighDemandInfo />}
 
-        {!hidePartnerName && !isAuctionArtwork && <PartnerLine {...rest} />}
+        {!hidePartnerName && !isAuctionArtwork && (
+          <PartnerLine artwork={artworkData} {...rest} />
+        )}
 
         {isHovered && showHoverDetails && (
-          <HoverDetailsFragmentContainer artwork={rest.artwork} />
+          <HoverDetailsFragmentContainer artwork={artworkData} />
         )}
       </Box>
 
       {showSubmissionStatus && (
-        <ConsignmentSubmissionStatusFragmentContainer artwork={rest.artwork} />
+        <ConsignmentSubmissionStatusFragmentContainer artwork={artworkData} />
       )}
 
       {!hideSaleInfo && (
         <SaleInfoLine
+          artwork={artworkData}
           showActivePartnerOffer={showActivePartnerOffer}
           {...rest}
         />
       )}
 
-      <BidTimerLine artwork={rest.artwork} />
+      <BidTimerLine artwork={artworkData} />
 
       {padForPrimaryLabelLine && <EmptyLine />}
     </Box>
@@ -543,91 +555,89 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   )
 }
 
-export const DetailsFragmentContainer = createFragmentContainer(Details, {
-  artwork: graphql`
-    fragment Details_artwork on Artwork
-      @argumentDefinitions(
-        includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+const ARTWORK_FRAGMENT = graphql`
+  fragment Details_artwork on Artwork
+    @argumentDefinitions(
+      includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
 
-        ignorePrimaryLabelSignals: {
-          type: "[LabelSignalEnum]"
-          defaultValue: null
-        }
-      ) {
-      internalID
-      href
-      title
-      date
-      collectorSignals {
-        primaryLabel(ignore: $ignorePrimaryLabelSignals)
-        auction {
-          bidCount
-          lotClosesAt
-          liveBiddingStarted
-          registrationEndsAt
-          onlineBiddingExtended
-        }
-        partnerOffer {
-          endAt
-          priceWithDiscount {
-            display
-          }
-        }
+      ignorePrimaryLabelSignals: {
+        type: "[LabelSignalEnum]"
+        defaultValue: null
       }
-      saleMessage
-      culturalMaker
-      artist(shallow: true) {
-        targetSupply {
-          isP1
-        }
+    ) {
+    internalID
+    href
+    title
+    date
+    collectorSignals {
+      primaryLabel(ignore: $ignorePrimaryLabelSignals)
+      auction {
+        bidCount
+        lotClosesAt
+        liveBiddingStarted
+        registrationEndsAt
+        onlineBiddingExtended
       }
-      marketPriceInsights {
-        demandRank
-      }
-      artists(shallow: true) {
-        id
-        href
-        name
-      }
-      collectingInstitution
-      partner(shallow: true) {
-        name
-        href
-      }
-      sale {
+      partnerOffer {
         endAt
-        cascadingEndTimeIntervalMinutes
-        extendedBiddingIntervalMinutes
-        startAt
-        isAuction
-        isClosed
-      }
-      saleArtwork {
-        lotID
-        lotLabel
-        endAt
-        extendedBiddingEndAt
-        formattedEndDateTime
-        counts {
-          bidderPositions
-        }
-        highestBid {
-          display
-        }
-        openingBid {
+        priceWithDiscount {
           display
         }
       }
-      consignmentSubmission @include(if: $includeConsignmentSubmission) {
-        internalID
-      }
-      ...BidTimerLine_artwork
-      ...HoverDetails_artwork
-      ...ConsignmentSubmissionStatus_artwork
-        @include(if: $includeConsignmentSubmission)
     }
-  `,
-})
+    saleMessage
+    culturalMaker
+    artist(shallow: true) {
+      targetSupply {
+        isP1
+      }
+    }
+    marketPriceInsights {
+      demandRank
+    }
+    artists(shallow: true) {
+      id
+      href
+      name
+    }
+    collectingInstitution
+    partner(shallow: true) {
+      name
+      href
+    }
+    sale {
+      endAt
+      cascadingEndTimeIntervalMinutes
+      extendedBiddingIntervalMinutes
+      startAt
+      isAuction
+      isClosed
+    }
+    saleArtwork {
+      lotID
+      lotLabel
+      endAt
+      extendedBiddingEndAt
+      formattedEndDateTime
+      counts {
+        bidderPositions
+      }
+      highestBid {
+        display
+      }
+      openingBid {
+        display
+      }
+    }
+    consignmentSubmission @include(if: $includeConsignmentSubmission) {
+      internalID
+    }
+    ...BidTimerLine_artwork
+    ...HoverDetails_artwork
+    ...ConsignmentSubmissionStatus_artwork
+      @include(if: $includeConsignmentSubmission)
+  }
+`
 
 type DetailsPlaceholderProps = Pick<
   DetailsProps,

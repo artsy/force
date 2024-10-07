@@ -1,9 +1,6 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, BoxProps } from "@artsy/palette"
-import {
-  DetailsFragmentContainer,
-  DetailsPlaceholder,
-} from "Components/Artwork/Details/Details"
+import { Details, DetailsPlaceholder } from "Components/Artwork/Details/Details"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -51,7 +48,7 @@ export const Metadata: React.FC<MetadataProps> = ({
       disableRouterLinking={disableRouterLinking}
       {...rest}
     >
-      <DetailsFragmentContainer
+      <Details
         includeLinks={false}
         artwork={artwork}
         hideSaleInfo={hideSaleInfo}
