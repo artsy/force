@@ -19,15 +19,7 @@ const AuctionWorksByFollowedArtistsRail: React.FC<AuctionWorksByFollowedArtistsR
   }
 
   return (
-    <ArtworkGridContextProvider
-      collectorSignalsConfig={{
-        disableCuratorsPick: true,
-        disablePartnerOffer: true,
-        disableTrendingNow: true,
-      }}
-      isAuctionArtwork
-      hideLotLabel
-    >
+    <ArtworkGridContextProvider isAuctionArtwork hideLotLabel>
       <Rail
         title="Works By Artists You Follow"
         viewAllOnClick={() => {

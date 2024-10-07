@@ -30,11 +30,11 @@ const ArtworkGridContext = createContext<ArtworkGridContextProps>({
   collectorSignalsConfig: {},
 })
 
-export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProps> = ({
-  children,
-  collectorSignalsConfig: signalConfig = {},
-  ...rest
-}) => {
+export const ArtworkGridContextProvider: React.FC<
+  Omit<ArtworkGridContextProps, "collectorSignalsConfig"> & {
+    collectorSignalsConfig?: CollectorSignalsConfig
+  }
+> = ({ children, collectorSignalsConfig: signalConfig = {}, ...rest }) => {
   return (
     <ArtworkGridContext.Provider
       value={{ collectorSignalsConfig: signalConfig, ...rest }}

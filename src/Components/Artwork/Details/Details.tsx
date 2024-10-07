@@ -326,8 +326,8 @@ export const Details: React.FC<DetailsProps> = ({
   )
 
   if (!increasedInterestCuratorsPickEnabled) {
-    collectorSignalsConfig.disableCuratorsPick = false
-    collectorSignalsConfig.disableTrendingNow = false
+    collectorSignalsConfig.disableCuratorsPick = true
+    collectorSignalsConfig.disableTrendingNow = true
   }
 
   const isP1Artist = artworkData.artist?.targetSupply?.isP1

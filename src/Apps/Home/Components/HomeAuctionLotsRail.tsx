@@ -8,7 +8,7 @@ import { HomeAuctionLotsRail_viewer$data } from "__generated__/HomeAuctionLotsRa
 import { HomeAuctionLotsRailQuery } from "__generated__/HomeAuctionLotsRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import {
-  ShelfArtworkFragmentContainer,
+  ShelfArtwork,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import {
@@ -39,7 +39,7 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
     <Shelf>
       {artworks.map(artwork => {
         return (
-          <ShelfArtworkFragmentContainer
+          <ShelfArtwork
             artwork={artwork}
             key={artwork.slug}
             lazyLoad
