@@ -332,7 +332,6 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
         includeAllImages: { type: "Boolean", defaultValue: false }
         includeBlurHash: { type: "Boolean!", defaultValue: true }
         includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
-        # ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
       ) {
       edges {
         node {
@@ -348,7 +347,6 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
             @arguments(
               includeBlurHash: $includeBlurHash
               includeConsignmentSubmission: $includeConsignmentSubmission
-              # ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
             )
         }
       }

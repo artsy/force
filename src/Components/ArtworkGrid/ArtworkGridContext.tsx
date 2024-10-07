@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react"
+import { CollectorSignalsConfig } from "Utils/collectorSignals"
 
 /**
  * Used to configure internal details of the Artwork Grid / Brick without
@@ -17,12 +18,6 @@ interface ArtworkGridContextProps {
   collectorSignalsConfig: CollectorSignalsConfig
 }
 
-export interface CollectorSignalsConfig {
-  disableTrendingNow?: boolean
-  disableCuratorsPick?: boolean
-  disablePartnerOffer?: boolean
-}
-
 const ArtworkGridContext = createContext<ArtworkGridContextProps>({
   isAuctionArtwork: false,
   hideLotLabel: false,
@@ -30,15 +25,12 @@ const ArtworkGridContext = createContext<ArtworkGridContextProps>({
   collectorSignalsConfig: {},
 })
 
-export const ArtworkGridContextProvider: React.FC<
-  Omit<ArtworkGridContextProps, "collectorSignalsConfig"> & {
-    collectorSignalsConfig?: CollectorSignalsConfig
-  }
-> = ({ children, collectorSignalsConfig: signalConfig = {}, ...rest }) => {
+export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProps> = ({
+  children,
+  ...rest
+}) => {
   return (
-    <ArtworkGridContext.Provider
-      value={{ collectorSignalsConfig: signalConfig, ...rest }}
-    >
+    <ArtworkGridContext.Provider value={{ ...rest }}>
       {children}
     </ArtworkGridContext.Provider>
   )

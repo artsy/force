@@ -107,10 +107,7 @@ export const CollectionArtworksFilterRefetchContainer = createRefetchContainer(
   {
     collection: graphql`
       fragment CollectionArtworksFilter_collection on MarketingCollection
-        @argumentDefinitions(
-          input: { type: "FilterArtworksInput" }
-          # ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
-        ) {
+        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         slug
         query {
           artistIDs

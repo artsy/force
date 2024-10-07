@@ -17,16 +17,14 @@ import {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { MetaTags } from "Components/MetaTags"
-import {
-  ArtworkGridContextProvider,
-  CollectorSignalsConfig,
-} from "Components/ArtworkGrid/ArtworkGridContext"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { useRouter } from "System/Hooks/useRouter"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { CollectionFeaturedArtistsQueryRenderer } from "Apps/Collect/Routes/Collection/Components/Header/CollectionFeaturedArtists"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { CollectorSignalsConfig } from "Utils/collectorSignals"
 
 interface CollectionAppProps {
   collection: Collection_collection$data
@@ -106,15 +104,11 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
                     $slug: String!
                     $aggregations: [ArtworkAggregation]
                     $input: FilterArtworksInput!
-                    $shouldFetchCounts: Boolean!
-                  ) # $ignorePrimaryLabelSignals: [LabelSignalEnum!]
-                  {
+                    $shouldFetchCounts: Boolean! # $ignorePrimaryLabelSignals: [LabelSignalEnum!]
+                  ) {
                     marketingCollection(slug: $slug) {
                       ...CollectionArtworksFilter_collection
-                        @arguments(
-                          input: $input
-                          # ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
-                        )
+                        @arguments(input: $input)
 
                       artworksConnection(
                         aggregations: $aggregations

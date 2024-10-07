@@ -107,7 +107,6 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
       fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection
         @argumentDefinitions(
           includeBlurHash: { type: "Boolean!", defaultValue: true }
-          # ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
         ) {
         id
         pageInfo {
@@ -122,11 +121,7 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
             id
           }
         }
-        ...ArtworkGrid_artworks
-          @arguments(
-            includeBlurHash: $includeBlurHash
-            # ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
-          )
+        ...ArtworkGrid_artworks @arguments(includeBlurHash: $includeBlurHash)
       }
     `,
   }
