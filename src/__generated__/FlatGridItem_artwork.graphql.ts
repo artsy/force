@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4dba6756928a89a606ce6d9ec27b8350>>
+ * @generated SignedSource<<4b8d8e590ea625272998df303f9258f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,11 +46,6 @@ export type FlatGridItem_artwork$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "ignorePrimaryLabelSignals"
-    },
-    {
       "defaultValue": false,
       "kind": "LocalArgument",
       "name": "includeAllImages"
@@ -72,11 +67,6 @@ const node: ReaderFragment = {
   "selections": [
     {
       "args": [
-        {
-          "kind": "Variable",
-          "name": "ignorePrimaryLabelSignals",
-          "variableName": "ignorePrimaryLabelSignals"
-        },
         {
           "kind": "Variable",
           "name": "includeConsignmentSubmission",
@@ -274,6 +264,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "84b0d2080dbe4a5b09127fa84c939da1";
+(node as any).hash = "f642a14fa9fb0e878754f4759b12d729";
 
 export default node;

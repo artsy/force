@@ -202,10 +202,7 @@ export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
 }
 
 const partnerOfferArtworkFragment = graphql`
-  fragment PartnerOfferArtwork_artwork on Artwork
-    @argumentDefinitions(
-      ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
-    ) {
+  fragment PartnerOfferArtwork_artwork on Artwork {
     internalID
     slug
     href
@@ -225,9 +222,8 @@ const partnerOfferArtworkFragment = graphql`
       }
     }
     collectorSignals {
-      primaryLabel(ignore: $ignorePrimaryLabelSignals)
+      primaryLabel
     }
     ...Metadata_artwork
-      @arguments(ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals)
   }
 `

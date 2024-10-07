@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9fc13e90ff3e35d95f690a134e80dd9c>>
+ * @generated SignedSource<<ac6c38d4dd3db8936b9b4bf1c808a7e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,13 +30,7 @@ export type ShelfArtwork_artwork$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "ignorePrimaryLabelSignals"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ShelfArtwork_artwork",
@@ -47,13 +41,7 @@ const node: ReaderFragment = {
       "name": "ExclusiveAccessBadge_artwork"
     },
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "ignorePrimaryLabelSignals",
-          "variableName": "ignorePrimaryLabelSignals"
-        }
-      ],
+      "args": null,
       "kind": "FragmentSpread",
       "name": "Metadata_artwork"
     },
@@ -138,6 +126,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5a934720a72942a23ae2777cf30c8777";
+(node as any).hash = "1c78062da40df279094a43d2e645407e";
 
 export default node;

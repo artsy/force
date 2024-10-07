@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<edd17d0e1ab535e9d05bb77327a244a6>>
+ * @generated SignedSource<<b5884de837507f8b9f2355b1ee239059>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -135,11 +135,6 @@ v5 = {
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "ignorePrimaryLabelSignals"
-    },
-    {
       "defaultValue": false,
       "kind": "LocalArgument",
       "name": "includeConsignmentSubmission"
@@ -175,13 +170,7 @@ return {
       "selections": [
         {
           "alias": null,
-          "args": [
-            {
-              "kind": "Variable",
-              "name": "ignore",
-              "variableName": "ignorePrimaryLabelSignals"
-            }
-          ],
+          "args": null,
           "kind": "ScalarField",
           "name": "primaryLabel",
           "storageKey": null
@@ -523,6 +512,6 @@ return {
 };
 })();
 
-(node as any).hash = "a01f937d7751684930a47cc4f37aa487";
+(node as any).hash = "5874eab010626e0be2516cb7236b8d13";
 
 export default node;

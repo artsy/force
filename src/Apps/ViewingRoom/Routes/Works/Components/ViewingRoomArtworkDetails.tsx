@@ -3,7 +3,7 @@ import { Button, GridColumns, Column, Text } from "@artsy/palette"
 import { ViewingRoomArtworkDetails_artwork$data } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
+import { Details } from "Components/Artwork/Details/Details"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
@@ -20,7 +20,7 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
 
   return (
     <ManageArtworkForSavesProvider>
-      <DetailsFragmentContainer
+      <Details
         includeLinks={true}
         artwork={artwork}
         hideSaleInfo={false}
@@ -71,7 +71,7 @@ export const ViewingRoomArtworkDetailsFragmentContainer = createFragmentContaine
   {
     artwork: graphql`
       fragment ViewingRoomArtworkDetails_artwork on Artwork {
-        ...Details_artwork @arguments(ignorePrimaryLabelSignals: [])
+        ...Details_artwork
         id
         additionalInformation
         href

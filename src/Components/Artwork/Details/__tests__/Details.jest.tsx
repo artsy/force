@@ -63,7 +63,6 @@ describe("Details", () => {
             ...Details_artwork
               @arguments(
                 includeConsignmentSubmission: $includeConsignmentSubmission
-                ignorePrimaryLabelSignals: []
               )
           }
         }

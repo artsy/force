@@ -559,18 +559,13 @@ const ARTWORK_FRAGMENT = graphql`
   fragment Details_artwork on Artwork
     @argumentDefinitions(
       includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
-
-      ignorePrimaryLabelSignals: {
-        type: "[LabelSignalEnum]"
-        defaultValue: null
-      }
     ) {
     internalID
     href
     title
     date
     collectorSignals {
-      primaryLabel(ignore: $ignorePrimaryLabelSignals)
+      primaryLabel
       auction {
         bidCount
         lotClosesAt

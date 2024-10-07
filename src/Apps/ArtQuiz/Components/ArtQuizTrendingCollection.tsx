@@ -1,6 +1,6 @@
 import { HTML, Shelf, SkeletonText, Spacer, Text } from "@artsy/palette"
 import {
-  ShelfArtworkFragmentContainer,
+  ShelfArtwork,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { FC } from "react"
@@ -35,12 +35,7 @@ const ArtQuizTrendingCollection: FC<ArtQuizTrendingCollectionProps> = ({
 
       <Shelf>
         {artworks.map(artwork => {
-          return (
-            <ShelfArtworkFragmentContainer
-              key={artwork.internalID}
-              artwork={artwork}
-            />
-          )
+          return <ShelfArtwork key={artwork.internalID} artwork={artwork} />
         })}
       </Shelf>
     </>

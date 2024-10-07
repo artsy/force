@@ -104,13 +104,9 @@ const ARTWORK_FRAGMENT = graphql`
   fragment Metadata_artwork on Artwork
     @argumentDefinitions(
       includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
-      ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
     ) {
     ...Details_artwork
-      @arguments(
-        includeConsignmentSubmission: $includeConsignmentSubmission
-        ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
-      )
+      @arguments(includeConsignmentSubmission: $includeConsignmentSubmission)
     internalID
     href
   }

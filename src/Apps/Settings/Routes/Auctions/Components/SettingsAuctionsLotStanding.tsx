@@ -3,7 +3,7 @@ import { Button, Column, Image, Flex, Text, Box } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
+import { Details } from "Components/Artwork/Details/Details"
 import { SettingsAuctionsLotStanding_lotStanding$data } from "__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
 import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
 import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
@@ -58,7 +58,7 @@ const SettingsAuctionsLotStanding: FC<SettingsAuctionsLotStandingProps> = ({
               </Text>
             )}
 
-            <DetailsFragmentContainer includeLinks={false} artwork={artwork} />
+            <Details includeLinks={false} artwork={artwork} />
           </Flex>
         </RouterLink>
       </Column>
@@ -118,7 +118,7 @@ export const SettingsAuctionsLotStandingFragmentContainer = createFragmentContai
             isClosed
           }
           artwork {
-            ...Details_artwork @arguments(ignorePrimaryLabelSignals: [])
+            ...Details_artwork
             href
             image {
               cropped(height: 100, width: 100) {

@@ -128,13 +128,9 @@ export const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
 }
 
 const ARTWORK_FRAGMENT = graphql`
-  fragment ShelfArtwork_artwork on Artwork
-    @argumentDefinitions(
-      ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
-    ) {
+  fragment ShelfArtwork_artwork on Artwork {
     ...ExclusiveAccessBadge_artwork
     ...Metadata_artwork
-      @arguments(ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals)
     title
     href
     artistNames
