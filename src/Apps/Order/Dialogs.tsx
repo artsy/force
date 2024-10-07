@@ -81,7 +81,7 @@ export class DialogContainer extends Container<DialogState> {
     title,
     message,
     confirmButtonText = "Continue",
-    cancelButtonText = "Cancel",
+    cancelButtonText,
   }: {
     title: string
     message: React.ReactNode
@@ -107,10 +107,12 @@ export class DialogContainer extends Container<DialogState> {
             text: confirmButtonText,
             action: accept,
           },
-          secondaryCta: {
-            text: cancelButtonText,
-            action: reject,
-          },
+          secondaryCta: !!cancelButtonText
+            ? {
+                text: cancelButtonText,
+                action: reject,
+              }
+            : undefined,
           onClose: reject,
         },
         onForceClose: reject,

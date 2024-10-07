@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6abc60c84789b413433be039e9eb2878>>
+ * @generated SignedSource<<0636ed6317b34ebf5331e0d88a1c21df>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,9 @@ export type BidTimerLine_artwork$data = {
       readonly registrationEndsAt: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
+  readonly saleArtwork: {
+    readonly lotID: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "BidTimerLine_artwork";
 };
 export type BidTimerLine_artwork$key = {
@@ -31,6 +34,24 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "BidTimerLine_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "SaleArtwork",
+      "kind": "LinkedField",
+      "name": "saleArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lotID",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -79,6 +100,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c4397270f2ed5f4915b5c65fc4df5769";
+(node as any).hash = "1b2dc7ce1e791c0c954cfc7b95ea1133";
 
 export default node;

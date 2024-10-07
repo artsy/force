@@ -5,8 +5,8 @@ import { SENTRY_PRIVATE_DSN, SENTRY_TRACING_ENABLED } from "Server/config"
 
 const TRACING_CONFIG: Sentry.NodeOptions = {
   integrations: [nodeProfilingIntegration()],
-  profilesSampleRate: 1.0, // Capture 100% of the transactions
-  tracesSampleRate: 1.0, // Capture 100% of the transactions
+  profilesSampleRate: 0.08, // Capture 8% of the transactions
+  tracesSampleRate: 0.08, // Capture 8% of the transactions
 }
 
 if (SENTRY_PRIVATE_DSN) {
