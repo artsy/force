@@ -10,7 +10,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { userIsTeam } from "Utils/user"
 import { FlatGridItem_artwork$data } from "__generated__/FlatGridItem_artwork.graphql"
-import Metadata from "./Metadata"
+import { Metadata } from "./Metadata"
 import { useSaveButton } from "./SaveButton"
 import { DeprecatedSaveButtonQueryRenderer } from "Components/Artwork/SaveButton/DeprecatedSaveButton"
 

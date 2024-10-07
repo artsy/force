@@ -1,7 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Button, Flex, Image, Link, Text, useTheme } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
-import Metadata from "Components/Artwork/Metadata"
+import { Metadata } from "Components/Artwork/Metadata"
 import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 import { RouterLink } from "System/Components/RouterLink"

@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react"
-import Metadata from "Components/Artwork/Metadata"
+import { Metadata } from "Components/Artwork/Metadata"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { MetadataTestQuery } from "__generated__/MetadataTestQuery.graphql"

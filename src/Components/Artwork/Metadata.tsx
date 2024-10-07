@@ -2,15 +2,18 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { Box, BoxProps } from "@artsy/palette"
 import { Details, DetailsPlaceholder } from "Components/Artwork/Details/Details"
 import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
-import { Metadata_artwork$data } from "__generated__/Metadata_artwork.graphql"
+import {
+  Metadata_artwork$data,
+  Metadata_artwork$key,
+} from "__generated__/Metadata_artwork.graphql"
 
 export interface MetadataProps
   extends BoxProps,
     React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  artwork: Metadata_artwork$data
+  artwork: Metadata_artwork$key
   contextModule?: AuthContextModule
   disableRouterLinking?: boolean
   hidePartnerName?: boolean
@@ -41,16 +44,17 @@ export const Metadata: React.FC<MetadataProps> = ({
   renderSaveButton,
   ...rest
 }) => {
+  const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
   return (
     <LinkContainer
-      artwork={artwork}
+      artwork={artworkData}
       mt={mt}
       disableRouterLinking={disableRouterLinking}
       {...rest}
     >
       <Details
         includeLinks={false}
-        artwork={artwork}
+        artwork={artworkData}
         hideSaleInfo={hideSaleInfo}
         hidePartnerName={hidePartnerName}
         hideArtistName={hideArtistName}
@@ -66,13 +70,11 @@ export const Metadata: React.FC<MetadataProps> = ({
   )
 }
 
-const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
-  artwork,
-  disableRouterLinking,
-  mt,
-  to,
-  ...rest
-}) => {
+const LinkContainer: React.FC<
+  Omit<MetadataProps, "children" | "artwork"> & {
+    artwork: Metadata_artwork$data
+  }
+> = ({ artwork, disableRouterLinking, mt, to, ...rest }) => {
   if (!!disableRouterLinking) {
     return <DisabledLink mt={mt}>{rest.children}</DisabledLink>
   }
@@ -98,23 +100,21 @@ const DisabledLink = styled(Box)`
   text-align: left;
 `
 
-export default createFragmentContainer(Metadata, {
-  artwork: graphql`
-    fragment Metadata_artwork on Artwork
-      @argumentDefinitions(
-        includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
-        ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
-      ) {
-      ...Details_artwork
-        @arguments(
-          includeConsignmentSubmission: $includeConsignmentSubmission
-          ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
-        )
-      internalID
-      href
-    }
-  `,
-})
+const ARTWORK_FRAGMENT = graphql`
+  fragment Metadata_artwork on Artwork
+    @argumentDefinitions(
+      includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+      ignorePrimaryLabelSignals: { type: "[LabelSignalEnum]" }
+    ) {
+    ...Details_artwork
+      @arguments(
+        includeConsignmentSubmission: $includeConsignmentSubmission
+        ignorePrimaryLabelSignals: $ignorePrimaryLabelSignals
+      )
+    internalID
+    href
+  }
+`
 
 type MetadataPlaceholderProps = Pick<
   MetadataProps,
