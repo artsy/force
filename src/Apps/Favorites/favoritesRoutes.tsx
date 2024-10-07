@@ -34,13 +34,6 @@ const Alerts = loadable(
   }
 )
 
-// Redirect home if the user is not logged in
-const handleServerSideRender = ({ req, res }) => {
-  if (!req.user) {
-    res.redirect("/")
-  }
-}
-
 export const favoritesRoutes: RouteProps[] = [
   {
     path: "/favorites",
@@ -94,7 +87,11 @@ export const favoritesRoutes: RouteProps[] = [
         onClientSideRender: () => {
           Alerts.preload()
         },
-        onServerSideRender: handleServerSideRender,
+        onServerSideRender: ({ req, res }) => {
+          if (!req.user) {
+            res.redirect("/")
+          }
+        },
         query: graphql`
           query favoritesRoutesAlertsAppEditQuery {
             me {
