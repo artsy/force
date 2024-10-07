@@ -7,7 +7,7 @@ import { ArtistConsignHowtoSellFragmentContainer } from "./Components/ArtistCons
 import { ArtistConsignMarketTrendsFragmentContainer } from "./Components/ArtistConsignMarketTrends"
 import { ArtistConsignMetaFragmentContainer } from "./Components/ArtistConsignMeta"
 import { ArtistConsignPageViewsFragmentContainer } from "./Components/ArtistConsignPageViews"
-import { ArtistConsignRecentlySoldFragmentContainer } from "./Components/ArtistConsignRecentlySold"
+import { ArtistConsignRecentlySold } from "./Components/ArtistConsignRecentlySold"
 import { ArtistConsignSellArtFragmentContainer } from "./Components/ArtistConsignSellArt"
 import { Spacer } from "@artsy/palette"
 import track from "react-tracking"
@@ -26,7 +26,7 @@ const ArtistConsignRoute: React.FC<ConsignRouteProps> = ({ artist }) => {
 
       <ArtistConsignHeaderFragmentContainer artist={artist} />
 
-      <ArtistConsignRecentlySoldFragmentContainer artist={artist} />
+      <ArtistConsignRecentlySold artist={artist} />
 
       <ArtistConsignPageViewsFragmentContainer artist={artist} />
 

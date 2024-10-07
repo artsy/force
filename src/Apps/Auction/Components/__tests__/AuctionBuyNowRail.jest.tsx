@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { AuctionBuyNowRailFragmentContainer } from "Apps/Auction/Components/AuctionBuyNowRail"
+import { AuctionBuyNowRail } from "Apps/Auction/Components/AuctionBuyNowRail"
 import { AuctionBuyNowRailTestQuery } from "__generated__/AuctionBuyNowRailTestQuery.graphql"
 
 jest.unmock("react-relay")
@@ -8,7 +8,7 @@ jest.unmock("react-relay")
 describe("AuctionBuyNowRail", () => {
   const { getWrapper } = setupTestWrapper<AuctionBuyNowRailTestQuery>({
     Component: (props: any) => {
-      return <AuctionBuyNowRailFragmentContainer {...props} />
+      return <AuctionBuyNowRail {...props} />
     },
     query: graphql`
       query AuctionBuyNowRailTestQuery {

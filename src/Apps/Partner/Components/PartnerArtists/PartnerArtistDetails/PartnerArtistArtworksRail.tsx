@@ -1,12 +1,12 @@
 import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { PartnerArtistArtworksRail_partnerArtist$data } from "__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
+import { graphql, useFragment } from "react-relay"
+import { PartnerArtistArtworksRail_partnerArtist$key } from "__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtwork } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
 
 export interface PartnerArtistArtworksRailProps {
-  partnerArtist: PartnerArtistArtworksRail_partnerArtist$data
+  partnerArtist: PartnerArtistArtworksRail_partnerArtist$key
   partnerId: string
   artistId: string
 }
@@ -16,9 +16,10 @@ export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps>
   partnerId,
   artistId,
 }) => {
-  if (!partnerArtist.artworksConnection) return null
+  const partnerArtistData = useFragment(PARTNER_ARTIST_FRAGMENT, partnerArtist)
+  if (!partnerArtistData.artworksConnection) return null
 
-  const artworks = extractNodes(partnerArtist.artworksConnection)
+  const artworks = extractNodes(partnerArtistData.artworksConnection)
 
   return (
     <Rail
@@ -34,22 +35,17 @@ export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps>
   )
 }
 
-export const PartnerArtistArtworksFragmentContainer = createFragmentContainer(
-  PartnerArtistArtworksRail,
-  {
-    partnerArtist: graphql`
-      fragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge {
-        artworksConnection(first: 12)
-          @connection(key: "PartnerArtistArtworksRail_artworksConnection") {
-          totalCount
-          edges {
-            node {
-              ...ShelfArtwork_artwork
-              internalID
-            }
-          }
+const PARTNER_ARTIST_FRAGMENT = graphql`
+  fragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge {
+    artworksConnection(first: 12)
+      @connection(key: "PartnerArtistArtworksRail_artworksConnection") {
+      totalCount
+      edges {
+        node {
+          ...ShelfArtwork_artwork
+          internalID
         }
       }
-    `,
+    }
   }
-)
+`

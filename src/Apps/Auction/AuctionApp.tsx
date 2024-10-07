@@ -9,7 +9,7 @@ import { AuctionMetaFragmentContainer } from "./Components/AuctionMeta"
 import { AuctionActiveBidsRefetchContainer } from "./Components/AuctionActiveBids"
 import { AuctionArtworkFilterRefetchContainer } from "./Components/AuctionArtworkFilter"
 import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/AuctionDetails"
-import { AuctionBuyNowRailFragmentContainer } from "./Components/AuctionBuyNowRail"
+import { AuctionBuyNowRail } from "./Components/AuctionBuyNowRail"
 import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "./Components/AuctionWorksByFollowedArtistsRail"
 import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAssociatedSale"
 import { useEffect } from "react"
@@ -113,7 +113,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
                   )}
                   {tabBar.showBuyNowTab && (
                     <Tab name="Inquire">
-                      <AuctionBuyNowRailFragmentContainer sale={sale} />
+                      <AuctionBuyNowRail sale={sale} />
                     </Tab>
                   )}
                 </Tabs>
