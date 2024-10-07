@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<010931ff4c6c2b7e5b9ae14b20126ddc>>
+ * @generated SignedSource<<fab839eb21b21f672c61fd826bd4caab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkApp_artwork$data = {
-  readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
-  } | null | undefined;
   readonly artists: ReadonlyArray<{
     readonly id: string;
     readonly internalID: string;
     readonly slug: string;
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
   } | null | undefined> | null | undefined;
   readonly attributionClass: {
     readonly internalID: string;
@@ -50,7 +46,7 @@ export type ArtworkApp_artwork$data = {
   readonly saleMessage: string | null | undefined;
   readonly slug: string;
   readonly visibilityLevel: Visibility | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkPageBanner_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork" | "PrivateArtworkDetails_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkPageBanner_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork" | "PrivateArtworkDetails_artwork">;
   readonly " $fragmentType": "ArtworkApp_artwork";
 };
 export type ArtworkApp_artwork$key = {
@@ -81,23 +77,13 @@ v2 = [
     "name": "display",
     "storageKey": null
   }
-],
-v3 = {
-  "args": null,
-  "kind": "FragmentSpread",
-  "name": "ArtistInfo_artist"
-};
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkApp_artwork",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkRelatedArtists_artwork"
-    },
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -303,20 +289,7 @@ return {
           "storageKey": null
         },
         (v0/*: any*/),
-        (v1/*: any*/),
-        (v3/*: any*/)
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artist",
-      "plural": false,
-      "selections": [
-        (v3/*: any*/)
+        (v1/*: any*/)
       ],
       "storageKey": null
     }
@@ -326,6 +299,6 @@ return {
 };
 })();
 
-(node as any).hash = "3d1b9b23390bc37bb476ccd127646c1d";
+(node as any).hash = "82a8b1fcaad1d89ad72ef1b713c5e781";
 
 export default node;

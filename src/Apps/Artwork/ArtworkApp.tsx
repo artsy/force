@@ -309,7 +309,7 @@ export const ArtworkApp: React.FC<Props> = props => {
           {/* Temporarily suppressed while we investigate performance. See PLATFORM-4980  */}
           {/* <RelatedWorksQueryRenderer slug={artwork.slug} /> */}
 
-          {artwork.artist && (
+          {artwork.artists && (
             <>
               <Spacer y={6} />
 
@@ -389,7 +389,6 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkApp_artwork on Artwork {
-        ...ArtworkRelatedArtists_artwork
         ...ArtworkMeta_artwork
         ...ArtworkTopContextBar_artwork
         ...ArtworkImageBrowser_artwork
@@ -438,10 +437,6 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
           id
           internalID
           slug
-          ...ArtistInfo_artist
-        }
-        artist {
-          ...ArtistInfo_artist
         }
       }
     `,
