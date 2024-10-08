@@ -59,6 +59,8 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
   const shouldRenderProgressBar =
     isAuctionArtwork && isExtendedBiddingEnabledSale && !hasEnded
 
+  const enablePrefetch = !sale?.isOpen
+
   return (
     <Flex
       {...containerProps}
@@ -77,6 +79,7 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
           to={artwork.href}
           onClick={handleClick}
           aria-label={`${artwork.title} by ${artwork.artistNames}`}
+          enablePrefetch={enablePrefetch}
         >
           {image && (
             <Image
@@ -136,6 +139,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
           extendedBiddingPeriodMinutes
           extendedBiddingIntervalMinutes
           startAt
+          isOpen
         }
         saleArtwork {
           endAt

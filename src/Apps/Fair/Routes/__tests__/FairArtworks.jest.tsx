@@ -149,6 +149,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
             },
             sale: {
               is_auction: true,
+              isOpen: true,
               is_closed: false,
               id: "saleabc123",
               is_preview: false,

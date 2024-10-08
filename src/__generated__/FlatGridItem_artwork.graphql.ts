@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b8d8e590ea625272998df303f9258f3>>
+ * @generated SignedSource<<049dc2dac2c2b433704451913514031c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,7 @@ export type FlatGridItem_artwork$data = {
   readonly sale: {
     readonly extendedBiddingIntervalMinutes: number | null | undefined;
     readonly extendedBiddingPeriodMinutes: number | null | undefined;
+    readonly isOpen: boolean | null | undefined;
     readonly startAt: string | null | undefined;
   } | null | undefined;
   readonly saleArtwork: {
@@ -103,6 +104,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "startAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isOpen",
           "storageKey": null
         }
       ],
@@ -264,6 +272,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f642a14fa9fb0e878754f4759b12d729";
+(node as any).hash = "802f5554854d0877359f5df32ba66fbc";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f22150a5802f697992645f7c5b3229f>>
+ * @generated SignedSource<<dbfafd2026f6a5fb517db02fb78dab5f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,9 @@ import { FragmentRefs } from "relay-runtime";
 export type Metadata_artwork$data = {
   readonly href: string | null | undefined;
   readonly internalID: string;
+  readonly sale: {
+    readonly isOpen: boolean | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
   readonly " $fragmentType": "Metadata_artwork";
 };
@@ -57,12 +60,30 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "href",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isOpen",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "eeeb45c66c57246b87946c622ccff1bc";
+(node as any).hash = "8c66d9ef146390beeb9462119b77dd98";
 
 export default node;
