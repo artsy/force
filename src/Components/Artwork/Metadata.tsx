@@ -80,6 +80,8 @@ const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
     return <DisabledLink mt={mt}>{rest.children}</DisabledLink>
   }
 
+  const enablePrefetch = !artwork.sale?.isOpen
+
   return (
     <RouterLink
       to={to !== undefined ? to : artwork.href}
@@ -88,6 +90,7 @@ const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
       textAlign="left"
       mt={mt}
       data-testid="metadata-artwork-link"
+      enablePrefetch={enablePrefetch}
       {...rest}
     >
       {rest.children}
@@ -111,6 +114,9 @@ export default createFragmentContainer(Metadata, {
         @arguments(includeConsignmentSubmission: $includeConsignmentSubmission)
       internalID
       href
+      sale {
+        isOpen
+      }
     }
   `,
 })
