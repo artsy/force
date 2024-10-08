@@ -226,6 +226,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
                 variant="primaryBlack"
                 size="large"
                 width="50%"
+                minWidth="200px"
                 mt={[1, 0]}
               >
                 Update Payment Method
