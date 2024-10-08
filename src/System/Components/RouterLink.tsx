@@ -32,6 +32,7 @@ export type RouterLinkProps = Omit<
 
 export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
   ({ inline, to, enablePrefetch = true, ...rest }, _ref) => {
+    return <>{rest.children}</>
     const systemContext = useSystemContext()
     const { router } = useRouter()
 
@@ -128,10 +129,10 @@ export const RouterAwareLink: React.FC<LinkPropsSimple & RouterLinkMixinProps> =
   // @ts-ignore
   styled(Link).withConfig({
     shouldForwardProp: (
-      prop: string,
-      defaultValidatorFn: (prop: string) => boolean
+      prop: string
+      // defaultValidatorFn: (prop: string) => boolean
     ) => {
-      return defaultValidatorFn(prop) || routerLinkValidator(prop)
+      return routerLinkValidator(prop)
     },
   })`
     :hover {
@@ -148,8 +149,8 @@ export const RouterUnawareLink: React.FC<
 > =
   // TODO: Update styled-components types
   // @ts-ignore
-  styled.a.withConfig({
-    shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
+  styled.a.attrs({
+    // shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
   })`
     :hover {
       color: ${props => props.inline && themeGet("colors.blue100")};
