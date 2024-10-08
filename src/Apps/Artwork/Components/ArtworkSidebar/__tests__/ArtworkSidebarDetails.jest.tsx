@@ -3,13 +3,6 @@ import { graphql } from "react-relay"
 import { ArtworkSidebarDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarDetails"
 import { ArtworkSidebarDetails_Test_Query } from "__generated__/ArtworkSidebarDetails_Test_Query.graphql"
 import { screen } from "@testing-library/react"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-
-jest.mock("System/Hooks/useFeatureFlag", () => {
-  return {
-    useFeatureFlag: jest.fn(),
-  }
-})
 
 jest.unmock("react-relay")
 
@@ -216,12 +209,6 @@ describe("ArtworkSidebarDetails", () => {
   })
 
   describe("collector signals", () => {
-    const mockUseFeatureFlag = useFeatureFlag as jest.Mock
-
-    beforeEach(() => {
-      mockUseFeatureFlag.mockImplementation(() => true)
-    })
-
     it("renders showing now info when the artwork is in a show", () => {
       renderWithRelay({
         Artwork: () => ({

@@ -6,7 +6,6 @@ import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridCo
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthDialog } from "Components/AuthDialog"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")
@@ -15,12 +14,6 @@ jest.mock("Components/AuthDialog/useAuthDialog")
 jest.mock("Components/Artwork/SaveButton/SaveButton", () => ({
   SaveButtonQueryRenderer: () => <div>SaveButtonQueryRenderer</div>,
 }))
-
-jest.mock("System/Hooks/useFeatureFlag", () => {
-  return {
-    useFeatureFlag: jest.fn(),
-  }
-})
 
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(
   "2022-03-18T05:22:32.000Z"
@@ -264,159 +257,6 @@ describe("Details", () => {
     })
   })
 
-  describe("lot close info", () => {
-    it("shows the lot is closed if the lot end time has passed and if the sale has cascading end times enabled", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
-          endAt: "2022-03-11T12:33:37.000Z",
-        },
-        sale: {
-          ...artworkInAuction?.sale,
-          cascadingEndTimeIntervalMinutes: 2,
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-      expect(wrapper.html()).toContain("Closed")
-    })
-
-    it("shows the lot is closing with the days countdown if lots have started closing and the sale has cascading end times enabled", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
-          endAt: "2026-03-11T12:33:37.000Z",
-        },
-        sale: {
-          ...artworkInAuction?.sale,
-          cascadingEndTimeIntervalMinutes: 2,
-          endAt: "2022-03-12T12:33:37.000Z",
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-
-      expect(wrapper.html()).toContain("Closes in 1454d 7h")
-    })
-
-    it("shows the lot is closing with the hours countdown if lots are hours from closing and the sale has cascading end times enabled", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
-          endAt: "2022-03-18T16:33:37.000Z",
-        },
-        sale: {
-          ...artworkInAuction?.sale,
-          cascadingEndTimeIntervalMinutes: 2,
-          endAt: "2022-03-18T15:33:37.000Z",
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-
-      expect(wrapper.html()).toContain("Closes in 11h 11m")
-    })
-
-    it("shows the lot is closing with the formatted end time of the sale if the lots have not started closing and the sale has cascading end times enabled", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
-          endAt: "2026-03-11T12:33:37.000Z",
-        },
-        sale: {
-          ...artworkInAuction?.sale,
-          cascadingEndTimeIntervalMinutes: 2,
-          endAt: "2030-03-12T12:33:37.000Z",
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-      expect(wrapper.html()).toContain("Closes, Mar 12 • 12:33pm GMT")
-    })
-
-    it("does not show the lot close info if the cascading end time flag is off", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        sale: {
-          ...artworkInAuction?.sale,
-          cascadingEndTimeIntervalMinutes: null,
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-      expect(wrapper.html()).not.toContain("Closed")
-    })
-
-    it("does not show the lot close info if sale is not yet open", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
-        },
-        sale: {
-          ...artworkInAuction?.sale,
-          cascadingEndTimeIntervalMinutes: 2,
-          startAt: "2030-03-12T12:33:37.000Z",
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-      expect(wrapper.html()).not.toContain("Closes")
-    })
-
-    describe("extended bidding fucntionality", () => {
-      describe("bidding has been extended", () => {
-        it("shows the extended label and the timer reflects the extendedBiddingEndAt", async () => {
-          const data: any = {
-            ...artworkInAuction,
-            sale_artwork: {
-              ...artworkInAuction?.sale_artwork,
-              endAt: "2022-03-18T05:23:37.000Z",
-              extendedBiddingEndAt: "2022-03-18T05:24:32.000Z",
-            },
-            sale: {
-              ...artworkInAuction?.sale,
-              extendedBiddingIntervalMinutes: 2,
-              cascadingEndTimeIntervalMinutes: 2,
-              endAt: "2022-03-18T15:33:37.000Z",
-            },
-          }
-
-          const wrapper = await getWrapper(data)
-
-          expect(wrapper.html()).toContain("Extended: 2m 0s")
-        })
-      })
-
-      describe("bidding has not yet been extended", () => {
-        it("shows the normal cascading timer copy", async () => {
-          const data: any = {
-            ...artworkInAuction,
-            sale_artwork: {
-              ...artworkInAuction?.sale_artwork,
-              endAt: "2022-03-18T05:23:37.000Z",
-              extendedBiddingEndAt: null,
-            },
-            sale: {
-              ...artworkInAuction?.sale,
-              extendedBiddingIntervalMinutes: 2,
-              cascadingEndTimeIntervalMinutes: 2,
-              endAt: "2022-03-18T15:33:37.000Z",
-            },
-          }
-
-          const wrapper = await getWrapper(data)
-
-          expect(wrapper.html()).toContain("Closes in 1m 5s")
-        })
-      })
-    })
-  })
-
   describe("Show High Demand Icon", () => {
     it("renders icon for MyCollectionArtwork in high demand", async () => {
       props = {
@@ -534,12 +374,6 @@ describe("Details", () => {
   })
 
   describe("collector signals", () => {
-    const mockUseFeatureFlag = useFeatureFlag as jest.Mock
-
-    beforeEach(() => {
-      mockUseFeatureFlag.mockImplementation(() => true)
-    })
-
     it("should render the active partner offer badge when it's the primary label", async () => {
       const data: any = {
         ...artworkNotInAuction,
