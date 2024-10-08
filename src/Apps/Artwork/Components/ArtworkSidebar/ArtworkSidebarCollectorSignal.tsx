@@ -5,7 +5,6 @@ import FairIcon from "@artsy/icons/FairIcon"
 import { RouterLink } from "System/Components/RouterLink"
 import TrendingIcon from "@artsy/icons/TrendingIcon"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface ArtworkSidebarCollectorSignalProps {
   artwork: ArtworkSidebarCollectorSignal_artwork$key
@@ -19,18 +18,11 @@ export const ArtworkSidebarCollectorSignal: React.FC<ArtworkSidebarCollectorSign
   const isShowingNow = data.collectorSignals?.runningShow ?? false
   const primaryLabel = data.collectorSignals?.primaryLabel
 
-  const increasedInterestCuratorsPickEnabled = useFeatureFlag(
-    "emerald_signals-increased-interest-curators-pick"
-  )
-
   if (!data.collectorSignals) {
     return null
   }
 
-  if (
-    primaryLabel === "CURATORS_PICK" &&
-    increasedInterestCuratorsPickEnabled
-  ) {
+  if (primaryLabel === "CURATORS_PICK") {
     return (
       <Flex alignItems="top" my={4} data-testid="curators_pick">
         <VerifiedIcon color="black100" width={18} mr={1} mt={0.5} />
@@ -46,10 +38,7 @@ export const ArtworkSidebarCollectorSignal: React.FC<ArtworkSidebarCollectorSign
     )
   }
 
-  if (
-    primaryLabel === "INCREASED_INTEREST" &&
-    increasedInterestCuratorsPickEnabled
-  ) {
+  if (primaryLabel === "INCREASED_INTEREST") {
     return (
       <Flex alignItems="top" my={4} data-testid="increased_interest">
         <TrendingIcon color="black100" width={18} mr={1} mt={0.5} />
