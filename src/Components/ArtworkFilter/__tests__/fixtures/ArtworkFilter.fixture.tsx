@@ -88,8 +88,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -135,8 +133,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -182,8 +178,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -233,8 +227,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -280,8 +272,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -327,8 +317,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -374,8 +362,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -421,8 +407,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -468,8 +452,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -515,8 +497,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -564,8 +544,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -614,8 +592,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -665,8 +641,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -716,8 +690,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -767,8 +739,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -814,8 +784,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -861,8 +829,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -908,8 +874,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -955,8 +919,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -1004,8 +966,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -1053,8 +1013,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -1100,8 +1058,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -1149,8 +1105,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -1196,8 +1150,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -1243,8 +1195,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -1292,8 +1242,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -1339,8 +1287,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -1386,8 +1332,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -1433,8 +1377,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
         {
@@ -1482,8 +1424,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             },
             sale: null,
             sale_artwork: null,
-
-            is_biddable: false,
           },
         },
       ],

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<929e5edacf36b439e7ba7171f39cca4e>>
+ * @generated SignedSource<<09b130f8b9a441ec99ca165068841835>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,7 @@ export type GridItem_artwork$data = {
   readonly imageTitle: string | null | undefined;
   readonly internalID: string;
   readonly title: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Badge_artwork" | "ExclusiveAccessBadge_artwork" | "Metadata_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ExclusiveAccessBadge_artwork" | "Metadata_artwork">;
   readonly " $fragmentType": "GridItem_artwork";
 };
 export type GridItem_artwork$key = {
@@ -175,11 +175,6 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ExclusiveAccessBadge_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Badge_artwork"
     }
   ],
   "type": "Artwork",
@@ -187,6 +182,6 @@ return {
 };
 })();
 
-(node as any).hash = "0793c509a509ac54ccc7ef52ea3453a2";
+(node as any).hash = "c4459a2e0d89f7ac40e00f390da7058d";
 
 export default node;
