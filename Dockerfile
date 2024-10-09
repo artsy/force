@@ -61,7 +61,7 @@ COPY --chown=deploy:deploy --from=builder-base /app/src ./src
 COPY --chown=deploy:deploy --from=builder-base /app/server.dist.js .
 COPY --chown=deploy:deploy --from=builder-base /app/server.dist.js.map .
 
-ENTRYPOINT ["/usr/bin/dumb-init", "./load_secrets_and_run.sh"]
+ENTRYPOINT ["/usr/bin/dumb-init", "./scripts/load_secrets_and_run.sh"]
 
 # TODO: Reduce production memory, this is not a concern
 CMD ["node", "--max_old_space_size=2048", "--heapsnapshot-signal=SIGUSR2", "--no-experimental-fetch", "./server.dist.js"]
