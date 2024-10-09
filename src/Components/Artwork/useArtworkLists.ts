@@ -5,13 +5,13 @@ import {
   useSaveArtworkToLists,
 } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
 import { useEffect } from "react"
-import { useTranslation } from "react-i18next"
+
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 
 export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
   const { artwork } = options
   const { sendToast } = useToasts()
-  const { t } = useTranslation()
+
   const { value, clearValue } = useAuthIntent()
   const {
     isSaved,
@@ -47,18 +47,12 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
     if (action === ResultAction.SavedToDefaultList) {
       sendToast({
         variant: "success",
-        message: t(
-          `collectorSaves.saveArtworkToLists.toast.artworkSaved.message`
-        ),
+        message: "Artwork saved",
         description: isInAuction
           ? ""
-          : t(
-              `collectorSaves.saveArtworkToLists.toast.artworkSaved.description`
-            ),
+          : "Saving an artwork signals interest to galleries.",
         action: {
-          label: t(
-            "collectorSaves.saveArtworkToLists.toast.artworkSaved.button"
-          ),
+          label: "Add to a List",
           onClick: openSelectListsForArtworkModal,
         },
       })
@@ -68,9 +62,7 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
 
     sendToast({
       variant: "message",
-      message: t(
-        "collectorSaves.saveArtworkToLists.toast.artworkRemoved.message"
-      ),
+      message: "Removed from Saved Artworks",
     })
   }
 

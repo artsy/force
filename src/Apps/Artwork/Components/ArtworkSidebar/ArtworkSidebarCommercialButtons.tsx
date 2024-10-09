@@ -34,7 +34,7 @@ import {
   Intent,
   OwnerType,
 } from "@artsy/cohesion"
-import { useTranslation } from "react-i18next"
+
 import { useAuthDialog } from "Components/AuthDialog"
 import { useRouter } from "System/Hooks/useRouter"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
@@ -82,8 +82,6 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
 
   const { router, user } = useSystemContext()
   const { match } = useRouter()
-
-  const { t } = useTranslation()
 
   const { trackEvent } = useTracking()
 
@@ -435,7 +433,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
                       : handleCreateOrder
                   }
                 >
-                  {t("artworkPage.sidebar.commercialButtons.buyNow")}
+                  Purchase
                 </Button>
               )}
               {renderButtons.makeOffer && (
@@ -446,7 +444,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
                   loading={isCommittingCreateOfferOrderMutation}
                   onClick={handleCreateOfferOrder}
                 >
-                  {t("artworkPage.sidebar.commercialButtons.makeOffer")}
+                  Make an Offer
                 </Button>
               )}
               {renderButtons.contactGallery && (
@@ -456,7 +454,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
                   size="large"
                   onClick={handleInquiry}
                 >
-                  {t("artworkPage.sidebar.commercialButtons.contactGallery")}
+                  Contact Gallery
                 </Button>
               )}
             </Join>

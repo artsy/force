@@ -7,7 +7,6 @@ import {
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useDismissibleContext } from "@artsy/dismissible"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
-import { t } from "i18next"
 
 const KEY = PROGRESSIVE_ONBOARDING.saveTitle
 
@@ -36,7 +35,7 @@ export const __ProgressiveOnboardingSaveTitle__: FC<ProgressiveOnboardingSaveTit
       onClose={handleClose}
       popover={
         <Text variant="xs">
-          {t("collectorSaves.artworkListsHeader.popover")}
+          Learn more about saves and how to manage your preferences.
         </Text>
       }
     >

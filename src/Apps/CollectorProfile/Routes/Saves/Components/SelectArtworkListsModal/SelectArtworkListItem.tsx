@@ -1,7 +1,7 @@
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 import { FC } from "react"
-import { useTranslation } from "react-i18next"
+
 import { createFragmentContainer, graphql } from "react-relay"
 import { SelectArtworkListItem_item$data } from "__generated__/SelectArtworkListItem_item.graphql"
 import { extractNodes } from "Utils/extractNodes"
@@ -22,7 +22,6 @@ const SelectArtworkListItem: FC<SelectArtworkListItemProps> = ({
   item,
   onClick,
 }) => {
-  const { t } = useTranslation()
   const nodes = extractNodes(item.artworksConnection)
   const imageURL = nodes[0]?.image?.url ?? null
 
@@ -57,9 +56,9 @@ const SelectArtworkListItem: FC<SelectArtworkListItemProps> = ({
         </Flex>
 
         <Text variant="sm-display" color="black60">
-          {t("collectorSaves.artworkLists.artworkWithCount", {
-            count: item.artworksCount,
-          })}
+          {item.artworksCount === 1
+            ? `${item.artworksCount} Artwork`
+            : `${item.artworksCount} Artworks`}
         </Text>
       </Flex>
 

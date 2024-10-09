@@ -1,5 +1,4 @@
 import { Button, useToasts } from "@artsy/palette"
-import { t } from "i18next"
 import { FC, useState } from "react"
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -34,14 +33,14 @@ export const TriggerCampaignButton: FC = () => {
       })
       sendToast({
         variant: "success",
-        message: t("artQuizPage.results.emailSuccess", { email: user?.email }),
+        message: `Results sent to ${user?.email}`,
       })
 
       setIsLoading(false)
     } catch (error) {
       sendToast({
         variant: "error",
-        message: t("common.errors.somethingWentWrong"),
+        message: "Something went wrong. Please try again.",
       })
 
       setIsLoading(false)
@@ -55,7 +54,7 @@ export const TriggerCampaignButton: FC = () => {
       onClick={handleClick}
       loading={isLoading}
     >
-      {t("artQuizPage.results.emailButton")}
+      Email My Results
     </Button>
   )
 }

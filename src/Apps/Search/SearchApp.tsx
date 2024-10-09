@@ -16,7 +16,7 @@ import { ZeroState } from "./Components/ZeroState"
 import { useRouter } from "System/Hooks/useRouter"
 import { Sticky } from "Components/Sticky"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { useTranslation } from "react-i18next"
+
 import { Jump } from "Utils/Hooks/useJump"
 import { usePrevious } from "@artsy/palette"
 
@@ -28,12 +28,10 @@ const TotalResults: React.FC<{ count: number; term: string }> = ({
   count,
   term,
 }) => {
-  const { t } = useTranslation()
-
   return (
     <>
       <Text variant={["lg-display", "xl"]}>
-        {t(`searchApp.resultsCount`, { count: count })}
+        {count === 1 ? "1 result for" : `${count} results for`}
 
         <Box as="span" color="blue100">
           {" "}

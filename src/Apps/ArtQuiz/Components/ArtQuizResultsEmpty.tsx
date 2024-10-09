@@ -2,23 +2,21 @@ import { Spacer, Tabs, Tab, Text } from "@artsy/palette"
 import { ArtQuizTrendingArtistsQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizTrendingArtists"
 import { ArtQuizTrendingCollectionsQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizTrendingCollections"
 import { FC } from "react"
-import { useTranslation } from "react-i18next"
 
 export const ArtQuizResultsEmpty: FC = () => {
-  const { t } = useTranslation()
-
   return (
     <>
       <Spacer y={[4, 6]} />
 
       <Text variant={["lg-display", "xl"]}>
-        {t("artQuizPage.results.empty.title")}
+        Explore Trending Collections and Artists
       </Text>
 
       <Spacer y={[0, 1]} />
 
       <Text color="black60" variant={["lg-display", "md"]}>
-        {t("artQuizPage.results.empty.subtitle")}
+        There are almost 2 million artworks on Artsy—keep exploring to find
+        something you love.
       </Text>
 
       <Spacer y={[4, 6]} />

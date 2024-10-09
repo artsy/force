@@ -17,7 +17,7 @@ import ArtworkGrid, {
   ArtworkGridPlaceholder,
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
-import { useTranslation } from "react-i18next"
+
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import {
   ConfirmationStepFooterContentPlaceholder,
@@ -38,7 +38,6 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
   alertID,
   onClose,
 }) => {
-  const { t } = useTranslation()
   const { clickedArtworkGroup } = useAlertTracking()
   const artworksCount = artworksConnection?.counts?.total ?? 0
 
@@ -46,11 +45,11 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
     return (
       <>
         <Text mb={2} p={2} bg="black10" color="black60">
-          {t("createAlertModal.confirmationStep.noMatches")}
+          There aren’t any works available that meet the criteria at this time.
         </Text>
 
         <ConfirmationStepFooterQueryRenderer
-          artworksCount={artworksCount!}
+          artworksCount={artworksCount}
           alertID={alertID}
           onClose={onClose}
         />
@@ -63,20 +62,18 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
       {artworksCount > NUMBER_OF_ARTWORKS_TO_SHOW ? (
         <>
           <Text variant="sm-display" color="black60">
-            {t("createAlertModal.confirmationStep.manyMatchingArtworks", {
-              count: artworksCount,
-            })}
+            {artworksCount} works currently on Artsy match your criteria.
           </Text>
           <Text variant="sm-display" color="black60">
-            {t("createAlertModal.confirmationStep.seeOurTopPicks")}
+            See our top picks for you:
           </Text>
         </>
       ) : (
         <>
           <Text variant="sm-display" color="black60">
-            {t("createAlertModal.confirmationStep.fewMatchingArtworks", {
-              count: artworksCount,
-            })}
+            {artworksCount === 1
+              ? "You might like this 1 work currently on Artsy that matches your criteria:"
+              : `You might like these ${artworksCount} works currently on Artsy that match your criteria:`}
           </Text>
         </>
       )}
@@ -87,7 +84,7 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
         <GridColumns>
           <Column span={12}>
             <ArtworkGrid
-              artworks={artworksConnection!}
+              artworks={artworksConnection as any}
               columnCount={2}
               onBrickClick={artwork =>
                 clickedArtworkGroup(artwork.internalID, artwork.slug)
@@ -100,7 +97,7 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
       <Spacer y={2} />
 
       <ConfirmationStepFooterQueryRenderer
-        artworksCount={artworksCount!}
+        artworksCount={artworksCount}
         alertID={alertID}
         onClose={onClose}
       />
@@ -162,18 +159,12 @@ export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQ
 }
 
 const ContentPlaceholder: FC = () => {
-  const { t } = useTranslation()
-
   return (
     <Flex flexDirection="column">
       <SkeletonText>
-        {t("createAlertModal.confirmationStep.artworksMatchCriteria", {
-          count: 300,
-        })}
+        300 works currently on Artsy match your criteria.
       </SkeletonText>
-      <SkeletonText>
-        {t("createAlertModal.confirmationStep.seeOurTopPicks")}
-      </SkeletonText>
+      <SkeletonText>See our top picks for you:</SkeletonText>
 
       <Spacer y={2} />
 

@@ -6,7 +6,7 @@ import {
   ConfirmationStepFooterQuery,
   ConfirmationStepFooterQuery$data,
 } from "__generated__/ConfirmationStepFooterQuery.graphql"
-import { useTranslation } from "react-i18next"
+
 import { RouterLink } from "System/Components/RouterLink"
 import { NUMBER_OF_ARTWORKS_TO_SHOW } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
 
@@ -21,7 +21,6 @@ export const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
   me,
   onClose,
 }) => {
-  const { t } = useTranslation()
   const savedSearch = me?.alert
 
   return (
@@ -37,7 +36,7 @@ export const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
           }}
           data-testid="seeAllMatchingWorksButton"
         >
-          {t("createAlertModal.confirmationStep.seeAllMatchingWorks")}
+          See all matching works
         </Button>
       )}
 
@@ -52,7 +51,7 @@ export const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
         }}
         data-testid="manageYourAlertsButton"
       >
-        {t("createAlertModal.confirmationStep.manageYourAlerts")}
+        Manage your alerts
       </Button>
     </Flex>
   )
@@ -100,16 +99,14 @@ export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQuery
 }
 
 export const ConfirmationStepFooterContentPlaceholder: FC = () => {
-  const { t } = useTranslation()
-
   return (
     <Flex flexDirection={["column", "row"]} gap={1}>
       <Button width="100%" disabled>
-        {t("createAlertModal.confirmationStep.seeAllMatchingWorks")}
+        See all matching works
       </Button>
 
       <Button width="100%" variant="secondaryBlack" disabled>
-        {t("createAlertModal.confirmationStep.manageYourAlerts")}
+        Manage your alerts
       </Button>
     </Flex>
   )

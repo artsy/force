@@ -24,7 +24,7 @@ describe("ArtQuizArtworks", () => {
       Artwork: () => ({ dominantColors: [] }),
     })
 
-    expect(screen.getByText("Like it? Hit the heart.")).toBeInTheDocument()
-    expect(screen.getByText("Not for you? Choose X.")).toBeInTheDocument()
+    expect(screen.queryByText(/Like it\? Hit the heart/)).toBeInTheDocument()
+    expect(screen.queryByText(/Not for you\? Choose X/)).toBeInTheDocument()
   })
 })

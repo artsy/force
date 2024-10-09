@@ -10,7 +10,7 @@ import {
 } from "@artsy/palette"
 import { SortFilter } from "Components/SortFilter"
 import { ArtworksListFragmentContainer } from "./ArtworksList"
-import { useTranslation } from "react-i18next"
+
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   createPaginationContainer,
@@ -49,7 +49,6 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false)
   const [sort, setSort] = useState(SORTS[0].value)
-  const { t } = useTranslation()
 
   if (isLoading) {
     return <ContentPlaceholder />
@@ -99,9 +98,9 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
     <>
       <Flex justifyContent="space-between" alignItems="center">
         <Text variant={["xs", "sm"]} fontWeight="bold">
-          {t("collectorSaves.addArtworksModal.artworksCount", {
-            count: artworksCount,
-          })}
+          {artworksCount === 1
+            ? `${artworksCount} Artwork`
+            : `${artworksCount} Artworks`}
         </Text>
 
         <SortFilter
@@ -114,7 +113,7 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
       <Spacer y={2} />
 
       <ArtworksListFragmentContainer
-        artworks={me.collection?.artworksConnection!}
+        artworks={me.collection?.artworksConnection as any}
         onItemClick={handleItemClick}
         selectedIds={selectedArtworkIds}
       />
@@ -217,16 +216,10 @@ export const AddArtworksModalContentQueryRender: FC<AddArtworksModalContentQuery
 }
 
 const ContentPlaceholder: FC = () => {
-  const { t } = useTranslation()
-
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
-        <SkeletonText variant={["xs", "sm"]}>
-          {t("collectorSaves.addArtworksModal.artworksCount", {
-            count: 127,
-          })}
-        </SkeletonText>
+        <SkeletonText variant={["xs", "sm"]}>127 Artworks</SkeletonText>
 
         <SortFilter
           sortOptions={SORTS}

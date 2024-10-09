@@ -4,21 +4,19 @@ import { ArtQuizRecommendedArtistsQueryRenderer } from "Apps/ArtQuiz/Components/
 import { ArtQuizResultsRecommendedArtworksQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizResultsRecommendedArtworks"
 import { TriggerCampaignButton } from "Apps/ArtQuiz/Components/TriggerCampaignButton"
 import { FC } from "react"
-import { useTranslation } from "react-i18next"
 
 export const ArtQuizResultsTabs: FC = ({}) => {
-  const { t } = useTranslation()
-
   return (
     <>
       <Spacer y={[4, 6]} />
 
-      <Text variant={["lg", "xl"]}>{t("artQuizPage.results.title")}</Text>
+      <Text variant={["lg", "xl"]}>Explore Art We Think You’ll Love</Text>
 
       <Spacer y={[0, 1]} />
 
       <Text color="black60" variant={["sm", "md"]}>
-        {t("artQuizPage.results.subtitle")}
+        Based on your responses, we think you’ll enjoy these artworks and
+        artists. Keep saving and following to continue tailoring Artsy to you.
       </Text>
 
       <Spacer y={[2, 4]} />
@@ -28,15 +26,15 @@ export const ArtQuizResultsTabs: FC = ({}) => {
       <Spacer y={[4, 6]} />
 
       <Tabs fill>
-        <Tab name={t("artQuizPage.results.tabs.worksYouLiked")}>
+        <Tab name="Works You Liked">
           <ArtQuizLikedArtworksQueryRenderer />
         </Tab>
 
-        <Tab name={t("artQuizPage.results.tabs.recommendedArtworks")}>
+        <Tab name="Works for You">
           <ArtQuizResultsRecommendedArtworksQueryRenderer />
         </Tab>
 
-        <Tab name={t("artQuizPage.results.tabs.recommendedArtists")}>
+        <Tab name="Artists for You">
           <Spacer y={4} />
 
           <ArtQuizRecommendedArtistsQueryRenderer />

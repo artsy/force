@@ -10,7 +10,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { getSelectedArtworkListIds } from "Apps/CollectorProfile/Routes/Saves/Utils/getSelectedArtworkListIds"
 import { useSelectArtworkLists } from "./useSelectArtworkLists"
 import createLogger from "Utils/logger"
-import { useTranslation } from "react-i18next"
+
 import { SelectArtworkListsContent } from "./SelectArtworkListsContent"
 import {
   ListKey,
@@ -33,7 +33,6 @@ type ArtworkListById = Record<string, ResultListEntity>
 export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = ({
   me,
 }) => {
-  const { t } = useTranslation()
   const { state, dispatch, reset, onSave } = useManageArtworkForSavesContext()
   const analytics = useAnalyticsContext()
   const { trackEvent } = useTracking()
@@ -149,7 +148,7 @@ export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = (
 
       sendToast({
         variant: "error",
-        message: t("common.errors.somethingWentWrong"),
+        message: "Something went wrong. Please try again.",
       })
     } finally {
       setIsSaving(false)

@@ -2,7 +2,7 @@ import { Flex, Text, Spacer, FullBleed, Spinner, Box } from "@artsy/palette"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import { SplitLayout } from "Components/SplitLayout"
 import { useState, useEffect, FC } from "react"
-import { useTranslation } from "react-i18next"
+
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 
 interface ArtQuizResultsLoaderProps {
@@ -12,8 +12,6 @@ interface ArtQuizResultsLoaderProps {
 export const ArtQuizResultsLoader: FC<ArtQuizResultsLoaderProps> = ({
   onReady,
 }) => {
-  const { t } = useTranslation()
-
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -57,17 +55,13 @@ export const ArtQuizResultsLoader: FC<ArtQuizResultsLoaderProps> = ({
               <Spacer y={2} />
 
               <Text variant={["lg", "xl"]}>
-                {loading
-                  ? t("artQuizPage.loadingScreen.findingArt")
-                  : t("artQuizPage.loadingScreen.resultsReady")}
+                {loading ? "Finding art for you..." : "Your results are ready"}
               </Text>
 
               <Spacer y={2} />
 
               <Text variant={["sm", "md"]} color="black60">
-                {loading
-                  ? t("artQuizPage.loadingScreen.calculatingResults")
-                  : t("artQuizPage.loadingScreen.resultsComplete")}
+                {loading ? "Calculating Results…" : "Results Complete"}
               </Text>
             </Flex>
           }

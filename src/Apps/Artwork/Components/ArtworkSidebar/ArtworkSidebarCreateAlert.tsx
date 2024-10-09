@@ -1,7 +1,7 @@
 import { Flex, Separator, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarCreateAlert_artwork$data } from "__generated__/ArtworkSidebarCreateAlert_artwork.graphql"
-import { useTranslation } from "react-i18next"
+
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface ArtworkSidebarCreateAlertProps {
@@ -11,7 +11,6 @@ interface ArtworkSidebarCreateAlertProps {
 export const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps> = ({
   artwork,
 }) => {
-  const { t } = useTranslation()
   if (!artwork.isEligibleToCreateAlert) return null
 
   return (
@@ -25,7 +24,7 @@ export const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps>
         my={2}
       >
         <Text variant="xs" mr={2}>
-          {t("artworkPage.sidebar.createAlert.description")}
+          Get notifications for similar works
         </Text>
         <CreateAlertButton />
       </Flex>

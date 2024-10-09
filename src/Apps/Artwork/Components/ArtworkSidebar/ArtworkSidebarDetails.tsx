@@ -4,7 +4,6 @@ import { Box, Spacer, Text } from "@artsy/palette"
 import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
 import { ArtworkSidebarAuthenticityCertificateFragmentContainer } from "./ArtworkSidebarAuthenticityCertificate"
 import { ArtworkSidebarCollectorSignal } from "./ArtworkSidebarCollectorSignal"
-import { useTranslation } from "react-i18next"
 
 interface ArtworkSidebarDetailsProps {
   artwork: ArtworkSidebarDetails_artwork$data
@@ -21,7 +20,6 @@ const ArtworkSidebarDetails: React.FC<ArtworkSidebarDetailsProps> = ({
     editionSets,
     isUnlisted,
   } = artwork
-  const { t } = useTranslation()
 
   const dimensionsPresent = dimensions =>
     /\d/.test(dimensions?.in) || /\d/.test(dimensions?.cm)
@@ -38,7 +36,7 @@ const ArtworkSidebarDetails: React.FC<ArtworkSidebarDetailsProps> = ({
       }
     }
 
-    return `${t`artworkPage.sidebar.details.frame`} ${frameDetails.toLowerCase()}`
+    return `Frame ${frameDetails.toLowerCase()}`
   }
 
   return (

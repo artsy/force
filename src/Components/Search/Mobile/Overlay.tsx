@@ -1,7 +1,7 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { Box, LabeledInput } from "@artsy/palette"
 import { FC, useCallback, useEffect, useRef, useState } from "react"
-import { useTranslation } from "react-i18next"
+
 import {
   PillType,
   TOP_PILL,
@@ -35,7 +35,6 @@ interface OverlayProps {
 }
 
 export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
-  const { t } = useTranslation()
   const tracking = useTracking()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
@@ -112,7 +111,7 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
               mx={2}
               ref={inputRef}
               value={inputValue}
-              placeholder={t`navbar.searchArtsy`}
+              placeholder="Search Artsy"
               label={<SearchIcon fill="black60" aria-hidden size={18} />}
               onChange={handleValueChange}
             />

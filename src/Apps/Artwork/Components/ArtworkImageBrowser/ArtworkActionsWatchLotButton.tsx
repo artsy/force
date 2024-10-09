@@ -6,7 +6,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsWatchLotButton_artwork$data } from "__generated__/ArtworkActionsWatchLotButton_artwork.graphql"
-import { useTranslation } from "react-i18next"
+
 import HeartFillIcon from "@artsy/icons/HeartFillIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 
@@ -25,7 +25,6 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
 }) => {
   const { isLoggedIn } = useSystemContext()
   const [popoverVisible, setPopoverVisible] = useState(false)
-  const { t } = useTranslation()
 
   const { isLiveOpen, isRegistrationClosed, registrationStatus, liveStartAt } =
     artwork.sale ?? {}
@@ -87,11 +86,7 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
             ref={anchorRef}
             name="heart"
             Icon={isSaved ? FilledIcon : HeartStrokeIcon}
-            label={
-              isSaved
-                ? t(`artworkPage.actions.watchingLot`)
-                : t(`artworkPage.actions.watchLot`)
-            }
+            label={isSaved ? "Watching lot" : "Watch lot"}
             onClick={handleButtonClick}
           />
         )

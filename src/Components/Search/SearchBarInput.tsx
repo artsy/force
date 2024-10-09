@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react"
-import { useTranslation } from "react-i18next"
+
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -47,8 +47,6 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
   searchTerm,
 }) => {
   const tracking = useTracking()
-
-  const { t } = useTranslation()
 
   const [value, setValue] = useState(searchTerm)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
@@ -216,7 +214,7 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
       forwardRef={ref}
       key={match.location.pathname}
       value={value}
-      placeholder={t`navbar.searchBy`}
+      placeholder="Search by artist, gallery, style, theme, tag, etc."
       spellCheck={false}
       options={shouldStartSearching(value) ? formattedOptions : []}
       defaultValue={value}
