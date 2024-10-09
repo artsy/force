@@ -37,6 +37,25 @@ export const useClientQuery = <T extends OperationType>({
     key.current = JSON.stringify(variables)
   }, [variables])
 
+  const refetch = async (newVariables = variables) => {
+    setLoading(true)
+
+    try {
+      const res = await fetchQuery<T>(
+        ((environment || relayEnvironment) as unknown) as Environment,
+        query,
+        newVariables,
+        cacheConfig
+      ).toPromise()
+
+      setData(res)
+      setLoading(false)
+    } catch (err) {
+      setError(err)
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
     if (key.current !== prevKey.current) {
       setData(null)
@@ -48,26 +67,7 @@ export const useClientQuery = <T extends OperationType>({
 
     if (skip || data || error) return
 
-    const exec = async () => {
-      setLoading(true)
-
-      try {
-        const res = await fetchQuery<T>(
-          ((environment || relayEnvironment) as unknown) as Environment,
-          query,
-          variables,
-          cacheConfig
-        ).toPromise()
-
-        setData(res)
-        setLoading(false)
-      } catch (err) {
-        setError(err)
-        setLoading(false)
-      }
-    }
-
-    exec()
+    refetch()
 
     // https://github.com/facebook/react/issues/25149
     // Excludes `T`
@@ -83,5 +83,5 @@ export const useClientQuery = <T extends OperationType>({
     variables,
   ])
 
-  return { data, error, loading: skip ? false : loading }
+  return { data, error, loading: skip ? false : loading, refetch }
 }

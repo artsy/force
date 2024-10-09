@@ -1,20 +1,12 @@
 import { AutocompleteInput, useUpdateEffect } from "@artsy/palette"
-import {
-  ChangeEvent,
-  FC,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react"
+import { ChangeEvent, FC, useEffect, useRef, useState } from "react"
 
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useSystemContext } from "System/Hooks/useSystemContext"
+import { graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { SearchBarInput_viewer$data } from "__generated__/SearchBarInput_viewer.graphql"
-import { SearchBarInputSuggestQuery } from "__generated__/SearchBarInputSuggestQuery.graphql"
-import createLogger from "Utils/logger"
+import {
+  SearchBarInputSuggestQuery,
+  SearchEntity,
+} from "__generated__/SearchBarInputSuggestQuery.graphql"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { isServer } from "Server/isServer"
 import { PillType, TOP_PILL, SEARCH_DEBOUNCE_DELAY } from "./constants"
@@ -27,26 +19,28 @@ import { StaticSearchContainer } from "./StaticSearchContainer"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Hooks/useRouter"
 import { useDebounce } from "Utils/Hooks/useDebounce"
-import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 import { getLabel } from "./utils/getLabel"
 import { ActionType } from "@artsy/cohesion"
 import { SearchBarFooter } from "./SearchBarFooter"
-
-const logger = createLogger("Components/Search/SearchBar")
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
 
 export interface SearchBarInputProps {
-  relay: RelayRefetchProp
-  viewer: SearchBarInput_viewer$data
   searchTerm: string
 }
 
-const SearchBarInput: FC<SearchBarInputProps> = ({
-  relay,
-  viewer,
-  searchTerm,
-}) => {
+export const SearchBarInput: FC<SearchBarInputProps> = ({ searchTerm }) => {
   const tracking = useTracking()
+
+  const { data, refetch } = useClientQuery<SearchBarInputSuggestQuery>({
+    query: QUERY,
+    variables: {
+      hasTerm: shouldStartSearching(searchTerm ?? ""),
+      term: searchTerm ? String(searchTerm) : "",
+      entities: [],
+    },
+    skip: !searchTerm,
+  })
 
   const [value, setValue] = useState(searchTerm)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
@@ -59,7 +53,7 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
 
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
-  const options = extractNodes(viewer.searchConnection)
+  const options = extractNodes(data?.viewer?.searchConnection)
 
   const formattedOptions: SuggestionItemOptionProps[] = [
     ...options.map(option => {
@@ -99,38 +93,18 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
     })
   }, [fetchCounter])
 
-  const refetch = useCallback(
-    (value: string, entity?: string) => {
-      const entities = entity ? [entity] : []
-      const performanceStart = performance && performance.now()
-
-      relay.refetch(
-        {
-          hasTerm: true,
-          term: String(value),
-          entities: entities,
-        },
-        null,
-        error => {
-          if (error) {
-            logger.error(error)
-            return
-          }
-
-          if (performance) {
-            reportPerformanceMeasurement(performanceStart)
-          }
-
-          // trigger useEffect to send tracking event
-          setFetchCounter(prevCounter => prevCounter + 1)
-        }
-      )
-    },
-    [relay]
-  )
-
   const debouncedSearchRequest = useDebounce({
-    callback: refetch,
+    callback: (value: string, entity?: SearchEntity) => {
+      const entities = entity ? [entity] : []
+
+      refetch({
+        hasTerm: true,
+        term: String(value),
+        entities,
+      })
+
+      setFetchCounter(prevCounter => prevCounter + 1)
+    },
     delay: SEARCH_DEBOUNCE_DELAY,
   })
 
@@ -145,13 +119,14 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
 
-    if (shouldStartSearching(event.target.value))
+    if (shouldStartSearching(event.target.value)) {
       debouncedSearchRequest(event.target.value, selectedPill.searchEntityName)
+    }
   }
 
   const handlePillClick = (pill: PillType) => {
     setSelectedPill(pill)
-    refetch(value, pill.searchEntityName)
+    debouncedSearchRequest(value, pill.searchEntityName)
 
     tracking.trackEvent({
       action_type: ActionType.tappedNavigationTab,
@@ -209,6 +184,10 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
     }
   }, [])
 
+  if (isServer) {
+    return <StaticSearchContainer searchQuery={searchTerm} />
+  }
+
   return (
     <AutocompleteInput
       forwardRef={ref}
@@ -224,13 +203,17 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
       onSubmit={handleSubmit}
       onClick={handleFocus}
       header={
-        <SearchInputPillsFragmentContainer
-          viewer={viewer}
-          selectedPill={selectedPill}
-          onPillClick={handlePillClick}
-        />
+        data?.viewer ? (
+          <SearchInputPillsFragmentContainer
+            viewer={data.viewer}
+            selectedPill={selectedPill}
+            onPillClick={handlePillClick}
+          />
+        ) : null
       }
       renderOption={option => {
+        if (!value) return <></>
+
         if (option.typename === "Footer") {
           return (
             <SearchBarFooter
@@ -256,112 +239,45 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
   )
 }
 
-export const SearchBarInputRefetchContainer = createRefetchContainer(
-  SearchBarInput,
-  {
-    viewer: graphql`
-      fragment SearchBarInput_viewer on Viewer
-        @argumentDefinitions(
-          term: { type: "String!", defaultValue: "" }
-          hasTerm: { type: "Boolean!", defaultValue: false }
-          entities: { type: "[SearchEntity]" }
-        ) {
-        searchConnection(
-          query: $term
-          entities: $entities
-          mode: AUTOSUGGEST
-          first: 7
-        ) @include(if: $hasTerm) {
-          edges {
-            node {
-              displayLabel
-              href
-              imageUrl
-              __typename
-              ... on SearchableItem {
-                displayType
-                slug
+const QUERY = graphql`
+  query SearchBarInputSuggestQuery(
+    $term: String!
+    $hasTerm: Boolean!
+    $entities: [SearchEntity]
+  ) {
+    viewer {
+      ...SearchInputPills_viewer @arguments(term: $term)
+
+      searchConnection(
+        query: $term
+        entities: $entities
+        mode: AUTOSUGGEST
+        first: 7
+      ) @include(if: $hasTerm) {
+        edges {
+          node {
+            displayLabel
+            href
+            imageUrl
+            __typename
+            ... on SearchableItem {
+              displayType
+              slug
+            }
+            ... on Artist {
+              statuses {
+                artworks
+                auctionLots
               }
-              ... on Artist {
-                statuses {
-                  artworks
-                  auctionLots
-                }
-                coverArtwork {
-                  image {
-                    src: url(version: ["square"])
-                  }
+              coverArtwork {
+                image {
+                  src: url(version: ["square"])
                 }
               }
             }
           }
         }
-        ...SearchInputPills_viewer @arguments(term: $term)
-      }
-    `,
-  },
-  graphql`
-    query SearchBarInputRefetchQuery(
-      $term: String!
-      $hasTerm: Boolean!
-      $entities: [SearchEntity]
-    ) {
-      viewer {
-        ...SearchBarInput_viewer
-          @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
       }
     }
-  `
-)
-
-interface SearchBarInputQueryRendererProps {
-  term?: string
-}
-
-export const SearchBarInputQueryRenderer: FC<SearchBarInputQueryRendererProps> = ({
-  term,
-}) => {
-  const { relayEnvironment, searchQuery = "" } = useSystemContext()
-
-  if (isServer) {
-    return <StaticSearchContainer searchQuery={searchQuery} />
   }
-
-  return (
-    <SystemQueryRenderer<SearchBarInputSuggestQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query SearchBarInputSuggestQuery(
-          $term: String!
-          $hasTerm: Boolean!
-          $entities: [SearchEntity]
-        ) {
-          viewer {
-            ...SearchBarInput_viewer
-              @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
-          }
-        }
-      `}
-      variables={{
-        hasTerm: shouldStartSearching(term ?? ""),
-        term: term ? String(term) : "",
-        entities: [],
-      }}
-      render={({ props }) => {
-        if (props?.viewer) {
-          return (
-            <SearchBarInputRefetchContainer
-              viewer={props.viewer}
-              searchTerm={term ?? ""}
-            />
-          )
-          // SSR render pass. Since we don't have access to `<Boot>` context
-          // from within the NavBar (it's not a part of any app) we need to lean
-          // on styled-system for showing / hiding depending upon breakpoint.
-        } else {
-          return <StaticSearchContainer searchQuery={searchQuery} />
-        }
-      }}
-    />
-  )
-}
+`
