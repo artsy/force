@@ -30,6 +30,21 @@ spec:
       name: force-web
       namespace: default
     spec:
+      initContainers:
+      - name: setenv
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/opstools:staging
+        imagePullPolicy: Always
+        command:
+        - python
+        - src/load_secrets_from_vault/load.py
+        - staging
+        - force
+        envFrom:
+        - configMapRef:
+            name: secrets-config
+        volumeMounts:
+        - name: secrets
+          mountPath: /secrets
       containers:
       - name: force-web
         env:
@@ -50,6 +65,10 @@ spec:
         envFrom:
         - configMapRef:
             name: force-environment
+        volumeMounts:
+        - name: secrets
+          mountPath: /secrets
+          readOnly: true
         image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:staging
         imagePullPolicy: Always
         ports:
@@ -82,6 +101,7 @@ spec:
         options:
         - name: ndots
           value: '1'
+      serviceAccountName: force
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -91,6 +111,10 @@ spec:
                 operator: In
                 values:
                 - foreground
+      volumes:
+      - name: secrets
+        emptyDir: {}
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -122,6 +146,21 @@ spec:
       name: force-web-spotty
       namespace: default
     spec:
+      initContainers:
+      - name: setenv
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/opstools:staging
+        imagePullPolicy: Always
+        command:
+        - python
+        - src/load_secrets_from_vault/load.py
+        - staging
+        - force
+        envFrom:
+        - configMapRef:
+            name: secrets-config
+        volumeMounts:
+        - name: secrets
+          mountPath: /secrets
       containers:
       - name: force-web-spotty
         env:
@@ -142,6 +181,10 @@ spec:
         envFrom:
         - configMapRef:
             name: force-environment
+        volumeMounts:
+        - name: secrets
+          mountPath: /secrets
+          readOnly: true
         image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:staging
         imagePullPolicy: Always
         ports:
@@ -179,6 +222,7 @@ spec:
           operator: Equal
           value: spot
           effect: NoSchedule
+      serviceAccountName: force
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -197,6 +241,10 @@ spec:
                 operator: In
                 values:
                 - foreground-spot
+      volumes:
+      - name: secrets
+        emptyDir: {}
+
 ---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
@@ -220,6 +268,7 @@ spec:
         averageUtilization: 70
         type: Utilization
     type: Resource
+
 ---
 apiVersion: v1
 kind: Service
@@ -241,6 +290,7 @@ spec:
     layer: application
     component: web
   type: ClusterIP
+
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
