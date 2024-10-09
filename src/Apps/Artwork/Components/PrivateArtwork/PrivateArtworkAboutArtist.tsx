@@ -16,6 +16,7 @@ import { useTracking } from "react-tracking"
 import { ActionType, ClickedOnReadMore } from "@artsy/cohesion"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface PrivateArtworkAboutArtistProps {
   artwork: PrivateArtworkAboutArtist_artwork$key
@@ -97,9 +98,15 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
                 </Box>
 
                 <Box>
-                  <Text variant="lg-display" color="white100" fontWeight="bold">
-                    {artist.name}
-                  </Text>
+                  <RouterLink to={artist.href} display="block">
+                    <Text
+                      variant="lg-display"
+                      color="white100"
+                      fontWeight="bold"
+                    >
+                      {artist.name}
+                    </Text>
+                  </RouterLink>
 
                   {artist.formattedNationalityAndBirthday && (
                     <Text variant="xs" color="white100">
