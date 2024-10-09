@@ -1,5 +1,5 @@
 import { Box } from "@artsy/palette"
-import { SearchBarInputQueryRenderer } from "./SearchBarInput"
+import { SearchBarInput } from "./SearchBarInput"
 import { Media } from "Utils/Responsive"
 import { MobileSearchBarQueryRenderer } from "./Mobile/MobileSearchBar"
 import { FC } from "react"
@@ -21,7 +21,7 @@ export const SearchBar: FC<SearchBarProps> = ({ onClose }) => {
       </Media>
 
       <Media greaterThan="xs">
-        <SearchBarInputQueryRenderer term={urlSearchTerm} />
+        <SearchBarInput searchTerm={urlSearchTerm} />
       </Media>
     </Box>
   )
