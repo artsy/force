@@ -1,6 +1,6 @@
 import { FC, useState } from "react"
 import { Flex, Text, ModalDialog, Button, useToasts } from "@artsy/palette"
-import { useTranslation } from "react-i18next"
+
 import { AddArtworksModalContentQueryRender } from "./AddArtworksModalContent"
 import { useAddArtworksToCollection } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/useAddArtworksToCollection"
 import createLogger from "Utils/logger"
@@ -24,7 +24,7 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
   onComplete,
 }) => {
   const [selectedArtworkIds, setSelectedArtworkIds] = useState<string[]>([])
-  const { t } = useTranslation()
+
   const { sendToast } = useToasts()
   const { submitMutation } = useAddArtworksToCollection()
   const { trackEvent } = useTracking()
@@ -75,7 +75,7 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
 
       sendToast({
         variant: "error",
-        message: t("common.errors.somethingWentWrong"),
+        message: "Something went wrong. Please try again.",
       })
     } finally {
       setIsSaving(false)
@@ -99,15 +99,13 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
         maxHeight: [null, 800],
       }}
       onClose={onComplete}
-      title={t("collectorSaves.addArtworksModal.modalTitle", {
-        value: artworkList.name,
-      })}
+      title={`${artworkList.name} created. Add saved works to the list.`}
       footer={
         <Flex justifyContent="space-between" alignItems="center">
           <Text variant="sm-display">
-            {t("collectorSaves.addArtworksModal.artworksSelected", {
-              count: selectedArtworkIds.length,
-            })}
+            {selectedArtworkIds.length === 1
+              ? `${selectedArtworkIds.length} artwork selected`
+              : `${selectedArtworkIds.length} artworks selected`}
           </Text>
 
           <Button
@@ -115,7 +113,7 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
             loading={isSaving}
             data-testid="artwork-list-modal-save"
           >
-            {t("common.buttons.save")}
+            Save
           </Button>
         </Flex>
       }

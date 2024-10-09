@@ -1,5 +1,5 @@
 import { Box, Clickable, Text } from "@artsy/palette"
-import { useTranslation } from "react-i18next"
+
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import { markAllNotificationsAsRead } from "./Mutations/markAllNotificationsAsRead"
@@ -16,7 +16,7 @@ export const MarkAllAsReadPanel: React.FC<MarkAllAsReadPanelProps> = ({
   unreadCounts,
 }) => {
   const { relayEnvironment } = useSystemContext()
-  const { t } = useTranslation()
+
   const hasUnreadNotifications = unreadCounts > 0
 
   const markAllAsRead = async () => {
@@ -50,7 +50,7 @@ export const MarkAllAsReadPanel: React.FC<MarkAllAsReadPanelProps> = ({
           variant="sm-display"
           color={!hasUnreadNotifications ? "black60" : "black100"}
         >
-          {t`activityPanel.markAllAsRead`}
+          Mark all as read
         </Text>
       </Clickable>
     </Box>

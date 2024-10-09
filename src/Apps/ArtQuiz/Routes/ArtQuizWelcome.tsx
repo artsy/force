@@ -2,7 +2,7 @@ import { Flex, Text, Spacer, Button, FullBleed, Box } from "@artsy/palette"
 import { SplitLayout } from "Components/SplitLayout"
 import { FC } from "react"
 import { RouterLink } from "System/Components/RouterLink"
-import { useTranslation } from "react-i18next"
+
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
@@ -12,8 +12,6 @@ interface ArtQuizWelcomeProps {
 }
 
 export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
-  const { t } = useTranslation()
-
   return (
     <ArtQuizFullScreen>
       <FullBleed height="100%">
@@ -37,18 +35,16 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
 
               <Spacer y={2} />
 
-              <Text variant={["xl", "xxl"]}>{t("artQuizPage.title")}</Text>
+              <Text variant={["xl", "xxl"]}>What’s your art taste?</Text>
 
               <Spacer y={6} />
 
-              <Text variant={["md", "lg"]}>
-                {t("artQuizPage.welcomeScreen.subtitle1")}
-              </Text>
+              <Text variant={["md", "lg"]}>Let us be your art advisor.</Text>
 
               <Spacer y={2} />
 
               <Text variant={["md", "lg-display"]}>
-                {t("artQuizPage.welcomeScreen.subtitle2")}
+                Rate artworks and get recommendations tailored to you.
               </Text>
 
               <Spacer y={12} />
@@ -61,7 +57,7 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
                   onClick={onStartQuiz}
                   to="/art-quiz/artworks"
                 >
-                  {t("artQuizPage.welcomeScreen.getStartedButton")}
+                  Get Started
                 </Button>
 
                 <Spacer y={1} />
@@ -73,7 +69,7 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
                   width="100%"
                   to="/"
                 >
-                  {t("artQuizPage.welcomeScreen.skipButton")}
+                  Skip
                 </Button>
               </Box>
             </Flex>

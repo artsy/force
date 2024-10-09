@@ -32,7 +32,7 @@ import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions
 import { useRouter } from "System/Hooks/useRouter"
 import Events from "Utils/Events"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { useTranslation } from "react-i18next"
+
 import { track, useTracking } from "react-tracking"
 import {
   NavBarItemButton,
@@ -74,7 +74,7 @@ export const NavBar: React.FC = track(
   const { prefetch } = usePrefetchRoute()
 
   const { trackEvent } = useTracking()
-  const { t } = useTranslation()
+
   const { router } = useRouter()
 
   const [mode, setMode] = useState<"Idle" | "Search" | "Profile" | "More">(
@@ -219,7 +219,7 @@ export const NavBar: React.FC = track(
                       onClick={handleClick}
                       data-label="Buy"
                     >
-                      {t("navbar.buy")}
+                      Buy
                     </NavBarItemLink>
                   </Flex>
 
@@ -230,7 +230,7 @@ export const NavBar: React.FC = track(
                     onClick={handleClick}
                     data-label="Consign"
                   >
-                    {t("navbar.sell")}
+                    Sell
                   </NavBarItemLink>
 
                   <NavBarItemLink
@@ -240,7 +240,7 @@ export const NavBar: React.FC = track(
                     onClick={handleClick}
                     data-label="Price Database"
                   >
-                    {t`navbar.priceDatabase`}
+                    Price Database
                   </NavBarItemLink>
 
                   <Flex alignItems="center" display={["none", "flex"]}>
@@ -251,7 +251,7 @@ export const NavBar: React.FC = track(
                       onClick={handleClick}
                       data-label="Articles"
                     >
-                      {t`navbar.editorial`}
+                      Editorial
                     </NavBarItemLink>
                   </Flex>
                 </Text>
@@ -440,7 +440,7 @@ export const NavBar: React.FC = track(
                         }}
                         data-label="Artists"
                       />
-                      {t`navbar.artists`}
+                      Artists
                     </NavBarItemButton>
                   )}
                 </Dropdown>
@@ -480,7 +480,7 @@ export const NavBar: React.FC = track(
                         }}
                         data-label="Artworks"
                       />
-                      {t`navbar.artworks`}
+                      Artworks
                     </NavBarItemButton>
                   )}
                 </Dropdown>
@@ -491,7 +491,7 @@ export const NavBar: React.FC = track(
                   onClick={handleClick}
                   data-label="Auctions"
                 >
-                  {t`navbar.auctions`}
+                  Auctions
                 </NavBarItemLink>
 
                 <NavBarItemLink
@@ -500,7 +500,7 @@ export const NavBar: React.FC = track(
                   onClick={handleClick}
                   data-label="Viewing Rooms"
                 >
-                  {t`navbar.viewingRooms`}
+                  Viewing Rooms
                 </NavBarItemLink>
 
                 <NavBarItemLink
@@ -509,7 +509,7 @@ export const NavBar: React.FC = track(
                   onClick={handleClick}
                   data-label="Galleries"
                 >
-                  {t`navbar.galleries`}
+                  Galleries
                 </NavBarItemLink>
 
                 <NavBarItemLink
@@ -518,7 +518,7 @@ export const NavBar: React.FC = track(
                   onClick={handleClick}
                   data-label="Fairs & Events"
                 >
-                  {t`navbar.fairs`}
+                  Fairs & Events
                 </NavBarItemLink>
 
                 <NavBarItemLink
@@ -527,7 +527,7 @@ export const NavBar: React.FC = track(
                   onClick={handleClick}
                   data-label="Shows"
                 >
-                  {t`navbar.shows`}
+                  Shows
                 </NavBarItemLink>
 
                 <NavBarItemInstitutionsLink
@@ -536,7 +536,7 @@ export const NavBar: React.FC = track(
                   onClick={handleClick}
                   data-label="Institutions"
                 >
-                  {t`navbar.museums`}
+                  Museums
                 </NavBarItemInstitutionsLink>
               </Flex>
             </Text>

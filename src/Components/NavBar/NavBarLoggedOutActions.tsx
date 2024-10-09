@@ -1,11 +1,9 @@
 import { Button, Flex, Spacer } from "@artsy/palette"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { useTranslation } from "react-i18next"
+
 import { useAuthDialog } from "Components/AuthDialog"
 
 export const NavBarLoggedOutActions = () => {
-  const { t } = useTranslation()
-
   const { showAuthDialog } = useAuthDialog()
 
   return (
@@ -22,7 +20,7 @@ export const NavBarLoggedOutActions = () => {
           })
         }}
       >
-        {t`navbar.login`}
+        Log In
       </Button>
 
       <Spacer x={1} />
@@ -38,7 +36,7 @@ export const NavBarLoggedOutActions = () => {
           })
         }}
       >
-        {t`navbar.signup`}
+        Sign Up
       </Button>
     </Flex>
   )

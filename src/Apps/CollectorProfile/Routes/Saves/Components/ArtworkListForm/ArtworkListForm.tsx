@@ -1,8 +1,7 @@
 import { Form, FormikProps } from "formik"
 import * as Yup from "yup"
-import { useTranslation } from "react-i18next"
+
 import { Input, Spacer, Text, Flex, Button, Toggle } from "@artsy/palette"
-import i18n from "System/i18n/i18n"
 
 export interface ArtworkListFormikValues {
   name: string
@@ -13,9 +12,9 @@ export const MAX_NAME_LENGTH = 40
 
 export const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .required(i18n.t("collectorSaves.artworkListForm.fields.name.required"))
+    .required("Name is required")
     .matches(/\S+/, {
-      message: i18n.t("collectorSaves.artworkListForm.fields.name.nonempty"),
+      message: "Name cannot be empty",
     })
     .max(MAX_NAME_LENGTH),
 })
@@ -36,21 +35,14 @@ interface ArtworkListFormProps {
 
 export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
   const { formik, mode, onClose, cancelMode } = props
-  const { t } = useTranslation()
 
   return (
     <Form>
       <Input
         name="name"
         value={formik.values.name}
-        title={
-          mode === "create"
-            ? t("collectorSaves.artworkListForm.fields.name.label.create")
-            : t("collectorSaves.artworkListForm.fields.name.label.edit")
-        }
-        placeholder={t(
-          "collectorSaves.artworkListForm.fields.name.placeholder"
-        )}
+        title={mode === "create" ? "Name your list" : "List Name"}
+        placeholder="E.g. Photography, Warhol, etc."
         error={formik.touched.name && formik.errors.name}
         maxLength={MAX_NAME_LENGTH}
         required
@@ -90,17 +82,13 @@ export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
           loading={!!formik.isSubmitting}
           disabled={!formik.dirty || !formik.isValid}
         >
-          {mode === "create"
-            ? t("collectorSaves.artworkListForm.buttons.create")
-            : t("collectorSaves.artworkListForm.buttons.edit")}
+          {mode === "create" ? "Create List" : "Save Changes"}
         </Button>
 
         <Spacer y={[1, 0]} />
 
         <Button variant="secondaryBlack" onClick={onClose}>
-          {cancelMode === "back"
-            ? t("common.buttons.back")
-            : t("common.buttons.cancel")}
+          {cancelMode === "back" ? "Back" : "Cancel"}
         </Button>
       </Flex>
     </Form>

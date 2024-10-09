@@ -1,6 +1,5 @@
 import { Button, Flex, Text } from "@artsy/palette"
 import { FC } from "react"
-import { useTranslation } from "react-i18next"
 
 interface SelectArtworkListsFooterProps {
   selectedArtworkListsCount: number
@@ -15,8 +14,6 @@ export const SelectArtworkListsFooter: FC<SelectArtworkListsFooterProps> = ({
   isSaving,
   onSaveClick,
 }) => {
-  const { t } = useTranslation()
-
   return (
     <Flex
       flexDirection="row"
@@ -24,12 +21,12 @@ export const SelectArtworkListsFooter: FC<SelectArtworkListsFooterProps> = ({
       justifyContent="space-between"
     >
       <Text variant="sm-display">
-        {t("collectorSaves.selectArtworkLists.footer.listsCount", {
-          count: selectedArtworkListsCount,
-        })}
+        {selectedArtworkListsCount === 1
+          ? `${selectedArtworkListsCount} list selected`
+          : `${selectedArtworkListsCount} lists selected`}
       </Text>
       <Button onClick={onSaveClick} loading={isSaving} disabled={!hasChanges}>
-        {t("collectorSaves.selectArtworkLists.footer.saveButton")}
+        Save
       </Button>
     </Flex>
   )

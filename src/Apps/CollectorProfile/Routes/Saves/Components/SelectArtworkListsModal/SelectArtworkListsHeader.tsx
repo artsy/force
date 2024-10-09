@@ -5,12 +5,10 @@ import {
   useManageArtworkForSavesContext,
 } from "Components/Artwork/ManageArtworkForSaves"
 import { FC } from "react"
-import { useTranslation } from "react-i18next"
 
 export const SelectArtworkListsHeader: FC = () => {
-  const { t } = useTranslation()
   const { state, dispatch } = useManageArtworkForSavesContext()
-  const artwork = state.artwork!
+  const artwork = state.artwork
 
   const openCreateArtworkListModal = () => {
     dispatch({
@@ -25,7 +23,7 @@ export const SelectArtworkListsHeader: FC = () => {
         flexDirection={["column", "row"]}
         alignItems={["stretch", "center"]}
       >
-        <ArtworkModalHeaderInfo artwork={artwork} />
+        <ArtworkModalHeaderInfo artwork={artwork as any} />
 
         <Spacer x={[0, 1]} y={[2, 0]} />
 
@@ -34,7 +32,7 @@ export const SelectArtworkListsHeader: FC = () => {
           size="small"
           onClick={openCreateArtworkListModal}
         >
-          {t("collectorSaves.selectArtworkLists.header.createNewListButton")}
+          Create New List
         </Button>
       </Flex>
 
@@ -42,16 +40,8 @@ export const SelectArtworkListsHeader: FC = () => {
         <>
           <Spacer y={2} />
 
-          <Message
-            variant="success"
-            title={t(
-              "collectorSaves.selectArtworkLists.header.recentlyAddedList.title"
-            )}
-          >
-            {t(
-              "collectorSaves.selectArtworkLists.header.recentlyAddedList.message",
-              { name: state.recentlyAddedList.name }
-            )}
+          <Message variant="success" title="List created">
+            Artwork will be added to {state.recentlyAddedList.name}
           </Message>
         </>
       )}

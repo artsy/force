@@ -3,7 +3,6 @@ import { Timer } from "Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionRegistrationPanel_artwork$data } from "__generated__/ArtworkAuctionRegistrationPanel_artwork.graphql"
 import { RouterLink } from "System/Components/RouterLink"
-import { useTranslation } from "react-i18next"
 
 interface ArtworkAuctionRegistrationPanelProps {
   artwork: ArtworkAuctionRegistrationPanel_artwork$data
@@ -12,15 +11,11 @@ interface ArtworkAuctionRegistrationPanelProps {
 const ArtworkAuctionRegistrationPanel: React.FC<ArtworkAuctionRegistrationPanelProps> = ({
   artwork,
 }) => {
-  const { t } = useTranslation()
-
   const isCountingDown = !!artwork.sale?.registrationEndsAt
   const href = `/auction-registration/${artwork.sale?.slug}`
-  const title = t(
-    isCountingDown
-      ? `artworkPage.actions.save.registerToBidWithDeadline`
-      : `artworkPage.actions.save.registerToBidWithoutDeadline`
-  )
+  const title = isCountingDown
+    ? "Register ahead of time to bid in this auction and get notifications for this lot."
+    : "Register to bid in this auction and get notifications for this lot."
 
   if (isCountingDown) {
     return (

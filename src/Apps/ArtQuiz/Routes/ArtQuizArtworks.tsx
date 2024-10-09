@@ -24,7 +24,7 @@ import { useSaveArtwork } from "Apps/ArtQuiz/Hooks/useSaveArtwork"
 import { ArtQuizResultsLoader } from "Apps/ArtQuiz/Components/ArtQuizResultsLoader"
 import { useTracking } from "react-tracking"
 import { ContextModule } from "@artsy/cohesion"
-import { useTranslation } from "react-i18next"
+
 import { compact } from "lodash"
 import { ArtQuizArtworksCardFragmentContainer } from "Apps/ArtQuiz/Components/ArtQuizArtworksCard"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
@@ -39,7 +39,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   const { submitMutation: submitUpdate } = useUpdateQuiz()
   const { trackEvent } = useTracking()
   const { router } = useRouter()
-  const { t } = useTranslation()
+
   const [showLoader, setShowLoader] = useState(false)
 
   const edges = me.quiz?.quizArtworkConnection?.edges || []
@@ -202,8 +202,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
     return <ArtQuizResultsLoader onReady={handleReady} />
   }
 
-  // Using split to create a deliberate break in text for better readability
-  const tooltipText = t("artQuizPage.artworksScreen.tooltip").split("\n")
+  const tooltipText = "Like it? Hit the heart.\nNot for you? Choose X."
 
   return (
     <ArtQuizFullScreen>
@@ -268,13 +267,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
         </Flex>
 
         <Tooltip
-          content={
-            <Text variant="xs">
-              {tooltipText.map((text, i) => {
-                return <div key={i}>{text}</div>
-              })}
-            </Text>
-          }
+          content={<Text variant="xs">{tooltipText}</Text>}
           variant="defaultDark"
           offset={-10}
           pointer

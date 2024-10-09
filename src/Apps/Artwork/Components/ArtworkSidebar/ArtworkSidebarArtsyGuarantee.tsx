@@ -1,6 +1,6 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
 import { ArtworkSidebarArtsyGuarantee_artwork$key } from "__generated__/ArtworkSidebarArtsyGuarantee_artwork.graphql"
-import { useTranslation } from "react-i18next"
+
 import { RouterLink } from "System/Components/RouterLink"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import LockIcon from "@artsy/icons/LockIcon"
@@ -24,14 +24,14 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuarantee
     `,
     artwork
   )
-  const { t } = useTranslation()
+
   const { trackEvent } = useTracking()
 
   if (data.isUnlisted) {
     return (
       <>
         <Text variant="xs" color="black60">
-          {t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}{" "}
+          Be covered by the Artsy Guarantee when you check out with Artsy{" "}
           <RouterLink
             inline
             to="/buyer-guarantee"
@@ -49,9 +49,7 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuarantee
               trackEvent(payload)
             }}
           >
-            <Text variant="xs">
-              {t("artworkPage.sidebar.artsyGuarantee.learnMore")}
-            </Text>
+            <Text variant="xs">Learn more</Text>
           </RouterLink>
         </Text>
       </>
@@ -64,7 +62,7 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuarantee
         <Flex flexDirection="row" alignItems="center">
           <LockIcon mr={1} height={24} width={24} />
 
-          <Text>{t("artworkPage.sidebar.artsyGuarantee.secureCheckout")}</Text>
+          <Text>Secure Checkout</Text>
         </Flex>
 
         <Spacer y={1} />
@@ -72,7 +70,7 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuarantee
         <Flex flexDirection="row" alignItems="center">
           <MoneyBackIcon mr={1} height={24} width={24} />
 
-          <Text>{t("artworkPage.sidebar.artsyGuarantee.moneyBack")}</Text>
+          <Text>Money-Back Guarantee</Text>
         </Flex>
 
         <Spacer y={1} />
@@ -80,7 +78,7 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuarantee
         <Flex flexDirection="row" alignItems="center">
           <VerifiedIcon mr={1} height={24} width={24} />
 
-          <Text>{t("artworkPage.sidebar.artsyGuarantee.authenticity")}</Text>
+          <Text>Authenticity Guarantee</Text>
         </Flex>
       </Text>
 
@@ -92,9 +90,7 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuarantee
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Text variant="xs">
-          {t("artworkPage.sidebar.artsyGuarantee.learnMore")}
-        </Text>
+        <Text variant="xs">Learn more</Text>
       </RouterLink>
     </>
   )

@@ -30,9 +30,7 @@ describe("ArtworkSidebarShippingInformation", () => {
         }),
       })
 
-      expect(
-        screen.queryByText(/artworkPage.sidebar.shippingAndTaxes.shipsFrom/)
-      ).not.toBeInTheDocument()
+      expect(screen.queryByText(/Ships from/)).not.toBeInTheDocument()
     })
   })
 

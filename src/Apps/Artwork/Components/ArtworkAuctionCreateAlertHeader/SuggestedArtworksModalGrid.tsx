@@ -13,7 +13,7 @@ import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridCo
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { FC } from "react"
-import { useTranslation } from "react-i18next"
+
 import { graphql } from "react-relay"
 import {
   SuggestedArtworksModalGridQuery,
@@ -33,15 +33,12 @@ export const SuggestedArtworksModalGrid: FC<SuggestedArtworksModalGridProps> = (
   artworksConnection,
   onClose,
 }) => {
-  const { t } = useTranslation()
   const artworksCount = artworksConnection?.counts?.total ?? 0
 
   if (artworksCount === 0) {
     return (
       <Text mb={2} p={2} bg="black10" color="black60">
-        {t(
-          "artworkPage.artworkAuctionCreateAlertHeader.suggestedArtworksModal.noMatches"
-        )}
+        There aren’t any works available that meet the criteria at this time.
       </Text>
     )
   }
@@ -50,10 +47,7 @@ export const SuggestedArtworksModalGrid: FC<SuggestedArtworksModalGridProps> = (
     <>
       <Media greaterThan="xs">
         <Text variant="sm-display" color="black60">
-          {t(
-            "artworkPage.artworkAuctionCreateAlertHeader.suggestedArtworksModal.artworksCount",
-            { count: artworksCount }
-          )}
+          {artworksCount === 1 ? "1 Artwork:" : `${artworksCount} Artworks:`}
         </Text>
         <Spacer y={2} />
       </Media>
@@ -129,16 +123,9 @@ export const SuggestedArtworksModalGridQueryRenderer: FC<SuggestedArtworksModalG
 }
 
 const ContentPlaceholder: FC = () => {
-  const { t } = useTranslation()
-
   return (
     <Flex flexDirection="column">
-      <SkeletonText>
-        {t(
-          "artworkPage.artworkAuctionCreateAlertHeader.suggestedArtworksModal.artworksCount",
-          { count: 300 }
-        )}
-      </SkeletonText>
+      <SkeletonText>300 Artworks:</SkeletonText>
 
       <Spacer y={2} />
 

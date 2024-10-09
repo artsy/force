@@ -3,10 +3,8 @@ import { SuggestedArtworksModal } from "Apps/Artwork/Components/ArtworkAuctionCr
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { FC, useState } from "react"
-import { useTranslation } from "react-i18next"
 
 export const SuggestedArtworksButton: FC = () => {
-  const { t } = useTranslation()
   const [modalIsOpened, setModalIsOpened] = useState(false)
 
   const handleClick = e => {
@@ -23,7 +21,7 @@ export const SuggestedArtworksButton: FC = () => {
       <Media greaterThan="xs">
         <Box textAlign="center">
           <RouterLink to="" onClick={handleClick}>
-            {t("artworkPage.artworkAuctionCreateAlertHeader.seeMoreButton")}
+            See more
           </RouterLink>
         </Box>
       </Media>
@@ -34,9 +32,7 @@ export const SuggestedArtworksButton: FC = () => {
           size="large"
           onClick={handleClick}
         >
-          {t(
-            "artworkPage.artworkAuctionCreateAlertHeader.suggestedArtworksButton"
-          )}
+          Browse Similar Works
         </Button>
       </Media>
 

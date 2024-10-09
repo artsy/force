@@ -9,7 +9,7 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
-import { useTranslation } from "react-i18next"
+
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { Formik, Form } from "formik"
 import { OfferSettingsListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsListItem"
@@ -34,7 +34,6 @@ export const OfferSettingsModal: React.FC<OfferSettingsModalProps> = ({
   onClose,
   me,
 }) => {
-  const { t } = useTranslation()
   const customArtworkLists = extractNodes(me.customArtworkLists)
   const savedArtworksArtworkList = me?.savedArtworksArtworkList
   const artworkLists = savedArtworksArtworkList
@@ -68,7 +67,7 @@ export const OfferSettingsModal: React.FC<OfferSettingsModalProps> = ({
 
       sendToast({
         variant: "success",
-        message: t("collectorSaves.offerSettingsModal.success"),
+        message: "Changes saved",
       })
 
       onClose()
@@ -81,7 +80,7 @@ export const OfferSettingsModal: React.FC<OfferSettingsModalProps> = ({
     <ModalDialog
       width={["100%", 600]}
       onClose={onClose}
-      title={t("collectorSaves.offerSettingsModal.title")}
+      title="Offer settings"
       data-testid="OfferSettingsModal"
     >
       <Formik<OfferSettingsFormikValues>
@@ -91,7 +90,9 @@ export const OfferSettingsModal: React.FC<OfferSettingsModalProps> = ({
         {formik => (
           <Form>
             <Text variant="xs">
-              {t("collectorSaves.offerSettingsModal.description")}{" "}
+              Shared lists are eligible to receive offers from galleries.
+              Switching sharing off will make them visible only to you, and you
+              won't receive offers.{" "}
               <Link
                 href="https://support.artsy.net/s/article/Offers-on-saved-works"
                 target="_blank"

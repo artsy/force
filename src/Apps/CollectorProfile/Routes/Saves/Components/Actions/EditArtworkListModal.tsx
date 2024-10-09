@@ -1,5 +1,5 @@
 import { ModalDialog, useToasts } from "@artsy/palette"
-import { useTranslation } from "react-i18next"
+
 import { Formik, FormikHelpers } from "formik"
 import { useUpdateArtworkList } from "./Mutations/useUpdateArtworkList"
 import createLogger from "Utils/logger"
@@ -28,7 +28,6 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
   artworkList,
   onClose,
 }) => {
-  const { t } = useTranslation()
   const { trackEvent } = useTracking()
 
   const initialValues: ArtworkListFormikValues = {
@@ -74,7 +73,7 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
 
       sendToast({
         variant: "success",
-        message: t("collectorSaves.editListModal.success"),
+        message: "Changes saved",
       })
 
       trackAnalyticEvent()
@@ -83,7 +82,7 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
       logger.error(error)
 
       // use generic error message by default
-      let errorMessage = t("common.errors.somethingWentWrong")
+      let errorMessage = "Something went wrong. Please try again."
 
       // if there is a specific error message for the name field, use that instead
       const nameErrorMessage = error?.fieldErrors?.find(
@@ -106,7 +105,7 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
       {formik => {
         return (
           <ModalDialog
-            title={t("collectorSaves.editListModal.title")}
+            title="Edit your list"
             onClose={onClose}
             width={["100%", 700]}
           >

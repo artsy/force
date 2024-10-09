@@ -9,7 +9,7 @@ import {
 import { ArtworkSidebarAuthenticityCertificate_artwork$data } from "__generated__/ArtworkSidebarAuthenticityCertificate_artwork.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useTranslation } from "react-i18next"
+
 import { RouterLink } from "System/Components/RouterLink"
 import CertificateIcon from "@artsy/icons/CertificateIcon"
 
@@ -20,7 +20,6 @@ interface ArtworkSidebarAuthenticityCertificateProps {
 export const ArtworkSidebarAuthenticityCertificate: React.FC<ArtworkSidebarAuthenticityCertificateProps> = ({
   artwork,
 }) => {
-  const { t } = useTranslation()
   const [isShowingModal, setIsShowingModal] = useState(false)
 
   const handleClose = () => {
@@ -43,11 +42,9 @@ export const ArtworkSidebarAuthenticityCertificate: React.FC<ArtworkSidebarAuthe
       <Flex alignItems="center" data-testid="authenticity-certificate">
         <CertificateIcon mr={1} />
         <Text variant="sm">
-          {t("artworkPage.sidebar.details.AuthenticityCertificate.includes")}
+          Includes a
           <Clickable onClick={handleClick} textDecoration="underline">
-            {t(
-              "artworkPage.sidebar.details.AuthenticityCertificate.certificateOfAuthenticity"
-            )}
+            Certificate of Authenticity
           </Clickable>
         </Text>
       </Flex>
@@ -55,47 +52,42 @@ export const ArtworkSidebarAuthenticityCertificate: React.FC<ArtworkSidebarAuthe
       {isShowingModal && (
         <ModalDialog
           onClose={handleClose}
-          title={t(
-            "artworkPage.sidebar.details.AuthenticityCertificateModal.title"
-          )}
+          title="Certificate of Authenticity"
           footer={
             <Button width="100%" onClick={handleClose}>
-              {t(
-                "artworkPage.sidebar.details.AuthenticityCertificateModal.close"
-              )}
+              OK
             </Button>
           }
         >
           <Flex flexGrow={1} flexDirection="column">
             <Text variant="sm">
-              {t(
-                "artworkPage.sidebar.details.AuthenticityCertificateModal.description1"
-              )}
+              A certificate of authenticity (COA) is a document from an
+              authoritative source that verifies the artwork’s authenticity.
+              While many COAs are signed by the artist, others will be signed by
+              the representing gallery or the printmaker who collaborated with
+              the artist on the work. For secondary market works, authorized
+              estates or foundations are often the issuing party.
             </Text>
 
             <Spacer y={2} />
 
             <Text variant="sm">
-              {t(
-                "artworkPage.sidebar.details.AuthenticityCertificateModal.description2"
-              )}
+              COAs typically include the name of the artist, the details (title,
+              date, medium, dimensions) of the work in question, and whenever
+              possible an image of the work.
             </Text>
 
             <Spacer y={2} />
 
             <Text variant="sm">
-              {t(
-                "artworkPage.sidebar.details.AuthenticityCertificateModal.readMore"
-              )}
+              Read more about artwork authenticity in our
               <RouterLink
                 inline
                 to="https://support.artsy.net/s/article/What-Counts-as-an-Artworks-Proof-of-Authenticity"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {t(
-                  "artworkPage.sidebar.details.AuthenticityCertificateModal.helpCenterLink"
-                )}
+                Help Center
               </RouterLink>
             </Text>
           </Flex>
