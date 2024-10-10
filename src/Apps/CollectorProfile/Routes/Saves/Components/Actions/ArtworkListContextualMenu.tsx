@@ -8,7 +8,7 @@ import {
   DeleteArtworkListModal,
   DeleteArtworkListEntity,
 } from "./DeleteArtworkListModal"
-import { useTranslation } from "react-i18next"
+
 import {
   EditArtworkListModal,
   EditArtworkListEntity,
@@ -24,8 +24,6 @@ interface ArtworkListContextualMenuProps {
 export const ArtworkListContextualMenu: React.FC<ArtworkListContextualMenuProps> = ({
   artworkList,
 }) => {
-  const { t } = useTranslation()
-
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
@@ -63,13 +61,13 @@ export const ArtworkListContextualMenu: React.FC<ArtworkListContextualMenuProps>
 
       <ContextualMenu>
         <ContextualMenuItem onClick={openEditModal}>
-          {t("collectorSaves.contextualMenu.edit")}
+          Edit List
         </ContextualMenuItem>
 
         <ContextualMenuDivider />
 
         <ContextualMenuItem onClick={openDeleteModal}>
-          {t("collectorSaves.contextualMenu.delete")}
+          Delete List
         </ContextualMenuItem>
       </ContextualMenu>
     </>

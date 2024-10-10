@@ -1,7 +1,7 @@
 import { FC, useState } from "react"
 import { Box, Text, Spacer, Button, Join, Flex } from "@artsy/palette"
 import { useToasts } from "@artsy/palette"
-import { useTranslation } from "react-i18next"
+
 import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModalWizard"
 import { ArtworkList } from "./CreateNewListModal/CreateNewListModal"
 import { ProgressiveOnboardingSaveTitle } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveTitle"
@@ -19,7 +19,6 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
   savedArtworksCount,
   me,
 }) => {
-  const { t } = useTranslation()
   const { sendToast } = useToasts()
   const [createModalIsOpened, setCreateModalIsOpened] = useState(false)
   const [editModalIsOpened, setEditModalIsOpened] = useState(false)
@@ -37,9 +36,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
 
     sendToast({
       variant: "success",
-      message: t("collectorSaves.artworkListsHeader.listCreated", {
-        listName: artworkList.name,
-      }),
+      message: `${artworkList.name}} Created`,
     })
   }
 
@@ -66,9 +63,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
       )}
 
       <Join separator={<Spacer y={0.5} />}>
-        <Text variant={["md", "lg-display"]}>
-          {t("collectorSaves.artworkListsHeader.savedArtworks")}
-        </Text>
+        <Text variant={["md", "lg-display"]}>Saves</Text>
 
         <Box
           display={["block", "flex"]}
@@ -78,12 +73,9 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
         >
           <Text variant="sm-display" color="black60">
             <ProgressiveOnboardingSaveTitle>
-              {t("collectorSaves.artworkListsHeader.curateYourList") +
-                " " +
-                t("collectorSaves.artworkListsHeader.connector") +
-                " "}
+              Curate your own lists of the works you love and{" "}
               <RouterLink to="https://support.artsy.net/s/article/Offers-on-saved-works">
-                {t("collectorSaves.artworkListsHeader.signalInterest")}
+                signal your interest to galleries
               </RouterLink>
             </ProgressiveOnboardingSaveTitle>
           </Text>
@@ -96,7 +88,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
                 onClick={handleEditListClick}
                 mt={[2, 0]}
               >
-                {t("collectorSaves.artworkListsHeader.offerSettingsButton")}
+                Offer Settings
               </Button>
             </ProgressiveOnboardingSaveOfferSettings>
 
@@ -108,7 +100,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
               onClick={handleCreateListClick}
               mt={[2, 0]}
             >
-              {t("collectorSaves.artworkListsHeader.createNewListButton")}
+              Create New List
             </Button>
           </Flex>
         </Box>

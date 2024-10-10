@@ -18,6 +18,7 @@ export const SuggestionItemPreview = ({
     return (
       <Image
         lazyLoad
+        key={`suggestionItemPreview-${imageUrl}`}
         width={PREVIEW_IMAGE_SIZE}
         height={PREVIEW_IMAGE_SIZE}
         src={imageUrl}

@@ -8,7 +8,7 @@ import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnbo
 import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
 import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
-import { useTranslation } from "react-i18next"
+
 import SearchIcon from "@artsy/icons/SearchIcon"
 
 interface OnboardingFollowsProps {
@@ -39,8 +39,6 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
 
   const tracking = useOnboardingTracking()
 
-  const { t } = useTranslation()
-
   return (
     <SplitLayout
       left={
@@ -56,17 +54,22 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
         <Flex flexDirection="column" minWidth={0}>
           <Box pt={4} px={4}>
             <Text ref={register(1)} variant="lg-display" mb={1}>
-              {t(`onboarding.follows.${kind}.title`)}
+              {kind === "artists"
+                ? "Follow artists to see more of their work"
+                : "Follow galleries you love to see events and news"}
             </Text>
 
             <Text ref={register(2)} variant="sm-display" mb={2}>
-              {t("onboarding.follows.description")}
+              You’ll see their latest works and get better recommendations (for
+              art you’ll love).
             </Text>
 
             <Box ref={register(3)}>
               <LabeledInput
                 label={<SearchIcon />}
-                placeholder={t(`onboarding.follows.${kind}.placeholder`)}
+                placeholder={
+                  kind === "artists" ? "Search Artists" : "Search Galleries"
+                }
                 mb={4}
                 onChange={event => setQuery(event.currentTarget.value)}
                 data-testid="search-input"

@@ -1,5 +1,5 @@
 import { Spacer, Text } from "@artsy/palette"
-import { useTranslation } from "react-i18next"
+
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -13,7 +13,6 @@ interface ArtworkSidebarLinksProps {
 const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
   artwork,
 }) => {
-  const { t } = useTranslation()
   const tracking = useTracking()
   const { sale, isInAuction, isUnlisted } = artwork
 
@@ -46,13 +45,13 @@ const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
       {isInOpenAuction && (
         <>
           <Text variant="xs" color="black60">
-            {t("artworkPage.sidebar.conditionsOfSale")}{" "}
+            By placing your bid you agree to Artsy's{" "}
             <RouterLink
               inline
               to="/terms"
               onClick={trackClickedConditionsOfSale}
             >
-              {t("artworkPage.sidebar.generalTermsAndConditionsOfSaleLink")}
+              General Terms and Conditions of Sale
             </RouterLink>
           </Text>
 
@@ -61,9 +60,9 @@ const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
       )}
 
       <Text variant="xs" color="black60">
-        {t("artworkPage.sidebar.sellWithArtsy")}{" "}
+        Want to sell a work by this artist?{" "}
         <RouterLink inline to="/sell" onClick={trackClickedSellWithArtsy}>
-          {t("artworkPage.sidebar.sellWithArtsyLink")}
+          Sell with Artsy
         </RouterLink>
       </Text>
     </>

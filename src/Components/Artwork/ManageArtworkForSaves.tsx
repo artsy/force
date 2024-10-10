@@ -11,7 +11,7 @@ import {
   useReducer,
   useState,
 } from "react"
-import { useTranslation } from "react-i18next"
+
 import { useRouter } from "System/Hooks/useRouter"
 
 export enum ModalKey {
@@ -109,7 +109,6 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
     artwork: artwork ?? null,
   })
 
-  const { t } = useTranslation()
   const { sendToast } = useToasts()
   const { router } = useRouter()
 
@@ -127,16 +126,9 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
 
       sendToast({
         variant: "success",
-        message: t(
-          "collectorSaves.manageArtworkForSaves.toasts.addedArtworkToList",
-          {
-            name: list.name,
-          }
-        ),
+        message: `Added to ${list.name} list`,
         action: {
-          label: t(
-            "collectorSaves.manageArtworkForSaves.toasts.viewListButton"
-          ),
+          label: "View List",
           onClick: () => {
             navigateToSaveListById(list.id)
           },
@@ -148,14 +140,9 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
 
     sendToast({
       variant: "success",
-      message: t(
-        "collectorSaves.manageArtworkForSaves.toasts.addedArtworkToLists",
-        {
-          count: addedLists.length,
-        }
-      ),
+      message: `Added to ${addedLists.length} lists`,
       action: {
-        label: t("collectorSaves.manageArtworkForSaves.toasts.viewSavesButton"),
+        label: "View Saves",
         onClick: () => {
           navigateToSaves()
         },
@@ -169,12 +156,7 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
 
       sendToast({
         variant: "message",
-        message: t(
-          "collectorSaves.manageArtworkForSaves.toasts.removedArtworkFromList",
-          {
-            name: list.name,
-          }
-        ),
+        message: `Removed from ${list.name}`,
       })
 
       return
@@ -182,19 +164,14 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
 
     sendToast({
       variant: "message",
-      message: t(
-        "collectorSaves.manageArtworkForSaves.toasts.removedArtworkFromLists",
-        {
-          count: removedLists.length,
-        }
-      ),
+      message: `Removed from ${removedLists.length} lists`,
     })
   }
 
   const showChangesSavedToast = () => {
     sendToast({
       variant: "success",
-      message: t("collectorSaves.manageArtworkForSaves.toasts.changesSaved"),
+      message: "Changes saved",
     })
   }
 

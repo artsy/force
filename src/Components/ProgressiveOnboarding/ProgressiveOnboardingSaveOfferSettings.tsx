@@ -7,7 +7,6 @@ import {
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useDismissibleContext } from "@artsy/dismissible"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
-import { t } from "i18next"
 
 const KEY = PROGRESSIVE_ONBOARDING.saveOfferSettings
 
@@ -36,7 +35,8 @@ export const __ProgressiveOnboardingSaveOfferSettings__: FC<ProgressiveOnboardin
       onClose={handleClose}
       popover={
         <Text variant="xs">
-          {t("collectorSaves.artworkListsHeader.offerSettingsPopover")}
+          Edit list settings to indicate to galleries which artworks you want to
+          receive offers on.
         </Text>
       }
     >

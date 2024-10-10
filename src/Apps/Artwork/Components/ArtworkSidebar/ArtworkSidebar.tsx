@@ -5,7 +5,7 @@ import { ArtworkSidebar_artwork$data } from "__generated__/ArtworkSidebar_artwor
 import { ArtworkSidebar_me$data } from "__generated__/ArtworkSidebar_me.graphql"
 import { ArtworkSidebarShippingInformationFragmentContainer } from "./ArtworkSidebarShippingInformation"
 import { SidebarExpandable } from "Components/Artwork/SidebarExpandable"
-import { useTranslation } from "react-i18next"
+
 import { ArtworkSidebarArtworkTitleFragmentContainer } from "./ArtworkSidebarArtworkTitle"
 import { ArtworkSidebarDetailsFragmentContainer } from "./ArtworkSidebarDetails"
 import { ArtworkSidebarArtsyGuarantee } from "./ArtworkSidebarArtsyGuarantee"
@@ -65,8 +65,6 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const isUnlisted = artwork?.isUnlisted
 
   const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
-
-  const { t } = useTranslation()
 
   useAuctionWebsocket({
     lotID: saleArtwork?.lotID as string,
@@ -192,9 +190,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       {!isUnlisted && !isSold && artworkEcommerceAvailable && (
         <>
-          <SidebarExpandable
-            label={t`artworkPage.sidebar.shippingAndTaxes.expandableLabel`}
-          >
+          <SidebarExpandable label="Shipping and taxes">
             <ArtworkSidebarShippingInformationFragmentContainer
               artwork={artwork}
             />
@@ -206,9 +202,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       {!isUnlisted && !!isEligibleForArtsyGuarantee && (
         <>
-          <SidebarExpandable
-            label={t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}
-          >
+          <SidebarExpandable label="Be covered by the Artsy Guarantee when you check out with Artsy">
             <ArtworkSidebarArtsyGuarantee artwork={artwork} />
           </SidebarExpandable>
 

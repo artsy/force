@@ -2,7 +2,6 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
 import { PrimaryLabelLine_artwork$key } from "__generated__/PrimaryLabelLine_artwork.graphql"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface PrimaryLabelLineProps {
   artwork: PrimaryLabelLine_artwork$key
@@ -14,10 +13,6 @@ export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
   const data = useFragment(primaryLabelLineFragment, artwork)
   const primaryLabel = data.collectorSignals?.primaryLabel
   const { hideSignals } = useArtworkGridContext()
-
-  const increasedInterestCuratorsPickEnabled = useFeatureFlag(
-    "emerald_signals-increased-interest-curators-pick"
-  )
 
   if (!primaryLabel) {
     return null
@@ -39,11 +34,7 @@ export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
     )
   }
 
-  if (
-    primaryLabel === "INCREASED_INTEREST" &&
-    !hideSignals &&
-    increasedInterestCuratorsPickEnabled
-  ) {
+  if (primaryLabel === "INCREASED_INTEREST" && !hideSignals) {
     return (
       <Text
         variant="xs"
@@ -61,11 +52,7 @@ export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
     )
   }
 
-  if (
-    primaryLabel === "CURATORS_PICK" &&
-    !hideSignals &&
-    increasedInterestCuratorsPickEnabled
-  ) {
+  if (primaryLabel === "CURATORS_PICK" && !hideSignals) {
     return (
       <Text
         variant="xs"

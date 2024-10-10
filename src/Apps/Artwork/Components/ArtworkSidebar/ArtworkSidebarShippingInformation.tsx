@@ -1,7 +1,7 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Spacer, Text } from "@artsy/palette"
 import { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
-import { useTranslation } from "react-i18next"
+
 import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
 import { ActionType, ClickedOnLearnMore } from "@artsy/cohesion"
@@ -19,7 +19,6 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
     taxInfo,
   },
 }) => {
-  const { t } = useTranslation()
   const { trackEvent } = useTracking()
 
   const handleMoreInfoClick = () => {
@@ -39,7 +38,7 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
       <>
         {!!shippingOrigin && (
           <Text variant="sm" color="black60">
-            {t`artworkPage.sidebar.shippingAndTaxes.shipsFrom`} {shippingOrigin}
+            Ships from {shippingOrigin}
           </Text>
         )}
 
@@ -66,7 +65,7 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
       <Spacer y={1} />
       {!!shippingOrigin && (
         <Text variant="sm" color="black60">
-          {t`artworkPage.sidebar.shippingAndTaxes.shipsFrom`} {shippingOrigin}
+          Ships from {shippingOrigin}
         </Text>
       )}
 

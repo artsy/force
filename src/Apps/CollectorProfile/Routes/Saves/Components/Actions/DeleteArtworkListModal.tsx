@@ -1,6 +1,6 @@
 import { Button, Flex, ModalDialog, Text, useToasts } from "@artsy/palette"
 import { useDeleteArtworkList } from "./Mutations/useDeleteArtworkList"
-import { useTranslation } from "react-i18next"
+
 import { useRouter } from "System/Hooks/useRouter"
 import { useTracking } from "react-tracking"
 import { ActionType, DeletedArtworkList, OwnerType } from "@artsy/cohesion"
@@ -20,7 +20,6 @@ export const DeleteArtworkListModal: React.FC<Props> = ({
   artworkList,
   onClose,
 }) => {
-  const { t } = useTranslation()
   const { router } = useRouter()
   const { trackEvent } = useTracking()
 
@@ -57,7 +56,7 @@ export const DeleteArtworkListModal: React.FC<Props> = ({
 
       sendToast({
         variant: "success",
-        message: t("collectorSaves.deleteListModal.success"),
+        message: "Changes saved",
       })
 
       trackAnalyticEvent()
@@ -75,9 +74,7 @@ export const DeleteArtworkListModal: React.FC<Props> = ({
 
   return (
     <ModalDialog
-      title={t("collectorSaves.deleteListModal.title", {
-        name: artworkList.name,
-      })}
+      title={`Delete ${artworkList.name} list?`}
       onClose={onClose}
       footer={
         <Flex
@@ -85,17 +82,17 @@ export const DeleteArtworkListModal: React.FC<Props> = ({
           flexDirection={["column-reverse", "row"]}
         >
           <Button variant="secondaryBlack" onClick={onClose}>
-            {t("common.buttons.cancel")}
+            Cancel
           </Button>
 
           <Button mb={[1, 0]} onClick={handleDeletePress}>
-            {t("collectorSaves.deleteListModal.delete")}
+            Yes, Delete List
           </Button>
         </Flex>
       }
       width={["100%", 700]}
     >
-      <Text>{t("collectorSaves.deleteListModal.message")}</Text>
+      <Text>You’ll lose any works that are only saved on this list.</Text>
     </ModalDialog>
   )
 }

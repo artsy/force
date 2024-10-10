@@ -1,6 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Spacer, Text } from "@artsy/palette"
-import { useTranslation } from "react-i18next"
+
 import { ArtworkSidebarBiddingClosedMessage_artwork$data } from "__generated__/ArtworkSidebarBiddingClosedMessage_artwork.graphql"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
@@ -12,18 +12,16 @@ interface BiddingClosedMessageProps {
 const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
   artwork,
 }) => {
-  const { t } = useTranslation()
-
   return (
     <>
       <Text variant="lg-display" color="black100">
-        {t(`artworkPage.sidebar.auction.biddingClosed`)}
+        Bidding closed
       </Text>
 
       {artwork.isEligibleToCreateAlert && (
         <>
           <Text variant="sm" color="black60" pt={0.5}>
-            {t(`artworkPage.sidebar.createAlert.description`)}
+            Get notifications for similar works
           </Text>
           <Spacer y={2} />
 

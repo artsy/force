@@ -2,7 +2,6 @@ import { Box, Separator, Text } from "@artsy/palette"
 import { SendFeedback } from "Apps/Search/Components/SendFeedback"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FC } from "react"
-import { useTranslation } from "react-i18next"
 
 interface ZeroStateProps {
   term: string
@@ -10,16 +9,15 @@ interface ZeroStateProps {
 
 export const ZeroState: FC<ZeroStateProps> = ({ term }) => {
   const { hasFilters, filters } = useArtworkFilterContext()
-  const { t } = useTranslation()
 
   return (
     <>
       <Text variant={["lg-display", "xl"]}>
         {hasFilters ? (
-          t`searchApp.noResultsFound`
+          "No results found."
         ) : (
           <>
-            {t(`searchApp.resultsCount`, { count: 0 })}
+            No results found for
             <Box as="span" color="blue100">
               {" "}
               “{filters?.term ?? term}”

@@ -2,7 +2,7 @@ import SearchIcon from "@artsy/icons/SearchIcon"
 import { LabeledInput } from "@artsy/palette"
 import { OverlayRefetchContainer } from "./Overlay"
 import { FC, useState } from "react"
-import { useTranslation } from "react-i18next"
+
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { isServer } from "Server/isServer"
@@ -22,7 +22,6 @@ export const MobileSearchBar: FC<MobileSearchBarProps> = ({
   viewer,
   onClose,
 }) => {
-  const { t } = useTranslation()
   const [overlayDisplayed, setOverlayDisplayed] = useState(false)
 
   const displayOverlay = () => {
@@ -41,7 +40,7 @@ export const MobileSearchBar: FC<MobileSearchBarProps> = ({
       )}
 
       <LabeledInput
-        placeholder={t`navbar.searchArtsy`}
+        placeholder="Search Artsy"
         label={<SearchIcon fill="black60" aria-hidden size={22} />}
         onClick={displayOverlay}
         height={40}

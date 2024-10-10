@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<22aab2e5a3a5f5c179642decc6920368>>
+ * @generated SignedSource<<8f068ebf0710ca380d36796225032ab9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,28 @@ export type SearchBarInputSuggestQuery$variables = {
 };
 export type SearchBarInputSuggestQuery$data = {
   readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"SearchBarInput_viewer">;
+    readonly searchConnection?: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly __typename: string;
+          readonly coverArtwork?: {
+            readonly image: {
+              readonly src: string | null | undefined;
+            } | null | undefined;
+          } | null | undefined;
+          readonly displayLabel: string | null | undefined;
+          readonly displayType?: string | null | undefined;
+          readonly href: string | null | undefined;
+          readonly imageUrl: string | null | undefined;
+          readonly slug?: string;
+          readonly statuses?: {
+            readonly artworks: boolean | null | undefined;
+            readonly auctionLots: boolean | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"SearchInputPills_viewer">;
   } | null | undefined;
 };
 export type SearchBarInputSuggestQuery = {
@@ -43,21 +64,130 @@ v2 = {
   "name": "term"
 },
 v3 = {
-  "kind": "Variable",
-  "name": "entities",
-  "variableName": "entities"
-},
-v4 = {
   "kind": "Literal",
   "name": "mode",
   "value": "AUTOSUGGEST"
 },
-v5 = {
+v4 = {
   "kind": "Variable",
   "name": "query",
   "variableName": "term"
 },
+v5 = [
+  {
+    "kind": "Variable",
+    "name": "entities",
+    "variableName": "entities"
+  },
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 7
+  },
+  (v3/*: any*/),
+  (v4/*: any*/)
+],
 v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "displayLabel",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "imageUrl",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v10 = {
+  "kind": "InlineFragment",
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "displayType",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    }
+  ],
+  "type": "SearchableItem",
+  "abstractKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "ArtistStatuses",
+  "kind": "LinkedField",
+  "name": "statuses",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artworks",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "auctionLots",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Image",
+  "kind": "LinkedField",
+  "name": "image",
+  "plural": false,
+  "selections": [
+    {
+      "alias": "src",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "version",
+          "value": [
+            "square"
+          ]
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "url",
+      "storageKey": "url(version:[\"square\"])"
+    }
+  ],
+  "storageKey": null
+},
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -85,12 +215,6 @@ return {
         "selections": [
           {
             "args": [
-              (v3/*: any*/),
-              {
-                "kind": "Variable",
-                "name": "hasTerm",
-                "variableName": "hasTerm"
-              },
               {
                 "kind": "Variable",
                 "name": "term",
@@ -98,7 +222,72 @@ return {
               }
             ],
             "kind": "FragmentSpread",
-            "name": "SearchBarInput_viewer"
+            "name": "SearchInputPills_viewer"
+          },
+          {
+            "condition": "hasTerm",
+            "kind": "Condition",
+            "passingValue": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": (v5/*: any*/),
+                "concreteType": "SearchableConnection",
+                "kind": "LinkedField",
+                "name": "searchConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "SearchableEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v6/*: any*/),
+                          (v7/*: any*/),
+                          (v8/*: any*/),
+                          (v9/*: any*/),
+                          (v10/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v11/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Artwork",
+                                "kind": "LinkedField",
+                                "name": "coverArtwork",
+                                "plural": false,
+                                "selections": [
+                                  (v12/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "type": "Artist",
+                            "abstractKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ]
           }
         ],
         "storageKey": null
@@ -126,182 +315,6 @@ return {
         "plural": false,
         "selections": [
           {
-            "condition": "hasTerm",
-            "kind": "Condition",
-            "passingValue": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": [
-                  (v3/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 7
-                  },
-                  (v4/*: any*/),
-                  (v5/*: any*/)
-                ],
-                "concreteType": "SearchableConnection",
-                "kind": "LinkedField",
-                "name": "searchConnection",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "SearchableEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": null,
-                        "kind": "LinkedField",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "displayLabel",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "href",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "imageUrl",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "__typename",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "displayType",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "slug",
-                                "storageKey": null
-                              }
-                            ],
-                            "type": "SearchableItem",
-                            "abstractKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "ArtistStatuses",
-                                "kind": "LinkedField",
-                                "name": "statuses",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "artworks",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "auctionLots",
-                                    "storageKey": null
-                                  }
-                                ],
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Artwork",
-                                "kind": "LinkedField",
-                                "name": "coverArtwork",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "concreteType": "Image",
-                                    "kind": "LinkedField",
-                                    "name": "image",
-                                    "plural": false,
-                                    "selections": [
-                                      {
-                                        "alias": "src",
-                                        "args": [
-                                          {
-                                            "kind": "Literal",
-                                            "name": "version",
-                                            "value": [
-                                              "square"
-                                            ]
-                                          }
-                                        ],
-                                        "kind": "ScalarField",
-                                        "name": "url",
-                                        "storageKey": "url(version:[\"square\"])"
-                                      }
-                                    ],
-                                    "storageKey": null
-                                  },
-                                  (v6/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "type": "Artist",
-                            "abstractKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v6/*: any*/)
-                            ],
-                            "type": "Node",
-                            "abstractKey": "__isNode"
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ]
-          },
-          {
             "alias": "searchConnectionAggregation",
             "args": [
               {
@@ -316,8 +329,8 @@ return {
                 "name": "first",
                 "value": 0
               },
-              (v4/*: any*/),
-              (v5/*: any*/)
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "concreteType": "SearchableConnection",
             "kind": "LinkedField",
@@ -362,6 +375,80 @@ return {
               }
             ],
             "storageKey": null
+          },
+          {
+            "condition": "hasTerm",
+            "kind": "Condition",
+            "passingValue": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": (v5/*: any*/),
+                "concreteType": "SearchableConnection",
+                "kind": "LinkedField",
+                "name": "searchConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "SearchableEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v6/*: any*/),
+                          (v7/*: any*/),
+                          (v8/*: any*/),
+                          (v9/*: any*/),
+                          (v10/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v11/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Artwork",
+                                "kind": "LinkedField",
+                                "name": "coverArtwork",
+                                "plural": false,
+                                "selections": [
+                                  (v12/*: any*/),
+                                  (v13/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "type": "Artist",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v13/*: any*/)
+                            ],
+                            "type": "Node",
+                            "abstractKey": "__isNode"
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ]
           }
         ],
         "storageKey": null
@@ -369,16 +456,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0a6af76749f51a04324c827fafb1378a",
+    "cacheID": "04d19cea2adb45006b8bd09c434abffc",
     "id": null,
     "metadata": {},
     "name": "SearchBarInputSuggestQuery",
     "operationKind": "query",
-    "text": "query SearchBarInputSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchBarInput_viewer_1B9obU\n  }\n}\n\nfragment SearchBarInput_viewer_1B9obU on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n          coverArtwork {\n            image {\n              src: url(version: [\"square\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  ...SearchInputPills_viewer_4hh6ED\n}\n\nfragment SearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
+    "text": "query SearchBarInputSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchInputPills_viewer_4hh6ED\n    searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n      edges {\n        node {\n          displayLabel\n          href\n          imageUrl\n          __typename\n          ... on SearchableItem {\n            displayType\n            slug\n          }\n          ... on Artist {\n            statuses {\n              artworks\n              auctionLots\n            }\n            coverArtwork {\n              image {\n                src: url(version: [\"square\"])\n              }\n              id\n            }\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "95d353003e510c4ac573272097b475de";
+(node as any).hash = "24a8f0c826080a6d521d3bbd1bad13a1";
 
 export default node;

@@ -12,12 +12,8 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "Components/Artwork/HoverDetails"
 import { SaveButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveButton"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
-import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
-import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
-import { useState } from "react"
 import { BidTimerLine } from "./BidTimerLine"
 import { PrimaryLabelLine } from "Components/Artwork/Details/PrimaryLabelLine"
 
@@ -243,19 +239,13 @@ const SaleMessage: React.FC<SaleMessageProps> = props => {
 const BidInfo: React.FC<DetailsProps> = ({
   artwork: { collectorSignals, sale, sale_artwork },
 }) => {
-  const signalsAuctionEnabled = useFeatureFlag(
-    "emerald_signals-auction-improvements"
-  )
-
   const inRunningAuction = sale?.is_auction && !sale?.is_closed
 
   if (!inRunningAuction) {
     return null
   }
 
-  const bidCount = signalsAuctionEnabled
-    ? collectorSignals?.auction?.bidCount ?? 0
-    : sale_artwork?.counts?.bidder_positions ?? 0
+  const bidCount = collectorSignals?.auction?.bidCount ?? 0
 
   if (bidCount === 0) {
     return null
@@ -322,22 +312,11 @@ export const Details: React.FC<DetailsProps> = ({
     showHighDemandIcon &&
     !isConsignmentSubmission
 
-  const signalsPartnerOffersEnabled = useFeatureFlag(
-    "emerald_signals-partner-offers"
-  )
-
-  const signalsAuctionEnabled = useFeatureFlag(
-    "emerald_signals-auction-improvements"
-  )
-
   const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
   const isAuction = rest?.artwork?.sale?.is_auction ?? false
 
   const showActivePartnerOffer: boolean =
-    !!signalsPartnerOffersEnabled &&
-    !isAuction &&
-    !!partnerOffer &&
-    contextModule !== "activity"
+    !isAuction && !!partnerOffer && contextModule !== "activity"
 
   const showPrimaryLabelLine: boolean =
     !!rest?.artwork?.collectorSignals?.primaryLabel && !isAuction
@@ -384,17 +363,6 @@ export const Details: React.FC<DetailsProps> = ({
                 LOT {rest.artwork?.sale_artwork?.lotLabel}
               </Text>
             )}
-
-            {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
-              rest?.artwork?.sale_artwork &&
-              !signalsAuctionEnabled && (
-                <>
-                  <LotCloseInfo
-                    saleArtwork={rest.artwork.sale_artwork}
-                    sale={rest.artwork.sale}
-                  />
-                </>
-              )}
           </Join>
         </Flex>
       )}
@@ -440,90 +408,6 @@ export const Details: React.FC<DetailsProps> = ({
 
       {padForPrimaryLabelLine && <EmptyLine />}
     </Box>
-  )
-}
-
-// TODO: Delete LotCloseInfo when signalsAuctionEnabled is removed
-interface LotCloseInfoProps {
-  saleArtwork: NonNullable<Details_artwork$data["sale_artwork"]>
-  sale: NonNullable<Details_artwork$data["sale"]>
-}
-
-export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
-  saleArtwork,
-  sale,
-}) => {
-  const { endAt, extendedBiddingEndAt, lotID } = saleArtwork
-  const biddingEndAt = extendedBiddingEndAt ?? endAt
-
-  const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
-  const [isExtended, setIsExtended] = useState(!!extendedBiddingEndAt)
-
-  useAuctionWebsocket({
-    lotID: lotID ?? "",
-    onChange: ({ extended_bidding_end_at }) => {
-      setUpdatedBiddingEndAt(extended_bidding_end_at)
-      setIsExtended(true)
-    },
-  })
-
-  const { hasEnded: lotHasClosed, time } = useTimer(
-    updatedBiddingEndAt ?? "",
-    sale.startAt ?? ""
-  )
-
-  const { hasEnded: lotsAreClosing, hasStarted: saleHasStarted } = useTimer(
-    sale.endAt ?? "",
-    sale.startAt ?? ""
-  )
-
-  if (!saleHasStarted) {
-    return null
-  }
-
-  const timerCopy = getSaleOrLotTimerInfo(time, {
-    hasStarted: saleHasStarted,
-    extendedBiddingEndAt: isExtended
-      ? updatedBiddingEndAt
-      : extendedBiddingEndAt,
-    urgencyIntervalMinutes: sale.cascadingEndTimeIntervalMinutes,
-  })
-
-  let lotCloseCopy
-  let labelColor = "black60"
-
-  // FIXME: Yikes...
-  // Lot has already closed
-  if (lotHasClosed) {
-    lotCloseCopy = "Closed"
-  } else if (saleHasStarted) {
-    // Sale has started and lots are <24 hours from closing or are actively closing
-    if (parseInt(time.days) < 1 || lotsAreClosing) {
-      lotCloseCopy = isExtended
-        ? // show Extended: timer if bidding has been extended
-          timerCopy.copy
-        : `Closes ${timerCopy.copy}`
-      if (timerCopy.color === "red100") {
-        labelColor = "red100"
-      } else {
-        labelColor = "black100"
-      }
-    }
-    // Sale has started but lots have not started closing
-    else {
-      lotCloseCopy = saleArtwork.formattedEndDateTime
-    }
-  }
-
-  return (
-    <Text
-      variant="sm-display"
-      lineHeight="22px"
-      color={labelColor}
-      overflowEllipsis
-    >
-      {lotCloseCopy}
-    </Text>
   )
 }
 

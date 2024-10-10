@@ -2,7 +2,7 @@ import { Box, Clickable, Flex, Text, Tooltip } from "@artsy/palette"
 import { FourUpImageLayout } from "./Images/FourUpImageLayout"
 import { StackedImageLayout } from "./Images/StackedImageLayout"
 import { FC } from "react"
-import { useTranslation } from "react-i18next"
+
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
@@ -21,7 +21,7 @@ interface ArtworkListItemProps {
 
 const ArtworkListItem: FC<ArtworkListItemProps> = props => {
   const { isSelected, imagesLayout, item } = props
-  const { t } = useTranslation()
+
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURLs = artworkNodes.map(node => node.image?.url ?? null)
   const { setArtworkListItemHasBeenTouched } = useArtworkListVisibilityContext()
@@ -67,7 +67,8 @@ const ArtworkListItem: FC<ArtworkListItemProps> = props => {
                 placement="bottom-start"
                 content={
                   <Text variant="xs">
-                    {t("collectorSaves.artworkListsHeader.hideIconTooltip")}
+                    Artworks in this list are only visible to you and not
+                    eligible to receive offers.
                   </Text>
                 }
               >
@@ -83,9 +84,9 @@ const ArtworkListItem: FC<ArtworkListItemProps> = props => {
           </Flex>
 
           <Text variant={["xs", "sm-display"]} color="black60" overflowEllipsis>
-            {t("collectorSaves.artworkLists.artworkWithCount", {
-              count: item.artworksCount,
-            })}
+            {item.artworksCount === 1
+              ? `${item.artworksCount} Artwork`
+              : `${item.artworksCount} Artworks`}
           </Text>
         </Box>
       </Flex>

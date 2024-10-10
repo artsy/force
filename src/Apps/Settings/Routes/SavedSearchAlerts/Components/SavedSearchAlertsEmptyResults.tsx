@@ -4,7 +4,6 @@ import FilterIcon from "@artsy/icons/FilterIcon"
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { Box, Button, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { useTranslation } from "react-i18next"
 
 interface InfoSectionProps {
   title: string
@@ -31,37 +30,31 @@ const InfoSection: React.FC<InfoSectionProps> = props => {
 }
 
 export const SavedSearchAlertsEmptyResults = () => {
-  const { t } = useTranslation()
-
   return (
     <Box mx="auto" px={[2, 0]} justifyContent="center" maxWidth="441px">
       <Flex flexDirection="column" alignItems="left">
-        <Text variant={["lg", "xl"]}>
-          {t("settings.alerts.empty.headline.line1")}
-        </Text>
-        <Text variant={["lg", "xl"]}>
-          {t("settings.alerts.empty.headline.line2")}
-        </Text>
+        <Text variant={["lg", "xl"]}>Hunting for a</Text>
+        <Text variant={["lg", "xl"]}>particular artwork?</Text>
         <Spacer y={4} />
         <Join separator={<Spacer y={2} />}>
           <InfoSection
-            title={t("settings.alerts.empty.search.title")}
-            body={t("settings.alerts.empty.search.body")}
+            title="Find your artist"
+            body="On an artist page, go to the Works for Sale section."
             icon={<SearchIcon />}
           />
           <InfoSection
-            title={t("settings.alerts.empty.filter.title")}
-            body={t("settings.alerts.empty.filter.body")}
+            title="Filter"
+            body="Set the filters for any search criteria you have, like price, medium or size."
             icon={<FilterIcon />}
           />
           <InfoSection
-            title={t("settings.alerts.empty.create.title")}
-            body={t("settings.alerts.empty.create.body")}
+            title="Create alert"
+            body="When you’re ready, click “Create Alert”."
             icon={<BellStrokeIcon />}
           />
           <InfoSection
-            title={t("settings.alerts.empty.match.title")}
-            body={t("settings.alerts.empty.match.body")}
+            title="Get a match"
+            body="Get notifications when there’s a match."
             icon={<ArtworkIcon />}
           />
         </Join>
@@ -74,7 +67,7 @@ export const SavedSearchAlertsEmptyResults = () => {
           size="large"
           variant="secondaryNeutral"
         >
-          {t("settings.alerts.empty.button.label")}
+          Explore Artists
         </Button>
       </Flex>
     </Box>

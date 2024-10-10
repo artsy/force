@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Text } from "@artsy/palette"
 import { limitWithCount } from "Apps/Artwork/Utils/limitWithCount"
 import { useInquiry } from "Components/Inquiry/useInquiry"
-import { useTranslation } from "react-i18next"
+
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -46,7 +46,6 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
     collectorSignals,
   } = artwork
 
-  const { t } = useTranslation()
   const { trackEvent } = useTracking()
 
   const { showInquiry, inquiryComponent } = useInquiry({
@@ -106,7 +105,7 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
 
         {shouldRenderContactGalleryCTA && (
           <Button size="small" variant="secondaryBlack" onClick={handleInquiry}>
-            {t("artworkPage.sidebar.partner.contactGalleryCta")}
+            Contact Gallery
           </Button>
         )}
 

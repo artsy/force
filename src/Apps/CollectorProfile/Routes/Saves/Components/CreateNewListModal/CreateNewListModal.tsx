@@ -1,7 +1,7 @@
 import { Formik, FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
 import { ModalDialog } from "@artsy/palette"
-import { useTranslation } from "react-i18next"
+
 import { useCreateCollection } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/Mutations/useCreateCollection"
 import { FC } from "react"
 import { useTracking } from "react-tracking"
@@ -44,7 +44,6 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   onComplete,
   onBackClick,
 }) => {
-  const { t } = useTranslation()
   const { submitMutation } = useCreateCollection()
   const { trackEvent } = useTracking()
   const analytics = useAnalyticsContext()
@@ -100,7 +99,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       logger.error(error)
 
       // use generic error message by default
-      let errorMessage = t("common.errors.somethingWentWrong")
+      let errorMessage = "Something went wrong. Please try again."
 
       // if there is a specific error message for the name field, use that instead
       const nameErrorMessage = error?.fieldErrors?.find(
@@ -125,7 +124,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
           <ModalDialog
             width={["100%", 713]}
             onClose={onClose}
-            title={t("collectorSaves.createNewListModal.title")}
+            title="Create a new list"
             data-testid="CreateNewList"
             {...(artwork
               ? {

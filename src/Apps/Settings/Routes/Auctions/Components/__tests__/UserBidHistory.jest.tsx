@@ -25,6 +25,9 @@ describe("UserBidHistory", () => {
       }),
       Artwork: () => ({
         sale_message: "Example Sale",
+        collectorSignals: {
+          partnerOffer: null,
+        },
       }),
     })
 

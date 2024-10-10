@@ -9,7 +9,6 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { useState, Fragment, FC } from "react"
-import { useTranslation } from "react-i18next"
 
 const REFETCH_PAGE_SIZE = 10
 
@@ -20,8 +19,6 @@ interface ArtistCVGroupProps {
 }
 
 const ArtistCVGroup: FC<ArtistCVGroupProps> = ({ artist, relay, title }) => {
-  const { t } = useTranslation()
-
   const [isLoading, setIsLoading] = useState(false)
   const hasMore = artist.showsConnection?.pageInfo.hasNextPage
 
@@ -48,7 +45,7 @@ const ArtistCVGroup: FC<ArtistCVGroupProps> = ({ artist, relay, title }) => {
 
         <Column span={8} start={4}>
           <Text variant="sm-display">
-            {t("artistPage.cv.emptyState", { groupName: title.toLowerCase() })}
+            This artist has no {title.toLowerCase()} yet.
           </Text>
         </Column>
       </GridColumns>
