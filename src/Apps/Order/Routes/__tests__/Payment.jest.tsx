@@ -297,6 +297,40 @@ describe("Payment", () => {
 
       expect(mockShowErrorDialog).toHaveBeenCalledWith()
     })
+
+    it("does not show language about card networks with no saved card", () => {
+      const meWithoutCreditCards: PaymentTestQuery$rawResponse["me"] = {
+        id: "123",
+        creditCards: {
+          edges: [],
+        },
+        bankAccounts: {
+          edges: [],
+        },
+      }
+      const { wrapper } = getWrapper({
+        CommerceOrder: () => testOrder,
+        Me: () => meWithoutCreditCards,
+      })
+      page = new PaymentTestPage(wrapper)
+
+      const creditCardCollapse = page
+        .find(CreditCardPickerFragmentContainer)
+        .closest(Collapse)
+
+      expect(creditCardCollapse.text()).not.toContain(
+        "To change the co-badged card network for this purchase, select “Add another card”."
+      )
+    })
+
+    it("shows language about card networks with saved credit card", () => {
+      const creditCardCollapse = page
+        .find(CreditCardPickerFragmentContainer)
+        .closest(Collapse)
+      expect(creditCardCollapse.text()).toContain(
+        "To change the co-badged card network for this purchase, select “Add another card”."
+      )
+    })
   })
 
   describe("Offer-mode orders", () => {
