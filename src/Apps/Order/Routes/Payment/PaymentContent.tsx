@@ -30,6 +30,7 @@ import InfoIcon from "@artsy/icons/InfoIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import UnknownCardIcon from "@artsy/icons/UnknownCardIcon"
 import { Jump } from "Utils/Hooks/useJump"
+import { extractNodes } from "Utils/extractNodes"
 
 export interface Props {
   order: Payment_order$data
@@ -42,6 +43,7 @@ export interface Props {
 
 export const PaymentContent: FC<Props> = props => {
   const { commitMutation, onSetPayment, me, order, CreditCardPicker } = props
+  const creditCards = extractNodes(me.creditCards)
   const {
     selectedPaymentMethod,
     setSelectedPaymentMethod,
@@ -95,6 +97,12 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* Credit card */}
       <Collapse open={selectedPaymentMethod === "CREDIT_CARD"}>
+        {creditCards.length > 0 && getPaymentMethodInfo(
+          selectedPaymentMethod,
+          order.source,
+          order.availablePaymentMethods
+        )}
+        <Spacer y={2} />
         <Flex
           style={{
             display:
@@ -285,6 +293,18 @@ const getPaymentMethodInfo = (
   availablePaymentMethods?: readonly CommercePaymentMethodEnum[]
 ) => {
   switch (paymentMethod) {
+    case "CREDIT_CARD":
+      return (
+        <>
+          {availablePaymentMethods?.length === 1 && (
+            <Text variant="lg-display">Credit card payment details</Text>
+          )}
+          <Text color="black60" variant="sm">
+            • To change the co-badged card network for this purchase, select
+            “Add another card”.
+          </Text>
+        </>
+      )
     case "WIRE_TRANSFER":
       if (orderSource === "private_sale") {
         return (

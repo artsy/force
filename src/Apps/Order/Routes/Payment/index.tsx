@@ -563,6 +563,13 @@ export const PaymentFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment Payment_me on Me {
+        creditCards(first: 100) {
+          edges {
+            node {
+              internalID
+            }
+          }
+        }
         bankAccounts(first: 100) {
           edges {
             node {
