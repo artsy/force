@@ -13,6 +13,9 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { FairFollowedArtistsQuery } from "__generated__/FairFollowedArtistsQuery.graphql"
 
 interface FairFollowedArtistsProps extends BoxProps {
   fair: FairFollowedArtists_fair$data
@@ -134,3 +137,34 @@ export const FairFollowedArtistsFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+interface FairFollowedArtistsQueryRendererProps {
+  id: string
+}
+
+export const FairFollowedArtistsQueryRenderer: React.FC<FairFollowedArtistsQueryRendererProps> = ({
+  id,
+}) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<FairFollowedArtistsQuery>
+      environment={relayEnvironment}
+      query={graphql`
+        query FairFollowedArtistsQuery($id: String!) {
+          fair(id: $id) {
+            ...FairFollowedArtists_fair
+          }
+        }
+      `}
+      variables={{ id }}
+      render={({ error, props }) => {
+        if (error || !props?.fair) {
+          return null
+        }
+
+        return <FairFollowedArtistsFragmentContainer fair={props.fair} />
+      }}
+    />
+  )
+}
