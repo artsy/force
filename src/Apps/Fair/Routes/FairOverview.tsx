@@ -2,7 +2,7 @@ import { FC, useEffect, useRef } from "react"
 import { BoxProps, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairCollectionsFragmentContainer } from "Apps/Fair/Components/FairCollections/FairCollections"
-import { FairFollowedArtistsFragmentContainer } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
+import { FairFollowedArtistsQueryRenderer } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { FairOverview_fair$data } from "__generated__/FairOverview_fair.graphql"
 import { FairAboutFragmentContainer as FairAbout } from "Apps/Fair/Components/FairOverview/FairAbout"
@@ -48,7 +48,7 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
 
         {hasCollections && <FairCollectionsFragmentContainer fair={fair} />}
 
-        {!!user && <FairFollowedArtistsFragmentContainer fair={fair} />}
+        {!!user && <FairFollowedArtistsQueryRenderer id={fair.slug} />}
 
         <Jump id="BoothsSection">
           <FairBooths slug={fair.slug} />
