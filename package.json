@@ -88,7 +88,7 @@
     "@artsy/eigen-web-association": "^1.6.0",
     "@artsy/express-reloadable": "^1.7.0",
     "@artsy/fresnel": "3.5.0",
-    "@artsy/icons": "3.20.0",
+    "@artsy/icons": "3.21.0",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "38.14.1",
