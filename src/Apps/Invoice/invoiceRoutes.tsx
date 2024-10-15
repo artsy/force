@@ -1,0 +1,79 @@
+import loadable from "@loadable/component"
+import { graphql } from "react-relay"
+import { RouteProps } from "System/Router/Route"
+
+const InvoiceApp = loadable(
+  () => import(/* webpackChunkName: "invoiceBundle" */ "./InvoiceApp"),
+  {
+    resolveComponent: component => component.InvoiceApp,
+  }
+)
+
+const InvoiceDetailRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "invoiceBundle" */ "./Routes/InvoiceDetailRoute"
+    ),
+  {
+    resolveComponent: component => component.InvoiceDetailRoute,
+  }
+)
+
+const InvoicePaymentRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "invoiceBundle" */ "./Routes/InvoicePaymentRoute"
+    ),
+  {
+    resolveComponent: component => component.InvoicePaymentRoute,
+  }
+)
+
+export const invoiceRoutes: RouteProps[] = [
+  {
+    path: "/invoice/:token",
+    getComponent: () => InvoiceApp,
+    onClientSideRender: () => {
+      InvoiceApp.preload()
+    },
+    query: graphql`
+      query invoiceRoutes_InvoiceQuery($token: String!) {
+        invoice(token: $token) {
+          ...InvoiceApp_invoice
+        }
+      }
+    `,
+    children: [
+      {
+        path: "",
+        getComponent: () => InvoiceDetailRoute,
+        onClientSideRender: () => {
+          InvoiceDetailRoute.preload()
+        },
+        query: graphql`
+          query invoiceRoutes_InvoiceDetailQuery($token: String!) {
+            invoice(token: $token) {
+              ...InvoiceDetailRoute_invoice
+            }
+          }
+        `,
+        cacheConfig: { force: true },
+      },
+
+      {
+        path: "payment",
+        getComponent: () => InvoicePaymentRoute,
+        onClientSideRender: () => {
+          InvoicePaymentRoute.preload()
+        },
+        query: graphql`
+          query invoiceRoutes_InvoicePaymentQuery($token: String!) {
+            invoice(token: $token) {
+              ...InvoicePaymentRoute_invoice
+            }
+          }
+        `,
+      },
+    ],
+  },
+]
