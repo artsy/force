@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * @generated SignedSource<<6a2cd9634ad0f0d7b3424468677d7440>>
+=======
+ * @generated SignedSource<<c2496a7adf6c77822ed1d788e014c06a>>
+>>>>>>> 7ed4e586e9 (feat: lazy load partner offer expiration)
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -48,14 +52,7 @@ v2 = {
   "name": "href",
   "storageKey": null
 },
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "endAt",
-  "storageKey": null
-},
-v4 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -64,25 +61,32 @@ v4 = [
     "storageKey": null
   }
 ],
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = [
+v5 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "endAt",
   "storageKey": null
 },
 v8 = {
@@ -93,8 +97,8 @@ v8 = {
   "storageKey": null
 },
 v9 = [
-  (v7/*: any*/),
-  (v5/*: any*/)
+  (v6/*: any*/),
+  (v4/*: any*/)
 ];
 return {
   "fragment": {
@@ -349,7 +353,6 @@ return {
                                 "name": "partnerOffer",
                                 "plural": false,
                                 "selections": [
-                                  (v3/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -357,10 +360,10 @@ return {
                                     "kind": "LinkedField",
                                     "name": "priceWithDiscount",
                                     "plural": false,
-                                    "selections": (v4/*: any*/),
+                                    "selections": (v3/*: any*/),
                                     "storageKey": null
                                   },
-                                  (v5/*: any*/)
+                                  (v4/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -383,7 +386,7 @@ return {
                           },
                           {
                             "alias": null,
-                            "args": (v6/*: any*/),
+                            "args": (v5/*: any*/),
                             "concreteType": "Artist",
                             "kind": "LinkedField",
                             "name": "artist",
@@ -407,7 +410,7 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v5/*: any*/)
+                              (v4/*: any*/)
                             ],
                             "storageKey": "artist(shallow:true)"
                           },
@@ -431,15 +434,15 @@ return {
                           },
                           {
                             "alias": null,
-                            "args": (v6/*: any*/),
+                            "args": (v5/*: any*/),
                             "concreteType": "Artist",
                             "kind": "LinkedField",
                             "name": "artists",
                             "plural": true,
                             "selections": [
-                              (v5/*: any*/),
+                              (v4/*: any*/),
                               (v2/*: any*/),
-                              (v7/*: any*/)
+                              (v6/*: any*/)
                             ],
                             "storageKey": "artists(shallow:true)"
                           },
@@ -452,15 +455,15 @@ return {
                           },
                           {
                             "alias": null,
-                            "args": (v6/*: any*/),
+                            "args": (v5/*: any*/),
                             "concreteType": "Partner",
                             "kind": "LinkedField",
                             "name": "partner",
                             "plural": false,
                             "selections": [
-                              (v7/*: any*/),
+                              (v6/*: any*/),
                               (v2/*: any*/),
-                              (v5/*: any*/)
+                              (v4/*: any*/)
                             ],
                             "storageKey": "partner(shallow:true)"
                           },
@@ -472,7 +475,7 @@ return {
                             "name": "sale",
                             "plural": false,
                             "selections": [
-                              (v3/*: any*/),
+                              (v7/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -508,7 +511,7 @@ return {
                                 "name": "isClosed",
                                 "storageKey": null
                               },
-                              (v5/*: any*/),
+                              (v4/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -535,7 +538,7 @@ return {
                                 "name": "lotLabel",
                                 "storageKey": null
                               },
-                              (v3/*: any*/),
+                              (v7/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -575,7 +578,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "highestBid",
                                 "plural": false,
-                                "selections": (v4/*: any*/),
+                                "selections": (v3/*: any*/),
                                 "storageKey": null
                               },
                               {
@@ -585,10 +588,10 @@ return {
                                 "kind": "LinkedField",
                                 "name": "openingBid",
                                 "plural": false,
-                                "selections": (v4/*: any*/),
+                                "selections": (v3/*: any*/),
                                 "storageKey": null
                               },
-                              (v5/*: any*/)
+                              (v4/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -601,7 +604,7 @@ return {
                             "plural": false,
                             "selections": [
                               (v8/*: any*/),
-                              (v5/*: any*/)
+                              (v4/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -643,7 +646,7 @@ return {
                             "name": "isUnlisted",
                             "storageKey": null
                           },
-                          (v5/*: any*/),
+                          (v4/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -703,23 +706,23 @@ return {
                 "kind": "LinkedHandle",
                 "name": "artworksConnection"
               },
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": "collection(id:\"saved-artwork\")"
           },
-          (v5/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "a5402a6a5a86ad76ad016ef0f0a26657",
+    "cacheID": "add6470a8ba92500700760c05d0c7eee",
     "id": null,
     "metadata": {},
     "name": "AddArtworksModalContentQuery",
     "operationKind": "query",
-    "text": "query AddArtworksModalContentQuery {\n  me {\n    ...AddArtworksModalContent_me\n    id\n  }\n}\n\nfragment AddArtworksModalContent_me on Me {\n  collection(id: \"saved-artwork\") {\n    artworksCount(onlyVisible: true)\n    artworksConnection(first: 30, sort: POSITION_DESC) {\n      ...ArtworksList_artworks\n      edges {\n        node {\n          internalID\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    id\n  }\n}\n\nfragment ArtworksList_artworks on ArtworkConnection {\n  edges {\n    node {\n      internalID\n      ...GridItem_artwork\n      id\n    }\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork_1ZRKfT on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n    blurhashDataURL\n  }\n  artistNames\n  href\n  ...Metadata_artwork_1ZRKfT\n  ...ExclusiveAccessBadge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork_1ZRKfT on Artwork {\n  ...Details_artwork_1ZRKfT\n  internalID\n  href\n  sale {\n    isOpen\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n  }\n}\n"
+    "text": "query AddArtworksModalContentQuery {\n  me {\n    ...AddArtworksModalContent_me\n    id\n  }\n}\n\nfragment AddArtworksModalContent_me on Me {\n  collection(id: \"saved-artwork\") {\n    artworksCount(onlyVisible: true)\n    artworksConnection(first: 30, sort: POSITION_DESC) {\n      ...ArtworksList_artworks\n      edges {\n        node {\n          internalID\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    id\n  }\n}\n\nfragment ArtworksList_artworks on ArtworkConnection {\n  edges {\n    node {\n      internalID\n      ...GridItem_artwork\n      id\n    }\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork_1ZRKfT on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n    partnerOffer {\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n    blurhashDataURL\n  }\n  artistNames\n  href\n  ...Metadata_artwork_1ZRKfT\n  ...ExclusiveAccessBadge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork_1ZRKfT on Artwork {\n  ...Details_artwork_1ZRKfT\n  internalID\n  href\n  sale {\n    isOpen\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n  }\n}\n"
   }
 };
 })();

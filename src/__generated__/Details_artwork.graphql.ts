@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * @generated SignedSource<<445acb4dfff3517ae198d845c422109f>>
+=======
+ * @generated SignedSource<<ffa1d607e762f8453d29af25769728f8>>
+>>>>>>> 7ed4e586e9 (feat: lazy load partner offer expiration)
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,7 +36,6 @@ export type Details_artwork$data = {
       readonly registrationEndsAt: string | null | undefined;
     } | null | undefined;
     readonly partnerOffer: {
-      readonly endAt: string | null | undefined;
       readonly priceWithDiscount: {
         readonly display: string | null | undefined;
       } | null | undefined;
@@ -102,14 +105,7 @@ v1 = {
   "name": "href",
   "storageKey": null
 },
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "endAt",
-  "storageKey": null
-},
-v3 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -118,18 +114,25 @@ v3 = [
     "storageKey": null
   }
 ],
-v4 = [
+v3 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "endAt",
   "storageKey": null
 };
 return {
@@ -229,7 +232,6 @@ return {
           "name": "partnerOffer",
           "plural": false,
           "selections": [
-            (v2/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -237,7 +239,7 @@ return {
               "kind": "LinkedField",
               "name": "priceWithDiscount",
               "plural": false,
-              "selections": (v3/*: any*/),
+              "selections": (v2/*: any*/),
               "storageKey": null
             }
           ],
@@ -262,7 +264,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v4/*: any*/),
+      "args": (v3/*: any*/),
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -309,7 +311,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v4/*: any*/),
+      "args": (v3/*: any*/),
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artists",
@@ -323,7 +325,7 @@ return {
           "storageKey": null
         },
         (v1/*: any*/),
-        (v5/*: any*/)
+        (v4/*: any*/)
       ],
       "storageKey": "artists(shallow:true)"
     },
@@ -336,13 +338,13 @@ return {
     },
     {
       "alias": null,
-      "args": (v4/*: any*/),
+      "args": (v3/*: any*/),
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partner",
       "plural": false,
       "selections": [
-        (v5/*: any*/),
+        (v4/*: any*/),
         (v1/*: any*/)
       ],
       "storageKey": "partner(shallow:true)"
@@ -355,7 +357,7 @@ return {
       "name": "sale",
       "plural": false,
       "selections": [
-        (v2/*: any*/),
+        (v5/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -416,7 +418,7 @@ return {
           "name": "lotLabel",
           "storageKey": null
         },
-        (v2/*: any*/),
+        (v5/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -456,7 +458,7 @@ return {
           "kind": "LinkedField",
           "name": "highestBid",
           "plural": false,
-          "selections": (v3/*: any*/),
+          "selections": (v2/*: any*/),
           "storageKey": null
         },
         {
@@ -466,7 +468,7 @@ return {
           "kind": "LinkedField",
           "name": "openingBid",
           "plural": false,
-          "selections": (v3/*: any*/),
+          "selections": (v2/*: any*/),
           "storageKey": null
         }
       ],
@@ -517,6 +519,6 @@ return {
 };
 })();
 
-(node as any).hash = "4a7954578860330b5f4916df6f20111f";
+(node as any).hash = "6ecb5087857efbf012da97487e0849c6";
 
 export default node;
