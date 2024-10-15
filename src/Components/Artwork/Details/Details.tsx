@@ -8,7 +8,6 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "Components/Artwork/HoverDetails"
 import { SaveButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveButton"
@@ -16,6 +15,7 @@ import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { BidTimerLine } from "./BidTimerLine"
 import { PrimaryLabelLine } from "Components/Artwork/Details/PrimaryLabelLine"
+import { PartnerOfferLineQueryRenderer } from "./PartnerOfferLine"
 
 export interface DetailsProps {
   artwork: Details_artwork$data
@@ -151,7 +151,6 @@ const PartnerLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
 }
 
 const SaleInfoLine: React.FC<React.PropsWithChildren<SaleInfoLineProps>> = props => {
-  const { showActivePartnerOffer } = props
   const { lotClosesAt } = props.artwork.collectorSignals?.auction ?? {}
   const { liveBiddingStarted } = props.artwork.collectorSignals?.auction ?? {}
 
@@ -187,7 +186,6 @@ const SaleInfoLine: React.FC<React.PropsWithChildren<SaleInfoLineProps>> = props
       >
         <SaleMessage {...props} /> <BidInfo {...props} />
       </Text>
-      {showActivePartnerOffer && <ActivePartnerOfferTimer {...props} />}
     </Flex>
   )
 }
@@ -256,29 +254,6 @@ const BidInfo: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   )
 }
 
-const ActivePartnerOfferTimer: React.FC<React.PropsWithChildren<DetailsProps>> = ({
-  artwork: { collectorSignals },
-}) => {
-  const SEPARATOR = <>&nbsp;</>
-  const { endAt } = collectorSignals?.partnerOffer ?? {}
-  const { time } = useTimer(endAt ?? "")
-  const { days, hours } = time
-
-  return (
-    <Text
-      variant="sm-display"
-      lineHeight="22px"
-      color="blue100"
-      px={0.5}
-      alignSelf="flex-start"
-    >
-      Exp.{SEPARATOR}
-      {Number(days)}d{SEPARATOR}
-      {Number(hours)}h{SEPARATOR}
-    </Text>
-  )
-}
-
 export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   contextModule,
   hideArtistName,
@@ -315,6 +290,7 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
 
   const showActivePartnerOffer: boolean =
     !isAuction && !!partnerOffer && contextModule !== "activity"
+  const artworkId = rest?.artwork?.internalID
 
   const showPrimaryLabelLine: boolean =
     !!rest?.artwork?.collectorSignals?.primaryLabel && !isAuction
@@ -404,6 +380,9 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
 
       <BidTimerLine artwork={rest.artwork} />
 
+      {showActivePartnerOffer && (
+        <PartnerOfferLineQueryRenderer id={artworkId} />
+      )}
       {padForPrimaryLabelLine && <EmptyLine />}
     </Box>
   )
@@ -429,7 +408,6 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           onlineBiddingExtended
         }
         partnerOffer {
-          endAt
           priceWithDiscount {
             display
           }
