@@ -18,22 +18,6 @@ export const PrimaryLabelLine: React.FC<
     return null
   }
 
-  if (primaryLabel === "PARTNER_OFFER") {
-    return (
-      <Text
-        variant="xs"
-        color="blue100"
-        backgroundColor="blue10"
-        px={0.5}
-        alignSelf="flex-start"
-        borderRadius={3}
-        style={{ whiteSpace: "nowrap" }}
-      >
-        Limited-Time Offer
-      </Text>
-    )
-  }
-
   if (primaryLabel === "INCREASED_INTEREST" && !hideSignals) {
     return (
       <Text
