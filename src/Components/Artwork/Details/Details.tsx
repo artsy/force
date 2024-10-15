@@ -378,11 +378,12 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
         />
       )}
 
-      <BidTimerLine artwork={rest.artwork} />
-
       {showActivePartnerOffer && (
         <PartnerOfferLineQueryRenderer id={artworkId} />
       )}
+
+      <BidTimerLine artwork={rest.artwork} />
+
       {padForPrimaryLabelLine && <EmptyLine />}
     </Box>
   )
