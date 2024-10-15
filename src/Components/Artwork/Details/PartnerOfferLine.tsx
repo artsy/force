@@ -5,6 +5,7 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PartnerOfferLineQuery } from "__generated__/PartnerOfferLineQuery.graphql"
 import { PartnerOfferLine_artwork$data } from "__generated__/PartnerOfferLine_artwork.graphql"
+import { EmptyLine } from "./Details"
 
 interface PartnerOfferLineProps {
   artwork: PartnerOfferLine_artwork$data
@@ -23,10 +24,9 @@ const ActivePartnerOfferTimer: React.FC<PartnerOfferLineProps> = ({
       variant="sm-display"
       lineHeight="22px"
       color="red100"
-      px={0.5}
       alignSelf="flex-start"
     >
-      Exp.{SEPARATOR}
+      Offer Expires {SEPARATOR}
       {Number(days)}d{SEPARATOR}
       {Number(hours)}h{SEPARATOR}
     </Text>
@@ -76,7 +76,7 @@ export const PartnerOfferLineQueryRenderer: FC<PartnerOfferLineQueryRendererProp
           }
         }
       `}
-      placeholder={<></>}
+      placeholder={<EmptyLine />}
       variables={{ id }}
       render={({ error, props }) => {
         if (error || !props?.artwork) {
