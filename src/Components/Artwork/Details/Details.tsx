@@ -32,14 +32,6 @@ export interface DetailsProps {
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
-interface SaleInfoLineProps extends DetailsProps {
-  showActivePartnerOffer: boolean
-}
-
-interface SaleMessageProps extends DetailsProps {
-  showActivePartnerOffer: boolean
-}
-
 const StyledConditionalLink = styled(RouterLink)`
   color: ${themeGet("colors.black100")};
   text-decoration: none;
@@ -152,7 +144,7 @@ const PartnerLine: React.FC<DetailsProps> = ({
   return null
 }
 
-const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
+const SaleInfoLine: React.FC<DetailsProps> = props => {
   const { lotClosesAt } = props.artwork.collectorSignals?.auction ?? {}
   const { liveBiddingStarted } = props.artwork.collectorSignals?.auction ?? {}
 
@@ -213,10 +205,9 @@ const HighDemandInfo = () => {
 
 const NBSP = " "
 
-const SaleMessage: React.FC<SaleMessageProps> = props => {
+const SaleMessage: React.FC<DetailsProps> = props => {
   const {
-    artwork: { sale, sale_message, sale_artwork, collectorSignals },
-    showActivePartnerOffer,
+    artwork: { sale, sale_message, sale_artwork },
   } = props
 
   if (sale?.is_auction && !sale?.is_closed) {
@@ -224,10 +215,6 @@ const SaleMessage: React.FC<SaleMessageProps> = props => {
     const openingBid_display = sale_artwork?.opening_bid?.display
 
     return <>{highestBid_display || openingBid_display || ""}</>
-  }
-
-  if (showActivePartnerOffer) {
-    return <>{collectorSignals?.partnerOffer?.priceWithDiscount?.display}</>
   }
 
   // NBSP is used to prevent un-aligned carousels
@@ -287,11 +274,7 @@ export const Details: React.FC<DetailsProps> = ({
     showHighDemandIcon &&
     !isConsignmentSubmission
 
-  const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
   const isAuction = rest?.artwork?.sale?.is_auction ?? false
-
-  const showActivePartnerOffer: boolean =
-    !isAuction && !!partnerOffer && contextModule !== "activity"
   const artworkId = rest?.artwork?.internalID
 
   const showPrimaryLabelLine: boolean =
@@ -373,16 +356,9 @@ export const Details: React.FC<DetailsProps> = ({
         <ConsignmentSubmissionStatusFragmentContainer artwork={rest.artwork} />
       )}
 
-      {!hideSaleInfo && (
-        <SaleInfoLine
-          showActivePartnerOffer={showActivePartnerOffer}
-          {...rest}
-        />
-      )}
+      {!hideSaleInfo && <SaleInfoLine {...rest} />}
 
-      {showActivePartnerOffer && (
-        <PartnerOfferLineQueryRenderer id={artworkId} />
-      )}
+      <PartnerOfferLineQueryRenderer id={artworkId} />
 
       <BidTimerLine artwork={rest.artwork} />
 
@@ -409,11 +385,6 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           liveBiddingStarted
           registrationEndsAt
           onlineBiddingExtended
-        }
-        partnerOffer {
-          priceWithDiscount {
-            display
-          }
         }
       }
       sale_message: saleMessage
