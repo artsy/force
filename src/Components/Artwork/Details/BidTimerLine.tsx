@@ -1,4 +1,3 @@
-import { EmptyLine } from "Components/Artwork/Details/Details"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { Text } from "@artsy/palette"
@@ -64,7 +63,7 @@ export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
   }
 
   if (!lotClosesAt || numDays > 5 || hasBiddingEnded) {
-    return <EmptyLine />
+    return null
   }
 
   const renderLotCloseTime = [
