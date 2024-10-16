@@ -5,7 +5,6 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PartnerOfferLineQuery } from "__generated__/PartnerOfferLineQuery.graphql"
 import { PartnerOfferLine_artwork$data } from "__generated__/PartnerOfferLine_artwork.graphql"
-import { EmptyLine } from "./Details"
 
 interface PartnerOfferLineProps {
   artwork: PartnerOfferLine_artwork$data
@@ -34,6 +33,10 @@ const ActivePartnerOfferTimer: React.FC<PartnerOfferLineProps> = ({
 }
 
 const PartnerOfferLine: React.FC<PartnerOfferLineProps> = ({ artwork }) => {
+  if (!artwork.collectorSignals?.partnerOffer) {
+    return null
+  }
+
   return (
     <Flex flexDirection="row" alignItems="center">
       <ActivePartnerOfferTimer artwork={artwork} />
