@@ -76,7 +76,7 @@ export const PartnerOfferLineQueryRenderer: FC<PartnerOfferLineQueryRendererProp
           }
         }
       `}
-      placeholder={<EmptyLine />}
+      placeholder={<></>}
       variables={{ id }}
       render={({ error, props }) => {
         if (error || !props?.artwork) {
