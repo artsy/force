@@ -25,6 +25,7 @@ import { geneRoutes } from "Apps/Gene/geneRoutes"
 import { homeRoutes } from "Apps/Home/homeRoutes"
 import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVerificationRoutes"
 import { institutionPartnershipsRoutes } from "Apps/InstitutionPartnerships/institutionPartnershipsRoutes"
+import { invoiceRoutes } from "Apps/Invoice/invoiceRoutes"
 import { jobsRoutes } from "Apps/Jobs/jobsRoutes"
 import { marketingRoutes } from "Apps/Marketing/marketingRoutes"
 import { myCollectionRoutes } from "Apps/MyCollection/myCollectionRoutes"
@@ -93,6 +94,7 @@ const ROUTES = buildAppRoutes([
   homeRoutes,
   identityVerificationRoutes,
   institutionPartnershipsRoutes,
+  invoiceRoutes,
   jobsRoutes,
   marketingRoutes,
   myCollectionRoutes,
