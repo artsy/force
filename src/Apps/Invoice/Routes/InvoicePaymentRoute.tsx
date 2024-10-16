@@ -20,8 +20,10 @@ export const InvoicePaymentRoute: React.FC<InvoicePaymentRouteProps> = ({
 
   return (
     <Box display="flex" justifyContent="center" width="100%" my={4}>
-      <Text variant={"xl"} fontWeight={"bold"}>
-        Make a payment: {remaining}
+      <Text variant={"xl"} fontWeight={"bold"} mr={2}>
+        Make a payment:
+        <br />
+        {remaining}
       </Text>
 
       <CreditCardInputProvider>
