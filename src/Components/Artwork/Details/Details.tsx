@@ -358,7 +358,7 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
 
       <PartnerOfferLineQueryRenderer id={artworkId} />
 
-      <BidTimerLine artwork={rest.artwork} />
+      {isAuction && <BidTimerLine artwork={rest.artwork} />}
 
       {padForPrimaryLabelLine && <EmptyLine />}
     </Box>
