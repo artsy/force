@@ -16,6 +16,7 @@ import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { BidTimerLine } from "./BidTimerLine"
 import { PrimaryLabelLine } from "Components/Artwork/Details/PrimaryLabelLine"
 import { PartnerOfferLineQueryRenderer } from "./PartnerOfferLine"
+import { PartnerOfferedPriceQueryRenderer } from "./PartnerOfferedPrice"
 
 export interface DetailsProps {
   artwork: Details_artwork$data
@@ -192,7 +193,11 @@ const SaleInfoLine: React.FC<React.PropsWithChildren<DetailsProps>> = props => {
         fontWeight="bold"
         overflowEllipsis
       >
-        <SaleMessage {...props} /> <BidInfo {...props} />
+        <PartnerOfferedPriceQueryRenderer
+          {...props}
+          id={props.artwork.internalID}
+        />{" "}
+        <BidInfo {...props} />
       </Text>
     </Flex>
   )
@@ -216,7 +221,7 @@ const HighDemandInfo = () => {
 
 const NBSP = " "
 
-const SaleMessage: React.FC<React.PropsWithChildren<DetailsProps>> = props => {
+export const SaleMessage: React.FC<React.PropsWithChildren<DetailsProps>> = props => {
   const {
     artwork: { sale, sale_message, sale_artwork },
   } = props
