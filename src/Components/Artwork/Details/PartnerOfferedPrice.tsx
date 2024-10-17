@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Flex, Text } from "@artsy/palette"
+import { SkeletonText, Text } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SaleMessage } from "./Details"
 import { PartnerOfferedPriceQuery } from "__generated__/PartnerOfferedPriceQuery.graphql"
@@ -59,13 +59,13 @@ export const PartnerOfferedPriceQueryRenderer: FC<PartnerOfferedPriceQueryRender
           }
         }
       `}
-      placeholder={<SaleMessage artwork={artwork} />}
+      placeholder={<SkeletonText variant="sm-display">Loading</SkeletonText>}
       variables={{ id }}
       render={({ error, props }) => {
         const publicPrice = <SaleMessage artwork={artwork} />
 
         if (error || !props?.artwork) {
-          return publicPrice
+          return <SkeletonText variant="sm-display">Loading</SkeletonText>
         }
 
         return (

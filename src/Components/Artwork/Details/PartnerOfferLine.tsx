@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Flex, Text } from "@artsy/palette"
+import { Flex, Text, SkeletonText } from "@artsy/palette"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PartnerOfferLineQuery } from "__generated__/PartnerOfferLineQuery.graphql"
@@ -79,11 +79,13 @@ export const PartnerOfferLineQueryRenderer: FC<PartnerOfferLineQueryRendererProp
           }
         }
       `}
-      placeholder={<></>}
+      placeholder={
+        <SkeletonText variant="sm-display">Loading timer</SkeletonText>
+      }
       variables={{ id }}
       render={({ error, props }) => {
         if (error || !props?.artwork) {
-          return null
+          return <SkeletonText variant="sm-display">Loading timer</SkeletonText>
         }
 
         return <PartnerOfferLineFragmentContainer artwork={props.artwork} />
