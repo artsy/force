@@ -27,7 +27,7 @@ export const InvoiceApp: React.FC<InvoiceAppProps> = ({
         <Text variant="xl" textTransform={"uppercase"}>
           Invoice
         </Text>
-        <Text variant="sm">
+        <Text data-testid="invoice-info" variant="sm">
           <em>Invoice</em> #{number}
           <br />
           <em>Date:</em> {readyAt}

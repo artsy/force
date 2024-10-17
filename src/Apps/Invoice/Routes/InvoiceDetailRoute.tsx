@@ -43,11 +43,11 @@ export const InvoiceDetailRoute: React.FC<InvoiceDetailRouteProps> = ({
             <Text variant="sm" fontWeight="bold">
               TO
             </Text>
-            <Text variant="sm">
+            <Text data-testid="invoice-name" variant="sm">
               <em>Name:</em> {name}
             </Text>
             <br />
-            <Text variant="sm">
+            <Text data-testid="invoice-email" variant="sm">
               <em>Email:</em> {email}
             </Text>
           </Box>
