@@ -73,6 +73,7 @@ export const invoiceRoutes: RouteProps[] = [
             }
           }
         `,
+        cacheConfig: { force: true },
       },
     ],
   },
