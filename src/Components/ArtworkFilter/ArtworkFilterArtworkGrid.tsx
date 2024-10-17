@@ -14,6 +14,8 @@ import {
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
+import { extractNodes } from "Utils/extractNodes"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
@@ -21,6 +23,7 @@ interface ArtworkFilterArtworkGridProps {
   isLoading?: boolean
   offset?: number
   relay: RelayProp
+  hideSignals?: boolean
 }
 
 const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props => {
@@ -32,6 +35,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
     contextPageOwnerId,
   } = useAnalyticsContext()
   const context = useArtworkFilterContext()
+  const filteredArtworks = extractNodes(props.filtered_artworks)
 
   const {
     columnCount,
@@ -40,6 +44,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
       pageInfo: { hasNextPage },
     },
     offset,
+    hideSignals,
   } = props
 
   /**
@@ -70,6 +75,9 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           onClearFilters={context.resetFilters}
           emptyStateComponent={context.ZeroState && <context.ZeroState />}
           onBrickClick={(artwork, artworkIndex) => {
+            const collectorSignals =
+              filteredArtworks?.[artworkIndex].collectorSignals
+
             const event: ClickedMainArtworkGrid = {
               action: ActionType.clickedMainArtworkGrid,
               context_module: ContextModule.artworkGrid,
@@ -82,6 +90,9 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
               position: artworkIndex,
               sort: context?.filters?.sort,
               type: "thumbnail",
+              signal_label: collectorSignals
+                ? getSignalLabel(collectorSignals, hideSignals)
+                : "",
             }
             trackEvent(event)
           }}
@@ -118,6 +129,9 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
         }
         edges {
           node {
+            collectorSignals {
+              primaryLabel
+            }
             id
           }
         }

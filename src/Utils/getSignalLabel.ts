@@ -2,8 +2,18 @@ export interface CollectorSignals {
   primaryLabel?: string | null | undefined
 }
 
-export const getSignalLabel = (collectorSignals: CollectorSignals) => {
+export const getSignalLabel = (
+  collectorSignals: CollectorSignals,
+  hideSignals?: boolean
+) => {
   const { primaryLabel } = collectorSignals
+
+  if (
+    hideSignals &&
+    (primaryLabel === "PARTNER_OFFER" || primaryLabel === "INCREASED_INTEREST")
+  ) {
+    return ""
+  }
 
   switch (primaryLabel) {
     case "PARTNER_OFFER":

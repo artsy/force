@@ -21,7 +21,10 @@ import {
 import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilterCreateAlert"
 import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawer"
 import { ArtworkFilterExpandableSort } from "Components/ArtworkFilter/ArtworkFilters/ArtworkFilterExpandableSort"
-import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import {
+  ArtworkGridContextProvider,
+  useArtworkGridContext,
+} from "Components/ArtworkGrid/ArtworkGridContext"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -114,6 +117,14 @@ export const BaseArtworkFilter: React.FC<
   featuredKeywords,
   ...rest
 }) => {
+  const HIDE_SIGNAL_SLUGS = [
+    "trending-now",
+    "curators-picks-emerging-artists",
+    "curators-picks-blue-chip-artists",
+  ]
+
+  const hideSignals = HIDE_SIGNAL_SLUGS.includes(viewer.slug)
+
   const tracking = useTracking()
 
   const {
@@ -421,12 +432,15 @@ export const BaseArtworkFilter: React.FC<
         <Spacer y={2} />
 
         {children || (
-          <ArtworkFilterArtworkGrid
-            filtered_artworks={viewer.filtered_artworks}
-            isLoading={isLoading}
-            offset={offset}
-            columnCount={[2, 3, 4]}
-          />
+          <ArtworkGridContextProvider hideSignals={hideSignals}>
+            <ArtworkFilterArtworkGrid
+              hideSignals={hideSignals}
+              filtered_artworks={viewer.filtered_artworks}
+              isLoading={isLoading}
+              offset={offset}
+              columnCount={[2, 3, 4]}
+            />
+          </ArtworkGridContextProvider>
         )}
       </Media>
     </Box>
