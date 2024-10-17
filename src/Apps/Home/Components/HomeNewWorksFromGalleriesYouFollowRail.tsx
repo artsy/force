@@ -76,7 +76,9 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
                 destination_page_owner_slug: artwork.slug,
                 type: "thumbnail",
                 signal_label: artwork.collectorSignals
-                  ? getSignalLabel(artwork.collectorSignals)
+                  ? getSignalLabel({
+                      collectorSignals: artwork.collectorSignals,
+                    })
                   : "",
                 signal_bid_count:
                   artwork.collectorSignals?.auction?.bidCount ?? undefined,

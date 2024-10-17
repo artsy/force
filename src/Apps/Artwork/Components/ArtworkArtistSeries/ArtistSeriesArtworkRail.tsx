@@ -72,7 +72,9 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
                   horizontal_slide_position: index,
                   type: "thumbnail",
                   signal_label: artwork.collectorSignals
-                    ? getSignalLabel(artwork.collectorSignals)
+                    ? getSignalLabel({
+                        collectorSignals: artwork.collectorSignals,
+                      })
                     : "",
                   signal_bid_count:
                     artwork.collectorSignals?.auction?.bidCount ?? undefined,

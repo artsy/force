@@ -2,10 +2,15 @@ export interface CollectorSignals {
   primaryLabel?: string | null | undefined
 }
 
-export const getSignalLabel = (
-  collectorSignals: CollectorSignals,
+interface SignalLabelProps {
+  collectorSignals: CollectorSignals
   hideSignals?: boolean
-) => {
+}
+
+export const getSignalLabel = ({
+  collectorSignals,
+  hideSignals,
+}: SignalLabelProps) => {
   const { primaryLabel } = collectorSignals
 
   if (

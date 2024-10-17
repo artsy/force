@@ -91,7 +91,10 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
               sort: context?.filters?.sort,
               type: "thumbnail",
               signal_label: collectorSignals
-                ? getSignalLabel(collectorSignals, hideSignals)
+                ? getSignalLabel({
+                    collectorSignals,
+                    hideSignals,
+                  })
                 : "",
             }
             trackEvent(event)
