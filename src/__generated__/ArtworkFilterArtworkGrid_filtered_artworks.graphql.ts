@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<10b84819e7571de7f7a08cf5fc0923ba>>
+ * @generated SignedSource<<4022fe5ac4d4f215c1af78aca56156c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,14 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkFilterArtworkGrid_filtered_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
+      readonly collectorSignals: {
+        readonly primaryLabel: LabelSignalEnum | null | undefined;
+      } | null | undefined;
       readonly id: string;
     } | null | undefined;
   } | null | undefined> | null | undefined;
@@ -110,6 +114,24 @@ return {
           "name": "node",
           "plural": false,
           "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "CollectorSignals",
+              "kind": "LinkedField",
+              "name": "collectorSignals",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "primaryLabel",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
             (v0/*: any*/)
           ],
           "storageKey": null
@@ -134,6 +156,6 @@ return {
 };
 })();
 
-(node as any).hash = "e6296fabcc752b9bb5de3add8435132d";
+(node as any).hash = "dbf8b5e1a2f079b0a2d145a197d0cfc8";
 
 export default node;

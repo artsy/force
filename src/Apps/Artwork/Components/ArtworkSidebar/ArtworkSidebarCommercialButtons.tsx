@@ -125,7 +125,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       context_owner_slug: artwork.slug,
       context_owner_id: artwork.internalID,
       signal_label: artwork.collectorSignals
-        ? getSignalLabel(artwork.collectorSignals)
+        ? getSignalLabel({
+            collectorSignals: artwork.collectorSignals,
+          })
         : "",
     }
     trackEvent(event)
@@ -141,7 +143,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       context_owner_slug: artwork.slug,
       flow: "Partner offer",
       signal_label: artwork.collectorSignals
-        ? getSignalLabel(artwork.collectorSignals)
+        ? getSignalLabel({
+            collectorSignals: artwork.collectorSignals,
+          })
         : "",
     }
 
@@ -199,7 +203,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialB
       context_owner_slug: artwork.slug,
       flow: "Buy now",
       signal_label: artwork.collectorSignals
-        ? getSignalLabel(artwork.collectorSignals)
+        ? getSignalLabel({
+            collectorSignals: artwork.collectorSignals,
+          })
         : "",
     }
 

@@ -56,7 +56,9 @@ const HomeNewWorksForYouRail: React.FC<HomeNewWorksForYouRailProps> = ({
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
                 signal_label: artwork.collectorSignals
-                  ? getSignalLabel(artwork.collectorSignals)
+                  ? getSignalLabel({
+                      collectorSignals: artwork.collectorSignals,
+                    })
                   : "",
                 signal_bid_count:
                   artwork.collectorSignals?.auction?.bidCount ?? undefined,
