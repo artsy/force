@@ -110,6 +110,9 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
       edges: [
         {
           node: {
+            collectorSignals: {
+              primaryLabel: null,
+            },
             id: "ggg123",
             slug: "yayoi-kusama-pumpkin-2222222222222222",
             href: "/artwork/yayoi-kusama-pumpkin-2222222222222222",
@@ -188,6 +191,9 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
         },
         {
           node: {
+            collectorSignals: {
+              primaryLabel: null,
+            },
             id: "abc123",
             slug: "yayoi-kusama-pumpkin-33333333333333333",
             href: "/artwork/yayoi-kusama-pumpkin-33333333333333333",
