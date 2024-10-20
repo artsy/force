@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bab9713dc81346eda398490f6efbc227>>
+ * @generated SignedSource<<0e8b7f5f13ad6f14e875f227e6987433>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,31 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Shipping_me$data = {
-  readonly addressConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly addressLine1: string;
-        readonly addressLine2: string | null | undefined;
-        readonly addressLine3: string | null | undefined;
-        readonly city: string;
-        readonly country: string;
-        readonly id: string;
-        readonly internalID: string;
-        readonly isDefault: boolean;
-        readonly name: string | null | undefined;
-        readonly phoneNumber: string | null | undefined;
-        readonly postalCode: string | null | undefined;
-        readonly region: string | null | undefined;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
-  readonly email: string | null | undefined;
-  readonly id: string;
-  readonly location: {
-    readonly country: string | null | undefined;
-  } | null | undefined;
-  readonly name: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"FulfillmentDetailsForm_me" | "ShippingContext_me">;
   readonly " $fragmentType": "Shipping_me";
 };
 export type Shipping_me$key = {
@@ -43,29 +19,7 @@ export type Shipping_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Shipping_me">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "country",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -92,34 +46,12 @@ return {
   "metadata": null,
   "name": "Shipping_me",
   "selections": [
-    (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "email",
-      "storageKey": null
-    },
-    (v1/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "MyLocation",
-      "kind": "LinkedField",
-      "name": "location",
-      "plural": false,
-      "selections": [
-        (v2/*: any*/)
-      ],
-      "storageKey": null
-    },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "SavedAddresses_me"
+      "name": "FulfillmentDetailsForm_me"
     },
     {
-      "alias": null,
       "args": [
         {
           "kind": "Variable",
@@ -142,108 +74,14 @@ return {
           "variableName": "last"
         }
       ],
-      "concreteType": "UserAddressConnection",
-      "kind": "LinkedField",
-      "name": "addressConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "UserAddressEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "UserAddress",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                (v1/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "addressLine1",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "addressLine2",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "addressLine3",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "city",
-                  "storageKey": null
-                },
-                (v2/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "isDefault",
-                  "storageKey": null
-                },
-                (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "phoneNumber",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "postalCode",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "region",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "ShippingContext_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "e31c45b18a2f038be369d1101419baaa";
+(node as any).hash = "333ca775bab381e61be0a76ce53046c1";
 
 export default node;

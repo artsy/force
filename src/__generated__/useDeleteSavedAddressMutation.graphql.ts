@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<44d1aa87f806086f6ec742e2aeb7ba52>>
+ * @generated SignedSource<<64f06cd9d0b3abb4da5f1a0224ad3d24>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,7 @@ export type useDeleteSavedAddressMutation$variables = {
 export type useDeleteSavedAddressMutation$data = {
   readonly deleteUserAddress: {
     readonly me: {
-      readonly " $fragmentSpreads": FragmentRefs<"Shipping2_me">;
+      readonly " $fragmentSpreads": FragmentRefs<"Shipping_me">;
     } | null | undefined;
     readonly userAddressOrErrors: {
       readonly __typename: "Errors";
@@ -133,7 +133,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "Shipping2_me"
+                "name": "Shipping_me"
               }
             ],
             "storageKey": null
@@ -344,16 +344,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "66a61c75722fc390807657bd39249e63",
+    "cacheID": "e1d9d1f6f18b00b8b55be6dc9e929009",
     "id": null,
     "metadata": {},
     "name": "useDeleteSavedAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteSavedAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      ...Shipping2_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n      }\n    }\n  }\n}\n\nfragment FulfillmentDetailsForm_me on Me {\n  name\n  email\n  id\n  location {\n    country\n    id\n  }\n  addressConnection(first: 30) {\n    totalCount\n  }\n}\n\nfragment Shipping2_me on Me {\n  ...FulfillmentDetailsForm_me\n  ...ShippingContext_me_dXEtb\n}\n\nfragment ShippingContext_me_dXEtb on Me {\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n"
+    "text": "mutation useDeleteSavedAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      ...Shipping_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n      }\n    }\n  }\n}\n\nfragment FulfillmentDetailsForm_me on Me {\n  name\n  email\n  id\n  location {\n    country\n    id\n  }\n  addressConnection(first: 30) {\n    totalCount\n  }\n}\n\nfragment ShippingContext_me_dXEtb on Me {\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n\nfragment Shipping_me on Me {\n  ...FulfillmentDetailsForm_me\n  ...ShippingContext_me_dXEtb\n}\n"
   }
 };
 })();
 
-(node as any).hash = "bb9ee165ba7ff2e2090f6461f8ba4850";
+(node as any).hash = "67225886a5fd2f0ac747726fe99c2aec";
 
 export default node;
