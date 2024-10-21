@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<00e97eaa70ddaed74de84ca67174e517>>
+ * @generated SignedSource<<12163f59bc3ffdf4f18c4f049d2fde3c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -147,13 +147,13 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 240
+              "value": 480
             },
             (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 335
+              "value": 670
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -161,32 +161,10 @@ return {
           "name": "cropped",
           "plural": false,
           "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:240,version:[\"main\",\"wide\"],width:335)"
+          "storageKey": "cropped(height:480,version:[\"main\",\"wide\"],width:670)"
         },
         {
           "alias": "medium",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 324
-            },
-            (v0/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 452
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:324,version:[\"main\",\"wide\"],width:452)"
-        },
-        {
-          "alias": "large",
           "args": [
             {
               "kind": "Literal",
@@ -208,18 +186,40 @@ return {
           "storageKey": "cropped(height:648,version:[\"main\",\"wide\"],width:904)"
         },
         {
-          "alias": "full",
+          "alias": "large",
           "args": [
             {
               "kind": "Literal",
               "name": "height",
-              "value": 777
+              "value": 1296
             },
             (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 1085
+              "value": 1808
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": (v1/*: any*/),
+          "storageKey": "cropped(height:1296,version:[\"main\",\"wide\"],width:1808)"
+        },
+        {
+          "alias": "full",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 1554
+            },
+            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 2170
             }
           ],
           "concreteType": "ResizedImageUrl",
@@ -227,7 +227,7 @@ return {
           "name": "resized",
           "plural": false,
           "selections": (v1/*: any*/),
-          "storageKey": "resized(height:777,version:[\"main\",\"wide\"],width:1085)"
+          "storageKey": "resized(height:1554,version:[\"main\",\"wide\"],width:2170)"
         }
       ],
       "storageKey": null
@@ -238,6 +238,6 @@ return {
 };
 })();
 
-(node as any).hash = "80c4cca0a36a443e6ac6394d2cfd9be9";
+(node as any).hash = "dc8251bf0c9af03ee0eef2b21aa1221b";
 
 export default node;
