@@ -54,7 +54,13 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
   return (
     <Flex justifyContent="space-between" alignItems="center">
       <Box pr={2}>
-        <Text variant="lg-display" as="h3" lineClamp={2} mr={2}>
+        <Text
+          variant="lg-display"
+          // @ts-ignore
+          as="h3"
+          lineClamp={2}
+          mr={2}
+        >
           <RailHeaderTitle
             title={title}
             viewAllHref={viewAllHref}
@@ -68,6 +74,7 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
         {subTitle && (
           <Text
             display={["none", "block"]}
+            // @ts-ignore
             as="h4"
             variant="lg-display"
             color="black60"
@@ -83,8 +90,8 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
           textAlign="right"
           variant={["xs", "sm-display"]}
           flexShrink={0}
-          as={RouterLink}
           // @ts-ignore
+          as={RouterLink}
           to={viewAllHref}
           onClick={viewAllOnClick}
         >

@@ -2,7 +2,7 @@ import { Box, Text, Image, BoxProps } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleSponsor_sponsor$data } from "__generated__/ArticleSponsor_sponsor.graphql"
-import { useArticleTracking } from "../useArticleTracking"
+import { useArticleTracking } from "Apps/Article/useArticleTracking"
 
 interface ArticleSponsorProps extends BoxProps {
   sponsor: ArticleSponsor_sponsor$data
@@ -31,7 +31,7 @@ const ArticleSponsor: FC<ArticleSponsorProps> = ({ sponsor, ...rest }) => {
         borderRadius="50%"
         as="a"
         // @ts-ignore
-        href={sponsor.partnerLogoLink}
+        href={sponsor.partnerLogoLink as string}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => {

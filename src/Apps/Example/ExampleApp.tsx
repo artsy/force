@@ -76,9 +76,9 @@ export const ExampleAppFragmentContainer = createFragmentContainer(ExampleApp, {
   `,
 })
 
-const RouterLink = styled<{ activeClassName?: string } & RouterLinkProps>(
-  BaseRouteLink
-).attrs({
+const RouterLink = styled(BaseRouteLink).attrs<
+  { activeClassName?: string } & RouterLinkProps
+>({
   activeClassName: "active",
 })`
   &.active {
