@@ -96,29 +96,28 @@ export const FeatureFeaturedLinkFragmentContainer = createFragmentContainer(
         subtitle(format: PLAIN)
         description(format: HTML)
         image {
-          # 9:16
-          small: cropped(width: 335, height: 240, version: ["main", "wide"]) {
+          small: cropped(width: 670, height: 480, version: ["main", "wide"]) {
             src
             srcSet
             width
             height
           }
           # 4:5
-          medium: cropped(width: 452, height: 324, version: ["main", "wide"]) {
+          medium: cropped(width: 904, height: 648, version: ["main", "wide"]) {
             src
             srcSet
             width
             height
           }
           # 16:9
-          large: cropped(width: 904, height: 648, version: ["main", "wide"]) {
+          large: cropped(width: 1808, height: 1296, version: ["main", "wide"]) {
             src
             srcSet
             width
             height
           }
           # ?:?
-          full: resized(width: 1085, height: 777, version: ["main", "wide"]) {
+          full: resized(width: 2170, height: 1554, version: ["main", "wide"]) {
             src
             srcSet
             width
