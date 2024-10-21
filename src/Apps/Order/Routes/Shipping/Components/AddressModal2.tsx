@@ -22,7 +22,7 @@ import {
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import createLogger from "Utils/logger"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
-import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
+import { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import {
   SavedAddressResult,
   UserAddressAction,

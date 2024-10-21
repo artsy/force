@@ -22,6 +22,7 @@ import {
   FulfillmentType,
   FulfillmentValues,
   PickupValues,
+  SavedAddressType,
   ShipValues,
   addressWithFallbackValues,
   getInitialShippingValues,
@@ -46,7 +47,6 @@ import {
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
-import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFieldError"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 

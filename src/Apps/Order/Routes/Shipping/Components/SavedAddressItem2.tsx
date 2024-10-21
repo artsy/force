@@ -1,18 +1,10 @@
 import { Flex, Text, RadioProps, BoxProps } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
-import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
-
-type AddressNode = NonNullable<
-  NonNullable<
-    NonNullable<
-      NonNullable<SavedAddresses_me$data["addressConnection"]>["edges"]
-    >[number]
-  >["node"]
->
+import { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 
 interface SavedAddressItemProps extends BoxProps {
-  address: AddressNode
+  address: SavedAddressType
   handleClickEdit: (event: any) => void
 }
 
