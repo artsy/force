@@ -39,12 +39,11 @@ export const FeatureHeaderFull: React.FC<FeatureHeaderFullProps> = ({
             </Text>
 
             {subheadline && (
-              <Text
+              <HTML
                 variant={["md", "lg-display"]}
                 color="rgba(255, 255, 255, 0.8)"
-              >
-                {subheadline}
-              </Text>
+                html={subheadline}
+              />
             )}
           </FullBleedHeaderOverlay>
         </FullBleedHeader>
