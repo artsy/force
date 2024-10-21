@@ -21,6 +21,8 @@ import {
 import { ClientContext } from "System/Router/Utils/clientAppContext"
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
+import { StyleSheetManager } from "styled-components"
+import isPropValid from "@emotion/is-prop-valid"
 
 export interface BootProps {
   children: React.ReactNode
@@ -111,5 +113,22 @@ const EnvironmentProvider: FC<{ environment: Environment }> = ({
 
 const ThemeProvider: FC = ({ children }) => {
   const { preferences } = useAppPreferences()
-  return <Theme theme={preferences.theme}>{children}</Theme>
+
+  return (
+    <Theme theme={preferences.theme}>
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        {children}
+      </StyleSheetManager>
+    </Theme>
+  )
+}
+
+// This implements the default behavior from styled-components v5
+function shouldForwardProp(propName, target) {
+  if (typeof target === "string") {
+    // For HTML elements, forward the prop if it is a valid HTML attribute
+    return isPropValid(propName)
+  }
+  // For other elements, forward all props
+  return true
 }

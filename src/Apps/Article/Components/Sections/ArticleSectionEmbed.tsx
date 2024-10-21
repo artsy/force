@@ -27,14 +27,16 @@ const ArticleSectionEmbed: FC<ArticleSectionEmbedProps> = ({ section }) => {
     return (
       <Container>
         <Box
-          data-testid="ArticleSectionEmbed"
           as="iframe"
           display="block"
+          data-testid="ArticleSectionEmbed"
           width="100%"
-          height={[
-            section.mobileHeight ?? (section.height as number),
-            section.height ?? (section.mobileHeight as number),
-          ]}
+          height={
+            [
+              section.mobileHeight ?? (section.height as number),
+              section.height ?? (section.mobileHeight as number),
+            ] as any
+          }
           borderWidth={0}
           // @ts-ignore
           src={section.url}

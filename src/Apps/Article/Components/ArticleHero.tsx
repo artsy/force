@@ -96,11 +96,10 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
               <Box
                 display="block"
                 width="100%"
-                height={height}
+                height={(height as unknown) as string}
                 style={{ objectFit: "cover" }}
                 as="video"
-                // @ts-ignore
-                src={article.hero.media}
+                src={article.hero.media as string}
                 autoPlay
                 loop
                 playsInline

@@ -76,8 +76,7 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
           data-testid="artwork-lightbox-box"
           bg="black10"
           mx={[0, 2]}
-          // @ts-ignore
-          maxWidth={image.width || "100%"}
+          maxWidth={image.width || ("100%" as any)}
           aspectWidth={image.width || 1}
           aspectHeight={image.height || 1}
         >
