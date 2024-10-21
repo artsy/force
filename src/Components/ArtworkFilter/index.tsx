@@ -434,7 +434,6 @@ export const BaseArtworkFilter: React.FC<
         {children || (
           <ArtworkGridContextProvider hideSignals={hideSignals}>
             <ArtworkFilterArtworkGrid
-              hideSignals={hideSignals}
               filtered_artworks={viewer.filtered_artworks}
               isLoading={isLoading}
               offset={offset}

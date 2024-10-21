@@ -15,7 +15,7 @@ export const getSignalLabel = ({
 
   if (
     hideSignals &&
-    (primaryLabel === "PARTNER_OFFER" || primaryLabel === "INCREASED_INTEREST")
+    (primaryLabel === "CURATORS_PICK" || primaryLabel === "INCREASED_INTEREST")
   ) {
     return ""
   }

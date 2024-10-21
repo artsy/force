@@ -16,6 +16,7 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
 import { extractNodes } from "Utils/extractNodes"
 import { getSignalLabel } from "Utils/getSignalLabel"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
@@ -23,7 +24,6 @@ interface ArtworkFilterArtworkGridProps {
   isLoading?: boolean
   offset?: number
   relay: RelayProp
-  hideSignals?: boolean
 }
 
 const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props => {
@@ -34,6 +34,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
     contextPageOwnerSlug,
     contextPageOwnerId,
   } = useAnalyticsContext()
+  const { hideSignals } = useArtworkGridContext()
   const context = useArtworkFilterContext()
   const filteredArtworks = extractNodes(props.filtered_artworks)
 
@@ -44,7 +45,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
       pageInfo: { hasNextPage },
     },
     offset,
-    hideSignals,
   } = props
 
   /**
