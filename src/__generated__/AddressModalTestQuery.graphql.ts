@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34fdde24b564bea3a6e4f5fb41852a34>>
+ * @generated SignedSource<<0e4d061aa33e6fb5f5aaa3c4026391c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,15 +9,15 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type AddressModal2TestQuery$variables = Record<PropertyKey, never>;
-export type AddressModal2TestQuery$data = {
+export type AddressModalTestQuery$variables = Record<PropertyKey, never>;
+export type AddressModalTestQuery$data = {
   readonly _unused: {
     readonly name: string | null | undefined;
   } | null | undefined;
 };
-export type AddressModal2TestQuery = {
-  response: AddressModal2TestQuery$data;
-  variables: AddressModal2TestQuery$variables;
+export type AddressModalTestQuery = {
+  response: AddressModalTestQuery$data;
+  variables: AddressModalTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -40,7 +40,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "AddressModal2TestQuery",
+    "name": "AddressModalTestQuery",
     "selections": [
       {
         "alias": "_unused",
@@ -62,7 +62,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "AddressModal2TestQuery",
+    "name": "AddressModalTestQuery",
     "selections": [
       {
         "alias": "_unused",
@@ -86,7 +86,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "183979d8a78785afa924dd92b817d07c",
+    "cacheID": "eac7d336c233bb012cfa500991bb3ed7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -110,13 +110,13 @@ return {
         }
       }
     },
-    "name": "AddressModal2TestQuery",
+    "name": "AddressModalTestQuery",
     "operationKind": "query",
-    "text": "query AddressModal2TestQuery {\n  _unused: artist(id: \"whocare\") {\n    name\n    id\n  }\n}\n"
+    "text": "query AddressModalTestQuery {\n  _unused: artist(id: \"whocare\") {\n    name\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b982ae8ea6d38ee099b7e60f49ce3b87";
+(node as any).hash = "f324dfe97aaee9357b4cb6c344df9ca7";
 
 export default node;

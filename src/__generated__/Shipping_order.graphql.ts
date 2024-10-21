@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0e70e491efc63e47490fa2584e9b639a>>
+ * @generated SignedSource<<7209f7bdbcf6b64bfa4e7e134549d256>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Shipping_order$data = {
   readonly internalID: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "FulfillmentDetailsForm_order" | "OrderStepper_order" | "SaveAndContinueButton_order" | "ShippingContext_order" | "ShippingQuotes2_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "FulfillmentDetailsForm_order" | "OrderStepper_order" | "SaveAndContinueButton_order" | "ShippingContext_order" | "ShippingQuotes_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Shipping_order";
 };
 export type Shipping_order$key = {
@@ -59,7 +59,7 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ShippingQuotes2_order"
+      "name": "ShippingQuotes_order"
     },
     {
       "alias": null,
@@ -73,6 +73,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "67092d2fec3cd3e76b0787326901a050";
+(node as any).hash = "7cb307555b00ab6c4a9474586a1c3943";
 
 export default node;

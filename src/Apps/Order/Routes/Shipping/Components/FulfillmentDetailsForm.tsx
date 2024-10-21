@@ -15,7 +15,7 @@ import {
   AddressVerificationFlowQueryRenderer,
 } from "Apps/Order/Components/AddressVerificationFlow"
 
-import { SavedAddresses2 } from "Apps/Order/Routes/Shipping/Components/SavedAddresses2"
+import { SavedAddresses } from "Apps/Order/Routes/Shipping/Components/SavedAddresses"
 import {
   ADDRESS_VALIDATION_SHAPE,
   BASIC_PHONE_VALIDATION_SHAPE,
@@ -308,7 +308,7 @@ const FulfillmentDetailsFormLayout = (
             data-testid="savedAddressesCollapse"
             open={addressFormMode === "saved_addresses"}
           >
-            <SavedAddresses2
+            <SavedAddresses
               active={addressFormMode === "saved_addresses"}
               onSelect={handleSelectSavedAddress}
             />

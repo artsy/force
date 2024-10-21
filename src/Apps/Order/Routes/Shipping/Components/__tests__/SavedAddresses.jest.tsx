@@ -2,9 +2,9 @@ import { useTracking } from "react-tracking"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { fireEvent, screen, within } from "@testing-library/react"
 import {
-  SavedAddresses2,
+  SavedAddresses,
   SavedAddressesProps,
-} from "Apps/Order/Routes/Shipping/Components/SavedAddresses2"
+} from "Apps/Order/Routes/Shipping/Components/SavedAddresses"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import userEvent from "@testing-library/user-event"
@@ -17,7 +17,7 @@ import { MockBoot } from "DevTools/MockBoot"
 import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { SavedAddresses2TestQuery } from "__generated__/SavedAddresses2TestQuery.graphql"
+import { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -72,16 +72,16 @@ const TestWrapper = ({ children }) => (
   </MockBoot>
 )
 
-const { renderWithRelay } = setupTestWrapperTL<SavedAddresses2TestQuery>({
+const { renderWithRelay } = setupTestWrapperTL<SavedAddressesTestQuery>({
   Component: props => {
     return (
       <TestWrapper>
-        <SavedAddresses2 {...testProps} />
+        <SavedAddresses {...testProps} />
       </TestWrapper>
     )
   },
   query: graphql`
-    query SavedAddresses2TestQuery {
+    query SavedAddressesTestQuery {
       me {
         email # need something for the wrapper to render
       }

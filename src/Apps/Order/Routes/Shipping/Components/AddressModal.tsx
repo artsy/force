@@ -30,7 +30,7 @@ import {
 } from "Apps/Order/Routes/Shipping/Hooks/useUserAddressUpdates"
 import { CountrySelect } from "Components/CountrySelect"
 
-const logger = createLogger("AddressModal2.tsx")
+const logger = createLogger("AddressModal.tsx")
 
 /**
  * Modal type to be rendered. the `address` property is used
@@ -66,7 +66,7 @@ export const AddressModal: FC<AddressModalProps> = ({
   addressModalAction,
   onSuccess,
 }) => {
-  const logger = createLogger("AddressModal2.tsx")
+  const logger = createLogger("AddressModal.tsx")
   const shippingContext = useShippingContext()
 
   const { executeUserAddressAction } = useUserAddressUpdates()

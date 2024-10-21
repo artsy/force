@@ -1,14 +1,14 @@
 import {
   AddressModal,
   AddressModalProps,
-} from "Apps/Order/Routes/Shipping/Components/AddressModal2"
+} from "Apps/Order/Routes/Shipping/Components/AddressModal"
 import { validAddress } from "Components/__tests__/Utils/addressForm2"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { createMockEnvironment } from "relay-test-utils"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { AddressModal2TestQuery } from "__generated__/AddressModal2TestQuery.graphql"
+import { AddressModalTestQuery } from "__generated__/AddressModalTestQuery.graphql"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { DeepPartial } from "Utils/typeSupport"
@@ -51,12 +51,12 @@ jest.mock("Apps/Order/Routes/Shipping/Hooks/useShippingContext", () => ({
   useShippingContext: () => mockShippingcontext,
 }))
 
-const { getWrapper: _getWrapper } = setupTestWrapper<AddressModal2TestQuery>({
+const { getWrapper: _getWrapper } = setupTestWrapper<AddressModalTestQuery>({
   Component: (props: unknown) => {
     return <AddressModal {...(props as AddressModalProps)} />
   },
   query: graphql`
-    query AddressModal2TestQuery @relay_test_operation {
+    query AddressModalTestQuery @relay_test_operation {
       _unused: artist(id: "whocare") {
         name
       }

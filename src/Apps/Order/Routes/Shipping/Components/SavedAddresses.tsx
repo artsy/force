@@ -4,9 +4,9 @@ import { RadioGroup, BorderedRadio, Spacer, Clickable } from "@artsy/palette"
 import {
   AddressModal,
   AddressModalAction,
-} from "Apps/Order/Routes/Shipping/Components/AddressModal2"
+} from "Apps/Order/Routes/Shipping/Components/AddressModal"
 import createLogger from "Utils/logger"
-import { SavedAddressItem } from "Apps/Order/Routes/Shipping/Components/SavedAddressItem2"
+import { SavedAddressItem } from "Apps/Order/Routes/Shipping/Components/SavedAddressItem"
 import { themeGet } from "@styled-system/theme-get"
 
 import {
@@ -24,7 +24,7 @@ export interface SavedAddressesProps {
   onSelect: (address: SavedAddressType) => void
 }
 
-export const SavedAddresses2: FC<SavedAddressesProps> = props => {
+export const SavedAddresses: FC<SavedAddressesProps> = props => {
   const logger = createLogger("SavedAddresses.tsx")
 
   const shippingContext = useShippingContext()

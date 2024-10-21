@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a427d8280e143dc9905e96d10b909972>>
+ * @generated SignedSource<<57e350f701551bebebe503023a4ff735>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShippingQuotes2_order$data = {
+export type ShippingQuotes_order$data = {
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -28,18 +28,18 @@ export type ShippingQuotes2_order$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly " $fragmentType": "ShippingQuotes2_order";
+  readonly " $fragmentType": "ShippingQuotes_order";
 };
-export type ShippingQuotes2_order$key = {
-  readonly " $data"?: ShippingQuotes2_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes2_order">;
+export type ShippingQuotes_order$key = {
+  readonly " $data"?: ShippingQuotes_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes_order">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ShippingQuotes2_order",
+  "name": "ShippingQuotes_order",
   "selections": [
     {
       "alias": null,
@@ -153,6 +153,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "39e80542a59a287f60af6948136b1dcc";
+(node as any).hash = "8d3e004bc9d835484aeec105ee1b5be5";
 
 export default node;

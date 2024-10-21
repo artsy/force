@@ -9,7 +9,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { ShippingQuotes2_order$key } from "__generated__/ShippingQuotes2_order.graphql"
+import { ShippingQuotes_order$key } from "__generated__/ShippingQuotes_order.graphql"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { extractNodes } from "Utils/extractNodes"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
@@ -17,17 +17,17 @@ import { useEffect } from "react"
 import { CollapseDetails } from "Apps/Order/Routes/Shipping/Components/CollapseDetails"
 
 export interface ShippingQuotesProps {
-  order: ShippingQuotes2_order$key
+  order: ShippingQuotes_order$key
 }
 
-export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({ order }) => {
+export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({ order }) => {
   const shippingContext = useShippingContext()
   const orderTracking = useOrderTracking()
   const { orderData } = shippingContext
 
   const data = useFragment(
     graphql`
-      fragment ShippingQuotes2_order on CommerceOrder {
+      fragment ShippingQuotes_order on CommerceOrder {
         lineItems {
           edges {
             node {

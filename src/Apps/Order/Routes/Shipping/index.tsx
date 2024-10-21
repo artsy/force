@@ -18,7 +18,7 @@ import {
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { ShippingQuotes2 } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes2"
+import { ShippingQuotes } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { Analytics } from "System/Contexts/AnalyticsContext"
@@ -98,7 +98,7 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
             <FulfillmentDetails me={me} order={order} />
 
             <Jump id="shippingOptionsTop" />
-            <ShippingQuotes2 order={order} />
+            <ShippingQuotes order={order} />
 
             <Media greaterThan="xs">
               <SaveAndContinueButton width="50%" order={order} />
@@ -141,7 +141,7 @@ const ORDER_FRAGMENT = graphql`
     ...ArtworkSummaryItem_order
     ...TransactionDetailsSummaryItem_order
     ...OrderStepper_order
-    ...ShippingQuotes2_order
+    ...ShippingQuotes_order
     internalID
   }
 `

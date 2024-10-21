@@ -11,7 +11,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadges"
 import { ContextModule } from "@artsy/cohesion"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
-import { shippingQuoteDisplayNames } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes2"
+import { shippingQuoteDisplayNames } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
 import { RouterLink } from "System/Components/RouterLink"
 import { withSystemContext } from "System/Contexts/SystemContext"
 
