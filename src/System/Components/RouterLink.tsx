@@ -121,6 +121,7 @@ const VALID_ROUTER_LINK_PROPS = [
   "data-test",
   "data-testid",
   "exact",
+  "onClick",
   "style",
   "target",
   "to",
