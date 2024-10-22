@@ -61,11 +61,9 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
       context_owner_type: OwnerType.artwork,
       context_owner_slug: slug,
       context_owner_id: internalID,
-      signal_label: collectorSignals
-        ? getSignalLabel({
-            collectorSignals: collectorSignals,
-          })
-        : "",
+      signal_label: getSignalLabel({
+        collectorSignals: collectorSignals ?? {},
+      }),
     }
 
     trackEvent(event)

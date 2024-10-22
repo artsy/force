@@ -71,12 +71,10 @@ export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRa
                   destination_page_owner_id: artwork.internalID,
                   destination_page_owner_slug: artwork.slug,
                   type: "thumbnail",
-                  signal_label: artwork.collectorSignals
-                    ? getSignalLabel({
-                        collectorSignals: artwork.collectorSignals,
-                        hideSignals: true,
-                      })
-                    : "",
+                  signal_label: getSignalLabel({
+                    collectorSignals: artwork.collectorSignals ?? {},
+                    hideSignals: true,
+                  }),
                   signal_bid_count:
                     artwork.collectorSignals?.auction?.bidCount ?? undefined,
                   signal_lot_watcher_count:

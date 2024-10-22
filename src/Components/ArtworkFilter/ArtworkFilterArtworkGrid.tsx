@@ -76,7 +76,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           emptyStateComponent={context.ZeroState && <context.ZeroState />}
           onBrickClick={(artwork, artworkIndex) => {
             const collectorSignals =
-              filteredArtworks?.[artworkIndex].collectorSignals
+              filteredArtworks?.[artworkIndex].collectorSignals ?? {}
 
             const event: ClickedMainArtworkGrid = {
               action: ActionType.clickedMainArtworkGrid,
@@ -90,12 +90,10 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
               position: artworkIndex,
               sort: context?.filters?.sort,
               type: "thumbnail",
-              signal_label: collectorSignals
-                ? getSignalLabel({
-                    collectorSignals,
-                    hideSignals,
-                  })
-                : "",
+              signal_label: getSignalLabel({
+                collectorSignals,
+                hideSignals,
+              }),
             }
             trackEvent(event)
           }}
