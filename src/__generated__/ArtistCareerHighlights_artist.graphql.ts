@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff6fa7429f8ca7e1d90e4de67bc0b1eb>>
+ * @generated SignedSource<<44dca2c1d05529c3f2fb85b354650b23>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,8 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistCareerHighlights_artist$data = {
   readonly href: string | null | undefined;
   readonly insights: ReadonlyArray<{
+    readonly description: string | null | undefined;
+    readonly entities: ReadonlyArray<string>;
     readonly kind: ArtistInsightKind | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlight_insight">;
   }>;
@@ -64,6 +66,26 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "kind",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "entities",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "format",
+              "value": "HTML"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": "description(format:\"HTML\")"
         }
       ],
       "storageKey": null
@@ -73,6 +95,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "33e93b2eb2a0e73224f710d4b90fc22e";
+(node as any).hash = "fe1ae82aedf825b87d4bb8d944f5e3f9";
 
 export default node;

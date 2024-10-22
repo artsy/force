@@ -11,6 +11,7 @@ interface ArtistCareerHighlightProps {
 export const ArtistCareerHighlight: FC<ArtistCareerHighlightProps> = ({
   insight,
 }) => {
+  if (!insight?.description && !insight?.entities?.length) return null
   return (
     <Expandable label={insight.label} pb={1}>
       <Description
