@@ -122,11 +122,6 @@ jobs:
 
   validate_production_schema:
     executor: node-executor
-    parameters:
-      # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
-      dev:
-        type: string
-        default: C02BC3HEJ
     steps:
       - checkout
       - node/install-packages:
@@ -136,7 +131,10 @@ jobs:
           command: node scripts/validateSchemas.js production
       - slack/notify:
           event: fail
-          channel: "<< parameters.dev >>"
+          # find channel ID at the botton of channel details view (slack app) or
+          # by right clicking on channel, and copying the link. The ID will be
+          # visible at the end of that URL.
+          channel: C02BC3HEJ
           custom: |
             {
               "blocks": [

@@ -57,7 +57,6 @@ import {
 } from "./Server/featureFlags/unleashService"
 import { registerFeatureFlagService } from "./Server/featureFlags/featureFlagService"
 import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
-import { graphqlProxyMiddleware } from "Server/middleware/graphqlProxyMiddleware"
 
 export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)
@@ -73,13 +72,6 @@ export function initializeMiddleware(app) {
   // JSON Body Parser is required for getting the `_csurf` token for passport.
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
-
-  /**
-   * Mount GraphQL proxy with cache. Support route even when proxying disabled, in the interest of stale clients.
-   * @important Body parser middleware must always be above the proxy.
-   * @see: System/Relay/getMetaphysicsEndpoint.ts
-   */
-  app.use("/api/metaphysics", graphqlProxyMiddleware)
 
   // Ensure basic security settings
   applySecurityMiddleware(app)
