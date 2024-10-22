@@ -51,7 +51,6 @@ export const EDITORIAL_PATHS: any =
 export const ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH: any = true
 export const ENABLE_NEW_AUCTIONS_FILTER: any = false
 export const ENABLE_QUERY_BATCHING: any = false
-export const ENABLE_SAVED_SEARCH: any = false
 export const ENABLE_WEB_CRAWLING: any = false
 export const GRAPHQL_CACHE_TTL: any = 1000000000
 export const GRAPHQL_CACHE_SIZE: any = 1000000000
