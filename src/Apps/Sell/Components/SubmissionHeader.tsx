@@ -1,7 +1,16 @@
 import { AuthIntent, ContextModule } from "@artsy/cohesion"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import CloseIcon from "@artsy/icons/CloseIcon"
-import { Button, Flex, FullBleed } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Clickable,
+  Flex,
+  FullBleed,
+  ModalDialog,
+  Text,
+} from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
@@ -41,6 +50,8 @@ export const SubmissionHeader: React.FC = () => {
   const exitURL = submission?.myCollectionArtworkID
     ? `/my-collection/artwork/${submission?.myCollectionArtworkID}`
     : "/sell"
+
+  const isFirstOrLastStep = !submission?.externalId || isLastStep
 
   const handleSaveAndExit = async () => {
     if (!submission?.externalId) return
@@ -127,7 +138,9 @@ export const SubmissionHeader: React.FC = () => {
                 <Flex
                   flexDirection="row"
                   justifyContent={[
-                    submission?.externalId ? "end" : "space-between",
+                    submission?.externalId && isLoggedIn
+                      ? "end"
+                      : "space-between",
                     "space-between",
                   ]}
                   alignItems="center"
@@ -135,9 +148,7 @@ export const SubmissionHeader: React.FC = () => {
                   pt={[1, 0]}
                   height={HEADER_HEIGHT}
                 >
-                  <Media greaterThan="xs">
-                    <ArtsyLogoIcon display="block" />
-                  </Media>
+                  <HeaderArtsyLogo withExitConfirmation={!isFirstOrLastStep} />
 
                   {submission?.externalId && !isLastStep ? (
                     <>
@@ -185,7 +196,7 @@ export const SubmissionHeader: React.FC = () => {
                           to={exitURL}
                           data-testid="exit-link"
                         >
-                          {isLastStep || !submission?.externalId ? "Exit" : ""}
+                          {isFirstOrLastStep ? "Exit" : ""}
                         </Button>
                       </Media>
                     </>
@@ -197,5 +208,91 @@ export const SubmissionHeader: React.FC = () => {
         )
       }}
     </Sticky>
+  )
+}
+
+const HeaderArtsyLogo: React.FC<{ withExitConfirmation }> = ({
+  withExitConfirmation,
+}) => {
+  const { router } = useRouter()
+  const { isLoggedIn } = useSystemContext()
+
+  const [showExitConfirmationModal, setShowExitConfirmationModal] = useState(
+    false
+  )
+
+  const handleClick = () => {
+    withExitConfirmation
+      ? setShowExitConfirmationModal(true)
+      : router.push("/sell")
+  }
+
+  // When logged in, it's possible to easily exit the flow by clicking on "Save & Exit"
+  // and the Artsy logo should not be clickable.
+  if (isLoggedIn) {
+    return (
+      <Media greaterThan="xs">
+        <Box data-testid="artsy-logo">
+          <ArtsyLogoIcon display="block" />
+        </Box>
+      </Media>
+    )
+  }
+
+  return (
+    <>
+      <Clickable display="block" onClick={handleClick}>
+        <Box data-testid="artsy-logo">
+          <Media greaterThanOrEqual="sm">
+            <ArtsyLogoIcon display="block" />
+          </Media>
+          <Media lessThan="sm">
+            <ArtsyMarkIcon display="block" />
+          </Media>
+        </Box>
+      </Clickable>
+
+      {showExitConfirmationModal && (
+        <ExitConfirmationModal
+          onClose={() => setShowExitConfirmationModal(false)}
+          onLeave={() => router.push("/sell")}
+        />
+      )}
+    </>
+  )
+}
+
+interface ExitConfirmationModalProps {
+  onClose: () => void
+  onLeave: () => void
+}
+
+export const ExitConfirmationModal: React.FC<ExitConfirmationModalProps> = ({
+  onClose,
+  onLeave,
+}) => {
+  return (
+    <ModalDialog
+      title="Leave without saving?"
+      onClose={onClose}
+      width={["100%", 600]}
+      footer={
+        <>
+          <Button onClick={onLeave} width="100%" data-testid="leave-button">
+            Leave Without Saving
+          </Button>
+          <Button
+            onClick={onClose}
+            variant="secondaryNeutral"
+            mt={2}
+            width="100%"
+          >
+            Continue Uploading Artwork
+          </Button>
+        </>
+      }
+    >
+      <Text>Changes you have made so far will not be saved.</Text>
+    </ModalDialog>
   )
 }
