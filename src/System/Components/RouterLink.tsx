@@ -115,17 +115,7 @@ type RouterLinkMixinProps = BoxProps & {
   inline?: boolean
 }
 
-const VALID_ROUTER_LINK_PROPS = [
-  "activeClassName",
-  "activeStyle",
-  "children",
-  "data-test",
-  "data-testid",
-  "exact",
-  "style",
-  "target",
-  "to",
-]
+const VALID_ROUTER_LINK_PROPS = ["activeClassName", "activeStyle", "exact"]
 
 const routerLinkValidator = (prop: string) => {
   return VALID_ROUTER_LINK_PROPS.includes(prop)
