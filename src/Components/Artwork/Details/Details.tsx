@@ -49,11 +49,11 @@ const StyledConditionalLink = styled(RouterLink)`
 `
 
 const ConditionalLink: React.FC<
-  Pick<DetailsProps, "includeLinks"> &
-    RouterLinkProps &
-    React.AnchorHTMLAttributes<HTMLAnchorElement>
+  { includeLinks: boolean } & RouterLinkProps
 > = ({ includeLinks, children, ...rest }) => {
-  const LinkComponent = includeLinks ? StyledConditionalLink : "span"
+  const LinkComponent = (includeLinks
+    ? StyledConditionalLink
+    : "span") as React.FC<RouterLinkProps>
   return <LinkComponent {...rest}>{children}</LinkComponent>
 }
 

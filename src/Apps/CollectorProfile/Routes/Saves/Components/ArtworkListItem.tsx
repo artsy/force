@@ -122,7 +122,7 @@ interface ArtworkListItemLinkProps extends RouterLinkProps {
   isSelected: boolean
 }
 
-const ArtworkListItemLink = styled<ArtworkListItemLinkProps>(RouterLink)`
+const ArtworkListItemLink = styled(RouterLink)<ArtworkListItemLinkProps>`
   border-radius: 10px;
   display: block;
   border: 1px solid transparent;

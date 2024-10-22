@@ -102,7 +102,7 @@ describe("NavBarMobileMenu", () => {
 
     it("renders the account subnav when logged in", () => {
       const linkContainer = getMobileMenuLinkContainer("notAdmin")
-      const mobileSubmenuLinks = linkContainer.children()
+      const mobileSubmenuLinks = linkContainer.first().children()
       let linkText = mobileSubmenuLinks.last().text()
 
       expect(linkText).toContain("Get the app")
@@ -115,7 +115,7 @@ describe("NavBarMobileMenu", () => {
         "User Conversations View",
       ])
 
-      expect(linkContainer.html()).toContain("Inbox")
+      expect(linkContainer.first().html()).toContain("Inbox")
     })
   })
 

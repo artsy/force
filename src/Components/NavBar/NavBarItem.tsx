@@ -24,7 +24,7 @@ const navBarItemMixin = css<{ active?: boolean }>`
 `
 
 // NOTE: Found's `Link` doesn't forward its ref, which is necessary for the UI.
-export const NavBarItemLink = styled(RouterUnawareLink)`
+export const NavBarItemLink = styled(RouterUnawareLink)<{ active?: boolean }>`
   ${navBarItemMixin}
 `
 
@@ -33,7 +33,7 @@ NavBarItemLink.defaultProps = {
   px: 1,
 }
 
-export const NavBarItemButton = styled(Clickable)`
+export const NavBarItemButton = styled(Clickable)<{ active?: boolean }>`
   ${navBarItemMixin}
 `
 

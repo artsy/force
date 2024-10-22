@@ -14,6 +14,9 @@ import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
  * <a> tag if ouside of a routing context.
+ *
+ * NOTE! The VALID_ROUTER_LINK_PROPS array below *must* be kept in mind if adding
+ * new props.
  */
 export type RouterLinkProps = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -114,7 +117,11 @@ type RouterLinkMixinProps = BoxProps & {
 const VALID_ROUTER_LINK_PROPS = [
   "activeClassName",
   "activeStyle",
+  "children",
+  "data-test",
+  "data-testid",
   "exact",
+  "style",
   "target",
   "to",
 ]
@@ -123,39 +130,30 @@ const routerLinkValidator = (prop: string) => {
   return VALID_ROUTER_LINK_PROPS.includes(prop)
 }
 
-export const RouterAwareLink: React.FC<LinkPropsSimple & RouterLinkMixinProps> =
-  // TODO: Update styled-components types
-  // @ts-ignore
-  styled(Link).withConfig({
-    shouldForwardProp: (
-      prop: string,
-      defaultValidatorFn: (prop: string) => boolean
-    ) => {
-      return defaultValidatorFn(prop) || routerLinkValidator(prop)
-    },
-  })`
-    :hover {
-      color: ${props => props.inline && themeGet("colors.blue100")};
-    }
-    :visited {
-      color: ${props => props.inline && themeGet("colors.blue150")};
-    }
-    ${routerLinkMixin}
-  `
+export const RouterAwareLink: React.FC<
+  LinkPropsSimple & RouterLinkMixinProps
+> = styled(Link).withConfig({
+  shouldForwardProp: (prop: string) => {
+    return routerLinkValidator(prop)
+  },
+})`
+  :hover {
+    color: ${props => props.inline && themeGet("colors.blue100")};
+  }
+  :visited {
+    color: ${props => props.inline && themeGet("colors.blue150")};
+  }
+  ${routerLinkMixin}
+`
 
 export const RouterUnawareLink: React.FC<
   React.AnchorHTMLAttributes<HTMLAnchorElement> & RouterLinkMixinProps
-> =
-  // TODO: Update styled-components types
-  // @ts-ignore
-  styled.a.withConfig({
-    shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
-  })`
-    :hover {
-      color: ${props => props.inline && themeGet("colors.blue100")};
-    }
-    :visited {
-      color: ${props => props.inline && themeGet("colors.blue150")};
-    }
-    ${routerLinkMixin}
-  `
+> = styled.a`
+  :hover {
+    color: ${props => props.inline && themeGet("colors.blue100")};
+  }
+  :visited {
+    color: ${props => props.inline && themeGet("colors.blue150")};
+  }
+  ${routerLinkMixin}
+`
