@@ -10,6 +10,7 @@ import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import isPropValid from "@emotion/is-prop-valid"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
@@ -114,18 +115,7 @@ type RouterLinkMixinProps = BoxProps & {
   inline?: boolean
 }
 
-const VALID_ROUTER_LINK_PROPS = [
-  "activeClassName",
-  "activeStyle",
-  "children",
-  "data-test",
-  "data-testid",
-  "exact",
-  "onClick",
-  "style",
-  "target",
-  "to",
-]
+const VALID_ROUTER_LINK_PROPS = ["activeClassName", "activeStyle", "exact"]
 
 const routerLinkValidator = (prop: string) => {
   return VALID_ROUTER_LINK_PROPS.includes(prop)
@@ -135,7 +125,7 @@ export const RouterAwareLink: React.FC<
   LinkPropsSimple & RouterLinkMixinProps
 > = styled(Link).withConfig({
   shouldForwardProp: (prop: string) => {
-    return routerLinkValidator(prop)
+    return isPropValid(prop) || routerLinkValidator(prop)
   },
 })`
   :hover {
