@@ -118,6 +118,8 @@ const VALID_ROUTER_LINK_PROPS = [
   "activeClassName",
   "activeStyle",
   "children",
+  "data-test",
+  "data-testid",
   "exact",
   "style",
   "target",
