@@ -49,7 +49,6 @@ export const DISABLE_IMAGE_PROXY: any = false
 export const EDITORIAL_PATHS: any =
   "^/article|^/2016-year-in-art|^/venice-biennale|^/gender-equality|^/series|^/video|^/news"
 export const ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH: any = true
-export const ENABLE_MEMORY_PROFILING: any = false
 export const ENABLE_NEW_AUCTIONS_FILTER: any = false
 export const ENABLE_QUERY_BATCHING: any = false
 export const ENABLE_SAVED_SEARCH: any = false
