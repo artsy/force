@@ -21,11 +21,8 @@ const OfferRoute = loadable(
 )
 
 const ShippingRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "orderBundle" */ "./Routes/Shipping/ShippingRoute"
-    ),
-  { resolveComponent: component => component.ShippingRoute }
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Shipping"),
+  { resolveComponent: component => component.ShippingRouteWithDialog }
 )
 
 const PaymentRoute = loadable(
