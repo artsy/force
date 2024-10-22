@@ -22,6 +22,10 @@ interface ArtistCareerHighlightsProps {
 const ArtistCareerHighlights: FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
+  if (!artist || !artist.insights?.length) {
+    return null
+  }
+
   const insights = artist.insights.slice(ARTIST_HEADER_NUMBER_OF_INSIGHTS)
   const numOfColumns = insights.length > 4 ? 2 : 1
   const mid = Math.ceil(insights.length / 2)
@@ -29,6 +33,10 @@ const ArtistCareerHighlights: FC<ArtistCareerHighlightsProps> = ({
     numOfColumns === 2
       ? [insights.slice(0, mid), insights.slice(mid, insights.length)]
       : [insights]
+
+  const hasEntitiesOrDescription = artist.insights.some(insight => {
+    return insight.entities.length > 0 || insight.description
+  })
 
   return (
     <>
@@ -55,7 +63,7 @@ const ArtistCareerHighlights: FC<ArtistCareerHighlightsProps> = ({
         </Media>
       )}
 
-      {insights.length > 0 && (
+      {insights.length > 0 && hasEntitiesOrDescription && (
         <Media greaterThan="xs">
           <Box display="flex" gap={4} flexDirection="column">
             <RailHeader
@@ -96,6 +104,8 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         insights {
           ...ArtistCareerHighlight_insight
           kind
+          entities
+          description(format: HTML)
         }
       }
     `,
