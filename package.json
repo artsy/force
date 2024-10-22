@@ -140,7 +140,6 @@
     "graphql": "14.5.8",
     "helmet": "2.3.0",
     "http-proxy": "1.18.1",
-    "http-proxy-middleware": "^3.0.0",
     "http-shutdown": "1.2.1",
     "insane": "2.6.1",
     "ip": "^1.1.9",
