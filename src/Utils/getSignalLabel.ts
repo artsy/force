@@ -4,7 +4,7 @@ export interface CollectorSignals {
 
 interface SignalLabelProps {
   collectorSignals: CollectorSignals
-  hideSignals?: boolean
+  hideSignals?: string[]
 }
 
 export const getSignalLabel = ({
@@ -13,10 +13,7 @@ export const getSignalLabel = ({
 }: SignalLabelProps) => {
   const { primaryLabel } = collectorSignals
 
-  if (
-    hideSignals &&
-    (primaryLabel === "CURATORS_PICK" || primaryLabel === "INCREASED_INTEREST")
-  ) {
+  if (primaryLabel && hideSignals?.includes(primaryLabel)) {
     return ""
   }
 

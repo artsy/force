@@ -117,14 +117,6 @@ export const BaseArtworkFilter: React.FC<
   featuredKeywords,
   ...rest
 }) => {
-  const HIDE_SIGNAL_SLUGS = [
-    "trending-now",
-    "curators-picks-emerging-artists",
-    "curators-picks-blue-chip-artists",
-  ]
-
-  const hideSignals = HIDE_SIGNAL_SLUGS.includes(viewer.slug)
-
   const tracking = useTracking()
 
   const {
@@ -432,7 +424,9 @@ export const BaseArtworkFilter: React.FC<
         <Spacer y={2} />
 
         {children || (
-          <ArtworkGridContextProvider hideSignals={hideSignals}>
+          <ArtworkGridContextProvider
+            hideSignals={hideSignalsBySlug(viewer.slug)}
+          >
             <ArtworkFilterArtworkGrid
               filtered_artworks={viewer.filtered_artworks}
               isLoading={isLoading}
@@ -478,4 +472,18 @@ export const getTotalCountLabel = ({
   }`
 
   return totalCountLabel
+}
+
+const hideSignalsBySlug = (slug: string) => {
+  const HIDE_SIGNAL_SLUGS = [
+    "trending-now",
+    "curators-picks-emerging-artists",
+    "curators-picks-blue-chip-artists",
+  ]
+
+  if (HIDE_SIGNAL_SLUGS.includes(slug)) {
+    return ["CURATORS_PICK", "INCREASED_INTEREST"]
+  }
+
+  return []
 }
