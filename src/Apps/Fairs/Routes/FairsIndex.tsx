@@ -250,10 +250,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
               <GridColumns my={2}>
                 {currentFairs.map(fair => {
                   return (
-                    <Column
-                      key={fair.internalID}
-                      span={fair.bannerSize === "x-large" ? 12 : 6}
-                    >
+                    <Column key={fair.internalID} span={6}>
                       <FairsFairBannerFragmentContainer fair={fair} />
                     </Column>
                   )
