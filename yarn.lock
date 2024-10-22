@@ -84,12 +84,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@^38.0.1":
-  version "38.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-38.0.1.tgz#19169eeb8e67e15d6b0534efd972b6a9ea5a43a6"
-  integrity sha512-NiCpN3H1MzDfauZAwYH+i/Dc7aAlufP1KEqNEt8a9j2iTXJn58TqILfMr17q5zoEYV/DfMVGUMn0zBjF01zt1w==
+"@artsy/palette-charts@^38.0.3":
+  version "38.0.3"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-38.0.3.tgz#deeaab897b1dad66e419660e4e20287312ac1ba3"
+  integrity sha512-HmDmtprwhEkQ/JTzL/DdzT+qxu5qZyk7+kL0fpITJoxEsx3UsJlCljukFAu2Dv52rijLQ52Oh79RkXeOofyQLA==
   dependencies:
-    "@artsy/palette" "^39.0.1"
+    "@artsy/palette" "^39.0.3"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -101,10 +101,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-6.1.0.tgz#f79a1304b59741e982eae98f07d9099d7f1c9347"
   integrity sha512-heBh9cuGIECWHdXPLFqmliKKIHob5iSKxi7SlsN36wkLrfIfwhy/NYUhP1OO/u24Khl7ixpTrKzkt6tQEyCSzw==
 
-"@artsy/palette@^39.0.1":
-  version "39.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-39.0.1.tgz#666d95e2ecc86685b739b24f9d950cbe58c47b09"
-  integrity sha512-Me8nqNNSx418ffyTn123am8+dJH2Fx16EiQK4RXbSgzzaO6yYk9lpC/7GjDimPN9UAK9NgtPiUzDDctX9AELRw==
+"@artsy/palette@^39.0.3":
+  version "39.0.3"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-39.0.3.tgz#dda8b4e7afd29fe033257513054f3e17d9a5d402"
+  integrity sha512-EqnfZuk0bJ82JkfS41Vqfo9xqdLIzobcm2XAXuJC2gLOnsE0QESweBlXsJPwil4oek75dUhknGXcKpE1rvLfUA==
   dependencies:
     "@artsy/icons" "^3.2.2"
     "@artsy/palette-tokens" "^6.1.0"
@@ -5101,13 +5101,6 @@
   resolved "https://registry.yarnpkg.com/@types/html-minifier-terser/-/html-minifier-terser-6.1.0.tgz#4fc33a00c1d0c16987b1a20cf92d20614c55ac35"
   integrity sha512-oh/6byDPnL1zeNXFrDXFLyZjkr1MsBG667IM792caf1L2UPOOMf65NFzjUH/ltyfwjAGfs1rsX1eftK0jC/KIg==
 
-"@types/http-proxy@^1.17.10":
-  version "1.17.14"
-  resolved "https://registry.yarnpkg.com/@types/http-proxy/-/http-proxy-1.17.14.tgz#57f8ccaa1c1c3780644f8a94f9c6b5000b5e2eec"
-  integrity sha512-SSrD0c1OQzlFX7pGu1eXxSEjemej64aaNPRhhVYUGqXh0BtldAAx37MG8btcumvpgKyZp1F5Gn3JkktdxiFv6w==
-  dependencies:
-    "@types/node" "*"
-
 "@types/is-function@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/is-function/-/is-function-1.0.0.tgz#1b0b819b1636c7baf0d6785d030d12edf70c3e83"
@@ -7744,13 +7737,6 @@ braces@^3.0.1, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
-braces@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/braces/-/braces-3.0.3.tgz#490332f40919452272d55a8480adc0c441358789"
-  integrity sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==
-  dependencies:
-    fill-range "^7.1.1"
-
 brorand@^1.0.1, brorand@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
@@ -9736,13 +9722,6 @@ debug@^3.0.0, debug@^3.1.0, debug@^3.2.6, debug@^3.2.7:
   integrity sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==
   dependencies:
     ms "^2.1.1"
-
-debug@^4.3.4:
-  version "4.3.5"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.5.tgz#e83444eceb9fedd4a1da56d671ae2446a01a6e1e"
-  integrity sha512-pt0bNEmneDIvdL1Xsd9oDQ/wrQRkXDT4AUWlNZNPKvW5x/jyO9VFXkJUP07vQ2upmw5PlaITaPKc31jK13V+jg==
-  dependencies:
-    ms "2.1.2"
 
 debug@^4.3.5:
   version "4.3.7"
@@ -11832,13 +11811,6 @@ fill-range@^7.0.1:
   dependencies:
     to-regex-range "^5.0.1"
 
-fill-range@^7.1.1:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-7.1.1.tgz#44265d3cac07e3ea7dc247516380643754a05292"
-  integrity sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==
-  dependencies:
-    to-regex-range "^5.0.1"
-
 filter-obj@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/filter-obj/-/filter-obj-1.1.0.tgz#9b311112bc6c6127a16e016c6c5d7f19e0805c5b"
@@ -13313,19 +13285,7 @@ http-proxy-agent@^5.0.0:
     agent-base "6"
     debug "4"
 
-http-proxy-middleware@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-3.0.0.tgz#550790357d6f92a9b82ab2d63e07343a791cf26b"
-  integrity sha512-36AV1fIaI2cWRzHo+rbcxhe3M3jUDCNzc4D5zRl57sEWRAxdXYtw7FSQKYY6PDKssiAKjLYypbssHk+xs/kMXw==
-  dependencies:
-    "@types/http-proxy" "^1.17.10"
-    debug "^4.3.4"
-    http-proxy "^1.18.1"
-    is-glob "^4.0.1"
-    is-plain-obj "^3.0.0"
-    micromatch "^4.0.5"
-
-http-proxy@1.18.1, http-proxy@^1.18.1:
+http-proxy@1.18.1:
   version "1.18.1"
   resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.1.tgz#401541f0534884bbf95260334e72f88ee3976549"
   integrity sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==
@@ -14230,11 +14190,6 @@ is-plain-obj@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-2.1.0.tgz#45e42e37fccf1f40da8e5f76ee21515840c09287"
   integrity sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==
-
-is-plain-obj@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-3.0.0.tgz#af6f2ea14ac5a646183a5bbdb5baabbc156ad9d7"
-  integrity sha512-gwsOE28k+23GP1B6vFl1oVh/WOzmawBrKwo5Ev6wMKzPkaXaCDIQKzLnvsA42DRlbVTWorkgTKIviAKCWkfUwA==
 
 is-plain-object@5.0.0, is-plain-object@^5.0.0:
   version "5.0.0"
@@ -16947,14 +16902,6 @@ micromatch@^4.0.2, micromatch@^4.0.4:
   dependencies:
     braces "^3.0.1"
     picomatch "^2.2.3"
-
-micromatch@^4.0.5:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.7.tgz#33e8190d9fe474a9895525f5618eee136d46c2e5"
-  integrity sha512-LPP/3KorzCwBxfeUuZmaR6bG2kdeHSbe0P2tY3FLRU4vYrjYz5hI4QZwV0njUx3jeuKe67YukQ1LSPZBKDqO/Q==
-  dependencies:
-    braces "^3.0.3"
-    picomatch "^2.3.1"
 
 miller-rabin@^4.0.0:
   version "4.0.1"
