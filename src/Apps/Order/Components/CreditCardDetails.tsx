@@ -20,7 +20,12 @@ export const CreditCardDetails = (props: Props) => {
 
   return (
     <Flex alignItems="center">
-      <BrandCreditCardIcon mr={1} type={brand as Brand} width="25px" />
+      <BrandCreditCardIcon
+        mr={1}
+        type={brand as Brand}
+        width="24px"
+        height="24px"
+      />
       <Text
         variant="sm-display"
         color={textColor}
