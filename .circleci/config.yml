@@ -5,7 +5,7 @@ orbs:
   cypress: cypress-io/cypress@3.4.0
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
-  slack: circleci/slack@4.14.0
+  slack: circleci/slack@4.15.0
   node: circleci/node@5.3.0
 
 executors:
