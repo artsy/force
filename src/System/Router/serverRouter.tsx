@@ -23,6 +23,7 @@ import { Boot } from "System/Boot"
 import { collectAssets } from "System/Router/Utils/collectAssets"
 import { getServerAppContext } from "System/Router/Utils/serverAppContext"
 import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
+import { Transform } from "stream"
 
 export interface ServerAppResults {
   html?: string
@@ -30,6 +31,7 @@ export interface ServerAppResults {
     url: string
   }
   status?: number
+  stream?: Transform
   scripts?: string
   headTags?: any[]
   styleTags?: string
@@ -119,10 +121,9 @@ export const setupServerRouter = async ({
     )
   }
 
-  const { html, scripts, styleTags } = await collectAssets({
+  const { html, stream, scripts, styleTags } = await collectAssets({
     ServerRouter,
     relayEnvironment,
-    res,
   })
 
   // Sentry names transactions according to their Express route.
@@ -141,6 +142,7 @@ export const setupServerRouter = async ({
     redirect,
     scripts,
     status,
+    stream,
     styleTags,
   }
 
