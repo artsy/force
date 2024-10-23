@@ -2,8 +2,20 @@ export interface CollectorSignals {
   primaryLabel?: string | null | undefined
 }
 
-export const getSignalLabel = (collectorSignals: CollectorSignals) => {
+interface SignalLabelProps {
+  collectorSignals: CollectorSignals
+  hideSignals?: string[]
+}
+
+export const getSignalLabel = ({
+  collectorSignals,
+  hideSignals,
+}: SignalLabelProps) => {
   const { primaryLabel } = collectorSignals
+
+  if (primaryLabel && hideSignals?.includes(primaryLabel)) {
+    return ""
+  }
 
   switch (primaryLabel) {
     case "PARTNER_OFFER":

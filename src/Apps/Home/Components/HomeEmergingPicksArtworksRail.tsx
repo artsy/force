@@ -35,7 +35,9 @@ export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRa
   }
 
   return (
-    <ArtworkGridContextProvider hideSignals>
+    <ArtworkGridContextProvider
+      hideSignals={["CURATORS_PICK", "INCREASED_INTEREST"]}
+    >
       <Rail
         title="Curators’ Picks: Emerging"
         subTitle="The best works by rising talents on Artsy, all available now."
@@ -71,9 +73,10 @@ export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRa
                   destination_page_owner_id: artwork.internalID,
                   destination_page_owner_slug: artwork.slug,
                   type: "thumbnail",
-                  signal_label: artwork.collectorSignals
-                    ? getSignalLabel(artwork.collectorSignals)
-                    : "",
+                  signal_label: getSignalLabel({
+                    collectorSignals: artwork.collectorSignals ?? {},
+                    hideSignals: ["CURATORS_PICK", "INCREASED_INTEREST"],
+                  }),
                   signal_bid_count:
                     artwork.collectorSignals?.auction?.bidCount ?? undefined,
                   signal_lot_watcher_count:
