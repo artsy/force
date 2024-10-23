@@ -6,7 +6,7 @@ import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")
 jest.mock("../../Components/GeneArtworkFilter", () => ({
-  GeneArtworkFilterRefetchContainer: () => <div />,
+  GeneArtworkFilterQueryRenderer: () => <div />,
 }))
 
 const { getWrapper } = setupTestWrapper<GeneShow_Test_Query>({

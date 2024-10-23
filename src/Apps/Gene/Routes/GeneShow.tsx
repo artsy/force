@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
 import { GeneShow_gene$data } from "__generated__/GeneShow_gene.graphql"
-import { GeneArtworkFilterRefetchContainer } from "Apps/Gene/Components/GeneArtworkFilter"
+import { GeneArtworkFilterQueryRenderer } from "Apps/Gene/Components/GeneArtworkFilter"
 import { GeneMetaFragmentContainer } from "Apps/Gene/Components/GeneMeta"
 import { extractNodes } from "Utils/extractNodes"
 
@@ -80,25 +80,14 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
 
       <Spacer y={12} />
 
-      <GeneArtworkFilterRefetchContainer gene={gene} />
+      <GeneArtworkFilterQueryRenderer />
     </>
   )
 }
 export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
   gene: graphql`
-    fragment GeneShow_gene on Gene
-      @argumentDefinitions(
-        input: { type: "FilterArtworksInput" }
-        aggregations: { type: "[ArtworkAggregation]" }
-        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
-      ) {
+    fragment GeneShow_gene on Gene {
       ...GeneMeta_gene
-      ...GeneArtworkFilter_gene
-        @arguments(
-          input: $input
-          aggregations: $aggregations
-          shouldFetchCounts: $shouldFetchCounts
-        )
       internalID
       name
       displayName
