@@ -245,6 +245,45 @@ describe("ArtworkSidebarArtists", () => {
         ]
       `)
     })
+
+    it("should not show the shipping section for a non Artsy auction artwork", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isSold: false,
+          isAcquireable: false,
+        }),
+      })
+
+      expect(screen.queryByText("Shipping and taxes")).not.toBeInTheDocument()
+    })
+
+    it("should not show the shipping section for an Artsy auction artwork with no shipping costs", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isSold: false,
+          isAcquireable: false,
+          partner: { internalID: "6321be2a8cde97000d9ad2df" },
+          domesticShippingFee: null,
+          internationalShippingFee: null,
+        }),
+      })
+
+      expect(screen.queryByText("Shipping and taxes")).not.toBeInTheDocument()
+    })
+
+    it("should show the shipping section for an Artsy auction artwork with shipping costs", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isSold: false,
+          isAcquireable: false,
+          partner: { internalID: "6321be2a8cde97000d9ad2df" },
+          domesticShippingFee: { display: "$100" },
+          internationalShippingFee: { display: "$200" },
+        }),
+      })
+
+      expect(screen.queryByText("Shipping and taxes")).toBeInTheDocument()
+    })
   })
 
   describe("Auction Timer", () => {
