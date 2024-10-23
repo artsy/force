@@ -9,6 +9,8 @@ import RelayServerSSR, {
   SSRCache,
 } from "react-relay-network-modern-ssr/lib/server"
 import { RelayNetworkLayerResponse } from "react-relay-network-modern"
+import { Readable } from "stream"
+import { ENABLE_SSR_STREAMING } from "Server/config"
 
 const STATS = "loadable-stats.json"
 
@@ -50,12 +52,20 @@ export const collectAssets = async ({
 
   const sheet = new ServerStyleSheet()
 
-  const jsx = extractor.collectChunks(sheet.collectStyles(<ServerRouter />))
+  const jsx = extractor.collectChunks(
+    sheet.collectStyles(<ServerRouter />)
+  ) as JSX.Element
 
-  const html = renderToString(jsx)
+  let stream
+  let html
+  let styleTags
 
-  // Extract styled-components styles
-  const styleTags = sheet.getStyleTags()
+  if (ENABLE_SSR_STREAMING) {
+    stream = sheet.interleaveWithNodeStream(renderToNodeStream(jsx) as Readable)
+  } else {
+    html = renderToString(jsx)
+    styleTags = sheet.getStyleTags()
+  }
 
   // Build up script tags to inject into head
   const initialScripts: string[] = []
@@ -121,6 +131,7 @@ export const collectAssets = async ({
   return {
     html,
     scripts,
+    stream,
     styleTags,
   }
 }

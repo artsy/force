@@ -65,10 +65,10 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
 
       <PaginationFragmentContainer
         getHref={() => ""}
-        pageCursors={fair?.articlesConnection?.pageCursors!}
+        pageCursors={fair?.articlesConnection?.pageCursors}
         onClick={handleClick}
         onNext={handleNext}
-        hasNextPage={fair?.articlesConnection?.pageInfo.hasNextPage!}
+        hasNextPage={fair?.articlesConnection?.pageInfo.hasNextPage as boolean}
         scrollTo="top"
         offset={40}
       />
