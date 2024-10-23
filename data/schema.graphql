@@ -9254,6 +9254,14 @@ type DisableSecondFactorPayload {
   secondFactorOrErrors: SecondFactorOrErrorsUnion!
 }
 
+enum DiscoverArtworksSort {
+  # Sort by certainty ascending. High certainty means the artwork is more likely to be recommended.
+  CERTAINTY_ASC
+
+  # Sort by certainty descending. High certainty means the artwork is more likely to be recommended.
+  CERTAINTY_DESC
+}
+
 type DiscoveryArtworkReferenceMutationFailure {
   mutationError: GravityMutationError
 }
@@ -16840,9 +16848,11 @@ type Query {
   discoverArtworks(
     after: String
     before: String
+    certainty: Float
     first: Int
     last: Int
     limit: Int
+    sort: DiscoverArtworksSort
     userId: String
   ): ArtworkConnection
 
@@ -19458,7 +19468,6 @@ type TargetSupplyMicrofunnelMetadata {
 
 type Task implements Node {
   actionLink: String!
-  actionMessage: String!
   createdAt(
     format: String
 
@@ -21513,9 +21522,11 @@ type Viewer {
   discoverArtworks(
     after: String
     before: String
+    certainty: Float
     first: Int
     last: Int
     limit: Int
+    sort: DiscoverArtworksSort
     userId: String
   ): ArtworkConnection
 
