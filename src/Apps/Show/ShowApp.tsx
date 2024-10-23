@@ -14,16 +14,12 @@ import { ShowAboutFragmentContainer as ShowAbout } from "./Components/ShowAbout"
 import { ShowInstallShotsFragmentContainer as ShowInstallShots } from "./Components/ShowInstallShots"
 import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "./Components/ShowViewingRoom"
 import { ShowApp_show$data } from "__generated__/ShowApp_show.graphql"
-import { ShowArtworksRefetchContainer as ShowArtworksFilter } from "./Components/ShowArtworks"
 import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
-import {
-  Counts,
-  SharedArtworkFilterContextProps,
-} from "Components/ArtworkFilter/ArtworkFilterContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { BackToFairBannerFragmentContainer as BackToFairBanner } from "./Components/BackToFairBanner"
+import { ShowArtworkFilterQueryRenderer } from "Apps/Show/Components/ShowArtworks"
 
 interface ShowAppProps {
   show: ShowApp_show$data
@@ -34,7 +30,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const hasAbout = !!show.about
   const hasWideHeader =
     (hasAbout && hasViewingRoom) || (!hasAbout && !hasViewingRoom)
-  const { sidebar, isFairBooth } = show
+  const { isFairBooth } = show
 
   return (
     <>
@@ -91,13 +87,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             </GridColumns>
 
             {(show.counts?.eligibleArtworks ?? 0) > 0 ? (
-              <ShowArtworksFilter
-                aggregations={
-                  sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-                }
-                counts={sidebar?.counts as Counts}
-                show={show}
-              />
+              <ShowArtworkFilterQueryRenderer />
             ) : (
               <>
                 <Separator as="hr" />
@@ -123,12 +113,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 // Top-level route needs to be exported for bundle splitting in the router
 export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
   show: graphql`
-    fragment ShowApp_show on Show
-      @argumentDefinitions(
-        input: { type: "FilterArtworksInput" }
-        aggregations: { type: "[ArtworkAggregation]" }
-        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
-      ) {
+    fragment ShowApp_show on Show {
       name
       href
       internalID
@@ -146,19 +131,6 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       fair {
         hasFullFeature
       }
-      sidebar: filterArtworksConnection(aggregations: $aggregations, first: 1) {
-        counts @include(if: $shouldFetchCounts) {
-          followedArtists
-        }
-        aggregations {
-          slice
-          counts {
-            name
-            value
-            count
-          }
-        }
-      }
       images(default: false, size: 100) {
         url
       }
@@ -169,7 +141,6 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       ...ShowInstallShots_show
       ...ShowViewingRoom_show
       ...ShowArtworksEmptyState_show
-      ...ShowArtworks_show @arguments(input: $input)
       ...ShowContextCard_show
     }
   `,

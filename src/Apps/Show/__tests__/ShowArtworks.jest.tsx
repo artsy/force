@@ -4,12 +4,6 @@ import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ShowArtworks_Test_Query } from "__generated__/ShowArtworks_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"
 import { useTracking } from "react-tracking"
-import {
-  artistAggregation,
-  artistNationalityAggregation,
-  materialsTermsAggregation,
-  mediumAggregation,
-} from "Apps/__tests__/Fixtures/aggregations"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.unmock("react-relay")
@@ -29,15 +23,7 @@ jest.mock("System/Hooks/useFeatureFlag", () => ({
 const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
   Component: ({ show }) => (
     <MockBoot>
-      <ShowArtworksRefetchContainer
-        aggregations={[
-          artistAggregation,
-          mediumAggregation,
-          materialsTermsAggregation,
-          artistNationalityAggregation,
-        ]}
-        show={show!}
-      />
+      <ShowArtworksRefetchContainer show={show!} />
     </MockBoot>
   ),
   query: graphql`
@@ -75,6 +61,12 @@ describe("ShowArtworks", () => {
         counts: {
           followedArtists: 10,
         },
+        aggregations: [
+          { slice: "ARTIST" },
+          { slice: "ARTIST_NATIONALITY" },
+          { slice: "MEDIUM" },
+          { slice: "MATERIALS_TERMS" },
+        ],
       }),
     })
     const filterWrappers = wrapper.find("FilterExpandable")

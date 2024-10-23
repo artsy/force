@@ -2,7 +2,6 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException } from "found"
 import { RouteProps } from "System/Router/Route"
-import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 
 const ShowApp = loadable(
   () => import(/* webpackChunkName: "showBundle" */ "./ShowApp"),
@@ -30,21 +29,10 @@ export const showRoutes: RouteProps[] = [
     onClientSideRender: () => {
       ShowApp.preload()
     },
-    prepareVariables: initializeVariablesWithFilterState,
     query: graphql`
-      query showRoutes_ShowQuery(
-        $slug: String!
-        $input: FilterArtworksInput
-        $aggregations: [ArtworkAggregation]
-        $shouldFetchCounts: Boolean!
-      ) {
+      query showRoutes_ShowQuery($slug: String!) {
         show(id: $slug) @principalField {
           ...ShowApp_show
-            @arguments(
-              input: $input
-              aggregations: $aggregations
-              shouldFetchCounts: $shouldFetchCounts
-            )
         }
       }
     `,
@@ -88,23 +76,3 @@ export const showRoutes: RouteProps[] = [
     `,
   },
 ]
-
-function initializeVariablesWithFilterState({ slug }, props) {
-  const initialFilterState = getInitialFilterState(props.location?.query ?? {})
-
-  const aggregations = [
-    "MEDIUM",
-    "TOTAL",
-    "MAJOR_PERIOD",
-    "ARTIST_NATIONALITY",
-    "MATERIALS_TERMS",
-    "ARTIST",
-  ]
-
-  const input = {
-    sort: "partner_show_position",
-    ...initialFilterState,
-  }
-
-  return { slug, input, aggregations, shouldFetchCounts: !!props.context.user }
-}

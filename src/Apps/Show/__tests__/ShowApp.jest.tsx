@@ -11,7 +11,7 @@ jest.mock("Apps/Show/Components/ShowMeta", () => ({
 }))
 
 jest.mock("Apps/Show/Components/ShowArtworks", () => ({
-  ShowArtworksRefetchContainer: () => null,
+  ShowArtworksQueryRenderer: () => null,
 }))
 
 jest.mock("Apps/Show/Components/ShowInstallShots", () => ({
