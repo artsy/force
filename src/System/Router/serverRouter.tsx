@@ -122,6 +122,7 @@ export const setupServerRouter = async ({
   const { html, scripts, styleTags } = await collectAssets({
     ServerRouter,
     relayEnvironment,
+    res,
   })
 
   // Sentry names transactions according to their Express route.

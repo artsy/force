@@ -4,7 +4,7 @@ import path from "path"
 import { ChunkExtractor } from "@loadable/server"
 import serialize from "serialize-javascript"
 import { ServerStyleSheet } from "styled-components"
-import { renderToString } from "react-dom/server"
+import { renderToString, renderToNodeStream } from "react-dom/server"
 import RelayServerSSR, {
   SSRCache,
 } from "react-relay-network-modern-ssr/lib/server"
