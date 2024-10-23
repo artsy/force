@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0844b62a7eb0dcdd57303a56dd2e288>>
+ * @generated SignedSource<<8fb5061eb13b1c7806af177af352965b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type TagApp_tag$data = {
   readonly name: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"TagArtworkFilter_tag" | "TagMeta_tag">;
+  readonly " $fragmentSpreads": FragmentRefs<"TagMeta_tag">;
   readonly " $fragmentType": "TagApp_tag";
 };
 export type TagApp_tag$key = {
@@ -21,48 +21,11 @@ export type TagApp_tag$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "aggregations"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "input"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "shouldFetchCounts"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "TagApp_tag",
   "selections": [
-    {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "aggregations",
-          "variableName": "aggregations"
-        },
-        {
-          "kind": "Variable",
-          "name": "input",
-          "variableName": "input"
-        },
-        {
-          "kind": "Variable",
-          "name": "shouldFetchCounts",
-          "variableName": "shouldFetchCounts"
-        }
-      ],
-      "kind": "FragmentSpread",
-      "name": "TagArtworkFilter_tag"
-    },
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -80,6 +43,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "15bfda47e4d0588e2e6ffeb5d7c2afdf";
+(node as any).hash = "c3fa05401742f7dffb327c1f5cd3c66b";
 
 export default node;
