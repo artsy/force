@@ -4,6 +4,9 @@ import { FC } from "react"
 import { maxDimensionsByArea, resized } from "Utils/resized"
 import { BREAKPOINTS, Media } from "Utils/Responsive"
 import { Link } from "react-head"
+import { getENV } from "Utils/getENV"
+
+const IS_GOOGLEBOT = getENV("IS_GOOGLEBOT")
 
 interface ArtistHeaderImageProps
   extends Omit<BoxProps, "maxHeight" | "maxWidth"> {
@@ -59,7 +62,7 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
             width="100%"
             height="100%"
             style={{ objectFit: "cover" }}
-            lazyLoad
+            lazyLoad={!IS_GOOGLEBOT}
           />
         </ResponsiveBox>
       </Media>
