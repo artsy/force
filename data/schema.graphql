@@ -16848,7 +16848,7 @@ type Query {
   discoverArtworks(
     after: String
     before: String
-    certainty: Int
+    certainty: Float
     first: Int
     last: Int
     limit: Int
@@ -21522,7 +21522,7 @@ type Viewer {
   discoverArtworks(
     after: String
     before: String
-    certainty: Int
+    certainty: Float
     first: Int
     last: Int
     limit: Int
