@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe0909f57816310ba48a18bd58cfc70d>>
+ * @generated SignedSource<<3e8af4237e21f73fd9c0fd0fe78e9f40>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,25 +9,14 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ARTIST_SERIES" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesApp_artistSeries$data = {
   readonly internalID: string;
   readonly railArtist: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesRail_artist">;
   }>;
-  readonly sidebarAggregations: {
-    readonly aggregations: ReadonlyArray<{
-      readonly counts: ReadonlyArray<{
-        readonly count: number;
-        readonly name: string;
-        readonly value: string;
-      } | null | undefined> | null | undefined;
-      readonly slice: ArtworkAggregation | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesArtworksFilter_artistSeries" | "ArtistSeriesHeader_artistSeries" | "ArtistSeriesMeta_artistSeries">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesHeader_artistSeries" | "ArtistSeriesMeta_artistSeries">;
   readonly " $fragmentType": "ArtistSeriesApp_artistSeries";
 };
 export type ArtistSeriesApp_artistSeries$key = {
@@ -36,18 +25,7 @@ export type ArtistSeriesApp_artistSeries$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "aggregations"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "input"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistSeriesApp_artistSeries",
@@ -97,95 +75,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
-    },
-    {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "input",
-          "variableName": "input"
-        }
-      ],
-      "kind": "FragmentSpread",
-      "name": "ArtistSeriesArtworksFilter_artistSeries"
-    },
-    {
-      "alias": "sidebarAggregations",
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "aggregations",
-          "variableName": "aggregations"
-        },
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 1
-        }
-      ],
-      "concreteType": "FilterArtworksConnection",
-      "kind": "LinkedField",
-      "name": "filterArtworksConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArtworksAggregationResults",
-          "kind": "LinkedField",
-          "name": "aggregations",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "slice",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "AggregationCount",
-              "kind": "LinkedField",
-              "name": "counts",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "name",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "value",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "count",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "ArtistSeries",
   "abstractKey": null
 };
 
-(node as any).hash = "c6215cab1d3c95d2a542476325745470";
+(node as any).hash = "07d450e96542574edcbdf65e8f45f035";
 
 export default node;
