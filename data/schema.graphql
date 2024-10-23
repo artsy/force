@@ -19458,7 +19458,6 @@ type TargetSupplyMicrofunnelMetadata {
 
 type Task implements Node {
   actionLink: String!
-  actionMessage: String!
   createdAt(
     format: String
 
