@@ -46,7 +46,7 @@ export const CookieConsentManager: FC<CookieConsentManagerProps> = ({
     setMode("Idle")
   }
 
-  if (!getENV("SEGMENT_WRITE_KEY")) {
+  if (!getENV("SEGMENT_WRITE_KEY") || getENV("IS_GOOGLEBOT")) {
     return <>{children}</>
   }
 
