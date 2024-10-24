@@ -1,11 +1,7 @@
 import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
-import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
-import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { RouteProps } from "System/Router/Route"
-import { getMerchandisingPartnerSlugs } from "./Utils/getMerchandisingPartnerSlugs"
 
 const PartnerApp = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./PartnerApp"),
@@ -49,7 +45,7 @@ const ViewingRoomsRoute = loadable(
 const WorksRoute = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./Routes/Works"),
   {
-    resolveComponent: component => component.ArtworksRefetchContainer,
+    resolveComponent: component => component.PartnerArtworksQueryRenderer,
   }
 )
 
@@ -199,52 +195,9 @@ export const partnerRoutes: RouteProps[] = [
         onClientSideRender: () => {
           WorksRoute.preload()
         },
-        prepareVariables: (data, props) => {
-          const filterStateFromUrl = props.location ? props.location.query : {}
-          const partnerId = props?.params?.partnerId
-          const partnerSlugs = getMerchandisingPartnerSlugs()
-          const aggregations = [
-            "TOTAL",
-            "MEDIUM",
-            "MATERIALS_TERMS",
-            "ARTIST_NATIONALITY",
-            "ARTIST",
-          ]
-
-          const filterParams = {
-            ...initialArtworkFilterState,
-            ...paramsToCamelCase(filterStateFromUrl),
-          }
-
-          // Preselects "Recently Added" sort option for artsy-2 partner by default
-          if (
-            filterParams.sort === initialArtworkFilterState.sort &&
-            partnerSlugs.includes(partnerId)
-          ) {
-            filterParams.sort = "-published_at"
-          }
-
-          return {
-            aggregations,
-            input: allowedFilters(filterParams),
-            partnerId: data.partnerId,
-            shouldFetchCounts: !!props.context.user,
-          }
-        },
         query: graphql`
-          query partnerRoutes_WorksQuery(
-            $partnerId: String!
-            $input: FilterArtworksInput
-            $aggregations: [ArtworkAggregation]
-            $shouldFetchCounts: Boolean!
-          ) {
+          query partnerRoutes_WorksQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
-              ...Works_partner
-                @arguments(
-                  input: $input
-                  aggregations: $aggregations
-                  shouldFetchCounts: $shouldFetchCounts
-                )
               displayWorksSection
               counts {
                 eligibleArtworks
@@ -275,7 +228,7 @@ export const partnerRoutes: RouteProps[] = [
             )
           }
 
-          return <Component {...props} />
+          return <Component />
         },
       },
       {

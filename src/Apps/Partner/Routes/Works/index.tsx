@@ -5,12 +5,20 @@ import { Works_partner$data } from "__generated__/Works_partner.graphql"
 import {
   ArtworkFilterContextProvider,
   Counts,
+  initialArtworkFilterState,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "System/Hooks/useRouter"
 import { getMerchandisingPartnerSlugs } from "Apps/Partner/Utils/getMerchandisingPartnerSlugs"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { WorksFilterQuery } from "__generated__/WorksFilterQuery.graphql"
 
 interface PartnerArtworkFilterProps {
   partner: Works_partner$data
@@ -100,10 +108,88 @@ export const ArtworksRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query WorksQuery($partnerId: String!, $input: FilterArtworksInput) {
+    query WorksFilterRefetchQuery(
+      $partnerId: String!
+      $input: FilterArtworksInput
+    ) {
       partner(id: $partnerId) {
         ...Works_partner @arguments(input: $input)
       }
     }
   `
 )
+
+interface PartnerArtworkFilterQueryRendererProps {}
+
+export const PartnerArtworksQueryRenderer: React.FC<PartnerArtworkFilterQueryRendererProps> = rest => {
+  const { relayEnvironment } = useSystemContext()
+  const { match } = useRouter()
+
+  return (
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<WorksFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query WorksFilterQuery(
+            $partnerId: String!
+            $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
+            $shouldFetchCounts: Boolean!
+          ) {
+            partner(id: $partnerId) {
+              ...Works_partner
+                @arguments(
+                  input: $input
+                  aggregations: $aggregations
+                  shouldFetchCounts: $shouldFetchCounts
+                )
+            }
+          }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="store-and-network"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.partner) {
+            return <ArtworkFilterPlaceholder />
+          }
+
+          return <ArtworksRefetchContainer partner={props.partner} {...rest} />
+        }}
+      />
+    </LazyArtworkGrid>
+  )
+}
+
+const initializeVariablesWithFilterState = (params, props) => {
+  const filterStateFromUrl = props.location ? props.location.query : {}
+  const partnerId = props?.params?.partnerId
+  const partnerSlugs = getMerchandisingPartnerSlugs()
+  const aggregations = [
+    "TOTAL",
+    "MEDIUM",
+    "MATERIALS_TERMS",
+    "ARTIST_NATIONALITY",
+    "ARTIST",
+  ]
+
+  const filterParams = {
+    ...initialArtworkFilterState,
+    ...paramsToCamelCase(filterStateFromUrl),
+  }
+
+  // Preselects "Recently Added" sort option for artsy-2 partner by default
+  if (
+    filterParams.sort === initialArtworkFilterState.sort &&
+    partnerSlugs.includes(partnerId)
+  ) {
+    filterParams.sort = "-published_at"
+  }
+
+  return {
+    aggregations,
+    input: allowedFilters(filterParams),
+    partnerId: params.partnerId,
+    shouldFetchCounts: !!props.context.user,
+  }
+}
