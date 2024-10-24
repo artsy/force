@@ -4,6 +4,10 @@ import MastercardIcon from "@artsy/icons/MastercardIcon"
 import UnknownCardIcon from "@artsy/icons/UnknownCardIcon"
 import AmexIcon from "@artsy/icons/AmexIcon"
 import DiscoverIcon from "@artsy/icons/DiscoverIcon"
+import CartesBancairesIcon from "@artsy/icons/CartesBancairesIcon"
+import DinersClubIcon from "@artsy/icons/DinersClubIcon"
+import JcbIcon from "@artsy/icons/JcbIcon"
+import UnionPayIcon from "@artsy/icons/UnionPayIcon"
 import { BoxProps } from "@artsy/palette"
 
 export type Brand =
@@ -11,6 +15,10 @@ export type Brand =
   | "MasterCard"
   | "American Express"
   | "Discover"
+  | "Cartes Bancaires"
+  | "Diners Club"
+  | "JCB"
+  | "UnionPay"
   | "Unknown"
 
 export interface BrandCreditCardIconProps extends BoxProps {
@@ -30,6 +38,14 @@ export const BrandCreditCardIcon: FC<BrandCreditCardIconProps> = ({
       return <AmexIcon {...rest} />
     case "Discover":
       return <DiscoverIcon {...rest} />
+    case "Cartes Bancaires":
+      return <CartesBancairesIcon {...rest} />
+    case "Diners Club":
+      return <DinersClubIcon {...rest} />
+    case "JCB":
+      return <JcbIcon {...rest} />
+    case "UnionPay":
+      return <UnionPayIcon {...rest} />
     default:
       return <UnknownCardIcon color="black30" {...rest} />
   }
