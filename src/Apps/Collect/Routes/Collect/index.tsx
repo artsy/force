@@ -1,4 +1,3 @@
-import StaticContainer from "found/StaticContainer"
 import { Box, Separator, Spacer, Text, Flex } from "@artsy/palette"
 import { Match, Router } from "found"
 import * as React from "react"
@@ -21,6 +20,7 @@ import { MetaTags } from "Components/MetaTags"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 export interface CollectAppProps {
   match: Match
@@ -84,9 +84,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
         </Box>
 
         <Box>
-          {/* Prevent layout jank when transitioning routes, because that
-              generates new params from `match` and causes rerenders */}
-          <StaticContainer shouldUpdate={!!match.elements}>
+          <LazyArtworkGrid>
             <SystemQueryRenderer<CollectArtworkFilterQuery>
               query={graphql`
                 query CollectArtworkFilterQuery(
@@ -155,7 +153,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
                 )
               }}
             />
-          </StaticContainer>
+          </LazyArtworkGrid>
         </Box>
       </FrameWithRecentlyViewed>
     </>

@@ -16,6 +16,7 @@ import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitial
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { ShowArtworksFilterQuery } from "__generated__/ShowArtworksFilterQuery.graphql"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show$data
@@ -129,31 +130,33 @@ export const ShowArtworkFilterQueryRenderer: React.FC<ShowArtworkFilterQueryRend
   const { match } = useRouter()
 
   return (
-    <SystemQueryRenderer<ShowArtworksFilterQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query ShowArtworksFilterQuery(
-          $slug: String!
-          $input: FilterArtworksInput
-          $aggregations: [ArtworkAggregation]
-        ) {
-          show(id: $slug) {
-            ...ShowArtworks_show
-              @arguments(input: $input, aggregations: $aggregations)
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<ShowArtworksFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query ShowArtworksFilterQuery(
+            $slug: String!
+            $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
+          ) {
+            show(id: $slug) {
+              ...ShowArtworks_show
+                @arguments(input: $input, aggregations: $aggregations)
+            }
           }
-        }
-      `}
-      variables={initializeVariablesWithFilterState(match.params, match)}
-      fetchPolicy="store-and-network"
-      placeholder={<ArtworkFilterPlaceholder />}
-      render={({ error, props }) => {
-        if (error || !props?.show) {
-          return <ArtworkFilterPlaceholder />
-        }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="store-and-network"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.show) {
+            return <ArtworkFilterPlaceholder />
+          }
 
-        return <ShowArtworksRefetchContainer show={props.show} {...rest} />
-      }}
-    />
+          return <ShowArtworksRefetchContainer show={props.show} {...rest} />
+        }}
+      />
+    </LazyArtworkGrid>
   )
 }
 

@@ -1,4 +1,3 @@
-import StaticContainer from "found/StaticContainer"
 import { Spacer } from "@artsy/palette"
 import { Collection_collection$data } from "__generated__/Collection_collection.graphql"
 import { CollectionArtworksQuery } from "__generated__/CollectionArtworksQuery.graphql"
@@ -24,6 +23,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { CollectionFeaturedArtistsQueryRenderer } from "Apps/Collect/Routes/Collection/Components/Header/CollectionFeaturedArtists"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface CollectionAppProps {
   collection: Collection_collection$data
@@ -57,7 +57,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
   const hideSignals = HIDE_SIGNAL_SLUGS.includes(collection.slug)
 
   return (
-    <StaticContainer shouldUpdate={!!match.elements}>
+    <LazyArtworkGrid>
       <Analytics contextPageOwnerId={context.contextPageOwnerId as string}>
         <MetaTags
           description={metadataDescription}
@@ -155,7 +155,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
           </FrameWithRecentlyViewed>
         </>
       </Analytics>
-    </StaticContainer>
+    </LazyArtworkGrid>
   )
 }
 
