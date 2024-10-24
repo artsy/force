@@ -43,7 +43,7 @@ jest.mock("Apps/Auction/Components/AuctionAssociatedSale", () => ({
 }))
 
 jest.mock("Apps/Auction/Components/AuctionArtworkFilter", () => ({
-  AuctionArtworkFilterRefetchContainer: () => null,
+  AuctionArtworkFilterQueryRenderer: () => null,
 }))
 
 jest.mock("Utils/getENV")
@@ -62,7 +62,7 @@ describe("AuctionApp", () => {
       )
     },
     query: graphql`
-      query AuctionAppTestQuery($input: FilterArtworksInput, $slug: String!) {
+      query AuctionAppTestQuery($slug: String!) {
         me {
           ...AuctionApp_me @arguments(saleID: $slug)
         }
@@ -70,13 +70,11 @@ describe("AuctionApp", () => {
           ...AuctionApp_sale
         }
         viewer {
-          ...AuctionApp_viewer
-            @arguments(input: $input, saleID: $slug, isLoggedIn: true)
+          ...AuctionApp_viewer @arguments(saleID: $slug, isLoggedIn: true)
         }
       }
     `,
     variables: {
-      input: {},
       slug: "auction-slug",
     },
   })
@@ -321,9 +319,7 @@ describe("AuctionApp", () => {
       expect(wrapper.text()).not.toContain(
         "Registration for this auction is currently open"
       )
-      expect(wrapper.find("AuctionArtworkFilterRefetchContainer").length).toBe(
-        1
-      )
+      expect(wrapper.find("AuctionArtworkFilterQueryRenderer").length).toBe(1)
     })
 
     it("shows message", () => {

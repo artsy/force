@@ -20,6 +20,9 @@ jest.mock("System/Hooks/useRouter", () => ({
     },
   }),
 }))
+jest.mock("Components/ArtworkFilter/ArtworkFilterPlaceholder", () => ({
+  ArtworkFilterPlaceholder: () => null,
+}))
 jest.mock("Components/ArtworkFilter", () => ({
   ArtworkFilter: () => null,
 }))
@@ -33,16 +36,13 @@ describe("AuctionArtworkFilter", () => {
       return <AuctionArtworkFilterRefetchContainer {...props} />
     },
     query: graphql`
-      query AuctionArtworkFilterTestQuery($input: FilterArtworksInput!) {
+      query AuctionArtworkFilterTestQuery {
         viewer {
           ...AuctionArtworkFilter_viewer
-            @arguments(input: $input, saleID: "test-sale", isLoggedIn: false)
+            @arguments(saleID: "test-sale", isLoggedIn: false)
         }
       }
     `,
-    variables: {
-      input: {},
-    },
   })
 
   it("renders correct components", () => {

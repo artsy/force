@@ -7,7 +7,6 @@ import { AuctionApp_sale$data } from "__generated__/AuctionApp_sale.graphql"
 import { AuctionApp_viewer$data } from "__generated__/AuctionApp_viewer.graphql"
 import { AuctionMetaFragmentContainer } from "./Components/AuctionMeta"
 import { AuctionActiveBidsRefetchContainer } from "./Components/AuctionActiveBids"
-import { AuctionArtworkFilterRefetchContainer } from "./Components/AuctionArtworkFilter"
 import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/AuctionDetails"
 import { AuctionBuyNowRailFragmentContainer } from "./Components/AuctionBuyNowRail"
 import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "./Components/AuctionWorksByFollowedArtistsRail"
@@ -17,6 +16,7 @@ import { useAuctionTracking } from "./Hooks/useAuctionTracking"
 import { AuctionCurrentAuctionsRailFragmentContainer } from "./Components/AuctionCurrentAuctionsRail"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { WebsocketContextProvider } from "System/Contexts/WebsocketContext"
+import { AuctionArtworkFilterQueryRenderer } from "Apps/Auction/Components/AuctionArtworkFilter"
 
 export interface AuctionAppProps {
   me: AuctionApp_me$data
@@ -137,7 +137,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
                 <AuctionCurrentAuctionsRailFragmentContainer viewer={viewer} />
               </>
             ) : (
-              <AuctionArtworkFilterRefetchContainer viewer={viewer} />
+              <AuctionArtworkFilterQueryRenderer />
             )}
 
             <Box>{children}</Box>
@@ -190,12 +190,9 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
   viewer: graphql`
     fragment AuctionApp_viewer on Viewer
       @argumentDefinitions(
-        input: { type: "FilterArtworksInput" }
         saleID: { type: "String!" }
         isLoggedIn: { type: "Boolean!" }
       ) {
-      ...AuctionArtworkFilter_viewer
-        @arguments(input: $input, saleID: $saleID, isLoggedIn: $isLoggedIn)
       ...AuctionWorksByFollowedArtistsRail_viewer
         @arguments(saleID: $saleID)
         @include(if: $isLoggedIn)
