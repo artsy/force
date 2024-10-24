@@ -84,12 +84,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@^38.0.3":
-  version "38.0.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-38.0.3.tgz#deeaab897b1dad66e419660e4e20287312ac1ba3"
-  integrity sha512-HmDmtprwhEkQ/JTzL/DdzT+qxu5qZyk7+kL0fpITJoxEsx3UsJlCljukFAu2Dv52rijLQ52Oh79RkXeOofyQLA==
+"@artsy/palette-charts@^38.0.4":
+  version "38.0.4"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-38.0.4.tgz#fdf80589d64993e431a7253768c1a60b0cdcfaa8"
+  integrity sha512-TgTIkziYKM9FYiQncfOk4OJmEgzSsTAtizidZrly8Y3Kp9aPajENFUa2xGfMw7VLAhFs/vjKHbUkGqzkp3350A==
   dependencies:
-    "@artsy/palette" "^39.0.3"
+    "@artsy/palette" "^39.0.4"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -101,10 +101,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-6.1.0.tgz#f79a1304b59741e982eae98f07d9099d7f1c9347"
   integrity sha512-heBh9cuGIECWHdXPLFqmliKKIHob5iSKxi7SlsN36wkLrfIfwhy/NYUhP1OO/u24Khl7ixpTrKzkt6tQEyCSzw==
 
-"@artsy/palette@^39.0.3":
-  version "39.0.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-39.0.3.tgz#dda8b4e7afd29fe033257513054f3e17d9a5d402"
-  integrity sha512-EqnfZuk0bJ82JkfS41Vqfo9xqdLIzobcm2XAXuJC2gLOnsE0QESweBlXsJPwil4oek75dUhknGXcKpE1rvLfUA==
+"@artsy/palette@^39.0.4":
+  version "39.0.4"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-39.0.4.tgz#b93b96498663b10ebe2f3ba4d038ecceb30bc020"
+  integrity sha512-exwrnJK/9pph1qG1IqBfUIp0HJ7si5jlyhs/f3i2y/DpduIDNeTP6ntI+yzE37qGG4P2w2SKSb3qqTedonGgkA==
   dependencies:
     "@artsy/icons" "^3.2.2"
     "@artsy/palette-tokens" "^6.1.0"
