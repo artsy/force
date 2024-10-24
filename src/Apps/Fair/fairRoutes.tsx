@@ -2,7 +2,6 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException } from "found"
 import { RouteProps } from "System/Router/Route"
-import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 
 const FairApp = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./FairApp"),
@@ -31,7 +30,7 @@ const FairExhibitorsRoute = loadable(
 const FairArtworksRoute = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairArtworks"),
   {
-    resolveComponent: component => component.FairArtworksRefetchContainer,
+    resolveComponent: component => component.FairArtworksQueryRenderer,
   }
 )
 const FairArticlesRoute = loadable(
@@ -98,19 +97,6 @@ export const fairRoutes: RouteProps[] = [
         onClientSideRender: () => {
           FairArtworksRoute.preload()
         },
-        prepareVariables: initializeVariablesWithFilterState,
-        query: graphql`
-          query fairRoutes_FairArtworksQuery(
-            $slug: String!
-            $input: FilterArtworksInput
-            $aggregations: [ArtworkAggregation]
-          ) {
-            fair(id: $slug) @principalField {
-              ...FairArtworks_fair
-                @arguments(input: $input, aggregations: $aggregations)
-            }
-          }
-        `,
       },
     ],
   },
@@ -147,31 +133,3 @@ export const fairRoutes: RouteProps[] = [
     ],
   },
 ]
-
-function initializeVariablesWithFilterState({ slug }, props) {
-  const initialFilterState = getInitialFilterState(props.location?.query ?? {})
-
-  let aggregations: string[] = [
-    "TOTAL",
-    "MAJOR_PERIOD",
-    "ARTIST",
-    "LOCATION_CITY",
-    "ARTIST_NATIONALITY",
-    "MATERIALS_TERMS",
-    "PARTNER",
-  ]
-
-  const input = {
-    sort: "-decayed_merch",
-    ...initialFilterState,
-    includeArtworksByFollowedArtists:
-      !!props.context.user &&
-      initialFilterState["includeArtworksByFollowedArtists"],
-  }
-
-  return {
-    slug,
-    input,
-    aggregations,
-  }
-}
