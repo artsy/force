@@ -1,7 +1,8 @@
-import { cloneDeep } from "lodash"
+/* eslint-disable jest/no-disabled-tests */
+import { cloneDeep, merge } from "lodash"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
-import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
+import { ShippingRouteWithDialog } from "Apps/Order/Routes/Shipping"
 import { graphql } from "react-relay"
 import {
   UntouchedBuyOrder,
@@ -11,13 +12,10 @@ import {
   UntouchedBuyOrderWithShippingQuotes,
   UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
   UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
+  BuyOrderWithArtaShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
 import {
   settingOrderShipmentSuccess,
-  settingOrderShipmentFailure,
-  settingOrderShipmentMissingCountryFailure,
-  settingOrderShipmentMissingRegionFailure,
-  settingOrderArtaShipmentDestinationCouldNotBeGeocodedFailure,
   settingOrderArtaShipmentSuccess,
   selectShippingQuoteSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
@@ -25,26 +23,28 @@ import {
   saveAddressSuccess,
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
-import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
-import { screen } from "@testing-library/react"
+import {
+  ShippingTestQuery,
+  ShippingTestQuery$rawResponse,
+} from "__generated__/ShippingTestQuery.graphql"
+import { screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import {
+  clickSaveAddress,
   fillAddressForm,
   validAddress,
-} from "Components/__tests__/Utils/addressForm"
+} from "Components/__tests__/Utils/addressForm2"
 import userEvent from "@testing-library/user-event"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { queryByAttribute } from "@testing-library/dom"
 import { ErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
-import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
 import { within } from "@testing-library/dom"
-import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { useRouter } from "System/Hooks/useRouter"
 
-// TODO: Optimize test performance and remove long timeout setting
-// Set longer timeout for each test _only_ for this file.
-// https://jestjs.io/docs/jest-object#jestsettimeouttimeout
 jest.setTimeout(10000)
+
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
@@ -71,42 +71,22 @@ jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
 }))
 
+jest.mock("System/Hooks/useRouter", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    router: jest.fn(),
+  }),
+}))
+
 const mockShowErrorDialog = jest.fn()
 jest.mock("Apps/Order/Dialogs", () => ({
-  ...jest.requireActual("../../Dialogs"),
+  ...jest.requireActual("Apps/Order/Dialogs"),
   injectDialog: Component => props => (
     <Component {...props} dialog={{ showErrorDialog: mockShowErrorDialog }} />
   ),
 }))
 
-// TODO: We need to mock `commitMutation` from 3 different places due to the
-// inconsistent implementation.
-const mockCommitMutation = jest.fn()
-jest.mock("Apps/Order/Utils/commitMutation", () => ({
-  ...jest.requireActual("../../Utils/commitMutation"),
-  injectCommitMutation: Component => props => (
-    <Component {...props} commitMutation={mockCommitMutation} />
-  ),
-}))
-jest.mock("relay-runtime", () => ({
-  ...jest.requireActual("relay-runtime"),
-  commitMutation: (...args) => mockCommitMutation(args),
-}))
-jest.mock("react-relay", () => ({
-  ...jest.requireActual("react-relay"),
-  commitMutation: (...args) => mockCommitMutation(args),
-}))
-
-const mockJumpTo = jest.fn()
-jest.mock("Utils/Hooks/useJump", () => ({
-  useJump: () => ({ jumpTo: mockJumpTo }),
-  Jump: () => null,
-}))
-
-const order: ShippingTestQuery$rawResponse["order"] = {
+const order = {
   ...UntouchedBuyOrder,
-  internalID: "1234",
-  id: "1234",
 }
 
 const pageInfo = {
@@ -127,7 +107,6 @@ const meWithoutAddress: ShippingTestQuery$rawResponse["me"] = {
   addressConnection: {
     totalCount: 0,
     edges: [],
-    pageInfo,
   },
 }
 
@@ -136,7 +115,7 @@ const meWithAddresses: ShippingTestQuery$rawResponse["me"] = Object.assign(
   meWithoutAddress,
   {
     addressConnection: {
-      totalCount: 0,
+      totalCount: 2,
       edges: [
         {
           node: {
@@ -181,10 +160,18 @@ const meWithAddresses: ShippingTestQuery$rawResponse["me"] = Object.assign(
 )
 
 const saveAndContinue = async () => {
-  await userEvent.click(screen.getByText("Save and Continue"))
-  await flushPromiseQueue()
+  await waitFor(() => userEvent.click(screen.getByText("Save and Continue")))
 }
 
+const validAddressBeforeVerification = {
+  ...validAddress,
+  addressLine1: "401 Broadway",
+  addressLine2: "Suite 25",
+  city: "New York",
+  region: "NY",
+  postalCode: "10013",
+  country: "US",
+}
 const recommendedAddress = {
   addressLine1: "401 Broadway Suite 25",
   addressLine2: null,
@@ -194,7 +181,11 @@ const recommendedAddress = {
   country: "US",
 }
 
-const verifyAddressWithSuggestions = async (relayEnv, input, suggested) => {
+const verifyAddressWithSuggestions = async (
+  mockResolveLastOperation,
+  input = validAddressBeforeVerification,
+  suggested = recommendedAddress
+) => {
   const addressLines = addr => {
     return [
       addr.addressLine1,
@@ -204,26 +195,33 @@ const verifyAddressWithSuggestions = async (relayEnv, input, suggested) => {
     ]
   }
 
-  const verificationResult = {
-    __typename: "VerifyAddressType",
-    verificationStatus: "VERIFIED_WITH_CHANGES",
-    suggestedAddresses: [
-      {
-        lines: addressLines(recommendedAddress),
-        address: recommendedAddress,
-      },
-    ],
-    inputAddress: {
-      lines: addressLines(validAddress),
-      address: validAddress,
-    },
-  }
+  const suggestedAddress = suggested
+    ? { ...recommendedAddress, ...suggested }
+    : recommendedAddress
 
-  const mutation = relayEnv.mock.getMostRecentOperation()
-  expect(mutation.request.node.operation.name).toEqual(
-    "AddressVerificationFlowQuery"
-  )
-  expect(mutation.request.variables).toEqual({
+  const { operationName, operationVariables } = await waitFor(() => {
+    return mockResolveLastOperation({
+      VerifyAddressPayload: () => ({
+        verifyAddressOrError: {
+          __typename: "VerifyAddressType",
+          verificationStatus: "VERIFIED_WITH_CHANGES",
+          suggestedAddresses: [
+            {
+              lines: addressLines(suggestedAddress),
+              address: suggestedAddress,
+            },
+          ],
+          inputAddress: {
+            lines: addressLines(validAddress),
+            address: validAddress,
+          },
+        },
+      }),
+    })
+  })
+
+  expect(operationName).toBe("AddressVerificationFlowQuery")
+  expect(operationVariables).toEqual({
     address: {
       addressLine1: input.addressLine1,
       addressLine2: input.addressLine2,
@@ -234,48 +232,83 @@ const verifyAddressWithSuggestions = async (relayEnv, input, suggested) => {
     },
   })
 
-  relayEnv.mock.resolveMostRecentOperation(operation => {
-    return MockPayloadGenerator.generate(operation, {
-      VerifyAddressType: () => verificationResult,
-    })
-  })
   expect(await screen.findByText("Confirm your delivery address")).toBeVisible()
   expect(await screen.findByText("Recommended")).toBeVisible()
   expect(await screen.findByText("What you entered")).toBeVisible()
 }
 
-// FIXME: Times out too frequently in CI
+const resolveSaveFulfillmentDetails = async (
+  mockResolveLastOperation,
+  /* A mockResolver for the CommerceSetShipping payload */
+  commerceSetShipping,
+  /* if you submitted the form with a different address than validAddress,
+   pass it here to override the address in the mutation response. */
+  responseAddress?: any
+) => {
+  await flushPromiseQueue()
+  const payload = responseAddress
+    ? merge({}, commerceSetShipping, {
+        orderOrError: {
+          order: { requestedFulfillment: responseAddress },
+        },
+      })
+    : commerceSetShipping
+
+  return await mockResolveLastOperation({
+    CommerceSetShippingPayload: () => payload,
+  })
+}
+
+const getAllPendingOperationNames = (env: MockEnvironment) => {
+  return env.mock.getAllOperations().map(op => op.request.node.operation.name)
+}
+
+let mockTrackEvent: jest.Mock
+
+// FIXME: CI Timeouts likely due to fillAddressForm() duration...
 describe.skip("Shipping", () => {
-  const pushMock = jest.fn()
-  let isCommittingMutation
-  let relayEnv
+  const mockUseRouter = useRouter as jest.Mock
+  const mockPush = jest.fn()
 
   beforeEach(() => {
-    isCommittingMutation = false
+    HTMLElement.prototype.scrollIntoView = jest.fn()
+    mockTrackEvent = jest.fn()
     ;(useTracking as jest.Mock).mockImplementation(() => ({
-      trackEvent: jest.fn(),
+      trackEvent: mockTrackEvent,
     }))
     ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
+
+    mockUseRouter.mockReturnValue({
+      router: {
+        push: mockPush,
+      },
+    })
   })
 
-  afterEach(() => {
-    jest.restoreAllMocks()
-  })
+  let mockRelayEnv
+  // create the mock environment here so we can pass it into our MockBoot
+  // component
+  const renderWithRelay: typeof renderWithRelayRaw = (
+    resolvers,
+    componentProps = {},
+    relayEnv = createMockEnvironment()
+  ) => {
+    mockRelayEnv = relayEnv
+    return renderWithRelayRaw(resolvers, componentProps, relayEnv)
+  }
 
-  const { renderWithRelay } = setupTestWrapperTL({
-    Component: (props: any) => (
-      <MockBoot relayEnvironment={relayEnv}>
-        <ShippingFragmentContainer
-          router={{ push: pushMock } as any}
-          order={props.order}
-          me={props.me}
-          // @ts-ignore
-          isCommittingMutation={isCommittingMutation}
-        />
-      </MockBoot>
-    ),
+  const { renderWithRelay: renderWithRelayRaw } = setupTestWrapperTL<
+    ShippingTestQuery
+  >({
+    Component: props => {
+      return (
+        <MockBoot relayEnvironment={mockRelayEnv}>
+          <ShippingRouteWithDialog order={props.order!} me={props.me!} />
+        </MockBoot>
+      )
+    },
     query: graphql`
-      query ShippingTestQuery @raw_response_type @relay_test_operation {
+      query ShippingTestQuery @relay_test_operation @raw_response_type {
         order: commerceOrder(id: "unused") {
           ...Shipping_order
         }
@@ -284,6 +317,100 @@ describe.skip("Shipping", () => {
         }
       }
     `,
+  })
+
+  describe("initial load with order data", () => {
+    it("loads with saved shipping fulfillment and no saved addresses", async () => {
+      const orderWithFulfillment = {
+        ...order,
+        requestedFulfillment: {
+          __typename: "CommerceShip",
+          name: "Dr Collector",
+          addressLine1: "1 Main St",
+          addressLine2: "",
+          city: "Madrid",
+          country: "ES",
+          postalCode: "28001",
+          region: "",
+          phoneNumber: "555-555-5555",
+        },
+      }
+      renderWithRelay({
+        CommerceOrder: () => orderWithFulfillment,
+        Me: () => meWithoutAddress,
+      })
+
+      const renderedFullName = await screen.findByDisplayValue("Dr Collector")
+      expect(renderedFullName).toHaveValue("Dr Collector")
+      expect(screen.getByPlaceholderText("Street address")).toHaveValue(
+        "1 Main St"
+      )
+      expect(screen.getByPlaceholderText("City")).toHaveValue("Madrid")
+      expect(screen.getByPlaceholderText("ZIP/Postal code")).toHaveValue(
+        "28001"
+      )
+      expect(
+        screen.getByPlaceholderText("Add phone number including country code")
+      ).toHaveValue("555-555-5555")
+    })
+
+    it("loads with saved shipping fulfillment and matching saved addresses", async () => {
+      const expectedAddress = meWithAddresses.addressConnection!.edges![1]!
+        .node!
+      const unexpectedAddress = meWithAddresses.addressConnection!.edges![0]!
+        .node!
+
+      const orderWithFulfillment = {
+        ...order,
+        requestedFulfillment: {
+          __typename: "CommerceShip",
+          name: expectedAddress.name,
+          addressLine1: expectedAddress.addressLine1,
+          addressLine2: expectedAddress.addressLine2,
+          city: expectedAddress.city,
+          country: expectedAddress.country,
+          postalCode: expectedAddress.postalCode,
+          region: expectedAddress.region,
+          phoneNumber: expectedAddress.phoneNumber,
+        },
+      }
+
+      renderWithRelay({
+        CommerceOrder: () => orderWithFulfillment,
+        Me: () => meWithAddresses,
+      })
+
+      expect(expectedAddress.addressLine1).toEqual("401 Broadway")
+      expect(unexpectedAddress.addressLine1).toEqual("1 Main St")
+
+      expect(screen.getByRole("radio", { name: /401 Broadway/ })).toBeChecked()
+      expect(screen.getByRole("radio", { name: /1 Main St/ })).not.toBeChecked()
+    })
+    it("loads with saved pickup fulfillment", async () => {
+      const orderWithFulfillment = {
+        ...order,
+        requestedFulfillment: {
+          __typename: "CommercePickup",
+          fulfillmentType: "PICKUP",
+          phoneNumber: "555-555-5555",
+        },
+      }
+
+      renderWithRelay({
+        CommerceOrder: () => orderWithFulfillment,
+        Me: () => meWithoutAddress,
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.getByRole("radio", { name: /Arrange for pickup/ })
+        ).toBeChecked()
+      })
+
+      expect(
+        screen.getByPlaceholderText("Add phone number including country code")
+      ).toHaveValue("555-555-5555")
+    })
   })
 
   describe("with partner shipping", () => {
@@ -312,7 +439,7 @@ describe.skip("Shipping", () => {
 
       it("does not render fulfillment selection if artwork is not available for pickup", async () => {
         const shippingOnlyOrder = cloneDeep(order) as any
-        shippingOnlyOrder.lineItems.edges[0].node.artwork.pickup_available = false
+        shippingOnlyOrder.lineItems.edges[0].node.artwork.pickupAvailable = false
 
         renderWithRelay({
           CommerceOrder: () => shippingOnlyOrder,
@@ -367,67 +494,56 @@ describe.skip("Shipping", () => {
         expect(screen.getByTestId("AddressForm_country")).toBeEnabled()
       })
 
-      it("sets shipping on order and saves address on user", async () => {
-        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
-        renderWithRelay({
-          CommerceOrder: () => order,
+      it("sets shipping on order, saves address on user and advances to payment", async () => {
+        const { mockResolveLastOperation, env } = renderWithRelay({
+          CommerceOrder: () => ({ ...order, __id: order.id }),
           Me: () => meWithoutAddress,
         })
 
         await fillAddressForm(validAddress)
+
         await saveAndContinue()
 
-        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-
-        let mutationArg = mockCommitMutation.mock.calls[0][0]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "SetShippingMutation"
-        )
-        expect(mutationArg.variables).toEqual({
-          input: {
-            id: "1234",
-            fulfillmentType: "SHIP",
-            phoneNumber: validAddress.phoneNumber,
-            shipping: {
-              ...validAddress,
-              phoneNumber: "",
+        const createAddressOperation = await mockResolveLastOperation({
+          CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
+          Me: () => ({
+            ...meWithoutAddress,
+            addressConnection: {
+              totalCount: 0,
+              edges: [
+                {
+                  node: {
+                    ...saveAddressSuccess.createUserAddress
+                      ?.userAddressOrErrors,
+                  },
+                },
+              ],
             },
-          },
+          }),
         })
 
-        mutationArg = mockCommitMutation.mock.calls[1][0][1]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "CreateUserAddressMutation"
+        expect(createAddressOperation.operationName).toBe(
+          "useCreateSavedAddressMutation"
         )
-        expect(mutationArg.variables).toEqual({
+        expect(createAddressOperation.operationVariables).toMatchObject({
           input: {
             attributes: validAddress,
           },
         })
-      })
 
-      it("sets shipping on order but does not save address if save address is not checked", async () => {
-        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
-        renderWithRelay({
-          CommerceOrder: () => order,
-          Me: () => meWithoutAddress,
-        })
+        await flushPromiseQueue()
 
-        await fillAddressForm(validAddress)
-        userEvent.click(
-          screen.getByRole("checkbox", { name: /Save shipping address/ })
+        const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderShipmentSuccess.commerceSetShipping
         )
-        await saveAndContinue()
 
-        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-
-        let mutationArg = mockCommitMutation.mock.calls[0][0]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "SetShippingMutation"
+        expect(fulfillmentRequest.operationName).toBe(
+          "useSaveFulfillmentDetailsMutation"
         )
-        expect(mutationArg.variables).toEqual({
+        expect(fulfillmentRequest.operationVariables).toMatchObject({
           input: {
-            id: "1234",
+            id: "2939023",
             fulfillmentType: "SHIP",
             phoneNumber: validAddress.phoneNumber,
             shipping: {
@@ -436,64 +552,77 @@ describe.skip("Shipping", () => {
             },
           },
         })
+
+        await waitFor(() => {
+          expect(getAllPendingOperationNames(env)).toEqual([])
+          expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
+        })
       })
 
-      it("routes to payment screen after mutation completes", async () => {
-        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
-        renderWithRelay({
+      it("save address not checked: sets shipping on order and advances to payment without saving address", async () => {
+        const { env, mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithoutAddress,
         })
 
         await fillAddressForm(validAddress)
+        await clickSaveAddress()
+
         await saveAndContinue()
 
-        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-        expect(pushMock).toHaveBeenCalledWith("/orders/1234/payment")
-      })
-
-      it("shows the button spinner while loading the mutation", async () => {
-        isCommittingMutation = true
-        renderWithRelay({
-          CommerceOrder: () => order,
-          Me: () => meWithoutAddress,
-        })
-
-        const button = screen.getByRole("button", { name: "Save and Continue" })
-        expect(queryByAttribute("class", button, /Spinner/)).toBeInTheDocument()
-      })
-
-      it("shows an error when there is an error from the server", async () => {
-        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentFailure)
-        renderWithRelay({
-          CommerceOrder: () => order,
-          Me: () => meWithoutAddress,
-        })
-
-        await fillAddressForm(validAddress)
-        await saveAndContinue()
-
-        expect(mockShowErrorDialog).toHaveBeenCalledWith()
-      })
-
-      it("shows an error when there is a network error", async () => {
-        mockCommitMutation.mockRejectedValueOnce({})
-        renderWithRelay({
-          CommerceOrder: () => order,
-          Me: () => meWithoutAddress,
-        })
-
-        await fillAddressForm(validAddress)
-        await saveAndContinue()
-
-        expect(mockShowErrorDialog).toHaveBeenCalledWith()
-      })
-
-      it("shows an error when there is a missing_country error from the server", async () => {
-        mockCommitMutation.mockResolvedValueOnce(
-          settingOrderShipmentMissingCountryFailure
+        const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderShipmentSuccess.commerceSetShipping
         )
-        renderWithRelay({
+
+        expect(fulfillmentRequest.operationName).toBe(
+          "useSaveFulfillmentDetailsMutation"
+        )
+        await waitFor(() => {
+          expect(getAllPendingOperationNames(env)).toEqual([])
+          expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
+        })
+        expect(() => env.mock.getMostRecentOperation()).toThrow()
+      })
+
+      it("shows a loading spinner while operations are pending", async () => {
+        const { mockResolveLastOperation, env } = renderWithRelay({
+          CommerceOrder: () => ({ ...order, __id: order.id }),
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await saveAndContinue()
+
+        const getSpinner = () => {
+          const button = screen.getByRole("button", {
+            name: "Save and Continue",
+          })
+          return queryByAttribute("class", button, /Spinner/)
+        }
+
+        await waitFor(() => {
+          expect(getSpinner()).toBeInTheDocument()
+        })
+
+        await mockResolveLastOperation({
+          CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
+        })
+
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderShipmentSuccess.commerceSetShipping
+        )
+
+        await waitFor(() => {
+          expect(getSpinner()).not.toBeInTheDocument()
+          expect(getAllPendingOperationNames(env)).toEqual([])
+          expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
+        })
+      })
+
+      it("shows a generic error when there is an unrecognized error code in the exchange result", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithoutAddress,
         })
@@ -501,49 +630,241 @@ describe.skip("Shipping", () => {
         await fillAddressForm(validAddress)
         await saveAndContinue()
 
-        expect(mockShowErrorDialog).toHaveBeenCalledWith({
-          title: "Invalid address",
+        await flushPromiseQueue()
+
+        await mockResolveLastOperation({
+          CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
+        })
+
+        await flushPromiseQueue()
+
+        await resolveSaveFulfillmentDetails(mockResolveLastOperation, {
+          orderOrError: {
+            __typename: "CommerceOrderWithMutationFailure",
+            error: {
+              type: "validation",
+              code: "something_new",
+              data: null,
+            },
+          },
+        })
+
+        await waitFor(() => {
+          expect(mockShowErrorDialog).toHaveBeenCalledWith()
+        })
+      })
+
+      it("shows and tracks an error when an exchange mutation throws an error", async () => {
+        const { mockRejectLastOperation } = renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await clickSaveAddress()
+
+        await saveAndContinue()
+
+        await waitFor(() =>
+          mockRejectLastOperation(new Error("##TEST_ERROR## wrong number"))
+        )
+        await waitFor(() => expect(mockShowErrorDialog).toHaveBeenCalledWith())
+
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: undefined,
+          flow: "user selects a shipping option",
+          message:
+            "Something went wrong. Please try again or contact orders@artsy.net.",
+          title: "An error occurred",
+        })
+      })
+
+      it("shows and tracks an error when there is a missing_country error from the server", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await clickSaveAddress()
+
+        await saveAndContinue()
+
+        await resolveSaveFulfillmentDetails(mockResolveLastOperation, {
+          orderOrError: {
+            __typename: "CommerceOrderWithMutationFailure",
+            error: {
+              type: "validation",
+              code: "missing_country",
+              data: null,
+            },
+          },
+        })
+        await waitFor(() =>
+          expect(mockShowErrorDialog).toHaveBeenCalledWith({
+            title: "Invalid address",
+            message:
+              "There was an error processing your address. Please review and try again.",
+          })
+        )
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: "missing_country",
+          flow: "user submits a shipping option",
           message:
             "There was an error processing your address. Please review and try again.",
+          title: "Invalid address",
         })
       })
 
-      it("shows an error when there is a missing_region error from the server", async () => {
-        mockCommitMutation.mockResolvedValueOnce(
-          settingOrderShipmentMissingRegionFailure
-        )
-        renderWithRelay({
+      it("shows and tracks an error when there is a missing_region error from the server", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithoutAddress,
         })
 
         await fillAddressForm(validAddress)
+        await clickSaveAddress()
+
         await saveAndContinue()
 
-        expect(mockShowErrorDialog).toHaveBeenCalledWith({
-          title: "Invalid address",
+        await resolveSaveFulfillmentDetails(mockResolveLastOperation, {
+          orderOrError: {
+            __typename: "CommerceOrderWithMutationFailure",
+            error: {
+              type: "validation",
+              code: "missing_region",
+              data: null,
+            },
+          },
+        })
+        await waitFor(() =>
+          expect(mockShowErrorDialog).toHaveBeenCalledWith({
+            title: "Invalid address",
+            message:
+              "There was an error processing your address. Please review and try again.",
+          })
+        )
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: "missing_region",
+          flow: "user submits a shipping option",
           message:
             "There was an error processing your address. Please review and try again.",
+          title: "Invalid address",
         })
       })
 
-      it("shows an error when there is a destination_could_not_be_geocodederror from the server", async () => {
-        mockCommitMutation.mockResolvedValueOnce(
-          settingOrderArtaShipmentDestinationCouldNotBeGeocodedFailure
-        )
-        renderWithRelay({
+      it("shows and tracks an error when there is a destination_could_not_be_geocoded error from the server", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithoutAddress,
         })
 
         await fillAddressForm(validAddress)
+        await clickSaveAddress()
+
         await saveAndContinue()
 
+        await resolveSaveFulfillmentDetails(mockResolveLastOperation, {
+          orderOrError: {
+            __typename: "CommerceOrderWithMutationFailure",
+            error: {
+              type: "arta",
+              code: "destination_could_not_be_geocoded",
+              data:
+                '{"status":422,"errors":{"destination":["could not be geocoded"]}}',
+            },
+          },
+        })
         expect(mockShowErrorDialog).toHaveBeenCalledWith({
           title: "Cannot calculate shipping",
           message: (
             <ErrorDialogMessage message="Please confirm that your address details are correct and try again. If the issue continues contact orders@artsy.net." />
           ),
+        })
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: "destination_could_not_be_geocoded",
+          flow: "user submits a shipping option",
+          message:
+            "Please confirm that your address details are correct and try again. If the issue continues contact orders@artsy.net.",
+          title: "Cannot calculate shipping",
+        })
+      })
+      it("shows and tracks an error when there is a unsupported_shipping_location error from the server", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await clickSaveAddress()
+
+        await saveAndContinue()
+
+        await resolveSaveFulfillmentDetails(mockResolveLastOperation, {
+          orderOrError: {
+            __typename: "CommerceOrderWithMutationFailure",
+            error: {
+              code: "unsupported_shipping_location",
+              data: '{"failure_code":"domestic_shipping_only"}',
+            },
+          },
+        })
+        expect(mockShowErrorDialog).toHaveBeenLastCalledWith({
+          title: "Can't ship to that address",
+          message: "This work can only be shipped domestically.",
+        })
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: "unsupported_shipping_location",
+          flow: "user submits a shipping option",
+          message: "This work can only be shipped domestically.",
+          title: "Can't ship to that address",
+        })
+      })
+      it("shows and tracks an error when there is an unlisted error from the server", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await clickSaveAddress()
+
+        await saveAndContinue()
+
+        await resolveSaveFulfillmentDetails(mockResolveLastOperation, {
+          orderOrError: {
+            __typename: "CommerceOrderWithMutationFailure",
+            error: {
+              code: "something new",
+              data: "{}",
+            },
+          },
+        })
+        expect(mockShowErrorDialog).toHaveBeenLastCalledWith()
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: "something new",
+          flow: "user submits a shipping option",
+          message:
+            "Something went wrong. Please try again or contact orders@artsy.net.",
+          title: "An error occurred",
         })
       })
 
@@ -565,250 +886,106 @@ describe.skip("Shipping", () => {
         )
       })
 
-      it("resets shipping for order with already persisted shipping info", async () => {
-        renderWithRelay({
-          CommerceOrder: () => ({
-            ...order,
-            requestedFulfillment: {
-              ...validAddress,
-              __typename: "CommerceShip",
-              name: "Dr Collector",
-            },
-          }),
-          Me: () => meWithoutAddress,
-        })
-
-        await saveAndContinue()
-
-        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-
-        const mutationArg = mockCommitMutation.mock.calls[0][0]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "SetShippingMutation"
-        )
-        expect(mutationArg.variables).toEqual({
-          input: {
-            id: "1234",
-            fulfillmentType: "SHIP",
-            phoneNumber: validAddress.phoneNumber,
-            shipping: {
-              ...validAddress,
-              name: "Dr Collector",
-            },
-          },
-        })
-      })
-
-      describe("form validations", () => {
-        it("does not submit an empty form", async () => {
-          renderWithRelay({
-            CommerceOrder: () => order,
-            Me: () => meWithoutAddress,
-          })
-
-          await saveAndContinue()
-          expect(mockCommitMutation).not.toBeCalled()
-        })
-
-        it("does not submit an incomplete form", async () => {
-          renderWithRelay({
-            CommerceOrder: () => order,
-            Me: () => meWithoutAddress,
-          })
-
-          userEvent.type(screen.getByPlaceholderText("Full name"), "First Last")
-
-          await saveAndContinue()
-          expect(mockCommitMutation).not.toBeCalled()
-        })
-
-        it("requires some fields", async () => {
-          renderWithRelay({
-            CommerceOrder: () => order,
-            Me: () => meWithoutAddress,
-          })
-
-          await saveAndContinue()
-          expect(
-            screen.getAllByText("This field is required").length
-          ).toBeGreaterThanOrEqual(1)
-        })
-
-        it("requires a phone number", async () => {
-          renderWithRelay({
-            CommerceOrder: () => order,
-            Me: () => meWithoutAddress,
-          })
-
-          await fillAddressForm({
-            name: "Erik David",
-            addressLine1: "401 Broadway",
-            addressLine2: "",
-            city: "New York",
-            region: "NY",
-            postalCode: "10013",
-            phoneNumber: "",
-            country: "US",
-          })
-          await saveAndContinue()
-
-          // TODO: form validation is triggered for collapsed form unnecessarily
-          expect(screen.getAllByText("This field is required")).toHaveLength(2)
-          expect(mockCommitMutation).not.toHaveBeenCalled()
-        })
-
-        it("allows a missing postal code and state/province if the selected country is not US or Canada", async () => {
-          renderWithRelay({
-            CommerceOrder: () => order,
-            Me: () => meWithoutAddress,
-          })
-
-          await fillAddressForm({
-            name: "Erik David",
-            addressLine1: "401 Broadway",
-            addressLine2: "",
-            city: "New York",
-            region: "",
-            postalCode: "",
-            phoneNumber: "5555937743",
-            country: "AQ",
-          })
-          await saveAndContinue()
-
-          expect(
-            screen.queryByText("This field is required")
-          ).not.toBeInTheDocument()
-          expect(mockCommitMutation).toHaveBeenCalled()
-        })
-
-        it("only shows validation erros on touched inputs before submission", async () => {
-          renderWithRelay({
-            CommerceOrder: () => order,
-            Me: () => meWithoutAddress,
-          })
-
-          const name = screen.getByPlaceholderText("Full name")
-          userEvent.type(name, "First Last")
-          userEvent.clear(name)
-
-          expect(screen.getByText("This field is required")).toBeInTheDocument()
-        })
-
-        it("shows all validation erros including untouched inputs after submission", async () => {
-          renderWithRelay({
-            CommerceOrder: () => order,
-            Me: () => meWithoutAddress,
-          })
-
-          const name = screen.getByPlaceholderText("Full name")
-          userEvent.type(name, "First Last")
-          userEvent.clear(name)
-
-          await saveAndContinue()
-          expect(
-            screen.getAllByText("This field is required").length
-          ).toBeGreaterThan(1)
-        })
-      })
-
       describe("address verification", () => {
         describe("with US enabled and international disabled", () => {
           beforeEach(() => {
             ;(useFeatureFlag as jest.Mock).mockImplementation(
               (featureName: string) => featureName === "address_verification_us"
             )
-            relayEnv = createMockEnvironment()
-          })
-
-          afterEach(() => {
-            relayEnv = undefined
           })
 
           it("triggers basic form validation before address verification", async () => {
-            const { env } = renderWithRelay(
-              {
-                CommerceOrder: () => order,
-                Me: () => meWithoutAddress,
-              },
-              undefined,
-              relayEnv
-            )
+            const { env } = renderWithRelay({
+              CommerceOrder: () => order,
+              Me: () => meWithoutAddress,
+            })
 
             expect(
-              screen.queryByText("This field is required")
+              screen.queryByText(/[\w\s]is required/)
             ).not.toBeInTheDocument()
 
-            await fillAddressForm(validAddress)
-            userEvent.clear(screen.getByPlaceholderText("Street address"))
+            await fillAddressForm({ ...validAddress, addressLine1: undefined })
+
+            await flushPromiseQueue()
+            expect(
+              screen.queryByText(/[\w\s]is required/)
+            ).not.toBeInTheDocument()
 
             await userEvent.click(screen.getByText("Save and Continue"))
 
-            expect(screen.getByText("This field is required")).toBeVisible()
-            expect(env.mock.getAllOperations()).toHaveLength(0)
+            await waitFor(() => {
+              expect(
+                screen.getByText("Street address is required")
+              ).toBeVisible()
+            })
+            expect(env.mock.getAllOperations().length).toEqual(0)
           })
 
           it("triggers the flow for US address after clicking continue", async () => {
-            const { env } = renderWithRelay(
-              {
-                CommerceOrder: () => order,
-                Me: () => meWithoutAddress,
-              },
-              undefined,
-              relayEnv
-            )
+            const { env, mockResolveLastOperation } = renderWithRelay({
+              CommerceOrder: () => order,
+              Me: () => meWithoutAddress,
+            })
 
-            await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await fillAddressForm(validAddressBeforeVerification)
+
+            await saveAndContinue()
 
             await verifyAddressWithSuggestions(
-              env,
-              validAddress,
+              mockResolveLastOperation,
+              validAddressBeforeVerification,
               recommendedAddress
             )
 
-            expect(mockCommitMutation).not.toHaveBeenCalled()
+            expect(env.mock.getAllOperations().length).toEqual(0)
           })
 
           it("uses recommended address", async () => {
-            const { env } = renderWithRelay(
-              {
-                CommerceOrder: () => order,
-                Me: () => meWithoutAddress,
-              },
-              undefined,
-              relayEnv
-            )
+            const { mockResolveLastOperation } = renderWithRelay({
+              CommerceOrder: () => order,
+              Me: () => meWithoutAddress,
+            })
 
-            await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await fillAddressForm(validAddressBeforeVerification)
+
+            await saveAndContinue()
 
             await verifyAddressWithSuggestions(
-              env,
-              validAddress,
+              mockResolveLastOperation,
+              validAddressBeforeVerification,
               recommendedAddress
             )
 
-            mockCommitMutation.mockResolvedValueOnce(
-              settingOrderShipmentSuccess
-            )
-            // Clicking "Use This Address" on verification modal automatically
-            // sets shipping on the order and proceeds to the next step.
-            userEvent.click(screen.getByText("Use This Address"))
-            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+            await userEvent.click(screen.getByText("Use This Address"))
 
-            let mutationArg = mockCommitMutation.mock.calls[0][0]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "SetShippingMutation"
+            await flushPromiseQueue()
+            const createAddressOperation = await mockResolveLastOperation({
+              CreateUserAddressPayload: () =>
+                saveAddressSuccess.createUserAddress,
+            })
+
+            expect(createAddressOperation.operationName).toBe(
+              "useCreateSavedAddressMutation"
             )
-            expect(mutationArg.variables).toEqual({
+
+            await flushPromiseQueue()
+            const fulfillmentOperation = await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
+            )
+
+            expect(fulfillmentOperation.operationName).toBe(
+              "useSaveFulfillmentDetailsMutation"
+            )
+            expect(fulfillmentOperation.operationVariables).toEqual({
               input: {
-                id: "1234",
+                id: "2939023",
                 fulfillmentType: "SHIP",
                 addressVerifiedBy: "ARTSY",
                 phoneNumber: validAddress.phoneNumber,
                 shipping: {
                   ...recommendedAddress,
-                  name: "Erik David",
+                  name: "Joelle Van Dyne",
                   phoneNumber: "",
                 },
               },
@@ -816,45 +993,53 @@ describe.skip("Shipping", () => {
           })
 
           it("goes back and edits address after verification", async () => {
-            const { env } = renderWithRelay(
-              {
-                CommerceOrder: () => order,
-                Me: () => meWithoutAddress,
-              },
-              undefined,
-              relayEnv
-            )
+            const { mockResolveLastOperation } = renderWithRelay({
+              CommerceOrder: () => order,
+              Me: () => meWithoutAddress,
+            })
 
-            await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await fillAddressForm(validAddressBeforeVerification)
+            await clickSaveAddress()
+
+            await saveAndContinue()
 
             await verifyAddressWithSuggestions(
-              env,
-              validAddress,
+              mockResolveLastOperation,
+              validAddressBeforeVerification,
               recommendedAddress
             )
 
             // Clicking "Back to Edit" allows users to edit the address form
             // and requires clicking "Save and Continue" to proceed.
-            userEvent.click(screen.getByText("Back to Edit"))
-            await userEvent.click(screen.getByText("Save and Continue"))
-            mockCommitMutation.mockResolvedValueOnce(
-              settingOrderShipmentSuccess
+            await userEvent.click(screen.getByText("Back to Edit"))
+            await userEvent.paste(
+              screen.getByPlaceholderText("City"),
+              ": the big apple"
             )
-            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
 
-            let mutationArg = mockCommitMutation.mock.calls[0][0]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "SetShippingMutation"
+            await flushPromiseQueue()
+
+            await saveAndContinue()
+
+            const fulfillmentOperation = await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
             )
-            expect(mutationArg.variables).toEqual({
+
+            expect(fulfillmentOperation.operationName).toBe(
+              "useSaveFulfillmentDetailsMutation"
+            )
+            expect(fulfillmentOperation.operationVariables).toEqual({
               input: {
-                id: "1234",
+                id: "2939023",
                 fulfillmentType: "SHIP",
                 addressVerifiedBy: "USER",
                 phoneNumber: validAddress.phoneNumber,
                 shipping: {
-                  ...validAddress,
+                  ...validAddressBeforeVerification,
+                  city: "New York: the big apple",
+
+                  name: "Joelle Van Dyne",
                   phoneNumber: "",
                 },
               },
@@ -862,181 +1047,51 @@ describe.skip("Shipping", () => {
           })
 
           it("does not triggers the flow for international address after clicking continue", async () => {
-            const { env } = renderWithRelay(
-              {
-                CommerceOrder: () => order,
-                Me: () => meWithoutAddress,
-              },
-              undefined,
-              relayEnv
-            )
-
-            await fillAddressForm(validAddress)
-            userEvent.selectOptions(screen.getByTestId("AddressForm_country"), [
-              "TW",
-            ])
-            await userEvent.click(screen.getByText("Save and Continue"))
-
-            expect(env.mock.getAllOperations()).toHaveLength(0)
-          })
-        })
-
-        describe("with US disabled and international enabled", () => {
-          beforeEach(() => {
-            ;(useFeatureFlag as jest.Mock).mockImplementation(
-              (featureName: string) =>
-                featureName === "address_verification_intl"
-            )
-            relayEnv = createMockEnvironment()
-          })
-
-          afterEach(() => {
-            relayEnv = undefined
-          })
-
-          it("does not trigger the flow for US address after clicking continue", async () => {
-            const { env } = renderWithRelay(
-              {
-                CommerceOrder: () => order,
-                Me: () => meWithoutAddress,
-              },
-              undefined,
-              relayEnv
-            )
-
-            await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
-
-            expect(env.mock.getAllOperations()).toHaveLength(0)
-          })
-
-          it("triggers the flow for international address after clicking continue", async () => {
-            const { env } = renderWithRelay(
-              {
-                CommerceOrder: () => order,
-                Me: () => meWithoutAddress,
-              },
-              undefined,
-              relayEnv
-            )
-
-            await fillAddressForm(validAddress)
-            userEvent.selectOptions(screen.getByTestId("AddressForm_country"), [
-              "TW",
-            ])
-            await userEvent.click(screen.getByText("Save and Continue"))
-
-            const mutation = env.mock.getMostRecentOperation()
-            expect(mutation.request.node.operation.name).toEqual(
-              "AddressVerificationFlowQuery"
-            )
-            expect(mutation.request.variables).toEqual({
-              address: {
-                addressLine1: "401 Broadway",
-                addressLine2: "",
-                city: "New York",
-                region: "NY",
-                postalCode: "15601",
-                country: "TW",
-              },
+            const { mockResolveLastOperation } = renderWithRelay({
+              CommerceOrder: () => order,
+              Me: () => meWithoutAddress,
             })
+
+            await fillAddressForm(validAddress)
+            await clickSaveAddress()
+
+            await userEvent.selectOptions(
+              screen.getByTestId("AddressForm_country"),
+              ["TW"]
+            )
+
+            await saveAndContinue()
+
+            await flushPromiseQueue()
+
+            const operation = mockResolveLastOperation({})
+
+            expect(operation.operationName).toBe(
+              "useSaveFulfillmentDetailsMutation"
+            )
           })
-        })
-      })
-
-      it("scrolls to top of address form when there are address form errors", async () => {
-        renderWithRelay({
-          CommerceOrder: () => UntouchedOfferOrder,
-          Me: () => meWithoutAddress,
-        })
-
-        await fillAddressForm({
-          name: "Erik David",
-          addressLine1: "401 Broadway",
-          addressLine2: "",
-          city: "",
-          region: "",
-          postalCode: "",
-          phoneNumber: "8888888888",
-          country: "",
-        })
-
-        await saveAndContinue()
-
-        expect(mockJumpTo).toBeCalledWith("deliveryAddressTop", {
-          behavior: "smooth",
-        })
-      })
-
-      it("scrolls to top of phone number form when there are phone number errors", async () => {
-        renderWithRelay({
-          CommerceOrder: () => UntouchedOfferOrder,
-          Me: () => meWithoutAddress,
-        })
-
-        await fillAddressForm({
-          name: "Erik David",
-          addressLine1: "401 Broadway",
-          addressLine2: "",
-          city: "New York",
-          region: "NY",
-          postalCode: "10013",
-          phoneNumber: "",
-          country: "US",
-        })
-
-        await saveAndContinue()
-
-        expect(mockJumpTo).toBeCalledWith("phoneNumberTop", {
-          behavior: "smooth",
-        })
-      })
-
-      it("scrolls to top of address form when there are both address and phone number errors", async () => {
-        renderWithRelay({
-          CommerceOrder: () => UntouchedOfferOrder,
-          Me: () => meWithoutAddress,
-        })
-
-        await saveAndContinue()
-
-        expect(mockJumpTo).toBeCalledWith("deliveryAddressTop", {
-          behavior: "smooth",
-        })
-      })
-
-      it("scrolls to top of shipping quotes when they are fetched after save and continue", async () => {
-        mockCommitMutation
-          .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
-          .mockImplementationOnce(relayProps => {
-            relayProps[1].onCompleted(saveAddressSuccess)
-          })
-          .mockResolvedValueOnce(selectShippingQuoteSuccess)
-
-        renderWithRelay({
-          CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
-          Me: () => meWithoutAddress,
-        })
-
-        await fillAddressForm(validAddress)
-        await saveAndContinue()
-
-        expect(mockJumpTo).toBeCalledWith("shippingOptionsTop", {
-          behavior: "smooth",
         })
       })
     })
 
+    // e.g.: Should valid saved address be automatically saved to show shipping quotes?
     describe("with saved addresses", () => {
       it("does not show the new address form", async () => {
-        renderWithRelay({
+        const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithAddresses,
         })
 
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderShipmentSuccess.commerceSetShipping
+        )
         // TODO: need a better way to check if the form is collapsed (height 0).
         // Zero height is not considered invisible.
         // https://github.com/testing-library/jest-dom/issues/450
+        expect(screen.getByTestId("addressFormCollapse")).toHaveStyle({
+          height: "0px",
+        })
         expect(screen.getByPlaceholderText("Street address")).toHaveAttribute(
           "tabindex",
           "-1"
@@ -1044,10 +1099,15 @@ describe.skip("Shipping", () => {
       })
 
       it("lists the addresses and renders the add address option", async () => {
-        renderWithRelay({
+        const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithAddresses,
         })
+
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderShipmentSuccess.commerceSetShipping
+        )
 
         expect(
           screen.getByRole("radio", { name: /401 Broadway/ })
@@ -1058,23 +1118,23 @@ describe.skip("Shipping", () => {
         ).toBeVisible()
       })
 
-      it("sets shipping with the first saved address and phone number when user submits the form directly", async () => {
-        renderWithRelay({
+      it("automatically saves the default saved address on load if valid (without tracking)", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithAddresses,
         })
 
-        await saveAndContinue()
-
-        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-
-        const mutationArg = mockCommitMutation.mock.calls[0][0]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "SetShippingMutation"
+        const automaticFulfillmentMutation = await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderShipmentSuccess.commerceSetShipping
         )
-        expect(mutationArg.variables).toEqual({
+
+        expect(automaticFulfillmentMutation.operationName).toEqual(
+          "useSaveFulfillmentDetailsMutation"
+        )
+        expect(automaticFulfillmentMutation.operationVariables).toEqual({
           input: {
-            id: "1234",
+            id: "2939023",
             fulfillmentType: "SHIP",
             phoneNumber: "422-424-4242",
             shipping: {
@@ -1083,32 +1143,46 @@ describe.skip("Shipping", () => {
               city: "New York",
               country: "US",
               name: "Test Name",
-              phoneNumber: "422-424-4242",
+              phoneNumber: "",
               postalCode: "10013",
               region: "NY",
             },
           },
         })
+
+        expect(mockTrackEvent).not.toHaveBeenCalled()
       })
 
-      it("sets shipping with the selected saved address and phone number", async () => {
-        renderWithRelay({
+      it("sets shipping again when the user clicks to select address", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithAddresses,
         })
 
-        userEvent.click(screen.getByRole("radio", { name: /1 Main St/ }))
-        await saveAndContinue()
-
-        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-
-        const mutationArg = mockCommitMutation.mock.calls[0][0]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "SetShippingMutation"
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderShipmentSuccess.commerceSetShipping
         )
-        expect(mutationArg.variables).toEqual({
+
+        await userEvent.click(screen.getByRole("radio", { name: /1 Main St/ }))
+
+        expect(mockTrackEvent).toHaveBeenCalledWith({
+          action: "clickedShippingAddress",
+          context_module: "ordersShipping",
+          context_page_owner_id: "2939023",
+          context_page_owner_type: "orders-shipping",
+        })
+
+        const fulfillmentMutation = await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderShipmentSuccess.commerceSetShipping
+        )
+        expect(fulfillmentMutation.operationName).toEqual(
+          "useSaveFulfillmentDetailsMutation"
+        )
+        expect(fulfillmentMutation.operationVariables).toEqual({
           input: {
-            id: "1234",
+            id: "2939023",
             fulfillmentType: "SHIP",
             phoneNumber: "555-555-5555",
             shipping: {
@@ -1117,7 +1191,7 @@ describe.skip("Shipping", () => {
               city: "Madrid",
               country: "ES",
               name: "Test Name",
-              phoneNumber: "555-555-5555",
+              phoneNumber: "",
               postalCode: "28001",
               region: "",
             },
@@ -1131,34 +1205,32 @@ describe.skip("Shipping", () => {
             ;(useFeatureFlag as jest.Mock).mockImplementation(
               (featureName: string) => featureName === "address_verification_us"
             )
-            relayEnv = createMockEnvironment()
-          })
-
-          afterEach(() => {
-            relayEnv = undefined
           })
 
           it("does not trigger the flow", async () => {
-            const { env } = renderWithRelay(
-              {
-                CommerceOrder: () => order,
-                Me: () => meWithAddresses,
-              },
-              undefined,
-              relayEnv
+            const { mockResolveLastOperation } = renderWithRelay({
+              CommerceOrder: () => order,
+              Me: () => meWithAddresses,
+            })
+
+            const automaticFulfillmentMutation = await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
             )
 
-            await userEvent.click(screen.getByText("Save and Continue"))
+            expect(automaticFulfillmentMutation.operationName).toEqual(
+              "useSaveFulfillmentDetailsMutation"
+            )
 
-            // Address verification flow is not triggered.
-            expect(env.mock.getAllOperations()).toHaveLength(0)
+            await userEvent.click(
+              screen.getByRole("radio", { name: /1 Main St/ })
+            )
 
-            // It sets shipping on order directly.
-            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-
-            const mutationArg = mockCommitMutation.mock.calls[0][0]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "SetShippingMutation"
+            const manualFulfillmentMutation = await waitFor(() =>
+              mockResolveLastOperation({})
+            )
+            expect(manualFulfillmentMutation.operationName).toBe(
+              "useSaveFulfillmentDetailsMutation"
             )
           })
         })
@@ -1166,100 +1238,118 @@ describe.skip("Shipping", () => {
 
       describe("editing address", () => {
         it("opens a modal with the address prepopulated", async () => {
-          mockCommitMutation.mockResolvedValueOnce(
-            settingOrderArtaShipmentSuccess
-          )
-
-          renderWithRelay({
-            CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+          const { mockResolveLastOperation } = renderWithRelay({
+            CommerceOrder: () => order,
             Me: () => meWithAddresses,
           })
-          await flushPromiseQueue()
 
-          // Set shipping on load for the default address
-          expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-          let mutationArg = mockCommitMutation.mock.calls[0][0]
-          expect(mutationArg.mutation.default.operation.name).toEqual(
-            "SetShippingMutation"
+          await resolveSaveFulfillmentDetails(
+            mockResolveLastOperation,
+            settingOrderShipmentSuccess.commerceSetShipping
           )
 
-          const selectedAddress = screen.getByRole("radio", {
-            name: /401 Broadway/,
-            checked: true,
-          })
-          await userEvent.click(within(selectedAddress).getByText("Edit"))
-          await flushPromiseQueue()
+          const selectedAddress = screen.getAllByTestId("savedAddress")[1]
+          expect(selectedAddress).toHaveTextContent("401 Broadway")
 
-          expect(screen.getByText("Edit address")).toBeVisible()
-          expect(screen.getByDisplayValue("401 Broadway")).toBeInTheDocument()
-          expect(screen.getByDisplayValue("Floor 25")).toBeInTheDocument()
-          expect(screen.getByDisplayValue("New York")).toBeInTheDocument()
-          expect(screen.getByDisplayValue("NY")).toBeInTheDocument()
-          expect(screen.getByDisplayValue("10013")).toBeInTheDocument()
+          await userEvent.click(within(selectedAddress).getByText("Edit"))
+
+          await waitFor(async () => {
+            const addressModal = screen.getByTestId("AddressModal")
+            expect(screen.getByText("Edit address")).toBeVisible()
+            expect(
+              within(addressModal).getByDisplayValue("401 Broadway")
+            ).toBeVisible()
+            expect(
+              within(addressModal).getByDisplayValue("Floor 25")
+            ).toBeVisible()
+            expect(
+              within(addressModal).getByDisplayValue("New York")
+            ).toBeVisible()
+            expect(within(addressModal).getByDisplayValue("NY")).toBeVisible()
+            expect(
+              within(addressModal).getByDisplayValue("10013")
+            ).toBeVisible()
+          })
         })
 
-        it("updates the address after submitting the modal form", async () => {
-          mockCommitMutation.mockResolvedValueOnce(
-            settingOrderArtaShipmentSuccess
-          )
-
-          const updateAddressSpy = jest
-            .spyOn(updateUserAddress, "updateUserAddress")
-            // @ts-ignore
-            .mockImplementationOnce((_, __, ___, ____, onSuccess) => {
-              onSuccess(updateAddressSuccess)
-            })
-
-          renderWithRelay({
-            CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+        it("updates the address after submitting the modal form, then saves the address to the order", async () => {
+          const { mockResolveLastOperation } = renderWithRelay({
+            CommerceOrder: () => order,
             Me: () => meWithAddresses,
           })
-          await flushPromiseQueue()
 
-          // Set shipping on load for the default address
-          expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-          let mutationArg = mockCommitMutation.mock.calls[0][0]
-          expect(mutationArg.mutation.default.operation.name).toEqual(
-            "SetShippingMutation"
+          await resolveSaveFulfillmentDetails(
+            mockResolveLastOperation,
+            settingOrderShipmentSuccess.commerceSetShipping
           )
 
-          const selectedAddress = screen.getByRole("radio", {
-            name: /401 Broadway/,
-            checked: true,
-          })
+          const selectedAddress = screen.getAllByTestId("savedAddress")[1]
+          expect(selectedAddress).toHaveTextContent("401 Broadway")
+
           await userEvent.click(within(selectedAddress).getByText("Edit"))
 
-          const modalTitle = screen.getByText("Edit address")
+          const modalTitle = await screen.findByText("Edit address")
           expect(modalTitle).toBeVisible()
 
           // TODO: need a better way to get a specific input field from multiple forms
-          const addressLine2 = screen.getAllByPlaceholderText(
-            /Apt, floor, suite/
-          )[0]
-          userEvent.clear(addressLine2)
-          userEvent.type(addressLine2, "25th fl.")
+          await waitFor(async () => {
+            const addressModal = screen.getByTestId("AddressModal")
+            const addressLine2 = within(addressModal).getByPlaceholderText(
+              /Apt, floor, suite/
+            )
+            await userEvent.clear(addressLine2)
+            await userEvent.paste(addressLine2, "25th fl.")
+          })
+
           userEvent.click(screen.getByRole("button", { name: "Save" }))
+
           await flushPromiseQueue()
 
-          expect(updateAddressSpy).toHaveBeenCalledTimes(1)
-          expect(updateAddressSpy).toHaveBeenCalledWith(
-            expect.anything(),
-            "2",
-            {
-              addressLine1: "401 Broadway",
+          const updateAddressResult = {
+            userAddressOrErrors: {
+              ...saveAddressSuccess.createUserAddress!.userAddressOrErrors,
               addressLine2: "25th fl.",
-              addressLine3: "",
-              city: "New York",
-              country: "US",
-              name: "Test Name",
-              phoneNumber: "422-424-4242",
-              postalCode: "10013",
-              region: "NY",
             },
-            expect.anything(),
-            expect.anything(),
-            expect.anything()
+          }
+          const updateAddressOperation = await mockResolveLastOperation({
+            UpdateUserAddressPayload: () => updateAddressResult,
+          })
+
+          expect(updateAddressOperation.operationName).toEqual(
+            "useUpdateSavedAddressMutation"
           )
+          expect(updateAddressOperation.operationVariables).toMatchObject({
+            input: {
+              attributes: {
+                addressLine1: "401 Broadway",
+                addressLine2: "25th fl.",
+                city: "New York",
+                country: "US",
+                name: "Test Name",
+                phoneNumber: "422-424-4242",
+                postalCode: "10013",
+                region: "NY",
+              },
+              userAddressID: "2",
+            },
+          })
+
+          await flushPromiseQueue()
+
+          const saveFulfillmentOperation = await resolveSaveFulfillmentDetails(
+            mockResolveLastOperation,
+            settingOrderShipmentSuccess.commerceSetShipping
+          )
+
+          expect(saveFulfillmentOperation.operationName).toEqual(
+            "useSaveFulfillmentDetailsMutation"
+          )
+
+          // Fixme: Save address with correct new value
+          expect(
+            saveFulfillmentOperation.operationVariables.input.shipping
+              .addressLine2
+          ).toEqual("25th fl.")
         })
       })
     })
@@ -1273,52 +1363,53 @@ describe.skip("Shipping", () => {
             ;(useFeatureFlag as jest.Mock).mockImplementation(
               (featureName: string) => featureName === "address_verification_us"
             )
-            relayEnv = createMockEnvironment()
-          })
-
-          afterEach(() => {
-            relayEnv = undefined
           })
 
           it("uses recommended address", async () => {
-            const { env } = renderWithRelay(
-              {
-                CommerceOrder: () =>
-                  UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
-                Me: () => meWithoutAddress,
-              },
-              undefined,
-              relayEnv
-            )
+            const { mockResolveLastOperation, env } = renderWithRelay({
+              CommerceOrder: () =>
+                UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+              Me: () => meWithoutAddress,
+            })
 
             await fillAddressForm(validAddress)
             await saveAndContinue()
 
             await verifyAddressWithSuggestions(
-              env,
+              mockResolveLastOperation,
               validAddress,
               recommendedAddress
             )
 
-            mockCommitMutation
-              .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
-              .mockImplementationOnce(relayProps => {
-                relayProps[1].onCompleted(saveAddressSuccess)
-              })
-              .mockResolvedValueOnce(selectShippingQuoteSuccess)
+            await userEvent.click(screen.getByText("Use This Address"))
 
-            // Clicking "Use This Address" on verification modal automatically
-            // sets shipping on the order and fetching quotes.
-            userEvent.click(screen.getByText("Use This Address"))
             await flushPromiseQueue()
 
-            expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-
-            let mutationArg = mockCommitMutation.mock.calls[0][0]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "SetShippingMutation"
+            const createAddressOperation = await mockResolveLastOperation({
+              CreateUserAddressPayload: () =>
+                merge({}, saveAddressSuccess.createUserAddress, {
+                  userAddressOrErrors: {
+                    ...recommendedAddress,
+                    __typename: "UserAddress",
+                  },
+                }),
+            })
+            expect(createAddressOperation.operationName).toBe(
+              "useCreateSavedAddressMutation"
             )
-            expect(mutationArg.variables).toEqual({
+
+            await flushPromiseQueue()
+
+            const fulfillmentOperation = await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderArtaShipmentSuccess.commerceSetShipping,
+              recommendedAddress
+            )
+
+            expect(fulfillmentOperation.operationName).toBe(
+              "useSaveFulfillmentDetailsMutation"
+            )
+            expect(fulfillmentOperation.operationVariables).toEqual({
               input: {
                 id: "2939023",
                 fulfillmentType: "SHIP_ARTA",
@@ -1326,98 +1417,78 @@ describe.skip("Shipping", () => {
                 phoneNumber: validAddress.phoneNumber,
                 shipping: {
                   ...recommendedAddress,
-                  name: "Erik David",
+                  name: "Joelle Van Dyne",
                   phoneNumber: "",
                 },
               },
             })
 
-            mutationArg = mockCommitMutation.mock.calls[1][0][1]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "CreateUserAddressMutation"
-            )
-            expect(mutationArg.variables).toEqual({
-              input: {
-                attributes: {
-                  ...recommendedAddress,
-                  name: "Erik David",
-                  phoneNumber: "5555937743",
-                },
-              },
-            })
+            await flushPromiseQueue()
 
-            userEvent.click(screen.getByText(/^Premium/))
+            await waitFor(() => userEvent.click(screen.getByText(/^Premium/)))
+
+            await flushPromiseQueue()
+
             await saveAndContinue()
-
-            expect(mockCommitMutation).toHaveBeenCalledTimes(4)
-
-            mutationArg = mockCommitMutation.mock.calls[2][0]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "SelectShippingOptionMutation"
+            await flushPromiseQueue()
+            const selectNewShippingOptionOperation = await mockResolveLastOperation(
+              {
+                CommerceSelectShippingOptionPayload: () =>
+                  selectShippingQuoteSuccess.commerceSelectShippingOption,
+              }
             )
-            expect(mutationArg.variables).toEqual({
-              input: {
-                id: "2939023",
-                selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
-              },
-            })
-
-            mutationArg = mockCommitMutation.mock.calls[3][0][1]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "UpdateUserAddressMutation"
+            expect(selectNewShippingOptionOperation.operationName).toBe(
+              "useSelectShippingQuoteMutation"
             )
-            expect(mutationArg.variables).toEqual({
-              input: {
-                userAddressID: "address-id",
-                attributes: {
-                  ...recommendedAddress,
-                  name: "Erik David",
-                  phoneNumber: "5555937743",
-                },
-              },
-            })
+
+            await flushPromiseQueue()
+            expect(getAllPendingOperationNames(env)).toEqual([])
+            expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
           })
 
           it("goes back and edits address after verification", async () => {
-            const { env } = renderWithRelay(
-              {
-                CommerceOrder: () =>
-                  UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
-                Me: () => meWithoutAddress,
-              },
-              undefined,
-              relayEnv
-            )
+            const { mockResolveLastOperation, env } = renderWithRelay({
+              CommerceOrder: () =>
+                UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+              Me: () => meWithoutAddress,
+            })
 
-            await fillAddressForm(validAddress)
+            await fillAddressForm(validAddressBeforeVerification)
+
             await saveAndContinue()
 
             await verifyAddressWithSuggestions(
-              env,
-              validAddress,
+              mockResolveLastOperation,
+              validAddressBeforeVerification,
               recommendedAddress
             )
-
-            mockCommitMutation
-              .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
-              .mockImplementationOnce(relayProps => {
-                relayProps[1].onCompleted(saveAddressSuccess)
-              })
-              .mockResolvedValueOnce(selectShippingQuoteSuccess)
 
             // Clicking "Back to Edit" allows users to edit the address form
             // and requires clicking "Save and Continue" to proceed.
             userEvent.click(screen.getByText("Back to Edit"))
-            await userEvent.click(screen.getByText("Save and Continue"))
+
+            await saveAndContinue()
             await flushPromiseQueue()
 
-            expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-
-            let mutationArg = mockCommitMutation.mock.calls[0][0]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "SetShippingMutation"
+            const createAddressOperation = await mockResolveLastOperation({
+              CreateUserAddressPayload: () =>
+                saveAddressSuccess.createUserAddress,
+            })
+            expect(createAddressOperation.operationName).toBe(
+              "useCreateSavedAddressMutation"
             )
-            expect(mutationArg.variables).toEqual({
+
+            await flushPromiseQueue()
+
+            const fulfillmentOperation = await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderArtaShipmentSuccess.commerceSetShipping
+            )
+
+            expect(fulfillmentOperation.operationName).toBe(
+              "useSaveFulfillmentDetailsMutation"
+            )
+            expect(fulfillmentOperation.operationVariables).toEqual({
               input: {
                 id: "2939023",
                 fulfillmentType: "SHIP_ARTA",
@@ -1425,134 +1496,28 @@ describe.skip("Shipping", () => {
                 phoneNumber: validAddress.phoneNumber,
                 shipping: {
                   ...validAddress,
+                  name: "Joelle Van Dyne",
                   phoneNumber: "",
                 },
               },
             })
 
-            mutationArg = mockCommitMutation.mock.calls[1][0][1]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "CreateUserAddressMutation"
-            )
-            expect(mutationArg.variables).toEqual({
-              input: {
-                attributes: {
-                  ...validAddress,
-                  phoneNumber: "5555937743",
-                },
-              },
-            })
-
-            userEvent.click(screen.getByText(/^Premium/))
+            await flushPromiseQueue()
             await saveAndContinue()
-
-            expect(mockCommitMutation).toHaveBeenCalledTimes(4)
-
-            mutationArg = mockCommitMutation.mock.calls[2][0]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "SelectShippingOptionMutation"
+            const selectShippingOptionOperation = await mockResolveLastOperation(
+              {
+                CommerceSelectShippingOptionPayload: () =>
+                  selectShippingQuoteSuccess.commerceSelectShippingOption,
+              }
             )
-            expect(mutationArg.variables).toEqual({
-              input: {
-                id: "2939023",
-                selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
-              },
-            })
-
-            mutationArg = mockCommitMutation.mock.calls[3][0][1]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "UpdateUserAddressMutation"
+            expect(selectShippingOptionOperation.operationName).toBe(
+              "useSelectShippingQuoteMutation"
             )
-            expect(mutationArg.variables).toEqual({
-              input: {
-                userAddressID: "address-id",
-                attributes: {
-                  ...validAddress,
-                  phoneNumber: "5555937743",
-                },
-              },
-            })
+
+            await flushPromiseQueue()
+            expect(getAllPendingOperationNames(env)).toEqual([])
+            expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
           })
-        })
-      })
-
-      it("sets shipping on order, selects shipping quote, and save address on user", async () => {
-        mockCommitMutation
-          .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
-          .mockImplementationOnce(relayProps => {
-            relayProps[1].onCompleted(saveAddressSuccess)
-          })
-          .mockResolvedValueOnce(selectShippingQuoteSuccess)
-
-        renderWithRelay({
-          CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
-          Me: () => meWithoutAddress,
-        })
-
-        await fillAddressForm(validAddress)
-        await saveAndContinue()
-
-        // FIXME: `getByRole` can be slow and cause test to time out.
-        // https://github.com/testing-library/dom-testing-library/issues/552#issuecomment-625172052
-        // expect(screen.getByRole("radio", { name: /Standard/ })).toBeVisible()
-        // expect(screen.getByRole("radio", { name: /Express/ })).toBeVisible()
-        // expect(screen.getByRole("radio", { name: /White Glove/ })).toBeVisible()
-        // expect(screen.getByRole("radio", { name: /Rush/ })).toBeVisible()
-        // expect(screen.getByRole("radio", { name: /Premium/ })).toBeVisible()
-        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-
-        let mutationArg = mockCommitMutation.mock.calls[0][0]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "SetShippingMutation"
-        )
-        expect(mutationArg.variables).toEqual({
-          input: {
-            id: "2939023",
-            fulfillmentType: "SHIP_ARTA",
-            phoneNumber: validAddress.phoneNumber,
-            shipping: {
-              ...validAddress,
-              phoneNumber: "",
-            },
-          },
-        })
-
-        mutationArg = mockCommitMutation.mock.calls[1][0][1]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "CreateUserAddressMutation"
-        )
-        expect(mutationArg.variables).toEqual({
-          input: {
-            attributes: validAddress,
-          },
-        })
-
-        userEvent.click(screen.getByText(/^Premium/))
-        await saveAndContinue()
-
-        expect(mockCommitMutation).toHaveBeenCalledTimes(4)
-
-        mutationArg = mockCommitMutation.mock.calls[2][0]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "SelectShippingOptionMutation"
-        )
-        expect(mutationArg.variables).toEqual({
-          input: {
-            id: "2939023",
-            selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
-          },
-        })
-
-        // TODO: Why do we need to update address shortly after creating it?
-        mutationArg = mockCommitMutation.mock.calls[3][0][1]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "UpdateUserAddressMutation"
-        )
-        expect(mutationArg.variables).toEqual({
-          input: {
-            userAddressID: "address-id",
-            attributes: validAddress,
-          },
         })
       })
 
@@ -1561,38 +1526,34 @@ describe.skip("Shipping", () => {
           settingOrderArtaShipmentSuccess
         ) as any
         settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping.orderOrError.order.lineItems.edges[0].node.shippingQuoteOptions.edges = []
-        mockCommitMutation.mockResolvedValueOnce(
-          settingOrderArtaShipmentSuccessWithoutQuotes
-        )
 
-        renderWithRelay({
+        const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
           Me: () => meWithoutAddress,
         })
 
         await fillAddressForm(validAddress)
+        await clickSaveAddress()
+
         await saveAndContinue()
+
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping
+        )
 
         expect(
           screen.queryByRole("radio", { name: /Standard/ })
         ).not.toBeInTheDocument()
-        // TODO: Why are there 2 error messages?
         expect(
-          screen.getAllByText(
+          screen.getByText(
             /In order to provide a shipping quote, we need some more information from you./
           )
-        ).toHaveLength(2)
+        ).toBeInTheDocument()
       })
 
-      it("removes saved address if save address is deselected after fetching shipping quotes", async () => {
-        mockCommitMutation
-          .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
-          .mockImplementationOnce(relayProps => {
-            relayProps[1].onCompleted(saveAddressSuccess)
-          })
-          .mockResolvedValueOnce(selectShippingQuoteSuccess)
-
-        renderWithRelay({
+      it("hides shipping quotes and updates shipping address plus saved address if user edits address fields", async () => {
+        const { mockResolveLastOperation, env } = renderWithRelay({
           CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
           Me: () => meWithoutAddress,
         })
@@ -1600,95 +1561,434 @@ describe.skip("Shipping", () => {
         await fillAddressForm(validAddress)
         await saveAndContinue()
 
-        // FIXME: `getByRole` can be slow and cause test to time out.
-        // https://github.com/testing-library/dom-testing-library/issues/552#issuecomment-625172052
-        // expect(screen.getByRole("radio", { name: /Standard/ })).toBeVisible()
-        // expect(screen.getByRole("radio", { name: /Express/ })).toBeVisible()
-        // expect(screen.getByRole("radio", { name: /White Glove/ })).toBeVisible()
-        // expect(screen.getByRole("radio", { name: /Rush/ })).toBeVisible()
-        // expect(screen.getByRole("radio", { name: /Premium/ })).toBeVisible()
-
-        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-
-        let mutationArg = mockCommitMutation.mock.calls[0][0]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "SetShippingMutation"
-        )
-        expect(mutationArg.variables).toEqual({
-          input: {
-            id: "2939023",
-            fulfillmentType: "SHIP_ARTA",
-            phoneNumber: validAddress.phoneNumber,
-            shipping: {
-              ...validAddress,
-              phoneNumber: "",
+        await flushPromiseQueue()
+        const saveAddressOperation = await mockResolveLastOperation({
+          CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
+          Me: () => ({
+            ...meWithoutAddress,
+            addressConnection: {
+              totalCount: 0,
+              edges: [
+                {
+                  node: {
+                    ...saveAddressSuccess.createUserAddress
+                      ?.userAddressOrErrors,
+                  },
+                },
+              ],
             },
-          },
+          }),
         })
 
-        mutationArg = mockCommitMutation.mock.calls[1][0][1]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "CreateUserAddressMutation"
+        expect(saveAddressOperation.operationName).toBe(
+          "useCreateSavedAddressMutation"
         )
-        expect(mutationArg.variables).toEqual({
-          input: {
-            attributes: validAddress,
-          },
+
+        await flushPromiseQueue()
+
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping
+        )
+
+        await flushPromiseQueue()
+
+        const addressLine1 = screen.getByPlaceholderText("Street address")
+        const addressLine2 = screen.getByPlaceholderText(
+          "Apt, floor, suite, etc."
+        )
+        await userEvent.clear(addressLine2)
+        await userEvent.tab()
+        await userEvent.paste(addressLine1, " Suite 25")
+
+        await waitFor(() => {
+          const shippingBox = screen.getByTestId("ShippingQuotes_collapse")
+
+          expect(shippingBox).toHaveStyle({ height: "0px" })
         })
 
-        userEvent.click(screen.getByText(/^Premium/))
-        userEvent.click(screen.getByText(/^Save shipping address/))
+        await flushPromiseQueue()
 
         await saveAndContinue()
 
-        expect(mockCommitMutation).toHaveBeenCalledTimes(4)
+        const updatedUserAddress = {
+          ...updateAddressSuccess?.updateUserAddress?.userAddressOrErrors,
+          __typename: "UserAddress",
+          addressLine1: "401 Broadway Suite 25",
+          addressLine2: "",
+        }
 
-        mutationArg = mockCommitMutation.mock.calls[2][0]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "SelectShippingOptionMutation"
+        await flushPromiseQueue()
+        const updateAddressOperation = await mockResolveLastOperation({
+          UpdateUserAddressPayload: () => ({
+            userAddressOrErrors: updatedUserAddress,
+          }),
+          Me: () => ({
+            ...meWithoutAddress,
+            addressConnection: {
+              totalCount: 1,
+              edges: [
+                {
+                  node: updatedUserAddress,
+                },
+              ],
+            },
+          }),
+        })
+
+        await flushPromiseQueue()
+
+        expect(updateAddressOperation.operationName).toBe(
+          "useUpdateSavedAddressMutation"
         )
-        expect(mutationArg.variables).toEqual({
+        expect(updateAddressOperation.operationVariables).toEqual({
+          input: {
+            attributes: {
+              name: "Joelle Van Dyne",
+              phoneNumber: "120938120983",
+              addressLine1: "401 Broadway Suite 25",
+              addressLine2: "",
+              city: "New York",
+              region: "NY",
+              country: "US",
+              postalCode: "10013",
+            },
+            userAddressID: "address-id",
+          },
+        })
+
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping,
+          { addressLine1: "401 Broadway Suite 25", addressLine2: "" }
+        )
+
+        await flushPromiseQueue()
+
+        const premiumShipping = await screen.findByRole("radio", {
+          name: /Premium/,
+        })
+
+        await userEvent.click(premiumShipping)
+
+        await saveAndContinue()
+
+        await flushPromiseQueue()
+
+        const selectShippingOptionOperation = await mockResolveLastOperation({
+          CommerceSelectShippingOptionPayload: () =>
+            selectShippingQuoteSuccess.commerceSelectShippingOption,
+        })
+
+        expect(selectShippingOptionOperation.operationName).toBe(
+          "useSelectShippingQuoteMutation"
+        )
+        expect(selectShippingOptionOperation.operationVariables).toEqual({
           input: {
             id: "2939023",
             selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
           },
         })
+        await flushPromiseQueue()
+        expect(getAllPendingOperationNames(env)).toEqual([])
+        expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
+      })
 
-        mutationArg = mockCommitMutation.mock.calls[3][0][1]
-        expect(mutationArg.mutation.default.operation.name).toEqual(
-          "DeleteUserAddressMutation"
+      it("saves address upon selecting shipping quote if address is checked and it wasn't saved before", async () => {
+        const { mockResolveLastOperation, env } = renderWithRelay({
+          CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await clickSaveAddress()
+
+        await saveAndContinue()
+
+        const fulfillmentOperation = await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping
         )
-        expect(mutationArg.variables).toEqual({
+        expect(fulfillmentOperation.operationName).toBe(
+          "useSaveFulfillmentDetailsMutation"
+        )
+
+        // FIXME: `getByRole` can be slow and cause test to time out.
+        // https://github.com/testing-library/dom-testing-library/issues/552#issuecomment-625172052
+        const premiumShipping = await screen.findByRole("radio", {
+          name: /Premium/,
+        })
+        await userEvent.click(premiumShipping)
+        await clickSaveAddress()
+
+        await saveAndContinue()
+
+        await flushPromiseQueue()
+        const saveAddressOperation = await mockResolveLastOperation({
+          CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
+        })
+
+        expect(saveAddressOperation.operationName).toBe(
+          "useCreateSavedAddressMutation"
+        )
+        expect(saveAddressOperation.operationVariables).toEqual({
+          input: {
+            attributes: {
+              addressLine1: "401 Broadway",
+              addressLine2: "Suite 25",
+              city: "New York",
+              country: "US",
+              name: "Joelle Van Dyne",
+              phoneNumber: "120938120983",
+              postalCode: "10013",
+              region: "NY",
+            },
+          },
+        })
+
+        await flushPromiseQueue()
+
+        const selectShippingOptionOperation = await mockResolveLastOperation({
+          CommerceSelectShippingOptionPayload: () =>
+            selectShippingQuoteSuccess.commerceSelectShippingOption,
+        })
+        expect(selectShippingOptionOperation.operationName).toBe(
+          "useSelectShippingQuoteMutation"
+        )
+
+        await flushPromiseQueue()
+
+        expect(getAllPendingOperationNames(env)).toEqual([])
+        expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
+      })
+
+      it("removes saved address upon selecting shipping quote if save-address is unchecked after initially saving it", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await saveAndContinue()
+
+        await flushPromiseQueue()
+        const saveAddressOperation = await mockResolveLastOperation({
+          CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
+        })
+
+        expect(saveAddressOperation.operationName).toBe(
+          "useCreateSavedAddressMutation"
+        )
+        await flushPromiseQueue()
+
+        const fulfillmentOperation = await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping,
+          validAddress
+        )
+        expect(fulfillmentOperation.operationName).toBe(
+          "useSaveFulfillmentDetailsMutation"
+        )
+
+        // FIXME: `getByRole` can be slow and cause test to time out.
+        // https://github.com/testing-library/dom-testing-library/issues/552#issuecomment-625172052
+        const premiumShipping = await screen.findByRole("radio", {
+          name: /Premium/,
+        })
+        await userEvent.click(premiumShipping)
+
+        await clickSaveAddress()
+        await flushPromiseQueue()
+
+        await saveAndContinue()
+        await flushPromiseQueue()
+
+        const deleteAddressOperation = await mockResolveLastOperation({
+          // DeleteUserAddressPayload: () => saveAddressSuccess,
+        })
+        expect(deleteAddressOperation.operationName).toBe(
+          "useDeleteSavedAddressMutation"
+        )
+
+        await flushPromiseQueue()
+
+        const selectShippingOptionOperation = await mockResolveLastOperation({
+          CommerceSelectShippingOptionPayload: () =>
+            selectShippingQuoteSuccess.commerceSelectShippingOption,
+        })
+        expect(selectShippingOptionOperation.operationName).toBe(
+          "useSelectShippingQuoteMutation"
+        )
+
+        expect(deleteAddressOperation.operationVariables).toEqual({
           input: {
             userAddressID: "address-id",
           },
         })
       })
+      it("shows dialog and tracks error if shipping quote save operation fails", async () => {
+        const {
+          mockResolveLastOperation,
+          mockRejectLastOperation,
+        } = renderWithRelay({
+          CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await saveAndContinue()
+
+        await flushPromiseQueue()
+        const saveAddressOperation = await mockResolveLastOperation({
+          CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
+        })
+
+        expect(saveAddressOperation.operationName).toBe(
+          "useCreateSavedAddressMutation"
+        )
+        await flushPromiseQueue()
+
+        const fulfillmentOperation = await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping,
+          validAddress
+        )
+        expect(fulfillmentOperation.operationName).toBe(
+          "useSaveFulfillmentDetailsMutation"
+        )
+
+        // FIXME: `getByRole` can be slow and cause test to time out.
+        // https://github.com/testing-library/dom-testing-library/issues/552#issuecomment-625172052
+        const premiumShipping = await screen.findByRole("radio", {
+          name: /Premium/,
+        })
+        await userEvent.click(premiumShipping)
+
+        await flushPromiseQueue()
+
+        await saveAndContinue()
+        await flushPromiseQueue()
+
+        const selectShippingOptionOperation = await mockRejectLastOperation(
+          new Error("##TEST_ERROR## shipping quotes failed")
+        )
+
+        expect(selectShippingOptionOperation.operationName).toBe(
+          "useSelectShippingQuoteMutation"
+        )
+
+        await waitFor(() => expect(mockShowErrorDialog).toHaveBeenCalledWith())
+        expect(mockTrackEvent).toHaveBeenCalledWith({
+          action: "errorMessageViewed",
+          context_owner_id: "2939023",
+          context_owner_type: "orders-shipping",
+          error_code: undefined,
+          flow: "user sets a shipping quote",
+          message:
+            "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
+          title: "An error occurred",
+        })
+      })
     })
 
     describe("with saved addresses", () => {
+      it("re-saves an already-saved shipping address on load to refresh shipping quotes without saving address", async () => {
+        const { mockResolveLastOperation, env } = renderWithRelay({
+          CommerceOrder: () => BuyOrderWithArtaShippingDetails,
+          Me: () => meWithoutAddress,
+        })
+
+        await waitFor(() => {
+          const shippingBox = screen.getByTestId("ShippingQuotes_collapse")
+          expect(shippingBox).toHaveStyle({ height: "0px" })
+        })
+
+        const fulfillmentOperation = await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping
+        )
+        expect(fulfillmentOperation.operationName).toBe(
+          "useSaveFulfillmentDetailsMutation"
+        )
+        expect(fulfillmentOperation.operationVariables).toEqual({
+          input: {
+            fulfillmentType: "SHIP_ARTA",
+            id: "2939023",
+            phoneNumber: "120938120983",
+            shipping: {
+              addressLine1: "401 Broadway",
+              addressLine2: "Suite 25",
+              city: "New York",
+              country: "US",
+              name: "Joelle Van Dyne",
+              phoneNumber: "",
+              postalCode: "10013",
+              region: "NY",
+            },
+          },
+        })
+
+        await flushPromiseQueue()
+        expect(getAllPendingOperationNames(env)).toEqual([])
+      })
+      it("tracks selecting shipping quote", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          CommerceOrder: () => BuyOrderWithArtaShippingDetails,
+          Me: () => meWithoutAddress,
+        })
+
+        await waitFor(() => {
+          const shippingBox = screen.getByTestId("ShippingQuotes_collapse")
+          expect(shippingBox).toHaveStyle({ height: "0px" })
+        })
+
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping
+        )
+
+        // FIXME: `getByRole` can be slow and cause test to time out.
+        // https://github.com/testing-library/dom-testing-library/issues/552#issuecomment-625172052
+        const premiumShipping = await screen.findByRole("radio", {
+          name: /Premium/,
+        })
+        await userEvent.click(premiumShipping)
+
+        expect(mockTrackEvent).toHaveBeenLastCalledWith({
+          action: "clickedSelectShippingOption",
+          context_module: "ordersShipping",
+          context_page_owner_id: "2939023",
+          context_page_owner_type: "orders-shipping",
+          subject: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+        })
+      })
+
+      // TODO: EMI-1526 https://artsyproduct.atlassian.net/browse/EMI-1526
       describe("Artsy shipping international only", () => {
         describe("with artwork located in the US", () => {
           it("sets shipping on order if the collector is in the EU", async () => {
             const meWithDefaultAddressInSpain = cloneDeep(
               meWithAddresses
             ) as any
+
             meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
             meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
 
-            renderWithRelay({
+            const { mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
                 UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
               Me: () => meWithDefaultAddressInSpain,
             })
-            await flushPromiseQueue()
 
-            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-            const mutationArg = mockCommitMutation.mock.calls[0][0]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "SetShippingMutation"
+            const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
             )
-            expect(mutationArg.variables).toEqual({
+
+            expect(fulfillmentRequest.operationName).toBe(
+              "useSaveFulfillmentDetailsMutation"
+            )
+            expect(fulfillmentRequest.operationVariables).toEqual({
               input: {
                 id: "2939023",
                 fulfillmentType: "SHIP_ARTA",
@@ -1699,47 +1999,37 @@ describe.skip("Shipping", () => {
                   city: "Madrid",
                   country: "ES",
                   name: "Test Name",
-                  phoneNumber: "555-555-5555",
+                  phoneNumber: "",
                   postalCode: "28001",
                   region: "",
                 },
               },
             })
           })
-
-          it("does not set shipping on order if the collector is in the US", async () => {
-            renderWithRelay({
-              CommerceOrder: () =>
-                UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
-              Me: () => meWithAddresses,
-            })
-            await flushPromiseQueue()
-
-            expect(mockCommitMutation).not.toHaveBeenCalled()
-            expect(
-              screen.queryByRole("radio", {
-                name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
-              })
-            ).not.toBeInTheDocument()
-          })
         })
 
         describe("with artwork located in Germany", () => {
-          it("does not set shipping on order if the collector is in the EU", async () => {
+          it("does not set shipping on order automatically if the collector is in the EU", async () => {
+            // TODO: Why would we want this behavior? We can now set shipping on all valid saved addresses-
+            // no need to check whether it needs artsy shipping.
             const meWithDefaultAddressInSpain = cloneDeep(
               meWithAddresses
             ) as any
             meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
             meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
 
-            renderWithRelay({
+            const { env, mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
                 UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
               Me: () => meWithDefaultAddressInSpain,
             })
-            await flushPromiseQueue()
 
-            expect(mockCommitMutation).not.toHaveBeenCalled()
+            await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
+            )
+
+            expect(getAllPendingOperationNames(env)).toEqual([])
             expect(
               screen.queryByRole("radio", {
                 name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
@@ -1747,20 +2037,22 @@ describe.skip("Shipping", () => {
             ).not.toBeInTheDocument()
           })
 
-          it("sets shipping on order if the collector is in the US", async () => {
-            renderWithRelay({
+          it("sets shipping on order automatically if the collector is in the US", async () => {
+            const { mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
                 UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
               Me: () => meWithAddresses,
             })
-            await flushPromiseQueue()
 
-            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-            const mutationArg = mockCommitMutation.mock.calls[0][0]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "SetShippingMutation"
+            const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
             )
-            expect(mutationArg.variables).toEqual({
+
+            expect(fulfillmentRequest.operationName).toBe(
+              "useSaveFulfillmentDetailsMutation"
+            )
+            expect(fulfillmentRequest.operationVariables).toEqual({
               input: {
                 id: "2939023",
                 fulfillmentType: "SHIP_ARTA",
@@ -1771,7 +2063,7 @@ describe.skip("Shipping", () => {
                   city: "New York",
                   country: "US",
                   name: "Test Name",
-                  phoneNumber: "422-424-4242",
+                  phoneNumber: "",
                   postalCode: "10013",
                   region: "NY",
                 },
@@ -1783,26 +2075,31 @@ describe.skip("Shipping", () => {
 
       describe("Artsy shipping domestic only", () => {
         describe("with artwork located in Germany", () => {
-          it("sets shipping on order if the collector is in Germany", async () => {
+          // TODO: Like the test above, these tests assume we don't want to automatically set shipping
+          // unless the default address would require artsy shipping. That is no longer the case-
+          // We can safely set the shipping. See alsoped test above (~L1957)
+          it("sets shipping on order if the collector is in the EU", async () => {
             const meWithDefaultAddressInSpain = cloneDeep(
               meWithAddresses
             ) as any
             meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
             meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
 
-            renderWithRelay({
+            const { mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
                 UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
               Me: () => meWithDefaultAddressInSpain,
             })
-            await flushPromiseQueue()
 
-            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-            const mutationArg = mockCommitMutation.mock.calls[0][0]
-            expect(mutationArg.mutation.default.operation.name).toEqual(
-              "SetShippingMutation"
+            const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
             )
-            expect(mutationArg.variables).toEqual({
+
+            expect(fulfillmentRequest.operationName).toBe(
+              "useSaveFulfillmentDetailsMutation"
+            )
+            expect(fulfillmentRequest.operationVariables).toEqual({
               input: {
                 id: "2939023",
                 fulfillmentType: "SHIP_ARTA",
@@ -1813,7 +2110,7 @@ describe.skip("Shipping", () => {
                   city: "Madrid",
                   country: "ES",
                   name: "Test Name",
-                  phoneNumber: "555-555-5555",
+                  phoneNumber: "",
                   postalCode: "28001",
                   region: "",
                 },
@@ -1822,14 +2119,18 @@ describe.skip("Shipping", () => {
           })
 
           it("does not set shipping on order if the collector is in the US", async () => {
-            renderWithRelay({
+            const { env, mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
                 UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
               Me: () => meWithAddresses,
             })
-            await flushPromiseQueue()
 
-            expect(mockCommitMutation).not.toHaveBeenCalled()
+            await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
+            )
+
+            expect(getAllPendingOperationNames(env)).toEqual([])
             expect(
               screen.queryByRole("radio", {
                 name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
@@ -1846,14 +2147,18 @@ describe.skip("Shipping", () => {
             meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
             meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
 
-            renderWithRelay({
+            const { env, mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
                 UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
               Me: () => meWithDefaultAddressInSpain,
             })
-            await flushPromiseQueue()
 
-            expect(mockCommitMutation).not.toHaveBeenCalled()
+            await resolveSaveFulfillmentDetails(
+              mockResolveLastOperation,
+              settingOrderShipmentSuccess.commerceSetShipping
+            )
+
+            expect(getAllPendingOperationNames(env)).toEqual([])
             expect(
               screen.queryByRole("radio", {
                 name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
@@ -1863,53 +2168,51 @@ describe.skip("Shipping", () => {
 
           describe("with the collector in the US", () => {
             it("sets shipping with the default address on load", async () => {
-              mockCommitMutation.mockResolvedValueOnce(
-                settingOrderArtaShipmentSuccess
-              )
-
-              renderWithRelay({
+              const { mockResolveLastOperation } = renderWithRelay({
                 CommerceOrder: () =>
                   UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
                 Me: () => meWithAddresses,
               })
-              await flushPromiseQueue()
 
-              expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-
-              const mutationArg = mockCommitMutation.mock.calls[0][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SetShippingMutation"
+              const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+                mockResolveLastOperation,
+                settingOrderArtaShipmentSuccess.commerceSetShipping
               )
-              expect(mutationArg.variables).toEqual({
-                input: {
-                  id: "2939023",
-                  fulfillmentType: "SHIP_ARTA",
-                  phoneNumber: "422-424-4242",
-                  shipping: {
-                    addressLine1: "401 Broadway",
-                    addressLine2: "Floor 25",
-                    city: "New York",
-                    country: "US",
-                    name: "Test Name",
-                    phoneNumber: "422-424-4242",
-                    postalCode: "10013",
-                    region: "NY",
-                  },
+
+              expect(fulfillmentRequest.operationName).toBe(
+                "useSaveFulfillmentDetailsMutation"
+              )
+              expect(fulfillmentRequest.operationVariables.input).toEqual({
+                id: "2939023",
+                fulfillmentType: "SHIP_ARTA",
+                phoneNumber: "422-424-4242",
+                shipping: {
+                  addressLine1: "401 Broadway",
+                  addressLine2: "Floor 25",
+                  city: "New York",
+                  country: "US",
+                  name: "Test Name",
+                  phoneNumber: "",
+                  postalCode: "10013",
+                  region: "NY",
                 },
               })
             })
 
             it("shows shipping quotes for the default address on load", async () => {
-              mockCommitMutation.mockResolvedValueOnce(
-                settingOrderArtaShipmentSuccess
-              )
-
-              renderWithRelay({
+              const { mockResolveLastOperation } = renderWithRelay({
                 CommerceOrder: () =>
                   UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
                 Me: () => meWithAddresses,
               })
-              await flushPromiseQueue()
+              const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+                mockResolveLastOperation,
+                settingOrderArtaShipmentSuccess.commerceSetShipping
+              )
+
+              expect(fulfillmentRequest.operationName).toBe(
+                "useSaveFulfillmentDetailsMutation"
+              )
 
               expect(
                 screen.getAllByRole("radio", {
@@ -1919,50 +2222,35 @@ describe.skip("Shipping", () => {
             })
 
             it("sets shipping on order, shows shipping quotes and saves the pre-selected quote", async () => {
-              mockCommitMutation.mockResolvedValueOnce(
-                settingOrderArtaShipmentSuccess
-              )
-
-              renderWithRelay({
+              const { mockResolveLastOperation } = renderWithRelay({
                 // Simulate the condition with an order with saved shipping quotes
                 CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
                 Me: () => meWithAddresses,
               })
 
-              await flushPromiseQueue()
+              const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+                mockResolveLastOperation,
+                settingOrderArtaShipmentSuccess.commerceSetShipping
+              )
+
+              expect(fulfillmentRequest.operationName).toBe(
+                "useSaveFulfillmentDetailsMutation"
+              )
+
               expect(screen.getByText("Save and Continue")).toBeEnabled()
 
+              await flushPromiseQueue()
               await saveAndContinue()
 
-              expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-
-              let mutationArg = mockCommitMutation.mock.calls[0][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SetShippingMutation"
+              await flushPromiseQueue()
+              const selectShippingOptionOperation = await mockResolveLastOperation(
+                {}
               )
-              expect(mutationArg.variables).toEqual({
-                input: {
-                  id: "2939023",
-                  fulfillmentType: "SHIP_ARTA",
-                  phoneNumber: "422-424-4242",
-                  shipping: {
-                    addressLine1: "401 Broadway",
-                    addressLine2: "Floor 25",
-                    city: "New York",
-                    country: "US",
-                    name: "Test Name",
-                    phoneNumber: "422-424-4242",
-                    postalCode: "10013",
-                    region: "NY",
-                  },
-                },
-              })
 
-              mutationArg = mockCommitMutation.mock.calls[1][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SelectShippingOptionMutation"
+              expect(selectShippingOptionOperation.operationName).toEqual(
+                "useSelectShippingQuoteMutation"
               )
-              expect(mutationArg.variables).toEqual({
+              expect(selectShippingOptionOperation.operationVariables).toEqual({
                 input: {
                   id: "2939023",
                   selectedShippingQuoteId:
@@ -1972,28 +2260,20 @@ describe.skip("Shipping", () => {
             })
 
             it("selects a different shipping quote and saves it", async () => {
-              mockCommitMutation.mockResolvedValueOnce(
-                settingOrderArtaShipmentSuccess
-              )
-
-              renderWithRelay({
+              const { mockResolveLastOperation } = renderWithRelay({
                 // Simulate the condition with an order with saved shipping quotes
                 CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
                 Me: () => meWithAddresses,
               })
-              await flushPromiseQueue()
-
-              userEvent.click(screen.getByText(/^Premium/))
-              expect(screen.getByText("Save and Continue")).toBeEnabled()
-              await saveAndContinue()
-
-              expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-
-              let mutationArg = mockCommitMutation.mock.calls[0][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SetShippingMutation"
+              const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+                mockResolveLastOperation,
+                settingOrderArtaShipmentSuccess.commerceSetShipping
               )
-              expect(mutationArg.variables).toEqual({
+
+              expect(fulfillmentRequest.operationName).toBe(
+                "useSaveFulfillmentDetailsMutation"
+              )
+              expect(fulfillmentRequest.operationVariables).toEqual({
                 input: {
                   id: "2939023",
                   fulfillmentType: "SHIP_ARTA",
@@ -2004,18 +2284,25 @@ describe.skip("Shipping", () => {
                     city: "New York",
                     country: "US",
                     name: "Test Name",
-                    phoneNumber: "422-424-4242",
+                    phoneNumber: "",
                     postalCode: "10013",
                     region: "NY",
                   },
                 },
               })
 
-              mutationArg = mockCommitMutation.mock.calls[1][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SelectShippingOptionMutation"
+              userEvent.click(screen.getByText(/^Premium/))
+              expect(screen.getByText("Save and Continue")).toBeEnabled()
+              await saveAndContinue()
+
+              await flushPromiseQueue()
+              const selectShippingOptionOperation = await mockResolveLastOperation(
+                {}
               )
-              expect(mutationArg.variables).toEqual({
+              expect(selectShippingOptionOperation.operationName).toEqual(
+                "useSelectShippingQuoteMutation"
+              )
+              expect(selectShippingOptionOperation.operationVariables).toEqual({
                 input: {
                   id: "2939023",
                   selectedShippingQuoteId:
@@ -2025,15 +2312,15 @@ describe.skip("Shipping", () => {
             })
 
             it("keeps the submit button enabled after selecting a shipping quote", async () => {
-              mockCommitMutation.mockResolvedValueOnce(
-                settingOrderArtaShipmentSuccess
-              )
-
-              renderWithRelay({
+              const { mockResolveLastOperation } = renderWithRelay({
+                // Simulate the condition with an order with saved shipping quotes
                 CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
                 Me: () => meWithAddresses,
               })
-              await flushPromiseQueue()
+              await resolveSaveFulfillmentDetails(
+                mockResolveLastOperation,
+                settingOrderArtaShipmentSuccess.commerceSetShipping
+              )
 
               const premiumShipping = screen.getByRole("radio", {
                 name: /^Premium/,
@@ -2050,269 +2337,148 @@ describe.skip("Shipping", () => {
             })
 
             it("routes to payment screen after saving shipping option", async () => {
-              mockCommitMutation
-                .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
-                .mockResolvedValueOnce(selectShippingQuoteSuccess)
-
-              renderWithRelay({
+              const { mockResolveLastOperation, env } = renderWithRelay({
+                // Simulate the condition with an order with saved shipping quotes
                 CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
                 Me: () => meWithAddresses,
               })
-              await flushPromiseQueue()
+              const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+                mockResolveLastOperation,
+                settingOrderArtaShipmentSuccess.commerceSetShipping
+              )
+              expect(fulfillmentRequest.operationName).toBe(
+                "useSaveFulfillmentDetailsMutation"
+              )
               await saveAndContinue()
 
-              expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+              await flushPromiseQueue()
+              const selectShippingOptionOperation = await mockResolveLastOperation(
+                {
+                  CommerceSelectShippingOptionPayload: () =>
+                    selectShippingQuoteSuccess.commerceSelectShippingOption,
+                }
+              )
+              expect(selectShippingOptionOperation.operationName).toEqual(
+                "useSelectShippingQuoteMutation"
+              )
 
-              let mutationArg = mockCommitMutation.mock.calls[0][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SetShippingMutation"
-              )
-              mutationArg = mockCommitMutation.mock.calls[1][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SelectShippingOptionMutation"
-              )
-              expect(pushMock).toHaveBeenCalledWith("/orders/2939023/payment")
+              expect(getAllPendingOperationNames(env)).toEqual([])
+              expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
             })
 
             it("reloads shipping quotes after editing the selected address", async () => {
-              relayEnv = createMockEnvironment()
-              mockCommitMutation
-                .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
-                .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
+              // const updateAddressResponse = cloneDeep(
+              //   updateAddressSuccess
+              // ) as any
+              // // Match the edited address with the selected address to trigger refetching quotes
+              // updateAddressResponse.updateUserAddress.userAddressOrErrors.internalID =
+              //   "2"
+              // const updateAddressSpy = jest
+              //   .spyOn(updateUserAddress, "updateUserAddress")
+              //   // @ts-ignore
+              //   .mockImplementationOnce((_, __, ___, ____, onSuccess) => {
+              //     onSuccess(updateAddressResponse)
+              //   })
 
-              const updateAddressResponse = cloneDeep(
-                updateAddressSuccess
-              ) as any
-              // Match the edited address with the selected address to trigger refetching quotes
-              updateAddressResponse.updateUserAddress.userAddressOrErrors.internalID =
-                "2"
-              const updateAddressSpy = jest
-                .spyOn(updateUserAddress, "updateUserAddress")
-                // @ts-ignore
-                .mockImplementationOnce((_, __, ___, ____, onSuccess) => {
-                  onSuccess(updateAddressResponse)
-                })
-
-              const { env } = renderWithRelay(
-                {
-                  CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
-                  Me: () => meWithAddresses,
-                },
-                undefined
-              )
-              await flushPromiseQueue()
-
-              // Set shipping/fetch quotes on load for the default address
-              expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-              let mutationArg = mockCommitMutation.mock.calls[0][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SetShippingMutation"
-              )
-
-              // Edit the selected address
-              const selectedAddress = screen.getByRole("radio", {
-                name: /401 Broadway/,
-                checked: true,
+              const { mockResolveLastOperation } = renderWithRelay({
+                CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+                Me: () => meWithAddresses,
               })
+
+              await resolveSaveFulfillmentDetails(
+                mockResolveLastOperation,
+                settingOrderArtaShipmentSuccess.commerceSetShipping
+              )
+
+              const selectedAddress = screen.getAllByTestId("savedAddress")[1]
+              expect(selectedAddress).toHaveTextContent("401 Broadway")
+
               await userEvent.click(within(selectedAddress).getByText("Edit"))
 
-              const modalTitle = screen.getByText("Edit address")
+              const modalTitle = await screen.findByText("Edit address")
               expect(modalTitle).toBeVisible()
 
               // TODO: need a better way to get a specific input field from multiple forms
-              const addressLine2 = screen.getAllByPlaceholderText(
-                /Apt, floor, suite/
-              )[0]
-              userEvent.clear(addressLine2)
-              userEvent.paste(addressLine2, "25th fl.")
-              userEvent.click(screen.getByText("Save"))
-
-              await flushPromiseQueue()
-
-              expect(updateAddressSpy).toHaveBeenCalledTimes(1)
-              expect(updateAddressSpy).toHaveBeenCalledWith(
-                expect.anything(),
-                "2",
-                {
-                  addressLine1: "401 Broadway",
-                  addressLine2: "25th fl.",
-                  addressLine3: "",
-                  city: "New York",
-                  country: "US",
-                  name: "Test Name",
-                  phoneNumber: "422-424-4242",
-                  postalCode: "10013",
-                  region: "NY",
-                },
-                expect.anything(),
-                expect.anything(),
-                expect.anything()
-              )
-
-              // TODO: This uses relay mock environment to mock the refetch query. Is there a better way?
-              const mutation = env.mock.getMostRecentOperation()
-              expect(mutation.request.node.operation.name).toEqual(
-                "SavedAddressesRefetchQuery"
-              )
-              expect(mutation.request.variables).toEqual({})
-
-              const updatedMe = cloneDeep(meWithAddresses) as any
-              updatedMe.addressConnection.edges[1].node.addressLine2 =
-                "25th fl."
-              env.mock.resolveMostRecentOperation(operation => {
-                return MockPayloadGenerator.generate(operation, {
-                  CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
-                  Me: () => updatedMe,
-                })
+              await waitFor(async () => {
+                const addressModal = screen.getByTestId("AddressModal")
+                const addressLine2 = within(addressModal).getByPlaceholderText(
+                  /Apt, floor, suite/
+                )
+                await userEvent.clear(addressLine2)
+                await userEvent.paste(addressLine2, "25th fl.")
               })
 
-              // Wait for the second setShipping mutation to complete before clicking save and continue
+              userEvent.click(screen.getByRole("button", { name: "Save" }))
+
               await flushPromiseQueue()
-              await saveAndContinue()
 
-              expect(mockCommitMutation).toHaveBeenCalledTimes(3)
+              const updateAddressOperation = await mockResolveLastOperation({
+                UpdateUserAddressPayload: () => ({
+                  ...saveAddressSuccess.createUserAddress,
+                  addressLine2: "25th fl.",
+                }),
+                Me: () => ({
+                  ...meWithAddresses,
+                  addressConnection: {
+                    totalCount: 2,
+                    edges: [
+                      meWithAddresses.addressConnection!.edges![0],
 
-              // Set shipping/fetch quotes again for the edited address
-              mutationArg = mockCommitMutation.mock.calls[1][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SetShippingMutation"
+                      {
+                        node: {
+                          ...meWithAddresses.addressConnection!.edges![1],
+                          addressLine2: "25th fl.",
+                        },
+                      },
+                    ],
+                  },
+                }),
+              })
+
+              expect(updateAddressOperation.operationName).toEqual(
+                "useUpdateSavedAddressMutation"
               )
-              expect(mutationArg.variables).toEqual({
+              expect(updateAddressOperation.operationVariables).toMatchObject({
                 input: {
-                  fulfillmentType: "SHIP_ARTA",
-                  id: "2939023",
-                  phoneNumber: "422-424-4242",
-                  shipping: expect.objectContaining({
-                    addressLine1: "1 Main St",
-                    addressLine2: "",
+                  attributes: {
+                    addressLine1: "401 Broadway",
+                    addressLine2: "25th fl.",
                     city: "New York",
-                    country: "USA",
-                    name: "Bob Ross",
-                    phoneNumber: "718-000-0000",
-                    postalCode: "10012",
+                    country: "US",
+                    name: "Test Name",
+                    phoneNumber: "422-424-4242",
+                    postalCode: "10013",
                     region: "NY",
-                  }),
+                  },
+                  userAddressID: "2",
                 },
               })
-
-              mutationArg = mockCommitMutation.mock.calls[2][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SelectShippingOptionMutation"
-              )
-              expect(mutationArg.variables).toEqual({
-                input: {
-                  id: "2939023",
-                  selectedShippingQuoteId:
-                    "4a8f8080-23d3-4c0e-9811-7a41a9df6933",
-                },
-              })
-            })
-
-            it("does not reload shipping quotes after editing a non-selected address", async () => {
-              relayEnv = createMockEnvironment()
-              mockCommitMutation
-                .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
-                .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
-
-              const updateAddressResponse = cloneDeep(
-                updateAddressSuccess
-              ) as any
-              // Match the edited address with the selected address to trigger refetching quotes
-              updateAddressResponse.updateUserAddress.userAddressOrErrors.internalID =
-                "1"
-              const updateAddressSpy = jest
-                .spyOn(updateUserAddress, "updateUserAddress")
-                // @ts-ignore
-                .mockImplementationOnce((_, __, ___, ____, onSuccess) => {
-                  onSuccess(updateAddressResponse)
-                })
-
-              const { env } = renderWithRelay(
-                {
-                  CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
-                  Me: () => meWithAddresses,
-                },
-                undefined
-              )
-              await flushPromiseQueue()
-
-              // Set shipping/fetch quotes on load for the default address
-              expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-              let mutationArg = mockCommitMutation.mock.calls[0][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SetShippingMutation"
-              )
-
-              // Edit the address that's not selected
-              const nonSelectedAddress = screen.getByRole("radio", {
-                name: /1 Main St/,
-                checked: false,
-              })
-              await userEvent.click(
-                within(nonSelectedAddress).getByText("Edit")
-              )
-
-              const modalTitle = screen.getByText("Edit address")
-              expect(modalTitle).toBeVisible()
-
-              // TODO: need a better way to get a specific input field from multiple forms
-              const addressLine2 = screen.getAllByPlaceholderText(
-                /Apt, floor, suite/
-              )[0]
-              userEvent.clear(addressLine2)
-              userEvent.paste(addressLine2, "25th fl.")
-              userEvent.click(screen.getByText("Save"))
 
               await flushPromiseQueue()
 
-              expect(updateAddressSpy).toHaveBeenCalledTimes(1)
-              expect(updateAddressSpy).toHaveBeenCalledWith(
-                expect.anything(),
-                "1",
-                {
-                  addressLine1: "1 Main St",
-                  addressLine2: "25th fl.",
-                  addressLine3: "",
-                  city: "Madrid",
-                  country: "ES",
-                  name: "Test Name",
-                  phoneNumber: "555-555-5555",
-                  postalCode: "28001",
-                  region: "",
-                },
-                expect.anything(),
-                expect.anything(),
-                expect.anything()
+              const saveFulfillmentOperation = await resolveSaveFulfillmentDetails(
+                mockResolveLastOperation,
+                settingOrderShipmentSuccess.commerceSetShipping
               )
 
-              // TODO: This uses relay mock environment to mock the refetch query. Is there a better way?
-              const mutation = env.mock.getMostRecentOperation()
-              expect(mutation.request.node.operation.name).toEqual(
-                "SavedAddressesRefetchQuery"
+              expect(saveFulfillmentOperation.operationName).toEqual(
+                "useSaveFulfillmentDetailsMutation"
               )
-              expect(mutation.request.variables).toEqual({})
 
-              const updatedMe = cloneDeep(meWithAddresses) as any
-              updatedMe.addressConnection.edges[1].node.addressLine2 =
-                "25th fl."
-              env.mock.resolveMostRecentOperation(operation => {
-                return MockPayloadGenerator.generate(operation, {
-                  CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
-                  Me: () => updatedMe,
-                })
-              })
-
-              // Wait for the second setShipping mutation to complete before clicking save and continue
-              await flushPromiseQueue()
               await saveAndContinue()
 
-              expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-
-              mutationArg = mockCommitMutation.mock.calls[1][0]
-              expect(mutationArg.mutation.default.operation.name).toEqual(
-                "SelectShippingOptionMutation"
+              await flushPromiseQueue()
+              const selectShippingOptionOperation = await mockResolveLastOperation(
+                {
+                  CommerceSelectShippingOptionPayload: () =>
+                    selectShippingQuoteSuccess.commerceSelectShippingOption,
+                }
               )
-              expect(mutationArg.variables).toEqual({
+
+              expect(selectShippingOptionOperation.operationName).toEqual(
+                "useSelectShippingQuoteMutation"
+              )
+              expect(selectShippingOptionOperation.operationVariables).toEqual({
                 input: {
                   id: "2939023",
                   selectedShippingQuoteId:
@@ -2333,45 +2499,84 @@ describe.skip("Shipping", () => {
         Me: () => meWithAddresses,
       })
 
-      userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
-      const phoneNumber = screen.getAllByPlaceholderText(
-        "Add phone number including country code"
-      )[1]
+      await userEvent.click(
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
+      )
+
+      const phoneNumber = await screen.findByTestId(
+        "AddressForm_pickupPhoneNumber"
+      )
       // TODO: need a better way to check the input is displayed/expanded (height > 0)
       expect(phoneNumber).toHaveAttribute("tabindex", "0")
       expect(phoneNumber).toHaveValue("")
     })
-
-    it("sets pickup on order", async () => {
-      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+    it("tracks click to switch to pickup", async () => {
       renderWithRelay({
+        CommerceOrder: () => order,
+        Me: () => meWithAddresses,
+      })
+
+      await userEvent.click(
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
+      )
+
+      await screen.findByTestId("AddressForm_pickupPhoneNumber")
+      expect(mockTrackEvent).toHaveBeenLastCalledWith({
+        action: "Click",
+        flow: "buy now",
+        subject: "arrange for pickup",
+        type: "button",
+      })
+    })
+
+    it("sets pickup on order and advances to payment", async () => {
+      const { mockResolveLastOperation, env } = renderWithRelay({
         CommerceOrder: () => order,
         Me: () => meWithoutAddress,
       })
 
-      userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
-      userEvent.type(
+      await userEvent.click(
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
+      )
+
+      await flushPromiseQueue()
+      await userEvent.paste(
         screen.getAllByPlaceholderText(
           "Add phone number including country code"
         )[0],
         "2813308004"
       )
+
+      await flushPromiseQueue()
       await saveAndContinue()
 
-      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-
-      let mutationArg = mockCommitMutation.mock.calls[0][0]
-      expect(mutationArg.mutation.default.operation.name).toEqual(
-        "SetShippingMutation"
+      const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+        mockResolveLastOperation,
+        {
+          orderOrError: {
+            __typename: "CommerceOrderWithMutationSuccess",
+            order: {
+              id: "2939023",
+              requestedFulfillment: {
+                __typename: "CommercePickup",
+                phoneNumber: "2813308004",
+              },
+            },
+          },
+        }
       )
-      expect(mutationArg.variables).toEqual({
+
+      expect(fulfillmentRequest.operationName).toBe(
+        "useSaveFulfillmentDetailsMutation"
+      )
+      expect(fulfillmentRequest.operationVariables).toMatchObject({
         input: {
-          id: "1234",
+          id: "2939023",
           fulfillmentType: "PICKUP",
           shipping: {
             addressLine1: "",
             addressLine2: "",
-            country: "US",
+            country: "",
             name: "",
             city: "",
             postalCode: "",
@@ -2381,20 +2586,26 @@ describe.skip("Shipping", () => {
           phoneNumber: "2813308004",
         },
       })
+      await waitFor(() => {
+        expect(getAllPendingOperationNames(env)).toEqual([])
+        expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
+      })
     })
 
     it("disables submission without a phone number", async () => {
-      renderWithRelay({
+      const { env } = renderWithRelay({
         CommerceOrder: () => order,
         Me: () => meWithoutAddress,
       })
 
       userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
-      expect(
-        screen.getByRole("button", {
-          name: "Save and Continue",
-        }) as HTMLInputElement
-      ).toBeDisabled()
+
+      await flushPromiseQueue()
+      await saveAndContinue()
+
+      expect(screen.getByText("Phone number is required")).toBeInTheDocument()
+
+      expect(env.mock.getAllOperations()).toHaveLength(0)
     })
   })
 })

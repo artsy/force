@@ -3,11 +3,11 @@ import {
   StepSummaryItem,
   StepSummaryItemProps,
 } from "Components/StepSummaryItem"
-import { shippingQuoteDisplayNames } from "Apps/Order/Components/ShippingQuotes"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
 import { startCase } from "lodash"
+import { shippingQuoteDisplayNames } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
 
 interface ShippingArtaSummaryItemProps {
   order: ShippingArtaSummaryItem_order$data

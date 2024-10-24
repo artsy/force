@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5cf230107de014f630f4542bb34555ad>>
+ * @generated SignedSource<<b5d10a542e550c7130e757f64bfc9e55>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,7 @@ export type useUpdateSavedAddressMutation$variables = {
 export type useUpdateSavedAddressMutation$data = {
   readonly updateUserAddress: {
     readonly me: {
-      readonly " $fragmentSpreads": FragmentRefs<"Shipping2_me">;
+      readonly " $fragmentSpreads": FragmentRefs<"Shipping_me">;
     } | null | undefined;
     readonly userAddressOrErrors: {
       readonly __typename: "Errors";
@@ -245,7 +245,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "Shipping2_me"
+                "name": "Shipping_me"
               }
             ],
             "storageKey": null
@@ -357,16 +357,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a3b8d8d0b4b3c04522f43ea13842afab",
+    "cacheID": "bd0762595bbb34e2914c9805b73753c9",
     "id": null,
     "metadata": {},
     "name": "useUpdateSavedAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateSavedAddressMutation(\n  $input: UpdateUserAddressInput!\n) {\n  updateUserAddress(input: $input) {\n    me {\n      ...Shipping2_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n\nfragment FulfillmentDetailsForm_me on Me {\n  name\n  email\n  id\n  location {\n    country\n    id\n  }\n  addressConnection(first: 30) {\n    totalCount\n  }\n}\n\nfragment Shipping2_me on Me {\n  ...FulfillmentDetailsForm_me\n  ...ShippingContext_me_dXEtb\n}\n\nfragment ShippingContext_me_dXEtb on Me {\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateSavedAddressMutation(\n  $input: UpdateUserAddressInput!\n) {\n  updateUserAddress(input: $input) {\n    me {\n      ...Shipping_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n\nfragment FulfillmentDetailsForm_me on Me {\n  name\n  email\n  id\n  location {\n    country\n    id\n  }\n  addressConnection(first: 30) {\n    totalCount\n  }\n}\n\nfragment ShippingContext_me_dXEtb on Me {\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n\nfragment Shipping_me on Me {\n  ...FulfillmentDetailsForm_me\n  ...ShippingContext_me_dXEtb\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5acf946cf48c509fa220a0624f9363d5";
+(node as any).hash = "865c24ef4592509c9aa6534557d751a8";
 
 export default node;

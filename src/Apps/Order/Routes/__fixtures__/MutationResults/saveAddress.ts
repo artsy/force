@@ -1,10 +1,9 @@
-import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
-import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
+import { useUpdateSavedAddressMutation$data } from "__generated__/useUpdateSavedAddressMutation.graphql"
+import { useCreateSavedAddressMutation$data } from "__generated__/useCreateSavedAddressMutation.graphql"
 
-export const saveAddressSuccess: CreateUserAddressMutation$data = {
+export const saveAddressSuccess: useCreateSavedAddressMutation$data = {
   createUserAddress: {
     userAddressOrErrors: {
-      // @ts-ignore - This is for the Shipping2 mutation result
       __typename: "UserAddress",
       internalID: "address-id",
       id: "graphql-id",
@@ -19,19 +18,20 @@ export const saveAddressSuccess: CreateUserAddressMutation$data = {
       country: "US",
       postalCode: "11111",
     },
+    me: {} as any,
   },
 }
 
-export const updateAddressSuccess: UpdateUserAddressMutation$data = {
+export const updateAddressSuccess: useUpdateSavedAddressMutation$data = {
   updateUserAddress: {
     userAddressOrErrors: {
-      // @ts-ignore - This is for the Shipping2 mutation result
       __typename: "UserAddress",
       internalID: "address-id",
       id: "graphql-id",
       name: "Bob Ross",
       addressLine1: "1 Main St",
       addressLine2: "",
+      addressLine3: "",
       isDefault: false,
       phoneNumber: "718-000-0000",
       city: "New York",
@@ -39,20 +39,6 @@ export const updateAddressSuccess: UpdateUserAddressMutation$data = {
       postalCode: "10012",
       country: "USA",
     },
-  },
-}
-
-export const updateAddressFailure: UpdateUserAddressMutation$data = {
-  updateUserAddress: {
-    userAddressOrErrors: {
-      // @ts-ignore - This is for the Shipping2 mutation result
-      __typename: "Errors",
-      errors: [
-        {
-          code: "100",
-          message: "Invalid address",
-        },
-      ],
-    },
+    me: {} as any,
   },
 }

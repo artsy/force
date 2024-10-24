@@ -11,7 +11,7 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useMemo } from "react"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import { FulfillmentType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
+import { FulfillmentType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 
 export const useOrderTracking = () => {
   const { trackEvent } = useTracking()
