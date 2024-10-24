@@ -16852,6 +16852,7 @@ type Query {
     first: Int
     last: Int
     limit: Int
+    offset: Int
     sort: DiscoverArtworksSort
     userId: String
   ): ArtworkConnection
@@ -21528,6 +21529,7 @@ type Viewer {
     first: Int
     last: Int
     limit: Int
+    offset: Int
     sort: DiscoverArtworksSort
     userId: String
   ): ArtworkConnection

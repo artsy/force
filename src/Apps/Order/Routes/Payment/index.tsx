@@ -589,7 +589,6 @@ export const PaymentFragmentContainer = createFragmentContainer(
         conditionsOfSale
         bankAccountId
         availablePaymentMethods
-        paymentSet
         buyerTotalCents
         internalID
         mode
