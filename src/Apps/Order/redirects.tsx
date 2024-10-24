@@ -5,6 +5,7 @@ import { RedirectPredicate, RedirectRecord } from "./getRedirect"
 
 import { redirects_order$data } from "__generated__/redirects_order.graphql"
 import { extractNodes } from "Utils/extractNodes"
+import { isPaymentSet } from "./Utils/orderUtils"
 
 interface OrderQuery {
   order: redirects_order$data
@@ -59,7 +60,7 @@ const goToShippingIfShippingIsNotCompleted: OrderPredicate = ({ order }) => {
 }
 
 const goToPaymentIfPaymentIsNotCompleted: OrderPredicate = ({ order }) => {
-  if (!order.paymentSet) {
+  if (!isPaymentSet(order.paymentMethodDetails)) {
     return {
       path: `/orders/${order.internalID}/payment`,
       reason: "Payment was not yet completed",
@@ -265,7 +266,6 @@ graphql`
     displayState
     source
     lastTransactionFailed
-    paymentSet
     ... on CommerceOfferOrder {
       myLastOffer {
         internalID
