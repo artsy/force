@@ -5,11 +5,18 @@ import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
   Counts,
+  initialArtworkFilterState,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { TagArtworkFilter_tag$data } from "__generated__/TagArtworkFilter_tag.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
+import { TagArtworkFilterQuery } from "__generated__/TagArtworkFilterQuery.graphql"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface TagArtworkFilterProps {
   tag: TagArtworkFilter_tag$data
@@ -84,10 +91,84 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query TagArtworkFilterQuery($slug: String!, $input: FilterArtworksInput) {
+    query TagArtworkFilterRefetchQuery(
+      $slug: String!
+      $input: FilterArtworksInput
+    ) {
       tag(id: $slug) {
         ...TagArtworkFilter_tag @arguments(input: $input)
       }
     }
   `
 )
+
+interface TagArtworkFilterQueryRendererProps {}
+
+export const TagArtworkFilterQueryRenderer: React.FC<TagArtworkFilterQueryRendererProps> = rest => {
+  const { relayEnvironment } = useSystemContext()
+  const { match } = useRouter()
+
+  return (
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<TagArtworkFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query TagArtworkFilterQuery(
+            $slug: String!
+            $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
+            $shouldFetchCounts: Boolean!
+          ) {
+            tag(id: $slug) {
+              ...TagArtworkFilter_tag
+                @arguments(
+                  input: $input
+                  aggregations: $aggregations
+                  shouldFetchCounts: $shouldFetchCounts
+                )
+            }
+          }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="store-and-network"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.tag) {
+            return <ArtworkFilterPlaceholder />
+          }
+
+          return <TagArtworkFilterRefetchContainer tag={props.tag} {...rest} />
+        }}
+      />
+    </LazyArtworkGrid>
+  )
+}
+
+const initializeVariablesWithFilterState = (params, props) => {
+  const aggregations = [
+    "TOTAL",
+    "ARTIST",
+    "MEDIUM",
+    "LOCATION_CITY",
+    "MATERIALS_TERMS",
+    "PARTNER",
+    "ARTIST_NATIONALITY",
+    "MAJOR_PERIOD",
+  ]
+
+  const urlFilterState = props.location ? props.location.query : {}
+
+  const filters = {
+    ...initialArtworkFilterState,
+    ...paramsToCamelCase(urlFilterState),
+  }
+
+  const tagSlug = params.slug
+
+  return {
+    aggregations,
+    input: allowedFilters(filters),
+    shouldFetchCounts: !!props.context.user,
+    slug: tagSlug,
+  }
+}

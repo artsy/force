@@ -18,6 +18,11 @@ import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
+import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { AuctionArtworkFilterQuery } from "__generated__/AuctionArtworkFilterQuery.graphql"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface AuctionArtworkFilterProps {
   relay: RelayRefetchProp
@@ -102,7 +107,7 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query AuctionArtworkFilterQuery(
+    query AuctionArtworkFilterRefetchQuery(
       $input: FilterArtworksInput
       $saleID: String!
       $isLoggedIn: Boolean!
@@ -114,3 +119,76 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
     }
   `
 )
+
+interface AuctionArtworkFilterQueryRendererProps {}
+
+export const AuctionArtworkFilterQueryRenderer: React.FC<AuctionArtworkFilterQueryRendererProps> = rest => {
+  const { relayEnvironment } = useSystemContext()
+  const { match } = useRouter()
+
+  return (
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<AuctionArtworkFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query AuctionArtworkFilterQuery(
+            $saleID: String!
+            $input: FilterArtworksInput
+            $isLoggedIn: Boolean!
+          ) {
+            viewer {
+              ...AuctionArtworkFilter_viewer
+                @arguments(
+                  input: $input
+                  saleID: $saleID
+                  isLoggedIn: $isLoggedIn
+                )
+            }
+          }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="network-only"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.viewer) {
+            return <ArtworkFilterPlaceholder />
+          }
+
+          return (
+            <AuctionArtworkFilterRefetchContainer
+              viewer={props.viewer}
+              {...rest}
+            />
+          )
+        }}
+      />
+    </LazyArtworkGrid>
+  )
+}
+
+const initializeVariablesWithFilterState = (params, props) => {
+  const auctionFilterDefaults = {
+    sort: "sale_position",
+  }
+
+  const initialFilterStateFromUrl = getInitialFilterState(
+    props.location?.query ?? {}
+  )
+
+  const userSpecificFilterState = getArtworkFilterInputArgs(props.context.user)
+
+  const variables = {
+    saleID: params.slug,
+    isLoggedIn: !!props.context.user,
+    input: {
+      ...auctionFilterDefaults,
+      ...initialFilterStateFromUrl,
+      ...userSpecificFilterState,
+      saleID: params.slug,
+      // FIXME: Understand why this is needed to view lots in `the-artist-is-present-a-benefit-auction-for-ukraine` while logged out
+      priceRange: "*-*",
+    },
+  }
+
+  return variables
+}

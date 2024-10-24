@@ -51,7 +51,9 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
 
   if (!image) return null
 
-  const shouldLazyLoad = Boolean(lazyLoad && !getENV("IS_GOOGLEBOT"))
+  const shouldLazyLoad = Boolean(
+    lazyLoad && !(getENV("IS_GOOGLEBOT") || getENV("IS_MOBILE"))
+  )
 
   return (
     <>

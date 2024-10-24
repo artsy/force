@@ -9,20 +9,25 @@ import { Match, RouterState, withRouter } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useRouter } from "System/Hooks/useRouter"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { ArtistSeriesArtworksFilterQuery } from "__generated__/ArtistSeriesArtworksFilterQuery.graphql"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries$data
   relay: RelayRefetchProp
   match?: Match
-  aggregations: SharedArtworkFilterContextProps["aggregations"]
 }
 
 const ArtistSeriesArtworksFilter: React.FC<
   ArtistSeriesArtworksFilterProps & RouterState
 > = props => {
   const { userPreferences } = useSystemContext()
-  const { match, relay, artistSeries, aggregations } = props
-  const { filtered_artworks } = artistSeries
+  const { match, relay, artistSeries } = props
+  const { filtered_artworks, sidebar } = artistSeries
 
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -33,7 +38,9 @@ const ArtistSeriesArtworksFilter: React.FC<
   return (
     <ArtworkFilterContextProvider
       filters={match && match.location.query}
-      aggregations={aggregations}
+      aggregations={
+        sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+      }
       sortOptions={[
         { value: "-decayed_merch", text: "Recommended" },
         { value: "-has_price,-prices", text: "Price (High to Low)" },
@@ -65,7 +72,23 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
   {
     artistSeries: graphql`
       fragment ArtistSeriesArtworksFilter_artistSeries on ArtistSeries
-        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        @argumentDefinitions(
+          input: { type: "FilterArtworksInput" }
+          aggregations: { type: "[ArtworkAggregation]" }
+        ) {
+        sidebar: filterArtworksConnection(
+          aggregations: $aggregations
+          first: 1
+        ) {
+          aggregations {
+            slice
+            counts {
+              name
+              value
+              count
+            }
+          }
+        }
         filtered_artworks: filterArtworksConnection(input: $input) {
           id
           counts {
@@ -77,7 +100,7 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
     `,
   },
   graphql`
-    query ArtistSeriesArtworksFilterQuery(
+    query ArtistSeriesArtworksFilterRefetchQuery(
       $input: FilterArtworksInput
       $slug: ID!
     ) {
@@ -87,3 +110,71 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
     }
   `
 )
+
+interface ArtistSeriesArtworkFilterQueryRendererProps {}
+
+export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<ArtistSeriesArtworkFilterQueryRendererProps> = rest => {
+  const { relayEnvironment } = useSystemContext()
+  const { match } = useRouter()
+
+  return (
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<ArtistSeriesArtworksFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query ArtistSeriesArtworksFilterQuery(
+            $slug: ID!
+            $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
+          ) {
+            artistSeries(id: $slug) {
+              ...ArtistSeriesArtworksFilter_artistSeries
+                @arguments(input: $input, aggregations: $aggregations)
+            }
+          }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="store-and-network"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.artistSeries) {
+            return <ArtworkFilterPlaceholder />
+          }
+
+          return (
+            <ArtistSeriesArtworksFilterRefetchContainer
+              artistSeries={props.artistSeries}
+              {...rest}
+            />
+          )
+        }}
+      />
+    </LazyArtworkGrid>
+  )
+}
+
+const initializeVariablesWithFilterState = (params, props) => {
+  const initialFilterState = getInitialFilterState(props.location?.query ?? {})
+
+  const aggregations = [
+    "MEDIUM",
+    "TOTAL",
+    "MAJOR_PERIOD",
+    "PARTNER",
+    "LOCATION_CITY",
+    "MATERIALS_TERMS",
+    "SIMPLE_PRICE_HISTOGRAM",
+  ]
+
+  const input = {
+    sort: "-decayed_merch",
+    ...initialFilterState,
+    first: 30,
+  }
+
+  return {
+    slug: params.slug,
+    input,
+    aggregations,
+  }
+}

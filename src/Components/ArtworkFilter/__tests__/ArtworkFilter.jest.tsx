@@ -28,14 +28,6 @@ jest.mock("System/Hooks/useRouter", () => ({
   }),
 }))
 
-jest.mock("System/Hooks/useAnalyticsContext", () => ({
-  useAnalyticsContext: jest.fn(() => ({
-    contextPageOwnerId: "contextPageOwnerID",
-    contextPageOwnerSlug: "contextPageOwnerSlug",
-    contextPageOwnerType: "contextPageOwnerType",
-  })),
-}))
-
 describe("ArtworkFilter", () => {
   const onFilterClick = jest.fn()
   const onChange = jest.fn()
@@ -218,14 +210,10 @@ describe("ArtworkFilter", () => {
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedMainArtworkGrid",
         context_module: "artworkGrid",
-        context_page_owner_id: "contextPageOwnerID",
-        context_page_owner_slug: "contextPageOwnerSlug",
-        context_page_owner_type: "contextPageOwnerType",
         destination_page_owner_id: "5d041931e607c200127ef3c1",
         destination_page_owner_slug: "andy-warhol-kenny-burrell",
         destination_page_owner_type: "artwork",
         position: 0,
-        signal_label: "",
         sort: "-decayed_merch",
         type: "thumbnail",
       })

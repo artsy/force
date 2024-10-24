@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<389ccb59af90dd116bcef5892c347093>>
+ * @generated SignedSource<<edb5a1bbc8058db51b749ad4f224316a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,7 @@ export type AuctionApp_viewer$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworkFilter_viewer" | "AuctionCurrentAuctionsRail_viewer" | "AuctionWorksByFollowedArtistsRail_viewer">;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionCurrentAuctionsRail_viewer" | "AuctionWorksByFollowedArtistsRail_viewer">;
   readonly " $fragmentType": "AuctionApp_viewer";
 };
 export type AuctionApp_viewer$key = {
@@ -26,19 +26,8 @@ export type AuctionApp_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"AuctionApp_viewer">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "kind": "Variable",
-  "name": "saleID",
-  "variableName": "saleID"
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "input"
-    },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
@@ -55,30 +44,17 @@ return {
   "name": "AuctionApp_viewer",
   "selections": [
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "input",
-          "variableName": "input"
-        },
-        {
-          "kind": "Variable",
-          "name": "isLoggedIn",
-          "variableName": "isLoggedIn"
-        },
-        (v0/*: any*/)
-      ],
-      "kind": "FragmentSpread",
-      "name": "AuctionArtworkFilter_viewer"
-    },
-    {
       "condition": "isLoggedIn",
       "kind": "Condition",
       "passingValue": true,
       "selections": [
         {
           "args": [
-            (v0/*: any*/)
+            {
+              "kind": "Variable",
+              "name": "saleID",
+              "variableName": "saleID"
+            }
           ],
           "kind": "FragmentSpread",
           "name": "AuctionWorksByFollowedArtistsRail_viewer"
@@ -157,8 +133,7 @@ return {
   "type": "Viewer",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "a8b68200b1e9591b3f754ce0598565df";
+(node as any).hash = "ae6e2cc965a8dbe227e9e412b40fb127";
 
 export default node;

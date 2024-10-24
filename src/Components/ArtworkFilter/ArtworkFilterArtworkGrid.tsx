@@ -14,9 +14,6 @@ import {
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
-import { extractNodes } from "Utils/extractNodes"
-import { getSignalLabel } from "Utils/getSignalLabel"
-import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
@@ -34,9 +31,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
     contextPageOwnerSlug,
     contextPageOwnerId,
   } = useAnalyticsContext()
-  const { hideSignals } = useArtworkGridContext()
   const context = useArtworkFilterContext()
-  const filteredArtworks = extractNodes(props.filtered_artworks)
 
   const {
     columnCount,
@@ -75,9 +70,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           onClearFilters={context.resetFilters}
           emptyStateComponent={context.ZeroState && <context.ZeroState />}
           onBrickClick={(artwork, artworkIndex) => {
-            const collectorSignals =
-              filteredArtworks?.[artworkIndex].collectorSignals ?? {}
-
             const event: ClickedMainArtworkGrid = {
               action: ActionType.clickedMainArtworkGrid,
               context_module: ContextModule.artworkGrid,
@@ -90,10 +82,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
               position: artworkIndex,
               sort: context?.filters?.sort,
               type: "thumbnail",
-              signal_label: getSignalLabel({
-                collectorSignals,
-                hideSignals,
-              }),
             }
             trackEvent(event)
           }}
@@ -130,9 +118,6 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
         }
         edges {
           node {
-            collectorSignals {
-              primaryLabel
-            }
             id
           }
         }

@@ -8,7 +8,7 @@ import { findMetaTagBySelector } from "DevTools/findMetaTagBySelector"
 
 jest.unmock("react-relay")
 jest.mock("../Components/TagArtworkFilter", () => ({
-  TagArtworkFilterRefetchContainer: () => <div />,
+  TagArtworkFilterQueryRenderer: () => <div />,
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<TagApp_Test_Query>({

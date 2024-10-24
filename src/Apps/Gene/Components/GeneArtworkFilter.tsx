@@ -6,10 +6,17 @@ import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import {
   ArtworkFilterContextProvider,
   Counts,
+  initialArtworkFilterState,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { GeneArtworkFilter_gene$data } from "__generated__/GeneArtworkFilter_gene.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { GeneArtworkFilterQuery } from "__generated__/GeneArtworkFilterQuery.graphql"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface GeneArtworkFilterProps {
   gene: GeneArtworkFilter_gene$data
@@ -87,10 +94,85 @@ export const GeneArtworkFilterRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query GeneArtworkFilterQuery($slug: String!, $input: FilterArtworksInput) {
+    query GeneArtworkFilterRefetchQuery(
+      $slug: String!
+      $input: FilterArtworksInput
+    ) {
       gene(id: $slug) {
         ...GeneArtworkFilter_gene @arguments(input: $input)
       }
     }
   `
 )
+
+interface GeneArtworkFilterQueryRendererProps {}
+
+export const GeneArtworkFilterQueryRenderer: React.FC<GeneArtworkFilterQueryRendererProps> = rest => {
+  const { relayEnvironment } = useSystemContext()
+  const { match } = useRouter()
+
+  return (
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<GeneArtworkFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query GeneArtworkFilterQuery(
+            $slug: String!
+            $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
+            $shouldFetchCounts: Boolean!
+          ) {
+            gene(id: $slug) {
+              ...GeneArtworkFilter_gene
+                @arguments(
+                  input: $input
+                  aggregations: $aggregations
+                  shouldFetchCounts: $shouldFetchCounts
+                )
+            }
+          }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="store-and-network"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.gene) {
+            return <ArtworkFilterPlaceholder />
+          }
+
+          return (
+            <GeneArtworkFilterRefetchContainer gene={props.gene} {...rest} />
+          )
+        }}
+      />
+    </LazyArtworkGrid>
+  )
+}
+
+const initializeVariablesWithFilterState = (params, props) => {
+  const aggregations = [
+    "TOTAL",
+    "ARTIST",
+    "MEDIUM",
+    "LOCATION_CITY",
+    "MATERIALS_TERMS",
+    "PARTNER",
+    "ARTIST_NATIONALITY",
+  ]
+
+  const urlFilterState = props.location ? props.location.query : {}
+
+  const filters = {
+    ...initialArtworkFilterState,
+    ...paramsToCamelCase(urlFilterState),
+  }
+
+  const geneSlug = params.slug
+
+  return {
+    aggregations,
+    input: allowedFilters(filters),
+    shouldFetchCounts: !!props.context.user,
+    slug: geneSlug,
+  }
+}

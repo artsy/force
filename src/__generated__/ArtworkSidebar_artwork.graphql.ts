@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<574a79cae275e0ff59a8db37a6d62879>>
+ * @generated SignedSource<<b0272978de22c050294fb6e84ef1e1b8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,12 @@ export type ArtworkSidebar_artwork$data = {
   readonly artists: ReadonlyArray<{
     readonly internalID: string;
   } | null | undefined> | null | undefined;
+  readonly domesticShippingFee: {
+    readonly display: string | null | undefined;
+  } | null | undefined;
+  readonly internationalShippingFee: {
+    readonly display: string | null | undefined;
+  } | null | undefined;
   readonly isAcquireable: boolean | null | undefined;
   readonly isBiddable: boolean | null | undefined;
   readonly isEligibleForArtsyGuarantee: boolean;
@@ -64,7 +70,16 @@ v1 = {
   "kind": "ScalarField",
   "name": "endAt",
   "storageKey": null
-};
+},
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "display",
+    "storageKey": null
+  }
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -308,6 +323,26 @@ return {
       "kind": "ScalarField",
       "name": "isUnlisted",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "domesticShippingFee",
+      "plural": false,
+      "selections": (v2/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "internationalShippingFee",
+      "plural": false,
+      "selections": (v2/*: any*/),
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -315,6 +350,6 @@ return {
 };
 })();
 
-(node as any).hash = "975d8eac1b5f029a070e69ec7ed564f2";
+(node as any).hash = "d9fe1832c4a829042f977e512a0ee42e";
 
 export default node;

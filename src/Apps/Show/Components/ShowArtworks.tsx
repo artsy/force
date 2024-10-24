@@ -12,19 +12,23 @@ import { BoxProps } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 import { omit } from "lodash"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { ShowArtworksFilterQuery } from "__generated__/ShowArtworksFilterQuery.graphql"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show$data
   relay: RelayRefetchProp
-  aggregations: SharedArtworkFilterContextProps["aggregations"]
   counts?: Counts
 }
 
 const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = props => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
-  const { relay, show, aggregations, counts, ...rest } = props
-  const { filtered_artworks } = show
+  const { relay, show, counts, ...rest } = props
+  const { filtered_artworks, sidebar } = show
 
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -52,7 +56,9 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = props => {
         { text: "Artwork Year (Ascending)", value: "year" },
       ]}
       onChange={updateUrl}
-      aggregations={aggregations}
+      aggregations={
+        sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+      }
       counts={counts}
       userPreferredMetric={userPreferences?.metric}
     >
@@ -74,7 +80,27 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
   {
     show: graphql`
       fragment ShowArtworks_show on Show
-        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        @argumentDefinitions(
+          input: { type: "FilterArtworksInput" }
+          aggregations: { type: "[ArtworkAggregation]" }
+          shouldFetchCounts: { type: "Boolean!", defaultValue: false }
+        ) {
+        sidebar: filterArtworksConnection(
+          aggregations: $aggregations
+          first: 1
+        ) {
+          counts @include(if: $shouldFetchCounts) {
+            followedArtists
+          }
+          aggregations {
+            slice
+            counts {
+              name
+              value
+              count
+            }
+          }
+        }
         filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
           counts {
@@ -86,10 +112,75 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query ShowArtworksQuery($slug: String!, $input: FilterArtworksInput) {
+    query ShowArtworksFilterRefetchQuery(
+      $slug: String!
+      $input: FilterArtworksInput
+    ) {
       show(id: $slug) {
         ...ShowArtworks_show @arguments(input: $input)
       }
     }
   `
 )
+
+interface ShowArtworkFilterQueryRendererProps {}
+
+export const ShowArtworkFilterQueryRenderer: React.FC<ShowArtworkFilterQueryRendererProps> = rest => {
+  const { relayEnvironment } = useSystemContext()
+  const { match } = useRouter()
+
+  return (
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<ShowArtworksFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query ShowArtworksFilterQuery(
+            $slug: String!
+            $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
+          ) {
+            show(id: $slug) {
+              ...ShowArtworks_show
+                @arguments(input: $input, aggregations: $aggregations)
+            }
+          }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="store-and-network"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.show) {
+            return <ArtworkFilterPlaceholder />
+          }
+
+          return <ShowArtworksRefetchContainer show={props.show} {...rest} />
+        }}
+      />
+    </LazyArtworkGrid>
+  )
+}
+
+const initializeVariablesWithFilterState = (params, props) => {
+  const initialFilterState = getInitialFilterState(props.location?.query ?? {})
+
+  const aggregations = [
+    "MEDIUM",
+    "TOTAL",
+    "MAJOR_PERIOD",
+    "ARTIST_NATIONALITY",
+    "MATERIALS_TERMS",
+    "ARTIST",
+  ]
+
+  const input = {
+    sort: "partner_show_position",
+    ...initialFilterState,
+  }
+
+  return {
+    slug: params.slug,
+    input,
+    aggregations,
+    shouldFetchCounts: !!props.context.user,
+  }
+}

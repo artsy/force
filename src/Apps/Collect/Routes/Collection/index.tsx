@@ -1,4 +1,3 @@
-import StaticContainer from "found/StaticContainer"
 import { Spacer } from "@artsy/palette"
 import { Collection_collection$data } from "__generated__/Collection_collection.graphql"
 import { CollectionArtworksQuery } from "__generated__/CollectionArtworksQuery.graphql"
@@ -17,12 +16,14 @@ import {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { MetaTags } from "Components/MetaTags"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { useRouter } from "System/Hooks/useRouter"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { CollectionFeaturedArtistsQueryRenderer } from "Apps/Collect/Routes/Collection/Components/Header/CollectionFeaturedArtists"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface CollectionAppProps {
   collection: Collection_collection$data
@@ -47,8 +48,16 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
   const socialImage = headerImage
 
+  const HIDE_SIGNAL_SLUGS = [
+    "trending-now",
+    "curators-picks-emerging-artists",
+    "curators-picks-blue-chip-artists",
+  ]
+
+  const hideSignals = HIDE_SIGNAL_SLUGS.includes(collection.slug)
+
   return (
-    <StaticContainer shouldUpdate={!!match.elements}>
+    <LazyArtworkGrid>
       <Analytics contextPageOwnerId={context.contextPageOwnerId as string}>
         <MetaTags
           description={metadataDescription}
@@ -67,84 +76,86 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
           <CollectionsHubRailsQueryRenderer slug={slug} />
 
           <FrameWithRecentlyViewed>
-            {/* TODO: Figure out why rerenders trigger refetches here, requiring
+            <ArtworkGridContextProvider hideSignals={hideSignals}>
+              {/* TODO: Figure out why rerenders trigger refetches here, requiring
               the static container to freeze rendering during route transitions. */}
-            <SystemQueryRenderer<CollectionArtworksQuery>
-              query={graphql`
-                query CollectionArtworksQuery(
-                  $slug: String!
-                  $aggregations: [ArtworkAggregation]
-                  $input: FilterArtworksInput!
-                  $shouldFetchCounts: Boolean!
-                ) {
-                  marketingCollection(slug: $slug) {
-                    ...CollectionArtworksFilter_collection
-                      @arguments(input: $input)
+              <SystemQueryRenderer<CollectionArtworksQuery>
+                query={graphql`
+                  query CollectionArtworksQuery(
+                    $slug: String!
+                    $aggregations: [ArtworkAggregation]
+                    $input: FilterArtworksInput!
+                    $shouldFetchCounts: Boolean!
+                  ) {
+                    marketingCollection(slug: $slug) {
+                      ...CollectionArtworksFilter_collection
+                        @arguments(input: $input)
 
-                    artworksConnection(
-                      aggregations: $aggregations
-                      includeMediumFilterInAggregation: true
-                      first: 20
-                      sort: "-decayed_merch"
-                    ) {
-                      counts @include(if: $shouldFetchCounts) {
-                        followedArtists
-                      }
-                      aggregations {
-                        slice
-                        counts {
-                          value
-                          name
-                          count
+                      artworksConnection(
+                        aggregations: $aggregations
+                        includeMediumFilterInAggregation: true
+                        first: 20
+                        sort: "-decayed_merch"
+                      ) {
+                        counts @include(if: $shouldFetchCounts) {
+                          followedArtists
+                        }
+                        aggregations {
+                          slice
+                          counts {
+                            value
+                            name
+                            count
+                          }
                         }
                       }
                     }
                   }
-                }
-              `}
-              variables={{
-                ...initializeVariablesWithFilterState(match.params, match),
-                slug,
-              }}
-              placeholder={<ArtworkFilterPlaceholder pt={6} />}
-              render={({ error, props }) => {
-                if (error) {
-                  console.error(
-                    "[collection]: Error loading artwork grid",
-                    error
+                `}
+                variables={{
+                  ...initializeVariablesWithFilterState(match.params, match),
+                  slug,
+                }}
+                placeholder={<ArtworkFilterPlaceholder pt={6} />}
+                render={({ error, props }) => {
+                  if (error) {
+                    console.error(
+                      "[collection]: Error loading artwork grid",
+                      error
+                    )
+                    return null
+                  }
+
+                  if (!props || !props.marketingCollection) {
+                    return <ArtworkFilterPlaceholder pt={6} />
+                  }
+
+                  return (
+                    <>
+                      <Spacer y={6} />
+
+                      <CollectionArtworksFilterRefetchContainer
+                        collection={props.marketingCollection}
+                        aggregations={
+                          props.marketingCollection?.artworksConnection
+                            ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                        }
+                        counts={
+                          props.marketingCollection.artworksConnection
+                            ?.counts as Counts
+                        }
+                      />
+
+                      <RelatedCollectionsRailQueryRenderer slug={slug} />
+                    </>
                   )
-                  return null
-                }
-
-                if (!props || !props.marketingCollection) {
-                  return <ArtworkFilterPlaceholder pt={6} />
-                }
-
-                return (
-                  <>
-                    <Spacer y={6} />
-
-                    <CollectionArtworksFilterRefetchContainer
-                      collection={props.marketingCollection}
-                      aggregations={
-                        props.marketingCollection?.artworksConnection
-                          ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-                      }
-                      counts={
-                        props.marketingCollection.artworksConnection
-                          ?.counts as Counts
-                      }
-                    />
-
-                    <RelatedCollectionsRailQueryRenderer slug={slug} />
-                  </>
-                )
-              }}
-            />
+                }}
+              />
+            </ArtworkGridContextProvider>
           </FrameWithRecentlyViewed>
         </>
       </Analytics>
-    </StaticContainer>
+    </LazyArtworkGrid>
   )
 }
 

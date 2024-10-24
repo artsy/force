@@ -48,9 +48,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1rZW5ueS1idXJyZWxs",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1rZW5ueS1idXJyZWxs",
             slug: "andy-warhol-kenny-burrell",
             href: "/artwork/andy-warhol-kenny-burrell",
@@ -96,9 +93,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1kb2xsYXJzLTEtZnMtaWktZG90LTI3NA==",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1kb2xsYXJzLTEtZnMtaWktZG90LTI3NA==",
             slug: "andy-warhol-dollars-1-fs-ii-dot-274",
             href: "/artwork/andy-warhol-dollars-1-fs-ii-dot-274",
@@ -144,9 +138,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1wZWFjaGVz",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1wZWFjaGVz",
             slug: "andy-warhol-peaches",
             href: "/artwork/andy-warhol-peaches",
@@ -193,9 +184,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           id:
             "QXJ0d29yazphbmR5LXdhcmhvbC1hY3RyZXNzLXNob3RzLWFuZHktd2FyaG9sLW55LWRhaWx5LW5ld3MtMTk2OA==",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id:
               "QXJ0d29yazphbmR5LXdhcmhvbC1hY3RyZXNzLXNob3RzLWFuZHktd2FyaG9sLW55LWRhaWx5LW5ld3MtMTk2OA==",
             slug: "andy-warhol-actress-shots-andy-warhol-ny-daily-news-1968",
@@ -244,9 +232,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1jb3Ntb3M=",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1jb3Ntb3M=",
             slug: "andy-warhol-cosmos",
             href: "/artwork/andy-warhol-cosmos",
@@ -292,9 +277,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1sZWUtaWFjb2NjYS0y",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1sZWUtaWFjb2NjYS0y",
             slug: "andy-warhol-lee-iacocca-2",
             href: "/artwork/andy-warhol-lee-iacocca-2",
@@ -340,9 +322,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1zaG9lLTE4",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1zaG9lLTE4",
             slug: "andy-warhol-shoe-18",
             href: "/artwork/andy-warhol-shoe-18",
@@ -388,9 +367,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1zZXdpbmctbWFjaGluZQ==",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1zZXdpbmctbWFjaGluZQ==",
             slug: "andy-warhol-sewing-machine",
             href: "/artwork/andy-warhol-sewing-machine",
@@ -436,9 +412,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1zdXBlcm1hbi1mLWFuZC1zLWlpLTI2MC0z",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1zdXBlcm1hbi1mLWFuZC1zLWlpLTI2MC0z",
             slug: "andy-warhol-superman-f-and-s-ii-260-3",
             href: "/artwork/andy-warhol-superman-f-and-s-ii-260-3",
@@ -484,9 +457,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1iaXJtaW5naGFtLXJhY2UtcmlvdC0xMA==",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1iaXJtaW5naGFtLXJhY2UtcmlvdC0xMA==",
             slug: "andy-warhol-birmingham-race-riot-10",
             href: "/artwork/andy-warhol-birmingham-race-riot-10",
@@ -533,9 +503,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           id:
             "QXJ0d29yazphbmR5LXdhcmhvbC1ub3J0aHdlc3QtY29hc3QtbWFzay1mcy1paS1kb3QtMzgwLTI=",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id:
               "QXJ0d29yazphbmR5LXdhcmhvbC1ub3J0aHdlc3QtY29hc3QtbWFzay1mcy1paS1kb3QtMzgwLTI=",
             slug: "andy-warhol-northwest-coast-mask-fs-ii-dot-380-2",
@@ -583,9 +550,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           id:
             "QXJ0d29yazphbmR5LXdhcmhvbC1yYXJlLW9yaWdpbmFsLWFuZHktd2FyaG9sLXJlY29yZC1hcnQ=",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id:
               "QXJ0d29yazphbmR5LXdhcmhvbC1yYXJlLW9yaWdpbmFsLWFuZHktd2FyaG9sLXJlY29yZC1hcnQ=",
             slug: "andy-warhol-rare-original-andy-warhol-record-art",
@@ -634,9 +598,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           id:
             "QXJ0d29yazphbmR5LXdhcmhvbC1hbmR5LXdhcmhvbC1waGlsaXAtZmFnYW4tYW5kLWdlcmFyZC1tYWxhbmdh",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id:
               "QXJ0d29yazphbmR5LXdhcmhvbC1hbmR5LXdhcmhvbC1waGlsaXAtZmFnYW4tYW5kLWdlcmFyZC1tYWxhbmdh",
             slug: "andy-warhol-andy-warhol-philip-fagan-and-gerard-malanga",
@@ -686,9 +647,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           id:
             "QXJ0d29yazphbmR5LXdhcmhvbC1hbmR5LXdhcmhvbC1waG90b2dyYXBoLW9mLWNvcm5lbGlhLWd1ZXN0LTE5ODU=",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id:
               "QXJ0d29yazphbmR5LXdhcmhvbC1hbmR5LXdhcmhvbC1waG90b2dyYXBoLW9mLWNvcm5lbGlhLWd1ZXN0LTE5ODU=",
             slug: "andy-warhol-andy-warhol-photograph-of-cornelia-guest-1985",
@@ -738,9 +696,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           id:
             "QXJ0d29yazphbmR5LXdhcmhvbC1hbmR5LXdhcmhvbC1waG90b2dyYXBoLW9mLXRpbW90aHktaHV0dG9uLTE5ODA=",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id:
               "QXJ0d29yazphbmR5LXdhcmhvbC1hbmR5LXdhcmhvbC1waG90b2dyYXBoLW9mLXRpbW90aHktaHV0dG9uLTE5ODA=",
             slug: "andy-warhol-andy-warhol-photograph-of-timothy-hutton-1980",
@@ -789,9 +744,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1tdWhhbW1lZC1hbGktMQ==",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1tdWhhbW1lZC1hbGktMQ==",
             slug: "andy-warhol-muhammed-ali-1",
             href: "/artwork/andy-warhol-muhammed-ali-1",
@@ -837,9 +789,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC11bnRpdGxlZC1qb24tZ291bGQtMQ==",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC11bnRpdGxlZC1qb24tZ291bGQtMQ==",
             slug: "andy-warhol-untitled-jon-gould-1",
             href: "/artwork/andy-warhol-untitled-jon-gould-1",
@@ -885,9 +834,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1nZXJvbmltby1mcy1paS1kb3QtMzg0LTEy",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1nZXJvbmltby1mcy1paS1kb3QtMzg0LTEy",
             slug: "andy-warhol-geronimo-fs-ii-dot-384-12",
             href: "/artwork/andy-warhol-geronimo-fs-ii-dot-384-12",
@@ -933,9 +879,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1qYXNvbi1tY2NveQ==",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1qYXNvbi1tY2NveQ==",
             slug: "andy-warhol-jason-mccoy",
             href: "/artwork/andy-warhol-jason-mccoy",
@@ -982,9 +925,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           id:
             "QXJ0d29yazphbmR5LXdhcmhvbC1kb2xsYXJzLXF1YWRyYW50LWZzLWlpLWRvdC0yODQtMQ==",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id:
               "QXJ0d29yazphbmR5LXdhcmhvbC1kb2xsYXJzLXF1YWRyYW50LWZzLWlpLWRvdC0yODQtMQ==",
             slug: "andy-warhol-dollars-quadrant-fs-ii-dot-284-1",
@@ -1032,9 +972,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           id:
             "QXJ0d29yazphbmR5LXdhcmhvbC1sYWRpZXMtYW5kLWdlbnRsZW1lbi1mcy1paS1kb3QtMTMwLTE=",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id:
               "QXJ0d29yazphbmR5LXdhcmhvbC1sYWRpZXMtYW5kLWdlbnRsZW1lbi1mcy1paS1kb3QtMTMwLTE=",
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-130-1",
@@ -1081,9 +1018,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1tYW8tZi1kb3Qtcy1paS1kb3QtOTU=",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1tYW8tZi1kb3Qtcy1paS1kb3QtOTU=",
             slug: "andy-warhol-mao-f-dot-s-ii-dot-95",
             href: "/artwork/andy-warhol-mao-f-dot-s-ii-dot-95",
@@ -1130,9 +1064,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           id:
             "QXJ0d29yazphbmR5LXdhcmhvbC1sYWRpZXMtYW5kLWdlbnRsZW1lbi1mcy1paS1kb3QtMTI3LTE=",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id:
               "QXJ0d29yazphbmR5LXdhcmhvbC1sYWRpZXMtYW5kLWdlbnRsZW1lbi1mcy1paS1kb3QtMTI3LTE=",
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-127-1",
@@ -1179,9 +1110,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC10cnVjay05",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC10cnVjay05",
             slug: "andy-warhol-truck-9",
             href: "/artwork/andy-warhol-truck-9",
@@ -1227,9 +1155,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1icmlsbG8tMQ==",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1icmlsbG8tMQ==",
             slug: "andy-warhol-brillo-1",
             href: "/artwork/andy-warhol-brillo-1",
@@ -1276,9 +1201,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           id:
             "QXJ0d29yazphbmR5LXdhcmhvbC1wbGFpbnMtaW5kaWFuLXNoaWVsZC1mcy1paS1kb3QtMzgyLTM=",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id:
               "QXJ0d29yazphbmR5LXdhcmhvbC1wbGFpbnMtaW5kaWFuLXNoaWVsZC1mcy1paS1kb3QtMzgyLTM=",
             slug: "andy-warhol-plains-indian-shield-fs-ii-dot-382-3",
@@ -1325,9 +1247,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1tYXJ0aGEtZ3JhaGFtLTE1",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1tYXJ0aGEtZ3JhaGFtLTE1",
             slug: "andy-warhol-martha-graham-15",
             href: "/artwork/andy-warhol-martha-graham-15",
@@ -1373,9 +1292,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC1maXNoLWZzLWlpaWEtZG90LTM5LTE=",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1maXNoLWZzLWlpaWEtZG90LTM5LTE=",
             slug: "andy-warhol-fish-fs-iiia-dot-39-1",
             href: "/artwork/andy-warhol-fish-fs-iiia-dot-39-1",
@@ -1421,9 +1337,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
         {
           id: "QXJ0d29yazphbmR5LXdhcmhvbC11bnRpdGxlZC1mZW1hbGUtZmlndXJl",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id: "QXJ0d29yazphbmR5LXdhcmhvbC11bnRpdGxlZC1mZW1hbGUtZmlndXJl",
             slug: "andy-warhol-untitled-female-figure",
             href: "/artwork/andy-warhol-untitled-female-figure",
@@ -1470,9 +1383,6 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           id:
             "QXJ0d29yazphbmR5LXdhcmhvbC1sYWRpZXMtYW5kLWdlbnRsZW1lbi1mcy1paS1kb3QtMTI4LTI=",
           node: {
-            collectorSignals: {
-              primaryLabel: null,
-            },
             id:
               "QXJ0d29yazphbmR5LXdhcmhvbC1sYWRpZXMtYW5kLWdlbnRsZW1lbi1mcy1paS1kb3QtMTI4LTI=",
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-128-2",

@@ -1,9 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException } from "found"
-import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
-import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { RouteProps } from "System/Router/Route"
 import { redirectGeneToCollection } from "./Server/redirectGeneToCollection"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
@@ -49,45 +46,10 @@ export const geneRoutes: RouteProps[] = [
         onClientSideRender: () => {
           return GeneShowRoute.preload()
         },
-        prepareVariables: ({ slug }, props) => {
-          const aggregations = [
-            "TOTAL",
-            "ARTIST",
-            "MEDIUM",
-            "LOCATION_CITY",
-            "MATERIALS_TERMS",
-            "PARTNER",
-            "ARTIST_NATIONALITY",
-          ]
-
-          const urlFilterState = props.location ? props.location.query : {}
-
-          const filters = {
-            ...initialArtworkFilterState,
-            ...paramsToCamelCase(urlFilterState),
-          }
-
-          return {
-            aggregations,
-            input: allowedFilters(filters),
-            shouldFetchCounts: !!props.context.user,
-            slug,
-          }
-        },
         query: graphql`
-          query geneRoutes_GeneShowQuery(
-            $slug: String!
-            $input: FilterArtworksInput
-            $aggregations: [ArtworkAggregation]
-            $shouldFetchCounts: Boolean!
-          ) {
+          query geneRoutes_GeneShowQuery($slug: String!) {
             gene(id: $slug) @principalField {
               ...GeneShow_gene
-                @arguments(
-                  input: $input
-                  aggregations: $aggregations
-                  shouldFetchCounts: $shouldFetchCounts
-                )
             }
           }
         `,

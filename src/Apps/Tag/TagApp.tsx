@@ -3,7 +3,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { TagApp_tag$data } from "__generated__/TagApp_tag.graphql"
 import { TagMetaFragmentContainer } from "./Components/TagMeta"
-import { TagArtworkFilterRefetchContainer } from "./Components/TagArtworkFilter"
+import { TagArtworkFilterQueryRenderer } from "./Components/TagArtworkFilter"
 
 interface TagAppProps {
   tag: TagApp_tag$data
@@ -22,25 +22,14 @@ const TagApp: React.FC<TagAppProps> = ({ tag }) => {
         </Column>
       </GridColumns>
 
-      <TagArtworkFilterRefetchContainer tag={tag} />
+      <TagArtworkFilterQueryRenderer />
     </>
   )
 }
 
 export const TagAppFragmentContainer = createFragmentContainer(TagApp, {
   tag: graphql`
-    fragment TagApp_tag on Tag
-      @argumentDefinitions(
-        input: { type: "FilterArtworksInput" }
-        aggregations: { type: "[ArtworkAggregation]" }
-        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
-      ) {
-      ...TagArtworkFilter_tag
-        @arguments(
-          input: $input
-          aggregations: $aggregations
-          shouldFetchCounts: $shouldFetchCounts
-        )
+    fragment TagApp_tag on Tag {
       ...TagMeta_tag
       name
     }
