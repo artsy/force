@@ -54,9 +54,9 @@ const HomeWorksByArtistsYouFollowRail: React.FC<HomeWorksByArtistsYouFollowRailP
                 destination_page_owner_slug: artwork.slug,
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
-                signal_label: getSignalLabel({
-                  collectorSignals: artwork.collectorSignals ?? {},
-                }),
+                signal_label: artwork.collectorSignals
+                  ? getSignalLabel(artwork.collectorSignals)
+                  : "",
                 signal_bid_count:
                   artwork.collectorSignals?.auction?.bidCount ?? undefined,
                 signal_lot_watcher_count:
