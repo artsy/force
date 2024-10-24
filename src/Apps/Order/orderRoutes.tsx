@@ -21,11 +21,8 @@ const OfferRoute = loadable(
 )
 
 const ShippingRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "orderBundle" */ "./Routes/Shipping2/ShippingRoute"
-    ),
-  { resolveComponent: component => component.ShippingRoute }
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Shipping"),
+  { resolveComponent: component => component.ShippingRouteWithDialog }
 )
 
 const PaymentRoute = loadable(
@@ -193,11 +190,9 @@ export const orderRoutes: RouteProps[] = [
           query orderRoutes_ShippingQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
               ...Shipping_order
-              ...Shipping2_order
             }
             me {
               ...Shipping_me
-              ...Shipping2_me
             }
           }
         `,
