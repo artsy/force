@@ -21,10 +21,7 @@ import {
 import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilterCreateAlert"
 import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawer"
 import { ArtworkFilterExpandableSort } from "Components/ArtworkFilter/ArtworkFilters/ArtworkFilterExpandableSort"
-import {
-  ArtworkGridContextProvider,
-  useArtworkGridContext,
-} from "Components/ArtworkGrid/ArtworkGridContext"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -424,16 +421,12 @@ export const BaseArtworkFilter: React.FC<
         <Spacer y={2} />
 
         {children || (
-          <ArtworkGridContextProvider
-            hideSignals={hideSignalsBySlug(viewer.slug)}
-          >
-            <ArtworkFilterArtworkGrid
-              filtered_artworks={viewer.filtered_artworks}
-              isLoading={isLoading}
-              offset={offset}
-              columnCount={[2, 3, 4]}
-            />
-          </ArtworkGridContextProvider>
+          <ArtworkFilterArtworkGrid
+            filtered_artworks={viewer.filtered_artworks}
+            isLoading={isLoading}
+            offset={offset}
+            columnCount={[2, 3, 4]}
+          />
         )}
       </Media>
     </Box>
@@ -472,18 +465,4 @@ export const getTotalCountLabel = ({
   }`
 
   return totalCountLabel
-}
-
-const hideSignalsBySlug = (slug: string) => {
-  const HIDE_SIGNAL_SLUGS = [
-    "trending-now",
-    "curators-picks-emerging-artists",
-    "curators-picks-blue-chip-artists",
-  ]
-
-  if (HIDE_SIGNAL_SLUGS.includes(slug)) {
-    return ["CURATORS_PICK", "INCREASED_INTEREST"]
-  }
-
-  return []
 }

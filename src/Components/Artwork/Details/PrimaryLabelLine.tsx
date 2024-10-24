@@ -34,10 +34,7 @@ export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
     )
   }
 
-  if (
-    primaryLabel === "INCREASED_INTEREST" &&
-    !hideSignals?.includes(primaryLabel)
-  ) {
+  if (primaryLabel === "INCREASED_INTEREST" && !hideSignals) {
     return (
       <Text
         variant="xs"
@@ -55,10 +52,7 @@ export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
     )
   }
 
-  if (
-    primaryLabel === "CURATORS_PICK" &&
-    !hideSignals?.includes(primaryLabel)
-  ) {
+  if (primaryLabel === "CURATORS_PICK" && !hideSignals) {
     return (
       <Text
         variant="xs"
