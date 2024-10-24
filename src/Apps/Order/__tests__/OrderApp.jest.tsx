@@ -262,7 +262,6 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/review",
       mockResolver({
         ...UntouchedBuyOrder,
-        paymentSet: false,
         paymentMethodDetails: null,
         requestedFulfillment: {
           __typename: "CommerceShip",
@@ -271,22 +270,6 @@ describe("OrderApp routing redirects", () => {
       })
     )
     expect(redirect.url).toBe("/orders/2939023/payment")
-  })
-
-  it("does not redirect to the payment route from the review route if credit card was set but later deleted", async () => {
-    const { redirect } = await render(
-      "/orders/2939023/review",
-      mockResolver({
-        ...UntouchedBuyOrder,
-        paymentSet: true,
-        paymentMethodDetails: null,
-        requestedFulfillment: {
-          __typename: "CommerceShip",
-        },
-        state: "APPROVED",
-      })
-    )
-    expect(redirect.url).toBe("/orders/2939023/status")
   })
 
   it("stays on the review route if there are payment and shipping options set", async () => {
