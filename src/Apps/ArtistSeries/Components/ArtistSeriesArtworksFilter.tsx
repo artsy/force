@@ -14,6 +14,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useRouter } from "System/Hooks/useRouter"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { ArtistSeriesArtworksFilterQuery } from "__generated__/ArtistSeriesArtworksFilterQuery.graphql"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries$data
@@ -117,36 +118,38 @@ export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<ArtistSeriesArtwor
   const { match } = useRouter()
 
   return (
-    <SystemQueryRenderer<ArtistSeriesArtworksFilterQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query ArtistSeriesArtworksFilterQuery(
-          $slug: ID!
-          $input: FilterArtworksInput
-          $aggregations: [ArtworkAggregation]
-        ) {
-          artistSeries(id: $slug) {
-            ...ArtistSeriesArtworksFilter_artistSeries
-              @arguments(input: $input, aggregations: $aggregations)
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<ArtistSeriesArtworksFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query ArtistSeriesArtworksFilterQuery(
+            $slug: ID!
+            $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
+          ) {
+            artistSeries(id: $slug) {
+              ...ArtistSeriesArtworksFilter_artistSeries
+                @arguments(input: $input, aggregations: $aggregations)
+            }
           }
-        }
-      `}
-      variables={initializeVariablesWithFilterState(match.params, match)}
-      fetchPolicy="store-and-network"
-      placeholder={<ArtworkFilterPlaceholder />}
-      render={({ error, props }) => {
-        if (error || !props?.artistSeries) {
-          return <ArtworkFilterPlaceholder />
-        }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="store-and-network"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.artistSeries) {
+            return <ArtworkFilterPlaceholder />
+          }
 
-        return (
-          <ArtistSeriesArtworksFilterRefetchContainer
-            artistSeries={props.artistSeries}
-            {...rest}
-          />
-        )
-      }}
-    />
+          return (
+            <ArtistSeriesArtworksFilterRefetchContainer
+              artistSeries={props.artistSeries}
+              {...rest}
+            />
+          )
+        }}
+      />
+    </LazyArtworkGrid>
   )
 }
 

@@ -16,6 +16,7 @@ import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilter
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { TagArtworkFilterQuery } from "__generated__/TagArtworkFilterQuery.graphql"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface TagArtworkFilterProps {
   tag: TagArtworkFilter_tag$data
@@ -108,36 +109,38 @@ export const TagArtworkFilterQueryRenderer: React.FC<TagArtworkFilterQueryRender
   const { match } = useRouter()
 
   return (
-    <SystemQueryRenderer<TagArtworkFilterQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query TagArtworkFilterQuery(
-          $slug: String!
-          $input: FilterArtworksInput
-          $aggregations: [ArtworkAggregation]
-          $shouldFetchCounts: Boolean!
-        ) {
-          tag(id: $slug) {
-            ...TagArtworkFilter_tag
-              @arguments(
-                input: $input
-                aggregations: $aggregations
-                shouldFetchCounts: $shouldFetchCounts
-              )
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<TagArtworkFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query TagArtworkFilterQuery(
+            $slug: String!
+            $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
+            $shouldFetchCounts: Boolean!
+          ) {
+            tag(id: $slug) {
+              ...TagArtworkFilter_tag
+                @arguments(
+                  input: $input
+                  aggregations: $aggregations
+                  shouldFetchCounts: $shouldFetchCounts
+                )
+            }
           }
-        }
-      `}
-      variables={initializeVariablesWithFilterState(match.params, match)}
-      fetchPolicy="store-and-network"
-      placeholder={<ArtworkFilterPlaceholder />}
-      render={({ error, props }) => {
-        if (error || !props?.tag) {
-          return <ArtworkFilterPlaceholder />
-        }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="store-and-network"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.tag) {
+            return <ArtworkFilterPlaceholder />
+          }
 
-        return <TagArtworkFilterRefetchContainer tag={props.tag} {...rest} />
-      }}
-    />
+          return <TagArtworkFilterRefetchContainer tag={props.tag} {...rest} />
+        }}
+      />
+    </LazyArtworkGrid>
   )
 }
 

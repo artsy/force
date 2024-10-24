@@ -16,6 +16,7 @@ import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilter
 import { GeneArtworkFilterQuery } from "__generated__/GeneArtworkFilterQuery.graphql"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface GeneArtworkFilterProps {
   gene: GeneArtworkFilter_gene$data
@@ -111,36 +112,40 @@ export const GeneArtworkFilterQueryRenderer: React.FC<GeneArtworkFilterQueryRend
   const { match } = useRouter()
 
   return (
-    <SystemQueryRenderer<GeneArtworkFilterQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query GeneArtworkFilterQuery(
-          $slug: String!
-          $input: FilterArtworksInput
-          $aggregations: [ArtworkAggregation]
-          $shouldFetchCounts: Boolean!
-        ) {
-          gene(id: $slug) {
-            ...GeneArtworkFilter_gene
-              @arguments(
-                input: $input
-                aggregations: $aggregations
-                shouldFetchCounts: $shouldFetchCounts
-              )
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<GeneArtworkFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query GeneArtworkFilterQuery(
+            $slug: String!
+            $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
+            $shouldFetchCounts: Boolean!
+          ) {
+            gene(id: $slug) {
+              ...GeneArtworkFilter_gene
+                @arguments(
+                  input: $input
+                  aggregations: $aggregations
+                  shouldFetchCounts: $shouldFetchCounts
+                )
+            }
           }
-        }
-      `}
-      variables={initializeVariablesWithFilterState(match.params, match)}
-      fetchPolicy="store-and-network"
-      placeholder={<ArtworkFilterPlaceholder />}
-      render={({ error, props }) => {
-        if (error || !props?.gene) {
-          return <ArtworkFilterPlaceholder />
-        }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="store-and-network"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.gene) {
+            return <ArtworkFilterPlaceholder />
+          }
 
-        return <GeneArtworkFilterRefetchContainer gene={props.gene} {...rest} />
-      }}
-    />
+          return (
+            <GeneArtworkFilterRefetchContainer gene={props.gene} {...rest} />
+          )
+        }}
+      />
+    </LazyArtworkGrid>
   )
 }
 

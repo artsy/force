@@ -1,4 +1,3 @@
-import StaticContainer from "found/StaticContainer"
 import { Column, GridColumns, Skeleton, Text } from "@artsy/palette"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -11,6 +10,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface CollectionFeaturedArtistsProps {
   collection: CollectionFeaturedArtists_collection$data
@@ -107,7 +107,7 @@ export const CollectionFeaturedArtistsQueryRenderer: React.FC<{
   )
 
   return (
-    <StaticContainer shouldUpdate={!!match.elements}>
+    <LazyArtworkGrid>
       <SystemQueryRenderer<CollectionFeaturedArtistsQuery>
         query={graphql`
           query CollectionFeaturedArtistsQuery(
@@ -158,7 +158,7 @@ export const CollectionFeaturedArtistsQueryRenderer: React.FC<{
           )
         }}
       />
-    </StaticContainer>
+    </LazyArtworkGrid>
   )
 }
 

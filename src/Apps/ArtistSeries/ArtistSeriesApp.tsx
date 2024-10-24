@@ -31,7 +31,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
           <Spacer y={6} />
 
           <OtherArtistSeriesRail
-            artist={(railArtist ?? [])[0]!}
+            artist={(railArtist ?? [])[0]}
             title="Series by this artist"
             contextModule={ContextModule.moreSeriesByThisArtist}
           />

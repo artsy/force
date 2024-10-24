@@ -22,6 +22,7 @@ import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitial
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { AuctionArtworkFilterQuery } from "__generated__/AuctionArtworkFilterQuery.graphql"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface AuctionArtworkFilterProps {
   relay: RelayRefetchProp
@@ -126,40 +127,42 @@ export const AuctionArtworkFilterQueryRenderer: React.FC<AuctionArtworkFilterQue
   const { match } = useRouter()
 
   return (
-    <SystemQueryRenderer<AuctionArtworkFilterQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query AuctionArtworkFilterQuery(
-          $saleID: String!
-          $input: FilterArtworksInput
-          $isLoggedIn: Boolean!
-        ) {
-          viewer {
-            ...AuctionArtworkFilter_viewer
-              @arguments(
-                input: $input
-                saleID: $saleID
-                isLoggedIn: $isLoggedIn
-              )
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<AuctionArtworkFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query AuctionArtworkFilterQuery(
+            $saleID: String!
+            $input: FilterArtworksInput
+            $isLoggedIn: Boolean!
+          ) {
+            viewer {
+              ...AuctionArtworkFilter_viewer
+                @arguments(
+                  input: $input
+                  saleID: $saleID
+                  isLoggedIn: $isLoggedIn
+                )
+            }
           }
-        }
-      `}
-      variables={initializeVariablesWithFilterState(match.params, match)}
-      fetchPolicy="network-only"
-      placeholder={<ArtworkFilterPlaceholder />}
-      render={({ error, props }) => {
-        if (error || !props?.viewer) {
-          return <ArtworkFilterPlaceholder />
-        }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="network-only"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.viewer) {
+            return <ArtworkFilterPlaceholder />
+          }
 
-        return (
-          <AuctionArtworkFilterRefetchContainer
-            viewer={props.viewer}
-            {...rest}
-          />
-        )
-      }}
-    />
+          return (
+            <AuctionArtworkFilterRefetchContainer
+              viewer={props.viewer}
+              {...rest}
+            />
+          )
+        }}
+      />
+    </LazyArtworkGrid>
   )
 }
 
