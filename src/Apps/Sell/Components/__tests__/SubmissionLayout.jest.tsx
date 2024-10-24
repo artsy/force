@@ -1,13 +1,13 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
+import { useAuthDialog } from "Components/AuthDialog"
 import { render } from "DevTools/renderWithMockBoot"
 import { useRouter } from "System/Hooks/useRouter"
-import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
 import { Formik } from "formik"
 import { useTracking } from "react-tracking"
-import { useAuthDialog } from "Components/AuthDialog"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockUseSystemContext = useSystemContext as jest.Mock
@@ -138,8 +138,72 @@ describe("SubmissionLayout", () => {
     })
   })
 
+  describe("Header Artsy Logo", () => {
+    describe("while logged in", () => {
+      beforeEach(() => {
+        mockUseSystemContext.mockImplementation(() => {
+          return { isLoggedIn: true }
+        })
+      })
+
+      it("the logo is visible but not clickable", async () => {
+        render(
+          <Formik<{}> initialValues={{}} onSubmit={onSubmitMock}>
+            <SellFlowContextProvider submission={submissionMock}>
+              <SubmissionLayout />
+            </SellFlowContextProvider>
+          </Formik>
+        )
+
+        const artsyLogo = screen.getByTestId("artsy-logo")
+
+        fireEvent.click(artsyLogo)
+
+        await waitFor(() => {
+          expect(
+            screen.queryByText("Leave Without Saving")
+          ).not.toBeInTheDocument()
+        })
+      })
+    })
+
+    describe("while logged out", () => {
+      beforeEach(() => {
+        mockUseSystemContext.mockImplementation(() => {
+          return { isLoggedIn: false }
+        })
+      })
+
+      it("the logo is clickable and the user can exit the flow with a dialog", async () => {
+        render(
+          <Formik<{}> initialValues={{}} onSubmit={onSubmitMock}>
+            <SellFlowContextProvider submission={submissionMock}>
+              <SubmissionLayout />
+            </SellFlowContextProvider>
+          </Formik>
+        )
+
+        const artsyLogo = screen.getByTestId("artsy-logo")
+
+        fireEvent.click(artsyLogo)
+
+        await waitFor(() => {
+          fireEvent.click(screen.getByText("Leave Without Saving"))
+
+          expect(mockPush).toHaveBeenCalledWith("/sell")
+        })
+      })
+    })
+  })
+
   describe("Save & Exit", () => {
     describe("while logged in", () => {
+      beforeEach(() => {
+        mockUseSystemContext.mockImplementation(() => {
+          return { isLoggedIn: true }
+        })
+      })
+
       it("saves the submission and redirects to the sell page", async () => {
         render(
           <Formik<{}> initialValues={{}} onSubmit={onSubmitMock}>

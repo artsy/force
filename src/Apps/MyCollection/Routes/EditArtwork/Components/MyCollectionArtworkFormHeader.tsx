@@ -1,3 +1,4 @@
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import { Flex, FullBleed, Separator, useTheme } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -5,7 +6,6 @@ import { BackLink } from "Components/Links/BackLink"
 import { Sticky } from "Components/Sticky"
 import { ReactNode } from "react"
 import { RouterLink } from "System/Components/RouterLink"
-import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 interface MyCollectionArtworkFormHeaderProps {
   NextButton?: ReactNode
