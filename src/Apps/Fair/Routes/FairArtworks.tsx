@@ -25,6 +25,11 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { Join, Spacer } from "@artsy/palette"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
+import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { FairArtworksFilterQuery } from "__generated__/FairArtworksFilterQuery.graphql"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair$data
@@ -136,10 +141,76 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query FairArtworksQuery($slug: String!, $input: FilterArtworksInput) {
+    query FairArtworksFilterRefetchQuery(
+      $slug: String!
+      $input: FilterArtworksInput
+    ) {
       fair(id: $slug) {
         ...FairArtworks_fair @arguments(input: $input)
       }
     }
   `
 )
+
+interface FairArtworkFilterQueryRendererProps {}
+
+export const FairArtworksQueryRenderer: React.FC<FairArtworkFilterQueryRendererProps> = rest => {
+  const { relayEnvironment } = useSystemContext()
+  const { match } = useRouter()
+
+  return (
+    <LazyArtworkGrid>
+      <SystemQueryRenderer<FairArtworksFilterQuery>
+        environment={relayEnvironment}
+        query={graphql`
+          query FairArtworksFilterQuery(
+            $slug: String!
+            $input: FilterArtworksInput
+          ) {
+            fair(id: $slug) {
+              ...FairArtworks_fair @arguments(input: $input)
+            }
+          }
+        `}
+        variables={initializeVariablesWithFilterState(match.params, match)}
+        fetchPolicy="store-and-network"
+        placeholder={<ArtworkFilterPlaceholder />}
+        render={({ error, props }) => {
+          if (error || !props?.fair) {
+            return <ArtworkFilterPlaceholder />
+          }
+
+          return <FairArtworksRefetchContainer fair={props.fair} {...rest} />
+        }}
+      />
+    </LazyArtworkGrid>
+  )
+}
+
+const initializeVariablesWithFilterState = (params, props) => {
+  const initialFilterState = getInitialFilterState(props.location?.query ?? {})
+
+  let aggregations: string[] = [
+    "TOTAL",
+    "MAJOR_PERIOD",
+    "ARTIST",
+    "LOCATION_CITY",
+    "ARTIST_NATIONALITY",
+    "MATERIALS_TERMS",
+    "PARTNER",
+  ]
+
+  const input = {
+    sort: "-decayed_merch",
+    ...initialFilterState,
+    includeArtworksByFollowedArtists:
+      !!props.context.user &&
+      initialFilterState["includeArtworksByFollowedArtists"],
+  }
+
+  return {
+    slug: params.slug,
+    input,
+    aggregations,
+  }
+}
