@@ -3,8 +3,6 @@ import { Redirect } from "found"
 import { graphql } from "react-relay"
 import { RouteProps } from "System/Router/Route"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
-import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 
 const AuctionApp = loadable(
   () => import(/* webpackChunkName: "auctionBundle" */ "./AuctionApp"),
@@ -58,11 +56,7 @@ export const auctionRoutes: RouteProps[] = [
       AuctionApp.preload()
     },
     query: graphql`
-      query auctionRoutes_TopLevelQuery(
-        $input: FilterArtworksInput
-        $slug: String!
-        $isLoggedIn: Boolean!
-      ) {
+      query auctionRoutes_TopLevelQuery($slug: String!, $isLoggedIn: Boolean!) {
         me {
           ...AuctionApp_me @arguments(saleID: $slug)
         }
@@ -71,34 +65,14 @@ export const auctionRoutes: RouteProps[] = [
         }
         viewer {
           ...AuctionApp_viewer
-            @arguments(input: $input, saleID: $slug, isLoggedIn: $isLoggedIn)
+            @arguments(saleID: $slug, isLoggedIn: $isLoggedIn)
         }
       }
     `,
     prepareVariables: (params, props) => {
-      const auctionFilterDefaults = {
-        sort: "sale_position",
-      }
-
-      const initialFilterStateFromUrl = getInitialFilterState(
-        props.location?.query ?? {}
-      )
-
-      const userSpecificFilterState = getArtworkFilterInputArgs(
-        props.context.user
-      )
-
       const variables = {
         slug: params.slug,
         isLoggedIn: !!props.context.user,
-        input: {
-          ...auctionFilterDefaults,
-          ...initialFilterStateFromUrl,
-          ...userSpecificFilterState,
-          saleID: params.slug,
-          // FIXME: Understand why this is needed to view lots in `the-artist-is-present-a-benefit-auction-for-ukraine` while logged out
-          priceRange: "*-*",
-        },
       }
 
       return variables
