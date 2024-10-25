@@ -39,6 +39,6 @@ describe("InvoiceApp", () => {
   it("renders correctly", () => {
     expect(
       screen.getByTestId("invoice-info").textContent
-    ).toMatchInlineSnapshot(`"Invoice #123Date: Oct 17, 2024"`)
+    ).toMatchInlineSnapshot(`"Oct 17, 2024"`)
   })
 })

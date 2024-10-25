@@ -1,5 +1,6 @@
-import { Box, Separator, Spacer, Text } from "@artsy/palette"
+import { Box, StackableBorderBox, Text } from "@artsy/palette"
 import { InvoiceApp_invoice$key } from "__generated__/InvoiceApp_invoice.graphql"
+import { MetaTags } from "Components/MetaTags"
 import { HttpError } from "found"
 import { graphql, useFragment } from "react-relay"
 
@@ -20,26 +21,22 @@ export const InvoiceApp: React.FC<InvoiceAppProps> = ({
   const { number, readyAt } = data
 
   return (
-    <Box mx={4}>
-      <Spacer y={4} />
+    <>
+      <MetaTags title={`Invoice #${number} | Artsy`} />
 
-      <Box textAlign={"right"}>
-        <Text variant="xl" textTransform={"uppercase"}>
-          Invoice
-        </Text>
-        <Text data-testid="invoice-info" variant="sm">
-          <em>Invoice</em> #{number}
-          <br />
-          <em>Date:</em> {readyAt}
-        </Text>
+      <Box width="50%" margin="auto" p={2}>
+        <StackableBorderBox>
+          <Text variant="md" fontWeight="bold">
+            Invoice #{number}
+          </Text>
+          <Text data-testid="invoice-info" variant="sm">
+            {readyAt}
+          </Text>
+        </StackableBorderBox>
+
+        {children}
       </Box>
-
-      <Spacer y={4} />
-
-      <Separator my={3} />
-
-      {children}
-    </Box>
+    </>
   )
 }
 

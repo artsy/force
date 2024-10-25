@@ -12,8 +12,8 @@ export const InvoiceLineItems: React.FC<InvoiceLineItemsProps> = ({
   const data = useFragment(InvoiceLineItemsFragment, invoice)
 
   return (
-    <Box my={4}>
-      <Text variant="lg" fontWeight="bold">
+    <Box>
+      <Text variant="sm" fontWeight="bold">
         Items
       </Text>
 

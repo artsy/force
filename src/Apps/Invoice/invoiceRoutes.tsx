@@ -32,6 +32,7 @@ const InvoicePaymentRoute = loadable(
 export const invoiceRoutes: RouteProps[] = [
   {
     path: "/invoice/:token",
+    layout: "LogoOnly",
     getComponent: () => InvoiceApp,
     onClientSideRender: () => {
       InvoiceApp.preload()
@@ -46,6 +47,7 @@ export const invoiceRoutes: RouteProps[] = [
     children: [
       {
         path: "",
+        layout: "LogoOnly",
         getComponent: () => InvoiceDetailRoute,
         onClientSideRender: () => {
           InvoiceDetailRoute.preload()
@@ -62,6 +64,7 @@ export const invoiceRoutes: RouteProps[] = [
 
       {
         path: "payment",
+        layout: "LogoOnly",
         getComponent: () => InvoicePaymentRoute,
         onClientSideRender: () => {
           InvoicePaymentRoute.preload()
