@@ -5,6 +5,8 @@ import loadAssetManifest from "Server/manifest"
 import path from "path"
 import { getENV } from "Utils/getENV"
 import { ServerAppResults } from "System/Router/serverRouter"
+import { Transform } from "stream"
+import { ENABLE_SSR_STREAMING } from "Server/config"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -25,6 +27,7 @@ interface RenderServerAppProps extends ServerAppResults {
   mount?: boolean
   req: ArtsyRequest
   res: ArtsyResponse
+  stream?: Transform
 }
 
 export const renderServerApp = ({
@@ -34,7 +37,8 @@ export const renderServerApp = ({
   mount = true,
   req,
   res,
-  scripts,
+  extractScriptTags,
+  stream,
   styleTags,
 }: RenderServerAppProps) => {
   const headTagsString = renderToString(headTags as any)
@@ -42,6 +46,8 @@ export const renderServerApp = ({
   const sharify = res.locals.sharify
 
   const { WEBFONT_URL } = sharify.data
+
+  const scripts = extractScriptTags?.()
 
   const options = {
     cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
@@ -78,5 +84,39 @@ export const renderServerApp = ({
 
   const statusCode = getENV("statusCode") ?? code
 
-  res.status(statusCode).render(`${PUBLIC_DIR}/html.ejs`, options)
+  res
+    .status(statusCode)
+    .render(`${PUBLIC_DIR}/html.ejs`, options, (error, html) => {
+      if (error) {
+        console.error(error)
+
+        res
+          .status(500)
+          .send("Internal Server Error: Error rendering server app")
+      } else {
+        // Stream or send HTML response
+        if (ENABLE_SSR_STREAMING && stream) {
+          res.write(html.split('<div id="react-root">')[0])
+
+          // Write tag that React will mount to
+          res.write('<div id="react-root">')
+
+          // Start streaming HTML response
+          stream.pipe(res, { end: false })
+
+          stream.on("end", () => {
+            res.write("</div>")
+
+            // Append scripts at the end
+            res.write(`${scripts}`)
+            res.write("</body></html>")
+
+            // Exit stream
+            res.end()
+          })
+        } else {
+          res.send(html)
+        }
+      }
+    })
 }
