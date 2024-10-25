@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f28ac9f20f141cd62d0234a62cef964d>>
+ * @generated SignedSource<<116fe4741394fc6b73892fdda802abca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,7 @@ export type Payment_validation$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined;
+  readonly paymentSet: boolean;
   readonly " $fragmentType": "Payment_validation";
 };
 export type Payment_validation$key = {
@@ -50,6 +51,13 @@ return {
   "metadata": null,
   "name": "Payment_validation",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "paymentSet",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -107,6 +115,6 @@ return {
 };
 })();
 
-(node as any).hash = "b2b71ea7bae825a7fcaa69e08936b58b";
+(node as any).hash = "887898566a4cc7bf7c19b5132dc44b9f";
 
 export default node;
