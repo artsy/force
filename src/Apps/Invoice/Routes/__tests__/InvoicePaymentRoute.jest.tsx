@@ -51,6 +51,6 @@ describe("InvoicePaymentRoute", () => {
   it("renders invoice details correctly", () => {
     expect(
       screen.getByTestId("invoice-payment-info").textContent
-    ).toMatchInlineSnapshot(`"Make a payment:$100.00"`)
+    ).toMatchInlineSnapshot(`"Make a payment: $100.00"`)
   })
 })

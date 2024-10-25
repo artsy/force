@@ -32,16 +32,11 @@ export const AddressForm = () => {
         <CountrySelect
           name="address.country"
           title="Country"
-          // TODO: Accept a value prop in Select
-          // @ts-ignore
           value={values.address.country}
           onChange={handleChange}
           onBlur={handleBlur}
           error={touched.address?.country && errors.address?.country}
           required
-          // FIXME: There's extra margin between title and select in palette
-          // than the title and select in input. Open PR to palette
-          mt={-0.5}
         />
       </Column>
 

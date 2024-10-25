@@ -1,4 +1,4 @@
-import { Box, Text } from "@artsy/palette"
+import { Spacer, StackableBorderBox, Text } from "@artsy/palette"
 import { InvoicePaymentRoute_invoice$key } from "__generated__/InvoicePaymentRoute_invoice.graphql"
 import { InvoicePaymentForm } from "Apps/Invoice/Components/InvoicePaymentForm"
 import { CreditCardInputProvider } from "Components/CreditCardInput"
@@ -19,26 +19,23 @@ export const InvoicePaymentRoute: React.FC<InvoicePaymentRouteProps> = ({
   const token = match.params.token
 
   return (
-    <Box display="flex" justifyContent="center" width="100%" my={4}>
-      <Text
-        data-testid="invoice-payment-info"
-        variant={"xl"}
-        fontWeight={"bold"}
-        mr={2}
-      >
-        Make a payment:
-        <br />
-        {remaining}
-      </Text>
+    <>
+      <StackableBorderBox>
+        <Text data-testid="invoice-payment-info" variant="md">
+          Make a payment: {remaining}
+        </Text>
 
-      <CreditCardInputProvider>
-        <InvoicePaymentForm
-          amountMinor={remainingMinor}
-          invoiceID={internalID}
-          invoiceToken={token}
-        />
-      </CreditCardInputProvider>
-    </Box>
+        <Spacer y={2} />
+
+        <CreditCardInputProvider>
+          <InvoicePaymentForm
+            amountMinor={remainingMinor}
+            invoiceID={internalID}
+            invoiceToken={token}
+          />
+        </CreditCardInputProvider>
+      </StackableBorderBox>
+    </>
   )
 }
 
