@@ -37,7 +37,7 @@ export const renderServerApp = ({
   mount = true,
   req,
   res,
-  scripts,
+  extractScriptTags,
   stream,
   styleTags,
 }: RenderServerAppProps) => {
@@ -46,6 +46,8 @@ export const renderServerApp = ({
   const sharify = res.locals.sharify
 
   const { WEBFONT_URL } = sharify.data
+
+  const scripts = extractScriptTags?.()
 
   const options = {
     cdnUrl: NODE_ENV === "production" ? CDN_URL : "",

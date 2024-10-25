@@ -33,6 +33,7 @@ export interface ServerAppResults {
   status?: number
   stream?: Transform
   scripts?: string
+  extractScriptTags?: () => string
   headTags?: any[]
   styleTags?: string
 }
@@ -121,7 +122,7 @@ export const setupServerRouter = async ({
     )
   }
 
-  const { html, stream, scripts, styleTags } = await collectAssets({
+  const { html, stream, extractScriptTags, styleTags } = await collectAssets({
     ServerRouter,
     relayEnvironment,
   })
@@ -140,7 +141,7 @@ export const setupServerRouter = async ({
     headTags,
     html,
     redirect,
-    scripts,
+    extractScriptTags,
     status,
     stream,
     styleTags,

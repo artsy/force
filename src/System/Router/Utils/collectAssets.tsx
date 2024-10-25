@@ -67,70 +67,76 @@ export const collectAssets = async ({
     styleTags = sheet.getStyleTags()
   }
 
-  // Build up script tags to inject into head
-  const initialScripts: string[] = []
-
-  // Extract scripts from loadable components
-  const bundleScriptTags = extractor.getScriptTags()
-
-  initialScripts.push(
-    bundleScriptTags
-      .split("\n")
-      .map(script => {
-        /**
-         * In production, prefix injected script src with CDN endpoint.
-         * @see https://github.com/artsy/force/blob/main/src/lib/middleware/asset.ts#L23
-         */
-        if (getENV("CDN_URL")) {
-          const scriptTagWithCDN = script.replace(
-            /src="\/assets/g,
-            `src="${assetPublicPath}`
-          )
-          return scriptTagWithCDN
-        } else {
-          return script
-        }
-      })
-      .filter(script => {
-        return !(
-          /**
-           * Since these files are already embedded in our main
-           * layout file, omit them from the scripts array.
-           *
-           * TODO: Don't include these files in the main layout
-           * and instead relay on dynamically including them here.
-           * Will require some shuffling in the jade template,
-           * however.
-           */
-          (
-            script.includes("/assets/runtime.") ||
-            script.includes("/assets/artsy.") ||
-            script.includes("/assets/common-artsy.") ||
-            script.includes("/assets/common-react.") ||
-            script.includes("/assets/common-utility.") ||
-            script.includes("/assets/common.")
-          )
-        )
-      })
-      .join("\n")
-  )
-
   const relaySSRMiddleware = (relayEnvironment as any)
     .relaySSRMiddleware as RelayServerSSR
 
   const initialRelayData = await relaySSRMiddleware.getCache()
 
-  initialScripts.push(`
+  /**
+   * Extract scripts from loadable components
+   * NOTE: When streaming is enabled we need to lazily execute script extraction
+   */
+  const extractScriptTags = () => {
+    const initialScripts: string[] = []
+
+    const bundleScriptTags = extractor.getScriptTags()
+
+    initialScripts.push(
+      bundleScriptTags
+        .split("\n")
+        .map(script => {
+          /**
+           * In production, prefix injected script src with CDN endpoint.
+           * @see https://github.com/artsy/force/blob/main/src/lib/middleware/asset.ts#L23
+           */
+          if (getENV("CDN_URL")) {
+            const scriptTagWithCDN = script.replace(
+              /src="\/assets/g,
+              `src="${assetPublicPath}`
+            )
+            return scriptTagWithCDN
+          } else {
+            return script
+          }
+        })
+        .filter(script => {
+          return !(
+            /**
+             * Since these files are already embedded in our main
+             * layout file, omit them from the scripts array.
+             *
+             * TODO: Don't include these files in the main layout
+             * and instead relay on dynamically including them here.
+             * Will require some shuffling in the jade template,
+             * however.
+             */
+            (
+              script.includes("/assets/runtime.") ||
+              script.includes("/assets/artsy.") ||
+              script.includes("/assets/common-artsy.") ||
+              script.includes("/assets/common-react.") ||
+              script.includes("/assets/common-utility.") ||
+              script.includes("/assets/common.")
+            )
+          )
+        })
+        .join("\n")
+    )
+
+    initialScripts.push(`
     <script>
       var __RELAY_BOOTSTRAP__ = ${serializeRelayData(initialRelayData)};
     </script>
   `)
 
-  const scripts = initialScripts.join("\n")
+    const scripts = initialScripts.join("\n")
+
+    return scripts
+  }
 
   return {
     html,
-    scripts,
+    extractScriptTags,
     stream,
     styleTags,
   }
