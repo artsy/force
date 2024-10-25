@@ -68,10 +68,7 @@ describe("InvoiceDetailRoute", () => {
   it("renders invoice details correctly", () => {
     expect(
       screen.getByTestId("invoice-name").textContent
-    ).toMatchInlineSnapshot(`"Name: John Doe"`)
-    expect(
-      screen.getByTestId("invoice-email").textContent
-    ).toMatchInlineSnapshot(`"Email: john@example.com"`)
+    ).toMatchInlineSnapshot(`"John Doe <john@example.com>"`)
     expect(screen.getByText("Cool Cat Art Auction")).toBeInTheDocument()
     expect(screen.getByText("$100.00")).toBeInTheDocument()
   })

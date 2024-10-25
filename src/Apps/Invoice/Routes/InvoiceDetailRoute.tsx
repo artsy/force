@@ -1,4 +1,11 @@
-import { Box, Button, Join, Separator, Text } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Flex,
+  Spacer,
+  StackableBorderBox,
+  Text,
+} from "@artsy/palette"
 import { InvoiceDetailRoute_invoice$key } from "__generated__/InvoiceDetailRoute_invoice.graphql"
 import { InvoiceLineItems } from "Apps/Invoice/Components/InvoiceLineItems"
 import { InvoicePayments } from "Apps/Invoice/Components/InvoicePayments"
@@ -27,55 +34,65 @@ export const InvoiceDetailRoute: React.FC<InvoiceDetailRouteProps> = ({
 
   return (
     <>
-      <Join separator={<Separator my={3} />}>
-        <Box display="flex" justifyContent="space-between" width="100%" my={4}>
+      <StackableBorderBox>
+        <Flex justifyContent="space-between">
           <Box>
             <Text variant="sm" fontWeight="bold">
-              FROM
+              From
             </Text>
             <Text variant="sm">Artsy</Text>
-            <br />
+          </Box>
+          <Box>
             <Text variant="sm">401 Broadway, 25th Floor</Text>
             <Text variant="sm">New York, NY 10013</Text>
           </Box>
+        </Flex>
+      </StackableBorderBox>
+      <StackableBorderBox>
+        <Text variant="sm" fontWeight="bold">
+          To
+        </Text>
+        <Text data-testid="invoice-name" variant="sm">
+          {name} {"<"}
+          {email}
+          {">"}
+        </Text>
+      </StackableBorderBox>
 
-          <Box textAlign="right">
-            <Text variant="sm" fontWeight="bold">
-              TO
-            </Text>
-            <Text data-testid="invoice-name" variant="sm">
-              <em>Name:</em> {name}
-            </Text>
-            <br />
-            <Text data-testid="invoice-email" variant="sm">
-              <em>Email:</em> {email}
-            </Text>
-          </Box>
-        </Box>
-
+      <StackableBorderBox>
         <InvoiceLineItems invoice={data} />
+      </StackableBorderBox>
 
-        {hasSuccessfulPayments && (
-          <>
-            <InvoicePayments invoice={data} />
-          </>
-        )}
+      {hasSuccessfulPayments && (
+        <StackableBorderBox>
+          <InvoicePayments invoice={data} />
+        </StackableBorderBox>
+      )}
 
-        <Box display="flex" justifyContent="space-between" width="100%" my={4}>
-          <Box>{externalNote && <Text variant="lg">{externalNote}</Text>}</Box>
-          <Text textAlign={"right"} variant="lg" fontWeight="bold">
+      <StackableBorderBox>
+        <Flex justifyContent="space-between">
+          {externalNote && <Text variant="lg">{externalNote}</Text>}
+
+          <Text variant="lg" fontWeight="bold">
             {remaining}
           </Text>
-        </Box>
-      </Join>
+        </Flex>
 
-      {!isPaid && (
-        <Box display="flex" justifyContent="center" width="100%">
-          <RouterLink to={paymentRoute}>
-            <Button>Make Payment</Button>
-          </RouterLink>
-        </Box>
-      )}
+        <Spacer y={4} />
+
+        {!isPaid && (
+          <Box display="flex" justifyContent="center" width="100%">
+            <Button
+              // @ts-ignore
+              as={RouterLink}
+              to={paymentRoute}
+              width="100%"
+            >
+              Make Payment
+            </Button>
+          </Box>
+        )}
+      </StackableBorderBox>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { Button } from "@artsy/palette"
+import { Button, Spacer } from "@artsy/palette"
 import { AddressFormValues } from "Apps/Invoice/Components/AddressForm"
 import { AddressFormWithCreditCard } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { useCreateTokenAndSubmit } from "Apps/Invoice/Hooks/useCreateTokenAndSubmit"
@@ -33,6 +33,8 @@ export const InvoicePaymentForm: React.FC<InvoicePaymentFormProps> = props => {
         return (
           <Form>
             <AddressFormWithCreditCard />
+
+            <Spacer y={2} />
 
             <Button
               mt={2}
