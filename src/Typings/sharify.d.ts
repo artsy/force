@@ -47,6 +47,7 @@ declare module "sharify" {
       ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH: boolean
       ENABLE_NEW_AUCTIONS_FILTER: boolean
       ENABLE_QUERY_BATCHING: boolean
+      ENABLE_SSR_STREAMING: boolean
       ENABLE_WEB_CRAWLING: string
       FACEBOOK_APP_NAMESPACE: string
       FACEBOOK_ID: string

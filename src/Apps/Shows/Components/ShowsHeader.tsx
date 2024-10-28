@@ -1,6 +1,5 @@
 import {
   Box,
-  BorderBox,
   Text,
   Join,
   Select,
@@ -12,10 +11,11 @@ import { themeGet } from "@styled-system/theme-get"
 import { uniqBy } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { ShowsHeader_viewer$data } from "__generated__/ShowsHeader_viewer.graphql"
+import { useDidMount } from "Utils/Hooks/useDidMount"
 
 interface ShowsHeaderProps {
   viewer: ShowsHeader_viewer$data
@@ -30,6 +30,7 @@ export const ShowsHeader: React.FC<ShowsHeaderProps> = ({
   viewer: { featuredCities, allCities },
 }) => {
   const { router } = useRouter()
+  const isMounted = useDidMount()
 
   const handleSelect = (value: string) => {
     router.push(`/shows/${value}`)
@@ -38,7 +39,7 @@ export const ShowsHeader: React.FC<ShowsHeaderProps> = ({
   const options = uniqBy([...DEFAULT_CITIES, ...allCities], city => city.value)
 
   return (
-    <BorderBox p={0}>
+    <Box p={0} border="1px solid" borderColor="black10">
       <GridColumns width="100%">
         <Column span={10} display={["none", "block"]}>
           <HorizontalOverflow height="100%" p={2} data-test="cities-rail">
@@ -65,10 +66,24 @@ export const ShowsHeader: React.FC<ShowsHeaderProps> = ({
         </Column>
 
         <Column span={2} p={1} pl={[1, 0]}>
-          <Select width="100%" options={options} onSelect={handleSelect} />
+          {/* For some reason this is creating issues with SSR -> hydration
+              styles, so only mount on client */}
+          {isMounted ? (
+            <SelectContainer>
+              <Select
+                width="100%"
+                options={options}
+                onSelect={handleSelect}
+                disabled={!isMounted}
+              />
+            </SelectContainer>
+          ) : (
+            // Placeholder for SSR render
+            <Box height={50} />
+          )}
         </Column>
       </GridColumns>
-    </BorderBox>
+    </Box>
   )
 }
 
@@ -97,4 +112,19 @@ const City = styled(RouterLink)`
   &.active {
     color: ${themeGet("colors.brand")};
   }
+`
+
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
+
+const SelectContainer = styled(Box)`
+  animation: ${fadeInUp} 0.2s linear forwards;
 `

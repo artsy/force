@@ -23,6 +23,7 @@ import { Boot } from "System/Boot"
 import { collectAssets } from "System/Router/Utils/collectAssets"
 import { getServerAppContext } from "System/Router/Utils/serverAppContext"
 import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
+import { Transform } from "stream"
 
 export interface ServerAppResults {
   html?: string
@@ -30,7 +31,9 @@ export interface ServerAppResults {
     url: string
   }
   status?: number
+  stream?: Transform
   scripts?: string
+  extractScriptTags?: () => string
   headTags?: any[]
   styleTags?: string
 }
@@ -119,7 +122,7 @@ export const setupServerRouter = async ({
     )
   }
 
-  const { html, scripts, styleTags } = await collectAssets({
+  const { html, stream, extractScriptTags, styleTags } = await collectAssets({
     ServerRouter,
     relayEnvironment,
   })
@@ -138,8 +141,9 @@ export const setupServerRouter = async ({
     headTags,
     html,
     redirect,
-    scripts,
+    extractScriptTags,
     status,
+    stream,
     styleTags,
   }
 
