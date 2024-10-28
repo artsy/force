@@ -16555,7 +16555,7 @@ type Query {
     respectParamsOrder: Boolean = false
   ): ArtworkConnection
     @deprecated(
-      reason: "This is only for use in resolving stitched queries, not for first-class client use."
+      reason: "This is only for use in resolving stitched queries, not for first-class client use!"
     )
 
   # Artworks Elastic Search results
@@ -21357,7 +21357,7 @@ type Viewer {
     respectParamsOrder: Boolean = false
   ): ArtworkConnection
     @deprecated(
-      reason: "This is only for use in resolving stitched queries, not for first-class client use."
+      reason: "This is only for use in resolving stitched queries, not for first-class client use!"
     )
 
   # Artworks Elastic Search results
