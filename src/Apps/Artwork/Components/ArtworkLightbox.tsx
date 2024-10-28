@@ -9,7 +9,6 @@ import { useLocalImage } from "Utils/localImageHelpers"
 import { userIsTeam } from "Utils/user"
 import { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
 import { ArtworkLightboxPlaceholder } from "./ArtworkLightboxPlaceholder"
-import { getENV } from "Utils/getENV"
 
 interface ArtworkLightboxProps extends ClickableProps {
   artwork: ArtworkLightbox_artwork$data
@@ -51,10 +50,6 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
 
   if (!image) return null
 
-  const shouldLazyLoad = Boolean(
-    lazyLoad && !(getENV("IS_GOOGLEBOT") || getENV("IS_MOBILE"))
-  )
-
   return (
     <>
       {isDefault && (
@@ -90,7 +85,8 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
               key={placeholder}
               src={placeholder}
               preload={!!isDefault}
-              lazyLoad={shouldLazyLoad}
+              // Deliberate, to improve LCP
+              lazyLoad={false}
             />
           )}
 
@@ -108,7 +104,8 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
             src={image.src}
             srcSet={image.srcSet}
             alt={artwork.formattedMetadata ?? ""}
-            lazyLoad={shouldLazyLoad}
+            // Deliberate, to improve LCP
+            lazyLoad={false}
             preventRightClick={!isTeam}
             style={{ position: "relative" }}
           />
