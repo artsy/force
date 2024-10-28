@@ -26,6 +26,8 @@ import HelpIcon from "@artsy/icons/HelpIcon"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import PendingIcon from "@artsy/icons/PendingIcon"
 import AlertStrokeIcon from "@artsy/icons/AlertStrokeIcon"
+import { useTracking } from "react-tracking"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 const ORDER_LABELS = {
   APPROVED: "Confirmed",
@@ -78,29 +80,6 @@ const getPaymentMethodText = (
   }
 }
 
-const getOrderLink = order => {
-  const isOrderActive = !["CANCELED", "REFUNDED"].includes(order.state)
-  const isOrderPaymentFailed = order.displayState === "PAYMENT_FAILED"
-
-  if (isOrderPaymentFailed) {
-    return (
-      <RouterLink inline to={`/orders/${order.internalID}/payment/new`}>
-        {order.code}
-      </RouterLink>
-    )
-  }
-
-  if (isOrderActive) {
-    return (
-      <RouterLink inline to={`/orders/${order.internalID}/status`}>
-        {order.code}
-      </RouterLink>
-    )
-  }
-
-  return <>{order.code}</>
-}
-
 interface SettingsPurchasesRowProps {
   order: SettingsPurchasesRow_order$data
 }
@@ -115,6 +94,43 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
   const image = artworkVersion?.image?.cropped
 
   const isPrivateSale = order.source === "private_sale"
+
+  const { trackEvent } = useTracking()
+  const trackChangePaymentMethodClick = (orderID: string) => () => {
+    trackEvent({
+      action: ActionType.clickedChangePaymentMethod,
+      context_module: ContextModule.ordersHistory,
+      context_page_owner_type: OwnerType.ordersHistory,
+      context_page_owner_id: orderID,
+    })
+  }
+
+  const getOrderLink = order => {
+    const isOrderActive = !["CANCELED", "REFUNDED"].includes(order.state)
+    const isOrderPaymentFailed = order.displayState === "PAYMENT_FAILED"
+
+    if (isOrderPaymentFailed) {
+      return (
+        <RouterLink
+          inline
+          to={`/orders/${order.internalID}/payment/new`}
+          onClick={trackChangePaymentMethodClick(order.internalID)}
+        >
+          {order.code}
+        </RouterLink>
+      )
+    }
+
+    if (isOrderActive) {
+      return (
+        <RouterLink inline to={`/orders/${order.internalID}/status`}>
+          {order.code}
+        </RouterLink>
+      )
+    }
+
+    return <>{order.code}</>
+  }
 
   return (
     <Box border="1px solid" borderColor="black10">
