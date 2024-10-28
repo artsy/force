@@ -5,7 +5,6 @@ import { useRouter } from "System/Hooks/useRouter"
 import { createFragmentContainer, graphql } from "react-relay"
 import { OrderStepper_order$data } from "__generated__/OrderStepper_order.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { isPaymentSet } from "Apps/Order/Utils/orderUtils"
 
 function typedArray<T extends string>(...elems: T[]): T[] {
   return elems
@@ -52,7 +51,7 @@ export const OrderStepper: FC<OrderStepperProps> = ({
       completedSteps.push("Shipping")
     }
 
-    if (isPaymentSet(order.paymentMethodDetails)) {
+    if (order.paymentSet) {
       completedSteps.push("Payment")
     }
 
@@ -135,6 +134,7 @@ export const OrderStepperFragmentContainer = createFragmentContainer(
     order: graphql`
       fragment OrderStepper_order on CommerceOrder {
         mode
+        paymentSet
         requestedFulfillment {
           __typename
         }

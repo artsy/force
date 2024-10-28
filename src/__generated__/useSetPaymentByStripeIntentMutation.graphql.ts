@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<508176450064c1b55882563932b1c4cc>>
+ * @generated SignedSource<<8ba92b6d321fb64abfc715dff36ce975>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -212,6 +212,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "paymentSet",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "paymentMethod",
                         "storageKey": null
                       },
@@ -270,12 +277,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2851785b859536bb0fecd27617bdc7f8",
+    "cacheID": "f4c70160224bd6ba8ca360d449a3090e",
     "id": null,
     "metadata": {},
     "name": "useSetPaymentByStripeIntentMutation",
     "operationKind": "mutation",
-    "text": "mutation useSetPaymentByStripeIntentMutation(\n  $input: CommerceSetPaymentByStripeIntentInput!\n) {\n  commerceSetPaymentByStripeIntent(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          ...Payment_validation\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment Payment_validation on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "mutation useSetPaymentByStripeIntentMutation(\n  $input: CommerceSetPaymentByStripeIntentInput!\n) {\n  commerceSetPaymentByStripeIntent(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          ...Payment_validation\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment Payment_validation on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentSet\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();

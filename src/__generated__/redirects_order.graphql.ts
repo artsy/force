@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5d8b5b8a593a222ae8e4bbd8404b1a3e>>
+ * @generated SignedSource<<a788cbd689d5b1004f59b6b7e54bf534>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -65,6 +65,7 @@ export type redirects_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined;
+  readonly paymentSet: boolean;
   readonly requestedFulfillment: {
     readonly __typename: string;
   } | null | undefined;
@@ -158,6 +159,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "lastTransactionFailed",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "paymentSet",
       "storageKey": null
     },
     {
@@ -360,6 +368,6 @@ return {
 };
 })();
 
-(node as any).hash = "5df8266de6ffc2d842761fbd9ba26b75";
+(node as any).hash = "7902edb5e9933e9c955a01a587a7fddf";
 
 export default node;

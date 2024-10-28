@@ -542,6 +542,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
 graphql`
   fragment Payment_validation on CommerceOrder {
+    paymentSet
     paymentMethod
     paymentMethodDetails {
       __typename
@@ -589,6 +590,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
         conditionsOfSale
         bankAccountId
         availablePaymentMethods
+        paymentSet
         buyerTotalCents
         internalID
         mode

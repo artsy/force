@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a1ff52d4e6c061f5df75fe28fd5bdaa>>
+ * @generated SignedSource<<7647319e6defb3f667fa013097ac6c49>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -72,6 +72,7 @@ export type orderRoutes_OrderQuery$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     } | null | undefined;
+    readonly paymentSet: boolean;
     readonly requestedFulfillment: {
       readonly __typename: string;
     } | null | undefined;
@@ -146,6 +147,7 @@ export type orderRoutes_OrderQuery$rawResponse = {
     } | {
       readonly __typename: string;
     } | null | undefined;
+    readonly paymentSet: boolean;
     readonly requestedFulfillment: {
       readonly __typename: string;
     } | null | undefined;
@@ -201,6 +203,7 @@ export type orderRoutes_OrderQuery$rawResponse = {
     } | {
       readonly __typename: string;
     } | null | undefined;
+    readonly paymentSet: boolean;
     readonly requestedFulfillment: {
       readonly __typename: string;
     } | null | undefined;
@@ -289,28 +292,35 @@ v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "paymentSet",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "createdAt",
   "storageKey": null
 },
-v11 = [
+v12 = [
   (v4/*: any*/),
-  (v10/*: any*/)
+  (v11/*: any*/)
 ],
-v12 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "awaitingResponseFrom",
   "storageKey": null
 },
-v13 = {
+v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v14 = {
+v15 = {
   "alias": null,
   "args": null,
   "concreteType": null,
@@ -318,42 +328,42 @@ v14 = {
   "name": "requestedFulfillment",
   "plural": false,
   "selections": [
-    (v13/*: any*/)
+    (v14/*: any*/)
   ],
-  "storageKey": null
-},
-v15 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
   "storageKey": null
 },
 v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "isSelected",
+  "name": "slug",
   "storageKey": null
 },
 v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "paymentMethod",
+  "name": "isSelected",
   "storageKey": null
 },
 v18 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "paymentMethod",
+  "storageKey": null
+},
+v19 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v19 = [
-  (v18/*: any*/)
+v20 = [
+  (v19/*: any*/)
 ],
-v20 = {
+v21 = {
   "alias": null,
   "args": null,
   "concreteType": null,
@@ -361,16 +371,16 @@ v20 = {
   "name": "paymentMethodDetails",
   "plural": false,
   "selections": [
-    (v13/*: any*/),
+    (v14/*: any*/),
     {
       "kind": "InlineFragment",
-      "selections": (v19/*: any*/),
+      "selections": (v20/*: any*/),
       "type": "CreditCard",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
-      "selections": (v19/*: any*/),
+      "selections": (v20/*: any*/),
       "type": "BankAccount",
       "abstractKey": null
     },
@@ -391,10 +401,10 @@ v20 = {
   ],
   "storageKey": null
 },
-v21 = [
+v22 = [
   (v4/*: any*/),
-  (v10/*: any*/),
-  (v18/*: any*/)
+  (v11/*: any*/),
+  (v19/*: any*/)
 ];
 return {
   "fragment": {
@@ -430,6 +440,7 @@ return {
           (v7/*: any*/),
           (v8/*: any*/),
           (v9/*: any*/),
+          (v10/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -440,7 +451,7 @@ return {
                 "kind": "LinkedField",
                 "name": "myLastOffer",
                 "plural": false,
-                "selections": (v11/*: any*/),
+                "selections": (v12/*: any*/),
                 "storageKey": null
               },
               {
@@ -450,15 +461,15 @@ return {
                 "kind": "LinkedField",
                 "name": "lastOffer",
                 "plural": false,
-                "selections": (v11/*: any*/),
+                "selections": (v12/*: any*/),
                 "storageKey": null
               },
-              (v12/*: any*/)
+              (v13/*: any*/)
             ],
             "type": "CommerceOfferOrder",
             "abstractKey": null
           },
-          (v14/*: any*/),
+          (v15/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -491,7 +502,7 @@ return {
                         "name": "artwork",
                         "plural": false,
                         "selections": [
-                          (v15/*: any*/)
+                          (v16/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -519,7 +530,7 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v16/*: any*/)
+                                  (v17/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -550,8 +561,8 @@ return {
             ],
             "storageKey": null
           },
-          (v17/*: any*/),
-          (v20/*: any*/),
+          (v18/*: any*/),
+          (v21/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -579,7 +590,7 @@ return {
         "plural": false,
         "selections": [
           (v1/*: any*/),
-          (v18/*: any*/)
+          (v19/*: any*/)
         ],
         "storageKey": null
       },
@@ -591,7 +602,7 @@ return {
         "name": "commerceOrder",
         "plural": false,
         "selections": [
-          (v13/*: any*/),
+          (v14/*: any*/),
           {
             "kind": "TypeDiscriminator",
             "abstractKey": "__isCommerceOrder"
@@ -603,6 +614,7 @@ return {
           (v7/*: any*/),
           (v8/*: any*/),
           (v9/*: any*/),
+          (v10/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -613,7 +625,7 @@ return {
                 "kind": "LinkedField",
                 "name": "myLastOffer",
                 "plural": false,
-                "selections": (v21/*: any*/),
+                "selections": (v22/*: any*/),
                 "storageKey": null
               },
               {
@@ -623,15 +635,15 @@ return {
                 "kind": "LinkedField",
                 "name": "lastOffer",
                 "plural": false,
-                "selections": (v21/*: any*/),
+                "selections": (v22/*: any*/),
                 "storageKey": null
               },
-              (v12/*: any*/)
+              (v13/*: any*/)
             ],
             "type": "CommerceOfferOrder",
             "abstractKey": null
           },
-          (v14/*: any*/),
+          (v15/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -664,8 +676,8 @@ return {
                         "name": "artwork",
                         "plural": false,
                         "selections": [
-                          (v15/*: any*/),
-                          (v18/*: any*/),
+                          (v16/*: any*/),
+                          (v19/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -714,8 +726,8 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v16/*: any*/),
-                                  (v18/*: any*/)
+                                  (v17/*: any*/),
+                                  (v19/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -725,7 +737,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v18/*: any*/)
+                      (v19/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -744,12 +756,12 @@ return {
             "plural": false,
             "selections": [
               (v4/*: any*/),
-              (v18/*: any*/)
+              (v19/*: any*/)
             ],
             "storageKey": null
           },
-          (v17/*: any*/),
-          (v20/*: any*/),
+          (v18/*: any*/),
+          (v21/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -764,19 +776,19 @@ return {
             "name": "itemsTotalCents",
             "storageKey": null
           },
-          (v18/*: any*/)
+          (v19/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "1119443c416fb3ce4588ce27275931ef",
+    "cacheID": "04eb65e8e71c48f3bbaeb023379fb57e",
     "id": null,
     "metadata": {},
     "name": "orderRoutes_OrderQuery",
     "operationKind": "query",
-    "text": "query orderRoutes_OrderQuery(\n  $orderID: ID!\n) {\n  me {\n    name\n    id\n  }\n  order: commerceOrder(id: $orderID) @principalField {\n    __typename\n    __isCommerceOrder: __typename\n    bankAccountId\n    internalID\n    mode\n    state\n    displayState\n    source\n    lastTransactionFailed\n    ... on CommerceOfferOrder {\n      myLastOffer {\n        internalID\n        createdAt\n        id\n      }\n      lastOffer {\n        internalID\n        createdAt\n        id\n      }\n      awaitingResponseFrom\n    }\n    requestedFulfillment {\n      __typename\n    }\n    lineItems {\n      edges {\n        node {\n          artwork {\n            slug\n            id\n          }\n          shippingQuoteOptions {\n            edges {\n              node {\n                isSelected\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n    creditCard {\n      internalID\n      id\n    }\n    paymentMethod\n    paymentMethodDetails {\n      __typename\n      ... on CreditCard {\n        id\n      }\n      ... on BankAccount {\n        id\n      }\n      ... on WireTransfer {\n        isManualPayment\n      }\n    }\n    ...OrderApp_order\n    id\n  }\n}\n\nfragment OrderApp_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  mode\n  source\n  currencyCode\n  itemsTotalCents\n  lineItems {\n    edges {\n      node {\n        artwork {\n          href\n          slug\n          is_acquireable: isAcquireable\n          is_offerable: isOfferable\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query orderRoutes_OrderQuery(\n  $orderID: ID!\n) {\n  me {\n    name\n    id\n  }\n  order: commerceOrder(id: $orderID) @principalField {\n    __typename\n    __isCommerceOrder: __typename\n    bankAccountId\n    internalID\n    mode\n    state\n    displayState\n    source\n    lastTransactionFailed\n    paymentSet\n    ... on CommerceOfferOrder {\n      myLastOffer {\n        internalID\n        createdAt\n        id\n      }\n      lastOffer {\n        internalID\n        createdAt\n        id\n      }\n      awaitingResponseFrom\n    }\n    requestedFulfillment {\n      __typename\n    }\n    lineItems {\n      edges {\n        node {\n          artwork {\n            slug\n            id\n          }\n          shippingQuoteOptions {\n            edges {\n              node {\n                isSelected\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n    creditCard {\n      internalID\n      id\n    }\n    paymentMethod\n    paymentMethodDetails {\n      __typename\n      ... on CreditCard {\n        id\n      }\n      ... on BankAccount {\n        id\n      }\n      ... on WireTransfer {\n        isManualPayment\n      }\n    }\n    ...OrderApp_order\n    id\n  }\n}\n\nfragment OrderApp_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  mode\n  source\n  currencyCode\n  itemsTotalCents\n  lineItems {\n    edges {\n      node {\n        artwork {\n          href\n          slug\n          is_acquireable: isAcquireable\n          is_offerable: isOfferable\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

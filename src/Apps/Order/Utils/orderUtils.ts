@@ -10,27 +10,12 @@ const initialPaymentMethods: CommercePaymentMethodEnum[] = [
   "WIRE_TRANSFER",
 ]
 
-export const isPaymentSet = (
-  paymentMethodDetails: Payment_order$data["paymentMethodDetails"]
-): boolean => {
-  switch (paymentMethodDetails?.__typename) {
-    case "CreditCard":
-      return !!paymentMethodDetails.id
-    case "BankAccount":
-      return !!paymentMethodDetails.id
-    case "WireTransfer":
-      return true
-    default:
-      return false
-  }
-}
-
 export const getInitialPaymentMethodValue = ({
+  paymentSet,
   paymentMethod,
-  paymentMethodDetails,
   availablePaymentMethods,
 }: Payment_order$data): CommercePaymentMethodEnum =>
-  isPaymentSet(paymentMethodDetails)
+  paymentSet
     ? paymentMethod!
     : initialPaymentMethods.find(method =>
         availablePaymentMethods.includes(method)
