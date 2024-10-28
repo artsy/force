@@ -39,13 +39,6 @@
     lodash.uniqby "^4.7.0"
     yup "^1.3.3"
 
-"@artsy/eigen-web-association@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/eigen-web-association/-/eigen-web-association-1.6.0.tgz#6093c72444a2990487948446d372cd1bbe6ec369"
-  integrity sha512-Th36VakVMhTUc+MwuvysgFHeiDlRgSjoD4pWai/2MkL81VcJvThNwdzhzBm4Bix6Qqcb7lUhlqMEsqck4nk7fg==
-  dependencies:
-    express "^4.15.0"
-
 "@artsy/express-reloadable@^1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.7.0.tgz#af8f93aea5ad8cf6ebb90d9be484c3e19269ffb6"
@@ -11525,7 +11518,7 @@ express-request-id@1.4.0:
   dependencies:
     uuid "^3.0.1"
 
-express@4.19.2, express@^4.15.0, express@^4.17.1:
+express@4.19.2, express@^4.17.1:
   version "4.19.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.19.2.tgz#e25437827a3aa7f2a827bc8171bbbb664a356465"
   integrity sha512-5T6nhjsT+EOMzuck8JjBHARTHfMht0POzlA60WV2pMD3gyXw2LZnZ+ueGdNxG+0calOJcWKbpFcuzLZ91YWq9Q==
