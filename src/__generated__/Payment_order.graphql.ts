@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f29d830bd5c90349c2f6483a6a758c0>>
+ * @generated SignedSource<<4b13693f7d36b2166885a73fa2799d89>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,6 +51,7 @@ export type Payment_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined;
+  readonly paymentSet: boolean;
   readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "OrderStepper_order" | "PartnerOfferTimerItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Payment_order";
@@ -109,6 +110,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "availablePaymentMethods",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "paymentSet",
       "storageKey": null
     },
     {
@@ -320,6 +328,6 @@ return {
 };
 })();
 
-(node as any).hash = "2e5aad5a99aedb891ca6d27ab4328781";
+(node as any).hash = "51e7d85c0b0748e4941859ab2c2aa5cd";
 
 export default node;

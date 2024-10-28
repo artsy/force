@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f232aeb89c47e95abeb339b8627a7c9f>>
+ * @generated SignedSource<<06990ca56ccbcdfd6c16578ee4437d22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,6 +43,7 @@ export type OrderStepper_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined;
+  readonly paymentSet: boolean;
   readonly requestedFulfillment: {
     readonly __typename: string;
   } | null | undefined;
@@ -81,6 +82,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "paymentSet",
       "storageKey": null
     },
     {
@@ -230,6 +238,6 @@ return {
 };
 })();
 
-(node as any).hash = "e5c5c953e638b03b3668625bf318ab6d";
+(node as any).hash = "475608c6cb79e5efeae1173f7b13e08e";
 
 export default node;

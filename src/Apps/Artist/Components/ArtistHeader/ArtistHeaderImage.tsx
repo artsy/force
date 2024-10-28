@@ -4,7 +4,6 @@ import { FC } from "react"
 import { maxDimensionsByArea, resized } from "Utils/resized"
 import { BREAKPOINTS, Media } from "Utils/Responsive"
 import { Link } from "react-head"
-import { getENV } from "Utils/getENV"
 
 interface ArtistHeaderImageProps
   extends Omit<BoxProps, "maxHeight" | "maxWidth"> {
@@ -15,8 +14,6 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
   image,
   ...rest
 }) => {
-  const lazyLoad = !(getENV("IS_GOOGLEBOT") || getENV("IS_MOBILE"))
-
   const max = maxDimensionsByArea({
     width: image.width,
     height: image.height,
@@ -62,7 +59,8 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
             width="100%"
             height="100%"
             style={{ objectFit: "cover" }}
-            lazyLoad={lazyLoad}
+            // Deliberate, to improve LCP
+            lazyLoad={false}
           />
         </ResponsiveBox>
       </Media>
