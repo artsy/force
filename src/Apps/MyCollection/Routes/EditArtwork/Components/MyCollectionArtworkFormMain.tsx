@@ -9,7 +9,7 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { ConfirmationModalBack } from "Apps/MyCollection/Routes/EditArtwork/Components/ConfirmationModalBack"
+import { ArtworkFormExitConfirmationDialog } from "Apps/MyCollection/Routes/EditArtwork/Components/ArtworkFormExitConfirmationDialog"
 import { ConfirmationModalDelete } from "Apps/MyCollection/Routes/EditArtwork/Components/ConfirmationModalDelete"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormDetails } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormDetails"
@@ -131,7 +131,7 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
       <AppContainer>
         <Form>
           {showLeaveWithoutSavingModal && (
-            <ConfirmationModalBack
+            <ArtworkFormExitConfirmationDialog
               onClose={() => setShowLeaveWithoutSavingModal(false)}
               isEditing={isEditing}
               onLeave={handleBack}

@@ -1,11 +1,11 @@
 import { Button, ModalDialog, Text } from "@artsy/palette"
 
 interface ConfirmationModalProps {
-  isEditing: boolean
+  isEditing?: boolean
   onClose: () => void
   onLeave: () => void
 }
-export const ConfirmationModalBack: React.FC<ConfirmationModalProps> = ({
+export const ArtworkFormExitConfirmationDialog: React.FC<ConfirmationModalProps> = ({
   isEditing,
   onClose,
   onLeave,
@@ -31,11 +31,7 @@ export const ConfirmationModalBack: React.FC<ConfirmationModalProps> = ({
         </>
       }
     >
-      <Text>
-        {isEditing
-          ? "Changes you have made so far will not be saved."
-          : "Your artwork will not be added to My Collection."}
-      </Text>
+      <Text>Changes you have made so far will not be saved.</Text>
     </ModalDialog>
   )
 }
