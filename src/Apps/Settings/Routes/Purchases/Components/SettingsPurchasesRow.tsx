@@ -27,7 +27,12 @@ import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import PendingIcon from "@artsy/icons/PendingIcon"
 import AlertStrokeIcon from "@artsy/icons/AlertStrokeIcon"
 import { useTracking } from "react-tracking"
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import {
+  ActionType,
+  ContextModule,
+  OwnerType,
+  ClickedChangePaymentMethod,
+} from "@artsy/cohesion"
 
 const ORDER_LABELS = {
   APPROVED: "Confirmed",
@@ -97,12 +102,14 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
 
   const { trackEvent } = useTracking()
   const trackChangePaymentMethodClick = (orderID: string) => () => {
-    trackEvent({
+    const payload: ClickedChangePaymentMethod = {
       action: ActionType.clickedChangePaymentMethod,
       context_module: ContextModule.ordersHistory,
       context_page_owner_type: OwnerType.ordersHistory,
       context_page_owner_id: orderID,
-    })
+    }
+
+    trackEvent(payload)
   }
 
   const getOrderLink = order => {
