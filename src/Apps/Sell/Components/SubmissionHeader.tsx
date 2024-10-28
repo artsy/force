@@ -2,17 +2,10 @@ import { AuthIntent, ContextModule } from "@artsy/cohesion"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import CloseIcon from "@artsy/icons/CloseIcon"
-import {
-  Box,
-  Button,
-  Clickable,
-  Flex,
-  FullBleed,
-  ModalDialog,
-  Text,
-} from "@artsy/palette"
+import { Box, Button, Clickable, Flex, FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { ArtworkFormExitConfirmationDialog } from "Apps/MyCollection/Routes/EditArtwork/Components/ArtworkFormExitConfirmationDialog"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useAssociateSubmission } from "Apps/Sell/Mutations/useAssociateSubmission"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
@@ -253,46 +246,11 @@ const HeaderArtsyLogo: React.FC<{ withExitConfirmation }> = ({
       </Clickable>
 
       {showExitConfirmationModal && (
-        <ExitConfirmationModal
+        <ArtworkFormExitConfirmationDialog
           onClose={() => setShowExitConfirmationModal(false)}
           onLeave={() => router.push("/sell")}
         />
       )}
     </>
-  )
-}
-
-interface ExitConfirmationModalProps {
-  onClose: () => void
-  onLeave: () => void
-}
-
-export const ExitConfirmationModal: React.FC<ExitConfirmationModalProps> = ({
-  onClose,
-  onLeave,
-}) => {
-  return (
-    <ModalDialog
-      title="Leave without saving?"
-      onClose={onClose}
-      width={["100%", 600]}
-      footer={
-        <>
-          <Button onClick={onLeave} width="100%" data-testid="leave-button">
-            Leave Without Saving
-          </Button>
-          <Button
-            onClick={onClose}
-            variant="secondaryNeutral"
-            mt={2}
-            width="100%"
-          >
-            Continue Uploading Artwork
-          </Button>
-        </>
-      }
-    >
-      <Text>Changes you have made so far will not be saved.</Text>
-    </ModalDialog>
   )
 }
