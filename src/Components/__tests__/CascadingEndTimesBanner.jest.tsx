@@ -25,7 +25,7 @@ describe("CascadingEndTimesBanner", () => {
         Sale: () => ({
           cascadingEndTimeIntervalMinutes: 1,
           extendedBiddingIntervalMinutes: 2,
-          endedAt: null,
+          isClosed: false,
         }),
       })
 
@@ -41,7 +41,7 @@ describe("CascadingEndTimesBanner", () => {
         Sale: () => ({
           cascadingEndTimeIntervalMinutes: 1,
           extendedBiddingIntervalMinutes: null,
-          endedAt: null,
+          isClosed: false,
         }),
       })
 
@@ -55,7 +55,7 @@ describe("CascadingEndTimesBanner", () => {
         Sale: () => ({
           cascadingEndTimeIntervalMinutes: 1,
           extendedBiddingIntervalMinutes: 2,
-          endedAt: "2024-01-01T00:00:00+00:00",
+          isClosed: true,
         }),
       })
 
@@ -67,7 +67,7 @@ describe("CascadingEndTimesBanner", () => {
         Sale: () => ({
           cascadingEndTimeIntervalMinutes: null,
           extendedBiddingIntervalMinutes: null,
-          endedAt: null,
+          isClosed: false,
         }),
       })
 

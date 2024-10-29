@@ -142,6 +142,7 @@ describe("AuctionApp", () => {
       const { wrapper } = getWrapper({
         Sale: () => ({
           cascadingEndTimeIntervalMinutes: 1,
+          isClosed: false,
         }),
       })
 

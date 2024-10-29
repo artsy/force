@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<26cfabc6cb93c3f48ce12d298d866ef4>>
+ * @generated SignedSource<<f0ccf84bafd241061f2e5061ea70a636>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -80,7 +80,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "endedAt",
+            "name": "isClosed",
             "storageKey": null
           },
           {
@@ -110,7 +110,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bef3d3421db2b0d1b58160dadbf98dd6",
+    "cacheID": "ac4e8ea83b1919f377d03b343775254f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -121,24 +121,24 @@ return {
           "type": "Sale"
         },
         "sale.cascadingEndTimeIntervalMinutes": (v1/*: any*/),
-        "sale.endedAt": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
         "sale.extendedBiddingIntervalMinutes": (v1/*: any*/),
         "sale.id": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "ID"
+        },
+        "sale.isClosed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
         }
       }
     },
     "name": "CascadingEndTimesBanner_Test_Query",
     "operationKind": "query",
-    "text": "query CascadingEndTimesBanner_Test_Query {\n  sale(id: \"example\") {\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  endedAt\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n"
+    "text": "query CascadingEndTimesBanner_Test_Query {\n  sale(id: \"example\") {\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  isClosed\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n"
   }
 };
 })();
