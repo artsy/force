@@ -30,6 +30,8 @@ const { routes, routePaths } = getRoutes()
 app.get(
   routePaths,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
+    res.write("<html>")
+
     try {
       const {
         status,
