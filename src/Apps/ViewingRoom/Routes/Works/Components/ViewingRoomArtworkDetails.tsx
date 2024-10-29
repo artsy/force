@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Button, GridColumns, Column, Text } from "@artsy/palette"
+import { Button, GridColumns, Column, HTML, ReadMore } from "@artsy/palette"
 import { ViewingRoomArtworkDetails_artwork$data } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
@@ -58,9 +58,9 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
       </GridColumns>
 
       {additionalInformation && (
-        <Text variant="md" mt={4}>
-          {additionalInformation}
-        </Text>
+        <HTML variant="md" mt={4}>
+          <ReadMore content={additionalInformation} maxChars={100000} />
+        </HTML>
       )}
     </ManageArtworkForSavesProvider>
   )
@@ -73,7 +73,7 @@ export const ViewingRoomArtworkDetailsFragmentContainer = createFragmentContaine
       fragment ViewingRoomArtworkDetails_artwork on Artwork {
         ...Details_artwork
         id
-        additionalInformation
+        additionalInformation(format: HTML)
         href
       }
     `,
