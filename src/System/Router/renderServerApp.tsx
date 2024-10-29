@@ -88,14 +88,28 @@ export const renderServerApp = ({
     .status(statusCode)
     .render(`${PUBLIC_DIR}/html.ejs`, options, (error, html) => {
       if (error) {
-        console.error(error)
-
         res
           .status(500)
-          .send("Internal Server Error: Error rendering server app")
+          .send(`[renderServerApp] Internal error: ${error.message}`)
       } else {
         // Stream or send HTML response
-        if (ENABLE_SSR_STREAMING && stream) {
+        if (ENABLE_SSR_STREAMING) {
+          if (!stream) {
+            res.status(500).send(`[renderServerApp] Stream is not available`)
+            return
+          }
+
+          stream.on("error", error => {
+            res
+              .status(500)
+              .send(`[renderServerApp] StreamError: ${error.message}`)
+          })
+
+          req.on("close", () => {
+            stream.unpipe(res)
+            res.end()
+          })
+
           res.write(html.split('<div id="react-root">')[0])
 
           // Write tag that React will mount to
@@ -105,6 +119,8 @@ export const renderServerApp = ({
           stream.pipe(res, { end: false })
 
           stream.on("end", () => {
+            stream.unpipe(res)
+
             res.write("</div>")
 
             // Append scripts at the end
