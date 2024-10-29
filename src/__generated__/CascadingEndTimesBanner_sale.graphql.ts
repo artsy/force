@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b7e2ab26517c6e5d7a34bc521c01a7a>>
+ * @generated SignedSource<<8db41ca3d65b736c5dc033ade04b1b04>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CascadingEndTimesBanner_sale$data = {
   readonly cascadingEndTimeIntervalMinutes: number | null | undefined;
   readonly extendedBiddingIntervalMinutes: number | null | undefined;
+  readonly isClosed: boolean | null | undefined;
   readonly " $fragmentType": "CascadingEndTimesBanner_sale";
 };
 export type CascadingEndTimesBanner_sale$key = {
@@ -26,6 +27,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "CascadingEndTimesBanner_sale",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isClosed",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -45,6 +53,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1821c972be80a5587319bdcf90723bba";
+(node as any).hash = "573175b841adb8cfdf9fc6a3ef0afaf8";
 
 export default node;

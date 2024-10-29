@@ -13,7 +13,7 @@ const CascadingEndTimesBanner: React.FC<CascadingEndTimesBannerProps> = ({
 }) => {
   const helpArticleLink = getENV("CASCADING_AUCTION_HELP_ARTICLE_LINK")
 
-  if (!sale.cascadingEndTimeIntervalMinutes) {
+  if (!sale.cascadingEndTimeIntervalMinutes || sale.isClosed) {
     return null
   }
 
@@ -40,6 +40,7 @@ export const CascadingEndTimesBannerFragmentContainer = createFragmentContainer(
   {
     sale: graphql`
       fragment CascadingEndTimesBanner_sale on Sale {
+        isClosed
         cascadingEndTimeIntervalMinutes
         extendedBiddingIntervalMinutes
       }
