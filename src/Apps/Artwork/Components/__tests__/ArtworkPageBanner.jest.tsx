@@ -82,6 +82,7 @@ describe("ArtworkPageBanner", () => {
           sale: {
             cascadingEndTimeIntervalMinutes: 10,
             extendedBiddingIntervalMinutes: null,
+            endedAt: null,
           },
         }),
         Me: () => meMock,
