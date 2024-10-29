@@ -77,6 +77,9 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   })
 
   const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
+
+  // The Artsy Auction partner and only the Artsy Auction partner are allowed
+  // to show set shipping costs to help potential bidders make a purchase
   const artsyAuction = partner?.internalID === "6321be2a8cde97000d9ad2df"
   const artsyAuctionShowShipping =
     artsyAuction && (domesticShippingFee || internationalShippingFee)
