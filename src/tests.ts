@@ -6,10 +6,7 @@ import { format } from "util"
 import "@testing-library/jest-dom"
 import { configure } from "@testing-library/react"
 
-if (
-  process.env.CIRCLECI === "true" ||
-  process.env.TERSE_RTL_OUTPUT === "true"
-) {
+if (process.env.CIRCLECI === "true") {
   configure({
     // Fixes issue where testing-library react await would time out on CI
     asyncUtilTimeout: 10000,
