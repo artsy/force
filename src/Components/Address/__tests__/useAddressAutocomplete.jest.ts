@@ -96,7 +96,7 @@ describe("useAddressAutocomplete", () => {
           })
           const { result } = setupHook({ country: "US" }, hookOptions)
 
-          await act(() => {
+          act(() => {
             result.current.fetchForAutocomplete({ search: "401 Broadway" })
           })
           // Assert basic parsed result
@@ -170,7 +170,7 @@ describe("useAddressAutocomplete", () => {
         it("returns simplified, deduplicated results without considering secondary information", async () => {
           const { result } = setupHook({ country: "US" }, hookOptions)
 
-          await act(() => {
+          act(() => {
             result.current.fetchForAutocomplete({ search: "401 Broadway" })
           })
 
@@ -254,7 +254,7 @@ describe("useAddressAutocomplete", () => {
           })
           const { result } = setupHook({ country: "US" }, hookOptions)
 
-          await act(() => {
+          act(() => {
             result.current.fetchForAutocomplete({ search: "401 Broadway" })
           })
           // Assert basic parsed result
@@ -305,7 +305,7 @@ describe("useAddressAutocomplete", () => {
       it("does not fetch for a query of less than 3 characters", async () => {
         const { result } = setupHook({ country: "US" })
 
-        await act(() => {
+        act(() => {
           result.current.fetchForAutocomplete({ search: "12" })
         })
 
@@ -315,7 +315,7 @@ describe("useAddressAutocomplete", () => {
       it("fetches top-level suggestions from the API with correct parameters", async () => {
         const { result } = setupHook({ country: "US" }, hookOptions)
 
-        await act(() => {
+        act(() => {
           result.current.fetchForAutocomplete({ search: "401 Broadway" })
         })
 
@@ -417,7 +417,7 @@ describe("useAddressAutocomplete", () => {
         }
 
         const { result } = setupHook({ country: "US" })
-        await act(() => {
+        act(() => {
           result.current.fetchSecondarySuggestions(
             "401 Broadway",
             selectedOption
@@ -460,7 +460,7 @@ describe("useAddressAutocomplete", () => {
         })
 
         const { result } = setupHook({ country: "US" }, hookOptions)
-        await act(() => {
+        act(() => {
           result.current.fetchSecondarySuggestions(
             "401 Broadway",
             selectedOption

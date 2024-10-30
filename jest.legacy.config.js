@@ -7,7 +7,9 @@ module.exports = {
   moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx"],
   moduleNameMapper: {
     "^luxon$": "<rootDir>/node_modules/luxon",
-    "^react$": "<rootDir>/node_modules/react",
+    "^react$": "react-17",
+    "^react-dom$": "react-dom-17",
+    "^react-dom/test-utils$": "react-dom-17/test-utils",
   },
   reporters: ["default", "jest-junit"],
   setupFilesAfterEnv: ["<rootDir>/src/tests.ts"],
