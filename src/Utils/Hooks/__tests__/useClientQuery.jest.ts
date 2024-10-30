@@ -1,3 +1,4 @@
+import { waitFor } from "@testing-library/react"
 import { renderHook } from "@testing-library/react-hooks"
 import { graphql } from "react-relay"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
@@ -17,7 +18,7 @@ describe("useClientQuery", () => {
   it("executes the query, updating the loading state", async () => {
     const environment = createMockEnvironment()
 
-    const { result, waitForNextUpdate } = renderHook(() =>
+    const { result } = renderHook(() =>
       useClientQuery({ environment, query: TEST_QUERY })
     )
 
@@ -29,10 +30,10 @@ describe("useClientQuery", () => {
 
     expect(result.current.loading).toBe(true)
 
-    await waitForNextUpdate()
-
-    expect(result.current.data).toEqual({ artwork: { id: "example" } })
-    expect(result.current.loading).toBe(false)
+    await waitFor(() => {
+      expect(result.current.data).toEqual({ artwork: { id: "example" } })
+      expect(result.current.loading).toBe(false)
+    })
   })
 
   it('skips the query if "skip" is true', () => {
