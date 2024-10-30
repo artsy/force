@@ -4,7 +4,7 @@ interface ConditionInfoModalProps {
   onClose: () => void
 }
 
-export const ConditionInfoModal: React.FC<ConditionInfoModalProps> = ({
+export const ConditionInfoModal: React.FC<React.PropsWithChildren<ConditionInfoModalProps>> = ({
   onClose,
 }) => {
   return (

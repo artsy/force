@@ -25,7 +25,7 @@ export const useInquiryAccountContext = () => {
   return useContext(InquiryAccountContext)
 }
 
-export const InquiryAccount: React.FC = () => {
+export const InquiryAccount: React.FC<React.PropsWithChildren<unknown>> = () => {
   const [screen, navigateTo] = useState(Screen.SignUp)
 
   return (

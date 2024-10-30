@@ -10,7 +10,7 @@ interface ConversationMessageArtworkProps extends FlexProps {
   item: ConversationMessageArtwork_item$key
 }
 
-export const ConversationMessageArtwork: React.FC<ConversationMessageArtworkProps> = ({
+export const ConversationMessageArtwork: React.FC<React.PropsWithChildren<ConversationMessageArtworkProps>> = ({
   item,
   ...flexProps
 }) => {

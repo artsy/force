@@ -7,7 +7,7 @@ interface CollectorProfileHeaderAvatarProps extends BoxProps {
   me: CollectorProfileHeaderAvatar_me$data
 }
 
-const CollectorProfileHeaderAvatar: React.FC<CollectorProfileHeaderAvatarProps> = ({
+const CollectorProfileHeaderAvatar: React.FC<React.PropsWithChildren<CollectorProfileHeaderAvatarProps>> = ({
   me,
   ...rest
 }) => {

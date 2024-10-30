@@ -10,7 +10,7 @@ interface SaveAndContinueButtonProps {
   width?: ButtonProps["width"]
 }
 
-export const SaveAndContinueButton: React.FC<SaveAndContinueButtonProps> = ({
+export const SaveAndContinueButton: React.FC<React.PropsWithChildren<SaveAndContinueButtonProps>> = ({
   order,
   width,
 }) => {

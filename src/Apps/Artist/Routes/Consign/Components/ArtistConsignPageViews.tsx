@@ -9,7 +9,7 @@ interface ArtistConsignPageViewsProps {
   artist: ArtistConsignPageViews_artist$data
 }
 
-export const ArtistConsignPageViews: React.FC<ArtistConsignPageViewsProps> = props => {
+export const ArtistConsignPageViews: React.FC<React.PropsWithChildren<ArtistConsignPageViewsProps>> = props => {
   const {
     artist: { name, targetSupply },
   } = props

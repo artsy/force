@@ -42,7 +42,7 @@ interface AlertProviderProps {
   isAlertArtworksView?: boolean
 }
 
-export const AlertProvider: FC<AlertProviderProps> = ({
+export const AlertProvider: FC<React.PropsWithChildren<AlertProviderProps>> = ({
   children,
   initialCriteria,
   initialSettings,

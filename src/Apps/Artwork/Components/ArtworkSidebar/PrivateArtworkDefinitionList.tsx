@@ -6,7 +6,7 @@ interface PrivateArtworkDefinitionListProps extends BoxProps {
   onTitleClick?: () => void
 }
 
-export const PrivateArtworkDefinitionList: React.FC<PrivateArtworkDefinitionListProps> = ({
+export const PrivateArtworkDefinitionList: React.FC<React.PropsWithChildren<PrivateArtworkDefinitionListProps>> = ({
   term,
   children,
   onTitleClick,

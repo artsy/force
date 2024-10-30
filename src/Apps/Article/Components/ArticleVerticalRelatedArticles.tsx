@@ -13,7 +13,7 @@ interface ArticleVerticalRelatedArticlesProps {
   article: ArticleVerticalRelatedArticles_article$data
 }
 
-const ArticleVerticalRelatedArticles: FC<ArticleVerticalRelatedArticlesProps> = ({
+const ArticleVerticalRelatedArticles: FC<React.PropsWithChildren<ArticleVerticalRelatedArticlesProps>> = ({
   article,
 }) => {
   if (article.verticalRelatedArticles.length === 0) return null
@@ -57,7 +57,7 @@ interface ArticleVerticalRelatedArticlesQueryRendererProps {
   id: string
 }
 
-export const ArticleVerticalRelatedArticlesQueryRenderer: FC<ArticleVerticalRelatedArticlesQueryRendererProps> = ({
+export const ArticleVerticalRelatedArticlesQueryRenderer: FC<React.PropsWithChildren<ArticleVerticalRelatedArticlesQueryRendererProps>> = ({
   id,
 }) => {
   return (
@@ -92,7 +92,7 @@ export const ArticleVerticalRelatedArticlesQueryRenderer: FC<ArticleVerticalRela
   )
 }
 
-const ArticleVerticalRelatedArticlesPlaceholder: FC = () => {
+const ArticleVerticalRelatedArticlesPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="lg-display" mb={4}>

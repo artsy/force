@@ -14,7 +14,7 @@ import React, { Dispatch, SetStateAction } from "react"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
-const Row: React.FC<FlexProps> = ({ children, ...others }) => (
+const Row: React.FC<React.PropsWithChildren<FlexProps>> = ({ children, ...others }) => (
   <Flex justifyContent="left" {...others}>
     {children}
   </Flex>
@@ -30,7 +30,7 @@ interface ArtworkSidebarEditionSetsProps {
   onSelectEditionSet?: Dispatch<SetStateAction<EditionSet>>
 }
 
-const ArtworkSidebarEditionSets: React.FC<ArtworkSidebarEditionSetsProps> = ({
+const ArtworkSidebarEditionSets: React.FC<React.PropsWithChildren<ArtworkSidebarEditionSetsProps>> = ({
   artwork,
   selectedEditionSet,
   onSelectEditionSet,

@@ -21,7 +21,7 @@ interface FairOrganizerDedicatedArticlesProps {
   relay: RelayRefetchProp
 }
 
-export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArticlesProps> = ({
+export const FairOrganizerDedicatedArticles: React.FC<React.PropsWithChildren<FairOrganizerDedicatedArticlesProps>> = ({
   fairOrganizer,
   relay,
 }) => {

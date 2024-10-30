@@ -41,8 +41,6 @@ jest.mock("react-tracking")
 const defaultComponent = () => <div>hi!</div>
 
 describe("serverRouter", () => {
-  const prevEnv = process.env
-
   let mockFindRoutesByPath = findRoutesByPath as jest.Mock
   let res: ArtsyResponse
   let req: Request
@@ -57,8 +55,6 @@ describe("serverRouter", () => {
   const mockTracking = useTracking as jest.Mock
 
   beforeEach(() => {
-    process.env = prevEnv
-
     res = {
       locals: { sd: {} },
     } as ArtsyResponse

@@ -8,7 +8,7 @@ export interface ShowHoursProps extends BoxProps {
   show: ShowHours_show$data
 }
 
-export const ShowHours: React.FC<ShowHoursProps> = ({ show, ...rest }) => {
+export const ShowHours: React.FC<React.PropsWithChildren<ShowHoursProps>> = ({ show, ...rest }) => {
   const location = show.location ?? show.fair?.location
 
   if (!location) {

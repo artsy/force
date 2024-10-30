@@ -26,7 +26,7 @@ export interface PriceOptionsProps {
   order: PriceOptions_order$data
 }
 
-export const PriceOptions: React.FC<PriceOptionsProps> = ({
+export const PriceOptions: React.FC<React.PropsWithChildren<PriceOptionsProps>> = ({
   onChange,
   onFocus,
   showError,

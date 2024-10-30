@@ -2,7 +2,7 @@ import { Button, Spacer } from "@artsy/palette"
 import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
 import { useRouter } from "System/Hooks/useRouter"
 
-export const ConsignmentInquiryConfirmation: React.FC = () => {
+export const ConsignmentInquiryConfirmation: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { router } = useRouter()
   return (
     <>

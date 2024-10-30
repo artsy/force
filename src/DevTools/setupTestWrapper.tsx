@@ -17,7 +17,7 @@ import {
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
 type SetupTestWrapper<T extends OperationType> = {
-  Component: React.ComponentType<T["response"]>
+  Component: React.ComponentType<React.PropsWithChildren<T["response"]>>
   query?: GraphQLTaggedNode
   variables?: T["variables"]
 }
@@ -270,7 +270,7 @@ export const setupTestWrapper = <T extends OperationType>({
   return { getWrapper }
 }
 
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends React.Component<React.PropsWithChildren> {
   componentDidCatch(error) {
     // Print an error to the console for a better debugging experience
     console.log("Something went wrong while rendering a component")

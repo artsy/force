@@ -15,7 +15,7 @@ export interface NotificationShowProps
   onClick?: () => void
 }
 
-export const NotificationPartnerShow: React.FC<NotificationShowProps> = ({
+export const NotificationPartnerShow: React.FC<React.PropsWithChildren<NotificationShowProps>> = ({
   show: showProp,
   contextModule,
   onClick,

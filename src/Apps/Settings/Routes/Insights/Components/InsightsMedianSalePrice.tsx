@@ -14,7 +14,7 @@ interface InsightsMedianSalePriceProps {
   me: InsightsMedianSalePrice_me$data
 }
 
-const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
+const InsightsMedianSalePrice: React.FC<React.PropsWithChildren<InsightsMedianSalePriceProps>> = ({
   me,
 }) => {
   const medianSalePrices = extractNodes(me.medianSalePrices)
@@ -103,11 +103,11 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
   )
 }
 
-const ArtistRowWrapper: React.FC<{
+const ArtistRowWrapper: React.FC<React.PropsWithChildren<{
   artistID: string
   children: JSX.Element
   medium: string
-}> = ({ artistID, children, medium }) => {
+}>> = ({ artistID, children, medium }) => {
   const { router } = useRouter()
 
   const enableMedianSalePriceGraphScreen = useFeatureFlag(

@@ -17,7 +17,7 @@ interface CollectionFeaturedArtistsProps {
   artworks: CollectionFeaturedArtists_artworks$data
 }
 
-export const CollectionFeaturedArtists: React.FC<CollectionFeaturedArtistsProps> = ({
+export const CollectionFeaturedArtists: React.FC<React.PropsWithChildren<CollectionFeaturedArtistsProps>> = ({
   artworks,
   collection,
 }) => {
@@ -96,9 +96,9 @@ export const CollectionFeaturedArtistsFragmentContainer = createFragmentContaine
   }
 )
 
-export const CollectionFeaturedArtistsQueryRenderer: React.FC<{
+export const CollectionFeaturedArtistsQueryRenderer: React.FC<React.PropsWithChildren<{
   slug: string
-}> = ({ slug }) => {
+}>> = ({ slug }) => {
   const { match } = useRouter()
 
   const { aggregations } = initializeVariablesWithFilterState(

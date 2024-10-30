@@ -1,13 +1,13 @@
 import { BorderBoxProps, Column, GridColumns, Text } from "@artsy/palette"
 import * as React from "react"
-import { SettingsEditSettingsTwoFactorBackupCodesActions } from "../../SettingsEditSettingsTwoFactorBackupCodesActions"
+import { SettingsEditSettingsTwoFactorBackupCodesActions } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/SettingsEditSettingsTwoFactorBackupCodesActions"
 
 interface BackupSecondFactorReminderProps extends BorderBoxProps {
   backupSecondFactors: string[]
   factorTypeName: string
 }
 
-export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProps> = props => {
+export const BackupSecondFactorReminder: React.FC<React.PropsWithChildren<BackupSecondFactorReminderProps>> = props => {
   const { backupSecondFactors, factorTypeName } = props
 
   return (

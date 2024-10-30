@@ -9,7 +9,7 @@ interface Props {
   fair: FairTiming_fair$data
 }
 
-const FairTiming: React.FC<Props> = ({
+const FairTiming: React.FC<React.PropsWithChildren<Props>> = ({
   fair: { exhibitionPeriod, startAt, endAt },
 }) => {
   const currentTime = useCurrentTime({ syncWithServer: true })

@@ -10,7 +10,7 @@ export interface ConsignmentInquiryFormModel {
   message: string
 }
 
-export const ConsignmentInquiryForm: React.FC<{}> = ({ ...rest }) => {
+export const ConsignmentInquiryForm: React.FC<React.PropsWithChildren<{}>> = ({ ...rest }) => {
   const {
     values,
     handleChange,

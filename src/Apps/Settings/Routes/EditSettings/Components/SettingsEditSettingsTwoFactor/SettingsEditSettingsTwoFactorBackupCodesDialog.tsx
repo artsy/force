@@ -16,7 +16,7 @@ interface SettingsEditSettingsTwoFactorBackupCodesDialogProps {
   me?: SettingsEditSettingsTwoFactorBackupCodesDialog_me$data | null
 }
 
-const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<SettingsEditSettingsTwoFactorBackupCodesDialogProps> = ({
+const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<React.PropsWithChildren<SettingsEditSettingsTwoFactorBackupCodesDialogProps>> = ({
   me,
 }) => {
   return (

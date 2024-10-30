@@ -21,7 +21,7 @@ interface ArticleSeriesProps {
   article: ArticleSeries_article$data
 }
 
-const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
+const ArticleSeries: FC<React.PropsWithChildren<ArticleSeriesProps>> = ({ article }) => {
   return (
     <>
       <TopContextBar href="/articles" displayBackArrow>

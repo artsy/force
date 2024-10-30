@@ -6,7 +6,7 @@ interface ArtworkItemProps {
   onClick: (artwork: any) => void
 }
 
-export const ArtworkItem: React.FC<ArtworkItemProps> = ({
+export const ArtworkItem: React.FC<React.PropsWithChildren<ArtworkItemProps>> = ({
   artwork,
   mode = "add",
   onClick,

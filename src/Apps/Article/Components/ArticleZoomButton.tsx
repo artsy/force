@@ -3,7 +3,7 @@ import { FC } from "react"
 import styled from "styled-components"
 import ExpandIcon from "@artsy/icons/ExpandIcon"
 
-export const ArticleZoomButton: FC<ClickableProps> = ({
+export const ArticleZoomButton: FC<React.PropsWithChildren<ClickableProps>> = ({
   children,
   ...rest
 }) => {

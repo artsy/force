@@ -24,7 +24,7 @@ interface FairsFairRowProps extends BoxProps {
   fair: FairsFairRow_fair$data
 }
 
-const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
+const FairsFairRow: React.FC<React.PropsWithChildren<FairsFairRowProps>> = ({ fair, ...rest }) => {
   const icon = fair.profile?.icon?.resized
   const href =
     // If fair status is upcoming — link to the organizer profile

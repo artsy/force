@@ -1,6 +1,6 @@
 import { MetaTags } from "Components/MetaTags"
 
-export const SellMeta: React.FC = () => {
+export const SellMeta: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <MetaTags
       pathname="/sell"

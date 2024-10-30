@@ -11,7 +11,7 @@ export interface EntityHeaderSubmissionProps extends BoxProps {
   FollowButton?: JSX.Element
 }
 
-const EntityHeaderSubmission: FC<EntityHeaderSubmissionProps> = ({
+const EntityHeaderSubmission: FC<React.PropsWithChildren<EntityHeaderSubmissionProps>> = ({
   submission,
   displayAvatar = true,
   displayLink = true,

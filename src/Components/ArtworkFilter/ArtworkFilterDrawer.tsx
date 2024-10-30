@@ -8,7 +8,7 @@ interface ArtworkFilterDrawerProps {
   onClose: () => void
 }
 
-export const ArtworkFilterDrawer: FC<ArtworkFilterDrawerProps> = ({
+export const ArtworkFilterDrawer: FC<React.PropsWithChildren<ArtworkFilterDrawerProps>> = ({
   children,
   open,
   onClose,

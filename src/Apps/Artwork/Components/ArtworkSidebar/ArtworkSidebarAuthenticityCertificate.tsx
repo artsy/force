@@ -17,7 +17,7 @@ interface ArtworkSidebarAuthenticityCertificateProps {
   artwork: ArtworkSidebarAuthenticityCertificate_artwork$data
 }
 
-export const ArtworkSidebarAuthenticityCertificate: React.FC<ArtworkSidebarAuthenticityCertificateProps> = ({
+export const ArtworkSidebarAuthenticityCertificate: React.FC<React.PropsWithChildren<ArtworkSidebarAuthenticityCertificateProps>> = ({
   artwork,
 }) => {
   const [isShowingModal, setIsShowingModal] = useState(false)

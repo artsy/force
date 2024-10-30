@@ -9,7 +9,7 @@ interface GeneFamiliesProps {
   geneFamiliesConnection: GeneFamilies_geneFamiliesConnection$data
 }
 
-const GeneFamilies: React.FC<GeneFamiliesProps> = ({
+const GeneFamilies: React.FC<React.PropsWithChildren<GeneFamiliesProps>> = ({
   geneFamiliesConnection,
 }) => {
   const geneFamilies = extractNodes(geneFamiliesConnection)

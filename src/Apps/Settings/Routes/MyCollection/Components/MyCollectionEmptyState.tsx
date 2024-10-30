@@ -16,7 +16,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { resized } from "Utils/resized"
 
-export const MyCollectionEmptyState: React.FC = () => {
+export const MyCollectionEmptyState: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { isLoggedIn } = useSystemContext()
 
   const {

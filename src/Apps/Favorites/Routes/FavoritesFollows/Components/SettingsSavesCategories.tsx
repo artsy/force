@@ -28,7 +28,7 @@ interface SettingsSavesCategoriesProps {
   relay: RelayPaginationProp
 }
 
-const SettingsSavesCategories: FC<SettingsSavesCategoriesProps> = ({
+const SettingsSavesCategories: FC<React.PropsWithChildren<SettingsSavesCategoriesProps>> = ({
   me,
   relay,
 }) => {

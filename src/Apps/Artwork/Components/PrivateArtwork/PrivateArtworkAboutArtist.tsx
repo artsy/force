@@ -22,7 +22,7 @@ interface PrivateArtworkAboutArtistProps {
   artwork: PrivateArtworkAboutArtist_artwork$key
 }
 
-export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps> = ({
+export const PrivateArtworkAboutArtist: React.FC<React.PropsWithChildren<PrivateArtworkAboutArtistProps>> = ({
   artwork,
 }) => {
   const { trackEvent } = useTracking()
@@ -128,6 +128,9 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
                       variant="secondaryWhite"
                       mr={1}
                     >
+                      {/*
+                      FIXME: REACT_18_UPGRADE
+                      @ts-ignore */}
                       {label => {
                         return (
                           <Stack

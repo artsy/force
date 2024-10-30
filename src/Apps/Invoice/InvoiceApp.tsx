@@ -8,7 +8,7 @@ interface InvoiceAppProps {
   invoice: InvoiceApp_invoice$key
 }
 
-export const InvoiceApp: React.FC<InvoiceAppProps> = ({
+export const InvoiceApp: React.FC<React.PropsWithChildren<InvoiceAppProps>> = ({
   invoice,
   children,
 }) => {

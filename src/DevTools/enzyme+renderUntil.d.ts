@@ -22,7 +22,7 @@ declare module "enzyme" {
      * @example
      *
        ```tsx
-      class Component extends React.Component {
+      class Component extends React.Component<React.PropsWithChildren> {
         state = {
           data: "Loading",
         }

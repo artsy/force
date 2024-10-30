@@ -7,7 +7,7 @@ interface Props {
   orderSource?: string | null
 }
 
-export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
+export const ConditionsOfSaleDisclaimer: React.FC<React.PropsWithChildren<Props>> = ({
   textProps,
   orderSource,
 }) => {

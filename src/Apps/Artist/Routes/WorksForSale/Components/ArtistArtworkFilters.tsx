@@ -18,7 +18,7 @@ import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/Avai
 
 interface ArtistArtworkFiltersProps {}
 
-export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props => {
+export const ArtistArtworkFilters: React.FC<React.PropsWithChildren<ArtistArtworkFiltersProps>> = props => {
   const { user } = useSystemContext()
 
   return (

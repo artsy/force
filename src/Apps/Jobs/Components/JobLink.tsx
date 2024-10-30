@@ -9,7 +9,7 @@ interface JobLinkProps {
   job: JobLink_job$data
 }
 
-const JobLink: FC<JobLinkProps> = ({ job }) => {
+const JobLink: FC<React.PropsWithChildren<JobLinkProps>> = ({ job }) => {
   return (
     <RouterLink
       to={`/job/${job.id}`}

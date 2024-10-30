@@ -12,7 +12,7 @@ interface ArtistConsignSellArtProps {
   artist: ArtistConsignSellArt_artist$data
 }
 
-const ArtistConsignSellArt: React.FC<ArtistConsignSellArtProps> = ({
+const ArtistConsignSellArt: React.FC<React.PropsWithChildren<ArtistConsignSellArtProps>> = ({
   artist,
 }) => {
   const tracking = useTracking()

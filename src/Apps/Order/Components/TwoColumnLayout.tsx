@@ -39,7 +39,7 @@ export interface TwoColumnLayoutProps {
   noRowGap?: boolean
 }
 
-export const TwoColumnLayout: FC<TwoColumnLayoutProps> = ({
+export const TwoColumnLayout: FC<React.PropsWithChildren<TwoColumnLayoutProps>> = ({
   Content,
   Sidebar,
   noRowGap,

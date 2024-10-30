@@ -23,7 +23,7 @@ export interface SearchAppProps {
   viewer: SearchApp_viewer$data
 }
 
-const TotalResults: React.FC<{ count: number; term: string }> = ({
+const TotalResults: React.FC<React.PropsWithChildren<{ count: number; term: string }>> = ({
   count,
   term,
 }) => {
@@ -41,7 +41,7 @@ const TotalResults: React.FC<{ count: number; term: string }> = ({
   )
 }
 
-export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
+export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({ viewer, children }) => {
   const {
     match: { location },
   } = useRouter()

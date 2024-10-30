@@ -23,7 +23,7 @@ interface ArtistRelatedArtistsRailProps {
   artist: ArtistRelatedArtistsRail_artist$data
 }
 
-const ArtistRelatedArtistsRail: FC<ArtistRelatedArtistsRailProps> = ({
+const ArtistRelatedArtistsRail: FC<React.PropsWithChildren<ArtistRelatedArtistsRailProps>> = ({
   artist,
 }) => {
   const tracking = useTracking()
@@ -113,9 +113,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistRelatedArtistsRailQueryRenderer: FC<{
+export const ArtistRelatedArtistsRailQueryRenderer: FC<React.PropsWithChildren<{
   slug: string
-}> = ({ slug }) => {
+}>> = ({ slug }) => {
   return (
     <SystemQueryRenderer<ArtistRelatedArtistsRailQuery>
       lazyLoad

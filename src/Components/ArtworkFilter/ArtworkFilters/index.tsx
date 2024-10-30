@@ -20,7 +20,7 @@ interface ArtworkFiltersProps {
 }
 
 // Some filters will be rendered only if there is the necessary data in aggregations (for example, ArtistsFilter)
-export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
+export const ArtworkFilters: React.FC<React.PropsWithChildren<ArtworkFiltersProps>> = props => {
   const { user } = props
 
   return (

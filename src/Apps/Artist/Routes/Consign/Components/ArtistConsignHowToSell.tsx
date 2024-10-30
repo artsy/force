@@ -16,7 +16,7 @@ interface ArtistConsignHowtoSellProps {
   artist: ArtistConsignHowToSell_artist$data
 }
 
-const ArtistConsignHowtoSell: React.FC<ArtistConsignHowtoSellProps> = ({
+const ArtistConsignHowtoSell: React.FC<React.PropsWithChildren<ArtistConsignHowtoSellProps>> = ({
   artist,
 }) => {
   const tracking = useTracking()
@@ -86,11 +86,11 @@ export const ArtistConsignHowtoSellFragmentContainer = createFragmentContainer(
   }
 )
 
-const Section: React.FC<{
+const Section: React.FC<React.PropsWithChildren<{
   icon: React.ReactNode
   text: string
   description: string
-}> = ({ icon, text, description }) => {
+}>> = ({ icon, text, description }) => {
   return (
     <Column span={4}>
       {icon}

@@ -35,7 +35,7 @@ interface CollectorProfileArtistsAddProps {
   relayEnvironment?: Environment | null
 }
 
-export const CollectorProfileArtistsAdd: FC<CollectorProfileArtistsAddProps> = ({
+export const CollectorProfileArtistsAdd: FC<React.PropsWithChildren<CollectorProfileArtistsAddProps>> = ({
   description,
   onCancel,
   onSuccess,

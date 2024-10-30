@@ -16,7 +16,7 @@ interface PriceProps {
   artworksConnection?: Price_artworksConnection$data | null
 }
 
-export const Price: React.FC<PriceProps> = ({ artworksConnection }) => {
+export const Price: React.FC<React.PropsWithChildren<PriceProps>> = ({ artworksConnection }) => {
   const { state, dispatch } = useAlertContext()
 
   const bars = aggregationsToHistogram(

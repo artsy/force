@@ -4,7 +4,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { FC, useState } from "react"
 
-export const SuggestedArtworksButton: FC = () => {
+export const SuggestedArtworksButton: FC<React.PropsWithChildren<unknown>> = () => {
   const [modalIsOpened, setModalIsOpened] = useState(false)
 
   const handleClick = e => {

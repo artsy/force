@@ -21,7 +21,7 @@ export interface TrendingLotsRailProps {
   viewer: TrendingLotsRail_viewer$data
 }
 
-const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {
+const TrendingLotsRail: React.FC<React.PropsWithChildren<TrendingLotsRailProps>> = ({ viewer }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap.trendingLots as AuthContextModule
@@ -94,7 +94,7 @@ export const TrendingLotsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const TrendingLotsRailQueryRenderer: React.FC = () => {
+export const TrendingLotsRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

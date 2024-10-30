@@ -16,7 +16,7 @@ interface BuyerGuaranteeProps {
   privateSaleConditions?: string | null
 }
 
-export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
+export const BuyerGuarantee: React.FC<React.PropsWithChildren<BuyerGuaranteeProps>> = ({
   contextModule,
   contextPageOwnerType,
   orderSource,

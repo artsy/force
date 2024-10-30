@@ -48,16 +48,14 @@ const StyledConditionalLink = styled(RouterLink)`
   }
 `
 
-const ConditionalLink: React.FC<
-  { includeLinks: boolean } & RouterLinkProps
-> = ({ includeLinks, children, ...rest }) => {
+const ConditionalLink: React.FC<React.PropsWithChildren<{ includeLinks: boolean } & RouterLinkProps>> = ({ includeLinks, children, ...rest }) => {
   const LinkComponent = (includeLinks
     ? StyledConditionalLink
-    : "span") as React.FC<RouterLinkProps>
+    : "span") as React.FC<React.PropsWithChildren<RouterLinkProps>>
   return <LinkComponent {...rest}>{children}</LinkComponent>
 }
 
-const ArtistLine: React.FC<DetailsProps> = ({
+const ArtistLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   artwork: { cultural_maker, artists },
   includeLinks,
   showSaveButton,
@@ -98,7 +96,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
   )
 }
 
-const TitleLine: React.FC<DetailsProps> = ({
+const TitleLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   includeLinks,
   artwork: { title, date, href },
 }) => {
@@ -117,7 +115,7 @@ const TitleLine: React.FC<DetailsProps> = ({
   )
 }
 
-const PartnerLine: React.FC<DetailsProps> = ({
+const PartnerLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   includeLinks,
   artwork: { collecting_institution, partner },
 }) => {
@@ -152,7 +150,7 @@ const PartnerLine: React.FC<DetailsProps> = ({
   return null
 }
 
-const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
+const SaleInfoLine: React.FC<React.PropsWithChildren<SaleInfoLineProps>> = props => {
   const { showActivePartnerOffer } = props
   const { lotClosesAt } = props.artwork.collectorSignals?.auction ?? {}
   const { liveBiddingStarted } = props.artwork.collectorSignals?.auction ?? {}
@@ -194,7 +192,7 @@ const SaleInfoLine: React.FC<SaleInfoLineProps> = props => {
   )
 }
 
-export const EmptyLine: React.FC = () => {
+export const EmptyLine: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Text variant="xs" lineHeight="22px">
       &nbsp;
@@ -215,7 +213,7 @@ const HighDemandInfo = () => {
 
 const NBSP = " "
 
-const SaleMessage: React.FC<SaleMessageProps> = props => {
+const SaleMessage: React.FC<React.PropsWithChildren<SaleMessageProps>> = props => {
   const {
     artwork: { sale, sale_message, sale_artwork, collectorSignals },
     showActivePartnerOffer,
@@ -236,7 +234,7 @@ const SaleMessage: React.FC<SaleMessageProps> = props => {
   return <>{sale_message ?? NBSP}</>
 }
 
-const BidInfo: React.FC<DetailsProps> = ({
+const BidInfo: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   artwork: { collectorSignals, sale, sale_artwork },
 }) => {
   const inRunningAuction = sale?.is_auction && !sale?.is_closed
@@ -258,7 +256,7 @@ const BidInfo: React.FC<DetailsProps> = ({
   )
 }
 
-const ActivePartnerOfferTimer: React.FC<DetailsProps> = ({
+const ActivePartnerOfferTimer: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   artwork: { collectorSignals },
 }) => {
   const SEPARATOR = <>&nbsp;</>
@@ -281,7 +279,7 @@ const ActivePartnerOfferTimer: React.FC<DetailsProps> = ({
   )
 }
 
-export const Details: React.FC<DetailsProps> = ({
+export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   contextModule,
   hideArtistName,
   hidePartnerName,
@@ -498,7 +496,7 @@ type DetailsPlaceholderProps = Pick<
   "hidePartnerName" | "hideArtistName" | "hideSaleInfo"
 >
 
-export const DetailsPlaceholder: React.FC<DetailsPlaceholderProps> = ({
+export const DetailsPlaceholder: React.FC<React.PropsWithChildren<DetailsPlaceholderProps>> = ({
   hideArtistName,
   hidePartnerName,
   hideSaleInfo,

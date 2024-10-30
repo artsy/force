@@ -9,7 +9,7 @@ export interface SaleDetailTimerProps {
   sale: SaleDetailTimer_sale$data
 }
 
-export const SaleDetailTimer: React.FC<SaleDetailTimerProps> = ({ sale }) => {
+export const SaleDetailTimer: React.FC<React.PropsWithChildren<SaleDetailTimerProps>> = ({ sale }) => {
   const endAt = sale?.endAt
   const startAt = sale?.startAt
   const endedAt = sale?.endedAt

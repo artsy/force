@@ -18,7 +18,7 @@ interface ConversationRouteProps {
   viewer: ConversationApp_viewer$data
 }
 
-const ConversationApp: React.FC<ConversationRouteProps> = ({
+const ConversationApp: React.FC<React.PropsWithChildren<ConversationRouteProps>> = ({
   viewer,
   conversation,
 }) => {

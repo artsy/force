@@ -13,7 +13,7 @@ interface SavedSearchAlertListItemProps {
   onViewArtworksClick: (entity: EditAlertEntity) => void
 }
 
-export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> = ({
+export const SavedSearchAlertListItem: React.FC<React.PropsWithChildren<SavedSearchAlertListItemProps>> = ({
   item,
   variant,
   onEditAlertClick,

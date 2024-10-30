@@ -24,7 +24,7 @@ export interface FairBoothRailArtworksProps {
   show: FairBoothRailArtworks_show$data
 }
 
-const FairBoothRailArtworks: React.FC<FairBoothRailArtworksProps> = ({
+const FairBoothRailArtworks: React.FC<React.PropsWithChildren<FairBoothRailArtworksProps>> = ({
   show,
 }) => {
   const tracking = useTracking()
@@ -108,9 +108,9 @@ export const FairBoothRailArtworksFragmentContainer = createFragmentContainer(
   }
 )
 
-export const FairBoothRailArtworksQueryRenderer: React.FC<{
+export const FairBoothRailArtworksQueryRenderer: React.FC<React.PropsWithChildren<{
   id: string
-}> = ({ id, ...rest }) => {
+}>> = ({ id, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

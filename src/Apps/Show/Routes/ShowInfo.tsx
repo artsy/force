@@ -20,7 +20,7 @@ interface ShowInfoProps {
   show: ShowInfo_show$data
 }
 
-export const ShowInfo: React.FC<ShowInfoProps> = ({
+export const ShowInfo: React.FC<React.PropsWithChildren<ShowInfoProps>> = ({
   show,
   show: { about, pressRelease, partner, hasLocation },
 }) => {
@@ -99,7 +99,7 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
   )
 }
 
-const EventList: React.FC<{ events: ShowInfoProps["show"]["events"] }> = ({
+const EventList: React.FC<React.PropsWithChildren<{ events: ShowInfoProps["show"]["events"] }>> = ({
   events,
 }) => {
   if (!events?.length) return null

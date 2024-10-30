@@ -25,7 +25,7 @@ const CONFIGURATION = {
   },
 } as const
 
-export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
+export const OnboardingFollows: FC<React.PropsWithChildren<OnboardingFollowsProps>> = ({ kind }) => {
   const { next, state } = useOnboardingContext()
   const { register, handleNext, loading } = useOnboardingFadeTransition({
     next,

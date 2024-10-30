@@ -9,7 +9,7 @@ interface InvoicePaymentRouteProps {
   invoice: InvoicePaymentRoute_invoice$key
 }
 
-export const InvoicePaymentRoute: React.FC<InvoicePaymentRouteProps> = ({
+export const InvoicePaymentRoute: React.FC<React.PropsWithChildren<InvoicePaymentRouteProps>> = ({
   invoice,
 }) => {
   const data = useFragment(InvoicePaymentRouteFragment, invoice)

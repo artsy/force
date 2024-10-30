@@ -27,7 +27,7 @@ interface SettingsEditProfileImageProps {
   relay: RelayRefetchProp
 }
 
-const SettingsEditProfileImage: FC<SettingsEditProfileImageProps> = ({
+const SettingsEditProfileImage: FC<React.PropsWithChildren<SettingsEditProfileImageProps>> = ({
   me,
   relay,
 }) => {

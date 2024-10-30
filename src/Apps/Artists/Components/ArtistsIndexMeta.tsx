@@ -6,7 +6,7 @@ const TITLE = "Browse Artists on Artsy | Modern and Contemporary Artists"
 const DESCRIPTION =
   "Research and discover more than 100,000 modern and contemporary artists on Artsy. Find works for sale, biographies, CVs, and auction results."
 
-export const ArtistsIndexMeta: React.FC = ({}) => {
+export const ArtistsIndexMeta: React.FC<React.PropsWithChildren<unknown>> = ({}) => {
   const href = `${getENV("APP_URL")}/artists`
 
   return (

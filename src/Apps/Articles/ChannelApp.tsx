@@ -15,7 +15,7 @@ interface ChannelAppProps {
   channel: ChannelApp_channel$data
 }
 
-const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
+const ChannelApp: FC<React.PropsWithChildren<ChannelAppProps>> = ({ channel }) => {
   const { theme } = useTheme()
 
   const rgb = theme.name === "light" ? "255, 255, 255" : "0, 0, 0"

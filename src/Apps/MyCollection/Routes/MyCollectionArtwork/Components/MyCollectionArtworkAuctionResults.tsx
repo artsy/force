@@ -9,7 +9,7 @@ interface MyCollectionArtworkAuctionResultsProps {
   artist: MyCollectionArtworkAuctionResults_artist$data
 }
 
-const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionResultsProps> = ({
+const MyCollectionAuctionResultsContainer: React.FC<React.PropsWithChildren<MyCollectionArtworkAuctionResultsProps>> = ({
   artist,
 }) => {
   const { slug, auctionResultsConnection } = artist

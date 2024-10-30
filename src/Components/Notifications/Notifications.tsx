@@ -30,7 +30,7 @@ interface NotificationsProps extends NotificationsWrapperProps {
   onHide?: () => void
 }
 
-export const Notifications: React.FC<NotificationsProps> = ({
+export const Notifications: React.FC<React.PropsWithChildren<NotificationsProps>> = ({
   mode,
   onHide,
   unreadCounts,
@@ -111,7 +111,7 @@ interface NotificationsDropdownPlaceholderProps {
   onHide(): void
 }
 
-export const NotificationsDropdownPlaceholder: FC<NotificationsDropdownPlaceholderProps> = ({
+export const NotificationsDropdownPlaceholder: FC<React.PropsWithChildren<NotificationsDropdownPlaceholderProps>> = ({
   onHide,
 }) => {
   return (

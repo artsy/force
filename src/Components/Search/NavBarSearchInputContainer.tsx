@@ -20,30 +20,35 @@ const SearchButton = styled(Clickable)`
   }
 `
 
-export const NavBarSearchInputContainer: React.ForwardRefExoticComponent<
-  Omit<LabeledInputProps, "label"> & { ref?: React.Ref<HTMLInputElement> }
-> = React.forwardRef((props, ref) => {
-  return (
-    <LabeledInput
-      ref={ref}
-      width="100%"
-      height={40}
-      label={
-        <SearchButton
-          type="submit"
-          onClick={event => {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ;(event.target as HTMLElement).parentElement.blur()
+export const NavBarSearchInputContainer = React.forwardRef(
+  (
+    props: Omit<LabeledInputProps, "label"> & {
+      ref?: React.Ref<HTMLInputElement>
+    },
+    ref
+  ) => {
+    return (
+      <LabeledInput
+        ref={ref as any}
+        width="100%"
+        height={40}
+        label={
+          <SearchButton
+            type="submit"
+            onClick={event => {
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+              ;(event.target as HTMLElement).parentElement.blur()
 
-            if (isEmpty(props.value)) {
-              event.preventDefault()
-            }
-          }}
-        >
-          <SearchIcon fill="black60" width={[22, 18]} height={[22, 18]} />
-        </SearchButton>
-      }
-      {...props}
-    />
-  )
-})
+              if (isEmpty(props.value)) {
+                event.preventDefault()
+              }
+            }}
+          >
+            <SearchIcon fill="black60" width={[22, 18]} height={[22, 18]} />
+          </SearchButton>
+        }
+        {...props}
+      />
+    )
+  }
+)

@@ -26,7 +26,7 @@ export interface AppDownloadBannerProps {
   idleDuration?: number
 }
 
-export const AppDownloadBanner: FC<AppDownloadBannerProps> = ({
+export const AppDownloadBanner: FC<React.PropsWithChildren<AppDownloadBannerProps>> = ({
   transitionDuration = 1500,
   idleDuration = 4000,
 }) => {

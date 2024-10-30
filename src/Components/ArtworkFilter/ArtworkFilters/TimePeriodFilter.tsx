@@ -18,7 +18,7 @@ export interface TimePeriodFilterProps {
 export const getTimePeriodToDisplay = period =>
   isNaN(period) ? period : `${period}s`
 
-export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
+export const TimePeriodFilter: FC<React.PropsWithChildren<TimePeriodFilterProps>> = ({ expanded }) => {
   const {
     aggregations,
     selectedFiltersCounts,

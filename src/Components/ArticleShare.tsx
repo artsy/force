@@ -11,7 +11,7 @@ interface ArticleShareProps extends BoxProps {
   pathname: string | null | undefined
 }
 
-export const ArticleShare: FC<ArticleShareProps> = ({
+export const ArticleShare: FC<React.PropsWithChildren<ArticleShareProps>> = ({
   description: _description,
   pathname,
   ...rest

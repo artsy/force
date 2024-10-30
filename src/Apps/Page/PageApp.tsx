@@ -19,7 +19,7 @@ interface PageAppProps {
   page: PageApp_page$data
 }
 
-const PageApp: FC<PageAppProps> = ({ page }) => {
+const PageApp: FC<React.PropsWithChildren<PageAppProps>> = ({ page }) => {
   const { user } = useSystemContext()
   const isAdmin = userIsAdmin(user)
   const { showAuthDialog } = useAuthDialog()

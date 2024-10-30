@@ -9,7 +9,7 @@ interface ArtworkSidebarPrivateArtworkProps {
   artwork: ArtworkSidebarPrivateArtwork_artwork$key
 }
 
-export const ArtworkSidebarPrivateArtwork: React.FC<ArtworkSidebarPrivateArtworkProps> = ({
+export const ArtworkSidebarPrivateArtwork: React.FC<React.PropsWithChildren<ArtworkSidebarPrivateArtworkProps>> = ({
   artwork,
 }) => {
   const { trackEvent } = useTracking()

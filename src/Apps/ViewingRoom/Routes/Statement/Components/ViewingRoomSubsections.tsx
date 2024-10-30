@@ -8,7 +8,7 @@ interface ViewingRoomSubsectionsProps {
   viewingRoom: ViewingRoomSubsections_viewingRoom$data
 }
 
-const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
+const ViewingRoomSubsections: React.FC<React.PropsWithChildren<ViewingRoomSubsectionsProps>> = ({
   viewingRoom: { subsections },
 }) => {
   if (subsections.length === 0) {

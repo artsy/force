@@ -45,7 +45,7 @@ export interface PriceEstimateContactInformationProps {
   me: PriceEstimateContactInformation_me$data
 }
 
-export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInformationProps> = ({
+export const PriceEstimateContactInformation: React.FC<React.PropsWithChildren<PriceEstimateContactInformationProps>> = ({
   artwork,
   me,
 }) => {

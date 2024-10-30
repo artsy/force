@@ -8,11 +8,11 @@ import { useEffect } from "react"
 export function buildAppRoutes(routes: RouteProps[][]): RouteProps[] {
   const children = routes.flat()
 
-  const Component: React.FC<{
+  const Component: React.FC<React.PropsWithChildren<{
     children: React.ReactNode
     match: Match
     router: Router
-  }> = props => {
+  }>> = props => {
     const { router, setRouter } = useSystemContext()
 
     // Store global reference to router instance

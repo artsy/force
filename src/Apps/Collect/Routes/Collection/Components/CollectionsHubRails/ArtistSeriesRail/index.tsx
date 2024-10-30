@@ -7,7 +7,7 @@ import { Rail } from "Components/Rail/Rail"
 export interface ArtistSeriesRailProps {
   collectionGroup: ArtistSeriesRail_collectionGroup$data
 }
-export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
+export const ArtistSeriesRail: React.FC<React.PropsWithChildren<ArtistSeriesRailProps>> = ({
   collectionGroup: { members, name },
 }) => {
   return (
@@ -29,7 +29,7 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
 }
 
 export const ArtistSeriesRailContainer = createFragmentContainer(
-  ArtistSeriesRail as React.FC<ArtistSeriesRailProps>,
+  ArtistSeriesRail as React.FC<React.PropsWithChildren<ArtistSeriesRailProps>>,
   {
     collectionGroup: graphql`
       fragment ArtistSeriesRail_collectionGroup on MarketingCollectionGroup {

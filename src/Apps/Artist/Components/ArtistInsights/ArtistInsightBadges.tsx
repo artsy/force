@@ -13,7 +13,7 @@ interface ArtistInsightBadgesProps {
   artist: ArtistInsightBadges_artist$data
 }
 
-export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
+export const ArtistInsightBadges: FC<React.PropsWithChildren<ArtistInsightBadgesProps>> = ({
   artist,
 }) => {
   if (artist.insightBadges.length === 0) {
@@ -65,7 +65,7 @@ export const ArtistInsightBadgesFragmentContainer = createFragmentContainer(
   }
 )
 
-export const ArtistInsightBadgesPlaceholder: FC = () => {
+export const ArtistInsightBadgesPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton>
       <Text variant="lg-display" mb={2}>

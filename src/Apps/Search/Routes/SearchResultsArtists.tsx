@@ -153,7 +153,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
 }
 
 export const SearchResultsArtistsRouteFragmentContainer = createRefetchContainer(
-  withRouter(SearchResultsArtistsRoute) as React.ComponentType<Props>,
+  withRouter(SearchResultsArtistsRoute) as React.ComponentType<React.PropsWithChildren<Props>>,
   {
     viewer: graphql`
       fragment SearchResultsArtists_viewer on Viewer

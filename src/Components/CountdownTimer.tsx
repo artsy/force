@@ -19,7 +19,7 @@ export interface CountdownTimerProps {
  * Extracted out of @artsy/palette
  * @deprecated Use `useTimer` instead
  */
-export const CountdownTimer: React.FC<CountdownTimerProps> = ({
+export const CountdownTimer: React.FC<React.PropsWithChildren<CountdownTimerProps>> = ({
   action,
   note,
   countdownEnd,

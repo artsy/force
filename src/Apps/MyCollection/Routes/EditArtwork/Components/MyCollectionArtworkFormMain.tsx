@@ -33,7 +33,7 @@ export interface MyCollectionArtworkFormMainProps {
   artwork?: MyCollectionArtworkFormMain_artwork$data
 }
 
-export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainProps> = ({
+export const MyCollectionArtworkFormMain: React.FC<React.PropsWithChildren<MyCollectionArtworkFormMainProps>> = ({
   artwork,
 }) => {
   const { onBack } = useMyCollectionArtworkFormContext()

@@ -22,7 +22,7 @@ export interface StandoutLotsRailProps {
   viewer: StandoutLotsRail_viewer$data
 }
 
-export const StandoutLotsRail: React.FC<StandoutLotsRailProps> = ({
+export const StandoutLotsRail: React.FC<React.PropsWithChildren<StandoutLotsRailProps>> = ({
   viewer,
 }) => {
   const { trackEvent } = useTracking()
@@ -88,7 +88,7 @@ export const StandoutLotsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const StandoutLotsRailQueryRenderer: React.FC = () => {
+export const StandoutLotsRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

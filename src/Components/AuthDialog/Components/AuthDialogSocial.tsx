@@ -9,7 +9,7 @@ import FacebookIcon from "@artsy/icons/FacebookIcon"
 import AppleIcon from "@artsy/icons/AppleIcon"
 import GoogleIcon from "@artsy/icons/GoogleIcon"
 
-export const AuthDialogSocial: FC = () => {
+export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
   const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
     applePath: "/users/auth/apple",
     facebookPath: "/users/auth/facebook",

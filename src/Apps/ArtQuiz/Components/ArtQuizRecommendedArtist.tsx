@@ -24,7 +24,7 @@ interface ArtQuizRecommendedArtistProps {
   artist: ArtQuizRecommendedArtist_artist$data
 }
 
-export const ArtQuizRecommendedArtist: FC<ArtQuizRecommendedArtistProps> = ({
+export const ArtQuizRecommendedArtist: FC<React.PropsWithChildren<ArtQuizRecommendedArtistProps>> = ({
   artist,
 }) => {
   const artworks = extractNodes(artist.artworksConnection)
@@ -100,7 +100,7 @@ export const ArtQuizRecommendedArtistFragmentContainer = createFragmentContainer
   }
 )
 
-export const ArtQuizRecommendedArtistPlaceholder: FC = () => {
+export const ArtQuizRecommendedArtistPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <GridColumns gridRowGap={[2, 4]}>
       <Column span={6}>

@@ -30,7 +30,7 @@ interface OfferSettingsFormikValues extends Array<OfferSettingsFormModel> {}
 
 const logger = createLogger("OfferSettingsModal")
 
-export const OfferSettingsModal: React.FC<OfferSettingsModalProps> = ({
+export const OfferSettingsModal: React.FC<React.PropsWithChildren<OfferSettingsModalProps>> = ({
   onClose,
   me,
 }) => {

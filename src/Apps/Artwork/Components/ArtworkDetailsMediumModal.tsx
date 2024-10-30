@@ -9,7 +9,7 @@ interface ArtworkDetailsMediumModalProps {
   onClose(): void
 }
 
-export const ArtworkDetailsMediumModal: React.FC<ArtworkDetailsMediumModalProps> = ({
+export const ArtworkDetailsMediumModal: React.FC<React.PropsWithChildren<ArtworkDetailsMediumModalProps>> = ({
   artwork,
   show,
   onClose,

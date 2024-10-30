@@ -15,7 +15,7 @@ interface FairOverviewProps extends BoxProps {
   fair: FairOverview_fair$data
 }
 
-const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
+const FairOverview: FC<React.PropsWithChildren<FairOverviewProps>> = ({ fair }) => {
   const { user } = useSystemContext()
   const { match } = useRouter()
   const { jumpTo } = useJump()

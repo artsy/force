@@ -10,7 +10,7 @@ interface ArtworkSidebarLinksProps {
   artwork: ArtworkSidebarLinks_artwork$data
 }
 
-const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
+const ArtworkSidebarLinks: React.FC<React.PropsWithChildren<ArtworkSidebarLinksProps>> = ({
   artwork,
 }) => {
   const tracking = useTracking()

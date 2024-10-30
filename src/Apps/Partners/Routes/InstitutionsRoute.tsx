@@ -23,7 +23,7 @@ interface InstitutionsRouteProps {
   viewer: InstitutionsRoute_viewer$data
 }
 
-const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
+const InstitutionsRoute: React.FC<React.PropsWithChildren<InstitutionsRouteProps>> = ({ viewer }) => {
   const {
     match: {
       location: { query },

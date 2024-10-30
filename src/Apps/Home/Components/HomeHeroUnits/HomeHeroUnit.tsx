@@ -24,7 +24,7 @@ interface HomeHeroUnitProps {
   onClick?: () => void
 }
 
-export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = props => {
+export const HomeHeroUnit: React.FC<React.PropsWithChildren<HomeHeroUnitProps>> = props => {
   return (
     <Box width="100%" height="100%">
       <Media at="xs">
@@ -38,7 +38,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = props => {
   )
 }
 
-const HomeHeroUnitSmall: React.FC<HomeHeroUnitProps> = ({
+const HomeHeroUnitSmall: React.FC<React.PropsWithChildren<HomeHeroUnitProps>> = ({
   heroUnit,
   index,
   onClick,
@@ -95,7 +95,7 @@ const HomeHeroUnitSmall: React.FC<HomeHeroUnitProps> = ({
   )
 }
 
-const HomeHeroUnitLarge: React.FC<HomeHeroUnitProps> = ({
+const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<HomeHeroUnitProps>> = ({
   heroUnit,
   index,
   onClick,

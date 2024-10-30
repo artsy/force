@@ -8,7 +8,7 @@ import {
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
-export const CurrencyFilter: React.FC = () => {
+export const CurrencyFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()
   const {
     currency: selectedCurrency,

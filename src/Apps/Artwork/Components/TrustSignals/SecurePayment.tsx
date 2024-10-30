@@ -12,7 +12,7 @@ interface SecurePaymentProps
   artwork: SecurePayment_artwork$data
 }
 
-export const SecurePayment: React.FC<SecurePaymentProps> = ({
+export const SecurePayment: React.FC<React.PropsWithChildren<SecurePaymentProps>> = ({
   artwork,
   ...other
 }) => {

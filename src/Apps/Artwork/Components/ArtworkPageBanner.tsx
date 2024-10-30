@@ -13,7 +13,7 @@ interface ArtworkPageBannerProps {
   artwork: ArtworkPageBanner_artwork$key
   me: ArtworkPageBanner_me$key
 }
-export const ArtworkPageBanner: FC<ArtworkPageBannerProps> = props => {
+export const ArtworkPageBanner: FC<React.PropsWithChildren<ArtworkPageBannerProps>> = props => {
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
   const { match } = useRouter()

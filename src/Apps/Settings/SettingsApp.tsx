@@ -11,7 +11,7 @@ interface SettingsAppProps {
   me: SettingsApp_me$data
 }
 
-const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
+const SettingsApp: React.FC<React.PropsWithChildren<SettingsAppProps>> = ({ me, children }) => {
   const { sendToast } = useToasts()
 
   const {

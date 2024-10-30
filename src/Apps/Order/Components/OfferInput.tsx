@@ -11,7 +11,7 @@ export interface OfferInputProps {
   value?: number
 }
 
-export const OfferInput: FC<OfferInputProps> = ({
+export const OfferInput: FC<React.PropsWithChildren<OfferInputProps>> = ({
   id,
   noTitle,
   showError,
@@ -28,7 +28,7 @@ export const OfferInput: FC<OfferInputProps> = ({
   }
 
   return (
-    <Input
+    (<Input
       id={id}
       title={noTitle ? "" : "Your offer"}
       type="text"
@@ -43,6 +43,6 @@ export const OfferInput: FC<OfferInputProps> = ({
         const cleanedValue = currentValue.replace(/[^\d]/g, "") // Remove non-digits
         onChange(Number(cleanedValue))
       }}
-    />
-  )
+    />)
+  );
 }

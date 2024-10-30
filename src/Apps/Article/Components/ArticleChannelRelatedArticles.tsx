@@ -13,7 +13,7 @@ interface ArticleChannelRelatedArticlesProps {
   article: ArticleChannelRelatedArticles_article$data
 }
 
-const ArticleChannelRelatedArticles: FC<ArticleChannelRelatedArticlesProps> = ({
+const ArticleChannelRelatedArticles: FC<React.PropsWithChildren<ArticleChannelRelatedArticlesProps>> = ({
   article,
 }) => {
   if (article.channelArticles.length === 0) return null
@@ -60,7 +60,7 @@ interface ArticleChannelRelatedArticlesQueryRendererProps {
   id: string
 }
 
-export const ArticleChannelRelatedArticlesQueryRenderer: FC<ArticleChannelRelatedArticlesQueryRendererProps> = ({
+export const ArticleChannelRelatedArticlesQueryRenderer: FC<React.PropsWithChildren<ArticleChannelRelatedArticlesQueryRendererProps>> = ({
   id,
 }) => {
   return (
@@ -95,7 +95,7 @@ export const ArticleChannelRelatedArticlesQueryRenderer: FC<ArticleChannelRelate
   )
 }
 
-const ArticleChannelRelatedArticlesPlaceholder: FC = () => {
+const ArticleChannelRelatedArticlesPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="lg-display" mb={4}>

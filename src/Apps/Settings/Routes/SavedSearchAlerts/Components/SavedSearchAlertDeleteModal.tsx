@@ -14,7 +14,7 @@ interface SavedSearchAlertDeleteModalProps {
   onDeleted: () => void
 }
 
-export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalProps> = ({
+export const SavedSearchAlertDeleteModal: React.FC<React.PropsWithChildren<SavedSearchAlertDeleteModalProps>> = ({
   id,
   onCloseClick,
   onDeleted,

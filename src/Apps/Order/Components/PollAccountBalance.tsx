@@ -25,7 +25,7 @@ interface PollAccountBalanceProps {
   orderCurrencyCode: string
 }
 
-const PollAccountBalance: FC<PollAccountBalanceProps> = ({
+const PollAccountBalance: FC<React.PropsWithChildren<PollAccountBalanceProps>> = ({
   relay,
   setupIntentId,
   bankAccountId,
@@ -117,7 +117,7 @@ interface PollAccountBalanceQueryRendererProps {
   orderCurrencyCode: string
 }
 
-export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRendererProps> = ({
+export const PollAccountBalanceQueryRenderer: FC<React.PropsWithChildren<PollAccountBalanceQueryRendererProps>> = ({
   setupIntentId,
   bankAccountId,
   onError,

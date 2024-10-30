@@ -97,7 +97,7 @@ interface InquiryProviderProps {
   onClose(): void
 }
 
-export const InquiryProvider: React.FC<InquiryProviderProps> = ({
+export const InquiryProvider: React.FC<React.PropsWithChildren<InquiryProviderProps>> = ({
   artworkID,
   askSpecialist,
   children,
@@ -202,7 +202,7 @@ interface InquiryContextContextProps {
   me: useInquiryContext_me$data | null | undefined
 }
 
-const InquiryContextContext: React.FC<InquiryContextContextProps> = ({
+const InquiryContextContext: React.FC<React.PropsWithChildren<InquiryContextContextProps>> = ({
   me,
   children,
 }) => {
@@ -241,7 +241,7 @@ const InquiryContextContextFragmentContainer = createFragmentContainer(
   }
 )
 
-export const InquiryContextContextQueryRenderer: React.FC = ({ children }) => {
+export const InquiryContextContextQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

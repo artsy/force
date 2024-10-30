@@ -18,7 +18,7 @@ interface PrivateArtworkMetadataProps {
   artwork: PrivateArtworkMetadata_artwork$key
 }
 
-export const PrivateArtworkMetadata: React.FC<PrivateArtworkMetadataProps> = ({
+export const PrivateArtworkMetadata: React.FC<React.PropsWithChildren<PrivateArtworkMetadataProps>> = ({
   artwork,
 }) => {
   const data = useFragment(
@@ -100,7 +100,7 @@ interface MetadataDetailItemProps {
   expanded?: boolean
 }
 
-const MetadataDetailItem: React.FC<MetadataDetailItemProps> = ({
+const MetadataDetailItem: React.FC<React.PropsWithChildren<MetadataDetailItemProps>> = ({
   title,
   children,
   expanded = false,

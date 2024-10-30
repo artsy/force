@@ -10,7 +10,7 @@ interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork$key
 }
 
-export const ArtworkMeta: React.FC<ArtworkMetaProps> = ({ artwork }) => {
+export const ArtworkMeta: React.FC<React.PropsWithChildren<ArtworkMetaProps>> = ({ artwork }) => {
   const { match } = useRouter()
   const data = useFragment(artworkMetaFragment, artwork)
 

@@ -61,7 +61,7 @@ interface AuctionResultsProps {
   >["aggregations"]
 }
 
-const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
+const AuctionResultsContainer: React.FC<React.PropsWithChildren<AuctionResultsProps>> = ({
   artist,
   relay,
   aggregations,

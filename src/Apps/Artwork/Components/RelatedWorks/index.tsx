@@ -22,7 +22,7 @@ interface RelatedWorksProps {
   artwork: RelatedWorks_artwork$data
 }
 
-export const RelatedWorks: React.FC<RelatedWorksProps> = ({ artwork }) => {
+export const RelatedWorks: React.FC<React.PropsWithChildren<RelatedWorksProps>> = ({ artwork }) => {
   const { trackEvent } = useTracking()
 
   const artworksConnection = artwork.layer?.artworksConnection
@@ -89,9 +89,9 @@ export const RelatedWorksFragmentContainer = createFragmentContainer(
   }
 )
 
-export const RelatedWorksQueryRenderer: React.FC<{
+export const RelatedWorksQueryRenderer: React.FC<React.PropsWithChildren<{
   slug: string
-}> = ({ slug }) => {
+}>> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

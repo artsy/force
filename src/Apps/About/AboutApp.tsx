@@ -16,7 +16,7 @@ import { resized } from "Utils/resized"
 import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 
-export const AboutApp: React.FC = () => {
+export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <MetaTags
@@ -96,7 +96,7 @@ interface SectionProps {
   href: string
 }
 
-const Section: React.FC<SectionProps & BoxProps> = ({
+const Section: React.FC<React.PropsWithChildren<SectionProps & BoxProps>> = ({
   imageUrl,
   title,
   description,

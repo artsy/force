@@ -1,6 +1,6 @@
 import * as Yup from "yup"
 import Cookies from "cookies-js"
-import { createContext, FC, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation"
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
@@ -113,9 +113,10 @@ export const runAuthIntent = async ({
         case "associateSubmission":
           return associateSubmissionMutation(relayEnvironment, value.objectId)
 
-        case "saveAndExitSubmission" ||
-          "submitSubmission":
+        case "saveAndExitSubmission":
           // Do nothing. Value update triggers UI which handles mutation.
+          break
+        case "submitSubmission":
           break
       }
     })()
@@ -177,7 +178,7 @@ const AuthIntentContext = createContext<{
   setValue: (_value: AfterAuthAction | null) => null,
 })
 
-export const AuthIntentProvider: FC = ({ children }) => {
+export const AuthIntentProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const [value, setValue] = useState<AfterAuthAction | null>(null)
 
   return (

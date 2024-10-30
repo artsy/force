@@ -49,7 +49,7 @@ export interface ConsignmentInquiryProps {
   viewer: ConsignmentInquiry_viewer$data
 }
 
-export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
+export const ConsignmentInquiry: React.FC<React.PropsWithChildren<ConsignmentInquiryProps>> = ({
   me,
   viewer,
 }) => {

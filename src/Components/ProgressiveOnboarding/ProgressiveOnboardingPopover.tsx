@@ -9,7 +9,7 @@ interface ProgressiveOnboardingPopoverProps
   name: string
 }
 
-export const ProgressiveOnboardingPopover: FC<ProgressiveOnboardingPopoverProps> = ({
+export const ProgressiveOnboardingPopover: FC<React.PropsWithChildren<ProgressiveOnboardingPopoverProps>> = ({
   popover,
   children,
   name,
@@ -38,6 +38,9 @@ export const ProgressiveOnboardingPopover: FC<ProgressiveOnboardingPopoverProps>
       manageFocus={false}
       {...rest}
     >
+      {/*
+          FIXME: REACT_18_UPGRADE
+          @ts-ignore */}
       {({ anchorRef }) => {
         return <Box ref={anchorRef as any}>{children}</Box>
       }}

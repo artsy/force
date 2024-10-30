@@ -12,7 +12,7 @@ interface InsightsCareerHighlightCardProps {
   onClick(): void
 }
 
-export const InsightsCareerHighlightCard: React.FC<InsightsCareerHighlightCardProps> = ({
+export const InsightsCareerHighlightCard: React.FC<React.PropsWithChildren<InsightsCareerHighlightCardProps>> = ({
   count,
   kind,
   onClick,
@@ -55,7 +55,7 @@ interface CardWrapperProps extends ClickableProps {
   onClick?: () => void
 }
 
-const CardWrapper: React.FC<CardWrapperProps> = ({
+const CardWrapper: React.FC<React.PropsWithChildren<CardWrapperProps>> = ({
   onClick,
   children,
   ...rest

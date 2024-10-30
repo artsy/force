@@ -18,7 +18,7 @@ export interface PriceRangeFilterProps {
   expanded?: boolean
 }
 
-export const PriceRangeFilter: FC<PriceRangeFilterProps> = ({ expanded }) => {
+export const PriceRangeFilter: FC<React.PropsWithChildren<PriceRangeFilterProps>> = ({ expanded }) => {
   const { field, range, histogram, onPriceRangeUpdate } = usePriceRangeFilter()
 
   const countLabel = useFilterLabelCountByKey(

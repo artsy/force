@@ -3,7 +3,7 @@ import { ImagePreviewItem } from "Apps/Sell/Components/ImagePreviewItem"
 import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
 import { useFormikContext } from "formik"
 
-export const ImagePreviewsGrid: React.FC = () => {
+export const ImagePreviewsGrid: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
     values: { photos },
   } = useFormikContext<PhotosFormValues>()

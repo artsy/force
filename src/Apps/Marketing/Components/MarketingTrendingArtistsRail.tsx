@@ -15,7 +15,7 @@ interface MarketingTrendingArtistsRailProps {
   viewer: MarketingTrendingArtistsRail_viewer$data
 }
 
-const MarketingTrendingArtistsRail: FC<MarketingTrendingArtistsRailProps> = ({
+const MarketingTrendingArtistsRail: FC<React.PropsWithChildren<MarketingTrendingArtistsRailProps>> = ({
   viewer,
 }) => {
   const artists = extractNodes(viewer.curatedTrendingArtists)
@@ -77,7 +77,7 @@ export const MarketingTrendingArtistsRailFragmentContainer = createFragmentConta
   }
 )
 
-export const MarketingTrendingArtistsRailQueryRenderer: FC = () => {
+export const MarketingTrendingArtistsRailQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <SystemQueryRenderer<MarketingTrendingArtistsRailQuery>
       lazyLoad

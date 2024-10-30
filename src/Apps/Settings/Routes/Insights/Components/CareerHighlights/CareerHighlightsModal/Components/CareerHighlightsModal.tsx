@@ -17,7 +17,7 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 
 type CareerHighlightModalProps = ModalBaseProps
 
-export const CareerHighlightModal: React.FC<CareerHighlightModalProps> = ({
+export const CareerHighlightModal: React.FC<React.PropsWithChildren<CareerHighlightModalProps>> = ({
   onClose,
   children,
   ...rest

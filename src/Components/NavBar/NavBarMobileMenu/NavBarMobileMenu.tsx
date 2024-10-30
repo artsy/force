@@ -27,7 +27,7 @@ interface NavBarMobileMenuProps {
   onNavButtonClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
-export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
+export const NavBarMobileMenu: React.FC<React.PropsWithChildren<NavBarMobileMenuProps>> = ({
   isOpen,
   onNavButtonClick,
   onClose,
@@ -177,7 +177,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
   )
 }
 
-export const NavBarMobileMenuIcon: React.FC<{ open: boolean }> = ({ open }) => {
+export const NavBarMobileMenuIcon: React.FC<React.PropsWithChildren<{ open: boolean }>> = ({ open }) => {
   // TODO: Should be able to scale these using width & height props
   return open ? (
     <CloseIcon style={{ transform: "scale(1.5)" }} />

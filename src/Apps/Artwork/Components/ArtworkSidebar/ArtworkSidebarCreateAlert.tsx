@@ -8,7 +8,7 @@ interface ArtworkSidebarCreateAlertProps {
   artwork: ArtworkSidebarCreateAlert_artwork$data
 }
 
-export const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps> = ({
+export const ArtworkSidebarCreateAlert: React.FC<React.PropsWithChildren<ArtworkSidebarCreateAlertProps>> = ({
   artwork,
 }) => {
   if (!artwork.isEligibleToCreateAlert) return null

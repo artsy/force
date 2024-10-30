@@ -23,7 +23,7 @@ interface ArtistArtworkFilterProps {
   match?: Match
 }
 
-const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
+const ArtistArtworkFilter: React.FC<React.PropsWithChildren<ArtistArtworkFilterProps>> = props => {
   const { userPreferences } = useSystemContext()
   const { match } = useRouter()
   const { relay, aggregations, artist } = props

@@ -1,6 +1,6 @@
 import { FC } from "react"
-import { OnboardingFollows } from "../Components/OnboardingFollows"
+import { OnboardingFollows } from "Components/Onboarding/Components/OnboardingFollows"
 
-export const OnboardingFollowGalleries: FC = () => {
+export const OnboardingFollowGalleries: FC<React.PropsWithChildren<unknown>> = () => {
   return <OnboardingFollows kind="galleries" />
 }

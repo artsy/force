@@ -6,7 +6,7 @@ export interface FrameWithRecentlyViewedProps {
   name?: string
 }
 
-export const FrameWithRecentlyViewed: React.FC<FrameWithRecentlyViewedProps> = ({
+export const FrameWithRecentlyViewed: React.FC<React.PropsWithChildren<FrameWithRecentlyViewedProps>> = ({
   children,
 }) => {
   return (

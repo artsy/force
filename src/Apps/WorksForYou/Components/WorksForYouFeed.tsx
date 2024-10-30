@@ -15,7 +15,7 @@ interface WorksForYouFeedProps {
   relay: RelayPaginationProp
 }
 
-export const WorksForYouFeed: React.FC<WorksForYouFeedProps> = ({
+export const WorksForYouFeed: React.FC<React.PropsWithChildren<WorksForYouFeedProps>> = ({
   viewer,
   relay,
 }) => {

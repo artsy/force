@@ -14,7 +14,7 @@ interface SettingsEditRouteProps {
   me: SettingsEditSettingsRoute_me$data
 }
 
-const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
+const SettingsEditRoute: React.FC<React.PropsWithChildren<SettingsEditRouteProps>> = ({ me }) => {
   return (
     <GridColumns>
       <Column span={8}>

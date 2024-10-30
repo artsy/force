@@ -5,7 +5,7 @@ interface LiveAuctionToolTipProps {
   show: boolean
 }
 
-export const LiveAuctionToolTip: React.FC<LiveAuctionToolTipProps> = ({
+export const LiveAuctionToolTip: React.FC<React.PropsWithChildren<LiveAuctionToolTipProps>> = ({
   show,
 }) => {
   if (!show) {

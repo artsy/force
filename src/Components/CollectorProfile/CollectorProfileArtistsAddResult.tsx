@@ -11,7 +11,7 @@ interface CollectorProfileArtistsAddResultProps {
   onSelect: (selected: boolean) => void
 }
 
-export const CollectorProfileArtistsAddResult: FC<CollectorProfileArtistsAddResultProps> = ({
+export const CollectorProfileArtistsAddResult: FC<React.PropsWithChildren<CollectorProfileArtistsAddResultProps>> = ({
   artist: _artist,
   selected,
   onSelect,

@@ -23,7 +23,7 @@ export interface TopContextBarProps {
   hideSeparator?: boolean
 }
 
-export const TopContextBar: React.FC<TopContextBarProps> = ({
+export const TopContextBar: React.FC<React.PropsWithChildren<TopContextBarProps>> = ({
   children,
   displayBackArrow = false,
   href: _href,

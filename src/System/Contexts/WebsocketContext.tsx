@@ -25,7 +25,7 @@ export const WebsocketContext = createContext<WebsocketContextProps>(
   initialValues
 )
 
-export const WebsocketContextProvider: React.FC<WebsocketContextProviderProps> = ({
+export const WebsocketContextProvider: React.FC<React.PropsWithChildren<WebsocketContextProviderProps>> = ({
   channelInfo,
   enabled,
   children,

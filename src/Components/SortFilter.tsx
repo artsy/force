@@ -12,7 +12,7 @@ interface SortFilterProps {
   onSort: (sort: string) => void
 }
 
-export const SortFilter: React.FC<SortFilterProps> = ({
+export const SortFilter: React.FC<React.PropsWithChildren<SortFilterProps>> = ({
   sortOptions,
   selected,
   onSort,

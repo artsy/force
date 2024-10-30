@@ -28,7 +28,7 @@ export interface CollectAppProps {
   marketingCollections: Collect_marketingCollections$data
 }
 
-export const CollectApp: React.FC<CollectAppProps> = ({
+export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
   marketingCollections,
   match: { location, params },
 }) => {

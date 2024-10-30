@@ -32,7 +32,7 @@ interface TitleRouteProps {
   submission: TitleRoute_submission$key
 }
 
-export const TitleRoute: React.FC<TitleRouteProps> = props => {
+export const TitleRoute: React.FC<React.PropsWithChildren<TitleRouteProps>> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const { actions } = useSellFlowContext()
   const focusedInputRef = useFocusInput()

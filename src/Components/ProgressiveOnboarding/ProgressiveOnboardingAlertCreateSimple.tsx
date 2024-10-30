@@ -14,7 +14,7 @@ const KEY = PROGRESSIVE_ONBOARDING.alertCreate
 interface ProgressiveOnboardingAlertCreateSimpleProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingAlertCreateSimple__: FC<ProgressiveOnboardingAlertCreateSimpleProps> = ({
+export const __ProgressiveOnboardingAlertCreateSimple__: FC<React.PropsWithChildren<ProgressiveOnboardingAlertCreateSimpleProps>> = ({
   children,
   counts,
 }) => {

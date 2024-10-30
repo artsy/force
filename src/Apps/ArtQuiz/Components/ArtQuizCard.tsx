@@ -14,7 +14,7 @@ interface ArtQuizCardProps extends BoxProps {
   mode: Mode
 }
 
-export const ArtQuizCard: FC<ArtQuizCardProps> = ({
+export const ArtQuizCard: FC<React.PropsWithChildren<ArtQuizCardProps>> = ({
   children,
   mode = Mode.Pending,
   ...rest

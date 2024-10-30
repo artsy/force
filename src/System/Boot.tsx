@@ -24,8 +24,7 @@ import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { StyleSheetManager } from "styled-components"
 import isPropValid from "@emotion/is-prop-valid"
 
-export interface BootProps {
-  children: React.ReactNode
+export interface BootProps extends React.PropsWithChildren {
   context: ClientContext
   headTags?: JSX.Element[]
   onlyMatchMediaQueries?: MatchingMediaQueries
@@ -36,9 +35,12 @@ export interface BootProps {
 
 const { GlobalStyles } = injectGlobalStyles()
 
-export const Boot = track(undefined, {
-  dispatch: Events.postEvent,
-})((props: BootProps) => {
+export const Boot: React.FC<React.PropsWithChildren<React.PropsWithChildren<BootProps>>> = track(
+  undefined,
+  {
+    dispatch: Events.postEvent,
+  }
+)((props: BootProps) => {
   /**
    * Let our end-to-end tests know that the app is hydrated and ready to go; and
    * if in prod, initialize Sentry.
@@ -98,7 +100,7 @@ export const Boot = track(undefined, {
   )
 })
 
-const EnvironmentProvider: FC<{ environment: Environment }> = ({
+const EnvironmentProvider: FC<React.PropsWithChildren<{ environment: Environment }>> = ({
   children,
   environment,
 }) => {
@@ -111,7 +113,7 @@ const EnvironmentProvider: FC<{ environment: Environment }> = ({
   )
 }
 
-const ThemeProvider: FC = ({ children }) => {
+const ThemeProvider: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const { preferences } = useAppPreferences()
 
   return (

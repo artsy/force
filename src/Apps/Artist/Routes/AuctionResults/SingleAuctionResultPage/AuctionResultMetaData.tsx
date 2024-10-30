@@ -8,7 +8,7 @@ interface AuctionResultMetaDataProps {
   auctionResult: AuctionResultMetaData_auctionResult$key
 }
 
-export const AuctionResultMetaData: React.FC<AuctionResultMetaDataProps> = ({
+export const AuctionResultMetaData: React.FC<React.PropsWithChildren<AuctionResultMetaDataProps>> = ({
   auctionResult,
 }) => {
   const data = useFragment(auctionResultMetaDataFragment, auctionResult)

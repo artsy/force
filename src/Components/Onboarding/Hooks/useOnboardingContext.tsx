@@ -97,7 +97,7 @@ interface OnboardingProviderProps {
   onClose(): void
 }
 
-export const OnboardingProvider: FC<OnboardingProviderProps> = ({
+export const OnboardingProvider: FC<React.PropsWithChildren<OnboardingProviderProps>> = ({
   children,
   onClose,
 }) => {

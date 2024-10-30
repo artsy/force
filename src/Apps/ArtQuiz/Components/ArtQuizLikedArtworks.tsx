@@ -12,7 +12,7 @@ interface ArtQuizLikedArtworksProps {
   me: ArtQuizLikedArtworks_me$data
 }
 
-const ArtQuizLikedArtworks: FC<ArtQuizLikedArtworksProps> = ({ me }) => {
+const ArtQuizLikedArtworks: FC<React.PropsWithChildren<ArtQuizLikedArtworksProps>> = ({ me }) => {
   return (
     <Masonry columnCount={[2, 3, 4]}>
       {me.quiz.savedArtworks.map(artwork => {
@@ -44,7 +44,7 @@ const ArtQuizLikedArtworksFragmentContainer = createFragmentContainer(
   }
 )
 
-const ArtQuizLikedArtworksPlaceholder: FC = () => {
+const ArtQuizLikedArtworksPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return <ArtworkGridPlaceholder columnCount={[2, 3, 4]} amount={6} />
 }
 

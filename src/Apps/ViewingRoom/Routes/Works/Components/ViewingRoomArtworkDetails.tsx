@@ -12,7 +12,7 @@ interface ViewingRoomArtworkDetailsProps {
   artwork: ViewingRoomArtworkDetails_artwork$data
 }
 
-export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps> = ({
+export const ViewingRoomArtworkDetails: React.FC<React.PropsWithChildren<ViewingRoomArtworkDetailsProps>> = ({
   artwork,
   artwork: { href, additionalInformation },
 }) => {

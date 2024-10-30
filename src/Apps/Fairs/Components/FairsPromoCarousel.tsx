@@ -20,7 +20,7 @@ interface FairsPromoCarouselProps {
   duration?: number
 }
 
-export const FairsPromoCarousel: React.FC<FairsPromoCarouselProps> = ({
+export const FairsPromoCarousel: React.FC<React.PropsWithChildren<FairsPromoCarouselProps>> = ({
   children,
   duration = 5000,
 }) => {

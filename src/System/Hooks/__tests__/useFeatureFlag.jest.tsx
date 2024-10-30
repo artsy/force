@@ -117,10 +117,10 @@ describe("useTrackFeatureVariantView", () => {
 
   // variantName is only for testing disabled variants.
   // It will not be a prop in production.
-  const TestComponent: React.FC<{
+  const TestComponent: React.FC<React.PropsWithChildren<{
     greeting?: string
     variantName?: string
-  }> = ({ greeting = "Hello", variantName = "experiment" }) => {
+  }>> = ({ greeting = "Hello", variantName = "experiment" }) => {
     const { trackFeatureVariant } = useTrackFeatureVariant({
       experimentName: "cool-experiment",
       variantName,

@@ -5,7 +5,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 
 // This button can be used for any email campaign that is triggered by a button click.
-export const TriggerCampaignButton: FC = () => {
+export const TriggerCampaignButton: FC<React.PropsWithChildren<unknown>> = () => {
   const [isLoading, setIsLoading] = useState(false)
   const { user } = useSystemContext()
   const { sendToast } = useToasts()

@@ -6,10 +6,10 @@ import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
-} from "../ArtworkFilterContext"
+} from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
-import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { sortResults } from "./Utils/sortResults"
 import { themeGet } from "@styled-system/theme-get"
 
@@ -53,7 +53,7 @@ const BlackAndWhiteSwatch = styled(ColorSwatch)`
   }
 `
 
-const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
+const ColorFilterOption: React.FC<React.PropsWithChildren<{ colorOption: ColorOption }>> = ({
   colorOption,
 }) => {
   const { name, value, hex } = colorOption
@@ -106,7 +106,7 @@ export interface ColorFilterProps {
   expanded?: boolean // set to true to force expansion
 }
 
-export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
+export const ColorFilter: React.FC<React.PropsWithChildren<ColorFilterProps>> = ({ expanded }) => {
   const { colors = [] } = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(

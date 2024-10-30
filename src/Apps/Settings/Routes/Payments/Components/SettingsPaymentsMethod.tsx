@@ -8,7 +8,7 @@ interface SettingsPaymentsMethodProps {
 
 type Mode = "Pending" | "Deleting"
 
-export const SettingsPaymentsMethod: React.FC<SettingsPaymentsMethodProps> = ({
+export const SettingsPaymentsMethod: React.FC<React.PropsWithChildren<SettingsPaymentsMethodProps>> = ({
   children,
   successDeleteMessage,
   onDelete,
