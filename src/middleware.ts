@@ -13,7 +13,6 @@ import helmet from "helmet"
 import path from "path"
 // eslint-disable-next-line no-restricted-imports
 import sharify from "sharify"
-import siteAssociation from "@artsy/eigen-web-association"
 import timeout from "connect-timeout"
 import bodyParser from "body-parser"
 import {
@@ -206,5 +205,4 @@ function applyStaticAssetMiddlewares(app) {
 
   // TODO: Move to ./public/images
   app.use(favicon(path.resolve(__dirname, "public/images/favicon.ico")))
-  app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
 }

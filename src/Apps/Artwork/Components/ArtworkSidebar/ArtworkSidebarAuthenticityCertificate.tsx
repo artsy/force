@@ -42,7 +42,7 @@ export const ArtworkSidebarAuthenticityCertificate: React.FC<ArtworkSidebarAuthe
       <Flex alignItems="center" data-testid="authenticity-certificate">
         <CertificateIcon mr={1} />
         <Text variant="sm">
-          Includes a
+          Includes a{" "}
           <Clickable onClick={handleClick} textDecoration="underline">
             Certificate of Authenticity
           </Clickable>

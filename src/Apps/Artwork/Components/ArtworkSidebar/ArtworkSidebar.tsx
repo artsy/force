@@ -56,9 +56,6 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
     isOfferable,
     saleArtwork,
     sale,
-    partner,
-    domesticShippingFee,
-    internationalShippingFee,
   } = artwork
   const startAt = sale?.startAt
   const endAt = saleArtwork?.endAt
@@ -77,9 +74,6 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   })
 
   const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
-  const artsyAuction = partner?.internalID === "6321be2a8cde97000d9ad2df"
-  const artsyAuctionShowShipping =
-    artsyAuction && (domesticShippingFee || internationalShippingFee)
 
   const timerEndAt = sale?.isAuction ? updatedBiddingEndAt : sale?.endAt
 
@@ -194,19 +188,17 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         </>
       )}
 
-      {!isUnlisted &&
-        !isSold &&
-        (artworkEcommerceAvailable || artsyAuctionShowShipping) && (
-          <>
-            <SidebarExpandable label="Shipping and taxes">
-              <ArtworkSidebarShippingInformationFragmentContainer
-                artwork={artwork}
-              />
-            </SidebarExpandable>
+      {!isUnlisted && !isSold && artworkEcommerceAvailable && (
+        <>
+          <SidebarExpandable label="Shipping and taxes">
+            <ArtworkSidebarShippingInformationFragmentContainer
+              artwork={artwork}
+            />
+          </SidebarExpandable>
 
-            <Spacer y={1} />
-          </>
-        )}
+          <Spacer y={1} />
+        </>
+      )}
 
       {!isUnlisted && !!isEligibleForArtsyGuarantee && (
         <>
@@ -288,12 +280,6 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
           internalID
         }
         isUnlisted
-        domesticShippingFee {
-          display
-        }
-        internationalShippingFee {
-          display
-        }
       }
     `,
     me: graphql`
