@@ -15,7 +15,7 @@ interface ArtistWorksForSaleRouteProps {
   artist: ArtistWorksForSaleRoute_artist$data
 }
 
-const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
+const ArtistWorksForSaleRoute: React.FC<React.PropsWithChildren<ArtistWorksForSaleRouteProps>> = ({
   artist,
 }) => {
   const { title, description } = artist.meta

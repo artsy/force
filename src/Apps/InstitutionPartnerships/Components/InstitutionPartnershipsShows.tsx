@@ -13,7 +13,7 @@ interface InstitutionPartnershipsShowsProps {
   orderedSet: InstitutionPartnershipsShows_orderedSet$data
 }
 
-const InstitutionPartnershipsShows: FC<InstitutionPartnershipsShowsProps> = ({
+const InstitutionPartnershipsShows: FC<React.PropsWithChildren<InstitutionPartnershipsShowsProps>> = ({
   orderedSet,
 }) => {
   const shows = orderedSet.items
@@ -51,7 +51,7 @@ const InstitutionPartnershipsShowsFragmentContainer = createFragmentContainer(
   }
 )
 
-const InstitutionPartnershipsShowsPlaceholder: FC = () => {
+const InstitutionPartnershipsShowsPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <GridColumns>
       <Column span={6}>
@@ -65,7 +65,7 @@ const InstitutionPartnershipsShowsPlaceholder: FC = () => {
   )
 }
 
-export const InstitutionPartnershipsShowsQueryRenderer: FC = () => {
+export const InstitutionPartnershipsShowsQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <SystemQueryRenderer<InstitutionPartnershipsShowsQuery>
       lazyLoad

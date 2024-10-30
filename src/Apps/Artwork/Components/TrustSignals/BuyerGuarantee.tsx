@@ -11,7 +11,7 @@ interface Props {
   artwork: BuyerGuarantee_artwork$data
 }
 
-const BuyerGuarantee: React.FC<Props> = props => {
+const BuyerGuarantee: React.FC<React.PropsWithChildren<Props>> = props => {
   const { artwork } = props
 
   if (shouldRenderBuyerGuaranteeAndSecurePayment(artwork)) {

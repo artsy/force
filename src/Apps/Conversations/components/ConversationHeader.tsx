@@ -22,7 +22,7 @@ interface ConversationHeaderProps {
   conversation: ConversationHeader_conversation$key
 }
 
-export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
+export const ConversationHeader: React.FC<React.PropsWithChildren<ConversationHeaderProps>> = ({
   conversation,
 }) => {
   const { goToDetails, goToSidebar } = useMobileLayoutActions()

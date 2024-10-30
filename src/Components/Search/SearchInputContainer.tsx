@@ -23,29 +23,34 @@ const SearchButton = styled(Clickable)`
   }
 `
 
-export const SearchInputContainer: React.ForwardRefExoticComponent<
-  Omit<LabeledInputProps, "label"> & { ref?: React.Ref<HTMLInputElement> }
-> = React.forwardRef((props, ref) => {
-  return (
-    <LabeledInput
-      ref={ref}
-      width="100%"
-      height={40}
-      label={
-        <SearchButton
-          type="submit"
-          onClick={event => {
-            ;(event.target as HTMLElement)?.parentElement?.blur()
+export const SearchInputContainer = React.forwardRef(
+  (
+    props: Omit<LabeledInputProps, "label"> & {
+      ref?: React.Ref<HTMLInputElement>
+    },
+    ref
+  ) => {
+    return (
+      <LabeledInput
+        ref={ref as any}
+        width="100%"
+        height={40}
+        label={
+          <SearchButton
+            type="submit"
+            onClick={event => {
+              ;(event.target as HTMLElement)?.parentElement?.blur()
 
-            if (isEmpty(props.value)) {
-              event.preventDefault()
-            }
-          }}
-        >
-          <SearchIcon height={22} width={22} />
-        </SearchButton>
-      }
-      {...props}
-    />
-  )
-})
+              if (isEmpty(props.value)) {
+                event.preventDefault()
+              }
+            }}
+          >
+            <SearchIcon height={22} width={22} />
+          </SearchButton>
+        }
+        {...props}
+      />
+    )
+  }
+)

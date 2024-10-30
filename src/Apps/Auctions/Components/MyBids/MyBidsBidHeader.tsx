@@ -11,7 +11,7 @@ interface MyBidsBidHeaderProps {
   sale: MyBidsBidHeader_sale$data
 }
 
-export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {
+export const MyBidsBidHeader: React.FC<React.PropsWithChildren<MyBidsBidHeaderProps>> = ({ sale }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
 

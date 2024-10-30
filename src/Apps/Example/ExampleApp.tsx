@@ -13,7 +13,7 @@ export interface ExampleAppProps {
   system: ExampleApp_system$data
 }
 
-const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
+const ExampleApp: React.FC<React.PropsWithChildren<ExampleAppProps>> = ({ system, children }) => {
   if (!system?.time) return null
 
   const { month, day, year } = system.time

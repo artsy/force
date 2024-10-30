@@ -16,7 +16,7 @@ interface InquiryProps {
   onClose(): void
 }
 
-export const Inquiry: React.FC<InquiryProps> = ({
+export const Inquiry: React.FC<React.PropsWithChildren<InquiryProps>> = ({
   artworkID,
   askSpecialist,
   enableCreateAlert,
@@ -38,7 +38,7 @@ export const Inquiry: React.FC<InquiryProps> = ({
   )
 }
 
-const InquiryDialog: React.FC = () => {
+const InquiryDialog: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { onClose, next, current, View } = useInquiryContext()
 
   const { theme } = useTheme()

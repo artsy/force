@@ -14,7 +14,7 @@ interface ArtistConsignFAQProps {
   artist: ArtistConsignFAQ_artist$data
 }
 
-const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
+const ArtistConsignFAQ: React.FC<React.PropsWithChildren<ArtistConsignFAQProps>> = props => {
   const tracking = useTracking()
 
   return (
@@ -167,7 +167,7 @@ export const ArtistConsignFAQFragmentContainer = createFragmentContainer(
   }
 )
 
-const Question: React.FC<{ question: string; answer: JSX.Element }> = ({
+const Question: React.FC<React.PropsWithChildren<{ question: string; answer: JSX.Element }>> = ({
   question,
   answer,
 }) => {

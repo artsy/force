@@ -14,7 +14,7 @@ interface ShowBannersRailProps extends BoxProps {
   partner: ShowBannersRail_partner$data
 }
 
-const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
+const ShowBannersRail: React.FC<React.PropsWithChildren<ShowBannersRailProps>> = ({
   partner,
   ...rest
 }) => {
@@ -121,11 +121,9 @@ const ShowBannersRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const ShowBannersRailRenderer: React.FC<
-  {
-    partnerId: string
-  } & Omit<ShowBannersRailProps, "partner">
-> = ({ partnerId, ...rest }) => {
+export const ShowBannersRailRenderer: React.FC<React.PropsWithChildren<{
+  partnerId: string
+} & Omit<ShowBannersRailProps, "partner">>> = ({ partnerId, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

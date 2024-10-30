@@ -11,7 +11,7 @@ interface SaleAgreementRouteProps {
   saleAgreement: SaleAgreementRoute_saleAgreement$key
 }
 
-export const SaleAgreementRoute: FC<SaleAgreementRouteProps> = ({
+export const SaleAgreementRoute: FC<React.PropsWithChildren<SaleAgreementRouteProps>> = ({
   saleAgreement,
 }) => {
   const data = useFragment(saleAgreementFragment, saleAgreement)

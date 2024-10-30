@@ -15,7 +15,7 @@ interface OnboardingMarketingCollectionProps {
   description: JSX.Element
 }
 
-const OnboardingMarketingCollection: FC<OnboardingMarketingCollectionProps> = ({
+const OnboardingMarketingCollection: FC<React.PropsWithChildren<OnboardingMarketingCollectionProps>> = ({
   marketingCollection,
   description,
 }) => {
@@ -82,7 +82,7 @@ interface OnboardingMarketingCollectionQueryRendererProps {
   description: JSX.Element
 }
 
-export const OnboardingMarketingCollectionQueryRenderer: FC<OnboardingMarketingCollectionQueryRendererProps> = ({
+export const OnboardingMarketingCollectionQueryRenderer: FC<React.PropsWithChildren<OnboardingMarketingCollectionQueryRendererProps>> = ({
   slug,
   description,
 }) => {

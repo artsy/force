@@ -54,7 +54,7 @@ interface FrameRouteProps {
   submission: FrameRoute_submission$key
 }
 
-export const FrameRoute: React.FC<FrameRouteProps> = props => {
+export const FrameRoute: React.FC<React.PropsWithChildren<FrameRouteProps>> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const artwork = submission.myCollectionArtwork
   const { actions } = useSellFlowContext()

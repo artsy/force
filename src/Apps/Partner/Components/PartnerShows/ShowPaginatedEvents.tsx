@@ -22,7 +22,7 @@ interface ShowEventsProps {
   paramsPage: number
 }
 
-const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
+const ShowPaginatedEvents: React.FC<React.PropsWithChildren<ShowEventsProps>> = ({
   eventTitle,
   relay,
   partner,
@@ -189,7 +189,7 @@ interface ShowPaginatedEventsRendererProps {
   page?: number
 }
 
-export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererProps> = ({
+export const ShowPaginatedEventsRenderer: React.FC<React.PropsWithChildren<ShowPaginatedEventsRendererProps>> = ({
   partnerId,
   first,
   status,

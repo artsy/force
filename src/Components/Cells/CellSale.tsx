@@ -19,7 +19,7 @@ export interface CellSaleProps extends Omit<RouterLinkProps, "to"> {
   mode?: "GRID" | "RAIL"
 }
 
-const CellSale: FC<CellSaleProps> = ({ sale, mode = "RAIL", ...rest }) => {
+const CellSale: FC<React.PropsWithChildren<CellSaleProps>> = ({ sale, mode = "RAIL", ...rest }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
   const image = sale.coverImage?.cropped
 
@@ -64,7 +64,7 @@ const CellSale: FC<CellSaleProps> = ({ sale, mode = "RAIL", ...rest }) => {
   )
 }
 
-export const CellSalePlaceholder: FC = () => {
+export const CellSalePlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Box width={DEFAULT_CELL_WIDTH}>
       <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">

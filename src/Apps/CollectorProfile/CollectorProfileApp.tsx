@@ -12,7 +12,7 @@ interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data
 }
 
-const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
+const CollectorProfileApp: React.FC<React.PropsWithChildren<CollectorProfileAppProps>> = ({
   me,
   children,
 }) => {

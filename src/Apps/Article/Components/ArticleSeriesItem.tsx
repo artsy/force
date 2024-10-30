@@ -18,7 +18,7 @@ interface ArticleSeriesItemProps {
   article: ArticleSeriesItem_article$data
 }
 
-const ArticleSeriesItem: FC<ArticleSeriesItemProps> = ({ article }) => {
+const ArticleSeriesItem: FC<React.PropsWithChildren<ArticleSeriesItemProps>> = ({ article }) => {
   const image = article.thumbnailImage?.display
   const context = article.seriesArticle?.title ?? article.vertical
 

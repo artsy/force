@@ -9,7 +9,7 @@ interface SoldArtworkDetailsProps {
   contextModule?: AuthContextModule
 }
 
-const ArtistLine: React.FC<SoldArtworkDetailsProps> = ({
+const ArtistLine: React.FC<React.PropsWithChildren<SoldArtworkDetailsProps>> = ({
   artwork: { cultural_maker, artists },
 }) => {
   if (cultural_maker) {
@@ -40,7 +40,7 @@ const ArtistLine: React.FC<SoldArtworkDetailsProps> = ({
   )
 }
 
-const TitleLine: React.FC<SoldArtworkDetailsProps> = ({
+const TitleLine: React.FC<React.PropsWithChildren<SoldArtworkDetailsProps>> = ({
   artwork: { title, date },
 }) => {
   return (
@@ -51,7 +51,7 @@ const TitleLine: React.FC<SoldArtworkDetailsProps> = ({
   )
 }
 
-const SoldArtworkDetails: React.FC<SoldArtworkDetailsProps> = ({ artwork }) => {
+const SoldArtworkDetails: React.FC<React.PropsWithChildren<SoldArtworkDetailsProps>> = ({ artwork }) => {
   return (
     <Box maxWidth="100%" my={1}>
       <ArtistLine artwork={artwork} />

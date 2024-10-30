@@ -19,7 +19,7 @@ interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist$data
 }
 
-const ArtistCareerHighlights: FC<ArtistCareerHighlightsProps> = ({
+const ArtistCareerHighlights: FC<React.PropsWithChildren<ArtistCareerHighlightsProps>> = ({
   artist,
 }) => {
   if (!artist || !artist.insights?.length) {
@@ -148,9 +148,9 @@ const PLACEHOLDER = (
   </Box>
 )
 
-export const ArtistCareerHighlightsQueryRenderer: FC<{
+export const ArtistCareerHighlightsQueryRenderer: FC<React.PropsWithChildren<{
   id: string
-}> = ({ id }) => {
+}>> = ({ id }) => {
   return (
     <SystemQueryRenderer<ArtistCareerHighlightsQuery>
       lazyLoad

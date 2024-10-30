@@ -35,7 +35,7 @@ export interface CounterProps {
 
 const logger = createLogger("Order/Routes/Counter/index.tsx")
 
-export const CounterRoute: FC<CounterProps> = props => {
+export const CounterRoute: FC<React.PropsWithChildren<CounterProps>> = props => {
   const { order, router, dialog, commitMutation, isCommittingMutation } = props
   const { trackEvent } = useTracking()
 

@@ -11,7 +11,7 @@ interface InsightsCareerHighlightRailProps {
   showProgress?: boolean
 }
 
-const InsightsCareerHighlightRail: React.FC<InsightsCareerHighlightRailProps> = ({
+const InsightsCareerHighlightRail: React.FC<React.PropsWithChildren<InsightsCareerHighlightRailProps>> = ({
   me,
   showProgress = true,
 }) => {

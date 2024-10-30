@@ -25,7 +25,7 @@ interface ProgressiveOnboardingAlertCreateProps
   children: (actions: { onSkip(): void }) => ReactNode
 }
 
-export const __ProgressiveOnboardingAlertCreate__: FC<ProgressiveOnboardingAlertCreateProps> = ({
+export const __ProgressiveOnboardingAlertCreate__: FC<React.PropsWithChildren<ProgressiveOnboardingAlertCreateProps>> = ({
   children,
   counts,
 }) => {

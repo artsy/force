@@ -9,7 +9,7 @@ export interface ArtworkSidebarAuctionProgressBarProps extends BoxProps {
   extendedBiddingIntervalMinutes: number
 }
 
-export const ArtworkSidebarAuctionProgressBar: React.FC<ArtworkSidebarAuctionProgressBarProps> = ({
+export const ArtworkSidebarAuctionProgressBar: React.FC<React.PropsWithChildren<ArtworkSidebarAuctionProgressBarProps>> = ({
   time,
   extendedBiddingPeriodMinutes,
   hasBeenExtended,

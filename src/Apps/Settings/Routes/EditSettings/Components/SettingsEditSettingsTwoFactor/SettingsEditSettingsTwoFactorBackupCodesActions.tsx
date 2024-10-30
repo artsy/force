@@ -7,7 +7,7 @@ interface SettingsEditSettingsTwoFactorBackupCodesActionsProps
   backupSecondFactors: string[]
 }
 
-export const SettingsEditSettingsTwoFactorBackupCodesActions: React.FC<SettingsEditSettingsTwoFactorBackupCodesActionsProps> = ({
+export const SettingsEditSettingsTwoFactorBackupCodesActions: React.FC<React.PropsWithChildren<SettingsEditSettingsTwoFactorBackupCodesActionsProps>> = ({
   backupSecondFactors,
   ...rest
 }) => {

@@ -15,7 +15,7 @@ export interface MockBootProps {
   relayEnvironment?: ReturnType<typeof createMockEnvironment>
 }
 
-export const MockBoot: React.FC<MockBootProps> = ({
+export const MockBoot: React.FC<React.PropsWithChildren<MockBootProps>> = ({
   breakpoint = "lg",
   headTags,
   children,

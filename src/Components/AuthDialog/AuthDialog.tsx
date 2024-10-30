@@ -17,7 +17,7 @@ export interface AuthDialogProps {
   onClose: () => void
 }
 
-export const AuthDialog: FC<AuthDialogProps> = ({ onClose }) => {
+export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({ onClose }) => {
   useRecaptcha()
 
   const {
@@ -58,7 +58,7 @@ export const AuthDialog: FC<AuthDialogProps> = ({ onClose }) => {
   )
 }
 
-export const AuthDialogView: FC = () => {
+export const AuthDialogView: FC<React.PropsWithChildren<unknown>> = () => {
   const { state } = useAuthDialogContext()
 
   switch (state.mode) {
@@ -87,7 +87,7 @@ const IMAGE = {
     "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
 }
 
-const AuthDialogLeftPanel: FC = () => {
+const AuthDialogLeftPanel: FC<React.PropsWithChildren<unknown>> = () => {
   const img = resized(IMAGE.src, { width: 450 })
 
   return (

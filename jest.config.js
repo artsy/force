@@ -14,7 +14,10 @@ module.exports = {
     "^react$": "<rootDir>/node_modules/react",
   },
   reporters: ["default", "jest-junit"],
-  setupFilesAfterEnv: ["<rootDir>/src/tests.ts"],
+  setupFilesAfterEnv: [
+    "<rootDir>/src/Utils/jestShim.js",
+    "<rootDir>/src/tests.ts",
+  ],
   testEnvironment: "jest-environment-jsdom",
   testMatch: ["**/src/**/*.jest.(ts|tsx|js|jsx)"],
   testEnvironmentOptions: {

@@ -24,7 +24,7 @@ interface ArtworkActionsProps {
   selectRoomViewableFigure(): void
 }
 
-export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
+export const ArtworkActions: React.FC<React.PropsWithChildren<ArtworkActionsProps>> = ({
   artwork,
   selectRoomViewableFigure,
 }) => {
@@ -65,6 +65,10 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
       placement="top"
       popover={<ArtworkSharePanelFragmentContainer artwork={artwork} />}
     >
+      {/*
+
+          FIXME: REACT_18_UPGRADE
+          @ts-ignore */}
       {({ anchorRef, onVisible }) => {
         return (
           <UtilButton
@@ -194,6 +198,9 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
                     </Box>
                   }
                 >
+                  {/*
+                      FIXME: REACT_18_UPGRADE
+                      @ts-ignore */}
                   {({ anchorRef, onVisible }) => {
                     return (
                       <UtilButton

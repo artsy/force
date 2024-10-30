@@ -8,7 +8,7 @@ interface ArticleSectionSocialEmbedProps {
   section: ArticleSectionSocialEmbed_section$data
 }
 
-const ArticleSectionSocialEmbed: FC<ArticleSectionSocialEmbedProps> = ({
+const ArticleSectionSocialEmbed: FC<React.PropsWithChildren<ArticleSectionSocialEmbedProps>> = ({
   section,
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)

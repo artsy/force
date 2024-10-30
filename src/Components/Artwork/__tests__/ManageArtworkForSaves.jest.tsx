@@ -29,7 +29,7 @@ describe("ManageArtworkForSaves", () => {
     relayEnv.mockClear()
   })
 
-  const TestRenderer: FC<TestButtonProps> = props => {
+  const TestRenderer: FC<React.PropsWithChildren<TestButtonProps>> = props => {
     return (
       <MockBoot relayEnvironment={relayEnv}>
         <ManageArtworkForSavesProvider>

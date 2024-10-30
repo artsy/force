@@ -9,7 +9,7 @@ interface ArtistCVRouteProps {
   viewer: ArtistCVRoute_viewer$data
 }
 
-const ArtistCVRoute: React.FC<ArtistCVRouteProps> = ({ viewer }) => {
+const ArtistCVRoute: React.FC<React.PropsWithChildren<ArtistCVRouteProps>> = ({ viewer }) => {
   if (!viewer) {
     return null
   }

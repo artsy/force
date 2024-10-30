@@ -7,7 +7,7 @@ interface SearchRouteOptionProps {
   artist: SearchRouteOption_artist$data
 }
 
-export const SearchRouteOption: FC<SearchRouteOptionProps> = ({ artist }) => {
+export const SearchRouteOption: FC<React.PropsWithChildren<SearchRouteOptionProps>> = ({ artist }) => {
   return (
     <Flex px={2} py={1} gap={1} alignItems="center">
       <Avatar

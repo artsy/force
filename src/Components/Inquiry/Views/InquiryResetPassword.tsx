@@ -23,7 +23,7 @@ import {
 
 type Mode = "Resetting" | "Error" | "Done"
 
-export const InquiryResetPassword: React.FC = () => {
+export const InquiryResetPassword: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { inquiry, setInquiry } = useInquiryContext()
   const { navigateTo } = useInquiryAccountContext()
 

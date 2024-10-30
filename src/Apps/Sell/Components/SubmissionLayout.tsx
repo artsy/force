@@ -16,7 +16,7 @@ interface SubmissionLayoutProps {
   loading?: boolean
 }
 
-export const SubmissionLayout: React.FC<SubmissionLayoutProps> = ({
+export const SubmissionLayout: React.FC<React.PropsWithChildren<SubmissionLayoutProps>> = ({
   children,
   hideNavigation = false,
 }) => {

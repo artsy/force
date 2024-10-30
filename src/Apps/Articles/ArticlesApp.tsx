@@ -13,7 +13,7 @@ interface ArticlesAppProps {
   viewer: ArticlesApp_viewer$data
 }
 
-const ArticlesApp: FC<ArticlesAppProps> = ({ viewer }) => {
+const ArticlesApp: FC<React.PropsWithChildren<ArticlesAppProps>> = ({ viewer }) => {
   useScrollToOpenEditorialAuthModal()
 
   return (

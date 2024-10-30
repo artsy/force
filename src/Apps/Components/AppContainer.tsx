@@ -8,7 +8,7 @@ interface AppContainerProps extends BoxProps, HTMLAttributes<HTMLElement> {
 /**
  * Handles the max-width of the application. That's it!
  */
-export const AppContainer: FC<AppContainerProps> = ({
+export const AppContainer: FC<React.PropsWithChildren<AppContainerProps>> = ({
   children,
   maxWidth,
   ...rest

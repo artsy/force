@@ -10,7 +10,7 @@ interface EndingSoonAuctionsProps {
   viewer: EndingSoonAuctions_viewer$data
 }
 
-const EndingSoonAuctions: React.FC<EndingSoonAuctionsProps> = ({ viewer }) => {
+const EndingSoonAuctions: React.FC<React.PropsWithChildren<EndingSoonAuctionsProps>> = ({ viewer }) => {
   return (
     <>
       <MetaTags

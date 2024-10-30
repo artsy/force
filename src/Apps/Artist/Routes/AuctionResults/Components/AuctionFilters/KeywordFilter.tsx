@@ -8,7 +8,7 @@ import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/Filter
 
 const DEBOUNCE_DELAY = 300
 
-export const KeywordFilter: React.FC = () => {
+export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   const filterContext = useAuctionResultsFilterContext()
 
   const updateKeywordFilter = (text: string) => {

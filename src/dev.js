@@ -72,7 +72,7 @@ const mountAndReload = createReloadable(app, require)
 
 // Mount express-reloadable on app
 mountAndReload(path.resolve("src/server.ts"), {
-  watchModules: [path.resolve(process.cwd(), "src")],
+  watchModules: [path.resolve(process.cwd(), "src"), "@artsy/fresnel"],
 })
 
 // Start server

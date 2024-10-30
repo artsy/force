@@ -20,7 +20,7 @@ import { MockBoot } from "DevTools/MockBoot"
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMutation")
 
-const TestComponent: FC<SelectArtworkListsModal_Test_Query$data> = props => {
+const TestComponent: FC<React.PropsWithChildren<SelectArtworkListsModal_Test_Query$data>> = props => {
   const { state } = useManageArtworkForSavesContext()
 
   // Modal is not displayed in the ManageArtworkForSaves component if artwork is null

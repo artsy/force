@@ -12,7 +12,7 @@ import {
 import { aggregationsToHistogram } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 
-export const PriceRangeFilter: FC = () => {
+export const PriceRangeFilter: FC<React.PropsWithChildren<unknown>> = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()
   const {
     priceRange,

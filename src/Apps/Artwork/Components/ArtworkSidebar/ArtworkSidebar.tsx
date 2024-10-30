@@ -43,7 +43,7 @@ const checkIfArtworkIsOnLoanOrPermanentCollection = (
   }
 }
 
-export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
+export const ArtworkSidebar: React.FC<React.PropsWithChildren<ArtworkSidebarProps>> = ({
   artwork,
   me,
 }) => {

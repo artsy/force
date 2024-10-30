@@ -24,7 +24,7 @@ import { useCallback, useEffect, useState } from "react"
 const HEADER_HEIGHT = 40
 const logger = createLogger("BottomFormNavigation.tsx")
 
-export const SubmissionHeader: React.FC = () => {
+export const SubmissionHeader: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
     router: { push: routerPush },
   } = useRouter()
@@ -204,7 +204,7 @@ export const SubmissionHeader: React.FC = () => {
   )
 }
 
-const HeaderArtsyLogo: React.FC<{ withExitConfirmation }> = ({
+const HeaderArtsyLogo: React.FC<React.PropsWithChildren<{ withExitConfirmation }>> = ({
   withExitConfirmation,
 }) => {
   const { router } = useRouter()

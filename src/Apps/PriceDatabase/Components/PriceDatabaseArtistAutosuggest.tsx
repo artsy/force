@@ -10,7 +10,7 @@ interface ArtistAutosuggestProps {
   onChange: (slug: string) => void
 }
 
-export const PriceDatabaseArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
+export const PriceDatabaseArtistAutosuggest: React.FC<React.PropsWithChildren<ArtistAutosuggestProps>> = ({
   onChange,
 }) => {
   const [query, setQuery] = useState("")

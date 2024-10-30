@@ -11,7 +11,7 @@ jest.mock("Components/ArtistMarketInsights", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL({
-  Component: ArtistInfoFragmentContainer,
+  Component: (props: any) => <ArtistInfoFragmentContainer {...props} />,
   query: graphql`
     query ArtistInfo_Test_Query @relay_test_operation {
       artist(id: "example") {

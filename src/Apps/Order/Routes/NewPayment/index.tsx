@@ -58,7 +58,7 @@ type CreditCardPickerResultType =
 
 const logger = createLogger("Order/Routes/NewPayment/index.tsx")
 
-export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
+export const NewPaymentRoute: FC<React.PropsWithChildren<NewPaymentProps & StripeProps>> = props => {
   const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
   const [
     creditCardPickerResult,

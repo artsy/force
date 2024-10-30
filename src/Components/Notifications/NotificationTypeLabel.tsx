@@ -9,7 +9,7 @@ interface Props {
   notification: NotificationTypeLabel_notification$key
 }
 
-export const NotificationTypeLabel: React.FC<Props> = ({ notification }) => {
+export const NotificationTypeLabel: React.FC<React.PropsWithChildren<Props>> = ({ notification }) => {
   const data = useFragment(NotificationTypeLabelFragment, notification)
 
   const { notificationType, publishedAt } = data

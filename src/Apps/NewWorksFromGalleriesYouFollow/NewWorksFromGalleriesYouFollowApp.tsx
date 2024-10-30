@@ -17,7 +17,7 @@ export interface NewWorksFromGalleriesYouFollowAppProps {
   relay: RelayPaginationProp
 }
 
-const NewWorksFromGalleriesYouFollowApp: FC<NewWorksFromGalleriesYouFollowAppProps> = ({
+const NewWorksFromGalleriesYouFollowApp: FC<React.PropsWithChildren<NewWorksFromGalleriesYouFollowAppProps>> = ({
   me,
   relay,
 }) => {

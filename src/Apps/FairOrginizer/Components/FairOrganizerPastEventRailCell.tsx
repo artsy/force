@@ -8,7 +8,7 @@ interface FairOrganizerPastEventRailCellProps {
   fair: FairOrganizerPastEventRailCell_fair$data
 }
 
-export const FairOrganizerPastEventRailCell: React.FC<FairOrganizerPastEventRailCellProps> = props => {
+export const FairOrganizerPastEventRailCell: React.FC<React.PropsWithChildren<FairOrganizerPastEventRailCellProps>> = props => {
   const { fair } = props
 
   return (

@@ -8,7 +8,7 @@ interface ViewingRoomCardProps {
   viewingRoom: ViewingRoomCard_viewingRoom$data
 }
 
-const ViewingRoomCard: React.FC<ViewingRoomCardProps> = ({ viewingRoom }) => {
+const ViewingRoomCard: React.FC<React.PropsWithChildren<ViewingRoomCardProps>> = ({ viewingRoom }) => {
   const { coverImage, title, href, exhibitionPeriod } = viewingRoom
 
   const coverImageURL = cropped(coverImage?.imageURLs?.normalized ?? "", {

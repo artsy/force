@@ -19,7 +19,9 @@ jest.mock("Components/ArtistSeriesRail/ArtistSeriesRail", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL({
-  Component: ArtworkArtistSeriesFragmentContainer,
+  Component: (props: any) => (
+    <ArtworkArtistSeriesFragmentContainer {...props} />
+  ),
   query: graphql`
     query ArtworkArtistSeries_Query @relay_test_operation {
       artwork(id: "example") {

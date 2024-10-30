@@ -12,7 +12,7 @@ interface ArtistAppProps {
   artist: ArtistApp_artist$data
 }
 
-const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
+const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({ artist, children }) => {
   useScrollToOpenArtistAuthModal({ name: artist.name })
 
   return (

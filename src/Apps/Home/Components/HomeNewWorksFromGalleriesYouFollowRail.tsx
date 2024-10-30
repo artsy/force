@@ -26,7 +26,7 @@ interface HomeNewWorksFromGalleriesYouFollowRailProps {
   newWorksFromGalleriesYouFollowConnection: HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data
 }
 
-const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleriesYouFollowRailProps> = ({
+const HomeNewWorksFromGalleriesYouFollowRail: React.FC<React.PropsWithChildren<HomeNewWorksFromGalleriesYouFollowRailProps>> = ({
   newWorksFromGalleriesYouFollowConnection,
 }) => {
   const { trackEvent } = useTracking()
@@ -117,7 +117,7 @@ export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer = createFra
   }
 )
 
-export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC = () => {
+export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   const { user } = useSystemContext()

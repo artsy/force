@@ -10,7 +10,7 @@ interface CollectionsAppProps {
   marketingCategories: Collections_marketingCategories$data
 }
 
-export const CollectionsApp: React.FC<CollectionsAppProps> = ({
+export const CollectionsApp: React.FC<React.PropsWithChildren<CollectionsAppProps>> = ({
   marketingCategories,
 }) => {
   const sorted = [...(marketingCategories ?? [])].sort((a, b) =>

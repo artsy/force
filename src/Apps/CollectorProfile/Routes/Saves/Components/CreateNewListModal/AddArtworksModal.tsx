@@ -19,7 +19,7 @@ interface AddArtworksModalProps {
 
 const logger = createLogger("AddArtworksModal")
 
-export const AddArtworksModal: FC<AddArtworksModalProps> = ({
+export const AddArtworksModal: FC<React.PropsWithChildren<AddArtworksModalProps>> = ({
   artworkList,
   onComplete,
 }) => {

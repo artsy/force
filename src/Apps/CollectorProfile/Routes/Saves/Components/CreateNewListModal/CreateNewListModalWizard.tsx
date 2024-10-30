@@ -8,7 +8,7 @@ export interface CreateNewListModalWizardProps {
   savedArtworksCount: number
 }
 
-export const CreateNewListModalWizard: FC<CreateNewListModalWizardProps> = ({
+export const CreateNewListModalWizard: FC<React.PropsWithChildren<CreateNewListModalWizardProps>> = ({
   onComplete,
   onClose,
   savedArtworksCount,

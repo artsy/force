@@ -22,7 +22,7 @@ interface PartnersSearchQueryRendererProps {
   type: "GALLERY" | "INSTITUTION"
 }
 
-export const PartnersSearchQueryRenderer: FC<PartnersSearchQueryRendererProps> = ({
+export const PartnersSearchQueryRenderer: FC<React.PropsWithChildren<PartnersSearchQueryRendererProps>> = ({
   type,
 }) => {
   const { relayEnvironment } = useSystemContext()

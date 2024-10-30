@@ -17,7 +17,7 @@ export interface NotificationsWrapperProps extends MarkAllAsReadPanelProps {
   onHide?: () => void
 }
 
-export const NotificationsWrapper: React.FC<NotificationsWrapperProps> = ({
+export const NotificationsWrapper: React.FC<React.PropsWithChildren<NotificationsWrapperProps>> = ({
   mode,
   onHide,
   unreadCounts,

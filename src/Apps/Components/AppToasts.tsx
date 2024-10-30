@@ -3,7 +3,7 @@ import { Box, Column, GridColumns, Toasts, useToasts } from "@artsy/palette"
 import { AppContainer } from "./AppContainer"
 import { Z } from "./constants"
 
-export const AppToasts: React.FC = () => {
+export const AppToasts: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { toasts } = useToasts()
 
   if (toasts.length === 0) return null

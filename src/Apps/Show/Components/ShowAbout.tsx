@@ -6,7 +6,7 @@ import { ShowAbout_show$data } from "__generated__/ShowAbout_show.graphql"
 interface ShowAboutProps extends BoxProps {
   show: ShowAbout_show$data
 }
-export const ShowAbout: React.FC<ShowAboutProps> = ({
+export const ShowAbout: React.FC<React.PropsWithChildren<ShowAboutProps>> = ({
   show: { about },
   ...rest
 }) => {

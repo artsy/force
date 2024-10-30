@@ -16,7 +16,7 @@ export interface UpcomingAuctionsProps {
   relay: RelayPaginationProp
 }
 
-const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
+const UpcomingAuctions: React.FC<React.PropsWithChildren<UpcomingAuctionsProps>> = ({
   viewer,
   relay,
 }) => {

@@ -8,7 +8,7 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { ReactElement } from "react"
+import { PropsWithChildren, ReactElement } from "react"
 
 /**
  * A test helper that can be used to render components that depend
@@ -54,7 +54,7 @@ export const createArtworkFilterTestRenderer = (
 ) => {
   return (ui: ReactElement, options: RenderOptions = {}) =>
     originalRender(ui, {
-      wrapper: ({ children }) => {
+      wrapper: ({ children }: PropsWithChildren) => {
         return (
           <ArtworkFilterContextProvider {...artworkFilterContext}>
             <ClearAllButton />
@@ -118,7 +118,7 @@ export const currentArtworkFilterContext = (): ArtworkFilterContextProps => {
  * `ArtworkFilterContext` when clicked.
  */
 
-const ClearAllButton: React.FC = () => {
+const ClearAllButton: React.FC<React.PropsWithChildren<unknown>> = () => {
   const artworkFilterContext = useArtworkFilterContext()
 
   return (
@@ -138,7 +138,9 @@ const ClearAllButton: React.FC = () => {
  * components that are visible to the user.)
  */
 
-const ArtworkFilterContextInspector: React.FC = () => {
+const ArtworkFilterContextInspector: React.FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   const artworkFilterContext = useArtworkFilterContext()
 
   return (

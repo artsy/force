@@ -31,13 +31,7 @@ app.get(
   routePaths,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
     try {
-      const {
-        status,
-        redirect,
-        html,
-        stream,
-        ...rest
-      } = await setupServerRouter({
+      const { status, redirect, ...rest } = await setupServerRouter({
         next,
         req,
         res,
@@ -49,7 +43,7 @@ app.get(
         return
       }
 
-      renderServerApp({ req, res, html, stream, ...rest })
+      renderServerApp({ req, res, ...rest })
     } catch (error) {
       console.error(error)
       next(error)

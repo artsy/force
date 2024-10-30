@@ -33,7 +33,7 @@ const StyledPartnerLink = styled(RouterLink)`
   }
 `
 
-const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
+const ArtworkSidebarPartnerInfo: React.FC<React.PropsWithChildren<ArtworkSidebarPartnerInfoProps>> = ({
   artwork,
 }) => {
   const {
@@ -115,7 +115,7 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   )
 }
 
-const PartnerName: React.FC<PartnerNameProps> = ({
+const PartnerName: React.FC<React.PropsWithChildren<PartnerNameProps>> = ({
   partner,
   sale,
   handlePartnerNameClick,

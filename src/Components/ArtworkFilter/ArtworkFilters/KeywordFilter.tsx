@@ -10,7 +10,7 @@ import SearchIcon from "@artsy/icons/SearchIcon"
 
 const DEBOUNCE_DELAY = 300
 
-export const KeywordFilter: React.FC = () => {
+export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { setFilter } = useArtworkFilterContext()
 
   const setFilterRef = useRef(setFilter)

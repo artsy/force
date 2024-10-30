@@ -13,7 +13,7 @@ import { Media } from "Utils/Responsive"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
 import { FC } from "react"
 
-export const PlaceholderCards: FC = () => {
+export const PlaceholderCards: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <HeroCarousel>
       {new Array(2).fill(0).map((_, index) => {
@@ -33,7 +33,7 @@ export const PlaceholderCards: FC = () => {
   )
 }
 
-const PlaceholderCardSmall: FC = () => {
+const PlaceholderCardSmall: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Box width="100%" height="100%" bg="black5">
       <ResponsiveBox
@@ -62,7 +62,7 @@ const PlaceholderCardSmall: FC = () => {
   )
 }
 
-const PlaceholderCardLarge: FC = () => {
+const PlaceholderCardLarge: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <GridColumns bg="black5">
       <Column span={6}>

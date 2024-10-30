@@ -14,7 +14,7 @@ interface ChannelArticlesProps {
   relay: RelayPaginationProp
 }
 
-export const ChannelArticles: FC<ChannelArticlesProps> = ({
+export const ChannelArticles: FC<React.PropsWithChildren<ChannelArticlesProps>> = ({
   channel,
   relay,
 }) => {

@@ -10,7 +10,7 @@ interface FeatureAppProps {
   feature: FeatureApp_feature$data
 }
 
-const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
+const FeatureApp: React.FC<React.PropsWithChildren<FeatureAppProps>> = ({ feature }) => {
   if (!feature) return null
 
   return (

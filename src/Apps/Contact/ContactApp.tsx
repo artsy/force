@@ -2,7 +2,7 @@ import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const ContactApp: React.FC = () => {
+export const ContactApp: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <MetaTags

@@ -30,7 +30,7 @@ export interface ArtworkDetailsAdditionalInfoProps extends FlexProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork$data
 }
 
-export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfoProps> = ({
+export const ArtworkDetailsAdditionalInfo: React.FC<React.PropsWithChildren<ArtworkDetailsAdditionalInfoProps>> = ({
   artwork,
   ...flexProps
 }) => {

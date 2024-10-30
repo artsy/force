@@ -13,7 +13,7 @@ interface SuggestionItemProps {
   selectedPill: PillType
 }
 
-export const SearchBarFooter: FC<SuggestionItemProps> = ({
+export const SearchBarFooter: FC<React.PropsWithChildren<SuggestionItemProps>> = ({
   href,
   query,
   selectedPill,

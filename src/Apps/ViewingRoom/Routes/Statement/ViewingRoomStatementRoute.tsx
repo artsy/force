@@ -13,7 +13,7 @@ interface ViewingRoomStatementRouteProps {
   viewingRoom: ViewingRoomStatementRoute_viewingRoom$data
 }
 
-const StatementRoute: React.FC<ViewingRoomStatementRouteProps> = ({
+const StatementRoute: React.FC<React.PropsWithChildren<ViewingRoomStatementRouteProps>> = ({
   viewingRoom,
 }) => {
   return (

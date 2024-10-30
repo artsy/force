@@ -17,7 +17,7 @@ interface SelectArtworkListItemProps {
   onClick: () => void
 }
 
-const SelectArtworkListItem: FC<SelectArtworkListItemProps> = ({
+const SelectArtworkListItem: FC<React.PropsWithChildren<SelectArtworkListItemProps>> = ({
   isSelected,
   item,
   onClick,

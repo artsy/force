@@ -7,7 +7,7 @@ export interface ArtistSeriesFilterProps {
   label?: string
 }
 
-export const ArtistSeriesFilter: React.FC<ArtistSeriesFilterProps> = ({
+export const ArtistSeriesFilter: React.FC<React.PropsWithChildren<ArtistSeriesFilterProps>> = ({
   expanded,
   label = "Artist Series",
 }) => {

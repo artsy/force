@@ -36,7 +36,7 @@ interface FairBoothsProps {
   relay: RelayRefetchProp
 }
 
-const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
+const FairBooths: React.FC<React.PropsWithChildren<FairBoothsProps>> = ({ fair, relay }) => {
   const context = useBoothsFilterContext()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -152,7 +152,7 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
   )
 }
 
-const FairBoothsWithContext: React.FC<FairBoothsProps> = ({ ...props }) => {
+const FairBoothsWithContext: React.FC<React.PropsWithChildren<FairBoothsProps>> = ({ ...props }) => {
   const {
     match: { location },
   } = useRouter()
@@ -231,7 +231,7 @@ export const FairBoothsFragmentContainer = createRefetchContainer(
   `
 )
 
-export const FairBoothsQueryRenderer: React.FC<{ slug: string }> = ({
+export const FairBoothsQueryRenderer: React.FC<React.PropsWithChildren<{ slug: string }>> = ({
   slug,
 }) => {
   const { relayEnvironment } = useSystemContext()

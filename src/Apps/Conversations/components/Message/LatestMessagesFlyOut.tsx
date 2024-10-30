@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react"
+import { FC, useRef } from "react"
 import { Button, ButtonProps } from "@artsy/palette"
 import ChevronSmallDownIcon from "@artsy/icons/ChevronSmallDownIcon"
 
@@ -7,7 +7,7 @@ interface LatestMessagesFlyOutProps {
   onClick: ButtonProps["onClick"]
 }
 
-export const LatestMessagesFlyOut: FC<LatestMessagesFlyOutProps> = ({
+export const LatestMessagesFlyOut: FC<React.PropsWithChildren<LatestMessagesFlyOutProps>> = ({
   visible,
   onClick,
 }) => {

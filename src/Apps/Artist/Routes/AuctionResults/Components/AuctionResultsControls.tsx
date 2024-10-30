@@ -1,5 +1,4 @@
 import { Button, Flex } from "@artsy/palette"
-import * as React from "react"
 import { Media } from "Utils/Responsive"
 import { SortSelect } from "./SortSelect"
 import FilterIcon from "@artsy/icons/FilterIcon"

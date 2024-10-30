@@ -20,7 +20,7 @@ interface SubmissionRouteProps {
   children: React.ReactNode
 }
 
-export const SubmissionRoute: React.FC<SubmissionRouteProps> = props => {
+export const SubmissionRoute: React.FC<React.PropsWithChildren<SubmissionRouteProps>> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
 
   if (!submission?.externalId) throw new HttpError(404)

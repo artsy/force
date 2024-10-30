@@ -17,7 +17,7 @@ interface OnboardingOrderedSetProps {
   orderedSet: OnboardingOrderedSet_orderedSet$data
 }
 
-export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
+export const OnboardingOrderedSet: FC<React.PropsWithChildren<OnboardingOrderedSetProps>> = ({
   orderedSet,
 }) => {
   const { dispatch } = useOnboardingContext()
@@ -119,7 +119,7 @@ interface OnboardingOrderedSetQueryRendererProps {
   id: string
 }
 
-export const OnboardingOrderedSetQueryRenderer: FC<OnboardingOrderedSetQueryRendererProps> = ({
+export const OnboardingOrderedSetQueryRenderer: FC<React.PropsWithChildren<OnboardingOrderedSetQueryRendererProps>> = ({
   id,
 }) => {
   return (

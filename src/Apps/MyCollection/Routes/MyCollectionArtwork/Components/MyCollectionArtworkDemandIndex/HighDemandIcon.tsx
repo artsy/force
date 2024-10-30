@@ -3,7 +3,7 @@ interface HighDemandIconProps {
   height?: number
 }
 
-export const HighDemandIcon: React.FC<HighDemandIconProps> = ({
+export const HighDemandIcon: React.FC<React.PropsWithChildren<HighDemandIconProps>> = ({
   width = 22,
   height = 22,
 }) => {

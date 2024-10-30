@@ -17,7 +17,7 @@ import { cropped, resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const ArtAppraisalsApp: React.FC = () => {
+export const ArtAppraisalsApp: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <MetaTags
@@ -35,7 +35,7 @@ export const ArtAppraisalsApp: React.FC = () => {
   )
 }
 
-const Header: React.FC = () => {
+const Header: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <FullBleedHeader src="https://files.artsy.net/images/appraisals-header.jpg">
       <Flex
@@ -90,7 +90,7 @@ const Header: React.FC = () => {
   )
 }
 
-const WhyUseArtsy: React.FC = () => {
+const WhyUseArtsy: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { src, srcSet } = resized(
     "https://files.artsy.net/images/shinpei-kusanagi-stop-talking-to-yourself-you-will-be-alright-number-3.jpeg",
     {
@@ -153,7 +153,7 @@ const WhyUseArtsy: React.FC = () => {
   )
 }
 
-const MeetOurSpecialists: React.FC = () => {
+const MeetOurSpecialists: React.FC<React.PropsWithChildren<unknown>> = () => {
   const image = cropped("https://files.artsy.net/images/simon-headshot.png", {
     width: 100,
     height: 100,

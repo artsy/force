@@ -11,7 +11,7 @@ interface Props {
   variant?: string
 }
 
-export const UserVerifiedIcon: React.FC<Props> = ({ variant = "sm" }) => {
+export const UserVerifiedIcon: React.FC<React.PropsWithChildren<Props>> = ({ variant = "sm" }) => {
   switch (variant) {
     case "md":
       return (
@@ -41,7 +41,7 @@ export const UserVerifiedIcon: React.FC<Props> = ({ variant = "sm" }) => {
     case "sm":
       return (
         //variant "sm"
-        <Flex
+        (<Flex
           position="relative"
           size={18}
           justifyContent="center"
@@ -62,8 +62,8 @@ export const UserVerifiedIcon: React.FC<Props> = ({ variant = "sm" }) => {
             size={8}
             style={{ bottom: 2, right: 1 }}
           />
-        </Flex>
-      )
+        </Flex>)
+      );
     default:
       return null
   }

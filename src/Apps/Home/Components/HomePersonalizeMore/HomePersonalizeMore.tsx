@@ -2,7 +2,7 @@ import { Column, GridColumns } from "@artsy/palette"
 import { FC } from "react"
 import { HomePersonalizeMoreCard } from "./HomePersonalizeMoreCard"
 
-export const HomePersonalizeMore: FC = () => {
+export const HomePersonalizeMore: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <GridColumns>
       <Column span={4}>

@@ -8,7 +8,7 @@ const PROGRESS_BAR_CONTAINER_HEIGHT = 22
 const PROGRESS_BAR_HEIGHT = 4
 const ICON_SIZE = 22
 
-export const SubmissionProgressBar: React.FC = ({}) => {
+export const SubmissionProgressBar: React.FC<React.PropsWithChildren<unknown>> = ({}) => {
   const { state } = useSellFlowContext()
 
   if (!state?.step) {

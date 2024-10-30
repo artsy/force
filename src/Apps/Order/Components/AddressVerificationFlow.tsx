@@ -88,7 +88,7 @@ enum AddressSuggestionRadioButton {
   user_address = "What you entered",
 }
 
-const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
+const AddressVerificationFlow: React.FC<React.PropsWithChildren<AddressVerificationFlowProps>> = ({
   verificationInput,
   verifyAddress,
   onChosenAddress,
@@ -405,14 +405,14 @@ export const AddressVerificationFlowFragmentContainer = createFragmentContainer(
   }
 )
 
-export const AddressVerificationFlowQueryRenderer: React.FC<{
+export const AddressVerificationFlowQueryRenderer: React.FC<React.PropsWithChildren<{
   address: AddressValues
   onChosenAddress: (
     verifiedBy: AddressVerifiedBy,
     address: AddressValues
   ) => void
   onClose: () => void
-}> = ({ address, onChosenAddress, onClose }) => {
+}>> = ({ address, onChosenAddress, onClose }) => {
   return (
     <SystemQueryRenderer<AddressVerificationFlowQuery>
       variables={{ address }}

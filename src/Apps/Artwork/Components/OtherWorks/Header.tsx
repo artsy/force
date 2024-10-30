@@ -8,7 +8,7 @@ interface HeaderProps {
   title: string
 }
 
-export const Header: React.FC<HeaderProps> = ({
+export const Header: React.FC<React.PropsWithChildren<HeaderProps>> = ({
   buttonHref,
   children,
   title,
@@ -28,9 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
   )
 }
 
-export const HeaderPlaceholder: React.FC<
-  Omit<HeaderProps, "buttonHref"> & { buttonHref?: boolean }
-> = ({ buttonHref, children, title }) => {
+export const HeaderPlaceholder: React.FC<React.PropsWithChildren<Omit<HeaderProps, "buttonHref"> & { buttonHref?: boolean }>> = ({ buttonHref, children, title }) => {
   return (
     <Flex flexDirection="row" justifyContent="space-between">
       <SkeletonText variant="lg-display">{title}</SkeletonText>

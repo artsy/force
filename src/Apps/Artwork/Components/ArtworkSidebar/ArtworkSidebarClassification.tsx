@@ -11,7 +11,7 @@ interface ArtworkSidebarClassificationProps {
   artwork: ArtworkSidebarClassification_artwork$data
 }
 
-const ArtworkSidebarClassification: React.FC<ArtworkSidebarClassificationProps> = ({
+const ArtworkSidebarClassification: React.FC<React.PropsWithChildren<ArtworkSidebarClassificationProps>> = ({
   artwork,
 }) => {
   const { trackEvent } = useTracking()

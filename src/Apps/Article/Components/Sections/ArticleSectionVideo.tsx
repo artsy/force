@@ -12,7 +12,7 @@ interface ArticleSectionVideoProps {
   section: ArticleSectionVideo_section$data
 }
 
-const ArticleSectionVideo: FC<ArticleSectionVideoProps> = ({ section }) => {
+const ArticleSectionVideo: FC<React.PropsWithChildren<ArticleSectionVideoProps>> = ({ section }) => {
   const {
     isDestinationAllowed,
     openConsentManager,

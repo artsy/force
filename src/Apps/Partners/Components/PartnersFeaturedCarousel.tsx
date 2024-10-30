@@ -10,7 +10,7 @@ interface PartnersFeaturedCarouselProps {
   viewer: PartnersFeaturedCarousel_viewer$data
 }
 
-const PartnersFeaturedCarousel: FC<PartnersFeaturedCarouselProps> = ({
+const PartnersFeaturedCarousel: FC<React.PropsWithChildren<PartnersFeaturedCarouselProps>> = ({
   viewer,
 }) => {
   const profiles = extractNodes(viewer.orderedSet?.orderedItemsConnection)

@@ -5,7 +5,7 @@ import { OnboardingProvider } from "Components/Onboarding/Hooks/useOnboardingCon
 import { OnboardingDebug } from "Components/Onboarding/Components/OnboardingDebug"
 import { OnboardingSteps } from "Components/Onboarding/Components/OnboardingSteps"
 
-export const OnboardingApp: FC = () => {
+export const OnboardingApp: FC<React.PropsWithChildren<unknown>> = () => {
   const { router } = useRouter()
 
   const handleDone = () => {

@@ -32,7 +32,7 @@ interface SearchResultsListProps {
 
 const ENTITIES_PER_SCROLL = 10
 
-const SearchResultsList: FC<SearchResultsListProps> = ({
+const SearchResultsList: FC<React.PropsWithChildren<SearchResultsListProps>> = ({
   relay,
   viewer,
   query,

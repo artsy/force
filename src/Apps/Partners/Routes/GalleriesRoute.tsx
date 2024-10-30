@@ -22,7 +22,7 @@ interface GalleriesRouteProps {
   viewer: GalleriesRoute_viewer$data
 }
 
-const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
+const GalleriesRoute: React.FC<React.PropsWithChildren<GalleriesRouteProps>> = ({ viewer }) => {
   const {
     match: {
       location: { query },

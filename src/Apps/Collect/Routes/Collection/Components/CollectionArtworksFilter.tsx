@@ -34,7 +34,7 @@ interface CollectionArtworksFilterProps {
   counts?: Counts
 }
 
-export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> = props => {
+export const CollectionArtworksFilter: React.FC<React.PropsWithChildren<CollectionArtworksFilterProps>> = props => {
   const { relay, collection, aggregations, counts } = props
   const { slug, query } = collection
   const isArtistCollection = query?.artistIDs?.length === 1

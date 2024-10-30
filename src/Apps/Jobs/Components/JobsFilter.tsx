@@ -20,7 +20,7 @@ interface JobsFilterProps {
   viewer: JobsFilter_viewer$data
 }
 
-const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
+const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({ viewer }) => {
   const locations = useMemo(
     () =>
       uniq(

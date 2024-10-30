@@ -111,7 +111,7 @@ interface SellFlowContextProviderProps {
   devMode?: boolean
 }
 
-export const SellFlowContextProvider: React.FC<SellFlowContextProviderProps> = ({
+export const SellFlowContextProvider: React.FC<React.PropsWithChildren<SellFlowContextProviderProps>> = ({
   children,
   submission,
   devMode = false,

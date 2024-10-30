@@ -48,7 +48,7 @@ export const BoothFilterContext = createContext<BoothFilterContextProps>({
   setFilter: () => {},
 })
 
-export const BoothFilterContextProvider: React.FC<SharedBoothFilterContextProps> = ({
+export const BoothFilterContextProvider: React.FC<React.PropsWithChildren<SharedBoothFilterContextProps>> = ({
   children,
   filters = {},
   sortOptions,

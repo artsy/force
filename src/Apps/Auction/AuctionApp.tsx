@@ -24,7 +24,7 @@ export interface AuctionAppProps {
   viewer: AuctionApp_viewer$data
 }
 
-export const AuctionApp: React.FC<AuctionAppProps> = ({
+export const AuctionApp: React.FC<React.PropsWithChildren<AuctionAppProps>> = ({
   children,
   me,
   sale,
@@ -62,90 +62,88 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 
   const websocketEnabled = !!extendedBiddingIntervalMinutes
 
-  return (
-    <>
-      <Analytics contextPageOwnerId={sale.internalID}>
-        <WebsocketContextProvider
-          channelInfo={{
-            channel: "SalesChannel",
-            sale_id: internalID,
-          }}
-          enabled={websocketEnabled}
-        >
-          <CascadingEndTimesBannerFragmentContainer sale={sale} />
+  return (<>
+    <Analytics contextPageOwnerId={sale.internalID}>
+      <WebsocketContextProvider
+        channelInfo={{
+          channel: "SalesChannel",
+          sale_id: internalID,
+        }}
+        enabled={websocketEnabled}
+      >
+        <CascadingEndTimesBannerFragmentContainer sale={sale} />
 
-          <AuctionMetaFragmentContainer sale={sale} />
+        <AuctionMetaFragmentContainer sale={sale} />
 
-          <Join separator={<Spacer y={4} />}>
-            {sale.coverImage?.url ? (
-              <FullBleedHeader
-                fixed={isFullBleedHeaderFixed}
-                src={sale.coverImage.url}
-              />
-            ) : (
+        <Join separator={<Spacer y={4} />}>
+          {sale.coverImage?.url ? (
+            <FullBleedHeader
+              fixed={isFullBleedHeaderFixed}
+              src={sale.coverImage.url}
+            />
+          ) : (
+            <Spacer y={2} />
+          )}
+
+          <AuctionDetailsFragmentContainer sale={sale} me={me} />
+
+          {tabBar.isVisible && (
+            // `key` is being passed to `Tabs` to ensure re-render
+            // Join is messing with `key` at this level; so `Tabs` are wrapped in a `Box`
+            // https://github.com/artsy/palette/pull/1144
+            (<Box>
+              <Tabs key={sale.internalID} mb={4}>
+                {tabBar.showAssociatedSale && (
+                  <Tab name="Associated Sale">
+                    <AuctionAssociatedSaleFragmentContainer sale={sale} />
+                  </Tab>
+                )}
+                {tabBar.showActiveBids && (
+                  <Tab name="Your Active Bids">
+                    <AuctionActiveBidsRefetchContainer me={me} />
+                  </Tab>
+                )}
+                {tabBar.showFollowedArtistsTab && (
+                  <Tab name="Works By Artists You Follow">
+                    <AuctionWorksByFollowedArtistsRailFragmentContainer
+                      viewer={viewer}
+                    />
+                  </Tab>
+                )}
+                {tabBar.showBuyNowTab && (
+                  <Tab name="Inquire">
+                    <AuctionBuyNowRailFragmentContainer sale={sale} />
+                  </Tab>
+                )}
+              </Tabs>
+            </Box>)
+          )}
+
+          {sale.status === "preview" &&
+          sale.eligibleSaleArtworksCount === 0 ? (
+            <>
+              <Message
+                variant="default"
+                title="Registration for this auction is currently open"
+              >
+                <Text variant="sm-display" color="black60">
+                  Auction lots will be published soon.
+                </Text>
+              </Message>
+
               <Spacer y={2} />
-            )}
 
-            <AuctionDetailsFragmentContainer sale={sale} me={me} />
+              <AuctionCurrentAuctionsRailFragmentContainer viewer={viewer} />
+            </>
+          ) : (
+            <AuctionArtworkFilterQueryRenderer />
+          )}
 
-            {tabBar.isVisible && (
-              // `key` is being passed to `Tabs` to ensure re-render
-              // Join is messing with `key` at this level; so `Tabs` are wrapped in a `Box`
-              // https://github.com/artsy/palette/pull/1144
-              <Box>
-                <Tabs key={sale.internalID} mb={4}>
-                  {tabBar.showAssociatedSale && (
-                    <Tab name="Associated Sale">
-                      <AuctionAssociatedSaleFragmentContainer sale={sale} />
-                    </Tab>
-                  )}
-                  {tabBar.showActiveBids && (
-                    <Tab name="Your Active Bids">
-                      <AuctionActiveBidsRefetchContainer me={me} />
-                    </Tab>
-                  )}
-                  {tabBar.showFollowedArtistsTab && (
-                    <Tab name="Works By Artists You Follow">
-                      <AuctionWorksByFollowedArtistsRailFragmentContainer
-                        viewer={viewer}
-                      />
-                    </Tab>
-                  )}
-                  {tabBar.showBuyNowTab && (
-                    <Tab name="Inquire">
-                      <AuctionBuyNowRailFragmentContainer sale={sale} />
-                    </Tab>
-                  )}
-                </Tabs>
-              </Box>
-            )}
-
-            {sale.status === "preview" &&
-            sale.eligibleSaleArtworksCount === 0 ? (
-              <>
-                <Message
-                  variant="default"
-                  title="Registration for this auction is currently open"
-                >
-                  <Text variant="sm-display" color="black60">
-                    Auction lots will be published soon.
-                  </Text>
-                </Message>
-
-                <Spacer y={2} />
-
-                <AuctionCurrentAuctionsRailFragmentContainer viewer={viewer} />
-              </>
-            ) : (
-              <AuctionArtworkFilterQueryRenderer />
-            )}
-
-            <Box>{children}</Box>
-          </Join>
-        </WebsocketContextProvider>
-      </Analytics>
-    </>
-  )
+          <Box>{children}</Box>
+        </Join>
+      </WebsocketContextProvider>
+    </Analytics>
+  </>);
 }
 
 export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {

@@ -14,7 +14,7 @@ interface ArtistHeaderImageProps
   image: ValidImage
 }
 
-export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
+export const ArtistHeaderImage: FC<React.PropsWithChildren<ArtistHeaderImageProps>> = ({
   image,
   ...rest
 }) => {

@@ -2,7 +2,7 @@ import { Checkbox, Spacer, Text } from "@artsy/palette"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const ConditionsOfSaleCheckbox: React.FC = () => {
+export const ConditionsOfSaleCheckbox: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
     values,
     touched,

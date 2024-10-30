@@ -8,7 +8,7 @@ interface ArtworkListEmptyStateProps {
   me: ArtworkListEmptyState_me$data
 }
 
-export const ArtworkListEmptyState: FC<ArtworkListEmptyStateProps> = ({
+export const ArtworkListEmptyState: FC<React.PropsWithChildren<ArtworkListEmptyStateProps>> = ({
   me,
 }) => {
   const savedArtworksCount = me.savedArtworksArtworkList?.artworksCount ?? 0

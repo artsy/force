@@ -16,8 +16,9 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-jest.mock("Server/isServer", () => ({
-  isServer: true,
+jest.mock("@artsy/palette", () => ({
+  ...jest.requireActual("@artsy/palette"),
+  useDidMount: jest.fn().mockReturnValue(false), // SSR-render
 }))
 
 jest.mock("Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu", () => ({

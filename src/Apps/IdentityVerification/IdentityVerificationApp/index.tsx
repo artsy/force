@@ -33,7 +33,7 @@ interface Props {
   relay: RelayProp
 }
 
-const IdentityVerificationApp: React.FC<Props> = ({
+const IdentityVerificationApp: React.FC<React.PropsWithChildren<Props>> = ({
   identityVerification,
   relay,
 }) => {

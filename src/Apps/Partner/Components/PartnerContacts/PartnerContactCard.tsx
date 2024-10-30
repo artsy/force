@@ -9,7 +9,7 @@ export interface PartnerContactCardProps {
   location: PartnerContactCard_location$data
 }
 
-export const PartnerContactCard: React.FC<PartnerContactCardProps> = ({
+export const PartnerContactCard: React.FC<React.PropsWithChildren<PartnerContactCardProps>> = ({
   location,
 }) => {
   return (

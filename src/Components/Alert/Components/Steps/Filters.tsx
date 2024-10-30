@@ -1,5 +1,5 @@
 import { Flex, Separator, Spacer, Text } from "@artsy/palette"
-import React, { FC } from "react"
+import { FC } from "react"
 import { Rarity } from "Components/Alert/Components/Filters/Rarity"
 import { Medium } from "Components/Alert/Components/Filters/Medium"
 import { PriceQueryRenderer } from "Components/Alert/Components/Filters/Price"
@@ -9,7 +9,7 @@ import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { ArtistSeriesQueryRenderer } from "Components/Alert/Components/Filters/ArtistSeries"
 import { FadeInBox } from "Components/FadeInBox"
 
-export const Filters: FC = () => {
+export const Filters: FC<React.PropsWithChildren<unknown>> = () => {
   const { state } = useAlertContext()
 
   return (

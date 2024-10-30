@@ -19,7 +19,7 @@ export const AVAILABILITY = {
   sold: "https://schema.org/OutOfStock",
 }
 
-export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
+export const SeoDataForArtwork: React.FC<React.PropsWithChildren<SeoDataForArtworkProps>> = ({
   artwork,
 }) => {
   const artistsName = artwork.artistNames

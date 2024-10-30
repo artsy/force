@@ -18,7 +18,7 @@ interface CollectorProfileArtistsListArtistDialogProps {
   onToggle: () => void
 }
 
-export const CollectorProfileArtistsListArtistDialog: FC<CollectorProfileArtistsListArtistDialogProps> = ({
+export const CollectorProfileArtistsListArtistDialog: FC<React.PropsWithChildren<CollectorProfileArtistsListArtistDialogProps>> = ({
   userInterestEdge,
   onClose,
   onToggle,

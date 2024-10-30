@@ -1,7 +1,7 @@
 import { Clickable, Image, ImageProps } from "@artsy/palette"
 import { FC, useState } from "react"
 
-export const ConversationMessageImage: FC<ImageProps> = ({
+export const ConversationMessageImage: FC<React.PropsWithChildren<ImageProps>> = ({
   alt,
   src,
   ...props

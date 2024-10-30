@@ -36,7 +36,7 @@ interface LocationAutocompleteInputProps
   onSelect?: (place?: Place) => void
 }
 
-export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
+export const LocationAutocompleteInput: FC<React.PropsWithChildren<LocationAutocompleteInputProps>> = ({
   onChange,
   onClick,
   onClose,
@@ -229,7 +229,7 @@ export const normalizePlace = (
   }
 }
 
-const PoweredByGoogleIcon: FC = () => {
+const PoweredByGoogleIcon: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

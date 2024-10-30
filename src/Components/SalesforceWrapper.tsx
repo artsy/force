@@ -7,7 +7,7 @@ interface SalesforceWrapperProps {
   isInAuction?: boolean | null
 }
 
-export const SalesforceWrapper: React.FC<SalesforceWrapperProps> = ({
+export const SalesforceWrapper: React.FC<React.PropsWithChildren<SalesforceWrapperProps>> = ({
   isInAuction = false,
 }) => {
   const salesforceMessageEnabled = getENV("SALESFORCE_MESSAGE_ENABLED")

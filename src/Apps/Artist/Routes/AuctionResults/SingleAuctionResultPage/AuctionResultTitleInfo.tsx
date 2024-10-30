@@ -6,7 +6,7 @@ import { RouterLink } from "System/Components/RouterLink"
 interface AuctionResultTitleInfoProps {
   auctionResult: AuctionResultTitleInfo_auctionResult$key
 }
-export const AuctionResultTitleInfo: React.FC<AuctionResultTitleInfoProps> = ({
+export const AuctionResultTitleInfo: React.FC<React.PropsWithChildren<AuctionResultTitleInfoProps>> = ({
   auctionResult,
 }) => {
   const data = useFragment(auctionResultTitleInfoFragment, auctionResult)
@@ -14,7 +14,7 @@ export const AuctionResultTitleInfo: React.FC<AuctionResultTitleInfoProps> = ({
   const { artist, title, dateText, organization, formattedSaleDate } = data
 
   return (
-    <Box>
+    (<Box>
       <Text as="h1" variant={["sm-display", "lg-display"]}>
         {artist?.isPersonalArtist ? (
           artist?.name
@@ -28,12 +28,11 @@ export const AuctionResultTitleInfo: React.FC<AuctionResultTitleInfoProps> = ({
         {title?.trim()}
         {dateText && dateText.replace(/\s+/g, "").length > 0 && ", " + dateText}
       </Text>
-
       <Text variant="xs" color="black60" mb={4}>
         {formattedSaleDate} • {organization}
       </Text>
-    </Box>
-  )
+    </Box>)
+  );
 }
 
 const auctionResultTitleInfoFragment = graphql`

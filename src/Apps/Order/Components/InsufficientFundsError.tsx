@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { Spacer, Message, Text } from "@artsy/palette"
 
-export const InsufficientFundsError: FC = () => {
+export const InsufficientFundsError: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <Spacer y={2} />

@@ -2,7 +2,7 @@ import React, { useRef } from "react"
 import { Box, Expandable, ExpandableProps } from "@artsy/palette"
 import { getENV } from "Utils/getENV"
 
-export const FilterExpandable: React.FC<ExpandableProps> = ({
+export const FilterExpandable: React.FC<React.PropsWithChildren<ExpandableProps>> = ({
   expanded,
   ...rest
 }) => {

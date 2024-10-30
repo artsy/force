@@ -24,7 +24,7 @@ interface EditArtworkListModalProps {
 
 const logger = createLogger("EditArtworkListModal")
 
-export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
+export const EditArtworkListModal: React.FC<React.PropsWithChildren<EditArtworkListModalProps>> = ({
   artworkList,
   onClose,
 }) => {

@@ -15,7 +15,7 @@ interface ArtistArticlesRouteProps {
   relay: RelayRefetchProp
 }
 
-const ArtistArticlesRoute: React.FC<ArtistArticlesRouteProps> = ({
+const ArtistArticlesRoute: React.FC<React.PropsWithChildren<ArtistArticlesRouteProps>> = ({
   artist,
   relay,
 }) => {

@@ -14,7 +14,7 @@ const KEY = PROGRESSIVE_ONBOARDING.alertFind
 interface ProgressiveOnboardingAlertFindProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingAlertFind__: FC<ProgressiveOnboardingAlertFindProps> = ({
+export const __ProgressiveOnboardingAlertFind__: FC<React.PropsWithChildren<ProgressiveOnboardingAlertFindProps>> = ({
   children,
   counts,
 }) => {

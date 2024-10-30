@@ -12,7 +12,7 @@ export interface PartnerArtistsProps {
   partner: PartnerArtists_partner$data
 }
 
-export const PartnerArtists: React.FC<PartnerArtistsProps> = ({ partner }) => {
+export const PartnerArtists: React.FC<React.PropsWithChildren<PartnerArtistsProps>> = ({ partner }) => {
   const { setIsLoaded } = usePartnerArtistsLoadingContext()
 
   useEffect(() => {
@@ -37,9 +37,9 @@ export const PartnerArtistsFragmentContainer = createFragmentContainer(
   }
 )
 
-export const PartnerArtistsQueryRenderer: React.FC<{
+export const PartnerArtistsQueryRenderer: React.FC<React.PropsWithChildren<{
   partnerId: string
-}> = ({ partnerId, ...rest }) => {
+}>> = ({ partnerId, ...rest }) => {
   return (
     <SystemQueryRenderer<PartnerArtistsQuery>
       lazyLoad

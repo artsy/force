@@ -26,7 +26,7 @@ interface HomeFeaturedEventsRailProps {
   orderedSet: HomeFeaturedEventsRail_orderedSet$data
 }
 
-const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
+const HomeFeaturedEventsRail: React.FC<React.PropsWithChildren<HomeFeaturedEventsRailProps>> = ({
   orderedSet,
 }) => {
   const { trackEvent } = useTracking()

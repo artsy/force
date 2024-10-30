@@ -9,7 +9,7 @@ jest.mock("../Inquiry", () => ({
 }))
 
 describe("useInquiry", () => {
-  const Wrapper: React.FC = () => {
+  const Wrapper: React.FC<React.PropsWithChildren<unknown>> = () => {
     const { showInquiry, inquiryComponent } = useInquiry({
       artworkID: "example",
     })
@@ -54,7 +54,7 @@ describe("useInquiry", () => {
 })
 
 describe("withInquiry", () => {
-  const Wrapper: React.FC<WithInquiryProps> = ({
+  const Wrapper: React.FC<React.PropsWithChildren<WithInquiryProps>> = ({
     showInquiry,
     inquiryComponent,
   }) => {

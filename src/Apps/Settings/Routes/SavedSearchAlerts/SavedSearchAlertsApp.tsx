@@ -50,7 +50,7 @@ interface RefetchVariables {
   sort?: string
 }
 
-export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
+export const SavedSearchAlertsApp: React.FC<React.PropsWithChildren<SavedSearchAlertsAppProps>> = ({
   me,
   relay,
 }) => {

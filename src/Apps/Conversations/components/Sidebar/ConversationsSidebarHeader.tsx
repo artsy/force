@@ -1,6 +1,6 @@
 import { Text, Box } from "@artsy/palette"
 
-export const ConversationsSidebarHeader: React.FC = () => {
+export const ConversationsSidebarHeader: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Box
       p={2}

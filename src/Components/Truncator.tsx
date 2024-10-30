@@ -12,7 +12,7 @@ interface Props {
  * @deprecated Use `Text` with `overflowEllipsis` for single line or `lineClamp` for multiple lines.
  * Truncate large bodies of text.
  */
-export const Truncator: React.SFC<Props> = ({
+export const Truncator: React.FC<React.PropsWithChildren<Props>> = ({
   ReadMoreLink,
   children,
   ellipsis,
@@ -48,7 +48,7 @@ export const Truncator: React.SFC<Props> = ({
   )
 }
 
-const TruncatorWrapper: React.FC<{ unsafeHTML: string }> = ({ unsafeHTML }) => {
+const TruncatorWrapper: React.FC<React.PropsWithChildren<{ unsafeHTML: string }>> = ({ unsafeHTML }) => {
   return (
     <div
       dangerouslySetInnerHTML={{

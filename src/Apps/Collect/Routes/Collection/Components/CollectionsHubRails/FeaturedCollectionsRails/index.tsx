@@ -8,7 +8,7 @@ interface Props {
   collectionGroup: FeaturedCollectionsRails_collectionGroup$data
 }
 
-export const FeaturedCollectionsRails: React.FC<Props> = ({
+export const FeaturedCollectionsRails: React.FC<React.PropsWithChildren<Props>> = ({
   collectionGroup: { members, name },
 }) => {
   return (
@@ -31,7 +31,7 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
 }
 
 export const FeaturedCollectionsRailsContainer = createFragmentContainer(
-  FeaturedCollectionsRails as React.FC<Props>,
+  FeaturedCollectionsRails as React.FC<React.PropsWithChildren<Props>>,
   {
     collectionGroup: graphql`
       fragment FeaturedCollectionsRails_collectionGroup on MarketingCollectionGroup {

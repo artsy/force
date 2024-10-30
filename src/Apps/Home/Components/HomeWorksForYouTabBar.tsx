@@ -5,7 +5,7 @@ import { HomeNewWorksForYouRailQueryRenderer } from "./HomeNewWorksForYouRail"
 import { HomeRecentlyViewedRailQueryRenderer } from "./HomeRecentlyViewedRail"
 import { HomeWorksByArtistsYouFollowRailQueryRenderer } from "./HomeWorksByArtistsYouFollowRail"
 
-export const HomeWorksForYouTabBar: React.FC = () => {
+export const HomeWorksForYouTabBar: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { user } = useSystemContext()
 
   if (!user) {

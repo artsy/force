@@ -22,7 +22,7 @@ interface MockRouterProps {
   routes: RouteProps[]
 }
 
-export const MockRouter: React.FC<MockRouterProps> = ({
+export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
   context,
   historyOptions,
   initialRoute = "/",
@@ -83,7 +83,7 @@ export const MockRouter: React.FC<MockRouterProps> = ({
   return MockRouterApp
 }
 
-const MockRouterAppShell: React.FC<MockRouterProps> = ({
+const MockRouterAppShell: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
   children,
   ...props
 }) => {

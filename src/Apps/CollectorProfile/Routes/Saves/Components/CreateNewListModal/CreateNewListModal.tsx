@@ -38,7 +38,7 @@ const logger = createLogger(
   "CollectorProfile/Routes/Saves/Components/CreateNewListModal"
 )
 
-export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
+export const CreateNewListModal: React.FC<React.PropsWithChildren<CreateNewListModalProps>> = ({
   artwork,
   onClose,
   onComplete,
@@ -145,7 +145,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   )
 }
 
-export const CreateNewListModalContainer: FC<CreateNewListModalContainerProps> = props => {
+export const CreateNewListModalContainer: FC<React.PropsWithChildren<CreateNewListModalContainerProps>> = props => {
   const { visible } = props
 
   if (!visible) return null

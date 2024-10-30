@@ -8,7 +8,7 @@ interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair$data
 }
 
-const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
+const FairHeader: React.FC<React.PropsWithChildren<FairHeaderProps>> = ({ fair }) => {
   const { name, exhibitionPeriod, profile } = fair
 
   const avatar = profile?.icon?.url

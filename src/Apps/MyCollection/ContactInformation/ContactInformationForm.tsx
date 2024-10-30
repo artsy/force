@@ -16,7 +16,7 @@ export interface ContactInformationFormProps extends BoxProps {
   optionalPhoneNumber?: boolean
 }
 
-export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
+export const ContactInformationForm: React.FC<React.PropsWithChildren<ContactInformationFormProps>> = ({
   me,
   optionalPhoneNumber = false,
   ...rest

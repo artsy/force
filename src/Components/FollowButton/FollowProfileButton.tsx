@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { FollowButton, FollowButtonRenderProps } from "./Button"
+import { FollowButton } from "./Button"
 import { FollowProfileButton_profile$data } from "__generated__/FollowProfileButton_profile.graphql"
 import { FollowProfileButton_me$data } from "__generated__/FollowProfileButton_me.graphql"
 import { ButtonProps } from "@artsy/palette"
@@ -18,14 +18,16 @@ import { FollowProfileButtonQuery } from "__generated__/FollowProfileButtonQuery
 import { useAuthDialog } from "Components/AuthDialog"
 
 interface FollowProfileButtonProps extends Omit<ButtonProps, "variant"> {
-  children?: FollowButtonRenderProps
+  children?: React.ReactNode
+  // FIXME: REACT_18_UPGRADE
+  // children?: FollowButtonRenderProps
   me: FollowProfileButton_me$data | null | undefined
   contextModule?: AuthContextModule
   onFollow?: (followed: boolean) => void
   profile: FollowProfileButton_profile$data
 }
 
-const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
+const FollowProfileButton: React.FC<React.PropsWithChildren<FollowProfileButtonProps>> = ({
   contextModule = ContextModule.partnerHeader,
   me,
   onFollow,
@@ -170,7 +172,7 @@ interface FollowProfileButtonQueryRendererProps
   id: string
 }
 
-export const FollowProfileButtonQueryRenderer: React.FC<FollowProfileButtonQueryRendererProps> = ({
+export const FollowProfileButtonQueryRenderer: React.FC<React.PropsWithChildren<FollowProfileButtonQueryRendererProps>> = ({
   id,
   ...rest
 }) => {

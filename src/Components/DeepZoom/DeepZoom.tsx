@@ -20,7 +20,7 @@ interface DeepZoomProps {
   onClose(): void
 }
 
-const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
+const DeepZoom: React.FC<React.PropsWithChildren<DeepZoomProps>> = ({ image, onClose }) => {
   const deepZoomRef = useRef<HTMLDivElement | null>(null)
   const osdViewerRef = useRef<any | null>(null)
 

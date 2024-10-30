@@ -21,7 +21,7 @@ interface TransitionPanelProviderProps {
   children: JSX.Element[]
 }
 
-export const TransitionPanelProvider: FC<TransitionPanelProviderProps> = ({
+export const TransitionPanelProvider: FC<React.PropsWithChildren<TransitionPanelProviderProps>> = ({
   children,
 }) => {
   const screens = Children.toArray(children).filter(isValidElement)

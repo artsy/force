@@ -40,11 +40,7 @@ type UtilButtonInnerTextProps = Pick<
 > &
   TextProps
 
-export const UtilButton: React.ForwardRefExoticComponent<
-  UtilButtonProps & {
-    ref?: React.Ref<HTMLElement>
-  }
-> = React.forwardRef(
+export const UtilButton = React.forwardRef(
   (
     {
       href,
@@ -56,6 +52,8 @@ export const UtilButton: React.ForwardRefExoticComponent<
       Component = UtilButtonButton,
       download,
       ...rest
+    }: UtilButtonProps & {
+      ref?: React.Ref<HTMLElement>
     },
     forwardedRef
   ) => {
@@ -84,7 +82,9 @@ export const UtilButton: React.ForwardRefExoticComponent<
     const ActionIcon = Icon ? Icon : getIcon()
 
     return (
-      <Component
+      // FIXME: REACT_18_UPGRADE
+      // @ts-ignore
+      (<Component
         ref={forwardedRef as any}
         p={1}
         onClick={onClick}
@@ -101,19 +101,18 @@ export const UtilButton: React.ForwardRefExoticComponent<
           {/* @ts-ignore */}
           <ActionIcon {...rest} fill="currentColor" />
         </Flex>
-
         <UtilButtonInnerText
           label={label}
           longestLabel={longestLabel}
           variant="xs"
           lineHeight={1}
         />
-      </Component>
-    )
+      </Component>)
+    );
   }
 )
 
-const UtilButtonInnerText: React.FC<UtilButtonInnerTextProps> = ({
+const UtilButtonInnerText: React.FC<React.PropsWithChildren<UtilButtonInnerTextProps>> = ({
   label,
   longestLabel,
   ...rest

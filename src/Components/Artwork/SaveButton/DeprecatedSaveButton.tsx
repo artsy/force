@@ -18,7 +18,7 @@ export interface DeprecatedSaveButtonProps {
   contextModule: AuthContextModule
 }
 
-export const DeprecatedSaveButton: React.FC<DeprecatedSaveButtonProps> = ({
+export const DeprecatedSaveButton: React.FC<React.PropsWithChildren<DeprecatedSaveButtonProps>> = ({
   artwork,
   contextModule,
 }) => {
@@ -135,7 +135,7 @@ interface DeprecatedSaveButtonQueryRendererProps
   id: string
 }
 
-export const DeprecatedSaveButtonQueryRenderer: React.FC<DeprecatedSaveButtonQueryRendererProps> = ({
+export const DeprecatedSaveButtonQueryRenderer: React.FC<React.PropsWithChildren<DeprecatedSaveButtonQueryRendererProps>> = ({
   id,
   contextModule,
 }) => {

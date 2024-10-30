@@ -22,7 +22,7 @@ import { RouterLink } from "System/Components/RouterLink"
 
 type Mode = "Pending" | "Sending" | "Error" | "Success"
 
-export const InquirySpecialist: React.FC = () => {
+export const InquirySpecialist: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { user } = useSystemContext()
   const { sendToast } = useToasts()
 

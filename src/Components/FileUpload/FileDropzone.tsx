@@ -17,7 +17,7 @@ export interface FileDropzoneProps extends BoxProps {
   onReject: (rejections: FileRejection[]) => void
 }
 
-export const FileDropzone: React.FC<FileDropzoneProps> = ({
+export const FileDropzone: React.FC<React.PropsWithChildren<FileDropzoneProps>> = ({
   title,
   subtitle,
   buttonText,

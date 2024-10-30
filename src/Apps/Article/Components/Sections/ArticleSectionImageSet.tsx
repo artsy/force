@@ -18,7 +18,7 @@ interface ArticleSectionImageSetProps {
   section: ArticleSectionImageSet_section$data
 }
 
-const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
+const ArticleSectionImageSet: FC<React.PropsWithChildren<ArticleSectionImageSetProps>> = ({
   section,
 }) => {
   const {

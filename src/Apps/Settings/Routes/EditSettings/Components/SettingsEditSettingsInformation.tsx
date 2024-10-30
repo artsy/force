@@ -25,7 +25,7 @@ interface SettingsEditSettingsInformationProps {
   me: SettingsEditSettingsInformation_me$data
 }
 
-export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInformationProps> = ({
+export const SettingsEditSettingsInformation: React.FC<React.PropsWithChildren<SettingsEditSettingsInformationProps>> = ({
   me,
 }) => {
   const { sendToast } = useToasts()

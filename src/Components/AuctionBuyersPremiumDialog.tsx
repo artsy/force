@@ -21,7 +21,7 @@ interface AuctionBuyersPremiumDialogProps {
   sale: AuctionBuyersPremiumDialog_sale$data
 }
 
-const AuctionBuyersPremiumDialog: React.FC<AuctionBuyersPremiumDialogProps> = ({
+const AuctionBuyersPremiumDialog: React.FC<React.PropsWithChildren<AuctionBuyersPremiumDialogProps>> = ({
   onClose,
   sale,
 }) => {
@@ -139,7 +139,7 @@ interface AuctionBuyersPremiumDialogQueryRendererProps {
   saleID: string
 }
 
-export const AuctionBuyersPremiumDialogQueryRenderer: React.FC<AuctionBuyersPremiumDialogQueryRendererProps> = ({
+export const AuctionBuyersPremiumDialogQueryRenderer: React.FC<React.PropsWithChildren<AuctionBuyersPremiumDialogQueryRendererProps>> = ({
   onClose,
   saleID,
 }) => {

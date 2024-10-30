@@ -7,7 +7,7 @@ interface ZeroStateProps {
   term: string
 }
 
-export const ZeroState: FC<ZeroStateProps> = ({ term }) => {
+export const ZeroState: FC<React.PropsWithChildren<ZeroStateProps>> = ({ term }) => {
   const { hasFilters, filters } = useArtworkFilterContext()
 
   return (

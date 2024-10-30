@@ -13,7 +13,7 @@ interface PartnersLocationAutocompleteProps {
   viewer: PartnersLocationAutocomplete_viewer$data
 }
 
-const PartnersLocationAutocomplete: FC<PartnersLocationAutocompleteProps> = ({
+const PartnersLocationAutocomplete: FC<React.PropsWithChildren<PartnersLocationAutocompleteProps>> = ({
   viewer: { featuredCities, allCities },
 }) => {
   const { router, match } = useRouter()
@@ -98,7 +98,7 @@ const PartnersLocationAutocomplete: FC<PartnersLocationAutocompleteProps> = ({
   )
 }
 
-const PartnersLocationAutocompletePlaceholder: FC = () => {
+const PartnersLocationAutocompletePlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <AutocompleteInput
       options={[{ text: "Loading...", value: "all" }]}
@@ -136,7 +136,7 @@ export const PartnersLocationAutocompleteFragmentContainer = createFragmentConta
   }
 )
 
-export const PartnersLocationAutocompleteQueryRenderer: FC = () => {
+export const PartnersLocationAutocompleteQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

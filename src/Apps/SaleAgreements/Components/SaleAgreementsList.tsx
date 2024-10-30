@@ -15,7 +15,7 @@ export interface SaleAgreementsListProps {
   >["node"][]
 }
 
-export const SaleAgreementsList: FC<SaleAgreementsListProps> = ({
+export const SaleAgreementsList: FC<React.PropsWithChildren<SaleAgreementsListProps>> = ({
   saleAgreements,
 }) => {
   const sortedSaleAgreements = sortBy(saleAgreements, ["sale.name"])

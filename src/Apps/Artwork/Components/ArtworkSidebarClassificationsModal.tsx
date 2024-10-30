@@ -35,7 +35,7 @@ interface ArtworkSidebarClassificationsModalProps {
   showDisclaimer?: boolean
 }
 
-const ArtworkSidebarClassificationsModal: React.FC<ArtworkSidebarClassificationsModalProps> = ({
+const ArtworkSidebarClassificationsModal: React.FC<React.PropsWithChildren<ArtworkSidebarClassificationsModalProps>> = ({
   viewer,
   show,
   onClose,
@@ -106,10 +106,10 @@ export const ARTWORK_SIDEBAR_CLASSIFICATIONS_MODAL_QUERY = graphql`
   }
 `
 
-export const ArtworkSidebarClassificationsModalQueryRenderer: React.FC<Omit<
+export const ArtworkSidebarClassificationsModalQueryRenderer: React.FC<React.PropsWithChildren<Omit<
   ArtworkSidebarClassificationsModalProps,
   "viewer"
->> = rest => {
+>>> = rest => {
   const { relayEnvironment } = useSystemContext()
 
   return (

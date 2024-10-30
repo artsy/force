@@ -1,4 +1,4 @@
-import { AutocompleteInput, useUpdateEffect } from "@artsy/palette"
+import { AutocompleteInput, useDidMount, useUpdateEffect } from "@artsy/palette"
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react"
 
 import { graphql } from "react-relay"
@@ -8,7 +8,6 @@ import {
   SearchEntity,
 } from "__generated__/SearchBarInputSuggestQuery.graphql"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
-import { isServer } from "Server/isServer"
 import { PillType, TOP_PILL, SEARCH_DEBOUNCE_DELAY } from "./constants"
 import {
   SuggestionItem,
@@ -29,8 +28,12 @@ export interface SearchBarInputProps {
   searchTerm: string
 }
 
-export const SearchBarInput: FC<SearchBarInputProps> = ({ searchTerm }) => {
+export const SearchBarInput: FC<React.PropsWithChildren<
+  SearchBarInputProps
+>> = ({ searchTerm }) => {
   const tracking = useTracking()
+
+  const isClient = useDidMount()
 
   const { data, refetch } = useClientQuery<SearchBarInputSuggestQuery>({
     query: QUERY,
@@ -184,7 +187,7 @@ export const SearchBarInput: FC<SearchBarInputProps> = ({ searchTerm }) => {
     }
   }, [])
 
-  if (isServer) {
+  if (!isClient) {
     return <StaticSearchContainer searchQuery={searchTerm} />
   }
 

@@ -15,7 +15,7 @@ export interface ArtistsRouteProps {
   match: Match
 }
 
-export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
+export const ArtistsRoute: React.FC<React.PropsWithChildren<ArtistsRouteProps>> = ({
   partner,
   match,
 }) => {

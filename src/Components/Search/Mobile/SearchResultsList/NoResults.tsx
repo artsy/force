@@ -6,7 +6,7 @@ interface NoResultsProps extends FlexProps {
   query: string
 }
 
-export const NoResults: FC<NoResultsProps> = ({ query, ...rest }) => {
+export const NoResults: FC<React.PropsWithChildren<NoResultsProps>> = ({ query, ...rest }) => {
   return (
     <Flex flexDirection="column" {...rest}>
       <Text alignContent="center" textAlign="center">

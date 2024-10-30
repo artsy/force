@@ -7,7 +7,7 @@ interface ArtworkGridEmptyStateProps extends BoxProps {
   onClearFilters?: () => void
 }
 
-export const ArtworkGridEmptyState: React.FC<ArtworkGridEmptyStateProps> = ({
+export const ArtworkGridEmptyState: React.FC<React.PropsWithChildren<ArtworkGridEmptyStateProps>> = ({
   onClearFilters,
   ...rest
 }) => (

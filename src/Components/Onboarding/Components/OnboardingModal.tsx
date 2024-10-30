@@ -11,7 +11,7 @@ import {
 
 export type OnboardingModalProps = ModalBaseProps
 
-export const OnboardingModal: React.FC<OnboardingModalProps> = ({
+export const OnboardingModal: React.FC<React.PropsWithChildren<OnboardingModalProps>> = ({
   children,
   onClose,
   title,

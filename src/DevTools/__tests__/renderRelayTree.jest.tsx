@@ -48,7 +48,7 @@ describe("renderRelayTree", () => {
   })
 
   it("resolves a promise once the optional `until` callback matches", async () => {
-    class Component extends React.Component {
+    class Component extends React.Component<React.PropsWithChildren> {
       state = {
         data: "",
       }

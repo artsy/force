@@ -13,7 +13,7 @@ export interface CellPartnerProps extends Omit<RouterLinkProps, "to"> {
   mode?: "GRID" | "RAIL"
 }
 
-const CellPartner: React.FC<CellPartnerProps> = ({
+const CellPartner: React.FC<React.PropsWithChildren<CellPartnerProps>> = ({
   partner,
   mode = "RAIL",
   ...rest
@@ -72,7 +72,7 @@ const CellPartner: React.FC<CellPartnerProps> = ({
 
 type CellPartnerPlaceholderProps = Pick<CellPartnerProps, "mode">
 
-export const CellPartnerPlaceholder: React.FC<CellPartnerPlaceholderProps> = ({
+export const CellPartnerPlaceholder: React.FC<React.PropsWithChildren<CellPartnerPlaceholderProps>> = ({
   mode = "RAIL",
 }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH

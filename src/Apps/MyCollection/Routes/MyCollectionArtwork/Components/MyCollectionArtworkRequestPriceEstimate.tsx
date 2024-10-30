@@ -9,7 +9,7 @@ interface MyCollectionArtworkRequestPriceEstimateProps {
   ctaColor?: "primaryBlack" | "secondaryNeutral" | null
 }
 
-export const MyCollectionArtworkRequestPriceEstimate: React.FC<MyCollectionArtworkRequestPriceEstimateProps> = ({
+export const MyCollectionArtworkRequestPriceEstimate: React.FC<React.PropsWithChildren<MyCollectionArtworkRequestPriceEstimateProps>> = ({
   ctaColor = "primaryBlack",
   ...props
 }) => {

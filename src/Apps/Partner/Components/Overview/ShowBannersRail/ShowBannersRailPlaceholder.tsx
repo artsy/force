@@ -16,7 +16,7 @@ interface ShowBannersRailPlaceholderProps extends BoxProps {
   count: number
 }
 
-export const ShowBannersRailPlaceholder: React.FC<ShowBannersRailPlaceholderProps> = ({
+export const ShowBannersRailPlaceholder: React.FC<React.PropsWithChildren<ShowBannersRailPlaceholderProps>> = ({
   count,
   ...rest
 }) => {

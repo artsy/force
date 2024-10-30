@@ -14,7 +14,7 @@ const ARTIST_OPTIONS = [
   },
 ]
 
-export const Debug: FC = () => {
+export const Debug: FC<React.PropsWithChildren<unknown>> = () => {
   const { state, current, dispatch } = useAlertContext()
 
   return (

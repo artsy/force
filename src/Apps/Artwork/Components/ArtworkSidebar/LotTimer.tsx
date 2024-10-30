@@ -11,7 +11,7 @@ export interface LotTimerProps {
   saleArtwork: LotTimer_saleArtwork$data
 }
 
-export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
+export const LotTimer: React.FC<React.PropsWithChildren<LotTimerProps>> = ({ saleArtwork }) => {
   const { endAt, extendedBiddingEndAt, lotID } = saleArtwork
 
   const startAt = saleArtwork.sale?.startAt

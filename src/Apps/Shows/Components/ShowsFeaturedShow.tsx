@@ -18,7 +18,7 @@ interface ShowsFeaturedShowProps {
   size: "large" | "small"
 }
 
-const ShowsFeaturedShow: React.FC<ShowsFeaturedShowProps> = ({
+const ShowsFeaturedShow: React.FC<React.PropsWithChildren<ShowsFeaturedShowProps>> = ({
   show,
   size,
 }) => {

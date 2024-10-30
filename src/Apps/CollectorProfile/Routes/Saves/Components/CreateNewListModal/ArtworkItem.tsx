@@ -9,7 +9,7 @@ interface ArtworkItemProps {
   onItemClick: (artworkID: string) => void
 }
 
-export const ArtworkItem: FC<ArtworkItemProps> = ({
+export const ArtworkItem: FC<React.PropsWithChildren<ArtworkItemProps>> = ({
   item,
   selected,
   onItemClick,

@@ -7,7 +7,7 @@ import { graphql } from "react-relay"
 import { SearchRouteQuery } from "__generated__/SearchRouteQuery.graphql"
 import { SearchRouteOptionFragmentContainer } from "Apps/Example/Routes/Search/SearchRouteOption"
 
-export const SearchRoute: FC = () => {
+export const SearchRoute: FC<React.PropsWithChildren<unknown>> = () => {
   const [query, setQuery] = useState("")
 
   const { data, loading } = useClientQuery<SearchRouteQuery>({

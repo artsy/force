@@ -33,7 +33,7 @@ const reasons = [
   },
 ]
 
-export const HowItWorksSteps: React.FC = () => {
+export const HowItWorksSteps: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { user, isLoggedIn } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
@@ -105,7 +105,7 @@ interface RowItemProps {
   title: string
   text: string
 }
-const RowItem: React.FC<RowItemProps> = ({ index, title, text }) => {
+const RowItem: React.FC<React.PropsWithChildren<RowItemProps>> = ({ index, title, text }) => {
   return (
     <Column span={3} mb={[2, 0]}>
       <Text mt={[0.5, 0]} variant={["lg-display", "xl", "xxl"]}>

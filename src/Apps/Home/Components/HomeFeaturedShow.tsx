@@ -14,7 +14,7 @@ interface HomeFeaturedShowProps {
   show: HomeFeaturedShow_show$data
 }
 
-const HomeFeaturedShow: React.FC<HomeFeaturedShowProps> = ({ show }) => {
+const HomeFeaturedShow: React.FC<React.PropsWithChildren<HomeFeaturedShowProps>> = ({ show }) => {
   const { trackEvent } = useTracking()
 
   return (

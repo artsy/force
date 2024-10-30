@@ -7,7 +7,7 @@ interface AuctionAssociatedSaleProps {
   sale: AuctionAssociatedSale_sale$data
 }
 
-const AuctionAssociatedSale: React.FC<AuctionAssociatedSaleProps> = ({
+const AuctionAssociatedSale: React.FC<React.PropsWithChildren<AuctionAssociatedSaleProps>> = ({
   sale,
 }) => {
   if (!sale.associatedSale) {

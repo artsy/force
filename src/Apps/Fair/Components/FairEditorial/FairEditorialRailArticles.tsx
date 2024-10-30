@@ -18,7 +18,7 @@ export interface FairBoothRailArtworksProps {
   fair: FairEditorialRailArticles_fair$data
 }
 
-const FairEditorialRailArticles: React.FC<FairBoothRailArtworksProps> = ({
+const FairEditorialRailArticles: React.FC<React.PropsWithChildren<FairBoothRailArtworksProps>> = ({
   fair,
 }) => {
   const tracking = useTracking()

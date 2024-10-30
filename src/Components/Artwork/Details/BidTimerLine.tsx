@@ -12,7 +12,7 @@ interface BidTimerLineProps {
   artwork: BidTimerLine_artwork$key
 }
 
-export const BidTimerLine: React.FC<BidTimerLineProps> = ({ artwork }) => {
+export const BidTimerLine: React.FC<React.PropsWithChildren<BidTimerLineProps>> = ({ artwork }) => {
   const data = useFragment(bidTimerLineFragment, artwork)
 
   const { collectorSignals, saleArtwork } = data

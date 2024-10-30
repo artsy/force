@@ -9,7 +9,7 @@ import { ShowContextualLinkFragmentContainer } from "./ShowContextualLink"
 interface ShowHeaderProps extends BoxProps {
   show: ShowHeader_show$data
 }
-export const ShowHeader: React.FC<ShowHeaderProps> = ({ show, ...rest }) => {
+export const ShowHeader: React.FC<React.PropsWithChildren<ShowHeaderProps>> = ({ show, ...rest }) => {
   const { name, startAt, endAt, formattedStartAt, formattedEndAt } = show
 
   const currentTime = useCurrentTime({ syncWithServer: true })

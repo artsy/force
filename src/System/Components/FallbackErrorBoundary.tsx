@@ -8,7 +8,7 @@ export interface ErrorFallbackProps {
 
 interface FallbackErrorBoundaryProps {
   children?: ReactNode
-  FallbackComponent: React.ComponentType<ErrorFallbackProps>
+  FallbackComponent: React.ComponentType<React.PropsWithChildren<ErrorFallbackProps>>
 }
 
 interface State {

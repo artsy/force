@@ -19,7 +19,7 @@ interface OrderStateProps {
   order: ConversationOrderState_state$key
 }
 
-export const ConversationOrderState: React.FC<OrderStateProps> = ({ order }) => {
+export const ConversationOrderState: React.FC<React.PropsWithChildren<OrderStateProps>> = ({ order }) => {
   const data = useFragment(
     graphql`
       fragment ConversationOrderState_state on CommerceOrder {
@@ -105,10 +105,10 @@ export const ConversationOrderState: React.FC<OrderStateProps> = ({ order }) => 
   return null
 }
 
-const Status: React.FC<{
+const Status: React.FC<React.PropsWithChildren<{
   text: string
   fill: "green100" | "red100"
-}> = ({ text, fill }) => {
+}>> = ({ text, fill }) => {
   return (
     <Flex alignItems="center">
       {fill === "green100" ? (
