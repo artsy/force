@@ -14,7 +14,6 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
 
   const { value, clearValue } = useAuthIntent()
   const {
-    isSaved,
     saveArtworkToLists: saveToLists,
     openSelectListsForArtworkModal,
   } = useSaveArtworkToLists(options)
@@ -28,6 +27,13 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
       return
     }
 
+    // if unsaving
+    //   fetch custom lists
+    //   if saved to custom lists
+    //     open lists modal
+    //   else
+    //     unsave
+    // else
     if (artwork.isSavedToCustomLists) {
       // Display select lists for artwork modal if artwork is saved to the custom lists
       openSelectListsForArtworkModal()

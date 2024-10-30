@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd54db32e7d1b5c5b7841acf0ec44775>>
+ * @generated SignedSource<<3da6e017d75d032be1761dce3a5d7b3d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type SaveArtworkMutation$data = {
         } | null | undefined;
       } | null | undefined;
       readonly id: string;
-      readonly isSaved: boolean | null | undefined;
+      readonly isSavedToList: boolean;
       readonly slug: string;
     } | null | undefined;
     readonly me: {
@@ -46,7 +46,7 @@ export type SaveArtworkMutation$rawResponse = {
         } | null | undefined;
       } | null | undefined;
       readonly id: string;
-      readonly isSaved: boolean | null | undefined;
+      readonly isSavedToList: boolean;
       readonly slug: string;
     } | null | undefined;
     readonly me: {
@@ -113,7 +113,7 @@ v2 = [
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isSaved",
+            "name": "isSavedToList",
             "storageKey": null
           },
           {
@@ -200,16 +200,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "ce0ddbb8d70edef386c711b28e8a951f",
+    "cacheID": "8e7c1c0bd7c7e76a9428ddf4afd48be4",
     "id": null,
     "metadata": {},
     "name": "SaveArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation SaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      isSaved\n      collectorSignals {\n        auction {\n          lotWatcherCount\n        }\n      }\n    }\n    me {\n      id\n      counts {\n        savedArtworks\n      }\n    }\n  }\n}\n"
+    "text": "mutation SaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      isSavedToList\n      collectorSignals {\n        auction {\n          lotWatcherCount\n        }\n      }\n    }\n    me {\n      id\n      counts {\n        savedArtworks\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "61927c650e7c9a584b4941326d6a924b";
+(node as any).hash = "e16150c8cbf16af273fe3b3ed0ef0aef";
 
 export default node;

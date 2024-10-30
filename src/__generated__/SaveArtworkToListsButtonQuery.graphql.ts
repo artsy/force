@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b12205c99e00ace4be80609dae2cf464>>
+ * @generated SignedSource<<0729e1dbb1491ccd622aa00bb33715cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -91,13 +91,6 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "internalID",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isSaved",
             "storageKey": null
           },
           {
@@ -215,12 +208,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e13a4248694d90f2e5ed74c277dbd13b",
+    "cacheID": "38af23b102950aef88a1c59f78bce94e",
     "id": null,
     "metadata": {},
     "name": "SaveArtworkToListsButtonQuery",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
+    "text": "query SaveArtworkToListsButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
   }
 };
 })();

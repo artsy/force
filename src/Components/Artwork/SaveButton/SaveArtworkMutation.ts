@@ -19,7 +19,7 @@ export const SaveArtwork = (
             artwork {
               id
               slug
-              isSaved
+              isSavedToList(default: null)
               collectorSignals {
                 auction {
                   lotWatcherCount
