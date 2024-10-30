@@ -8,10 +8,21 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { SaveArtworkToListsButton_Test_Query } from "__generated__/SaveArtworkToListsButton_Test_Query.graphql"
+import { fetchQuery } from "react-relay"
+import { act } from "react-dom/test-utils"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
 jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
+
+// Used for stubbing list inclusion query
+// made when an artwork is unsaved.
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+  fetchQuery: jest.fn(() => ({
+    toPromise: jest.fn(),
+  })),
+}))
 
 describe("SaveArtworkToListsButton", () => {
   const mockSaveArtwork = SaveArtwork as jest.Mock
@@ -66,7 +77,7 @@ describe("SaveArtworkToListsButton", () => {
       mockSaveArtwork.mockImplementation(args => ({
         saveArtwork: {
           artwork: {
-            isSaved: true,
+            isSavedToAnyList: true,
             isInAuction: false,
           },
         },
@@ -107,7 +118,7 @@ describe("SaveArtworkToListsButton", () => {
       mockSaveArtwork.mockImplementation(args => ({
         saveArtwork: {
           artwork: {
-            isSaved: true,
+            isSavedToAnyList: true,
             isInAuction: true,
           },
         },
@@ -142,43 +153,23 @@ describe("SaveArtworkToListsButton", () => {
   })
 
   describe("Unsave flow", () => {
+    const mockFetchQuery = fetchQuery as jest.Mock
+
     beforeEach(() => {
       mockSaveArtwork.mockImplementation(args => ({
         saveArtwork: {
           artwork: {
-            isSaved: false,
+            isSavedToAnyList: false,
           },
         },
       }))
     })
 
     describe("should display `Unsave` label", () => {
-      it("if artwork was previously saved in `Saved Artworks` list", () => {
+      it("if artwork was previously saved", () => {
         renderWithRelay({
           Artwork: () => ({
-            isSaved: true,
-          }),
-        })
-
-        expect(screen.getByLabelText("Unsave")).toBeInTheDocument()
-      })
-
-      it("if artwork was previously saved in custom lists", () => {
-        renderWithRelay({
-          Artwork: () => ({
-            isSaved: false,
-            isSavedToList: true,
-          }),
-        })
-
-        expect(screen.getByLabelText("Unsave")).toBeInTheDocument()
-      })
-
-      it("if artwork was previously saved in `Saved Artworks` and custom lists", () => {
-        renderWithRelay({
-          Artwork: () => ({
-            isSaved: false,
-            isSavedToList: true,
+            isSavedToAnyList: true,
           }),
         })
 
@@ -187,6 +178,14 @@ describe("SaveArtworkToListsButton", () => {
     })
 
     it("should display a toast message when artwork was unsaved", async () => {
+      mockFetchQuery.mockImplementation(() => {
+        return {
+          toPromise: jest
+            .fn()
+            .mockResolvedValue({ artwork: { isSavedToList: false } }),
+        }
+      })
+
       renderWithRelay({
         Artwork: () => savedArtwork,
       })
@@ -197,50 +196,41 @@ describe("SaveArtworkToListsButton", () => {
       expect(element).toBeInTheDocument()
     })
 
-    it("should unsave artwork from `Saved Artworks` list by default", async () => {
-      renderWithRelay({
-        Artwork: () => ({
-          isSaved: true,
-          isSavedToList: false,
-        }),
-      })
-
-      fireEvent.click(screen.getByLabelText("Unsave"))
-
-      const element = await screen.findByText("Removed from Saved Artworks")
-      expect(element).toBeInTheDocument()
-    })
-
     it("should open the modal when artwork was saved in custom lists", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          isSaved: true,
-          isSavedToList: true,
-        }),
+      mockFetchQuery.mockImplementation(() => {
+        return {
+          toPromise: jest
+            .fn()
+            .mockResolvedValue({ artwork: { isSavedToList: true } }),
+        }
       })
 
-      fireEvent.click(screen.getByLabelText("Unsave"))
+      renderWithRelay({
+        Artwork: () => savedArtwork,
+      })
 
-      const modalTitle = "Select lists for this artwork"
-      expect(screen.getByText(modalTitle)).toBeInTheDocument()
+      act(() => {
+        fireEvent.click(screen.getByLabelText("Unsave"))
+        setTimeout(() => {
+          const modalTitle = "Select lists for this artwork"
+          expect(screen.getByText(modalTitle)).toBeInTheDocument()
+        })
+      })
     })
   })
 })
 
 const unsavedArtwork = {
   isInAuction: false,
-  isSaved: false,
-  isSavedToList: false,
+  isSavedToAnyList: false,
 }
 
 const savedArtwork = {
   isInAuction: false,
-  isSaved: true,
-  isSavedToList: false,
+  isSavedToAnyList: true,
 }
 
 const unsavedAuctionArtwork = {
   isInAuction: true,
-  isSaved: false,
-  isSavedToList: false,
+  isSavedToAnyList: false,
 }

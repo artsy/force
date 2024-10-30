@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2e145646ed715729b2636ac781d244e>>
+ * @generated SignedSource<<9757df965d52fafd3e30a51b22cb953f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -104,7 +104,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isSaved",
+            "name": "isSavedToAnyList",
             "storageKey": null
           },
           {
@@ -149,12 +149,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bc3c4c25fead56b01f3bf1cd197a4c1e",
+    "cacheID": "0be565b25dc02f4d578cffce7d14fe63",
     "id": null,
     "metadata": {},
     "name": "DeprecatedSaveButtonQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
+    "text": "query DeprecatedSaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
   }
 };
 })();

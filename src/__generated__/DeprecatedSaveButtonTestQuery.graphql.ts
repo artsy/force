@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<769bcd936c62db4ee779c08655f196cd>>
+ * @generated SignedSource<<7d0cc4c48261106285a4bcaa2380fa62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -101,7 +101,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isSaved",
+            "name": "isSavedToAnyList",
             "storageKey": null
           },
           {
@@ -146,7 +146,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7c3631fca548e1b68cc179a87cb0eb4b",
+    "cacheID": "b702f948d12f009352a48ac4ddd84744",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -176,9 +176,9 @@ return {
         },
         "artwork.id": (v1/*: any*/),
         "artwork.internalID": (v1/*: any*/),
-        "artwork.isSaved": {
+        "artwork.isSavedToAnyList": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
@@ -193,7 +193,7 @@ return {
     },
     "name": "DeprecatedSaveButtonTestQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonTestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
+    "text": "query DeprecatedSaveButtonTestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
   }
 };
 })();
