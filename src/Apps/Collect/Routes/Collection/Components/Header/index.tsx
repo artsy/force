@@ -17,7 +17,7 @@ export interface CollectionHeaderProps {
   collection: Header_collection$data
 }
 
-export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
+export const CollectionHeader: React.FC<React.PropsWithChildren<CollectionHeaderProps>> = ({
   collection,
 }) => {
   return (

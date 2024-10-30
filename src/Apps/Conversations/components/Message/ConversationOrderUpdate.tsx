@@ -13,7 +13,7 @@ export interface OrderUpdateProps extends FlexProps {
   event: ConversationOrderUpdate_event$key
 }
 
-export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
+export const ConversationOrderUpdate: React.FC<React.PropsWithChildren<OrderUpdateProps>> = ({
   event,
   ...flexProps
 }) => {
@@ -72,7 +72,7 @@ const getIconProps = (
   color: string
   message: string
   textColor?: string
-  Icon: React.FC<any>
+  Icon: React.FC<React.PropsWithChildren<any>>
 } => {
   if (data.__typename === "CommerceOfferSubmittedEvent") {
     const isCounter = data.offer.respondsTo !== null

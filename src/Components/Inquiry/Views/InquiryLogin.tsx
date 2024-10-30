@@ -42,7 +42,7 @@ interface InquiryLoginState {
   authenticationCode: string
 }
 
-export const InquiryLogin: React.FC = () => {
+export const InquiryLogin: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
     artworkID,
     engine,

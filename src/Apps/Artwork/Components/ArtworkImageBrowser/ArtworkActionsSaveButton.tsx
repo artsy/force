@@ -14,7 +14,7 @@ interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
 }
 
-export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
+export const ArtworkActionsSaveButton: FC<React.PropsWithChildren<ArtworkActionsSaveButtonProps>> = ({
   artwork,
 }) => {
   const { isAuction, isClosed } = artwork.sale ?? {}

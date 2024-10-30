@@ -7,7 +7,7 @@ export interface CountrySelectProps extends Omit<SelectProps, "options"> {
   tabIndex?: number
 }
 
-export const CountrySelect: FC<CountrySelectProps> = ({
+export const CountrySelect: FC<React.PropsWithChildren<CountrySelectProps>> = ({
   euShippingOnly,
   tabIndex,
   ...rest

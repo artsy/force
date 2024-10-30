@@ -34,7 +34,7 @@ interface OverlayProps {
   onClose: () => void
 }
 
-export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
+export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({ viewer, relay, onClose }) => {
   const tracking = useTracking()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)

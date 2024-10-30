@@ -7,7 +7,7 @@ interface FeatureMetaProps {
   feature: FeatureMeta_feature$data
 }
 
-const FeatureMeta: React.FC<FeatureMetaProps> = ({
+const FeatureMeta: React.FC<React.PropsWithChildren<FeatureMetaProps>> = ({
   feature: {
     meta: { description, name, image },
     slug,

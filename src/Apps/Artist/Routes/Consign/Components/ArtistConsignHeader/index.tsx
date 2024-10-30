@@ -20,7 +20,7 @@ interface ArtistConsignHeaderProps {
   artist: ArtistConsignHeader_artist$data
 }
 
-export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
+export const ArtistConsignHeader: React.FC<React.PropsWithChildren<ArtistConsignHeaderProps>> = ({
   artist,
 }) => {
   const tracking = useTracking()
@@ -38,7 +38,7 @@ export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
           alignItems="center"
           justifyContent="center"
         >
-          {leftArtwork && (
+          {leftArtwork?.image?.cropped && (
             <ResponsiveBox
               aspectWidth={leftArtwork.image.cropped.width}
               aspectHeight={leftArtwork.image.cropped.height}
@@ -77,7 +77,7 @@ export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
             // @ts-ignore
             as={RouterLink}
             to={getConsignSubmissionUrl({
-              contextPath: artist.href!,
+              contextPath: artist.href as string,
               subject: DeprecatedAnalyticsSchema.Subject.RequestPriceEstimate,
             })}
             onClick={() => {
@@ -100,7 +100,7 @@ export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
           alignItems="center"
           justifyContent="center"
         >
-          {rightArtwork && (
+          {rightArtwork?.image?.cropped && (
             <ResponsiveBox
               aspectWidth={rightArtwork.image.cropped.width}
               aspectHeight={rightArtwork.image.cropped.height}

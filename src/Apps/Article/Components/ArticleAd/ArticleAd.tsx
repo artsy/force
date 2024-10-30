@@ -10,7 +10,7 @@ export interface ArticleAdProps extends BoxProps {
   size: AdSize
 }
 
-export const ArticleAd: FC<ArticleAdProps> = memo(({ unit, size, ...rest }) => {
+export const ArticleAd: FC<React.PropsWithChildren<ArticleAdProps>> = memo(({ unit, size, ...rest }) => {
   const {
     isDestinationAllowed,
     openConsentManager,
@@ -60,7 +60,7 @@ export const ArticleAd: FC<ArticleAdProps> = memo(({ unit, size, ...rest }) => {
 
 ArticleAd.displayName = "ArticleAd"
 
-export const ArticleAdProvider: FC = ({ children }) => {
+export const ArticleAdProvider: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <DFPSlotsProvider dfpNetworkId="21805539690">{children}</DFPSlotsProvider>
   )

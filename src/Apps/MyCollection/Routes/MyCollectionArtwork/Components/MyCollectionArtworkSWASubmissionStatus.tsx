@@ -34,7 +34,7 @@ interface Props {
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$key
 }
 
-export const MyCollectionArtworkSWASubmissionStatus: React.FC<Props> = props => {
+export const MyCollectionArtworkSWASubmissionStatus: React.FC<React.PropsWithChildren<Props>> = props => {
   const { trackEvent } = useTracking()
   const { testSubmissionState } = useTestSubmissionState()
   const [

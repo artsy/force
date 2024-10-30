@@ -15,7 +15,7 @@ import { forgotPassword } from "Utils/auth"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 
-export const AuthDialogForgotPassword: FC = () => {
+export const AuthDialogForgotPassword: FC<React.PropsWithChildren<unknown>> = () => {
   const {
     dispatch,
     state: { options, values },

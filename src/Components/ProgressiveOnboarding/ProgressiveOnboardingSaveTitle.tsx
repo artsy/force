@@ -13,7 +13,7 @@ const KEY = PROGRESSIVE_ONBOARDING.saveTitle
 interface ProgressiveOnboardingSaveTitleProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingSaveTitle__: FC<ProgressiveOnboardingSaveTitleProps> = ({
+export const __ProgressiveOnboardingSaveTitle__: FC<React.PropsWithChildren<ProgressiveOnboardingSaveTitleProps>> = ({
   children,
 }) => {
   const { dismiss, isDismissed } = useDismissibleContext()

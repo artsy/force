@@ -21,7 +21,7 @@ interface SettingsEditProfileArtistsYouCollectProps {
   me: SettingsEditProfileArtistsYouCollect_me$data
 }
 
-export const SettingsEditProfileArtistsYouCollect: FC<SettingsEditProfileArtistsYouCollectProps> = ({
+export const SettingsEditProfileArtistsYouCollect: FC<React.PropsWithChildren<SettingsEditProfileArtistsYouCollectProps>> = ({
   me,
 }) => {
   const userInterests = compact(me.collectorProfile?.userInterests)
@@ -142,7 +142,7 @@ interface SettingsEditProfileArtistsYouCollectAutocompleteInputProps
   onSelect(option: { text: string; value: string }): void
 }
 
-const SettingsEditProfileArtistsYouCollectAutocompleteInput: FC<SettingsEditProfileArtistsYouCollectAutocompleteInputProps> = ({
+const SettingsEditProfileArtistsYouCollectAutocompleteInput: FC<React.PropsWithChildren<SettingsEditProfileArtistsYouCollectAutocompleteInputProps>> = ({
   onSelect,
   ...rest
 }) => {

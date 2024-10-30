@@ -15,7 +15,7 @@ interface FairsPastFairsProps {
   relay: RelayPaginationProp
 }
 
-export const FairsPastFairs: React.FC<FairsPastFairsProps> = ({
+export const FairsPastFairs: React.FC<React.PropsWithChildren<FairsPastFairsProps>> = ({
   viewer,
   relay,
 }) => {

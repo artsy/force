@@ -11,7 +11,7 @@ export interface PartnerArtistArtworksRailProps {
   artistId: string
 }
 
-export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps> = ({
+export const PartnerArtistArtworksRail: React.FC<React.PropsWithChildren<PartnerArtistArtworksRailProps>> = ({
   partnerArtist,
   partnerId,
   artistId,

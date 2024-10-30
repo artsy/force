@@ -12,7 +12,7 @@ import { recaptcha } from "Utils/recaptcha"
 
 interface AuthDialogWelcomeProps {}
 
-export const AuthDialogWelcome: FC<AuthDialogWelcomeProps> = () => {
+export const AuthDialogWelcome: FC<React.PropsWithChildren<AuthDialogWelcomeProps>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   const {

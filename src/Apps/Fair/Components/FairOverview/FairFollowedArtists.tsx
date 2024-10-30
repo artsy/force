@@ -21,7 +21,7 @@ interface FairFollowedArtistsProps extends BoxProps {
   fair: FairFollowedArtists_fair$data
 }
 
-export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
+export const FairFollowedArtists: React.FC<React.PropsWithChildren<FairFollowedArtistsProps>> = ({
   fair,
   ...rest
 }) => {
@@ -142,7 +142,7 @@ interface FairFollowedArtistsQueryRendererProps {
   id: string
 }
 
-export const FairFollowedArtistsQueryRenderer: React.FC<FairFollowedArtistsQueryRendererProps> = ({
+export const FairFollowedArtistsQueryRenderer: React.FC<React.PropsWithChildren<FairFollowedArtistsQueryRendererProps>> = ({
   id,
 }) => {
   const { relayEnvironment } = useSystemContext()

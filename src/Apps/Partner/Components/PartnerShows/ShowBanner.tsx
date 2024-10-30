@@ -46,7 +46,7 @@ interface ShowBannerProps extends BoxProps {
   withAnimation?: boolean
 }
 
-const ShowBanner: React.FC<ShowBannerProps> = ({
+const ShowBanner: React.FC<React.PropsWithChildren<ShowBannerProps>> = ({
   show,
   selected = false,
   withAnimation,

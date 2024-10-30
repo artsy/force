@@ -69,7 +69,7 @@ const mockOnChange = jest.fn()
 const mockOnClear = jest.fn()
 const mockOnSelect = jest.fn()
 
-const TestImplementation: FC<ImplementationProps> = ({
+const TestImplementation: FC<React.PropsWithChildren<ImplementationProps>> = ({
   initialAddress = { country: "US" },
   ...rest
 }) => {

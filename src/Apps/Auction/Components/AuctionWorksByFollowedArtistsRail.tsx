@@ -9,7 +9,7 @@ interface AuctionWorksByFollowedArtistsRailProps {
   viewer: AuctionWorksByFollowedArtistsRail_viewer$data
 }
 
-const AuctionWorksByFollowedArtistsRail: React.FC<AuctionWorksByFollowedArtistsRailProps> = ({
+const AuctionWorksByFollowedArtistsRail: React.FC<React.PropsWithChildren<AuctionWorksByFollowedArtistsRailProps>> = ({
   viewer,
 }) => {
   const nodes = extractNodes(viewer.saleArtworksConnection)

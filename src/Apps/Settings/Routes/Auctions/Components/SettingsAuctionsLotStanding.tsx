@@ -1,6 +1,5 @@
 import { FC, Fragment } from "react"
 import { Button, Column, Image, Flex, Text, Box } from "@artsy/palette"
-import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
@@ -12,7 +11,7 @@ interface SettingsAuctionsLotStandingProps {
   lotStanding: SettingsAuctionsLotStanding_lotStanding$data
 }
 
-const SettingsAuctionsLotStanding: FC<SettingsAuctionsLotStandingProps> = ({
+const SettingsAuctionsLotStanding: FC<React.PropsWithChildren<SettingsAuctionsLotStandingProps>> = ({
   lotStanding,
 }) => {
   if (!lotStanding) return null

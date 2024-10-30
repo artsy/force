@@ -10,7 +10,7 @@ interface NotificationViewingRoomListProps {
   viewingRoomsConnection?: NotificationViewingRoomsList_viewingRoomsConnection$key | null
 }
 
-export const NotificationViewingRoomsList: FC<NotificationViewingRoomListProps> = props => {
+export const NotificationViewingRoomsList: FC<React.PropsWithChildren<NotificationViewingRoomListProps>> = props => {
   const viewingRoomsConnection = useFragment(
     notificationViewingRoomsListFragment,
     props.viewingRoomsConnection

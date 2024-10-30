@@ -18,7 +18,7 @@ export const getCareerHighlight = (
   count: number
 ) => {
   let label: string = ""
-  let Icon: FC<ComponentProps<typeof PersonIcon>> = Fragment
+  let Icon: FC<React.PropsWithChildren<ComponentProps<typeof PersonIcon>>> = Fragment
 
   // plural
   const pl = count > 1

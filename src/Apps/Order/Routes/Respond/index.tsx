@@ -51,7 +51,7 @@ type ResponseOptions = "ACCEPT" | "COUNTER" | "DECLINE" | null
 
 export const logger = createLogger("Order/Routes/Respond/index.tsx")
 
-export const RespondRoute: FC<RespondProps> = ({
+export const RespondRoute: FC<React.PropsWithChildren<RespondProps>> = ({
   order,
   match,
   router,

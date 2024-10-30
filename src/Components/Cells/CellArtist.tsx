@@ -23,7 +23,7 @@ export interface CellArtistProps extends Partial<RouterLinkProps> {
   FollowButton?: JSX.Element
 }
 
-const CellArtist: FC<CellArtistProps> = ({
+const CellArtist: FC<React.PropsWithChildren<CellArtistProps>> = ({
   artist,
   mode = "RAIL",
   displayCounts,
@@ -87,7 +87,7 @@ type CellArtistPlaceholderProps = Pick<
   "mode" | "displayCounts"
 >
 
-export const CellArtistPlaceholder: FC<CellArtistPlaceholderProps> = ({
+export const CellArtistPlaceholder: FC<React.PropsWithChildren<CellArtistPlaceholderProps>> = ({
   mode = "RAIL",
   displayCounts,
 }) => {

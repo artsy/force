@@ -9,7 +9,7 @@ interface ArtworkFilterCreateAlertProps {
   children?: ReactNode
 }
 
-export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
+export const ArtworkFilterCreateAlert: FC<React.PropsWithChildren<ArtworkFilterCreateAlertProps>> = ({
   renderButton,
   children,
 }) => {
@@ -23,6 +23,9 @@ export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
       <CreateAlertButton
         renderButton={({ onClick }) => (
           <ProgressiveOnboardingAlertCreate>
+            {/*
+              FIXME: REACT_18_UPGRADE
+              @ts-ignore */}
             {({ onSkip: createSkip }) =>
               renderButton({
                 onClick: () => {

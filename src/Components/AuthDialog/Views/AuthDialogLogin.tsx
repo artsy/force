@@ -19,7 +19,7 @@ import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuth
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 
-export const AuthDialogLogin: FC = () => {
+export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
   const { dispatch, state } = useAuthDialogContext()
 
   const { runAfterAuthentication } = useAfterAuthentication()

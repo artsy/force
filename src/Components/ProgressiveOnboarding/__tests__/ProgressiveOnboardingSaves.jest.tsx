@@ -25,7 +25,7 @@ jest.mock(
 
 jest.mock("Components/ProgressiveOnboarding/withProgressiveOnboardingCounts")
 
-const Example: FC = () => {
+const Example: FC<React.PropsWithChildren<unknown>> = () => {
   const ProgressiveOnboardingSaveFind = withProgressiveOnboardingCounts(
     __ProgressiveOnboardingSaveFind__
   )

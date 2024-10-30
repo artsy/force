@@ -22,7 +22,7 @@ import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/Au
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisclaimer"
 
-export const AuthDialogSignUp: FC = () => {
+export const AuthDialogSignUp: FC<React.PropsWithChildren<unknown>> = () => {
   const {
     dispatch,
     state: { options, values, isFallback },

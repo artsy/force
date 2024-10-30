@@ -17,7 +17,7 @@ export interface NotificationArtworkProps
   onClick?: () => void
 }
 
-export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
+export const NotificationArtwork: React.FC<React.PropsWithChildren<NotificationArtworkProps>> = ({
   artwork: artworkProp,
   contextModule,
   onClick,

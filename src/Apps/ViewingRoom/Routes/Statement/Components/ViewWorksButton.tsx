@@ -10,7 +10,7 @@ interface ViewWorksButtonProps {
   artworksCount: number
 }
 
-export const ViewWorksButton: React.FC<ViewWorksButtonProps> = ({
+export const ViewWorksButton: React.FC<React.PropsWithChildren<ViewWorksButtonProps>> = ({
   artworksCount,
 }) => {
   const tracking = useTracking()

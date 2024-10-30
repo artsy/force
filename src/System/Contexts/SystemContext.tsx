@@ -1,5 +1,5 @@
 import { Router } from "found"
-import { createContext, FC, useState } from "react"
+import { createContext, useState } from "react"
 import { Environment } from "react-relay"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { getUser } from "Utils/user"
@@ -32,10 +32,9 @@ export const SystemContext = createContext<SystemContextProps>(
   ({} as unknown) as SystemContextProps
 )
 
-export const SystemContextProvider: FC<Partial<SystemContextProps>> = ({
-  children,
-  ...props
-}) => {
+export const SystemContextProvider: React.FC<React.PropsWithChildren<React.PropsWithChildren<
+  Partial<SystemContextProps>
+>>> = ({ children, ...props }) => {
   const [router, setRouter] = useState<SystemContextProps["router"]>(null)
 
   const [user, setUser] = useState<SystemContextProps["user"]>(

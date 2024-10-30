@@ -9,7 +9,7 @@ interface ArticleZoomGalleryCaptionProps {
   figure: ArticleZoomGalleryCaption_figure$data
 }
 
-const ArticleZoomGalleryCaption: FC<ArticleZoomGalleryCaptionProps> = ({
+const ArticleZoomGalleryCaption: FC<React.PropsWithChildren<ArticleZoomGalleryCaptionProps>> = ({
   figure,
 }) => {
   switch (figure.__typename) {

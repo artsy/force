@@ -49,7 +49,7 @@ const reasons = [
   },
 ]
 
-export const Highlights: React.FC = () => {
+export const Highlights: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <GridColumns gridColumnGap={[0, 2, 4]} alignItems="fex-start">
       {reasons.map((reason, index) => (
@@ -69,10 +69,10 @@ interface RowItemProps {
   title: string
   text: string
 }
-const RowItem: React.FC<RowItemProps> = ({ icon, title, text }) => {
+const RowItem: React.FC<React.PropsWithChildren<RowItemProps>> = ({ icon, title, text }) => {
   return (
     // FIXME: Remove external margins
-    <Column span={4} mb={[2, 0]}>
+    (<Column span={4} mb={[2, 0]}>
       {icon}
       <Text mt={[0.5, 2]} variant={["md", "lg-display", "xl"]}>
         {title}
@@ -80,6 +80,6 @@ const RowItem: React.FC<RowItemProps> = ({ icon, title, text }) => {
       <Text mt={[0.5, 1]} variant={["xs", "sm"]}>
         {text}
       </Text>
-    </Column>
-  )
+    </Column>)
+  );
 }

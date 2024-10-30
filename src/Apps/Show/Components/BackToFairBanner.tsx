@@ -9,7 +9,7 @@ interface BackToFairBannerProps {
   show: BackToFairBanner_show$data
 }
 
-const BackToFairBanner: React.FC<BackToFairBannerProps & BoxProps> = ({
+const BackToFairBanner: React.FC<React.PropsWithChildren<BackToFairBannerProps & BoxProps>> = ({
   show,
 }) => {
   const { match } = useRouter()

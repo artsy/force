@@ -57,7 +57,10 @@ interface WizardState {
  * </Wizard>
  * ```
  */
-export class Wizard extends React.Component<WizardProps, WizardState> {
+export class Wizard extends React.Component<
+  React.PropsWithChildren<WizardProps>,
+  WizardState
+> {
   static defaultProps = {
     initialValues: {},
   }
@@ -188,7 +191,9 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
   }
 }
 
-class WizardContextProvider extends Component<WizardContext> {
+class WizardContextProvider extends Component<
+  React.PropsWithChildren<WizardContext>
+> {
   static childContextTypes = {
     wizard: PropTypes.object,
     form: PropTypes.object,

@@ -14,7 +14,7 @@ interface ArtQuizArtworksCardMetadataProps extends BoxProps {
   artwork: ArtQuizArtworksCardMetadata_artwork$data
 }
 
-const ArtQuizArtworksCardMetadata: FC<ArtQuizArtworksCardMetadataProps> = ({
+const ArtQuizArtworksCardMetadata: FC<React.PropsWithChildren<ArtQuizArtworksCardMetadataProps>> = ({
   artwork,
   ...rest
 }) => {

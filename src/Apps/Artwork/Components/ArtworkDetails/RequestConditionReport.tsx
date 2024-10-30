@@ -27,7 +27,7 @@ interface RequestConditionReportProps {
   me: RequestConditionReport_me$data | null | undefined
 }
 
-export const RequestConditionReport: React.FC<RequestConditionReportProps> = props => {
+export const RequestConditionReport: React.FC<React.PropsWithChildren<RequestConditionReportProps>> = props => {
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { trackEvent } = useTracking()
 
@@ -153,11 +153,11 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
   )
 }
 
-const RequestedConditionReportModal: React.FC<{
+const RequestedConditionReportModal: React.FC<React.PropsWithChildren<{
   onClose(): void
   show: boolean
   email: string
-}> = ({ onClose, show, email }) => {
+}>> = ({ onClose, show, email }) => {
   if (!show) return null
 
   return (
@@ -186,7 +186,7 @@ const RequestedConditionReportModal: React.FC<{
   )
 }
 
-const TrackingWrappedRequestConditionReport: React.FC<RequestConditionReportProps> = track(
+const TrackingWrappedRequestConditionReport: React.FC<React.PropsWithChildren<RequestConditionReportProps>> = track(
   props => {
     return {
       context_page: DeprecatedAnalyticsSchema.PageName.ArtworkPage,
@@ -200,9 +200,9 @@ const TrackingWrappedRequestConditionReport: React.FC<RequestConditionReportProp
   }
 )(RequestConditionReport)
 
-export const RequestConditionReportQueryRenderer: React.FC<{
+export const RequestConditionReportQueryRenderer: React.FC<React.PropsWithChildren<{
   artworkID: string
-}> = ({ artworkID }) => {
+}>> = ({ artworkID }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

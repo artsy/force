@@ -30,7 +30,7 @@ interface MyCollectionArtworkFormArtistStepProps {
   me: MyCollectionArtworkFormArtistStep_me$key
 }
 
-export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkFormArtistStepProps> = ({
+export const MyCollectionArtworkFormArtistStep: React.FC<React.PropsWithChildren<MyCollectionArtworkFormArtistStepProps>> = ({
   me: meProp,
 }) => {
   const me = useFragment(MyCollectionArtworkFormArtistStepFragment, meProp)

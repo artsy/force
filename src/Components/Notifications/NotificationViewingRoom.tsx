@@ -14,7 +14,7 @@ export interface NotificationViewingRoomProps
   onClick?: () => void
 }
 
-export const NotificationViewingRoom: React.FC<NotificationViewingRoomProps> = ({
+export const NotificationViewingRoom: React.FC<React.PropsWithChildren<NotificationViewingRoomProps>> = ({
   viewingRoom: viewingRoomProp,
   contextModule,
   onClick,

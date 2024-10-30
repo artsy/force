@@ -10,7 +10,7 @@ export interface PartnerArtistListProps {
   partner: PartnerArtistList_partner$data
 }
 
-export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
+export const PartnerArtistList: React.FC<React.PropsWithChildren<PartnerArtistListProps>> = ({
   partner,
 }) => {
   if (

@@ -11,7 +11,7 @@ interface ArtistBackLinkProps {
   artist: ArtistBackLink_artist$data
 }
 
-const ArtistBackLink: React.FC<ArtistBackLinkProps> = ({ artist }) => {
+const ArtistBackLink: React.FC<React.PropsWithChildren<ArtistBackLinkProps>> = ({ artist }) => {
   const { trackEvent } = useTracking()
 
   const router = useRouter()

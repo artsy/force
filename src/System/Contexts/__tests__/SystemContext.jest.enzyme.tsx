@@ -15,11 +15,9 @@ jest.mock("System/Relay/createRelaySSREnvironment", () => ({
   }),
 }))
 
-const ShowCurrentUser: React.SFC<
-  SystemContextProps & {
-    additionalProp?: string
-  }
-> = props => {
+const ShowCurrentUser: React.FC<React.PropsWithChildren<SystemContextProps & {
+  additionalProp?: string
+}>> = props => {
   let text = props.user ? props.user.id : "no-current-user"
   if (props.additionalProp) {
     text = `${text} & ${props.additionalProp}`
@@ -29,7 +27,7 @@ const ShowCurrentUser: React.SFC<
 // This HOC adds the context to the component.
 const WithCurrentUser = withSystemContext(ShowCurrentUser)
 
-const ShowRelayEnvironment: React.SFC<SystemContextProps> = props => {
+const ShowRelayEnvironment: React.FC<React.PropsWithChildren<SystemContextProps>> = props => {
   const mockedEnv: any = props.relayEnvironment
   return <div>{mockedEnv.description}</div>
 }

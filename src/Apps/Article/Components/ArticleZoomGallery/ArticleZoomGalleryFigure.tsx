@@ -18,7 +18,7 @@ interface ArticleZoomGalleryFigureProps {
   preload: boolean
 }
 
-const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
+const ArticleZoomGalleryFigure: FC<React.PropsWithChildren<ArticleZoomGalleryFigureProps>> = ({
   figure,
   active,
   preload,
@@ -113,22 +113,20 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
 
   // See: https://web.dev/preload-responsive-images/#preload-and-lesspicturegreater
   if (preload)
-    return (
-      <>
-        {sources.map((source, i) => {
-          return (
-            // eslint-disable-next-line jsx-a11y/anchor-is-valid
-            <Link
-              key={i}
-              rel="preload"
-              as="image"
-              imagesrcset={source.img.srcSet}
-              media={source.media.preload}
-            />
-          )
-        })}
-      </>
-    )
+    return (<>
+      {sources.map((source, i) => {
+        return (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          (<Link
+            key={i}
+            rel="preload"
+            as="image"
+            imagesrcset={source.img.srcSet}
+            media={source.media.preload}
+          />)
+        );
+      })}
+    </>);
 
   return null
 }
@@ -175,7 +173,7 @@ const Img = styled.img`
 
 type Mode = "Loading" | "Ready" | "Error"
 
-const Image: FC<ImgHTMLAttributes<HTMLImageElement>> = props => {
+const Image: FC<React.PropsWithChildren<ImgHTMLAttributes<HTMLImageElement>>> = props => {
   const [mode, setMode] = useMode<Mode>("Loading")
 
   const ref = useRef<HTMLImageElement>(null)

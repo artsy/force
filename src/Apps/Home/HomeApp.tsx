@@ -23,7 +23,7 @@ interface HomeAppProps {
   heroUnitsConnection: HomeApp_heroUnitsConnection$data
 }
 
-export const HomeApp: React.FC<HomeAppProps> = ({
+export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
   featuredEventsOrderedSet,
   heroUnitsConnection,
 }) => {

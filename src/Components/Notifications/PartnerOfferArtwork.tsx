@@ -21,7 +21,7 @@ interface PartnerOfferArtworkProps {
   priceWithDiscount?: string | null
 }
 
-export const PartnerOfferArtwork: FC<PartnerOfferArtworkProps> = ({
+export const PartnerOfferArtwork: FC<React.PropsWithChildren<PartnerOfferArtworkProps>> = ({
   artwork: artworkProp,
   targetHref,
   priceWithDiscount,

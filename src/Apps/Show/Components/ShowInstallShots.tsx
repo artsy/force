@@ -24,7 +24,7 @@ interface ShowInstallShotsProps {
   show: ShowInstallShots_show$data
 }
 
-export const ShowInstallShots: FC<ShowInstallShotsProps> = ({
+export const ShowInstallShots: FC<React.PropsWithChildren<ShowInstallShotsProps>> = ({
   show,
   ...rest
 }) => {

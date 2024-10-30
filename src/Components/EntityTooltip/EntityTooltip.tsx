@@ -13,7 +13,7 @@ interface EntityTooltipProps {
   id: string
 }
 
-export const EntityTooltip: FC<EntityTooltipProps> = ({ entity, id }) => {
+export const EntityTooltip: FC<React.PropsWithChildren<EntityTooltipProps>> = ({ entity, id }) => {
   switch (entity) {
     case "artist":
       return <EntityTooltipArtistQueryRenderer id={id} />

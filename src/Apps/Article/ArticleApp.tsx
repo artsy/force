@@ -17,7 +17,7 @@ interface ArticleAppProps {
   article: ArticleApp_article$data
 }
 
-const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
+const ArticleApp: FC<React.PropsWithChildren<ArticleAppProps>> = ({ article }) => {
   useScrollToOpenEditorialAuthModal()
 
   return (

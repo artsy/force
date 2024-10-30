@@ -13,7 +13,7 @@ interface DisableFactorConfirmationProps {
   secondFactorID: string
 }
 
-export const DisableFactorConfirmation: React.FC<DisableFactorConfirmationProps> = props => {
+export const DisableFactorConfirmation: React.FC<React.PropsWithChildren<DisableFactorConfirmationProps>> = props => {
   const { onCancel, onConfirm, show, secondFactorID } = props
   const { relayEnvironment } = useSystemContext()
 

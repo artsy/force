@@ -12,7 +12,7 @@ interface StickyFooterProps extends WithInquiryProps {
   orderSource: string | null | undefined
 }
 
-export const StickyFooter: FC<StickyFooterProps> = ({
+export const StickyFooter: FC<React.PropsWithChildren<StickyFooterProps>> = ({
   showInquiry,
   inquiryComponent,
   orderType,

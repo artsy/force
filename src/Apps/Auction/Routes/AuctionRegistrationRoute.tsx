@@ -24,7 +24,7 @@ export interface AuctionRegistrationRouteProps {
   sale: AuctionRegistrationRoute_sale$data
 }
 
-const AuctionRegistrationRoute: React.FC<AuctionRegistrationRouteProps> = ({
+const AuctionRegistrationRoute: React.FC<React.PropsWithChildren<AuctionRegistrationRouteProps>> = ({
   me,
   sale,
 }) => {
@@ -106,10 +106,10 @@ export const AuctionRegistrationRouteFragmentContainer = createFragmentContainer
   (props: AuctionRegistrationRouteProps) => {
     return (
       // Wrap the provider down here as we need it for our hooks
-      <CreditCardInputProvider>
+      (<CreditCardInputProvider>
         <AuctionRegistrationRoute {...props} />
-      </CreditCardInputProvider>
-    )
+      </CreditCardInputProvider>)
+    );
   },
   {
     me: graphql`

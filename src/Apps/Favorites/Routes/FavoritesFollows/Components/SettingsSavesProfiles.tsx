@@ -28,7 +28,7 @@ interface SettingsSavesProfilesProps {
   relay: RelayPaginationProp
 }
 
-const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
+const SettingsSavesProfiles: FC<React.PropsWithChildren<SettingsSavesProfilesProps>> = ({
   me,
   relay,
 }) => {

@@ -6,7 +6,7 @@ interface ArtworkSidebarArtworkTitleProps {
   artwork: ArtworkSidebarArtworkTitle_artwork$data
 }
 
-const ArtworkSidebarArtworkTitle: React.FC<ArtworkSidebarArtworkTitleProps> = ({
+const ArtworkSidebarArtworkTitle: React.FC<React.PropsWithChildren<ArtworkSidebarArtworkTitleProps>> = ({
   artwork,
 }) => {
   const getArtworkDate = () => {

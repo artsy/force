@@ -60,7 +60,7 @@ import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
  * (FIXME: Can use Fresnel now)
  */
 
-export const NavBar: React.FC = track(
+export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   {
     flow: DeprecatedAnalyticsSchema.Flow.Header,
     context_module: DeprecatedAnalyticsSchema.ContextModule.Header,
@@ -377,6 +377,9 @@ export const NavBar: React.FC = track(
                     />
                   )}
                 >
+                  {/*
+                    FIXME: REACT_18_UPGRADE
+                    @ts-ignore */}
                   {({ anchorRef, anchorProps, visible, setVisible }) => (
                     <NavBarItemButton
                       ref={anchorRef as any}
@@ -421,6 +424,9 @@ export const NavBar: React.FC = track(
                     />
                   )}
                 >
+                  {/*
+                    FIXME: REACT_18_UPGRADE
+                    @ts-ignore */}
                   {({ anchorRef, anchorProps, visible, setVisible }) => (
                     <NavBarItemButton
                       ref={anchorRef as any}
@@ -461,6 +467,9 @@ export const NavBar: React.FC = track(
                     />
                   )}
                 >
+                  {/*
+                    FIXME: REACT_18_UPGRADE
+                    @ts-ignore */}
                   {({ anchorRef, anchorProps, visible, setVisible }) => (
                     <NavBarItemButton
                       ref={anchorRef as any}

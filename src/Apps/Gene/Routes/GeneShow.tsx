@@ -12,7 +12,7 @@ interface GeneShowProps {
   gene: GeneShow_gene$data
 }
 
-export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
+export const GeneShow: React.FC<React.PropsWithChildren<GeneShowProps>> = ({ gene }) => {
   const similar = extractNodes(gene.similar)
   const artists = extractNodes(gene.artistsConnection)
 

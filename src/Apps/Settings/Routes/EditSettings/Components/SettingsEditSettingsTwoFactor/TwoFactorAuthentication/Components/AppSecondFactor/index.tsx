@@ -31,7 +31,7 @@ interface AppSecondFactorProps {
 }
 
 // TODO: This needs to be rebuilt from scratch
-export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
+export const AppSecondFactor: React.FC<React.PropsWithChildren<AppSecondFactorProps>> = ({
   me,
   relay,
 }) => {

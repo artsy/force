@@ -1,7 +1,7 @@
 import * as React from "react"
 import { MetaTags } from "Components/MetaTags"
 
-export const FairsMeta: React.FC = ({}) => {
+export const FairsMeta: React.FC<React.PropsWithChildren<unknown>> = ({}) => {
   return (
     <MetaTags
       title="Preview 60+ Top Art Fairs on Artsy | Artsy"

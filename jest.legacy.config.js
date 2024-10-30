@@ -12,7 +12,10 @@ module.exports = {
     "^react-dom/test-utils$": "react-dom-17/test-utils",
   },
   reporters: ["default", "jest-junit"],
-  setupFilesAfterEnv: ["<rootDir>/src/tests.ts"],
+  setupFilesAfterEnv: [
+    "<rootDir>/src/Utils/jestShim.js",
+    "<rootDir>/src/tests.ts",
+  ],
   testEnvironment: "jest-environment-jsdom",
   testMatch: ["**/src/**/*.jest.enzyme.(ts|tsx|js|jsx)"],
   testEnvironmentOptions: {

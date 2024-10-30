@@ -7,7 +7,7 @@ interface ConversationMessageFileProps {
   size: string
 }
 
-export const ConversationMessageFile: FC<ConversationMessageFileProps> = ({
+export const ConversationMessageFile: FC<React.PropsWithChildren<ConversationMessageFileProps>> = ({
   src,
   name,
   size,

@@ -20,7 +20,7 @@ interface ArtistRelatedGeneCategoriesProps {
   artist: ArtistRelatedGeneCategories_artist$data
 }
 
-const ArtistRelatedGeneCategories: FC<ArtistRelatedGeneCategoriesProps> = ({
+const ArtistRelatedGeneCategories: FC<React.PropsWithChildren<ArtistRelatedGeneCategoriesProps>> = ({
   artist,
 }) => {
   const genes = extractNodes(artist.related?.genes)
@@ -83,7 +83,7 @@ export const ArtistRelatedGeneCategoriesFragmentContainer = createFragmentContai
   }
 )
 
-export const ArtistRelatedGeneCategoriesQueryRenderer: FC<{ slug: string }> = ({
+export const ArtistRelatedGeneCategoriesQueryRenderer: FC<React.PropsWithChildren<{ slug: string }>> = ({
   slug,
 }) => {
   const { relayEnvironment } = useSystemContext()

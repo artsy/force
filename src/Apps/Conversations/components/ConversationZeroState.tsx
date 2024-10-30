@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Link, Spacer, Text } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 
-export const ConversationZeroState: React.FC = () => {
+export const ConversationZeroState: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <MetaTags title="Inbox | Artsy" />

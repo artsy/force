@@ -12,7 +12,7 @@ interface CollectorProfileArtistsAddNewDialogProps {
   onAdd: (artistID: string) => void
 }
 
-export const CollectorProfileArtistsAddNewDialog: FC<CollectorProfileArtistsAddNewDialogProps> = ({
+export const CollectorProfileArtistsAddNewDialog: FC<React.PropsWithChildren<CollectorProfileArtistsAddNewDialogProps>> = ({
   name,
   onClose,
   onAdd,

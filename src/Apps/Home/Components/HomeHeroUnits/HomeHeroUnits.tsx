@@ -9,7 +9,7 @@ interface HomeHeroUnitsProps {
   heroUnits: HomeHeroUnits_heroUnits$data
 }
 
-export const HomeHeroUnits: React.FC<HomeHeroUnitsProps> = ({ heroUnits }) => {
+export const HomeHeroUnits: React.FC<React.PropsWithChildren<HomeHeroUnitsProps>> = ({ heroUnits }) => {
   const nodes = extractNodes(heroUnits)
 
   return (

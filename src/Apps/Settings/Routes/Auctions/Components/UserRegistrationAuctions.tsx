@@ -10,7 +10,7 @@ interface UserRegistrationAuctionsProps {
   me: UserRegistrationAuctions_me$data
 }
 
-export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> = ({
+export const UserRegistrationAuctions: React.FC<React.PropsWithChildren<UserRegistrationAuctionsProps>> = ({
   me,
 }) => {
   const saleRegistrations = extractNodes(me?.saleRegistrationsConnection)

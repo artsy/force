@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { OnboardingMarketingCollectionQueryRenderer } from "Components/Onboarding/Components/OnboardingMarketingCollection"
 
-export const OnboardingTopAuctionLots: FC = () => {
+export const OnboardingTopAuctionLots: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <OnboardingMarketingCollectionQueryRenderer
       slug="top-auction-lots"

@@ -65,7 +65,7 @@ interface BelowTheFoldArtworkDetailsProps {
   slug: ArtworkApp_artwork$data["slug"]
 }
 
-const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
+const BelowTheFoldArtworkDetails: React.FC<React.PropsWithChildren<BelowTheFoldArtworkDetailsProps>> = ({
   artists,
   slug,
 }) => (
@@ -88,7 +88,7 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
   </>
 )
 
-export const ArtworkApp: React.FC<Props> = props => {
+export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
   const { match, silentPush, silentReplace } = useRouter()
   const { showAuthDialog } = useAuthDialog()
@@ -329,7 +329,7 @@ export const ArtworkApp: React.FC<Props> = props => {
   )
 }
 
-const WrappedArtworkApp: React.FC<Props> = props => {
+const WrappedArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
   const {
     artwork: { artists, attributionClass, internalID, mediumType, sale },
   } = props
@@ -448,7 +448,7 @@ interface ArtworkResultProps extends RenderProps {
   me: ArtworkApp_me$data
 }
 
-const ArtworkResult: React.FC<ArtworkResultProps> = props => {
+const ArtworkResult: React.FC<React.PropsWithChildren<ArtworkResultProps>> = props => {
   const { artworkResult, ...rest } = props
   const { __typename } = artworkResult
 

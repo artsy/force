@@ -10,7 +10,7 @@ export interface AdditionalArtworkDetailsProps
   order: AdditionalArtworkDetails_order$data
 }
 
-const AdditionalArtworkDetails: React.FC<AdditionalArtworkDetailsProps> = ({
+const AdditionalArtworkDetails: React.FC<React.PropsWithChildren<AdditionalArtworkDetailsProps>> = ({
   order: { artworkDetails, lineItems },
   ...others
 }) => {

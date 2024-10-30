@@ -13,9 +13,9 @@ import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
-export const InsightsCareerHighlightPromoCard: React.FC<{
+export const InsightsCareerHighlightPromoCard: React.FC<React.PropsWithChildren<{
   onClick?(): void
-}> = ({ onClick }) => {
+}>> = ({ onClick }) => {
   const { src: dSrc, srcSet: dSrcSet } = resized(
     "https://files.artsy.net/images/CareerHighlightPromoImage.png",
     {
@@ -107,7 +107,7 @@ interface CardWrapperProps extends ClickableProps {
   onClick?: () => void
 }
 
-const CardWrapper: React.FC<CardWrapperProps> = ({
+const CardWrapper: React.FC<React.PropsWithChildren<CardWrapperProps>> = ({
   onClick,
   children,
   ...rest

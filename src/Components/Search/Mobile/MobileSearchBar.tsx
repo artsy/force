@@ -18,7 +18,7 @@ interface MobileSearchBarProps {
   onClose: () => void
 }
 
-export const MobileSearchBar: FC<MobileSearchBarProps> = ({
+export const MobileSearchBar: FC<React.PropsWithChildren<MobileSearchBarProps>> = ({
   viewer,
   onClose,
 }) => {
@@ -53,7 +53,7 @@ interface MobileSearchBarQueryRendererProps {
   onClose: () => void
 }
 
-export const MobileSearchBarQueryRenderer: FC<MobileSearchBarQueryRendererProps> = props => {
+export const MobileSearchBarQueryRenderer: FC<React.PropsWithChildren<MobileSearchBarQueryRendererProps>> = props => {
   const { relayEnvironment, searchQuery = "" } = useSystemContext()
 
   if (isServer) {

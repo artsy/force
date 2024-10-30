@@ -46,7 +46,9 @@ interface NotificationProps {
   notificationId: string
 }
 
-const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
+const Notification: React.FC<React.PropsWithChildren<NotificationProps>> = ({
+  notificationId,
+}) => {
   const { relayEnvironment } = useSystemContext()
   const { router } = useRouter()
 
@@ -125,7 +127,9 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
   }
 }
 
-export const NotificationQueryRenderer: React.FC = props => {
+export const NotificationQueryRenderer: React.FC<React.PropsWithChildren<
+  unknown
+>> = props => {
   const { state } = useNotificationsContext()
 
   if (!state.currentNotificationId) {
@@ -166,7 +170,7 @@ const notificationQuery = graphql`
   }
 `
 
-export const Placeholder: React.FC = () => (
+export const Placeholder: React.FC<React.PropsWithChildren<unknown>> = () => (
   <Flex flexDirection="column">
     <Skeleton>
       <SkeletonText variant="xl">Name of the Artist</SkeletonText>

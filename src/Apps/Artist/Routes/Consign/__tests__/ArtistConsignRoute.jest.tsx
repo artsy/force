@@ -11,7 +11,7 @@ jest.mock("../Components/ArtistConsignMeta", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL({
-  Component: ArtistConsignRouteFragmentContainer,
+  Component: (props: any) => <ArtistConsignRouteFragmentContainer {...props} />,
   query: graphql`
     query ArtistConsignRoute_Test_Query {
       artist(id: "example") {

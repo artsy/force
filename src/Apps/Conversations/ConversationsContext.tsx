@@ -35,7 +35,7 @@ type PartnerOffer = NonNullable<
   >["node"]
 >
 
-export const ConversationsProvider: React.FC<ConversationsProviderProps> = ({
+export const ConversationsProvider: React.FC<React.PropsWithChildren<ConversationsProviderProps>> = ({
   children,
   viewer,
 }) => {

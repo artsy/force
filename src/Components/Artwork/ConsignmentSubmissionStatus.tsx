@@ -7,7 +7,7 @@ interface ConsignmentSubmissionStatusProps {
   artwork: ConsignmentSubmissionStatus_artwork$data
 }
 
-const ConsignmentSubmissionStatus: React.FC<ConsignmentSubmissionStatusProps> = ({
+const ConsignmentSubmissionStatus: React.FC<React.PropsWithChildren<ConsignmentSubmissionStatusProps>> = ({
   artwork,
 }) => {
   const submission = artwork.consignmentSubmission

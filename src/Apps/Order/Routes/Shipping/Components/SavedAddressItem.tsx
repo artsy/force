@@ -8,7 +8,7 @@ interface SavedAddressItemProps extends BoxProps {
   handleClickEdit: (event: any) => void
 }
 
-export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
+export const SavedAddressItem: React.FC<React.PropsWithChildren<SavedAddressItemProps>> = (
   props
 ): React.ReactElement<RadioProps<string>> => {
   const handleClickEdit = props.handleClickEdit

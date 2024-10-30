@@ -3,7 +3,7 @@ import { Banner } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import { useRouter } from "System/Hooks/useRouter"
 
-export const ArtsyGuaranteeMessage: React.FC = () => {
+export const ArtsyGuaranteeMessage: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { match } = useRouter()
   const [showBanner, setShowBanner] = useState(false)
 

@@ -22,7 +22,7 @@ interface SettingsEditProfileAboutYouProps {
   me: SettingsEditProfileAboutYou_me$data
 }
 
-const SettingsEditProfileAboutYou: FC<SettingsEditProfileAboutYouProps> = ({
+const SettingsEditProfileAboutYou: FC<React.PropsWithChildren<SettingsEditProfileAboutYouProps>> = ({
   me,
 }) => {
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()

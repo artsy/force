@@ -21,7 +21,7 @@ interface EntityTooltipPartnerProps {
   partner: EntityTooltipPartner_partner$data
 }
 
-const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
+const EntityTooltipPartner: FC<React.PropsWithChildren<EntityTooltipPartnerProps>> = ({ partner }) => {
   const { trackEvent } = useTracking()
 
   const {
@@ -114,7 +114,7 @@ const EntityTooltipPartnerFragmentContainer = createFragmentContainer(
   }
 )
 
-const EntityTooltipPartnerPlaceholder: FC = () => {
+const EntityTooltipPartnerPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton p={2} width={300}>
       <SkeletonBox width={260} height={146} />
@@ -135,7 +135,7 @@ interface EntityTooltipPartnerQueryRendererProps {
   id: string
 }
 
-export const EntityTooltipPartnerQueryRenderer: FC<EntityTooltipPartnerQueryRendererProps> = ({
+export const EntityTooltipPartnerQueryRenderer: FC<React.PropsWithChildren<EntityTooltipPartnerQueryRendererProps>> = ({
   id,
 }) => {
   return (

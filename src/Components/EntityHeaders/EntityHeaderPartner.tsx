@@ -20,7 +20,7 @@ export interface EntityHeaderPartnerProps extends BoxProps {
   onFollow?(): void
 }
 
-const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
+const EntityHeaderPartner: FC<React.PropsWithChildren<EntityHeaderPartnerProps>> = ({
   partner,
   displayAvatar = true,
   displayLink = true,

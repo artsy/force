@@ -19,7 +19,7 @@ import { InstitutionPartnershipsHero } from "./Components/InstitutionPartnership
 import { InstitutionPartnershipsProfilesQueryRenderer } from "./Components/InstitutionPartnershipsProfiles"
 import { InstitutionPartnershipsShowsQueryRenderer } from "./Components/InstitutionPartnershipsShows"
 
-export const InstitutionPartnershipsApp: FC = () => {
+export const InstitutionPartnershipsApp: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <MetaTags

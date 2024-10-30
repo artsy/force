@@ -41,7 +41,7 @@ export interface Props {
   CreditCardPicker: RefObject<CreditCardPicker>
 }
 
-export const PaymentContent: FC<Props> = props => {
+export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
   const { commitMutation, onSetPayment, me, order, CreditCardPicker } = props
   const creditCards = extractNodes(me.creditCards)
   const {

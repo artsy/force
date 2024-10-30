@@ -17,7 +17,7 @@ interface SaveArtworkToListsButtonProps {
   contextModule: AuthContextModule
 }
 
-const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
+const SaveArtworkToListsButton: FC<React.PropsWithChildren<SaveArtworkToListsButtonProps>> = ({
   artwork,
   contextModule,
 }) => {
@@ -119,7 +119,7 @@ interface SaveArtworkToListsButtonQueryRendererProps
   id: string
 }
 
-export const SaveArtworkToListsButtonQueryRenderer: FC<SaveArtworkToListsButtonQueryRendererProps> = ({
+export const SaveArtworkToListsButtonQueryRenderer: FC<React.PropsWithChildren<SaveArtworkToListsButtonQueryRendererProps>> = ({
   id,
   contextModule,
 }) => {

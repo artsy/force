@@ -7,7 +7,7 @@ export interface AuctionResultsRouteProps {
   artist: ArtistAuctionResultsRoute_artist$data
 }
 
-export const ArtistAuctionResultsRoute: React.FC<AuctionResultsRouteProps> = props => {
+export const ArtistAuctionResultsRoute: React.FC<React.PropsWithChildren<AuctionResultsRouteProps>> = props => {
   return (
     <ArtistAuctionResultsRefetchContainer
       artist={props.artist}

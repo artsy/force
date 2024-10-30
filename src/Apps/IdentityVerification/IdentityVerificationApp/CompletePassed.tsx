@@ -2,7 +2,7 @@ import { Button, Text, Spacer, Message } from "@artsy/palette"
 import * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const CompletePassed: React.FC = () => {
+export const CompletePassed: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <Text variant="xl">Identity verification complete</Text>

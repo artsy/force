@@ -31,7 +31,7 @@ interface HeroCarouselLargeProps {
   onChange?: (index) => void
 }
 
-export const HeroCarouselLarge: React.FC<HeroCarouselLargeProps> = ({
+export const HeroCarouselLarge: React.FC<React.PropsWithChildren<HeroCarouselLargeProps>> = ({
   children,
   fullBleed = true,
   progressbarVariant,
@@ -166,10 +166,10 @@ const Cell: ForwardRefExoticComponent<CarouselCellProps> = forwardRef(
   }
 )
 
-const Rail: FC<CarouselRailProps> = props => {
+const Rail: FC<React.PropsWithChildren<CarouselRailProps>> = props => {
   return <CarouselRail {...props} display="block" />
 }
 
-const Disable: FC = () => {
+const Disable: FC<React.PropsWithChildren<unknown>> = () => {
   return <></>
 }

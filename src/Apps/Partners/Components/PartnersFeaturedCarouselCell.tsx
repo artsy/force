@@ -11,7 +11,7 @@ interface PartnersFeaturedCarouselCellProps {
   lazyLoad?: boolean
 }
 
-const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
+const PartnersFeaturedCarouselCell: FC<React.PropsWithChildren<PartnersFeaturedCarouselCellProps>> = ({
   profile,
   lazyLoad = true,
 }) => {

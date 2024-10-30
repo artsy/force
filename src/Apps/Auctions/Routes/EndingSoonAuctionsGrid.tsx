@@ -1,5 +1,5 @@
 import { Box, Button, Text } from "@artsy/palette"
-import React, { FC, useState } from "react"
+import { FC, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
@@ -14,7 +14,7 @@ interface EndingSoonAuctionsGridProps {
   relay: RelayPaginationProp
 }
 
-export const EndingSoonAuctionsGrid: FC<EndingSoonAuctionsGridProps> = ({
+export const EndingSoonAuctionsGrid: FC<React.PropsWithChildren<EndingSoonAuctionsGridProps>> = ({
   viewer,
   relay,
 }) => {

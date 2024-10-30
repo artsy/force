@@ -5,7 +5,7 @@ import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingC
 import { OnboardingModal } from "./OnboardingModal"
 import { OnboardingSteps } from "./OnboardingSteps"
 
-export const OnboardingDebug: FC = () => {
+export const OnboardingDebug: FC<React.PropsWithChildren<unknown>> = () => {
   const {
     state,
     current,

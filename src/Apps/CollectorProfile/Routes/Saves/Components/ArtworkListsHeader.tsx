@@ -15,7 +15,7 @@ interface ArtworkListsHeaderProps {
   me: CollectorProfileSavesRoute_me$data
 }
 
-export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
+export const ArtworkListsHeader: FC<React.PropsWithChildren<ArtworkListsHeaderProps>> = ({
   savedArtworksCount,
   me,
 }) => {

@@ -1,7 +1,7 @@
 import { Popover, THEME } from "@artsy/palette"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { UtilButton } from "./UtilButton"
-import { FC, useCallback, useEffect, useState } from "react"
+import React, { FC, useCallback, useEffect, useState } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -17,7 +17,7 @@ interface ArtworkActionsWatchLotButtonProps {
   onClick: () => void
 }
 
-const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
+const ArtworkActionsWatchLotButton: FC<React.PropsWithChildren<ArtworkActionsWatchLotButtonProps>> = ({
   isSaved,
   artwork,
   canShowRegistrationPopover = true,
@@ -80,12 +80,20 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
       }
       maxWidth={[mobileMaxWidth, 410]}
     >
+      {/*
+        FIXME: REACT_18_UPGRADE
+        @ts-ignore */}
       {({ anchorRef }) => {
         return (
           <UtilButton
             ref={anchorRef}
             name="heart"
-            Icon={isSaved ? FilledIcon : HeartStrokeIcon}
+            Icon={
+              ((isSaved
+                ? FilledIcon
+                : // FIXME: REACT_18_UPGRADE
+                  HeartStrokeIcon) as unknown) as React.ReactNode
+            }
             label={isSaved ? "Watching lot" : "Watch lot"}
             onClick={handleButtonClick}
           />

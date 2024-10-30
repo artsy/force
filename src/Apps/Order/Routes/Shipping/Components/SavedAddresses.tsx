@@ -24,7 +24,7 @@ export interface SavedAddressesProps {
   onSelect: (address: SavedAddressType) => void
 }
 
-export const SavedAddresses: FC<SavedAddressesProps> = props => {
+export const SavedAddresses: FC<React.PropsWithChildren<SavedAddressesProps>> = props => {
   const logger = createLogger("SavedAddresses.tsx")
 
   const shippingContext = useShippingContext()

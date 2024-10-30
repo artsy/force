@@ -15,7 +15,7 @@ interface ConversationDetailsProps {
   onClose?: () => void
 }
 
-export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
+export const ConversationDetails: React.FC<React.PropsWithChildren<ConversationDetailsProps>> = ({
   conversation,
   onClose,
 }) => {

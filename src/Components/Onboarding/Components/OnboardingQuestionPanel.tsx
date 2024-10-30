@@ -8,7 +8,7 @@ interface OnboardingQuestionPanelProps {
   onNext(): void
 }
 
-export const OnboardingQuestionPanel: FC<OnboardingQuestionPanelProps> = ({
+export const OnboardingQuestionPanel: FC<React.PropsWithChildren<OnboardingQuestionPanelProps>> = ({
   disabled,
   loading,
   onNext,

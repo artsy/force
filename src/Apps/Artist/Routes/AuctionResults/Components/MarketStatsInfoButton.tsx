@@ -7,7 +7,7 @@ interface MarketStatsInfoButtonProps {
   onClick?: () => void
 }
 
-export const MarketStatsInfoButton: React.FC<MarketStatsInfoButtonProps> = ({
+export const MarketStatsInfoButton: React.FC<React.PropsWithChildren<MarketStatsInfoButtonProps>> = ({
   onClick,
 }) => {
   const [showModal, setShowModal] = useState(false)

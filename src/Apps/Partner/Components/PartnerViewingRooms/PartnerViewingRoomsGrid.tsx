@@ -18,7 +18,7 @@ interface PartnerViewingRoomsGridProps {
 
 export const PAGE_SIZE = 12
 
-const PartnerViewingRoomsGrid: React.FC<PartnerViewingRoomsGridProps> = ({
+const PartnerViewingRoomsGrid: React.FC<React.PropsWithChildren<PartnerViewingRoomsGridProps>> = ({
   sectionTitle,
   viewingRoomsConnection,
   relay,

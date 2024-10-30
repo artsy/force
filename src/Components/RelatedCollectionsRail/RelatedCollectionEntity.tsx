@@ -16,7 +16,7 @@ export interface RelatedCollectionEntityProps {
   slideIndex: number
 }
 
-export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = ({
+export const RelatedCollectionEntity: React.FC<React.PropsWithChildren<RelatedCollectionEntityProps>> = ({
   lazyLoad,
   collection,
   slideIndex,

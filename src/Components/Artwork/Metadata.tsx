@@ -28,7 +28,7 @@ export interface MetadataProps
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
-export const Metadata: React.FC<MetadataProps> = ({
+export const Metadata: React.FC<React.PropsWithChildren<MetadataProps>> = ({
   artwork,
   contextModule,
   disableRouterLinking,
@@ -69,7 +69,7 @@ export const Metadata: React.FC<MetadataProps> = ({
   )
 }
 
-const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
+const LinkContainer: React.FC<React.PropsWithChildren<Omit<MetadataProps, "children">>> = ({
   artwork,
   disableRouterLinking,
   mt,
@@ -127,7 +127,7 @@ type MetadataPlaceholderProps = Pick<
 > &
   BoxProps
 
-export const MetadataPlaceholder: React.FC<MetadataPlaceholderProps> = ({
+export const MetadataPlaceholder: React.FC<React.PropsWithChildren<MetadataPlaceholderProps>> = ({
   mt = 1,
   hidePartnerName,
   hideArtistName,

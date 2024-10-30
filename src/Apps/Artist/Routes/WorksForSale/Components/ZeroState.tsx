@@ -4,7 +4,7 @@ import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterC
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { Sticky } from "Components/Sticky"
 
-export const ZeroState: React.FC<BoxProps> = props => {
+export const ZeroState: React.FC<React.PropsWithChildren<BoxProps>> = props => {
   const { selectedFiltersCounts, resetFilters } = useArtworkFilterContext()
   const hasAppliedFilters = !isEmpty(selectedFiltersCounts)
 

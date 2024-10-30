@@ -32,7 +32,7 @@ const validateChildren = (children: React.ReactNode) => {
  * Creates a contextual menu by composing a MoreIcon (⋯) trigger
  * and a Dropdown component from Palette.
  */
-export const ContextualMenu: React.FC<ContextualMenuProps> = ({
+export const ContextualMenu: React.FC<React.PropsWithChildren<ContextualMenuProps>> = ({
   children,
   placement = "bottom-end",
   zIndex,
@@ -66,6 +66,9 @@ export const ContextualMenu: React.FC<ContextualMenuProps> = ({
         })
       }}
     >
+      {/*
+        FIXME: REACT_18_UPGRADE
+        @ts-ignore */}
       {({ anchorRef, anchorProps }) => {
         return (
           <Clickable

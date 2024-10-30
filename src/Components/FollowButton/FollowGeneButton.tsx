@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { FollowButton, FollowButtonRenderProps } from "./Button"
+import { FollowButton } from "./Button"
 import { FollowGeneButton_gene$data } from "__generated__/FollowGeneButton_gene.graphql"
 import { ButtonProps } from "@artsy/palette"
 import {
@@ -17,13 +17,15 @@ import { FollowGeneButtonQuery } from "__generated__/FollowGeneButtonQuery.graph
 import { useAuthDialog } from "Components/AuthDialog"
 
 interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
-  children?: FollowButtonRenderProps
+  children?: React.ReactNode
+  // FIXME: REACT_18_UPGRADE
+  // children?: FollowButtonRenderProps
   gene: FollowGeneButton_gene$data
   contextModule?: AuthContextModule
   onFollow?: (followed: boolean) => void
 }
 
-const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
+const FollowGeneButton: React.FC<React.PropsWithChildren<FollowGeneButtonProps>> = ({
   gene,
   contextModule = ContextModule.geneHeader,
   onFollow,
@@ -133,7 +135,7 @@ interface FollowGeneButtonQueryRendererProps
   id: string
 }
 
-export const FollowGeneButtonQueryRenderer: React.FC<FollowGeneButtonQueryRendererProps> = ({
+export const FollowGeneButtonQueryRenderer: React.FC<React.PropsWithChildren<FollowGeneButtonQueryRendererProps>> = ({
   id,
   ...rest
 }) => {

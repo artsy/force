@@ -8,7 +8,7 @@ interface OnboardingProgressProps {
   preview?: boolean
 }
 
-export const OnboardingProgress: FC<OnboardingProgressProps> = ({
+export const OnboardingProgress: FC<React.PropsWithChildren<OnboardingProgressProps>> = ({
   preview = false,
 }) => {
   const { back, progress, workflowEngine } = useOnboardingContext()

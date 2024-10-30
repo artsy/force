@@ -17,7 +17,7 @@ interface QuickNavigationItemProps {
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
-export const QuickNavigationItem: FC<QuickNavigationItemProps & PillProps> = ({
+export const QuickNavigationItem: FC<React.PropsWithChildren<QuickNavigationItemProps & PillProps>> = ({
   label,
   to,
   onClick,

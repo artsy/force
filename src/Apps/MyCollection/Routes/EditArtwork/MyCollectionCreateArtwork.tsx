@@ -28,7 +28,7 @@ interface MyCollectionCreateArtworkProps {
   me: MyCollectionCreateArtwork_me$data
 }
 
-export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps> = ({
+export const MyCollectionCreateArtwork: React.FC<React.PropsWithChildren<MyCollectionCreateArtworkProps>> = ({
   me,
 }) => {
   const {

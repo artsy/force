@@ -15,7 +15,7 @@ interface PartnersRailsProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-const PartnersRails: FC<PartnersRailsProps> = ({ viewer, type }) => {
+const PartnersRails: FC<React.PropsWithChildren<PartnersRailsProps>> = ({ viewer, type }) => {
   const categories = shuffle(compact(viewer.partnerCategories))
 
   return (
@@ -50,7 +50,7 @@ const PartnersRailsFragmentContainer = createFragmentContainer(PartnersRails, {
   `,
 })
 
-const PartnersRailsPlaceholder: FC = () => {
+const PartnersRailsPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton>
       <Join separator={<Spacer y={4} />}>
@@ -77,7 +77,7 @@ interface PartnersRailsQueryRendererProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-export const PartnersRailsQueryRenderer: FC<PartnersRailsQueryRendererProps> = ({
+export const PartnersRailsQueryRenderer: FC<React.PropsWithChildren<PartnersRailsQueryRendererProps>> = ({
   type,
 }) => {
   const { relayEnvironment } = useSystemContext()

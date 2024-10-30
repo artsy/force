@@ -26,7 +26,7 @@ interface MarketingAlternatingStackProps {
   cards: Card[]
 }
 
-export const MarketingAlternatingStack: FC<MarketingAlternatingStackProps> = ({
+export const MarketingAlternatingStack: FC<React.PropsWithChildren<MarketingAlternatingStackProps>> = ({
   cards,
 }) => {
   return (

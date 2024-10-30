@@ -19,7 +19,7 @@ interface ArticleSectionAdProps {
  * Features have ads placed after the first and third image-sections.
  * Standard layouts have a single ad placed after the second image-section.
  */
-const ArticleSectionAd: FC<ArticleSectionAdProps> = ({ article, i }) => {
+const ArticleSectionAd: FC<React.PropsWithChildren<ArticleSectionAdProps>> = ({ article, i }) => {
   const [first, second, third] = article.sections
     .map((section, index) => {
       return IMAGE_SECTIONS.includes(section.__typename) ? index : false

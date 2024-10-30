@@ -7,7 +7,7 @@ interface SettingsShippingRouteProps {
   me: SettingsShippingRoute_me$data
 }
 
-const SettingsShippingRoute: React.FC<SettingsShippingRouteProps> = ({
+const SettingsShippingRoute: React.FC<React.PropsWithChildren<SettingsShippingRouteProps>> = ({
   me,
 }) => {
   return (

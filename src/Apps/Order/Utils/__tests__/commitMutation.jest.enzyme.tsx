@@ -26,7 +26,7 @@ describe("injectCommitMutation", () => {
     store,
   }) as IEnvironment
 
-  const Provider: React.FC = props => (
+  const Provider: React.FC<React.PropsWithChildren<unknown>> = props => (
     <SystemContextProvider relayEnvironment={relayEnvironment}>
       {props.children}
     </SystemContextProvider>
@@ -58,7 +58,7 @@ describe("injectCommitMutation", () => {
       }) => {
         return (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-          <div
+          (<div
             className={
               props.isCommittingMutation ? "isCommittingMutation" : "nothing"
             }
@@ -93,8 +93,8 @@ describe("injectCommitMutation", () => {
             }}
           >
             {props.word}
-          </div>
-        )
+          </div>)
+        );
       }
     )
 

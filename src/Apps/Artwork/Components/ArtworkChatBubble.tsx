@@ -10,7 +10,7 @@ interface ArtworkChatBubbleProps {
   artwork: ArtworkChatBubble_artwork$data
 }
 
-const ArtworkChatBubble: FC<ArtworkChatBubbleProps> = ({ artwork }) => {
+const ArtworkChatBubble: FC<React.PropsWithChildren<ArtworkChatBubbleProps>> = ({ artwork }) => {
   const {
     isAcquireable,
     isInquireable,

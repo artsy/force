@@ -9,7 +9,7 @@ interface MinPriceWarningProps {
   orderID: string
 }
 
-export const MinPriceWarning: React.FC<MinPriceWarningProps> = ({
+export const MinPriceWarning: React.FC<React.PropsWithChildren<MinPriceWarningProps>> = ({
   isPriceRange,
   minPrice,
   orderID,

@@ -3,7 +3,7 @@ import { getENV } from "Utils/getENV"
 import { useAppendStylesheet } from "./Hooks/useAppendStylesheet"
 import { useLoadScript } from "./Hooks/useLoadScript"
 
-export const EnableRecaptcha: React.FC = () => {
+export const EnableRecaptcha: React.FC<React.PropsWithChildren<unknown>> = () => {
   useRecaptcha()
 
   return null

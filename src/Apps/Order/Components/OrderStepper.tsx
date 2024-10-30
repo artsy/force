@@ -26,7 +26,7 @@ export interface OrderStepperProps {
   steps: string[]
 }
 
-export const OrderStepper: FC<OrderStepperProps> = ({
+export const OrderStepper: FC<React.PropsWithChildren<OrderStepperProps>> = ({
   order,
   steps,
   currentStep,

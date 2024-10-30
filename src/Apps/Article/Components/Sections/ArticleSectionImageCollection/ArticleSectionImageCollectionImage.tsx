@@ -11,7 +11,7 @@ interface ArticleSectionImageCollectionImageProps {
   targetWidth: number
 }
 
-const ArticleSectionImageCollectionImage: FC<ArticleSectionImageCollectionImageProps> = ({
+const ArticleSectionImageCollectionImage: FC<React.PropsWithChildren<ArticleSectionImageCollectionImageProps>> = ({
   figure,
   targetWidth,
 }) => {

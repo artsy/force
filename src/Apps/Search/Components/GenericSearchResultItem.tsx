@@ -17,7 +17,7 @@ interface GenericSearchResultItemProps {
   id: string
 }
 
-export const GenericSearchResultItem: React.FC<GenericSearchResultItemProps> = ({
+export const GenericSearchResultItem: React.FC<React.PropsWithChildren<GenericSearchResultItemProps>> = ({
   imageUrl,
   name,
   description,

@@ -11,7 +11,7 @@ export interface HeroCarouselProps {
   onChange?: (index) => void
 }
 
-export const HeroCarousel: FC<HeroCarouselProps> = ({
+export const HeroCarousel: FC<React.PropsWithChildren<HeroCarouselProps>> = ({
   children,
   fullBleed = true,
   progressbarVariant,

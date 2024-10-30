@@ -11,7 +11,7 @@ interface ArticleVisibilityMetadataProps {
 /**
  * Updates article URL and title when the article is in view
  */
-const ArticleVisibilityMetadata: FC<ArticleVisibilityMetadataProps> = ({
+const ArticleVisibilityMetadata: FC<React.PropsWithChildren<ArticleVisibilityMetadataProps>> = ({
   article,
   children,
 }) => {

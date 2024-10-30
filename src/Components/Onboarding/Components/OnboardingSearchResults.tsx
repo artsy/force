@@ -18,7 +18,7 @@ interface OnboardingSearchResultsProps {
   term: string
 }
 
-const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
+const OnboardingSearchResults: FC<React.PropsWithChildren<OnboardingSearchResultsProps>> = ({
   term,
   viewer,
 }) => {
@@ -136,7 +136,7 @@ const PLACEHOLDER = (
   </Join>
 )
 
-export const OnboardingSearchResultsQueryRenderer: FC<OnboardingOrderedSetQueryRendererProps> = ({
+export const OnboardingSearchResultsQueryRenderer: FC<React.PropsWithChildren<OnboardingOrderedSetQueryRendererProps>> = ({
   term,
   entities,
 }) => {

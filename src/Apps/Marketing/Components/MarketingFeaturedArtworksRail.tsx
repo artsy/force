@@ -16,7 +16,7 @@ interface MarketingFeaturedArtworksRailProps {
   viewer: MarketingFeaturedArtworksRail_viewer$data
 }
 
-const MarketingFeaturedArtworksRail: FC<MarketingFeaturedArtworksRailProps> = ({
+const MarketingFeaturedArtworksRail: FC<React.PropsWithChildren<MarketingFeaturedArtworksRailProps>> = ({
   viewer,
 }) => {
   const [collection] = compact(viewer.marketingCollections)
@@ -85,7 +85,7 @@ export const MarketingFeaturedArtworksRailFragmentContainer = createFragmentCont
   }
 )
 
-export const MarketingFeaturedArtworksRailQueryRenderer: FC = () => {
+export const MarketingFeaturedArtworksRailQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <SystemQueryRenderer<MarketingFeaturedArtworksRailQuery>
       lazyLoad

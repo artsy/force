@@ -175,7 +175,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
 }
 
 export const SearchResultsEntityRouteFragmentContainer = createRefetchContainer(
-  withRouter(SearchResultsEntityRoute) as React.ComponentType<Props>,
+  withRouter(SearchResultsEntityRoute) as React.ComponentType<React.PropsWithChildren<Props>>,
   {
     viewer: graphql`
       fragment SearchResultsEntity_viewer on Viewer

@@ -14,7 +14,7 @@ interface ArtQuizRecommendedArtistsProps {
   me: ArtQuizRecommendedArtists_me$data
 }
 
-const ArtQuizRecommendedArtists: FC<ArtQuizRecommendedArtistsProps> = ({
+const ArtQuizRecommendedArtists: FC<React.PropsWithChildren<ArtQuizRecommendedArtistsProps>> = ({
   me,
 }) => {
   const likedArtists = compact(

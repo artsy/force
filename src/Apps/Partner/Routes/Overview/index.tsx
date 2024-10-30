@@ -13,7 +13,7 @@ interface OverviewProps {
   partner: Overview_partner$data
 }
 
-const Overview: React.FC<OverviewProps> = ({ partner }) => {
+const Overview: React.FC<React.PropsWithChildren<OverviewProps>> = ({ partner }) => {
   const {
     slug,
     partnerType,

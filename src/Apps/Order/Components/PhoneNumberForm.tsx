@@ -16,7 +16,7 @@ export interface PhoneNumberFormProps {
   tabIndex?: number
 }
 
-export const PhoneNumberForm: FC<PhoneNumberFormProps> = ({
+export const PhoneNumberForm: FC<React.PropsWithChildren<PhoneNumberFormProps>> = ({
   onChange,
   touched,
   errors,

@@ -5,7 +5,7 @@ import NoArtIcon from "@artsy/icons/NoArtIcon"
 
 const NO_ICON_SIZE = 18
 
-export const ArtworkListNoImage: FC<FlexProps> = props => {
+export const ArtworkListNoImage: FC<React.PropsWithChildren<FlexProps>> = props => {
   return (
     <ArtworkListImageBorder
       bg="black5"

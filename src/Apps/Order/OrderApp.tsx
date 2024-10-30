@@ -39,7 +39,7 @@ export const preventHardReload = event => {
   event.returnValue = true
 }
 
-const OrderApp: FC<OrderAppProps> = props => {
+const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
   const { order, children, match, router } = props
   const { isEigen } = useSystemContext()
 

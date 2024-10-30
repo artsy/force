@@ -11,7 +11,7 @@ interface ArtworksListProps {
   artworks: ArtworksList_artworks$data
 }
 
-const ArtworksList: FC<ArtworksListProps> = ({
+const ArtworksList: FC<React.PropsWithChildren<ArtworksListProps>> = ({
   onItemClick,
   selectedIds,
   artworks,
@@ -23,7 +23,7 @@ const ArtworksList: FC<ArtworksListProps> = ({
   return (
     // Disable scroll anchoring for infinite article scroll
     // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor/Guide_to_scroll_anchoring
-    <div style={{ overflowAnchor: "none" }}>
+    (<div style={{ overflowAnchor: "none" }}>
       <GridColumns alignItems="flex-end">
         {extractNodes(artworks).map(artwork => {
           return (
@@ -42,8 +42,8 @@ const ArtworksList: FC<ArtworksListProps> = ({
           )
         })}
       </GridColumns>
-    </div>
-  )
+    </div>)
+  );
 }
 
 export const ArtworksListFragmentContainer = createFragmentContainer(

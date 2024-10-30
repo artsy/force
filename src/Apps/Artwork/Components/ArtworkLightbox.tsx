@@ -19,7 +19,7 @@ interface ArtworkLightboxProps extends ClickableProps {
 
 const MAX_SIZE = 800
 
-const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
+const ArtworkLightbox: React.FC<React.PropsWithChildren<ArtworkLightboxProps>> = ({
   artwork,
   activeIndex,
   lazyLoad,

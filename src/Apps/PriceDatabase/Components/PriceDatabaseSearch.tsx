@@ -29,7 +29,7 @@ const mapMapToOptions = map => {
 const categoryOptions = mapMapToOptions(categoryMap)
 const sizeOptions = mapMapToOptions(sizeMap)
 
-export const PriceDatabaseSearch: FC = () => {
+export const PriceDatabaseSearch: FC<React.PropsWithChildren<unknown>> = () => {
   const { router } = useRouter()
   const { filters, setFilter } = useAuctionResultsFilterContext()
   const { trackEvent } = useTracking()

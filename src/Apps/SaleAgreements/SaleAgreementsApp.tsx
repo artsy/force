@@ -11,7 +11,7 @@ interface SaleAgreementsAppProps {
   viewer: SaleAgreementsApp_viewer$key
 }
 
-export const SaleAgreementsApp: FC<SaleAgreementsAppProps> = ({ viewer }) => {
+export const SaleAgreementsApp: FC<React.PropsWithChildren<SaleAgreementsAppProps>> = ({ viewer }) => {
   const showSupplementalCosPage = useFeatureFlag("sapphire_supplemental-cos")
   const data = useFragment(saleAgreementsAppFragment, viewer)
 

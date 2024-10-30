@@ -19,7 +19,7 @@ interface SettingsEditSettingsLinkedAccountsProps {
 
 const providerNames = ["Apple", "Facebook", "Google"]
 
-export const SettingsEditSettingsLinkedAccounts: FC<SettingsEditSettingsLinkedAccountsProps> = ({
+export const SettingsEditSettingsLinkedAccounts: FC<React.PropsWithChildren<SettingsEditSettingsLinkedAccountsProps>> = ({
   me,
 }) => {
   const { match } = useRouter()
@@ -93,7 +93,7 @@ export const SettingsEditSettingsLinkedAccountsFragmentContainer = createFragmen
 )
 
 interface SettingsEditSettingsLinkedAccountsButtonProps {
-  Icon: React.FunctionComponent<any>
+  Icon: React.FunctionComponent<React.PropsWithChildren<any>>
   me: SettingsEditSettingsLinkedAccounts_me$data
   href?: string
   provider: AuthenticationProvider
@@ -101,7 +101,7 @@ interface SettingsEditSettingsLinkedAccountsButtonProps {
 
 type Mode = "Disconnected" | "Connecting" | "Connected" | "Disconnecting"
 
-const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAccountsButtonProps> = ({
+const SettingsEditSettingsLinkedAccountsButton: FC<React.PropsWithChildren<SettingsEditSettingsLinkedAccountsButtonProps>> = ({
   Icon,
   me,
   href,

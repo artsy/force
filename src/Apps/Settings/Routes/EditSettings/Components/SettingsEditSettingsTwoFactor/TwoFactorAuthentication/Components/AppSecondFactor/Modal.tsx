@@ -45,7 +45,7 @@ interface AppSecondFactorModalProps {
   password: string
 }
 
-export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props => {
+export const AppSecondFactorModal: React.FC<React.PropsWithChildren<AppSecondFactorModalProps>> = props => {
   const { secondFactor, password, onComplete } = props
   const { relayEnvironment } = useSystemContext()
 
@@ -156,7 +156,7 @@ interface InnerFormProps extends FormikProps<FormValues> {
   secondFactor: CreateAppSecondFactorMutationResponse["createAppSecondFactor"]["secondFactorOrErrors"]
 }
 
-const InnerForm: React.FC<InnerFormProps> = ({
+const InnerForm: React.FC<React.PropsWithChildren<InnerFormProps>> = ({
   errors,
   handleBlur,
   handleChange,
@@ -248,7 +248,7 @@ interface OnCompleteRedirectModalProps {
   show: boolean
 }
 
-export const OnCompleteRedirectModal: React.FC<OnCompleteRedirectModalProps> = props => {
+export const OnCompleteRedirectModal: React.FC<React.PropsWithChildren<OnCompleteRedirectModalProps>> = props => {
   const { onClick, redirectTo, show } = props
 
   if (!show) return null

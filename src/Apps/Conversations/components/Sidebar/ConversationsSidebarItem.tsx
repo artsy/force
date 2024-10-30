@@ -14,7 +14,7 @@ interface ConversationsSidebarItemProps {
   index: number
 }
 
-export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> = ({
+export const ConversationsSidebarItem: React.FC<React.PropsWithChildren<ConversationsSidebarItemProps>> = ({
   conversation,
   index,
 }) => {

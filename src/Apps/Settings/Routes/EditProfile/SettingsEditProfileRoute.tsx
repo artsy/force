@@ -9,7 +9,7 @@ interface SettingsEditProfileRouteProps {
   me: SettingsEditProfileRoute_me$data
 }
 
-const SettingsEditProfileRoute: React.FC<SettingsEditProfileRouteProps> = ({
+const SettingsEditProfileRoute: React.FC<React.PropsWithChildren<SettingsEditProfileRouteProps>> = ({
   me,
 }) => {
   return (

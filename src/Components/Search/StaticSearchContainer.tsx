@@ -6,7 +6,7 @@ import { NavBarSearchInputContainer } from "./NavBarSearchInputContainer"
 /**
  * Displays during SSR render.
  */
-export const StaticSearchContainer: FC<{ searchQuery: string } & BoxProps> = ({
+export const StaticSearchContainer: FC<React.PropsWithChildren<{ searchQuery: string } & BoxProps>> = ({
   searchQuery,
   ...rest
 }) => {

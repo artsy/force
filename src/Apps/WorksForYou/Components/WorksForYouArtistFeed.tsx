@@ -14,7 +14,7 @@ interface WorksForYouArtistFeedProps {
   viewer: WorksForYouArtistFeed_viewer$data
 }
 
-const WorksForYouArtistFeed: React.FC<WorksForYouArtistFeedProps> = ({
+const WorksForYouArtistFeed: React.FC<React.PropsWithChildren<WorksForYouArtistFeedProps>> = ({
   relay,
   viewer,
 }) => {

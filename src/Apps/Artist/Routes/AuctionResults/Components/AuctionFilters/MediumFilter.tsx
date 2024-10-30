@@ -4,7 +4,7 @@ import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
-} from "../../AuctionResultsFilterContext"
+} from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 
 export const categoryMap = [
@@ -16,7 +16,7 @@ export const categoryMap = [
   { displayName: "Textile arts", name: "Textile Arts" },
 ]
 
-export const MediumFilter: React.FC = () => {
+export const MediumFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { setFilter } = useAuctionResultsFilterContext()
   const { categories = [] } = useCurrentlySelectedFiltersForAuctionResults()
 

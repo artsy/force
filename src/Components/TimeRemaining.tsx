@@ -6,7 +6,7 @@ import React from "react"
  * Extracted out of @artsy/palette
  * @deprecated Use `useTimer` instead
  */
-export const TimeRemaining: React.FC<{
+export const TimeRemaining: React.FC<React.PropsWithChildren<{
   countdownEnd: string
   currentTime: string
   highlight: string
@@ -14,7 +14,7 @@ export const TimeRemaining: React.FC<{
   labelWithTimeRemaining?: string
   timeEndedDisplayText?: string
   trailingText?: string
-}> = ({
+}>> = ({
   countdownEnd,
   currentTime,
   highlight = "brand",

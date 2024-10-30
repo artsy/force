@@ -10,7 +10,7 @@ export const PartnerArtistsLoadingContext = React.createContext<
   PartnerArtistsLoadingContextProps
 >({})
 
-export const PartnerArtistsLoadingContextProvider: React.FC<PartnerArtistsLoadingContextProps> = ({
+export const PartnerArtistsLoadingContextProvider: React.FC<React.PropsWithChildren<PartnerArtistsLoadingContextProps>> = ({
   children,
 }) => {
   const [isLoaded, setIsLoaded] = useState(false)

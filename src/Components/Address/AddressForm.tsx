@@ -80,7 +80,7 @@ export interface AddressFormProps {
   tabIndex?: number
 }
 
-export const AddressForm: React.FC<AddressFormProps> = ({
+export const AddressForm: React.FC<React.PropsWithChildren<AddressFormProps>> = ({
   onChange,
   value,
   billing,

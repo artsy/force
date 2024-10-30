@@ -7,7 +7,7 @@ export interface FeatureSetMetaProps extends BoxProps {
   set: FeatureSetMeta_set$data
 }
 
-export const FeatureSetMeta: React.FC<FeatureSetMetaProps> = ({
+export const FeatureSetMeta: React.FC<React.PropsWithChildren<FeatureSetMetaProps>> = ({
   set,
   ...rest
 }) => {

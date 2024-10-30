@@ -95,7 +95,7 @@ export const setupClientRouter = (config: RouterConfig) => {
     },
   })
 
-  const ClientRouter: React.FC = () => {
+  const ClientRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
       <Boot
         context={matchContext}

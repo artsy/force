@@ -19,7 +19,7 @@ interface CookieConsentBannerProps {
   onAccept: () => void
 }
 
-export const CookieConsentBanner: FC<CookieConsentBannerProps> = ({
+export const CookieConsentBanner: FC<React.PropsWithChildren<CookieConsentBannerProps>> = ({
   onManage,
   onAccept,
 }) => {

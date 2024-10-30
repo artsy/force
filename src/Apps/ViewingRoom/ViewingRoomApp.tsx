@@ -17,7 +17,7 @@ interface ViewingRoomAppProps {
   viewingRoom: ViewingRoomApp_viewingRoom$data
 }
 
-const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
+const ViewingRoomApp: React.FC<React.PropsWithChildren<ViewingRoomAppProps>> = ({
   children,
   viewingRoom,
 }) => {

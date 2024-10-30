@@ -24,7 +24,7 @@ interface NotificationItemProps {
   mode?: NotificationListMode
 }
 
-const NotificationItem: FC<NotificationItemProps> = ({
+const NotificationItem: FC<React.PropsWithChildren<NotificationItemProps>> = ({
   notification,
   mode,
 }) => {
@@ -179,7 +179,7 @@ interface NotificationItemWrapperProps {
   onClick: () => void
 }
 
-export const NotificationItemWrapper: FC<NotificationItemWrapperProps> = ({
+export const NotificationItemWrapper: FC<React.PropsWithChildren<NotificationItemWrapperProps>> = ({
   item,
   mode,
   children,

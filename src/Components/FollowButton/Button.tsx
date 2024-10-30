@@ -2,7 +2,6 @@ import { Box, Button, ButtonProps, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import {
   forwardRef,
-  ForwardRefExoticComponent,
   MouseEventHandler,
   ReactNode,
   Ref,
@@ -16,16 +15,22 @@ export type FollowButtonRenderProps = (
 ) => ReactNode
 
 export interface FollowButtonProps
-  extends Omit<Partial<ButtonProps>, "variant"> {
-  children?: FollowButtonRenderProps
+  extends Omit<Partial<ButtonProps>, "variant">,
+    React.PropsWithChildren<FollowButtonRenderProps> {
   handleFollow?: MouseEventHandler<HTMLButtonElement>
   isFollowed?: boolean
 }
 
-export const FollowButton: ForwardRefExoticComponent<
-  FollowButtonProps & { ref?: Ref<HTMLElement> }
-> = forwardRef(
-  ({ children, handleFollow, isFollowed = false, ...rest }, forwardedRef) => {
+export const FollowButton = forwardRef(
+  (
+    {
+      children,
+      handleFollow,
+      isFollowed = false,
+      ...rest
+    }: FollowButtonProps & { ref?: Ref<HTMLElement>; children?: any },
+    forwardedRef
+  ) => {
     const [showUnfollow, setShowUnfollow] = useState(false)
 
     const label = useMemo(() => {

@@ -16,7 +16,7 @@ interface PartnersRailProps {
   partnerCategory: PartnersRail_partnerCategory$data
 }
 
-const PartnersRail: React.FC<PartnersRailProps> = ({ partnerCategory }) => {
+const PartnersRail: React.FC<React.PropsWithChildren<PartnersRailProps>> = ({ partnerCategory }) => {
   const partners = useMemo(() => {
     return mergeBuckets(
       compact(partnerCategory.primary),
@@ -45,7 +45,7 @@ interface PartnersRailPlaceholderProps {
   name: string
 }
 
-export const PartnersRailPlaceholder: React.FC<PartnersRailPlaceholderProps> = ({
+export const PartnersRailPlaceholder: React.FC<React.PropsWithChildren<PartnersRailPlaceholderProps>> = ({
   name,
 }) => {
   return (
@@ -106,7 +106,7 @@ interface PartnersRailQueryRendererProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-export const PartnersRailQueryRenderer: React.FC<PartnersRailQueryRendererProps> = ({
+export const PartnersRailQueryRenderer: React.FC<React.PropsWithChildren<PartnersRailQueryRendererProps>> = ({
   id,
   name,
   type,

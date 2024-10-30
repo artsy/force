@@ -20,7 +20,7 @@ interface ConversationsSidebarProps {
   relay: RelayPaginationProp
 }
 
-export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
+export const ConversationsSidebar: React.FC<React.PropsWithChildren<ConversationsSidebarProps>> = ({
   viewer,
   relay,
 }) => {

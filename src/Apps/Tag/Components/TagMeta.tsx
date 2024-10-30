@@ -8,7 +8,7 @@ interface GeneMetaProps {
   tag: TagMeta_tag$data
 }
 
-const TagMeta: React.FC<GeneMetaProps> = ({ tag }) => {
+const TagMeta: React.FC<React.PropsWithChildren<GeneMetaProps>> = ({ tag }) => {
   const title = `${tag.name} | Artsy`
 
   const fallbackDescription = `Browse all artworks with the ${tag.name} tag on Artsy. Artsy has the largest collection of art on the Web; browse art by subject matter, medium, size and price.`

@@ -15,7 +15,7 @@ interface ProgressiveOnboardingSaveHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
 }
 
-export const ProgressiveOnboardingSaveHighlight: FC<ProgressiveOnboardingSaveHighlightProps> = ({
+export const ProgressiveOnboardingSaveHighlight: FC<React.PropsWithChildren<ProgressiveOnboardingSaveHighlightProps>> = ({
   children,
   position,
 }) => {

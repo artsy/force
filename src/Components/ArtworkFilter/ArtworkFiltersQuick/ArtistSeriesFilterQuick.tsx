@@ -6,7 +6,7 @@ import { FilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/Filter
 export interface ArtistSeriesFilterQuickProps
   extends Omit<DropdownProps, "dropdown" | "children"> {}
 
-export const ArtistSeriesFilterQuick: FC<ArtistSeriesFilterQuickProps> = props => {
+export const ArtistSeriesFilterQuick: FC<React.PropsWithChildren<ArtistSeriesFilterQuickProps>> = props => {
   const { aggregations } = useArtworkFilterContext()
   const aggregation = aggregations?.find(agg => agg.slice === "ARTIST_SERIES")
   const artistSeries = aggregation?.counts || []

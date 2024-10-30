@@ -27,9 +27,9 @@ import { getENV } from "Utils/getENV"
 import { FallbackErrorBoundary } from "System/Components/FallbackErrorBoundary"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
-export const NavBarLoggedInActions: React.FC<Partial<
+export const NavBarLoggedInActions: React.FC<React.PropsWithChildren<Partial<
   NavBarLoggedInActionsQuery$data
->> = ({ me }) => {
+>>> = ({ me }) => {
   const { trackEvent } = useTracking()
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const unreadConversationCount = me?.unreadConversationCount ?? 0
@@ -41,117 +41,119 @@ export const NavBarLoggedInActions: React.FC<Partial<
 
   const firstConversation = extractNodes(me?.firstConversationConnection)[0]
 
-  return (
-    <>
-      <Dropdown
-        zIndex={Z.dropdown}
-        // eslint-disable-next-line react/no-unstable-nested-components
-        dropdown={({ onHide }) => {
-          return (
-            <NavBarNotifications
-              unreadCounts={unreadNotificationsCount}
-              onHide={onHide}
-            />
-          )
-        }}
-        placement="bottom-end"
-        offset={0}
-        openDropdownByClick
-      >
-        {({ anchorRef, anchorProps, visible }) => (
-          <NavBarItemButton
-            ref={anchorRef as any}
-            active={visible}
-            {...anchorProps}
-            aria-label={
-              hasNotifications
-                ? `${me?.unreadNotificationsCount} unread notifications`
-                : "Notifications"
-            }
-            onClick={event => {
-              anchorProps.onClick?.(event)
-
-              if (!visible) {
-                trackEvent({
-                  action: ActionType.clickedNotificationsBell,
-                })
-              }
-            }}
-          >
-            <BellStrokeIcon fill="currentColor" />
-
-            {shouldDisplayBlueDot && (
-              <NavBarNotificationIndicator
-                position="absolute"
-                top="15px"
-                right="9px"
-              />
-            )}
-          </NavBarItemButton>
-        )}
-      </Dropdown>
-
-      <NavBarItemLink
-        href={(() => {
-          if (getENV("IS_MOBILE")) {
-            return `/user/conversations`
-          }
-
-          if (firstConversation?.internalID) {
-            return `/user/conversations/${firstConversation.internalID}`
-          } else {
-            return "/user/conversations"
-          }
-        })()}
-        aria-label={
-          hasConversations
-            ? `${me?.unreadConversationCount} unread conversations`
-            : "Conversations"
-        }
-      >
-        <EnvelopeIcon fill="currentColor" />
-
-        {hasConversations && (
-          <NavBarNotificationIndicator
-            position="absolute"
-            top="15px"
-            right="5px"
+  return (<>
+    <Dropdown
+      zIndex={Z.dropdown}
+      // eslint-disable-next-line react/no-unstable-nested-components
+      dropdown={({ onHide }) => {
+        return (
+          <NavBarNotifications
+            unreadCounts={unreadNotificationsCount}
+            onHide={onHide}
           />
-        )}
-      </NavBarItemLink>
+        )
+      }}
+      placement="bottom-end"
+      offset={0}
+      openDropdownByClick
+    >
+      {/*
+          FIXME: REACT_18_UPGRADE
+          @ts-ignore */}
+      {({ anchorRef, anchorProps, visible }) => (
+        <NavBarItemButton
+          ref={anchorRef as any}
+          active={visible}
+          {...anchorProps}
+          aria-label={
+            hasNotifications
+              ? `${me?.unreadNotificationsCount} unread notifications`
+              : "Notifications"
+          }
+          onClick={event => {
+            anchorProps.onClick?.(event)
 
-      <Dropdown
-        zIndex={Z.dropdown}
-        dropdown={<NavBarUserMenu width={230} />}
-        placement="bottom-end"
-        offset={0}
-        openDropdownByClick
-      >
-        {({ anchorRef, anchorProps, visible }) => (
-          // Offset to accomodate hit area padding on right side of icon
-          <Flex mr={-1}>
-            <ProgressiveOnboardingSaveFind>
-              <ProgressiveOnboardingFollowFind>
-                <ProgressiveOnboardingAlertFind>
-                  <NavBarItemButton
-                    ref={anchorRef as any}
-                    active={visible}
-                    aria-label="Your account"
-                    {...anchorProps}
-                  >
-                    <PersonIcon fill="currentColor" />
-                  </NavBarItemButton>
-                </ProgressiveOnboardingAlertFind>
-              </ProgressiveOnboardingFollowFind>
-            </ProgressiveOnboardingSaveFind>
-          </Flex>
-        )}
-      </Dropdown>
-    </>
-  )
+            if (!visible) {
+              trackEvent({
+                action: ActionType.clickedNotificationsBell,
+              })
+            }
+          }}
+        >
+          <BellStrokeIcon fill="currentColor" />
+
+          {shouldDisplayBlueDot && (
+            <NavBarNotificationIndicator
+              position="absolute"
+              top="15px"
+              right="9px"
+            />
+          )}
+        </NavBarItemButton>
+      )}
+    </Dropdown>
+    <NavBarItemLink
+      href={(() => {
+        if (getENV("IS_MOBILE")) {
+          return `/user/conversations`
+        }
+
+        if (firstConversation?.internalID) {
+          return `/user/conversations/${firstConversation.internalID}`
+        } else {
+          return "/user/conversations"
+        }
+      })()}
+      aria-label={
+        hasConversations
+          ? `${me?.unreadConversationCount} unread conversations`
+          : "Conversations"
+      }
+    >
+      <EnvelopeIcon fill="currentColor" />
+
+      {hasConversations && (
+        <NavBarNotificationIndicator
+          position="absolute"
+          top="15px"
+          right="5px"
+        />
+      )}
+    </NavBarItemLink>
+    <Dropdown
+      zIndex={Z.dropdown}
+      dropdown={<NavBarUserMenu width={230} />}
+      placement="bottom-end"
+      offset={0}
+      openDropdownByClick
+    >
+      {/*
+        FIXME: REACT_18_UPGRADE
+        @ts-ignore */}
+      {({ anchorRef, anchorProps, visible }) => (
+        // Offset to accomodate hit area padding on right side of icon
+        (<Flex mr={-1}>
+          <ProgressiveOnboardingSaveFind>
+            <ProgressiveOnboardingFollowFind>
+              <ProgressiveOnboardingAlertFind>
+                <NavBarItemButton
+                  ref={anchorRef as any}
+                  active={visible}
+                  aria-label="Your account"
+                  {...anchorProps}
+                >
+                  <PersonIcon fill="currentColor" />
+                </NavBarItemButton>
+              </ProgressiveOnboardingAlertFind>
+            </ProgressiveOnboardingFollowFind>
+          </ProgressiveOnboardingSaveFind>
+        </Flex>)
+      )}
+    </Dropdown>
+  </>);
 }
 
-export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
+export const NavBarLoggedInActionsQueryRenderer: React.FC<React.PropsWithChildren<{}>> = () => {
   const { relayEnvironment } = useContext(SystemContext)
 
   return isServer ? (
@@ -206,7 +208,7 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
   )
 }
 
-const Placeholder: React.FC = () => {
+const Placeholder: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Flex gap={2} alignItems="center" ml={1}>
       <BellStrokeIcon fill="currentColor" />

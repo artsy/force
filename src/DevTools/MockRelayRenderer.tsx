@@ -22,7 +22,7 @@ import {
 } from "System/Contexts/SystemContext"
 
 export interface MockRelayRendererProps<T extends OperationType> {
-  Component: React.ComponentType<any>
+  Component: React.ComponentType<React.PropsWithChildren<any>>
   componentProps?: object
   variables?: T["variables"]
   query: GraphQLTaggedNode

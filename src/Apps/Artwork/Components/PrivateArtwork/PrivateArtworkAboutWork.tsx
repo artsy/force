@@ -8,7 +8,7 @@ interface PrivateArtworkAboutWorkProps {
   artwork: PrivateArtworkAboutWork_artwork$key
 }
 
-export const PrivateArtworkAboutWork: React.FC<PrivateArtworkAboutWorkProps> = ({
+export const PrivateArtworkAboutWork: React.FC<React.PropsWithChildren<PrivateArtworkAboutWorkProps>> = ({
   artwork,
 }) => {
   const data = useFragment(

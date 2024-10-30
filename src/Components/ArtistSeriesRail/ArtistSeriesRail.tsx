@@ -25,7 +25,7 @@ interface ArtistSeriesProps {
   title?: string
 }
 
-const ArtistSeriesRail: FC<ArtistSeriesProps> = ({
+const ArtistSeriesRail: FC<React.PropsWithChildren<ArtistSeriesProps>> = ({
   artist,
   contextModule,
   title,
@@ -116,10 +116,10 @@ const ArtistSeriesRailPlaceholder = () => {
   )
 }
 
-export const ArtistSeriesRailQueryRenderer: FC<{
+export const ArtistSeriesRailQueryRenderer: FC<React.PropsWithChildren<{
   id: string
   title?: string
-}> = ({ id, title }) => {
+}>> = ({ id, title }) => {
   return (
     <Box data-test="ArtistSeriesRailQueryRenderer">
       <SystemQueryRenderer<ArtistSeriesRailQuery>

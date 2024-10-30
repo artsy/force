@@ -31,7 +31,7 @@ interface SmsSecondFactorProps {
 }
 
 // TODO: This needs to be rebuilt from scratch
-export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
+export const SmsSecondFactor: React.FC<React.PropsWithChildren<SmsSecondFactorProps>> = ({
   me,
   relay,
 }) => {

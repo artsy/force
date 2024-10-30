@@ -23,7 +23,7 @@ interface ArticleSectionImageCollectionProps {
   section: ArticleSectionImageCollection_section$data
 }
 
-const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
+const ArticleSectionImageCollection: FC<React.PropsWithChildren<ArticleSectionImageCollectionProps>> = ({
   section,
 }) => {
   const { Container, Caption, targetWidth } = useMemo(() => {
@@ -86,7 +86,7 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
   )
 }
 
-const FullBleedCaption: FC = ({ children }) => {
+const FullBleedCaption: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <HorizontalPadding>
       <GridColumns>

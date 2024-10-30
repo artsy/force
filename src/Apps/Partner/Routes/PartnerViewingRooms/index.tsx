@@ -12,7 +12,7 @@ interface PartnerViewingRoomsProps {
   pastViewingRooms: PartnerViewingRooms_pastViewingRooms$data
 }
 
-export const PartnerViewingRooms: React.FC<PartnerViewingRoomsProps> = ({
+export const PartnerViewingRooms: React.FC<React.PropsWithChildren<PartnerViewingRoomsProps>> = ({
   currentViewingRooms,
   upcomingViewingRooms,
   pastViewingRooms,

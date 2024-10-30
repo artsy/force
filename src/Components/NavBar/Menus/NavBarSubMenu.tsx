@@ -16,7 +16,7 @@ interface NavBarSubMenuProps {
 }
 
 /** Component for full-width sub-menus (Artworks, Artists) */
-export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
+export const NavBarSubMenu: React.FC<React.PropsWithChildren<NavBarSubMenuProps>> = ({
   menu,
   contextModule,
   onClick,

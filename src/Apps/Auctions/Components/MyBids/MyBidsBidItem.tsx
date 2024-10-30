@@ -15,7 +15,7 @@ interface MyBidsBidItemProps {
   saleArtwork: MyBidsBidItem_saleArtwork$data
 }
 
-export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
+export const MyBidsBidItem: React.FC<React.PropsWithChildren<MyBidsBidItemProps>> = ({
   horizontalSlidePosition,
   saleArtwork,
 }) => {

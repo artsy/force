@@ -17,7 +17,7 @@ interface ArtistShowsGroupProps {
   status: string
 }
 
-const ArtistShowsGroup: React.FC<ArtistShowsGroupProps> = ({
+const ArtistShowsGroup: React.FC<React.PropsWithChildren<ArtistShowsGroupProps>> = ({
   artist,
   relay,
   sort,

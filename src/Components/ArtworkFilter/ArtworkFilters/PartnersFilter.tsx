@@ -1,5 +1,5 @@
 import * as React from "react"
-import { SelectedFiltersCountsLabels } from "../ArtworkFilterContext"
+import { SelectedFiltersCountsLabels } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
 export interface PartnersFilterProps {
@@ -7,7 +7,7 @@ export interface PartnersFilterProps {
   label?: string
 }
 
-export const PartnersFilter: React.FC<PartnersFilterProps> = ({
+export const PartnersFilter: React.FC<React.PropsWithChildren<PartnersFilterProps>> = ({
   expanded,
   label = "Galleries and Institutions",
 }) => {

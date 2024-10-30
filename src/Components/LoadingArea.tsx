@@ -10,7 +10,7 @@ interface LoadingAreaProps extends BoxProps {
  * Use this component when a content skeleton is inappropriate: for example,
  * when paginating contents, a skeleton would likely cause the UI to shift
  */
-export const LoadingArea: FC<LoadingAreaProps> = ({
+export const LoadingArea: FC<React.PropsWithChildren<LoadingAreaProps>> = ({
   isLoading,
   children,
   ...rest

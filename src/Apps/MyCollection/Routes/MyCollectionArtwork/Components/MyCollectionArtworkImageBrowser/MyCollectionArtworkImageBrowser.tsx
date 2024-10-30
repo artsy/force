@@ -8,7 +8,7 @@ interface MyCollectionArtworkImageBrowserProps {
   artwork: MyCollectionArtworkImageBrowser_artwork$key
 }
 
-export const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserProps> = props => {
+export const MyCollectionArtworkImageBrowser: React.FC<React.PropsWithChildren<MyCollectionArtworkImageBrowserProps>> = props => {
   const artwork = useFragment(FRAGMENT, props.artwork)
 
   if (artwork?.figures?.length === 0) {

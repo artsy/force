@@ -30,7 +30,7 @@ interface CollectorProfileArtistsListArtistProps {
   userInterestEdge: CollectorProfileArtistsListArtist_userInterestEdge$key
 }
 
-export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListArtistProps> = ({
+export const CollectorProfileArtistsListArtist: FC<React.PropsWithChildren<CollectorProfileArtistsListArtistProps>> = ({
   userInterestEdge,
 }) => {
   const [mode, setMode] = useState<"Idle" | "Open" | "Delete">("Idle")
@@ -147,6 +147,9 @@ export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListAr
               placement="bottom-end"
               openDropdownByClick
             >
+              {/*
+                FIXME: REACT_18_UPGRADE
+                @ts-ignore */}
               {({ anchorRef, anchorProps, onHide }) => {
                 onHideRef.current = onHide
 
@@ -201,7 +204,7 @@ export const CollectorProfileArtistsListArtist: FC<CollectorProfileArtistsListAr
   )
 }
 
-export const CollectorProfileArtistsListArtistSkeleton: FC = () => {
+export const CollectorProfileArtistsListArtistSkeleton: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <Media greaterThan="xs">

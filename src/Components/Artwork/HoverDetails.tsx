@@ -10,7 +10,7 @@ interface HoverDetailsProps {
   artwork: HoverDetails_artwork$data
 }
 
-const HoverDetails: FC<HoverDetailsProps> = ({ artwork }) => {
+const HoverDetails: FC<React.PropsWithChildren<HoverDetailsProps>> = ({ artwork }) => {
   const labels = compact([
     artwork.attributionClass?.name,
     artwork.mediumType?.filterGene?.name,

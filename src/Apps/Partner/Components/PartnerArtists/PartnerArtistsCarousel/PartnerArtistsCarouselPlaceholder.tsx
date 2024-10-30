@@ -6,7 +6,7 @@ export interface PartnerArtistsCarouselPlaceholderProps {
   count: number
 }
 
-export const PartnerArtistsCarouselPlaceholder: React.FC<PartnerArtistsCarouselPlaceholderProps> = ({
+export const PartnerArtistsCarouselPlaceholder: React.FC<React.PropsWithChildren<PartnerArtistsCarouselPlaceholderProps>> = ({
   count,
 }) => {
   return (

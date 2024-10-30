@@ -43,7 +43,7 @@ export interface OfferRouteProps {
   isCommittingMutation: boolean
 }
 
-export const OfferRoute: FC<OfferRouteProps> = ({
+export const OfferRoute: FC<React.PropsWithChildren<OfferRouteProps>> = ({
   order,
   router,
   dialog,
