@@ -10,6 +10,8 @@ import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "Apps/Artwor
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
+import Arta from "@artaio/arta-browser"
+// import { ArtaObject } from "@artaio/arta-browser/dist/MetadataTypes"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
   artwork: ArtworkSidebarCurrentBidInfo_artwork$data
@@ -117,12 +119,38 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
 
   const CurrentBid = currentBidChanged ? TextWithPulse : Text
 
+  //const objects: ArtaObject[] = [
+  //    {
+  //height: 24,
+  //subtype: "painting_unframed",
+  //unit_of_measurement: "in",
+  //value_currency: "USD",
+  //value: 100.0,
+  //weight: 2,
+  //weight_unit: "lb",
+  //width: 36,
+  //},
+  //  //]
+
+  //const origin = {
+  //address_line_1: "87 Richardson St",
+  //city: "Brooklyn",
+  //region: "NY",
+  //country: "US",
+  //postal_code: "11249",
+  //  //}
+
+  //const requestSettings = {
+  //origin,
+  //objects,
+  //  }
+  Arta.init("test")
+  //const estimate = Arta.estimate(requestSettings)
+
   return (
     <>
       {dialogComponent}
-
       <Spacer y={2} />
-
       <Flex width="100%" flexDirection="row" justifyContent="space-between">
         <Text variant="lg-display" pr={1}>
           {bidsPresent ? "Current bid" : "Starting bid"}
@@ -149,7 +177,6 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
           </CurrentBid>
         </Flex>
       </Flex>
-
       {(bidText || myMaxBid) && (
         <Flex width="100%" flexDirection="row" justifyContent="space-between">
           {bidText && (
@@ -165,15 +192,12 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
           )}
         </Flex>
       )}
-
       {!!lotWatcherCount && (
         <Text variant="xs" color="black100">
           {lotWatcherCount} {lotWatcherCount === 1 ? "watcher" : "watchers"}
         </Text>
       )}
-
       <Spacer y={2} />
-
       {artwork.sale && artwork.sale.is_with_buyers_premium && (
         <>
           <Spacer y={1} />

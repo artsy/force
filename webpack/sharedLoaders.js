@@ -34,6 +34,11 @@ export const babelLoader = {
   ],
 }
 
+export const cssLoader = {
+  test: /\.css$/,
+  use: ["css-loader"],
+}
+
 export const ejsLoader = {
   test: /\.ejs$/,
   use: {

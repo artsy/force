@@ -82,6 +82,7 @@
     "styled-components": "^6.1.13"
   },
   "dependencies": {
+    "@artaio/arta-browser": "^2.13.0",
     "@artsy/cohesion": "4.214.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
@@ -287,6 +288,7 @@
     "chai": "4.0.0",
     "chai-passport-strategy": "^3.0.0",
     "concurrently": "^6.2.0",
+    "css-loader": "^7.1.2",
     "csstype": "3.0.7",
     "cypress": "10.7.0",
     "danger": "^10.9.0",
