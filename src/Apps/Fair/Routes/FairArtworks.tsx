@@ -166,9 +166,11 @@ export const FairArtworksQueryRenderer: React.FC<FairArtworkFilterQueryRendererP
           query FairArtworksFilterQuery(
             $slug: String!
             $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
           ) {
             fair(id: $slug) {
-              ...FairArtworks_fair @arguments(input: $input)
+              ...FairArtworks_fair
+                @arguments(input: $input, aggregations: $aggregations)
             }
           }
         `}
