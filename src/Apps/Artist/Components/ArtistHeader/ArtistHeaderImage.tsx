@@ -24,20 +24,22 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
 
   return (
     <>
-      <Link
-        rel="preload"
-        href={image.src}
-        as="image"
-        media={`(max-width: ${BREAKPOINTS.sm}px)`}
-      />
+      <Media greaterThan="xs">
+        <Link
+          rel="preload"
+          href={image.src}
+          as="image"
+          media={`(max-width: ${BREAKPOINTS.sm}px)`}
+        />
 
-      <Link
-        rel="preload"
-        href={desktop.src}
-        as="image"
-        imagesrcset={desktop.srcSet}
-        media={`(min-width: ${BREAKPOINTS.sm}px)`}
-      />
+        <Link
+          rel="preload"
+          href={desktop.src}
+          as="image"
+          imagesrcset={desktop.srcSet}
+          media={`(min-width: ${BREAKPOINTS.sm}px)`}
+        />
+      </Media>
 
       <Media at="xs">
         <FullBleedHeader src={image.src} />
