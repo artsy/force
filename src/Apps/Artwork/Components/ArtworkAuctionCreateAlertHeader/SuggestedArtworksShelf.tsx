@@ -32,6 +32,7 @@ export const SuggestedArtworksShelf: FC<SuggestedArtworksShelfProps> = ({
     suggestedArtworksCount > NUMBER_OF_ARTWORKS_TO_SHOW
 
   if (!displaySuggestedArtworksSection) return null
+
   return (
     <>
       <Column span={12} display={["none", "block"]}>
@@ -46,7 +47,7 @@ export const SuggestedArtworksShelf: FC<SuggestedArtworksShelfProps> = ({
           gap={2}
           justifyContent="center"
           overflow="hidden"
-          height="340px"
+          height="350px"
         >
           {artworks.map(artwork => (
             <ShelfArtworkFragmentContainer
