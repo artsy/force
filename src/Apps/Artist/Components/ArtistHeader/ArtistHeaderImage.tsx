@@ -1,9 +1,13 @@
-import { BoxProps, Image, ResponsiveBox } from "@artsy/palette"
-import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
+import { BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
 import { FC } from "react"
-import { maxDimensionsByArea, resized } from "Utils/resized"
+import { cropped, maxDimensionsByArea, resized } from "Utils/resized"
 import { BREAKPOINTS, Media } from "Utils/Responsive"
 import { Link } from "react-head"
+
+const MOBILE_SIZE = {
+  width: 450,
+  height: 320,
+}
 
 interface ArtistHeaderImageProps
   extends Omit<BoxProps, "maxHeight" | "maxWidth"> {
@@ -21,16 +25,14 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
   })
 
   const desktop = resized(image.src, { width: max.width, height: max.height })
+  const mobile = cropped(image.src, {
+    width: MOBILE_SIZE.width,
+    height: MOBILE_SIZE.height,
+    quality: 60,
+  })
 
   return (
     <>
-      <Link
-        rel="preload"
-        href={image.src}
-        as="image"
-        media={`(max-width: ${BREAKPOINTS.sm}px)`}
-      />
-
       <Link
         rel="preload"
         href={desktop.src}
@@ -39,8 +41,37 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
         media={`(min-width: ${BREAKPOINTS.sm}px)`}
       />
 
+      <Link
+        rel="preload"
+        href={mobile.src}
+        as="image"
+        imagesrcset={mobile.srcSet}
+        media={`(min-width: ${BREAKPOINTS.sm}px)`}
+      />
+
       <Media at="xs">
-        <FullBleedHeader src={image.src} />
+        <FullBleed>
+          <ResponsiveBox
+            aspectWidth={MOBILE_SIZE.width}
+            aspectHeight={MOBILE_SIZE.height}
+            maxWidth={700}
+            minWidth={MOBILE_SIZE.width}
+            maxHeight={MOBILE_SIZE.height}
+            minHeight={MOBILE_SIZE.height}
+          >
+            <Image
+              width="100%"
+              height="100%"
+              src={mobile.src}
+              srcSet={mobile.srcSet}
+              fetchPriority="high"
+              style={{
+                minWidth: MOBILE_SIZE.width,
+                minHeight: MOBILE_SIZE.height,
+              }}
+            />
+          </ResponsiveBox>
+        </FullBleed>
       </Media>
 
       <Media greaterThan="xs">
