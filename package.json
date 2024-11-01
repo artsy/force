@@ -92,7 +92,7 @@
     "@artsy/palette-charts": "^38.0.4",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/to-title-case": "^1.1.0",
-    "@artsy/xapp": "1.0.6",
+    "@artsy/xapp": "2.0.0",
     "@babel/runtime": "7.13.10",
     "@loadable/component": "5.15.2",
     "@loadable/server": "5.15.2",

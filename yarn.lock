@@ -126,12 +126,10 @@
     lodash.isnumber "^3.0.3"
     lodash.upperfirst "^4.3.1"
 
-"@artsy/xapp@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@artsy/xapp/-/xapp-1.0.6.tgz#7aa62f2fdb3defd2634b3ce24a2932159daa2442"
-  integrity sha512-HvVHokBkSg73p9CspnPnNLlZwINgNA/tJ1I5wfmMGXi4hdb9K+35CNLT+rByz4dWXmtA3RJcfzCFQknejEObGg==
-  dependencies:
-    superagent "^1.2.0"
+"@artsy/xapp@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/xapp/-/xapp-2.0.0.tgz#ca29d4a09f6d3e73a03d630f01a23518fa5de73f"
+  integrity sha512-PzawBTmxbZSCqNElv8srMFZM6rXEDIV+LfIVS4gaC0jnt4UI6STGQw4yr6sQuyOmuFzdjA9TjAJlr4OCrVauQg==
 
 "@babel/cli@7.13.10":
   version "7.13.10"
@@ -21991,7 +21989,7 @@ superagent-retry@^0.6.0:
   resolved "https://registry.yarnpkg.com/superagent-retry/-/superagent-retry-0.6.0.tgz#e49b35ca96c0e3b1d0e3f49605136df0e0a028b7"
   integrity sha1-5Js1ypbA47HQ4/SWBRNt8OCgKLc=
 
-superagent@3.8.3, superagent@^1.2.0, superagent@^3.5.0:
+superagent@3.8.3, superagent@^3.5.0:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.3.tgz#460ea0dbdb7d5b11bc4f78deba565f86a178e128"
   integrity sha512-GLQtLMCoEIK4eDv6OGtkOoSMt3D+oq0y3dsxMuYuDvaNUvuT8eFBuLmfR0iYYzHC1e8hpzC6ZsxbuP6DIalMFA==
