@@ -69,7 +69,7 @@ beforeEach(() => {
 const resolveMostRecentOperation = async (resolvers: any) => {
   const operation = mockRelayEnv.mock.getMostRecentOperation()
 
-  await act(() => {
+  act(() => {
     mockRelayEnv.mock.resolve(
       operation,
       MockPayloadGenerator.generate(operation, resolvers)
