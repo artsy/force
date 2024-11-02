@@ -9,10 +9,12 @@ import { ArtistsCarouselCell_featuredLink$data } from "__generated__/ArtistsCaro
 interface ArtistsCarouselCellProps {
   featuredLink: ArtistsCarouselCell_featuredLink$data
   index: number
+  lazyLoad?: boolean
 }
 
 const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
   featuredLink,
+  lazyLoad = true,
 }) => {
   const { image, entity } = featuredLink
 
@@ -27,8 +29,8 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
             srcSet={image.thumb.srcSet}
             width={image.thumb.width}
             height={image.thumb.height}
+            lazyLoad={lazyLoad}
             alt=""
-            lazyLoad
           />
         ) : (
           <Box width={600} height={450} bg="black10" />
@@ -42,7 +44,7 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
         alignItems="flex-start"
       >
         <RouterLink
-          to={featuredLink.href!}
+          to={featuredLink.href}
           display="block"
           textDecoration="none"
           aria-label={featuredLink.title ?? entity.name ?? "Unknown Artist"}
@@ -55,7 +57,7 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
         </RouterLink>
 
         <FollowArtistButtonQueryRenderer
-          id={entity.internalID!}
+          id={entity.internalID as string}
           contextModule={ContextModule.featuredArtistsRail}
         />
       </Box>

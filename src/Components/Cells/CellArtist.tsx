@@ -19,6 +19,7 @@ export interface CellArtistProps extends Partial<RouterLinkProps> {
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
   displayCounts?: boolean
+  lazyLoad?: boolean
   FollowButton?: JSX.Element
 }
 
@@ -26,6 +27,7 @@ const CellArtist: FC<CellArtistProps> = ({
   artist,
   mode = "RAIL",
   displayCounts,
+  lazyLoad = true,
   FollowButton,
   ...rest
 }) => {
@@ -48,7 +50,7 @@ const CellArtist: FC<CellArtistProps> = ({
             width="100%"
             height="100%"
             alt=""
-            lazyLoad
+            lazyLoad={lazyLoad}
             style={{ display: "block" }}
           />
         ) : (

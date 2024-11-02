@@ -19,6 +19,7 @@ import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
 import { Media } from "Utils/Responsive"
 import { compact } from "lodash"
 import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
+import { getENV } from "Utils/getENV"
 
 interface ArtistsIndexProps {
   featuredArtists: ArtistsIndex_featuredArtists$data | null
@@ -70,6 +71,8 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                     key={featuredLink.internalID}
                     featuredLink={featuredLink}
                     index={index}
+                    // Improves LCP for above the fold content
+                    lazyLoad={false}
                   />
                 )
               })}
@@ -92,7 +95,7 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                 <Box key={gene.name ?? i}>
                   <Box display="flex" justifyContent="space-between">
                     <RouterLink
-                      to={gene.href!}
+                      to={gene.href}
                       textDecoration="none"
                       display="block"
                     >
@@ -104,7 +107,7 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                     <Spacer x={2} />
 
                     <RouterLink
-                      to={gene.href!}
+                      to={gene.href}
                       textDecoration="none"
                       display="block"
                     >
@@ -117,14 +120,18 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                   <Spacer y={2} />
 
                   <GridColumns gridRowGap={4}>
-                    {gene.trendingArtists.map(artist => {
+                    {gene.trendingArtists.map((artist, artistsIndex) => {
                       if (!artist) return null
+
+                      const isMobile = getENV("IS_MOBILE")
 
                       return (
                         <Column key={artist.internalID} span={[12, 6, 3, 3]}>
                           <CellArtistFragmentContainer
                             mode="GRID"
                             artist={artist}
+                            // LCP above the fold optimization for mobile
+                            lazyLoad={isMobile ? artistsIndex > 0 : true}
                           />
                         </Column>
                       )
