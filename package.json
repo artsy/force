@@ -348,7 +348,8 @@
     "webpack-hot-middleware": "^2.25.4",
     "webpack-manifest-plugin": "3.1.1",
     "webpack-node-externals": "3.0.0",
-    "webpack-retry-chunk-load-plugin": "2.2.0"
+    "webpack-retry-chunk-load-plugin": "2.2.0",
+    "workbox-webpack-plugin": "^7.3.0"
   },
   "optionalDependencies": {
     "fsevents": "*"
