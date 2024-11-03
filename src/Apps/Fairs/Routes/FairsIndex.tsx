@@ -91,7 +91,8 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
               width="100%"
               height="100%"
               alt=""
-              lazyLoad
+              // LCP Optimization
+              lazyLoad={false}
             />
 
             <Text
@@ -248,10 +249,14 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
               </Text>
 
               <GridColumns my={2}>
-                {currentFairs.map(fair => {
+                {currentFairs.map((fair, index) => {
                   return (
                     <Column key={fair.internalID} span={6}>
-                      <FairsFairBannerFragmentContainer fair={fair} />
+                      <FairsFairBannerFragmentContainer
+                        fair={fair}
+                        // LCP Optimization
+                        lazyLoad={index > 3}
+                      />
                     </Column>
                   )
                 })}

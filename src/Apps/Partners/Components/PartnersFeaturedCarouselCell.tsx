@@ -8,10 +8,12 @@ import { PartnersFeaturedCarouselCell_profile$data } from "__generated__/Partner
 
 interface PartnersFeaturedCarouselCellProps {
   profile: PartnersFeaturedCarouselCell_profile$data
+  lazyLoad?: boolean
 }
 
 const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
   profile,
+  lazyLoad = true,
 }) => {
   const partner = profile.owner
 
@@ -91,7 +93,7 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
             src={image.src}
             srcSet={image.srcSet}
             style={{ objectFit: "cover" }}
-            lazyLoad
+            lazyLoad={lazyLoad}
             width="100%"
             height="100%"
             alt=""

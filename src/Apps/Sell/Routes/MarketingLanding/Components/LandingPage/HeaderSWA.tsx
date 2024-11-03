@@ -104,7 +104,8 @@ export const HeaderSWA = () => {
             height="100%"
             src={image.src}
             srcSet={image.srcSet}
-            lazyLoad
+            // LCP Optimization
+            lazyLoad={false}
             alt="Collage of three artworks on a white background"
           />
         </ResponsiveBox>
