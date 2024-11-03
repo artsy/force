@@ -51,7 +51,8 @@ export const CollectionsHubsNav: FC<CollectionsHubsNavProps> = props => {
                     width="100%"
                     height="100%"
                     alt=""
-                    lazyLoad
+                    // LCP optimization
+                    lazyLoad={false}
                   />
                 )}
               </ResponsiveBox>
