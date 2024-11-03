@@ -6,37 +6,16 @@ import { RouterLink } from "System/Components/RouterLink"
 import { FairsFairBanner_fair$data } from "__generated__/FairsFairBanner_fair.graphql"
 import { themeGet } from "@styled-system/theme-get"
 
-const Overlay = styled(Box)`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: flex-end;
-  background: ${themeGet("effects.overlayGradient")};
-  opacity: 0;
-  transition: opacity 250ms;
-
-  > div {
-    transition: transform 250ms;
-    transform: translateY(25%);
-  }
-
-  &:hover {
-    opacity: 1;
-
-    > div {
-      transform: translateY(0);
-    }
-  }
-`
-
 interface FairsFairBannerProps extends BoxProps {
   fair: FairsFairBanner_fair$data
+  lazyLoad?: boolean
 }
 
-const FairsFairBanner: React.FC<FairsFairBannerProps> = ({ fair, ...rest }) => {
+const FairsFairBanner: React.FC<FairsFairBannerProps> = ({
+  fair,
+  lazyLoad = true,
+  ...rest
+}) => {
   const banner =
     fair.image &&
     (fair.bannerSize === "x-large" ? fair.image.large : fair.image.small)
@@ -66,7 +45,7 @@ const FairsFairBanner: React.FC<FairsFairBannerProps> = ({ fair, ...rest }) => {
               src={banner.src}
               srcSet={banner.srcSet}
               alt=""
-              lazyLoad
+              lazyLoad={lazyLoad}
             />
 
             <Overlay>
@@ -138,3 +117,29 @@ export const FairsFairBannerFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const Overlay = styled(Box)`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  background: ${themeGet("effects.overlayGradient")};
+  opacity: 0;
+  transition: opacity 250ms;
+
+  > div {
+    transition: transform 250ms;
+    transform: translateY(25%);
+  }
+
+  &:hover {
+    opacity: 1;
+
+    > div {
+      transform: translateY(0);
+    }
+  }
+`

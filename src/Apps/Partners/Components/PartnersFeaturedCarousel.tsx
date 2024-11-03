@@ -18,11 +18,13 @@ const PartnersFeaturedCarousel: FC<PartnersFeaturedCarouselProps> = ({
 
   return (
     <HeroCarousel fullBleed={false}>
-      {shuffled.map(profile => {
+      {shuffled.map((profile, index) => {
         return (
           <PartnersFeaturedCarouselCellFragmentContainer
             key={profile.internalID}
             profile={profile}
+            // LCP optimization
+            lazyLoad={index > 0}
           />
         )
       })}
