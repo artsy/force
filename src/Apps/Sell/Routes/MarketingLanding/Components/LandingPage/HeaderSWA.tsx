@@ -106,6 +106,7 @@ export const HeaderSWA = () => {
             srcSet={image.srcSet}
             // LCP Optimization
             lazyLoad={false}
+            fetchPriority="high"
             alt="Collage of three artworks on a white background"
           />
         </ResponsiveBox>

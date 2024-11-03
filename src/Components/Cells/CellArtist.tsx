@@ -51,6 +51,7 @@ const CellArtist: FC<CellArtistProps> = ({
             height="100%"
             alt=""
             lazyLoad={lazyLoad}
+            fetchPriority={lazyLoad ? "auto" : "high"}
             style={{ display: "block" }}
           />
         ) : (

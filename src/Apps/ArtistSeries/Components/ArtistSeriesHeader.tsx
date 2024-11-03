@@ -83,6 +83,7 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
                 alt={`${title} by ${artist.name}`}
                 // LCP Optimization
                 lazyLoad={false}
+                fetchPriority="high"
               />
             </ResponsiveBox>
           </Column>

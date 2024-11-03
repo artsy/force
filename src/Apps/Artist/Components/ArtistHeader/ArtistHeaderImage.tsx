@@ -1,12 +1,12 @@
 import { BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
 import { FC } from "react"
-import { cropped, maxDimensionsByArea, resized } from "Utils/resized"
+import { maxDimensionsByArea, resized } from "Utils/resized"
 import { BREAKPOINTS, Media } from "Utils/Responsive"
 import { Link } from "react-head"
 
 const MOBILE_SIZE = {
-  width: 450,
-  height: 320,
+  width: 350,
+  height: 220,
 }
 
 interface ArtistHeaderImageProps
@@ -25,7 +25,7 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
   })
 
   const desktop = resized(image.src, { width: max.width, height: max.height })
-  const mobile = cropped(image.src, {
+  const mobile = resized(image.src, {
     width: MOBILE_SIZE.width,
     height: MOBILE_SIZE.height,
     quality: 60,
@@ -54,9 +54,7 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
           <ResponsiveBox
             aspectWidth={MOBILE_SIZE.width}
             aspectHeight={MOBILE_SIZE.height}
-            maxWidth={700}
-            minWidth={MOBILE_SIZE.width}
-            maxHeight={MOBILE_SIZE.height}
+            maxWidth={1000}
             minHeight={MOBILE_SIZE.height}
           >
             <Image
@@ -66,8 +64,7 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
               srcSet={mobile.srcSet}
               fetchPriority="high"
               style={{
-                minWidth: MOBILE_SIZE.width,
-                minHeight: MOBILE_SIZE.height,
+                objectFit: "cover",
               }}
             />
           </ResponsiveBox>
@@ -92,6 +89,7 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
             style={{ objectFit: "cover" }}
             // Deliberate, to improve LCP
             lazyLoad={false}
+            fetchPriority="high"
           />
         </ResponsiveBox>
       </Media>
