@@ -94,6 +94,7 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
             srcSet={image.srcSet}
             style={{ objectFit: "cover" }}
             lazyLoad={lazyLoad}
+            fetchPriority={lazyLoad ? "auto" : "high"}
             width="100%"
             height="100%"
             alt=""

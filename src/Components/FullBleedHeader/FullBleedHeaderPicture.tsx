@@ -40,7 +40,12 @@ export const FullBleedHeaderPicture: ForwardRefExoticComponent<
       <source srcSet={sm.srcSet} media="(min-width: 767px)" />
       <source srcSet={xs.srcSet} media="(max-width: 766px)" />
 
-      <Image ref={forwardedRef as any} src={sm.src} alt="" />
+      <Image
+        ref={forwardedRef as any}
+        src={sm.src}
+        alt=""
+        fetchPriority="high"
+      />
     </picture>
   )
 })

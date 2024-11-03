@@ -53,6 +53,7 @@ export const CollectionsHubsNav: FC<CollectionsHubsNavProps> = props => {
                     alt=""
                     // LCP optimization
                     lazyLoad={false}
+                    fetchPriority="high"
                   />
                 )}
               </ResponsiveBox>

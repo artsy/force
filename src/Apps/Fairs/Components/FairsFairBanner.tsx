@@ -46,6 +46,7 @@ const FairsFairBanner: React.FC<FairsFairBannerProps> = ({
               srcSet={banner.srcSet}
               alt=""
               lazyLoad={lazyLoad}
+              fetchPriority={lazyLoad ? "auto" : "high"}
             />
 
             <Overlay>
