@@ -126,11 +126,13 @@ const HomeHeroUnitLarge: React.FC<HomeHeroUnitProps> = ({
               <Image
                 alt=""
                 height="100%"
-                lazyLoad={index > 0}
                 src={image.src}
                 srcSet={image.srcSet}
                 style={{ objectFit: "cover" }}
                 width="100%"
+                // LCP optimization
+                lazyLoad={index > 0}
+                fetchPriority={index > 0 ? "auto" : "high"}
               />
             )}
 

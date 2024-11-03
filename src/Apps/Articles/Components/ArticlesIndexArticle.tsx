@@ -73,6 +73,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({
                 width="100%"
                 height="100%"
                 lazyLoad={lazyLoad}
+                fetchPriority={lazyLoad ? "auto" : "high"}
               />
             )}
           </ResponsiveBox>

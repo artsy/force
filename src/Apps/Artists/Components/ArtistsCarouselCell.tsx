@@ -30,6 +30,7 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
             width={image.thumb.width}
             height={image.thumb.height}
             lazyLoad={lazyLoad}
+            fetchPriority={lazyLoad ? "auto" : "high"}
             alt=""
           />
         ) : (

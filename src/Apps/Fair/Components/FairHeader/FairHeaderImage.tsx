@@ -5,11 +5,11 @@ import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { BREAKPOINTS, Media } from "Utils/Responsive"
 import { FullBleed, Image, ResponsiveBox } from "@artsy/palette"
 import { Link } from "react-head"
-import { cropped } from "Utils/resized"
+import { resized } from "Utils/resized"
 
 const MOBILE_SIZE = {
-  width: 450,
-  height: 320,
+  width: 350,
+  height: 220,
 }
 
 interface FairHeaderImageProps {
@@ -23,7 +23,7 @@ export const FairHeaderImage: React.FC<FairHeaderImageProps> = ({
     return null
   }
 
-  const mobile = cropped(image.url, {
+  const mobile = resized(image.url, {
     width: MOBILE_SIZE.width,
     height: MOBILE_SIZE.height,
     quality: 60,
@@ -44,9 +44,7 @@ export const FairHeaderImage: React.FC<FairHeaderImageProps> = ({
           <ResponsiveBox
             aspectWidth={MOBILE_SIZE.width}
             aspectHeight={MOBILE_SIZE.height}
-            maxWidth={700}
-            minWidth={MOBILE_SIZE.width}
-            maxHeight={MOBILE_SIZE.height}
+            maxWidth={1000}
             minHeight={MOBILE_SIZE.height}
           >
             <Image
@@ -56,8 +54,7 @@ export const FairHeaderImage: React.FC<FairHeaderImageProps> = ({
               srcSet={mobile.srcSet}
               fetchPriority="high"
               style={{
-                minWidth: MOBILE_SIZE.width,
-                minHeight: MOBILE_SIZE.height,
+                objectFit: "cover",
               }}
             />
           </ResponsiveBox>
