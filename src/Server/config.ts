@@ -53,6 +53,7 @@ export const ENABLE_NEW_AUCTIONS_FILTER: any = false
 export const ENABLE_QUERY_BATCHING: any = false
 export const ENABLE_SSR_STREAMING: any = false
 export const ENABLE_WEB_CRAWLING: any = false
+export const ENABLE_WEB_VITALS_LOGGING: any = false
 export const GRAPHQL_CACHE_TTL: any = 1000000000
 export const GRAPHQL_CACHE_SIZE: any = 1000000000
 export const FACEBOOK_APP_NAMESPACE: any = "artsyinc"

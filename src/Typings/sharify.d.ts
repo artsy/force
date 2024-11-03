@@ -49,6 +49,7 @@ declare module "sharify" {
       ENABLE_QUERY_BATCHING: boolean
       ENABLE_SSR_STREAMING: boolean
       ENABLE_WEB_CRAWLING: string
+      ENABLE_WEB_VITALS_LOGGING: boolean
       FACEBOOK_APP_NAMESPACE: string
       FACEBOOK_ID: string
       FAIR_ORGANIZER?: any
