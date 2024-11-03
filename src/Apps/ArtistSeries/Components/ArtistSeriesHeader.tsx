@@ -81,7 +81,8 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
                 width="100%"
                 height="100%"
                 alt={`${title} by ${artist.name}`}
-                lazyLoad
+                // LCP Optimization
+                lazyLoad={false}
               />
             </ResponsiveBox>
           </Column>
@@ -102,7 +103,7 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
         artworksCountMessage
         descriptionFormatted(format: HTML)
         image {
-          cropped(width: 670, height: 500, version: "normalized") {
+          cropped(width: 670, height: 500, quality: 60, version: "normalized") {
             src
             srcSet
             width
