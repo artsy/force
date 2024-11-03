@@ -46,7 +46,7 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
         href={mobile.src}
         as="image"
         imagesrcset={mobile.srcSet}
-        media={`(min-width: ${BREAKPOINTS.sm}px)`}
+        media={`(max-width: ${BREAKPOINTS.sm}px)`}
       />
 
       <Media at="xs">
