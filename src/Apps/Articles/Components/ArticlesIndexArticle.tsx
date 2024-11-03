@@ -14,9 +14,13 @@ import { ArticleShare } from "Components/ArticleShare"
 
 interface ArticlesIndexArticleProps {
   article: ArticlesIndexArticle_article$data
+  lazyLoad?: boolean
 }
 
-const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {
+const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({
+  article,
+  lazyLoad = true,
+}) => {
   const image = article.thumbnailImage?.cropped
 
   return (
@@ -57,7 +61,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {
           tabIndex={-1}
         >
           <ResponsiveBox
-            bg="black30"
+            bg="black10"
             aspectWidth={910}
             aspectHeight={607}
             maxWidth="100%"
@@ -68,7 +72,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {
                 srcSet={image.srcSet}
                 width="100%"
                 height="100%"
-                lazyLoad
+                lazyLoad={lazyLoad}
               />
             )}
           </ResponsiveBox>
