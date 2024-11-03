@@ -40,11 +40,13 @@ export const ArticlesIndexArticles: FC<ArticlesIndexArticlesProps> = ({
   return (
     <>
       <Join separator={<Spacer y={4} />}>
-        {articles.map((article, i) => {
+        {articles.map((article, index) => {
           return (
             <ArticlesIndexArticleFragmentContainer
               key={article.internalID}
               article={article}
+              // LCP Optimization
+              lazyLoad={index > 0}
             />
           )
         })}
