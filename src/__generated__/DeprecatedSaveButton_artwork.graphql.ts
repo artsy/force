@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0bd596e8de8732273b03bfab90d54f2>>
+ * @generated SignedSource<<730138eb692a5cf5c914e1d8c2f96795>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,7 @@ export type DeprecatedSaveButton_artwork$data = {
   } | null | undefined;
   readonly id: string;
   readonly internalID: string;
-  readonly isSaved: boolean | null | undefined;
+  readonly isSavedToAnyList: boolean;
   readonly slug: string;
   readonly title: string | null | undefined;
   readonly " $fragmentType": "DeprecatedSaveButton_artwork";
@@ -59,7 +59,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isSaved",
+      "name": "isSavedToAnyList",
       "storageKey": null
     },
     {
@@ -103,6 +103,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "77175173cf4a6c991516a9da1795fed2";
+(node as any).hash = "67c6401cf0c3acbdeba292f8dc795c47";
 
 export default node;

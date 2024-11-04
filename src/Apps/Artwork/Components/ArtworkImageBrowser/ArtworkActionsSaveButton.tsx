@@ -21,7 +21,7 @@ export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
   const { isAuction, isClosed } = artwork.sale ?? {}
   const isOpenOrUpcomingSale = isAuction && !isClosed
 
-  const { isSaved, saveArtworkToLists } = useArtworkLists({
+  const { saveArtworkToLists } = useArtworkLists({
     contextModule: ContextModule.artworkImage,
     artwork: {
       internalID: artwork.internalID,
@@ -32,8 +32,7 @@ export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
       isInAuction: !!artwork.isInAuction,
-      isSavedToDefaultList: !!artwork.isSaved,
-      isSavedToCustomLists: artwork.isSavedToList,
+      isSavedToAnyList: artwork.isSavedToAnyList,
       collectorSignals: {
         auction: {
           lotWatcherCount:
@@ -44,7 +43,7 @@ export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
   })
 
   const { handleSave: saveToDefaultCollection } = useSaveArtwork({
-    isSaved: !!artwork.isSaved,
+    isSaved: artwork.isSavedToAnyList,
     artwork: {
       internalID: artwork.internalID,
       id: artwork.id,
@@ -78,17 +77,17 @@ export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
   if (isOpenOrUpcomingSale) {
     return (
       <ArtworkActionsWatchLotButtonFragmentContainer
-        isSaved={!!artwork.isSaved}
+        isSaved={artwork.isSavedToAnyList}
         artwork={artwork}
         onClick={handleSaveArtworkInAuction}
-        canShowRegistrationPopover={!artwork.isSavedToList}
+        canShowRegistrationPopover
       />
     )
   }
 
   return (
     <ProgressiveOnboardingSaveArtwork>
-      <SaveUtilButton isSaved={isSaved} onClick={handleSave} />
+      <SaveUtilButton isSaved={artwork.isSavedToAnyList} onClick={handleSave} />
     </ProgressiveOnboardingSaveArtwork>
   )
 }
@@ -100,7 +99,6 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
       fragment ArtworkActionsSaveButton_artwork on Artwork {
         id
         internalID
-        isSaved
         slug
         title
         date
@@ -109,7 +107,7 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
           url(version: "square")
         }
         isInAuction
-        isSavedToList
+        isSavedToAnyList
         sale {
           isAuction
           isClosed

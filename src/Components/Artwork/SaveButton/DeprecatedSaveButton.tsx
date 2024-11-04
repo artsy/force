@@ -25,10 +25,8 @@ export const DeprecatedSaveButton: React.FC<DeprecatedSaveButtonProps> = ({
   const tracking = useTracking()
   const [isHovered, setIsHovered] = useState(false)
 
-  const isSaved = !!artwork.isSaved
-
   const { handleSave } = useSaveArtwork({
-    isSaved,
+    isSaved: artwork.isSavedToAnyList,
     artwork: {
       internalID: artwork.internalID,
       slug: artwork.slug,
@@ -76,8 +74,8 @@ export const DeprecatedSaveButton: React.FC<DeprecatedSaveButtonProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Inner isSaved={isSaved}>
-        {isSaved && isHovered ? (
+      <Inner isSaved={artwork.isSavedToAnyList}>
+        {artwork.isSavedToAnyList && isHovered ? (
           <CloseIcon fill="white100" width={24} height={24} />
         ) : (
           <HeartStrokeIcon fill="white100" width={24} height={24} />
@@ -120,7 +118,7 @@ export const DeprecatedSaveButtonFragmentContainer = createFragmentContainer(
         id
         internalID
         slug
-        isSaved
+        isSavedToAnyList
         title
         collectorSignals {
           auction {

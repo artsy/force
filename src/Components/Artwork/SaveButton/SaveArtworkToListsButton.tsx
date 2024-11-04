@@ -1,5 +1,4 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveButtonBase } from "Components/Artwork/SaveButton/SaveButton"
 import { ResultAction } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
 import { useArtworkLists } from "Components/Artwork/useArtworkLists"
@@ -23,11 +22,8 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   contextModule,
 }) => {
   const tracking = useTracking()
-  const { savedListId, isSavedToList } = useManageArtworkForSavesContext()
 
-  const isSavedToDefaultList = !!artwork.isSaved
-
-  const { isSaved, saveArtworkToLists } = useArtworkLists({
+  const { saveArtworkToLists } = useArtworkLists({
     contextModule,
     artwork: {
       internalID: artwork.internalID,
@@ -38,8 +34,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
       isInAuction: !!artwork.isInAuction,
-      isSavedToDefaultList,
-      isSavedToCustomLists: artwork.isSavedToList,
+      isSavedToAnyList: artwork.isSavedToAnyList,
       collectorSignals: {
         auction: {
           lotWatcherCount:
@@ -79,7 +74,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
 
   return (
     <SaveButtonBase
-      isSaved={savedListId ? isSavedToList : isSaved}
+      isSaved={artwork.isSavedToAnyList}
       onClick={handleClick}
       artwork={artwork}
     />
@@ -93,7 +88,6 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
       fragment SaveArtworkToListsButton_artwork on Artwork {
         id
         internalID
-        isSaved
         slug
         title
         date
@@ -102,7 +96,7 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
           url(version: "square")
         }
         isInAuction
-        isSavedToList
+        isSavedToAnyList
         collectorSignals {
           auction {
             lotWatcherCount

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b12205c99e00ace4be80609dae2cf464>>
+ * @generated SignedSource<<18074a843d0443f0b26f3ccf5e69345d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -97,13 +97,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isSaved",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "slug",
             "storageKey": null
           },
@@ -163,7 +156,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isSavedToList",
+            "name": "isSavedToAnyList",
             "storageKey": null
           },
           {
@@ -215,12 +208,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e13a4248694d90f2e5ed74c277dbd13b",
+    "cacheID": "2f0677fa8adcc1698157a4a8f82991e1",
     "id": null,
     "metadata": {},
     "name": "SaveArtworkToListsButtonQuery",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
+    "text": "query SaveArtworkToListsButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
   }
 };
 })();
