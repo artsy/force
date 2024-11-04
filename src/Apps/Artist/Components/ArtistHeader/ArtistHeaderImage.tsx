@@ -39,6 +39,7 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
         as="image"
         imagesrcset={desktop.srcSet}
         media={`(min-width: ${BREAKPOINTS.sm}px)`}
+        fetchPriority="high"
       />
 
       <Link
@@ -47,6 +48,7 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
         as="image"
         imagesrcset={mobile.srcSet}
         media={`(max-width: ${BREAKPOINTS.sm}px)`}
+        fetchPriority="high"
       />
 
       <Media at="xs">
