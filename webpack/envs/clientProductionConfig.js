@@ -62,14 +62,13 @@ const clientProductionConfig = () => {
       }),
       new HtmlWebpackPlugin({
         filename: path.resolve(basePath, "public", "html.ejs"),
-        template: path.resolve(basePath, "src/html.ejs"),
-        inject: true,
-        scriptLoading: "defer",
+        inject: false,
         minify: {
           collapseWhitespace: true,
           conservativeCollapse: true,
           removeComments: true,
         },
+        template: path.resolve(basePath, "src/html.ejs"),
       }),
       process.env.WEBPACK_BUNDLE_REPORT &&
         new BundleAnalyzerPlugin({
