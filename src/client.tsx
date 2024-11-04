@@ -6,9 +6,11 @@ import { setupAnalytics } from "Server/analytics/helpers"
 import { setupClientRouter } from "System/Router/clientRouter"
 import { setupSentryClient } from "System/Utils/setupSentryClient"
 import { setupWebVitals } from "System/Utils/setupWebVitals"
+import { setupServiceWorkers } from "System/Utils/setupServiceWorkers"
 
 setupAnalytics()
 setupSentryClient()
+setupServiceWorkers()
 setupWebVitals()
 
 const { ClientRouter } = setupClientRouter({
