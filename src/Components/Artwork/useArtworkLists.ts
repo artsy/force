@@ -5,16 +5,18 @@ import {
   useSaveArtworkToLists,
 } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
 import { useEffect } from "react"
-
+import { fetchQuery, graphql } from "react-relay"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
+import { useArtworkListsArtworkSaveStatesQuery } from "__generated__/useArtworkListsArtworkSaveStatesQuery.graphql"
 
 export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
   const { artwork } = options
   const { sendToast } = useToasts()
+  const { relayEnvironment } = useSystemContext()
 
   const { value, clearValue } = useAuthIntent()
   const {
-    isSaved,
     saveArtworkToLists: saveToLists,
     openSelectListsForArtworkModal,
   } = useSaveArtworkToLists(options)
@@ -28,18 +30,37 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
       return
     }
 
-    if (artwork.isSavedToCustomLists) {
-      // Display select lists for artwork modal if artwork is saved to the custom lists
-      openSelectListsForArtworkModal()
-    } else if (artwork.isSavedToDefaultList) {
-      // Display toast if artwork is already saved to the default list
-      showToastByAction(ResultAction.SavedToDefaultList, artwork.isInAuction)
-    } else {
-      // Save artwork to the default list
-      saveArtworkToLists()
+    const fetchSavedStatusAndPerformAction = async () => {
+      const data = await fetchQuery<useArtworkListsArtworkSaveStatesQuery>(
+        relayEnvironment,
+        graphql`
+          query useArtworkListsArtworkSaveStatesQuery($artworkID: String!) {
+            artwork(id: $artworkID) {
+              isSavedToList(default: false)
+              isSaved
+            }
+          }
+        `,
+        { artworkID: artwork.internalID }
+      ).toPromise()
+
+      // The user clicked the save button while logged out.
+      // We need to comprehensively check the artwork's save state.
+
+      if (data?.artwork?.isSavedToList) {
+        // Display select lists for artwork modal if artwork is saved to the custom lists
+        openSelectListsForArtworkModal()
+      } else if (data?.artwork?.isSaved) {
+        // Display toast if artwork is already saved to the default list
+        showToastByAction(ResultAction.SavedToDefaultList, artwork.isInAuction)
+      } else {
+        // Save artwork to the default list
+        saveArtworkToLists()
+      }
     }
 
     clearValue()
+    fetchSavedStatusAndPerformAction()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, clearValue])
 
@@ -79,5 +100,5 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
     return action
   }
 
-  return { isSaved, saveArtworkToLists }
+  return { saveArtworkToLists }
 }

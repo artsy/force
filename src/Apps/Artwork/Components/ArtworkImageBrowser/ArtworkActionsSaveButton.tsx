@@ -7,7 +7,6 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
-import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 
 const logger = createLogger("ArtworkActionsSaveButton")
 
@@ -21,7 +20,7 @@ export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
   const { isAuction, isClosed } = artwork.sale ?? {}
   const isOpenOrUpcomingSale = isAuction && !isClosed
 
-  const { isSaved, saveArtworkToLists } = useArtworkLists({
+  const { saveArtworkToLists } = useArtworkLists({
     contextModule: ContextModule.artworkImage,
     artwork: {
       internalID: artwork.internalID,
@@ -32,8 +31,7 @@ export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
       isInAuction: !!artwork.isInAuction,
-      isSavedToDefaultList: !!artwork.isSaved,
-      isSavedToCustomLists: artwork.isSavedToList,
+      isSavedToAnyList: artwork.isSavedToAnyList,
       collectorSignals: {
         auction: {
           lotWatcherCount:
@@ -41,22 +39,6 @@ export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
         },
       },
     },
-  })
-
-  const { handleSave: saveToDefaultCollection } = useSaveArtwork({
-    isSaved: !!artwork.isSaved,
-    artwork: {
-      internalID: artwork.internalID,
-      id: artwork.id,
-      slug: artwork.slug,
-      collectorSignals: {
-        auction: {
-          lotWatcherCount:
-            artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
-        },
-      },
-    },
-    contextModule: ContextModule.artworkImage,
   })
 
   const handleSave = async () => {
@@ -67,28 +49,20 @@ export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
     }
   }
 
-  const handleSaveArtworkInAuction = async () => {
-    try {
-      await saveToDefaultCollection()
-    } catch (error) {
-      logger.error(error)
-    }
-  }
-
   if (isOpenOrUpcomingSale) {
     return (
       <ArtworkActionsWatchLotButtonFragmentContainer
-        isSaved={!!artwork.isSaved}
+        isSaved={artwork.isSavedToAnyList}
         artwork={artwork}
-        onClick={handleSaveArtworkInAuction}
-        canShowRegistrationPopover={!artwork.isSavedToList}
+        onClick={handleSave}
+        canShowRegistrationPopover
       />
     )
   }
 
   return (
     <ProgressiveOnboardingSaveArtwork>
-      <SaveUtilButton isSaved={isSaved} onClick={handleSave} />
+      <SaveUtilButton isSaved={artwork.isSavedToAnyList} onClick={handleSave} />
     </ProgressiveOnboardingSaveArtwork>
   )
 }
@@ -100,7 +74,6 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
       fragment ArtworkActionsSaveButton_artwork on Artwork {
         id
         internalID
-        isSaved
         slug
         title
         date
@@ -109,7 +82,7 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
           url(version: "square")
         }
         isInAuction
-        isSavedToList
+        isSavedToAnyList
         sale {
           isAuction
           isClosed

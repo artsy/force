@@ -40,6 +40,9 @@ export const useSelectArtworkLists = (artworkID: string) => {
                 default
                 ...ArtworkListItem_item
               }
+              artwork {
+                isSavedToAnyList
+              }
             }
             ... on ArtworksCollectionsBatchUpdateFailure {
               mutationError {

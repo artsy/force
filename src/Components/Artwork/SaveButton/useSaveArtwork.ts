@@ -42,7 +42,7 @@ export const useSaveArtwork = ({
               artwork: {
                 id: artwork.id ?? "",
                 slug: artwork.slug ?? "",
-                isSaved: !isSaved,
+                isSavedToAnyList: !isSaved,
                 collectorSignals: artwork.collectorSignals ?? null,
               },
               /**
@@ -65,7 +65,7 @@ export const useSaveArtwork = ({
 
         onSave?.({
           // TODO: Pass "saved" or "removed" value
-          action: !!saveArtwork?.artwork?.isSaved
+          action: !!saveArtwork?.artwork?.isSavedToAnyList
             ? "Saved Artwork"
             : "Removed Artwork",
           artwork,

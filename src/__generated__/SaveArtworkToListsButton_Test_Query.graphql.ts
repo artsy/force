@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<880d7390607177f17c3fd90dcdaa6532>>
+ * @generated SignedSource<<b7377eabd289ec91a7539ff49ec6d43d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,12 +46,6 @@ v3 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
-},
-v4 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -106,13 +100,6 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "internalID",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isSaved",
             "storageKey": null
           },
           {
@@ -178,7 +165,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isSavedToList",
+            "name": "isSavedToAnyList",
             "storageKey": null
           },
           {
@@ -230,7 +217,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "25a8bacc0cde70f4baf42e97679078fe",
+    "cacheID": "3e0910926b201f94569f6ab717dd89e2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -264,9 +251,13 @@ return {
         "artwork.date": (v1/*: any*/),
         "artwork.id": (v3/*: any*/),
         "artwork.internalID": (v3/*: any*/),
-        "artwork.isInAuction": (v4/*: any*/),
-        "artwork.isSaved": (v4/*: any*/),
-        "artwork.isSavedToList": (v2/*: any*/),
+        "artwork.isInAuction": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "artwork.isSavedToAnyList": (v2/*: any*/),
         "artwork.preview": {
           "enumValues": null,
           "nullable": true,
@@ -280,7 +271,7 @@ return {
     },
     "name": "SaveArtworkToListsButton_Test_Query",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
+    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
   }
 };
 })();

@@ -31,7 +31,7 @@ describe("Deprecated Save artwork", () => {
     id: "foo",
     internalID: "abcd1234",
     slug: "andy-warhol-skull",
-    isSaved: false,
+    isSavedToAnyList: false,
     title: "Skull",
   }
 
@@ -58,7 +58,7 @@ describe("Deprecated Save artwork", () => {
       saveArtwork: {
         artwork: {
           ...artwork,
-          isSaved: true,
+          isSavedToAnyList: true,
         },
       },
     }
@@ -97,9 +97,9 @@ describe("Deprecated Save artwork", () => {
   })
 
   it("can remove a saved artwork", async () => {
-    defaultMutationResults.saveArtwork.artwork.isSaved = false
+    defaultMutationResults.saveArtwork.artwork.isSavedToAnyList = false
     const { wrapper } = getWrapper({
-      Artwork: () => ({ ...artwork, isSaved: true }),
+      Artwork: () => ({ ...artwork, isSavedToAnyList: true }),
     })
     const page = new DeprecatedSaveButtonTestPage(wrapper)
 

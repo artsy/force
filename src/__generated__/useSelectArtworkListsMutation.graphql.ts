@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<83c6281515e8a67cf48498bb624d997b>>
+ * @generated SignedSource<<8775efb09a8c74bfb2f1f07062064917>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,9 @@ export type useSelectArtworkListsMutation$data = {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
       } | null | undefined> | null | undefined;
+      readonly artwork?: {
+        readonly isSavedToAnyList: boolean;
+      } | null | undefined;
       readonly mutationError?: {
         readonly statusCode: number | null | undefined;
       } | null | undefined;
@@ -82,6 +85,13 @@ v4 = [
   }
 ],
 v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isSavedToAnyList",
+  "storageKey": null
+},
+v6 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -106,14 +116,14 @@ v5 = {
   "type": "ArtworksCollectionsBatchUpdateFailure",
   "abstractKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = [
+v8 = [
   (v2/*: any*/),
   (v3/*: any*/),
   {
@@ -197,7 +207,7 @@ v7 = [
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           }
@@ -207,7 +217,7 @@ v7 = [
     ],
     "storageKey": "artworksConnection(first:4)"
   },
-  (v6/*: any*/)
+  (v7/*: any*/)
 ];
 return {
   "fragment": {
@@ -254,12 +264,24 @@ return {
                     "plural": true,
                     "selections": (v4/*: any*/),
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artwork",
+                    "kind": "LinkedField",
+                    "name": "artwork",
+                    "plural": false,
+                    "selections": [
+                      (v5/*: any*/)
+                    ],
+                    "storageKey": null
                   }
                 ],
                 "type": "ArtworksCollectionsBatchUpdateSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           }
@@ -309,7 +331,7 @@ return {
                     "kind": "LinkedField",
                     "name": "addedToCollections",
                     "plural": true,
-                    "selections": (v7/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -319,14 +341,27 @@ return {
                     "kind": "LinkedField",
                     "name": "removedFromCollections",
                     "plural": true,
-                    "selections": (v7/*: any*/),
+                    "selections": (v8/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artwork",
+                    "kind": "LinkedField",
+                    "name": "artwork",
+                    "plural": false,
+                    "selections": [
+                      (v5/*: any*/),
+                      (v7/*: any*/)
+                    ],
                     "storageKey": null
                   }
                 ],
                 "type": "ArtworksCollectionsBatchUpdateSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           }
@@ -336,16 +371,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e9cc842cb7da37ecca5bc60e0bea49e2",
+    "cacheID": "b9d6153f02a9425de4a25f8526299c12",
     "id": null,
     "metadata": {},
     "name": "useSelectArtworkListsMutation",
     "operationKind": "mutation",
-    "text": "mutation useSelectArtworkListsMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToArtworkLists: addedToCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n        removedFromArtworkLists: removedFromCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useSelectArtworkListsMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToArtworkLists: addedToCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n        removedFromArtworkLists: removedFromCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n        artwork {\n          isSavedToAnyList\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "eccaa75c432a092ab88db2a70d44cda8";
+(node as any).hash = "1a45b67aff26726ed28320e5f5e3524b";
 
 export default node;
