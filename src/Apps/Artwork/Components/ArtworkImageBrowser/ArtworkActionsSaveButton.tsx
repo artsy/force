@@ -7,7 +7,6 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
-import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 
 const logger = createLogger("ArtworkActionsSaveButton")
 
@@ -42,33 +41,9 @@ export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
     },
   })
 
-  const { handleSave: saveToDefaultCollection } = useSaveArtwork({
-    isSaved: artwork.isSavedToAnyList,
-    artwork: {
-      internalID: artwork.internalID,
-      id: artwork.id,
-      slug: artwork.slug,
-      collectorSignals: {
-        auction: {
-          lotWatcherCount:
-            artwork.collectorSignals?.auction?.lotWatcherCount ?? 0,
-        },
-      },
-    },
-    contextModule: ContextModule.artworkImage,
-  })
-
   const handleSave = async () => {
     try {
       await saveArtworkToLists()
-    } catch (error) {
-      logger.error(error)
-    }
-  }
-
-  const handleSaveArtworkInAuction = async () => {
-    try {
-      await saveToDefaultCollection()
     } catch (error) {
       logger.error(error)
     }
@@ -79,7 +54,7 @@ export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
       <ArtworkActionsWatchLotButtonFragmentContainer
         isSaved={artwork.isSavedToAnyList}
         artwork={artwork}
-        onClick={handleSaveArtworkInAuction}
+        onClick={handleSave}
         canShowRegistrationPopover
       />
     )

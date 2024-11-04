@@ -7,7 +7,6 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ArtworkActionsSaveButton_Test_Query } from "__generated__/ArtworkActionsSaveButton_Test_Query.graphql"
-import { wait } from "Utils/wait"
 import { fetchQuery } from "react-relay"
 import { act } from "react-dom/test-utils"
 
@@ -107,19 +106,15 @@ describe("ArtworkActionsSaveButton", () => {
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 
-    it("should not display the toast message when artwork is in auction", async () => {
+    it("should display the toast message when artwork is in auction", async () => {
       renderWithRelay({
         Artwork: () => unsavedAuctionArtwork,
       })
 
       fireEvent.click(screen.getByText("Watch lot"))
 
-      // giving the toast some time to appear. Without this line, the test succeeds
-      // even when the toast is being displayed
-      await wait(500)
-
-      expect(screen.queryByText("Artwork saved")).not.toBeInTheDocument()
-      expect(screen.queryByText("Add to a List")).not.toBeInTheDocument()
+      expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
+      expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 
     it("should open the modal when `Add to a List` button was pressed", async () => {
