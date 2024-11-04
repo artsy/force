@@ -76,9 +76,8 @@ export const clientDevelopmentConfig = () => {
       }),
       new HtmlWebpackPlugin({
         filename: path.resolve(basePath, "public", "html.ejs"),
+        inject: false,
         template: path.resolve(basePath, "src/html.ejs"),
-        inject: true,
-        scriptLoading: "defer",
       }),
       new ReactRefreshWebpackPlugin({
         overlay: false,
