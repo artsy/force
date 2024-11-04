@@ -10,10 +10,10 @@ interface SalesforceWrapperProps {
 export const SalesforceWrapper: React.FC<SalesforceWrapperProps> = ({
   isInAuction = false,
 }) => {
+  const salesforceMessageEnabled = getENV("SALESFORCE_MESSAGE_ENABLED")
   let embeddedService = null
   let buttonId = null
   let ewsLiveAgentDevName = null
-  let salesforceMessageEnabled = getENV("SALESFORCE_MESSAGE_ENABLED")
   let serviceName = null
   let chatURL = null
 
