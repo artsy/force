@@ -1,6 +1,7 @@
+import path from "path"
+import fs from "fs"
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-
 import { CDN_URL, GEMINI_CLOUDFRONT_URL, WEBFONT_URL } from "Server/config"
 
 /**
@@ -22,7 +23,40 @@ export function linkHeadersMiddleware(
       `<${WEBFONT_URL}/ll-unica77_regular.woff2>; rel=preload; as=font; crossorigin`,
       `<${WEBFONT_URL}/ll-unica77_medium.woff2>; rel=preload; as=font; crossorigin`,
       `<${WEBFONT_URL}/ll-unica77_italic.woff2>; rel=preload; as=font; crossorigin`,
+      ...getWebpackHintHeaders(),
     ])
   }
   next()
+}
+
+const getWebpackHintHeaders = () => {
+  let chunkFiles
+
+  try {
+    const earlyHintsPath = path.join(
+      process.cwd(),
+      "public/assets",
+      "early-hints.json"
+    )
+    chunkFiles = JSON.parse(fs.readFileSync(earlyHintsPath, "utf-8"))
+  } catch (error) {
+    console.error(
+      "[linkHeadersMiddleware] Could not load webpack early-hints.json:",
+      error
+    )
+  }
+
+  const cdnUrl = (() => {
+    if (process.env.NODE_ENV === "development") {
+      return ""
+    }
+
+    return CDN_URL
+  })()
+
+  const hintHeaders = chunkFiles.map(
+    file => `<${cdnUrl}${file}>; rel=preload; as=script; crossorigin`
+  )
+
+  return hintHeaders
 }

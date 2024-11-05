@@ -2,6 +2,7 @@
 
 import { RetryChunkLoadPlugin } from "webpack-retry-chunk-load-plugin"
 // import PreloadWebpackPlugin from "@vue/preload-webpack-plugin"
+import { EarlyHintsPlugin } from "./plugins/EarlyHintsPlugin"
 import NodePolyfillPlugin from "node-polyfill-webpack-plugin"
 import webpack from "webpack"
 
@@ -33,4 +34,6 @@ export const sharedPlugins = () => [
   //   as: "script",
   //   include: "initial",
   // }),
+
+  new EarlyHintsPlugin(),
 ]
