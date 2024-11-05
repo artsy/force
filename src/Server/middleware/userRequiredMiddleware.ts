@@ -4,7 +4,7 @@ const USER_REQUIRED_ROUTES = [
   "/notifications",
   "/orders(.*)",
   "/my-collection/artworks(.*)",
-  "/favorites/alerts",
+  "/favorites/alerts(.*)",
   "/settings/payments",
   "/settings/purchases(.*)",
   "/settings/shipping",
