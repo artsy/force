@@ -65,7 +65,6 @@ export const FairOverviewFragmentContainer = createFragmentContainer(
       fragment FairOverview_fair on Fair {
         ...FairEditorialRailArticles_fair
         ...FairCollections_fair
-        ...FairFollowedArtists_fair
         ...FairAbout_fair
         href
         slug

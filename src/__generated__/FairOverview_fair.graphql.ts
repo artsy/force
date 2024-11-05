@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d30ee5e770b0ed801235733db823023>>
+ * @generated SignedSource<<3e94918c7956bfaa41354741a2a0d987>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,7 @@ export type FairOverview_fair$data = {
     readonly id: string;
   } | null | undefined>;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"FairAbout_fair" | "FairCollections_fair" | "FairEditorialRailArticles_fair" | "FairFollowedArtists_fair">;
+  readonly " $fragmentSpreads": FragmentRefs<"FairAbout_fair" | "FairCollections_fair" | "FairEditorialRailArticles_fair">;
   readonly " $fragmentType": "FairOverview_fair";
 };
 export type FairOverview_fair$key = {
@@ -44,11 +44,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairCollections_fair"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairFollowedArtists_fair"
     },
     {
       "args": null,
@@ -138,6 +133,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1fda5e6f80a86ce85f7c32c2ce9dbbaf";
+(node as any).hash = "b9e870bd9763a25200b90803c0f08826";
 
 export default node;
