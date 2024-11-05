@@ -33,7 +33,7 @@ const ArtworkChatBubble: FC<ArtworkChatBubbleProps> = ({ artwork }) => {
     }
   }, [listPrice])
 
-  if (!getENV("SALESFORCE_CHAT_ENABLED")) {
+  if (!getENV("SALESFORCE_MESSAGE_ENABLED")) {
     return null
   }
 
