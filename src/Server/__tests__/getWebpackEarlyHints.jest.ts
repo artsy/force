@@ -1,13 +1,13 @@
 import fs from "fs"
 import path from "path"
-import { getWebpackEalyHints } from "Server/getWebpackEarlyHints"
+import { getWebpackEarlyHints } from "Server/getWebpackEarlyHints"
 
 jest.mock("fs")
 jest.mock("Server/config", () => ({ CDN_URL: "https://cdn.example.com" }))
 
 const HINTS_PATH = path.join(process.cwd(), "public/assets", "early-hints.json")
 
-describe("getWebpackEalyHints", () => {
+describe("getWebpackEarlyHints", () => {
   const mockReadFileSync = fs.readFileSync as jest.Mock
 
   afterEach(() => {
@@ -20,7 +20,7 @@ describe("getWebpackEalyHints", () => {
 
     mockReadFileSync.mockReturnValueOnce(JSON.stringify(mockChunkFiles))
 
-    const result = getWebpackEalyHints()
+    const result = getWebpackEarlyHints()
 
     expect(fs.readFileSync).toHaveBeenCalledWith(HINTS_PATH, "utf-8")
     expect(result.linkHeaders).toEqual([
@@ -39,7 +39,7 @@ describe("getWebpackEalyHints", () => {
 
     mockReadFileSync.mockReturnValueOnce(JSON.stringify(mockChunkFiles))
 
-    const result = getWebpackEalyHints()
+    const result = getWebpackEarlyHints()
 
     expect(fs.readFileSync).toHaveBeenCalledWith(HINTS_PATH, "utf-8")
     expect(result.linkHeaders).toEqual([

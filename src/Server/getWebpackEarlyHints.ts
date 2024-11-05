@@ -4,7 +4,7 @@ import fs from "fs"
 
 const HINTS_PATH = path.join(process.cwd(), "public/assets", "early-hints.json")
 
-export const getWebpackEalyHints = (): {
+export const getWebpackEarlyHints = (): {
   linkHeaders: string[]
   linkPreloadTags: string[]
 } => {
