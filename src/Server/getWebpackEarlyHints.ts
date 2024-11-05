@@ -17,6 +17,11 @@ export const getWebpackEalyHints = (): {
       "[getWebpackEarlyHints] Could not load webpack early-hints.json:",
       error
     )
+
+    return {
+      linkHeaders: [],
+      linkPreloadTags: [],
+    }
   }
 
   const cdnUrl = (() => {
