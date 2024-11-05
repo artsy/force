@@ -64,6 +64,7 @@
     "webpack": "node --max_old_space_size=4096 -r @babel/register node_modules/.bin/webpack"
   },
   "resolutions": {
+    "@types/express": "4.17.21",
     "@types/react": "16.9.34",
     "@types/relay-runtime": "14.1.1",
     "chokidar": "3.4.0",
@@ -238,7 +239,7 @@
     "@testing-library/user-event": "^13.1.9",
     "@types/autosuggest-highlight": "3.1.0",
     "@types/enzyme": "3.1.11",
-    "@types/express": "4.16.1",
+    "@types/express": "4.17.21",
     "@types/google-maps": "^3.2.3",
     "@types/isomorphic-fetch": "0.0.34",
     "@types/jest": "27.0.2",
