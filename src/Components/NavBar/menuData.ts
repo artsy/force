@@ -27,38 +27,10 @@ export interface MenuLinkData {
 }
 
 export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
-  text: "What’s New",
+  text: "What's New",
   menu: {
-    title: "What’s New",
+    title: "What's New",
     links: [
-      {
-        text: "Start Here",
-        menu: {
-          title: "Start Here",
-          links: [
-            {
-              text: "New This Week",
-              href: "/collection/new-this-week?metric=in",
-            },
-            {
-              text: "Trending Now",
-              href: "/collection/trending-now",
-            },
-            {
-              text: "Top Auction Lots",
-              href: "/collection/top-auction-lots",
-            },
-            {
-              text: "New Abstract Art",
-              href: "/collection/new-abstract-art",
-            },
-            {
-              text: "New Figurative Art",
-              href: "/collection/new-figurative-art",
-            },
-          ],
-        },
-      },
       {
         text: "By Price",
         menu: {
@@ -66,43 +38,31 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Art under $500",
-              href: "/collection/art-under-500-dollars?metric=in",
+              href: "/collect?price_range=%2A-500&metric=in",
             },
             {
               text: "Art under $1,000",
-              href: "/collection/art-under-1000-dollars?metric=in",
+              href: "/collect?price_range=%2A-1000&metric=in",
             },
             {
               text: "Art under $2,500",
-              href: "/collection/art-under-2500-dollars?metric=in",
+              href: "/collect?price_range=%2A-2500&metric=in",
             },
             {
               text: "Art under $5,000",
-              href: "/collection/art-under-5000-dollars?metric=in",
+              href: "/collect?price_range=%2A-5000&metric=in",
             },
             {
               text: "Art under $10,000",
-              href: "/collection/art-under-10000-dollars?metric=in",
-            },
-          ],
-        },
-      },
-      {
-        text: "Curators’ Picks",
-        menu: {
-          title: "Curators’ Picks",
-          links: [
-            {
-              text: "Curators’ Picks: Emerging Artists",
-              href: "/collection/curators-picks-emerging-artists?metric=in",
+              href: "/collect?price_range=%2A-10000&metric=in",
             },
             {
-              text: "Curators’ Picks: Blue-Chip Artists",
-              href: "/collection/curators-picks-blue-chip-artists?metric=in",
+              text: "Art under $25,000",
+              href: "/collect?price_range=%2A-25000&metric=in",
             },
             {
-              text: "The Artsy Vanguard Artists",
-              href: "/collection/artsy-vanguard-artists",
+              text: "Art above $25,000",
+              href: "/collect?price_range=25000-%2A&metric=in",
             },
           ],
         },
@@ -127,6 +87,74 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
             {
               text: "New from Nonprofits",
               href: "/collection/new-from-nonprofits?metric=in",
+            },
+            {
+              text: "The Artsy Edition Shop",
+              href: "/fair/the-artsy-edition-shop/artworks",
+            },
+          ],
+        },
+      },
+      {
+        text: "Our Picks",
+        menu: {
+          title: "Our Picks",
+          links: [
+            {
+              text: "Curators' Picks",
+              href: "/collection/curators-picks",
+            },
+            {
+              text: "Best Bids",
+              href: "/collection/best-bids",
+            },
+            {
+              text: "Most Loved",
+              href: "/collection/most-loved",
+            },
+            {
+              text: "Street Art Edit",
+              href: "/collection/street-art-edit",
+            },
+            {
+              text: "Icons",
+              href: "/collection/icons",
+            },
+            {
+              text: "Bleeding Edge",
+              href: "/collection/bleeding-edge",
+            },
+          ],
+        },
+      },
+      {
+        text: "By Style",
+        menu: {
+          title: "By Style",
+          links: [
+            {
+              text: "Statement Pieces",
+              href: "/collection/statement-pieces",
+            },
+            {
+              text: "Little Gems",
+              href: "/collection/little-gems",
+            },
+            {
+              text: "Understated",
+              href: "/collection/understated",
+            },
+            {
+              text: "Transcendent",
+              href: "/collection/transcendent",
+            },
+            {
+              text: "Feast for the Eyes",
+              href: "/collection/feast-for-the-eyes",
+            },
+            {
+              text: "Flora and Fauna",
+              href: "/collection/flora-and-fauna",
             },
           ],
         },
