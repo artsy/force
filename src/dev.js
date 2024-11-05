@@ -50,6 +50,7 @@ const wdm = webpackDevMiddleware(compiler, {
      * @see https://github.com/artsy/reaction/blob/master/src/Artsy/Router/serverRouter.tsx
      */
     return (
+      /early-hints/.test(filePath) ||
       /loadable-stats/.test(filePath) ||
       /manifest/.test(filePath) ||
       /\.ejs/.test(filePath)
