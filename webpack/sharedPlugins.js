@@ -1,7 +1,7 @@
 // @ts-check
 
 import { RetryChunkLoadPlugin } from "webpack-retry-chunk-load-plugin"
-import PreloadWebpackPlugin from "@vue/preload-webpack-plugin"
+// import PreloadWebpackPlugin from "@vue/preload-webpack-plugin"
 import NodePolyfillPlugin from "node-polyfill-webpack-plugin"
 import webpack from "webpack"
 
@@ -28,9 +28,9 @@ export const sharedPlugins = () => [
     }`,
   }),
 
-  new PreloadWebpackPlugin({
-    rel: "preload",
-    as: "script",
-    include: "initial",
-  }),
+  // new PreloadWebpackPlugin({
+  //   rel: "preload",
+  //   as: "script",
+  //   include: "initial",
+  // }),
 ]

@@ -77,7 +77,8 @@ export const clientDevelopmentConfig = () => {
       new HtmlWebpackPlugin({
         filename: path.resolve(basePath, "public", "html.ejs"),
         template: path.resolve(basePath, "src/html.ejs"),
-        inject: true,
+        // We need to inject runtime CDN url in via express
+        inject: false,
         scriptLoading: "defer",
       }),
       new ReactRefreshWebpackPlugin({
