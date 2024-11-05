@@ -8,7 +8,7 @@ export const redirectPostAuth = ({
   req: ArtsyRequest
   res: ArtsyResponse
 }) => {
-  const redirectTo = req.query["redirectTo"]
+  const redirectTo = req.query["redirectTo"] as string
 
   const configuredAllowedHosts =
     getENV("ALLOWED_REDIRECT_HOSTS")?.split(",") || []
