@@ -46,6 +46,7 @@ declare global {
     braze?: typeof Braze
     desktopPageTimeTrackers: [{ path: string; reset: (path) => void }]
     embedded_svc?: any
+    embeddedservice_bootstrap?: any
     grecaptcha: any
     ReactNativeWebView?: { postMessage: (message: string) => void }
     sd: any
