@@ -20,33 +20,33 @@ describe("getRedirectUrl", () => {
   })
 
   it("should redirect to the correct URL with dynamic segments", () => {
-    const req = {
+    const req = ({
       route: { path: "/foo/:id/bar" },
       params: { id: "123" },
       url: "/foo/123/bar",
-    } as ArtsyRequest
+    } as unknown) as ArtsyRequest
 
     const result = getRedirectUrl(req, redirects)
     expect(result).toEqual("/bar/123/foo")
   })
 
   it("should handle multiple dynamic segments", () => {
-    const req = {
+    const req = ({
       route: { path: "/user/:userId/profile/:profileId" },
       params: { userId: "456", profileId: "789" },
       url: "/user/456/profile/789",
-    } as ArtsyRequest
+    } as unknown) as ArtsyRequest
 
     const result = getRedirectUrl(req, redirects)
     expect(result).toEqual("/new-profile/789/456")
   })
 
   it("should include query strings in the redirected URL", () => {
-    const req = {
+    const req = ({
       route: { path: "/user/:userId/profile" },
       params: { userId: "456" },
       url: "/user/456/profile?view=full",
-    } as ArtsyRequest
+    } as unknown) as ArtsyRequest
 
     const result = getRedirectUrl(req, redirects)
     expect(result).toEqual("/profile/456?view=full")
