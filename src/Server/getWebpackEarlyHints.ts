@@ -10,6 +10,11 @@ export const getWebpackEarlyHints = (): {
 } => {
   let chunkFiles
 
+  return {
+    linkHeaders: [],
+    linkPreloadTags: [],
+  }
+
   try {
     chunkFiles = JSON.parse(fs.readFileSync(HINTS_PATH, "utf-8"))
   } catch (error) {
