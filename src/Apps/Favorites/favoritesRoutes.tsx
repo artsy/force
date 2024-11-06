@@ -87,11 +87,6 @@ export const favoritesRoutes: RouteProps[] = [
         onClientSideRender: () => {
           Alerts.preload()
         },
-        onServerSideRender: ({ req, res }) => {
-          if (!req.user) {
-            res.redirect("/")
-          }
-        },
         query: graphql`
           query favoritesRoutesAlertsAppEditQuery {
             me {
