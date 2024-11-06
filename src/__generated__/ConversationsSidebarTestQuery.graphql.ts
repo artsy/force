@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3905244edc2bd350c23615ba7e6f117a>>
+ * @generated SignedSource<<4ff0c3800989a51d191de6e54f7715bc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -159,47 +159,6 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "internalID",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "ConversationInitiator",
-                        "kind": "LinkedField",
-                        "name": "from",
-                        "plural": false,
-                        "selections": (v2/*: any*/),
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "User",
-                        "kind": "LinkedField",
-                        "name": "fromUser",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "CollectorProfileType",
-                            "kind": "LinkedField",
-                            "name": "collectorProfile",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "confirmedBuyerAt",
-                                "storageKey": null
-                              },
-                              (v1/*: any*/)
-                            ],
-                            "storageKey": null
-                          },
-                          (v1/*: any*/)
-                        ],
                         "storageKey": null
                       },
                       {
@@ -427,7 +386,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "95582c8518fcf2011af14da2a8fb28ec",
+    "cacheID": "13e484a73b3ee4bd325cc4b4475cb179",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -457,29 +416,6 @@ return {
           "type": "Conversation"
         },
         "viewer.conversationsConnection.edges.node.__typename": (v4/*: any*/),
-        "viewer.conversationsConnection.edges.node.from": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ConversationInitiator"
-        },
-        "viewer.conversationsConnection.edges.node.from.id": (v5/*: any*/),
-        "viewer.conversationsConnection.edges.node.from.name": (v4/*: any*/),
-        "viewer.conversationsConnection.edges.node.fromUser": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "User"
-        },
-        "viewer.conversationsConnection.edges.node.fromUser.collectorProfile": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CollectorProfileType"
-        },
-        "viewer.conversationsConnection.edges.node.fromUser.collectorProfile.confirmedBuyerAt": (v6/*: any*/),
-        "viewer.conversationsConnection.edges.node.fromUser.collectorProfile.id": (v5/*: any*/),
-        "viewer.conversationsConnection.edges.node.fromUser.id": (v5/*: any*/),
         "viewer.conversationsConnection.edges.node.id": (v5/*: any*/),
         "viewer.conversationsConnection.edges.node.internalID": {
           "enumValues": null,
@@ -561,7 +497,7 @@ return {
     },
     "name": "ConversationsSidebarTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

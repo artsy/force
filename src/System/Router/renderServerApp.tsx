@@ -7,6 +7,7 @@ import { getENV } from "Utils/getENV"
 import { ServerAppResults } from "System/Router/serverRouter"
 import { Transform } from "stream"
 import { ENABLE_SSR_STREAMING } from "Server/config"
+import { getWebpackEarlyHints } from "Server/getWebpackEarlyHints"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -49,12 +50,15 @@ export const renderServerApp = ({
 
   const scripts = extractScriptTags?.()
 
+  const { linkPreloadTags } = getWebpackEarlyHints()
+
   const options = {
     cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
     content: {
       body: html,
       data: sharify.script(),
       head: headTagsString,
+      linkPreloadTags,
       scripts,
       style: styleTags,
     },
