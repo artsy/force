@@ -12,7 +12,13 @@ import webpack from "webpack"
 import { basePath, webpackEnv } from "../webpackEnv"
 import { splitChunks } from "../bundleSplitting"
 import { sharedPlugins } from "../sharedPlugins"
-import { babelLoader, ejsLoader, mjsLoader, swcLoader } from "../sharedLoaders"
+import {
+  babelLoader,
+  ejsLoader,
+  mjsLoader,
+  swcLoader,
+  cssLoader,
+} from "../sharedLoaders"
 
 import {
   cache,
@@ -48,10 +54,11 @@ export const clientDevelopmentConfig = () => {
         webpackEnv.experimentalSWCCompiler ? swcLoader : babelLoader,
         ejsLoader,
         mjsLoader,
+        cssLoader,
       ],
     },
     optimization: {
-      runtimeChunk: "single", // Extract webpack runtime code into it's own file
+      runtimeChunk: "single", // Extract webpack runtime code into its own file
       splitChunks,
 
       // Webpack does extra algorithmic work to optimize the output for size and

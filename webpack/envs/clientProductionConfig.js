@@ -7,7 +7,7 @@ import { WebpackManifestPlugin } from "webpack-manifest-plugin"
 import { basePath } from "../webpackEnv"
 import { sharedPlugins } from "../sharedPlugins"
 import { splitChunks } from "../bundleSplitting"
-import { babelLoader, ejsLoader, mjsLoader } from "../sharedLoaders"
+import { babelLoader, ejsLoader, mjsLoader, cssLoader } from "../sharedLoaders"
 
 import {
   externals,
@@ -29,12 +29,12 @@ const clientProductionConfig = () => {
     externals,
     mode,
     module: {
-      rules: [babelLoader, ejsLoader, mjsLoader],
+      rules: [babelLoader, ejsLoader, mjsLoader, cssLoader],
     },
     optimization: {
       minimize: !process.env.WEBPACK_FAST_PROD_BUILD,
       minimizer,
-      runtimeChunk: "single", // Extract webpack runtime code into it's own file
+      runtimeChunk: "single", // Extract webpack runtime code into its own file
       splitChunks,
     },
     output: {
