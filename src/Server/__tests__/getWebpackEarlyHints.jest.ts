@@ -24,12 +24,12 @@ describe("getWebpackEarlyHints", () => {
 
     expect(fs.readFileSync).toHaveBeenCalledWith(HINTS_PATH, "utf-8")
     expect(result.linkHeaders).toEqual([
-      `<https://cdn.example.com/chunk1.js>; rel=preload; as=script; crossorigin`,
-      `<https://cdn.example.com/chunk2.js>; rel=preload; as=script; crossorigin`,
+      `<https://cdn.example.com/chunk1.js>; rel=preload; as=script`,
+      `<https://cdn.example.com/chunk2.js>; rel=preload; as=script`,
     ])
     expect(result.linkPreloadTags).toEqual([
-      `<link rel="preload" as="script" href="https://cdn.example.com/chunk1.js" crossorigin>`,
-      `<link rel="preload" as="script" href="https://cdn.example.com/chunk2.js" crossorigin>`,
+      `<link rel="preload" as="script" href="https://cdn.example.com/chunk1.js">`,
+      `<link rel="preload" as="script" href="https://cdn.example.com/chunk2.js">`,
     ])
   })
 
@@ -43,12 +43,12 @@ describe("getWebpackEarlyHints", () => {
 
     expect(fs.readFileSync).toHaveBeenCalledWith(HINTS_PATH, "utf-8")
     expect(result.linkHeaders).toEqual([
-      `</chunk1.js>; rel=preload; as=script; crossorigin`,
-      `</chunk2.js>; rel=preload; as=script; crossorigin`,
+      `</chunk1.js>; rel=preload; as=script`,
+      `</chunk2.js>; rel=preload; as=script`,
     ])
     expect(result.linkPreloadTags).toEqual([
-      `<link rel="preload" as="script" href="/chunk1.js" crossorigin>`,
-      `<link rel="preload" as="script" href="/chunk2.js" crossorigin>`,
+      `<link rel="preload" as="script" href="/chunk1.js">`,
+      `<link rel="preload" as="script" href="/chunk2.js">`,
     ])
   })
 })

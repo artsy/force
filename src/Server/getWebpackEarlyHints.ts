@@ -34,11 +34,9 @@ export const getWebpackEarlyHints = (): {
 
   const links = chunkFiles.reduce(
     (acc, file) => {
-      acc.linkHeaders.push(
-        `<${cdnUrl}${file}>; rel=preload; as=script; crossorigin`
-      )
+      acc.linkHeaders.push(`<${cdnUrl}${file}>; rel=preload; as=script`)
       acc.linkPreloadTags.push(
-        `<link rel="preload" as="script" href="${cdnUrl}${file}" crossorigin>`
+        `<link rel="preload" as="script" href="${cdnUrl}${file}">`
       )
       return acc
     },
