@@ -48,11 +48,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
   const socialImage = headerImage
 
-  const HIDE_SIGNAL_SLUGS = [
-    "trending-now",
-    "curators-picks-emerging-artists",
-    "curators-picks-blue-chip-artists",
-  ]
+  const HIDE_SIGNAL_SLUGS = ["most-loved", "curators-picks"]
 
   const hideSignals = HIDE_SIGNAL_SLUGS.includes(collection.slug)
 
