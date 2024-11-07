@@ -1,43 +1,11 @@
 ## Caching
 
-Relay is responsible for graphql response caching, which happens as users navigate from page to page on the client. This is typically configured via the route.
+There are two different layers of caching on Artsy.net, namely:
 
-- Caching at the server level, via Redis, while logged out.
+- Caching at the Relay query level, which happens as users navigate from page to page on the client. This is an entirely client-side cache, and typically configured via the route. We will refer to this going forward as 'Relay caching'.
+- Caching at the [Metaphysics CDN](https://github.com/artsy/metaphysics/blob/1b3940a2387ab0bf308c2ca7b597e40fad015b4d/docs/cdn.md) level - which has the effect of caching the entire response for a given query. We will refer to this going forward as 'CDN caching'.
 
-> ⚠️ If for whatever reason we need to disable the cache, unset the environment variables via hokusai:
->
-> ```
-> hokusai production env unset ENABLE_GRAPHQL_PROXY ENABLE_GRAPHQL_CACHE
-> ```
-
-#### Important Cache-related ENV vars:
-
-- `ENABLE_GRAPHQL_PROXY`: Enables the proxy in support of caching
-- `ENABLE_GRAPHQL_CACHE`: Enables the GraphQL cache
-- `GRAPHQL_CACHE_SIZE`: Total number of entries before eviction (on the client; server-cache sizes are memory dependent)
-- `GRAPHQL_CACHE_TTL`: Default expiration TTL (in milliseconds)
-
-Non-default route cache times are set in [`Apps/serverCacheTTLs.tsx`](src/Apps/serverCacheTTLs.tsx).
-
-### General Cache Behavior
-
-#### Logged in:
-
-By default, we cache on the client for all routes _for a given session_. This means we only cache on the client, after the app mounts. (In other words, the cache isn't persisted across sessions or users.) This enables speedy transitions to pages already visited.
-
-Cache can be disabled at the route level via the `cacheConfig` prop on the route (see below), or applying `fetchPolicy: "network-only"`. Note that there are a few different types of fetch policies, which can be [read about here](https://relay.dev/docs/guided-tour/reusing-cached-data/fetch-policies/). A notable one is `store-and-network`, which will return a cache of the page and revalidate in the background, updating the page with the latest data if there's something new.
-
-#### Logged out:
-
-By default, we cache all pages (unless otherwise configured with `cacheConfig: { force: true }` or `serverCacheTTL: 0`). How this works is:
-
-- User visits a page and Relay issues a GraphQL request
-- GraphQL requests are proxied to `/api/metaphysics` within force via [middleware](https://github.com/artsy/force/blob/main/src/Server/middleware/graphqlProxyMiddleware.ts)
-- We check Redis to see if the query (keyed by query name + variables) has been requested before
-  - If so, return cache of Metaphysics response
-  - If not, on successful response, store response in Redis
-- Then, when the user navigates on the client in SPA mode, we push unvisited queries into the redis cache as they navigate
-- When a new user arrives at the site and visits a page that's already been visited, cache is returned, even if they've navigated to the page via our single-page app.
+For both of these caching layers, there are several different configurations that can be used/combined to achieve desired behavior.
 
 ### Configuring Cache
 
@@ -49,8 +17,8 @@ At the router level, we can configure things in a few different ways:
 const myRouter = [
   {
     path: "/some-app",
-    // Tell relay network layer to never cache. This flows down to redis
-    // layer automatically, so setting here will skip cache there.
+    // Tell relay network layer to never cache. This flows down to setting
+    // a `no-cache` header when making the CDN request, thus bypassing that cache as well.
     cacheConfig: {
       force: true,
     },
@@ -58,15 +26,15 @@ const myRouter = [
 ]
 ```
 
-2. When logged out, never cache on the server, always cache on the client. This ensure users will always receive fresh data when they first visit a page, but once visited, page will be cached on the client for a given session. (Timely pages like `/auction/:id` apply this strategy.)
+2. Never cache on the server (initial request always skips both caching layers), but always employ Relay caching. This ensures users will always receive fresh data when they first visit a page, but once visited, page will be cached on the client for a given session. (Timely pages like `/auction/:id` apply this strategy.)
 
 ```tsx
 const myRouter = [
   {
     path: "/some-app",
-    // Tell redis to never cache queries on the server. We still cache on
-    // client-side SPA transitions at the relay level (only during the session).
-    // Only applies while logged out!
+    // Never cache queries on the server (initial query). We still cache on
+    // client-side SPA transitions via Relay caching (only during the session).
+    // This flows down to setting a `no-cache` header when making the CDN request, thus bypassing that cache as well.
     serverCacheTTL: 0,
   },
 ]
@@ -78,27 +46,94 @@ const myRouter = [
 const myRouter = [
   {
     path: "/some-app",
+    // This flows down to a `max-age` value in the CDN request as well.
     serverCacheTTL: 24 * 60 * 60, // 24 hours,
   },
 ]
 ```
 
-By default, the value of `serverCacheTTL` falls back to our `GRAPHQL_CACHE_TTL` env config, typically set to 1 hour.
+4. Use the cacheable directive to allow a logged-in query to be cached by the CDN:
 
-### Managing Redis Cache
+```tsx
+const myRouter = [
+  {
+    path: "/some-app",
+    query: graphql`
+      query SomeAppQuery($artistID: String!) @cacheable {
+        artist(id: $artistID) @principalField {
+          slug
+        }
+      }
+    `,
+  },
+]
+```
 
-We should avoid needing to hand-manage individual Redis cache entries, but occasionally issues arise where an AE or partner posts a bug saying that they can't see their new feature that they've created, or a change they've made somewhere to an artwork (while logged out). If this happens:
+5. Never cache in a QueryRenderer or hook or other relay-centric component:
 
-- Visit https://artsy.net/admin/cache
-- Click 'load all cache keys'
-- Enter the id (or some other piece of metadata) for the page that needs an update. (eg, artist/artwork slug, or some other id.)
-- Click 'Delete cache key'
-- Tell AE to reload page, which will return the latest version
+```tsx
+<SystemQueryRenderer relayCacheConfig={{ force: true }} />
+<SystemQueryRenderer relayCacheConfig={{ force: true }} />
 
-As a last resort, we can flush the entire Redis cache by clicking the "Clear entire cache" button. This should be avoided however as all of our previous cache keys will need to be reindexed, which will greatly slow down the site.
+const data = useLazyLoadQuery(..., { cacheConfig: { force: true }})
+
+// etc.
+```
+
+By default, when no custom cache TTL is set via `serverCacheTTL`, or the non-default route cache times in [`Apps/serverCacheTTLs.tsx`](src/Apps/serverCacheTTLs.tsx) isn't specified, we fall back to a default of 1 hour, [configured at the CDN level via an ENV var](https://dash.cloudflare.com/0373426be7be649ff052277fb5377c4f/workers/services/view/metaphysics-cdn-staging/production/settings).
+
+### General Cache Behavior
+
+#### Logged out:
+
+By default, we typically cache (at both layers) all queries for logged-out visitors, unless otherwise opted-out with `cacheConfig: { force: true }`. There is also a `serverCacheTTL: 0` (set on the route config) which has the effect of skipping the CDN cache so the initial request will always hit Metaphysics, while leaving client-side caching enabled. There are also certain client-side queries made using Relay's `fetchQuery` - which implicitly _adds_ a `force: true` configuration to the query, thus skipping the cache as well. For queries made using `fetchQuery` - you need to add the `force: false` directive explicitly in order to cache. The important thing to remember is: **everything is cached by default unless opted-out (and there are two ways to opt-out, both layers via `force: true`, or just the CDN layer via `serverCacheTTL: 0`)**.
+
+#### Logged in:
+
+There is a bit more nuance here. For CDN caching: **nothing is cached unless it’s opted-in**. For Relay caching: **by default we cache on the client for all routes _for a given session_**.
+
+#### Relay caching:
+
+Cache can be disabled at the route level via the `cacheConfig` prop on the route (see below), or applying `fetchPolicy: "network-only"`. Note that there are a few different types of fetch policies, which can be [read about here](https://relay.dev/docs/guided-tour/reusing-cached-data/fetch-policies/). A notable one is `store-and-network`, which will return a cache of the page and revalidate in the background, updating the page with the latest data if there's something new.
+
+#### CDN caching:
+
+In general, any request made to the CDN with either an access token header _or_ a `Cache-Control: no-cache` header will bypass the CDN cache and hit the Metaphysics server directly. Any requests that have _neither_ of these headers will be cached by the CDN. When caching is occurring, a `max-age` value is respected by the CDN if provided. Thus, Force controls the cacheability of any given query by setting/not setting these headers appropriately, as well as including an optional `max-age` value when desired.
+
+Since logged-in queries always propagate the user's access token, they will _never_ be cached by the CDN, unless they are opted-in.
+
+For logged-in queries, there is an opt-in directive `@cacheable` that can be added to a query. When present - no access token will be propagated with the request, and the `no-cache` value in the `Cache-Control` header will not be included - which will thus allow the CDN to cache this query. This is useful for queries that are not user-specific, and can be cached for all users.
+
+Worth noting that one can mix and match, and add `@cacheable` _and_ a `force: true` configuration to the same query (there is no validation preventing this). As a conservative choice, when there is a conflict between an _opt-in_ (via `@cacheable`) and an _opt-out_ (via `force: true`), the opt-out takes precedence (and thus this query would not be cached).
+
+**What if I want to see the latest page / unpublished preview?** There is an escape hatch - a query param in the URL: `?nocache=true` - that will force the CDN to bypass the cache and hit Metaphysics directly _despite_ any `@cacheable` directive. This can be useful for a privileged user to see an unpublished page (which we wouldn't want to cache).
+
+Setting/unsetting the `Cache-Control` header, and propagating any `max-age` is accomplished in a Relay middleware: [`System/Relay/middleware/cacheHeaderMiddleware.tsx`](System/Relay/middleware/cacheHeaderMiddleware.tsx). This takes into account the various configuration options available (including `@cacheable`).
+
+Un-setting the access token header for logged-in queries using `@cacheable` is accomplished in a Relay middleware: [`System/Relay/createRelaySSREnvironment.ts`](System/Relay/createRelaySSREnvironment.ts).
+
+### Cache-related ENV vars for Relay caching:
+
+- `GRAPHQL_CACHE_SIZE`: Total number of entries before eviction (on the client)
+- `GRAPHQL_CACHE_TTL`: Default expiration TTL in milliseconds (on the client) - defaults when unset to 1 hour
+
+### Relay Store Normalization Issues with Prefetching and CDN Cache
+
+Sometimes issues arise where a prefetched and cached network response conflicts with fresh uncached data (via, say, a QueryRenderer). In rare cases like this Relay often fails to normalize the data, which can create conflicts in the store and possible runtime errors.
+
+As a generally-good habit, be defensive when coding:
+
+```tsx
+const data = useFragment(...)
+
+if (!data) {
+  return null // or some other error component/placeholder
+}
+```
+
+For more info on this issue, see [this slack thread](https://artsy.slack.com/archives/C05EEBNEF71/p1731004838892619).
 
 ### Useful Links for Monitoring Cache Performance
 
-- [Force-production redis cluster metrics](https://us-east-1.console.aws.amazon.com/elasticache/home?region=us-east-1#/redis/force-production) (hit rate, eviction rate, # items, etc.)
 - [Calibre scores over time](https://app.datadoghq.com/dashboard/qfh-2gu-td7/calibre-scores?fromUser=false&refresh_mode=sliding&view=spans&from_ts=1720285399034&to_ts=1722877399034&live=true) (by page, device type, just a few data points per day)
 - [Force end-user load times](https://app.datadoghq.com/dashboard/dt4-sdd-r6r/force-load-times?fromUser=false&refresh_mode=sliding&view=spans&from_ts=1722272630753&to_ts=1722877430753&live=true) (FP, FCP, TTI, etc.)
