@@ -88,7 +88,12 @@ const ArtistLine: React.FC<DetailsProps> = ({
         if (!artist || !artist.href || !artist.name) return null
 
         return (
-          <ConditionalLink includeLinks={includeLinks} to={artist.href} key={i}>
+          <ConditionalLink
+            enablePrefetch={false}
+            includeLinks={includeLinks}
+            to={artist.href}
+            key={i}
+          >
             {artist.name}
             {i !== artists.length - 1 && ", "}
           </ConditionalLink>
@@ -103,7 +108,11 @@ const TitleLine: React.FC<DetailsProps> = ({
   artwork: { title, date, href },
 }) => {
   return (
-    <ConditionalLink includeLinks={includeLinks} to={href}>
+    <ConditionalLink
+      enablePrefetch={false}
+      includeLinks={includeLinks}
+      to={href}
+    >
       <Text
         variant="sm-display"
         lineHeight="22px"
