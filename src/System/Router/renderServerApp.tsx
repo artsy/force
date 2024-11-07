@@ -5,11 +5,11 @@ import loadAssetManifest from "Server/manifest"
 import path from "path"
 import { getENV } from "Utils/getENV"
 import { ServerAppResults } from "System/Router/serverRouter"
-import { getWebpackEarlyHints } from "Server/getWebpackEarlyHints"
+import { getScriptEarlyHints, getImageEarlyHints } from "Server/earlyHints"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
-const { CDN_URL, NODE_ENV, GEMINI_CLOUDFRONT_URL } = process.env
+const { CDN_URL, NODE_ENV, GEMINI_CLOUDFRONT_URL, WEBFONT_URL } = process.env
 
 const PUBLIC_DIR = path.resolve(process.cwd(), "public")
 
@@ -44,7 +44,10 @@ export const renderServerApp = ({
 
   const { WEBFONT_URL } = sharify.data
 
-  const { linkPreloadTags } = getWebpackEarlyHints()
+  const { imageLinkHeaders, imageLinkPreloadTags } = getImageEarlyHints(
+    html ?? ""
+  )
+  const { scriptLinkHeaders, scriptLinkPreloadTags } = getScriptEarlyHints()
 
   const options = {
     cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
@@ -52,7 +55,8 @@ export const renderServerApp = ({
       body: html,
       data: sharify.script(),
       head: headTagsString,
-      linkPreloadTags,
+      imageLinkPreloadTags,
+      scriptLinkPreloadTags,
       scripts,
       style: styleTags,
     },
@@ -80,7 +84,51 @@ export const renderServerApp = ({
     sd: sharify.data,
   }
 
+  // Preconnect or preload associated links
+  setEarlyHintsResponseHeaders({
+    imageLinkHeaders,
+    scriptLinkHeaders,
+    req,
+    res,
+  })
+
   const statusCode = getENV("statusCode") ?? code
 
   res.status(statusCode).render(`${PUBLIC_DIR}/html.ejs`, options)
+}
+
+/**
+ * Link headers allow 103: Early Hints to be sent to the client (by Cloudflare).
+ * These should correspond to preconnect and preload items from html.ejs.
+ * See: https://developers.cloudflare.com/cache/advanced-configuration/early-hints/
+ */
+interface SetEarlyHintsResponseHeadersProps {
+  imageLinkHeaders: string[]
+  scriptLinkHeaders: string[]
+  req: ArtsyRequest
+  res: ArtsyResponse
+}
+
+const setEarlyHintsResponseHeaders = ({
+  imageLinkHeaders,
+  scriptLinkHeaders,
+  res,
+}: SetEarlyHintsResponseHeadersProps) => {
+  try {
+    if (!res.headersSent) {
+      res.header("Link", [
+        `<${CDN_URL}>; rel=preconnect; crossorigin`,
+        `<${GEMINI_CLOUDFRONT_URL}>; rel=preconnect; crossorigin`,
+        `<${WEBFONT_URL}>; rel=preconnect; crossorigin`,
+        `<${WEBFONT_URL}/all-webfonts.css>; rel=preload; as=style`,
+        `<${WEBFONT_URL}/ll-unica77_regular.woff2>; rel=preload; as=font; crossorigin`,
+        `<${WEBFONT_URL}/ll-unica77_medium.woff2>; rel=preload; as=font; crossorigin`,
+        `<${WEBFONT_URL}/ll-unica77_italic.woff2>; rel=preload; as=font; crossorigin`,
+        ...imageLinkHeaders,
+        ...scriptLinkHeaders,
+      ])
+    }
+  } catch (error) {
+    console.log(["[renderServerApp] Error setting early hints", error])
+  }
 }

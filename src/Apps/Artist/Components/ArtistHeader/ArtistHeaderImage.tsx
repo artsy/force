@@ -1,8 +1,7 @@
 import { BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
 import { FC } from "react"
 import { maxDimensionsByArea, resized } from "Utils/resized"
-import { BREAKPOINTS, Media } from "Utils/Responsive"
-import { Link } from "react-head"
+import { Media } from "Utils/Responsive"
 
 const MOBILE_SIZE = {
   width: 350,
@@ -33,22 +32,6 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
 
   return (
     <>
-      <Link
-        rel="preload"
-        href={desktop.src}
-        as="image"
-        imagesrcset={desktop.srcSet}
-        media={`(min-width: ${BREAKPOINTS.sm}px)`}
-      />
-
-      <Link
-        rel="preload"
-        href={mobile.src}
-        as="image"
-        imagesrcset={mobile.srcSet}
-        media={`(max-width: ${BREAKPOINTS.sm}px)`}
-      />
-
       <Media at="xs">
         <FullBleed>
           <ResponsiveBox

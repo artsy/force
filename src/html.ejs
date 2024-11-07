@@ -36,7 +36,8 @@
     <%- htmlWebpackPlugin.tags.headTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.attributes['src'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; return tag; }) %>
   <%% } %>
 
-  <%%- content.linkPreloadTags.join("") %>
+  <%%- content.imageLinkPreloadTags?.join("") %>
+  <%%- content.scriptLinkPreloadTags?.join("") %>
 
   <%%- content.head %>
   <%%- content.style %>
