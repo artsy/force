@@ -244,6 +244,11 @@ const FulfillmentDetailsFormLayout = (
   const tabbableIf = (activeForm: AddressFormMode): 0 | -1 =>
     addressFormMode === activeForm ? 0 : -1
 
+  const savedAddressesErrors =
+    (addressFormMode === "saved_addresses" &&
+      Object.entries(errors.attributes || {})) ||
+    []
+
   return (
     <Form data-testid="FulfillmentDetails_form">
       <ScrollToFieldError />
@@ -308,6 +313,12 @@ const FulfillmentDetailsFormLayout = (
             data-testid="savedAddressesCollapse"
             open={addressFormMode === "saved_addresses"}
           >
+            {savedAddressesErrors.length > 0 && (
+              <Text variant="xs" color="red100" mb={2}>
+                The selected address is invalid. Please edit it or select a new
+                address.
+              </Text>
+            )}
             <SavedAddresses
               active={addressFormMode === "saved_addresses"}
               onSelect={handleSelectSavedAddress}

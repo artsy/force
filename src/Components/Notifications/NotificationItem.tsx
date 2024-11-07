@@ -1,22 +1,21 @@
 import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
 import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
 import { useMarkNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
+import { NotificationItemUnreadIndicator } from "Components/Notifications/NotificationItemUnreadIndicator"
+import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
 import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
 import createLogger from "Utils/logger"
 import { NotificationItem_notification$data } from "__generated__/NotificationItem_notification.graphql"
 import { FC, useCallback } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 import { NotificationTypeLabel } from "./NotificationTypeLabel"
 import { isArtworksBasedNotification } from "./util"
-import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { Media } from "Utils/Responsive"
-import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
-import { NotificationItemUnreadIndicator } from "Components/Notifications/NotificationItemUnreadIndicator"
 
 const logger = createLogger("NotificationItem")
 
@@ -204,6 +203,7 @@ export const NotificationItemWrapper: FC<NotificationItemWrapperProps> = ({
           to={itemUrl(item, "dropdown")}
           onClick={onClick}
           backgroundColor={backgroundColor}
+          enablePrefetch={false}
         >
           {children}
         </NotificationItemLink>
@@ -214,6 +214,7 @@ export const NotificationItemWrapper: FC<NotificationItemWrapperProps> = ({
           to={itemUrl(item, mode)}
           onClick={onClick}
           backgroundColor={backgroundColor}
+          enablePrefetch={false}
         >
           {children}
         </NotificationItemLink>
