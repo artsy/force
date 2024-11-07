@@ -1,7 +1,9 @@
+import { ActionType } from "@artsy/cohesion"
 import { Box, Clickable, Flex, Spacer, Sup, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { useJump } from "Utils/Hooks/useJump"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
@@ -19,9 +21,10 @@ export const SavedSearchAlertListItem: React.FC<React.PropsWithChildren<SavedSea
   onEditAlertClick,
   onViewArtworksClick,
 }) => {
-  const matchingArtworksCount = item.artworksConnection?.counts?.total
-
   const { jumpTo } = useJump()
+  const { trackEvent } = useTracking()
+
+  const matchingArtworksCount = item.artworksConnection?.counts?.total
 
   return (
     <Box
@@ -82,14 +85,16 @@ export const SavedSearchAlertListItem: React.FC<React.PropsWithChildren<SavedSea
             <Clickable
               textDecoration="underline"
               onClick={() => {
-                {
-                  onEditAlertClick({
-                    id: item.internalID,
-                    name: item.settings?.name ?? undefined,
-                    artistIds: item.artistIDs as string[],
-                  })
-                  jumpTo("Alerts")
-                }
+                trackEvent({
+                  action_type: ActionType.clickedEditAlert,
+                  alert_id: item.internalID,
+                })
+                onEditAlertClick({
+                  id: item.internalID,
+                  name: item.settings?.name ?? undefined,
+                  artistIds: item.artistIDs as string[],
+                })
+                jumpTo("Alerts")
               }}
             >
               Edit
@@ -105,6 +110,10 @@ export const SavedSearchAlertListItem: React.FC<React.PropsWithChildren<SavedSea
           >
             <Clickable
               onClick={() => {
+                trackEvent({
+                  action_type: ActionType.clickedViewArtworks,
+                  alert_id: item.internalID,
+                })
                 onViewArtworksClick({
                   id: item.internalID,
                   name: item.settings?.name ?? undefined,
