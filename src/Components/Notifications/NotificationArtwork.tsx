@@ -88,6 +88,7 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
           as={RouterLink}
           to={artwork?.href}
           onClick={onClick}
+          enablePrefetch={false}
         >
           View Work
         </Button>
