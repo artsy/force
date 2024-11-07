@@ -1,17 +1,19 @@
-import * as React from "react"
 import { SearchResultsArtworks_viewer$data } from "__generated__/SearchResultsArtworks_viewer.graphql"
+import { SearchResultsArtworksFilters } from "Apps/Search/Components/SearchResultsArtworksFilters"
 import { ZeroState } from "Apps/Search/Components/ZeroState"
 import { ArtworkFilter } from "Components/ArtworkFilter"
-import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useRouter } from "System/Hooks/useRouter"
 import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SearchResultsArtworksFilters } from "Apps/Search/Components/SearchResultsArtworksFilters"
+import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import * as React from "react"
 import { useEffect, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+
+const SEARCH_PATH_NAME = "/search"
 
 interface SearchResultsRouteProps {
   viewer: SearchResultsArtworks_viewer$data
@@ -27,8 +29,13 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
   const { sidebar } = viewer
 
   useEffect(() => {
+    const term = match.location.query.term
+
+    // This is to avoid remounting the component when moving away from the search page (e.g. by clicking on a search result).
+    if (match.location.pathname !== SEARCH_PATH_NAME || !term) return
+
     // refresh artwork filter on query change
-    setSearchFilterKey(match.location.query.term)
+    setSearchFilterKey(term)
   }, [match.location.query.term])
 
   return (
