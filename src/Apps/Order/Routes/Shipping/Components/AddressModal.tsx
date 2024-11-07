@@ -1,4 +1,4 @@
-import { useState, FC } from "react"
+import { useState, FC, useEffect } from "react"
 import * as Yup from "yup"
 import {
   Button,
@@ -158,13 +158,11 @@ export const AddressModal: FC<AddressModalProps> = ({
         initialValues={initialValues}
         onSubmit={handleSubmit}
       >
-        {
-          <AddressModalForm
-            addressModalAction={addressModalAction}
-            onClose={closeModal}
-            onDeleteAddress={handleDeleteAddress}
-          />
-        }
+        <AddressModalForm
+          addressModalAction={addressModalAction}
+          onClose={closeModal}
+          onDeleteAddress={handleDeleteAddress}
+        />
       </Formik>
     </>
   )
@@ -178,6 +176,31 @@ const AddressModalForm: FC<{
   const shippingContext = useShippingContext()
   const formikContext = useFormikContext<FormValues>()
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
+
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    setFieldTouched,
+  } = formikContext
+
+  const attributeErrorFieldsForEdit =
+    addressModalAction.type === "edit"
+      ? Object.keys(errors.attributes || {})
+      : []
+
+  // Touch fields that have errors on edit
+  useEffect(() => {
+    if (attributeErrorFieldsForEdit.length > 0) {
+      attributeErrorFieldsForEdit.forEach(field => {
+        setFieldTouched(`attributes.${field}`, true)
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attributeErrorFieldsForEdit.length])
 
   if (!addressModalAction) {
     return null
@@ -197,15 +220,6 @@ const AddressModalForm: FC<{
       }
     }
   }
-
-  const {
-    values,
-    touched,
-    errors,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-  } = formikContext
 
   const handleModalClose = () => {
     formikContext.resetForm()
