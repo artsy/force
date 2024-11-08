@@ -1,10 +1,10 @@
 import { screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 import { useEffect } from "react"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
@@ -27,7 +27,7 @@ describe(AvailabilityFilter, () => {
     expect(currentArtworkFilterContext().filters?.forSale).toBeTruthy()
 
     userEvent.click(screen.getAllByRole("checkbox")[0])
-    expect(currentArtworkFilterContext().filters?.forSale).toBeFalsy()
+    expect(currentArtworkFilterContext().filters?.forSale).toBeNull()
   })
 
   it("clears local input state after Clear All", () => {
@@ -37,7 +37,7 @@ describe(AvailabilityFilter, () => {
 
     userEvent.click(screen.getByText("Clear all"))
 
-    expect(currentArtworkFilterContext().filters?.forSale).toBeFalsy()
+    expect(currentArtworkFilterContext().filters?.forSale).toBeUndefined()
   })
 
   describe("mobile-specific behavior", () => {
