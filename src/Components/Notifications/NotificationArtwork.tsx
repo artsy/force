@@ -41,7 +41,6 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
         to={artwork?.href}
         onClick={onClick}
         display="flex"
-        enablePrefetch={false}
         flexDirection="column"
         textDecoration="none"
         aria-label={label}
@@ -88,7 +87,6 @@ export const NotificationArtwork: React.FC<NotificationArtworkProps> = ({
           as={RouterLink}
           to={artwork?.href}
           onClick={onClick}
-          enablePrefetch={false}
         >
           View Work
         </Button>
