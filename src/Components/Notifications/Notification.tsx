@@ -6,26 +6,27 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { graphql } from "react-relay"
 import {
   NotificationQuery,
   NotificationTypesEnum,
 } from "__generated__/NotificationQuery.graphql"
-import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
-import { useEffect } from "react"
-import { ArtworkPublishedNotification } from "Components/Notifications/ArtworkPublishedNotification"
 import { AlertNotification } from "Components/Notifications/AlertNotification"
-import { useRouter } from "System/Hooks/useRouter"
 import { ArticleFeaturedArtistNotification } from "Components/Notifications/ArticleFeaturedArtistNotification"
-import { PartnerOfferCreatedNotification } from "Components/Notifications/PartnerOfferCreatedNotification"
+import { ArtworkPublishedNotification } from "Components/Notifications/ArtworkPublishedNotification"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
-import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
+import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
 import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
+import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { PartnerOfferCreatedNotification } from "Components/Notifications/PartnerOfferCreatedNotification"
+import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
+import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
+import { error } from "console"
+import { Suspense, useEffect } from "react"
+import { graphql, useLazyLoadQuery } from "react-relay"
+import { ErrorBoundary } from "System/Components/ErrorBoundary"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
-import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
-import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
 
 const logger = createLogger("NotificationItem")
 
@@ -49,9 +50,8 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
   const { relayEnvironment } = useSystemContext()
   const { router } = useRouter()
 
-  const { data, loading, error } = useClientQuery<NotificationQuery>({
-    query: notificationQuery,
-    variables: { internalID: notificationId },
+  const data = useLazyLoadQuery<NotificationQuery>(notificationQuery, {
+    internalID: notificationId,
   })
 
   const notification = data?.me?.notification
@@ -94,11 +94,7 @@ const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
     markAsRead()
   }, [notification, relayEnvironment])
 
-  if (loading) {
-    return <Placeholder />
-  }
-
-  if (error || !notification) {
+  if (!notification) {
     logger.error(error)
 
     return <NotificationErrorMessage />
@@ -139,7 +135,14 @@ export const NotificationQueryRenderer: React.FC = props => {
   return (
     // FIXME: Should not have external margins
     <Box mx={[2, 4]} my={2}>
-      <Notification notificationId={state.currentNotificationId} {...props} />
+      <ErrorBoundary>
+        <Suspense fallback={<Placeholder />}>
+          <Notification
+            notificationId={state.currentNotificationId}
+            {...props}
+          />
+        </Suspense>
+      </ErrorBoundary>
     </Box>
   )
 }
