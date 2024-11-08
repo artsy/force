@@ -1,21 +1,21 @@
-import { MetaTags } from "Components/MetaTags"
-import { Notifications } from "Components/Notifications/Notifications"
-import { createFragmentContainer, graphql } from "react-relay"
-import { NotificationsApp_me$data } from "__generated__/NotificationsApp_me.graphql"
-import { Media } from "Utils/Responsive"
-import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
-import { NotificationQueryRenderer } from "Components/Notifications/Notification"
-import { useRouter } from "found"
-import { GridColumns, Column, FullBleed, Box } from "@artsy/palette"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { useAuthDialog } from "Components/AuthDialog"
-import { useSystemContext } from "System/Hooks/useSystemContext"
+import { Box, Column, FullBleed, GridColumns } from "@artsy/palette"
+import { NotificationsApp_me$data } from "__generated__/NotificationsApp_me.graphql"
 import {
   DESKTOP_HEIGHT,
   MIN_LIST_WIDTH,
 } from "Apps/Notifications/notificationsutils"
-import { useOnce } from "Utils/Hooks/useOnce"
+import { useAuthDialog } from "Components/AuthDialog"
+import { MetaTags } from "Components/MetaTags"
+import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
+import { NotificationQueryRenderer } from "Components/Notifications/Notification"
+import { Notifications } from "Components/Notifications/Notifications"
+import { useRouter } from "found"
 import { useEffect, useRef } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useOnce } from "Utils/Hooks/useOnce"
+import { Media } from "Utils/Responsive"
 
 interface NotificationsAppProps {
   me: NotificationsApp_me$data
@@ -79,7 +79,9 @@ const NotificationsApp: React.FC<NotificationsAppProps> = ({ me }) => {
                 maxHeight={DESKTOP_HEIGHT}
                 overflow="auto"
               >
-                <NotificationQueryRenderer />
+                <Box mx={[2, 4]} my={2}>
+                  <NotificationQueryRenderer />
+                </Box>
               </Box>
             </Column>
           </GridColumns>

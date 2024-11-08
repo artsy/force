@@ -122,7 +122,7 @@ export const setupServerRouter = async ({
     )
   }
 
-  const { html, stream, extractScriptTags, styleTags } = await collectAssets({
+  const { html, scripts, styleTags } = await collectAssets({
     ServerRouter,
     relayEnvironment,
   })
@@ -141,9 +141,8 @@ export const setupServerRouter = async ({
     headTags,
     html,
     redirect,
-    extractScriptTags,
+    scripts,
     status,
-    stream,
     styleTags,
   }
 

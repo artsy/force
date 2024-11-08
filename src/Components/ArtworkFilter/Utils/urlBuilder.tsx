@@ -15,7 +15,9 @@ export const buildUrl = (
   const params = removeDefaultValues(state, {
     defaultValues: options?.defaultValues,
   })
-  const queryString = qs.stringify(paramsToSnakeCase(params))
+  const queryString = qs.stringify(paramsToSnakeCase(params), {
+    skipNulls: true,
+  })
 
   let pathname = options?.pathname
   if (!pathname && typeof window !== "undefined") {
