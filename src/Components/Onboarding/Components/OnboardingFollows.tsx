@@ -6,7 +6,6 @@ import { OnboardingSearchResultsQueryRenderer } from "Components/Onboarding/Comp
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
 import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
-import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
 
 import SearchIcon from "@artsy/icons/SearchIcon"
@@ -36,8 +35,6 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
   const { debouncedValue } = useDebouncedValue({ value: query, delay: 200 })
 
   const { entities, setId } = CONFIGURATION[kind]
-
-  const tracking = useOnboardingTracking()
 
   return (
     <SplitLayout
@@ -97,10 +94,7 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
           <Box p={2}>
             <Button
               width="100%"
-              onClick={() => {
-                tracking.userCompletedOnboarding()
-                handleNext()
-              }}
+              onClick={handleNext}
               loading={loading}
               disabled={state.followedIds.length === 0}
             >

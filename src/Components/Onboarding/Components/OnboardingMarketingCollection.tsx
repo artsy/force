@@ -9,7 +9,6 @@ import { extractNodes } from "Utils/extractNodes"
 import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { OnboardingThankYou } from "Components/Onboarding/Views/OnboardingThankYou"
-import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 
 interface OnboardingMarketingCollectionProps {
   marketingCollection: OnboardingMarketingCollection_marketingCollection$data
@@ -21,17 +20,6 @@ const OnboardingMarketingCollection: FC<OnboardingMarketingCollectionProps> = ({
   description,
 }) => {
   const artworks = extractNodes(marketingCollection.artworks)
-  const { onClose } = useOnboardingContext()
-  const tracking = useOnboardingTracking()
-
-  useEffect(() => {
-    return () => {
-      if (onClose) {
-        tracking.userCompletedOnboarding()
-        onClose()
-      }
-    }
-  }, [onClose, tracking])
 
   return (
     <Box px={[2, 4]} py={6}>

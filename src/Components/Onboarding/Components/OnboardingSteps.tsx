@@ -24,16 +24,13 @@ import { OnboardingArtistsOnTheRise } from "Components/Onboarding/Views/Onboardi
 import { OnboardingFollowGalleries } from "Components/Onboarding/Views/OnboardingFollowGalleries"
 import { OnboardingThankYou } from "Components/Onboarding/Views/OnboardingThankYou"
 import { useRouter } from "System/Hooks/useRouter"
-import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 
 interface OnboardingStepsProps {}
 
 export const OnboardingSteps: FC<OnboardingStepsProps> = () => {
   const { router } = useRouter()
 
-  const tracking = useOnboardingTracking()
-
-  const { current, onComplete, onClose } = useOnboardingContext()
+  const { current, next } = useOnboardingContext()
 
   switch (current) {
     case VIEW_WELCOME:
@@ -49,9 +46,7 @@ export const OnboardingSteps: FC<OnboardingStepsProps> = () => {
       return <OnboardingQuestionThree />
 
     case VIEW_ART_QUIZ: {
-      tracking.userCompletedOnboarding()
-      onComplete()
-      onClose()
+      next()
       router.push("/art-quiz/welcome")
       return null
     }
