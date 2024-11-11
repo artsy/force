@@ -1,6 +1,7 @@
 import { useRef, useState } from "react"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
 import { State } from "./Hooks/useOnboardingContext"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 
 interface UseConfig {
   basis: React.RefObject<State>
@@ -8,6 +9,8 @@ interface UseConfig {
 }
 
 export const useConfig = ({ basis, onClose }: UseConfig) => {
+  const tracking = useOnboardingTracking()
+
   const workflowEngine = useRef(
     new WorkflowEngine({
       workflow: [
@@ -34,6 +37,7 @@ export const useConfig = ({ basis, onClose }: UseConfig) => {
       ],
       conditions: {
         [DECISION_WHERE_WOULD_YOU_LIKE_TO_DIVE_IN]: () => {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return basis.current?.questionThree!
         },
       },
@@ -49,6 +53,11 @@ export const useConfig = ({ basis, onClose }: UseConfig) => {
     }
 
     setCurrent(workflowEngine.current.next())
+
+    // Track completion if we've made it to the end
+    if (workflowEngine.current.isEnd()) {
+      tracking.userCompletedOnboarding()
+    }
   }
 
   const back = () => {
