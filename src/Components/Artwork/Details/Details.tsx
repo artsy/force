@@ -3,7 +3,6 @@ import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
-import { PrimaryLabelLine } from "Components/Artwork/Details/PrimaryLabelLine"
 import { HoverDetailsFragmentContainer } from "Components/Artwork/HoverDetails"
 import { SaveArtworkToListsButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { SaveButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveButton"
@@ -15,6 +14,7 @@ import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { BidTimerLine } from "./BidTimerLine"
+import { PrimaryLabelLineQueryRenderer } from "Components/Artwork/Details/PrimaryLabelLine"
 import { PartnerOfferLineQueryRenderer } from "./PartnerOfferLine"
 import { PartnerOfferedPriceQueryRenderer } from "./PartnerOfferedPrice"
 
@@ -292,8 +292,8 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   const isAuction = rest?.artwork?.sale?.is_auction ?? false
   const artworkId = rest?.artwork?.internalID
 
-  const showPrimaryLabelLine: boolean =
-    !!rest?.artwork?.collectorSignals?.primaryLabel && !isAuction
+  const primaryLabel = rest?.artwork?.collectorSignals?.primaryLabel
+  const showPrimaryLabelLine: boolean = !!primaryLabel && !isAuction
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -348,7 +348,12 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
           maxWidth={showPrimaryLabelLine ? "95%" : "75%"}
           overflow="hidden"
         >
-          {showPrimaryLabelLine && <PrimaryLabelLine artwork={rest.artwork} />}
+          {showPrimaryLabelLine && (
+            <PrimaryLabelLineQueryRenderer
+              id={artworkId}
+              label={primaryLabel}
+            />
+          )}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
           )}

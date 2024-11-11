@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e1bc6bcde55055ee87dd3d77bdeed20a>>
+ * @generated SignedSource<<b35e659205ce64f9fae4a225986d3bb4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerOfferedPriceQuery$variables = {
+export type PrimaryLabelLineQuery$variables = {
   id: string;
 };
-export type PartnerOfferedPriceQuery$data = {
+export type PrimaryLabelLineQuery$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"PartnerOfferedPrice_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"PrimaryLabelLine_artwork">;
   } | null | undefined;
 };
-export type PartnerOfferedPriceQuery = {
-  response: PartnerOfferedPriceQuery$data;
-  variables: PartnerOfferedPriceQuery$variables;
+export type PrimaryLabelLineQuery = {
+  response: PrimaryLabelLineQuery$data;
+  variables: PrimaryLabelLineQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -50,7 +50,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PartnerOfferedPriceQuery",
+    "name": "PrimaryLabelLineQuery",
     "selections": [
       {
         "alias": null,
@@ -63,7 +63,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PartnerOfferedPrice_artwork"
+            "name": "PrimaryLabelLine_artwork"
           }
         ],
         "storageKey": null
@@ -76,7 +76,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PartnerOfferedPriceQuery",
+    "name": "PrimaryLabelLineQuery",
     "selections": [
       {
         "alias": null,
@@ -94,6 +94,13 @@ return {
             "name": "collectorSignals",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "primaryLabel",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -141,16 +148,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "94df35b04390a18848aba366c104f4cf",
+    "cacheID": "9482ce43f89cf7a5343d9c1491db122d",
     "id": null,
     "metadata": {},
-    "name": "PartnerOfferedPriceQuery",
+    "name": "PrimaryLabelLineQuery",
     "operationKind": "query",
-    "text": "query PartnerOfferedPriceQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...PartnerOfferedPrice_artwork\n    id\n  }\n}\n\nfragment PartnerOfferedPrice_artwork on Artwork {\n  collectorSignals {\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query PrimaryLabelLineQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...PrimaryLabelLine_artwork\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f6ab5ba13662f712cb9ffb1e19f786af";
+(node as any).hash = "05a7ad415ba37c52d978d686eb288093";
 
 export default node;
