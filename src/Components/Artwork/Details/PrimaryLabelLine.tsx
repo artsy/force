@@ -18,8 +18,21 @@ export const PrimaryLabelLine: React.FC<React.PropsWithChildren<PrimaryLabelLine
   const { hideSignals } = useArtworkGridContext()
   const partnerOffer = artwork?.collectorSignals?.partnerOffer
 
-  if (!label || !!partnerOffer) {
-    return null
+  if (!!partnerOffer) {
+    return (
+      <Text
+        variant="xs"
+        color="blue100"
+        backgroundColor="blue10"
+        px={0.5}
+        alignSelf="flex-start"
+        borderRadius={3}
+        my="1px"
+        style={{ whiteSpace: "nowrap" }}
+      >
+        Limited-Time Offer
+      </Text>
+    )
   }
 
   if (label === "INCREASED_INTEREST" && !hideSignals) {

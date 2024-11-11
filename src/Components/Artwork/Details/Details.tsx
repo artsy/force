@@ -15,7 +15,6 @@ import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { BidTimerLine } from "./BidTimerLine"
 import { PrimaryLabelLineQueryRenderer } from "Components/Artwork/Details/PrimaryLabelLine"
-import { PartnerOfferLineQueryRenderer } from "./PartnerOfferLine"
 import { PartnerOfferedPriceQueryRenderer } from "./PartnerOfferedPrice"
 
 export interface DetailsProps {
@@ -294,7 +293,7 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   const artworkId = rest?.artwork?.internalID
 
   const primaryLabel = rest?.artwork?.collectorSignals?.primaryLabel
-  const showPrimaryLabelLine: boolean = !!primaryLabel && !isAuction
+  const showPrimaryLabelLine: boolean = !isAuction
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -379,8 +378,6 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
       )}
 
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
-
-      <PartnerOfferLineQueryRenderer id={artworkId} />
 
       {isAuction && <BidTimerLine artwork={rest.artwork} />}
     </Box>
