@@ -15,7 +15,7 @@ import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { BidTimerLine } from "./BidTimerLine"
 import { PrimaryLabelLineQueryRenderer } from "Components/Artwork/Details/PrimaryLabelLine"
-import { PartnerOfferedPriceQueryRenderer } from "./PartnerOfferedPrice"
+import { SaleMessageQueryRenderer } from "./SaleMessage"
 
 export interface DetailsProps {
   artwork: Details_artwork$data
@@ -192,10 +192,7 @@ const SaleInfoLine: React.FC<React.PropsWithChildren<DetailsProps>> = props => {
         fontWeight="bold"
         overflowEllipsis
       >
-        <PartnerOfferedPriceQueryRenderer
-          {...props}
-          id={props.artwork.internalID}
-        />{" "}
+        <SaleMessageQueryRenderer {...props} id={props.artwork.internalID} />{" "}
         <BidInfo {...props} />
       </Text>
     </Flex>
@@ -216,24 +213,6 @@ const HighDemandInfo = () => {
       </Text>
     </Flex>
   )
-}
-
-const NBSP = " "
-
-export const SaleMessage: React.FC<React.PropsWithChildren<DetailsProps>> = props => {
-  const {
-    artwork: { sale, sale_message, sale_artwork },
-  } = props
-
-  if (sale?.is_auction && !sale?.is_closed) {
-    const highestBid_display = sale_artwork?.highest_bid?.display
-    const openingBid_display = sale_artwork?.opening_bid?.display
-
-    return <>{highestBid_display || openingBid_display || ""}</>
-  }
-
-  // NBSP is used to prevent un-aligned carousels
-  return <>{sale_message ?? NBSP}</>
 }
 
 const BidInfo: React.FC<React.PropsWithChildren<DetailsProps>> = ({
