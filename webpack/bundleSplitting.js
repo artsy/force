@@ -2,6 +2,14 @@
 import crypto from "crypto"
 
 const FRAMEWORK_BUNDLES = ["react", "react-dom", "@sentry"]
+const ARTSY_FRAMEWORK_BUNDLES = [
+  "detect-responsive-traits",
+  "dismissible",
+  "fresnel",
+  "img",
+  "palette",
+  "palette-tokens",
+]
 const TOTAL_PAGES = 12
 
 export const splitChunks = {
@@ -13,7 +21,12 @@ export const splitChunks = {
     "artsy-framework": {
       name: "artsy-framework",
       chunks: "all",
-      test: /.*node_modules[\\/](@artsy)[\\/]/,
+      // Include only @artsy/* modules commonly required on client
+      test: new RegExp(
+        `(?<!node_modules.*)[\\\\/]node_modules[\\\\/]@artsy[\\\\/](${ARTSY_FRAMEWORK_BUNDLES.join(
+          `|`
+        )})[\\\\/]`
+      ),
       priority: 40,
       enforce: true,
     },
