@@ -1,14 +1,14 @@
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
-import { PrimaryLabelLine_artwork$key } from "__generated__/PrimaryLabelLine_artwork.graphql"
+import { PrimaryLabelLine_artwork$data } from "__generated__/PrimaryLabelLine_artwork.graphql"
 import { FC } from "react"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PrimaryLabelLineQuery } from "__generated__/PrimaryLabelLineQuery.graphql"
 
 interface PrimaryLabelLineProps {
   label: string | null | undefined
-  artwork?: PrimaryLabelLine_artwork$key
+  artwork?: PrimaryLabelLine_artwork$data
 }
 
 export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
