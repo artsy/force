@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f188ad0db3f18d85a08dc9efe25c7756>>
+ * @generated SignedSource<<00d0579b32bce161feaf08cbb18c949b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerOfferedPrice_artwork$data = {
+export type SaleMessage_artwork$data = {
   readonly collectorSignals: {
     readonly partnerOffer: {
       readonly endAt: string | null | undefined;
@@ -19,18 +19,18 @@ export type PartnerOfferedPrice_artwork$data = {
       } | null | undefined;
     } | null | undefined;
   } | null | undefined;
-  readonly " $fragmentType": "PartnerOfferedPrice_artwork";
+  readonly " $fragmentType": "SaleMessage_artwork";
 };
-export type PartnerOfferedPrice_artwork$key = {
-  readonly " $data"?: PartnerOfferedPrice_artwork$data;
-  readonly " $fragmentSpreads": FragmentRefs<"PartnerOfferedPrice_artwork">;
+export type SaleMessage_artwork$key = {
+  readonly " $data"?: SaleMessage_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SaleMessage_artwork">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "PartnerOfferedPrice_artwork",
+  "name": "SaleMessage_artwork",
   "selections": [
     {
       "alias": null,
@@ -84,6 +84,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e183115990f16ae59970028abac82ac8";
+(node as any).hash = "eaae4e7967d9a10a33ea7c169019aa30";
 
 export default node;

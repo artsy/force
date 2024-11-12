@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c15893aacbb7161b42ba9c8e1db0fbac>>
+ * @generated SignedSource<<41aea4de8500ff4ee2ab9cfd7074dc6c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerOfferedPriceQuery$variables = {
+export type SaleMessageQuery$variables = {
   id: string;
 };
-export type PartnerOfferedPriceQuery$data = {
+export type SaleMessageQuery$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"PartnerOfferedPrice_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"SaleMessage_artwork">;
   } | null | undefined;
 };
-export type PartnerOfferedPriceQuery = {
-  response: PartnerOfferedPriceQuery$data;
-  variables: PartnerOfferedPriceQuery$variables;
+export type SaleMessageQuery = {
+  response: SaleMessageQuery$data;
+  variables: SaleMessageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -50,7 +50,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PartnerOfferedPriceQuery",
+    "name": "SaleMessageQuery",
     "selections": [
       {
         "alias": null,
@@ -63,7 +63,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PartnerOfferedPrice_artwork"
+            "name": "SaleMessage_artwork"
           }
         ],
         "storageKey": null
@@ -76,7 +76,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PartnerOfferedPriceQuery",
+    "name": "SaleMessageQuery",
     "selections": [
       {
         "alias": null,
@@ -141,16 +141,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "94df35b04390a18848aba366c104f4cf",
+    "cacheID": "2dcb17cca11024062106331d2791337c",
     "id": null,
     "metadata": {},
-    "name": "PartnerOfferedPriceQuery",
+    "name": "SaleMessageQuery",
     "operationKind": "query",
-    "text": "query PartnerOfferedPriceQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...PartnerOfferedPrice_artwork\n    id\n  }\n}\n\nfragment PartnerOfferedPrice_artwork on Artwork {\n  collectorSignals {\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query SaleMessageQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaleMessage_artwork\n    id\n  }\n}\n\nfragment SaleMessage_artwork on Artwork {\n  collectorSignals {\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f6ab5ba13662f712cb9ffb1e19f786af";
+(node as any).hash = "b99dd1add4bff46f0402baf47993cf0a";
 
 export default node;
