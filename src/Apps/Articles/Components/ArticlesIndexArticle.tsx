@@ -68,6 +68,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({
           >
             {image && (
               <Image
+                key={image.src}
                 src={image.src}
                 srcSet={image.srcSet}
                 width="100%"
