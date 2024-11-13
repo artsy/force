@@ -32,11 +32,12 @@ spec:
     spec:
       initContainers:
       - name: setenv
-        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/opstools:production
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/fortress:production
         imagePullPolicy: Always
         command:
         - python
-        - src/load_secrets_from_vault/load.py
+        - src/load/load.py
+        - kubernetes
         - production
         - force
         envFrom:
@@ -59,6 +60,8 @@ spec:
             fieldRef:
               fieldPath: metadata.labels['app.kubernetes.io/version']
         envFrom:
+        - configMapRef:
+            name: secrets-config
         - configMapRef:
             name: force-environment
         volumeMounts:
@@ -145,11 +148,12 @@ spec:
     spec:
       initContainers:
       - name: setenv
-        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/opstools:production
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/fortress:production
         imagePullPolicy: Always
         command:
         - python
-        - src/load_secrets_from_vault/load.py
+        - src/load/load.py
+        - kubernetes
         - production
         - force
         envFrom:
@@ -172,6 +176,8 @@ spec:
             fieldRef:
               fieldPath: metadata.labels['app.kubernetes.io/version']
         envFrom:
+        - configMapRef:
+            name: secrets-config
         - configMapRef:
             name: force-environment
         volumeMounts:
