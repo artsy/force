@@ -13,6 +13,7 @@ const ArticleMetaTags: FC<ArticleMetaTagsProps> = ({ article }) => {
     <>
       <MetaTags
         title={`${article.searchTitle || article.title} | Artsy`}
+        socialTitle={article.title}
         pathname={article.href}
         description={article.searchDescription || article.description}
         imageURL={article.thumbnailImage?.url}
