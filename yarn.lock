@@ -112,6 +112,24 @@
     use-cursor "^1.2.3"
     use-keyboard-list-navigation "2.4.2"
 
+"@artsy/palette@^39.1.0":
+  version "39.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-39.1.0.tgz#2b454f30b17e7b394df776c8aa9f034ee7e04057"
+  integrity sha512-SJDXzGAnUUAA/43TADk9Sael5lWjrx72zvSDolreeh36EmWmtGFPjuGl4k8OKIoJEVJKJSX4aDeIIcBQZiErJQ==
+  dependencies:
+    "@artsy/icons" "^3.2.2"
+    "@artsy/palette-tokens" "^6.1.0"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
+    es-toolkit "^1.16.0"
+    proportional-scale "^4.0.0"
+    react-focus-on "^3.7.0"
+    react-lazy-load-image-component "1.5.5"
+    styled-system "^5.1.5"
+    trunc-html "^1.1.2"
+    use-cursor "^1.2.3"
+    use-keyboard-list-navigation "2.4.2"
+
 "@artsy/react-html-parser@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
@@ -19452,7 +19470,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-"react-17@npm:react@17.0.2", react@17.0.2:
+"react-17@npm:react@17.0.2":
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
@@ -19494,7 +19512,16 @@ react-docgen@^5.0.0:
     node-dir "^0.1.10"
     strip-indent "^3.0.0"
 
-"react-dom-17@npm:react-dom@17.0.2", react-dom@17.0.2:
+"react-dom-17@npm:react-dom@17.0.2":
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
+  integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    scheduler "^0.20.2"
+
+react-dom@17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
   integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
@@ -19755,6 +19782,14 @@ react-waypoint@8.0.0:
   dependencies:
     consolidated-events "^1.1.0"
     prop-types "^15.0.0"
+
+react@17.0.2:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
+  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
