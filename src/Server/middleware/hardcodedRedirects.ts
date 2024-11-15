@@ -22,6 +22,7 @@ const PERMANENT_REDIRECTS = {
   "/artsy-education": "/channel/artsy-education",
   "/artsy-vanguard-2019": "/article/artsy-vanguard-2019-50-artists",
   "/artsy.net/artwork/marilyn-minter-miley": "/artwork/marilyn-minter-miley",
+  "/auction": "/auctions",
   "/auction-partnerships": "https://partners.artsy.net/auction-partnerships/",
   "/artist": "/artists",
   "/artworks": "/collect",
@@ -37,8 +38,10 @@ const PERMANENT_REDIRECTS = {
   "/collector-profile/saves": "/favorites/saves",
   "/collector-profile/saves/:id": "/favorites/saves/:id",
   "/collector/edit": "/profile/edit",
+  "/collection": "/collections",
   "/conditions-of-sale": "/supplemental-cos",
   "/dev/blank": "/debug/baseline",
+  "/fair": "/art-fairs",
   "/fair-application": "/apply/fair",
   "/fairs": "art-fairs",
   "/favorites": "/user/saves#saved-artworks",
@@ -102,6 +105,9 @@ const PERMANENT_REDIRECTS = {
   "/user/purchases": "/settings/purchases",
   "/user/saves": "/favorites/saves",
   "/user/shipping": "/settings/shipping",
+  "/viewing-room": "/viewing-rooms",
+  "/_=_": "/", // Facebook passport bug, see: https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-5913711
+  // redirects for the Venice Biennale
   "/venice-biennale": "/article/inside-biennale",
   "/venice-biennale-2015": "/partner/56th-venice-biennale",
   "/venice-biennale/anne-imhof-faust":
@@ -122,7 +128,6 @@ const PERMANENT_REDIRECTS = {
     "/article/artsy-editorial-inside-biennale-ep-2-studio-venezia",
   "/venice-biennale/toward-venice":
     "/article/artsy-editorial-inside-biennale-ep-1-venice",
-  "/_=_": "/", // Facebook passport bug, see: https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-5913711
   // redirects for articles to the partners.artsy.net domain
   "/article/elena-soboleva-how-to-write-an-effective-press-release":
     "https://partners.artsy.net/resource/write-an-effective-press-release-for-your-gallery",
