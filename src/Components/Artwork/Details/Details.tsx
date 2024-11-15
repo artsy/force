@@ -14,7 +14,7 @@ import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { BidTimerLine } from "./BidTimerLine"
-import { PrimaryLabelLineQueryRenderer } from "Components/Artwork/Details/PrimaryLabelLine"
+import { PrimaryLabelLineQueryRenderer } from "./PrimaryLabelLine"
 import { SaleMessageQueryRenderer } from "./SaleMessage"
 
 export interface DetailsProps {

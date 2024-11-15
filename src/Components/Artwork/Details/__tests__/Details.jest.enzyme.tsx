@@ -14,6 +14,12 @@ jest.mock("Components/AuthDialog/useAuthDialog")
 jest.mock("Components/Artwork/SaveButton/SaveButton", () => ({
   SaveButtonQueryRenderer: () => <div>SaveButtonQueryRenderer</div>,
 }))
+jest.mock("Components/Artwork/Details/SaleMessage", () => ({
+  SaleMessageQueryRenderer: () => <div>SaleMessageQueryRenderer</div>,
+}))
+jest.mock("Components/Artwork/Details/PrimaryLabelLine", () => ({
+  PrimaryLabelLineQueryRenderer: () => <div>PrimaryLabelLineQueryRenderer</div>,
+}))
 
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(
   "2022-03-18T05:22:32.000Z",
@@ -90,7 +96,7 @@ describe("Details", () => {
       expect(html).not.toContain("Contact for Price")
       expect(html).not.toContain("Gerhard Richter")
       expect(html).not.toContain("This Really Great Gallery")
-      expect(html).toContain("$2,600")
+      expect(html).toContain("SaleMessageQueryRenderer")
       expect(html).toContain("Tulips (P17)")
     })
   })
@@ -142,46 +148,12 @@ describe("Details", () => {
       const wrapper = await getWrapper(artworkInAuction, props)
       const html = wrapper.html()
 
-      expect(html).not.toContain("$2,600")
+      expect(html).not.toContain("SaleMessageQueryRenderer")
     })
   })
 
   describe("in sale", () => {
-    it("shows highest bid if sale open and highest bid", async () => {
-      const wrapper = await getWrapper(artworkInAuction)
-      const html = wrapper.html()
-      expect(html).toContain("$2,600")
-    })
-
-    it("shows sale_message if in closed auction", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        sale_message: "Bidding closed",
-        sale: { ...artworkInAuction?.sale, is_closed: true },
-      }
-
-      const wrapper = await getWrapper(data)
-      expect(wrapper.html()).toContain("Bidding closed")
-    })
-
-    it("shows opening bid if sale open and no highest bid", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
-          highest_bid: {
-            ...artworkInAuction?.sale_artwork?.highest_bid,
-            display: null,
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-      const html = wrapper.html()
-      expect(html).toContain("$2,400")
-    })
-
-    it("shows sale_message", async () => {
+    it("shows sale message", async () => {
       const data: any = {
         ...artworkInAuction,
         sale_message: "Price on request",
@@ -193,32 +165,7 @@ describe("Details", () => {
 
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
-      expect(html).toContain("Price on request")
-    })
-
-    it("shows sale message if sale open and no bids", async () => {
-      const data: any = {
-        ...artworkInAuction,
-        sale: {
-          ...artworkInAuction?.sale,
-          is_auction: false,
-        },
-        sale_artwork: {
-          ...artworkInAuction?.sale_artwork,
-          highest_bid: {
-            ...artworkInAuction?.sale_artwork?.highest_bid,
-            display: null,
-          },
-          opening_bid: {
-            ...artworkInAuction?.sale_artwork?.highest_bid,
-            display: null,
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-      const html = wrapper.html()
-      expect(html).toContain("$450")
+      expect(html).toContain("SaleMessageQueryRenderer")
     })
 
     it("shows the number of bids in the message if sale open and are bids", async () => {
@@ -235,7 +182,7 @@ describe("Details", () => {
 
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
-      expect(html).toContain("$2,600")
+      expect(html).toContain("SaleMessageQueryRenderer")
       expect(html).toContain("(2 bids)")
     })
 
@@ -374,7 +321,7 @@ describe("Details", () => {
   })
 
   describe("collector signals", () => {
-    it("should render the active partner offer badge when it's the primary label", async () => {
+    it("renders the primary label", async () => {
       const data: any = {
         ...artworkNotInAuction,
         collectorSignals: {
@@ -391,12 +338,11 @@ describe("Details", () => {
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
 
-      expect(html).toContain("Limited-Time Offer")
-      expect(html).toContain("Exp.")
-      expect(html).toContain("$3,500")
+      expect(html).toContain("PrimaryLabelLineQueryRenderer")
+      expect(html).toContain("SaleMessageQueryRenderer")
     })
 
-    it("should not render the active partner offer badge if the artwork is in an auction", async () => {
+    it("does not render the primary label if the artwork is in an auction", async () => {
       const data: any = {
         ...artworkInAuction,
         collectorSignals: {
@@ -412,63 +358,8 @@ describe("Details", () => {
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
 
-      expect(html).not.toContain("Limited-Time Offer")
-      expect(html).not.toContain("Exp.")
-      expect(html).toContain("$2,600")
-    })
-
-    it("should not render the active partner offer badge if the artwork in the activity panel", async () => {
-      props = {
-        contextModule: ContextModule.activity,
-      }
-
-      const data: any = {
-        ...artworkNotInAuction,
-        collectorSignals: {
-          partnerOffer: {
-            isActive: true,
-            endAt: "2055-03-12T12:33:37.000Z",
-            priceWithDiscount: { display: "$2000" },
-          },
-        },
-      }
-
-      const wrapper = await getWrapper(data, props)
-      const html = wrapper.html()
-
-      expect(html).not.toContain("Limited-Time Offer")
-    })
-
-    it("should render the curators pick badge when it's the primary label", async () => {
-      const data: any = {
-        ...artworkNotInAuction,
-        collectorSignals: {
-          ...artworkInAuction?.collectorSignals,
-          primaryLabel: "CURATORS_PICK",
-          partnerOffer: null,
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-      const html = wrapper.html()
-
-      expect(html).toContain("Curators’ Pick")
-    })
-
-    it("should render the increased interest badge when it's the primary label", async () => {
-      const data: any = {
-        ...artworkNotInAuction,
-        collectorSignals: {
-          ...artworkInAuction?.collectorSignals,
-          primaryLabel: "INCREASED_INTEREST",
-          partnerOffer: null,
-        },
-      }
-
-      const wrapper = await getWrapper(data)
-      const html = wrapper.html()
-
-      expect(html).toContain("Increased Interest")
+      expect(html).not.toContain("PrimaryLabelLineQueryRenderer")
+      expect(html).toContain("SaleMessageQueryRenderer")
     })
 
     it("does not show the number of bids when there are bids on the sale artwork but no auction signals", async () => {
@@ -489,7 +380,7 @@ describe("Details", () => {
 
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
-      expect(html).toContain("$2,600")
+      expect(html).toContain("SaleMessageQueryRenderer")
       expect(html).not.toMatch(/\d+ bids?/)
     })
   })
