@@ -14,7 +14,7 @@ import { SaveButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveButto
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { BidTimerLine } from "./BidTimerLine"
-import { PrimaryLabelLineQueryRenderer } from "Components/Artwork/Details/PrimaryLabelLine"
+import { PrimaryLabelLineQueryRenderer } from "./PrimaryLabelLine"
 import { SaleMessageQueryRenderer } from "./SaleMessage"
 
 export interface DetailsProps {
