@@ -442,7 +442,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
           extendedBiddingIntervalMinutes
         }
         saleMessage
-        artists {
+        artists(shallow: true) {
           id
           internalID
           slug

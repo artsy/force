@@ -279,7 +279,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
           endAt
           endedAt
         }
-        artists {
+        artists(shallow: true) {
           internalID
         }
         isUnlisted
