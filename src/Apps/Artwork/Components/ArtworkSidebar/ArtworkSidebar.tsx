@@ -24,6 +24,9 @@ import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAu
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPrivateArtwork"
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { ArtworkSidebarQuery } from "__generated__/ArtworkSidebarQuery.graphql"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork$data
@@ -291,3 +294,45 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+interface ArtworkSidebarQueryRendererProps {
+  artworkID: string
+}
+
+export const ArtworkSidebarQueryRenderer: React.FC<ArtworkSidebarQueryRendererProps> = ({
+  artworkID,
+  ...rest
+}) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtworkSidebarQuery>
+      environment={relayEnvironment}
+      query={graphql`
+        query ArtworkSidebarQuery($artworkID: String!) {
+          artwork(id: $artworkID) {
+            ...ArtworkSidebar_artwork
+          }
+          me {
+            ...ArtworkSidebar_me @arguments(artworkID: $artworkID)
+          }
+        }
+      `}
+      variables={{ artworkID }}
+      render={({ error, props }) => {
+        if (error || !props?.artwork) {
+          return null
+        }
+
+        return (
+          <ArtworkSidebarFragmentContainer
+            artwork={props.artwork}
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            me={props.me!}
+            {...rest}
+          />
+        )
+      }}
+    />
+  )
+}

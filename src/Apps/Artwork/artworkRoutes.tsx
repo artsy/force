@@ -18,9 +18,13 @@ export const artworkRoutes: RouteProps[] = [
     onClientSideRender: () => {
       ArtworkApp.preload()
     },
-    prepareVariables: ({ artworkID }, props) => {
+    prepareVariables: ({ artworkID }, { context }) => {
+      // We want to defer loading the sidebar for mobile as it is below-the-fold.
+      const loadSidebar = !context?.isMobile
+
       return {
         artworkID,
+        loadSidebar,
       }
     },
     render: ({ Component, props }) => {
@@ -38,9 +42,12 @@ export const artworkRoutes: RouteProps[] = [
       return <Component {...props} />
     },
     query: graphql`
-      query artworkRoutes_ArtworkQuery($artworkID: String!) {
+      query artworkRoutes_ArtworkQuery(
+        $artworkID: String!
+        $loadSidebar: Boolean!
+      ) {
         artworkResult(id: $artworkID) {
-          ...ArtworkApp_artworkResult
+          ...ArtworkApp_artworkResult @arguments(loadSidebar: $loadSidebar)
 
           ... on ArtworkError {
             requestError {
@@ -49,7 +56,8 @@ export const artworkRoutes: RouteProps[] = [
           }
         }
         me {
-          ...ArtworkApp_me @arguments(artworkID: $artworkID)
+          ...ArtworkApp_me
+            @arguments(artworkID: $artworkID, loadSidebar: $loadSidebar)
         }
       }
     `,
