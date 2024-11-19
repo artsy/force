@@ -13,7 +13,7 @@ export const ConsignmentInquiryConfirmation: React.FC = () => {
       <Spacer y={4} />
 
       <Button
-        width={["100%", "20%"]}
+        width={["100%", "auto"]}
         data-test-id="back-to-sell-with-artsy-button"
         size="large"
         variant="primaryBlack"
