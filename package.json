@@ -304,6 +304,7 @@
     "eslint-plugin-styled-components-a11y": "0.0.16",
     "eslint-plugin-testing-library": "^4.6.0",
     "fork-ts-checker-notifier-webpack-plugin": "4.0.0",
+    "fresnel-17": "npm:@artsy/fresnel@6",
     "graphql-tag": "2.10.3",
     "graphql-tools": "4.0.3",
     "html-webpack-plugin": "5.3.1",

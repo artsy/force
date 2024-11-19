@@ -7,6 +7,7 @@ module.exports = {
   moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx"],
   moduleNameMapper: {
     "^luxon$": "<rootDir>/node_modules/luxon",
+    "^@artsy/fresnel$": "fresnel-17",
     "^react$": "react-17",
     "^react-dom$": "react-dom-17",
     "^react-dom/test-utils$": "react-dom-17/test-utils",
