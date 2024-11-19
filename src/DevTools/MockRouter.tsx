@@ -46,7 +46,7 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
           ? createMockNetworkLayer2({ mockData, mockMutationResults })
           : null
 
-        const { ClientRouter } = setupClientRouter({
+        const { ClientRouter } = await setupClientRouter({
           routes: [
             {
               path: "/",
@@ -83,9 +83,8 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
   return MockRouterApp
 }
 
-const MockRouterAppShell: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
-  children,
-  ...props
-}) => {
+const MockRouterAppShell: React.FC<React.PropsWithChildren<
+  MockRouterProps
+>> = ({ children, ...props }) => {
   return <AppShell {...props}>{children}</AppShell>
 }

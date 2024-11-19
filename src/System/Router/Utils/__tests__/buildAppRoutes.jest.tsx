@@ -57,7 +57,7 @@ describe("buildAppRoutes", () => {
       return null
     }
 
-    const { ClientRouter } = setupClientRouter({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },
@@ -80,7 +80,7 @@ describe("buildAppRoutes", () => {
   })
 
   it("uses an `<AppShell>` component to render child routes", async () => {
-    const { ClientRouter } = setupClientRouter({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },

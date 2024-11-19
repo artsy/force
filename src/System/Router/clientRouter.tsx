@@ -6,12 +6,7 @@ import {
   createQueryMiddleware,
 } from "farce"
 import { Resolver } from "found-relay"
-import {
-  createFarceRouter,
-  createInitialBrowserRouter,
-  createInitialFarceRouter,
-  createRender,
-} from "found"
+import { createInitialFarceRouter, createRender } from "found"
 import { ScrollManager, ScrollManagerProps } from "found-scroll"
 import { renderStates } from "System/Router/RenderStates"
 import { RouteProps } from "System/Router/Route"
@@ -40,7 +35,11 @@ export interface RouterConfig {
   url?: string
 }
 
-export const setupClientRouter = async (config: RouterConfig) => {
+export const setupClientRouter = async (
+  config: RouterConfig
+): Promise<{
+  ClientRouter: React.ComponentType<any>
+}> => {
   const matchContext = getClientAppContext(config.context)
 
   const user = getUser(matchContext.user)
@@ -112,7 +111,7 @@ export const setupClientRouter = async (config: RouterConfig) => {
           relayEnvironment={relayEnvironment}
           routes={config.routes}
         >
-          <BrowserRouter />
+          <BrowserRouter resolver={resolver} />
         </Boot>
       )
     }
