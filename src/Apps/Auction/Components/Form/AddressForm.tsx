@@ -1,42 +1,9 @@
 import { Column, GridColumns, Input } from "@artsy/palette"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
 import { CountrySelect } from "Components/CountrySelect"
-import {
-  AddressAutocompleteInput,
-  useAddressAutocompleteTracking,
-} from "Components/Address/AddressAutocompleteInput"
-import { useState } from "react"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-// import { ContextModule } from "@artsy/cohesion"
 
 export const AddressForm = () => {
-  const {
-    handleChange,
-    handleBlur,
-    errors,
-    values,
-    touched,
-    setValues,
-    setFieldValue,
-  } = useFormContext()
-  const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
-
-  const autocompleteTrackingValues = {
-    contextModule: "auctionRegistration" as any, //ContextModule.auctionRegistration,
-    // contextModule: ContextModule.auctionRegistration,
-    contextOwnerType: contextPageOwnerType,
-    contextPageOwnerId: contextPageOwnerId || "",
-  }
-
-  const trackAutoCompleteEdits = (fieldName: string, handleChange) => (
-    ...args
-  ) => {
-    if (hasAutocompletedAddress) {
-      autocompleteTracking.editedAutocompletedAddress(fieldName)
-      setHasAutocompletedAddress(false)
-    }
-    handleChange(...args)
-  }
+  const { handleChange, handleBlur, errors, values, touched } = useFormContext()
 
   return (
     <GridColumns>
@@ -70,47 +37,16 @@ export const AddressForm = () => {
       </Column>
 
       <Column span={12}>
-        <AddressAutocompleteInput
-          address={{
-            country: values.address.country,
-          }}
-          flip={false}
-          required
-          disableAutocomplete={values.address.region === "AK"}
+        <Input
           name="address.addressLine1"
-          placeholder="Add address"
           title="Address Line 1"
-          value={values.address.addressLine1}
-          onChange={trackAutoCompleteEdits("addressLine1", handleChange)}
+          placeholder="Add address"
+          autoComplete="address-line1"
+          value={values.address?.addressLine1}
+          onChange={handleChange}
           onBlur={handleBlur}
-          onSelect={option => {
-            const selectedAddress = option.address
-            setValues({
-              ...values,
-              address: {
-                ...values.address,
-                addressLine1: selectedAddress.addressLine1,
-                addressLine2: selectedAddress.addressLine2,
-                city: selectedAddress.city,
-                region: selectedAddress.region,
-                postalCode: selectedAddress.postalCode,
-                country: selectedAddress.country,
-              },
-            })
-            setHasAutocompletedAddress(true)
-
-            autocompleteTracking.selectedAutocompletedAddress(
-              option,
-              values.address.addressLine1
-            )
-          }}
-          onReceiveAutocompleteResult={(input, count) => {
-            autocompleteTracking.receivedAutocompleteResult(input, count)
-          }}
           error={touched.address?.addressLine1 && errors.address?.addressLine1}
-          onClear={() => {
-            setFieldValue("address.addressLine1", "")
-          }}
+          required
         />
       </Column>
 
