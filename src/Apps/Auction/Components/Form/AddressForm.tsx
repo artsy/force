@@ -1,9 +1,29 @@
+// import { ContextModule } from "@artsy/cohesion"
 import { Column, GridColumns, Input } from "@artsy/palette"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
+import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import { CountrySelect } from "Components/CountrySelect"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 export const AddressForm = () => {
-  const { handleChange, handleBlur, errors, values, touched } = useFormContext()
+  const {
+    handleChange,
+    handleBlur,
+    errors,
+    values,
+    touched,
+    setValues,
+    setFieldValue,
+  } = useFormContext()
+
+  const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
+
+  const autocompleteTrackingValues = {
+    contextModule: "auctionRegistration" as any,
+    // contextModule: ContextModule.auctionRegistration,
+    contextOwnerType: contextPageOwnerType,
+    contextPageOwnerId: contextPageOwnerId || "",
+  }
 
   return (
     <GridColumns>
@@ -37,16 +57,39 @@ export const AddressForm = () => {
       </Column>
 
       <Column>
-        <Input
+        <AddressAutocompleteInput
+          trackingValues={autocompleteTrackingValues}
+          address={{
+            country: values.address.country,
+          }}
+          flip={false}
+          required
+          disableAutocomplete={values.address.region === "AK"}
           name="address.addressLine1"
-          title="Street address"
-          placeholder="Add street address"
-          autoComplete="address-line1"
-          value={values.address?.addressLine1}
+          placeholder="Add address"
+          title="Address Line 1"
+          value={values.address.addressLine1}
           onChange={handleChange}
           onBlur={handleBlur}
+          onSelect={option => {
+            const selectedAddress = option.address
+            setValues({
+              ...values,
+              address: {
+                ...values.address,
+                addressLine1: selectedAddress.addressLine1,
+                addressLine2: selectedAddress.addressLine2,
+                city: selectedAddress.city,
+                region: selectedAddress.region,
+                postalCode: selectedAddress.postalCode,
+                country: selectedAddress.country,
+              },
+            })
+          }}
           error={touched.address?.addressLine1 && errors.address?.addressLine1}
-          required
+          onClear={() => {
+            setFieldValue("address.addressLine1", "")
+          }}
         />
       </Column>
 
