@@ -1,19 +1,10 @@
-import {
-  Box,
-  Clickable,
-  Dropdown,
-  Flex,
-  Spacer,
-  Text,
-  THEME,
-} from "@artsy/palette"
+import { Box, Clickable, Flex, Spacer, Text, THEME } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { NavBarSubMenu } from "./Menus"
 import {
   NavBarMobileMenu,
   NavBarMobileMenuIcon,
@@ -27,18 +18,13 @@ import { ActionType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { Z } from "Apps/Components/constants"
 import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
 import { useRouter } from "System/Hooks/useRouter"
 import Events from "Utils/Events"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 import { track, useTracking } from "react-tracking"
-import {
-  NavBarItemButton,
-  NavBarItemLink,
-  NavBarItemUnfocusableAnchor,
-} from "./NavBarItem"
+import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
@@ -53,6 +39,7 @@ import styled from "styled-components"
 import { AppDownloadBanner } from "Components/AppDownloadBanner"
 import { Media } from "Utils/Responsive"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
+import { NavBarDropdownPanel } from "./NavBarDropdownPanel"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -87,6 +74,10 @@ export const NavBar: React.FC = track(
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && mode !== "More"
+
+  const [transitionCount, setTransitionCount] = useState(0)
+
+  const shouldTransition = transitionCount <= 1
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
@@ -148,6 +139,15 @@ export const NavBar: React.FC = track(
 
   const handleMobileSearchBarClose = () => {
     setMode("Idle")
+  }
+
+  const handleMenuEnter = () => {
+    setTransitionCount(count => count + 1)
+  }
+
+  const handleMenuLeave = () => {
+    // Reset the counter when leaving the navigation area completely
+    setTransitionCount(0)
   }
 
   if (isEigen) {
@@ -360,130 +360,49 @@ export const NavBar: React.FC = track(
               variant="sm"
               lineHeight={1}
             >
-              <Flex alignItems="stretch" minWidth={0}>
-                <Dropdown
-                  zIndex={Z.dropdown}
-                  keepInDOM
-                  placement="bottom"
-                  offset={0}
-                  dropdown={({ setVisible }) => (
-                    <NavBarSubMenu
-                      menu={WHATS_NEW_SUBMENU_DATA.menu}
-                      contextModule={
-                        DeprecatedAnalyticsSchema.ContextModule
-                          .HeaderWhatsNewDropdown
-                      }
-                      onClick={() => setVisible(false)}
-                    />
-                  )}
-                >
-                  {({ anchorRef, anchorProps, visible, setVisible }) => (
-                    <NavBarItemButton
-                      ref={anchorRef as any}
-                      px={0}
-                      pr={1}
-                      active={visible}
-                      {...anchorProps}
-                    >
-                      <NavBarItemUnfocusableAnchor
-                        href="/collection/new-this-week"
-                        onMouseOver={() =>
-                          prefetch("/collection/new-this-week")
-                        }
-                        onClick={event => {
-                          handleClick(event)
+              <Flex
+                alignItems="stretch"
+                minWidth={0}
+                onMouseLeave={handleMenuLeave}
+              >
+                <NavBarDropdownPanel
+                  href="/collection/new-this-week"
+                  label={WHATS_NEW_SUBMENU_DATA.text}
+                  menu={WHATS_NEW_SUBMENU_DATA.menu}
+                  contextModule={
+                    DeprecatedAnalyticsSchema.ContextModule
+                      .HeaderWhatsNewDropdown
+                  }
+                  onMenuEnter={handleMenuEnter}
+                  handleClick={handleClick}
+                  shouldTransition={shouldTransition}
+                />
 
-                          // Small timeout to avoid transition race condition
-                          setTimeout(() => {
-                            setVisible(false)
-                          }, 100)
-                        }}
-                        data-label={WHATS_NEW_SUBMENU_DATA.text}
-                      />
-                      {WHATS_NEW_SUBMENU_DATA.text}
-                    </NavBarItemButton>
-                  )}
-                </Dropdown>
+                <NavBarDropdownPanel
+                  href="/artists"
+                  label="Artists"
+                  menu={ARTISTS_SUBMENU_DATA.menu}
+                  contextModule={
+                    DeprecatedAnalyticsSchema.ContextModule
+                      .HeaderArtistsDropdown
+                  }
+                  onMenuEnter={handleMenuEnter}
+                  handleClick={handleClick}
+                  shouldTransition={shouldTransition}
+                />
 
-                <Dropdown
-                  zIndex={Z.dropdown}
-                  keepInDOM
-                  placement="bottom"
-                  offset={0}
-                  dropdown={({ setVisible }) => (
-                    <NavBarSubMenu
-                      menu={ARTISTS_SUBMENU_DATA.menu}
-                      contextModule={
-                        DeprecatedAnalyticsSchema.ContextModule
-                          .HeaderArtistsDropdown
-                      }
-                      onClick={() => setVisible(false)}
-                    />
-                  )}
-                >
-                  {({ anchorRef, anchorProps, visible, setVisible }) => (
-                    <NavBarItemButton
-                      ref={anchorRef as any}
-                      active={visible}
-                      {...anchorProps}
-                    >
-                      <NavBarItemUnfocusableAnchor
-                        href="/artists"
-                        onMouseOver={() => prefetch("/artists")}
-                        onClick={event => {
-                          handleClick(event)
-
-                          // Small timeout to avoid transition race condition
-                          setTimeout(() => {
-                            setVisible(false)
-                          }, 100)
-                        }}
-                        data-label="Artists"
-                      />
-                      Artists
-                    </NavBarItemButton>
-                  )}
-                </Dropdown>
-
-                <Dropdown
-                  zIndex={Z.dropdown}
-                  keepInDOM
-                  placement="bottom"
-                  offset={0}
-                  dropdown={({ setVisible }) => (
-                    <NavBarSubMenu
-                      menu={ARTWORKS_SUBMENU_DATA.menu}
-                      contextModule={
-                        DeprecatedAnalyticsSchema.ContextModule
-                          .HeaderArtworksDropdown
-                      }
-                      onClick={() => setVisible(false)}
-                    />
-                  )}
-                >
-                  {({ anchorRef, anchorProps, visible, setVisible }) => (
-                    <NavBarItemButton
-                      ref={anchorRef as any}
-                      active={visible}
-                      {...anchorProps}
-                    >
-                      <NavBarItemUnfocusableAnchor
-                        href="/collect"
-                        onMouseOver={() => prefetch("/collect")}
-                        onClick={event => {
-                          handleClick(event)
-
-                          // Small timeout to avoid transition race condition
-                          setTimeout(() => {
-                            setVisible(false)
-                          }, 100)
-                        }}
-                        data-label="Artworks"
-                      />
-                      Artworks
-                    </NavBarItemButton>
-                  )}
-                </Dropdown>
+                <NavBarDropdownPanel
+                  href="/collect"
+                  label="Artworks"
+                  menu={ARTWORKS_SUBMENU_DATA.menu}
+                  contextModule={
+                    DeprecatedAnalyticsSchema.ContextModule
+                      .HeaderArtworksDropdown
+                  }
+                  onMenuEnter={handleMenuEnter}
+                  handleClick={handleClick}
+                  shouldTransition={shouldTransition}
+                />
 
                 <NavBarItemLink
                   href="/auctions"

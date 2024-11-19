@@ -311,7 +311,7 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
                 <Flex>
                   <CountdownTimer
                     action="Submit new payment"
-                    note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
+                    note="Once this offer expires, negotiations will end. Note that the artwork could be sold to another buyer in the meantime."
                     countdownStart={order.lastOffer?.createdAt}
                     countdownEnd={order.stateExpiresAt}
                   />
