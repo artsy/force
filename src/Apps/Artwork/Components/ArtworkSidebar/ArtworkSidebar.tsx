@@ -1,4 +1,12 @@
-import { Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
+import {
+  Flex,
+  Join,
+  Separator,
+  Skeleton,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
 import { ArtworkSidebar_artwork$data } from "__generated__/ArtworkSidebar_artwork.graphql"
@@ -299,6 +307,16 @@ interface ArtworkSidebarQueryRendererProps {
   artworkID: string
 }
 
+const PLACEHOLDER = (
+  <Skeleton>
+    <SkeletonText variant="md">Some Longish Artist Name</SkeletonText>
+    <SkeletonText variant="md">Artwork Title, 2024</SkeletonText>
+    <Spacer y={2} />
+    <SkeletonText variant="sm">Oil on Canvas</SkeletonText>
+    <SkeletonText variant="sm">16 × 12 in | 40.6 × 30.5 cm</SkeletonText>
+  </Skeleton>
+)
+
 export const ArtworkSidebarQueryRenderer: React.FC<ArtworkSidebarQueryRendererProps> = ({
   artworkID,
   ...rest
@@ -308,6 +326,7 @@ export const ArtworkSidebarQueryRenderer: React.FC<ArtworkSidebarQueryRendererPr
   return (
     <SystemQueryRenderer<ArtworkSidebarQuery>
       environment={relayEnvironment}
+      placeholder={PLACEHOLDER}
       query={graphql`
         query ArtworkSidebarQuery($artworkID: String!) {
           artwork(id: $artworkID) {
@@ -320,8 +339,10 @@ export const ArtworkSidebarQueryRenderer: React.FC<ArtworkSidebarQueryRendererPr
       `}
       variables={{ artworkID }}
       render={({ error, props }) => {
-        if (error || !props?.artwork) {
-          return null
+        if (error) return null
+
+        if (!props?.artwork) {
+          return PLACEHOLDER
         }
 
         return (
