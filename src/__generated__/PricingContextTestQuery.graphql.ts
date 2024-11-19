@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d5d9d73113379105a05174a7b419cdd>>
+ * @generated SignedSource<<860bb8456eadc86b5aeaf0bc93c5553f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -217,7 +217,13 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "shallow",
+                "value": true
+              }
+            ],
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artists",
@@ -232,7 +238,7 @@ return {
               },
               (v2/*: any*/)
             ],
-            "storageKey": null
+            "storageKey": "artists(shallow:true)"
           },
           (v3/*: any*/),
           {
@@ -325,7 +331,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b1e971a4dff21b591743d4062e780480",
+    "cacheID": "c37726b84b8047e64abaf40d7a565fb5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -426,7 +432,7 @@ return {
     },
     "name": "PricingContextTestQuery",
     "operationKind": "query",
-    "text": "query PricingContextTestQuery {\n  artwork(id: \"unused\") {\n    ...PricingContext_artwork\n    id\n  }\n}\n\nfragment PricingContext_artwork on Artwork {\n  listPrice {\n    __typename\n    ... on PriceRange {\n      maxPrice {\n        minor\n      }\n      minPrice {\n        minor\n      }\n    }\n    ... on Money {\n      minor\n    }\n  }\n  artists {\n    slug\n    id\n  }\n  category\n  pricingContext {\n    appliedFiltersDisplay\n    appliedFilters {\n      dimension\n      category\n    }\n    bins {\n      maxPrice\n      maxPriceCents\n      minPrice\n      minPriceCents\n      numArtworks\n    }\n  }\n}\n"
+    "text": "query PricingContextTestQuery {\n  artwork(id: \"unused\") {\n    ...PricingContext_artwork\n    id\n  }\n}\n\nfragment PricingContext_artwork on Artwork {\n  listPrice {\n    __typename\n    ... on PriceRange {\n      maxPrice {\n        minor\n      }\n      minPrice {\n        minor\n      }\n    }\n    ... on Money {\n      minor\n    }\n  }\n  artists(shallow: true) {\n    slug\n    id\n  }\n  category\n  pricingContext {\n    appliedFiltersDisplay\n    appliedFilters {\n      dimension\n      category\n    }\n    bins {\n      maxPrice\n      maxPriceCents\n      minPrice\n      minPriceCents\n      numArtworks\n    }\n  }\n}\n"
   }
 };
 })();

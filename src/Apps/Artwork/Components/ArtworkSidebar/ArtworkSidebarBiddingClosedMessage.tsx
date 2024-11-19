@@ -40,7 +40,7 @@ export const ArtworkSidebarBiddingClosedMessageFragmentContainer = createFragmen
     artwork: graphql`
       fragment ArtworkSidebarBiddingClosedMessage_artwork on Artwork {
         isEligibleToCreateAlert
-        artists {
+        artists(shallow: true) {
           internalID
         }
         attributionClass {

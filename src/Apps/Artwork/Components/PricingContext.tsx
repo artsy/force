@@ -196,7 +196,7 @@ export const PricingContextFragmentContainer = createFragmentContainer(
             minor
           }
         }
-        artists {
+        artists(shallow: true) {
           slug
         }
         category
