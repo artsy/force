@@ -32,7 +32,10 @@ import { Media } from "Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match, RenderProps } from "found"
 import React, { useCallback, useEffect } from "react"
-import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
+import {
+  ArtworkSidebarFragmentContainer,
+  ArtworkSidebarQueryRenderer,
+} from "./Components/ArtworkSidebar/ArtworkSidebar"
 import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
 import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertHeader"
 import { compact } from "lodash"
@@ -92,6 +95,7 @@ export const ArtworkApp: React.FC<Props> = props => {
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
   const { match, silentPush, silentReplace } = useRouter()
   const { showAuthDialog } = useAuthDialog()
+  const isMobile = !!getENV("IS_MOBILE")
 
   // If the user is expecting a partner offer, require login and remove
   // the query param from the URL after login.
@@ -275,7 +279,11 @@ export const ArtworkApp: React.FC<Props> = props => {
           )}
         </Column>
         <Column span={4} pt={[0, 2]}>
-          <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
+          {isMobile ? (
+            <ArtworkSidebarQueryRenderer artworkID={artwork.internalID} />
+          ) : (
+            <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
+          )}
         </Column>
       </GridColumns>
       {isPrivateArtwork && (
@@ -388,11 +396,12 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
   withSystemContext(WrappedArtworkApp),
   {
     artwork: graphql`
-      fragment ArtworkApp_artwork on Artwork {
+      fragment ArtworkApp_artwork on Artwork
+        @argumentDefinitions(loadSidebar: { type: "Boolean!" }) {
         ...ArtworkMeta_artwork
         ...ArtworkTopContextBar_artwork
         ...ArtworkImageBrowser_artwork
-        ...ArtworkSidebar_artwork
+        ...ArtworkSidebar_artwork @include(if: $loadSidebar)
         ...ArtworkAuctionCreateAlertHeader_artwork
         ...PrivateArtworkDetails_artwork
         ...ArtworkPageBanner_artwork
@@ -463,18 +472,24 @@ export const ArtworkResultFragmentContainer = createFragmentContainer(
   ArtworkResult,
   {
     artworkResult: graphql`
-      fragment ArtworkApp_artworkResult on ArtworkResult {
+      fragment ArtworkApp_artworkResult on ArtworkResult
+        @argumentDefinitions(loadSidebar: { type: "Boolean!" }) {
         __typename
 
-        ...ArtworkApp_artwork
+        ...ArtworkApp_artwork @arguments(loadSidebar: $loadSidebar)
         ...ArtworkErrorApp_artworkError
       }
     `,
 
     me: graphql`
       fragment ArtworkApp_me on Me
-        @argumentDefinitions(artworkID: { type: "String!" }) {
-        ...ArtworkSidebar_me @arguments(artworkID: $artworkID)
+        @argumentDefinitions(
+          artworkID: { type: "String!" }
+          loadSidebar: { type: "Boolean!" }
+        ) {
+        ...ArtworkSidebar_me
+          @include(if: $loadSidebar)
+          @arguments(artworkID: $artworkID)
         ...ArtworkPageBanner_me @arguments(artworkID: $artworkID)
       }
     `,

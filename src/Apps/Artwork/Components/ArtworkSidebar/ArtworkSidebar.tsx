@@ -1,4 +1,12 @@
-import { Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
+import {
+  Flex,
+  Join,
+  Separator,
+  Skeleton,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
 import { ArtworkSidebar_artwork$data } from "__generated__/ArtworkSidebar_artwork.graphql"
@@ -24,6 +32,9 @@ import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAu
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPrivateArtwork"
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { ArtworkSidebarQuery } from "__generated__/ArtworkSidebarQuery.graphql"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork$data
@@ -291,3 +302,58 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+interface ArtworkSidebarQueryRendererProps {
+  artworkID: string
+}
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <SkeletonText variant="md">Some Longish Artist Name</SkeletonText>
+    <SkeletonText variant="md">Artwork Title, 2024</SkeletonText>
+    <Spacer y={2} />
+    <SkeletonText variant="sm">Oil on Canvas</SkeletonText>
+    <SkeletonText variant="sm">16 × 12 in | 40.6 × 30.5 cm</SkeletonText>
+  </Skeleton>
+)
+
+export const ArtworkSidebarQueryRenderer: React.FC<ArtworkSidebarQueryRendererProps> = ({
+  artworkID,
+  ...rest
+}) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtworkSidebarQuery>
+      environment={relayEnvironment}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtworkSidebarQuery($artworkID: String!) {
+          artwork(id: $artworkID) {
+            ...ArtworkSidebar_artwork
+          }
+          me {
+            ...ArtworkSidebar_me @arguments(artworkID: $artworkID)
+          }
+        }
+      `}
+      variables={{ artworkID }}
+      render={({ error, props }) => {
+        if (error) return null
+
+        if (!props?.artwork) {
+          return PLACEHOLDER
+        }
+
+        return (
+          <ArtworkSidebarFragmentContainer
+            artwork={props.artwork}
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            me={props.me!}
+            {...rest}
+          />
+        )
+      }}
+    />
+  )
+}
