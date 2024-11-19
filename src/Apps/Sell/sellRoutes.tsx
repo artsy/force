@@ -579,8 +579,7 @@ export const sellRoutes: RouteProps[] = [
             },
           },
           {
-            path: "inquiry/:recipientEmail?",
-            getComponent: () => ConsignmentInquiryContainer,
+            path: ":recipientEmail?",
             children: [
               {
                 path: "",
