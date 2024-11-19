@@ -47,10 +47,10 @@ const { renderWithRelay } = setupTestWrapperTL<ArtworkAppTestQuery>({
   query: graphql`
     query ArtworkAppTestQuery {
       artworkResult(id: "artwork-id") {
-        ...ArtworkApp_artworkResult
+        ...ArtworkApp_artworkResult @arguments(loadSidebar: true)
       }
       me {
-        ...ArtworkApp_me @arguments(artworkID: "artwork-id")
+        ...ArtworkApp_me @arguments(artworkID: "artwork-id", loadSidebar: true)
       }
     }
   `,
