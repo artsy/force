@@ -7,11 +7,11 @@ export const AddressForm = () => {
 
   return (
     <GridColumns>
-      <Column span={12}>
+      <Column>
         <Input
           name="address.name"
           title="Full Name"
-          placeholder="Enter name"
+          placeholder="Add full name"
           autoComplete="name"
           autoFocus
           value={values.address?.name}
@@ -22,7 +22,7 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column span={12}>
+      <Column>
         <CountrySelect
           name="address.country"
           title="Country"
@@ -36,11 +36,11 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column span={12}>
+      <Column>
         <Input
           name="address.addressLine1"
-          title="Address Line 1"
-          placeholder="Add address"
+          title="Street address"
+          placeholder="Add street address"
           autoComplete="address-line1"
           value={values.address?.addressLine1}
           onChange={handleChange}
@@ -50,11 +50,11 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column span={12}>
+      <Column>
         <Input
           name="address.addressLine2"
-          title="Address line 2"
-          placeholder="Add address line 2"
+          title="Apt, floor, suite, etc. (optional)"
+          placeholder="Add apartment, floor, suite, etc."
           autoComplete="address-line2"
           value={values.address?.addressLine2}
           onChange={handleChange}
@@ -63,11 +63,11 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column span={12}>
+      <Column>
         <Input
           name="address.city"
           title="City"
-          placeholder="Enter city"
+          placeholder="Add city"
           autoComplete="address-level2"
           value={values.address?.city}
           onChange={handleChange}
@@ -80,8 +80,8 @@ export const AddressForm = () => {
       <Column span={6}>
         <Input
           name="address.region"
-          title="State, Province, or Region"
-          placeholder="Add state, province, or region"
+          title="State, region or province"
+          placeholder="Add state, region or province"
           autoComplete="address-level1"
           value={values.address?.region}
           onChange={handleChange}
@@ -94,8 +94,8 @@ export const AddressForm = () => {
       <Column span={6}>
         <Input
           name="address.postalCode"
-          title="Postal Code"
-          placeholder="Add postal code"
+          title="ZIP/Postal code"
+          placeholder="Add ZIP/Postal code"
           autoComplete="postal-code"
           value={values.address?.postalCode}
           onChange={handleChange}
@@ -105,10 +105,10 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column span={12}>
+      <Column>
         <Input
           name="phoneNumber"
-          title="Phone Number"
+          title="Phone number"
           type="tel"
           description="Required for shipping logistics"
           placeholder="Add phone number"
