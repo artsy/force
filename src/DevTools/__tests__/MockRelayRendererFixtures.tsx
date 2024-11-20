@@ -6,9 +6,9 @@ import { MockRelayRendererFixturesArtistQuery } from "__generated__/MockRelayRen
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import cheerio from "cheerio"
-import { render } from "enzyme"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
+import { render } from "@testing-library/react"
 
 const Metadata = createFragmentContainer(
   (props: {
@@ -103,5 +103,5 @@ export const badQuery = graphql`
 `
 
 export function renderToString(element: JSX.Element) {
-  return cheerio.html(render(element))
+  return cheerio.html(render(element) as any)
 }

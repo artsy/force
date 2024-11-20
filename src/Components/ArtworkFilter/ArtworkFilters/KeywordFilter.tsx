@@ -38,7 +38,7 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   // Stop the invocation of the debounced function after unmounting
   useEffect(() => {
-    return () => handleDebounce.cancel()
+    return () => handleDebounce.cancel?.()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
