@@ -39,7 +39,6 @@ export const MediumFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
           {categoryMap.map((checkbox, index) => {
             const { name, displayName } = checkbox
             const props = {
-              key: index,
               onSelect: (selected: boolean) => {
                 toggleSelection(selected, name)
               },
@@ -47,7 +46,11 @@ export const MediumFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
               selected: categories?.includes(name),
               testID: `medium-filter-${name}`,
             }
-            return <Checkbox {...props}>{displayName}</Checkbox>
+            return (
+              <Checkbox key={index} {...props}>
+                {displayName}
+              </Checkbox>
+            )
           })}
         </ShowMore>
       </Flex>

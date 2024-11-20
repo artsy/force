@@ -169,8 +169,10 @@ export const setupTestWrapperTL = <T extends OperationType>({
 
     const view = render(<TestRenderer />)
 
-    env.mock.resolveMostRecentOperation(operation => {
-      return MockPayloadGenerator.generate(operation, mockResolvers)
+    act(() => {
+      env.mock.resolveMostRecentOperation(operation => {
+        return MockPayloadGenerator.generate(operation, mockResolvers)
+      })
     })
 
     return {

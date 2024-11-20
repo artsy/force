@@ -521,7 +521,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             { name: "1979", value: "1979", count: 100 },
             { name: "1980", value: "1980", count: 100 },
             { name: "1990", value: "1990", count: 300 },
-            { name: "1990", value: "1991", count: 300 },
+            { name: "1991", value: "1991", count: 300 },
           ],
         },
       ],

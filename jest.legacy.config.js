@@ -15,7 +15,7 @@ module.exports = {
   reporters: ["default", "jest-junit"],
   setupFilesAfterEnv: [
     "<rootDir>/src/Utils/jestShim.js",
-    "<rootDir>/src/tests.ts",
+    "<rootDir>/src/Utils/tests.legacy.ts",
   ],
   testEnvironment: "jest-environment-jsdom",
   testMatch: ["**/src/**/*.jest.enzyme.(ts|tsx|js|jsx)"],

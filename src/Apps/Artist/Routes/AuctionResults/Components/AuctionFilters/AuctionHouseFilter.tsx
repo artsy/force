@@ -15,7 +15,9 @@ export const auctionHouseMap = [
   { displayName: "Artsy Auction", name: "Artsy Auction" },
 ]
 
-export const AuctionHouseFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const AuctionHouseFilter: React.FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   const { setFilter } = useAuctionResultsFilterContext()
   const { organizations = [] } = useCurrentlySelectedFiltersForAuctionResults()
 
@@ -38,7 +40,6 @@ export const AuctionHouseFilter: React.FC<React.PropsWithChildren<unknown>> = ()
           {auctionHouseMap.map((checkbox, index) => {
             const { name, displayName } = checkbox
             const props = {
-              key: index,
               onSelect: (selected: boolean) => {
                 toggleSelection(selected, name)
               },
@@ -46,7 +47,11 @@ export const AuctionHouseFilter: React.FC<React.PropsWithChildren<unknown>> = ()
               selected: organizations?.includes(name),
               testID: `organization-filter-${name}`,
             }
-            return <Checkbox {...props}>{displayName}</Checkbox>
+            return (
+              <Checkbox key={index} {...props}>
+                {displayName}
+              </Checkbox>
+            )
           })}
         </ShowMore>
       </Flex>

@@ -70,7 +70,6 @@ export const SizeFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
           {options.map((checkbox, index) => {
             const { name, displayName } = checkbox
             const props = {
-              key: index,
               onSelect: (selected: boolean) => {
                 toggleSelection(selected, name)
               },
@@ -78,7 +77,11 @@ export const SizeFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
               selected: sizes.includes(name),
               testID: `size-filter-${name}`,
             }
-            return <Checkbox {...props}>{displayName}</Checkbox>
+            return (
+              <Checkbox key={index} {...props}>
+                {displayName}
+              </Checkbox>
+            )
           })}
         </ShowMore>
       </Flex>
