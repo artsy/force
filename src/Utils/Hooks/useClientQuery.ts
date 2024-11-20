@@ -1,11 +1,13 @@
+import { useUpdateEffect } from "@artsy/palette"
 import { useEffect, useRef, useState } from "react"
 import { Environment, fetchQuery, GraphQLTaggedNode } from "react-relay"
 import {
   CacheConfig,
+  createOperationDescriptor,
   FetchQueryFetchPolicy,
+  getRequest,
   OperationType,
 } from "relay-runtime"
-import { useUpdateEffect } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const useClientQuery = <T extends OperationType>({
@@ -50,6 +52,14 @@ export const useClientQuery = <T extends OperationType>({
 
       setData(res)
       setLoading(false)
+
+      const operation = createOperationDescriptor(
+        getRequest(query),
+        variables ?? {}
+      )
+
+      // Retain the operation to prevent it from being garbage collected. Garbage collection can compromise type safety (e.g. non-nullable values being `null`), potentially leading to runtime errors.
+      relayEnvironment.retain(operation)
     } catch (err) {
       setError(err)
       setLoading(false)
