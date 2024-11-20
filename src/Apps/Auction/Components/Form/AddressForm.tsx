@@ -1,4 +1,4 @@
-// import { ContextModule } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { Column, GridColumns, Input } from "@artsy/palette"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
@@ -19,15 +19,14 @@ export const AddressForm = () => {
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
   const autocompleteTrackingValues = {
-    contextModule: "auctionRegistration" as any,
-    // contextModule: ContextModule.auctionRegistration,
+    contextModule: ContextModule.auctionRegistration,
     contextOwnerType: contextPageOwnerType,
     contextPageOwnerId: contextPageOwnerId || "",
   }
 
   return (
     <GridColumns>
-      <Column>
+      <Column span={12}>
         <Input
           name="address.name"
           title="Full Name"
@@ -42,7 +41,7 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column>
+      <Column span={12}>
         <CountrySelect
           name="address.country"
           title="Country"
@@ -56,7 +55,7 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column>
+      <Column span={12}>
         <AddressAutocompleteInput
           trackingValues={autocompleteTrackingValues}
           address={{
@@ -93,7 +92,7 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column>
+      <Column span={12}>
         <Input
           name="address.addressLine2"
           title="Apt, floor, suite, etc. (optional)"
@@ -106,7 +105,7 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column>
+      <Column span={12}>
         <Input
           name="address.city"
           title="City"
@@ -148,7 +147,7 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column>
+      <Column span={12}>
         <Input
           name="phoneNumber"
           title="Phone number"
