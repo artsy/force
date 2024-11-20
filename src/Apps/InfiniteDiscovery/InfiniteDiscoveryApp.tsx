@@ -20,6 +20,7 @@ const BUILD_SEARCH_QUERY = (lArtworks, dArtworks, cArtworks) => {
       _id: artwork.internalID,
     },
   }))
+
   const query = {
     query: {
       bool: {
