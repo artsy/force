@@ -374,7 +374,7 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
                 shippingOrigin
                 title
                 artistNames
-                artists {
+                artists(shallow: true) {
                   href
                 }
               }

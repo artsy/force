@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d50d0e01e978705dfed80708f1a59e2c>>
+ * @generated SignedSource<<eb7e49cfb8e066745fc327d8a9fe7801>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -109,7 +109,13 @@ return {
           (v1/*: any*/),
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "shallow",
+                "value": true
+              }
+            ],
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artist",
@@ -143,7 +149,7 @@ return {
               },
               (v2/*: any*/)
             ],
-            "storageKey": null
+            "storageKey": "artist(shallow:true)"
           },
           {
             "alias": null,
@@ -182,12 +188,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ff278d77de74a054e45dbe630daa98a1",
+    "cacheID": "87ff1d8f986f1599cc89fd388edbc9b7",
     "id": null,
     "metadata": {},
     "name": "MyCollectionArtworkSubmitForSale_Test_Query",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSubmitForSale_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSubmitForSale_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSubmitForSale_artwork on Artwork {\n  internalID\n  artist {\n    internalID\n    slug\n    targetSupply {\n      priority\n    }\n    id\n  }\n  consignmentSubmission {\n    internalID\n  }\n  marketPriceInsights {\n    demandRank\n  }\n}\n"
+    "text": "query MyCollectionArtworkSubmitForSale_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSubmitForSale_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSubmitForSale_artwork on Artwork {\n  internalID\n  artist(shallow: true) {\n    internalID\n    slug\n    targetSupply {\n      priority\n    }\n    id\n  }\n  consignmentSubmission {\n    internalID\n  }\n  marketPriceInsights {\n    demandRank\n  }\n}\n"
   }
 };
 })();

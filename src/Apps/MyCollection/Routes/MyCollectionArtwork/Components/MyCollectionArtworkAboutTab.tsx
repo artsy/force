@@ -67,7 +67,7 @@ const FRAGMENT = graphql`
     ...MyCollectionArtworkRequestPriceEstimate_artwork
     ...MyCollectionArtworkSubmitForSale_artwork
 
-    artist {
+    artist(shallow: true) {
       slug
       targetSupply {
         priority

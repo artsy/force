@@ -42,7 +42,7 @@ const FRAGMENT = graphql`
     artistNames
     title
     date
-    artist {
+    artist(shallow: true) {
       href
       isPersonalArtist
     }

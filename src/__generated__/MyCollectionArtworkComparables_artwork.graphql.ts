@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aab43d52a2cf413a5c1be2bd56a9efeb>>
+ * @generated SignedSource<<8771424526731887b6914863e5484302>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -104,7 +104,13 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -118,13 +124,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "artist(shallow:true)"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "7d30a78ec5af365b6c6aaec39b80f2d1";
+(node as any).hash = "417792b31251c2d2ba0fd6fba8ec9327";
 
 export default node;

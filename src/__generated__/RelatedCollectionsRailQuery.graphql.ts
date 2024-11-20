@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18225e52254cd8af43afb84c4fdf52f6>>
+ * @generated SignedSource<<a0998747da6d1c1e1fef319bd32571b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -191,7 +191,13 @@ return {
                         "selections": [
                           {
                             "alias": null,
-                            "args": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "shallow",
+                                "value": true
+                              }
+                            ],
                             "concreteType": "Artist",
                             "kind": "LinkedField",
                             "name": "artist",
@@ -206,7 +212,7 @@ return {
                               },
                               (v4/*: any*/)
                             ],
-                            "storageKey": null
+                            "storageKey": "artist(shallow:true)"
                           },
                           (v2/*: any*/),
                           {
@@ -291,12 +297,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "43fa759517c419081a10f6974fa31e38",
+    "cacheID": "a1aa98ae2be5a723f4a3f72ed1e63fd0",
     "id": null,
     "metadata": {},
     "name": "RelatedCollectionsRailQuery",
     "operationKind": "query",
-    "text": "query RelatedCollectionsRailQuery(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    title\n    relatedCollections(size: 16) {\n      ...RelatedCollectionsRail_collections\n      id\n    }\n    id\n  }\n}\n\nfragment RelatedCollectionEntity_collection on MarketingCollection {\n  headerImage\n  slug\n  title\n  id\n  priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        artist {\n          name\n          id\n        }\n        title\n        image {\n          resized(width: 150, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment RelatedCollectionsRail_collections on MarketingCollection {\n  ...RelatedCollectionEntity_collection\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query RelatedCollectionsRailQuery(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    title\n    relatedCollections(size: 16) {\n      ...RelatedCollectionsRail_collections\n      id\n    }\n    id\n  }\n}\n\nfragment RelatedCollectionEntity_collection on MarketingCollection {\n  headerImage\n  slug\n  title\n  id\n  priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        artist(shallow: true) {\n          name\n          id\n        }\n        title\n        image {\n          resized(width: 150, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment RelatedCollectionsRail_collections on MarketingCollection {\n  ...RelatedCollectionEntity_collection\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

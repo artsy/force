@@ -311,7 +311,7 @@ export const AcceptFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
-                artists {
+                artists(shallow: true) {
                   slug
                 }
               }

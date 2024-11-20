@@ -43,29 +43,38 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
         {groupedMedianSalePrices.map(artistMedianSalePrices => {
           const [firstElement] = artistMedianSalePrices
 
+          if (
+            !firstElement.artist ||
+            !firstElement.artist.internalID ||
+            !firstElement.mediumType?.name
+          )
+            return null
+
           return (
             <ArtistRowWrapper
-              artistID={firstElement.artist?.internalID!}
-              medium={firstElement.mediumType?.name!}
+              artistID={firstElement.artist.internalID}
+              medium={firstElement.mediumType?.name}
+              key={firstElement.artist.internalID}
             >
               <Flex py={1} mb={[4, 0]} flexDirection={["column", "row"]}>
                 <EntityHeaderArtistFragmentContainer
                   flex={1}
                   alignItems="flex-start"
-                  artist={firstElement.artist!}
+                  artist={firstElement.artist}
                   displayLink={false}
                   // added this to hide the follow button
                   FollowButton={<></>}
                 />
 
                 <Flex flex={1} flexDirection="column">
-                  {artistMedianSalePrices.map(medianSalePrice => {
+                  {artistMedianSalePrices.map((medianSalePrice, index) => {
                     return (
                       <Flex
                         mt={[2, 0]}
                         minHeight={[0, 45]}
                         alignItems="center"
                         justifyContent={["space-between", null]}
+                        key={[firstElement.artist?.internalID, index].join("-")}
                       >
                         <Text
                           variant={["xs", "sm"]}
@@ -138,7 +147,7 @@ export const InsightsMedianSalePriceFragmentContainer = createFragmentContainer(
                 name
               }
               title
-              artist {
+              artist(shallow: true) {
                 internalID
                 ...EntityHeaderArtist_artist
               }

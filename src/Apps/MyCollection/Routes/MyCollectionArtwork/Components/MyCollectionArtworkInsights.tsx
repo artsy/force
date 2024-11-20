@@ -112,7 +112,7 @@ const FRAGMENT = graphql`
     ...MyCollectionArtworkRequestPriceEstimate_artwork
     ...MyCollectionArtworkSWASectionSubmitted_submissionState
     ...MyCollectionArtworkSWASubmissionStatus_artwork
-    artist {
+    artist(shallow: true) {
       slug
       auctionResultsCount: auctionResultsConnection(first: 1) {
         totalCount
