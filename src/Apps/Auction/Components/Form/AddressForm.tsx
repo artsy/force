@@ -1,9 +1,28 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Column, GridColumns, Input } from "@artsy/palette"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
+import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import { CountrySelect } from "Components/CountrySelect"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 export const AddressForm = () => {
-  const { handleChange, handleBlur, errors, values, touched } = useFormContext()
+  const {
+    handleChange,
+    handleBlur,
+    errors,
+    values,
+    touched,
+    setValues,
+    setFieldValue,
+  } = useFormContext()
+
+  const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
+
+  const autocompleteTrackingValues = {
+    contextModule: ContextModule.auctionRegistration,
+    contextOwnerType: contextPageOwnerType,
+    contextPageOwnerId: contextPageOwnerId || "",
+  }
 
   return (
     <GridColumns>
@@ -11,7 +30,7 @@ export const AddressForm = () => {
         <Input
           name="address.name"
           title="Full Name"
-          placeholder="Enter name"
+          placeholder="Add full name"
           autoComplete="name"
           autoFocus
           value={values.address?.name}
@@ -22,7 +41,7 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column span={6}>
+      <Column span={12}>
         <CountrySelect
           name="address.country"
           title="Country"
@@ -33,45 +52,51 @@ export const AddressForm = () => {
           onBlur={handleBlur}
           error={touched.address?.country && errors.address?.country}
           required
-          // FIXME: There's extra margin between title and select in palette
-          // than the title and select in input. Open PR to palette
-          mt={-0.5}
         />
       </Column>
 
-      <Column span={6}>
-        <Input
-          name="address.postalCode"
-          title="Postal Code"
-          placeholder="Add postal code"
-          autoComplete="postal-code"
-          value={values.address?.postalCode}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={touched.address?.postalCode && errors.address?.postalCode}
+      <Column span={12}>
+        <AddressAutocompleteInput
+          trackingValues={autocompleteTrackingValues}
+          address={{
+            country: values.address.country,
+          }}
+          flip={false}
           required
-        />
-      </Column>
-
-      <Column span={6}>
-        <Input
+          disableAutocomplete={values.address.region === "AK"}
           name="address.addressLine1"
-          title="Address Line 1"
-          placeholder="Add address"
-          autoComplete="address-line1"
-          value={values.address?.addressLine1}
+          placeholder="Add street address"
+          title="Street address"
+          value={values.address.addressLine1}
           onChange={handleChange}
           onBlur={handleBlur}
+          onSelect={option => {
+            const selectedAddress = option.address
+            setValues({
+              ...values,
+              address: {
+                ...values.address,
+                addressLine1: selectedAddress.addressLine1,
+                addressLine2: selectedAddress.addressLine2,
+                city: selectedAddress.city,
+                region: selectedAddress.region,
+                postalCode: selectedAddress.postalCode,
+                country: selectedAddress.country,
+              },
+            })
+          }}
           error={touched.address?.addressLine1 && errors.address?.addressLine1}
-          required
+          onClear={() => {
+            setFieldValue("address.addressLine1", "")
+          }}
         />
       </Column>
 
-      <Column span={6}>
+      <Column span={12}>
         <Input
           name="address.addressLine2"
-          title="Address Line 2"
-          placeholder="Add address line 2"
+          title="Apt, floor, suite, etc. (optional)"
+          placeholder="Add apartment, floor, suite, etc."
           autoComplete="address-line2"
           value={values.address?.addressLine2}
           onChange={handleChange}
@@ -80,11 +105,11 @@ export const AddressForm = () => {
         />
       </Column>
 
-      <Column span={6}>
+      <Column span={12}>
         <Input
           name="address.city"
           title="City"
-          placeholder="Enter city"
+          placeholder="Add city"
           autoComplete="address-level2"
           value={values.address?.city}
           onChange={handleChange}
@@ -97,8 +122,8 @@ export const AddressForm = () => {
       <Column span={6}>
         <Input
           name="address.region"
-          title="State, Province, or Region"
-          placeholder="Add state, province, or region"
+          title="State, region or province"
+          placeholder="Add state, region or province"
           autoComplete="address-level1"
           value={values.address?.region}
           onChange={handleChange}
@@ -108,10 +133,24 @@ export const AddressForm = () => {
         />
       </Column>
 
+      <Column span={6}>
+        <Input
+          name="address.postalCode"
+          title="ZIP/Postal code"
+          placeholder="Add ZIP/Postal code"
+          autoComplete="postal-code"
+          value={values.address?.postalCode}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.address?.postalCode && errors.address?.postalCode}
+          required
+        />
+      </Column>
+
       <Column span={12}>
         <Input
           name="phoneNumber"
-          title="Phone Number"
+          title="Phone number"
           type="tel"
           description="Required for shipping logistics"
           placeholder="Add phone number"
