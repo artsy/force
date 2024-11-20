@@ -125,12 +125,6 @@ export const InfiniteDiscoveryApp = () => {
   const [dismissedArtworks, setDismissedArtworks] = React.useState([]) as any
   const [curatedArtworks, setCuratedArtworks] = React.useState([]) as any
 
-  useEffect(() => {
-    request(`${ES_URL}/_search`, {
-      body: JSON.stringify(BUILD_SEARCH_QUERY([], [])),
-    })
-  }, [])
-
   const onLike = artwork => {
     setLikedArtworks([...likedArtworks, artwork])
     // filter out from curated artworks
@@ -224,8 +218,14 @@ export const InfiniteDiscoveryApp = () => {
         })}
       </Flex>
       <Separator />
-      <pre>Liked artworks: {likedArtworks.join(", ")}</pre>
-      <pre>Dismissed artworks: {dismissedArtworks.join(", ")}</pre>
+      <Flex flexDirection={"column"}>
+        <Text fontSize={15}>
+          <b>Liked artworks:</b> {likedArtworks.join(", ")}
+        </Text>
+        <Text fontSize={15}>
+          <b>Dismissed artworks:</b> {dismissedArtworks.join(", ")}
+        </Text>
+      </Flex>
     </Flex>
   )
 }
