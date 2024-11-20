@@ -50,7 +50,7 @@ const BUILD_SEARCH_QUERY = (lArtworks, dArtworks) => {
       uniq_artists: {
         terms: {
           field: "artist_id",
-          size: 15,
+          size: 3,
           order: {
             top_score: "desc",
           },
