@@ -77,12 +77,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@38.1.2":
-  version "38.1.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-38.1.2.tgz#d52e7fc0c1a9e1d0b172c4026147d5ec8370a557"
-  integrity sha512-yS3v9YOPu3cmCxm2ez8RSL8kcJJwwo0LvA4w1mMhiHTkb46cH5Ng/9chsC4CendspcheOOR24YQkeg/hXPGhPw==
+"@artsy/palette-charts@39.1.0":
+  version "39.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-39.1.0.tgz#f2b128aa1ea14dbfd04e903e782ab309903e1631"
+  integrity sha512-rDTYVPMkn69T78VUia68AmiTbhE6zOO4mRcSWsWIYAyGqTnrdr0NYkSix9qSokwZAn8GHwirE7TbyM3fr51A5A==
   dependencies:
-    "@artsy/palette" "^39.1.2"
+    "@artsy/palette" "^40.1.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -94,7 +94,7 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-6.1.0.tgz#f79a1304b59741e982eae98f07d9099d7f1c9347"
   integrity sha512-heBh9cuGIECWHdXPLFqmliKKIHob5iSKxi7SlsN36wkLrfIfwhy/NYUhP1OO/u24Khl7ixpTrKzkt6tQEyCSzw==
 
-"@artsy/palette@39.1.2", "@artsy/palette@^39.1.2":
+"@artsy/palette@39.1.2":
   version "39.1.2"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-39.1.2.tgz#8d12b5a1531bfc3a63057a643cbf2c3d79beacb3"
   integrity sha512-giuzM56qKsfCBtsiKKjZfVMn7CdnU0xLTb4kD4V8/Ff9qvoMxde3ip9Qy+yR8fyIOxtSmjnbBT9mNcvxYNQWWg==
@@ -107,6 +107,24 @@
     proportional-scale "^4.0.0"
     react-focus-on "^3.7.0"
     react-lazy-load-image-component "1.5.5"
+    styled-system "^5.1.5"
+    trunc-html "^1.1.2"
+    use-cursor "^1.2.3"
+    use-keyboard-list-navigation "2.4.2"
+
+"@artsy/palette@^40.1.0":
+  version "40.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-40.1.0.tgz#b65a6f31b5e563e936a3e5bb5df58387dc60208e"
+  integrity sha512-tpziNgGc8Rhs6OdSsqkpb02JaFpgXhD6C469Vm13ZSyVaU1mfvLCBY8ZGeN0kx6zCw9nooopvPdrinBYn1AXZA==
+  dependencies:
+    "@artsy/icons" "^3.2.2"
+    "@artsy/palette-tokens" "^6.1.0"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
+    es-toolkit "^1.16.0"
+    proportional-scale "^4.0.0"
+    react-focus-on "^3.7.0"
+    react-lazy-load-image-component "1.6.2"
     styled-system "^5.1.5"
     trunc-html "^1.1.2"
     use-cursor "^1.2.3"
@@ -19598,6 +19616,14 @@ react-lazy-load-image-component@1.5.5:
   version "1.5.5"
   resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.5.5.tgz#ef6630a4cf5d604d36b0ca808dbe92eca8c81759"
   integrity sha512-pPtq48tIhkLIZg6MAhB3VvVhntJLrc3MBun/lQkNmNtrRFXdjEc5aHlPT5EhpXPQR1nsNVwN91ne6Aagm3rtNQ==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
+
+react-lazy-load-image-component@1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.6.2.tgz#af1773e4d66519ad6b3c2015290c23b5de97c81b"
+  integrity sha512-dAdH5PsRgvDMlHC7QpZRA9oRzEZl1kPFwowmR9Mt0IUUhxk2wwq43PB6Ffwv84HFYuPmsxDUCka0E9KVXi8roQ==
   dependencies:
     lodash.debounce "^4.0.8"
     lodash.throttle "^4.1.1"

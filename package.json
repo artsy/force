@@ -90,7 +90,7 @@
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "39.1.2",
-    "@artsy/palette-charts": "38.1.2",
+    "@artsy/palette-charts": "39.1.0",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/xapp": "2.0.0",
     "@babel/runtime": "7.13.10",
