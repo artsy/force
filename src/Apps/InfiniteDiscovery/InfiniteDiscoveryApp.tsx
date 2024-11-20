@@ -194,7 +194,9 @@ export const InfiniteDiscoveryApp = () => {
           <div>
             <Button
               onClick={submitSearch}
-              disabled={likedArtworks.length === 0}
+              disabled={
+                likedArtworks.length === 0 && dismissedArtworks.length === 0
+              }
             >
               Get Recommendations
             </Button>
