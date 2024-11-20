@@ -75,7 +75,7 @@ export const ArtworkSidebarArtistsFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment ArtworkSidebarArtists_artwork on Artwork {
         culturalMaker
-        artists {
+        artists(shallow: true) {
           slug
           name
         }

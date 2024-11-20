@@ -172,7 +172,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
         isInAuction
         artistNames
         internalID
-        artists {
+        artists(shallow: true) {
           internalID
           name
           slug

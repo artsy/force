@@ -654,7 +654,7 @@ const ARTWORK_FRAGMENT = graphql`
   fragment ArtworkSidebarCommercialButtons_artwork on Artwork {
     ...ArtworkSidebarEditionSets_artwork
     isEligibleToCreateAlert
-    artists {
+    artists(shallow: true) {
       internalID
     }
     attributionClass {

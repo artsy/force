@@ -32,7 +32,7 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
       fragment PrivateArtworkAboutArtist_artwork on Artwork {
         displayArtistBio
         slug
-        artists {
+        artists(shallow: true) {
           ...FollowArtistButton_artist
           internalID
           href
