@@ -89,8 +89,8 @@
     "@artsy/icons": "3.22.0",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
-    "@artsy/palette": "40.1.0-canary.1412.31379.0",
-    "@artsy/palette-charts": "39.1.0-canary.1412.31379.0",
+    "@artsy/palette": "^40.1.0",
+    "@artsy/palette-charts": "^39.1.0",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/xapp": "2.0.0",
     "@babel/runtime": "7.13.10",
@@ -104,7 +104,6 @@
     "@stripe/stripe-js": "^4.1.0",
     "@styled-system/theme-get": "5.1.2",
     "actioncable": "^5.2.7-1",
-    "add": "^2.0.6",
     "analytics-node": "2.4.1",
     "async": "^3.2.4",
     "autosuggest-highlight": "3.1.1",
@@ -201,7 +200,6 @@
     "waypoints": "4.0.0",
     "web-vitals": "^4.2.4",
     "yargs": "11.0.0",
-    "yarn": "^1.22.22",
     "yup": "0.32.6"
   },
   "devDependencies": {
