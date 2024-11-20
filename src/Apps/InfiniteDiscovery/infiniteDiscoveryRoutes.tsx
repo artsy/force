@@ -3,7 +3,9 @@ import { RouteProps } from "System/Router/Route"
 
 const InfiniteDiscoveryApp = loadable(
   () =>
-    import(/* webpackChunkName: "discoveryBundle" */ "./InfiniteDiscoveryApp"),
+    import(
+      /* webpackChunkName: "infiniteDiscoveryBundle" */ "./InfiniteDiscoveryApp"
+    ),
   {
     resolveComponent: component => component.InfiniteDiscoveryApp,
   }
