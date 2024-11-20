@@ -29,12 +29,12 @@ describe("AddressForm", () => {
     ;[
       "Full Name",
       "Country",
-      "Postal Code",
-      "Address Line 1",
-      "Address Line 2",
+      "ZIP/Postal code",
+      "Street address",
+      "Apt, floor, suite, etc. (optional)",
       "City",
-      "State, Province, or Region",
-      "Phone Number",
+      "State, region or province",
+      "Phone number",
     ].forEach(label => {
       expect(text).toContain(label)
     })

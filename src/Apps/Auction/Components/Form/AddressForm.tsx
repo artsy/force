@@ -66,8 +66,8 @@ export const AddressForm = () => {
           required
           disableAutocomplete={values.address.region === "AK"}
           name="address.addressLine1"
-          placeholder="Add address"
-          title="Address Line 1"
+          placeholder="Add street address"
+          title="Street address"
           value={values.address.addressLine1}
           onChange={handleChange}
           onBlur={handleBlur}
