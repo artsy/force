@@ -1,4 +1,4 @@
-import { ActionType } from "@artsy/cohesion"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Clickable, Flex, Spacer, Sup, Text } from "@artsy/palette"
 import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
@@ -86,8 +86,10 @@ export const SavedSearchAlertListItem: React.FC<React.PropsWithChildren<SavedSea
               textDecoration="underline"
               onClick={() => {
                 trackEvent({
-                  action_type: ActionType.clickedEditAlert,
+                  action_type: ActionType.clickEditAlert,
                   alert_id: item.internalID,
+                  context_module: ContextModule.alertsList,
+                  context_owner_type: OwnerType.savedSearches,
                 })
                 onEditAlertClick({
                   id: item.internalID,
@@ -111,8 +113,10 @@ export const SavedSearchAlertListItem: React.FC<React.PropsWithChildren<SavedSea
             <Clickable
               onClick={() => {
                 trackEvent({
-                  action_type: ActionType.clickedViewArtworks,
+                  action_type: ActionType.clickedArtworkGroup,
                   alert_id: item.internalID,
+                  context_module: ContextModule.alertsList,
+                  context_owner_type: OwnerType.savedSearches,
                 })
                 onViewArtworksClick({
                   id: item.internalID,
