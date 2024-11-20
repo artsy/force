@@ -133,11 +133,13 @@ export const InfiniteDiscoveryApp = () => {
 
   const onLike = artwork => {
     setLikedArtworks([...likedArtworks, artwork])
+    // filter out from curated artworks
+    setCuratedArtworks(curatedArtworks.filter(a => a !== artwork))
   }
 
   const onDismiss = artwork => {
     setDismissedArtworks([...dismissedArtworks, artwork])
-    // filter curated artworks
+    // filter out from curated artworks
     setCuratedArtworks(curatedArtworks.filter(a => a !== artwork))
   }
 
