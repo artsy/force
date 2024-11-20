@@ -374,7 +374,7 @@ export const NewPaymentFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
-                artists {
+                artists(shallow: true) {
                   slug
                 }
               }

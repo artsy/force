@@ -43,7 +43,7 @@ const ArtQuizRecommendedArtistsFragmentContainer = createFragmentContainer(
         quiz {
           savedArtworks {
             isSaved
-            artist {
+            artist(shallow: true) {
               ...ArtQuizRecommendedArtist_artist
               internalID
             }

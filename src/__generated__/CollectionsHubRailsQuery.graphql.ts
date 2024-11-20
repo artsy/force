@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<815820f84c2d08d2f2cb23eee44c9381>>
+ * @generated SignedSource<<b6fc762bab8ff951150f23e8711dfe57>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -292,7 +292,13 @@ return {
                               (v9/*: any*/),
                               {
                                 "alias": null,
-                                "args": null,
+                                "args": [
+                                  {
+                                    "kind": "Literal",
+                                    "name": "shallow",
+                                    "value": true
+                                  }
+                                ],
                                 "concreteType": "Artist",
                                 "kind": "LinkedField",
                                 "name": "artist",
@@ -301,7 +307,7 @@ return {
                                   (v2/*: any*/),
                                   (v3/*: any*/)
                                 ],
-                                "storageKey": null
+                                "storageKey": "artist(shallow:true)"
                               },
                               (v4/*: any*/),
                               {
@@ -365,12 +371,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a6260a62f0c4693579635fad4515d6a2",
+    "cacheID": "48a15cadece85a159760e99ed62aa156",
     "id": null,
     "metadata": {},
     "name": "CollectionsHubRailsQuery",
     "operationKind": "query",
-    "text": "query CollectionsHubRailsQuery(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    linkedCollections {\n      ...CollectionsHubRails_linkedCollections\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesEntity_member on MarketingCollection {\n  id\n  slug\n  headerImage\n  thumbnail\n  title\n  priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        internalID\n        artist {\n          name\n          id\n        }\n        title\n        image {\n          resized(width: 150, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    slug\n    ...ArtistSeriesEntity_member\n    id\n  }\n}\n\nfragment CollectionsHubRails_linkedCollections on MarketingCollectionGroup {\n  groupType\n  ...FeaturedCollectionsRails_collectionGroup\n  ...OtherCollectionsRail_collectionGroup\n  ...ArtistSeriesRail_collectionGroup\n}\n\nfragment FeaturedCollectionRailEntity_member on MarketingCollection {\n  id\n  slug\n  title\n  description\n  priceGuidance\n  thumbnailImage {\n    cropped(width: 325, height: 244) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment FeaturedCollectionsRails_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    ...FeaturedCollectionRailEntity_member\n    internalID\n    id\n  }\n}\n\nfragment OtherCollectionEntity_member on MarketingCollection {\n  id\n  slug\n  thumbnail\n  title\n}\n\nfragment OtherCollectionsRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    ...OtherCollectionEntity_member\n    id\n  }\n}\n"
+    "text": "query CollectionsHubRailsQuery(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    linkedCollections {\n      ...CollectionsHubRails_linkedCollections\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesEntity_member on MarketingCollection {\n  id\n  slug\n  headerImage\n  thumbnail\n  title\n  priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        internalID\n        artist(shallow: true) {\n          name\n          id\n        }\n        title\n        image {\n          resized(width: 150, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    slug\n    ...ArtistSeriesEntity_member\n    id\n  }\n}\n\nfragment CollectionsHubRails_linkedCollections on MarketingCollectionGroup {\n  groupType\n  ...FeaturedCollectionsRails_collectionGroup\n  ...OtherCollectionsRail_collectionGroup\n  ...ArtistSeriesRail_collectionGroup\n}\n\nfragment FeaturedCollectionRailEntity_member on MarketingCollection {\n  id\n  slug\n  title\n  description\n  priceGuidance\n  thumbnailImage {\n    cropped(width: 325, height: 244) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment FeaturedCollectionsRails_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    ...FeaturedCollectionRailEntity_member\n    internalID\n    id\n  }\n}\n\nfragment OtherCollectionEntity_member on MarketingCollection {\n  id\n  slug\n  thumbnail\n  title\n}\n\nfragment OtherCollectionsRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    ...OtherCollectionEntity_member\n    id\n  }\n}\n"
   }
 };
 })();

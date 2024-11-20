@@ -136,7 +136,7 @@ export const MyCollectionEditArtworkFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment MyCollectionEditArtwork_artwork on Artwork {
-        artist {
+        artist(shallow: true) {
           internalID
           initials
           name

@@ -43,11 +43,13 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
   } = useAnalyticsContext()
 
   const handleLinkClick = () => {
+    if (!contextPageOwnerType) return null
+
     const analyticsOptions: Partial<ClickedArtistSeriesGroup> = {
       context_module: ContextModule.artistSeriesRail,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
-      context_page_owner_type: contextPageOwnerType!,
+      context_page_owner_type: contextPageOwnerType,
       destination_page_owner_id: id,
       destination_page_owner_slug: slug,
       horizontal_slide_position: itemNumber,
@@ -140,7 +142,7 @@ export const ArtistSeriesRailContainer = createFragmentContainer(
           edges {
             node {
               internalID
-              artist {
+              artist(shallow: true) {
                 name
               }
               title

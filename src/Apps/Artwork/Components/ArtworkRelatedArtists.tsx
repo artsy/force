@@ -128,7 +128,7 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
           cursor: { type: "String", defaultValue: "" }
         ) {
         slug
-        artist {
+        artist(shallow: true) {
           href
           related {
             artistsConnection(kind: MAIN, first: $count, after: $cursor)

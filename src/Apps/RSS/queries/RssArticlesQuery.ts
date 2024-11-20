@@ -73,7 +73,7 @@ graphql`
   fragment RssArticlesQuery_artwork on Artwork {
     title
     date
-    artists {
+    artists(shallow: true) {
       name
     }
     partner {

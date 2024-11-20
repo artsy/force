@@ -214,7 +214,7 @@ const InquiryInquiryFragmentContainer = createFragmentContainer(
         internalID
         title
         date
-        artist {
+        artist(shallow: true) {
           name
         }
         partner {

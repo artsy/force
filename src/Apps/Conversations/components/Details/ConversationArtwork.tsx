@@ -25,7 +25,7 @@ export const ConversationArtwork: React.FC<ConversationArtworkProps> = ({
               date
               title
               isUnlisted
-              artist {
+              artist(shallow: true) {
                 name
                 slug
               }
