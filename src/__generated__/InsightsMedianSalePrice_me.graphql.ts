@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<62c334f83551bd62ce56c8dcf4c78896>>
+ * @generated SignedSource<<2bc1f4d08815467b0973bba832af4063>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -121,7 +121,13 @@ return {
                 },
                 {
                   "alias": null,
-                  "args": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "shallow",
+                      "value": true
+                    }
+                  ],
                   "concreteType": "Artist",
                   "kind": "LinkedField",
                   "name": "artist",
@@ -134,7 +140,7 @@ return {
                       "name": "EntityHeaderArtist_artist"
                     }
                   ],
-                  "storageKey": null
+                  "storageKey": "artist(shallow:true)"
                 },
                 {
                   "alias": null,
@@ -169,6 +175,6 @@ return {
 };
 })();
 
-(node as any).hash = "2fe34f95002e3673d8bfb4bddeb3ba75";
+(node as any).hash = "d7fa86365d3a548c7e8b06101edd0abb";
 
 export default node;

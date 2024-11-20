@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a32eeca8f806c8fc159487b04926af8>>
+ * @generated SignedSource<<32ce69a10fe39ebb6ec810d9ad8d1966>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -178,7 +178,13 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "shallow",
+                            "value": true
+                          }
+                        ],
                         "concreteType": "Artist",
                         "kind": "LinkedField",
                         "name": "artist",
@@ -300,7 +306,7 @@ return {
                           },
                           (v2/*: any*/)
                         ],
-                        "storageKey": null
+                        "storageKey": "artist(shallow:true)"
                       },
                       {
                         "alias": null,
@@ -337,7 +343,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e12dd738085e7b2bab9f1e2b61a88e00",
+    "cacheID": "4534049650bf8770c1b4932a49e6ce84",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -420,7 +426,7 @@ return {
     },
     "name": "InsightsMedianSalePriceTestQuery",
     "operationKind": "query",
-    "text": "query InsightsMedianSalePriceTestQuery {\n  me {\n    ...InsightsMedianSalePrice_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment InsightsMedianSalePrice_me on Me {\n  medianSalePrices: myCollectionConnection(first: 3, sortByLastAuctionResultDate: true) {\n    edges {\n      node {\n        internalID\n        medium\n        mediumType {\n          name\n        }\n        title\n        artist {\n          internalID\n          ...EntityHeaderArtist_artist\n          id\n        }\n        marketPriceInsights {\n          medianSalePriceDisplayText\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query InsightsMedianSalePriceTestQuery {\n  me {\n    ...InsightsMedianSalePrice_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment InsightsMedianSalePrice_me on Me {\n  medianSalePrices: myCollectionConnection(first: 3, sortByLastAuctionResultDate: true) {\n    edges {\n      node {\n        internalID\n        medium\n        mediumType {\n          name\n        }\n        title\n        artist(shallow: true) {\n          internalID\n          ...EntityHeaderArtist_artist\n          id\n        }\n        marketPriceInsights {\n          medianSalePriceDisplayText\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

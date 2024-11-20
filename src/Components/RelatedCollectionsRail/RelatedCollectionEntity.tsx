@@ -133,7 +133,7 @@ export const RelatedCollectionEntityFragmentContainer = createFragmentContainer(
         ) {
           edges {
             node {
-              artist {
+              artist(shallow: true) {
                 name
               }
               title

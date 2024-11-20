@@ -169,7 +169,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
           internalID
         }
         submissionId
-        artist {
+        artist(shallow: true) {
           slug
           targetSupply {
             priority

@@ -37,13 +37,10 @@ import {
   Formik,
 } from "formik"
 import { pick } from "lodash"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect } from "react"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
-import {
-  AddressAutocompleteInput,
-  useAddressAutocompleteTracking,
-} from "Components/Address/AddressAutocompleteInput"
+import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
@@ -85,11 +82,6 @@ const FulfillmentDetailsFormLayout = (
   props: FulfillmentDetailsFormLayoutProps
 ) => {
   const { contextPageOwnerId } = useAnalyticsContext()
-  const autocompleteTracking = useAddressAutocompleteTracking({
-    contextModule: ContextModule.ordersShipping,
-    contextOwnerType: OwnerType.ordersShipping,
-    contextPageOwnerId: contextPageOwnerId || "",
-  })
 
   const shippingContext = useShippingContext()
   const orderTracking = useOrderTracking()
@@ -99,8 +91,6 @@ const FulfillmentDetailsFormLayout = (
     shippingContext.orderData.shippingQuotes &&
     shippingContext.orderData.shippingQuotes.length === 0
   )
-
-  const [hasAutocompletedAddress, setHasAutocompletedAddress] = useState(false)
 
   const formikContext = useFormikContext<FulfillmentValues>()
   const {
@@ -137,16 +127,6 @@ const FulfillmentDetailsFormLayout = (
       shippingContext.actions.goBackToFulfillmentDetails()
     }
     cb(...args)
-  }
-
-  const trackAutoCompleteEdits = (fieldName: string, handleChange) => (
-    ...args
-  ) => {
-    if (hasAutocompletedAddress) {
-      autocompleteTracking.editedAutocompletedAddress(fieldName)
-      setHasAutocompletedAddress(false)
-    }
-    handleChange(...args)
   }
 
   const handleCloseVerification = async () => {
@@ -358,11 +338,9 @@ const FulfillmentDetailsFormLayout = (
                   aria-labelledby="country-select"
                   tabIndex={tabbableIf("new_address")}
                   selected={values.attributes.country}
-                  onSelect={withBackToFulfillmentDetails(
-                    trackAutoCompleteEdits("country", selected => {
-                      setFieldValue(`attributes.country`, selected)
-                    })
-                  )}
+                  onSelect={withBackToFulfillmentDetails(selected => {
+                    setFieldValue(`attributes.country`, selected)
+                  })}
                   disabled={
                     !!shippingContext.orderData.lockShippingCountryTo &&
                     shippingContext.orderData.lockShippingCountryTo !== "EU"
@@ -389,6 +367,11 @@ const FulfillmentDetailsFormLayout = (
                     country: (values.attributes as ShipValues["attributes"])
                       .country,
                   }}
+                  trackingValues={{
+                    contextModule: ContextModule.ordersShipping,
+                    contextOwnerType: OwnerType.ordersShipping,
+                    contextPageOwnerId: contextPageOwnerId || "",
+                  }}
                   flip={false}
                   disableAutocomplete={values.attributes.region === "AK"}
                   tabIndex={tabbableIf("new_address")}
@@ -396,9 +379,7 @@ const FulfillmentDetailsFormLayout = (
                   placeholder="Street address"
                   title="Address line 1"
                   value={values.attributes.addressLine1}
-                  onChange={withBackToFulfillmentDetails(
-                    trackAutoCompleteEdits("addressLine1", handleChange)
-                  )}
+                  onChange={withBackToFulfillmentDetails(handleChange)}
                   onBlur={handleBlur}
                   onSelect={option => {
                     const selectedAddress = option.address
@@ -414,19 +395,7 @@ const FulfillmentDetailsFormLayout = (
                         country: selectedAddress.country,
                       },
                     })
-                    setHasAutocompletedAddress(true)
                     shippingContext.actions.goBackToFulfillmentDetails()
-
-                    autocompleteTracking.selectedAutocompletedAddress(
-                      option,
-                      values.attributes.addressLine1
-                    )
-                  }}
-                  onReceiveAutocompleteResult={(input, count) => {
-                    autocompleteTracking.receivedAutocompleteResult(
-                      input,
-                      count
-                    )
                   }}
                   error={
                     (touched as FormikTouched<ShipValues>).attributes
@@ -447,9 +416,7 @@ const FulfillmentDetailsFormLayout = (
                   placeholder="Apt, floor, suite, etc."
                   title="Address line 2 (optional)"
                   value={values.attributes.addressLine2}
-                  onChange={withBackToFulfillmentDetails(
-                    trackAutoCompleteEdits("addressLine2", handleChange)
-                  )}
+                  onChange={withBackToFulfillmentDetails(handleChange)}
                   onBlur={handleBlur}
                   error={
                     (touched as FormikTouched<ShipValues>).attributes
@@ -467,9 +434,7 @@ const FulfillmentDetailsFormLayout = (
                   placeholder="City"
                   title="City"
                   value={values.attributes.city}
-                  onChange={withBackToFulfillmentDetails(
-                    trackAutoCompleteEdits("city", handleChange)
-                  )}
+                  onChange={withBackToFulfillmentDetails(handleChange)}
                   onBlur={handleBlur}
                   error={
                     (touched as FormikTouched<ShipValues>).attributes?.city &&
@@ -494,9 +459,7 @@ const FulfillmentDetailsFormLayout = (
                   }
                   autoCorrect="off"
                   value={values.attributes.region}
-                  onChange={withBackToFulfillmentDetails(
-                    trackAutoCompleteEdits("region", handleChange)
-                  )}
+                  onChange={withBackToFulfillmentDetails(handleChange)}
                   onBlur={handleBlur}
                   error={
                     (touched as FormikTouched<ShipValues>).attributes?.region &&
@@ -522,9 +485,7 @@ const FulfillmentDetailsFormLayout = (
                   autoCapitalize="characters"
                   autoCorrect="off"
                   value={values.attributes.postalCode}
-                  onChange={withBackToFulfillmentDetails(
-                    trackAutoCompleteEdits("postalCode", handleChange)
-                  )}
+                  onChange={withBackToFulfillmentDetails(handleChange)}
                   onBlur={handleBlur}
                   error={
                     (touched as FormikTouched<ShipValues>).attributes

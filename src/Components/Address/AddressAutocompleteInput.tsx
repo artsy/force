@@ -15,12 +15,17 @@ import {
   ActionType,
   AddressAutoCompletionResult,
   ContextModule,
-  EditedAutocompletedAddress,
   PageOwnerType,
   SelectedItemFromAddressAutoCompletion,
 } from "@artsy/cohesion"
 
 const THROTTLE_DELAY = 500
+
+interface AutocompleteTrackingValues {
+  contextPageOwnerId: string
+  contextOwnerType: PageOwnerType
+  contextModule: ContextModule
+}
 
 export interface AddressAutocompleteInputProps
   extends Partial<AutocompleteInputProps<AddressAutocompleteSuggestion>> {
@@ -37,8 +42,9 @@ export interface AddressAutocompleteInputProps
   onChange: NonNullable<
     AutocompleteInputProps<AddressAutocompleteSuggestion>["onChange"]
   >
-  onReceiveAutocompleteResult?: (input: string, resultCount: number) => void
   "data-testid"?: string
+
+  trackingValues: AutocompleteTrackingValues
 }
 
 type ProviderSuggestion = {
@@ -71,7 +77,6 @@ interface ServiceAvailability {
  */
 export const AddressAutocompleteInput = ({
   address,
-  onReceiveAutocompleteResult,
   disableAutocomplete = false,
   tabIndex,
   value = "",
@@ -84,6 +89,7 @@ export const AddressAutocompleteInput = ({
   onClear,
   onSelect,
   "data-testid": dataTestId,
+  trackingValues,
   ...autocompleteProps
 }: AddressAutocompleteInputProps) => {
   const [providerSuggestions, setProviderSuggestions] = useState<
@@ -104,6 +110,40 @@ export const AddressAutocompleteInput = ({
     loading: true,
     fetching: false,
   })
+
+  const { trackEvent } = useTracking()
+
+  const trackReceivedAutocompleteResult = (
+    input: string,
+    resultCount: number
+  ) => {
+    const event: AddressAutoCompletionResult = {
+      action: ActionType.addressAutoCompletionResult,
+      context_module: trackingValues.contextModule,
+      context_owner_type: trackingValues.contextOwnerType,
+      context_owner_id: trackingValues.contextPageOwnerId,
+      input,
+      suggested_addresses_results: resultCount,
+    }
+
+    trackEvent(event)
+  }
+
+  const trackSelectedAutocompletedAddress = (
+    option: AddressAutocompleteSuggestion,
+    input: string
+  ) => {
+    const event: SelectedItemFromAddressAutoCompletion = {
+      action: ActionType.selectedItemFromAddressAutoCompletion,
+      context_module: trackingValues.contextModule,
+      context_owner_type: trackingValues.contextOwnerType,
+      context_owner_id: trackingValues.contextPageOwnerId,
+      input: input,
+      item: option.value,
+    }
+
+    trackEvent(event)
+  }
 
   useEffect(() => {
     const isAPIKeyPresent = !!apiKey
@@ -175,6 +215,7 @@ export const AddressAutocompleteInput = ({
     },
     []
   )
+
   const filterSecondarySuggestions = useCallback(
     (suggestions: ProviderSuggestion[]) => {
       const noSecondaryData = suggestions.map(
@@ -245,10 +286,12 @@ export const AddressAutocompleteInput = ({
   useEffect(() => {
     if (
       serviceAvailability.enabled &&
-      onReceiveAutocompleteResult &&
       serializedOptions !== serializedPreviousOptions
     ) {
-      onReceiveAutocompleteResult(value as string, providerSuggestions.length)
+      trackReceivedAutocompleteResult(
+        value as string,
+        providerSuggestions.length
+      )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -294,68 +337,10 @@ export const AddressAutocompleteInput = ({
         fetchForAutocomplete({ search: "" })
       }}
       onSelect={(option, index) => {
+        trackSelectedAutocompletedAddress(option, value as string)
         onSelect(option, index)
       }}
       {...autocompleteProps}
     />
   )
-}
-
-interface TrackingValues {
-  contextPageOwnerId: string
-  contextOwnerType: PageOwnerType
-  contextModule: ContextModule
-}
-
-export const useAddressAutocompleteTracking = (
-  trackingValues: TrackingValues
-) => {
-  const { trackEvent } = useTracking()
-
-  const receivedAutocompleteResult = (input: string, resultCount: number) => {
-    const event: AddressAutoCompletionResult = {
-      action: ActionType.addressAutoCompletionResult,
-      context_module: trackingValues.contextModule,
-      context_owner_type: trackingValues.contextOwnerType,
-      context_owner_id: trackingValues.contextPageOwnerId,
-      input,
-      suggested_addresses_results: resultCount,
-    }
-
-    trackEvent(event)
-  }
-
-  const selectedAutocompletedAddress = (
-    option: AddressAutocompleteSuggestion,
-    input: string
-  ) => {
-    const event: SelectedItemFromAddressAutoCompletion = {
-      action: ActionType.selectedItemFromAddressAutoCompletion,
-      context_module: trackingValues.contextModule,
-      context_owner_type: trackingValues.contextOwnerType,
-      context_owner_id: trackingValues.contextPageOwnerId,
-      input: input,
-      item: option.value,
-    }
-
-    trackEvent(event)
-  }
-
-  const editedAutocompletedAddress = (field: string) => {
-    const event: EditedAutocompletedAddress = {
-      action: ActionType.editedAutocompletedAddress,
-      context_module: trackingValues.contextModule,
-      context_owner_type: trackingValues.contextOwnerType,
-      context_owner_id: trackingValues.contextPageOwnerId,
-      field: field,
-    }
-
-    trackEvent(event)
-  }
-
-  return {
-    receivedAutocompleteResult,
-    selectedAutocompletedAddress,
-    editedAutocompletedAddress,
-  }
 }

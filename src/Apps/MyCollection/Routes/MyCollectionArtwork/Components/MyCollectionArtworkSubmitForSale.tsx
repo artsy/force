@@ -89,7 +89,7 @@ export const MyCollectionArtworkSubmitForSale: React.FC<MyCollectionArtworkSubmi
 const MyCollectionArtworkSubmitForSaleFragment = graphql`
   fragment MyCollectionArtworkSubmitForSale_artwork on Artwork {
     internalID
-    artist {
+    artist(shallow: true) {
       internalID
       slug
       targetSupply {

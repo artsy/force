@@ -4,6 +4,7 @@ import {
   DEFAULT_OPT_OUT_PREFERENCES,
 } from "Components/CookieConsentManager/categories"
 import { useDidMount } from "Utils/Hooks/useDidMount"
+import { getENV } from "Utils/getENV"
 import { getTimeZone } from "Utils/getTimeZone"
 import qs from "qs"
 
@@ -35,6 +36,7 @@ export const useConsentRequired = (): {
 
   const timezone = getTimeZone()
 
+  const isGoogleBot = Boolean(getENV("IS_GOOGLEBOT"))
   const isEU =
     !!timezone?.startsWith("Europe") ||
     AMBIGUOUS_TIMEZONES.includes(timezone) ||
@@ -44,7 +46,7 @@ export const useConsentRequired = (): {
 
   const isOptIn = isEU
   const isOptOut = isCA || isBR
-  const isDisplayable = isOptIn || isOptOut
+  const isDisplayable = (isOptIn || isOptOut) && !isGoogleBot
 
   const initialPreferences = (() => {
     if (isOptIn) return DEFAULT_OPT_IN_PREFERENCES

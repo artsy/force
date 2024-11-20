@@ -68,7 +68,7 @@ export const MyCollectionArtworkComparablesFragmentContainer = createFragmentCon
             }
           }
         }
-        artist {
+        artist(shallow: true) {
           name
         }
       }
