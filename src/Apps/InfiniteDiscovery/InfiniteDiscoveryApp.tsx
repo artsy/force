@@ -6,8 +6,22 @@ import { uniq, sampleSize, shuffle } from "lodash"
 const ES_URL =
   "https://vpc-artsy-staging-es7-srsqgcck5vzy7uq2eqqhvrm4x4.us-east-1.es.amazonaws.com"
 
-const BUILD_SEARCH_QUERY = (lArtworks, dArtworks) => {
+const BUILD_SEARCH_QUERY = (lArtworks, dArtworks, cArtworks) => {
   const likedArtworks = lArtworks.map(artwork => {
+    return {
+      _index: "artworks_7shards_production",
+      _type: "_doc",
+      _id: artwork.internalID,
+    }
+  })
+
+  const dismissedArtworks = dArtworks.map(artwork => ({
+    term: {
+      _id: artwork.internalID,
+    },
+  }))
+
+  const curatedArtworks = cArtworks.map(artwork => {
     return {
       _index: "artworks_7shards_production",
       _type: "_doc",
@@ -15,36 +29,59 @@ const BUILD_SEARCH_QUERY = (lArtworks, dArtworks) => {
     }
   })
 
-  const dismissedArtworks = dArtworks.map(artwork => ({
+  const sampleCurated = sampleSize(curatedArtworks, 3)
+
+  const artistsToFilterIds = uniq(
+    [...lArtworks, ...dArtworks].map(artwork => artwork.artist.internalID)
+  )
+
+  console.log("artistsToFilterIds")
+  console.log(artistsToFilterIds)
+
+  const filterArtists = artistsToFilterIds.map(id => ({
     term: {
-      _id: artwork,
+      artist_id: id,
     },
   }))
 
   return {
     query: {
       bool: {
-        must: [
+        should: [
           {
             more_like_this: {
               fields: ["id", "genes_vectors"],
-              like: likedArtworks,
+              like: likedArtworks.length === 0 ? sampleCurated : likedArtworks,
               min_term_freq: 1,
-              max_query_terms: 12,
+              min_doc_freq: 30,
+              max_query_terms: 18,
+              minimum_should_match: "30%",
             },
           },
         ],
-        filter: [
+        must: [
           {
             term: { published: true },
           },
           {
             term: { for_sale: true },
           },
-          { range: { career_stage: { gte: 0, lte: 100 } } },
         ],
-        must_not: dismissedArtworks,
+        filter: [
+          { range: { career_stage: { gte: 0, lte: 100 } } },
+          {
+            script: {
+              script: {
+                source: "doc['genes.raw'].size() >= 1",
+              },
+            },
+          },
+        ],
+        must_not: [...(dismissedArtworks || []), ...filterArtists],
       },
+    },
+    collapse: {
+      field: "artist_id",
     },
     aggregations: {
       uniq_artists: {
@@ -90,6 +127,7 @@ const ARTWORK_QUERY = internalID => `
       internalID
       artist {
         name
+        internalID
       }
     }
   }
@@ -128,7 +166,7 @@ export const InfiniteDiscoveryApp = () => {
   const onLike = artwork => {
     setLikedArtworks([...likedArtworks, artwork])
     // filter out from curated artworks
-    setCuratedArtworks(curatedArtworks.filter(a => a !== artwork))
+    setCuratedArtworks(curatedArtworks.filter(a => a !== artwork.internalID))
   }
 
   const onDismiss = artwork => {
@@ -142,7 +180,7 @@ export const InfiniteDiscoveryApp = () => {
   const submitSearch = async () => {
     const data = await request(`${ES_URL}/_search`, {
       body: JSON.stringify(
-        BUILD_SEARCH_QUERY(likedArtworks, dismissedArtworks)
+        BUILD_SEARCH_QUERY(likedArtworks, dismissedArtworks, curatedArtworks)
       ),
     })
 
@@ -222,17 +260,51 @@ export const InfiniteDiscoveryApp = () => {
       <Separator />
       <Flex flexDirection={"column"}>
         <Text fontSize={15}>
-          <b>Liked artworks:</b> {likedArtworks.join(", ")}
+          <b>Liked artworks:</b>
         </Text>
+        <Flex flexDirection={"row"} flexWrap={"wrap"}>
+          {likedArtworks.map((artwork: any) => {
+            return (
+              <Artwork
+                key={artwork.internalID + "liked"}
+                internalID={artwork.internalID}
+                onLike={onLike}
+                onDismiss={onDismiss}
+                isCurated={isCurated}
+                viewed
+              />
+            )
+          })}
+        </Flex>
         <Text fontSize={15}>
-          <b>Dismissed artworks:</b> {dismissedArtworks.join(", ")}
+          <b>Dismissed artworks:</b>
         </Text>
+        <Flex flexDirection={"row"} flexWrap={"wrap"}>
+          {dismissedArtworks.map((artwork: any) => {
+            return (
+              <Artwork
+                key={artwork.internalID + "dismissed"}
+                internalID={artwork.internalID}
+                onLike={onLike}
+                onDismiss={onDismiss}
+                isCurated={isCurated}
+                viewed
+              />
+            )
+          })}
+        </Flex>
       </Flex>
     </Flex>
   )
 }
 
-const Artwork = ({ internalID, onLike, onDismiss, isCurated }) => {
+const Artwork = ({
+  internalID,
+  onLike,
+  onDismiss,
+  isCurated,
+  viewed = false,
+}) => {
   const [artwork, setArtwork] = React.useState({}) as any
 
   useEffect(() => {
@@ -251,8 +323,8 @@ const Artwork = ({ internalID, onLike, onDismiss, isCurated }) => {
     req()
   }, []) // eslint-disable-line
 
-  const onLikeEvent = id => {
-    onLike(id)
+  const onLikeEvent = a => {
+    onLike(a)
     setArtwork({ ...artwork, liked: true })
   }
 
@@ -270,7 +342,7 @@ const Artwork = ({ internalID, onLike, onDismiss, isCurated }) => {
         <img
           src={artwork?.imageUrl}
           alt={artwork?.title || ""}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", width: viewed ? "30%" : "auto" }}
         />
       </a>
       <h2 style={{ fontSize: "12px" }}>
@@ -285,26 +357,27 @@ const Artwork = ({ internalID, onLike, onDismiss, isCurated }) => {
           curators-picks
         </Text>
       )}
-      {artwork.title !== "Artwork not available" && (
-        <>
-          <Button
-            size="small"
-            variant="primaryWhite"
-            onClick={() => onLikeEvent(artwork.internalID)}
-            disabled={artwork.liked || artwork.dismissed}
-          >
-            Like
-          </Button>
-          <Button
-            size="small"
-            variant="primaryWhite"
-            onClick={() => onDismissEvent(artwork.internalID)}
-            disabled={artwork.dismissed || artwork.liked}
-          >
-            Dismiss
-          </Button>
-        </>
-      )}
+      {viewed ||
+        (artwork.title !== "Artwork not available" && (
+          <>
+            <Button
+              size="small"
+              variant="primaryWhite"
+              onClick={() => onLikeEvent(artwork)}
+              disabled={artwork.liked || artwork.dismissed}
+            >
+              Like
+            </Button>
+            <Button
+              size="small"
+              variant="primaryWhite"
+              onClick={() => onDismissEvent(artwork)}
+              disabled={artwork.dismissed || artwork.liked}
+            >
+              Dismiss
+            </Button>
+          </>
+        ))}
     </div>
   )
 }
