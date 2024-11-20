@@ -31,19 +31,6 @@ const BUILD_SEARCH_QUERY = (lArtworks, dArtworks, cArtworks) => {
 
   const sampleCurated = sampleSize(curatedArtworks, 3)
 
-  const artistsToFilterIds = uniq(
-    [...lArtworks, ...dArtworks].map(artwork => artwork.artist.internalID)
-  )
-
-  console.log("artistsToFilterIds")
-  console.log(artistsToFilterIds)
-
-  const filterArtists = artistsToFilterIds.map(id => ({
-    term: {
-      artist_id: id,
-    },
-  }))
-
   return {
     query: {
       bool: {
@@ -77,7 +64,7 @@ const BUILD_SEARCH_QUERY = (lArtworks, dArtworks, cArtworks) => {
             },
           },
         ],
-        must_not: [...(dismissedArtworks || []), ...filterArtists],
+        must_not: [...(dismissedArtworks || [])],
       },
     },
     collapse: {
@@ -162,6 +149,7 @@ export const InfiniteDiscoveryApp = () => {
   const [likedArtworks, setLikedArtworks] = React.useState([]) as any
   const [dismissedArtworks, setDismissedArtworks] = React.useState([]) as any
   const [curatedArtworks, setCuratedArtworks] = React.useState([]) as any
+  const [loading, setLoading] = React.useState(false)
 
   const onLike = artwork => {
     setLikedArtworks([...likedArtworks, artwork])
@@ -178,6 +166,7 @@ export const InfiniteDiscoveryApp = () => {
   const isCurated = artwork => curatedArtworks.includes(artwork)
 
   const submitSearch = async () => {
+    setLoading(true)
     const data = await request(`${ES_URL}/_search`, {
       body: JSON.stringify(
         BUILD_SEARCH_QUERY(likedArtworks, dismissedArtworks, curatedArtworks)
@@ -198,6 +187,7 @@ export const InfiniteDiscoveryApp = () => {
     console.log("cArtworks", cArtworks)
 
     setArtworks(shuffle([...aArtworks, ...cArtworks]))
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -232,8 +222,11 @@ export const InfiniteDiscoveryApp = () => {
           <div>
             <Button
               onClick={submitSearch}
+              loading={loading}
               disabled={
-                likedArtworks.length === 0 && dismissedArtworks.length === 0
+                (likedArtworks.length === 0 &&
+                  dismissedArtworks.length === 0) ||
+                loading
               }
             >
               Get Recommendations
