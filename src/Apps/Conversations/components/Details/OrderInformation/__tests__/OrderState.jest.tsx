@@ -1,4 +1,4 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { OrderStateTestQuery } from "__generated__/OrderStateTestQuery.graphql"
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"

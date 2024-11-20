@@ -1,7 +1,7 @@
 import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
 import { ArtistConsignRouteFragmentContainer } from "Apps/Artist/Routes/Consign/ArtistConsignRoute"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")

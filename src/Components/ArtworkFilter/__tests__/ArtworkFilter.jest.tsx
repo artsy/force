@@ -10,7 +10,7 @@ import { renderToString } from "DevTools/__tests__/MockRelayRendererFixtures"
 import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { omit } from "lodash"
 
 jest.unmock("react-relay")

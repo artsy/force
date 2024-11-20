@@ -30,9 +30,9 @@ interface CollectorProfileArtistsListArtistProps {
   userInterestEdge: CollectorProfileArtistsListArtist_userInterestEdge$key
 }
 
-export const CollectorProfileArtistsListArtist: FC<React.PropsWithChildren<CollectorProfileArtistsListArtistProps>> = ({
-  userInterestEdge,
-}) => {
+export const CollectorProfileArtistsListArtist: FC<React.PropsWithChildren<
+  CollectorProfileArtistsListArtistProps
+>> = ({ userInterestEdge }) => {
   const [mode, setMode] = useState<"Idle" | "Open" | "Delete">("Idle")
 
   const { sendToast } = useToasts()
@@ -147,9 +147,6 @@ export const CollectorProfileArtistsListArtist: FC<React.PropsWithChildren<Colle
               placement="bottom-end"
               openDropdownByClick
             >
-              {/*
-                FIXME: REACT_18_UPGRADE
-                @ts-ignore */}
               {({ anchorRef, anchorProps, onHide }) => {
                 onHideRef.current = onHide
 
@@ -204,7 +201,9 @@ export const CollectorProfileArtistsListArtist: FC<React.PropsWithChildren<Colle
   )
 }
 
-export const CollectorProfileArtistsListArtistSkeleton: FC<React.PropsWithChildren<unknown>> = () => {
+export const CollectorProfileArtistsListArtistSkeleton: FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   return (
     <>
       <Media greaterThan="xs">

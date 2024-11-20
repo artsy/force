@@ -37,7 +37,9 @@ interface ArtistHeaderProps {
   artist: ArtistHeader_artist$data
 }
 
-const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({ artist }) => {
+const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
+  artist,
+}) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId } = useAnalyticsContext()
 
@@ -100,8 +102,8 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({ ar
                         width={["100%", "fit-content"]}
                       >
                         {/*
-                            FIXME: REACT_18_UPGRADE
-                            @ts-ignore */}
+                          // FIXME: REACT_18_UPGRADE
+                          @ts-ignore */}
                         {label => (
                           <Stack
                             gap={0.5}

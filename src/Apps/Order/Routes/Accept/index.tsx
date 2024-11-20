@@ -44,7 +44,9 @@ export interface StripeProps {
 
 const logger = createLogger("Order/Routes/Offer/index.tsx")
 
-export const Accept: FC<React.PropsWithChildren<AcceptProps & StripeProps>> = props => {
+export const Accept: FC<React.PropsWithChildren<
+  AcceptProps & StripeProps
+>> = props => {
   const {
     order,
     isCommittingMutation,
@@ -263,9 +265,6 @@ export const Accept: FC<React.PropsWithChildren<AcceptProps & StripeProps>> = pr
         <Flex flexDirection="column">
           <Flex flexDirection="column">
             <Media greaterThan="xs">
-              {/*
-                FIXME: REACT_18_UPGRADE
-                @ts-ignore */}
               {className => (
                 <ArtworkSummaryItem className={className} order={order} />
               )}

@@ -1,5 +1,5 @@
 import { InvoiceApp } from "Apps/Invoice/InvoiceApp"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { InvoiceApp_Test_Query } from "__generated__/InvoiceApp_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"

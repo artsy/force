@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ArtworkArtistSeriesFragmentContainer } from "Apps/Artwork/Components/ArtworkArtistSeries"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
 
 jest.mock("react-tracking")

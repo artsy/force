@@ -221,9 +221,6 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 }
                 placement="top"
               >
-                {/*
-                  FIXME: REACT_18_UPGRADE
-                  @ts-ignore */}
                 {({ anchorRef, anchorProps }) => {
                   return (
                     <Box ref={anchorRef as any} {...anchorProps}>
@@ -332,9 +329,6 @@ const ThemeSelect: React.FC<React.PropsWithChildren<unknown>> = () => {
           )
         }}
       >
-        {/*
-          FIXME: REACT_18_UPGRADE
-          @ts-ignore */}
         {({ anchorRef, anchorProps }) => {
           return (
             <Clickable ref={anchorRef as any} {...anchorProps}>

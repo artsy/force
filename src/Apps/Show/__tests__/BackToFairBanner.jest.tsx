@@ -1,6 +1,6 @@
 import { BackToFairBanner_Test_Query } from "__generated__/BackToFairBanner_Test_Query.graphql"
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { BackToFairBannerFragmentContainer } from "Apps/Show/Components/BackToFairBanner"
 import { screen } from "@testing-library/react"
 import { useRouter } from "System/Hooks/useRouter"

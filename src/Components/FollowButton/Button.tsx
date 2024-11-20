@@ -1,6 +1,6 @@
 import { Box, Button, ButtonProps, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import {
+import React, {
   forwardRef,
   MouseEventHandler,
   ReactNode,
@@ -12,7 +12,7 @@ import styled from "styled-components"
 
 export type FollowButtonRenderProps = (
   label: "Follow" | "Following" | "Unfollow"
-) => ReactNode
+) => any
 
 export interface FollowButtonProps
   extends Omit<Partial<ButtonProps>, "variant">,

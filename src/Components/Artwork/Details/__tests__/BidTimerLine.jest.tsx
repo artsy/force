@@ -4,7 +4,7 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { useTimer } from "Utils/Hooks/useTimer"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { BidTimerLineTestQuery } from "__generated__/BidTimerLineTestQuery.graphql"
 
 jest.mock("Components/ArtworkGrid/ArtworkGridContext")

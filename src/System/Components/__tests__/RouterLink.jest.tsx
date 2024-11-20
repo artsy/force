@@ -1,7 +1,5 @@
 import { MockRouter } from "DevTools/MockRouter"
-import { mount } from "enzyme"
 import { render, screen } from "@testing-library/react"
-import { Link } from "found"
 import { RouterLink } from "System/Components/RouterLink"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
@@ -88,8 +86,8 @@ describe("RouterLink", () => {
   })
 
   it("falls back to an <a> tag if missing a router context", () => {
-    const wrapper = mount(<RouterLink to="/foo">Foo</RouterLink>)
-    expect(wrapper.find(Link).length).toEqual(0)
-    expect(wrapper.find("a").length).toEqual(1)
+    render(<RouterLink to="/foo">Foo</RouterLink>)
+    expect(screen.queryByText("FooLink")).not.toBeInTheDocument()
+    expect(screen.getByRole("link", { name: "Foo" })).toBeInTheDocument()
   })
 })

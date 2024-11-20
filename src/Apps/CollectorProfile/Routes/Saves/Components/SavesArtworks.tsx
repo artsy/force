@@ -31,7 +31,9 @@ const DEFAULT_FILTERS: {
   priceMin: "*",
 }
 
-export const SavesArtworks: FC<React.PropsWithChildren<SavesArtworksProps>> = ({ id }) => {
+export const SavesArtworks: FC<React.PropsWithChildren<SavesArtworksProps>> = ({
+  id,
+}) => {
   const [state, setState] = useState<{
     page: number
     priceMin: CustomRangeSegment
@@ -94,9 +96,6 @@ export const SavesArtworks: FC<React.PropsWithChildren<SavesArtworksProps>> = ({
               openDropdownByClick
               placement="bottom-start"
             >
-              {/*
-                FIXME: REACT_18_UPGRADE
-                @ts-ignore */}
               {props => {
                 return (
                   <FilterQuickDropdownAnchor

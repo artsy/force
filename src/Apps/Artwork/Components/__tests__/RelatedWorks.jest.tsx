@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { RelatedWorksFragmentContainer } from "Apps/Artwork/Components/RelatedWorks"
 import { RelatedWorks_Test_Query } from "__generated__/RelatedWorks_Test_Query.graphql"
 

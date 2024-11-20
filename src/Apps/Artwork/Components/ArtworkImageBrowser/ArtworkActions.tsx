@@ -24,10 +24,9 @@ interface ArtworkActionsProps {
   selectRoomViewableFigure(): void
 }
 
-export const ArtworkActions: React.FC<React.PropsWithChildren<ArtworkActionsProps>> = ({
-  artwork,
-  selectRoomViewableFigure,
-}) => {
+export const ArtworkActions: React.FC<React.PropsWithChildren<
+  ArtworkActionsProps
+>> = ({ artwork, selectRoomViewableFigure }) => {
   const { user } = useSystemContext()
   const isAdmin = userIsAdmin(user)
   const isTeam = userIsTeam(user)
@@ -65,10 +64,6 @@ export const ArtworkActions: React.FC<React.PropsWithChildren<ArtworkActionsProp
       placement="top"
       popover={<ArtworkSharePanelFragmentContainer artwork={artwork} />}
     >
-      {/*
-
-          FIXME: REACT_18_UPGRADE
-          @ts-ignore */}
       {({ anchorRef, onVisible }) => {
         return (
           <UtilButton
@@ -198,9 +193,6 @@ export const ArtworkActions: React.FC<React.PropsWithChildren<ArtworkActionsProp
                     </Box>
                   }
                 >
-                  {/*
-                      FIXME: REACT_18_UPGRADE
-                      @ts-ignore */}
                   {({ anchorRef, onVisible }) => {
                     return (
                       <UtilButton

@@ -3,7 +3,7 @@ import {
   PreferencesAppFragmentContainer,
   parseTokenFromRouter,
 } from "Apps/Preferences/PreferencesApp"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { PreferencesAppTestQuery } from "__generated__/PreferencesAppTestQuery.graphql"
 import { graphql } from "react-relay"
 

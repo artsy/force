@@ -1,7 +1,7 @@
 import { waitFor, screen } from "@testing-library/react"
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { DeepPartial } from "Utils/typeSupport"

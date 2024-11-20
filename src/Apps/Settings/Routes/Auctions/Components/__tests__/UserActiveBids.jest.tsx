@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { UserActiveBidsFragmentContainer } from "Apps/Settings/Routes/Auctions/Components/UserActiveBids"
 import { UserActiveBids_Test_Query } from "__generated__/UserActiveBids_Test_Query.graphql"
 import { screen } from "@testing-library/react"

@@ -8,14 +8,12 @@ interface SaveUtilButtonProps {
   onClick?: () => void
 }
 
-export const SaveUtilButton: FC<React.PropsWithChildren<SaveUtilButtonProps>> = ({
-  isSaved,
-  onClick,
-}) => {
+export const SaveUtilButton: FC<React.PropsWithChildren<
+  SaveUtilButtonProps
+>> = ({ isSaved, onClick }) => {
   return (
     <UtilButton
       name="heart"
-      // FIXME: REACT_18_UPGRADE
       Icon={((isSaved ? UnsaveIcon : SaveIcon) as unknown) as React.ReactNode}
       label={isSaved ? "Saved" : "Save"}
       longestLabel="Saved"

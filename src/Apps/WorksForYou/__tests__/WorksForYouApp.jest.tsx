@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { WorksForYouAppFragmentContainer } from "Apps/WorksForYou/WorksForYouApp"
 import { useRouter } from "System/Hooks/useRouter"
 

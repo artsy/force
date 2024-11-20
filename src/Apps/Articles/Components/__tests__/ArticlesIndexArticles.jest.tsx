@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ArticlesIndexArticlesPaginationContainer } from "../ArticlesIndexArticles"
 
 jest.unmock("react-relay")

@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AuctionArtworksRailFragmentContainer } from "Apps/Auctions/Components/AuctionArtworksRail"
 import { useTracking as baseUseTracking } from "react-tracking"
 

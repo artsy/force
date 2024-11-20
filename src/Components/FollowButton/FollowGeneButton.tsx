@@ -25,7 +25,9 @@ interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
   onFollow?: (followed: boolean) => void
 }
 
-const FollowGeneButton: React.FC<React.PropsWithChildren<FollowGeneButtonProps>> = ({
+const FollowGeneButton: React.FC<React.PropsWithChildren<
+  FollowGeneButtonProps
+>> = ({
   gene,
   contextModule = ContextModule.geneHeader,
   onFollow,
@@ -135,10 +137,9 @@ interface FollowGeneButtonQueryRendererProps
   id: string
 }
 
-export const FollowGeneButtonQueryRenderer: React.FC<React.PropsWithChildren<FollowGeneButtonQueryRendererProps>> = ({
-  id,
-  ...rest
-}) => {
+export const FollowGeneButtonQueryRenderer: React.FC<React.PropsWithChildren<
+  FollowGeneButtonQueryRendererProps
+>> = ({ id, ...rest }) => {
   const { isLoggedIn } = useSystemContext()
   return (
     <SystemQueryRenderer<FollowGeneButtonQuery>

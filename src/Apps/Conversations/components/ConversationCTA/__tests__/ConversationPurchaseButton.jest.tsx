@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen, fireEvent, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"

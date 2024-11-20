@@ -110,6 +110,7 @@ export const currentArtworkFilterContext = (): ArtworkFilterContextProps => {
         `The currentContext() helper function requires an <ArtworkFilterContextInspector /> to be mounted in the current DOM.`
       )
   }
+
   return JSON.parse(contextInspector!.textContent!)
 }
 

@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ConversationsSidebarPaginationContainer } from "Apps/Conversations/components/Sidebar/ConversationsSidebar"
 import { ConversationsSidebarTestQuery } from "__generated__/ConversationsSidebarTestQuery.graphql"
 import { graphql } from "react-relay"

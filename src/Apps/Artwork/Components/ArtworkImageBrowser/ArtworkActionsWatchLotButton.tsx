@@ -17,12 +17,9 @@ interface ArtworkActionsWatchLotButtonProps {
   onClick: () => void
 }
 
-const ArtworkActionsWatchLotButton: FC<React.PropsWithChildren<ArtworkActionsWatchLotButtonProps>> = ({
-  isSaved,
-  artwork,
-  canShowRegistrationPopover = true,
-  onClick,
-}) => {
+const ArtworkActionsWatchLotButton: FC<React.PropsWithChildren<
+  ArtworkActionsWatchLotButtonProps
+>> = ({ isSaved, artwork, canShowRegistrationPopover = true, onClick }) => {
   const { isLoggedIn } = useSystemContext()
   const [popoverVisible, setPopoverVisible] = useState(false)
 
@@ -80,9 +77,6 @@ const ArtworkActionsWatchLotButton: FC<React.PropsWithChildren<ArtworkActionsWat
       }
       maxWidth={[mobileMaxWidth, 410]}
     >
-      {/*
-        FIXME: REACT_18_UPGRADE
-        @ts-ignore */}
       {({ anchorRef }) => {
         return (
           <UtilButton
@@ -91,8 +85,7 @@ const ArtworkActionsWatchLotButton: FC<React.PropsWithChildren<ArtworkActionsWat
             Icon={
               ((isSaved
                 ? FilledIcon
-                : // FIXME: REACT_18_UPGRADE
-                  HeartStrokeIcon) as unknown) as React.ReactNode
+                : HeartStrokeIcon) as unknown) as React.ReactNode
             }
             label={isSaved ? "Watching lot" : "Watch lot"}
             onClick={handleButtonClick}

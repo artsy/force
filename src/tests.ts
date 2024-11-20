@@ -1,5 +1,4 @@
 import chalk from "chalk"
-import Enzyme from "enzyme"
 import "regenerator-runtime/runtime"
 import { format } from "util"
 import "@testing-library/jest-dom"

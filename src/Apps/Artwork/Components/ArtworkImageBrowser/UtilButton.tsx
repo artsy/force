@@ -84,7 +84,7 @@ export const UtilButton = React.forwardRef(
     return (
       // FIXME: REACT_18_UPGRADE
       // @ts-ignore
-      (<Component
+      <Component
         ref={forwardedRef as any}
         p={1}
         onClick={onClick}
@@ -107,16 +107,14 @@ export const UtilButton = React.forwardRef(
           variant="xs"
           lineHeight={1}
         />
-      </Component>)
-    );
+      </Component>
+    )
   }
 )
 
-const UtilButtonInnerText: React.FC<React.PropsWithChildren<UtilButtonInnerTextProps>> = ({
-  label,
-  longestLabel,
-  ...rest
-}) => {
+const UtilButtonInnerText: React.FC<React.PropsWithChildren<
+  UtilButtonInnerTextProps
+>> = ({ label, longestLabel, ...rest }) => {
   if (!label) {
     return null
   }

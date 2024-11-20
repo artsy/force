@@ -9,12 +9,9 @@ interface ProgressiveOnboardingPopoverProps
   name: string
 }
 
-export const ProgressiveOnboardingPopover: FC<React.PropsWithChildren<ProgressiveOnboardingPopoverProps>> = ({
-  popover,
-  children,
-  name,
-  ...rest
-}) => {
+export const ProgressiveOnboardingPopover: FC<React.PropsWithChildren<
+  ProgressiveOnboardingPopoverProps
+>> = ({ popover, children, name, ...rest }) => {
   const [visible, setVisible] = useState(false)
 
   const { trackEvent } = useProgressiveOnboardingTracking({ name })
@@ -38,9 +35,6 @@ export const ProgressiveOnboardingPopover: FC<React.PropsWithChildren<Progressiv
       manageFocus={false}
       {...rest}
     >
-      {/*
-          FIXME: REACT_18_UPGRADE
-          @ts-ignore */}
       {({ anchorRef }) => {
         return <Box ref={anchorRef as any}>{children}</Box>
       }}

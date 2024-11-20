@@ -1,6 +1,6 @@
 import { useTracking } from "react-tracking"
 import { Analytics } from "System/Contexts/AnalyticsContext"
-import { fireEvent, screen, within } from "@testing-library/react"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import {
   SavedAddresses,
   SavedAddressesProps,
@@ -15,7 +15,7 @@ import {
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { MockBoot } from "DevTools/MockBoot"
 import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
 
@@ -143,19 +143,22 @@ describe("Saved Addresses", () => {
     })
     const savedAddresses = screen.getAllByTestId("savedAddress")
     savedAddresses[0].click()
-    expect(testProps.onSelect).toHaveBeenCalledTimes(1)
-    expect(testProps.onSelect).toHaveBeenCalledWith({
-      addressLine1: "1 Main St",
-      addressLine2: "",
-      addressLine3: "",
-      city: "Madrid",
-      country: "Spain",
-      internalID: "1",
-      isDefault: false,
-      name: "Test Name",
-      phoneNumber: "555-555-5555",
-      postalCode: "28001",
-      region: "",
+
+    await waitFor(() => {
+      expect(testProps.onSelect).toHaveBeenCalledTimes(1)
+      expect(testProps.onSelect).toHaveBeenCalledWith({
+        addressLine1: "1 Main St",
+        addressLine2: "",
+        addressLine3: "",
+        city: "Madrid",
+        country: "Spain",
+        internalID: "1",
+        isDefault: false,
+        name: "Test Name",
+        phoneNumber: "555-555-5555",
+        postalCode: "28001",
+        region: "",
+      })
     })
   })
 
