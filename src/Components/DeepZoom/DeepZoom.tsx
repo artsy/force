@@ -95,7 +95,8 @@ const DeepZoom: React.FC<React.PropsWithChildren<DeepZoomProps>> = ({
       osdViewerRef.current.destroy()
       osdViewerRef.current = null
     }
-  }, [image.deepZoom])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [image.deepZoom, deepZoomRef?.current])
 
   const zoomBy = (amount: number) => {
     if (!osdViewerRef.current) return
