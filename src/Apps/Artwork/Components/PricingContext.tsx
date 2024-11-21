@@ -246,7 +246,7 @@ export const PricingContextQueryRenderer: React.FC<React.PropsWithChildren<{
       variables={{ slug }}
       placeholder={PLACEHOLDER}
       query={graphql`
-        query PricingContextQuery($slug: String!) {
+        query PricingContextQuery($slug: String!) @cacheable {
           artwork(id: $slug) {
             ...PricingContext_artwork
           }
