@@ -35,6 +35,7 @@ export interface DetailsProps {
 const LINE_HEIGHT = 22
 const NUM_OF_LINES = 5
 const CONTAINER_HEIGHT = LINE_HEIGHT * NUM_OF_LINES
+const LINE_HEIGHT_PX = LINE_HEIGHT + "px"
 
 const StyledConditionalLink = styled(RouterLink)`
   color: ${themeGet("colors.black100")};
@@ -60,11 +61,7 @@ const ArtistLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
 }) => {
   if (cultural_maker) {
     return (
-      <Text
-        variant="sm-display"
-        lineHeight={LINE_HEIGHT + "px"}
-        overflowEllipsis
-      >
+      <Text variant="sm-display" lineHeight={LINE_HEIGHT_PX} overflowEllipsis>
         {cultural_maker}
       </Text>
     )
@@ -73,11 +70,7 @@ const ArtistLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   if (!artists?.length) {
     if (showSaveButton) {
       return (
-        <Text
-          variant="sm-display"
-          lineHeight={LINE_HEIGHT + "px"}
-          overflowEllipsis
-        >
+        <Text variant="sm-display" lineHeight={LINE_HEIGHT_PX} overflowEllipsis>
           Artist Unavailable
         </Text>
       )
@@ -87,7 +80,7 @@ const ArtistLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   }
 
   return (
-    <Text variant="sm-display" lineHeight={LINE_HEIGHT + "px"} overflowEllipsis>
+    <Text variant="sm-display" lineHeight={LINE_HEIGHT_PX} overflowEllipsis>
       {artists.map((artist, i) => {
         if (!artist || !artist.href || !artist.name) return null
 
@@ -110,7 +103,7 @@ const TitleLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
     <ConditionalLink includeLinks={includeLinks} to={href}>
       <Text
         variant="sm-display"
-        lineHeight={LINE_HEIGHT + "px"}
+        lineHeight={LINE_HEIGHT_PX}
         color="black60"
         overflowEllipsis
       >
@@ -129,7 +122,7 @@ const PartnerLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
     return (
       <Text
         variant="sm-display"
-        lineHeight={LINE_HEIGHT + "px"}
+        lineHeight={LINE_HEIGHT_PX}
         color="black60"
         overflowEllipsis
       >
@@ -143,7 +136,7 @@ const PartnerLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
       <ConditionalLink includeLinks={includeLinks} to={partner?.href}>
         <Text
           variant="sm-display"
-          lineHeight={LINE_HEIGHT + "px"}
+          lineHeight={LINE_HEIGHT_PX}
           color="black60"
           overflowEllipsis
         >
@@ -164,7 +157,7 @@ const SaleInfoLine: React.FC<React.PropsWithChildren<DetailsProps>> = props => {
     return (
       <Text
         variant="sm-display"
-        lineHeight={LINE_HEIGHT + "px"}
+        lineHeight={LINE_HEIGHT_PX}
         color="black100"
         fontWeight="bold"
       >
@@ -175,11 +168,7 @@ const SaleInfoLine: React.FC<React.PropsWithChildren<DetailsProps>> = props => {
 
   if (liveBiddingStarted) {
     return (
-      <Text
-        variant="sm-display"
-        lineHeight={LINE_HEIGHT + "px"}
-        color="blue100"
-      >
+      <Text variant="sm-display" lineHeight={LINE_HEIGHT_PX} color="blue100">
         Bidding live now
       </Text>
     )
@@ -189,7 +178,7 @@ const SaleInfoLine: React.FC<React.PropsWithChildren<DetailsProps>> = props => {
     <Flex flexDirection="row" alignItems="center">
       <Text
         variant="sm-display"
-        lineHeight={LINE_HEIGHT + "px"}
+        lineHeight={LINE_HEIGHT_PX}
         color="black100"
         fontWeight="bold"
         overflowEllipsis
@@ -207,7 +196,7 @@ const HighDemandInfo = () => {
       <HighDemandIcon fill="blue100" />
       <Text
         variant="sm-display"
-        lineHeight={LINE_HEIGHT + "px"}
+        lineHeight={LINE_HEIGHT_PX}
         color="blue100"
         ml={0.3}
       >
@@ -310,7 +299,7 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
             {!hideLotLabel && (
               <Text
                 variant="sm-display"
-                lineHeight={LINE_HEIGHT + "px"}
+                lineHeight={LINE_HEIGHT_PX}
                 flexShrink={0}
               >
                 LOT {rest.artwork?.sale_artwork?.lotLabel}
@@ -449,23 +438,23 @@ export const DetailsPlaceholder: React.FC<
   return (
     <>
       {!hideArtistName && (
-        <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT + "px"}>
+        <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
           Artist Name
         </SkeletonText>
       )}
 
-      <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT + "px"}>
+      <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
         Artwork Title
       </SkeletonText>
 
       {!hidePartnerName && (
-        <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT + "px"}>
+        <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
           Partner
         </SkeletonText>
       )}
 
       {!hideSaleInfo && (
-        <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT + "px"}>
+        <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
           Price
         </SkeletonText>
       )}
