@@ -1,5 +1,5 @@
 import { DateTime } from "luxon"
-import { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
+import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { SaleMessageQueryRenderer } from "Components/Artwork/Details/SaleMessage"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 import { createRef } from "react"
@@ -7,6 +7,7 @@ import { render, screen } from "@testing-library/react"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { CleanRelayFragment } from "Utils/typeSupport"
 
 jest.unmock("react-relay")
 
@@ -125,7 +126,7 @@ describe("SaleMessage", () => {
       it("shows the sale message of the artwork", async () => {
         render(
           <SaleMessageQueryRenderer
-            artwork={artworkNotInAuction}
+            artwork={artworkNotInAuction as Details_artwork$data}
             id={"opaque-internal-id"}
           />
         )
@@ -138,7 +139,7 @@ describe("SaleMessage", () => {
       it("shows the sale message of the artwork", async () => {
         render(
           <SaleMessageQueryRenderer
-            artwork={artworkNotInAuction}
+            artwork={artworkNotInAuction as Details_artwork$data}
             id={"opaque-internal-id"}
           />
         )
@@ -161,7 +162,7 @@ describe("SaleMessage", () => {
       it("shows the partner offer instead of the sale message from artwork", async () => {
         render(
           <SaleMessageQueryRenderer
-            artwork={artworkNotInAuction}
+            artwork={artworkNotInAuction as Details_artwork$data}
             id={"opaque-internal-id"}
           />
         )
@@ -188,12 +189,9 @@ describe("SaleMessage", () => {
   })
 })
 
-const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
-  id: "opaque-artwork-id",
+const artworkNotInAuction: CleanRelayFragment<Details_artwork$data> = {
   internalID: "opaque-internal-id",
-  saleArtwork: null,
   artist: {
-    id: "artist-id",
     targetSupply: {
       isP1: true,
     },
@@ -217,25 +215,12 @@ const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
   title: "Tulips (P17)",
   collecting_institution: "This Really Great Gallery",
   partner: {
-    id: "opaque-partner-id",
     name: "Forum Auctions",
     href: "/auction/forum-auctions",
   },
-  attributionClass: {
-    id: "attributionClass-id",
-    name: "Unique",
-  },
-  mediumType: {
-    filterGene: {
-      id: "gene-id",
-      name: "Prints",
-    },
-  },
   collectorSignals: {
     primaryLabel: null,
-    partnerOffer: null,
     auction: null,
   },
   consignmentSubmission: null,
-  isListed: false,
 }
