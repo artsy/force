@@ -1,5 +1,40 @@
 import { validatePhoneNumber } from "Components/PhoneNumberInput"
+import { CreateTokenCardData } from "@stripe/stripe-js"
 import * as Yup from "yup"
+
+export interface Address {
+  name: string
+  country: string
+  postalCode: string
+  addressLine1: string
+  addressLine2: string
+  city: string
+  region: string
+  phoneNumber?: string
+}
+
+export const emptyAddress: Address = {
+  name: "",
+  country: "",
+  postalCode: "",
+  addressLine1: "",
+  addressLine2: "",
+  city: "",
+  region: "",
+  phoneNumber: "",
+}
+
+export const toStripeAddress = (address: Address): CreateTokenCardData => {
+  return {
+    name: address.name,
+    address_line1: address.addressLine1,
+    address_line2: address.addressLine2,
+    address_country: address.country,
+    address_city: address.city,
+    address_state: address.region,
+    address_zip: address.postalCode,
+  }
+}
 
 export const yupPhoneValidator = Yup.string()
   .required("Phone Number is required")

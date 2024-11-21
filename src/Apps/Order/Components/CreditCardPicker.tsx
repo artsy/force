@@ -2,13 +2,13 @@ import { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.grap
 import { CreditCardPicker_order$data } from "__generated__/CreditCardPicker_order.graphql"
 import { CreditCardPickerCreateCreditCardMutation } from "__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
 import {
-  Address,
   AddressChangeHandler,
   AddressErrors,
   AddressForm,
   AddressTouched,
-  emptyAddress,
 } from "Components/Address/AddressForm"
+
+import { Address, emptyAddress } from "Components/Address/utils"
 
 import { CreditCardInput } from "Components/CreditCardInput"
 import { validateAddress } from "Apps/Order/Utils/formValidators"

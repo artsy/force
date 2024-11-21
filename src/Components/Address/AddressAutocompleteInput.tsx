@@ -5,7 +5,7 @@ import {
   Input,
   usePrevious,
 } from "@artsy/palette"
-import { Address } from "Components/Address/AddressForm"
+import { Address } from "Components/Address/utils"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { useCallback, useEffect, useMemo, useState } from "react"

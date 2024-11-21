@@ -1,6 +1,6 @@
 import { Column, GridColumns, Input } from "@artsy/palette"
 import { CountrySelect } from "Components/CountrySelect"
-import { Address } from "Components/Address/AddressForm"
+import { Address } from "Components/Address/utils"
 import { useFormContext } from "Apps/Invoice/Hooks/useFormContext"
 
 export interface AddressFormValues {

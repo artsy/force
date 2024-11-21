@@ -6,7 +6,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js"
 import createLogger from "Utils/logger"
-import { toStripeAddress } from "Components/Address/AddressForm"
+import { toStripeAddress } from "Components/Address/utils"
 import {
   stripeCardElementNotFound,
   stripeNotLoadedErrorMessage,

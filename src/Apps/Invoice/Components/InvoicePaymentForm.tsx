@@ -2,7 +2,7 @@ import { Button, Spacer } from "@artsy/palette"
 import { AddressFormValues } from "Apps/Invoice/Components/AddressForm"
 import { AddressFormWithCreditCard } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { useCreateTokenAndSubmit } from "Apps/Invoice/Hooks/useCreateTokenAndSubmit"
-import { emptyAddress } from "Components/Address/AddressForm"
+import { emptyAddress } from "Components/Address/utils"
 import { Formik, Form } from "formik"
 import { useRouter } from "System/Hooks/useRouter"
 

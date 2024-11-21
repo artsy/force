@@ -13,7 +13,7 @@ import { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrat
 import { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
 import { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
 import { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
-import { toStripeAddress } from "Components/Address/AddressForm"
+import { toStripeAddress } from "Components/Address/utils"
 import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
 import {
   errorMessageForCard,
