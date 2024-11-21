@@ -20,25 +20,14 @@ const BUILD_SEARCH_QUERY = (lArtworks, dArtworks, cArtworks) => {
       _id: artwork.internalID,
     },
   }))
-
-  const curatedArtworks = cArtworks.map(artwork => {
-    return {
-      _index: "artworks_7shards_production",
-      _type: "_doc",
-      _id: artwork,
-    }
-  })
-
-  const sampleCurated = sampleSize(curatedArtworks, 3)
-
-  return {
+  const query = {
     query: {
       bool: {
         should: [
           {
             more_like_this: {
               fields: ["id", "genes_vectors"],
-              like: likedArtworks.length === 0 ? sampleCurated : likedArtworks,
+              like: likedArtworks,
               min_term_freq: 1,
               min_doc_freq: 30,
               max_query_terms: 18,
@@ -95,6 +84,11 @@ const BUILD_SEARCH_QUERY = (lArtworks, dArtworks, cArtworks) => {
       },
     },
   }
+
+  console.log("QUERY")
+  console.log(query)
+
+  return query
 }
 
 const CURATORS_PICKS_QUERY = `
@@ -149,6 +143,7 @@ export const InfiniteDiscoveryApp = () => {
   const [likedArtworks, setLikedArtworks] = React.useState([]) as any
   const [dismissedArtworks, setDismissedArtworks] = React.useState([]) as any
   const [curatedArtworks, setCuratedArtworks] = React.useState([]) as any
+  const [ca, setCa] = React.useState([]) as any
   const [loading, setLoading] = React.useState(false)
 
   const onLike = artwork => {
@@ -163,28 +158,27 @@ export const InfiniteDiscoveryApp = () => {
     setCuratedArtworks(curatedArtworks.filter(a => a !== artwork))
   }
 
-  const isCurated = artwork => curatedArtworks.includes(artwork)
+  const isCurated = artwork => ca.includes(artwork)
 
   const submitSearch = async () => {
     setLoading(true)
+
+    // continue showing curated artworks if liked artworks are less than 3
+    if (likedArtworks.length < 3) {
+      setArtworks(sampleSize(curatedArtworks, 10))
+      return setLoading(false)
+    }
+
     const data = await request(`${ES_URL}/_search`, {
       body: JSON.stringify(
         BUILD_SEARCH_QUERY(likedArtworks, dismissedArtworks, curatedArtworks)
       ),
     })
 
-    console.log("curatedArtworks", curatedArtworks)
-    console.log("likedArtworks", likedArtworks)
-    console.log("dismissedArtworks", dismissedArtworks)
-
-    console.log(data)
     const artworksResponse = data?.hits?.hits.map(hit => hit._id)
 
     const aArtworks = artworksResponse.slice(0, 8)
     const cArtworks = sampleSize(curatedArtworks, 2)
-
-    console.log("aArtworks", aArtworks)
-    console.log("cArtworks", cArtworks)
 
     setArtworks(shuffle([...aArtworks, ...cArtworks]))
     setLoading(false)
@@ -200,6 +194,7 @@ export const InfiniteDiscoveryApp = () => {
       const artworks = uniq(response?.data?.marketingCollection?.artworkIds)
       setArtworks(sampleSize(artworks, 10))
       setCuratedArtworks(artworks)
+      setCa(artworks)
     }
     req()
   }, [])
