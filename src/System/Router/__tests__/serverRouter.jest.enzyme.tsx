@@ -179,7 +179,6 @@ describe("serverRouter", () => {
               "initialMatchingMediaQueries",
               "isEigen",
               "isLoggedIn",
-              "isMobile",
               "relayEnvironment",
               "router",
               "routes",

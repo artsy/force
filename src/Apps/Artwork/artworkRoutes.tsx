@@ -2,6 +2,7 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { updateContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 import { RouteProps } from "System/Router/Route"
+import { getENV } from "Utils/getENV"
 
 const ArtworkApp = loadable(
   () => import(/* webpackChunkName: "artworkBundle" */ "./ArtworkApp"),
@@ -18,9 +19,9 @@ export const artworkRoutes: RouteProps[] = [
     onClientSideRender: () => {
       ArtworkApp.preload()
     },
-    prepareVariables: ({ artworkID }, { context }) => {
+    prepareVariables: ({ artworkID }) => {
       // We want to defer loading the sidebar for mobile as it is below-the-fold.
-      const loadSidebar = !context?.isMobile
+      const loadSidebar = !getENV("IS_MOBILE")
 
       return {
         artworkID,
