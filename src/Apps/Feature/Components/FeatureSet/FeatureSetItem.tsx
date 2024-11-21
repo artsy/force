@@ -13,7 +13,7 @@ export interface FeatureSetItemProps {
   size: FeaturedLinkSize
 }
 
-export const FeatureSetItem: React.FC<FeatureSetItemProps> = ({
+export const FeatureSetItem: React.FC<React.PropsWithChildren<FeatureSetItemProps>> = ({
   setItem,
   size,
 }) => {

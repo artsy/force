@@ -18,7 +18,7 @@ export interface AlertFormikValues {
   frequency?: SavedSearchFrequency
 }
 
-export const Details: FC = () => {
+export const Details: FC<React.PropsWithChildren<unknown>> = () => {
   const { clickedAddFilters } = useAlertTracking()
 
   const {

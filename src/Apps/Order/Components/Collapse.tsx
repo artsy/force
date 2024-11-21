@@ -6,7 +6,9 @@ export interface CollapseProps {
 /**
  * Collapse component for the web
  */
-export class Collapse extends React.Component<CollapseProps> {
+export class Collapse extends React.Component<
+  React.PropsWithChildren<CollapseProps>
+> {
   wrapperModifyTimeout: ReturnType<typeof setTimeout>
   wrapperRef: HTMLDivElement | null = null
 

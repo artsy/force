@@ -14,7 +14,7 @@ interface CompleteProfileCollectionDialogProps {
   onClose: () => void
 }
 
-export const CompleteProfileCollectionDialog: FC<CompleteProfileCollectionDialogProps> = ({
+export const CompleteProfileCollectionDialog: FC<React.PropsWithChildren<CompleteProfileCollectionDialogProps>> = ({
   onClose,
 }) => {
   const {

@@ -13,7 +13,7 @@ interface CollectorProfileHeaderProps {
   me: CollectorProfileHeader_me$data
 }
 
-const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
+const CollectorProfileHeader: React.FC<React.PropsWithChildren<CollectorProfileHeaderProps>> = ({
   me,
 }) => {
   const collectorProfile = me.collectorProfile

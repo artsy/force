@@ -14,7 +14,7 @@ export interface SettingsPurchasesProps {
   relay: RelayRefetchProp
 }
 
-const SettingsPurchases: FC<SettingsPurchasesProps> = ({
+const SettingsPurchases: FC<React.PropsWithChildren<SettingsPurchasesProps>> = ({
   me,
   relay,
 }: SettingsPurchasesProps) => {

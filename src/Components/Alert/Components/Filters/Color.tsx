@@ -14,7 +14,7 @@ import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
 type ColorOption = typeof COLOR_OPTIONS[number]
 
-const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
+const ColorFilterOption: React.FC<React.PropsWithChildren<{ colorOption: ColorOption }>> = ({
   colorOption,
 }) => {
   const { state, dispatch } = useAlertContext()
@@ -65,7 +65,7 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
   )
 }
 
-export const Color: React.FC = () => {
+export const Color: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <Text variant="sm-display">Colors</Text>

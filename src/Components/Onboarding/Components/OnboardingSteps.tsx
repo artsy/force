@@ -27,7 +27,7 @@ import { useRouter } from "System/Hooks/useRouter"
 
 interface OnboardingStepsProps {}
 
-export const OnboardingSteps: FC<OnboardingStepsProps> = () => {
+export const OnboardingSteps: FC<React.PropsWithChildren<OnboardingStepsProps>> = () => {
   const { router } = useRouter()
 
   const { current, next } = useOnboardingContext()

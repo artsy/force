@@ -53,7 +53,7 @@ export interface AuctionResultsFilterContextProps {
   filters?: AuctionResultsFilters
   stagedFilters?: AuctionResultsFiltersState
   currentlySelectedFilters?: () => AuctionResultsFiltersState
-  ZeroState?: React.FC | null
+  ZeroState?: React.FC<React.PropsWithChildren<unknown>> | null
   onChange?: (filterState) => void
   resetFilters?: (() => void) | null
   setFilter?: ((name: ChangableFilter, value: any) => void) | null
@@ -104,11 +104,9 @@ export type SharedAuctionResultsFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
-export const AuctionResultsFilterContextProvider: React.FC<
-  SharedAuctionResultsFilterContextProps & {
-    children: React.ReactNode
-  }
-> = ({
+export const AuctionResultsFilterContextProvider: React.FC<React.PropsWithChildren<SharedAuctionResultsFilterContextProps & {
+  children: React.ReactNode
+}>> = ({
   aggregations = [],
   children,
   filters = {},

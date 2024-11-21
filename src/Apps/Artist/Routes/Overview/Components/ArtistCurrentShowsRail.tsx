@@ -18,7 +18,7 @@ interface ArtistCurrentShowsRailProps {
   artist: ArtistCurrentShowsRail_artist$data
 }
 
-const ArtistCurrentShowsRail: React.FC<ArtistCurrentShowsRailProps> = ({
+const ArtistCurrentShowsRail: React.FC<React.PropsWithChildren<ArtistCurrentShowsRailProps>> = ({
   artist,
 }) => {
   const tracking = useTracking()
@@ -124,9 +124,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistCurrentShowsRailQueryRenderer: React.FC<{
+export const ArtistCurrentShowsRailQueryRenderer: React.FC<React.PropsWithChildren<{
   id: string
-}> = ({ id }) => {
+}>> = ({ id }) => {
   return (
     <SystemQueryRenderer<ArtistCurrentShowsRailQuery>
       lazyLoad

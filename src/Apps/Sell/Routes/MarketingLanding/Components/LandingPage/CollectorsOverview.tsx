@@ -16,7 +16,7 @@ const DATA: { value: string; title: string }[] = [
   },
 ]
 
-export const CollectorsOverview: React.FC = () => {
+export const CollectorsOverview: React.FC<React.PropsWithChildren<unknown>> = () => {
   const image = resized(
     "https://files.artsy.net/images/world-map-with-circles.jpg",
     { width: 1277, height: 634, quality: 100 }

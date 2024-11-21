@@ -24,7 +24,7 @@ const APP_DOWNLOAD_FOOTER_KEY = "AppDownloadFooter"
 
 interface AppDownloadFooterProps {}
 
-export const AppDownloadFooter: FC<AppDownloadFooterProps> = () => {
+export const AppDownloadFooter: FC<React.PropsWithChildren<AppDownloadFooterProps>> = () => {
   const isMounted = useDidMount()
   const { user } = useSystemContext()
   const {

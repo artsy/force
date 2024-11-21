@@ -3,7 +3,7 @@ import { Clickable, Flex, Text } from "@artsy/palette"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
-export const FiltersHeader: FC = () => {
+export const FiltersHeader: FC<React.PropsWithChildren<unknown>> = () => {
   const { goToDetails, state } = useAlertContext()
 
   return (

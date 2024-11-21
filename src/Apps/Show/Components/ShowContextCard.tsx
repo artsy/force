@@ -40,7 +40,7 @@ const CARD_IMAGE_WIDTHS = [
   CARD_SMALL_IMAGE_WIDTH,
 ]
 
-export const ShowContextCard: React.FC<Props> = ({ show }) => {
+export const ShowContextCard: React.FC<React.PropsWithChildren<Props>> = ({ show }) => {
   const { isFairBooth, fair, partner } = show
 
   return isFairBooth ? (
@@ -50,7 +50,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
   )
 }
 
-const FairInfo: React.FC<{ fair: Props["show"]["fair"] }> = ({ fair }) => {
+const FairInfo: React.FC<React.PropsWithChildren<{ fair: Props["show"]["fair"] }>> = ({ fair }) => {
   const {
     contextPageOwnerId,
     contextPageOwnerSlug,
@@ -100,7 +100,7 @@ const FairInfo: React.FC<{ fair: Props["show"]["fair"] }> = ({ fair }) => {
   )
 }
 
-const PartnerInfo: React.FC<{ partner: Props["show"]["partner"] }> = ({
+const PartnerInfo: React.FC<React.PropsWithChildren<{ partner: Props["show"]["partner"] }>> = ({
   partner,
 }) => {
   const {

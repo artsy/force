@@ -19,7 +19,7 @@ interface ShowViewingRoomProps extends BoxProps {
   show: ShowViewingRoom_show$data
 }
 
-export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
+export const ShowViewingRoom: React.FC<React.PropsWithChildren<ShowViewingRoomProps>> = ({
   show,
   ...rest
 }) => {

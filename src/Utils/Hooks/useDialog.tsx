@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react"
 
 export interface UseDialogProps {
-  Dialog: React.ComponentType<any>
+  Dialog: React.ComponentType<React.PropsWithChildren<any>>
   onShow?(): void
   onHide?(): void
 }

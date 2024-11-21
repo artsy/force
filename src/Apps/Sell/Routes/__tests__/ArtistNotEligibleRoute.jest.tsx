@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/react"
 import { ArtistNotEligibleRoute } from "Apps/Sell/Routes/ArtistNotEligibleRoute"
 import { useAuthDialog } from "Components/AuthDialog/useAuthDialog"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { graphql } from "react-relay"

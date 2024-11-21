@@ -11,7 +11,7 @@ interface ArticleAdBanerProps {
   height: number
 }
 
-export const ArticleAdBaner: FC<ArticleAdBanerProps> = ({
+export const ArticleAdBaner: FC<React.PropsWithChildren<ArticleAdBanerProps>> = ({
   unit,
   width,
   height,

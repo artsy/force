@@ -39,7 +39,7 @@ interface CookieConsentManagerDialogProps {
   ) => void
 }
 
-export const CookieConsentManagerDialog: FC<CookieConsentManagerDialogProps> = ({
+export const CookieConsentManagerDialog: FC<React.PropsWithChildren<CookieConsentManagerDialogProps>> = ({
   destinations,
   onClose,
   preferences,

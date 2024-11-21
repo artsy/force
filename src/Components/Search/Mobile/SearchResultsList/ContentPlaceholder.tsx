@@ -2,7 +2,7 @@ import { Flex, SkeletonBox, SkeletonText, Spacer } from "@artsy/palette"
 import { SuggestionItemLink } from "Components/Search/SuggestionItem/SuggestionItemLink"
 import { FC } from "react"
 
-export const ContentPlaceholder: FC = () => {
+export const ContentPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       {[...Array(10)].map((_, index) => {

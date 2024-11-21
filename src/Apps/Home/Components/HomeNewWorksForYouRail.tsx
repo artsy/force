@@ -23,7 +23,7 @@ interface HomeNewWorksForYouRailProps {
   artworksForUser: HomeNewWorksForYouRail_artworksForUser$data
 }
 
-const HomeNewWorksForYouRail: React.FC<HomeNewWorksForYouRailProps> = ({
+const HomeNewWorksForYouRail: React.FC<React.PropsWithChildren<HomeNewWorksForYouRailProps>> = ({
   artworksForUser,
 }) => {
   const { trackEvent } = useTracking()
@@ -107,7 +107,7 @@ export const HomeNewWorksForYouRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeNewWorksForYouRailQueryRenderer: React.FC = () => {
+export const HomeNewWorksForYouRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

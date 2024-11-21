@@ -13,7 +13,7 @@ interface InstitutionPartnershipsProfilesProps {
   orderedSet: InstitutionPartnershipsProfiles_orderedSet$data
 }
 
-const InstitutionPartnershipsProfiles: FC<InstitutionPartnershipsProfilesProps> = ({
+const InstitutionPartnershipsProfiles: FC<React.PropsWithChildren<InstitutionPartnershipsProfilesProps>> = ({
   orderedSet,
 }) => {
   const profiles = orderedSet.items
@@ -60,7 +60,7 @@ const InstitutionPartnershipsProfilesFragmentContainer = createFragmentContainer
   }
 )
 
-const InstitutionPartnershipsProfilesPlaceholder: FC = () => {
+const InstitutionPartnershipsProfilesPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <GridColumns gridRowGap={4}>
       {[...new Array(8)].map((_, i) => {
@@ -74,7 +74,7 @@ const InstitutionPartnershipsProfilesPlaceholder: FC = () => {
   )
 }
 
-export const InstitutionPartnershipsProfilesQueryRenderer: FC = () => {
+export const InstitutionPartnershipsProfilesQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <SystemQueryRenderer<InstitutionPartnershipsProfilesQuery>
       lazyLoad

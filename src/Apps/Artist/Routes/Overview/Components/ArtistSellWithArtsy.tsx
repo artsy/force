@@ -23,7 +23,7 @@ interface ArtistSellWithArtsyProps {
   artist?: ArtistSellWithArtsy_artist$data
 }
 
-const ArtistSellWithArtsy: FC<ArtistSellWithArtsyProps> = ({ artist }) => {
+const ArtistSellWithArtsy: FC<React.PropsWithChildren<ArtistSellWithArtsyProps>> = ({ artist }) => {
   const image = artist?.image?.resized?.src
 
   const href = artist?.targetSupply?.isInMicrofunnel
@@ -145,7 +145,7 @@ interface ArtistSellWithArtsyQueryRendererProps {
   slug: string
 }
 
-export const ArtistSellWithArtsyQueryRenderer: FC<ArtistSellWithArtsyQueryRendererProps> = ({
+export const ArtistSellWithArtsyQueryRenderer: FC<React.PropsWithChildren<ArtistSellWithArtsyQueryRendererProps>> = ({
   slug,
 }) => {
   return (

@@ -35,7 +35,7 @@ interface FairsIndexProps {
   viewer: FairsIndex_viewer$data
 }
 
-export const FairsIndex: React.FC<FairsIndexProps> = ({
+export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
   featuredFairs,
   viewer,
 }) => {

@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ConversationHeader } from "Apps/Conversations/components/ConversationHeader"
 import { ConversationHeaderTestQuery } from "__generated__/ConversationHeaderTestQuery.graphql"
 import { MediaContextProvider } from "Utils/Responsive"

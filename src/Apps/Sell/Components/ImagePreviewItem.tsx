@@ -17,7 +17,7 @@ interface ImagePreviewItemProps {
   photo: DropzoneFile
 }
 
-export const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
+export const ImagePreviewItem: React.FC<React.PropsWithChildren<ImagePreviewItemProps>> = ({
   photo,
 }) => {
   const { isLoggedIn } = useSystemContext()

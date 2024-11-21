@@ -9,7 +9,7 @@ import { useTracking } from "react-tracking"
 const logger = createLogger("Components/FlashBanner/EmailConfirmationCTA")
 
 // TODO: Rewrite
-export const EmailConfirmationCTA: React.FC = () => {
+export const EmailConfirmationCTA: React.FC<React.PropsWithChildren<unknown>> = () => {
   const [afterSubmitContent, setAfterSubmitContent] = React.useState<
     string | null
   >(null)

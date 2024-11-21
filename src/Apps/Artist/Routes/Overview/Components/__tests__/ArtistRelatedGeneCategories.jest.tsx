@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ArtistRelatedGeneCategoriesFragmentContainer } from "../ArtistRelatedGeneCategories"
 
 jest.unmock("react-relay")

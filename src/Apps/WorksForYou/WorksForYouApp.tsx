@@ -28,7 +28,7 @@ interface WorksForYouProps {
   viewerMe: WorksForYouApp_viewerMe$data
 }
 
-const WorksForYouApp: React.FC<WorksForYouProps> = ({
+const WorksForYouApp: React.FC<React.PropsWithChildren<WorksForYouProps>> = ({
   viewerArtist,
   viewerFeed,
   viewerMe,

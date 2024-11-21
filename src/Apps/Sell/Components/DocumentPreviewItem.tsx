@@ -17,7 +17,7 @@ interface DocumentPreviewItemProps {
   document: DropzoneFile
 }
 
-export const DocumentPreviewItem: React.FC<DocumentPreviewItemProps> = ({
+export const DocumentPreviewItem: React.FC<React.PropsWithChildren<DocumentPreviewItemProps>> = ({
   document,
 }) => {
   const { isLoggedIn } = useSystemContext()

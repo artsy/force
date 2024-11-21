@@ -23,7 +23,7 @@ interface SettingsEditSettingsTwoFactorBackupCodesProps {
 
 type Mode = "Pending" | "Show" | "Creating"
 
-export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTwoFactorBackupCodesProps> = ({
+export const SettingsEditSettingsTwoFactorBackupCodes: FC<React.PropsWithChildren<SettingsEditSettingsTwoFactorBackupCodesProps>> = ({
   me,
 }) => {
   const [mode, setMode] = useMode<Mode>("Pending")

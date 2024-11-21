@@ -12,7 +12,7 @@ import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progres
 interface ProgressiveOnboardingFollowFindProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingFollowFind__: FC<ProgressiveOnboardingFollowFindProps> = ({
+export const __ProgressiveOnboardingFollowFind__: FC<React.PropsWithChildren<ProgressiveOnboardingFollowFindProps>> = ({
   children,
   counts,
 }) => {

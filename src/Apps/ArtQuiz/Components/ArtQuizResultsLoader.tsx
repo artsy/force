@@ -9,7 +9,7 @@ interface ArtQuizResultsLoaderProps {
   onReady(): void
 }
 
-export const ArtQuizResultsLoader: FC<ArtQuizResultsLoaderProps> = ({
+export const ArtQuizResultsLoader: FC<React.PropsWithChildren<ArtQuizResultsLoaderProps>> = ({
   onReady,
 }) => {
   const [loading, setLoading] = useState(true)

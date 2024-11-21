@@ -17,7 +17,7 @@ const names = [
   "xxxxxxxxxxxxx",
 ]
 
-export const PartnerArtistListPlaceholder: React.FC = () => (
+export const PartnerArtistListPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => (
   <>
     <SkeletonText variant="sm-display">Represented Artists</SkeletonText>
 

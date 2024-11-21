@@ -36,7 +36,7 @@ interface InquiryBasicInfoProps {
   me: InquiryBasicInfo_me$data | null | undefined
 }
 
-const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
+const InquiryBasicInfo: React.FC<React.PropsWithChildren<InquiryBasicInfoProps>> = ({ artwork, me }) => {
   const { next, setContext, relayEnvironment, context } = useInquiryContext()
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
@@ -175,7 +175,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
   )
 }
 
-const InquiryBasicInfoPlaceholder: React.FC = () => {
+const InquiryBasicInfoPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton>
       <Stack gap={4}>
@@ -225,7 +225,7 @@ export const InquiryBasicInfoFragmentContainer = createFragmentContainer(
   }
 )
 
-export const InquiryBasicInfoQueryRenderer: React.FC = () => {
+export const InquiryBasicInfoQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { artworkID, relayEnvironment } = useInquiryContext()
 
   return (

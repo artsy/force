@@ -5,7 +5,7 @@ import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { FC } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
-export const LayoutNav: FC = () => {
+export const LayoutNav: FC<React.PropsWithChildren<unknown>> = () => {
   const { isEigen } = useSystemContext()
   const { height: navBarHeight } = useNavBarHeight()
 

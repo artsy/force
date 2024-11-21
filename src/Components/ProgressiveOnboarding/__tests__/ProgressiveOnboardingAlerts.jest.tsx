@@ -17,7 +17,7 @@ jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: () => ({ isLoggedIn: true }),
 }))
 
-const Example: FC = () => {
+const Example: FC<React.PropsWithChildren<unknown>> = () => {
   const ProgressiveOnboardingAlertCreate = withProgressiveOnboardingCounts(
     __ProgressiveOnboardingAlertCreate__
   )
@@ -25,6 +25,9 @@ const Example: FC = () => {
   return (
     <DismissibleProvider keys={PROGRESSIVE_ONBOARDING_KEYS}>
       <ProgressiveOnboardingAlertCreate>
+        {/*
+          FIXME: REACT_18_UPGRADE
+          @ts-ignore */}
         {({ onSkip: createOnSkip }) => (
           <button
             onClick={() => {

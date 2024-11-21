@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { PageApp_Test_Query } from "__generated__/PageApp_Test_Query.graphql"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { PageAppFragmentContainer } from "Apps/Page/PageApp"
 import { screen } from "@testing-library/react"
 import { HttpError } from "found"

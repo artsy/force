@@ -24,7 +24,7 @@ interface EntityTooltipArtistProps {
   artist: EntityTooltipArtist_artist$data
 }
 
-const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
+const EntityTooltipArtist: FC<React.PropsWithChildren<EntityTooltipArtistProps>> = ({ artist }) => {
   const { trackEvent } = useTracking()
 
   const {
@@ -120,7 +120,7 @@ const EntityTooltipArtistFragmentContainer = createFragmentContainer(
   }
 )
 
-const EntityTooltipArtistPlaceholder: FC = () => {
+const EntityTooltipArtistPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton p={2} width={300}>
       <HorizontalOverflow mb={2}>
@@ -153,7 +153,7 @@ interface EntityTooltipArtistQueryRendererProps {
   id: string
 }
 
-export const EntityTooltipArtistQueryRenderer: FC<EntityTooltipArtistQueryRendererProps> = ({
+export const EntityTooltipArtistQueryRenderer: FC<React.PropsWithChildren<EntityTooltipArtistQueryRendererProps>> = ({
   id,
 }) => {
   return (

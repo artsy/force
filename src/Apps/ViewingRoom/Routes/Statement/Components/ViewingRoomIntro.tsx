@@ -7,7 +7,7 @@ interface ViewingRoomIntroProps {
   viewingRoom: ViewingRoomIntro_viewingRoom$data
 }
 
-const ViewingRoomIntro: React.FC<ViewingRoomIntroProps> = ({
+const ViewingRoomIntro: React.FC<React.PropsWithChildren<ViewingRoomIntroProps>> = ({
   viewingRoom: { introStatement },
 }) => {
   if (!introStatement) {

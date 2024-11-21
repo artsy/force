@@ -12,7 +12,7 @@ interface PartnerShowsProps {
   partner: Shows_partner$data
 }
 
-export const Shows: React.FC<PartnerShowsProps> = ({ partner }) => {
+export const Shows: React.FC<React.PropsWithChildren<PartnerShowsProps>> = ({ partner }) => {
   const { currentEvents, upcomingEvents, featuredEvents } = partner
 
   const {

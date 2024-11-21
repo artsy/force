@@ -6,7 +6,7 @@ export interface PartnerArtistDetailsListPlaceholderProps {
   count: number
 }
 
-export const PartnerArtistDetailsListPlaceholder: React.FC<PartnerArtistDetailsListPlaceholderProps> = ({
+export const PartnerArtistDetailsListPlaceholder: React.FC<React.PropsWithChildren<PartnerArtistDetailsListPlaceholderProps>> = ({
   count,
 }) => {
   return (

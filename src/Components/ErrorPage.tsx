@@ -16,7 +16,7 @@ interface ErrorPageProps extends BoxProps {
   detail?: string
 }
 
-export const ErrorPage: React.FC<ErrorPageProps> = ({
+export const ErrorPage: React.FC<React.PropsWithChildren<ErrorPageProps>> = ({
   code,
   message,
   detail,

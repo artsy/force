@@ -10,7 +10,7 @@ interface ShowAppProps {
   show: ShowSubApp_show$data
 }
 
-const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
+const ShowApp: React.FC<React.PropsWithChildren<ShowAppProps>> = ({ children, show }) => {
   return (
     <>
       <ShowMeta show={show} />

@@ -9,7 +9,7 @@ interface SettingsBankAccountProps {
   bankAccount: SettingsBankAccount_bankAccount$data
 }
 
-const SettingsBankAccount: React.FC<SettingsBankAccountProps> = ({
+const SettingsBankAccount: React.FC<React.PropsWithChildren<SettingsBankAccountProps>> = ({
   bankAccount,
 }) => {
   const { internalID, last4 } = bankAccount

@@ -20,7 +20,7 @@ import { Suspense, useCallback, useState } from "react"
 
 interface MyCollectionArtworkFormArtworkStepProps {}
 
-export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFormArtworkStepProps> = () => {
+export const MyCollectionArtworkFormArtworkStep: React.FC<React.PropsWithChildren<MyCollectionArtworkFormArtworkStepProps>> = () => {
   const {
     trackSelectArtwork,
     trackSkipArtworkSelection,

@@ -21,7 +21,7 @@ export interface SaleAppProps {
   viewer: SaleApp_viewer$data
 }
 
-const SaleApp: React.FC<SaleAppProps> = ({ children, sale, viewer }) => {
+const SaleApp: React.FC<React.PropsWithChildren<SaleAppProps>> = ({ children, sale, viewer }) => {
   return (
     <>
       <SaleMetaFragmentContainer sale={sale} />

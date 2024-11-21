@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { HomeTrendingArtistsRailFragmentContainer } from "Apps/Home/Components/HomeTrendingArtistsRail"
 import { useTracking } from "react-tracking"
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

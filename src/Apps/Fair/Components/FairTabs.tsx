@@ -17,7 +17,7 @@ interface FairTabsProps {
   fair: FairTabs_fair$data
 }
 
-const FairTabs: FC<FairTabsProps> = ({ fair }) => {
+const FairTabs: FC<React.PropsWithChildren<FairTabsProps>> = ({ fair }) => {
   const tracking = useTracking()
 
   const {

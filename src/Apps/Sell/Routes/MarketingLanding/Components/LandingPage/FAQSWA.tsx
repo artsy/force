@@ -3,7 +3,7 @@ import { TextAndImageLayout } from "Apps/Sell/Routes/MarketingLanding/Components
 import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 
-export const FAQSWA: React.FC = () => {
+export const FAQSWA: React.FC<React.PropsWithChildren<unknown>> = () => {
   const image = resized(
     "https://files.artsy.net/images/SWA-landing-FAQ-section-x2.jpg",
     { width: 950, height: 419 }

@@ -14,7 +14,7 @@ interface ArtQuizTrendingArtistsProps {
   viewer: ArtQuizTrendingArtists_viewer$data
 }
 
-const ArtQuizTrendingArtists: FC<ArtQuizTrendingArtistsProps> = ({
+const ArtQuizTrendingArtists: FC<React.PropsWithChildren<ArtQuizTrendingArtistsProps>> = ({
   viewer,
 }) => {
   const artists = extractNodes(viewer.curatedTrendingArtists)

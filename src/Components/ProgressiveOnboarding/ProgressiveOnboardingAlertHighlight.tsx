@@ -10,7 +10,7 @@ interface ProgressiveOnboardingAlertHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
 }
 
-export const ProgressiveOnboardingAlertHighlight: FC<ProgressiveOnboardingAlertHighlightProps> = ({
+export const ProgressiveOnboardingAlertHighlight: FC<React.PropsWithChildren<ProgressiveOnboardingAlertHighlightProps>> = ({
   children,
   position,
 }) => {

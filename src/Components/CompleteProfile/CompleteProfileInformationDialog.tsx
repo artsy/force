@@ -25,7 +25,7 @@ interface CompleteProfileInformationDialogProps {
   onClose(): void
 }
 
-export const CompleteProfileInformationDialog: FC<CompleteProfileInformationDialogProps> = ({
+export const CompleteProfileInformationDialog: FC<React.PropsWithChildren<CompleteProfileInformationDialogProps>> = ({
   onClose,
 }) => {
   return (
@@ -45,7 +45,7 @@ interface CompleteProfileInformationDialogFormProps {
   onSuccess(): void
 }
 
-const CompleteProfileInformationDialogForm: FC<CompleteProfileInformationDialogFormProps> = ({
+const CompleteProfileInformationDialogForm: FC<React.PropsWithChildren<CompleteProfileInformationDialogFormProps>> = ({
   onSuccess,
 }) => {
   const { me } = useLazyLoadQuery<CompleteProfileInformationDialogQuery>(
@@ -173,7 +173,7 @@ const CompleteProfileInformationDialogForm: FC<CompleteProfileInformationDialogF
   )
 }
 
-const CompleteProfileInformationDialogFormSkeleton: FC = () => {
+const CompleteProfileInformationDialogFormSkeleton: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Stack gap={4}>
       <Stack gap={2}>

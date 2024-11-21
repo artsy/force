@@ -30,7 +30,7 @@ export interface SelectArtworkListsModalProps {
 
 type ArtworkListById = Record<string, ResultListEntity>
 
-export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = ({
+export const SelectArtworkListsModal: React.FC<React.PropsWithChildren<SelectArtworkListsModalProps>> = ({
   me,
 }) => {
   const { state, dispatch, reset, onSave } = useManageArtworkForSavesContext()
@@ -241,7 +241,7 @@ export const SelectArtworkListsModalFragmentContainer = createFragmentContainer(
   }
 )
 
-export const SelectArtworkListsModalQueryRender: FC = () => {
+export const SelectArtworkListsModalQueryRender: FC<React.PropsWithChildren<unknown>> = () => {
   const { state } = useManageArtworkForSavesContext()
 
   return (

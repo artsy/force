@@ -5,7 +5,7 @@ interface ConfirmationModalProps {
   handleDelete: () => void
 }
 
-export const ConfirmationModalDelete: React.FC<ConfirmationModalProps> = ({
+export const ConfirmationModalDelete: React.FC<React.PropsWithChildren<ConfirmationModalProps>> = ({
   onClose,
   handleDelete,
 }) => {

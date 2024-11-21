@@ -14,7 +14,7 @@ import { MetaTags } from "Components/MetaTags"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { FC } from "react"
 
-export const MarketingMeetArtAdvisorRoute: FC = () => {
+export const MarketingMeetArtAdvisorRoute: FC<React.PropsWithChildren<unknown>> = () => {
   const { isEigen } = useSystemContext()
 
   return (

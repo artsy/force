@@ -13,7 +13,7 @@ interface ArtworkVideoPlayerProps extends BoxProps {
   maxHeight: number
 }
 
-const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
+const ArtworkVideoPlayer: FC<React.PropsWithChildren<ArtworkVideoPlayerProps>> = ({
   activeIndex,
   artwork: { internalID, figures, slug },
   maxHeight,

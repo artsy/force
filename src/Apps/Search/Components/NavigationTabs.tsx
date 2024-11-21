@@ -114,7 +114,7 @@ interface NavigationTabProps {
   count: number
 }
 
-const NavigationTab: FC<NavigationTabProps> = ({ count, term, tab: _tab }) => {
+const NavigationTab: FC<React.PropsWithChildren<NavigationTabProps>> = ({ count, term, tab: _tab }) => {
   const tab = TABS[_tab]
   const to = `/search${tab.path}?term=${encodeURIComponent(term)}`
   const selected = useIsRouteActive(to)
@@ -154,7 +154,7 @@ const NavigationTab: FC<NavigationTabProps> = ({ count, term, tab: _tab }) => {
   )
 }
 
-export const NavigationTabs: FC<NavigationTabsProps> = ({
+export const NavigationTabs: FC<React.PropsWithChildren<NavigationTabsProps>> = ({
   term,
   artworkCount,
   searchableConnection,

@@ -10,7 +10,7 @@ export interface ShippingInformationProps {
   artwork: ArtworkSidebarShippingInformation_artwork$data
 }
 
-const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
+const ArtworkSidebarShippingInformation: React.FC<React.PropsWithChildren<ShippingInformationProps>> = ({
   artwork: {
     isUnlisted,
     priceIncludesTaxDisplay,

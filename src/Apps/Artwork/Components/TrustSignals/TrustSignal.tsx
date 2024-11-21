@@ -8,7 +8,7 @@ export interface TrustSignalProps extends Omit<FlexProps, "flexDirection"> {
   onClick?: () => void
 }
 
-export const TrustSignal: FC<TrustSignalProps> = ({
+export const TrustSignal: FC<React.PropsWithChildren<TrustSignalProps>> = ({
   Icon,
   label,
   description,

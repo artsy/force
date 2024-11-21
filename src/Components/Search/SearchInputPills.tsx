@@ -71,7 +71,7 @@ interface SearchInputPillsProps {
   onPillClick: (pill: PillType) => void
 }
 
-const SearchInputPills: FC<SearchInputPillsProps> = ({
+const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
   viewer,
   selectedPill,
   enableChevronNavigation = true,

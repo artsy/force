@@ -21,7 +21,7 @@ interface EntityTooltipGeneProps {
   gene: EntityTooltipGene_gene$data
 }
 
-const EntityTooltipGene: FC<EntityTooltipGeneProps> = ({ gene }) => {
+const EntityTooltipGene: FC<React.PropsWithChildren<EntityTooltipGeneProps>> = ({ gene }) => {
   const { trackEvent } = useTracking()
 
   const {
@@ -106,7 +106,7 @@ const EntityTooltipGeneFragmentContainer = createFragmentContainer(
   }
 )
 
-const EntityTooltipGenePlaceholder: FC = () => {
+const EntityTooltipGenePlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton p={2} width={300}>
       <SkeletonBox width={260} height={146} />
@@ -125,7 +125,7 @@ interface EntityTooltipGeneQueryRendererProps {
   id: string
 }
 
-export const EntityTooltipGeneQueryRenderer: FC<EntityTooltipGeneQueryRendererProps> = ({
+export const EntityTooltipGeneQueryRenderer: FC<React.PropsWithChildren<EntityTooltipGeneQueryRendererProps>> = ({
   id,
 }) => {
   return (

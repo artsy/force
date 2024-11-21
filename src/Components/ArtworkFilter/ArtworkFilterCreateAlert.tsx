@@ -9,10 +9,9 @@ interface ArtworkFilterCreateAlertProps {
   children?: ReactNode
 }
 
-export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
-  renderButton,
-  children,
-}) => {
+export const ArtworkFilterCreateAlert: FC<React.PropsWithChildren<
+  ArtworkFilterCreateAlertProps
+>> = ({ renderButton, children }) => {
   const { entity } = useSavedSearchAlertContext()
 
   // If there is no entity then we don't want to create an alert
@@ -23,6 +22,9 @@ export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
       <CreateAlertButton
         renderButton={({ onClick }) => (
           <ProgressiveOnboardingAlertCreate>
+            {/*
+              FIXME: REACT_18_UPGRADE
+              @ts-ignore */}
             {({ onSkip: createSkip }) =>
               renderButton({
                 onClick: () => {

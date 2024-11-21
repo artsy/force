@@ -17,7 +17,7 @@ const PUBLIC_ASSET_PATH = "public/assets"
 const ASSET_PATH = "/assets"
 
 interface CollectAssetsProps {
-  ServerRouter: React.FC
+  ServerRouter: React.FC<React.PropsWithChildren<unknown>>
   relayEnvironment: Environment
 }
 
@@ -50,9 +50,7 @@ export const collectAssets = async ({
 
   const sheet = new ServerStyleSheet()
 
-  const jsx = extractor.collectChunks(
-    sheet.collectStyles(<ServerRouter />)
-  ) as JSX.Element
+  const jsx = extractor.collectChunks(sheet.collectStyles(<ServerRouter />))
 
   const html = renderToString(jsx)
   const styleTags = sheet.getStyleTags()

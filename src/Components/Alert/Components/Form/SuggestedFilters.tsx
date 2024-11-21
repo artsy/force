@@ -20,7 +20,7 @@ import { graphql, useLazyLoadQuery } from "react-relay"
 interface SuggestedFiltersProps {
   transitionToFiltersAndTrack: () => void
 }
-export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
+export const SuggestedFilters: React.FC<React.PropsWithChildren<SuggestedFiltersProps>> = ({
   transitionToFiltersAndTrack,
 }) => {
   const { state, dispatch } = useAlertContext()
@@ -138,7 +138,7 @@ const suggestedFiltersFetchQuery = graphql`
   }
 `
 
-export const SugggestedFiltersQueryRenderer: React.FC<SuggestedFiltersProps> = props => {
+export const SugggestedFiltersQueryRenderer: React.FC<React.PropsWithChildren<SuggestedFiltersProps>> = props => {
   return (
     <Suspense fallback={<SuggestedFiltersPlaceholder />}>
       <SuggestedFilters {...props} />
@@ -146,7 +146,7 @@ export const SugggestedFiltersQueryRenderer: React.FC<SuggestedFiltersProps> = p
   )
 }
 
-const SuggestedFiltersPlaceholder: React.FC = () => {
+const SuggestedFiltersPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="xs" mb={2}>

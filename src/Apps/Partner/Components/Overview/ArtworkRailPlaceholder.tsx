@@ -5,7 +5,7 @@ export interface ArtworksRailPlaceholderProps extends BoxProps {
   count: number
 }
 
-export const ArtworksRailPlaceholder: React.FC<ArtworksRailPlaceholderProps> = ({
+export const ArtworksRailPlaceholder: React.FC<React.PropsWithChildren<ArtworksRailPlaceholderProps>> = ({
   count,
   ...rest
 }) => {

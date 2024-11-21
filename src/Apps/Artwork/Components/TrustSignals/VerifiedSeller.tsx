@@ -11,7 +11,7 @@ interface VerifiedSellerProps
   artwork: VerifiedSeller_artwork$data
 }
 
-export const VerifiedSeller: React.FC<VerifiedSellerProps> = ({
+export const VerifiedSeller: React.FC<React.PropsWithChildren<VerifiedSellerProps>> = ({
   artwork,
   ...other
 }) => {

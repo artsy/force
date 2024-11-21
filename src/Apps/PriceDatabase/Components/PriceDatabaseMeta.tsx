@@ -1,7 +1,7 @@
 import * as React from "react"
 import { MetaTags } from "Components/MetaTags"
 
-export const PriceDatabaseMeta: React.FC = () => {
+export const PriceDatabaseMeta: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <MetaTags
       title="Search Auction Results for Free | Artsy Price Database"

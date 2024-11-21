@@ -47,7 +47,7 @@ interface FormValuesForNotificationPreferences {
   partnerOffersOnSaves: boolean
 }
 
-export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
+export const PreferencesApp: FC<React.PropsWithChildren<PreferencesAppProps>> = ({ viewer }) => {
   const router = useRouter()
   const authenticationToken = parseTokenFromRouter(router)
   const { sendToast } = useToasts()

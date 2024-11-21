@@ -18,7 +18,7 @@ interface Props {
   artwork: MyCollectionArtworkSWASectionSubmitted_submissionState$key
 }
 
-export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
+export const MyCollectionArtworkSWASectionSubmitted: React.FC<React.PropsWithChildren<Props>> = ({
   artwork,
 }) => {
   const [
@@ -106,7 +106,7 @@ interface SubmissionStatusModalProps {
   onClose(): void
 }
 
-const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
+const SubmissionStatusModal: React.FC<React.PropsWithChildren<SubmissionStatusModalProps>> = ({
   show,
   onClose,
 }) => {

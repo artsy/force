@@ -7,7 +7,7 @@ interface FairOrganizerHeaderImageProps {
   fairOrganizer: FairOrganizerHeaderImage_fairOrganizer$data
 }
 
-export const FairOrganizerHeaderImage: React.FC<FairOrganizerHeaderImageProps> = ({
+export const FairOrganizerHeaderImage: React.FC<React.PropsWithChildren<FairOrganizerHeaderImageProps>> = ({
   fairOrganizer: { profile },
 }) => {
   if (profile?.image?.url) {

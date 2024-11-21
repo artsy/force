@@ -39,7 +39,7 @@ jest.mock("System/Hooks/useRouter", () => ({
   }),
 }))
 
-const Example: FC = () => {
+const Example: FC<React.PropsWithChildren<unknown>> = () => {
   const ProgressiveOnboardingFollowFind = withProgressiveOnboardingCounts(
     __ProgressiveOnboardingFollowFind__
   )

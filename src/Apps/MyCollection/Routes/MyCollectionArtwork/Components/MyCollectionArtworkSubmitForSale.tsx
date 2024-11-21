@@ -13,7 +13,7 @@ interface MyCollectionArtworkSubmitForSaleProps {
   artwork: MyCollectionArtworkSubmitForSale_artwork$key
 }
 
-export const MyCollectionArtworkSubmitForSale: React.FC<MyCollectionArtworkSubmitForSaleProps> = props => {
+export const MyCollectionArtworkSubmitForSale: React.FC<React.PropsWithChildren<MyCollectionArtworkSubmitForSaleProps>> = props => {
   const { trackEvent } = useTracking()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { router } = useRouter()

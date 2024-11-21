@@ -44,7 +44,7 @@ export interface SizeFilterProps {
   expanded?: boolean
 }
 
-export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
+export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({ expanded }) => {
   const { setFilters } = useArtworkFilterContext()
   const selectedFilters = useCurrentlySelectedFilters()
   const {

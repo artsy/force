@@ -10,7 +10,7 @@ interface ArticlesRailProps {
   partner: ArticlesRail_partner$data
 }
 
-const ArticlesRail: React.FC<ArticlesRailProps> = ({ partner }) => {
+const ArticlesRail: React.FC<React.PropsWithChildren<ArticlesRailProps>> = ({ partner }) => {
   const { articlesConnection, slug } = partner
   const articles = extractNodes(articlesConnection)
 

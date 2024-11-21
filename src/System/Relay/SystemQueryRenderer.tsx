@@ -1,6 +1,11 @@
 import * as React from "react"
-import { Environment, QueryRenderer } from "react-relay"
-import { OperationType } from "relay-runtime"
+import {
+  Environment,
+  FetchPolicy,
+  QueryRenderer,
+  QueryRendererProps,
+} from "react-relay"
+import { CacheConfig, OperationType } from "relay-runtime"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
@@ -13,18 +18,18 @@ import {
 } from "react"
 import { isForwardRef } from "react-is"
 
-type QueryRendererProps = React.ComponentProps<typeof QueryRenderer>
-
 export type SystemQueryRendererProps<T extends OperationType> = Omit<
-  QueryRendererProps,
+  QueryRendererProps<T>,
   "render" | "environment" | "variables"
 > & {
   debugPlaceholder?: boolean
   lazyLoad?: boolean
   lazyLoadThreshold?: number
   placeholder?: ReactElement<any, string | JSXElementConstructor<any>>
+  fetchPolicy?: FetchPolicy
+  cacheConfig?: CacheConfig
   environment?: Environment
-  variables?: QueryRendererProps["variables"]
+  variables?: QueryRendererProps<any>["variables"]
   render(renderProps: {
     error: Error | null
     props: T["response"] | null
@@ -41,7 +46,7 @@ export function SystemQueryRenderer<T extends OperationType>({
   variables = {},
   render,
   ...rest
-}: SystemQueryRendererProps<T>): JSX.Element {
+}: SystemQueryRendererProps<T>) {
   const isMounted = useDidMount()
 
   const [isEnteredView, setIsEnteredView] = useState(false)

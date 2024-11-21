@@ -57,7 +57,7 @@ interface SettingsEditProfileFieldsProps {
   me: SettingsEditProfileFields_me$data
 }
 
-const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
+const SettingsEditProfileFields: React.FC<React.PropsWithChildren<SettingsEditProfileFieldsProps>> = ({
   me,
 }) => {
   const { sendToast } = useToasts()

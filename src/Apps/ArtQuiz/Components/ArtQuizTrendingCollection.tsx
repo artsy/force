@@ -12,7 +12,7 @@ interface ArtQuizTrendingCollectionProps {
   collection: ArtQuizTrendingCollection_collection$data
 }
 
-const ArtQuizTrendingCollection: FC<ArtQuizTrendingCollectionProps> = ({
+const ArtQuizTrendingCollection: FC<React.PropsWithChildren<ArtQuizTrendingCollectionProps>> = ({
   collection,
 }) => {
   const artworks = extractNodes(collection.artworksConnection)
@@ -47,7 +47,7 @@ const ArtQuizTrendingCollection: FC<ArtQuizTrendingCollectionProps> = ({
   )
 }
 
-export const ArtQuizTrendingCollectionPlaceholder: FC = () => {
+export const ArtQuizTrendingCollectionPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <SkeletonText variant="lg-display">Example Collection Title</SkeletonText>

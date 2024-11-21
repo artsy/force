@@ -7,7 +7,7 @@ import { FC } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Media } from "Utils/Responsive"
 
-export const LayoutFooter: FC = () => {
+export const LayoutFooter: FC<React.PropsWithChildren<unknown>> = () => {
   const { isEigen } = useSystemContext()
 
   if (isEigen) return null

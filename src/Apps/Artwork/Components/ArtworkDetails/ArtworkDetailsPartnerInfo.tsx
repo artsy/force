@@ -12,7 +12,7 @@ export interface PartnerInfoProps {
   artwork: ArtworkDetailsPartnerInfo_artwork$data
 }
 
-export const PartnerInfo: React.FC<PartnerInfoProps> = ({ artwork }) => {
+export const PartnerInfo: React.FC<React.PropsWithChildren<PartnerInfoProps>> = ({ artwork }) => {
   const { partner } = artwork
 
   if (!partner) return null
@@ -67,9 +67,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtworkDetailsPartnerInfoQueryRenderer: React.FC<{
+export const ArtworkDetailsPartnerInfoQueryRenderer: React.FC<React.PropsWithChildren<{
   slug: string
-}> = ({ slug }) => {
+}>> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

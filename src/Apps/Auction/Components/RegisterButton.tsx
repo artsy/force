@@ -16,7 +16,7 @@ export interface RegisterButtonProps {
   sale: RegisterButton_sale$data
 }
 
-export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
+export const RegisterButton: React.FC<React.PropsWithChildren<RegisterButtonProps>> = ({ me, sale }) => {
   const { router } = useRouter()
   const { tracking } = useAuctionTracking()
 
@@ -209,13 +209,13 @@ const IdentityVerificationMessage = () => {
   )
 }
 
-const ButtonAction: React.FC<{
+const ButtonAction: React.FC<React.PropsWithChildren<{
   description?: string | JSX.Element
   disabled?: boolean
   onClick?: () => void
   title: string
   to?: string
-}> = ({ description = false, disabled, title, to, onClick }) => {
+}>> = ({ description = false, disabled, title, to, onClick }) => {
   return (
     <Flex flexDirection="column" data-testid="RegisterButton">
       <Button

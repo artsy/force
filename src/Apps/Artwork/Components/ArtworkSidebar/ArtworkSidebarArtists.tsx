@@ -19,7 +19,7 @@ const StyledArtistLink = styled(RouterLink)`
   }
 `
 
-export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
+export const ArtworkSidebarArtists: React.FC<React.PropsWithChildren<ArtistsProps>> = ({
   artwork: { artists, culturalMaker },
 }) => {
   if (!artists) return null

@@ -26,7 +26,7 @@ interface ViewInRoomRoomProps extends BoxProps {
   onMount(): void
 }
 
-export const ViewInRoomRoom: React.FC<ViewInRoomRoomProps> = ({
+export const ViewInRoomRoom: React.FC<React.PropsWithChildren<ViewInRoomRoomProps>> = ({
   onMount,
   ...rest
 }) => {

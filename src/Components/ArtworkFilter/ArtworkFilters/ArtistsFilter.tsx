@@ -19,14 +19,12 @@ export interface ArtistsFilterProps {
   user?: User
 }
 
-const ArtistItem: React.FC<
-  {
-    slug: string
-    name: string
-    followedArtistSlugs: string[]
-    isFollowedArtistCheckboxSelected: boolean
-  } & CheckboxProps
-> = ({
+const ArtistItem: React.FC<React.PropsWithChildren<{
+  slug: string
+  name: string
+  followedArtistSlugs: string[]
+  isFollowedArtistCheckboxSelected: boolean
+} & CheckboxProps>> = ({
   slug,
   name,
   followedArtistSlugs,
@@ -67,7 +65,7 @@ const ArtistItem: React.FC<
   )
 }
 
-export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
+export const ArtistsFilter: FC<React.PropsWithChildren<ArtistsFilterProps>> = ({ expanded, fairID }) => {
   const { relayEnvironment, user } = useSystemContext()
 
   const {

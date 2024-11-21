@@ -34,7 +34,7 @@ type Artworks =
 type Artwork = ExtractNodeType<Artworks>
 type SectionedArtworks = Array<Array<Artwork>>
 
-interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
+interface ArtworkGridProps {
   artworks: Artworks
   contextModule?: AuthContextModule
   columnCount?: number | number[]
@@ -58,6 +58,7 @@ interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
   renderSaveButton?: (artworkId: string) => React.ReactNode
   popoverContent?: ReactNode | null
   onPopoverDismiss?: () => void
+  className?: string
 }
 
 export interface ArtworkGridContainerState {
@@ -271,18 +272,23 @@ export class ArtworkGridContainer extends React.Component<
 
     return columnBreakpointProps.map(([count, props], i) => (
       // We always create all Media instances, so using i as key is fine.
-      <Media {...props} key={i}>
-        {(className, renderChildren) => (
-          <InnerContainer className={className}>
-            {renderChildren &&
-              this.renderSectionsForSingleBreakpoint(
-                count,
-                sectionedArtworksForAllBreakpoints[i]
-              )}
-          </InnerContainer>
-        )}
-      </Media>
-    ))
+      (<Media {...props} key={i}>
+        {/*
+        FIXME: REACT_18_MIGRATION
+        @ts-ignore */}
+        {(className, renderChildren) => {
+          return (
+            <InnerContainer className={className}>
+              {renderChildren &&
+                this.renderSectionsForSingleBreakpoint(
+                  count,
+                  sectionedArtworksForAllBreakpoints[i]
+                )}
+            </InnerContainer>
+          )
+        }}
+      </Media>)
+    ));
   }
 
   render() {
@@ -365,10 +371,9 @@ function areSectionedArtworksEqual(current: any, previous: any) {
     const previousEdges = (previous as Artworks).edges
     return (
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      currentEdges.length === previousEdges.length &&
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      currentEdges.every((e, i) => e.node.id === previousEdges[i].node.id)
-    )
+      (currentEdges.length === previousEdges.length && // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      currentEdges.every((e, i) => e.node.id === previousEdges[i].node.id))
+    );
   }
 }
 
@@ -440,7 +445,7 @@ interface ArtworkGridPlaceholderProps extends MasonryProps {
   amount?: number
 }
 
-export const ArtworkGridPlaceholder: React.FC<ArtworkGridPlaceholderProps> = ({
+export const ArtworkGridPlaceholder: React.FC<React.PropsWithChildren<ArtworkGridPlaceholderProps>> = ({
   amount = 20,
   ...rest
 }) => {

@@ -46,7 +46,7 @@ interface PhoneNumberRouteProps {
   me: PhoneNumberRoute_me$key
 }
 
-export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
+export const PhoneNumberRoute: React.FC<React.PropsWithChildren<PhoneNumberRouteProps>> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const me = useFragment(FRAGMENT_ME, props.me)
 
@@ -91,7 +91,7 @@ export const PhoneNumberRoute: React.FC<PhoneNumberRouteProps> = props => {
   )
 }
 
-const PhoneNumberRouteForm: React.FC = () => {
+const PhoneNumberRouteForm: React.FC<React.PropsWithChildren<unknown>> = () => {
   const focusedInputRef = useFocusInput()
   const { values, handleChange, setFieldValue } = useFormikContext<FormValues>()
 

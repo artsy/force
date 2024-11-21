@@ -21,7 +21,7 @@ beforeEach(() => {
 
 describe("AddressForm", () => {
   it("preserves updated value from props after user input", () => {
-    const Page: FC = () => {
+    const Page: FC<React.PropsWithChildren<unknown>> = () => {
       const [address, setAddress] = useState({
         addressLine1: "Before update",
         country: "US",

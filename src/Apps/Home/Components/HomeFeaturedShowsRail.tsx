@@ -21,7 +21,7 @@ interface HomeFeaturedShowsRailProps {
   orderedSet: HomeFeaturedShowsRail_orderedSet$data
 }
 
-const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
+const HomeFeaturedShowsRail: React.FC<React.PropsWithChildren<HomeFeaturedShowsRailProps>> = ({
   orderedSet,
 }) => {
   const { trackEvent } = useTracking()
@@ -98,7 +98,7 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const HomeFeaturedShowsRailQueryRenderer: React.FC = () => {
+export const HomeFeaturedShowsRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

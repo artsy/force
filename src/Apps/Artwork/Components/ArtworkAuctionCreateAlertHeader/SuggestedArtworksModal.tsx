@@ -8,7 +8,7 @@ interface SuggestedArtworksModalProps {
   onClose: () => void
 }
 
-export const SuggestedArtworksModal: FC<SuggestedArtworksModalProps> = ({
+export const SuggestedArtworksModal: FC<React.PropsWithChildren<SuggestedArtworksModalProps>> = ({
   onClose,
 }) => {
   const { criteria, entity } = useSavedSearchAlertContext()

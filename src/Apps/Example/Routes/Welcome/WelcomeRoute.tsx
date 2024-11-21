@@ -5,7 +5,7 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTracking } from "react-tracking"
 import { ContextModule, clickedShowMore } from "@artsy/cohesion"
 
-export const WelcomeRoute: React.FC = () => {
+export const WelcomeRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { trackEvent } = useTracking()
   const {
     contextPageOwnerType,

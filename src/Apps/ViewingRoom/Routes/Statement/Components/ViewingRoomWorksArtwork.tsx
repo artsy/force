@@ -13,7 +13,7 @@ interface ViewingRoomWorksArtworkProps {
   artwork: ViewingRoomWorksArtwork_artwork$data
 }
 
-const ViewingRoomWorksArtwork: React.FC<ViewingRoomWorksArtworkProps> = ({
+const ViewingRoomWorksArtwork: React.FC<React.PropsWithChildren<ViewingRoomWorksArtworkProps>> = ({
   to,
   artwork,
 }) => {

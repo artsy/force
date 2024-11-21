@@ -9,7 +9,9 @@ interface SearchBarProps {
   onClose: () => void
 }
 
-export const SearchBar: FC<SearchBarProps> = ({ onClose }) => {
+export const SearchBar: FC<React.PropsWithChildren<SearchBarProps>> = ({
+  onClose,
+}) => {
   const { match } = useRouter()
 
   const urlSearchTerm = match?.location?.query?.term

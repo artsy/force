@@ -97,7 +97,7 @@ describe("AuctionRegistrationRoute", () => {
     }))
 
     // Hack to get around mocking Formik
-    ;(mockFormik as React.FC).displayName = "Formik"
+    ;(mockFormik as React.FC<React.PropsWithChildren<unknown>>).displayName = "Formik"
     mockFormik.mockImplementation(({ children }) => {
       return children(defaultFormikProps)
     })

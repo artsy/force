@@ -13,7 +13,7 @@ interface ArtworkSidebarArtsyGuaranteeProps {
   artwork: ArtworkSidebarArtsyGuarantee_artwork$key
 }
 
-export const ArtworkSidebarArtsyGuarantee: React.FC<ArtworkSidebarArtsyGuaranteeProps> = ({
+export const ArtworkSidebarArtsyGuarantee: React.FC<React.PropsWithChildren<ArtworkSidebarArtsyGuaranteeProps>> = ({
   artwork,
 }) => {
   const data = useFragment(

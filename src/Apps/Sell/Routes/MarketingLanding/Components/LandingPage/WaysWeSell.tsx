@@ -87,7 +87,7 @@ export const WaysWeSell = () => {
   )
 }
 
-const ShelfItem: React.FC<ShelfItemProps> = ({ image, title, text }) => {
+const ShelfItem: React.FC<React.PropsWithChildren<ShelfItemProps>> = ({ image, title, text }) => {
   return (
     <Stack gap={[1, 2]}>
       <ResponsiveBox
@@ -117,7 +117,7 @@ const ShelfItem: React.FC<ShelfItemProps> = ({ image, title, text }) => {
   )
 }
 
-const DesktopLayout: React.FC = () => {
+const DesktopLayout: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Media greaterThan="xs">
       <GridColumns gridColumnGap={[0, 2, 4]}>
@@ -140,7 +140,7 @@ const DesktopLayout: React.FC = () => {
   )
 }
 
-const MobileLayout: React.FC = () => {
+const MobileLayout: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Media at="xs">
       <Shelf>

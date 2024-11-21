@@ -44,7 +44,9 @@ export interface StripeProps {
 
 const logger = createLogger("Order/Routes/Offer/index.tsx")
 
-export const Accept: FC<AcceptProps & StripeProps> = props => {
+export const Accept: FC<React.PropsWithChildren<
+  AcceptProps & StripeProps
+>> = props => {
   const {
     order,
     isCommittingMutation,

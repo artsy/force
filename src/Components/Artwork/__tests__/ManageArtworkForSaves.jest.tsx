@@ -1,5 +1,5 @@
 import { Button } from "@artsy/palette"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import {
   ArtworkEntity,
   ManageArtworkForSavesProvider,
@@ -29,7 +29,7 @@ describe("ManageArtworkForSaves", () => {
     relayEnv.mockClear()
   })
 
-  const TestRenderer: FC<TestButtonProps> = props => {
+  const TestRenderer: FC<React.PropsWithChildren<TestButtonProps>> = props => {
     return (
       <MockBoot relayEnvironment={relayEnv}>
         <ManageArtworkForSavesProvider>
@@ -72,20 +72,24 @@ describe("ManageArtworkForSaves", () => {
     expect(screen.getByText(modalTitle)).toBeInTheDocument()
   })
 
-  it("should render lists", () => {
+  it("should render lists", async () => {
     renderAndOpenModal()
 
-    expect(screen.getByText("List 1")).toBeInTheDocument()
-    expect(screen.getByText("List 2")).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText("List 1")).toBeInTheDocument()
+      expect(screen.getByText("List 2")).toBeInTheDocument()
+    })
   })
 
-  it("should reset state when modal was closed", () => {
+  it("should reset state when modal was closed", async () => {
     renderAndOpenModal()
 
-    fireEvent.click(screen.getByText("List 1"))
-    fireEvent.click(screen.getByText("List 2"))
+    await waitFor(() => {
+      fireEvent.click(screen.getByText("List 1"))
+      fireEvent.click(screen.getByText("List 2"))
 
-    expect(screen.getByText("2 lists selected")).toBeInTheDocument()
+      expect(screen.getByText("2 lists selected")).toBeInTheDocument()
+    })
 
     fireEvent.click(screen.getByLabelText("Close"))
     fireEvent.click(screen.getByText("Open Modal"))

@@ -8,7 +8,7 @@ interface ArtQuizResultsProps {
   me: ArtQuizResults_me$data
 }
 
-const ArtQuizResults: FC<ArtQuizResultsProps> = ({ me }) => {
+const ArtQuizResults: FC<React.PropsWithChildren<ArtQuizResultsProps>> = ({ me }) => {
   if (me.quiz.savedArtworks.length > 0) {
     return <ArtQuizResultsTabs />
   }

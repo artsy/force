@@ -20,7 +20,7 @@ interface ThankYouRouteProps {
   submission: ThankYouRoute_submission$key
 }
 
-export const ThankYouRoute: React.FC<ThankYouRouteProps> = props => {
+export const ThankYouRoute: React.FC<React.PropsWithChildren<ThankYouRouteProps>> = props => {
   const {
     state: { step },
   } = useSellFlowContext()

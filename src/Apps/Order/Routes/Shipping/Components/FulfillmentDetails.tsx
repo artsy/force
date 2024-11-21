@@ -28,7 +28,7 @@ export interface FulfillmentDetailsProps {
   order: FulfillmentDetailsForm_order$key
 }
 
-export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
+export const FulfillmentDetails: FC<React.PropsWithChildren<FulfillmentDetailsProps>> = ({
   me,
   order,
 }) => {

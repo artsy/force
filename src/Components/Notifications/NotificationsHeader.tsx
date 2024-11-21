@@ -15,7 +15,7 @@ export interface NotificationsHeaderProps extends MarkAllAsReadPanelProps {
   onHide?: () => void
 }
 
-export const NotificationsHeader: FC<NotificationsHeaderProps> = ({
+export const NotificationsHeader: FC<React.PropsWithChildren<NotificationsHeaderProps>> = ({
   mode,
   onHide,
   unreadCounts,
@@ -69,7 +69,7 @@ interface NotificationsHeaderPlaceholderProps {
   onHide(): void
 }
 
-export const NotificationsHeaderPlaceholder: FC<NotificationsHeaderPlaceholderProps> = ({
+export const NotificationsHeaderPlaceholder: FC<React.PropsWithChildren<NotificationsHeaderPlaceholderProps>> = ({
   onHide,
 }) => {
   return (

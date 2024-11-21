@@ -8,7 +8,7 @@ interface AuctionBuyNowRailProps {
   sale: AuctionBuyNowRail_sale$data
 }
 
-const AuctionBuyNowRail: React.FC<AuctionBuyNowRailProps> = ({ sale }) => {
+const AuctionBuyNowRail: React.FC<React.PropsWithChildren<AuctionBuyNowRailProps>> = ({ sale }) => {
   if (!sale.promotedSale) {
     return null
   }

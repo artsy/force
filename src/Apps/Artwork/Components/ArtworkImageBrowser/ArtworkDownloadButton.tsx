@@ -7,7 +7,7 @@ interface ArtworkDownloadButtonProps {
   artwork: ArtworkDownloadButton_artwork$data
 }
 
-const ArtworkDownloadButton: React.FC<ArtworkDownloadButtonProps> = ({
+const ArtworkDownloadButton: React.FC<React.PropsWithChildren<ArtworkDownloadButtonProps>> = ({
   artwork,
 }) => {
   if (!artwork.downloadableImageUrl) return null

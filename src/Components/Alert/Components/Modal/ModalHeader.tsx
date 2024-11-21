@@ -4,7 +4,7 @@ import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { FiltersHeader } from "Components/Alert/Components/Steps/StepsHeader/FiltersHeader"
 import { ConfirmationHeader } from "Components/Alert/Components/Steps/StepsHeader/ConfirmationHeader"
 
-export const ModalHeader: FC = () => {
+export const ModalHeader: FC<React.PropsWithChildren<unknown>> = () => {
   const { current, state } = useAlertContext()
 
   switch (current) {

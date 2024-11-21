@@ -15,7 +15,7 @@ interface NewsIndexArticlesProps {
   relay: RelayPaginationProp
 }
 
-export const NewsIndexArticles: FC<NewsIndexArticlesProps> = ({
+export const NewsIndexArticles: FC<React.PropsWithChildren<NewsIndexArticlesProps>> = ({
   viewer,
   relay,
 }) => {

@@ -17,7 +17,7 @@ interface PartnersSpecialtyAutocompleteProps {
   viewer: PartnersSpecialtyAutocomplete_viewer$data
 }
 
-const PartnersSpecialtyAutocomplete: FC<PartnersSpecialtyAutocompleteProps> = ({
+const PartnersSpecialtyAutocomplete: FC<React.PropsWithChildren<PartnersSpecialtyAutocompleteProps>> = ({
   viewer: { allOptions, filterPartners },
 }) => {
   const specialties = useMemo(() => {
@@ -101,7 +101,7 @@ const PartnersSpecialtyAutocomplete: FC<PartnersSpecialtyAutocompleteProps> = ({
   )
 }
 
-const PartnersSpecialtyAutocompletePlaceholder: FC = () => {
+const PartnersSpecialtyAutocompletePlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <AutocompleteInput
       options={[{ text: "Loading...", value: "all" }]}
@@ -160,7 +160,7 @@ interface PartnersSpecialtyAutocompleteQueryRendererProps {
   type: "GALLERY" | "INSTITUTION"
 }
 
-export const PartnersSpecialtyAutocompleteQueryRenderer: FC<PartnersSpecialtyAutocompleteQueryRendererProps> = ({
+export const PartnersSpecialtyAutocompleteQueryRenderer: FC<React.PropsWithChildren<PartnersSpecialtyAutocompleteQueryRendererProps>> = ({
   type,
 }) => {
   const { relayEnvironment } = useSystemContext()

@@ -26,7 +26,7 @@ interface ArticleHeroProps {
   fixed?: boolean
 }
 
-const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
+const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({ article, fixed = true }) => {
   const height = useFullBleedHeaderHeight()
 
   const { theme } = useTheme()

@@ -13,7 +13,7 @@ interface MyCollectionArtworkDemandIndexProps {
 const DemandIndexExplanation =
   "Overall strength of demand for this artist and medium combination. Based on the last 36 months of auction sale data from top commercial auction houses."
 
-const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexProps> = ({
+const MyCollectionArtworkDemandIndex: React.FC<React.PropsWithChildren<MyCollectionArtworkDemandIndexProps>> = ({
   marketPriceInsights,
 }) => {
   if (!marketPriceInsights?.demandRank) {

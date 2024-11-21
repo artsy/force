@@ -26,7 +26,7 @@ interface CollectorProfileSavesRouteProps {
   me: CollectorProfileSavesRoute_me$data
 }
 
-const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
+const CollectorProfileSavesRoute: FC<React.PropsWithChildren<CollectorProfileSavesRouteProps>> = ({
   me,
 }) => {
   const {
@@ -125,7 +125,7 @@ const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
   )
 }
 
-const PageWrapper: FC<CollectorProfileSavesRouteProps> = props => {
+const PageWrapper: FC<React.PropsWithChildren<CollectorProfileSavesRouteProps>> = props => {
   const { match } = useRouter()
 
   return (

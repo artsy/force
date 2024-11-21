@@ -26,7 +26,7 @@ interface NotificationsContextProviderProps {
   id?: string | null
 }
 
-export const NotificationsContextProvider: FC<NotificationsContextProviderProps> = ({
+export const NotificationsContextProvider: FC<React.PropsWithChildren<NotificationsContextProviderProps>> = ({
   children,
   id = null,
 }) => {

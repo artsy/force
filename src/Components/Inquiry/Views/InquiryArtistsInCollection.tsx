@@ -16,7 +16,7 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useOnce } from "Utils/Hooks/useOnce"
 
-export const InquiryArtistsInCollection: FC = () => {
+export const InquiryArtistsInCollection: FC<React.PropsWithChildren<unknown>> = () => {
   const { next, relayEnvironment, context } = useInquiryContext()
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({

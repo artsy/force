@@ -2,7 +2,7 @@ import { act, fireEvent, waitFor } from "@testing-library/react"
 import { ArtworkVideoPlayer_Test_Query } from "__generated__/ArtworkVideoPlayer_Test_Query.graphql"
 import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer/ArtworkVideoPlayer"
 import { useTracking } from "react-tracking"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

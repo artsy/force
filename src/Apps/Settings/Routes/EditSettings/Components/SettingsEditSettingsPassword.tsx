@@ -24,7 +24,7 @@ interface SettingsEditSettingsPasswordProps {
 
 type Mode = "Pending" | "Active"
 
-export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps> = ({
+export const SettingsEditSettingsPassword: FC<React.PropsWithChildren<SettingsEditSettingsPasswordProps>> = ({
   me: { hasPassword },
 }) => {
   const [mode, setMode] = useMode<Mode>("Pending")

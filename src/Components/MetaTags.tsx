@@ -23,7 +23,7 @@ interface MetaTagsProps {
   blockRobots?: boolean
 }
 
-export const MetaTags: React.FC<MetaTagsProps> = ({
+export const MetaTags: React.FC<React.PropsWithChildren<MetaTagsProps>> = ({
   title: _title,
   socialTitle: _socialTitle,
   description: _description,

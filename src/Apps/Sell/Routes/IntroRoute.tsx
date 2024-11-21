@@ -20,7 +20,7 @@ import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { cropped } from "Utils/resized"
 import * as React from "react"
 
-export const IntroRoute: React.FC = () => {
+export const IntroRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { trackTappedNewSubmission } = useSubmissionTracking()
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 

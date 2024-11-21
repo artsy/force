@@ -33,7 +33,7 @@ interface ConfirmationArtworksProps {
   onClose: () => void
 }
 
-export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
+export const ConfirmationArtworks: FC<React.PropsWithChildren<ConfirmationArtworksProps>> = ({
   artworksConnection,
   alertID,
   onClose,
@@ -112,7 +112,7 @@ interface ConfirmationArtworksGridQueryRendererProps
   excludeArtworkIDs?: string[]
 }
 
-export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQueryRendererProps> = props => {
+export const ConfirmationArtworksGridQueryRenderer: FC<React.PropsWithChildren<ConfirmationArtworksGridQueryRendererProps>> = props => {
   const { onClose, excludeArtworkIDs, alertID, ...inputProps } = props
 
   return (
@@ -158,7 +158,7 @@ export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQ
   )
 }
 
-const ContentPlaceholder: FC = () => {
+const ContentPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Flex flexDirection="column">
       <SkeletonText>

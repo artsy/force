@@ -52,7 +52,7 @@ interface ConditionRouteProps {
   submission: ConditionRoute_submission$key
 }
 
-export const ConditionRoute: React.FC<ConditionRouteProps> = props => {
+export const ConditionRoute: React.FC<React.PropsWithChildren<ConditionRouteProps>> = props => {
   const { actions } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
   const artwork = submission.myCollectionArtwork

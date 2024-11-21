@@ -9,7 +9,7 @@ interface RailProps extends RailHeaderProps {
   showProgress?: ShelfProps["showProgress"]
 }
 
-export const Rail: React.FC<RailProps> = ({
+export const Rail: React.FC<React.PropsWithChildren<RailProps>> = ({
   getItems,
   alignItems = "flex-end",
   showProgress = true,

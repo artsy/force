@@ -9,12 +9,9 @@ interface ProgressiveOnboardingPopoverProps
   name: string
 }
 
-export const ProgressiveOnboardingPopover: FC<ProgressiveOnboardingPopoverProps> = ({
-  popover,
-  children,
-  name,
-  ...rest
-}) => {
+export const ProgressiveOnboardingPopover: FC<React.PropsWithChildren<
+  ProgressiveOnboardingPopoverProps
+>> = ({ popover, children, name, ...rest }) => {
   const [visible, setVisible] = useState(false)
 
   const { trackEvent } = useProgressiveOnboardingTracking({ name })

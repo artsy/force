@@ -5,7 +5,7 @@ import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterC
 
 export interface ArtworkFilterActiveFiltersProps {}
 
-export const ArtworkFilterActiveFilters: FC<ArtworkFilterActiveFiltersProps> = () => {
+export const ArtworkFilterActiveFilters: FC<React.PropsWithChildren<ArtworkFilterActiveFiltersProps>> = () => {
   const { pills, removePill } = useActiveFilterPills()
 
   const { resetFilters } = useArtworkFilterContext()

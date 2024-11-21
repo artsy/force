@@ -10,7 +10,7 @@ interface AuctionFAQsDialogProps {
   viewer: AuctionFAQsDialog_viewer$data
 }
 
-const AuctionFAQsDialog: React.FC<AuctionFAQsDialogProps> = ({
+const AuctionFAQsDialog: React.FC<React.PropsWithChildren<AuctionFAQsDialogProps>> = ({
   onClose,
   viewer,
 }) => {

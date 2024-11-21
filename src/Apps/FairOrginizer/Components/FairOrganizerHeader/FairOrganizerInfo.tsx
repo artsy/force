@@ -9,7 +9,7 @@ interface FairOrganizerInfoProps {
   fairOrganizer: FairOrganizerInfo_fairOrganizer$data
 }
 
-export const FairOrganizerInfo: React.FC<FairOrganizerInfoProps> = ({
+export const FairOrganizerInfo: React.FC<React.PropsWithChildren<FairOrganizerInfoProps>> = ({
   fairOrganizer,
 }) => {
   const { about } = fairOrganizer

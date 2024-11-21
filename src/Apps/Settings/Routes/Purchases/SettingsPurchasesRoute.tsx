@@ -7,7 +7,7 @@ interface SettingsPurchasesRouteProps {
   me: SettingsPurchasesRoute_me$data
 }
 
-const SettingsPurchasesRoute: React.FC<SettingsPurchasesRouteProps> = ({
+const SettingsPurchasesRoute: React.FC<React.PropsWithChildren<SettingsPurchasesRouteProps>> = ({
   me,
 }) => {
   return <SettingsPurchasesFragmentContainer me={me} />

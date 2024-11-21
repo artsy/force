@@ -11,7 +11,7 @@ interface PressAppProps {
   page: PressApp_page$data
 }
 
-const PressApp: FC<PressAppProps> = ({ page }) => {
+const PressApp: FC<React.PropsWithChildren<PressAppProps>> = ({ page }) => {
   if (!page.content) return null
 
   return (

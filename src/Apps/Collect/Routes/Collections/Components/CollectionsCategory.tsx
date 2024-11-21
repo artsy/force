@@ -20,7 +20,7 @@ interface CollectionsCategoryProps {
   category: CollectionsCategory_category$data
 }
 
-export const CollectionsCategory: React.FC<CollectionsCategoryProps> = ({
+export const CollectionsCategory: React.FC<React.PropsWithChildren<CollectionsCategoryProps>> = ({
   category,
   category: { collections },
 }) => {

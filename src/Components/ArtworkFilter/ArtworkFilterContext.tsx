@@ -169,7 +169,7 @@ export interface ArtworkFilterContextProps {
   selectedFiltersCounts: Partial<SelectedFiltersCounts>
 
   // Components
-  ZeroState?: React.FC
+  ZeroState?: React.FC<React.PropsWithChildren<unknown>>
 
   // Sorting
   sortOptions?: SortOptions
@@ -245,11 +245,9 @@ export type SharedArtworkFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
-export const ArtworkFilterContextProvider: React.FC<
-  SharedArtworkFilterContextProps & {
-    children: React.ReactNode
-  }
-> = ({
+export const ArtworkFilterContextProvider: React.FC<React.PropsWithChildren<SharedArtworkFilterContextProps & {
+  children: React.ReactNode
+}>> = ({
   aggregations = [],
   children,
   counts = {},

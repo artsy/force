@@ -19,7 +19,7 @@ interface ArtworkImageBrowserProps {
   isMyCollectionArtwork?: boolean
 }
 
-export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
+export const ArtworkImageBrowser: React.FC<React.PropsWithChildren<ArtworkImageBrowserProps>> = ({
   artwork,
   isMyCollectionArtwork,
 }) => {

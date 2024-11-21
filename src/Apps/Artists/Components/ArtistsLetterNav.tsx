@@ -8,7 +8,7 @@ export const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
 
 interface ArtistsLetterNavProps extends BoxProps {}
 
-export const ArtistsLetterNav: React.FC<ArtistsLetterNavProps> = ({
+export const ArtistsLetterNav: React.FC<React.PropsWithChildren<ArtistsLetterNavProps>> = ({
   ...rest
 }) => {
   return (

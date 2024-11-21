@@ -14,7 +14,7 @@ interface ArticleSectionProps {
   isLast: boolean
 }
 
-const ArticleSection: FC<ArticleSectionProps> = ({
+const ArticleSection: FC<React.PropsWithChildren<ArticleSectionProps>> = ({
   section,
   isFirst,
   isLast,

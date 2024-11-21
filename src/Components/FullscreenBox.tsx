@@ -13,7 +13,7 @@ export interface FullscreenBoxProps extends BoxProps {
  * - We can't use an image with `object-fit: contain` because that doesn't give us a correctly sized placeholder box.
  * - We can't create a grey placeholder box using native CSS `aspect-ratio` because it is uncenterable using flexbox.
  */
-export const FullscreenBox: FC<FullscreenBoxProps> = ({
+export const FullscreenBox: FC<React.PropsWithChildren<FullscreenBoxProps>> = ({
   aspectWidth,
   aspectHeight,
   children,

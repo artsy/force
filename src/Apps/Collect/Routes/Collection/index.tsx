@@ -29,7 +29,7 @@ interface CollectionAppProps {
   collection: Collection_collection$data
 }
 
-export const CollectionApp: React.FC<CollectionAppProps> = props => {
+export const CollectionApp: React.FC<React.PropsWithChildren<CollectionAppProps>> = props => {
   const { collection } = props
 
   const context = useAnalyticsContext()

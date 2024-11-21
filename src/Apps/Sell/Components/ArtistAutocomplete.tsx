@@ -38,7 +38,7 @@ interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
   option: AutocompleteArtist
 }
 
-export const ArtistAutoComplete: React.FC<{
+export const ArtistAutoComplete: React.FC<React.PropsWithChildren<{
   onArtistNotFound?: (notFound: boolean) => void
   onError: () => void
   onChange?: (value: string) => void
@@ -47,7 +47,7 @@ export const ArtistAutoComplete: React.FC<{
   showChevronIcon?: boolean
   required?: boolean
   title?: string
-}> = ({
+}>> = ({
   onArtistNotFound,
   onError,
   onChange,

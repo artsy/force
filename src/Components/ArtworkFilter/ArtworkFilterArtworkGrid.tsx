@@ -23,7 +23,7 @@ interface ArtworkFilterArtworkGridProps {
   relay: RelayProp
 }
 
-const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props => {
+const ArtworkFilterArtworkGrid: React.FC<React.PropsWithChildren<ArtworkFilterArtworkGridProps>> = props => {
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
   const {

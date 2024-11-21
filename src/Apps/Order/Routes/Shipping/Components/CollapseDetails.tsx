@@ -2,7 +2,7 @@ import { Collapse } from "Apps/Order/Components/Collapse"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import React from "react"
 
-export const CollapseDetails: React.FC = ({ children }) => {
+export const CollapseDetails: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const shippingContext = useShippingContext()
 
   const showArtsyShipping =

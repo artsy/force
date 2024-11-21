@@ -13,7 +13,7 @@ interface FairOrganizerAppProps {
   fairOrganizer: FairOrganizerApp_fairOrganizer$data
 }
 
-const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
+const FairOrganizerApp: React.FC<React.PropsWithChildren<FairOrganizerAppProps>> = ({
   fairOrganizer,
 }) => {
   const { name, profile, slug, description } = fairOrganizer

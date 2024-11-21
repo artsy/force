@@ -15,7 +15,7 @@ export interface MediumFilterProps {
   expanded?: boolean
 }
 
-export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
+export const MediumFilter: FC<React.PropsWithChildren<MediumFilterProps>> = ({ expanded }) => {
   const { aggregations, counts, setFilter } = useArtworkFilterContext()
   const { additionalGeneIDs = [], medium } = useCurrentlySelectedFilters()
 

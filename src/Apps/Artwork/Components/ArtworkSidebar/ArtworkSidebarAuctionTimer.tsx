@@ -10,7 +10,7 @@ interface ArtworkSidebarAuctionTimerProps {
   artwork: ArtworkSidebarAuctionTimer_artwork$data
 }
 
-export const ArtworkSidebarAuctionTimer: React.FC<ArtworkSidebarAuctionTimerProps> = ({
+export const ArtworkSidebarAuctionTimer: React.FC<React.PropsWithChildren<ArtworkSidebarAuctionTimerProps>> = ({
   artwork,
 }) => {
   const { sale, saleArtwork } = artwork

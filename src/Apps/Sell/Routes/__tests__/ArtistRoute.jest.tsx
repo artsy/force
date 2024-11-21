@@ -1,7 +1,7 @@
 import { fireEvent, screen } from "@testing-library/react"
 import { ArtistRoute } from "Apps/Sell/Routes/ArtistRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { graphql } from "react-relay"

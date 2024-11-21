@@ -10,7 +10,7 @@ interface SettingsEditSettingsTwoFactorProps {
   me: SettingsEditSettingsTwoFactor_me$data
 }
 
-export const SettingsEditSettingsTwoFactor: React.FC<SettingsEditSettingsTwoFactorProps> = ({
+export const SettingsEditSettingsTwoFactor: React.FC<React.PropsWithChildren<SettingsEditSettingsTwoFactorProps>> = ({
   me,
 }) => {
   return (

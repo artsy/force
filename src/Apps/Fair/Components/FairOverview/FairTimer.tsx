@@ -9,7 +9,7 @@ interface FairTimerProps {
   fair: FairTimer_fair$data
 }
 
-export const FairTimer: React.FC<FairTimerProps> = ({ fair: { endAt } }) => {
+export const FairTimer: React.FC<React.PropsWithChildren<FairTimerProps>> = ({ fair: { endAt } }) => {
   const { hasEnded } = useTimer(endAt!)
 
   return (

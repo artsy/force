@@ -10,7 +10,7 @@ interface SuggestedArtworksModalFooterProps {
   onClose: () => void
 }
 
-export const SuggestedArtworksModalFooter: FC<SuggestedArtworksModalFooterProps> = ({
+export const SuggestedArtworksModalFooter: FC<React.PropsWithChildren<SuggestedArtworksModalFooterProps>> = ({
   artworksCount,
   onClose,
 }) => {

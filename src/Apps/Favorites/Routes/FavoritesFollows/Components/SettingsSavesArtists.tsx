@@ -28,7 +28,7 @@ interface SettingsSavesArtistsProps {
   relay: RelayPaginationProp
 }
 
-const SettingsSavesArtists: FC<SettingsSavesArtistsProps> = ({ me, relay }) => {
+const SettingsSavesArtists: FC<React.PropsWithChildren<SettingsSavesArtistsProps>> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const connection = me.followsAndSaves?.artistsConnection

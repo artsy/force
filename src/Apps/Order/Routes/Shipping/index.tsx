@@ -43,11 +43,11 @@ export interface ShippingProps {
   dialog: Dialog
 }
 
-export const ShippingRoute: FC<{
+export const ShippingRoute: FC<React.PropsWithChildren<{
   order: Shipping_order$key
   me: Shipping_me$key
   dialog: Dialog
-}> = props => {
+}>> = props => {
   const orderData = useFragment(ORDER_FRAGMENT, props.order)
   const meData = useFragment(ME_FRAGMENT, props.me)
   return (
@@ -63,7 +63,7 @@ export const ShippingRoute: FC<{
   )
 }
 
-const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
+const ShippingRouteLayout: FC<React.PropsWithChildren<Omit<ShippingProps, "dialog">>> = ({
   me,
   order,
 }) => {

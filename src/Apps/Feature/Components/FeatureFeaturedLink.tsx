@@ -21,7 +21,7 @@ export interface FeatureFeaturedLinkProps extends FlexProps {
   featuredLink: FeatureFeaturedLink_featuredLink$data
 }
 
-export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
+export const FeatureFeaturedLink: React.FC<React.PropsWithChildren<FeatureFeaturedLinkProps>> = ({
   size,
   featuredLink,
   featuredLink: { href, title, subtitle, description, image },

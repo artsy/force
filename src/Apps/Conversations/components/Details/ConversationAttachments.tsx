@@ -9,7 +9,7 @@ interface ConversationAttachmentsProps {
   conversation: ConversationAttachments_conversation$key
 }
 
-export const ConversationAttachments: React.FC<ConversationAttachmentsProps> = ({
+export const ConversationAttachments: React.FC<React.PropsWithChildren<ConversationAttachmentsProps>> = ({
   conversation,
 }) => {
   const data = useFragment(

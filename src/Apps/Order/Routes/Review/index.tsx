@@ -63,7 +63,7 @@ const logger = createLogger("Order/Routes/Review/index.tsx")
 
 const OrdersReviewOwnerType = OwnerType.ordersReview
 
-export const ReviewRoute: FC<ReviewProps> = props => {
+export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
   const { trackEvent } = useTracking()
   const productId = extractNodes(props.order.lineItems)[0].artwork?.internalID
   const artworkVersion = extractNodes(props.order.lineItems)[0]?.artworkVersion
@@ -502,7 +502,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
   const { order, isCommittingMutation, isEigen, stripe } = props
   const submittable = !!stripe
 
-  const SubmitButton: FC = () => (
+  const SubmitButton: FC<React.PropsWithChildren<unknown>> = () => (
     <Button
       data-test="review-step-submit-button"
       variant="primaryBlack"

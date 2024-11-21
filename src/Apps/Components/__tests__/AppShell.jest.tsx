@@ -25,7 +25,7 @@ jest.mock("Components/Footer/FooterDownloadAppBanner", () => ({
 
 describe("AppShell", () => {
   it("renders a Footer", async () => {
-    const { ClientRouter } = setupClientRouter({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },
@@ -53,7 +53,7 @@ describe("AppShell", () => {
 
   it("calls the matched routes `prepare` function if found", async () => {
     const onClientSideRender = jest.fn()
-    const { ClientRouter } = setupClientRouter({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },

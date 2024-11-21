@@ -17,7 +17,7 @@ const Container = styled(StyledLink)`
 /**
  * @deprecated Use `TopContextBar` instead
  */
-export const BackLink: React.FC<BackLinkProps> = ({
+export const BackLink: React.FC<React.PropsWithChildren<BackLinkProps>> = ({
   children,
   to,
   ...rest
@@ -26,9 +26,8 @@ export const BackLink: React.FC<BackLinkProps> = ({
     // TODO: Anything using a `RouterLink` has issues with the typings.
     // These props are infact valid.
     // @ts-ignore
-    <Container to={to} {...rest}>
+    (<Container to={to} {...rest}>
       <ChevronLeftIcon color="black100" height={14} width={18} mr={0.5} />
-
       <Text
         variant="sm"
         fontWeight={rest.fontWeight ?? "bold"}
@@ -40,6 +39,6 @@ export const BackLink: React.FC<BackLinkProps> = ({
       >
         {children}
       </Text>
-    </Container>
-  )
+    </Container>)
+  );
 }

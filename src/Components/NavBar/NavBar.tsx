@@ -47,7 +47,7 @@ import { NavBarDropdownPanel } from "./NavBarDropdownPanel"
  * (FIXME: Can use Fresnel now)
  */
 
-export const NavBar: React.FC = track(
+export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   {
     flow: DeprecatedAnalyticsSchema.Flow.Header,
     context_module: DeprecatedAnalyticsSchema.ContextModule.Header,

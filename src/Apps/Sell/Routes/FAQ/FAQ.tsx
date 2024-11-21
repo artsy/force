@@ -8,7 +8,7 @@ export interface FAQProps {
   shouldTrackClickEvent?: boolean
 }
 
-export const FAQ: React.FC<FAQProps> = ({ shouldTrackClickEvent }) => {
+export const FAQ: React.FC<React.PropsWithChildren<FAQProps>> = ({ shouldTrackClickEvent }) => {
   const { trackEvent } = useTracking()
 
   const trackClickedFAQ = (label: string) => {
@@ -145,7 +145,7 @@ export const FAQ: React.FC<FAQProps> = ({ shouldTrackClickEvent }) => {
   )
 }
 
-const TextItem: React.FC = ({ children }) => {
+const TextItem: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <Text variant="sm-display" color="black60" pr={2}>
       {children}

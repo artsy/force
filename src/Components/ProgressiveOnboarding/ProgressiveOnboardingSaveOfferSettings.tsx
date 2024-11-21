@@ -13,7 +13,7 @@ const KEY = PROGRESSIVE_ONBOARDING.saveOfferSettings
 interface ProgressiveOnboardingSaveOfferSettingsProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingSaveOfferSettings__: FC<ProgressiveOnboardingSaveOfferSettingsProps> = ({
+export const __ProgressiveOnboardingSaveOfferSettings__: FC<React.PropsWithChildren<ProgressiveOnboardingSaveOfferSettingsProps>> = ({
   children,
 }) => {
   const { dismiss, isDismissed } = useDismissibleContext()

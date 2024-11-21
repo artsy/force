@@ -27,7 +27,7 @@ const artistSeriesOptionsQuery = graphql`
   }
 `
 
-export const ArtistSeries: FC = () => {
+export const ArtistSeries: FC<React.PropsWithChildren<unknown>> = () => {
   const { state } = useAlertContext()
   const artistIDs = state?.criteria?.artistIDs
 
@@ -69,7 +69,7 @@ export const ArtistSeries: FC = () => {
   )
 }
 
-export const ArtistSeriesQueryRenderer: React.FC = props => {
+export const ArtistSeriesQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = props => {
   return (
     <Suspense fallback={<ArtistSeriesPlaceholder />}>
       <ArtistSeries {...props} />
@@ -77,7 +77,7 @@ export const ArtistSeriesQueryRenderer: React.FC = props => {
   )
 }
 
-const ArtistSeriesPlaceholder: React.FC = () => {
+const ArtistSeriesPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="xs" mb={2}>

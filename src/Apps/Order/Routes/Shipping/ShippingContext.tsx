@@ -1,4 +1,4 @@
-import React, { createContext, FC, useMemo, useReducer, useRef } from "react"
+import { createContext, FC, useMemo, useReducer, useRef } from "react"
 import {
   ComputedOrderData,
   computeOrderData,
@@ -67,11 +67,11 @@ export interface ShippingContextProps {
 
 export const ShippingContext = createContext<ShippingContextProps>({} as any)
 
-export const ShippingContextProvider: FC<{
+export const ShippingContextProvider: FC<React.PropsWithChildren<{
   order: ShippingContext_order$key
   me: ShippingContext_me$key
   dialog: ShippingProps["dialog"]
-}> = props => {
+}>> = props => {
   const orderFragmentData = useFragment(ORDER_FRAGMENT, props.order)
   const meFragmentData = useFragment(ME_FRAGMENT, props.me)
   const meData = useMemo(

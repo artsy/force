@@ -25,7 +25,7 @@ interface ArtworkSharePanelProps extends BoxProps {
   artwork: ArtworkSharePanel_artwork$data
 }
 
-export const ArtworkSharePanel: React.FC<ArtworkSharePanelProps> = ({
+export const ArtworkSharePanel: React.FC<React.PropsWithChildren<ArtworkSharePanelProps>> = ({
   artwork: { href, artworkMeta, images },
   ...rest
 }) => {
@@ -215,7 +215,7 @@ const ICONS = {
   ),
 }
 
-const ShareButton: React.FC<{
+const ShareButton: React.FC<React.PropsWithChildren<{
   service: string
   label: string
   message: string
@@ -227,7 +227,7 @@ const ShareButton: React.FC<{
     service: string
     url: string
   }): (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-}> = ({ service, label, message, url, onClick, ...rest }) => {
+}>> = ({ service, label, message, url, onClick, ...rest }) => {
   return (
     <Clickable
       display="flex"

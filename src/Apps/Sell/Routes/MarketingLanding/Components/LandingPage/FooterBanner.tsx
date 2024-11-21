@@ -2,7 +2,7 @@ import { Box } from "@artsy/palette"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const FooterBanner: React.FC = () => {
+export const FooterBanner: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Box display={["none", "block"]}>
       <FullBleedBanner dismissable={false} variant="defaultLight">

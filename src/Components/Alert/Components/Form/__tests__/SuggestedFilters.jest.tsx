@@ -1,8 +1,8 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
@@ -30,17 +30,21 @@ describe("SuggestedFilters", () => {
 
     await flushPromiseQueue()
 
-    expect(screen.getByText("Add Filters")).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText("Add Filters")).toBeInTheDocument()
 
-    mockSuggestedFilters.forEach(filter => {
-      expect(screen.getByText(filter.displayValue)).toBeInTheDocument()
+      mockSuggestedFilters.forEach(filter => {
+        expect(screen.getByText(filter.displayValue)).toBeInTheDocument()
+      })
+
+      expect(screen.getByText("More Filters")).toBeInTheDocument()
     })
-
-    expect(screen.getByText("More Filters")).toBeInTheDocument()
 
     fireEvent.click(screen.getByText("More Filters"))
 
-    expect(mockTransitionToFiltersAndTrack).toHaveBeenCalled()
+    await waitFor(() => {
+      expect(mockTransitionToFiltersAndTrack).toHaveBeenCalled()
+    })
   })
 
   it("Does not show Suggested Filters when there are no suggested filters", async () => {
@@ -50,7 +54,9 @@ describe("SuggestedFilters", () => {
 
     await flushPromiseQueue()
 
-    expect(() => screen.getByText("Add Filters")).toThrow()
+    await waitFor(() => {
+      expect(() => screen.getByText("Add Filters")).toThrow()
+    })
 
     mockSuggestedFilters.forEach(filter => {
       expect(() => screen.getByText(filter.displayValue)).toThrow()

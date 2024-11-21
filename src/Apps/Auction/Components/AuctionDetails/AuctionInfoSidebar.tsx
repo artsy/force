@@ -8,7 +8,7 @@ interface AuctionInfoSidebarProps {
   sale: AuctionInfoSidebar_sale$data
 }
 
-const AuctionInfoSidebar: React.FC<AuctionInfoSidebarProps> = ({ sale }) => {
+const AuctionInfoSidebar: React.FC<React.PropsWithChildren<AuctionInfoSidebarProps>> = ({ sale }) => {
   return (
     <Join separator={<Spacer y={2} />}>
       <LiveAuctionToolTip show={!!sale.liveStartAt} />

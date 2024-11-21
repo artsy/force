@@ -9,7 +9,7 @@ interface MarketingCollectionCellProps {
   src: string
 }
 
-export const MarketingCollectionCell: FC<MarketingCollectionCellProps> = ({
+export const MarketingCollectionCell: FC<React.PropsWithChildren<MarketingCollectionCellProps>> = ({
   title,
   href,
   src,

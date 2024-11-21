@@ -17,7 +17,7 @@ interface SaleArtworkFilterProps {
   featuredKeywords?: readonly string[]
 }
 
-const SaleArtworkFilter: React.FC<SaleArtworkFilterProps> = ({
+const SaleArtworkFilter: React.FC<React.PropsWithChildren<SaleArtworkFilterProps>> = ({
   relay,
   viewer,
   featuredKeywords,

@@ -23,7 +23,7 @@ interface HomeEmergingPicksArtworksRailProps {
   viewer: HomeEmergingPicksArtworksRail_viewer$data
 }
 
-export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRailProps> = ({
+export const HomeEmergingPicksArtworksRail: React.FC<React.PropsWithChildren<HomeEmergingPicksArtworksRailProps>> = ({
   viewer,
 }) => {
   const { trackEvent } = useTracking()
@@ -121,7 +121,7 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
   }
 )
 
-export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC = () => {
+export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <SystemQueryRenderer<HomeEmergingPicksArtworksRailQuery>
       placeholder={PLACEHOLDER}

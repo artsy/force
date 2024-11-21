@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { MyCollectionArtworkTitleTestQuery } from "__generated__/MyCollectionArtworkTitleTestQuery.graphql"
 import { MyCollectionArtworkTitle } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkTitle"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

@@ -20,7 +20,7 @@ interface AuctionConfirmRegistrationRouteProps {
   sale: AuctionConfirmRegistrationRoute_sale$data
 }
 
-const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteProps> = ({
+const AuctionConfirmRegistrationRoute: React.FC<React.PropsWithChildren<AuctionConfirmRegistrationRouteProps>> = ({
   me,
   sale,
 }) => {
@@ -155,7 +155,7 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
   )
 }
 
-const ConditionsOfSaleMessage: React.FC<{ additionalText?: string }> = ({
+const ConditionsOfSaleMessage: React.FC<React.PropsWithChildren<{ additionalText?: string }>> = ({
   additionalText,
 }) => {
   return (
