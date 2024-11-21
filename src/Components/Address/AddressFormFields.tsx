@@ -16,7 +16,7 @@ const useFormContext = () => {
   return context
 }
 
-export const AddressForm = () => {
+export const AddressFormFields = () => {
   const {
     handleChange,
     handleBlur,

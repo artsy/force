@@ -1,8 +1,8 @@
 import { mount } from "enzyme"
 import { AddressFormWithCreditCard } from "Apps/Auction/Components/Form/AddressFormWithCreditCard"
-import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
+import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
 
-jest.mock("Apps/Auction/Hooks/useFormContext")
+jest.mock("Apps/Auction/Hooks/useAuctionFormContext")
 
 jest.mock("Components/CreditCardInput", () => ({
   CreditCardInput: () => null,
@@ -12,7 +12,7 @@ jest.mock("../AddressForm", () => ({
 }))
 
 describe("AddressFormWithCreditCard", () => {
-  const mockUseFormContext = useFormContext as jest.Mock
+  const mockuseAuctionFormContext = useAuctionFormContext as jest.Mock
   const setFieldTouched = jest.fn()
   const setFieldValue = jest.fn()
   const setFieldError = jest.fn()
@@ -22,7 +22,7 @@ describe("AddressFormWithCreditCard", () => {
   }
 
   beforeAll(() => {
-    mockUseFormContext.mockImplementation(() => {
+    mockuseAuctionFormContext.mockImplementation(() => {
       return {
         setFieldTouched,
         setFieldValue,

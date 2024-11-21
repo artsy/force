@@ -1,8 +1,9 @@
 import { mount } from "enzyme"
 import { AddressForm } from "Apps/Auction/Components/Form/AddressForm"
 
-jest.mock("Apps/Auction/Hooks/useFormContext", () => ({
-  useFormContext: () => {
+// TODO: Migrate these tests to new Components/Address/AddressFormFields.jest.tsx file
+jest.mock("Apps/Auction/Hooks/useAuctionFormContext", () => ({
+  useAuctionFormContext: () => {
     return {
       handleChange: jest.fn(),
       handleBlur: jest.fn(),

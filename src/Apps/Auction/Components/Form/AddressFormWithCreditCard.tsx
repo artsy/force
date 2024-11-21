@@ -1,7 +1,7 @@
 import { Join, Spacer, Text } from "@artsy/palette"
 import { CreditCardInput } from "Components/CreditCardInput"
-import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
-import { AddressForm } from "./AddressForm"
+import { AddressFormFields } from "Components/Address/AddressFormFields"
+import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
 
 export const AddressFormWithCreditCard: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
@@ -10,7 +10,7 @@ export const AddressFormWithCreditCard: React.FC<React.PropsWithChildren<unknown
     setFieldError,
     errors,
     touched,
-  } = useFormContext()
+  } = useAuctionFormContext()
 
   return (
     <Join separator={<Spacer y={2} />}>
@@ -44,7 +44,7 @@ export const AddressFormWithCreditCard: React.FC<React.PropsWithChildren<unknown
         required
       />
 
-      <AddressForm />
+      <AddressFormFields />
     </Join>
   )
 }
