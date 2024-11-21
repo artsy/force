@@ -2,7 +2,7 @@ import * as Yup from "yup"
 import { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
 import { ShippingContext_me$data } from "__generated__/ShippingContext_me.graphql"
 import { pick, omitBy, isNil, isEqual } from "lodash"
-import { postalCodeValidator } from "Components/Address/utils"
+import { Address, postalCodeValidator } from "Components/Address/utils"
 
 export enum FulfillmentType {
   SHIP = "SHIP",
@@ -29,7 +29,7 @@ export interface PickupValues {
 
 export interface ShipValues {
   fulfillmentType: FulfillmentType.SHIP
-  attributes: ShippingAddressFormValues
+  attributes: Address
   meta: FormMetaValues
 }
 
@@ -45,17 +45,6 @@ interface FormMetaValues {
 }
 
 export type FulfillmentValues = ShipValues | PickupValues
-
-export interface ShippingAddressFormValues {
-  name: string
-  phoneNumber: string
-  addressLine1: string
-  addressLine2: string
-  city: string
-  region: string
-  country: string
-  postalCode: string
-}
 
 // TODO: Replace with what we use in SettingsShippingAddressForm when we have
 // a rich phone input
@@ -80,7 +69,7 @@ export const ADDRESS_VALIDATION_SHAPE = {
   country: Yup.string().required("Country is required"),
 }
 
-const ORDER_EMPTY_ADDRESS: ShippingAddressFormValues = {
+const ORDER_EMPTY_ADDRESS: Address = {
   name: "",
   phoneNumber: "",
   addressLine1: "",
@@ -92,22 +81,17 @@ const ORDER_EMPTY_ADDRESS: ShippingAddressFormValues = {
 }
 
 export const onlyAddressValues = (values: any) => {
-  return pick<ShippingAddressFormValues>(
-    values,
-    Object.keys(ORDER_EMPTY_ADDRESS)
-  )
+  return pick<Address>(values, Object.keys(ORDER_EMPTY_ADDRESS))
 }
 
 /**
  * Takes an address object and returns a new address object with all the
  * non-null values from the original address object. Useful for converting
- * a SavedAddress from relay to a ShippingAddressFormValues object.
+ * a SavedAddress from relay to a Address object.
  */
-export const addressWithFallbackValues = (
-  address: any
-): ShippingAddressFormValues => ({
+export const addressWithFallbackValues = (address: any): Address => ({
   ...ORDER_EMPTY_ADDRESS,
-  ...omitBy<ShippingAddressFormValues>(onlyAddressValues(address), isNil),
+  ...omitBy<Address>(onlyAddressValues(address), isNil),
 })
 
 export type SavedAddressType = NonNullable<
@@ -189,7 +173,7 @@ export const getInitialShippingValues = (
 export const matchAddressFields = (...addressPair: [object, object]) => {
   const [a1, a2] = addressPair.map(a => addressWithFallbackValues(a))
 
-  const fields: Array<keyof ShippingAddressFormValues> = [
+  const fields: Array<keyof Address> = [
     "addressLine1",
     "addressLine2",
     "city",

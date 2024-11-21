@@ -2,7 +2,7 @@ import { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext
 import {
   FulfillmentType,
   PickupValues,
-  ShippingAddressFormValues,
+  Address,
   addressWithFallbackValues,
   matchAddressFields,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
@@ -33,7 +33,7 @@ type SavedFulfillmentData =
   | {
       fulfillmentType: FulfillmentType.SHIP
       isArtsyShipping: boolean
-      attributes: ShippingAddressFormValues
+      attributes: Address
       selectedSavedAddressID: string | null
     }
   | null

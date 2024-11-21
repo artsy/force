@@ -5,7 +5,7 @@ export interface AuctionFormValues {
   address: Address
   agreeToTerms: boolean
   creditCard?: boolean
-  phoneNumber?: string
+  phoneNumber: string
   selectedBid?: string
 }
 

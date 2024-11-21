@@ -11,12 +11,7 @@ interface FormikContextWithAddress {
   phoneNumber: string
 }
 
-const useFormContext = () => {
-  const context = useFormikContext<FormikContextWithAddress>()
-  return context
-}
-
-export const AddressFormFields = () => {
+export const AddressFormFields = <V extends FormikContextWithAddress>() => {
   const {
     handleChange,
     handleBlur,
@@ -25,7 +20,16 @@ export const AddressFormFields = () => {
     touched,
     setValues,
     setFieldValue,
-  } = useFormContext()
+  } = useFormikContext<V>()
+
+  // Formik types don't understand our specific nested structure
+  // so we need to cast these to what we know to be the correct types
+  const touchedAddress = touched.address as
+    | Partial<Record<keyof V["address"], boolean>>
+    | undefined
+  const errorsAddress = errors.address as
+    | Partial<Record<keyof V["address"], string>>
+    | undefined
 
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
@@ -47,7 +51,7 @@ export const AddressFormFields = () => {
           value={values.address?.name}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.name && errors.address?.name}
+          error={touchedAddress?.name && errorsAddress?.name}
           required
         />
       </Column>
@@ -61,7 +65,7 @@ export const AddressFormFields = () => {
           value={values.address.country}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.country && errors.address?.country}
+          error={touchedAddress?.country && errorsAddress?.country}
           required
         />
       </Column>
@@ -96,7 +100,7 @@ export const AddressFormFields = () => {
               },
             })
           }}
-          error={touched.address?.addressLine1 && errors.address?.addressLine1}
+          error={touchedAddress?.addressLine1 && errorsAddress?.addressLine1}
           onClear={() => {
             setFieldValue("address.addressLine1", "")
           }}
@@ -112,7 +116,7 @@ export const AddressFormFields = () => {
           value={values.address?.addressLine2}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.addressLine2 && errors.address?.addressLine2}
+          error={touchedAddress?.addressLine2 && errorsAddress?.addressLine2}
         />
       </Column>
 
@@ -125,7 +129,7 @@ export const AddressFormFields = () => {
           value={values.address?.city}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.city && errors.address?.city}
+          error={touchedAddress?.city && errorsAddress?.city}
           required
         />
       </Column>
@@ -139,7 +143,7 @@ export const AddressFormFields = () => {
           value={values.address?.region}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.region && errors.address?.region}
+          error={touchedAddress?.region && errorsAddress?.region}
           required
         />
       </Column>
@@ -153,7 +157,7 @@ export const AddressFormFields = () => {
           value={values.address?.postalCode}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.postalCode && errors.address?.postalCode}
+          error={touchedAddress?.postalCode && errorsAddress?.postalCode}
           required
         />
       </Column>
@@ -169,7 +173,9 @@ export const AddressFormFields = () => {
           value={values.phoneNumber}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.phoneNumber && errors.phoneNumber}
+          error={
+            touched.phoneNumber && (errors.phoneNumber as string | undefined)
+          }
           required
         />
       </Column>
