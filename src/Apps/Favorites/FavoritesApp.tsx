@@ -7,7 +7,7 @@ interface FavoritesAppProps {
   children: ReactNode
 }
 
-export const FavoritesApp: FC<FavoritesAppProps> = ({ children }) => {
+export const FavoritesApp: FC<React.PropsWithChildren<FavoritesAppProps>> = ({ children }) => {
   return (
     <>
       <TopContextBar displayBackArrow href="/collector-profile/my-collection">

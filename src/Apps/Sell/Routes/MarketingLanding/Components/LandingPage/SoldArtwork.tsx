@@ -16,7 +16,7 @@ export interface SoldArtworkProps
   onClick?: () => void
 }
 
-const SoldArtwork: React.FC<SoldArtworkProps> = ({
+const SoldArtwork: React.FC<React.PropsWithChildren<SoldArtworkProps>> = ({
   artwork,
   contextModule,
   lazyLoad,

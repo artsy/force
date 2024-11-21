@@ -26,14 +26,17 @@ import { useSticky } from "./StickyProvider"
  *      If a selector to a target is specified (for example, bottomBoundary="#footer"),
  *      the offset will be the bottom of the target
  */
-export const Sticky: React.FC<
-  Pick<ReactStickyProps, "bottomBoundary"> & {
-    id?: string
-    // TODO: Remove this prop!
-    withoutHeaderOffset?: boolean
-    children: ReactNode | (({ stuck }: { stuck: boolean }) => ReactNode)
-  }
-> = ({ children, bottomBoundary, withoutHeaderOffset, id }) => {
+export const Sticky = ({
+  children,
+  bottomBoundary,
+  withoutHeaderOffset,
+  id,
+}: Pick<ReactStickyProps, "bottomBoundary"> & {
+  id?: string
+  // TODO: Remove this prop!
+  withoutHeaderOffset?: boolean
+  children: ReactNode | (({ stuck }: { stuck: boolean }) => ReactNode)
+}) => {
   const {
     offsetTop,
     registerSticky,

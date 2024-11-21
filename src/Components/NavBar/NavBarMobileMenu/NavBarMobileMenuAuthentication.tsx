@@ -7,7 +7,7 @@ import * as React from "react"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
 
-export const NavBarMobileMenuLoggedIn: React.FC = () => {
+export const NavBarMobileMenuLoggedIn: React.FC<React.PropsWithChildren<unknown>> = () => {
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>
   ) => {
@@ -50,7 +50,7 @@ export const NavBarMobileMenuLoggedIn: React.FC = () => {
   )
 }
 
-const NavBarMobileMenuLoggedOut: React.FC = () => {
+const NavBarMobileMenuLoggedOut: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <NavBarMobileMenuItemLink
@@ -68,7 +68,7 @@ const NavBarMobileMenuLoggedOut: React.FC = () => {
   )
 }
 
-export const NavBarMobileMenuAuthentication: React.FC = () => {
+export const NavBarMobileMenuAuthentication: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { isLoggedIn } = useSystemContext()
 
   return isLoggedIn ? (

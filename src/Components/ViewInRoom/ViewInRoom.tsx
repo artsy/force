@@ -16,7 +16,7 @@ interface ViewInRoomProps {
   onClose(): void
 }
 
-const ViewInRoom: React.FC<ViewInRoomProps> = ({ artwork, onClose }) => {
+const ViewInRoom: React.FC<React.PropsWithChildren<ViewInRoomProps>> = ({ artwork, onClose }) => {
   return (
     <ModalBase position="relative" onClose={onClose}>
       <ViewInRoomTransition>

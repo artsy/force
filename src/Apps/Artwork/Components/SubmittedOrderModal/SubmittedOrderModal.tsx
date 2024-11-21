@@ -14,7 +14,7 @@ interface SubmittedOrderModalProps {
   submittedOrder: SubmittedOrderModal_submittedOrder$data
 }
 
-const SubmittedOrderModal: FC<SubmittedOrderModalProps> = ({
+const SubmittedOrderModal: FC<React.PropsWithChildren<SubmittedOrderModalProps>> = ({
   submittedOrder,
 }) => {
   const [isOpen, setIsOpen] = useState(true)
@@ -53,7 +53,7 @@ export const SubmittedOrderModalFragmentContainer = createFragmentContainer(
   }
 )
 
-export const SubmittedOrderModalQueryRenderer: FC<{ orderId: string }> = ({
+export const SubmittedOrderModalQueryRenderer: FC<React.PropsWithChildren<{ orderId: string }>> = ({
   orderId,
 }) => {
   return (

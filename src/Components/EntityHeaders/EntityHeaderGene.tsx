@@ -12,7 +12,7 @@ export interface EntityHeaderGeneProps extends BoxProps {
   FollowButton?: JSX.Element
 }
 
-const EntityHeaderGene: FC<EntityHeaderGeneProps> = ({
+const EntityHeaderGene: FC<React.PropsWithChildren<EntityHeaderGeneProps>> = ({
   gene,
   displayAvatar = true,
   displayLink = true,

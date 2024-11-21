@@ -3,7 +3,7 @@ import * as React from "react"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const InquiryConfirmation: React.FC = () => {
+export const InquiryConfirmation: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { context, dispatchCreateAlert, next } = useInquiryContext()
 
   return (

@@ -41,7 +41,7 @@ interface InquirySignUpState {
   password: string
 }
 
-export const InquirySignUp: React.FC = () => {
+export const InquirySignUp: React.FC<React.PropsWithChildren<unknown>> = () => {
   const [mode, setMode] = useMode<Mode>("Pending")
   const [error, setError] = useState("")
 

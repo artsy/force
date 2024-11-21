@@ -19,7 +19,7 @@ interface MyCollectionArtworkFormImagesProps {
   isEditing?: boolean
 }
 
-export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImagesProps> = ({
+export const MyCollectionArtworkFormImages: React.FC<React.PropsWithChildren<MyCollectionArtworkFormImagesProps>> = ({
   isEditing = false,
 }) => {
   const [errors, setErrors] = useState<Array<FileRejection>>([])

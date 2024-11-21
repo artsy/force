@@ -17,7 +17,7 @@ interface MyCollectionArtworkInsightsProps {
   artwork: MyCollectionArtworkInsights_artwork$key
 }
 
-export const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
+export const MyCollectionArtworkInsights: React.FC<React.PropsWithChildren<MyCollectionArtworkInsightsProps>> = ({
   ...restProps
 }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(

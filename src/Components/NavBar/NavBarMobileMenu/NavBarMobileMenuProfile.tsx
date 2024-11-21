@@ -9,7 +9,7 @@ interface NavBarMobileMenuProfileProps {
   onNavButtonClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
-export const NavBarMobileMenuProfile: FC<NavBarMobileMenuProfileProps> = ({
+export const NavBarMobileMenuProfile: FC<React.PropsWithChildren<NavBarMobileMenuProfileProps>> = ({
   onClose,
   onNavButtonClick,
 }) => {

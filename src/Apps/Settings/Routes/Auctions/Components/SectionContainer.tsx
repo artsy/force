@@ -6,7 +6,7 @@ interface SectionContainerProps {
   children?: React.ReactNode
 }
 
-export const SectionContainer: React.FC<SectionContainerProps> = ({
+export const SectionContainer: React.FC<React.PropsWithChildren<SectionContainerProps>> = ({
   children,
   title,
 }) => {

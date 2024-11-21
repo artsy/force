@@ -35,7 +35,7 @@ import MessageIcon from "@artsy/icons/MessageIcon"
 const SUPPORT_ARTICLE_URL =
   "https://support.artsy.net/s/article/The-Artsy-Guarantee"
 
-export const BuyerGuaranteeIndex: FC = () => {
+export const BuyerGuaranteeIndex: FC<React.PropsWithChildren<unknown>> = () => {
   const { jumpTo } = useJump({ behavior: "smooth" })
 
   return (

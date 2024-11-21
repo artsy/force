@@ -34,7 +34,7 @@ const TextWithPulse = styled(Text)`
   animation-iteration-count: 1;
 `
 
-export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfoProps> = ({
+export const ArtworkSidebarCurrentBidInfo: React.FC<React.PropsWithChildren<ArtworkSidebarCurrentBidInfoProps>> = ({
   artwork,
   currentBidChanged,
 }) => {

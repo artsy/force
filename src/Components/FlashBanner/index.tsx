@@ -17,7 +17,7 @@ interface FlashBannerProps {
  * The component responsible for selecting a determining and
  * displaying a flash message on the homepage.
  */
-const FlashBanner: FC<FlashBannerProps> = ({ me }) => {
+const FlashBanner: FC<React.PropsWithChildren<FlashBannerProps>> = ({ me }) => {
   const {
     match: { location },
   } = useRouter()
@@ -80,7 +80,7 @@ export const FlashBannerFragmentContainer = createFragmentContainer(
   }
 )
 
-export const FlashBannerQueryRenderer: FC = () => {
+export const FlashBannerQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
   const { user } = useSystemContext()
 
   return user ? (

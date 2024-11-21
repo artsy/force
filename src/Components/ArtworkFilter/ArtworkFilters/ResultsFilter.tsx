@@ -10,7 +10,7 @@ interface ResultsFilterProps extends UseFilterSelectResultsProps {
   placeholder: string
 }
 
-export const ResultsFilter: React.FC<ResultsFilterProps> = ({
+export const ResultsFilter: React.FC<React.PropsWithChildren<ResultsFilterProps>> = ({
   expanded,
   facetName,
   filtersCountKey,

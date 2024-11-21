@@ -5,7 +5,7 @@ import { Media } from "Utils/Responsive"
 
 interface CollectorProfileArtistsListHeaderProps {}
 
-export const CollectorProfileArtistsListHeader: FC<CollectorProfileArtistsListHeaderProps> = () => {
+export const CollectorProfileArtistsListHeader: FC<React.PropsWithChildren<CollectorProfileArtistsListHeaderProps>> = () => {
   return (
     <Media greaterThan="xs">
       <GridColumns

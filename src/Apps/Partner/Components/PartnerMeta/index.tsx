@@ -11,7 +11,7 @@ interface PartnerMetaProps {
   partner: PartnerMeta_partner$data
 }
 
-const PartnerMeta: React.FC<PartnerMetaProps> = ({
+const PartnerMeta: React.FC<React.PropsWithChildren<PartnerMetaProps>> = ({
   partner: { locationsConnection, meta, name, slug },
 }) => {
   const {

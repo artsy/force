@@ -24,7 +24,7 @@ interface SettingsShippingAddressProps {
 
 type Mode = "Pending" | "Editing" | "Deleting"
 
-const SettingsShippingAddress: FC<SettingsShippingAddressProps> = ({
+const SettingsShippingAddress: FC<React.PropsWithChildren<SettingsShippingAddressProps>> = ({
   address,
 }) => {
   const [mode, setMode] = useMode<Mode>("Pending")
@@ -75,68 +75,65 @@ const SettingsShippingAddress: FC<SettingsShippingAddressProps> = ({
     setMode("Pending")
   }
 
-  return (
-    <>
-      {mode === "Editing" && (
-        <SettingsShippingAddressForm
-          onClose={handleClose}
-          address={{
-            internalID: address.internalID,
-            isDefault: address.isDefault,
-            attributes: {
-              // Backfill incase missing fields
-              ...INITIAL_ADDRESS,
-              // Remove null fields; select out only editable fields
-              ...compactObject(pick(address, Object.keys(INITIAL_ADDRESS))),
-            },
-          }}
-        />
-      )}
+  return (<>
+    {mode === "Editing" && (
+      <SettingsShippingAddressForm
+        onClose={handleClose}
+        address={{
+          internalID: address.internalID,
+          isDefault: address.isDefault,
+          attributes: {
+            // Backfill incase missing fields
+            ...INITIAL_ADDRESS,
+            // Remove null fields; select out only editable fields
+            ...compactObject(pick(address, Object.keys(INITIAL_ADDRESS))),
+          },
+        }}
+      />
+    )}
+    <Box border="1px solid" borderColor="black10" p={2}>
+      <Text variant="sm" mb={1}>
+        {address.name}
+      </Text>
 
-      <Box border="1px solid" borderColor="black10" p={2}>
-        <Text variant="sm" mb={1}>
-          {address.name}
-        </Text>
-
-        {lines.map((line, i) => {
-          return (
-            <Text key={i} variant="sm" color="black60">
-              {line}
-            </Text>
-          )
-        })}
-
-        <Separator my={2} />
-
-        <Flex justifyContent="space-between">
-          {address.isDefault ? (
-            <Text variant="xs">Default Address</Text>
-          ) : (
-            // Pushes actions to the right
-            <div />
-          )}
-
-          <Text variant="sm-display" display="flex">
-            <Clickable
-              mr={1}
-              onClick={handleEdit}
-              disabled={mode === "Editing"}
-            >
-              {mode === "Editing" ? "Editing" : "Edit"}
-            </Clickable>
-
-            <Clickable
-              color="red100"
-              onClick={handleDelete}
-              disabled={mode === "Deleting"}
-            >
-              {mode === "Deleting" ? "Deleting" : "Delete"}
-            </Clickable>
+      {lines.map((line, i) => {
+        return (
+          <Text key={i} variant="sm" color="black60">
+            {line}
           </Text>
-        </Flex>
-      </Box>
-    </>
-  )
+        )
+      })}
+
+      <Separator my={2} />
+
+      <Flex justifyContent="space-between">
+        {address.isDefault ? (
+          <Text variant="xs">Default Address</Text>
+        ) : (
+          // Pushes actions to the right
+          (<div />)
+        )}
+
+        <Text variant="sm-display" display="flex">
+          <Clickable
+            mr={1}
+            onClick={handleEdit}
+            disabled={mode === "Editing"}
+          >
+            {mode === "Editing" ? "Editing" : "Edit"}
+          </Clickable>
+
+          <Clickable
+            color="red100"
+            onClick={handleDelete}
+            disabled={mode === "Deleting"}
+          >
+            {mode === "Deleting" ? "Deleting" : "Delete"}
+          </Clickable>
+        </Text>
+      </Flex>
+    </Box>
+  </>);
 }
 
 export const SettingsShippingAddressFragmentContainer = createFragmentContainer(

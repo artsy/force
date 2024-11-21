@@ -7,7 +7,7 @@ export interface SaleAgreementListItemProps {
   saleAgreement: SaleAgreementsListProps["saleAgreements"][0]
 }
 
-export const SaleAgreementListItem: FC<SaleAgreementListItemProps> = ({
+export const SaleAgreementListItem: FC<React.PropsWithChildren<SaleAgreementListItemProps>> = ({
   saleAgreement,
 }) => {
   if (!saleAgreement) return null

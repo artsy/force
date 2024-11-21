@@ -22,7 +22,7 @@ interface SuggestedArtworksShelfProps {
   artworksConnection: SuggestedArtworksShelfQuery$data["artworksConnection"]
 }
 
-export const SuggestedArtworksShelf: FC<SuggestedArtworksShelfProps> = ({
+export const SuggestedArtworksShelf: FC<React.PropsWithChildren<SuggestedArtworksShelfProps>> = ({
   artworksConnection,
 }) => {
   const artworks = extractNodes(artworksConnection)
@@ -69,7 +69,7 @@ export const SuggestedArtworksShelf: FC<SuggestedArtworksShelfProps> = ({
   )
 }
 
-export const SuggestedArtworksShelfQueryRenderer: FC<SearchCriteriaAttributes> = props => {
+export const SuggestedArtworksShelfQueryRenderer: FC<React.PropsWithChildren<SearchCriteriaAttributes>> = props => {
   return (
     <SystemQueryRenderer<SuggestedArtworksShelfQuery>
       placeholder={<SuggestedArtworksShelfPlaceholder />}
@@ -116,7 +116,7 @@ export const SuggestedArtworksShelfQueryRenderer: FC<SearchCriteriaAttributes> =
   )
 }
 
-const SuggestedArtworksShelfPlaceholder: FC = () => {
+const SuggestedArtworksShelfPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton>
       <Flex

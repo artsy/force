@@ -4,7 +4,7 @@ import { Box } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"
 
-export const Resizer: FC<SplitPaneProps> = ({ children, ...props }) => {
+export const Resizer: FC<React.PropsWithChildren<SplitPaneProps>> = ({ children, ...props }) => {
   return (
     <PaneWrapper>
       <SplitPane {...props}>{children}</SplitPane>

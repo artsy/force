@@ -1,7 +1,7 @@
 import { act, fireEvent, screen, within } from "@testing-library/react"
 import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsRoute"
 import { MockBoot } from "DevTools/MockBoot"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql"
@@ -521,7 +521,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             { name: "1979", value: "1979", count: 100 },
             { name: "1980", value: "1980", count: 100 },
             { name: "1990", value: "1990", count: 300 },
-            { name: "1990", value: "1991", count: 300 },
+            { name: "1991", value: "1991", count: 300 },
           ],
         },
       ],

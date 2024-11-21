@@ -89,7 +89,7 @@ interface SettingsPurchasesRowProps {
   order: SettingsPurchasesRow_order$data
 }
 
-const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
+const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps>> = ({ order }) => {
   const [lineItem] = extractNodes(order?.lineItems)
   const { artwork, artworkVersion, fulfillments } = lineItem
   const { requestedFulfillment } = order
@@ -140,7 +140,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
   }
 
   return (
-    <Box border="1px solid" borderColor="black10">
+    (<Box border="1px solid" borderColor="black10">
       <Flex
         bg="black5"
         justifyContent="space-between"
@@ -179,7 +179,6 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
           )}
         </Flex>
       </Flex>
-
       <GridColumns m={2}>
         <Column span={6} display="flex" alignItems="center">
           {image ? (
@@ -296,7 +295,6 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
           </Text>
         </Column>
       </GridColumns>
-
       <Flex p={2} borderTop="1px solid" borderColor="black10">
         <HelpIcon fill="black60" mr={0.5} />
 
@@ -313,8 +311,8 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
           )}
         </Text>
       </Flex>
-    </Box>
-  )
+    </Box>)
+  );
 }
 
 export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
@@ -393,7 +391,7 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
   }
 )
 
-export const SettingsPurchasesRowPlaceholder: FC = () => {
+export const SettingsPurchasesRowPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton>
       <Box border="1px solid" borderColor="black10">

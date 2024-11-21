@@ -4,7 +4,7 @@ import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { ConfirmationArtworksGridQueryRenderer } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 
-export const Confirmation: FC = () => {
+export const Confirmation: FC<React.PropsWithChildren<unknown>> = () => {
   const { dispatch, state } = useAlertContext()
 
   return (

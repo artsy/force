@@ -1,6 +1,5 @@
 import { mount } from "enzyme"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
-import React from "react"
 import { BankDebitForm } from "Components/BankDebitForm/BankDebitForm"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 

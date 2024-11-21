@@ -9,7 +9,7 @@ interface SaleAgreementsFilterProps {
   viewer: SaleAgreementsFilter_viewer$key
 }
 
-export const SaleAgreementsFilter: FC<SaleAgreementsFilterProps> = ({
+export const SaleAgreementsFilter: FC<React.PropsWithChildren<SaleAgreementsFilterProps>> = ({
   viewer,
 }) => {
   const data = useFragment(saleAgreementsFilterFragment, viewer)

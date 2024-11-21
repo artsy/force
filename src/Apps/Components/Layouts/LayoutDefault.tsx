@@ -7,7 +7,7 @@ import { LayoutFooter } from "Apps/Components/Layouts/Components/LayoutFooter"
 import { LayoutNav } from "Apps/Components/Layouts/Components/LayoutNav"
 import { BaseLayoutProps } from "Apps/Components/Layouts"
 
-export const LayoutDefault: FC<BaseLayoutProps> = ({ children }) => {
+export const LayoutDefault: FC<React.PropsWithChildren<BaseLayoutProps>> = ({ children }) => {
   return (
     <>
       <AppToasts />

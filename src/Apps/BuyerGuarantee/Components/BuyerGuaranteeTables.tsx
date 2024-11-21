@@ -4,7 +4,7 @@ import { FC } from "react"
 import styled from "styled-components"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 
-export const BuyerGuaranteeTableDesktop: FC = () => {
+export const BuyerGuaranteeTableDesktop: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <Row>
@@ -94,7 +94,7 @@ export const BuyerGuaranteeTableDesktop: FC = () => {
   )
 }
 
-export const BuyerGuaranteeTableMobile: FC = () => {
+export const BuyerGuaranteeTableMobile: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <Row>

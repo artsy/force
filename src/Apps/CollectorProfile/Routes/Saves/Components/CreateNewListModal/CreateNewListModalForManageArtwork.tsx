@@ -9,7 +9,7 @@ import {
 } from "Components/Artwork/ManageArtworkForSaves"
 import { FC } from "react"
 
-export const CreateNewListModalForManageArtwork: FC = () => {
+export const CreateNewListModalForManageArtwork: FC<React.PropsWithChildren<unknown>> = () => {
   const { state, dispatch } = useManageArtworkForSavesContext()
   const artwork = state.artwork!
 

@@ -1,5 +1,4 @@
 import { Box, Image } from "@artsy/palette"
-import * as React from "react"
 import { useLayoutEffect } from "react"
 import { useState } from "react"
 import { wait } from "Utils/wait"
@@ -15,12 +14,12 @@ enum TransitionStage {
 }
 
 interface ViewInRoomTransitionProps {
-  children({ onMount }: { onMount(): void }): JSX.Element
+  children({ onMount }: { onMount(): void }): any
 }
 
-export const ViewInRoomTransition: React.FC<ViewInRoomTransitionProps> = ({
+export const ViewInRoomTransition = ({
   children,
-}) => {
+}: ViewInRoomTransitionProps) => {
   const [transitionState, setTransitionState] = useState<{
     src?: string
     srcSet?: string

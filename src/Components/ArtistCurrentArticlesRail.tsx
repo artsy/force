@@ -18,7 +18,7 @@ interface ArtistCurrentArticlesRailProps {
   artworkId?: string
 }
 
-const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
+const ArtistCurrentArticlesRail: React.FC<React.PropsWithChildren<ArtistCurrentArticlesRailProps>> = ({
   artist,
   artworkId,
 }) => {
@@ -132,10 +132,10 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistCurrentArticlesRailQueryRenderer: React.FC<{
+export const ArtistCurrentArticlesRailQueryRenderer: React.FC<React.PropsWithChildren<{
   slug: string
   artworkId?: string
-}> = ({ slug, artworkId }) => {
+}>> = ({ slug, artworkId }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

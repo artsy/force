@@ -12,7 +12,7 @@ interface CollectorProfileArtistsSearchResultsProps {
   term: string
 }
 
-export const CollectorProfileArtistsSearchResults: FC<CollectorProfileArtistsSearchResultsProps> = ({
+export const CollectorProfileArtistsSearchResults: FC<React.PropsWithChildren<CollectorProfileArtistsSearchResultsProps>> = ({
   term,
 }) => {
   return (
@@ -25,7 +25,7 @@ export const CollectorProfileArtistsSearchResults: FC<CollectorProfileArtistsSea
 interface CollectorProfileArtistsSearchResultsArtistsProps
   extends CollectorProfileArtistsSearchResultsProps {}
 
-const CollectorProfileArtistsSearchResultsArtists: FC<CollectorProfileArtistsSearchResultsArtistsProps> = ({
+const CollectorProfileArtistsSearchResultsArtists: FC<React.PropsWithChildren<CollectorProfileArtistsSearchResultsArtistsProps>> = ({
   term,
 }) => {
   const { me } = useLazyLoadQuery<CollectorProfileArtistsSearchResultsQuery>(
@@ -61,7 +61,7 @@ const CollectorProfileArtistsSearchResultsArtists: FC<CollectorProfileArtistsSea
   )
 }
 
-const CollectorProfileArtistsListPlaceholder: FC = () => {
+const CollectorProfileArtistsListPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       {new Array(5).fill(null).map((_, i) => {

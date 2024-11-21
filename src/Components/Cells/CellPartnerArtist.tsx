@@ -15,7 +15,7 @@ export interface CellPartnerArtistProps extends Partial<RouterLinkProps> {
   FollowButton?: JSX.Element
 }
 
-const CellPartnerArtist: FC<CellPartnerArtistProps> = ({
+const CellPartnerArtist: FC<React.PropsWithChildren<CellPartnerArtistProps>> = ({
   artistPartnerEdge,
   mode = "RAIL",
   displayCounts,

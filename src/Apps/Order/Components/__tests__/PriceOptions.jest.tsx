@@ -1,5 +1,5 @@
 import { PriceOptionsFragmentContainer } from "Apps/Order/Components/PriceOptions"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { useTracking } from "react-tracking"

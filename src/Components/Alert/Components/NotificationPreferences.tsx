@@ -23,7 +23,7 @@ interface NotificationPreferencesProps {
   viewer?: NotificationPreferences_viewer$data
 }
 
-export const NotificationPreferences: FC<NotificationPreferencesProps> = ({
+export const NotificationPreferences: FC<React.PropsWithChildren<NotificationPreferencesProps>> = ({
   mode,
   viewer,
 }) => {
@@ -98,7 +98,7 @@ interface NotificationPreferencesQueryRendererProps {
   mode: AlertFormMode
 }
 
-export const NotificationPreferencesQueryRenderer: React.FC<NotificationPreferencesQueryRendererProps> = ({
+export const NotificationPreferencesQueryRenderer: React.FC<React.PropsWithChildren<NotificationPreferencesQueryRendererProps>> = ({
   mode,
 }) => {
   return (

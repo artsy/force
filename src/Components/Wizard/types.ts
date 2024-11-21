@@ -21,7 +21,7 @@ export interface StepProps {
   validationSchema?: object
   children:
     | React.ComponentClass<WizardStepChildProps>
-    | React.SFC<WizardStepChildProps>
+    | React.FC<React.PropsWithChildren<WizardStepChildProps>>
   onSubmit?: (
     values: FormValues,
     actions?: FormikActions<FormValues>

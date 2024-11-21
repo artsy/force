@@ -5,7 +5,7 @@ import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
-} from "../../AuctionResultsFilterContext"
+} from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { Metric } from "Utils/metrics"
 
 export const sizeMap = [
@@ -24,7 +24,7 @@ export const sizeMapInInches = [
  * Note: This implementation was cloned to:
  * src/Components/ArtworkFilter/ArtworkFilters/SizeFilter.tsx
  */
-export const SizeFilter: React.FC = () => {
+export const SizeFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { setFilter } = useAuctionResultsFilterContext()
   const { sizes = [], metric } = useCurrentlySelectedFiltersForAuctionResults()
   const options = metric === "in" ? sizeMapInInches : sizeMap
@@ -70,7 +70,6 @@ export const SizeFilter: React.FC = () => {
           {options.map((checkbox, index) => {
             const { name, displayName } = checkbox
             const props = {
-              key: index,
               onSelect: (selected: boolean) => {
                 toggleSelection(selected, name)
               },
@@ -78,7 +77,11 @@ export const SizeFilter: React.FC = () => {
               selected: sizes.includes(name),
               testID: `size-filter-${name}`,
             }
-            return <Checkbox {...props}>{displayName}</Checkbox>
+            return (
+              <Checkbox key={index} {...props}>
+                {displayName}
+              </Checkbox>
+            )
           })}
         </ShowMore>
       </Flex>

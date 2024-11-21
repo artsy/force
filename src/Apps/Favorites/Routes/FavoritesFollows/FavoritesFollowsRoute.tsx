@@ -5,7 +5,7 @@ import { SettingsSavesCategoriesQueryRenderer } from "Apps/Favorites/Routes/Favo
 import { SettingsSavesProfilesQueryRenderer } from "Apps/Favorites/Routes/FavoritesFollows/Components/SettingsSavesProfiles"
 import { Join, Spacer } from "@artsy/palette"
 
-export const FavoritesFollowsRoute: FC = () => {
+export const FavoritesFollowsRoute: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <MetaTags title="Follows | Artsy" pathname="favorites/follows" />

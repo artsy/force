@@ -13,7 +13,7 @@ interface CategoriesAppProps {
   geneFamiliesConnection: CategoriesApp_geneFamiliesConnection$data
 }
 
-const CategoriesApp: React.FC<CategoriesAppProps> = ({
+const CategoriesApp: React.FC<React.PropsWithChildren<CategoriesAppProps>> = ({
   geneFamiliesConnection,
 }) => {
   const { theme } = useTheme()

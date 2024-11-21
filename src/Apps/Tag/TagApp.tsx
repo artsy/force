@@ -9,7 +9,7 @@ interface TagAppProps {
   tag: TagApp_tag$data
 }
 
-const TagApp: React.FC<TagAppProps> = ({ tag }) => {
+const TagApp: React.FC<React.PropsWithChildren<TagAppProps>> = ({ tag }) => {
   return (
     <>
       <TagMetaFragmentContainer tag={tag} />

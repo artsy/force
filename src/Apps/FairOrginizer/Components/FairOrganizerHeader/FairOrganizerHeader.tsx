@@ -15,7 +15,7 @@ interface FairOrganizerHeaderProps {
   fairOrganizer: FairOrganizerHeader_fairOrganizer$data
 }
 
-export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
+export const FairOrganizerHeader: React.FC<React.PropsWithChildren<FairOrganizerHeaderProps>> = ({
   fairOrganizer,
 }) => {
   const { fairsConnection, name, profile } = fairOrganizer

@@ -1,5 +1,5 @@
 import { ExampleAppFragmentContainer } from "Apps/Example/ExampleApp"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { ExampleApp_Test_Query } from "__generated__/ExampleApp_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"

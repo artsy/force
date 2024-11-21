@@ -1,7 +1,7 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { MyCollectionArtworkSubmitForSale } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSubmitForSale"
 import { createOrUpdateConsignSubmission } from "Apps/Sell/Utils/createOrUpdateConsignSubmission"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { graphql } from "react-relay"

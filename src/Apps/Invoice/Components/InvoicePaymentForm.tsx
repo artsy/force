@@ -12,7 +12,7 @@ export interface InvoicePaymentFormProps {
   amountMinor: number
 }
 
-export const InvoicePaymentForm: React.FC<InvoicePaymentFormProps> = props => {
+export const InvoicePaymentForm: React.FC<React.PropsWithChildren<InvoicePaymentFormProps>> = props => {
   const { match, router } = useRouter()
   const token = match.params.token
   const invoiceRoute = `/invoice/${token}`

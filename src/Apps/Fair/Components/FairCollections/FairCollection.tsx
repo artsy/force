@@ -29,7 +29,7 @@ interface FairCollectionProps {
   carouselIndex: number // needed for analytics
 }
 
-export const FairCollection: React.FC<FairCollectionProps> = ({
+export const FairCollection: React.FC<React.PropsWithChildren<FairCollectionProps>> = ({
   collection,
   carouselIndex,
 }) => {

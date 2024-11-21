@@ -19,7 +19,7 @@ import {
 } from "@artsy/palette"
 import { useMemo } from "react"
 
-const PricingTransparency: React.FC<PricingTransparencyQuery$data> = props => {
+const PricingTransparency: React.FC<React.PropsWithChildren<PricingTransparencyQuery$data>> = props => {
   const calculatedCost = props.artwork?.saleArtwork?.calculatedCost
 
   return (
@@ -50,7 +50,7 @@ const PricingTransparency: React.FC<PricingTransparencyQuery$data> = props => {
   )
 }
 
-const Row: React.FC = ({ children }) => {
+const Row: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   return <Flex justifyContent="space-between">{children}</Flex>
 }
 

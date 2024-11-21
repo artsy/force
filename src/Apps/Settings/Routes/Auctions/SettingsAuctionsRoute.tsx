@@ -10,7 +10,7 @@ interface SettingsAuctionsRouteProps {
   me: SettingsAuctionsRoute_me$data
 }
 
-const SettingsAuctionsRoute: React.FC<SettingsAuctionsRouteProps> = ({
+const SettingsAuctionsRoute: React.FC<React.PropsWithChildren<SettingsAuctionsRouteProps>> = ({
   me,
 }) => {
   return (

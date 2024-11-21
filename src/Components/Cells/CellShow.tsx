@@ -23,7 +23,7 @@ export interface CellShowProps extends Omit<RouterLinkProps, "to"> {
   mode?: "GRID" | "RAIL"
 }
 
-const CellShow: FC<CellShowProps> = ({
+const CellShow: FC<React.PropsWithChildren<CellShowProps>> = ({
   show,
   displayKind = false,
   displayStatus = false,
@@ -85,7 +85,7 @@ const CellShow: FC<CellShowProps> = ({
 
 type CellShowPlaceholderProps = Pick<CellShowProps, "mode" | "displayKind">
 
-export const CellShowPlaceholder: FC<CellShowPlaceholderProps> = ({
+export const CellShowPlaceholder: FC<React.PropsWithChildren<CellShowPlaceholderProps>> = ({
   mode = "RAIL",
   displayKind = false,
 }) => {
@@ -121,7 +121,7 @@ interface CellShowStatusProps {
   endAt: string
 }
 
-export const CellShowStatus: FC<CellShowStatusProps> = ({ startAt, endAt }) => {
+export const CellShowStatus: FC<React.PropsWithChildren<CellShowStatusProps>> = ({ startAt, endAt }) => {
   const { formattedTime: status } = useEventTiming({
     currentTime: useCurrentTime({ syncWithServer: true }),
     startAt,

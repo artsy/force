@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
 import { MyCollectionArtworkImageBrowser } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MockBoot } from "DevTools/MockBoot"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 

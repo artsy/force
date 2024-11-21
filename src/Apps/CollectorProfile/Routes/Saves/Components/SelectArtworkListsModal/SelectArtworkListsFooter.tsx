@@ -8,7 +8,7 @@ interface SelectArtworkListsFooterProps {
   onSaveClick: () => void
 }
 
-export const SelectArtworkListsFooter: FC<SelectArtworkListsFooterProps> = ({
+export const SelectArtworkListsFooter: FC<React.PropsWithChildren<SelectArtworkListsFooterProps>> = ({
   selectedArtworkListsCount,
   hasChanges,
   isSaving,

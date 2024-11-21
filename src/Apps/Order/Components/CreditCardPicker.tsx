@@ -458,11 +458,9 @@ export class CreditCardPicker extends React.Component<
 // Our mess of HOC wrappers is not amenable to ref forwarding, so to expose a
 // ref to the CreditCardPicker instance (for getCreditCardId) we'll add an
 // `innerRef` prop which gets sneakily injected here
-const CreditCardPickerWithInnerRef: React.FC<
-  CreditCardPickerProps & {
-    innerRef: React.RefObject<CreditCardPicker>
-  }
-> = ({ innerRef, ...props }) => (
+const CreditCardPickerWithInnerRef: React.FC<React.PropsWithChildren<CreditCardPickerProps & {
+  innerRef: React.RefObject<CreditCardPicker>
+}>> = ({ innerRef, ...props }) => (
   <SystemContextConsumer>
     {({ isEigen }) => {
       return (

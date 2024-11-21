@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicatorFragmentContainer } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 

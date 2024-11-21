@@ -18,21 +18,22 @@ import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useAuthDialog } from "Components/AuthDialog"
 
-interface FollowArtistButtonProps extends ButtonProps {
+interface FollowArtistButtonProps
+  extends ButtonProps,
+    React.PropsWithChildren<FollowButtonRenderProps> {
   artist: FollowArtistButton_artist$data
-  children?: FollowButtonRenderProps
   contextModule?: AuthContextModule
   me: FollowArtistButton_me$data | null | undefined
   onFollow?: (followed: boolean) => void
 }
 
-const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
+const FollowArtistButton = ({
   artist,
   contextModule = ContextModule.artistHeader,
   me,
   onFollow,
   ...rest
-}) => {
+}: FollowArtistButtonProps) => {
   const { isLoggedIn } = useSystemContext()
 
   const { trackFollow } = useFollowButtonTracking({
@@ -205,10 +206,10 @@ interface FollowArtistButtonQueryRendererProps
   id: string
 }
 
-export const FollowArtistButtonQueryRenderer: React.FC<FollowArtistButtonQueryRendererProps> = ({
+export const FollowArtistButtonQueryRenderer = ({
   id,
   ...rest
-}) => {
+}: FollowArtistButtonQueryRendererProps) => {
   const { isLoggedIn } = useSystemContext()
   return (
     <SystemQueryRenderer<FollowArtistButtonQuery>

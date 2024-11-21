@@ -8,7 +8,7 @@ interface ArtworkAuctionRegistrationPanelProps {
   artwork: ArtworkAuctionRegistrationPanel_artwork$data
 }
 
-const ArtworkAuctionRegistrationPanel: React.FC<ArtworkAuctionRegistrationPanelProps> = ({
+const ArtworkAuctionRegistrationPanel: React.FC<React.PropsWithChildren<ArtworkAuctionRegistrationPanelProps>> = ({
   artwork,
 }) => {
   const isCountingDown = !!artwork.sale?.registrationEndsAt

@@ -8,7 +8,7 @@ interface AuctionCurrentAuctionsRailProps {
   viewer: AuctionCurrentAuctionsRail_viewer$data
 }
 
-const AuctionCurrentAuctionsRail: React.FC<AuctionCurrentAuctionsRailProps> = ({
+const AuctionCurrentAuctionsRail: React.FC<React.PropsWithChildren<AuctionCurrentAuctionsRailProps>> = ({
   viewer,
 }) => {
   const nodes = extractNodes(viewer.salesConnection)

@@ -20,7 +20,7 @@ interface ArtistWorksForSaleRailProps {
   artist: ArtistWorksForSaleRail_artist$data
 }
 
-const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
+const ArtistWorksForSaleRail: React.FC<React.PropsWithChildren<ArtistWorksForSaleRailProps>> = ({
   artist,
 }) => {
   const tracking = useTracking()
@@ -126,9 +126,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistWorksForSaleRailQueryRenderer: React.FC<{
+export const ArtistWorksForSaleRailQueryRenderer: React.FC<React.PropsWithChildren<{
   slug: string
-}> = ({ slug }) => {
+}>> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

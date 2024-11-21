@@ -23,7 +23,7 @@ interface ArtworkFilterPlaceholderProps extends BoxProps {
   showCreateAlert?: boolean
 }
 
-export const ArtworkFilterPlaceholder: React.FC<ArtworkFilterPlaceholderProps> = ({
+export const ArtworkFilterPlaceholder: React.FC<React.PropsWithChildren<ArtworkFilterPlaceholderProps>> = ({
   showCreateAlert = false,
   ...rest
 }) => {

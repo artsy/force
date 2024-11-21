@@ -20,7 +20,7 @@ interface HomePersonalizeMoreCardProps extends BoxProps {
   href: string
 }
 
-export const HomePersonalizeMoreCard: FC<HomePersonalizeMoreCardProps> = ({
+export const HomePersonalizeMoreCard: FC<React.PropsWithChildren<HomePersonalizeMoreCardProps>> = ({
   src,
   title,
   subtitle,

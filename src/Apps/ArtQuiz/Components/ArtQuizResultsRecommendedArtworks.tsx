@@ -13,7 +13,7 @@ interface ArtQuizResultsRecommendedArtworksProps {
   me: ArtQuizResultsRecommendedArtworks_me$data
 }
 
-const ArtQuizResultsRecommendedArtworks: FC<ArtQuizResultsRecommendedArtworksProps> = ({
+const ArtQuizResultsRecommendedArtworks: FC<React.PropsWithChildren<ArtQuizResultsRecommendedArtworksProps>> = ({
   me,
 }) => {
   const artworks = useStableShuffle({ items: [...me.quiz.recommendedArtworks] })
@@ -54,11 +54,11 @@ export const ArtQuizResultsRecommendedArtworksFragmentContainer = createFragment
   }
 )
 
-const ArtQuizResultsRecommendedArtworksPlaceholder: FC = () => {
+const ArtQuizResultsRecommendedArtworksPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return <ArtworkGridPlaceholder columnCount={[2, 3, 4]} amount={16} />
 }
 
-export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC = () => {
+export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <SystemQueryRenderer<ArtQuizResultsRecommendedArtworksQuery>
       query={graphql`

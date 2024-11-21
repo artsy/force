@@ -11,7 +11,7 @@ const SelectedEditionSetContext = createContext<SelectedEditionSetContextType>({
   setSelectedEditionSet: (_value: EditionSet) => {},
 })
 
-export const SelectedEditionSetProvider: React.FC = ({ children }) => {
+export const SelectedEditionSetProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const [selectedEditionSet, setSelectedEditionSet] = useState<EditionSet>(null)
 
   return (

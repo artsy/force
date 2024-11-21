@@ -11,7 +11,7 @@ interface NavBarMobileMenuNotificationsIndicatorProps {
   me?: NavBarMobileMenuNotificationsIndicator_me$data | null
 }
 
-export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNotificationsIndicatorProps> = ({
+export const NavBarMobileMenuNotificationsIndicator: React.FC<React.PropsWithChildren<NavBarMobileMenuNotificationsIndicatorProps>> = ({
   me,
 }) => {
   const unreadConversationCount = me?.unreadConversationCount ?? 0
@@ -50,7 +50,7 @@ export const NavBarMobileMenuNotificationsIndicatorFragmentContainer = createFra
   }
 )
 
-export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<{}> = () => {
+export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<React.PropsWithChildren<{}>> = () => {
   const { relayEnvironment } = useContext(SystemContext)
 
   return (

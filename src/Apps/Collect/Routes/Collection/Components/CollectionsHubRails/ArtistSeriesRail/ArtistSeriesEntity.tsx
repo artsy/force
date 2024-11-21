@@ -19,7 +19,7 @@ export interface ArtistSeriesEntityProps {
   itemNumber: number
 }
 
-export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
+export const ArtistSeriesEntity: React.FC<React.PropsWithChildren<ArtistSeriesEntityProps>> = ({
   member,
   itemNumber,
 }) => {
@@ -124,7 +124,7 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
 }
 
 export const ArtistSeriesRailContainer = createFragmentContainer(
-  ArtistSeriesEntity as React.FC<ArtistSeriesEntityProps>,
+  ArtistSeriesEntity as React.FC<React.PropsWithChildren<ArtistSeriesEntityProps>>,
   {
     member: graphql`
       fragment ArtistSeriesEntity_member on MarketingCollection {

@@ -8,7 +8,7 @@ interface ContextualMenuItemProps extends ClickableProps {
   onClick?: () => void
 }
 
-export const ContextualMenuItem: React.FC<ContextualMenuItemProps> = ({
+export const ContextualMenuItem: React.FC<React.PropsWithChildren<ContextualMenuItemProps>> = ({
   children,
   onClick,
   padding = 2,
@@ -36,6 +36,6 @@ const ContextualMenuItemContent = styled(Clickable)`
   }
 `
 
-export const ContextualMenuDivider: React.FC = () => {
+export const ContextualMenuDivider: React.FC<React.PropsWithChildren<unknown>> = () => {
   return <Separator color="black10" as="hr" width="100%" />
 }

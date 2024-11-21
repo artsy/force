@@ -7,7 +7,7 @@ interface PrimaryLabelLineProps {
   artwork: PrimaryLabelLine_artwork$key
 }
 
-export const PrimaryLabelLine: React.FC<PrimaryLabelLineProps> = ({
+export const PrimaryLabelLine: React.FC<React.PropsWithChildren<PrimaryLabelLineProps>> = ({
   artwork,
 }) => {
   const data = useFragment(primaryLabelLineFragment, artwork)

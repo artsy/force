@@ -1,4 +1,4 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { FairBoothRailFragmentContainer } from "Apps/Fair/Components/FairBoothRail"
 import { graphql } from "react-relay"
 import { FairBoothRail_Test_Query } from "__generated__/FairBoothRail_Test_Query.graphql"

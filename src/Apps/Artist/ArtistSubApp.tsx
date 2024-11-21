@@ -13,7 +13,7 @@ interface ArtistSubAppProps {
   match: Match
 }
 
-const ArtistSubApp: React.FC<ArtistSubAppProps> = ({
+const ArtistSubApp: React.FC<React.PropsWithChildren<ArtistSubAppProps>> = ({
   artist,
   children,
   match,

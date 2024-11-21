@@ -15,7 +15,7 @@ interface MyCollectionArtworkGridProps {
   onLoadMore: () => void
 }
 
-const MyCollectionArtworksGrid: FC<MyCollectionArtworkGridProps> = ({
+const MyCollectionArtworksGrid: FC<React.PropsWithChildren<MyCollectionArtworkGridProps>> = ({
   artworks,
   onLoadMore,
 }) => {

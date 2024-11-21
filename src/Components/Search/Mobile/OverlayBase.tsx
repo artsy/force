@@ -18,7 +18,7 @@ interface OverlayBaseProps {
   onClose: () => void
 }
 
-export const OverlayBase: FC<OverlayBaseProps> = ({
+export const OverlayBase: FC<React.PropsWithChildren<OverlayBaseProps>> = ({
   header,
   children,
   onClose,

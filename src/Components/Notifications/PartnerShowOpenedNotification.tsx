@@ -14,7 +14,7 @@ interface PartnerShowOpenedNotificationProps {
   notification: PartnerShowOpenedNotification_notification$key
 }
 
-export const PartnerShowOpenedNotification: FC<PartnerShowOpenedNotificationProps> = ({
+export const PartnerShowOpenedNotification: FC<React.PropsWithChildren<PartnerShowOpenedNotificationProps>> = ({
   notification,
 }) => {
   const notificationData = useFragment(

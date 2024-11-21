@@ -75,7 +75,7 @@ interface SettingsShippingAddressFormProps {
   }
 }
 
-export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
+export const SettingsShippingAddressForm: FC<React.PropsWithChildren<SettingsShippingAddressFormProps>> = ({
   onClose,
   address,
 }) => {

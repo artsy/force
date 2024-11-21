@@ -3,7 +3,7 @@ import { FC } from "react"
 
 interface LayoutMainProps extends BoxProps {}
 
-export const LayoutMain: FC<LayoutMainProps> = ({ children, ...rest }) => {
+export const LayoutMain: FC<React.PropsWithChildren<LayoutMainProps>> = ({ children, ...rest }) => {
   return (
     <Box as="main" id="main" overflowX="hidden" {...rest}>
       {children}

@@ -11,7 +11,7 @@ export interface ArtistBioProps {
   onReadMoreClicked?: () => void
 }
 
-export const ArtistBio: React.FC<ArtistBioProps> = ({ bio }) => {
+export const ArtistBio: React.FC<React.PropsWithChildren<ArtistBioProps>> = ({ bio }) => {
   const { credit, partnerID, text } = bio.biographyBlurb ?? {}
   const partnerHref = `${sd.APP_URL}/${partnerID}`
 

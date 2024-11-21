@@ -98,7 +98,7 @@ export const useManageArtworkForSavesContext = () => {
  * If `savedListId` was passed, it means the user is on the artwork lists page
  * In this case, whether the artwork is saved or not will depend on the local state (not on the status received from backend)
  */
-export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
+export const ManageArtworkForSavesProvider: FC<React.PropsWithChildren<ProviderProps>> = ({
   children,
   savedListId,
   artwork,

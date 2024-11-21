@@ -6,7 +6,7 @@ interface ClientSuspenseProps {
   children: ReactNode
 }
 
-export const ClientSuspense: FC<ClientSuspenseProps> = ({
+export const ClientSuspense: FC<React.PropsWithChildren<ClientSuspenseProps>> = ({
   fallback,
   children,
 }) => {

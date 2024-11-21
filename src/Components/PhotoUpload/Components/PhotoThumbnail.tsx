@@ -37,12 +37,10 @@ const ImageContainer = styled(Box).attrs({
   cursor: default;
 `
 
-export const PhotoThumbnail: React.FC<
-  PhotoThumbnailProps &
-    BoxProps & {
-      onLoad?: ComponentProps<typeof Image>["onLoad"]
-    }
-> = ({ photo, onDelete, ...rest }) => {
+export const PhotoThumbnail: React.FC<React.PropsWithChildren<PhotoThumbnailProps &
+  BoxProps & {
+    onLoad?: ComponentProps<typeof Image>["onLoad"]
+  }>> = ({ photo, onDelete, ...rest }) => {
   const [photoSrc, setPhotoSrc] = useState<string>()
 
   useEffect(() => {
@@ -128,7 +126,7 @@ interface RemoveButtonProps {
   handleDelete: () => void
 }
 
-const RemoveButton: React.FC<RemoveButtonProps> = ({
+const RemoveButton: React.FC<React.PropsWithChildren<RemoveButtonProps>> = ({
   withIconButton,
   handleDelete,
 }) => (
@@ -153,7 +151,7 @@ interface PhotoThumbnailStateProps extends Omit<PhotoThumbnailProps, "state"> {
   photoSrc?: string
 }
 
-const PhotoThumbnailLoadingState: React.FC<PhotoThumbnailStateProps> = ({
+const PhotoThumbnailLoadingState: React.FC<React.PropsWithChildren<PhotoThumbnailStateProps>> = ({
   onDelete,
   photoSrc,
   photo,
@@ -176,7 +174,7 @@ const PhotoThumbnailLoadingState: React.FC<PhotoThumbnailStateProps> = ({
   </Column>
 )
 
-const PhotoThumbnailErrorState: React.FC<PhotoThumbnailStateProps> = ({
+const PhotoThumbnailErrorState: React.FC<React.PropsWithChildren<PhotoThumbnailStateProps>> = ({
   onDelete,
   photo,
 }) => (
@@ -191,11 +189,9 @@ const PhotoThumbnailErrorState: React.FC<PhotoThumbnailStateProps> = ({
   </>
 )
 
-const PhotoThumbnailSuccessState: React.FC<
-  PhotoThumbnailStateProps & {
-    onLoad: ComponentProps<typeof Image>["onLoad"]
-  }
-> = ({ onDelete, photoSrc, photo, onLoad = () => {} }) => (
+const PhotoThumbnailSuccessState: React.FC<React.PropsWithChildren<PhotoThumbnailStateProps & {
+  onLoad: ComponentProps<typeof Image>["onLoad"]
+}>> = ({ onDelete, photoSrc, photo, onLoad = () => {} }) => (
   <>
     <Flex alignItems="center">
       <ImageContainer>
@@ -216,7 +212,7 @@ const PhotoThumbnailSuccessState: React.FC<
   </>
 )
 
-const PhotoThumbnailProcessingState: React.FC<PhotoThumbnailStateProps> = ({
+const PhotoThumbnailProcessingState: React.FC<React.PropsWithChildren<PhotoThumbnailStateProps>> = ({
   onDelete,
   photo,
 }) => (

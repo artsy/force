@@ -1,5 +1,4 @@
-import { Box } from "@artsy/palette"
-import { isServer } from "Server/isServer"
+import { Box, useDidMount } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { NavBarMobileMenuNotificationsQuery } from "__generated__/NavBarMobileMenuNotificationsQuery.graphql"
@@ -12,9 +11,9 @@ interface NavBarMobileMenuNotificationsProps {
   me?: NavBarMobileMenuNotifications_me$data | null
 }
 
-export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificationsProps> = ({
-  me,
-}) => {
+export const NavBarMobileMenuNotifications: React.FC<React.PropsWithChildren<
+  NavBarMobileMenuNotificationsProps
+>> = ({ me }) => {
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const hasConversations = unreadConversationCount > 0
 
@@ -46,10 +45,12 @@ const NavBarMobileMenuNotificationsFragmentContainer = createFragmentContainer(
   }
 )
 
-export const NavBarMobileMenuNotificationsQueryRenderer: React.FC<{}> = () => {
+export const NavBarMobileMenuNotificationsQueryRenderer: React.FC<React.PropsWithChildren<{}>> = () => {
   const { relayEnvironment } = useContext(SystemContext)
 
-  return isServer ? (
+  const isClient = useDidMount()
+
+  return !isClient ? (
     <NavBarMobileMenuNotificationsFragmentContainer />
   ) : (
     <SystemQueryRenderer<NavBarMobileMenuNotificationsQuery>

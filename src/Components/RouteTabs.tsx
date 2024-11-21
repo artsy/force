@@ -5,7 +5,7 @@ import { useIsRouteActive } from "System/Hooks/useRouter"
 import { useTracking } from "react-tracking"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 
-export const RouteTab: React.FC<BaseTabProps & RouterLinkProps> = ({
+export const RouteTab: React.FC<React.PropsWithChildren<BaseTabProps & RouterLinkProps>> = ({
   children,
   to,
   ...rest
@@ -38,7 +38,7 @@ export const RouteTab: React.FC<BaseTabProps & RouterLinkProps> = ({
 
 RouteTab.displayName = "RouteTab"
 
-export const RouteTabs: React.FC<BaseTabsProps> = ({ children, ...rest }) => {
+export const RouteTabs: React.FC<React.PropsWithChildren<BaseTabsProps>> = ({ children, ...rest }) => {
   return (
     <BaseTabs mx={[-4, 0]} px={[2, 0]} {...rest}>
       {children}

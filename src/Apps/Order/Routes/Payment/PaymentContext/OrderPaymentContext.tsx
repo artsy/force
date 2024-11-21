@@ -2,7 +2,7 @@ import React, { useReducer, useContext, createContext, Dispatch } from "react"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { orderPaymentReducer } from "./orderPaymentReducer"
 import createLogger from "Utils/logger"
-import { BankAccountSelection } from "../index"
+import { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
 
 const logger = createLogger("[dev: OrderPaymentContext] state:")
 
@@ -89,7 +89,7 @@ const OrderPaymentContext = createContext<{
  * Provider
  */
 
-export const OrderPaymentContextProvider: React.FC = ({ children }) => {
+export const OrderPaymentContextProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const [state, dispatch] = useReducer(
     orderPaymentReducer,
     initialOrderPaymentState

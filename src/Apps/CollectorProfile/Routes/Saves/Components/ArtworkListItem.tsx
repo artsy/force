@@ -19,7 +19,7 @@ interface ArtworkListItemProps {
   item: ArtworkListItem_item$data
 }
 
-const ArtworkListItem: FC<ArtworkListItemProps> = props => {
+const ArtworkListItem: FC<React.PropsWithChildren<ArtworkListItemProps>> = props => {
   const { isSelected, imagesLayout, item } = props
 
   const artworkNodes = extractNodes(item.artworksConnection)

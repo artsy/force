@@ -13,7 +13,7 @@ interface NewsAppProps {
   viewer: NewsApp_viewer$data
 }
 
-const NewsApp: FC<NewsAppProps> = ({ viewer }) => {
+const NewsApp: FC<React.PropsWithChildren<NewsAppProps>> = ({ viewer }) => {
   useScrollToOpenEditorialAuthModal()
 
   return (

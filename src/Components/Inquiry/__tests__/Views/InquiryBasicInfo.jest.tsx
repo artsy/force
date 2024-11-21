@@ -2,7 +2,7 @@ import { InquiryBasicInfoFragmentContainer } from "Components/Inquiry/Views/Inqu
 import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
 

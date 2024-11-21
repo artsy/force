@@ -1,5 +1,4 @@
 import { FC } from "react"
-import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Title } from "react-head"
 import { Match } from "found"
@@ -45,7 +44,7 @@ export interface StatusProps {
   match: Match
 }
 
-export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
+export const StatusRoute: FC<React.PropsWithChildren<StatusProps>> = ({ order, match }) => {
   const { isEigen } = useSystemContext()
 
   const flowName = order.mode === "OFFER" ? "Offer" : "Order"

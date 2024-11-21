@@ -35,7 +35,7 @@ import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 
 interface FooterProps extends BoxProps {}
 
-export const Footer: React.FC<FooterProps> = props => {
+export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
   const { isEigen } = useSystemContext()
 
   if (isEigen) {
@@ -283,7 +283,7 @@ export const Footer: React.FC<FooterProps> = props => {
   )
 }
 
-const ThemeSelect: React.FC = () => {
+const ThemeSelect: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { preferences, updatePreferences } = useDarkModeToggle({
     attachKeyListeners: false,
   })

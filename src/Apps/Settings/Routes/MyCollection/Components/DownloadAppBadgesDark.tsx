@@ -6,7 +6,7 @@ import {
   DOWNLOAD_APP_URLS,
 } from "Utils/Hooks/useDeviceDetection"
 
-export const DownloadAppBadgesDark: React.FC<FlexProps> = ({
+export const DownloadAppBadgesDark: React.FC<React.PropsWithChildren<FlexProps>> = ({
   justifyContent,
 }) => {
   const { device: deviceOS } = useDeviceDetection()
@@ -32,7 +32,7 @@ export const DownloadAppBadgesDark: React.FC<FlexProps> = ({
   )
 }
 
-const PlayStoreBadge: React.FC = () => {
+const PlayStoreBadge: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <RouterLink to={DOWNLOAD_APP_URLS[Device.Android]} target="_blank">
       <Box width={136} height={40}>
@@ -48,7 +48,7 @@ const PlayStoreBadge: React.FC = () => {
   )
 }
 
-const AppStoreBadge: React.FC = () => {
+const AppStoreBadge: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <RouterLink to={DOWNLOAD_APP_URLS[Device.iPhone]} target="_blank">
       <Box width={120} height={40}>

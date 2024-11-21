@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react"
 import { SaleAppFragmentContainer } from "Apps/Sale/SaleApp"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

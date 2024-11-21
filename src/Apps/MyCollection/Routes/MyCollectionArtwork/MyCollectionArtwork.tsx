@@ -22,7 +22,7 @@ interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
 }
 
-const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
+const MyCollectionArtwork: React.FC<React.PropsWithChildren<MyCollectionArtworkProps>> = ({
   artwork,
 }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(

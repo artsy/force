@@ -6,7 +6,7 @@ interface MyCollectionArtworkMetaProps {
   artwork: MyCollectionArtworkMeta_artwork$key
 }
 
-export const MyCollectionArtworkMeta: React.FC<MyCollectionArtworkMetaProps> = props => {
+export const MyCollectionArtworkMeta: React.FC<React.PropsWithChildren<MyCollectionArtworkMetaProps>> = props => {
   const { artistNames, title } = useFragment(FRAGMENT, props.artwork)
 
   return (

@@ -15,7 +15,7 @@ import { extractNodes } from "Utils/extractNodes"
 interface OtherAuctionsProps {
   salesConnection: OtherAuctions_salesConnection$data
 }
-export const OtherAuctions: React.FC<OtherAuctionsProps> = ({
+export const OtherAuctions: React.FC<React.PropsWithChildren<OtherAuctionsProps>> = ({
   salesConnection,
 }) => {
   const sales = extractNodes(salesConnection)

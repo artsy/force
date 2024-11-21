@@ -22,9 +22,7 @@ interface ArtistSeriesArtworksFilterProps {
   match?: Match
 }
 
-const ArtistSeriesArtworksFilter: React.FC<
-  ArtistSeriesArtworksFilterProps & RouterState
-> = props => {
+const ArtistSeriesArtworksFilter: React.FC<React.PropsWithChildren<ArtistSeriesArtworksFilterProps & RouterState>> = props => {
   const { userPreferences } = useSystemContext()
   const { match, relay, artistSeries } = props
   const { filtered_artworks, sidebar } = artistSeries
@@ -113,7 +111,7 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
 
 interface ArtistSeriesArtworkFilterQueryRendererProps {}
 
-export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<ArtistSeriesArtworkFilterQueryRendererProps> = rest => {
+export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<ArtistSeriesArtworkFilterQueryRendererProps>> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

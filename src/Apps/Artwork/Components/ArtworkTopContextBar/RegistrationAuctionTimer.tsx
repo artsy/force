@@ -7,7 +7,7 @@ interface RegistrationAuctionTimerProps {
   sale: RegistrationAuctionTimer_sale$data
 }
 
-const RegistrationAuctionTimer: React.FC<RegistrationAuctionTimerProps> = ({
+const RegistrationAuctionTimer: React.FC<React.PropsWithChildren<RegistrationAuctionTimerProps>> = ({
   sale,
 }) => {
   if (!sale.registrationEndsAt || sale.isRegistrationClosed) {

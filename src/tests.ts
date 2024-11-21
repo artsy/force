@@ -1,6 +1,4 @@
 import chalk from "chalk"
-import Enzyme from "enzyme"
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17"
 import "regenerator-runtime/runtime"
 import { format } from "util"
 import "@testing-library/jest-dom"
@@ -47,9 +45,6 @@ jest.mock("routes", () => ({
  * SEE: https://github.com/facebook/jest/issues/2209#issuecomment-458706599
  */
 // afterEach(() => expect.hasAssertions())
-
-import "DevTools/renderUntil"
-Enzyme.configure({ adapter: new Adapter() })
 
 // Manually run the garbage collector after 30 seconds. Only works if the
 // --expose-gc flag is used.

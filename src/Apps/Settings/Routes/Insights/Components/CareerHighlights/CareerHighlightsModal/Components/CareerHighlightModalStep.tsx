@@ -21,7 +21,7 @@ interface CareerHighlightModalStepProps {
   kind: CareerHighlightKindWithPromo | (string & {})
 }
 
-export const CareerHighlightModalStep: React.FC<CareerHighlightModalStepProps> = ({
+export const CareerHighlightModalStep: React.FC<React.PropsWithChildren<CareerHighlightModalStepProps>> = ({
   careerHighlight,
   kind,
 }) => {

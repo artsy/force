@@ -1,6 +1,6 @@
 /* eslint-disable jest/no-disabled-tests */
 import { cloneDeep, merge } from "lodash"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { MockBoot } from "DevTools/MockBoot"
 import { ShippingRouteWithDialog } from "Apps/Order/Routes/Shipping"
 import { graphql } from "react-relay"

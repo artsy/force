@@ -20,7 +20,7 @@ interface HeroCarouselSmallProps {
   onChange?: (index) => void
 }
 
-export const HeroCarouselSmall: FC<HeroCarouselSmallProps> = ({
+export const HeroCarouselSmall: FC<React.PropsWithChildren<HeroCarouselSmallProps>> = ({
   children,
   progressbarVariant,
   onChange,
@@ -81,6 +81,6 @@ const Cell: ForwardRefExoticComponent<SwiperCellProps> = forwardRef(
   }
 )
 
-const Rail: FC<SwiperRailProps> = props => {
+const Rail: FC<React.PropsWithChildren<SwiperRailProps>> = props => {
   return <SwiperRail {...props} display="block" />
 }

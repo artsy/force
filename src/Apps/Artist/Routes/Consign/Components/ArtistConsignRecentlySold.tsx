@@ -12,7 +12,7 @@ interface ArtistConsignRecentlySoldProps {
   artist: ArtistConsignRecentlySold_artist$data
 }
 
-export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps> = ({
+export const ArtistConsignRecentlySold: React.FC<React.PropsWithChildren<ArtistConsignRecentlySoldProps>> = ({
   artist,
 }) => {
   const artworks = extractNodes(

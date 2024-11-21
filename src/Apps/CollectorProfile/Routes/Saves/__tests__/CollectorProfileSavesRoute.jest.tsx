@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen, waitFor } from "@testing-library/react"
 import { CollectorProfileSavesRoute_Test_Query } from "__generated__/CollectorProfileSavesRoute_Test_Query.graphql"
 import { CollectorProfileSavesRouteFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/CollectorProfileSavesRoute"

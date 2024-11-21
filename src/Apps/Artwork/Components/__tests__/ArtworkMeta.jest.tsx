@@ -1,7 +1,7 @@
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkMeta } from "Apps/Artwork/Components/ArtworkMeta"
 import { useRouter } from "System/Hooks/useRouter"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { ArtworkMeta_Test_Query } from "__generated__/ArtworkMeta_Test_Query.graphql"
 

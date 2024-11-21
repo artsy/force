@@ -12,7 +12,7 @@ interface DownloadAppBadgesProps extends FlexProps {
   contextModule: ContextModule
 }
 
-export const DownloadAppBadges: React.FC<DownloadAppBadgesProps> = ({
+export const DownloadAppBadges: React.FC<React.PropsWithChildren<DownloadAppBadgesProps>> = ({
   contextModule,
   ...rest
 }) => {

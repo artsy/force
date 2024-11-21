@@ -8,7 +8,7 @@ interface NotificationsContextualMenuProps {
   unreadCounts: number
 }
 
-export const NotificationsContextualMenu: React.FC<NotificationsContextualMenuProps> = ({
+export const NotificationsContextualMenu: React.FC<React.PropsWithChildren<NotificationsContextualMenuProps>> = ({
   onHide,
   unreadCounts,
 }) => {

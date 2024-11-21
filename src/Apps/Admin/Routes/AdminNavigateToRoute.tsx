@@ -11,7 +11,7 @@ import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { useEffect, useRef } from "react"
 
-export const AdminNavigateToRoute: React.FC = () => {
+export const AdminNavigateToRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
   const ref = useRef<HTMLInputElement>(null)
   const { router } = useRouter()
 

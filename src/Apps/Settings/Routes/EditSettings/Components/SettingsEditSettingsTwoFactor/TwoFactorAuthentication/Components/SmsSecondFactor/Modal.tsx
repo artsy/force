@@ -32,7 +32,9 @@ interface SmsSecondFactorModalProps {
   password: string
 }
 
-export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props => {
+export const SmsSecondFactorModal: React.FC<React.PropsWithChildren<
+  SmsSecondFactorModalProps
+>> = props => {
   const { secondFactor, password, onComplete } = props
   const { relayEnvironment } = useSystemContext()
   const [isSubmitting, setSubmitting] = useState(false)
@@ -275,6 +277,9 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
             initialValues={{ countryCode: "US", phoneNumber: "", code: "" }}
             steps={steps}
           >
+            {/*
+              FIXME: REACT_18_UPGRADE
+              @ts-ignore */}
             {wizardProps => {
               const { wizard } = wizardProps
               const { currentStep } = wizard
@@ -310,7 +315,9 @@ interface OnCompleteRedirectModalProps {
   show: boolean
 }
 
-export const OnCompleteRedirectModal: React.FC<OnCompleteRedirectModalProps> = props => {
+export const OnCompleteRedirectModal: React.FC<React.PropsWithChildren<
+  OnCompleteRedirectModalProps
+>> = props => {
   const { onClick, redirectTo, show } = props
 
   if (!show) {

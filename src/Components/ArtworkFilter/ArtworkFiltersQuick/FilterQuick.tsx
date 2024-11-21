@@ -27,7 +27,7 @@ interface FilterQuickProps
   slice?: Slice
 }
 
-export const FilterQuick: FC<FilterQuickProps> = ({
+export const FilterQuick: FC<React.PropsWithChildren<FilterQuickProps>> = ({
   name,
   label,
   options: _options,
@@ -114,13 +114,9 @@ interface FilterQuickDropdownAnchorProps extends DropdownActions {
   count: number
 }
 
-export const FilterQuickDropdownAnchor: FC<FilterQuickDropdownAnchorProps> = ({
-  anchorProps,
-  anchorRef,
-  label,
-  count,
-  visible,
-}) => {
+export const FilterQuickDropdownAnchor: FC<React.PropsWithChildren<
+  FilterQuickDropdownAnchorProps
+>> = ({ anchorProps, anchorRef, label, count, visible }) => {
   return (
     <Pill
       ref={anchorRef as any}
@@ -147,14 +143,9 @@ interface FilterQuickDropdownPanelProps extends BoxProps {
   count: number
 }
 
-export const FilterQuickDropdownPanel: FC<FilterQuickDropdownPanelProps> = ({
-  onClear,
-  onConfirm,
-  children,
-  count,
-  p = 1,
-  ...rest
-}) => {
+export const FilterQuickDropdownPanel: FC<React.PropsWithChildren<
+  FilterQuickDropdownPanelProps
+>> = ({ onClear, onConfirm, children, count, p = 1, ...rest }) => {
   return (
     <Box
       display="flex"

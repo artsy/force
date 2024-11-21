@@ -11,7 +11,7 @@ interface FairOrganizerLatestArticlesProps {
   fairOrganizer: FairOrganizerLatestArticles_fairOrganizer$data
 }
 
-export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesProps> = ({
+export const FairOrganizerLatestArticles: React.FC<React.PropsWithChildren<FairOrganizerLatestArticlesProps>> = ({
   fairOrganizer,
 }) => {
   const { articlesConnection, name, slug } = fairOrganizer

@@ -10,7 +10,7 @@ interface FullBleedHeaderFaderProps {
   figures: FullBleedHeaderProps[]
 }
 
-export const FullBleedHeaderFader: FC<FullBleedHeaderFaderProps> = ({
+export const FullBleedHeaderFader: FC<React.PropsWithChildren<FullBleedHeaderFaderProps>> = ({
   figures,
   children,
 }) => {

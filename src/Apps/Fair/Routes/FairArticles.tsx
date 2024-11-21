@@ -14,7 +14,7 @@ interface FairArticlesProps {
   relay: RelayRefetchProp
 }
 
-const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
+const FairArticles: React.FC<React.PropsWithChildren<FairArticlesProps>> = ({ fair, relay }) => {
   const articles = extractNodes(fair.articlesConnection)
 
   const [isLoading, setIsLoading] = useState(false)

@@ -1,6 +1,6 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { ConsignmentInquiryFragmentContainer } from "Apps/Sell/Routes/ConsignmentInquiry/ConsignmentInquiry"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
@@ -71,8 +71,14 @@ const simulateTyping = async (field: string, text: string) => {
   input && fireEvent.change(input, { target: { name: field, value: text } })
 }
 
-const getSubmitButton = () =>
-  screen.getByTestId("consignment-inquiry-send-button")
+const getSubmitButton = async () => {
+  let btn
+  await waitFor(() => {
+    btn = screen.getByTestId("consignment-inquiry-send-button")
+  })
+
+  return btn
+}
 
 const getInput = (name: string) =>
   screen.getAllByRole("textbox").find(c => c.getAttribute("name") === name)
@@ -112,7 +118,7 @@ describe("ConsignmentInquiry", () => {
       screen.getAllByRole("button").find(c => c.textContent?.includes("Back"))
     ).toBeInTheDocument()
 
-    expect(getSubmitButton()).toBeInTheDocument()
+    expect(await getSubmitButton()).toBeInTheDocument()
   })
 
   it("renders correctly with selected specialist", async () => {
@@ -139,7 +145,7 @@ describe("ConsignmentInquiry", () => {
       screen.getAllByRole("button").find(c => c.textContent?.includes("Back"))
     ).toBeInTheDocument()
 
-    expect(getSubmitButton()).toBeInTheDocument()
+    expect(await getSubmitButton()).toBeInTheDocument()
   })
 
   it("submitting a valid form", async () => {
@@ -165,7 +171,7 @@ describe("ConsignmentInquiry", () => {
       simulateTyping("message", "This is my message to you")
     })
 
-    fireEvent.click(getSubmitButton())
+    fireEvent.click(await getSubmitButton())
 
     await waitFor(() => {
       expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
@@ -202,7 +208,7 @@ describe("ConsignmentInquiry", () => {
       expect(getInput("email")).not.toHaveValue()
       expect(getInput("phoneNumber")).not.toHaveValue()
       expect(getInput("message")).not.toHaveValue()
-      expect(getSubmitButton()).toBeDisabled()
+      expect(await getSubmitButton()).toBeDisabled()
     })
   })
 })

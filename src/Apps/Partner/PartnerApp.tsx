@@ -14,7 +14,7 @@ export interface PartnerAppProps {
   partner: PartnerApp_partner$data
 }
 
-export const PartnerApp: React.FC<PartnerAppProps> = ({
+export const PartnerApp: React.FC<React.PropsWithChildren<PartnerAppProps>> = ({
   partner,
   children,
 }) => {

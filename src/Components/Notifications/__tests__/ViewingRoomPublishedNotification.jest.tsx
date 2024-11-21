@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
 import { ViewingRoomPublishedNotification_test_Query } from "__generated__/ViewingRoomPublishedNotification_test_Query.graphql"

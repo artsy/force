@@ -18,7 +18,7 @@ const KEY = PROGRESSIVE_ONBOARDING.followPartner
 interface ProgressiveOnboardingFollowPartnerProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingFollowPartner__: FC<ProgressiveOnboardingFollowPartnerProps> = ({
+export const __ProgressiveOnboardingFollowPartner__: FC<React.PropsWithChildren<ProgressiveOnboardingFollowPartnerProps>> = ({
   counts,
   children,
 }) => {

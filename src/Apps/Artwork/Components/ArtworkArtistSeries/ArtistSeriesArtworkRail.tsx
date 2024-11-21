@@ -17,7 +17,7 @@ interface Props {
   artwork: ArtistSeriesArtworkRail_artwork$data
 }
 
-export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
+export const ArtistSeriesArtworkRail: React.FC<React.PropsWithChildren<Props>> = ({ artwork }) => {
   const { trackEvent } = useTracking()
   const { artistSeriesConnection } = artwork
   const nodes = extractNodes(artistSeriesConnection)

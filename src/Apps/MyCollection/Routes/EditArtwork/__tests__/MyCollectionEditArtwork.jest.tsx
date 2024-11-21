@@ -3,7 +3,7 @@ import { MyCollectionEditArtworkFragmentContainer } from "Apps/MyCollection/Rout
 import { uploadPhotoToS3 } from "Components/PhotoUpload/Utils/fileUtils"
 import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { createMockEnvironment } from "relay-test-utils"
@@ -329,8 +329,10 @@ describe("Edit artwork", () => {
         },
       })
 
-      expect(await screen.findByText("0.02 MB")).toBeInTheDocument()
-      expect(await screen.findByText(name)).toBeInTheDocument()
+      await waitFor(() => {
+        expect(screen.getByText("0.02 MB")).toBeInTheDocument()
+        expect(screen.getByText(name)).toBeInTheDocument()
+      })
 
       await waitFor(() => {
         expect(screen.getAllByTestId("photo-thumbnail").length).toEqual(2)

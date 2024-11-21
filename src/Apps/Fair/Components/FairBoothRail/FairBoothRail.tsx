@@ -27,7 +27,7 @@ interface FairBoothRailProps extends BoxProps {
   show: FairBoothRail_show$data
 }
 
-export const FairBoothRail: React.FC<FairBoothRailProps> = ({
+export const FairBoothRail: React.FC<React.PropsWithChildren<FairBoothRailProps>> = ({
   show,
   ...rest
 }) => {

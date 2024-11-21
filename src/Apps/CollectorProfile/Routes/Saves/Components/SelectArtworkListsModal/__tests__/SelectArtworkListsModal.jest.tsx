@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import {
   SelectArtworkListsModal_Test_Query,
@@ -20,7 +20,9 @@ import { MockBoot } from "DevTools/MockBoot"
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMutation")
 
-const TestComponent: FC<SelectArtworkListsModal_Test_Query$data> = props => {
+const TestComponent: FC<React.PropsWithChildren<
+  SelectArtworkListsModal_Test_Query$data
+>> = props => {
   const { state } = useManageArtworkForSavesContext()
 
   // Modal is not displayed in the ManageArtworkForSaves component if artwork is null

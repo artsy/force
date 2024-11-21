@@ -3,7 +3,7 @@ import { CreditCardInput } from "Components/CreditCardInput"
 import { AddressForm } from "./AddressForm"
 import { useFormContext } from "Apps/Invoice/Hooks/useFormContext"
 
-export const AddressFormWithCreditCard: React.FC = () => {
+export const AddressFormWithCreditCard: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
     setFieldValue,
     setFieldTouched,

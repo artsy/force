@@ -4,7 +4,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { LoadingArea } from "Components/LoadingArea"
 import { Box } from "@artsy/palette"
 
-export const PartnerOfferCheckout: FC = () => {
+export const PartnerOfferCheckout: FC<React.PropsWithChildren<unknown>> = () => {
   const { match, router } = useRouter()
   const partnerOfferId = match.params.partnerOfferID
   const {

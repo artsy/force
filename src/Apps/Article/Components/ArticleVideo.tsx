@@ -34,7 +34,7 @@ interface ArticleVideoProps {
   article: ArticleVideo_article$data
 }
 
-const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
+const ArticleVideo: FC<React.PropsWithChildren<ArticleVideoProps>> = ({ article }) => {
   const { clickedPlayVideo } = useArticleTracking()
 
   const height = useFullBleedHeaderHeight()

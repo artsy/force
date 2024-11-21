@@ -9,7 +9,7 @@ export interface ArtworkTopContextBarProps {
   artwork: ArtworkTopContextBar_artwork$data
 }
 
-export const ArtworkTopContextBar: React.FC<ArtworkTopContextBarProps> = props => {
+export const ArtworkTopContextBar: React.FC<React.PropsWithChildren<ArtworkTopContextBarProps>> = props => {
   const bannerProps = computeBannerProps(props)
 
   if (!bannerProps) {

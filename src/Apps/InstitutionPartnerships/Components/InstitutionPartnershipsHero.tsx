@@ -4,7 +4,7 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { FullBleedHeaderFader } from "Components/FullBleedHeader/FullBleedHeaderFader"
 
-export const InstitutionPartnershipsHero: FC = () => {
+export const InstitutionPartnershipsHero: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <FullBleedHeaderFader figures={FIGURES}>
       <Box position="absolute" top={0} left={0} width="100%" height="100%">

@@ -19,7 +19,7 @@ export const MyCollectionArtworkFormContext = createContext<
   removeLocalImage: () => {},
 })
 
-export const MyCollectionArtworkFormContextProvider: React.FC<MyCollectionArtworkFormContextProps> = ({
+export const MyCollectionArtworkFormContextProvider: React.FC<React.PropsWithChildren<MyCollectionArtworkFormContextProps>> = ({
   children,
   ...rest
 }) => {

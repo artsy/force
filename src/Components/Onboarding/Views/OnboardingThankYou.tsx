@@ -10,7 +10,7 @@ interface OnboardingThankYouProps {
 
 const AUTOCLOSE_DELAY = 5000
 
-export const OnboardingThankYou: FC<OnboardingThankYouProps> = ({
+export const OnboardingThankYou: FC<React.PropsWithChildren<OnboardingThankYouProps>> = ({
   autoClose,
   message,
 }) => {

@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { AddressVerificationFlowFragmentContainer } from "Apps/Order/Components/AddressVerificationFlow"
 import { AddressVerificationFlow_Test_Query } from "__generated__/AddressVerificationFlow_Test_Query.graphql"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
 import { useTracking } from "react-tracking"
@@ -322,23 +322,33 @@ describe("AddressVerificationFlow", () => {
 
       const userAddress = screen.getByText("What you entered")
       userAddress.click()
-      const button = screen.getByText("Use This Address")
-      button.click()
 
-      expect(trackEvent).toHaveBeenCalledTimes(2)
-      expect(trackEvent).toHaveBeenNthCalledWith(2, {
-        action: "clickedValidationAddressOptions",
-        context_module: "ordersShipping",
-        context_page_owner_id: "example-order-id",
-        context_page_owner_type: "orders-shipping",
-        subject: "Confirm your delivery address",
-        label: "Use This Address",
-        option: "What you entered",
-        user_id: "example-user-id",
+      let button
+      await waitFor(() => {
+        button = screen.getByText("Use This Address")
       })
 
-      expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
-      expect(mockOnChosenAddress).toHaveBeenCalledWith("USER", mockInputAddress)
+      await waitFor(() => {
+        button.click()
+
+        expect(trackEvent).toHaveBeenCalledTimes(2)
+        expect(trackEvent).toHaveBeenNthCalledWith(2, {
+          action: "clickedValidationAddressOptions",
+          context_module: "ordersShipping",
+          context_page_owner_id: "example-order-id",
+          context_page_owner_type: "orders-shipping",
+          subject: "Confirm your delivery address",
+          label: "Use This Address",
+          option: "What you entered",
+          user_id: "example-user-id",
+        })
+
+        expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
+        expect(mockOnChosenAddress).toHaveBeenCalledWith(
+          "USER",
+          mockInputAddress
+        )
+      })
     })
 
     it("calls onClose and tracks the click with the user closes the modal", async () => {

@@ -8,7 +8,7 @@ import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/Filter
 
 const DEBOUNCE_DELAY = 300
 
-export const KeywordFilter: React.FC = () => {
+export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   const filterContext = useAuctionResultsFilterContext()
 
   const updateKeywordFilter = (text: string) => {
@@ -24,7 +24,7 @@ export const KeywordFilter: React.FC = () => {
 
   // Stop the invocation of the debounced function after unmounting
   useEffect(() => {
-    return () => handleChangeText.cancel()
+    return () => handleChangeText?.cancel?.()
     // FIXME:
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

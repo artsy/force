@@ -12,7 +12,7 @@ interface ArtistsCarouselCellProps {
   lazyLoad?: boolean
 }
 
-const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
+const ArtistsCarouselCell: React.FC<React.PropsWithChildren<ArtistsCarouselCellProps>> = ({
   featuredLink,
   lazyLoad = true,
 }) => {

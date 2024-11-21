@@ -19,7 +19,7 @@ interface SearchResultsRouteProps {
   viewer: SearchResultsArtworks_viewer$data
 }
 
-export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = props => {
+export const SearchResultsArtworksRoute: React.FC<React.PropsWithChildren<SearchResultsRouteProps>> = props => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
   const [searchFilterKey, setSearchFilterKey] = useState(

@@ -12,7 +12,7 @@ export interface MarkAllAsReadPanelProps {
   unreadCounts: number
 }
 
-export const MarkAllAsReadPanel: React.FC<MarkAllAsReadPanelProps> = ({
+export const MarkAllAsReadPanel: React.FC<React.PropsWithChildren<MarkAllAsReadPanelProps>> = ({
   unreadCounts,
 }) => {
   const { relayEnvironment } = useSystemContext()

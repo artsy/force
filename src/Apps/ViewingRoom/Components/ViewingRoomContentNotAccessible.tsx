@@ -9,7 +9,7 @@ interface ViewingRoomContentNotAccessibleProps {
   viewingRoom: ViewingRoomContentNotAccessible_viewingRoom$data
 }
 
-const ViewingRoomContentNotAccessible: React.FC<ViewingRoomContentNotAccessibleProps> = ({
+const ViewingRoomContentNotAccessible: React.FC<React.PropsWithChildren<ViewingRoomContentNotAccessibleProps>> = ({
   viewingRoom,
 }) => {
   const infoText =

@@ -7,7 +7,7 @@ export interface MyCollectionArtworkDetailsProps {
   artwork: MyCollectionArtworkDetails_artwork$key
 }
 
-export const MyCollectionArtworkDetails: React.FC<MyCollectionArtworkDetailsProps> = props => {
+export const MyCollectionArtworkDetails: React.FC<React.PropsWithChildren<MyCollectionArtworkDetailsProps>> = props => {
   const {
     attributionClass,
     mediumType,

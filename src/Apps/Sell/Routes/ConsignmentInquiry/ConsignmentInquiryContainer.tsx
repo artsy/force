@@ -7,7 +7,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
-export const ConsignmentInquiryContainer: React.FC = ({ children }) => {
+export const ConsignmentInquiryContainer: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const { router, match } = useRouter()
 
   const handleLogoClick = (

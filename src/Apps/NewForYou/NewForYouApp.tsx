@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import { FC } from "react"
 import { MetaTags } from "Components/MetaTags"
 import { Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -11,7 +11,7 @@ interface NewForYouAppProps {
   viewer: NewForYouApp_viewer$data
 }
 
-export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
+export const NewForYouApp: FC<React.PropsWithChildren<NewForYouAppProps>> = ({ viewer }) => {
   return (
     <>
       <MetaTags title="New For You" />

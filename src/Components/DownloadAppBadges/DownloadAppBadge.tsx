@@ -21,7 +21,7 @@ interface DownloadAppBadgeProps extends LinkProps {
   downloadAppUrl: string
 }
 
-export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = ({
+export const DownloadAppBadge: React.FC<React.PropsWithChildren<DownloadAppBadgeProps>> = ({
   contextModule,
   device,
   downloadAppUrl,

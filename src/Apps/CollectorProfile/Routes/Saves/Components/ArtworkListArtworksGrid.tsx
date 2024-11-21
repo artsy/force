@@ -35,7 +35,7 @@ interface ArtworkListArtworksGridProps {
  * In the future we plan to use the `BaseArtworkFilter` and `ArtworkFilterArtworkGrid` components
  * when filter support is added.
  */
-const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
+const ArtworkListArtworksGrid: FC<React.PropsWithChildren<ArtworkListArtworksGridProps>> = ({
   relayRefetch,
   me,
 }) => {

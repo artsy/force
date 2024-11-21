@@ -13,7 +13,7 @@ interface ArtworkFilterSavedSearchAlertContextProviderProps
  * A simple component that just wraps the `SavedSearchAlertContextProvider` in order
  *  to omit the `criteria` prop, which is inferred from the filter context
  */
-export const ArtworkFilterSavedSearchAlertContextProvider: FC<ArtworkFilterSavedSearchAlertContextProviderProps> = ({
+export const ArtworkFilterSavedSearchAlertContextProvider: FC<React.PropsWithChildren<ArtworkFilterSavedSearchAlertContextProviderProps>> = ({
   children,
   entity,
   ...rest

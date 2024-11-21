@@ -12,7 +12,7 @@ interface ViewingRoomsAppProps {
   featuredViewingRooms: ViewingRoomsApp_featuredViewingRooms$data
 }
 
-const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
+const ViewingRoomsApp: React.FC<React.PropsWithChildren<ViewingRoomsAppProps>> = props => {
   const { allViewingRooms, featuredViewingRooms } = props
   return (
     <>

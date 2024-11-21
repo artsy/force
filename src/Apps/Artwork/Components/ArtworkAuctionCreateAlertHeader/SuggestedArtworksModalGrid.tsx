@@ -29,7 +29,7 @@ interface SuggestedArtworksModalGridProps {
   onClose: () => void
 }
 
-export const SuggestedArtworksModalGrid: FC<SuggestedArtworksModalGridProps> = ({
+export const SuggestedArtworksModalGrid: FC<React.PropsWithChildren<SuggestedArtworksModalGridProps>> = ({
   artworksConnection,
   onClose,
 }) => {
@@ -77,7 +77,7 @@ interface SuggestedArtworksModalGridQueryRendererProps
   onClose: () => void
 }
 
-export const SuggestedArtworksModalGridQueryRenderer: FC<SuggestedArtworksModalGridQueryRendererProps> = props => {
+export const SuggestedArtworksModalGridQueryRenderer: FC<React.PropsWithChildren<SuggestedArtworksModalGridQueryRendererProps>> = props => {
   const { onClose, ...inputProps } = props
 
   return (
@@ -122,7 +122,7 @@ export const SuggestedArtworksModalGridQueryRenderer: FC<SuggestedArtworksModalG
   )
 }
 
-const ContentPlaceholder: FC = () => {
+const ContentPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Flex flexDirection="column">
       <SkeletonText>300 Artworks:</SkeletonText>

@@ -22,7 +22,7 @@ interface ArtworkImageBrowserSmallProps {
   maxHeight: number
 }
 
-const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
+const ArtworkImageBrowserSmall: React.FC<React.PropsWithChildren<ArtworkImageBrowserSmallProps>> = ({
   artwork,
   activeIndex,
   setActiveIndex,
@@ -116,7 +116,7 @@ const Cell: React.ForwardRefExoticComponent<SwiperCellProps> = React.forwardRef(
   }
 )
 
-const Rail: React.FC<SwiperRailProps> = props => {
+const Rail: React.FC<React.PropsWithChildren<SwiperRailProps>> = props => {
   return <SwiperRail {...props} display="block" />
 }
 

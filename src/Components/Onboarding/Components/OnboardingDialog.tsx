@@ -8,7 +8,7 @@ interface OnboardingDialogProps {
   onHide(): void
 }
 
-export const OnboardingDialog: FC<OnboardingDialogProps> = ({
+export const OnboardingDialog: FC<React.PropsWithChildren<OnboardingDialogProps>> = ({
   onClose,
   onHide,
 }) => {

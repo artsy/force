@@ -7,7 +7,7 @@ interface ShowMetaProps {
   show: ShowMeta_show$data
 }
 
-const ShowMeta: React.FC<ShowMetaProps> = ({
+const ShowMeta: React.FC<React.PropsWithChildren<ShowMetaProps>> = ({
   show: {
     name,
     href,

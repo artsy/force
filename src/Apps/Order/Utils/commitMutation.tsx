@@ -32,7 +32,7 @@ const MutationContext = React.createContext<CommitMutationProps>({
 })
 
 class ProvideMutationContext extends React.Component<
-  { relayEnvironment: Environment },
+  React.PropsWithChildren<{ relayEnvironment: Environment }>,
   { isCommittingMutation: boolean }
 > {
   execQueue: Array<() => Promise<any>> = []
@@ -86,8 +86,8 @@ class ProvideMutationContext extends React.Component<
 }
 
 export function injectCommitMutation<Props extends CommitMutationProps>(
-  Component: React.ComponentType<Props>
-): React.ComponentType<Omit<Props, keyof CommitMutationProps>> {
+  Component: React.ComponentType<React.PropsWithChildren<Props>>
+): React.ComponentType<React.PropsWithChildren<Omit<Props, keyof CommitMutationProps>>> {
   return props => {
     const { relayEnvironment } = useContext(SystemContext)
     return (

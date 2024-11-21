@@ -31,7 +31,7 @@ interface ArticleZoomGalleryProps {
   onClose: () => void
 }
 
-const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
+const ArticleZoomGallery: FC<React.PropsWithChildren<ArticleZoomGalleryProps>> = ({
   article,
   figureId,
   onClose,
@@ -206,7 +206,7 @@ export const ArticleZoomGalleryFragmentContainer = createFragmentContainer(
   }
 )
 
-const ArticleZoomGalleryPlaceholder: FC = () => {
+const ArticleZoomGalleryPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   const { theme } = useTheme()
   return (
     <ModalBase bg={theme.effects.backdrop}>
@@ -229,7 +229,7 @@ interface ArticleZoomGalleryRefetchContainerProps {
   onClose: () => void
 }
 
-export const ArticleZoomGalleryRefetchContainer: FC<ArticleZoomGalleryRefetchContainerProps> = ({
+export const ArticleZoomGalleryRefetchContainer: FC<React.PropsWithChildren<ArticleZoomGalleryRefetchContainerProps>> = ({
   id,
   figureId,
   onClose,

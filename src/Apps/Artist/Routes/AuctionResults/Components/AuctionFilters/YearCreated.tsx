@@ -7,7 +7,7 @@ import {
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
-export const YearCreated: React.FC = () => {
+export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()
   const {
     createdAfterYear,

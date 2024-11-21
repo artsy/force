@@ -35,7 +35,7 @@ interface ConversationMessagesProps {
   relay: RelayPaginationProp
 }
 
-export const ConversationMessages: FC<ConversationMessagesProps> = ({
+export const ConversationMessages: FC<React.PropsWithChildren<ConversationMessagesProps>> = ({
   conversation,
   relay,
 }) => {
@@ -344,7 +344,7 @@ const useAutoScrollToBottom = ({
   const lastMessageId = messages.length > 0 ? messages[0].internalID : null
 
   const triggerAutoScroll = useCallback(
-    ({ behavior = "instant", block, start } = {}) => {
+    ({ behavior = "instant", block, start }: any = {}) => {
       setTimeout(() => {
         autoScrollToBottomRef?.current?.scrollIntoView({
           behavior,
@@ -369,7 +369,7 @@ const useAutoScrollToBottom = ({
   return { triggerAutoScroll }
 }
 
-const LoadingSpinner: React.FC<BoxProps> = boxProps => (
+const LoadingSpinner: React.FC<React.PropsWithChildren<BoxProps>> = boxProps => (
   <Box position="relative" {...boxProps} data-testid="LoadingSpinner">
     <Spinner />
   </Box>
@@ -380,7 +380,7 @@ const LatestMessagesSentinel = Sentinel
 const TopLoadingSpinner = LoadingSpinner
 const AutoScrollToBottom = Box
 
-const BottomLoadingSpinner: React.FC<BoxProps & { visible: boolean }> = ({
+const BottomLoadingSpinner: React.FC<React.PropsWithChildren<BoxProps & { visible: boolean }>> = ({
   visible,
   ...boxProps
 }) => {

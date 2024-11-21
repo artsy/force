@@ -8,7 +8,7 @@ interface SavesEntityImageProps {
   size?: number
 }
 
-export const SavesEntityImage: FC<SavesEntityImageProps> = ({
+export const SavesEntityImage: FC<React.PropsWithChildren<SavesEntityImageProps>> = ({
   url,
   size = 60,
 }) => {

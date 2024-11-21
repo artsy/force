@@ -12,7 +12,7 @@ import { useRouter } from "found"
 import { Suspense } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 
-export const PreviousSubmissionQueryRenderer: React.FC = () => {
+export const PreviousSubmissionQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { submissionID, step } = usePreviousSubmission()
 
   if (!submissionID) return null
@@ -32,7 +32,7 @@ interface PreviousSubmissionProps {
   currentStep: SellFlowStep
 }
 
-const PreviousSubmission: React.FC<PreviousSubmissionProps> = ({
+const PreviousSubmission: React.FC<React.PropsWithChildren<PreviousSubmissionProps>> = ({
   submissionID,
   currentStep = INITIAL_STEP,
 }) => {

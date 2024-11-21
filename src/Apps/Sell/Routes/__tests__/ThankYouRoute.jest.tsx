@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { ThankYouRoute } from "Apps/Sell/Routes/ThankYouRoute"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { graphql } from "react-relay"

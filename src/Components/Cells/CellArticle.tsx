@@ -20,7 +20,7 @@ export interface CellArticleProps extends Omit<RouterLinkProps, "to"> {
   displayByline?: boolean
 }
 
-const CellArticle: FC<CellArticleProps> = ({
+const CellArticle: FC<React.PropsWithChildren<CellArticleProps>> = ({
   article,
   mode,
   displayByline = true,
@@ -102,7 +102,7 @@ export const CellArticleFragmentContainer = createFragmentContainer(
 
 type CellArticlePlaceholderProps = Pick<CellArticleProps, "mode"> & BoxProps
 
-export const CellArticlePlaceholder: FC<CellArticlePlaceholderProps> = ({
+export const CellArticlePlaceholder: FC<React.PropsWithChildren<CellArticlePlaceholderProps>> = ({
   mode = "RAIL",
   ...rest
 }) => {

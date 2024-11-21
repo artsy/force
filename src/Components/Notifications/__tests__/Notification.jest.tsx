@@ -1,7 +1,7 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { NotificationQueryRenderer } from "Components/Notifications/Notification"
 import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { waitFor } from "@testing-library/react"
 
 const mockRouterPush = jest.fn()
 
@@ -30,9 +30,9 @@ describe("Notification", () => {
         Notification: () => notification,
       })
 
-      await flushPromiseQueue()
-
-      expect(mockRouterPush).toHaveBeenCalledWith("test-href")
+      await waitFor(() => {
+        expect(mockRouterPush).toHaveBeenCalledWith("test-href")
+      })
     })
   })
 })
