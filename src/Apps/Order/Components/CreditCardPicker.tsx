@@ -91,7 +91,7 @@ export class CreditCardPicker extends React.Component<
       return this.props.me.creditCards?.edges?.length
         ? {
             type: "existing",
-            id: this.props.me.creditCards.edges[0]?.node?.internalID!,
+            id: this.props.me.creditCards.edges[0]?.node?.internalID as string,
           }
         : { type: "new" }
     }
@@ -121,6 +121,7 @@ export class CreditCardPicker extends React.Component<
     try {
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const cardNumberElement = this.props.elements.getElement(
         CardNumberElement
       )!
@@ -167,7 +168,7 @@ export class CreditCardPicker extends React.Component<
     const creditCardOrError = (
       await this.createCreditCard({
         input: {
-          token: stripeResult?.token?.id!,
+          token: stripeResult.token.id,
           oneTimeUse: !saveNewCreditCard,
         },
       })
@@ -192,7 +193,7 @@ export class CreditCardPicker extends React.Component<
     } else
       return {
         type: "success",
-        creditCardId: creditCardOrError?.creditCard?.internalID!,
+        creditCardId: creditCardOrError?.creditCard?.internalID as string,
       }
   }
 

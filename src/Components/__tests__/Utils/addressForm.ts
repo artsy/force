@@ -66,5 +66,5 @@ export const fillAddressForm = async (address: Address) => {
   userEvent.paste(city, address.city)
   userEvent.paste(region, address.region)
   userEvent.paste(postalCode, address.postalCode)
-  userEvent.paste(phoneNumber, address.phoneNumber!)
+  address.phoneNumber && userEvent.paste(phoneNumber, address.phoneNumber)
 }
