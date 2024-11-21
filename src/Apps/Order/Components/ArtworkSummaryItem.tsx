@@ -31,10 +31,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   const { artistNames, title, image, date } = artworkVersion || {}
   const { shippingOrigin, isUnlisted } = artwork || {}
 
-  const imageURL =
-    image &&
-    image.resized_ArtworkSummaryItem &&
-    image.resized_ArtworkSummaryItem.url
+  const imageURL = image && image.resized && image.resized.url
 
   const truncateTextStyle = {
     whiteSpace: "nowrap",
@@ -160,7 +157,7 @@ export const ArtworkSummaryItemFragmentContainer = createFragmentContainer(
                 artistNames
                 title
                 image {
-                  resized_ArtworkSummaryItem: resized(width: 55) {
+                  resized(width: 185) {
                     url
                   }
                 }

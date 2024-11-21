@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af25ec17ac06c506d9c9bd3667d8f407>>
+ * @generated SignedSource<<1e6f52f83fe32f351e23dbff9b88c827>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,7 +37,7 @@ export type ArtworkSummaryItem_order$data = {
           readonly artistNames: string | null | undefined;
           readonly date: string | null | undefined;
           readonly image: {
-            readonly resized_ArtworkSummaryItem: {
+            readonly resized: {
               readonly url: string;
             } | null | undefined;
           } | null | undefined;
@@ -244,12 +244,12 @@ return {
                       "plural": false,
                       "selections": [
                         {
-                          "alias": "resized_ArtworkSummaryItem",
+                          "alias": null,
                           "args": [
                             {
                               "kind": "Literal",
                               "name": "width",
-                              "value": 55
+                              "value": 185
                             }
                           ],
                           "concreteType": "ResizedImageUrl",
@@ -265,7 +265,7 @@ return {
                               "storageKey": null
                             }
                           ],
-                          "storageKey": "resized(width:55)"
+                          "storageKey": "resized(width:185)"
                         }
                       ],
                       "storageKey": null
@@ -288,6 +288,6 @@ return {
 };
 })();
 
-(node as any).hash = "3389bf5437c689478d9b92b4ea7550c2";
+(node as any).hash = "debc47d6e821d7c72b82c3e6b2d1d1df";
 
 export default node;
