@@ -44,7 +44,8 @@ export const AddressFormFields = <V extends FormikContextWithAddress>() => {
       <Column span={12}>
         <Input
           name="address.name"
-          title="Full Name"
+          id="address.name"
+          title="Full name"
           placeholder="Add full name"
           autoComplete="name"
           autoFocus
@@ -59,6 +60,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>() => {
       <Column span={12}>
         <CountrySelect
           name="address.country"
+          id="address.country"
           title="Country"
           // TODO: Accept a value prop in Select
           // @ts-ignore
@@ -72,6 +74,8 @@ export const AddressFormFields = <V extends FormikContextWithAddress>() => {
 
       <Column span={12}>
         <AddressAutocompleteInput
+          name="address.addressLine1"
+          id="address.addressLine1"
           trackingValues={autocompleteTrackingValues}
           address={{
             country: values.address.country,
@@ -79,7 +83,6 @@ export const AddressFormFields = <V extends FormikContextWithAddress>() => {
           flip={false}
           required
           disableAutocomplete={values.address.region === "AK"}
-          name="address.addressLine1"
           placeholder="Add street address"
           title="Street address"
           value={values.address.addressLine1}
@@ -110,6 +113,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>() => {
       <Column span={12}>
         <Input
           name="address.addressLine2"
+          id="address.addressLine2"
           title="Apt, floor, suite, etc. (optional)"
           placeholder="Add apartment, floor, suite, etc."
           autoComplete="address-line2"
@@ -123,6 +127,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>() => {
       <Column span={12}>
         <Input
           name="address.city"
+          id="address.city"
           title="City"
           placeholder="Add city"
           autoComplete="address-level2"
@@ -137,6 +142,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>() => {
       <Column span={6}>
         <Input
           name="address.region"
+          id="address.region"
           title="State, region or province"
           placeholder="Add state, region or province"
           autoComplete="address-level1"
@@ -151,6 +157,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>() => {
       <Column span={6}>
         <Input
           name="address.postalCode"
+          id="address.postalCode"
           title="ZIP/Postal code"
           placeholder="Add ZIP/Postal code"
           autoComplete="postal-code"
@@ -165,6 +172,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>() => {
       <Column span={12}>
         <Input
           name="phoneNumber"
+          id="phoneNumber"
           title="Phone number"
           type="tel"
           description="Required for shipping logistics"

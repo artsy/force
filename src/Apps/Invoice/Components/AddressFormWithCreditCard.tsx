@@ -1,7 +1,8 @@
 import { Join, Spacer } from "@artsy/palette"
 import { CreditCardInput } from "Components/CreditCardInput"
-import { AddressForm } from "./AddressForm"
+import { AddressForm, AddressFormValues } from "./AddressForm"
 import { useFormContext } from "Apps/Invoice/Hooks/useFormContext"
+import { AddressFormFields } from "Components/Address/AddressFormFields"
 
 export const AddressFormWithCreditCard: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
@@ -36,7 +37,7 @@ export const AddressFormWithCreditCard: React.FC<React.PropsWithChildren<unknown
         required
       />
 
-      <AddressForm />
+      <AddressFormFields<AddressFormValues> />
     </Join>
   )
 }
