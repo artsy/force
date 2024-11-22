@@ -32,7 +32,7 @@ export const PrivateArtworkAboutArtist: React.FC<React.PropsWithChildren<
       fragment PrivateArtworkAboutArtist_artwork on Artwork {
         displayArtistBio
         slug
-        artists(shallow: true) {
+        privateArtists: artists(shallow: false) {
           ...FollowArtistButton_artist
           internalID
           href
@@ -80,12 +80,13 @@ export const PrivateArtworkAboutArtist: React.FC<React.PropsWithChildren<
       backgroundColor="black100"
     >
       <Text variant="md" color="white100">
-        About the Artist{data.artists && data.artists?.length > 1 ? "s" : ""}
+        About the Artist
+        {data.privateArtists && data.privateArtists?.length > 1 ? "s" : ""}
       </Text>
 
       <Spacer y={2} />
 
-      {data.artists?.map(
+      {data.privateArtists?.map(
         artist =>
           artist && (
             <>
