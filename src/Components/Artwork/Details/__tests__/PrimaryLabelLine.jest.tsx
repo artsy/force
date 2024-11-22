@@ -2,7 +2,7 @@ import { DateTime } from "luxon"
 import { PrimaryLabelLineQueryRenderer } from "Components/Artwork/Details/PrimaryLabelLine"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 import { createRef } from "react"
-import { render, screen } from "@testing-library/react"
+import { act, render, screen } from "@testing-library/react"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -105,15 +105,17 @@ describe("PrimaryLabelLine", () => {
         <PrimaryLabelLineQueryRenderer id="opaque-internal-id" label={label} />
       )
 
-      mockEnvironment.mock.resolveMostRecentOperation(operation =>
-        MockPayloadGenerator.generate(operation, {
-          Artwork: () => ({
-            collectorSignals: {
-              partnerOffer: null,
-            },
-          }),
-        })
-      )
+      act(() => {
+        mockEnvironment.mock.resolveMostRecentOperation(operation =>
+          MockPayloadGenerator.generate(operation, {
+            Artwork: () => ({
+              collectorSignals: {
+                partnerOffer: null,
+              },
+            }),
+          })
+        )
+      })
 
       return container
     }
@@ -159,20 +161,22 @@ describe("PrimaryLabelLine", () => {
         <PrimaryLabelLineQueryRenderer id="opaque-internal-id" label={label} />
       )
 
-      mockEnvironment.mock.resolveMostRecentOperation(operation =>
-        MockPayloadGenerator.generate(operation, {
-          Artwork: () => ({
-            collectorSignals: {
-              partnerOffer: {
-                endAt: DateTime.now().plus({ days: 1, seconds: -1 }).toISO(),
-                priceWithDiscount: {
-                  display: "$1,999",
+      act(() => {
+        mockEnvironment.mock.resolveMostRecentOperation(operation =>
+          MockPayloadGenerator.generate(operation, {
+            Artwork: () => ({
+              collectorSignals: {
+                partnerOffer: {
+                  endAt: DateTime.now().plus({ days: 1, seconds: -1 }).toISO(),
+                  priceWithDiscount: {
+                    display: "$1,999",
+                  },
                 },
               },
-            },
-          }),
-        })
-      )
+            }),
+          })
+        )
+      })
 
       return container
     }
