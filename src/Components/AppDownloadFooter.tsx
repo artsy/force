@@ -6,7 +6,7 @@ import {
   Text,
   useDidMount,
 } from "@artsy/palette"
-import { FC, useRef } from "react"
+import { FC, useEffect, useRef } from "react"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { Z } from "Apps/Components/constants"
@@ -14,11 +14,11 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 import Cookies from "cookies-js"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-import { useRouteComplete } from "Utils/Hooks/useRouteComplete"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useRouter } from "System/Hooks/useRouter"
 
 const APP_DOWNLOAD_FOOTER_KEY = "AppDownloadFooter"
 
@@ -26,7 +26,9 @@ interface AppDownloadFooterProps {}
 
 export const AppDownloadFooter: FC<AppDownloadFooterProps> = () => {
   const isMounted = useDidMount()
+
   const { user } = useSystemContext()
+
   const {
     contextPageOwnerType,
     contextPageOwnerId,
@@ -37,11 +39,16 @@ export const AppDownloadFooter: FC<AppDownloadFooterProps> = () => {
   const ref = useRef<HTMLDivElement | null>(null)
 
   const { downloadAppUrl } = useDeviceDetection()
+  const { match } = useRouter()
 
-  useRouteComplete({
-    // Used to ensure we just show the banner after an initial internal navigation
-    onComplete: async () => {
-      if (!ref.current || !("animate" in ref.current)) return
+  const isVisible = useRef(false)
+  const routeChanges = useRef(-1)
+
+  useEffect(() => {
+    const showBanner = async () => {
+      if (!ref.current || !("animate" in ref.current) || isVisible.current) {
+        return
+      }
 
       const animation = ref.current.animate(
         [{ transform: "translateY(100%)" }, { transform: "translateY(0)" }],
@@ -49,8 +56,19 @@ export const AppDownloadFooter: FC<AppDownloadFooterProps> = () => {
       )
 
       await animation.finished
-    },
-  })
+      isVisible.current = true
+    }
+
+    // Increment route changes counter when pathname changes
+    if (match.location.pathname) {
+      routeChanges.current++
+    }
+
+    // Show banner after second route change
+    if (routeChanges.current === 2) {
+      showBanner()
+    }
+  }, [match.location.pathname])
 
   const trackAppDownload = () => {
     const trackingEvent = {
