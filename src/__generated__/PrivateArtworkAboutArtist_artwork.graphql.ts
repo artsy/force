@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e22196db70d3374d92027693aeca5b12>>
+ * @generated SignedSource<<9c31a08c7a6eee9553594bf1ffeb88ae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrivateArtworkAboutArtist_artwork$data = {
-  readonly artists: ReadonlyArray<{
+  readonly displayArtistBio: boolean | null | undefined;
+  readonly privateArtists: ReadonlyArray<{
     readonly biographyBlurb: {
       readonly text: string | null | undefined;
     } | null | undefined;
@@ -36,7 +37,6 @@ export type PrivateArtworkAboutArtist_artwork$data = {
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
   } | null | undefined> | null | undefined;
-  readonly displayArtistBio: boolean | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "PrivateArtworkAboutArtist_artwork";
 };
@@ -68,12 +68,12 @@ return {
     },
     (v0/*: any*/),
     {
-      "alias": null,
+      "alias": "privateArtists",
       "args": [
         {
           "kind": "Literal",
           "name": "shallow",
-          "value": true
+          "value": false
         }
       ],
       "concreteType": "Artist",
@@ -242,7 +242,7 @@ return {
           "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
         }
       ],
-      "storageKey": "artists(shallow:true)"
+      "storageKey": "artists(shallow:false)"
     }
   ],
   "type": "Artwork",
@@ -250,6 +250,6 @@ return {
 };
 })();
 
-(node as any).hash = "035a8008975b98dd485781eec2fc39de";
+(node as any).hash = "751f547dd9e8a5e79bfb581d55c15c6c";
 
 export default node;
