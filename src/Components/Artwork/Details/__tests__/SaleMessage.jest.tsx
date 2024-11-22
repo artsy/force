@@ -3,7 +3,7 @@ import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { SaleMessageQueryRenderer } from "Components/Artwork/Details/SaleMessage"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 import { createRef } from "react"
-import { render, screen } from "@testing-library/react"
+import { act, render, screen } from "@testing-library/react"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -51,15 +51,17 @@ describe("SaleMessage", () => {
           />
         )
 
-        mockEnvironment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            Artwork: () => ({
-              collectorSignals: {
-                partnerOffer: null,
-              },
-            }),
-          })
-        )
+        act(() => {
+          mockEnvironment.mock.resolveMostRecentOperation(operation =>
+            MockPayloadGenerator.generate(operation, {
+              Artwork: () => ({
+                collectorSignals: {
+                  partnerOffer: null,
+                },
+              }),
+            })
+          )
+        })
       }
 
       it("shows highest bid when there is one", async () => {
@@ -144,15 +146,17 @@ describe("SaleMessage", () => {
           />
         )
 
-        mockEnvironment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            Artwork: () => ({
-              collectorSignals: {
-                partnerOffer: null,
-              },
-            }),
-          })
-        )
+        act(() => {
+          mockEnvironment.mock.resolveMostRecentOperation(operation =>
+            MockPayloadGenerator.generate(operation, {
+              Artwork: () => ({
+                collectorSignals: {
+                  partnerOffer: null,
+                },
+              }),
+            })
+          )
+        })
 
         expect(screen.getByText("SALE MESSAGE")).toBeInTheDocument()
       })
@@ -167,20 +171,25 @@ describe("SaleMessage", () => {
           />
         )
 
-        mockEnvironment.mock.resolveMostRecentOperation(operation =>
-          MockPayloadGenerator.generate(operation, {
-            Artwork: () => ({
-              collectorSignals: {
-                partnerOffer: {
-                  endAt: DateTime.now().plus({ days: 1, seconds: -1 }).toISO(),
-                  priceWithDiscount: {
-                    display: "$1,999",
+        act(() => {
+          mockEnvironment.mock.resolveMostRecentOperation(operation =>
+            MockPayloadGenerator.generate(operation, {
+              Artwork: () => ({
+                collectorSignals: {
+                  partnerOffer: {
+                    endAt: DateTime.now()
+                      .plus({ days: 1, seconds: -1 })
+                      .toISO(),
+                    priceWithDiscount: {
+                      display: "$1,999",
+                    },
                   },
                 },
-              },
-            }),
-          })
-        )
+              }),
+            })
+          )
+        })
+
         expect(screen.getByText("$1,999")).toBeInTheDocument()
         expect(screen.getByText("Exp. 0d 23h")).toBeInTheDocument()
         expect(screen.queryByText("SALE MESSAGE")).not.toBeInTheDocument()
