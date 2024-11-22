@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2cb50f720b5aa0a23866edc6999833cf>>
+ * @generated SignedSource<<b640803d312038972ecc25562ba2ad34>>
+ * @relayHash 3a7a2fa496666cf641764cbbc90eb006
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3a7a2fa496666cf641764cbbc90eb006
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type SettingsEditProfileArtistsYouCollectAutocompleteQuery$variables = {
@@ -184,12 +187,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3a7a2fa496666cf641764cbbc90eb006",
-    "id": null,
+    "id": "3a7a2fa496666cf641764cbbc90eb006",
     "metadata": {},
     "name": "SettingsEditProfileArtistsYouCollectAutocompleteQuery",
     "operationKind": "query",
-    "text": "query SettingsEditProfileArtistsYouCollectAutocompleteQuery(\n  $term: String!\n) {\n  searchConnection(query: $term, entities: ARTIST, first: 5) {\n    edges {\n      node {\n        __typename\n        text: displayLabel\n        ... on Artist {\n          value: internalID\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

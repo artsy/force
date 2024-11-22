@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ac0022e69524821cde37d60042a09aeb>>
+ * @generated SignedSource<<1d209891ab9d6b63710b6de1e82e65ba>>
+ * @relayHash a603c2392788751cc7bdca82490074e1
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID a603c2392788751cc7bdca82490074e1
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
@@ -304,12 +307,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a603c2392788751cc7bdca82490074e1",
-    "id": null,
+    "id": "a603c2392788751cc7bdca82490074e1",
     "metadata": {},
     "name": "OfferMutation",
     "operationKind": "mutation",
-    "text": "mutation OfferMutation(\n  $input: CommerceAddInitialOfferToOrderInput!\n) {\n  commerceAddInitialOfferToOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          mode\n          totalListPriceCents\n          ... on CommerceOfferOrder {\n            myLastOffer {\n              internalID\n              amountCents\n              note\n              id\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

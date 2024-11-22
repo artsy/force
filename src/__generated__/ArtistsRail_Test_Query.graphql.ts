@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<77c5e612aa1d3483e055bcfe62fc030c>>
+ * @generated SignedSource<<e7e78ae6043cb44f98b959980afac9ec>>
+ * @relayHash d3ddc01e6e897e18b469e29349dbf5c8
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d3ddc01e6e897e18b469e29349dbf5c8
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -184,8 +187,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d3ddc01e6e897e18b469e29349dbf5c8",
-    "id": null,
+    "id": "d3ddc01e6e897e18b469e29349dbf5c8",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
@@ -216,7 +218,7 @@ return {
     },
     "name": "ArtistsRail_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistsRail_Test_Query(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...ArtistsRail_partner\n    id\n  }\n}\n\nfragment ArtistsRail_partner on Partner {\n  slug\n  profileArtistsLayout\n  displayFullPartnerPage\n  artistsWithPublishedArtworks: artistsConnection(hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  representedArtistsWithoutPublishedArtworks: artistsConnection(representedBy: true, hasPublishedArtworks: false, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n"
+    "text": null
   }
 };
 })();

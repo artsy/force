@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<32ce69a10fe39ebb6ec810d9ad8d1966>>
+ * @generated SignedSource<<5d6e07276dafdac96673675a24e113f0>>
+ * @relayHash 4534049650bf8770c1b4932a49e6ce84
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 4534049650bf8770c1b4932a49e6ce84
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -343,8 +346,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4534049650bf8770c1b4932a49e6ce84",
-    "id": null,
+    "id": "4534049650bf8770c1b4932a49e6ce84",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -426,7 +428,7 @@ return {
     },
     "name": "InsightsMedianSalePriceTestQuery",
     "operationKind": "query",
-    "text": "query InsightsMedianSalePriceTestQuery {\n  me {\n    ...InsightsMedianSalePrice_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment InsightsMedianSalePrice_me on Me {\n  medianSalePrices: myCollectionConnection(first: 3, sortByLastAuctionResultDate: true) {\n    edges {\n      node {\n        internalID\n        medium\n        mediumType {\n          name\n        }\n        title\n        artist(shallow: true) {\n          internalID\n          ...EntityHeaderArtist_artist\n          id\n        }\n        marketPriceInsights {\n          medianSalePriceDisplayText\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

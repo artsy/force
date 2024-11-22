@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<76a169d8855f120d913a5734848aa66b>>
+ * @generated SignedSource<<5563493e1baff0a9fda00fdc6e10a2fe>>
+ * @relayHash 9b3da345db736cfe2bdb3918b63648c1
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 9b3da345db736cfe2bdb3918b63648c1
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -270,8 +273,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9b3da345db736cfe2bdb3918b63648c1",
-    "id": null,
+    "id": "9b3da345db736cfe2bdb3918b63648c1",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
@@ -333,7 +335,7 @@ return {
     },
     "name": "ShowViewingRoom_Test_Query",
     "operationKind": "query",
-    "text": "query ShowViewingRoom_Test_Query {\n  show(id: \"example-show-id\") {\n    ...ShowViewingRoom_show\n    id\n  }\n}\n\nfragment ShowViewingRoom_show on Show {\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  viewingRoomsConnection {\n    edges {\n      node {\n        internalID\n        slug\n        status\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        title\n        href\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

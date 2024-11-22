@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a928ed7eff45d367be775ea009547259>>
+ * @generated SignedSource<<6a4102f29db2d367f395a91e29e89fe2>>
+ * @relayHash 5ef6376521cd73c2ac9bcc2818b802b0
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5ef6376521cd73c2ac9bcc2818b802b0
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -348,8 +351,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5ef6376521cd73c2ac9bcc2818b802b0",
-    "id": null,
+    "id": "5ef6376521cd73c2ac9bcc2818b802b0",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "conversation": {
@@ -429,7 +431,7 @@ return {
     },
     "name": "ConversationOrderUpdate_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationOrderUpdate_Test_Query(\n  $conversationID: String!\n) {\n  conversation(id: $conversationID) {\n    orderConnection(first: 10, participantType: BUYER) {\n      edges {\n        node {\n          __typename\n          orderHistory {\n            __typename\n            ...ConversationOrderUpdate_event\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ConversationOrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    orderUpdateState\n    state\n    stateReason\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<512612b8556c48b5a0ce97e1ff0b8dfc>>
+ * @generated SignedSource<<2f602fc0c5c5def5f7f243cf22706b23>>
+ * @relayHash 47bbe2aace6d693bae79702c711df3a4
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 47bbe2aace6d693bae79702c711df3a4
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -82,12 +85,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "47bbe2aace6d693bae79702c711df3a4",
-    "id": null,
+    "id": "47bbe2aace6d693bae79702c711df3a4",
     "metadata": {},
     "name": "settingsRoutes_SettingsQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SettingsQuery {\n  me @principalField {\n    ...SettingsApp_me\n    id\n  }\n}\n\nfragment SettingsApp_me on Me {\n  name\n}\n"
+    "text": null
   }
 };
 

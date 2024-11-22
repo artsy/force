@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9ea5e3eb410fa84ed34b2887b9e98870>>
+ * @generated SignedSource<<89d8a8c7d5533f5c0132a616646a0446>>
+ * @relayHash b07eba690598df1d617b74dd03889d64
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b07eba690598df1d617b74dd03889d64
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -231,12 +234,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b07eba690598df1d617b74dd03889d64",
-    "id": null,
+    "id": "b07eba690598df1d617b74dd03889d64",
     "metadata": {},
     "name": "partnerRoutes_ContactQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ContactQuery(\n  $partnerId: String!\n) @cacheable {\n  partner(id: $partnerId) @principalField {\n    ...Contact_partner\n    locations: locationsConnection(first: 50) {\n      totalCount\n    }\n    id\n  }\n}\n\nfragment Contact_partner on Partner {\n  locations: locationsConnection(first: 50) {\n    edges {\n      ...PartnerContacts_edges\n    }\n  }\n}\n\nfragment PartnerContactAddress_location on Location {\n  city\n  phone\n  state\n  address\n  address2\n  postalCode\n  displayCountry\n}\n\nfragment PartnerContactCard_location on Location {\n  ...PartnerContactAddress_location\n  ...PartnerContactMap_location\n}\n\nfragment PartnerContactMap_location on Location {\n  city\n  phone\n  state\n  address\n  address2\n  postalCode\n  displayCountry\n  coordinates {\n    lat\n    lng\n  }\n}\n\nfragment PartnerContacts_edges on LocationEdge {\n  node {\n    id\n    ...PartnerContactCard_location\n  }\n}\n"
+    "text": null
   }
 };
 })();

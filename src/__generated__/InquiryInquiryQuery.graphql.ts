@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5c4be4fed5954d27319bcc500c063430>>
+ * @generated SignedSource<<10a2d41bcc6f602d23fb8ff88413b828>>
+ * @relayHash c2f840615ae54fbab4219e2fc27a2e0d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID c2f840615ae54fbab4219e2fc27a2e0d
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -211,12 +214,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c2f840615ae54fbab4219e2fc27a2e0d",
-    "id": null,
+    "id": "c2f840615ae54fbab4219e2fc27a2e0d",
     "metadata": {},
     "name": "InquiryInquiryQuery",
     "operationKind": "query",
-    "text": "query InquiryInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryInquiry_artwork\n    id\n  }\n}\n\nfragment InquiryInquiry_artwork on Artwork {\n  internalID\n  title\n  date\n  artist(shallow: true) {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0a0bf15cc6cbd82efca54485d7b056fc>>
+ * @generated SignedSource<<d8ef62153ed594cfd4dca02a33eb4539>>
+ * @relayHash 3b955119945204fcd7e4d03799c2c54b
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3b955119945204fcd7e4d03799c2c54b
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -217,12 +220,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3b955119945204fcd7e4d03799c2c54b",
-    "id": null,
+    "id": "3b955119945204fcd7e4d03799c2c54b",
     "metadata": {},
     "name": "PhotosRoute_Test_Query",
     "operationKind": "query",
-    "text": "query PhotosRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...PhotosRoute_submission\n    id\n  }\n}\n\nfragment PhotosRoute_submission on ConsignmentSubmission {\n  externalId\n  myCollectionArtwork {\n    images {\n      url(version: \"large\")\n    }\n    id\n  }\n  assets {\n    id\n    size\n    filename\n    geminiToken\n    imageUrls\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
+    "text": null
   }
 };
 })();

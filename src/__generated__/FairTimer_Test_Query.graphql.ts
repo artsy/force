@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ff02cc9dc28b4becde621a3defddf643>>
+ * @generated SignedSource<<754b011a96ae65ffc96a759bcf0ca484>>
+ * @relayHash de1c2ffe9f192b0a09d1e5757b6ddf88
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID de1c2ffe9f192b0a09d1e5757b6ddf88
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -90,8 +93,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "de1c2ffe9f192b0a09d1e5757b6ddf88",
-    "id": null,
+    "id": "de1c2ffe9f192b0a09d1e5757b6ddf88",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
@@ -116,7 +118,7 @@ return {
     },
     "name": "FairTimer_Test_Query",
     "operationKind": "query",
-    "text": "query FairTimer_Test_Query {\n  fair(id: \"example\") {\n    ...FairTimer_fair\n    id\n  }\n}\n\nfragment FairTimer_fair on Fair {\n  endAt\n}\n"
+    "text": null
   }
 };
 })();

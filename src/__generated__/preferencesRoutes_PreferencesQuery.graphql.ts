@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5803dc99c94ff9ec2527d932b35e6364>>
+ * @generated SignedSource<<b2683976c3f9cc891490318fbd3d3980>>
+ * @relayHash b5a42ea324a5fbc271f83dabb8544269
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b5a42ea324a5fbc271f83dabb8544269
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -110,12 +113,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b5a42ea324a5fbc271f83dabb8544269",
-    "id": null,
+    "id": "b5a42ea324a5fbc271f83dabb8544269",
     "metadata": {},
     "name": "preferencesRoutes_PreferencesQuery",
     "operationKind": "query",
-    "text": "query preferencesRoutes_PreferencesQuery(\n  $authenticationToken: String\n) {\n  viewer {\n    ...PreferencesApp_viewer_4kNil9\n  }\n}\n\nfragment PreferencesApp_viewer_4kNil9 on Viewer {\n  notificationPreferences(authenticationToken: $authenticationToken) {\n    name\n    status\n  }\n}\n"
+    "text": null
   }
 };
 })();

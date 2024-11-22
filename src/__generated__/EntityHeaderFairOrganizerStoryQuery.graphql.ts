@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<cad25acbb4d47ad76d84435632816203>>
+ * @generated SignedSource<<b4f6ede766365fe4a323ad5abb3c13a2>>
+ * @relayHash db36ba4cd5f3cbc0bf7950977de888fb
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID db36ba4cd5f3cbc0bf7950977de888fb
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -207,12 +210,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "db36ba4cd5f3cbc0bf7950977de888fb",
-    "id": null,
+    "id": "db36ba4cd5f3cbc0bf7950977de888fb",
     "metadata": {},
     "name": "EntityHeaderFairOrganizerStoryQuery",
     "operationKind": "query",
-    "text": "query EntityHeaderFairOrganizerStoryQuery(\n  $id: String!\n) {\n  fairOrganizer(id: $id) {\n    ...EntityHeaderFairOrganizer_fairOrganizer\n    id\n  }\n}\n\nfragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    internalID\n    href\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

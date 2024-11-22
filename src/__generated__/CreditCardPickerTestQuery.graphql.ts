@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<708a87f0533a91aeb2557172d2e474ef>>
+ * @generated SignedSource<<0871b93a53f8e38dcd6c6788080e63b4>>
+ * @relayHash 968fbd9bcd9770453d7a311a3bb3b7d2
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 968fbd9bcd9770453d7a311a3bb3b7d2
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -570,8 +573,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "968fbd9bcd9770453d7a311a3bb3b7d2",
-    "id": null,
+    "id": "968fbd9bcd9770453d7a311a3bb3b7d2",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -711,7 +713,7 @@ return {
     },
     "name": "CreditCardPickerTestQuery",
     "operationKind": "query",
-    "text": "query CreditCardPickerTestQuery {\n  me {\n    ...CreditCardPicker_me\n    id\n  }\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...CreditCardPicker_order\n    id\n  }\n}\n\nfragment CreditCardPicker_me on Me {\n  creditCards(first: 100) {\n    edges {\n      node {\n        internalID\n        brand\n        lastDigits\n        expirationMonth\n        expirationYear\n        id\n      }\n    }\n  }\n}\n\nfragment CreditCardPicker_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  creditCard {\n    internalID\n    name\n    street1\n    street2\n    city\n    state\n    country\n    postalCode\n    expirationMonth\n    expirationYear\n    lastDigits\n    brand\n    id\n  }\n  sellerDetails {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommerceShipArta {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommercePickup {\n      fulfillmentType\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

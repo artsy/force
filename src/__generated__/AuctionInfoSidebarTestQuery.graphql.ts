@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<e2bacd357cb15a5426e1f3a45288dd74>>
+ * @generated SignedSource<<323b687a6ddc75d7aca6fb69ce927f2a>>
+ * @relayHash 8c448b5672c90b8998259c383a51cfdb
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 8c448b5672c90b8998259c383a51cfdb
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -90,8 +93,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8c448b5672c90b8998259c383a51cfdb",
-    "id": null,
+    "id": "8c448b5672c90b8998259c383a51cfdb",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "sale": {
@@ -116,7 +118,7 @@ return {
     },
     "name": "AuctionInfoSidebarTestQuery",
     "operationKind": "query",
-    "text": "query AuctionInfoSidebarTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionInfoSidebar_sale\n    id\n  }\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n"
+    "text": null
   }
 };
 })();

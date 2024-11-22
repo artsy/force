@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<bfa8dc1a72656124783fe634f82d7cf0>>
+ * @generated SignedSource<<f9374a1ea74b83c0149f37010822cafa>>
+ * @relayHash 5623c26ede9cc7e86d5a8249bef95bc7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5623c26ede9cc7e86d5a8249bef95bc7
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -144,12 +147,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5623c26ede9cc7e86d5a8249bef95bc7",
-    "id": null,
+    "id": "5623c26ede9cc7e86d5a8249bef95bc7",
     "metadata": {},
     "name": "artistRoutes_WorksForSaleQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_WorksForSaleQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) @principalField {\n    ...ArtistWorksForSaleRoute_artist\n    id\n  }\n}\n\nfragment ArtistWorksForSaleEmpty_artist on Artist {\n  internalID\n  name\n}\n\nfragment ArtistWorksForSaleRoute_artist on Artist {\n  ...ArtistWorksForSaleEmpty_artist\n  slug\n  meta(page: ARTWORKS) {\n    description\n    title\n  }\n}\n"
+    "text": null
   }
 };
 })();

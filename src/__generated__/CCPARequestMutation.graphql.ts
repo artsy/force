@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<30bfe07831bef7e760dc95afe2e07741>>
+ * @generated SignedSource<<936c8307bf1e3205b4940d3a18e62317>>
+ * @relayHash d1b1f778074aa47d433f9a222a60685a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d1b1f778074aa47d433f9a222a60685a
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateAccountRequestMutationInput = {
@@ -202,12 +205,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d1b1f778074aa47d433f9a222a60685a",
-    "id": null,
+    "id": "d1b1f778074aa47d433f9a222a60685a",
     "metadata": {},
     "name": "CCPARequestMutation",
     "operationKind": "mutation",
-    "text": "mutation CCPARequestMutation(\n  $input: CreateAccountRequestMutationInput!\n) {\n  createAccountRequest(input: $input) {\n    accountRequestOrError {\n      __typename\n      ... on CreateAccountRequestMutationSuccess {\n        accountRequest {\n          notes\n          id\n        }\n      }\n      ... on CreateAccountRequestMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

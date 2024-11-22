@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<386a6b434368a92fb296f8c81a649155>>
+ * @generated SignedSource<<e8208186791387bbc051b142d926e0ba>>
+ * @relayHash d01d446ade18834a29bc63e928474d62
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d01d446ade18834a29bc63e928474d62
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -150,12 +153,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d01d446ade18834a29bc63e928474d62",
-    "id": null,
+    "id": "d01d446ade18834a29bc63e928474d62",
     "metadata": {},
     "name": "sellRoutes_ArtistRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_ArtistRouteQuery(\n  $id: ID!\n  $sessionID: String!\n) {\n  submission(id: $id, sessionID: $sessionID) @principalField {\n    ...ArtistRoute_submission\n    id\n  }\n}\n\nfragment ArtistRoute_submission on ConsignmentSubmission {\n  internalID\n  artist {\n    internalID\n    targetSupply {\n      isTargetSupply\n    }\n    name\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

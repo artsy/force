@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8ff3310e3bae92b261317832755c0bf0>>
+ * @generated SignedSource<<07455c76260566e70f1338de2518465a>>
+ * @relayHash b53c8e2c03e8297b889d5cb83bf29ab0
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b53c8e2c03e8297b889d5cb83bf29ab0
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type createMockNetworkLayerTestQuery$variables = Record<PropertyKey, never>;
@@ -73,12 +76,11 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "b53c8e2c03e8297b889d5cb83bf29ab0",
-    "id": null,
+    "id": "b53c8e2c03e8297b889d5cb83bf29ab0",
     "metadata": {},
     "name": "createMockNetworkLayerTestQuery",
     "operationKind": "query",
-    "text": "query createMockNetworkLayerTestQuery {\n  artwork(id: \"untitled\") {\n    id\n    title\n  }\n}\n"
+    "text": null
   }
 };
 })();

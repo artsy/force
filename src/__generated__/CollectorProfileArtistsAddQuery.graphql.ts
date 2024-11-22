@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ee913479cfdaa5c521d6101c97893504>>
+ * @generated SignedSource<<67b70b4db00883ff05d28239966eead2>>
+ * @relayHash 0583707b802770baae3e85ce5c84e632
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0583707b802770baae3e85ce5c84e632
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -332,12 +335,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0583707b802770baae3e85ce5c84e632",
-    "id": null,
+    "id": "0583707b802770baae3e85ce5c84e632",
     "metadata": {},
     "name": "CollectorProfileArtistsAddQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileArtistsAddQuery(\n  $query: String!\n) {\n  matchConnection(term: $query, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        ...CollectorProfileArtistsAddResult_artist\n        ... on Artist {\n          internalID\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n        ... on Profile {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CollectorProfileArtistsAddResult_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

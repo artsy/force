@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<208d7915acde7750bea20924ddc12a7a>>
+ * @generated SignedSource<<e9475c3b56658e51c27b8790ac0c42b1>>
+ * @relayHash d5b62f223f07108ee24bb0bb2d47db3f
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d5b62f223f07108ee24bb0bb2d47db3f
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -274,8 +277,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d5b62f223f07108ee24bb0bb2d47db3f",
-    "id": null,
+    "id": "d5b62f223f07108ee24bb0bb2d47db3f",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -354,7 +356,7 @@ return {
     },
     "name": "ArtworkListItem_test_Query",
     "operationKind": "query",
-    "text": "query ArtworkListItem_test_Query {\n  me {\n    collectionsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtworkListItem_item\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

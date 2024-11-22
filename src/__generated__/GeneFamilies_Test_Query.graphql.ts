@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<96695c47b368cfd36c2aa9f2526b9eae>>
+ * @generated SignedSource<<9f45bda9ae013ae0c8ef8065162015ca>>
+ * @relayHash 2a90f21b2ffb40eb036bc02bc2cded7e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 2a90f21b2ffb40eb036bc02bc2cded7e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -169,8 +172,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2a90f21b2ffb40eb036bc02bc2cded7e",
-    "id": null,
+    "id": "2a90f21b2ffb40eb036bc02bc2cded7e",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "geneFamiliesConnection": {
@@ -220,7 +222,7 @@ return {
     },
     "name": "GeneFamilies_Test_Query",
     "operationKind": "query",
-    "text": "query GeneFamilies_Test_Query {\n  geneFamiliesConnection(first: 20) {\n    ...GeneFamilies_geneFamiliesConnection\n  }\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      ...GeneFamily_geneFamily\n      id\n    }\n  }\n}\n\nfragment GeneFamily_geneFamily on GeneFamily {\n  id\n  slug\n  name\n  genes {\n    isPublished\n    id\n    displayName\n    name\n    slug\n  }\n}\n"
+    "text": null
   }
 };
 })();

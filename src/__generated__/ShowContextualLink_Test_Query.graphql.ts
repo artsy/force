@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<1d9d85b50edd44c4a013b11dd590364b>>
+ * @generated SignedSource<<12e769f2d6aa0c938e2460b2ce61b01d>>
+ * @relayHash 974ac8587680e7ed44f89a313ab25e94
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 974ac8587680e7ed44f89a313ab25e94
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -199,8 +202,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "974ac8587680e7ed44f89a313ab25e94",
-    "id": null,
+    "id": "974ac8587680e7ed44f89a313ab25e94",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
@@ -237,7 +239,7 @@ return {
     },
     "name": "ShowContextualLink_Test_Query",
     "operationKind": "query",
-    "text": "query ShowContextualLink_Test_Query {\n  show(id: \"catty-show\") {\n    ...ShowContextualLink_show\n    id\n  }\n}\n\nfragment ShowContextualLink_show on Show {\n  isFairBooth\n  fair {\n    href\n    isActive\n    name\n    id\n  }\n  partner {\n    __typename\n    ... on Partner {\n      isLinkable\n      name\n      href\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

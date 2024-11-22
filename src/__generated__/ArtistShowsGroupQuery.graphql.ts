@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d78cd32300d4b03983367378c17833c7>>
+ * @generated SignedSource<<eeb516303e78d6361c23e67585fc7dcc>>
+ * @relayHash 055bb1a65f6365fadc27d32ec5bac832
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 055bb1a65f6365fadc27d32ec5bac832
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -434,12 +437,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "055bb1a65f6365fadc27d32ec5bac832",
-    "id": null,
+    "id": "055bb1a65f6365fadc27d32ec5bac832",
     "metadata": {},
     "name": "ArtistShowsGroupQuery",
     "operationKind": "query",
-    "text": "query ArtistShowsGroupQuery(\n  $page: Int\n  $artistID: String!\n  $sort: ShowSorts\n  $status: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_3ny9Yn\n    id\n  }\n}\n\nfragment ArtistShowsGroup_artist_3ny9Yn on Artist {\n  slug\n  showsConnection(first: 12, page: $page, sort: $sort, status: $status) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<eb7e49cfb8e066745fc327d8a9fe7801>>
+ * @generated SignedSource<<9f2754249ca2e35fb662f6465080aa28>>
+ * @relayHash 87ff1d8f986f1599cc89fd388edbc9b7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 87ff1d8f986f1599cc89fd388edbc9b7
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -188,12 +191,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "87ff1d8f986f1599cc89fd388edbc9b7",
-    "id": null,
+    "id": "87ff1d8f986f1599cc89fd388edbc9b7",
     "metadata": {},
     "name": "MyCollectionArtworkSubmitForSale_Test_Query",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSubmitForSale_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSubmitForSale_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSubmitForSale_artwork on Artwork {\n  internalID\n  artist(shallow: true) {\n    internalID\n    slug\n    targetSupply {\n      priority\n    }\n    id\n  }\n  consignmentSubmission {\n    internalID\n  }\n  marketPriceInsights {\n    demandRank\n  }\n}\n"
+    "text": null
   }
 };
 })();

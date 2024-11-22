@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<348c91bccefe710c3778e4a03d1758d4>>
+ * @generated SignedSource<<3fa3266ae1e3348f05417d3d3f9ffd74>>
+ * @relayHash 97c86dcd89f2399867b589680d719f74
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 97c86dcd89f2399867b589680d719f74
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -140,8 +143,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "97c86dcd89f2399867b589680d719f74",
-    "id": null,
+    "id": "97c86dcd89f2399867b589680d719f74",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fairOrganizer": {
@@ -171,7 +173,7 @@ return {
     },
     "name": "DedicatedArticlesBreadcrumbs_Test_Query",
     "operationKind": "query",
-    "text": "query DedicatedArticlesBreadcrumbs_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...DedicatedArticlesBreadcrumbs_fairOrganizer\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      url\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

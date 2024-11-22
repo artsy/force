@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<c12662beb00d71975620f669df667c24>>
+ * @generated SignedSource<<5d19a20e34e2b5a7fe64c1859b99ee0f>>
+ * @relayHash 2a1d12cd5a9d8f35d6a39b8f94cb234f
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 2a1d12cd5a9d8f35d6a39b8f94cb234f
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -100,12 +103,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "2a1d12cd5a9d8f35d6a39b8f94cb234f",
-    "id": null,
+    "id": "2a1d12cd5a9d8f35d6a39b8f94cb234f",
     "metadata": {},
     "name": "ArtworkSidebarClassificationsModalQuery",
     "operationKind": "query",
-    "text": "query ArtworkSidebarClassificationsModalQuery {\n  viewer {\n    ...ArtworkSidebarClassificationsModal_viewer\n  }\n}\n\nfragment ArtworkSidebarClassificationsModal_viewer on Viewer {\n  artworkAttributionClasses {\n    id\n    name\n    longDescription\n  }\n}\n"
+    "text": null
   }
 };
 

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a60a0a15bcf894fd641e676a124f7740>>
+ * @generated SignedSource<<f3b954fd5adc8f5f23b4ad5399032cd5>>
+ * @relayHash c9b6ddcdfec6bdb286b6ddfb676fbb62
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID c9b6ddcdfec6bdb286b6ddfb676fbb62
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SendConfirmationEmailMutationInput = {
@@ -167,12 +170,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c9b6ddcdfec6bdb286b6ddfb676fbb62",
-    "id": null,
+    "id": "c9b6ddcdfec6bdb286b6ddfb676fbb62",
     "metadata": {},
     "name": "useVerifyEmailMutation",
     "operationKind": "mutation",
-    "text": "mutation useVerifyEmailMutation(\n  $input: SendConfirmationEmailMutationInput!\n) {\n  sendConfirmationEmail(input: $input) {\n    confirmationOrError {\n      __typename\n      ... on SendConfirmationEmailMutationSuccess {\n        unconfirmedEmail\n      }\n      ... on SendConfirmationEmailMutationFailure {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

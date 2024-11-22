@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<31e711f218b9ac4e24fb6fe6c0bdfa17>>
+ * @generated SignedSource<<e11e68be92a96338b1b8fd5f3d0580f2>>
+ * @relayHash f469d37eb814de3f319b823061403fe1
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f469d37eb814de3f319b823061403fe1
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -147,12 +150,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f469d37eb814de3f319b823061403fe1",
-    "id": null,
+    "id": "f469d37eb814de3f319b823061403fe1",
     "metadata": {},
     "name": "SaveButtonTestQuery",
     "operationKind": "query",
-    "text": "query SaveButtonTestQuery {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...SaveButton_artwork\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

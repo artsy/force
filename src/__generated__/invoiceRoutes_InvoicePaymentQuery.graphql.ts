@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<e215273222ed89bb8c05de43da02c374>>
+ * @generated SignedSource<<b9a8688c60968a801f5b86d358102cbd>>
+ * @relayHash 342fb5e595a8161a3ed3308adb7b6916
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 342fb5e595a8161a3ed3308adb7b6916
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -119,12 +122,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "342fb5e595a8161a3ed3308adb7b6916",
-    "id": null,
+    "id": "342fb5e595a8161a3ed3308adb7b6916",
     "metadata": {},
     "name": "invoiceRoutes_InvoicePaymentQuery",
     "operationKind": "query",
-    "text": "query invoiceRoutes_InvoicePaymentQuery(\n  $token: String!\n) {\n  invoice(token: $token) {\n    ...InvoicePaymentRoute_invoice\n    id\n  }\n}\n\nfragment InvoicePaymentRoute_invoice on Invoice {\n  remaining(precision: 2)\n  internalID\n  remainingMinor\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<bff8a3f94c742fce33f5595f7961af0f>>
+ * @generated SignedSource<<7e48ba339bcfc5a1f1725202db07984b>>
+ * @relayHash 18e09fc5e169dbf9b10751429190f56c
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 18e09fc5e169dbf9b10751429190f56c
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type NavBarLoggedInActionsQuery$variables = Record<PropertyKey, never>;
@@ -451,8 +454,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "18e09fc5e169dbf9b10751429190f56c",
-    "id": null,
+    "id": "18e09fc5e169dbf9b10751429190f56c",
     "metadata": {
       "connection": [
         {
@@ -469,7 +471,7 @@ return {
     },
     "name": "NavBarLoggedInActionsQuery",
     "operationKind": "query",
-    "text": "query NavBarLoggedInActionsQuery {\n  me {\n    unreadNotificationsCount\n    unseenNotificationsCount\n    unreadConversationCount\n    firstConversationConnection: conversationsConnection(first: 1) {\n      edges {\n        node {\n          internalID\n          id\n        }\n      }\n    }\n    followsAndSaves {\n      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n        edges {\n          node {\n            href\n            summary\n            artists\n            published_at: publishedAt(format: \"MMM DD\")\n            image {\n              resized(height: 40, width: 40) {\n                url\n              }\n            }\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4ff0c3800989a51d191de6e54f7715bc>>
+ * @generated SignedSource<<db27db5331171a8d7d6f5e98d1d1e7de>>
+ * @relayHash 13e484a73b3ee4bd325cc4b4475cb179
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 13e484a73b3ee4bd325cc4b4475cb179
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -386,8 +389,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "13e484a73b3ee4bd325cc4b4475cb179",
-    "id": null,
+    "id": "13e484a73b3ee4bd325cc4b4475cb179",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
@@ -497,7 +499,7 @@ return {
     },
     "name": "ConversationsSidebarTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

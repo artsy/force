@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<221d1c615d8183d4d363f60239eaaee4>>
+ * @generated SignedSource<<8e8d025fa9cdb4dcbfaa478514b46913>>
+ * @relayHash 54cf4fae1b4bfb8aa44405e0651d74a8
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 54cf4fae1b4bfb8aa44405e0651d74a8
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -123,8 +126,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "54cf4fae1b4bfb8aa44405e0651d74a8",
-    "id": null,
+    "id": "54cf4fae1b4bfb8aa44405e0651d74a8",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "gene": {
@@ -152,7 +154,7 @@ return {
     },
     "name": "FollowGeneButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    ...FollowGeneButton_gene_2OV785\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_2OV785 on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
+    "text": null
   }
 };
 })();

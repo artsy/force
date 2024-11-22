@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0c281de6d28d6c7f9a76c329cf5c6118>>
+ * @generated SignedSource<<c8e99a580da581f5d714a886907e97e5>>
+ * @relayHash 0fd614359fcbd334b9bcc786fb220eed
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0fd614359fcbd334b9bcc786fb220eed
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -129,12 +132,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "0fd614359fcbd334b9bcc786fb220eed",
-    "id": null,
+    "id": "0fd614359fcbd334b9bcc786fb220eed",
     "metadata": {},
     "name": "AppSecondFactorRefetchQuery",
     "operationKind": "query",
-    "text": "query AppSecondFactorRefetchQuery {\n  me {\n    ...AppSecondFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n"
+    "text": null
   }
 };
 

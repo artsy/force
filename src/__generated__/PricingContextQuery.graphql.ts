@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<fbfc16b86e511a336be0f38f0cae90f6>>
+ * @generated SignedSource<<e290f6e574c56bfaa07e84c0ce8ad004>>
+ * @relayHash 3ce6aa5a6927bc93fb908cf326054a73
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3ce6aa5a6927bc93fb908cf326054a73
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -269,12 +272,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3ce6aa5a6927bc93fb908cf326054a73",
-    "id": null,
+    "id": "3ce6aa5a6927bc93fb908cf326054a73",
     "metadata": {},
     "name": "PricingContextQuery",
     "operationKind": "query",
-    "text": "query PricingContextQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...PricingContext_artwork\n    id\n  }\n}\n\nfragment PricingContext_artwork on Artwork {\n  listPrice {\n    __typename\n    ... on PriceRange {\n      maxPrice {\n        minor\n      }\n      minPrice {\n        minor\n      }\n    }\n    ... on Money {\n      minor\n    }\n  }\n  artists(shallow: true) {\n    slug\n    id\n  }\n  category\n  pricingContext {\n    appliedFiltersDisplay\n    appliedFilters {\n      dimension\n      category\n    }\n    bins {\n      maxPrice\n      maxPriceCents\n      minPrice\n      minPriceCents\n      numArtworks\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

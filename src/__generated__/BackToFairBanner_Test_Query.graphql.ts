@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ce3fa0ed84160cf7d9f06220c70570bf>>
+ * @generated SignedSource<<912cb6f4d1a3cea0026fe08993672f6a>>
+ * @relayHash 571ed50bd38f5bd9e4ae35cf05c8d18f
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 571ed50bd38f5bd9e4ae35cf05c8d18f
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -122,8 +125,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "571ed50bd38f5bd9e4ae35cf05c8d18f",
-    "id": null,
+    "id": "571ed50bd38f5bd9e4ae35cf05c8d18f",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
@@ -146,7 +148,7 @@ return {
     },
     "name": "BackToFairBanner_Test_Query",
     "operationKind": "query",
-    "text": "query BackToFairBanner_Test_Query {\n  show(id: \"show-id\") {\n    ...BackToFairBanner_show\n    id\n  }\n}\n\nfragment BackToFairBanner_show on Show {\n  fair {\n    name\n    href\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<32a1939112fc760d82677164c2f02d9e>>
+ * @generated SignedSource<<9db021eb66e5ff18527db3cecaf7b70a>>
+ * @relayHash 16353554fe0fe298641e341233d14e31
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 16353554fe0fe298641e341233d14e31
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type useArtworkListsArtworkSaveStatesQuery$variables = {
@@ -111,12 +114,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "16353554fe0fe298641e341233d14e31",
-    "id": null,
+    "id": "16353554fe0fe298641e341233d14e31",
     "metadata": {},
     "name": "useArtworkListsArtworkSaveStatesQuery",
     "operationKind": "query",
-    "text": "query useArtworkListsArtworkSaveStatesQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    isSavedToList(default: false)\n    isSaved\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<956a4d0c1d575b6f7501629ff0124391>>
+ * @generated SignedSource<<1dba2f02634d689b1991daa74f797888>>
+ * @relayHash 00d0be7957863981c565fdd39a848257
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 00d0be7957863981c565fdd39a848257
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -243,8 +246,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "00d0be7957863981c565fdd39a848257",
-    "id": null,
+    "id": "00d0be7957863981c565fdd39a848257",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
@@ -297,7 +299,7 @@ return {
     },
     "name": "ShowInstallShots_Test_Query",
     "operationKind": "query",
-    "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    versions\n    blurhashDataURL\n    zoom: resized(quality: 85, width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

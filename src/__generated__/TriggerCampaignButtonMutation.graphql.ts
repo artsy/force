@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<70a66a9af76ff827ec80439130c12bbe>>
+ * @generated SignedSource<<6078e0f19be00b63742fee114f0849f6>>
+ * @relayHash c6b918273677e3f4546257933d9b36ef
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID c6b918273677e3f4546257933d9b36ef
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type TriggerCampaignID = "ART_QUIZ" | "%future added value";
@@ -79,12 +82,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "c6b918273677e3f4546257933d9b36ef",
-    "id": null,
+    "id": "c6b918273677e3f4546257933d9b36ef",
     "metadata": {},
     "name": "TriggerCampaignButtonMutation",
     "operationKind": "mutation",
-    "text": "mutation TriggerCampaignButtonMutation(\n  $input: TriggerCampaignInput!\n) {\n  triggerCampaign(input: $input) {\n    clientMutationId\n  }\n}\n"
+    "text": null
   }
 };
 })();

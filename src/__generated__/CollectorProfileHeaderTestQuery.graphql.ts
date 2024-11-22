@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<351fd41d3db4e99b766446b2e8dd99d5>>
+ * @generated SignedSource<<bfa3407f428dc40d81e39069341255b9>>
+ * @relayHash e4d9c2a5c6bce8c6b61164ee9565988e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID e4d9c2a5c6bce8c6b61164ee9565988e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -215,8 +218,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e4d9c2a5c6bce8c6b61164ee9565988e",
-    "id": null,
+    "id": "e4d9c2a5c6bce8c6b61164ee9565988e",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -280,7 +282,7 @@ return {
     },
     "name": "CollectorProfileHeaderTestQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileHeaderTestQuery {\n  me {\n    ...CollectorProfileHeader_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  name\n  initials\n  icon {\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n  location {\n    display\n    id\n  }\n  collectorProfile {\n    isIdentityVerified\n    confirmedBuyerAt\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<c4c6fd685bd3a29ca524bcc4ce52b60a>>
+ * @generated SignedSource<<5c529ee9dac2129604882aed01ca1693>>
+ * @relayHash dfe330fe06ae5e2676293a9887aa1969
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID dfe330fe06ae5e2676293a9887aa1969
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -422,12 +425,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dfe330fe06ae5e2676293a9887aa1969",
-    "id": null,
+    "id": "dfe330fe06ae5e2676293a9887aa1969",
     "metadata": {},
     "name": "useUpdateSettingsInformationMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateSettingsInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditSettingsInformation_me\n      email\n      name\n      phoneNumber {\n        regionCode\n        display(format: NATIONAL)\n        originalNumber\n      }\n      priceRangeMin\n      priceRangeMax\n      id\n    }\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phoneNumber {\n    regionCode\n    display(format: NATIONAL)\n    originalNumber\n  }\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<cd06491c330e4ee044f8540eed93a152>>
+ * @generated SignedSource<<a14d2286b19676847bba46906f0e0daf>>
+ * @relayHash 5f27cc9c09d7f032279f77a81770a88f
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5f27cc9c09d7f032279f77a81770a88f
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type markAllNotificationsAsReadMutation$variables = Record<PropertyKey, never>;
@@ -195,12 +198,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5f27cc9c09d7f032279f77a81770a88f",
-    "id": null,
+    "id": "5f27cc9c09d7f032279f77a81770a88f",
     "metadata": {},
     "name": "markAllNotificationsAsReadMutation",
     "operationKind": "mutation",
-    "text": "mutation markAllNotificationsAsReadMutation {\n  markAllNotificationsAsRead(input: {}) {\n    responseOrError {\n      __typename\n      ... on MarkAllNotificationsAsReadSuccess {\n        success\n        me {\n          unreadNotificationsCount\n          id\n        }\n      }\n      ... on MarkAllNotificationsAsReadFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

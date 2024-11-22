@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8afc64dc684d2226b9cf544a343808aa>>
+ * @generated SignedSource<<bf73c2bbf19a515dcd81aaee6d0a2019>>
+ * @relayHash ae0dd24054f0bb323a02c978f9f32965
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID ae0dd24054f0bb323a02c978f9f32965
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
@@ -200,12 +203,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ae0dd24054f0bb323a02c978f9f32965",
-    "id": null,
+    "id": "ae0dd24054f0bb323a02c978f9f32965",
     "metadata": {},
     "name": "PartnersSearchQuery",
     "operationKind": "query",
-    "text": "query PartnersSearchQuery(\n  $near: String\n  $partnerCategories: [String]\n  $term: String\n  $type: [PartnerClassification]\n) {\n  filterPartners(aggregations: [TOTAL], defaultProfilePublic: true, eligibleForListing: true, near: $near, partnerCategories: $partnerCategories, size: 9, sort: RANDOM_SCORE_DESC, term: $term, type: $type) {\n    total\n    hits {\n      text: name\n      value: slug\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ad56c51e93d7a12a665a80c69bea8715>>
+ * @generated SignedSource<<8779e4c1210ca027c9d16a449197273b>>
+ * @relayHash e1d3b1cbc09d5c4ec69b6db91d403301
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID e1d3b1cbc09d5c4ec69b6db91d403301
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type updateCollectionInput = {
@@ -244,12 +247,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e1d3b1cbc09d5c4ec69b6db91d403301",
-    "id": null,
+    "id": "e1d3b1cbc09d5c4ec69b6db91d403301",
     "metadata": {},
     "name": "useUpdateArtworkListMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateArtworkListMutation(\n  $input: updateCollectionInput!\n) {\n  updateCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on UpdateCollectionSuccess {\n        artworkList: collection {\n          internalID\n          name\n          shareableWithPartners\n          id\n        }\n      }\n      ... on UpdateCollectionFailure {\n        mutationError {\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

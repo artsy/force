@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<3ed5c6ff240deaf592349b944eafc20b>>
+ * @generated SignedSource<<fadf107361993ad69665c0ba0e652a1d>>
+ * @relayHash a6174e5f4a3c77e88f3c06d269b84758
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID a6174e5f4a3c77e88f3c06d269b84758
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -103,8 +106,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a6174e5f4a3c77e88f3c06d269b84758",
-    "id": null,
+    "id": "a6174e5f4a3c77e88f3c06d269b84758",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -125,7 +127,7 @@ return {
     },
     "name": "SecurePaymentTestQuery",
     "operationKind": "query",
-    "text": "query SecurePaymentTestQuery {\n  artwork(id: \"whatevs\") {\n    ...SecurePayment_artwork\n    id\n  }\n}\n\nfragment SecurePayment_artwork on Artwork {\n  is_acquireable: isAcquireable\n  is_offerable: isOfferable\n}\n"
+    "text": null
   }
 };
 })();

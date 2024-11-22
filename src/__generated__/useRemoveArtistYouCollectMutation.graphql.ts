@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<919746a18bad5114a59b71f76a2c8802>>
+ * @generated SignedSource<<9b6e5f858bc450a1e9f37a87616e39fe>>
+ * @relayHash 152ff6c097b54abb1e7936215500ccbd
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 152ff6c097b54abb1e7936215500ccbd
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -220,12 +223,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "152ff6c097b54abb1e7936215500ccbd",
-    "id": null,
+    "id": "152ff6c097b54abb1e7936215500ccbd",
     "metadata": {},
     "name": "useRemoveArtistYouCollectMutation",
     "operationKind": "mutation",
-    "text": "mutation useRemoveArtistYouCollectMutation(\n  $input: DeleteUserInterestMutationInput!\n) {\n  deleteUserInterest(input: $input) {\n    clientMutationId\n    me {\n      ...SettingsEditProfileArtistsYouCollect_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

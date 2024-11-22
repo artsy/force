@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4811c67c611ddb6d2fbfe223c18ebedb>>
+ * @generated SignedSource<<9d2ff8ad420617269b578d0a91719935>>
+ * @relayHash 0a81834d4f18678ed3f966919caf94ef
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0a81834d4f18678ed3f966919caf94ef
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
@@ -366,12 +369,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0a81834d4f18678ed3f966919caf94ef",
-    "id": null,
+    "id": "0a81834d4f18678ed3f966919caf94ef",
     "metadata": {},
     "name": "NewPaymentRouteSetOrderPaymentMutation",
     "operationKind": "mutation",
-    "text": "mutation NewPaymentRouteSetOrderPaymentMutation(\n  $input: CommerceFixFailedPaymentInput!\n) {\n  commerceFixFailedPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          state\n          creditCard {\n            internalID\n            name\n            street1\n            street2\n            city\n            state\n            country\n            postal_code: postalCode\n            id\n          }\n          ... on CommerceOfferOrder {\n            awaitingResponseFrom\n          }\n          id\n        }\n      }\n      ... on CommerceOrderRequiresAction {\n        actionData {\n          clientSecret\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

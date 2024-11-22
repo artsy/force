@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d9ff9353f32281ac62a2debc1665dacb>>
+ * @generated SignedSource<<ce336d483ca169355c00dbd3408aa2cf>>
+ * @relayHash 83ae9d8f5f980a726414c0b7c77949d0
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 83ae9d8f5f980a726414c0b7c77949d0
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -271,12 +274,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "83ae9d8f5f980a726414c0b7c77949d0",
-    "id": null,
+    "id": "83ae9d8f5f980a726414c0b7c77949d0",
     "metadata": {},
     "name": "EntityTooltipGeneQuery",
     "operationKind": "query",
-    "text": "query EntityTooltipGeneQuery(\n  $id: String!\n) {\n  gene(id: $id) {\n    ...EntityTooltipGene_gene\n    id\n  }\n}\n\nfragment EntityHeaderGene_gene on Gene {\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n\nfragment EntityTooltipGene_gene on Gene {\n  ...EntityHeaderGene_gene\n  href\n  description(format: PLAIN)\n  image {\n    cropped(width: 260, height: 146, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n      height\n      width\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

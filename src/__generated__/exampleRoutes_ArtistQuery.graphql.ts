@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<33d98364a91a900d96f926f60fb21057>>
+ * @generated SignedSource<<436fec3040ff31ba1c930e0c84431123>>
+ * @relayHash f4b3a80c97fa58b6055b7bff5ba53caf
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f4b3a80c97fa58b6055b7bff5ba53caf
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -116,12 +119,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f4b3a80c97fa58b6055b7bff5ba53caf",
-    "id": null,
+    "id": "f4b3a80c97fa58b6055b7bff5ba53caf",
     "metadata": {},
     "name": "exampleRoutes_ArtistQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistRoute_artist\n  }\n}\n\nfragment ExampleArtistRoute_artist on Artist {\n  name\n  bio\n  internalID\n}\n"
+    "text": null
   }
 };
 })();

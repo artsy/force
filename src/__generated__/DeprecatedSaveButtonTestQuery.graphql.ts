@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7d0cc4c48261106285a4bcaa2380fa62>>
+ * @generated SignedSource<<eda956a244b3b5e0ee12fa35c6e4887b>>
+ * @relayHash b702f948d12f009352a48ac4ddd84744
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b702f948d12f009352a48ac4ddd84744
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -146,8 +149,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b702f948d12f009352a48ac4ddd84744",
-    "id": null,
+    "id": "b702f948d12f009352a48ac4ddd84744",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -193,7 +195,7 @@ return {
     },
     "name": "DeprecatedSaveButtonTestQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonTestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

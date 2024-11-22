@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<6f93ba4f6346138c4d00230c8e0c0ca8>>
+ * @generated SignedSource<<b839f0e493039a8e677f56b43a403573>>
+ * @relayHash 52e1b248618f45749cb9dca9c6b6118b
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 52e1b248618f45749cb9dca9c6b6118b
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -231,12 +234,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "52e1b248618f45749cb9dca9c6b6118b",
-    "id": null,
+    "id": "52e1b248618f45749cb9dca9c6b6118b",
     "metadata": {},
     "name": "auctionsRoutes_Current_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Current_AuctionsQuery {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 10, live: true, published: true, sort: LICENSED_TIMELY_AT_NAME_DESC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

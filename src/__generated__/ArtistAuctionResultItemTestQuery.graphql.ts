@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<dbdd62d664fe5d36fa0b8e168d4940a5>>
+ * @generated SignedSource<<6d4eac0c60a62cbd768a7fcd20b0db1f>>
+ * @relayHash f94a5035082c47196becd05f31df317e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f94a5035082c47196becd05f31df317e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -423,12 +426,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f94a5035082c47196becd05f31df317e",
-    "id": null,
+    "id": "f94a5035082c47196becd05f31df317e",
     "metadata": {},
     "name": "ArtistAuctionResultItemTestQuery",
     "operationKind": "query",
-    "text": "query ArtistAuctionResultItemTestQuery {\n  artist(id: \"andy-warhol\") {\n    auctionResultsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtistAuctionResultItem_auctionResult\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n"
+    "text": null
   }
 };
 })();

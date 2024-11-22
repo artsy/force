@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5af2174cfaf68321f7959178fc64c345>>
+ * @generated SignedSource<<ac18e63761bf6e2d9e574e878fe348a1>>
+ * @relayHash 9550b3c56002c636c161cfadb608925a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 9550b3c56002c636c161cfadb608925a
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -136,12 +139,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "9550b3c56002c636c161cfadb608925a",
-    "id": null,
+    "id": "9550b3c56002c636c161cfadb608925a",
     "metadata": {},
     "name": "SmsSecondFactorRefetchQuery",
     "operationKind": "query",
-    "text": "query SmsSecondFactorRefetchQuery {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": null
   }
 };
 

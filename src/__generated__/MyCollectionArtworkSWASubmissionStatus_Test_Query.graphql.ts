@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<84c5ac1e285f193a3d7d3cdeda506a87>>
+ * @generated SignedSource<<c24c54d314fced1da2fd9ad6767df1be>>
+ * @relayHash abadfc61c81111f69b098b57de91304f
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID abadfc61c81111f69b098b57de91304f
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -220,12 +223,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "abadfc61c81111f69b098b57de91304f",
-    "id": null,
+    "id": "abadfc61c81111f69b098b57de91304f",
     "metadata": {},
     "name": "MyCollectionArtworkSWASubmissionStatus_Test_Query",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSWASubmissionStatus_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkSWASubmissionStatus_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSWASubmissionStatus_artwork on Artwork {\n  internalID\n  listedArtworksConnection(first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n  isListed\n  consignmentSubmission {\n    actionLabel\n    buttonLabel\n    externalID\n    internalID\n    state\n    stateLabel\n    stateHelpMessage\n  }\n}\n"
+    "text": null
   }
 };
 })();

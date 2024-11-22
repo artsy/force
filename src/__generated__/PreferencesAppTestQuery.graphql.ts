@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<724a54a6495567db1d2612f95c3bacc0>>
+ * @generated SignedSource<<c3dec0d170f75e26766cf66aace73c29>>
+ * @relayHash 1a18f0845044c123c015049ea2a69573
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 1a18f0845044c123c015049ea2a69573
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -93,8 +96,7 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "1a18f0845044c123c015049ea2a69573",
-    "id": null,
+    "id": "1a18f0845044c123c015049ea2a69573",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
@@ -128,7 +130,7 @@ const node: ConcreteRequest = {
     },
     "name": "PreferencesAppTestQuery",
     "operationKind": "query",
-    "text": "query PreferencesAppTestQuery {\n  viewer {\n    ...PreferencesApp_viewer\n  }\n}\n\nfragment PreferencesApp_viewer on Viewer {\n  notificationPreferences {\n    name\n    status\n  }\n}\n"
+    "text": null
   }
 };
 

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<e5f11b0b2f9645d13083aea029b123c1>>
+ * @generated SignedSource<<6d8b25f755820a24eaa8bb9fdd7178be>>
+ * @relayHash 71f07a37256f0b1ba2ced9768f36ea37
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 71f07a37256f0b1ba2ced9768f36ea37
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -267,8 +270,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "71f07a37256f0b1ba2ced9768f36ea37",
-    "id": null,
+    "id": "71f07a37256f0b1ba2ced9768f36ea37",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
@@ -316,7 +318,7 @@ return {
     },
     "name": "PartnerContacts_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerContacts_Test_Query {\n  partner(id: \"white-cube\") {\n    locations: locationsConnection(first: 50) {\n      edges {\n        ...PartnerContacts_edges\n      }\n    }\n    id\n  }\n}\n\nfragment PartnerContactAddress_location on Location {\n  city\n  phone\n  state\n  address\n  address2\n  postalCode\n  displayCountry\n}\n\nfragment PartnerContactCard_location on Location {\n  ...PartnerContactAddress_location\n  ...PartnerContactMap_location\n}\n\nfragment PartnerContactMap_location on Location {\n  city\n  phone\n  state\n  address\n  address2\n  postalCode\n  displayCountry\n  coordinates {\n    lat\n    lng\n  }\n}\n\nfragment PartnerContacts_edges on LocationEdge {\n  node {\n    id\n    ...PartnerContactCard_location\n  }\n}\n"
+    "text": null
   }
 };
 })();

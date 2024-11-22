@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b6fc762bab8ff951150f23e8711dfe57>>
+ * @generated SignedSource<<94c9d0a6bad2a33bf2f4609f20033c68>>
+ * @relayHash 48a15cadece85a159760e99ed62aa156
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 48a15cadece85a159760e99ed62aa156
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -371,12 +374,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "48a15cadece85a159760e99ed62aa156",
-    "id": null,
+    "id": "48a15cadece85a159760e99ed62aa156",
     "metadata": {},
     "name": "CollectionsHubRailsQuery",
     "operationKind": "query",
-    "text": "query CollectionsHubRailsQuery(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    linkedCollections {\n      ...CollectionsHubRails_linkedCollections\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesEntity_member on MarketingCollection {\n  id\n  slug\n  headerImage\n  thumbnail\n  title\n  priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        internalID\n        artist(shallow: true) {\n          name\n          id\n        }\n        title\n        image {\n          resized(width: 150, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    slug\n    ...ArtistSeriesEntity_member\n    id\n  }\n}\n\nfragment CollectionsHubRails_linkedCollections on MarketingCollectionGroup {\n  groupType\n  ...FeaturedCollectionsRails_collectionGroup\n  ...OtherCollectionsRail_collectionGroup\n  ...ArtistSeriesRail_collectionGroup\n}\n\nfragment FeaturedCollectionRailEntity_member on MarketingCollection {\n  id\n  slug\n  title\n  description\n  priceGuidance\n  thumbnailImage {\n    cropped(width: 325, height: 244) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment FeaturedCollectionsRails_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    ...FeaturedCollectionRailEntity_member\n    internalID\n    id\n  }\n}\n\nfragment OtherCollectionEntity_member on MarketingCollection {\n  id\n  slug\n  thumbnail\n  title\n}\n\nfragment OtherCollectionsRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    ...OtherCollectionEntity_member\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

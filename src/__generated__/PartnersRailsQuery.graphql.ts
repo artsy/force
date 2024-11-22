@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5a1959329e349e4c284908b87b34ceef>>
+ * @generated SignedSource<<959ce2c543e00d205f033f348d867133>>
+ * @relayHash 4d2797ae375b363622de696ec0ae85ed
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 4d2797ae375b363622de696ec0ae85ed
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -130,12 +133,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4d2797ae375b363622de696ec0ae85ed",
-    "id": null,
+    "id": "4d2797ae375b363622de696ec0ae85ed",
     "metadata": {},
     "name": "PartnersRailsQuery",
     "operationKind": "query",
-    "text": "query PartnersRailsQuery(\n  $categoryType: PartnerCategoryType\n) {\n  viewer {\n    ...PartnersRails_viewer_49b74Z\n  }\n}\n\nfragment PartnersRails_viewer_49b74Z on Viewer {\n  partnerCategories(categoryType: $categoryType, size: 50, internal: false) {\n    name\n    slug\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

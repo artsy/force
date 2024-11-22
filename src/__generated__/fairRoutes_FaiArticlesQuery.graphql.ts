@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<47ed0a4196c02bf7576d24006f859026>>
+ * @generated SignedSource<<42b886dfbaf68e8dd2148657f6d2366a>>
+ * @relayHash 388473fdabfbbf2f2483f2897aea955a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 388473fdabfbbf2f2483f2897aea955a
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -358,12 +361,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "388473fdabfbbf2f2483f2897aea955a",
-    "id": null,
+    "id": "388473fdabfbbf2f2483f2897aea955a",
     "metadata": {},
     "name": "fairRoutes_FaiArticlesQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FaiArticlesQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairArticles_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairArticles_fair on Fair {\n  slug\n  articlesConnection(page: 1, size: 12) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": null
   }
 };
 })();

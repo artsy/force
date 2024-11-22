@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b0b95383780520bd0a95f3fcc08c1da4>>
+ * @generated SignedSource<<07f2383c67d9417a21b65dcf520511cd>>
+ * @relayHash 8033dd2a5d79dcb9ed64c9f658cc8051
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 8033dd2a5d79dcb9ed64c9f658cc8051
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -226,12 +229,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8033dd2a5d79dcb9ed64c9f658cc8051",
-    "id": null,
+    "id": "8033dd2a5d79dcb9ed64c9f658cc8051",
     "metadata": {},
     "name": "auctionRoutes_ConfirmRegistrationRouteQuery",
     "operationKind": "query",
-    "text": "query auctionRoutes_ConfirmRegistrationRouteQuery(\n  $slug: String!\n) {\n  me {\n    ...AuctionConfirmRegistrationRoute_me\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...AuctionConfirmRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_me on Me {\n  internalID\n  isIdentityVerified\n  hasQualifiedCreditCards\n  phoneNumber {\n    originalNumber\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  isClosed\n  isLiveOpen\n  requireIdentityVerification\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

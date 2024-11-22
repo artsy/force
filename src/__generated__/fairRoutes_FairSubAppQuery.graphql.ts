@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<59719769be38c4a533716734671552f0>>
+ * @generated SignedSource<<9ab748f929c51a3ea585def5ff6c26fe>>
+ * @relayHash 2ee21d06ffa979a8044a616f6988c5cf
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 2ee21d06ffa979a8044a616f6988c5cf
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -164,12 +167,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2ee21d06ffa979a8044a616f6988c5cf",
-    "id": null,
+    "id": "2ee21d06ffa979a8044a616f6988c5cf",
     "metadata": {},
     "name": "fairRoutes_FairSubAppQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairSubAppQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  ...FairMeta_fair\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

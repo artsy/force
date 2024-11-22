@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8100b6428a5f28d0d3e7292dfe2f2d88>>
+ * @generated SignedSource<<39139e7bbe0d407d1bd389fbd5067b0f>>
+ * @relayHash dbddc17b80d8e5b722fc08f8b5b926d4
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID dbddc17b80d8e5b722fc08f8b5b926d4
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -281,12 +284,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dbddc17b80d8e5b722fc08f8b5b926d4",
-    "id": null,
+    "id": "dbddc17b80d8e5b722fc08f8b5b926d4",
     "metadata": {},
     "name": "favoritesRoutesAlertsArtworksQuery",
     "operationKind": "query",
-    "text": "query favoritesRoutesAlertsArtworksQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  artistIDs\n  artistSeriesIDs\n  href\n  title: displayName(only: [artistIDs])\n  subtitle: displayName(except: [artistIDs])\n  artworksConnection(first: 10) {\n    counts {\n      total\n    }\n    id\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  alertsConnection(first: 10, sort: ENABLED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        artistIDs\n        ...SavedSearchAlertListItem_item\n        title: displayName(only: [artistIDs])\n        subtitle: displayName(except: [artistIDs])\n        artworksConnection(first: 10) {\n          counts {\n            total\n          }\n          id\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

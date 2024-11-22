@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2209a9dfb6a144b888aceca5e4843375>>
+ * @generated SignedSource<<3f03964ab7bf9d66c0d36d17be5d4117>>
+ * @relayHash 60c0b4c3c892f163c460d89c1f395887
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 60c0b4c3c892f163c460d89c1f395887
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -271,12 +274,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "60c0b4c3c892f163c460d89c1f395887",
-    "id": null,
+    "id": "60c0b4c3c892f163c460d89c1f395887",
     "metadata": {},
     "name": "HomeFeaturedShowsRailQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedShowsRailQuery {\n  orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...HomeFeaturedShowsRail_orderedSet\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  ...CellShow_show\n  internalID\n  slug\n}\n\nfragment HomeFeaturedShowsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      ...HomeFeaturedShow_show\n      internalID\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

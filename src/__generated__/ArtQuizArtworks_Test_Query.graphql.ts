@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<3c0c1058f231df103f4aa023869d1b50>>
+ * @generated SignedSource<<7e4d3df7cb1057d88f98b061311a04e4>>
+ * @relayHash 856c2b79b889594d0fc32d3da48b5743
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 856c2b79b889594d0fc32d3da48b5743
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -324,8 +327,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "856c2b79b889594d0fc32d3da48b5743",
-    "id": null,
+    "id": "856c2b79b889594d0fc32d3da48b5743",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -421,7 +423,7 @@ return {
     },
     "name": "ArtQuizArtworks_Test_Query",
     "operationKind": "query",
-    "text": "query ArtQuizArtworks_Test_Query {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworksCardMetadata_artwork on Artwork {\n  title\n  date\n  dominantColors\n  culturalMaker\n  artists(shallow: true) {\n    name\n    id\n  }\n  partner(shallow: true) {\n    name\n    id\n  }\n}\n\nfragment ArtQuizArtworksCard_artwork on Artwork {\n  ...ArtQuizArtworksCardMetadata_artwork\n  image {\n    resized(width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        node {\n          ...ArtQuizArtworksCard_artwork\n          internalID\n          slug\n          isDisliked\n          isSaved\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

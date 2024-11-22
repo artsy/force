@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<655fbea2156fa26dcfdd09fb8261b7b5>>
+ * @generated SignedSource<<07ed66eea4c983677e283d0ffa208b91>>
+ * @relayHash 30d2e9b0312a355ec1d8d819e0f44040
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 30d2e9b0312a355ec1d8d819e0f44040
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -298,8 +301,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "30d2e9b0312a355ec1d8d819e0f44040",
-    "id": null,
+    "id": "30d2e9b0312a355ec1d8d819e0f44040",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "conversation": {
@@ -386,7 +388,7 @@ return {
     },
     "name": "ConversationsSidebarItemTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarItemTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationsSidebarItem_conversation\n    id\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

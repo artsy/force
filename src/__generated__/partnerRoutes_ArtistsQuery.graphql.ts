@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<77ce65df10e9486cc44c482b8c1c4e25>>
+ * @generated SignedSource<<766e9d03bdbd2b363bb0dff15f34941e>>
+ * @relayHash 7b67add0913f3495efdb353152138824
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 7b67add0913f3495efdb353152138824
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -253,12 +256,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7b67add0913f3495efdb353152138824",
-    "id": null,
+    "id": "7b67add0913f3495efdb353152138824",
     "metadata": {},
     "name": "partnerRoutes_ArtistsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ArtistsQuery(\n  $partnerId: String!\n) @cacheable {\n  partner(id: $partnerId) @principalField {\n    ...ArtistsRoute_partner\n    displayArtistsSection\n    allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {\n      totalCount\n    }\n    id\n  }\n}\n\nfragment ArtistsRoute_partner on Partner {\n  ...PartnerArtists_partner\n}\n\nfragment PartnerArtistList_partner on Partner {\n  href\n  distinguishRepresentedArtists\n  displayFullPartnerPage\n  allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {\n    edges {\n      representedBy\n      counts {\n        artworks\n      }\n      node {\n        internalID\n        slug\n        name\n        href\n        counts {\n          artworks\n        }\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment PartnerArtists_partner on Partner {\n  ...PartnerArtistList_partner\n}\n"
+    "text": null
   }
 };
 })();

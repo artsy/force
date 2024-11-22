@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f70b0b0dfe66651d24af53c4566ca3f2>>
+ * @generated SignedSource<<736fd0f0c73f0455f513f67538475705>>
+ * @relayHash 5ea02d04692fe4d66eefc6baafe460d8
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5ea02d04692fe4d66eefc6baafe460d8
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -233,8 +236,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5ea02d04692fe4d66eefc6baafe460d8",
-    "id": null,
+    "id": "5ea02d04692fe4d66eefc6baafe460d8",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewingRoom": {
@@ -277,7 +279,7 @@ return {
     },
     "name": "ViewingRoomApp_DraftTest_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomApp_DraftTest_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  internalID\n  status\n  partner {\n    internalID\n    id\n  }\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  href\n  pullQuote\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

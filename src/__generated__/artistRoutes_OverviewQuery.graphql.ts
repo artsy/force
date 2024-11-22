@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<de86367cb931e85d5fc5d730057cd9be>>
+ * @generated SignedSource<<89ea0db693bcc3c9d90951de2e6f72b4>>
+ * @relayHash 7470edb26229de38dca64f3c84a42938
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 7470edb26229de38dca64f3c84a42938
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -284,12 +287,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7470edb26229de38dca64f3c84a42938",
-    "id": null,
+    "id": "7470edb26229de38dca64f3c84a42938",
     "metadata": {},
     "name": "artistRoutes_OverviewQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  internalID\n  name\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    artworks\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

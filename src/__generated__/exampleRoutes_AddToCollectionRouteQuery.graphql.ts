@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<cac2ea54660d2e0b48457c368dbed99a>>
+ * @generated SignedSource<<68c16e4fccc73c2dfa173f36b4b75a61>>
+ * @relayHash 83f36b1fcea66becf9ef30962be8a3d1
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 83f36b1fcea66becf9ef30962be8a3d1
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -216,12 +219,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "83f36b1fcea66becf9ef30962be8a3d1",
-    "id": null,
+    "id": "83f36b1fcea66becf9ef30962be8a3d1",
     "metadata": {},
     "name": "exampleRoutes_AddToCollectionRouteQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_AddToCollectionRouteQuery {\n  viewer {\n    ...AddToCollectionRoute_viewer\n  }\n}\n\nfragment AddToCollectionRoute_viewer on Viewer {\n  artworksConnection(first: 50, marketable: true, medium: \"painting\") {\n    edges {\n      node {\n        internalID\n        artistNames\n        title\n        date\n        image {\n          cropped(width: 200, height: 200) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

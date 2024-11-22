@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<26efc6af1586c8be2fd7d64f44ca8854>>
+ * @generated SignedSource<<85ded87699f4853ab65f1e78a3465914>>
+ * @relayHash 3f2312f93f0fd80495dd19645d51b547
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3f2312f93f0fd80495dd19645d51b547
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -261,8 +264,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3f2312f93f0fd80495dd19645d51b547",
-    "id": null,
+    "id": "3f2312f93f0fd80495dd19645d51b547",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewingRoomsConnection": {
@@ -328,7 +330,7 @@ return {
     },
     "name": "PartnerViewingRoomsGrid_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerViewingRoomsGrid_Test_Query {\n  viewingRoomsConnection: partner(id: \"white-cube\") {\n    ...PartnerViewingRoomsGrid_viewingRoomsConnection\n    id\n  }\n}\n\nfragment PartnerViewingRoomsGrid_viewingRoomsConnection on Partner {\n  viewingRoomsConnection {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCard_viewingRoom\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n"
+    "text": null
   }
 };
 })();

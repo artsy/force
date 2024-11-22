@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ce99e428f5a895cafd7c45f904ee070b>>
+ * @generated SignedSource<<090b4017265943b2ba1dd040e4aab3d0>>
+ * @relayHash 900f96821a765e776857f45adfc899ea
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 900f96821a765e776857f45adfc899ea
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -285,12 +288,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "900f96821a765e776857f45adfc899ea",
-    "id": null,
+    "id": "900f96821a765e776857f45adfc899ea",
     "metadata": {},
     "name": "ViewingRoomsLatestGrid_ViewingRoomsAppQuery",
     "operationKind": "query",
-    "text": "query ViewingRoomsLatestGrid_ViewingRoomsAppQuery(\n  $count: Int!\n  $after: String\n) {\n  allViewingRooms: viewer {\n    ...ViewingRoomsApp_allViewingRooms_2QE1um\n  }\n}\n\nfragment ViewingRoomsApp_allViewingRooms_2QE1um on Viewer {\n  ...ViewingRoomsLatestGrid_viewingRooms_2QE1um\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms_2QE1um on Viewer {\n  viewingRoomsConnection(first: $count, after: $after) {\n    edges {\n      node {\n        slug\n        status\n        title\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        partner {\n          name\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

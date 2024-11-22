@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a10e5a571fb57d6a67b76557b65d711b>>
+ * @generated SignedSource<<370a8ae7109fcbf5b20ef85214d06194>>
+ * @relayHash 3e636d64f54d1ae9bbfc1380e72523b2
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3e636d64f54d1ae9bbfc1380e72523b2
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
@@ -248,12 +251,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3e636d64f54d1ae9bbfc1380e72523b2",
-    "id": null,
+    "id": "3e636d64f54d1ae9bbfc1380e72523b2",
     "metadata": {},
     "name": "ReviewSubmitOfferOrderWithConversationMutation",
     "operationKind": "mutation",
-    "text": "mutation ReviewSubmitOfferOrderWithConversationMutation(\n  $input: CommerceSubmitOrderWithOfferInput!\n) {\n  submitOfferOrderWithConversation(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          state\n          id\n        }\n      }\n      ... on CommerceOrderRequiresAction {\n        actionData {\n          clientSecret\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

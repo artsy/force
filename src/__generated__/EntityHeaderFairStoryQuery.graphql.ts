@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ff241b82a861fde7c9b2c754b2d31c0e>>
+ * @generated SignedSource<<f6782eb16ce43abc815ed99bad130c1e>>
+ * @relayHash cc1e72f2e745dcad84b7966c17c840a6
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID cc1e72f2e745dcad84b7966c17c840a6
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -208,12 +211,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cc1e72f2e745dcad84b7966c17c840a6",
-    "id": null,
+    "id": "cc1e72f2e745dcad84b7966c17c840a6",
     "metadata": {},
     "name": "EntityHeaderFairStoryQuery",
     "operationKind": "query",
-    "text": "query EntityHeaderFairStoryQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...EntityHeaderFair_fair\n    id\n  }\n}\n\nfragment EntityHeaderFair_fair on Fair {\n  internalID\n  href\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    internalID\n    initials\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<775988469ddc647ca8c124d4172be0d6>>
+ * @generated SignedSource<<3aa2d028aa7fda771fda152398fd2bb7>>
+ * @relayHash 7bc4f30a6475a4f19f875215a9f2dec8
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 7bc4f30a6475a4f19f875215a9f2dec8
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -275,12 +278,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7bc4f30a6475a4f19f875215a9f2dec8",
-    "id": null,
+    "id": "7bc4f30a6475a4f19f875215a9f2dec8",
     "metadata": {},
     "name": "SelectArtworkListsModalQuery",
     "operationKind": "query",
-    "text": "query SelectArtworkListsModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectArtworkListsModal_me_2R6IMa\n    id\n  }\n}\n\nfragment SelectArtworkListItem_item on Collection {\n  name\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectArtworkListsModal_me_2R6IMa on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: $artworkID)\n    name\n    ...SelectArtworkListItem_item\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: UPDATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: $artworkID)\n        name\n        ...SelectArtworkListItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

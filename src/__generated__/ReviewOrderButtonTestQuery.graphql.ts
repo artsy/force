@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<c9aa2109fc49b48de6c7fc3f5c5ef077>>
+ * @generated SignedSource<<92898c71362dd425b1a6f922fe5c221c>>
+ * @relayHash 5166bc556cf837b67c9c96eeab624e49
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5166bc556cf837b67c9c96eeab624e49
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -206,8 +209,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5166bc556cf837b67c9c96eeab624e49",
-    "id": null,
+    "id": "5166bc556cf837b67c9c96eeab624e49",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "commerceOrder": {
@@ -294,7 +296,7 @@ return {
     },
     "name": "ReviewOrderButtonTestQuery",
     "operationKind": "query",
-    "text": "query ReviewOrderButtonTestQuery {\n  commerceOrder(id: \"1234\") {\n    __typename\n    ...ReviewOrderButton_order\n    id\n  }\n}\n\nfragment ReviewOrderButton_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  id\n  state\n  mode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

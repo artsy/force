@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<450f09b16de4859309f70d954a458224>>
+ * @generated SignedSource<<a250e4d9c5af39ec57c8223a6f948924>>
+ * @relayHash fab2f3ffc55f6b67ea106ea284ea0433
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID fab2f3ffc55f6b67ea106ea284ea0433
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -364,8 +367,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fab2f3ffc55f6b67ea106ea284ea0433",
-    "id": null,
+    "id": "fab2f3ffc55f6b67ea106ea284ea0433",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "conversation": {
@@ -435,7 +437,7 @@ return {
     },
     "name": "ConversationMessageTestQuery",
     "operationKind": "query",
-    "text": "query ConversationMessageTestQuery {\n  conversation(id: \"123\") {\n    messagesConnection(first: 1) {\n      edges {\n        node {\n          ...ConversationMessage_message\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  __typename\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  isMessageSentOnPlatform\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n"
+    "text": null
   }
 };
 })();

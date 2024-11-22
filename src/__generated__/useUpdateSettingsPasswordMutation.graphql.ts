@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7e36831201cbba33846bcf7dd27f12d0>>
+ * @generated SignedSource<<89692680fb88b98db923d9b465139c9e>>
+ * @relayHash 336ca1e7c22c431ed0bed53039b1d2a7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 336ca1e7c22c431ed0bed53039b1d2a7
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateMyPasswordMutationInput = {
@@ -80,12 +83,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "336ca1e7c22c431ed0bed53039b1d2a7",
-    "id": null,
+    "id": "336ca1e7c22c431ed0bed53039b1d2a7",
     "metadata": {},
     "name": "useUpdateSettingsPasswordMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateSettingsPasswordMutation(\n  $input: UpdateMyPasswordMutationInput!\n) {\n  updateMyPassword(input: $input) {\n    clientMutationId\n  }\n}\n"
+    "text": null
   }
 };
 })();

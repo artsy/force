@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ce0790af55cc9e959541ed711a0fe29b>>
+ * @generated SignedSource<<decbe742db95ddf052977b30a2872378>>
+ * @relayHash fd20ddec8c53dbc3c5f87987be488538
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID fd20ddec8c53dbc3c5f87987be488538
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
@@ -227,12 +230,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fd20ddec8c53dbc3c5f87987be488538",
-    "id": null,
+    "id": "fd20ddec8c53dbc3c5f87987be488538",
     "metadata": {},
     "name": "createMockNetworkLayerTestMutationResultsMutation",
     "operationKind": "mutation",
-    "text": "mutation createMockNetworkLayerTestMutationResultsMutation(\n  $input: CommerceBuyerAcceptOfferInput!\n) {\n  commerceBuyerAcceptOffer(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          internalID\n          state\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

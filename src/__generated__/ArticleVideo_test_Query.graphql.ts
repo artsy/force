@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<1e7d1ff5b6e56dd6f58d38cbbb107b3a>>
+ * @generated SignedSource<<2b116fd64a50f4b088736879bfc94437>>
+ * @relayHash 2fbf4f8756cee62f3a5401a3259b849b
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 2fbf4f8756cee62f3a5401a3259b849b
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -387,8 +390,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2fbf4f8756cee62f3a5401a3259b849b",
-    "id": null,
+    "id": "2fbf4f8756cee62f3a5401a3259b849b",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "article": (v8/*: any*/),
@@ -452,7 +454,7 @@ return {
     },
     "name": "ArticleVideo_test_Query",
     "operationKind": "query",
-    "text": "query ArticleVideo_test_Query {\n  article(id: \"example\") {\n    ...ArticleVideo_article\n    id\n  }\n}\n\nfragment ArticleSeriesItem_article on Article {\n  href\n  vertical\n  title\n  thumbnailTitle\n  byline\n  description\n  publishedAt(format: \"MMM DD, YYYY\")\n  thumbnailImage {\n    display: cropped(width: 869, height: 580) {\n      src\n      srcSet\n    }\n  }\n  media {\n    duration\n  }\n  seriesArticle {\n    title\n    id\n  }\n}\n\nfragment ArticleSponsor_sponsor on ArticleSponsor {\n  partnerLightLogo\n  partnerDarkLogo\n  partnerLogoLink\n}\n\nfragment ArticleVideo_article on Article {\n  vertical\n  title\n  href\n  description\n  media {\n    coverImage {\n      url\n    }\n    credits\n    description\n    duration\n    releaseDate(format: \"MMM DD, YYYY h:mma\")\n    url\n  }\n  seriesArticle {\n    title\n    href\n    description\n    sponsor {\n      ...ArticleSponsor_sponsor\n    }\n    id\n  }\n  moreRelatedArticles: relatedArticles(size: 4) {\n    ...ArticleSeriesItem_article\n    internalID\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

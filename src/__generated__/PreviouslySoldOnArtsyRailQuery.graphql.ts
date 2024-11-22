@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a449ab81838e8c06b78153f016f49469>>
+ * @generated SignedSource<<e31438fbc3931a67f520d26f89d6ca10>>
+ * @relayHash 4e7018711237e182b965e16c99e2fb11
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 4e7018711237e182b965e16c99e2fb11
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -284,12 +287,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4e7018711237e182b965e16c99e2fb11",
-    "id": null,
+    "id": "4e7018711237e182b965e16c99e2fb11",
     "metadata": {},
     "name": "PreviouslySoldOnArtsyRailQuery",
     "operationKind": "query",
-    "text": "query PreviouslySoldOnArtsyRailQuery {\n  recentlySoldArtworks {\n    ...PreviouslySoldOnArtsyRail_recentlySoldArtworks\n  }\n}\n\nfragment PreviouslySoldOnArtsyRail_recentlySoldArtworks on RecentlySoldArtworkTypeConnection {\n  edges {\n    node {\n      artwork {\n        ...SoldArtwork_artwork\n        slug\n        internalID\n        id\n      }\n      lowEstimate {\n        display\n      }\n      highEstimate {\n        display\n      }\n      priceRealized {\n        display\n      }\n      performance {\n        mid\n      }\n    }\n  }\n}\n\nfragment SoldArtworkDetails_artwork on Artwork {\n  href\n  title\n  date\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n}\n\nfragment SoldArtwork_artwork on Artwork {\n  ...SoldArtworkDetails_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n"
+    "text": null
   }
 };
 })();

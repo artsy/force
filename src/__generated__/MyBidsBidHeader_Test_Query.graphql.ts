@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<3b837e97fbd3c48dfd7a334cb4119a21>>
+ * @generated SignedSource<<a8d2691ceb211f4fcf6b659a6620f9a0>>
+ * @relayHash 6bedef722f769a678a32f871afd0e885
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 6bedef722f769a678a32f871afd0e885
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -193,8 +196,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6bedef722f769a678a32f871afd0e885",
-    "id": null,
+    "id": "6bedef722f769a678a32f871afd0e885",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "sale": {
@@ -233,7 +235,7 @@ return {
     },
     "name": "MyBidsBidHeader_Test_Query",
     "operationKind": "query",
-    "text": "query MyBidsBidHeader_Test_Query {\n  sale(id: \"foo\") {\n    ...MyBidsBidHeader_sale\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    cropped(width: 330, height: 100, version: [\"source\", \"wide\", \"large_rectangle\"]) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n"
+    "text": null
   }
 };
 })();

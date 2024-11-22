@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7a54c7deb80c7fac1b6b660d98921d1e>>
+ * @generated SignedSource<<0bc857982983f2f7cb6597dd62ffbe11>>
+ * @relayHash b34dab2604f8f34105035285a3dc36ad
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b34dab2604f8f34105035285a3dc36ad
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -112,12 +115,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b34dab2604f8f34105035285a3dc36ad",
-    "id": null,
+    "id": "b34dab2604f8f34105035285a3dc36ad",
     "metadata": {},
     "name": "invoiceRoutes_InvoiceQuery",
     "operationKind": "query",
-    "text": "query invoiceRoutes_InvoiceQuery(\n  $token: String!\n) {\n  invoice(token: $token) {\n    ...InvoiceApp_invoice\n    id\n  }\n}\n\nfragment InvoiceApp_invoice on Invoice {\n  number\n  readyAt(format: \"MMM D, YYYY\")\n}\n"
+    "text": null
   }
 };
 })();

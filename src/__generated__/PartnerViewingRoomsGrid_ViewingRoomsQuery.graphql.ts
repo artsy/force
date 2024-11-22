@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9c66b2c6d3f21de8025df65884e82e38>>
+ * @generated SignedSource<<0817e547b01e9344dcc4b18a9509ad9f>>
+ * @relayHash 06ea61921141f612b554fa240fe63043
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 06ea61921141f612b554fa240fe63043
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -300,12 +303,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "06ea61921141f612b554fa240fe63043",
-    "id": null,
+    "id": "06ea61921141f612b554fa240fe63043",
     "metadata": {},
     "name": "PartnerViewingRoomsGrid_ViewingRoomsQuery",
     "operationKind": "query",
-    "text": "query PartnerViewingRoomsGrid_ViewingRoomsQuery(\n  $count: Int!\n  $after: String\n  $partnerId: String!\n  $statuses: [ViewingRoomStatusEnum!]\n) {\n  viewingRoomsConnection: partner(id: $partnerId) {\n    ...PartnerViewingRoomsGrid_viewingRoomsConnection_2E6mFi\n    id\n  }\n}\n\nfragment PartnerViewingRoomsGrid_viewingRoomsConnection_2E6mFi on Partner {\n  viewingRoomsConnection(first: $count, after: $after, statuses: $statuses) {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCard_viewingRoom\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4944d4ef6950c20adc572745e915c9ad>>
+ * @generated SignedSource<<02067e726be1286ee477774e5ad32c7a>>
+ * @relayHash ff534b3733d456106110eb8392488fd7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID ff534b3733d456106110eb8392488fd7
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ARTIST_SERIES" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
@@ -203,12 +206,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ff534b3733d456106110eb8392488fd7",
-    "id": null,
+    "id": "ff534b3733d456106110eb8392488fd7",
     "metadata": {},
     "name": "ArtistSeriesOptionsQuery",
     "operationKind": "query",
-    "text": "query ArtistSeriesOptionsQuery(\n  $input: FilterArtworksInput!\n) {\n  artworksConnection(size: 0, input: $input) {\n    aggregations {\n      counts {\n        count\n        name\n        value\n      }\n      slice\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

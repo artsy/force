@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<36e3edcf559109afd885c91c8503133c>>
+ * @generated SignedSource<<44d1e6a6bf06bf539df870e46c64d5ae>>
+ * @relayHash f127b8c34938b7ecf723c22bc14c6e93
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f127b8c34938b7ecf723c22bc14c6e93
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -290,12 +293,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f127b8c34938b7ecf723c22bc14c6e93",
-    "id": null,
+    "id": "f127b8c34938b7ecf723c22bc14c6e93",
     "metadata": {},
     "name": "SearchRouteQuery",
     "operationKind": "query",
-    "text": "query SearchRouteQuery(\n  $query: String!\n) {\n  matchConnection(term: $query, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          ...SearchRouteOption_artist\n          text: name\n          value: slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n        ... on Profile {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment SearchRouteOption_artist on Artist {\n  name\n  initials\n  formattedNationalityAndBirthday\n  image {\n    cropped(height: 200, width: 200) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

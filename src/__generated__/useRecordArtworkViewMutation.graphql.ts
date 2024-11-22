@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b22039528dd6e183c9c76f74c577e053>>
+ * @generated SignedSource<<6b32dd9c6da6cd44ccf7a594704b0c6f>>
+ * @relayHash 1878a771aa159ee5adf200a2f061815d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 1878a771aa159ee5adf200a2f061815d
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type useRecordArtworkViewMutation$variables = {
@@ -80,12 +83,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "1878a771aa159ee5adf200a2f061815d",
-    "id": null,
+    "id": "1878a771aa159ee5adf200a2f061815d",
     "metadata": {},
     "name": "useRecordArtworkViewMutation",
     "operationKind": "mutation",
-    "text": "mutation useRecordArtworkViewMutation(\n  $artworkID: String!\n) {\n  recordArtworkView(input: {artwork_id: $artworkID}) {\n    artwork_id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<92318ea264674de31340c12a1daf79cc>>
+ * @generated SignedSource<<193b79e1584ad1ef34b0c735865137fa>>
+ * @relayHash 036c94c633dc898558fb29f59e0a4e05
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 036c94c633dc898558fb29f59e0a4e05
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -361,8 +364,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "036c94c633dc898558fb29f59e0a4e05",
-    "id": null,
+    "id": "036c94c633dc898558fb29f59e0a4e05",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
@@ -457,7 +459,7 @@ return {
     },
     "name": "GalleriesRouteFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query GalleriesRouteFragmentContainer_Test_Query {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_4uWBz4\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<dd990cc928b86c8bf0d25dbdcde513ac>>
+ * @generated SignedSource<<caf02aff3a289bec8b1e384c1fbe8250>>
+ * @relayHash 5b0233d743da651b03e469c7dd09b29d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5b0233d743da651b03e469c7dd09b29d
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -154,8 +157,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5b0233d743da651b03e469c7dd09b29d",
-    "id": null,
+    "id": "5b0233d743da651b03e469c7dd09b29d",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -190,7 +192,7 @@ return {
     },
     "name": "MyCollectionArtworkArtistMarket_Test_Query",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkArtistMarket_Test_Query {\n  artwork(id: \"foo\") {\n    marketPriceInsights {\n      ...MyCollectionArtworkArtistMarket_marketPriceInsights\n    }\n    id\n  }\n}\n\nfragment MyCollectionArtworkArtistMarket_marketPriceInsights on ArtworkPriceInsights {\n  annualLotsSold\n  annualValueSoldDisplayText\n  medianSaleOverEstimatePercentage\n  liquidityRankDisplayText\n  sellThroughRate\n}\n"
+    "text": null
   }
 };
 })();

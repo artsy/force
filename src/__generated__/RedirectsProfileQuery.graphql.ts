@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a49433333e30843e690e4ea98e932ba2>>
+ * @generated SignedSource<<410d47a8aa7060255a4ba5dc35475262>>
+ * @relayHash 9bfa32949a2612a9bce1511ed76bd490
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 9bfa32949a2612a9bce1511ed76bd490
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type RedirectsProfileQuery$variables = {
@@ -180,12 +183,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9bfa32949a2612a9bce1511ed76bd490",
-    "id": null,
+    "id": "9bfa32949a2612a9bce1511ed76bd490",
     "metadata": {},
     "name": "RedirectsProfileQuery",
     "operationKind": "query",
-    "text": "query RedirectsProfileQuery(\n  $id: String!\n) {\n  profile(id: $id) {\n    owner {\n      __typename\n      ... on Partner {\n        slug\n      }\n      ... on Fair {\n        slug\n      }\n      ... on FairOrganizer {\n        slug\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

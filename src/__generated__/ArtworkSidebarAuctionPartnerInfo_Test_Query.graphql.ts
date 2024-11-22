@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0527e7ece755aade1fdc6e2454547cc0>>
+ * @generated SignedSource<<c5596d7a948fde904dd41ede5dc3005c>>
+ * @relayHash f6cc3b67662fcadcaad2db702ba3a9fb
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f6cc3b67662fcadcaad2db702ba3a9fb
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -179,8 +182,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f6cc3b67662fcadcaad2db702ba3a9fb",
-    "id": null,
+    "id": "f6cc3b67662fcadcaad2db702ba3a9fb",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -224,7 +226,7 @@ return {
     },
     "name": "ArtworkSidebarAuctionPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarAuctionPartnerInfo_Test_Query {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarAuctionPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarAuctionPartnerInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale_artwork: saleArtwork {\n    estimate\n    id\n  }\n  sale {\n    internalID\n    is_closed: isClosed\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

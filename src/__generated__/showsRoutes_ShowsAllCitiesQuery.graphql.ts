@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<863cefad3b55c01c658b35c16d6a9f22>>
+ * @generated SignedSource<<91e1df816000437f30d56b3ecdf328c0>>
+ * @relayHash 57b8a6a1300857be760a3d5691d145a8
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 57b8a6a1300857be760a3d5691d145a8
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -100,12 +103,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "57b8a6a1300857be760a3d5691d145a8",
-    "id": null,
+    "id": "57b8a6a1300857be760a3d5691d145a8",
     "metadata": {},
     "name": "showsRoutes_ShowsAllCitiesQuery",
     "operationKind": "query",
-    "text": "query showsRoutes_ShowsAllCitiesQuery @cacheable {\n  viewer {\n    ...ShowsAllCities_viewer\n  }\n}\n\nfragment ShowsAllCities_viewer on Viewer {\n  cities {\n    fullName\n    name\n    slug\n  }\n}\n"
+    "text": null
   }
 };
 

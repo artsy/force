@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<06af64d88b4b08a8c575c6d50a216ff9>>
+ * @generated SignedSource<<c4a8f7895e5cfeab7a0f4b2832e51b60>>
+ * @relayHash 6a460f1ad0a78ade7979d0f0b923eed0
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 6a460f1ad0a78ade7979d0f0b923eed0
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -201,12 +204,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6a460f1ad0a78ade7979d0f0b923eed0",
-    "id": null,
+    "id": "6a460f1ad0a78ade7979d0f0b923eed0",
     "metadata": {},
     "name": "CellArticleStoryQuery",
     "operationKind": "query",
-    "text": "query CellArticleStoryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0743e75df54553f11cfbaae5690d069a>>
+ * @generated SignedSource<<44e41300c50f710bd5f4d1db3873173f>>
+ * @relayHash 7ca5580ed4893769594810cb06e0cfbc
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 7ca5580ed4893769594810cb06e0cfbc
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -219,12 +222,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7ca5580ed4893769594810cb06e0cfbc",
-    "id": null,
+    "id": "7ca5580ed4893769594810cb06e0cfbc",
     "metadata": {},
     "name": "EntityHeaderArtistStoryQuery",
     "operationKind": "query",
-    "text": "query EntityHeaderArtistStoryQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

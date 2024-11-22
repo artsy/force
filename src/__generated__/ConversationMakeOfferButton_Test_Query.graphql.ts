@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a2bcc78d7471527a675d5c6cf4ab0798>>
+ * @generated SignedSource<<7b7ac777ada8315a5e85d42d4c4abde9>>
+ * @relayHash 540a2c3e9c2731803e9b9f95b9891adc
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 540a2c3e9c2731803e9b9f95b9891adc
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -214,8 +217,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "540a2c3e9c2731803e9b9f95b9891adc",
-    "id": null,
+    "id": "540a2c3e9c2731803e9b9f95b9891adc",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -269,7 +271,7 @@ return {
     },
     "name": "ConversationMakeOfferButton_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationMakeOfferButton_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...useConversationPurchaseButtonData_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment useConversationPurchaseButtonData_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isAcquireable\n        isEdition\n        internalID\n        slug\n        editionSets {\n          internalID\n          id\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

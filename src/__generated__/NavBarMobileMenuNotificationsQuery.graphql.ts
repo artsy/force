@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<6ed0eac9c4eb8700975eb6100c4759ce>>
+ * @generated SignedSource<<88d122398d04eaf2efe6a37ebb1800d8>>
+ * @relayHash ed6b3ad42600266fc4bff072e1aac6bc
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID ed6b3ad42600266fc4bff072e1aac6bc
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -96,12 +99,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "ed6b3ad42600266fc4bff072e1aac6bc",
-    "id": null,
+    "id": "ed6b3ad42600266fc4bff072e1aac6bc",
     "metadata": {},
     "name": "NavBarMobileMenuNotificationsQuery",
     "operationKind": "query",
-    "text": "query NavBarMobileMenuNotificationsQuery {\n  me {\n    ...NavBarMobileMenuNotifications_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotifications_me on Me {\n  unreadNotificationsCount\n  unreadConversationCount\n  unseenNotificationsCount\n}\n"
+    "text": null
   }
 };
 

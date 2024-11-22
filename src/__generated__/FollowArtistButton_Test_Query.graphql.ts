@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<dfeb42d197c8147237ab3f8523de949b>>
+ * @generated SignedSource<<fb5df7155aa44d7e76b10acec78e0b16>>
+ * @relayHash ac0e8f342b27a0961260035865e59269
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID ac0e8f342b27a0961260035865e59269
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -191,8 +194,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ac0e8f342b27a0961260035865e59269",
-    "id": null,
+    "id": "ac0e8f342b27a0961260035865e59269",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
@@ -251,7 +253,7 @@ return {
     },
     "name": "FollowArtistButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowArtistButton_Test_Query {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: \"example\") {\n    ...FollowArtistButton_artist_2OV785\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_2OV785 on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
+    "text": null
   }
 };
 })();

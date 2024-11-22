@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<55761f1a00eb099b1b88be817fc82bb5>>
+ * @generated SignedSource<<8dc33c7e5f06adffd5a600e50b78440a>>
+ * @relayHash 1f0454408f898044b1b23cffbe01146f
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 1f0454408f898044b1b23cffbe01146f
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type AddUserToSubmissionMutationInput = {
@@ -132,12 +135,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1f0454408f898044b1b23cffbe01146f",
-    "id": null,
+    "id": "1f0454408f898044b1b23cffbe01146f",
     "metadata": {},
     "name": "AuthIntentAssociateSubmissionMutation",
     "operationKind": "mutation",
-    "text": "mutation AuthIntentAssociateSubmissionMutation(\n  $input: AddUserToSubmissionMutationInput!\n) {\n  addUserToSubmission(input: $input) {\n    consignmentSubmission {\n      internalID\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

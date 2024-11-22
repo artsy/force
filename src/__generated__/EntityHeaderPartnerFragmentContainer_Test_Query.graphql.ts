@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b5ae653a6008403d338c0adf74451ed7>>
+ * @generated SignedSource<<8a436414b11e119e373900236bd1a100>>
+ * @relayHash fb1497b8b7ff8b9706e9b1763404cde8
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID fb1497b8b7ff8b9706e9b1763404cde8
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -316,8 +319,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fb1497b8b7ff8b9706e9b1763404cde8",
-    "id": null,
+    "id": "fb1497b8b7ff8b9706e9b1763404cde8",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
@@ -382,7 +384,7 @@ return {
     },
     "name": "EntityHeaderPartnerFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query EntityHeaderPartnerFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...EntityHeaderPartner_partner\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

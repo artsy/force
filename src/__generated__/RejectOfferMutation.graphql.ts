@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7c489169b2002e4fd2a9b866bb42bce0>>
+ * @generated SignedSource<<101dadd91cec0781ace332f4e8be82f6>>
+ * @relayHash 96754b731151eab290a32787dd0ae728
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 96754b731151eab290a32787dd0ae728
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceCancelReasonTypeEnum = "ADMIN_CANCELED" | "ADMIN_FAILED_REVIEW" | "BUYER_LAPSED" | "BUYER_REJECTED" | "FUNDS_NOT_RECEIVED" | "SELLER_LAPSED" | "SELLER_REJECTED" | "SELLER_REJECTED_ARTWORK_UNAVAILABLE" | "SELLER_REJECTED_OFFER_TOO_LOW" | "SELLER_REJECTED_OTHER" | "SELLER_REJECTED_SHIPPING_UNAVAILABLE" | "%future added value";
@@ -238,12 +241,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "96754b731151eab290a32787dd0ae728",
-    "id": null,
+    "id": "96754b731151eab290a32787dd0ae728",
     "metadata": {},
     "name": "RejectOfferMutation",
     "operationKind": "mutation",
-    "text": "mutation RejectOfferMutation(\n  $input: CommerceBuyerRejectOfferInput!\n) {\n  commerceBuyerRejectOffer(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          ... on CommerceOfferOrder {\n            awaitingResponseFrom\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

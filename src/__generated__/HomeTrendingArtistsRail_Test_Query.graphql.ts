@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<46410162cdfa7420b8dcabf4a118682d>>
+ * @generated SignedSource<<8dd9b772e2ccf2ed04418772821d1b77>>
+ * @relayHash df10e58ec8852aee3b15b95cdb018794
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID df10e58ec8852aee3b15b95cdb018794
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -319,8 +322,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "df10e58ec8852aee3b15b95cdb018794",
-    "id": null,
+    "id": "df10e58ec8852aee3b15b95cdb018794",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
@@ -381,7 +383,7 @@ return {
     },
     "name": "HomeTrendingArtistsRail_Test_Query",
     "operationKind": "query",
-    "text": "query HomeTrendingArtistsRail_Test_Query {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  coverArtwork {\n    image {\n      cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  curatedTrendingArtists(first: 20) {\n    edges {\n      node {\n        ...CellArtist_artist\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

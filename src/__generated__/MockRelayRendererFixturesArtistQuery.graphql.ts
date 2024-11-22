@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b094819d4673064acd73fe3c18c6fc6d>>
+ * @generated SignedSource<<453460a28fb795c503ed97b321fff958>>
+ * @relayHash cbf4686647f004d150e5f1a608cbe861
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID cbf4686647f004d150e5f1a608cbe861
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -106,12 +109,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cbf4686647f004d150e5f1a608cbe861",
-    "id": null,
+    "id": "cbf4686647f004d150e5f1a608cbe861",
     "metadata": {},
     "name": "MockRelayRendererFixturesArtistQuery",
     "operationKind": "query",
-    "text": "query MockRelayRendererFixturesArtistQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...MockRelayRendererFixtures_artist\n    id\n  }\n}\n\nfragment MockRelayRendererFixtures_artist on Artist {\n  name\n}\n"
+    "text": null
   }
 };
 })();

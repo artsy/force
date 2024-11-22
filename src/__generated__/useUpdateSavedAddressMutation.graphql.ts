@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b5d10a542e550c7130e757f64bfc9e55>>
+ * @generated SignedSource<<2321febf38c8c31f2488ab75ad5e065d>>
+ * @relayHash bd0762595bbb34e2914c9805b73753c9
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID bd0762595bbb34e2914c9805b73753c9
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -357,12 +360,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bd0762595bbb34e2914c9805b73753c9",
-    "id": null,
+    "id": "bd0762595bbb34e2914c9805b73753c9",
     "metadata": {},
     "name": "useUpdateSavedAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateSavedAddressMutation(\n  $input: UpdateUserAddressInput!\n) {\n  updateUserAddress(input: $input) {\n    me {\n      ...Shipping_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n\nfragment FulfillmentDetailsForm_me on Me {\n  name\n  email\n  id\n  location {\n    country\n    id\n  }\n  addressConnection(first: 30) {\n    totalCount\n  }\n}\n\nfragment ShippingContext_me_dXEtb on Me {\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n\nfragment Shipping_me on Me {\n  ...FulfillmentDetailsForm_me\n  ...ShippingContext_me_dXEtb\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8319744f593cd8653df9da7860b183c1>>
+ * @generated SignedSource<<39fa6732dee7d22849892b714b9ca3ab>>
+ * @relayHash 107af8db0b344a3cde7f77f243798514
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 107af8db0b344a3cde7f77f243798514
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -455,8 +458,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "107af8db0b344a3cde7f77f243798514",
-    "id": null,
+    "id": "107af8db0b344a3cde7f77f243798514",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "orderedSet": {
@@ -555,7 +557,7 @@ return {
     },
     "name": "HomeFeaturedGalleriesRail_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedGalleriesRail_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          owner {\n            __typename\n            ...CellPartner_partner\n            ... on Partner {\n              internalID\n              slug\n            }\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<94a05125cc8fc94f599fc258463acbc2>>
+ * @generated SignedSource<<6cbfccf60f13a692753bc0950368739e>>
+ * @relayHash 06456174a6d2b2cc8130259a6f18b353
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 06456174a6d2b2cc8130259a6f18b353
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SaveArtworkInput = {
@@ -109,12 +112,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "06456174a6d2b2cc8130259a6f18b353",
-    "id": null,
+    "id": "06456174a6d2b2cc8130259a6f18b353",
     "metadata": {},
     "name": "AuthIntentSaveArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation AuthIntentSaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      id\n      isSaved\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

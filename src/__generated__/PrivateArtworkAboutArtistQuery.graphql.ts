@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9b84bda4738bcd0567c4e808566e4817>>
+ * @generated SignedSource<<06cae746c7150080f7231bf0b7e50b3e>>
+ * @relayHash a99fc8e9720ccdbd6247a653c4ebd2f4
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID a99fc8e9720ccdbd6247a653c4ebd2f4
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -273,12 +276,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a99fc8e9720ccdbd6247a653c4ebd2f4",
-    "id": null,
+    "id": "a99fc8e9720ccdbd6247a653c4ebd2f4",
     "metadata": {},
     "name": "PrivateArtworkAboutArtistQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  counts {\n    follows\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  displayArtistBio\n  slug\n  artists(shallow: true) {\n    ...FollowArtistButton_artist\n    internalID\n    href\n    slug\n    name\n    initials\n    formattedNationalityAndBirthday\n    counts {\n      artworks\n      forSaleArtworks\n      follows\n    }\n    coverArtwork {\n      image {\n        cropped(width: 145, height: 145) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

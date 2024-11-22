@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<1e1dc0040adface2c90e7ed52d37ca49>>
+ * @generated SignedSource<<eb86ed0f2138b7e035b64091ec86cc24>>
+ * @relayHash f0645bbed9a6c8ddee36997d501ae9a2
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f0645bbed9a6c8ddee36997d501ae9a2
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -165,8 +168,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f0645bbed9a6c8ddee36997d501ae9a2",
-    "id": null,
+    "id": "f0645bbed9a6c8ddee36997d501ae9a2",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artistSeries": {
@@ -207,7 +209,7 @@ return {
     },
     "name": "CellArtistSeriesFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query CellArtistSeriesFragmentContainer_Test_Query {\n  artistSeries(id: \"example\") {\n    ...CellArtistSeries_artistSeries\n    id\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

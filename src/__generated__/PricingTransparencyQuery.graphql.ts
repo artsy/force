@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d6d92d377ccac53e3e7b75068f2d8fe8>>
+ * @generated SignedSource<<3d68dc83bb39159885c7a061543ed9a1>>
+ * @relayHash 32ac9984618e63cde9cfe54115b5523e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 32ac9984618e63cde9cfe54115b5523e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type PricingTransparencyQuery$variables = {
@@ -205,12 +208,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "32ac9984618e63cde9cfe54115b5523e",
-    "id": null,
+    "id": "32ac9984618e63cde9cfe54115b5523e",
     "metadata": {},
     "name": "PricingTransparencyQuery",
     "operationKind": "query",
-    "text": "query PricingTransparencyQuery(\n  $saleId: String!\n  $artworkId: String!\n  $bidAmountMinor: Int!\n) {\n  artwork(id: $artworkId) {\n    saleArtwork(saleID: $saleId) {\n      calculatedCost(bidAmountMinor: $bidAmountMinor) {\n        bidAmount {\n          display\n        }\n        buyersPremium {\n          display\n        }\n        subtotal {\n          display\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2688fa565abfa8b7d137f011bc37765e>>
+ * @generated SignedSource<<c9e3dc90dcb0f259b961be2baba07611>>
+ * @relayHash b94597b1dc00411d5eb26402e3ff8d24
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b94597b1dc00411d5eb26402e3ff8d24
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -531,12 +534,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b94597b1dc00411d5eb26402e3ff8d24",
-    "id": null,
+    "id": "b94597b1dc00411d5eb26402e3ff8d24",
     "metadata": {},
     "name": "showRoutes_ShowInfoQuery",
     "operationKind": "query",
-    "text": "query showRoutes_ShowInfoQuery(\n  $slug: String!\n) {\n  show(id: $slug) @principalField {\n    ...ShowInfo_show\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ShowHours_show on Show {\n  location {\n    ...ShowLocationHours_location\n    id\n  }\n  fair {\n    location {\n      ...ShowLocationHours_location\n      id\n    }\n    id\n  }\n}\n\nfragment ShowInfoLocation_show on Show {\n  fair {\n    location {\n      display\n      address\n      address2\n      city\n      state\n      country\n      summary\n      id\n    }\n    id\n  }\n  location {\n    display\n    address\n    address2\n    city\n    state\n    country\n    summary\n    id\n  }\n}\n\nfragment ShowInfo_show on Show {\n  ...ShowInfoLocation_show\n  ...ShowHours_show\n  name\n  about: description\n  pressRelease(format: HTML)\n  hasLocation\n  events {\n    dateTimeRange\n    description\n    eventType\n    title\n  }\n  partner {\n    __typename\n    ... on Partner {\n      ...EntityHeaderPartner_partner\n      type\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n\nfragment ShowLocationHours_location on Location {\n  openingHours {\n    __typename\n    ... on OpeningHoursArray {\n      schedules {\n        days\n        hours\n      }\n    }\n    ... on OpeningHoursText {\n      text\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

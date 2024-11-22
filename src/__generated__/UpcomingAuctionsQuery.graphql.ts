@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<325aecf4ac390324fcb38b9f1af0609d>>
+ * @generated SignedSource<<afe71ac5176da806f325a79218b6035b>>
+ * @relayHash 35a3fd1e045bfba2440e6eba2c66f16b
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 35a3fd1e045bfba2440e6eba2c66f16b
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -262,12 +265,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "35a3fd1e045bfba2440e6eba2c66f16b",
-    "id": null,
+    "id": "35a3fd1e045bfba2440e6eba2c66f16b",
     "metadata": {},
     "name": "UpcomingAuctionsQuery",
     "operationKind": "query",
-    "text": "query UpcomingAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...UpcomingAuctions_viewer_2HEEH6\n  }\n}\n\nfragment UpcomingAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, sort: START_AT_ASC, auctionState: UPCOMING) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        status\n        formattedStartDateTime\n        eventStartAt\n        isLiveOpen\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

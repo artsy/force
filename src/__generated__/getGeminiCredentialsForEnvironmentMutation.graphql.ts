@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2c2684939f5d5be10d33318dec17bf53>>
+ * @generated SignedSource<<1a47ec3b893471006c003c88f6ed12a6>>
+ * @relayHash 390163a2c0e0d6080e2fc0a6780e2530
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 390163a2c0e0d6080e2fc0a6780e2530
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RequestCredentialsForAssetUploadInput = {
@@ -174,12 +177,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "390163a2c0e0d6080e2fc0a6780e2530",
-    "id": null,
+    "id": "390163a2c0e0d6080e2fc0a6780e2530",
     "metadata": {},
     "name": "getGeminiCredentialsForEnvironmentMutation",
     "operationKind": "mutation",
-    "text": "mutation getGeminiCredentialsForEnvironmentMutation(\n  $input: RequestCredentialsForAssetUploadInput!\n) {\n  requestCredentialsForAssetUpload(input: $input) {\n    asset {\n      signature\n      credentials\n      policyEncoded\n      policyDocument {\n        expiration\n        conditions {\n          acl\n          bucket\n          geminiKey\n          successActionStatus\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

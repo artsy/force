@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<94444243a926a0bbe0d708a9f81efe27>>
+ * @generated SignedSource<<da8a60ec74260e9de2efff40a97a1c16>>
+ * @relayHash 9e0aa5cc81fda4355ce35d18a45bb945
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 9e0aa5cc81fda4355ce35d18a45bb945
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -267,12 +270,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9e0aa5cc81fda4355ce35d18a45bb945",
-    "id": null,
+    "id": "9e0aa5cc81fda4355ce35d18a45bb945",
     "metadata": {},
     "name": "AddressVerificationFlowQuery",
     "operationKind": "query",
-    "text": "query AddressVerificationFlowQuery(\n  $address: VerifyAddressInput!\n) {\n  verifyAddress(input: $address) {\n    ...AddressVerificationFlow_verifyAddress\n  }\n}\n\nfragment AddressVerificationFlow_verifyAddress on VerifyAddressPayload {\n  verifyAddressOrError {\n    __typename\n    ... on VerifyAddressType {\n      inputAddress {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      suggestedAddresses {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      verificationStatus\n      addressVerificationId\n    }\n    ... on VerifyAddressFailureType {\n      mutationError {\n        type\n        message\n        statusCode\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

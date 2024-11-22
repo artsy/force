@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7f375e1701bdaedb243780821cc0d427>>
+ * @generated SignedSource<<6a415b3864c26301601728ffa705cfb7>>
+ * @relayHash 16df52be1de60e2c406ac50db5062c16
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 16df52be1de60e2c406ac50db5062c16
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type fetchFollowedArtistsRawQuery$variables = Record<PropertyKey, never>;
@@ -219,12 +222,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "16df52be1de60e2c406ac50db5062c16",
-    "id": null,
+    "id": "16df52be1de60e2c406ac50db5062c16",
     "metadata": {},
     "name": "fetchFollowedArtistsRawQuery",
     "operationKind": "query",
-    "text": "query fetchFollowedArtistsRawQuery {\n  me {\n    followsAndSaves {\n      artistsConnection(first: 99) {\n        edges {\n          node {\n            artist {\n              slug\n              internalID\n              id\n            }\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

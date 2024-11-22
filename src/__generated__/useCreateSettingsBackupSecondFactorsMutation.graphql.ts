@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9a45e30e16e2285fe426f29750cc8405>>
+ * @generated SignedSource<<3c87ced67fdf20636e64c3e5352e8c5c>>
+ * @relayHash 4114903b103c095c825571daddc6f56b
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 4114903b103c095c825571daddc6f56b
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateBackupSecondFactorsInput = {
@@ -157,12 +160,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4114903b103c095c825571daddc6f56b",
-    "id": null,
+    "id": "4114903b103c095c825571daddc6f56b",
     "metadata": {},
     "name": "useCreateSettingsBackupSecondFactorsMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateSettingsBackupSecondFactorsMutation(\n  $input: CreateBackupSecondFactorsInput!\n) {\n  createBackupSecondFactors(input: $input) {\n    secondFactorsOrErrors {\n      __typename\n      ... on BackupSecondFactors {\n        __typename\n        secondFactors {\n          code\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

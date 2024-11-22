@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f412f43171769022f6f28a5e8c520d5a>>
+ * @generated SignedSource<<d564e01d6ba02198bb97cd432b540655>>
+ * @relayHash 3fc9ba038ec2c2d7970c729d37c667bc
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3fc9ba038ec2c2d7970c729d37c667bc
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -151,12 +154,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3fc9ba038ec2c2d7970c729d37c667bc",
-    "id": null,
+    "id": "3fc9ba038ec2c2d7970c729d37c667bc",
     "metadata": {},
     "name": "ArtistCareerHighlightsQuery",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlightsQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n    entities\n    description(format: HTML)\n  }\n}\n"
+    "text": null
   }
 };
 })();

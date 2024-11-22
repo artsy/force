@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a5004eed39aaaaa9bc647ca71b89515f>>
+ * @generated SignedSource<<c8ec2bb852ca76f5121aaa7c1ffc2cb0>>
+ * @relayHash 29bb933113695f53e75561b1d9bd2c02
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 29bb933113695f53e75561b1d9bd2c02
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -162,8 +165,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "29bb933113695f53e75561b1d9bd2c02",
-    "id": null,
+    "id": "29bb933113695f53e75561b1d9bd2c02",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
@@ -205,7 +207,7 @@ return {
     },
     "name": "ArtistRelatedGeneCategories_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistRelatedGeneCategories_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistRelatedGeneCategories_artist\n    id\n  }\n}\n\nfragment ArtistRelatedGeneCategories_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          internalID\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

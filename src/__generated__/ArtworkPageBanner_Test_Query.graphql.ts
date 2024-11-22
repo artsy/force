@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<baf37a4d73a550234950e12c81ec6e2f>>
+ * @generated SignedSource<<4ecda0aeb9ff1a4aa38ddd6260d33f01>>
+ * @relayHash e614b10b22d48f742400a2fdb88bd52a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID e614b10b22d48f742400a2fdb88bd52a
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -267,12 +270,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e614b10b22d48f742400a2fdb88bd52a",
-    "id": null,
+    "id": "e614b10b22d48f742400a2fdb88bd52a",
     "metadata": {},
     "name": "ArtworkPageBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkPageBanner_Test_Query {\n  artwork(id: \"erik-s-mona-lisa\") {\n    ...ArtworkPageBanner_artwork\n    id\n  }\n  me {\n    ...ArtworkPageBanner_me_4FqYAG\n    id\n  }\n}\n\nfragment ArtworkPageBanner_artwork on Artwork {\n  published\n  visibilityLevel\n  isPurchasable\n  sale {\n    __typename\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment ArtworkPageBanner_me_4FqYAG on Me {\n  partnerOffersConnection(artworkID: \"erik-s-mona-lisa\", first: 1) {\n    edges {\n      node {\n        internalID\n        isActive\n        id\n      }\n    }\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  isClosed\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n"
+    "text": null
   }
 };
 })();

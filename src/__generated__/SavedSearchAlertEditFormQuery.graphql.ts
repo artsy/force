@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<76b6a9b8ecb3a3c3634dc3ad7e119251>>
+ * @generated SignedSource<<740e227434e8d692ebed3c2c6924cdb9>>
+ * @relayHash 2ea83d852d94a1e49b72a531266d5cba
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 2ea83d852d94a1e49b72a531266d5cba
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -406,12 +409,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2ea83d852d94a1e49b72a531266d5cba",
-    "id": null,
+    "id": "2ea83d852d94a1e49b72a531266d5cba",
     "metadata": {},
     "name": "SavedSearchAlertEditFormQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditFormQuery(\n  $id: String!\n) {\n  viewer {\n    ...SavedSearchAlertEditForm_viewer\n  }\n  me {\n    alert(id: $id) {\n      internalID\n      acquireable\n      additionalGeneIDs\n      artistIDs\n      artistSeriesIDs\n      atAuction\n      attributionClass\n      colors\n      dimensionRange\n      sizes\n      width\n      height\n      inquireableOnly\n      locationCities\n      majorPeriods\n      materialsTerms\n      offerable\n      partnerIDs\n      priceRange\n      settings {\n        name\n        email\n        push\n        details\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
+    "text": null
   }
 };
 })();

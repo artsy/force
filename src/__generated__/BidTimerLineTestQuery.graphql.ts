@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<1b7c1171765a698773b464ee00502ca6>>
+ * @generated SignedSource<<7a25e642ed94f5ff60fcd41333c823b6>>
+ * @relayHash e74f91d14867e856663c782f8ce05d6b
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID e74f91d14867e856663c782f8ce05d6b
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -158,8 +161,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e74f91d14867e856663c782f8ce05d6b",
-    "id": null,
+    "id": "e74f91d14867e856663c782f8ce05d6b",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -201,7 +203,7 @@ return {
     },
     "name": "BidTimerLineTestQuery",
     "operationKind": "query",
-    "text": "query BidTimerLineTestQuery {\n  artwork(id: \"artwork-id\") {\n    ...BidTimerLine_artwork\n    id\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

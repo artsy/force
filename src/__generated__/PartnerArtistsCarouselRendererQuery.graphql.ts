@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a12afa2369173bdd0c0900cb2f140d5f>>
+ * @generated SignedSource<<7a172e53b1aa75fe6e154e47b33f0637>>
+ * @relayHash 63258f6c1c10a15cc83b9fc59283dfb2
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 63258f6c1c10a15cc83b9fc59283dfb2
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -381,12 +384,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "63258f6c1c10a15cc83b9fc59283dfb2",
-    "id": null,
+    "id": "63258f6c1c10a15cc83b9fc59283dfb2",
     "metadata": {},
     "name": "PartnerArtistsCarouselRendererQuery",
     "operationKind": "query",
-    "text": "query PartnerArtistsCarouselRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner\n    id\n  }\n}\n\nfragment CellPartnerArtist_partnerArtist on ArtistPartnerEdge {\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  artist {\n    ...EntityHeaderArtist_artist\n    internalID\n    slug\n    name\n    href\n    initials\n    id\n  }\n  partner {\n    slug\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment PartnerArtistsCarousel_partner on Partner {\n  slug\n  artistsConnection(first: 20, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    edges {\n      node {\n        internalID\n        slug\n        id\n      }\n      ...CellPartnerArtist_partnerArtist\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

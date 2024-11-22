@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<42dcbe7ee743922776511896d1e58505>>
+ * @generated SignedSource<<4c6134590433ab5e4685ae04588fcc55>>
+ * @relayHash d2759d79e2c03e7a4f20054093419f41
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d2759d79e2c03e7a4f20054093419f41
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type getConvectionGeminiKeyQuery$variables = Record<PropertyKey, never>;
@@ -85,12 +88,11 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "d2759d79e2c03e7a4f20054093419f41",
-    "id": null,
+    "id": "d2759d79e2c03e7a4f20054093419f41",
     "metadata": {},
     "name": "getConvectionGeminiKeyQuery",
     "operationKind": "query",
-    "text": "query getConvectionGeminiKeyQuery {\n  system {\n    services {\n      convection {\n        geminiTemplateKey\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

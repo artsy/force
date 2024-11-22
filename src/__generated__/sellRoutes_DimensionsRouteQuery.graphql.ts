@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5db4f44831e2a004f8c75d5ef55aafff>>
+ * @generated SignedSource<<13fe6b7363ca1a2a04c32f02a570fcca>>
+ * @relayHash c3849405043bdc18cd6bf71eb2f8c48b
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID c3849405043bdc18cd6bf71eb2f8c48b
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -131,12 +134,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c3849405043bdc18cd6bf71eb2f8c48b",
-    "id": null,
+    "id": "c3849405043bdc18cd6bf71eb2f8c48b",
     "metadata": {},
     "name": "sellRoutes_DimensionsRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_DimensionsRouteQuery(\n  $id: ID!\n  $sessionID: String!\n) {\n  submission(id: $id, sessionID: $sessionID) @principalField {\n    ...DimensionsRoute_submission\n    id\n  }\n}\n\nfragment DimensionsRoute_submission on ConsignmentSubmission {\n  width\n  height\n  depth\n  dimensionsMetric\n}\n"
+    "text": null
   }
 };
 })();

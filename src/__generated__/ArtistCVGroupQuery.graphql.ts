@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<bc23eaf00c5ef4c00da704164965d3bc>>
+ * @generated SignedSource<<5549e5cbc53c4e9bc2431124ede158d0>>
+ * @relayHash 66e0688a276a707eb85236d8e3a07b3a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 66e0688a276a707eb85236d8e3a07b3a
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -380,12 +383,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "66e0688a276a707eb85236d8e3a07b3a",
-    "id": null,
+    "id": "66e0688a276a707eb85236d8e3a07b3a",
     "metadata": {},
     "name": "ArtistCVGroupQuery",
     "operationKind": "query",
-    "text": "query ArtistCVGroupQuery(\n  $count: Int\n  $cursor: String\n  $slug: String!\n  $sort: ShowSorts\n  $atAFair: Boolean\n  $soloShow: Boolean\n  $isReference: Boolean\n  $visibleToPublic: Boolean\n) {\n  artist(id: $slug) {\n    ...ArtistCVGroup_artist_4A66pF\n    id\n  }\n}\n\nfragment ArtistCVGroup_artist_4A66pF on Artist {\n  slug\n  showsConnection(first: $count, after: $cursor, sort: $sort, atAFair: $atAFair, soloShow: $soloShow, isReference: $isReference, visibleToPublic: $visibleToPublic) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

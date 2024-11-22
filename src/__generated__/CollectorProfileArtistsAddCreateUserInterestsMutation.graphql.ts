@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8a1d71da43e9957aed97c7238e6c934a>>
+ * @generated SignedSource<<30de47c2d71f083891e3bb2c81547977>>
+ * @relayHash d22745fcec62d4322ed92f63c0ddf761
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d22745fcec62d4322ed92f63c0ddf761
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -462,12 +465,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d22745fcec62d4322ed92f63c0ddf761",
-    "id": null,
+    "id": "d22745fcec62d4322ed92f63c0ddf761",
     "metadata": {},
     "name": "CollectorProfileArtistsAddCreateUserInterestsMutation",
     "operationKind": "mutation",
-    "text": "mutation CollectorProfileArtistsAddCreateUserInterestsMutation(\n  $input: CreateUserInterestsMutationInput!\n) {\n  createUserInterests(input: $input) {\n    me {\n      ...CollectorProfileArtistsList_me_4aMZep\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtistDialog_userInterestEdge on UserInterestEdge {\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      isPersonalArtist\n      counts {\n        myCollectedArtworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsListArtist_userInterestEdge on UserInterestEdge {\n  ...CollectorProfileArtistsListArtistDialog_userInterestEdge\n  id\n  internalID\n  private\n  node {\n    __typename\n    ... on Artist {\n      ...EntityHeaderArtist_artist\n      internalID\n      name\n      isPersonalArtist\n      counts {\n        myCollectedArtworks\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment CollectorProfileArtistsList_me_4aMZep on Me {\n  userInterestsConnection(page: 1, size: 10, interestType: ARTIST) {\n    totalCount\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    pageInfo {\n      hasNextPage\n    }\n    edges {\n      ...CollectorProfileArtistsListArtist_userInterestEdge\n      internalID\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7984213b87edcd3c8ce5d66edc9f91a6>>
+ * @generated SignedSource<<db2677e20571f4c450cf6ad1224e2b99>>
+ * @relayHash 8f4fa54bd5a87ba62997eac92b8a6df1
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 8f4fa54bd5a87ba62997eac92b8a6df1
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SubmitInquiryRequestMutationInput = {
@@ -208,12 +211,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8f4fa54bd5a87ba62997eac92b8a6df1",
-    "id": null,
+    "id": "8f4fa54bd5a87ba62997eac92b8a6df1",
     "metadata": {},
     "name": "useArtworkInquiryRequestMutation",
     "operationKind": "mutation",
-    "text": "mutation useArtworkInquiryRequestMutation(\n  $input: SubmitInquiryRequestMutationInput!\n) {\n  submitInquiryRequestMutation(input: $input) {\n    clientMutationId\n    inquiryRequest {\n      internalID\n      inquireable {\n        __typename\n        ... on Artwork {\n          internalID\n          slug\n          price\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

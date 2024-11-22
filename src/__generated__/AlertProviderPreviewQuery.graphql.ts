@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ff0293dbe42a3e60ff7bd110d371cc7e>>
+ * @generated SignedSource<<769e14c4ac33a13c247e20d7bc7d11d4>>
+ * @relayHash c37038e6282d87be348b8ee47f551631
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID c37038e6282d87be348b8ee47f551631
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
@@ -136,12 +139,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "c37038e6282d87be348b8ee47f551631",
-    "id": null,
+    "id": "c37038e6282d87be348b8ee47f551631",
     "metadata": {},
     "name": "AlertProviderPreviewQuery",
     "operationKind": "query",
-    "text": "query AlertProviderPreviewQuery(\n  $attributes: PreviewSavedSearchAttributes\n) {\n  viewer {\n    previewSavedSearch(attributes: $attributes) {\n      labels {\n        displayValue\n        field\n        value\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

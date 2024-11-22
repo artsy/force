@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9539e78f122f7d3f69120bf1430a932d>>
+ * @generated SignedSource<<7b874357e9d602b243f32e811ddb612b>>
+ * @relayHash f8392b0d6f9c82a9432ddf2ec1e103f5
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f8392b0d6f9c82a9432ddf2ec1e103f5
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -505,8 +508,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f8392b0d6f9c82a9432ddf2ec1e103f5",
-    "id": null,
+    "id": "f8392b0d6f9c82a9432ddf2ec1e103f5",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -580,7 +582,7 @@ return {
     },
     "name": "SeoDataForArtwork_Test_Query",
     "operationKind": "query",
-    "text": "query SeoDataForArtwork_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...SeoDataForArtwork_artwork\n    id\n  }\n}\n\nfragment SeoDataForArtwork_artwork on Artwork {\n  href\n  date\n  is_price_hidden: isPriceHidden\n  is_price_range: isPriceRange\n  listPrice {\n    __typename\n    ... on PriceRange {\n      minPrice {\n        major\n        currencyCode\n      }\n      maxPrice {\n        major\n      }\n    }\n    ... on Money {\n      major\n      currencyCode\n    }\n  }\n  meta_image: image {\n    resized(width: 640, height: 640, version: [\"large\", \"medium\", \"tall\"]) {\n      width\n      height\n      url\n    }\n  }\n  meta {\n    title\n    description(limit: 155)\n  }\n  partner {\n    name\n    type\n    profile {\n      image {\n        resized(width: 320, height: 320, version: [\"medium\"]) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n  artistNames\n  availability\n  category\n  dimensions {\n    in\n  }\n}\n"
+    "text": null
   }
 };
 })();

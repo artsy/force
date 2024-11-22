@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ecb945f80b96a5a00f2b623d35626130>>
+ * @generated SignedSource<<b6daf8a5011a3cdffe24b6255a7142b3>>
+ * @relayHash 97fb62052856067e08f7e0bfb93ead58
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 97fb62052856067e08f7e0bfb93ead58
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type artQuizRoutes_WelcomeQuery$variables = Record<PropertyKey, never>;
@@ -105,12 +108,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "97fb62052856067e08f7e0bfb93ead58",
-    "id": null,
+    "id": "97fb62052856067e08f7e0bfb93ead58",
     "metadata": {},
     "name": "artQuizRoutes_WelcomeQuery",
     "operationKind": "query",
-    "text": "query artQuizRoutes_WelcomeQuery {\n  me {\n    quiz {\n      completedAt\n      id\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

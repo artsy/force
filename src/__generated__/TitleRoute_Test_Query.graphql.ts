@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<607cda80356a142d7419402a5e7c1e31>>
+ * @generated SignedSource<<fce42aed94d1c9586d5139fc64d09f9a>>
+ * @relayHash 5f5b0553cf4de2c3b6c077f15918e45d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5f5b0553cf4de2c3b6c077f15918e45d
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -291,12 +294,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5f5b0553cf4de2c3b6c077f15918e45d",
-    "id": null,
+    "id": "5f5b0553cf4de2c3b6c077f15918e45d",
     "metadata": {},
     "name": "TitleRoute_Test_Query",
     "operationKind": "query",
-    "text": "query TitleRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...TitleRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n\nfragment TitleRoute_submission on ConsignmentSubmission {\n  title\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

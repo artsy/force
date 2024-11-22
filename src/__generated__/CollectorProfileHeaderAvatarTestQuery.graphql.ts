@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0fc35a528e7ef24568df2b334de4a9f1>>
+ * @generated SignedSource<<a11196eadfa76f547cd41c8737659a47>>
+ * @relayHash 92bff54218bc0a8e43436f3f57b52859
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 92bff54218bc0a8e43436f3f57b52859
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -150,8 +153,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "92bff54218bc0a8e43436f3f57b52859",
-    "id": null,
+    "id": "92bff54218bc0a8e43436f3f57b52859",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -202,7 +204,7 @@ return {
     },
     "name": "CollectorProfileHeaderAvatarTestQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileHeaderAvatarTestQuery {\n  me {\n    ...CollectorProfileHeaderAvatar_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

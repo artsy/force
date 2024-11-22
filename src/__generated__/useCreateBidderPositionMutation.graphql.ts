@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2b99b27c7204d154657833b7cc49367e>>
+ * @generated SignedSource<<83e01076b0f6e8f86ddb02b1d2d62a79>>
+ * @relayHash 45786e904cc89c96628fe0bbefdb45d9
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 45786e904cc89c96628fe0bbefdb45d9
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type BidderPositionInput = {
@@ -258,12 +261,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "45786e904cc89c96628fe0bbefdb45d9",
-    "id": null,
+    "id": "45786e904cc89c96628fe0bbefdb45d9",
     "metadata": {},
     "name": "useCreateBidderPositionMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateBidderPositionMutation(\n  $input: BidderPositionInput!\n) {\n  createBidderPosition(input: $input) {\n    result {\n      position {\n        internalID\n        saleArtwork {\n          sale {\n            registrationStatus {\n              internalID\n              qualifiedForBidding\n              id\n            }\n            id\n          }\n          id\n        }\n        id\n      }\n      status\n      messageHeader\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

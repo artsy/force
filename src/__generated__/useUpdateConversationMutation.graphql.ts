@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<38ab4c0d2d1c6e77a73f06cd5efe93fa>>
+ * @generated SignedSource<<5ae97a5aed8f08280d0957bc23a9fc7f>>
+ * @relayHash 66b78e45d4bb5f3f93cd4158bb4ca47f
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 66b78e45d4bb5f3f93cd4158bb4ca47f
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateConversationMutationInput = {
@@ -104,12 +107,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "66b78e45d4bb5f3f93cd4158bb4ca47f",
-    "id": null,
+    "id": "66b78e45d4bb5f3f93cd4158bb4ca47f",
     "metadata": {},
     "name": "useUpdateConversationMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateConversationMutation(\n  $input: UpdateConversationMutationInput!\n) {\n  updateConversation(input: $input) {\n    conversation {\n      id\n      unread\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

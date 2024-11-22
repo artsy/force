@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<fca0583bf820db9fe81bb4b996761285>>
+ * @generated SignedSource<<35a91582c81a6692521a88002e8f41d5>>
+ * @relayHash 97dab2302a1a5ff32034b39881da1779
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 97dab2302a1a5ff32034b39881da1779
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -221,12 +224,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "97dab2302a1a5ff32034b39881da1779",
-    "id": null,
+    "id": "97dab2302a1a5ff32034b39881da1779",
     "metadata": {},
     "name": "ArtworkLightboxTestQuery",
     "operationKind": "query",
-    "text": "query ArtworkLightboxTestQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkLightbox_artwork\n    id\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(quality: 85, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 85, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5c83a9b4c157067b0d0e52bcb34a85db>>
+ * @generated SignedSource<<e13951d0942de4fdf7e0da098db90845>>
+ * @relayHash 6f7779c4698ec556295c193d58013649
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 6f7779c4698ec556295c193d58013649
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RequestConditionReportInput = {
@@ -91,12 +94,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "6f7779c4698ec556295c193d58013649",
-    "id": null,
+    "id": "6f7779c4698ec556295c193d58013649",
     "metadata": {},
     "name": "RequestConditionReportMutation",
     "operationKind": "mutation",
-    "text": "mutation RequestConditionReportMutation(\n  $input: RequestConditionReportInput!\n) {\n  requestConditionReport(input: $input) {\n    conditionReportRequest {\n      internalID\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

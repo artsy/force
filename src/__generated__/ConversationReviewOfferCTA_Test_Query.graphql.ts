@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<aa2c94614f1226fdb70f482d35f30584>>
+ * @generated SignedSource<<07bab034078349cd474116f48aa71c9d>>
+ * @relayHash feaa885a42bdf3d0cb387f0651fc060e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID feaa885a42bdf3d0cb387f0651fc060e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -277,8 +280,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "feaa885a42bdf3d0cb387f0651fc060e",
-    "id": null,
+    "id": "feaa885a42bdf3d0cb387f0651fc060e",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "conversation": {
@@ -369,7 +371,7 @@ return {
     },
     "name": "ConversationReviewOfferCTA_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationReviewOfferCTA_Test_Query {\n  conversation(id: \"123\") {\n    ...ConversationReviewOfferCTA_conversation\n    id\n  }\n}\n\nfragment ConversationReviewOfferCTA_conversation on Conversation {\n  internalID\n  activeOrders: orderConnection(first: 1, states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        stateUpdatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          lastOffer {\n            createdAt\n            id\n          }\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

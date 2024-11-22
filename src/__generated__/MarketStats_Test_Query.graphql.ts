@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<394051c1bae78fd51069f940b0163206>>
+ * @generated SignedSource<<360acd17e616bbca81443f0dd465e2fe>>
+ * @relayHash 8c98db6a8df16f080ab0cdacba936001
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 8c98db6a8df16f080ab0cdacba936001
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -160,8 +163,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8c98db6a8df16f080ab0cdacba936001",
-    "id": null,
+    "id": "8c98db6a8df16f080ab0cdacba936001",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "priceInsightsConnection": {
@@ -212,7 +214,7 @@ return {
     },
     "name": "MarketStats_Test_Query",
     "operationKind": "query",
-    "text": "query MarketStats_Test_Query(\n  $artistInternalID: ID!\n) {\n  priceInsightsConnection: priceInsights(artistId: $artistInternalID, sort: ANNUAL_VALUE_SOLD_CENTS_DESC) {\n    ...MarketStats_priceInsightsConnection\n  }\n}\n\nfragment MarketStats_priceInsightsConnection on PriceInsightConnection {\n  edges {\n    node {\n      medium\n      annualLotsSold\n      annualValueSoldCents\n      sellThroughRate\n      medianSaleOverEstimatePercentage\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

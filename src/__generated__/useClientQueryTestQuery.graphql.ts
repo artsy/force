@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<21b7a64f8a07552b1ed62ca5d535c88f>>
+ * @generated SignedSource<<2e46fa712454a6f5c6f1b53d04f0b1f6>>
+ * @relayHash 249bc7811c01aa3a1496127742d32f2c
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 249bc7811c01aa3a1496127742d32f2c
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type useClientQueryTestQuery$variables = Record<PropertyKey, never>;
@@ -65,12 +68,11 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "249bc7811c01aa3a1496127742d32f2c",
-    "id": null,
+    "id": "249bc7811c01aa3a1496127742d32f2c",
     "metadata": {},
     "name": "useClientQueryTestQuery",
     "operationKind": "query",
-    "text": "query useClientQueryTestQuery {\n  artwork(id: \"example\") {\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

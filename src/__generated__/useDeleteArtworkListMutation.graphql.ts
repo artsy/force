@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<31ffde404e70921aa30dd2dd0fd0462e>>
+ * @generated SignedSource<<6c831660e0bd6855f6759d7467da2692>>
+ * @relayHash 0e755afbf6a66f051770fe2c7b61796e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0e755afbf6a66f051770fe2c7b61796e
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type deleteCollectionInput = {
@@ -161,12 +164,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "0e755afbf6a66f051770fe2c7b61796e",
-    "id": null,
+    "id": "0e755afbf6a66f051770fe2c7b61796e",
     "metadata": {},
     "name": "useDeleteArtworkListMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteArtworkListMutation(\n  $input: deleteCollectionInput!\n) {\n  deleteCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on DeleteCollectionSuccess {\n        artworkList: collection {\n          id\n        }\n      }\n      ... on DeleteCollectionFailure {\n        mutationError {\n          message\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

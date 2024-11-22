@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<504b6e9070b23ab04e118f0810e8e6e3>>
+ * @generated SignedSource<<bf0763e89a33e7b980863e9c05aad469>>
+ * @relayHash fc119b3e6e67e3ca5d7ff1574fc123d3
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID fc119b3e6e67e3ca5d7ff1574fc123d3
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -151,12 +154,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fc119b3e6e67e3ca5d7ff1574fc123d3",
-    "id": null,
+    "id": "fc119b3e6e67e3ca5d7ff1574fc123d3",
     "metadata": {},
     "name": "SaleAgreementRoute_Test_Query",
     "operationKind": "query",
-    "text": "query SaleAgreementRoute_Test_Query {\n  saleAgreement(id: \"abc123\") {\n    ...SaleAgreementRoute_saleAgreement\n    id\n  }\n}\n\nfragment SaleAgreementRoute_saleAgreement on SaleAgreement {\n  internalID\n  content(format: HTML)\n  displayStartAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n  displayEndAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n  sale {\n    internalID\n    name\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<80e94de58cc24adad924ad28cf9baec9>>
+ * @generated SignedSource<<8cda81a0f2cd1eb1d7dfe687d0cdd1e3>>
+ * @relayHash 2f96b77a7ff92a55654ad4103f8710cd
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 2f96b77a7ff92a55654ad4103f8710cd
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type updateQuizMutationInput = {
@@ -125,12 +128,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2f96b77a7ff92a55654ad4103f8710cd",
-    "id": null,
+    "id": "2f96b77a7ff92a55654ad4103f8710cd",
     "metadata": {},
     "name": "useUpdateQuizMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateQuizMutation(\n  $input: updateQuizMutationInput!\n) {\n  updateQuiz(input: $input) {\n    quiz {\n      completedAt\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

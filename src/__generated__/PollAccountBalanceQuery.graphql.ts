@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<1ea6e7e197ec8a79b6280501ef130af2>>
+ * @generated SignedSource<<d755dbea12c4cfb55d93b4d3a9e7176a>>
+ * @relayHash f7043ed6843b7da9f448a5954e791b08
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f7043ed6843b7da9f448a5954e791b08
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -114,12 +117,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f7043ed6843b7da9f448a5954e791b08",
-    "id": null,
+    "id": "f7043ed6843b7da9f448a5954e791b08",
     "metadata": {},
     "name": "PollAccountBalanceQuery",
     "operationKind": "query",
-    "text": "query PollAccountBalanceQuery(\n  $setupIntentId: ID\n  $bankAccountId: ID\n) {\n  commerceBankAccountBalance(setupIntentId: $setupIntentId, bankAccountId: $bankAccountId) {\n    ...PollAccountBalance_commerceBankAccountBalance\n  }\n}\n\nfragment PollAccountBalance_commerceBankAccountBalance on CommerceBankAccountBalance {\n  balanceCents\n  currencyCode\n}\n"
+    "text": null
   }
 };
 })();

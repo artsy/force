@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<65218a07b9bdeb1b372a65a4d8d6ef52>>
+ * @generated SignedSource<<90764ee616388c5c4990ddae20b64b81>>
+ * @relayHash f9d3fe4997800804c4d5f6f28cbe5961
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f9d3fe4997800804c4d5f6f28cbe5961
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -254,8 +257,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f9d3fe4997800804c4d5f6f28cbe5961",
-    "id": null,
+    "id": "f9d3fe4997800804c4d5f6f28cbe5961",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
@@ -311,7 +313,7 @@ return {
     },
     "name": "ViewingRoomCard_Test_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomCard_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    viewingRoomsConnection(first: 12) {\n      edges {\n        node {\n          internalID\n          ...ViewingRoomCard_viewingRoom\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n"
+    "text": null
   }
 };
 })();

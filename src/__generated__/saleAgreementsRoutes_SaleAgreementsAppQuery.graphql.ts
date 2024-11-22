@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7d305a1f5c394a16ec5cd97871b3c3c6>>
+ * @generated SignedSource<<a4b0347577c44d16dd33a23226a7a7b6>>
+ * @relayHash 42b1144b3daa6e3b35aaeed40157c8b6
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 42b1144b3daa6e3b35aaeed40157c8b6
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -212,12 +215,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "42b1144b3daa6e3b35aaeed40157c8b6",
-    "id": null,
+    "id": "42b1144b3daa6e3b35aaeed40157c8b6",
     "metadata": {},
     "name": "saleAgreementsRoutes_SaleAgreementsAppQuery",
     "operationKind": "query",
-    "text": "query saleAgreementsRoutes_SaleAgreementsAppQuery {\n  viewer {\n    ...SaleAgreementsApp_viewer\n  }\n}\n\nfragment SaleAgreementsApp_viewer on Viewer {\n  ...SaleAgreementsFilter_viewer\n}\n\nfragment SaleAgreementsFilter_viewer on Viewer {\n  saleAgreementsConnection(first: 100) {\n    edges {\n      node {\n        internalID\n        content\n        displayStartAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n        displayEndAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n        published\n        status\n        sale {\n          internalID\n          name\n          isArtsyLicensed\n          isBenefit\n          isAuction\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0c59549e46c82d66681a5eaec019e05e>>
+ * @generated SignedSource<<80a6cce7c99dd485c4efbf08292a878e>>
+ * @relayHash da1a4154ca3cb9994105397159486af6
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID da1a4154ca3cb9994105397159486af6
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -191,8 +194,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "da1a4154ca3cb9994105397159486af6",
-    "id": null,
+    "id": "da1a4154ca3cb9994105397159486af6",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
@@ -231,7 +233,7 @@ return {
     },
     "name": "FairBoothRail_Test_Query",
     "operationKind": "query",
-    "text": "query FairBoothRail_Test_Query {\n  show(id: \"show-id\") {\n    ...FairBoothRail_show\n    id\n  }\n}\n\nfragment FairBoothRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n"
+    "text": null
   }
 };
 })();

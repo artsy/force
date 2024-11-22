@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2954b221acee6e07c399ea4ae3b2ff43>>
+ * @generated SignedSource<<12bdad62eccc94dd1d01a635917ff31a>>
+ * @relayHash 43fac0034838582150d5333fea6faa38
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 43fac0034838582150d5333fea6faa38
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -100,12 +103,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "43fac0034838582150d5333fea6faa38",
-    "id": null,
+    "id": "43fac0034838582150d5333fea6faa38",
     "metadata": {},
     "name": "NotificationPreferencesQuery",
     "operationKind": "query",
-    "text": "query NotificationPreferencesQuery {\n  viewer {\n    ...NotificationPreferences_viewer\n  }\n}\n\nfragment NotificationPreferences_viewer on Viewer {\n  notificationPreferences {\n    channel\n    name\n    status\n  }\n}\n"
+    "text": null
   }
 };
 

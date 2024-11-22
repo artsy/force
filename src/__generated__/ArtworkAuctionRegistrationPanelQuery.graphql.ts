@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<955c6b38da8cf3ae8536d89193a626e9>>
+ * @generated SignedSource<<004ee6873364d7104474319357f3a283>>
+ * @relayHash 39848c0dc33774f02593016a81650b7a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 39848c0dc33774f02593016a81650b7a
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -117,12 +120,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "39848c0dc33774f02593016a81650b7a",
-    "id": null,
+    "id": "39848c0dc33774f02593016a81650b7a",
     "metadata": {},
     "name": "ArtworkAuctionRegistrationPanelQuery",
     "operationKind": "query",
-    "text": "query ArtworkAuctionRegistrationPanelQuery {\n  artwork(id: \"example\") {\n    ...ArtworkAuctionRegistrationPanel_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

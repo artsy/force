@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<995e0404ec00b44b59eb99f3ef76c82e>>
+ * @generated SignedSource<<c1268905203426ddef08e4902620e8e5>>
+ * @relayHash 91e2cf635c0b6d86e89128b7faeb2318
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 91e2cf635c0b6d86e89128b7faeb2318
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type timeQuery$variables = Record<PropertyKey, never>;
@@ -72,12 +75,11 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "91e2cf635c0b6d86e89128b7faeb2318",
-    "id": null,
+    "id": "91e2cf635c0b6d86e89128b7faeb2318",
     "metadata": {},
     "name": "timeQuery",
     "operationKind": "query",
-    "text": "query timeQuery {\n  system {\n    time {\n      unix\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

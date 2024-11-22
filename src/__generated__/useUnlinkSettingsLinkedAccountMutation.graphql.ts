@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4c806ad114e0405063e0ddc69da84709>>
+ * @generated SignedSource<<fb09923bfeb89584aaaa2fbd8ed48f44>>
+ * @relayHash 0d93dd39b9e7eb1a49d2b4c73bd27579
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0d93dd39b9e7eb1a49d2b4c73bd27579
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -141,12 +144,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0d93dd39b9e7eb1a49d2b4c73bd27579",
-    "id": null,
+    "id": "0d93dd39b9e7eb1a49d2b4c73bd27579",
     "metadata": {},
     "name": "useUnlinkSettingsLinkedAccountMutation",
     "operationKind": "mutation",
-    "text": "mutation useUnlinkSettingsLinkedAccountMutation(\n  $input: UnlinkAuthenticationMutationInput!\n) {\n  unlinkAuthentication(input: $input) {\n    me {\n      ...SettingsEditSettingsLinkedAccounts_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditSettingsLinkedAccounts_me on Me {\n  authentications {\n    provider\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

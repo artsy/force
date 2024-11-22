@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<09836e4204ce009e2ae2e5f48165bc1c>>
+ * @generated SignedSource<<39f2d31aeb80278b4f8c63900f2955c7>>
+ * @relayHash 05ebe8eb11518db5711bac9b45daaf90
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 05ebe8eb11518db5711bac9b45daaf90
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -143,8 +146,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "05ebe8eb11518db5711bac9b45daaf90",
-    "id": null,
+    "id": "05ebe8eb11518db5711bac9b45daaf90",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "bio": {
@@ -172,7 +174,7 @@ return {
     },
     "name": "ArtistBioTestQuery",
     "operationKind": "query",
-    "text": "query ArtistBioTestQuery {\n  bio: artist(id: \"unused\") {\n    ...ArtistBio_bio\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    partnerID\n    text\n  }\n}\n"
+    "text": null
   }
 };
 })();

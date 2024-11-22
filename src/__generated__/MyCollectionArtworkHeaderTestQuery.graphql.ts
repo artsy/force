@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f005b67a39b0de751a359fda902916e5>>
+ * @generated SignedSource<<134efcf57fe29d10727907eb7b4b62c3>>
+ * @relayHash 59f5d759f49d7e1d3a5169bfda18cea7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 59f5d759f49d7e1d3a5169bfda18cea7
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -116,8 +119,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "59f5d759f49d7e1d3a5169bfda18cea7",
-    "id": null,
+    "id": "59f5d759f49d7e1d3a5169bfda18cea7",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -145,7 +147,7 @@ return {
     },
     "name": "MyCollectionArtworkHeaderTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkHeaderTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkHeader_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkHeader_artwork on Artwork {\n  internalID\n  slug\n  consignmentSubmission {\n    internalID\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<e50bbdce3a7a342a1330bb3d0d3bec93>>
+ * @generated SignedSource<<78fe40f7c9f7f1f60f4b453162a2278b>>
+ * @relayHash f1ebd996e39b20b09887b6c8f9f09b41
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f1ebd996e39b20b09887b6c8f9f09b41
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type createCollectionInput = {
@@ -250,12 +253,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f1ebd996e39b20b09887b6c8f9f09b41",
-    "id": null,
+    "id": "f1ebd996e39b20b09887b6c8f9f09b41",
     "metadata": {},
     "name": "useCreateCollectionMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateCollectionMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          name\n          shareableWithPartners\n          artworksCount(onlyVisible: true)\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

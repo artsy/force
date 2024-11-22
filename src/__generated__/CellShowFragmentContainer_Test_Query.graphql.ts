@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<e844bff7491b3cc47068a47dbca0972c>>
+ * @generated SignedSource<<8e06bd8156254e68ed7f3a43f0d73bf8>>
+ * @relayHash 850aeb6c32072038fc88972e61a271ef
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 850aeb6c32072038fc88972e61a271ef
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -255,8 +258,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "850aeb6c32072038fc88972e61a271ef",
-    "id": null,
+    "id": "850aeb6c32072038fc88972e61a271ef",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
@@ -307,7 +309,7 @@ return {
     },
     "name": "CellShowFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query CellShowFragmentContainer_Test_Query {\n  show(id: \"example\") {\n    ...CellShow_show\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

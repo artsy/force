@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<95042893f768fde5be83344cd644c5e8>>
+ * @generated SignedSource<<102b1487f59c9f478904f89c293f2bf0>>
+ * @relayHash bf1b7117bb2734c344098a8a3aa56a24
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID bf1b7117bb2734c344098a8a3aa56a24
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -151,12 +154,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bf1b7117bb2734c344098a8a3aa56a24",
-    "id": null,
+    "id": "bf1b7117bb2734c344098a8a3aa56a24",
     "metadata": {},
     "name": "ArtworkVideoPlayer_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkVideoPlayer_Test_Query {\n  artwork(id: \"foo\") {\n    ...ArtworkVideoPlayer_artwork\n    id\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  internalID\n  slug\n  figures(includeAll: false) {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

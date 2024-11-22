@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<de7122e62243ea533aaca5051265e2c8>>
+ * @generated SignedSource<<417020876f22facc265e429d2dbf7605>>
+ * @relayHash 329ec0943e26266c9c19bb7bef908884
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 329ec0943e26266c9c19bb7bef908884
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowProfileInput = {
@@ -158,12 +161,11 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "329ec0943e26266c9c19bb7bef908884",
-    "id": null,
+    "id": "329ec0943e26266c9c19bb7bef908884",
     "metadata": {},
     "name": "FollowProfileButtonMutation",
     "operationKind": "mutation",
-    "text": "mutation FollowProfileButtonMutation(\n  $input: FollowProfileInput!\n) {\n  followProfile(input: $input) {\n    me {\n      id\n      counts {\n        followedProfiles\n      }\n    }\n    profile {\n      id\n      isFollowed\n      counts {\n        follows\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f83ec22c89489f47d614fef7d3b44475>>
+ * @generated SignedSource<<c36ba0d7e687b722de40f9f02996c39f>>
+ * @relayHash d40af8102a19f44dea2bd6699a1a52ed
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d40af8102a19f44dea2bd6699a1a52ed
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type SavedAddressesTestQuery$variables = Record<PropertyKey, never>;
@@ -79,12 +82,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d40af8102a19f44dea2bd6699a1a52ed",
-    "id": null,
+    "id": "d40af8102a19f44dea2bd6699a1a52ed",
     "metadata": {},
     "name": "SavedAddressesTestQuery",
     "operationKind": "query",
-    "text": "query SavedAddressesTestQuery {\n  me {\n    email\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<55cd840a5a1add36fc933d71371b486b>>
+ * @generated SignedSource<<19ce71faf114d44aab8fc8b9b146c489>>
+ * @relayHash b08d17b25c77374037b4b8d7c9d43067
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b08d17b25c77374037b4b8d7c9d43067
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -268,8 +271,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b08d17b25c77374037b4b8d7c9d43067",
-    "id": null,
+    "id": "b08d17b25c77374037b4b8d7c9d43067",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
@@ -321,7 +323,7 @@ return {
     },
     "name": "FairApp_Test_Query",
     "operationKind": "query",
-    "text": "query FairApp_Test_Query {\n  fair(id: \"example\") {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairTabs_fair\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
+    "text": null
   }
 };
 })();

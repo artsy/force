@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<afaa83d4565d640b8d33787ad37c33c6>>
+ * @generated SignedSource<<24ce69c9a9da895e08330f26d66ca4de>>
+ * @relayHash 53b49286981715cbc6bbd45a3f554854
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 53b49286981715cbc6bbd45a3f554854
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type AddAssetToConsignmentSubmissionInput = {
@@ -102,12 +105,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "53b49286981715cbc6bbd45a3f554854",
-    "id": null,
+    "id": "53b49286981715cbc6bbd45a3f554854",
     "metadata": {},
     "name": "addAssetToConsignmentMutation",
     "operationKind": "mutation",
-    "text": "mutation addAssetToConsignmentMutation(\n  $input: AddAssetToConsignmentSubmissionInput!\n) {\n  addAssetToConsignmentSubmission(input: $input) {\n    asset {\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

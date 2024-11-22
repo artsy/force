@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0de33fc26d564b7a84bf30f19eebe1e8>>
+ * @generated SignedSource<<4881346b2cc421b99f69bea384765752>>
+ * @relayHash 60e3da8ae3195ca7eb125870da7efae8
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 60e3da8ae3195ca7eb125870da7efae8
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -237,12 +240,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "60e3da8ae3195ca7eb125870da7efae8",
-    "id": null,
+    "id": "60e3da8ae3195ca7eb125870da7efae8",
     "metadata": {},
     "name": "ArticleHeroStoryQuery",
     "operationKind": "query",
-    "text": "query ArticleHeroStoryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleHero_article\n    id\n  }\n}\n\nfragment ArticleHero_article on Article {\n  title\n  href\n  vertical\n  byline\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      embed\n      media\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

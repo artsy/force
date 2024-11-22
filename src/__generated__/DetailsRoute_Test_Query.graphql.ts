@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<91f5de9da1f720a5b92d24925cbbf45e>>
+ * @generated SignedSource<<9663ff58e89b4e2cda4c431a954fcc56>>
+ * @relayHash 6facb5d5928a33ffd714f88cae1b0098
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 6facb5d5928a33ffd714f88cae1b0098
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -151,12 +154,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6facb5d5928a33ffd714f88cae1b0098",
-    "id": null,
+    "id": "6facb5d5928a33ffd714f88cae1b0098",
     "metadata": {},
     "name": "DetailsRoute_Test_Query",
     "operationKind": "query",
-    "text": "query DetailsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...DetailsRoute_submission\n    id\n  }\n}\n\nfragment DetailsRoute_submission on ConsignmentSubmission {\n  year\n  category\n  medium\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
+    "text": null
   }
 };
 })();

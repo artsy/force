@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d6d94b4caaf32882030fa096e3336df9>>
+ * @generated SignedSource<<7730925c0381ae177ead6a1e9fb1adf2>>
+ * @relayHash 0de38b85bc83566f8d1bf02c55337f30
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0de38b85bc83566f8d1bf02c55337f30
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -90,8 +93,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0de38b85bc83566f8d1bf02c55337f30",
-    "id": null,
+    "id": "0de38b85bc83566f8d1bf02c55337f30",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -116,7 +118,7 @@ return {
     },
     "name": "ExclusiveAccessBadge_test_Query",
     "operationKind": "query",
-    "text": "query ExclusiveAccessBadge_test_Query {\n  artwork(id: \"foo\") {\n    ...ExclusiveAccessBadge_artwork\n    id\n  }\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n"
+    "text": null
   }
 };
 })();

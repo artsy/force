@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<969d332c62328604b806558704c2b21d>>
+ * @generated SignedSource<<cf25b6b846ed64f035ecf034b01fc8b0>>
+ * @relayHash 55a8c7797e0ad70ce3351836d4745c74
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 55a8c7797e0ad70ce3351836d4745c74
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateGeminiEntryForAssetInput = {
@@ -94,12 +97,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "55a8c7797e0ad70ce3351836d4745c74",
-    "id": null,
+    "id": "55a8c7797e0ad70ce3351836d4745c74",
     "metadata": {},
     "name": "createGeminiAssetWithS3CredentialsMutation",
     "operationKind": "mutation",
-    "text": "mutation createGeminiAssetWithS3CredentialsMutation(\n  $input: CreateGeminiEntryForAssetInput!\n) {\n  createGeminiEntryForAsset(input: $input) {\n    asset {\n      token\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

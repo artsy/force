@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7d74c554d2e7a761e40bcc87b4e9bb75>>
+ * @generated SignedSource<<158d826fb0eb17f09b35a38fa098b37f>>
+ * @relayHash 9cf855e663f6b932f59ad675bdfa6d22
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 9cf855e663f6b932f59ad675bdfa6d22
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceCreateBankDebitSetupForOrderInput = {
@@ -169,12 +172,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "9cf855e663f6b932f59ad675bdfa6d22",
-    "id": null,
+    "id": "9cf855e663f6b932f59ad675bdfa6d22",
     "metadata": {},
     "name": "CreateBankDebitSetupForOrderMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateBankDebitSetupForOrderMutation(\n  $input: CommerceCreateBankDebitSetupForOrderInput!\n) {\n  commerceCreateBankDebitSetupForOrder(input: $input) {\n    actionOrError {\n      __typename\n      ... on CommerceOrderRequiresAction {\n        actionData {\n          clientSecret\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          code\n          data\n          type\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

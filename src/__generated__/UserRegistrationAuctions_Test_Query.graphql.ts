@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5280be0e428cf0290737bfcc05bdbdb3>>
+ * @generated SignedSource<<4c4002ca65fa59eff868e2970aaa9764>>
+ * @relayHash 3415c0e9c92ccf9b5cc91b4557e778c8
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3415c0e9c92ccf9b5cc91b4557e778c8
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -215,8 +218,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3415c0e9c92ccf9b5cc91b4557e778c8",
-    "id": null,
+    "id": "3415c0e9c92ccf9b5cc91b4557e778c8",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -262,7 +264,7 @@ return {
     },
     "name": "UserRegistrationAuctions_Test_Query",
     "operationKind": "query",
-    "text": "query UserRegistrationAuctions_Test_Query {\n  me {\n    ...UserRegistrationAuctions_me\n    id\n  }\n}\n\nfragment UserRegistrationAuctions_me on Me {\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        isRegistered\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n          isRegistrationClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

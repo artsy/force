@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ac0636bd712fdffbc7d6b17d401d8456>>
+ * @generated SignedSource<<daf5b7f4a312fe0e007472ceef963920>>
+ * @relayHash 030dce989ae1e0bab087d42e72978174
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 030dce989ae1e0bab087d42e72978174
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -309,12 +312,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "030dce989ae1e0bab087d42e72978174",
-    "id": null,
+    "id": "030dce989ae1e0bab087d42e72978174",
     "metadata": {},
     "name": "collectorProfileRoutes_MyCollectionArtworkUploadQuery",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_MyCollectionArtworkUploadQuery {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100, includePersonalArtists: true) {\n      edges {\n        node {\n          ...EntityHeaderArtist_artist\n          counts {\n            artworks\n          }\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          targetSupply {\n            isP1\n            isTargetSupply\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
+    "text": null
   }
 };
 })();

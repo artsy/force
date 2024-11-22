@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<30bdbc87864a7ffd98ddfa32de8ca125>>
+ * @generated SignedSource<<574fc89a8c0fbc8aa2a94167c64ec295>>
+ * @relayHash 85c33bf66f0d0ae05ea0ff4c72c24979
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 85c33bf66f0d0ae05ea0ff4c72c24979
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -320,8 +323,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "85c33bf66f0d0ae05ea0ff4c72c24979",
-    "id": null,
+    "id": "85c33bf66f0d0ae05ea0ff4c72c24979",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
@@ -389,7 +391,7 @@ return {
     },
     "name": "ArticlesIndexArticles_test_Query",
     "operationKind": "query",
-    "text": "query ArticlesIndexArticles_test_Query(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  thumbnailTitle\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<13648114d4f6f39c67f002a5146be4ea>>
+ * @generated SignedSource<<45b66ab23d4bc5ca6aa140794dced927>>
+ * @relayHash 9d08a7db72fcefd9a641cf22037d2120
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 9d08a7db72fcefd9a641cf22037d2120
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -161,8 +164,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9d08a7db72fcefd9a641cf22037d2120",
-    "id": null,
+    "id": "9d08a7db72fcefd9a641cf22037d2120",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -205,7 +207,7 @@ return {
     },
     "name": "ArtworkSidebarShippingInformation_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  isUnlisted\n  priceIncludesTaxDisplay\n  shippingOrigin\n  shippingInfo\n  taxInfo {\n    displayText\n    moreInfo {\n      displayText\n      url\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

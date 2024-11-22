@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<30eab97e11954e2e5b951fe9bc6738c9>>
+ * @generated SignedSource<<1afd988156771cb0c8fbed0059393903>>
+ * @relayHash be1d4b59692f4f959c251740265327bb
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID be1d4b59692f4f959c251740265327bb
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type AlertProviderTestQuery$variables = Record<PropertyKey, never>;
@@ -99,8 +102,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "be1d4b59692f4f959c251740265327bb",
-    "id": null,
+    "id": "be1d4b59692f4f959c251740265327bb",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
@@ -115,7 +117,7 @@ return {
     },
     "name": "AlertProviderTestQuery",
     "operationKind": "query",
-    "text": "query AlertProviderTestQuery {\n  artist(id: \"artist-id\") {\n    internalID\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

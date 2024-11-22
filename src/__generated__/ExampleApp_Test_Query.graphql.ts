@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d32232253f5b6edc072d942db84ccb6a>>
+ * @generated SignedSource<<8a64d1204dd893b718237c513cd578eb>>
+ * @relayHash 4dff6c5e7269421ed28bf8fd13e16494
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 4dff6c5e7269421ed28bf8fd13e16494
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -107,8 +110,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4dff6c5e7269421ed28bf8fd13e16494",
-    "id": null,
+    "id": "4dff6c5e7269421ed28bf8fd13e16494",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "system": {
@@ -130,7 +132,7 @@ return {
     },
     "name": "ExampleApp_Test_Query",
     "operationKind": "query",
-    "text": "query ExampleApp_Test_Query {\n  system {\n    ...ExampleApp_system\n  }\n}\n\nfragment ExampleApp_system on System {\n  time {\n    day\n    month\n    year\n  }\n}\n"
+    "text": null
   }
 };
 })();

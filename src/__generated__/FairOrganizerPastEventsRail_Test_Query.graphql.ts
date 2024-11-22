@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<061cd64a9c29db908f2215b0701b62d3>>
+ * @generated SignedSource<<8f2a82e158e9f3d3dd23d74fbff1e923>>
+ * @relayHash 7386bdfb7dc7b35a3ec13a67aae86838
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 7386bdfb7dc7b35a3ec13a67aae86838
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -232,8 +235,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7386bdfb7dc7b35a3ec13a67aae86838",
-    "id": null,
+    "id": "7386bdfb7dc7b35a3ec13a67aae86838",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fairOrganizer": {
@@ -289,7 +291,7 @@ return {
     },
     "name": "FairOrganizerPastEventsRail_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerPastEventsRail_Test_Query {\n  fairOrganizer(id: \"the-armory-show\") {\n    ...FairOrganizerPastEventsRail_fairOrganizer\n    id\n  }\n}\n\nfragment FairOrganizerPastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {\n  pastFairs: fairsConnection(first: 20, sort: START_AT_DESC, status: CLOSED, hasFullFeature: true) {\n    edges {\n      node {\n        id\n        ...FairOrganizerPastEventRailCell_fair\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

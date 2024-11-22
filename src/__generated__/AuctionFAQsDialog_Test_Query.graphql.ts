@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<1777596008da54333b395bdfba7bcf00>>
+ * @generated SignedSource<<ad6efba2d17caddba524fcbd704a45cd>>
+ * @relayHash 3f3162249896d5db65c95e6cfdeebe14
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3f3162249896d5db65c95e6cfdeebe14
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -202,8 +205,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3f3162249896d5db65c95e6cfdeebe14",
-    "id": null,
+    "id": "3f3162249896d5db65c95e6cfdeebe14",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
@@ -236,7 +238,7 @@ return {
     },
     "name": "AuctionFAQsDialog_Test_Query",
     "operationKind": "query",
-    "text": "query AuctionFAQsDialog_Test_Query {\n  viewer {\n    ...AuctionFAQsDialog_viewer\n  }\n}\n\nfragment AuctionFAQsDialog_viewer on Viewer {\n  bidding: page(id: \"how-auctions-work-bidding\") {\n    name\n    content(format: HTML)\n    id\n  }\n  buyersPremium: page(id: \"how-auctions-work-buyers-premium-taxes-and-fees\") {\n    name\n    content(format: HTML)\n    id\n  }\n  paymentsAndShipping: page(id: \"how-auctions-work-payments-and-shipping\") {\n    name\n    content(format: HTML)\n    id\n  }\n  emailsAndAlerts: page(id: \"how-auctions-work-emails-and-alerts\") {\n    name\n    content(format: HTML)\n    id\n  }\n  conditionsOfSale: page(id: \"how-auctions-work-conditions-of-sale\") {\n    name\n    content(format: HTML)\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

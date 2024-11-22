@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<52d4dceccba893fc8687c913b47ff91c>>
+ * @generated SignedSource<<9e581ed5e86eb59bd74db462ee45ec57>>
+ * @relayHash 1773a95e478361f6fc2d0aa4e2b36057
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 1773a95e478361f6fc2d0aa4e2b36057
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -224,12 +227,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1773a95e478361f6fc2d0aa4e2b36057",
-    "id": null,
+    "id": "1773a95e478361f6fc2d0aa4e2b36057",
     "metadata": {},
     "name": "PhoneNumberRoute_Test_Query",
     "operationKind": "query",
-    "text": "query PhoneNumberRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...PhoneNumberRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...PhoneNumberRoute_me\n    id\n  }\n}\n\nfragment PhoneNumberRoute_me on Me {\n  internalID\n  phoneNumber {\n    regionCode\n    display(format: NATIONAL)\n  }\n}\n\nfragment PhoneNumberRoute_submission on ConsignmentSubmission {\n  userPhoneNumber {\n    display\n    regionCode\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
+    "text": null
   }
 };
 })();

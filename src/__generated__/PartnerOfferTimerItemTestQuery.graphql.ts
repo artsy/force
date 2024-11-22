@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<e30a72e9e748dcb18cf293c4240139b0>>
+ * @generated SignedSource<<dd07fe2de4b167627566689da1743411>>
+ * @relayHash 131f22d54f682fd77a2c7c5a973b1ba6
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 131f22d54f682fd77a2c7c5a973b1ba6
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -114,8 +117,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "131f22d54f682fd77a2c7c5a973b1ba6",
-    "id": null,
+    "id": "131f22d54f682fd77a2c7c5a973b1ba6",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "order": {
@@ -160,7 +162,7 @@ return {
     },
     "name": "PartnerOfferTimerItemTestQuery",
     "operationKind": "query",
-    "text": "query PartnerOfferTimerItemTestQuery {\n  order: commerceOrder(id: \"123\") {\n    __typename\n    ...PartnerOfferTimerItem_order\n    id\n  }\n}\n\nfragment PartnerOfferTimerItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  displayState\n  stateExpiresAt\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<c335d5d81aef8b972e5b5f470f27e542>>
+ * @generated SignedSource<<4481bc60686d5ef936801ff45677d4be>>
+ * @relayHash 55f3243863662916e0b9a80153e66417
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 55f3243863662916e0b9a80153e66417
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type AlertSourceType = "ARTIST" | "ARTWORK" | "%future added value";
@@ -152,12 +155,11 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "55f3243863662916e0b9a80153e66417",
-    "id": null,
+    "id": "55f3243863662916e0b9a80153e66417",
     "metadata": {},
     "name": "SuggestedFiltersFetchQuery",
     "operationKind": "query",
-    "text": "query SuggestedFiltersFetchQuery(\n  $source: AlertSource\n  $attributes: PreviewSavedSearchAttributes!\n) {\n  previewSavedSearch(attributes: $attributes) {\n    suggestedFilters(source: $source) {\n      displayValue\n      field\n      name\n      value\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

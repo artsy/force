@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<781bb8e550d5341b20449fdd73dbd6a3>>
+ * @generated SignedSource<<d1bdf1868c6d56041b003701ed9f1429>>
+ * @relayHash 3481091fc45f362edfbd3ae67c5df81d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3481091fc45f362edfbd3ae67c5df81d
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -170,8 +173,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3481091fc45f362edfbd3ae67c5df81d",
-    "id": null,
+    "id": "3481091fc45f362edfbd3ae67c5df81d",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artistSeries": {
@@ -196,7 +198,7 @@ return {
     },
     "name": "ArtistSeriesMeta_TestQuery",
     "operationKind": "query",
-    "text": "query ArtistSeriesMeta_TestQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesMeta_artistSeries\n    id\n  }\n}\n\nfragment ArtistSeriesMeta_artistSeries on ArtistSeries {\n  title\n  description\n  slug\n  artists(size: 1) {\n    name\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

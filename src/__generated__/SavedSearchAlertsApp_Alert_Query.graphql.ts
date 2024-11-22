@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<e39a2fc0411330f2e0007f06a0066b17>>
+ * @generated SignedSource<<80fb326cae6a93fef1947f452ecd16b4>>
+ * @relayHash 49202e5f880c7ed9962a0739460ca0bf
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 49202e5f880c7ed9962a0739460ca0bf
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type SavedSearchAlertsApp_Alert_Query$variables = {
@@ -221,12 +224,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "49202e5f880c7ed9962a0739460ca0bf",
-    "id": null,
+    "id": "49202e5f880c7ed9962a0739460ca0bf",
     "metadata": {},
     "name": "SavedSearchAlertsApp_Alert_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsApp_Alert_Query(\n  $alertID: String!\n) {\n  me {\n    alert(id: $alertID) {\n      internalID\n      artistIDs\n      title: displayName(only: [artistIDs])\n      subtitle: displayName(except: [artistIDs])\n      artworksConnection(first: 1) {\n        counts {\n          total\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

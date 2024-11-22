@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<52efe035a22e971de76f5c11cf1d7b1f>>
+ * @generated SignedSource<<fbfa078ba13691da23665d5ca146c007>>
+ * @relayHash 7fec67d0e5123ba6dd34cdba33cad4ca
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 7fec67d0e5123ba6dd34cdba33cad4ca
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -219,12 +222,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7fec67d0e5123ba6dd34cdba33cad4ca",
-    "id": null,
+    "id": "7fec67d0e5123ba6dd34cdba33cad4ca",
     "metadata": {},
     "name": "myCollectionInsightsRoutesQuery",
     "operationKind": "query",
-    "text": "query myCollectionInsightsRoutesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) @principalField {\n    ...MyCollectionInsightsMedianSalePriceAtAuction_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment MyCollectionInsightsMedianSalePriceAtAuction_artist on Artist {\n  ...EntityHeaderArtist_artist\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b2e8b7b635eb1768cc89ffc3b476c92e>>
+ * @generated SignedSource<<6d5c607b1bf7ef2497c3bb125c9ba742>>
+ * @relayHash 7806f9147dd6437d77aa143d20a9d623
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 7806f9147dd6437d77aa143d20a9d623
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -414,8 +417,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7806f9147dd6437d77aa143d20a9d623",
-    "id": null,
+    "id": "7806f9147dd6437d77aa143d20a9d623",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": (v4/*: any*/),
@@ -485,7 +487,7 @@ return {
     },
     "name": "CellPartnerArtistFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query CellPartnerArtistFragmentContainer_Test_Query {\n  partner(id: \"foo\") {\n    artistsConnection {\n      edges {\n        ...CellPartnerArtist_partnerArtist\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment CellPartnerArtist_partnerArtist on ArtistPartnerEdge {\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  artist {\n    ...EntityHeaderArtist_artist\n    internalID\n    slug\n    name\n    href\n    initials\n    id\n  }\n  partner {\n    slug\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

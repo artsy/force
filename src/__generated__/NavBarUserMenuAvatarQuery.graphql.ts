@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a048c3f3d0bd66bd783ec2164ffd6939>>
+ * @generated SignedSource<<f1d8d04e9e20d5dacef293684aae5a61>>
+ * @relayHash 05d876177c9c7a40927ddf8dfcf358c4
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 05d876177c9c7a40927ddf8dfcf358c4
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type NavBarUserMenuAvatarQuery$variables = Record<PropertyKey, never>;
@@ -139,12 +142,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "05d876177c9c7a40927ddf8dfcf358c4",
-    "id": null,
+    "id": "05d876177c9c7a40927ddf8dfcf358c4",
     "metadata": {},
     "name": "NavBarUserMenuAvatarQuery",
     "operationKind": "query",
-    "text": "query NavBarUserMenuAvatarQuery {\n  me {\n    initials\n    icon {\n      resized(height: 45, width: 45, version: \"large_square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2e7e6a38c2782bf0e9b240a6e08821ff>>
+ * @generated SignedSource<<c86114960fecb9a7941e7c4930e38786>>
+ * @relayHash 0296f8d2fba205e2470b55dc43677e1c
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0296f8d2fba205e2470b55dc43677e1c
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type Intents = "BUY_ART_AND_DESIGN" | "FIND_ART_EXHIBITS" | "LEARN_ABOUT_ART" | "READ_ART_MARKET_NEWS" | "RESEARCH_ART_PRICES" | "SELL_ART_AND_DESIGN" | "%future added value";
@@ -89,12 +92,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "0296f8d2fba205e2470b55dc43677e1c",
-    "id": null,
+    "id": "0296f8d2fba205e2470b55dc43677e1c",
     "metadata": {},
     "name": "useUpdateCollectorProfileMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateCollectorProfileMutation(\n  $input: UpdateCollectorProfileInput!\n) {\n  updateCollectorProfile(input: $input) {\n    clientMutationId\n  }\n}\n"
+    "text": null
   }
 };
 })();

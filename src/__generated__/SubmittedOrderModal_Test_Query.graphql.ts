@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<58306216d6fa94c276e4fc01d7708f54>>
+ * @generated SignedSource<<5ce1a4b07590618e197f2c91661f21e5>>
+ * @relayHash 4444e17f70c00a9bb4533e0f8206fd37
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 4444e17f70c00a9bb4533e0f8206fd37
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -113,8 +116,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4444e17f70c00a9bb4533e0f8206fd37",
-    "id": null,
+    "id": "4444e17f70c00a9bb4533e0f8206fd37",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "submittedOrder": {
@@ -141,7 +143,7 @@ return {
     },
     "name": "SubmittedOrderModal_Test_Query",
     "operationKind": "query",
-    "text": "query SubmittedOrderModal_Test_Query {\n  submittedOrder: commerceOrder(id: \"some-id\") {\n    __typename\n    ...SubmittedOrderModal_submittedOrder\n    id\n  }\n}\n\nfragment SubmittedOrderModal_submittedOrder on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt(format: \"MMM D\")\n}\n"
+    "text": null
   }
 };
 })();

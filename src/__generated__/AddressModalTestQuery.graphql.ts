@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0e4d061aa33e6fb5f5aaa3c4026391c4>>
+ * @generated SignedSource<<97a7b953336490bf76b4a87cb311a7e1>>
+ * @relayHash eac7d336c233bb012cfa500991bb3ed7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID eac7d336c233bb012cfa500991bb3ed7
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type AddressModalTestQuery$variables = Record<PropertyKey, never>;
@@ -86,8 +89,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "eac7d336c233bb012cfa500991bb3ed7",
-    "id": null,
+    "id": "eac7d336c233bb012cfa500991bb3ed7",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "_unused": {
@@ -112,7 +114,7 @@ return {
     },
     "name": "AddressModalTestQuery",
     "operationKind": "query",
-    "text": "query AddressModalTestQuery {\n  _unused: artist(id: \"whocare\") {\n    name\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

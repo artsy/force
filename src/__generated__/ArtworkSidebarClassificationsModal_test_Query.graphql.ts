@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<340b9cce42b919aa74dc750d94a443f3>>
+ * @generated SignedSource<<0adbaf3660d674d4efb94cb765f3181b>>
+ * @relayHash 3e9c86fbad13153ce3cacb447a13c23d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3e9c86fbad13153ce3cacb447a13c23d
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -107,8 +110,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3e9c86fbad13153ce3cacb447a13c23d",
-    "id": null,
+    "id": "3e9c86fbad13153ce3cacb447a13c23d",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
@@ -135,7 +137,7 @@ return {
     },
     "name": "ArtworkSidebarClassificationsModal_test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarClassificationsModal_test_Query {\n  viewer {\n    ...ArtworkSidebarClassificationsModal_viewer\n  }\n}\n\nfragment ArtworkSidebarClassificationsModal_viewer on Viewer {\n  artworkAttributionClasses {\n    id\n    name\n    longDescription\n  }\n}\n"
+    "text": null
   }
 };
 })();

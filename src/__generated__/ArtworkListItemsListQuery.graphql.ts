@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b4eac44e957e88c5ee96e78f29045b06>>
+ * @generated SignedSource<<71093ac99c203d21913c0b5cb19673c0>>
+ * @relayHash 14d5f7eb655a8dadb1d4236864e13c76
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 14d5f7eb655a8dadb1d4236864e13c76
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -382,8 +385,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "14d5f7eb655a8dadb1d4236864e13c76",
-    "id": null,
+    "id": "14d5f7eb655a8dadb1d4236864e13c76",
     "metadata": {
       "connection": [
         {
@@ -399,7 +401,7 @@ return {
     },
     "name": "ArtworkListItemsListQuery",
     "operationKind": "query",
-    "text": "query ArtworkListItemsListQuery {\n  me {\n    savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n      internalID\n      ...ArtworkListItem_item\n      id\n    }\n    customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n      edges {\n        node {\n          internalID\n          ...ArtworkListItem_item\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

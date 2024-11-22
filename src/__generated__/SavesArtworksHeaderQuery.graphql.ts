@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ad853981b94e59714f00b8c24160988e>>
+ * @generated SignedSource<<5072ac350bbd2da7e0c5da0187006d05>>
+ * @relayHash bb33bc7db9cd88f848d2818ea23fb880
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID bb33bc7db9cd88f848d2818ea23fb880
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type SavesArtworksHeaderQuery$variables = {
@@ -151,12 +154,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bb33bc7db9cd88f848d2818ea23fb880",
-    "id": null,
+    "id": "bb33bc7db9cd88f848d2818ea23fb880",
     "metadata": {},
     "name": "SavesArtworksHeaderQuery",
     "operationKind": "query",
-    "text": "query SavesArtworksHeaderQuery(\n  $id: String!\n) {\n  me {\n    collection(id: $id) {\n      internalID\n      name\n      default\n      shareableWithPartners\n      id\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

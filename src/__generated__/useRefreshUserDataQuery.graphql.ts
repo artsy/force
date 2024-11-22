@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7073b71ca7299948b78fff38bf25f155>>
+ * @generated SignedSource<<1a84c2823c5fa79210018e82e989bdc0>>
+ * @relayHash 37da86cc057552e5bc68d8f8f554a780
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 37da86cc057552e5bc68d8f8f554a780
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -89,12 +92,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "37da86cc057552e5bc68d8f8f554a780",
-    "id": null,
+    "id": "37da86cc057552e5bc68d8f8f554a780",
     "metadata": {},
     "name": "useRefreshUserDataQuery",
     "operationKind": "query",
-    "text": "query useRefreshUserDataQuery {\n  me {\n    ...AuctionBidRoute_me\n    id\n  }\n}\n\nfragment AuctionBidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n"
+    "text": null
   }
 };
 

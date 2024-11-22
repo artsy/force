@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<139a4220ed8bfa1897f935d1e6514fca>>
+ * @generated SignedSource<<f28a313e52f6c5febcbaf076cbf37712>>
+ * @relayHash 3304937a9de9eb05c58ff1b74af00891
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3304937a9de9eb05c58ff1b74af00891
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -103,8 +106,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3304937a9de9eb05c58ff1b74af00891",
-    "id": null,
+    "id": "3304937a9de9eb05c58ff1b74af00891",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -125,7 +127,7 @@ return {
     },
     "name": "BuyerGuaranteeTestQuery",
     "operationKind": "query",
-    "text": "query BuyerGuaranteeTestQuery {\n  artwork(id: \"whatevs\") {\n    ...BuyerGuarantee_artwork\n    id\n  }\n}\n\nfragment BuyerGuarantee_artwork on Artwork {\n  is_acquireable: isAcquireable\n  is_offerable: isOfferable\n}\n"
+    "text": null
   }
 };
 })();

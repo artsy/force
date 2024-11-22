@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<bd3605fcdab30fab8940e2e0c7c9d2fb>>
+ * @generated SignedSource<<fb34adb6ea15bc797f872d915eff00de>>
+ * @relayHash 783024d105874317d3ecb8558837ad73
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 783024d105874317d3ecb8558837ad73
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -230,8 +233,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "783024d105874317d3ecb8558837ad73",
-    "id": null,
+    "id": "783024d105874317d3ecb8558837ad73",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "invoice": {
@@ -293,7 +295,7 @@ return {
     },
     "name": "InvoiceDetailRoute_Test_Query",
     "operationKind": "query",
-    "text": "query InvoiceDetailRoute_Test_Query {\n  invoice(token: \"cool-token\") {\n    ...InvoiceDetailRoute_invoice\n    id\n  }\n}\n\nfragment InvoiceDetailRoute_invoice on Invoice {\n  name\n  email\n  state\n  payments {\n    successful\n    id\n  }\n  externalNote\n  remaining(precision: 2)\n  ...InvoiceLineItems_invoice\n  ...InvoicePayments_invoice\n}\n\nfragment InvoiceLineItems_invoice on Invoice {\n  lineItems {\n    description\n    amount(precision: 2)\n    id\n  }\n}\n\nfragment InvoicePayments_invoice on Invoice {\n  payments {\n    id\n    successful\n    createdAt(format: \"MMM D, YYYY\")\n    amount(precision: 2)\n    creditCard {\n      brand\n      lastDigits\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

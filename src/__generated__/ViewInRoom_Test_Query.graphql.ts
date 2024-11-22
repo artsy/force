@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<006c9690d96604df8a975f8a1468d46d>>
+ * @generated SignedSource<<3cd44772233f20c1f6ac6e7a9c9d1228>>
+ * @relayHash 55aac5e3b3d983fba30bd4e07d6ce448
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 55aac5e3b3d983fba30bd4e07d6ce448
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -186,8 +189,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "55aac5e3b3d983fba30bd4e07d6ce448",
-    "id": null,
+    "id": "55aac5e3b3d983fba30bd4e07d6ce448",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -224,7 +226,7 @@ return {
     },
     "name": "ViewInRoom_Test_Query",
     "operationKind": "query",
-    "text": "query ViewInRoom_Test_Query {\n  artwork(id: \"example\") {\n    ...ViewInRoom_artwork\n    id\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
+    "text": null
   }
 };
 })();

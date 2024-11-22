@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7cccf6b24ae14d3a66fee8d5466f7a2d>>
+ * @generated SignedSource<<af8b81f274e78c724970f24dd30b0946>>
+ * @relayHash 40955eeacddae97c2fff092a90ad2239
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 40955eeacddae97c2fff092a90ad2239
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -193,8 +196,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "40955eeacddae97c2fff092a90ad2239",
-    "id": null,
+    "id": "40955eeacddae97c2fff092a90ad2239",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "commerceOrder": {
@@ -259,7 +261,7 @@ return {
     },
     "name": "OrderStateTestQuery",
     "operationKind": "query",
-    "text": "query OrderStateTestQuery {\n  commerceOrder {\n    __typename\n    ...ConversationOrderState_state\n    id\n  }\n}\n\nfragment ConversationOrderState_state on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  mode\n  stateReason\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n  ...ConversationStatusWithCounter_order\n}\n\nfragment ConversationStatusWithCounter_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt\n  stateUpdatedAt\n  formattedStateExpiresAt: stateExpiresAt(format: \"MMM D, h:mm A zz\")\n}\n"
+    "text": null
   }
 };
 })();

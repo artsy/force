@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8ab1d2fb3107f506cfd17b62dd65c727>>
+ * @generated SignedSource<<1a20d4904ead7223c24b3f2dde799906>>
+ * @relayHash fd71c996171594405049406011bd0adc
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID fd71c996171594405049406011bd0adc
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -82,8 +85,7 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "fd71c996171594405049406011bd0adc",
-    "id": null,
+    "id": "fd71c996171594405049406011bd0adc",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -108,7 +110,7 @@ const node: ConcreteRequest = {
     },
     "name": "FlashBanner_Test_Query",
     "operationKind": "query",
-    "text": "query FlashBanner_Test_Query {\n  me {\n    ...FlashBanner_me\n    id\n  }\n}\n\nfragment FlashBanner_me on Me {\n  canRequestEmailConfirmation\n}\n"
+    "text": null
   }
 };
 

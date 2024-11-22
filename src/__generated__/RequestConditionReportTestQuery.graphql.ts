@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<11ec2f82944846223ea19b628e134f21>>
+ * @generated SignedSource<<fa6f6b27be92aff532bf6bf3dc9f2fc8>>
+ * @relayHash 96e5136e1d518b2c9a0724fd52938694
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 96e5136e1d518b2c9a0724fd52938694
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -174,8 +177,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "96e5136e1d518b2c9a0724fd52938694",
-    "id": null,
+    "id": "96e5136e1d518b2c9a0724fd52938694",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -213,7 +215,7 @@ return {
     },
     "name": "RequestConditionReportTestQuery",
     "operationKind": "query",
-    "text": "query RequestConditionReportTestQuery {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: \"artwork-id\") {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
+    "text": null
   }
 };
 })();

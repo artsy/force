@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f6131e7d082a2ef6d7b046488e6c3db2>>
+ * @generated SignedSource<<f1eacd21a96800c874d4b1f2f17d6bcd>>
+ * @relayHash e4dfd39cb604ee40aaec376962e6362e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID e4dfd39cb604ee40aaec376962e6362e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -287,8 +290,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e4dfd39cb604ee40aaec376962e6362e",
-    "id": null,
+    "id": "e4dfd39cb604ee40aaec376962e6362e",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
@@ -331,7 +333,7 @@ return {
     },
     "name": "CellArtistFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query CellArtistFragmentContainer_Test_Query {\n  artist(id: \"example\") {\n    ...CellArtist_artist\n    id\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  coverArtwork {\n    image {\n      cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

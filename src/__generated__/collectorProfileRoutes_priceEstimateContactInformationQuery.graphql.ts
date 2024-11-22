@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<c54eb1eeb3b346b0a8ef776c93826e3c>>
+ * @generated SignedSource<<83da9aaa04c616cfbf6d9be3ff867526>>
+ * @relayHash d1886e1ffbeed17217eb3a52f1243fb3
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d1886e1ffbeed17217eb3a52f1243fb3
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -179,12 +182,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d1886e1ffbeed17217eb3a52f1243fb3",
-    "id": null,
+    "id": "d1886e1ffbeed17217eb3a52f1243fb3",
     "metadata": {},
     "name": "collectorProfileRoutes_priceEstimateContactInformationQuery",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_priceEstimateContactInformationQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) @principalField {\n    ...PriceEstimateContactInformation_artwork\n    id\n  }\n  me {\n    ...PriceEstimateContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment PriceEstimateContactInformation_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment PriceEstimateContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n"
+    "text": null
   }
 };
 })();

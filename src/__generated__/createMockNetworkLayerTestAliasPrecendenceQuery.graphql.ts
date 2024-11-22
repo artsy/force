@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5317fcbec7e3a24cd10ac79c81a31442>>
+ * @generated SignedSource<<6e8d0fcce20d7894b5d5e57fab8bf909>>
+ * @relayHash a8be7eed0e853c7b0b536eeede369966
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID a8be7eed0e853c7b0b536eeede369966
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type createMockNetworkLayerTestAliasPrecendenceQuery$variables = Record<PropertyKey, never>;
@@ -126,12 +129,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a8be7eed0e853c7b0b536eeede369966",
-    "id": null,
+    "id": "a8be7eed0e853c7b0b536eeede369966",
     "metadata": {},
     "name": "createMockNetworkLayerTestAliasPrecendenceQuery",
     "operationKind": "query",
-    "text": "query createMockNetworkLayerTestAliasPrecendenceQuery {\n  artist(id: \"banksy\") {\n    forSaleArtworks: artworksConnection(filter: IS_FOR_SALE) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4663cc384cadbc9241057b4456f3a077>>
+ * @generated SignedSource<<e479cd0eac99c7878ac7b59ae94be740>>
+ * @relayHash 38a719ba623ea6b6c085c6ecffeabd35
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 38a719ba623ea6b6c085c6ecffeabd35
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -317,8 +320,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "38a719ba623ea6b6c085c6ecffeabd35",
-    "id": null,
+    "id": "38a719ba623ea6b6c085c6ecffeabd35",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "notificationsConnection": {
@@ -410,7 +412,7 @@ return {
     },
     "name": "NotificationItem_test_Query",
     "operationKind": "query",
-    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_notification on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    internalID\n    blurhashDataURL\n    resized(height: 58, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      srcSet\n    }\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n"
+    "text": null
   }
 };
 })();

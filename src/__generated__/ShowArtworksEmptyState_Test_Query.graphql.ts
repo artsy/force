@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5e1e68e0482843f1e8ea5d9c95cf6020>>
+ * @generated SignedSource<<fb84307d696de8b0c6e999ffcb94f106>>
+ * @relayHash 75d8219d862fd0a45178ea701cfa40db
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 75d8219d862fd0a45178ea701cfa40db
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -97,8 +100,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "75d8219d862fd0a45178ea701cfa40db",
-    "id": null,
+    "id": "75d8219d862fd0a45178ea701cfa40db",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
@@ -129,7 +131,7 @@ return {
     },
     "name": "ShowArtworksEmptyState_Test_Query",
     "operationKind": "query",
-    "text": "query ShowArtworksEmptyState_Test_Query {\n  show(id: \"example-show-id\") {\n    ...ShowArtworksEmptyState_show\n    id\n  }\n}\n\nfragment ShowArtworksEmptyState_show on Show {\n  isFairBooth\n  status\n}\n"
+    "text": null
   }
 };
 })();

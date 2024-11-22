@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<74a92b98b8ca1764452f5d0c09e01a30>>
+ * @generated SignedSource<<2b3ec0839a27026dcbcbef7854dca276>>
+ * @relayHash 47a02d5911a4658ddccc4bfda833a1b7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 47a02d5911a4658ddccc4bfda833a1b7
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -150,8 +153,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "47a02d5911a4658ddccc4bfda833a1b7",
-    "id": null,
+    "id": "47a02d5911a4658ddccc4bfda833a1b7",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
@@ -183,7 +185,7 @@ return {
     },
     "name": "AboutPartner_Test_Query",
     "operationKind": "query",
-    "text": "query AboutPartner_Test_Query {\n  partner(id: \"unit-london\") @principalField {\n    ...AboutPartner_partner\n    id\n  }\n}\n\nfragment AboutPartner_partner on Partner {\n  profile {\n    fullBio\n    bio\n    id\n  }\n  website\n  displayFullPartnerPage\n  slug\n  internalID\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0e1e2db2bc6772e5c1f2f750ad24872c>>
+ * @generated SignedSource<<2d6f1795087d12149ca61dd472372ea1>>
+ * @relayHash d66bb51acde386d5ed4cc0dc0ca51425
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d66bb51acde386d5ed4cc0dc0ca51425
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -294,8 +297,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d66bb51acde386d5ed4cc0dc0ca51425",
-    "id": null,
+    "id": "d66bb51acde386d5ed4cc0dc0ca51425",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
@@ -351,7 +353,7 @@ return {
     },
     "name": "NavigationTabs_Test_PartnerQuery",
     "operationKind": "query",
-    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  partnerType\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n    displayableShows\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {\n    totalCount\n  }\n}\n"
+    "text": null
   }
 };
 })();

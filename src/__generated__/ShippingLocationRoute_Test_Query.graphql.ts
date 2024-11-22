@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d76be1256a2b05b8960d67c0501a511f>>
+ * @generated SignedSource<<f936ec52e8f383aa6d245004bdcc2638>>
+ * @relayHash 080056e2e77867c8c3f858556e9af4b4
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 080056e2e77867c8c3f858556e9af4b4
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -315,12 +318,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "080056e2e77867c8c3f858556e9af4b4",
-    "id": null,
+    "id": "080056e2e77867c8c3f858556e9af4b4",
     "metadata": {},
     "name": "ShippingLocationRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ShippingLocationRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ShippingLocationRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationCountryCode\n  locationState\n  locationPostalCode\n  locationAddress\n  locationAddress2\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
+    "text": null
   }
 };
 })();

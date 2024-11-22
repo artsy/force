@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0131a59cd7fc4b0dcfdca9aecff1cee0>>
+ * @generated SignedSource<<17ae3371cf96e52547dbeaae091c470d>>
+ * @relayHash 0861d56cb02263928a7b1588d3adb963
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0861d56cb02263928a7b1588d3adb963
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -168,12 +171,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0861d56cb02263928a7b1588d3adb963",
-    "id": null,
+    "id": "0861d56cb02263928a7b1588d3adb963",
     "metadata": {},
     "name": "CellArtistSeriesStoryQuery",
     "operationKind": "query",
-    "text": "query CellArtistSeriesStoryQuery(\n  $id: ID!\n) {\n  artistSeries(id: $id) {\n    ...CellArtistSeries_artistSeries\n    id\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

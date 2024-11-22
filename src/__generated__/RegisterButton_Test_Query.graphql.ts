@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2e441cda544b9357adb25c18f5375d6a>>
+ * @generated SignedSource<<848dd29397036c4eae2eb2fdfd4a572c>>
+ * @relayHash df374e27131a2f85e4f31fc5a7372f81
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID df374e27131a2f85e4f31fc5a7372f81
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -243,12 +246,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "df374e27131a2f85e4f31fc5a7372f81",
-    "id": null,
+    "id": "df374e27131a2f85e4f31fc5a7372f81",
     "metadata": {},
     "name": "RegisterButton_Test_Query",
     "operationKind": "query",
-    "text": "query RegisterButton_Test_Query {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  isIdentityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
+    "text": null
   }
 };
 })();

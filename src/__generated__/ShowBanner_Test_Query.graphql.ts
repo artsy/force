@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d14d9b5da4db62ecbf1f1b4be1816e3e>>
+ * @generated SignedSource<<3f3a3f7ed116d4b2e1d7946152a9dbee>>
+ * @relayHash ea8bee9a71b35e245fd6648880f961eb
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID ea8bee9a71b35e245fd6648880f961eb
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -307,8 +310,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ea8bee9a71b35e245fd6648880f961eb",
-    "id": null,
+    "id": "ea8bee9a71b35e245fd6648880f961eb",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
@@ -375,7 +377,7 @@ return {
     },
     "name": "ShowBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ShowBanner_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    showsConnection(first: 1) {\n      edges {\n        node {\n          ...ShowBanner_show\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 910, height: 480, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

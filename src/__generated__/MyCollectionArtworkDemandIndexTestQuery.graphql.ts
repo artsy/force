@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<06fb5a79de51691c46590e3fae08b1de>>
+ * @generated SignedSource<<7a3cfee72907f3d3bcdcb786f3ab8769>>
+ * @relayHash 83dcc9a0e94ce6d58226825bbdaa8475
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 83dcc9a0e94ce6d58226825bbdaa8475
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -121,8 +124,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "83dcc9a0e94ce6d58226825bbdaa8475",
-    "id": null,
+    "id": "83dcc9a0e94ce6d58226825bbdaa8475",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -159,7 +161,7 @@ return {
     },
     "name": "MyCollectionArtworkDemandIndexTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkDemandIndexTestQuery {\n  artwork(id: \"artwork-ID\") {\n    marketPriceInsights {\n      ...MyCollectionArtworkDemandIndex_marketPriceInsights\n    }\n    id\n  }\n}\n\nfragment MyCollectionArtworkDemandIndex_marketPriceInsights on ArtworkPriceInsights {\n  demandRank\n  demandRankDisplayText\n}\n"
+    "text": null
   }
 };
 })();

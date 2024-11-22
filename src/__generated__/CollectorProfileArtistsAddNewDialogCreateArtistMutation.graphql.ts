@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<75ad7e738b3fc94318f433b3641c181a>>
+ * @generated SignedSource<<e26661611bed1a1a273ef189b94d9bbf>>
+ * @relayHash 02e1599e0d5f8e13ac2096803774034a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 02e1599e0d5f8e13ac2096803774034a
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateArtistMutationInput = {
@@ -205,12 +208,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "02e1599e0d5f8e13ac2096803774034a",
-    "id": null,
+    "id": "02e1599e0d5f8e13ac2096803774034a",
     "metadata": {},
     "name": "CollectorProfileArtistsAddNewDialogCreateArtistMutation",
     "operationKind": "mutation",
-    "text": "mutation CollectorProfileArtistsAddNewDialogCreateArtistMutation(\n  $input: CreateArtistMutationInput!\n) {\n  createArtist(input: $input) {\n    artistOrError {\n      __typename\n      ... on CreateArtistSuccess {\n        artist {\n          internalID\n          id\n        }\n      }\n      ... on CreateArtistFailure {\n        mutationError {\n          error\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

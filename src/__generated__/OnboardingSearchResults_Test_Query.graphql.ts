@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<1db2e248eb5d5e48605347dd1966e8ea>>
+ * @generated SignedSource<<8178b0d2799499a41ee84ebf6dbcd6d5>>
+ * @relayHash 008c439237992b08d2e07b8c0f7ea6dc
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 008c439237992b08d2e07b8c0f7ea6dc
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -493,8 +496,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "008c439237992b08d2e07b8c0f7ea6dc",
-    "id": null,
+    "id": "008c439237992b08d2e07b8c0f7ea6dc",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
@@ -613,7 +615,7 @@ return {
     },
     "name": "OnboardingSearchResults_Test_Query",
     "operationKind": "query",
-    "text": "query OnboardingSearchResults_Test_Query {\n  viewer {\n    ...OnboardingSearchResults_viewer\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment OnboardingSearchResults_viewer on Viewer {\n  matchConnection(term: \"\", entities: [], first: 10, mode: AUTOSUGGEST) {\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          internalID\n          ...EntityHeaderArtist_artist\n        }\n        ... on Profile {\n          internalID\n          owner {\n            __typename\n            ... on Partner {\n              ...EntityHeaderPartner_partner\n            }\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

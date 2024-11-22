@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f7cdb881147a665261b8d322686f8063>>
+ * @generated SignedSource<<66927f203cdfee6adfb6ed6636858c53>>
+ * @relayHash 457c3f65a942f5ee7d59891f512aa0b4
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 457c3f65a942f5ee7d59891f512aa0b4
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type withProgressiveOnboardingCountsQuery$variables = Record<PropertyKey, never>;
@@ -116,12 +119,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "457c3f65a942f5ee7d59891f512aa0b4",
-    "id": null,
+    "id": "457c3f65a942f5ee7d59891f512aa0b4",
     "metadata": {},
     "name": "withProgressiveOnboardingCountsQuery",
     "operationKind": "query",
-    "text": "query withProgressiveOnboardingCountsQuery {\n  me {\n    counts {\n      followedArtists\n      followedProfiles\n      savedArtworks\n      savedSearches\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

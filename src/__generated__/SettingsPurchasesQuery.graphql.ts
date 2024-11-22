@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<bccca3c715ad7146dd61dd499899515a>>
+ * @generated SignedSource<<b58538b92fed60e1ce67c84ccb3d2b74>>
+ * @relayHash 0e68e05ecea561aa5adfa73fc0d65164
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0e68e05ecea561aa5adfa73fc0d65164
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -661,12 +664,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0e68e05ecea561aa5adfa73fc0d65164",
-    "id": null,
+    "id": "0e68e05ecea561aa5adfa73fc0d65164",
     "metadata": {},
     "name": "SettingsPurchasesQuery",
     "operationKind": "query",
-    "text": "query SettingsPurchasesQuery(\n  $states: [CommerceOrderStateEnum!]\n  $first: Int!\n  $after: String\n) {\n  me {\n    ...SettingsPurchases_me_4tp0sF\n    id\n  }\n}\n\nfragment CommercePagination_pageCursors on CommercePageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsPurchasesRow_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  source\n  internalID\n  code\n  displayState\n  state\n  requestedFulfillment {\n    __typename\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artworkVersion {\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        artwork {\n          href\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                cropped(width: 45, height: 45) {\n                  src\n                  srcSet\n                }\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          title\n          artistNames\n          artists(shallow: true) {\n            href\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPurchases_me_4tp0sF on Me {\n  name\n  orders(states: $states, first: $first, after: $after) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...CommercePagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        code\n        ...SettingsPurchasesRow_order\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

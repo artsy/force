@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a55b1a18076ea738e8fde7cf5d40b4d8>>
+ * @generated SignedSource<<146efe58c9c0e928bd4b2be0dde31962>>
+ * @relayHash 3e50fbf1f0fd0bb8c957874a7af447ac
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3e50fbf1f0fd0bb8c957874a7af447ac
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -207,8 +210,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3e50fbf1f0fd0bb8c957874a7af447ac",
-    "id": null,
+    "id": "3e50fbf1f0fd0bb8c957874a7af447ac",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -272,7 +274,7 @@ return {
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isUnlisted\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n  collectorSignals {\n    primaryLabel(ignore: [PARTNER_OFFER])\n  }\n}\n"
+    "text": null
   }
 };
 })();

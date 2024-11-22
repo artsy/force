@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2738a2c9ffcd257e39b4bd87d1b0033b>>
+ * @generated SignedSource<<8f3518f9283ea210ae1ed7d69e93a202>>
+ * @relayHash d6ba79ba74aba724eb08852f5bff49b9
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d6ba79ba74aba724eb08852f5bff49b9
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RemoveAssetFromConsignmentSubmissionInput = {
@@ -92,12 +95,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "d6ba79ba74aba724eb08852f5bff49b9",
-    "id": null,
+    "id": "d6ba79ba74aba724eb08852f5bff49b9",
     "metadata": {},
     "name": "removeAssetFromConsignmentSubmissionMutation",
     "operationKind": "mutation",
-    "text": "mutation removeAssetFromConsignmentSubmissionMutation(\n  $input: RemoveAssetFromConsignmentSubmissionInput!\n) {\n  removeAssetFromConsignmentSubmission(input: $input) {\n    asset {\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

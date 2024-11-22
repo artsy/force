@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ed608b0c816908d1e353c121efb3f299>>
+ * @generated SignedSource<<4154049ad06e257dc27ea1c59a8c6154>>
+ * @relayHash 27814b52bd0ea5db9e5d0f4b7461f0d5
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 27814b52bd0ea5db9e5d0f4b7461f0d5
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -149,8 +152,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "27814b52bd0ea5db9e5d0f4b7461f0d5",
-    "id": null,
+    "id": "27814b52bd0ea5db9e5d0f4b7461f0d5",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -181,7 +183,7 @@ return {
     },
     "name": "MyCollectionArtworkTitleTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkTitleTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkTitle_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkTitle_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist(shallow: true) {\n    href\n    isPersonalArtist\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

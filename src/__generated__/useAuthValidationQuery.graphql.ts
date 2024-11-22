@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5b12bad2772496b7bf611ef42f47b205>>
+ * @generated SignedSource<<7276610ab694f93aace1f10467eb28c5>>
+ * @relayHash abde732d3af0c5c7ee480209560f6de0
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID abde732d3af0c5c7ee480209560f6de0
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type AuthenticationStatus = "INVALID" | "LOGGED_IN" | "LOGGED_OUT" | "%future added value";
@@ -47,12 +50,11 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "abde732d3af0c5c7ee480209560f6de0",
-    "id": null,
+    "id": "abde732d3af0c5c7ee480209560f6de0",
     "metadata": {},
     "name": "useAuthValidationQuery",
     "operationKind": "query",
-    "text": "query useAuthValidationQuery {\n  authenticationStatus\n}\n"
+    "text": null
   }
 };
 })();

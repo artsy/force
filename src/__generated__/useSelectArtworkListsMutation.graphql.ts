@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8775efb09a8c74bfb2f1f07062064917>>
+ * @generated SignedSource<<1b6402d893de289562762e19e2485aeb>>
+ * @relayHash b9d6153f02a9425de4a25f8526299c12
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b9d6153f02a9425de4a25f8526299c12
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -371,12 +374,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b9d6153f02a9425de4a25f8526299c12",
-    "id": null,
+    "id": "b9d6153f02a9425de4a25f8526299c12",
     "metadata": {},
     "name": "useSelectArtworkListsMutation",
     "operationKind": "mutation",
-    "text": "mutation useSelectArtworkListsMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToArtworkLists: addedToCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n        removedFromArtworkLists: removedFromCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n        artwork {\n          isSavedToAnyList\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

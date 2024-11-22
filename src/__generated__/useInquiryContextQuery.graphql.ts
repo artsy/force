@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<868fa1fec19982aa40d9e0c5e262ca12>>
+ * @generated SignedSource<<fe46b582dacbd2ae4d155ebc60f4c56c>>
+ * @relayHash 4a6f837aa100fa7226183af77ee2cb00
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 4a6f837aa100fa7226183af77ee2cb00
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -193,12 +196,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4a6f837aa100fa7226183af77ee2cb00",
-    "id": null,
+    "id": "4a6f837aa100fa7226183af77ee2cb00",
     "metadata": {},
     "name": "useInquiryContextQuery",
     "operationKind": "query",
-    "text": "query useInquiryContextQuery {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  internalID\n  collectorLevel\n  location {\n    city\n    state\n    postalCode\n    country\n    id\n  }\n  otherRelevantPositions\n  profession\n  userInterestsConnection(interestType: ARTIST, first: 1) {\n    totalCount\n  }\n  collectorProfile {\n    lastUpdatePromptAt\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

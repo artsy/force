@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<1dc72b4fc40cea049a59a7d723b0c5b2>>
+ * @generated SignedSource<<c834c343f0c23e4124bd9a4cb096da06>>
+ * @relayHash d9a9159a53ca2fe6287956f136081197
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d9a9159a53ca2fe6287956f136081197
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -285,8 +288,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d9a9159a53ca2fe6287956f136081197",
-    "id": null,
+    "id": "d9a9159a53ca2fe6287956f136081197",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
@@ -350,7 +352,7 @@ return {
     },
     "name": "FairEditorialRailArticles_Test_Query",
     "operationKind": "query",
-    "text": "query FairEditorialRailArticles_Test_Query {\n  fair(id: \"test\") {\n    ...FairEditorialRailArticles_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairEditorialRailArticles_fair on Fair {\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<818b1074691d5b6611e5f7d6b541d578>>
+ * @generated SignedSource<<c06374488c6395059f56461ac35d7338>>
+ * @relayHash 113d2e286f960b3542db2824a333c1dc
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 113d2e286f960b3542db2824a333c1dc
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -292,8 +295,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "113d2e286f960b3542db2824a333c1dc",
-    "id": null,
+    "id": "113d2e286f960b3542db2824a333c1dc",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -368,7 +370,7 @@ return {
     },
     "name": "ArtworkDetailsAdditionalInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetailsAdditionalInfo_Test_Query {\n  artwork(id: \"xxx\") {\n    ...ArtworkDetailsAdditionalInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n"
+    "text": null
   }
 };
 })();

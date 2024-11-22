@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<005e3370263293a94bb770a2e6f2219d>>
+ * @generated SignedSource<<78c45586199d7ac30d2ed4cab281e540>>
+ * @relayHash e7d9cd0207cd109a332d3ab209ea1504
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID e7d9cd0207cd109a332d3ab209ea1504
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -479,12 +482,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e7d9cd0207cd109a332d3ab209ea1504",
-    "id": null,
+    "id": "e7d9cd0207cd109a332d3ab209ea1504",
     "metadata": {},
     "name": "myCollectionRoutes_MyCollectionArtworkFormQuery",
     "operationKind": "query",
-    "text": "query myCollectionRoutes_MyCollectionArtworkFormQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionEditArtwork_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormMain_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment MyCollectionEditArtwork_artwork on Artwork {\n  artist(shallow: true) {\n    internalID\n    initials\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    isPersonalArtist\n    image {\n      cropped(width: 44, height: 44) {\n        height\n        src\n        srcSet\n        width\n      }\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  provenance\n  slug\n  title\n  width\n  confidentialNotes\n  collectorLocation {\n    city\n    state\n    country\n    countryCode\n    id\n  }\n  ...MyCollectionArtworkFormMain_artwork\n}\n"
+    "text": null
   }
 };
 })();

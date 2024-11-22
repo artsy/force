@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<99f38371b022452aeef49c6457eec7a9>>
+ * @generated SignedSource<<bb27bb00d43b81cdc9aa58fd482f8dbb>>
+ * @relayHash 5d4669f74fce276f53e92ecde8a7218a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5d4669f74fce276f53e92ecde8a7218a
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -413,8 +416,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5d4669f74fce276f53e92ecde8a7218a",
-    "id": null,
+    "id": "5d4669f74fce276f53e92ecde8a7218a",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "order": {
@@ -486,7 +488,7 @@ return {
     },
     "name": "OfferHistoryItemTestQuery",
     "operationKind": "query",
-    "text": "query OfferHistoryItemTestQuery {\n  order: commerceOrder(id: \"foo\") {\n    __typename\n    ...OfferHistoryItem_order\n    id\n  }\n}\n\nfragment OfferHistoryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    offers {\n      edges {\n        node {\n          internalID\n          amount(precision: 2)\n          createdAt(format: \"MMM D\")\n          fromParticipant\n          id\n        }\n      }\n    }\n    currencyCode\n    lastOffer {\n      internalID\n      fromParticipant\n      amount(precision: 2)\n      shippingTotal(precision: 2)\n      taxTotal(precision: 2)\n      note\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

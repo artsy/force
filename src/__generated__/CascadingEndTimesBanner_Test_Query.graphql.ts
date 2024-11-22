@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f0ccf84bafd241061f2e5061ea70a636>>
+ * @generated SignedSource<<5edcb968722f1dff8efefe89fb3a352a>>
+ * @relayHash ac4e8ea83b1919f377d03b343775254f
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID ac4e8ea83b1919f377d03b343775254f
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -110,8 +113,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ac4e8ea83b1919f377d03b343775254f",
-    "id": null,
+    "id": "ac4e8ea83b1919f377d03b343775254f",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "sale": {
@@ -138,7 +140,7 @@ return {
     },
     "name": "CascadingEndTimesBanner_Test_Query",
     "operationKind": "query",
-    "text": "query CascadingEndTimesBanner_Test_Query {\n  sale(id: \"example\") {\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  isClosed\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<098906c4c2fb124c32145e9292c3abe0>>
+ * @generated SignedSource<<1f7bd6931d14984e6076e54b8601c0dc>>
+ * @relayHash 43dca918fa308d0c89cda7c9faa43a7c
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 43dca918fa308d0c89cda7c9faa43a7c
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -311,8 +314,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "43dca918fa308d0c89cda7c9faa43a7c",
-    "id": null,
+    "id": "43dca918fa308d0c89cda7c9faa43a7c",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "article": (v6/*: any*/),
@@ -379,7 +381,7 @@ return {
     },
     "name": "ArticleSeries_test_Query",
     "operationKind": "query",
-    "text": "query ArticleSeries_test_Query {\n  article(id: \"example\") {\n    ...ArticleSeries_article\n    id\n  }\n}\n\nfragment ArticleSeriesItem_article on Article {\n  href\n  vertical\n  title\n  thumbnailTitle\n  byline\n  description\n  publishedAt(format: \"MMM DD, YYYY\")\n  thumbnailImage {\n    display: cropped(width: 869, height: 580) {\n      src\n      srcSet\n    }\n  }\n  media {\n    duration\n  }\n  seriesArticle {\n    title\n    id\n  }\n}\n\nfragment ArticleSeries_article on Article {\n  title\n  byline\n  href\n  series {\n    description\n  }\n  sponsor {\n    ...ArticleSponsor_sponsor\n  }\n  relatedArticles {\n    ...ArticleSeriesItem_article\n    internalID\n    id\n  }\n}\n\nfragment ArticleSponsor_sponsor on ArticleSponsor {\n  partnerLightLogo\n  partnerDarkLogo\n  partnerLogoLink\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<41eb028e2f86698e979ade9779094e69>>
+ * @generated SignedSource<<8b9b58af9cbb8172a77ec243612452e3>>
+ * @relayHash 76aec82acae55653903cd0d5d009bc36
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 76aec82acae55653903cd0d5d009bc36
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateInvoicePaymentInput = {
@@ -151,12 +154,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "76aec82acae55653903cd0d5d009bc36",
-    "id": null,
+    "id": "76aec82acae55653903cd0d5d009bc36",
     "metadata": {},
     "name": "useMakeInvoicePaymentMutation",
     "operationKind": "mutation",
-    "text": "mutation useMakeInvoicePaymentMutation(\n  $input: CreateInvoicePaymentInput!\n) {\n  createInvoicePayment(input: $input) {\n    __typename\n    responseOrError {\n      __typename\n      ... on CreateInvoicePaymentFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

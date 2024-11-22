@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<c55cc518596179faeb3cf3d8d65d2be1>>
+ * @generated SignedSource<<123d5d7b459f1f9b9ace6e6d3df19298>>
+ * @relayHash 0fd66eaa028a2588bcc93afabfdf956e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0fd66eaa028a2588bcc93afabfdf956e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -114,8 +117,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0fd66eaa028a2588bcc93afabfdf956e",
-    "id": null,
+    "id": "0fd66eaa028a2588bcc93afabfdf956e",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -142,7 +144,7 @@ return {
     },
     "name": "ArtworkDetailsMediumModal_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetailsMediumModal_Test_Query {\n  artwork(id: \"xxx\") {\n    ...ArtworkDetailsMediumModal_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n"
+    "text": null
   }
 };
 })();

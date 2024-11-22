@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<39695ec164e0596a26cd1c9f8bce3c48>>
+ * @generated SignedSource<<8ab15980171939fe7e89a3c77eefc47e>>
+ * @relayHash 94f1c0eb0ac0367d39a17756b6c9f5d6
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 94f1c0eb0ac0367d39a17756b6c9f5d6
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -394,8 +397,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "94f1c0eb0ac0367d39a17756b6c9f5d6",
-    "id": null,
+    "id": "94f1c0eb0ac0367d39a17756b6c9f5d6",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "conversation": {
@@ -551,7 +553,7 @@ return {
     },
     "name": "ConversationHeaderTestQuery",
     "operationKind": "query",
-    "text": "query ConversationHeaderTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationHeader_conversation\n    id\n  }\n}\n\nfragment ConversationHeader_conversation on Conversation {\n  from {\n    name\n    id\n  }\n  to {\n    name\n    id\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        id\n        slug\n        date\n        title\n        artist(shallow: true) {\n          name\n          id\n        }\n        image {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  orderConnection(first: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED, CANCELED]) {\n    edges {\n      node {\n        __typename\n        ...ReviewOrderButton_order\n        id\n      }\n    }\n  }\n}\n\nfragment ReviewOrderButton_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  id\n  state\n  mode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

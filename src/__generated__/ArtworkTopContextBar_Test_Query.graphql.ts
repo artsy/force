@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4877837b8b637ef985f8ff8740bce61a>>
+ * @generated SignedSource<<2d0607b0fd26e5b36e618fb8ae810fde>>
+ * @relayHash 19c8361b490b2288ba2973d5489d8a21
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 19c8361b490b2288ba2973d5489d8a21
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -299,8 +302,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "19c8361b490b2288ba2973d5489d8a21",
-    "id": null,
+    "id": "19c8361b490b2288ba2973d5489d8a21",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -359,7 +361,7 @@ return {
     },
     "name": "ArtworkTopContextBar_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkTopContextBar_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkTopContextBar_artwork\n    id\n  }\n}\n\nfragment ArtworkTopContextBar_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      url\n    }\n    ...RegistrationAuctionTimer_sale\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          url\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        url\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment RegistrationAuctionTimer_sale on Sale {\n  registrationEndsAt\n  isRegistrationClosed\n}\n"
+    "text": null
   }
 };
 })();

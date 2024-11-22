@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d7a33881be4781ade239f2b1561cbf13>>
+ * @generated SignedSource<<ecf751cafd995347e4a9d0cb225f3f66>>
+ * @relayHash 0d1e710c5b3024b4c06304d266f795b6
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0d1e710c5b3024b4c06304d266f795b6
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -256,12 +259,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0d1e710c5b3024b4c06304d266f795b6",
-    "id": null,
+    "id": "0d1e710c5b3024b4c06304d266f795b6",
     "metadata": {},
     "name": "sellRoutes_ShippingLocationRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_ShippingLocationRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...ShippingLocationRoute_submission\n    id\n  }\n  me {\n    ...ShippingLocationRoute_me\n    id\n  }\n}\n\nfragment ShippingLocationRoute_me on Me {\n  addressConnection {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        city\n        country\n        isDefault\n        postalCode\n        region\n        id\n      }\n    }\n  }\n}\n\nfragment ShippingLocationRoute_submission on ConsignmentSubmission {\n  locationCity\n  locationCountry\n  locationCountryCode\n  locationState\n  locationPostalCode\n  locationAddress\n  locationAddress2\n}\n"
+    "text": null
   }
 };
 })();

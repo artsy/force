@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<3bb09563946ad291f3d5740be8ced4c2>>
+ * @generated SignedSource<<af58af450e4ad425cfb571ec6e5e1740>>
+ * @relayHash 8e045f8ecea20e507b87e6c0e9456a6a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 8e045f8ecea20e507b87e6c0e9456a6a
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SubGroupInputStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added value";
@@ -85,12 +88,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "8e045f8ecea20e507b87e6c0e9456a6a",
-    "id": null,
+    "id": "8e045f8ecea20e507b87e6c0e9456a6a",
     "metadata": {},
     "name": "useEditNotificationPreferencesMutation",
     "operationKind": "mutation",
-    "text": "mutation useEditNotificationPreferencesMutation(\n  $input: updateNotificationPreferencesMutationInput!\n) {\n  updateNotificationPreferences(input: $input) {\n    clientMutationId\n  }\n}\n"
+    "text": null
   }
 };
 })();

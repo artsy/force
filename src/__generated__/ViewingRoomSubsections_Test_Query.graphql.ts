@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<e5a779454daf5f23017cf9a0cab648f5>>
+ * @generated SignedSource<<3c03568593a42584498c47800c2a7262>>
+ * @relayHash 598bb548b7c8ecfa24439d829b003fdf
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 598bb548b7c8ecfa24439d829b003fdf
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -170,8 +173,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "598bb548b7c8ecfa24439d829b003fdf",
-    "id": null,
+    "id": "598bb548b7c8ecfa24439d829b003fdf",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewingRoom": {
@@ -214,7 +216,7 @@ return {
     },
     "name": "ViewingRoomSubsections_Test_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomSubsections_Test_Query {\n  viewingRoom(id: \"exmaple\") {\n    ...ViewingRoomSubsections_viewingRoom\n  }\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    image {\n      width\n      height\n      imageURLs {\n        normalized\n      }\n    }\n    caption\n  }\n}\n"
+    "text": null
   }
 };
 })();

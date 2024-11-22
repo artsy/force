@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8ce05eb478ff91075890a55cce342e0d>>
+ * @generated SignedSource<<8b986542f4d8eb72cab3820b8ab3689c>>
+ * @relayHash 0495699a58ae9c1bfae5fe0f293230c1
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0495699a58ae9c1bfae5fe0f293230c1
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SendFeedbackMutationInput = {
@@ -218,12 +221,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0495699a58ae9c1bfae5fe0f293230c1",
-    "id": null,
+    "id": "0495699a58ae9c1bfae5fe0f293230c1",
     "metadata": {},
     "name": "SendFeedbackSearchResultsMutation",
     "operationKind": "mutation",
-    "text": "mutation SendFeedbackSearchResultsMutation(\n  $input: SendFeedbackMutationInput!\n) {\n  sendFeedback(input: $input) {\n    feedbackOrError {\n      __typename\n      ... on SendFeedbackMutationSuccess {\n        feedback {\n          internalID\n          id\n        }\n      }\n      ... on SendFeedbackMutationFailure {\n        mutationError {\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

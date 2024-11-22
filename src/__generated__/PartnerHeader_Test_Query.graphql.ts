@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<6f1bba1f2e913cec9d37a9c7dc59d8e4>>
+ * @generated SignedSource<<d4dd3193e7f124a6fefe331332274f16>>
+ * @relayHash 524ed91e14607eab719c86e65873356c
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 524ed91e14607eab719c86e65873356c
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -297,8 +300,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "524ed91e14607eab719c86e65873356c",
-    "id": null,
+    "id": "524ed91e14607eab719c86e65873356c",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
@@ -375,7 +377,7 @@ return {
     },
     "name": "PartnerHeader_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    counts {\n      follows\n    }\n    internalID\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

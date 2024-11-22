@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d461b50e775201f2ea1a7358e9166b17>>
+ * @generated SignedSource<<c8301826939621a1a4e5a007a0064a68>>
+ * @relayHash 5fccbc2e95a60c3c6c5c305bff951f35
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5fccbc2e95a60c3c6c5c305bff951f35
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -346,12 +349,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5fccbc2e95a60c3c6c5c305bff951f35",
-    "id": null,
+    "id": "5fccbc2e95a60c3c6c5c305bff951f35",
     "metadata": {},
     "name": "SearchResultsListPaginationQuery",
     "operationKind": "query",
-    "text": "query SearchResultsListPaginationQuery(\n  $after: String\n  $term: String!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchResultsList_viewer_1PWAgx\n  }\n}\n\nfragment SearchResultsList_viewer_1PWAgx on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10, after: $after) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n          coverArtwork {\n            image {\n              src: url(version: [\"small\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

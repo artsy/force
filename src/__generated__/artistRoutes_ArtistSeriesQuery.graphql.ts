@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<514c3340fd2aa7103ac7d3b5275a4cef>>
+ * @generated SignedSource<<ece92194a58258364bd03badbf879c29>>
+ * @relayHash 0b28848008d9961d89e85cfe5479b1c8
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0b28848008d9961d89e85cfe5479b1c8
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -253,12 +256,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0b28848008d9961d89e85cfe5479b1c8",
-    "id": null,
+    "id": "0b28848008d9961d89e85cfe5479b1c8",
     "metadata": {},
     "name": "artistRoutes_ArtistSeriesQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistSeriesQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistArtistSeriesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArtistSeriesRoute_artist on Artist {\n  internalID\n  name\n  slug\n  meta(page: ARTIST_SERIES) {\n    description\n    title\n  }\n  artistSeriesConnection(first: 50) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

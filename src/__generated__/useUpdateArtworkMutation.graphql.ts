@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d4cddbdc27723f1e4efddb6eb64a6628>>
+ * @generated SignedSource<<67da148cf184ad13c66a32e3a4af2d29>>
+ * @relayHash 78bfd0991b9cae521206bcebc2af90ba
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 78bfd0991b9cae521206bcebc2af90ba
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
@@ -273,12 +276,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "78bfd0991b9cae521206bcebc2af90ba",
-    "id": null,
+    "id": "78bfd0991b9cae521206bcebc2af90ba",
     "metadata": {},
     "name": "useUpdateArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateArtworkMutation(\n  $input: MyCollectionUpdateArtworkInput!\n) {\n  myCollectionUpdateArtwork(input: $input) {\n    artworkOrError {\n      __typename\n      ... on MyCollectionArtworkMutationSuccess {\n        artwork {\n          internalID\n          images(includeAll: true) {\n            internalID\n          }\n          id\n        }\n      }\n      ... on MyCollectionArtworkMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

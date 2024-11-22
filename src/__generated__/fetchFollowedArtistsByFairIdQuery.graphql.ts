@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<52d2cf47436b8fd44807fbd9d31f154b>>
+ * @generated SignedSource<<0ee363086a95b08ed9759066d64701f8>>
+ * @relayHash b67b9494c651c9cc7fa543497efb5697
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b67b9494c651c9cc7fa543497efb5697
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type fetchFollowedArtistsByFairIdQuery$variables = {
@@ -233,12 +236,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b67b9494c651c9cc7fa543497efb5697",
-    "id": null,
+    "id": "b67b9494c651c9cc7fa543497efb5697",
     "metadata": {},
     "name": "fetchFollowedArtistsByFairIdQuery",
     "operationKind": "query",
-    "text": "query fetchFollowedArtistsByFairIdQuery(\n  $fairID: String\n) {\n  me {\n    followsAndSaves {\n      artistsConnection(first: 99, fairID: $fairID) {\n        edges {\n          node {\n            artist {\n              slug\n              internalID\n              id\n            }\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

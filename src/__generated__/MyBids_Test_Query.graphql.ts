@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<859c402c5b47dcf6b0bdfe7076b5bc84>>
+ * @generated SignedSource<<37f3c5dcf7b9323a5222e57b7d204ba1>>
+ * @relayHash 20a1daa2edbe576e726062ce2fb65119
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 20a1daa2edbe576e726062ce2fb65119
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -410,8 +413,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "20a1daa2edbe576e726062ce2fb65119",
-    "id": null,
+    "id": "20a1daa2edbe576e726062ce2fb65119",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -512,7 +514,7 @@ return {
     },
     "name": "MyBids_Test_Query",
     "operationKind": "query",
-    "text": "query MyBids_Test_Query {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    cropped(width: 330, height: 100, version: [\"source\", \"wide\", \"large_rectangle\"]) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      cropped(width: 55, height: 55) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        slug\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

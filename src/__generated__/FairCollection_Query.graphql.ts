@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<90a182fdc0dda75ab179de42fb6a1066>>
+ * @generated SignedSource<<e7fa7ede08fcf6ba93eb232636128c06>>
+ * @relayHash 5e865ed859305a24d9624c2a9e29ee26
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5e865ed859305a24d9624c2a9e29ee26
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -224,8 +227,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5e865ed859305a24d9624c2a9e29ee26",
-    "id": null,
+    "id": "5e865ed859305a24d9624c2a9e29ee26",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "marketingCollection": {
@@ -285,7 +287,7 @@ return {
     },
     "name": "FairCollection_Query",
     "operationKind": "query",
-    "text": "query FairCollection_Query(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    ...FairCollection_collection\n    id\n  }\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

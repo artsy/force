@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<57acbb65bd33a5de2854d7a2e0a4db9a>>
+ * @generated SignedSource<<8e77fe729cad126a5e6578a6a40f101c>>
+ * @relayHash 828c2cd89526ab8f80b290a5e5291ea6
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 828c2cd89526ab8f80b290a5e5291ea6
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -294,12 +297,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "828c2cd89526ab8f80b290a5e5291ea6",
-    "id": null,
+    "id": "828c2cd89526ab8f80b290a5e5291ea6",
     "metadata": {},
     "name": "PriceOptions_Test_Query",
     "operationKind": "query",
-    "text": "query PriceOptions_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...PriceOptions_artwork\n    id\n  }\n  order: commerceOrder(id: \"order-id\") {\n    __typename\n    ...PriceOptions_order\n    id\n  }\n}\n\nfragment PriceOptions_artwork on Artwork {\n  priceCurrency\n  isPriceRange\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      maxPrice {\n        major\n      }\n      minPrice {\n        major\n      }\n    }\n  }\n}\n\nfragment PriceOptions_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  source\n  lineItems {\n    edges {\n      node {\n        listPrice(format: \"%v\", thousand: \"\")\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    myLastOffer {\n      amountCents\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

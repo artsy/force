@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4feda5cad43a003d789d318061d51ebc>>
+ * @generated SignedSource<<08ceeeaea395c2f357f6461d771ee3fa>>
+ * @relayHash 9f6b88922cedacb6f93c9a47fe7989b5
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 9f6b88922cedacb6f93c9a47fe7989b5
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -321,12 +324,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9f6b88922cedacb6f93c9a47fe7989b5",
-    "id": null,
+    "id": "9f6b88922cedacb6f93c9a47fe7989b5",
     "metadata": {},
     "name": "articlesRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_ArticlesQuery {\n  viewer {\n    ...ArticlesApp_viewer\n  }\n}\n\nfragment ArticlesApp_viewer on Viewer {\n  ...ArticlesIndexNews_viewer\n  ...ArticlesIndexArticles_viewer\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  thumbnailTitle\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer on Viewer {\n  articlesConnection(first: 15, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ArticlesIndexNews_viewer on Viewer {\n  articles(published: true, limit: 3, sort: PUBLISHED_AT_DESC, layout: NEWS) {\n    internalID\n    title\n    href\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

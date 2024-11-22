@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<e93b48cd72cdedb87685b7c1513a7f00>>
+ * @generated SignedSource<<809e7278f04c8c9ed73f27a0b23a8c9f>>
+ * @relayHash 2889188b3fd6ab90028716ba7d7ee76d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 2889188b3fd6ab90028716ba7d7ee76d
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -247,12 +250,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2889188b3fd6ab90028716ba7d7ee76d",
-    "id": null,
+    "id": "2889188b3fd6ab90028716ba7d7ee76d",
     "metadata": {},
     "name": "PastAuctionsQuery",
     "operationKind": "query",
-    "text": "query PastAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...PastAuctions_viewer_2HEEH6\n  }\n}\n\nfragment PastAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, live: false, sort: TIMELY_AT_NAME_DESC, auctionState: CLOSED) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8d8f56ce2789c0f2ab68d32f6b204460>>
+ * @generated SignedSource<<845c464b8a8635868852e8127b2f99ec>>
+ * @relayHash 1838aefbc22504b484439724d1b52b4e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 1838aefbc22504b484439724d1b52b4e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -82,12 +85,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "1838aefbc22504b484439724d1b52b4e",
-    "id": null,
+    "id": "1838aefbc22504b484439724d1b52b4e",
     "metadata": {},
     "name": "settingsRoutes_DeleteAccountRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_DeleteAccountRouteQuery {\n  me {\n    ...DeleteAccountRoute_me\n    id\n  }\n}\n\nfragment DeleteAccountRoute_me on Me {\n  hasPassword\n}\n"
+    "text": null
   }
 };
 

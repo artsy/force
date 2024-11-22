@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5454825054193bbbdea2645fd726a126>>
+ * @generated SignedSource<<9bb774b76bd5ce3ccbacf5f799b3f84a>>
+ * @relayHash 331da03cb18e9b2cab06d62c7c331b47
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 331da03cb18e9b2cab06d62c7c331b47
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -287,8 +290,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "331da03cb18e9b2cab06d62c7c331b47",
-    "id": null,
+    "id": "331da03cb18e9b2cab06d62c7c331b47",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
@@ -348,7 +350,7 @@ return {
     },
     "name": "ArtistCurrentArticlesRail_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCurrentArticlesRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentArticlesRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  internalID\n  name\n  slug\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

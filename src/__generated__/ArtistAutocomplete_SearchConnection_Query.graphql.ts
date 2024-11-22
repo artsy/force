@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a2c916fd5034f86a06e783660208b564>>
+ * @generated SignedSource<<240dcd712207fb3c6492c834156a05b8>>
+ * @relayHash 1a73f7e9ee3ba05feba5ea711738bc62
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 1a73f7e9ee3ba05feba5ea711738bc62
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type ArtistAutocomplete_SearchConnection_Query$variables = {
@@ -387,12 +390,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1a73f7e9ee3ba05feba5ea711738bc62",
-    "id": null,
+    "id": "1a73f7e9ee3ba05feba5ea711738bc62",
     "metadata": {},
     "name": "ArtistAutocomplete_SearchConnection_Query",
     "operationKind": "query",
-    "text": "query ArtistAutocomplete_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 6) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          counts {\n            artworks\n          }\n          formattedNationalityAndBirthday\n          name\n          initials\n          internalID\n          isPersonalArtist\n          coverArtwork {\n            image {\n              cropped(width: 50, height: 50) {\n                height\n                width\n                src\n                srcSet\n              }\n            }\n            id\n          }\n          targetSupply {\n            isP1\n            isTargetSupply\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

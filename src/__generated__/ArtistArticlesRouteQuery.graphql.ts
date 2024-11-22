@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<db792708bb03cccd56a73588fe0e4d40>>
+ * @generated SignedSource<<9c2c30ee20fac2b6984b3776658ac307>>
+ * @relayHash 29a72d083234277dd1b6f4ebdd77bcaa
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 29a72d083234277dd1b6f4ebdd77bcaa
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -383,12 +386,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "29a72d083234277dd1b6f4ebdd77bcaa",
-    "id": null,
+    "id": "29a72d083234277dd1b6f4ebdd77bcaa",
     "metadata": {},
     "name": "ArtistArticlesRouteQuery",
     "operationKind": "query",
-    "text": "query ArtistArticlesRouteQuery(\n  $page: Int\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistArticlesRoute_artist_2Pg8Wv\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist_2Pg8Wv on Artist {\n  name\n  slug\n  articlesConnection(page: $page, size: 12, sort: PUBLISHED_AT_DESC) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": null
   }
 };
 })();

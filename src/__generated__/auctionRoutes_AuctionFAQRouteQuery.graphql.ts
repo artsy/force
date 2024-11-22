@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<60298178d611c18a5f60b804dab8670d>>
+ * @generated SignedSource<<13cb8bf91480a86489e331572266b502>>
+ * @relayHash 280acc52aa9b82c18f5919737a2b0df6
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 280acc52aa9b82c18f5919737a2b0df6
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -171,12 +174,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "280acc52aa9b82c18f5919737a2b0df6",
-    "id": null,
+    "id": "280acc52aa9b82c18f5919737a2b0df6",
     "metadata": {},
     "name": "auctionRoutes_AuctionFAQRouteQuery",
     "operationKind": "query",
-    "text": "query auctionRoutes_AuctionFAQRouteQuery {\n  viewer {\n    ...AuctionFAQRoute_viewer\n  }\n}\n\nfragment AuctionFAQRoute_viewer on Viewer {\n  bidding: staticContent(id: \"how-auctions-work-bidding\") {\n    content(format: HTML)\n    id\n  }\n  buyersPremiumTaxesAndFees: staticContent(id: \"how-auctions-work-buyers-premium-taxes-and-fees\") {\n    content(format: HTML)\n    id\n  }\n  paymentsAndShipping: staticContent(id: \"how-auctions-work-payments-and-shipping\") {\n    content(format: HTML)\n    id\n  }\n  emailsAndAlerts: staticContent(id: \"how-auctions-work-emails-and-alerts\") {\n    content(format: HTML)\n    id\n  }\n  conditionsOfSale: staticContent(id: \"how-auctions-work-conditions-of-sale\") {\n    content(format: HTML)\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

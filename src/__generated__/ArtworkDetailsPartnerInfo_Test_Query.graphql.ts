@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8f4a14b9356fb69a2feb296db9019884>>
+ * @generated SignedSource<<25c8bcaa4cd3732deff39a3656fb5043>>
+ * @relayHash da5d572c66e6021574ce411ada3624b1
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID da5d572c66e6021574ce411ada3624b1
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -357,8 +360,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "da5d572c66e6021574ce411ada3624b1",
-    "id": null,
+    "id": "da5d572c66e6021574ce411ada3624b1",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -432,7 +434,7 @@ return {
     },
     "name": "ArtworkDetailsPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetailsPartnerInfo_Test_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkDetailsPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsPartnerInfo_artwork on Artwork {\n  partner {\n    ...EntityHeaderPartner_partner\n    partnerPageEligible\n    isDefaultProfilePublic\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

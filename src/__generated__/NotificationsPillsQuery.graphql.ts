@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<db801f75fc0c166cd03f0e8aa4a37b5b>>
+ * @generated SignedSource<<b926b07f9b900b500395352071331636>>
+ * @relayHash 433d8d3fe81095c9f4efc9cb8374313d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 433d8d3fe81095c9f4efc9cb8374313d
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type NotificationsPillsQuery$variables = Record<PropertyKey, never>;
@@ -85,12 +88,11 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "433d8d3fe81095c9f4efc9cb8374313d",
-    "id": null,
+    "id": "433d8d3fe81095c9f4efc9cb8374313d",
     "metadata": {},
     "name": "NotificationsPillsQuery",
     "operationKind": "query",
-    "text": "query NotificationsPillsQuery {\n  viewer {\n    partnerOfferNotifications: notificationsConnection(first: 1, notificationTypes: [PARTNER_OFFER_CREATED]) {\n      totalCount\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

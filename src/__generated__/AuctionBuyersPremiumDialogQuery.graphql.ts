@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0fc2edb03b20bb9bfd6214312802c495>>
+ * @generated SignedSource<<7843639c45bcdc765d49f764a7f31d10>>
+ * @relayHash 5aed1817cbf98b9e64d6f5660b032cdf
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5aed1817cbf98b9e64d6f5660b032cdf
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -124,12 +127,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5aed1817cbf98b9e64d6f5660b032cdf",
-    "id": null,
+    "id": "5aed1817cbf98b9e64d6f5660b032cdf",
     "metadata": {},
     "name": "AuctionBuyersPremiumDialogQuery",
     "operationKind": "query",
-    "text": "query AuctionBuyersPremiumDialogQuery(\n  $saleID: String!\n) {\n  sale(id: $saleID) {\n    ...AuctionBuyersPremiumDialog_sale\n    id\n  }\n}\n\nfragment AuctionBuyersPremiumDialog_sale on Sale {\n  buyersPremium {\n    amount\n    cents\n    percent\n  }\n}\n"
+    "text": null
   }
 };
 })();

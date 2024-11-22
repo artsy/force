@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7decebe18a81246743eef915d83eeafc>>
+ * @generated SignedSource<<5846fa0af40b6d98689a7fa14e70bfde>>
+ * @relayHash ba5f3b408393f1fe8869e50d1d1c3531
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID ba5f3b408393f1fe8869e50d1d1c3531
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -153,12 +156,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ba5f3b408393f1fe8869e50d1d1c3531",
-    "id": null,
+    "id": "ba5f3b408393f1fe8869e50d1d1c3531",
     "metadata": {},
     "name": "collectRoutes_CollectionQuery",
     "operationKind": "query",
-    "text": "query collectRoutes_CollectionQuery(\n  $slug: String!\n) {\n  collection: marketingCollection(slug: $slug) @principalField {\n    ...Collection_collection\n    id\n  }\n}\n\nfragment Collection_collection on MarketingCollection {\n  ...Header_collection\n  metaDescription: markdownDescription(format: PLAIN)\n  headerImage\n  slug\n  title\n  showFeaturedArtists\n}\n\nfragment Header_collection on MarketingCollection {\n  category\n  description: markdownDescription(format: HTML)\n  id\n  slug\n  title\n}\n"
+    "text": null
   }
 };
 })();

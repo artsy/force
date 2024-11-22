@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ce0b89416afccf25103399ad6badd2f6>>
+ * @generated SignedSource<<cfab31062fe67ac1d0d65c5e26a6704c>>
+ * @relayHash 01a8ed58b091be0bfc514aaf0039d3c0
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 01a8ed58b091be0bfc514aaf0039d3c0
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -214,8 +217,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "01a8ed58b091be0bfc514aaf0039d3c0",
-    "id": null,
+    "id": "01a8ed58b091be0bfc514aaf0039d3c0",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "gene": {
@@ -265,7 +267,7 @@ return {
     },
     "name": "EntityHeaderGeneFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query EntityHeaderGeneFragmentContainer_Test_Query {\n  gene(id: \"example\") {\n    ...EntityHeaderGene_gene\n    id\n  }\n}\n\nfragment EntityHeaderGene_gene on Gene {\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

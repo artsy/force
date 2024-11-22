@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<3653f94639bb62a5e43a10ca3ec74307>>
+ * @generated SignedSource<<c046c7a757088570db9595a9a5b29658>>
+ * @relayHash 33209f924eb9eff0afc978b443395ec5
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 33209f924eb9eff0afc978b443395ec5
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -429,8 +432,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "33209f924eb9eff0afc978b443395ec5",
-    "id": null,
+    "id": "33209f924eb9eff0afc978b443395ec5",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -534,7 +536,7 @@ return {
     },
     "name": "ArtworkSidebarBidAction_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarBidAction_Test_Query {\n  artwork(id: \"auction_artwork\") {\n    ...ArtworkSidebarBidAction_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebarBidAction_me\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_artwork on Artwork {\n  myLotStanding(live: true) {\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        cents\n      }\n      id\n    }\n  }\n  slug\n  internalID\n  sale {\n    slug\n    registrationStatus {\n      qualified_for_bidding: qualifiedForBidding\n      id\n    }\n    is_preview: isPreview\n    is_open: isOpen\n    is_live_open: isLiveOpen\n    is_closed: isClosed\n    is_registration_closed: isRegistrationClosed\n    requireIdentityVerification\n    id\n  }\n  sale_artwork: saleArtwork {\n    increments {\n      cents\n      display\n    }\n    endedAt\n    id\n  }\n  collectorSignals {\n    auction {\n      bidCount\n      lotWatcherCount\n    }\n  }\n}\n\nfragment ArtworkSidebarBidAction_me on Me {\n  isIdentityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

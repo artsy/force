@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2262dbd6297f84ac60ab361d472068a7>>
+ * @generated SignedSource<<814090e72626cf5e1ff9c64b09da1504>>
+ * @relayHash 57125fd6eb43dddb7d169cb9a214e039
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 57125fd6eb43dddb7d169cb9a214e039
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -368,12 +371,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "57125fd6eb43dddb7d169cb9a214e039",
-    "id": null,
+    "id": "57125fd6eb43dddb7d169cb9a214e039",
     "metadata": {},
     "name": "EntityTooltipPartnerQuery",
     "operationKind": "query",
-    "text": "query EntityTooltipPartnerQuery(\n  $id: String!\n) {\n  partner(id: $id) {\n    ...EntityTooltipPartner_partner\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityTooltipPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  href\n  profile {\n    bio\n    fullBio\n    image {\n      cropped(width: 260, height: 146, version: [\"wide\", \"medium250x165\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<36122c19af825e664bfef44c45d85d86>>
+ * @generated SignedSource<<966721e8040804b59766ad62d9f2e0d8>>
+ * @relayHash 8c7c5558867414c43413ce9818030b69
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 8c7c5558867414c43413ce9818030b69
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -139,12 +142,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8c7c5558867414c43413ce9818030b69",
-    "id": null,
+    "id": "8c7c5558867414c43413ce9818030b69",
     "metadata": {},
     "name": "FollowGeneButtonQuery",
     "operationKind": "query",
-    "text": "query FollowGeneButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  gene(id: $id) {\n    ...FollowGeneButton_gene_4dcqWc\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_4dcqWc on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n}\n"
+    "text": null
   }
 };
 })();

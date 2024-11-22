@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<dfcfc5419c7dab1f4ea82a5987ee0208>>
+ * @generated SignedSource<<660c97f94759a015c256bba910b98849>>
+ * @relayHash 1a726d22d475625907540026eb1a39ff
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 1a726d22d475625907540026eb1a39ff
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type AuthDialogWelcomeQuery$variables = {
@@ -85,12 +88,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "1a726d22d475625907540026eb1a39ff",
-    "id": null,
+    "id": "1a726d22d475625907540026eb1a39ff",
     "metadata": {},
     "name": "AuthDialogWelcomeQuery",
     "operationKind": "query",
-    "text": "query AuthDialogWelcomeQuery(\n  $email: String!\n  $recaptchaToken: String!\n) {\n  verifyUser(email: $email, recaptchaToken: $recaptchaToken) {\n    exists\n  }\n}\n"
+    "text": null
   }
 };
 })();

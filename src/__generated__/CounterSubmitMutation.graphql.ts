@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<de3f709cbb3cc143f503ff453c892967>>
+ * @generated SignedSource<<e7b14c0de484e6a80cb570ae3064dadd>>
+ * @relayHash 139c9ea66f61610625c885a03fef9e20
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 139c9ea66f61610625c885a03fef9e20
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
@@ -235,12 +238,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "139c9ea66f61610625c885a03fef9e20",
-    "id": null,
+    "id": "139c9ea66f61610625c885a03fef9e20",
     "metadata": {},
     "name": "CounterSubmitMutation",
     "operationKind": "mutation",
-    "text": "mutation CounterSubmitMutation(\n  $input: CommerceSubmitPendingOfferInput!\n) {\n  commerceSubmitPendingOffer(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          state\n          ... on CommerceOfferOrder {\n            awaitingResponseFrom\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

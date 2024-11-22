@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ad3335bcb996d019411ba1e834c4f4f6>>
+ * @generated SignedSource<<7c4ad4c5729f66192fe85d41e45a17e5>>
+ * @relayHash c5558559415a9d7bab2a700b4f47826f
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID c5558559415a9d7bab2a700b4f47826f
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DeleteAccountInput = {
@@ -178,12 +181,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c5558559415a9d7bab2a700b4f47826f",
-    "id": null,
+    "id": "c5558559415a9d7bab2a700b4f47826f",
     "metadata": {},
     "name": "useDeleteAccountMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteAccountMutation(\n  $input: DeleteAccountInput!\n) {\n  deleteMyAccountMutation(input: $input) {\n    userAccountOrError {\n      __typename\n      ... on AccountMutationSuccess {\n        success\n      }\n      ... on AccountMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

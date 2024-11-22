@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<354808e3779ced4e315ed8760a97ea61>>
+ * @generated SignedSource<<ad5d5159f1ebe03b5f8712b408a63906>>
+ * @relayHash f1cb1212c24b08e83f034ba23864b2b5
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f1cb1212c24b08e83f034ba23864b2b5
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -238,12 +241,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f1cb1212c24b08e83f034ba23864b2b5",
-    "id": null,
+    "id": "f1cb1212c24b08e83f034ba23864b2b5",
     "metadata": {},
     "name": "HomeFeaturedMarketNewsQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedMarketNewsQuery {\n  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {\n    ...HomeFeaturedMarketNews_articles\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedMarketNews_articles on Article {\n  ...CellArticle_article\n  internalID\n  href\n  byline\n  slug\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

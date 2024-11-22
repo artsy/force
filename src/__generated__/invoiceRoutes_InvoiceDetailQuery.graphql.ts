@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4853612b420100dcf5341a5e02d9a2ef>>
+ * @generated SignedSource<<0b41f5a8009ef80ff10534646a5e2e0b>>
+ * @relayHash 2b9ce39a17afe7ac05b3615cf29c85b3
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 2b9ce39a17afe7ac05b3615cf29c85b3
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -221,12 +224,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2b9ce39a17afe7ac05b3615cf29c85b3",
-    "id": null,
+    "id": "2b9ce39a17afe7ac05b3615cf29c85b3",
     "metadata": {},
     "name": "invoiceRoutes_InvoiceDetailQuery",
     "operationKind": "query",
-    "text": "query invoiceRoutes_InvoiceDetailQuery(\n  $token: String!\n) {\n  invoice(token: $token) {\n    ...InvoiceDetailRoute_invoice\n    id\n  }\n}\n\nfragment InvoiceDetailRoute_invoice on Invoice {\n  name\n  email\n  state\n  payments {\n    successful\n    id\n  }\n  externalNote\n  remaining(precision: 2)\n  ...InvoiceLineItems_invoice\n  ...InvoicePayments_invoice\n}\n\nfragment InvoiceLineItems_invoice on Invoice {\n  lineItems {\n    description\n    amount(precision: 2)\n    id\n  }\n}\n\nfragment InvoicePayments_invoice on Invoice {\n  payments {\n    id\n    successful\n    createdAt(format: \"MMM D, YYYY\")\n    amount(precision: 2)\n    creditCard {\n      brand\n      lastDigits\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

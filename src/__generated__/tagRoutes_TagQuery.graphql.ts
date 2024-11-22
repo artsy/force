@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<294a4b63f7aab0cebe369ce4ad992d89>>
+ * @generated SignedSource<<93f5a68e5ebcb9d7826fc99a47058c2d>>
+ * @relayHash 035d078a8dc1e5672ec96bd1575eea3b
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 035d078a8dc1e5672ec96bd1575eea3b
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -153,12 +156,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "035d078a8dc1e5672ec96bd1575eea3b",
-    "id": null,
+    "id": "035d078a8dc1e5672ec96bd1575eea3b",
     "metadata": {},
     "name": "tagRoutes_TagQuery",
     "operationKind": "query",
-    "text": "query tagRoutes_TagQuery(\n  $slug: String!\n) {\n  tag(id: $slug) @principalField {\n    ...TagApp_tag\n    id\n  }\n}\n\nfragment TagApp_tag on Tag {\n  ...TagMeta_tag\n  name\n}\n\nfragment TagMeta_tag on Tag {\n  name\n  href\n  description\n  image {\n    cropped(width: 1200, height: 630) {\n      src\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

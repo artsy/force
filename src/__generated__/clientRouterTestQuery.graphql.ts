@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<3723e771a303cadde0ca569cf0695f9f>>
+ * @generated SignedSource<<484d6a4c15c591de678cf0531ff0b27b>>
+ * @relayHash 4f5dff1b35458e561b7911853d082d48
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 4f5dff1b35458e561b7911853d082d48
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type clientRouterTestQuery$variables = Record<PropertyKey, never>;
@@ -59,8 +62,7 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "4f5dff1b35458e561b7911853d082d48",
-    "id": null,
+    "id": "4f5dff1b35458e561b7911853d082d48",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -79,7 +81,7 @@ return {
     },
     "name": "clientRouterTestQuery",
     "operationKind": "query",
-    "text": "query clientRouterTestQuery {\n  me {\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

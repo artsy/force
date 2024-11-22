@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b4a6e316a111c68c57499ab498696a02>>
+ * @generated SignedSource<<1a9bfaea181e009088a1d30892162be9>>
+ * @relayHash b2a2b74f60217326753edb7487f4dadc
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b2a2b74f60217326753edb7487f4dadc
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -432,8 +435,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b2a2b74f60217326753edb7487f4dadc",
-    "id": null,
+    "id": "b2a2b74f60217326753edb7487f4dadc",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -505,7 +507,7 @@ return {
     },
     "name": "CollectorProfileSavesRoute_Test_Query",
     "operationKind": "query",
-    "text": "query CollectorProfileSavesRoute_Test_Query {\n  me {\n    ...CollectorProfileSavesRoute_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  shareableWithPartners\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSavesRoute_me on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    shareableWithPartners\n    ...ArtworkListItem_item\n    ...OfferSettingsListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        shareableWithPartners\n        ...ArtworkListItem_item\n        ...OfferSettingsListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment OfferSettingsListItem_item on Collection {\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          resized(width: 200, version: [\"square\"]) {\n            src\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

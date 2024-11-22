@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<864784f748e8c881bb48ff0b16e6f16c>>
+ * @generated SignedSource<<8b88dacd59225f1617253d97a14b06a8>>
+ * @relayHash fb94cfdb6e151d1568a95b1be381d3d9
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID fb94cfdb6e151d1568a95b1be381d3d9
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -155,12 +158,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fb94cfdb6e151d1568a95b1be381d3d9",
-    "id": null,
+    "id": "fb94cfdb6e151d1568a95b1be381d3d9",
     "metadata": {},
     "name": "sellRoutes_AdditionalDocumentsRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_AdditionalDocumentsRouteQuery(\n  $id: ID!\n) {\n  submission(id: $id) @principalField {\n    ...AdditionalDocumentsRoute_submission\n    id\n  }\n}\n\nfragment AdditionalDocumentsRoute_submission on ConsignmentSubmission {\n  externalId\n  assets(assetType: [ADDITIONAL_FILE]) {\n    id\n    size\n    filename\n    documentPath\n    s3Path\n    s3Bucket\n  }\n}\n"
+    "text": null
   }
 };
 })();

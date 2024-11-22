@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5c1bf870e5122dd54dcb202eaa16f751>>
+ * @generated SignedSource<<b117f0e057007af13f8183d36a971aca>>
+ * @relayHash e425374b6e7a15a42e687dfbf664f554
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID e425374b6e7a15a42e687dfbf664f554
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -101,8 +104,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e425374b6e7a15a42e687dfbf664f554",
-    "id": null,
+    "id": "e425374b6e7a15a42e687dfbf664f554",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
@@ -133,7 +135,7 @@ return {
     },
     "name": "ExhibitorsLetterNav_Test_Query",
     "operationKind": "query",
-    "text": "query ExhibitorsLetterNav_Test_Query {\n  fair(id: \"one-x-artsy\") {\n    ...ExhibitorsLetterNav_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<6a84ff2d4f316da59bc2e6cc81b32e3f>>
+ * @generated SignedSource<<84de5e71ba6c8ad7d688a50d7f48d1a5>>
+ * @relayHash 0f79c5f093926765695fbad77844b546
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0f79c5f093926765695fbad77844b546
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -371,12 +374,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0f79c5f093926765695fbad77844b546",
-    "id": null,
+    "id": "0f79c5f093926765695fbad77844b546",
     "metadata": {},
     "name": "CollectionFeaturedArtistsQuery",
     "operationKind": "query",
-    "text": "query CollectionFeaturedArtistsQuery(\n  $slug: String!\n  $aggregations: [ArtworkAggregation]\n) {\n  marketingCollection(slug: $slug) {\n    ...CollectionFeaturedArtists_collection\n    artworksConnection(aggregations: $aggregations, includeMediumFilterInAggregation: true, first: 20, sort: \"-decayed_merch\") {\n      ...CollectionFeaturedArtists_artworks\n      id\n    }\n    id\n  }\n}\n\nfragment CollectionFeaturedArtists_artworks on FilterArtworksConnection {\n  merchandisableArtists {\n    ...EntityHeaderArtist_artist\n    internalID\n    name\n    id\n  }\n}\n\nfragment CollectionFeaturedArtists_collection on MarketingCollection {\n  category\n  credit\n  description\n  featuredArtistExclusionIds\n  headerImage\n  id\n  query {\n    artistIDs\n  }\n  slug\n  title\n  showHeaderArtworksRail\n  showFeaturedArtists\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

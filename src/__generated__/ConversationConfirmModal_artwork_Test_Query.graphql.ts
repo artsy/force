@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7204c024a69473934fd2c1859f02f9ca>>
+ * @generated SignedSource<<a4d521d9842bd59be91034ca2d7f5a9b>>
+ * @relayHash 911ed335ca1c1db06d8e8877fbbb1d16
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 911ed335ca1c1db06d8e8877fbbb1d16
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -452,8 +455,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "911ed335ca1c1db06d8e8877fbbb1d16",
-    "id": null,
+    "id": "911ed335ca1c1db06d8e8877fbbb1d16",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -538,7 +540,7 @@ return {
     },
     "name": "ConversationConfirmModal_artwork_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationConfirmModal_artwork_Test_Query {\n  artwork(id: \"xxx\") {\n    ...ConversationConfirmModal_artwork\n    id\n  }\n}\n\nfragment ConversationConfirmModal_artwork on Artwork {\n  category\n  artistNames\n  date\n  internalID\n  isEdition\n  manufacturer\n  medium\n  publisher\n  saleMessage\n  title\n  isOfferable\n  isAcquireable\n  isOfferableFromInquiry\n  attributionClass {\n    name\n    id\n  }\n  image {\n    resized(width: 40, height: 40) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  conditionDescription {\n    details\n  }\n  certificateOfAuthenticity {\n    details\n  }\n  framed {\n    details\n  }\n  dimensions {\n    in\n    cm\n  }\n  signatureInfo {\n    details\n  }\n  editionSets {\n    internalID\n    editionOf\n    isOfferableFromInquiry\n    isOfferable\n    isAcquireable\n    listPrice {\n      __typename\n      ... on Money {\n        display\n      }\n      ... on PriceRange {\n        display\n      }\n    }\n    dimensions {\n      cm\n      in\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

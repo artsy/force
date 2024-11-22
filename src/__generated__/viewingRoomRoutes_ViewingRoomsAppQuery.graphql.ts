@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<3e8b6800bff407d5f21a33aca20f323b>>
+ * @generated SignedSource<<386b15a5781ed02e26434bf6af267528>>
+ * @relayHash e30762de4830b7adafec1ac4cbaf9c5e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID e30762de4830b7adafec1ac4cbaf9c5e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -358,12 +361,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e30762de4830b7adafec1ac4cbaf9c5e",
-    "id": null,
+    "id": "e30762de4830b7adafec1ac4cbaf9c5e",
     "metadata": {},
     "name": "viewingRoomRoutes_ViewingRoomsAppQuery",
     "operationKind": "query",
-    "text": "query viewingRoomRoutes_ViewingRoomsAppQuery(\n  $count: Int!\n  $after: String\n) @cacheable {\n  allViewingRooms: viewer {\n    ...ViewingRoomsApp_allViewingRooms_2QE1um\n  }\n  featuredViewingRooms: viewingRoomsConnection(featured: true) {\n    ...ViewingRoomsApp_featuredViewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_allViewingRooms_2QE1um on Viewer {\n  ...ViewingRoomsLatestGrid_viewingRooms_2QE1um\n}\n\nfragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomsConnection {\n  ...ViewingRoomsFeaturedRail_featuredViewingRooms\n}\n\nfragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomsConnection {\n  edges {\n    node {\n      status\n      slug\n      title\n      image {\n        imageURLs {\n          normalized\n        }\n      }\n      distanceToOpen(short: true)\n      distanceToClose(short: true)\n      partner {\n        name\n        id\n      }\n    }\n  }\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms_2QE1um on Viewer {\n  viewingRoomsConnection(first: $count, after: $after) {\n    edges {\n      node {\n        slug\n        status\n        title\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        partner {\n          name\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

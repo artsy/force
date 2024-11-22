@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4324c6f53a473dfc3c8f23e9dca5dd78>>
+ * @generated SignedSource<<f970313e7301540ce087f18a12e7803e>>
+ * @relayHash fe685ddc81a113b98fdaf1cf1846eae1
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID fe685ddc81a113b98fdaf1cf1846eae1
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -117,12 +120,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fe685ddc81a113b98fdaf1cf1846eae1",
-    "id": null,
+    "id": "fe685ddc81a113b98fdaf1cf1846eae1",
     "metadata": {},
     "name": "sellRoutes_PurchaseHistoryRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_PurchaseHistoryRouteQuery(\n  $id: ID!\n  $sessionID: String!\n) {\n  submission(id: $id, sessionID: $sessionID) @principalField {\n    ...PurchaseHistoryRoute_submission\n    id\n  }\n}\n\nfragment PurchaseHistoryRoute_submission on ConsignmentSubmission {\n  provenance\n  signature\n}\n"
+    "text": null
   }
 };
 })();

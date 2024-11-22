@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<445e92d14e48171f70609bbea2156f12>>
+ * @generated SignedSource<<1c129ad79ce28923da664d87aec53156>>
+ * @relayHash 20dbf776bb08b92835e2010b8447b323
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 20dbf776bb08b92835e2010b8447b323
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -207,12 +210,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "20dbf776bb08b92835e2010b8447b323",
-    "id": null,
+    "id": "20dbf776bb08b92835e2010b8447b323",
     "metadata": {},
     "name": "FollowArtistButtonQuery",
     "operationKind": "query",
-    "text": "query FollowArtistButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: $id) {\n    ...FollowArtistButton_artist_4dcqWc\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_4dcqWc on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n  counts {\n    follows\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
+    "text": null
   }
 };
 })();

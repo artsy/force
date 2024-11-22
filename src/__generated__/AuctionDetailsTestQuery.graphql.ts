@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<1fd29d21b998f6b8b61ab1ff6978fe70>>
+ * @generated SignedSource<<648ff8ac397ff7babd447f34d485b40f>>
+ * @relayHash 09d48aa728c68d5ebd5f3e53c5219d6a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 09d48aa728c68d5ebd5f3e53c5219d6a
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -273,8 +276,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "09d48aa728c68d5ebd5f3e53c5219d6a",
-    "id": null,
+    "id": "09d48aa728c68d5ebd5f3e53c5219d6a",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "sale": {
@@ -317,7 +319,7 @@ return {
     },
     "name": "AuctionDetailsTestQuery",
     "operationKind": "query",
-    "text": "query AuctionDetailsTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeIntervalMinutes\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n}\n"
+    "text": null
   }
 };
 })();

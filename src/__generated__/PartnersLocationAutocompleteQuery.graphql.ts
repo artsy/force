@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<bb6e718be4bf3f22d87fca10bb10aec4>>
+ * @generated SignedSource<<501960b2fc3096ab8b6ebf07a30cd7b9>>
+ * @relayHash eeef8ce891628f4c737159ee38ba1b1e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID eeef8ce891628f4c737159ee38ba1b1e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -143,12 +146,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "eeef8ce891628f4c737159ee38ba1b1e",
-    "id": null,
+    "id": "eeef8ce891628f4c737159ee38ba1b1e",
     "metadata": {},
     "name": "PartnersLocationAutocompleteQuery",
     "operationKind": "query",
-    "text": "query PartnersLocationAutocompleteQuery {\n  viewer {\n    ...PartnersLocationAutocomplete_viewer\n  }\n}\n\nfragment PartnersLocationAutocomplete_viewer on Viewer {\n  featuredCities: cities(featured: true) {\n    fullName\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n  allCities: cities {\n    fullName\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

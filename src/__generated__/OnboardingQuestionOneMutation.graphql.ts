@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d607ef4ec3a073efe289e3947978e3cf>>
+ * @generated SignedSource<<862e9dc78b66447b082405c3203923e2>>
+ * @relayHash 76679c257063be6cf3d06d2c8a03acc4
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 76679c257063be6cf3d06d2c8a03acc4
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type OnboardingQuestionOneMutation$variables = {
@@ -80,12 +83,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "76679c257063be6cf3d06d2c8a03acc4",
-    "id": null,
+    "id": "76679c257063be6cf3d06d2c8a03acc4",
     "metadata": {},
     "name": "OnboardingQuestionOneMutation",
     "operationKind": "mutation",
-    "text": "mutation OnboardingQuestionOneMutation(\n  $collectorLevel: Int!\n) {\n  updateMyUserProfile(input: {collectorLevel: $collectorLevel}) {\n    clientMutationId\n  }\n}\n"
+    "text": null
   }
 };
 })();

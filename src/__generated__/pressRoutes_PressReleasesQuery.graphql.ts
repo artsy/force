@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<75c1fb9cc330c02b46ecfbb3107f3f66>>
+ * @generated SignedSource<<9ef7882f0a44fccc95fe327838802fe9>>
+ * @relayHash ad8db60858a7e0158a8acb4cffdbecdf
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID ad8db60858a7e0158a8acb4cffdbecdf
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -110,12 +113,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ad8db60858a7e0158a8acb4cffdbecdf",
-    "id": null,
+    "id": "ad8db60858a7e0158a8acb4cffdbecdf",
     "metadata": {},
     "name": "pressRoutes_PressReleasesQuery",
     "operationKind": "query",
-    "text": "query pressRoutes_PressReleasesQuery {\n  page(id: \"news-and-press-releases\") @principalField {\n    ...PressApp_page\n    id\n  }\n}\n\nfragment PressApp_page on Page {\n  internalID\n  name\n  content(format: HTML)\n}\n"
+    "text": null
   }
 };
 })();

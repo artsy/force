@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<559a6fe7875a70d7e72d61f7127c1418>>
+ * @generated SignedSource<<34f01ba3c1454fe383c8adaaab7f0906>>
+ * @relayHash 3fad4e3d6d387285592a3b3d0eb6443c
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3fad4e3d6d387285592a3b3d0eb6443c
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -251,8 +254,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3fad4e3d6d387285592a3b3d0eb6443c",
-    "id": null,
+    "id": "3fad4e3d6d387285592a3b3d0eb6443c",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -312,7 +314,7 @@ return {
     },
     "name": "MyCollectionArtworkDetailsTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkDetailsTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkDetails_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkDetails_artwork on Artwork {\n  mediumType {\n    name\n  }\n  confidentialNotes\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  editionOf\n  pricePaid {\n    display\n  }\n  collectorLocation {\n    city\n    state\n    country\n    countryCode\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

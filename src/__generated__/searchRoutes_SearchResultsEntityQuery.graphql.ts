@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<0c07e13b99526c6600cf0c539b10d4f4>>
+ * @generated SignedSource<<55cc378d8a59e5b90a4852ebc2b5ebac>>
+ * @relayHash 7d1f126429a4f113d2d97c2ae1164c12
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 7d1f126429a4f113d2d97c2ae1164c12
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -335,12 +338,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7d1f126429a4f113d2d97c2ae1164c12",
-    "id": null,
+    "id": "7d1f126429a4f113d2d97c2ae1164c12",
     "metadata": {},
     "name": "searchRoutes_SearchResultsEntityQuery",
     "operationKind": "query",
-    "text": "query searchRoutes_SearchResultsEntityQuery(\n  $keyword: String!\n  $entities: [SearchEntity]\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsEntity_viewer_gkVBu\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsEntity_viewer_gkVBu on Viewer {\n  searchConnection(query: $keyword, first: 10, page: $page, entities: $entities) @principalField {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          description\n          displayLabel\n          href\n          internalID\n          imageUrl\n          displayType\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

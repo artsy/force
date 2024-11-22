@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<dbb2690af8727c778f0b47aabec2bcdc>>
+ * @generated SignedSource<<03d889c76847d4899bfa78bd5b6993c6>>
+ * @relayHash bfebd378c9ccb7682d6d454cd46392eb
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID bfebd378c9ccb7682d6d454cd46392eb
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -191,12 +194,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bfebd378c9ccb7682d6d454cd46392eb",
-    "id": null,
+    "id": "bfebd378c9ccb7682d6d454cd46392eb",
     "metadata": {},
     "name": "FrameRoute_Test_Query",
     "operationKind": "query",
-    "text": "query FrameRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...FrameRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment FrameRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    artworkId: internalID\n    isFramed\n    framedMetric\n    framedWidth\n    framedHeight\n    framedDepth\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
+    "text": null
   }
 };
 })();

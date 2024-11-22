@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<538a7944e01a951e90180be67742f6b5>>
+ * @generated SignedSource<<40d524dd7e858e9ad161f720703dd550>>
+ * @relayHash 243420daa9e42c8b0ee4126f579cc638
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 243420daa9e42c8b0ee4126f579cc638
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type AlertSettingsFrequency = "DAILY" | "INSTANT" | "%future added value";
@@ -254,12 +257,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "243420daa9e42c8b0ee4126f579cc638",
-    "id": null,
+    "id": "243420daa9e42c8b0ee4126f579cc638",
     "metadata": {},
     "name": "useCreateAlertMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateAlertMutation(\n  $input: createAlertInput!\n) {\n  createAlert(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateAlertSuccess {\n        alert {\n          internalID\n          searchCriteriaID\n          id\n        }\n        me {\n          counts {\n            savedSearches\n          }\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

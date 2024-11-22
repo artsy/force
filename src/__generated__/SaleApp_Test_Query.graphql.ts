@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<16611f459acbe597136833b9b1a9d563>>
+ * @generated SignedSource<<e0c3450f9fbbb465560a2086ac6a8759>>
+ * @relayHash 061686f2c21ebab0f5392c4f07721ffd
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 061686f2c21ebab0f5392c4f07721ffd
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -171,8 +174,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "061686f2c21ebab0f5392c4f07721ffd",
-    "id": null,
+    "id": "061686f2c21ebab0f5392c4f07721ffd",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "sale": {
@@ -209,7 +211,7 @@ return {
     },
     "name": "SaleApp_Test_Query",
     "operationKind": "query",
-    "text": "query SaleApp_Test_Query {\n  sale(id: \"xxx\") {\n    ...SaleApp_sale\n    id\n  }\n}\n\nfragment SaleApp_sale on Sale {\n  ...SaleMeta_sale\n  coverImage {\n    url(version: [\"wide\", \"source\", \"large_rectangle\"])\n  }\n  description(format: HTML)\n  eligibleSaleArtworksCount\n  internalID\n  name\n  featuredKeywords\n}\n\nfragment SaleMeta_sale on Sale {\n  name\n  description(format: HTML)\n  slug\n  coverImage {\n    url(version: [\"wide\", \"source\", \"large_rectangle\"])\n  }\n}\n"
+    "text": null
   }
 };
 })();

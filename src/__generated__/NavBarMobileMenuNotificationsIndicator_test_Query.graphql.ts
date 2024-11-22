@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4cf25f23e7931b3f2477afaa419332ee>>
+ * @generated SignedSource<<6428da6a519f2e5c41b4d25b8563b499>>
+ * @relayHash 7e937619485679b0ea694a36eebcd8b5
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 7e937619485679b0ea694a36eebcd8b5
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -103,8 +106,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7e937619485679b0ea694a36eebcd8b5",
-    "id": null,
+    "id": "7e937619485679b0ea694a36eebcd8b5",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -126,7 +128,7 @@ return {
     },
     "name": "NavBarMobileMenuNotificationsIndicator_test_Query",
     "operationKind": "query",
-    "text": "query NavBarMobileMenuNotificationsIndicator_test_Query {\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n  unreadNotificationsCount\n  unseenNotificationsCount\n}\n"
+    "text": null
   }
 };
 })();

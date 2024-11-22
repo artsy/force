@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8dd90cb8767c179a98e279ecb1169555>>
+ * @generated SignedSource<<f61e693223165d302b018490b75e2f65>>
+ * @relayHash ac7a6decfefaa17b5b4db2bc99877d86
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID ac7a6decfefaa17b5b4db2bc99877d86
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -246,8 +249,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ac7a6decfefaa17b5b4db2bc99877d86",
-    "id": null,
+    "id": "ac7a6decfefaa17b5b4db2bc99877d86",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
@@ -293,7 +295,7 @@ return {
     },
     "name": "FairsFairRow_Test_Query",
     "operationKind": "query",
-    "text": "query FairsFairRow_Test_Query {\n  fair(id: \"example\") {\n    ...FairsFairRow_fair\n    id\n  }\n}\n\nfragment FairsFairRow_fair on Fair {\n  href\n  name\n  isoStartAt: startAt\n  exhibitionPeriod\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  organizer {\n    profile {\n      href\n      id\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

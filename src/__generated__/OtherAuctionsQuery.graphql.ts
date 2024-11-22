@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<46c7278ddd9da20629ffeed9a6542377>>
+ * @generated SignedSource<<f5e011aa54e24a00dcda15b7098009bf>>
+ * @relayHash cc9d10f568acac655f288720d5474f8b
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID cc9d10f568acac655f288720d5474f8b
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -293,12 +296,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cc9d10f568acac655f288720d5474f8b",
-    "id": null,
+    "id": "cc9d10f568acac655f288720d5474f8b",
     "metadata": {},
     "name": "OtherAuctionsQuery",
     "operationKind": "query",
-    "text": "query OtherAuctionsQuery(\n  $first: Int\n  $sort: SaleSorts\n) {\n  salesConnection(first: $first, sort: $sort) {\n    ...OtherAuctions_salesConnection\n  }\n}\n\nfragment AuctionCard_sale on Sale {\n  coverImage {\n    cropped(width: 445, height: 334) {\n      src\n      srcSet\n    }\n  }\n  isBenefit\n  isGalleryAuction\n  endAt\n  href\n  slug\n  isLiveOpen\n  isPreview\n  liveStartAt\n  registrationStatus {\n    internalID\n    id\n  }\n  isRegistrationClosed\n  name\n  startAt\n  isClosed\n  partner {\n    name\n    id\n  }\n}\n\nfragment OtherAuctions_salesConnection on SaleConnection {\n  edges {\n    node {\n      internalID\n      ...AuctionCard_sale\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

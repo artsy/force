@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<86c51d5923f13685dd0c21354aef9089>>
+ * @generated SignedSource<<89361067595d126547903191c5877381>>
+ * @relayHash b7a9c4ee6d7395aa93b6527fa2485d79
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b7a9c4ee6d7395aa93b6527fa2485d79
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -126,8 +129,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b7a9c4ee6d7395aa93b6527fa2485d79",
-    "id": null,
+    "id": "b7a9c4ee6d7395aa93b6527fa2485d79",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
@@ -188,7 +190,7 @@ return {
     },
     "name": "ArtistInsightBadges_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistInsightBadges_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightBadges_artist\n    id\n  }\n}\n\nfragment ArtistInsightBadges_artist on Artist {\n  insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {\n    kind\n    label\n    description\n  }\n}\n"
+    "text": null
   }
 };
 })();

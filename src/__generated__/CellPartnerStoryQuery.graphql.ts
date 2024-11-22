@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<df37cb656fbba2f108e009e2e19691bf>>
+ * @generated SignedSource<<8ed12e8746884786f38c9cc86f883a01>>
+ * @relayHash 170690c18d7b1afed69d261bd33b9747
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 170690c18d7b1afed69d261bd33b9747
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -337,12 +340,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "170690c18d7b1afed69d261bd33b9747",
-    "id": null,
+    "id": "170690c18d7b1afed69d261bd33b9747",
     "metadata": {},
     "name": "CellPartnerStoryQuery",
     "operationKind": "query",
-    "text": "query CellPartnerStoryQuery(\n  $id: String!\n) {\n  partner(id: $id) {\n    ...CellPartner_partner\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

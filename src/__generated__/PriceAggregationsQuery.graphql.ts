@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<132dcd7b300de07ed24e5ecc78ee79e9>>
+ * @generated SignedSource<<8b63f91dfa566c8035487d0a0822bd2e>>
+ * @relayHash c4eff41d88c01a162bcfb26bb4bd2214
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID c4eff41d88c01a162bcfb26bb4bd2214
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -154,12 +157,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c4eff41d88c01a162bcfb26bb4bd2214",
-    "id": null,
+    "id": "c4eff41d88c01a162bcfb26bb4bd2214",
     "metadata": {},
     "name": "PriceAggregationsQuery",
     "operationKind": "query",
-    "text": "query PriceAggregationsQuery(\n  $artistIDs: [String!]!\n) {\n  artworksConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM], artistIDs: $artistIDs, first: 0) {\n    ...Price_artworksConnection\n    id\n  }\n}\n\nfragment Price_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      name\n      value\n      count\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

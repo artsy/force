@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f15a373832e57d437b8722ca57844229>>
+ * @generated SignedSource<<2a2d05493d834fe572adc60397cd2a50>>
+ * @relayHash f149fc467f69a8f9c052822c4a66893b
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f149fc467f69a8f9c052822c4a66893b
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -159,12 +162,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f149fc467f69a8f9c052822c4a66893b",
-    "id": null,
+    "id": "f149fc467f69a8f9c052822c4a66893b",
     "metadata": {},
     "name": "DimensionsRoute_Test_Query",
     "operationKind": "query",
-    "text": "query DimensionsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...DimensionsRoute_submission\n    id\n  }\n}\n\nfragment DimensionsRoute_submission on ConsignmentSubmission {\n  width\n  height\n  depth\n  dimensionsMetric\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
+    "text": null
   }
 };
 })();

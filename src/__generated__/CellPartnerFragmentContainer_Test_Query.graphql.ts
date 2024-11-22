@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<70c022e05e37a285e8c76e0a9886cb45>>
+ * @generated SignedSource<<af277f53b229134e90cae04382472c1b>>
+ * @relayHash c6602bf059cf0f30ff7888d08971b20e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID c6602bf059cf0f30ff7888d08971b20e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -358,8 +361,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c6602bf059cf0f30ff7888d08971b20e",
-    "id": null,
+    "id": "c6602bf059cf0f30ff7888d08971b20e",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
@@ -428,7 +430,7 @@ return {
     },
     "name": "CellPartnerFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query CellPartnerFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...CellPartner_partner\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

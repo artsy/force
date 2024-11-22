@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4129ec47c4d3871a3d849471080b882a>>
+ * @generated SignedSource<<c4366b6a89d36e483461cbd5a0a65b69>>
+ * @relayHash 79cf86f4361bbb038bc513d96891b75c
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 79cf86f4361bbb038bc513d96891b75c
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SendIdentityVerificationEmailMutationInput = {
@@ -232,12 +235,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "79cf86f4361bbb038bc513d96891b75c",
-    "id": null,
+    "id": "79cf86f4361bbb038bc513d96891b75c",
     "metadata": {},
     "name": "useVerifyIDMutation",
     "operationKind": "mutation",
-    "text": "mutation useVerifyIDMutation(\n  $input: SendIdentityVerificationEmailMutationInput!\n) {\n  sendIdentityVerificationEmail(input: $input) {\n    confirmationOrError {\n      __typename\n      ... on IdentityVerificationEmailMutationSuccessType {\n        identityVerification {\n          internalID\n          state\n          userID\n          id\n        }\n      }\n      ... on IdentityVerificationEmailMutationFailureType {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

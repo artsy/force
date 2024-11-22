@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5cc839696db396036376b5684534e09b>>
+ * @generated SignedSource<<d0d8fa5123eb6b852de06f2a5b1e210d>>
+ * @relayHash f070677a5e86cad29e475bc85017ba4c
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f070677a5e86cad29e475bc85017ba4c
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -398,12 +401,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f070677a5e86cad29e475bc85017ba4c",
-    "id": null,
+    "id": "f070677a5e86cad29e475bc85017ba4c",
     "metadata": {},
     "name": "InstitutionPartnershipsProfilesQuery",
     "operationKind": "query",
-    "text": "query InstitutionPartnershipsProfilesQuery {\n  orderedSet(id: \"62ace82dd1b5bd000b4e674e\") {\n    ...InstitutionPartnershipsProfiles_orderedSet\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment InstitutionPartnershipsProfiles_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Profile {\n      internalID\n      owner {\n        __typename\n        ... on Partner {\n          ...CellPartner_partner\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FairOrganizer {\n          id\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

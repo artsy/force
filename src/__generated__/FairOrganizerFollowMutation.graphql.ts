@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<e12d0b9f127db76be9734e1bb0cf95c3>>
+ * @generated SignedSource<<8639eee76b06a7c557128f45123cdf11>>
+ * @relayHash d26c8c51b0a41c29451b00f1018c16bf
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d26c8c51b0a41c29451b00f1018c16bf
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowProfileInput = {
@@ -109,12 +112,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "d26c8c51b0a41c29451b00f1018c16bf",
-    "id": null,
+    "id": "d26c8c51b0a41c29451b00f1018c16bf",
     "metadata": {},
     "name": "FairOrganizerFollowMutation",
     "operationKind": "mutation",
-    "text": "mutation FairOrganizerFollowMutation(\n  $input: FollowProfileInput!\n) {\n  followProfile(input: $input) {\n    profile {\n      id\n      isFollowed\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ac8363f53cd53d60e619b2099a866330>>
+ * @generated SignedSource<<4440eb7349c68fda24db86a7ab612f01>>
+ * @relayHash 2ce39f1a77768173826ade0cceba2503
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 2ce39f1a77768173826ade0cceba2503
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -121,12 +124,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "2ce39f1a77768173826ade0cceba2503",
-    "id": null,
+    "id": "2ce39f1a77768173826ade0cceba2503",
     "metadata": {},
     "name": "collectRoutes_MarketingCollectionsAppQuery",
     "operationKind": "query",
-    "text": "query collectRoutes_MarketingCollectionsAppQuery {\n  marketingCategories @principalField {\n    ...Collections_marketingCategories\n  }\n}\n\nfragment CollectionsCategory_category on MarketingCollectionCategory {\n  name\n  collections {\n    internalID\n    slug\n    title\n    headerImage\n    id\n  }\n}\n\nfragment Collections_marketingCategories on MarketingCollectionCategory {\n  name\n  ...CollectionsCategory_category\n}\n"
+    "text": null
   }
 };
 

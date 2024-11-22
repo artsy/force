@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<cc453340ced1ec70d2473672fca511cc>>
+ * @generated SignedSource<<81faec87c8ff90cabc623b44c6ca2af2>>
+ * @relayHash 1261ae6f506df66d7fb3c34448d24fd1
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 1261ae6f506df66d7fb3c34448d24fd1
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -171,8 +174,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1261ae6f506df66d7fb3c34448d24fd1",
-    "id": null,
+    "id": "1261ae6f506df66d7fb3c34448d24fd1",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "sale": {
@@ -208,7 +210,7 @@ return {
     },
     "name": "CellSaleFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query CellSaleFragmentContainer_Test_Query {\n  sale(id: \"example\") {\n    ...CellSale_sale\n    id\n  }\n}\n\nfragment CellSale_sale on Sale {\n  name\n  formattedStartDateTime\n  href\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

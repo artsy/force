@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<36ca7c94a230430cb00df23e28ea40bd>>
+ * @generated SignedSource<<07f1acb028c1cdc6efffbcd2e62864cf>>
+ * @relayHash 8238d4f7c6342a9c4d44330498b7958d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 8238d4f7c6342a9c4d44330498b7958d
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -167,8 +170,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8238d4f7c6342a9c4d44330498b7958d",
-    "id": null,
+    "id": "8238d4f7c6342a9c4d44330498b7958d",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
@@ -195,7 +197,7 @@ return {
     },
     "name": "PartnersLocationAutocomplete_Test_Query",
     "operationKind": "query",
-    "text": "query PartnersLocationAutocomplete_Test_Query {\n  viewer {\n    ...PartnersLocationAutocomplete_viewer\n  }\n}\n\nfragment PartnersLocationAutocomplete_viewer on Viewer {\n  featuredCities: cities(featured: true) {\n    fullName\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n  allCities: cities {\n    fullName\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

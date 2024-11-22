@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<24e358ed91ee99fce0ff0ba54ed9c1cc>>
+ * @generated SignedSource<<b2bb4d452ceff587f333ffdab0f00174>>
+ * @relayHash a2ee8a32c62410950fa3fab096c1f49e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID a2ee8a32c62410950fa3fab096c1f49e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -160,12 +163,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a2ee8a32c62410950fa3fab096c1f49e",
-    "id": null,
+    "id": "a2ee8a32c62410950fa3fab096c1f49e",
     "metadata": {},
     "name": "saleAgreementsRoutes_SaleAgreementQuery",
     "operationKind": "query",
-    "text": "query saleAgreementsRoutes_SaleAgreementQuery(\n  $id: ID!\n) {\n  saleAgreement(id: $id) {\n    ...SaleAgreementRoute_saleAgreement\n    id\n  }\n}\n\nfragment SaleAgreementRoute_saleAgreement on SaleAgreement {\n  internalID\n  content(format: HTML)\n  displayStartAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n  displayEndAt(format: \"MMM Do, YYYY\", timezone: \"UTC\")\n  sale {\n    internalID\n    name\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

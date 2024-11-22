@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8d03243b9e1a1e3dda3e8682c961b9af>>
+ * @generated SignedSource<<6180c5260c8962278f17535b3474baaf>>
+ * @relayHash 251a78bb85ec4257dbf59a2680a7cd0f
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 251a78bb85ec4257dbf59a2680a7cd0f
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -396,8 +399,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "251a78bb85ec4257dbf59a2680a7cd0f",
-    "id": null,
+    "id": "251a78bb85ec4257dbf59a2680a7cd0f",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "notificationsConnection": {
@@ -512,7 +514,7 @@ return {
     },
     "name": "PartnerShowOpenedNotification_test_Query",
     "operationKind": "query",
-    "text": "query PartnerShowOpenedNotification_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...PartnerShowOpenedNotification_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationPartnerShow_show on Show {\n  location {\n    city\n    id\n  }\n  exhibitionPeriod\n  startAt\n  endAt\n  name\n  description\n  href\n  coverImage {\n    cropped(width: 600, height: 450, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n  slug\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment PartnerShowOpenedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ShowOpenedNotificationItem {\n      partner {\n        href\n        name\n        profile {\n          internalID\n          id\n        }\n        id\n      }\n      showsConnection {\n        edges {\n          node {\n            internalID\n            ...NotificationPartnerShow_show\n            id\n          }\n        }\n      }\n    }\n  }\n  ...NotificationTypeLabel_notification\n}\n"
+    "text": null
   }
 };
 })();

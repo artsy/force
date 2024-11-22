@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<bb71fa0210d77223b44d0344815dcd95>>
+ * @generated SignedSource<<b80ce91034fc215801a07dbfea659ea3>>
+ * @relayHash fd1e23c00e12848477c2f2b296a7a275
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID fd1e23c00e12848477c2f2b296a7a275
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -218,8 +221,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fd1e23c00e12848477c2f2b296a7a275",
-    "id": null,
+    "id": "fd1e23c00e12848477c2f2b296a7a275",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -250,7 +252,7 @@ return {
     },
     "name": "SettingsEditSettingsTwoFactor_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditSettingsTwoFactor_Test_Query {\n  me {\n    ...SettingsEditSettingsTwoFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...SettingsEditSettingsTwoFactorBackupCodes_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b7377eabd289ec91a7539ff49ec6d43d>>
+ * @generated SignedSource<<af3aa7130e617cf2d7985957741b2e74>>
+ * @relayHash 3e0910926b201f94569f6ab717dd89e2
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3e0910926b201f94569f6ab717dd89e2
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -217,8 +220,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3e0910926b201f94569f6ab717dd89e2",
-    "id": null,
+    "id": "3e0910926b201f94569f6ab717dd89e2",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -271,7 +273,7 @@ return {
     },
     "name": "SaveArtworkToListsButton_Test_Query",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

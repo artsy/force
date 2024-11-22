@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<68875a45565224fb3fd3890cb4624f5a>>
+ * @generated SignedSource<<860f322b254d8104a505be211efa5c16>>
+ * @relayHash cae170ccd1a84499231ef3b0b294d564
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID cae170ccd1a84499231ef3b0b294d564
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -202,8 +205,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cae170ccd1a84499231ef3b0b294d564",
-    "id": null,
+    "id": "cae170ccd1a84499231ef3b0b294d564",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -246,7 +248,7 @@ return {
     },
     "name": "InquiryBasicInfo_Test_Query",
     "operationKind": "query",
-    "text": "query InquiryBasicInfo_Test_Query {\n  artwork(id: \"example\") {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  name\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  otherRelevantPositions\n  profession\n}\n"
+    "text": null
   }
 };
 })();

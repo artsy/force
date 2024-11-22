@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<c6f2cc76bf778ede3e27b8261de6940e>>
+ * @generated SignedSource<<34976edce26340edacccff99628ae20d>>
+ * @relayHash 470c206ecbc5934cf79625ff9ff87a83
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 470c206ecbc5934cf79625ff9ff87a83
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -272,12 +275,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "470c206ecbc5934cf79625ff9ff87a83",
-    "id": null,
+    "id": "470c206ecbc5934cf79625ff9ff87a83",
     "metadata": {},
     "name": "geneRoutes_GeneShowQuery",
     "operationKind": "query",
-    "text": "query geneRoutes_GeneShowQuery(\n  $slug: String!\n) {\n  gene(id: $slug) @principalField {\n    ...GeneShow_gene\n    id\n  }\n}\n\nfragment GeneMeta_gene on Gene {\n  name\n  displayName\n  href\n  meta {\n    description\n  }\n  image {\n    cropped(width: 1200, height: 630) {\n      src\n    }\n  }\n}\n\nfragment GeneShow_gene on Gene {\n  ...GeneMeta_gene\n  internalID\n  name\n  displayName\n  formattedDescription: description(format: HTML)\n  similar(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n  artistsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

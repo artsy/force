@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<86192b9b34d2102c45f4282a7559cd89>>
+ * @generated SignedSource<<a29f05ec5da11684651eb6b7bcde85b2>>
+ * @relayHash 682c240be5721e9124059b60eaecb4b2
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 682c240be5721e9124059b60eaecb4b2
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -358,12 +361,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "682c240be5721e9124059b60eaecb4b2",
-    "id": null,
+    "id": "682c240be5721e9124059b60eaecb4b2",
     "metadata": {},
     "name": "FairBoothsContainerQuery",
     "operationKind": "query",
-    "text": "query FairBoothsContainerQuery(\n  $slug: String!\n  $page: Int\n  $sort: ShowSorts\n) {\n  fair(id: $slug) @principalField {\n    ...FairBooths_fair_20XdsY\n    id\n  }\n}\n\nfragment FairBoothRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairBooths_fair_20XdsY on Fair {\n  slug\n  exhibitors: showsConnection(sort: $sort, first: 15, page: $page, totalCount: true) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        ...FairBoothRail_show\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<465fec28364b00ceea1442f45b52a020>>
+ * @generated SignedSource<<ba35ac9075f847f5c251388fa1ff00ec>>
+ * @relayHash 17c95e53e5559d703015b84ac558ffaa
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 17c95e53e5559d703015b84ac558ffaa
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ConfirmPasswordInput = {
@@ -84,12 +87,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "17c95e53e5559d703015b84ac558ffaa",
-    "id": null,
+    "id": "17c95e53e5559d703015b84ac558ffaa",
     "metadata": {},
     "name": "ConfirmPasswordMutation",
     "operationKind": "mutation",
-    "text": "mutation ConfirmPasswordMutation(\n  $input: ConfirmPasswordInput!\n) {\n  confirmPassword(input: $input) {\n    valid\n  }\n}\n"
+    "text": null
   }
 };
 })();

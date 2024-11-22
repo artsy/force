@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<cf6a43e98aee77102b2362c02206146b>>
+ * @generated SignedSource<<5fb282bff8fbe281c871506b99261a9d>>
+ * @relayHash f0e9ed8bb41b1a4abc44462deb681925
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f0e9ed8bb41b1a4abc44462deb681925
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -343,12 +346,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f0e9ed8bb41b1a4abc44462deb681925",
-    "id": null,
+    "id": "f0e9ed8bb41b1a4abc44462deb681925",
     "metadata": {},
     "name": "partnersRoutes_GalleriesRouteQuery",
     "operationKind": "query",
-    "text": "query partnersRoutes_GalleriesRouteQuery @cacheable {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_4uWBz4\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

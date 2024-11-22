@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f7a220ad608f6d1add5bbd4bfda56b00>>
+ * @generated SignedSource<<b0cf1ee3eb2b82f608d43cae9ca84b4c>>
+ * @relayHash b21c427347731dd46b812f2a087622e3
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b21c427347731dd46b812f2a087622e3
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -111,12 +114,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b21c427347731dd46b812f2a087622e3",
-    "id": null,
+    "id": "b21c427347731dd46b812f2a087622e3",
     "metadata": {},
     "name": "collectRoutes_ArtworkFilterQuery",
     "operationKind": "query",
-    "text": "query collectRoutes_ArtworkFilterQuery {\n  marketingCollections(slugs: [\"contemporary\", \"painting\", \"street-art\", \"photography\", \"emerging-art\", \"20th-century-art\"]) {\n    ...Collect_marketingCollections\n    id\n  }\n}\n\nfragment Collect_marketingCollections on MarketingCollection {\n  ...CollectionsHubsNav_marketingCollections\n}\n\nfragment CollectionsHubsNav_marketingCollections on MarketingCollection {\n  slug\n  title\n  thumbnail\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<c1a4ca05168b4909a7d2d009afd1750b>>
+ * @generated SignedSource<<529a7acf252ed1b33c7aef132226fe52>>
+ * @relayHash 6cae9d7e06bb4e667740befe070d36b0
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 6cae9d7e06bb4e667740befe070d36b0
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
@@ -146,12 +149,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6cae9d7e06bb4e667740befe070d36b0",
-    "id": null,
+    "id": "6cae9d7e06bb4e667740befe070d36b0",
     "metadata": {},
     "name": "commitMutationTest1Mutation",
     "operationKind": "mutation",
-    "text": "mutation commitMutationTest1Mutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          code\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

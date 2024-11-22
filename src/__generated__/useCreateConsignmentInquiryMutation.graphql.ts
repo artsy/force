@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4e31c506dcd21e9935a57326f10dfde1>>
+ * @generated SignedSource<<51dceab08da6edb91e48942f596693e0>>
+ * @relayHash a6b6882e5266d9b8ec9595a2ec808a8e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID a6b6882e5266d9b8ec9595a2ec808a8e
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateConsignmentInquiryMutationInput = {
@@ -194,12 +197,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a6b6882e5266d9b8ec9595a2ec808a8e",
-    "id": null,
+    "id": "a6b6882e5266d9b8ec9595a2ec808a8e",
     "metadata": {},
     "name": "useCreateConsignmentInquiryMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateConsignmentInquiryMutation(\n  $input: CreateConsignmentInquiryMutationInput!\n) {\n  createConsignmentInquiry(input: $input) {\n    consignmentInquiryOrError {\n      __typename\n      ... on ConsignmentInquiryMutationSuccess {\n        consignmentInquiry {\n          internalID\n        }\n      }\n      ... on ConsignmentInquiryMutationFailure {\n        mutationError {\n          error\n          message\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

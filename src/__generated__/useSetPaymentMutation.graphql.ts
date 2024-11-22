@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<3a0e91fb11710de4e7ff919ad62756b5>>
+ * @generated SignedSource<<403b1422a30e4f3299ad875a175e29b0>>
+ * @relayHash 69997568335d1ae1641128a418ddd061
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 69997568335d1ae1641128a418ddd061
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -278,12 +281,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "69997568335d1ae1641128a418ddd061",
-    "id": null,
+    "id": "69997568335d1ae1641128a418ddd061",
     "metadata": {},
     "name": "useSetPaymentMutation",
     "operationKind": "mutation",
-    "text": "mutation useSetPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          ...Payment_validation\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment Payment_validation on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentSet\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

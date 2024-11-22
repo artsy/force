@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<806c7108f9a286ec7a35541b991e843a>>
+ * @generated SignedSource<<a82c7ab06d3eb773215d53512c8d0c9d>>
+ * @relayHash cae7f2374f87052f35959448a221bcf8
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID cae7f2374f87052f35959448a221bcf8
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RequestPriceEstimateInput = {
@@ -176,12 +179,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cae7f2374f87052f35959448a221bcf8",
-    "id": null,
+    "id": "cae7f2374f87052f35959448a221bcf8",
     "metadata": {},
     "name": "useRequestPriceEstimateMutation",
     "operationKind": "mutation",
-    "text": "mutation useRequestPriceEstimateMutation(\n  $input: RequestPriceEstimateInput!\n) {\n  requestPriceEstimate(input: $input) {\n    priceEstimateParamsOrError {\n      __typename\n      ... on RequestPriceEstimatedMutationSuccess {\n        submittedPriceEstimateParams {\n          artworkId\n        }\n      }\n      ... on RequestPriceEstimatedMutationFailure {\n        mutationError {\n          error\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

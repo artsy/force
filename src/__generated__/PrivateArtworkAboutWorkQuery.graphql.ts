@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<211c05b4de0105413e850dd805fe58a1>>
+ * @generated SignedSource<<48a10b2ef6ed6b677040a54300158b0d>>
+ * @relayHash 33c4addf70176dba75996fbfc9f22b6d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 33c4addf70176dba75996fbfc9f22b6d
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -96,12 +99,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "33c4addf70176dba75996fbfc9f22b6d",
-    "id": null,
+    "id": "33c4addf70176dba75996fbfc9f22b6d",
     "metadata": {},
     "name": "PrivateArtworkAboutWorkQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkAboutWorkQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutWork_artwork\n    id\n  }\n}\n\nfragment PrivateArtworkAboutWork_artwork on Artwork {\n  additionalInformationHTML: additionalInformation(format: HTML)\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ef945efa0be77939ba417e1fae2917ba>>
+ * @generated SignedSource<<94779c4f3f479bb2cd1a4b4ac0c89cbd>>
+ * @relayHash 6becda9717f11814aa0c339445779049
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 6becda9717f11814aa0c339445779049
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -203,8 +206,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6becda9717f11814aa0c339445779049",
-    "id": null,
+    "id": "6becda9717f11814aa0c339445779049",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -250,7 +252,7 @@ return {
     },
     "name": "ConsignmentInquiry_Test_Query",
     "operationKind": "query",
-    "text": "query ConsignmentInquiry_Test_Query {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n  viewer {\n    ...ConsignmentInquiry_viewer\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ConsignmentInquiry_viewer on Viewer {\n  staticContent {\n    specialistBios {\n      firstName\n      email\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

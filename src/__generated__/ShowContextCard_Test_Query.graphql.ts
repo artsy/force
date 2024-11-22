@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b8957c239a6e4285d25d022b36435ee7>>
+ * @generated SignedSource<<41a7fba37600b8f7812ed1f9698c24aa>>
+ * @relayHash fb7d7202bfc43bd73749e915995fb41c
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID fb7d7202bfc43bd73749e915995fb41c
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -377,8 +380,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fb7d7202bfc43bd73749e915995fb41c",
-    "id": null,
+    "id": "fb7d7202bfc43bd73749e915995fb41c",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
@@ -459,7 +461,7 @@ return {
     },
     "name": "ShowContextCard_Test_Query",
     "operationKind": "query",
-    "text": "query ShowContextCard_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowContextCard_show\n    id\n  }\n}\n\nfragment FairCard_fair on Fair {\n  name\n  image {\n    cropped(width: 768, height: 512, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment ShowContextCard_show on Show {\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      internalID\n      slug\n      href\n      name\n      locations {\n        city\n        id\n      }\n      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {\n        edges {\n          node {\n            image {\n              url(version: \"larger\")\n            }\n            id\n          }\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  fair {\n    internalID\n    isActive\n    slug\n    href\n    name\n    ...FairTiming_fair\n    ...FairCard_fair\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

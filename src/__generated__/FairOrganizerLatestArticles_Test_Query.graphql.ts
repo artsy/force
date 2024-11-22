@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a40ca1ef64d1dd30e064b6e7c60af7e0>>
+ * @generated SignedSource<<0a8166768f2dcf78983e480d4e9114cf>>
+ * @relayHash 445905d6461b8d98e76b561640a7492a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 445905d6461b8d98e76b561640a7492a
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -290,8 +293,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "445905d6461b8d98e76b561640a7492a",
-    "id": null,
+    "id": "445905d6461b8d98e76b561640a7492a",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fairOrganizer": {
@@ -355,7 +357,7 @@ return {
     },
     "name": "FairOrganizerLatestArticles_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerLatestArticles_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerLatestArticles_fairOrganizer\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  slug\n  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

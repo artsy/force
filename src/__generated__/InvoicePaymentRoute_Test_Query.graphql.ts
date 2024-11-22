@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<016cff09fc370a09019d0a4c1adacee3>>
+ * @generated SignedSource<<6e4a08707ca49822cea97da1643b02de>>
+ * @relayHash 3b81fa065528467cbabdd1b3753a042e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3b81fa065528467cbabdd1b3753a042e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -116,8 +119,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3b81fa065528467cbabdd1b3753a042e",
-    "id": null,
+    "id": "3b81fa065528467cbabdd1b3753a042e",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "invoice": {
@@ -144,7 +146,7 @@ return {
     },
     "name": "InvoicePaymentRoute_Test_Query",
     "operationKind": "query",
-    "text": "query InvoicePaymentRoute_Test_Query {\n  invoice(token: \"cool-token\") {\n    ...InvoicePaymentRoute_invoice\n    id\n  }\n}\n\nfragment InvoicePaymentRoute_invoice on Invoice {\n  remaining(precision: 2)\n  internalID\n  remainingMinor\n}\n"
+    "text": null
   }
 };
 })();

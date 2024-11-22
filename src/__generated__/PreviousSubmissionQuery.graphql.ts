@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<3bfa5b5b0509f0f59c2eca4b5d8c8923>>
+ * @generated SignedSource<<e6c04d0de8790f53aabb880726f64401>>
+ * @relayHash 021a3e638cf3b9b6f4d3eb53b716e686
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 021a3e638cf3b9b6f4d3eb53b716e686
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -196,12 +199,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "021a3e638cf3b9b6f4d3eb53b716e686",
-    "id": null,
+    "id": "021a3e638cf3b9b6f4d3eb53b716e686",
     "metadata": {},
     "name": "PreviousSubmissionQuery",
     "operationKind": "query",
-    "text": "query PreviousSubmissionQuery(\n  $id: ID!\n) {\n  submission(id: $id) {\n    state\n    ...EntityHeaderSubmission_submission\n    id\n  }\n}\n\nfragment EntityHeaderSubmission_submission on ConsignmentSubmission {\n  artist {\n    initials\n    name\n    coverArtwork {\n      avatar: image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n  title\n}\n"
+    "text": null
   }
 };
 })();

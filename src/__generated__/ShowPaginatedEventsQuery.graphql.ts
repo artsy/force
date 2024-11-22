@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a90afd768f7ffeb9532e7635dd2c395d>>
+ * @generated SignedSource<<96daa137972954534999853df2fcd179>>
+ * @relayHash bf4d99069079270da00422038680564d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID bf4d99069079270da00422038680564d
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -471,12 +474,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bf4d99069079270da00422038680564d",
-    "id": null,
+    "id": "bf4d99069079270da00422038680564d",
     "metadata": {},
     "name": "ShowPaginatedEventsQuery",
     "operationKind": "query",
-    "text": "query ShowPaginatedEventsQuery(\n  $partnerId: String!\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $status: EventStatus\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowPaginatedEvents_partner_qVb3U\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowPaginatedEvents_partner_qVb3U on Partner {\n  slug\n  showsConnection(first: $first, last: $last, after: $after, before: $before, status: $status, isDisplayable: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

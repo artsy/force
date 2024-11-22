@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<17c901f8ef8525672c9edfcdd224e228>>
+ * @generated SignedSource<<019de33dc52e2c83452ba7bbb3d2cc1e>>
+ * @relayHash 7ea1e0571ad11d9a39628f1c3ecab821
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 7ea1e0571ad11d9a39628f1c3ecab821
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -115,12 +118,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "7ea1e0571ad11d9a39628f1c3ecab821",
-    "id": null,
+    "id": "7ea1e0571ad11d9a39628f1c3ecab821",
     "metadata": {},
     "name": "SettingsEditSettingsTwoFactorBackupCodesDialogQuery",
     "operationKind": "query",
-    "text": "query SettingsEditSettingsTwoFactorBackupCodesDialogQuery {\n  me {\n    ...SettingsEditSettingsTwoFactorBackupCodesDialog_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodesDialog_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      code\n    }\n  }\n}\n"
+    "text": null
   }
 };
 

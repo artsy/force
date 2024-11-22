@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<984b5acd7efaa06256caf51f43dc5b32>>
+ * @generated SignedSource<<a51f341455729db8fff08ff775beafcd>>
+ * @relayHash 77ccdb15d9ce6340f5b5abdcaef0a8cc
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 77ccdb15d9ce6340f5b5abdcaef0a8cc
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -143,12 +146,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "77ccdb15d9ce6340f5b5abdcaef0a8cc",
-    "id": null,
+    "id": "77ccdb15d9ce6340f5b5abdcaef0a8cc",
     "metadata": {},
     "name": "ArtworkSidebarPrivateArtworkQuery",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPrivateArtworkQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkSidebarPrivateArtwork_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPrivateArtwork_artwork on Artwork {\n  partner {\n    name\n    slug\n    profile {\n      isPubliclyVisible\n      id\n    }\n    id\n  }\n  isUnlisted\n  additionalInformation\n}\n"
+    "text": null
   }
 };
 })();

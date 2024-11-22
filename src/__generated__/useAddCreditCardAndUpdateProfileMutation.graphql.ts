@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<980278e3a3d1ceef3cde71e58d0d3725>>
+ * @generated SignedSource<<cde4305b98f116305a2ea31350da842a>>
+ * @relayHash 9005c85d37fb2dc5f6000b558ed459f6
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 9005c85d37fb2dc5f6000b558ed459f6
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
@@ -366,12 +369,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9005c85d37fb2dc5f6000b558ed459f6",
-    "id": null,
+    "id": "9005c85d37fb2dc5f6000b558ed459f6",
     "metadata": {},
     "name": "useAddCreditCardAndUpdateProfileMutation",
     "operationKind": "mutation",
-    "text": "mutation useAddCreditCardAndUpdateProfileMutation(\n  $creditCardInput: CreditCardInput!\n  $profileInput: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $profileInput) {\n    user {\n      internalID\n      id\n    }\n  }\n  createCreditCard(input: $creditCardInput) {\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCardEdge {\n          node {\n            lastDigits\n            id\n          }\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

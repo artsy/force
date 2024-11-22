@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<6a4641fafc0377387cd7a8b35815831d>>
+ * @generated SignedSource<<1fe909a628a6acf0ed590fb43f3dc7eb>>
+ * @relayHash 0a22e5c7ee4958827bb611a5dc7f663a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0a22e5c7ee4958827bb611a5dc7f663a
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -317,8 +320,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0a22e5c7ee4958827bb611a5dc7f663a",
-    "id": null,
+    "id": "0a22e5c7ee4958827bb611a5dc7f663a",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
@@ -379,7 +381,7 @@ return {
     },
     "name": "ArtistEditorialNewsGrid_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistEditorialNewsGrid_Test_Query {\n  artist(id: \"test-artist\") {\n    ...ArtistEditorialNewsGrid_artist\n    id\n  }\n}\n\nfragment ArtistEditorialNewsGrid_artist on Artist {\n  internalID\n  name\n  slug\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        href\n        byline\n        slug\n        title\n        publishedAt(format: \"MMM D, YYYY\")\n        vertical\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 670, height: 720) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<c390b7f37eaf74e0a9a85f7d3340cb63>>
+ * @generated SignedSource<<bf991125f1e9438c86449a5dbce1362b>>
+ * @relayHash 8a741a905ebc4b68b45db51d0842ef13
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 8a741a905ebc4b68b45db51d0842ef13
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type ConfirmationStepFooter_Test_Query$variables = {
@@ -137,8 +140,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8a741a905ebc4b68b45db51d0842ef13",
-    "id": null,
+    "id": "8a741a905ebc4b68b45db51d0842ef13",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -166,7 +168,7 @@ return {
     },
     "name": "ConfirmationStepFooter_Test_Query",
     "operationKind": "query",
-    "text": "query ConfirmationStepFooter_Test_Query(\n  $alertID: String!\n) {\n  me {\n    internalID\n    alert(id: $alertID) {\n      href\n      id\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

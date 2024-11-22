@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<eee0bac04f899a973c2ed78fb8922ec9>>
+ * @generated SignedSource<<ab06c4ee508bf2ed3d70e608e292dd1b>>
+ * @relayHash 266407a3e6a21a2606e73e5025d2e0df
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 266407a3e6a21a2606e73e5025d2e0df
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -129,8 +132,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "266407a3e6a21a2606e73e5025d2e0df",
-    "id": null,
+    "id": "266407a3e6a21a2606e73e5025d2e0df",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -159,7 +161,7 @@ return {
     },
     "name": "VerifiedSellerTestQuery",
     "operationKind": "query",
-    "text": "query VerifiedSellerTestQuery {\n  artwork(id: \"whatevs\") {\n    ...VerifiedSeller_artwork\n    id\n  }\n}\n\nfragment VerifiedSeller_artwork on Artwork {\n  is_biddable: isBiddable\n  partner {\n    isVerifiedSeller\n    name\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

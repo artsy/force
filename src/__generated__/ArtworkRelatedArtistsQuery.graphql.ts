@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d9aea4b3f39f371c918ffd88037c5496>>
+ * @generated SignedSource<<f72c2edb239b454d50467fc18d8b065e>>
+ * @relayHash 898531577d8c4fe0c194bfb8f9de1871
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 898531577d8c4fe0c194bfb8f9de1871
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -353,12 +356,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "898531577d8c4fe0c194bfb8f9de1871",
-    "id": null,
+    "id": "898531577d8c4fe0c194bfb8f9de1871",
     "metadata": {},
     "name": "ArtworkRelatedArtistsQuery",
     "operationKind": "query",
-    "text": "query ArtworkRelatedArtistsQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkRelatedArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkRelatedArtists_artwork on Artwork {\n  slug\n  artist(shallow: true) {\n    href\n    related {\n      artistsConnection(kind: MAIN, first: 6, after: \"\") {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        edges {\n          node {\n            ...EntityHeaderArtist_artist\n            id\n            __typename\n          }\n          cursor\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

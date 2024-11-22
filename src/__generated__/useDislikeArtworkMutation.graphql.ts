@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9e5decd86da5649b5d63ddff289c2d16>>
+ * @generated SignedSource<<3f5aeb06bf17c5052de08c8b921959b2>>
+ * @relayHash 8eee1223c96bbb7eede14f840396f967
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 8eee1223c96bbb7eede14f840396f967
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DislikeArtworkInput = {
@@ -124,12 +127,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8eee1223c96bbb7eede14f840396f967",
-    "id": null,
+    "id": "8eee1223c96bbb7eede14f840396f967",
     "metadata": {},
     "name": "useDislikeArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useDislikeArtworkMutation(\n  $input: DislikeArtworkInput!\n) {\n  dislikeArtwork(input: $input) {\n    artwork {\n      isDisliked\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

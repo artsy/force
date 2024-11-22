@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<384a679dac7be38762307a90e08eefd4>>
+ * @generated SignedSource<<cc09459defffa14872deca6a8f82a8a2>>
+ * @relayHash 29135631f3bc0ca939f6d9397bbd8532
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 29135631f3bc0ca939f6d9397bbd8532
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -276,12 +279,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "29135631f3bc0ca939f6d9397bbd8532",
-    "id": null,
+    "id": "29135631f3bc0ca939f6d9397bbd8532",
     "metadata": {},
     "name": "searchRoutes_SearchResultsTopLevelQuery",
     "operationKind": "query",
-    "text": "query searchRoutes_SearchResultsTopLevelQuery(\n  $keyword: String!\n) {\n  viewer {\n    ...SearchApp_viewer_2hPz0N\n  }\n}\n\nfragment NavigationTabs_searchableConnection on SearchableConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n    }\n  }\n}\n\nfragment SearchApp_viewer_2hPz0N on Viewer {\n  searchConnection(query: $keyword, first: 1, aggregations: [TYPE]) {\n    aggregations {\n      slice\n      counts {\n        count\n        name\n      }\n    }\n    ...NavigationTabs_searchableConnection\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          slug\n          displayLabel\n          displayType\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  artworksConnection(keyword: $keyword, size: 0, aggregations: [TOTAL]) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

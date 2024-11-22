@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ef0f4dc65afb339a7c1178c7af2a3b93>>
+ * @generated SignedSource<<18251429a09cab027452baa8cb556f3a>>
+ * @relayHash 3e907257fd567408d787084798e921ff
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3e907257fd567408d787084798e921ff
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -329,12 +332,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3e907257fd567408d787084798e921ff",
-    "id": null,
+    "id": "3e907257fd567408d787084798e921ff",
     "metadata": {},
     "name": "useEditAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useEditAddressMutation(\n  $input: UpdateUserAddressInput!\n) {\n  updateUserAddress(input: $input) {\n    me {\n      ...SettingsShippingAddresses_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

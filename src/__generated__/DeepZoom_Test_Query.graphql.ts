@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<180c9b38b215f8e4badbbaa3a06bc926>>
+ * @generated SignedSource<<10ba021bea33ae650363d22e00f4e7b7>>
+ * @relayHash 0af34a87bb80a2043ccf5e692cd3d56e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0af34a87bb80a2043ccf5e692cd3d56e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -201,8 +204,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0af34a87bb80a2043ccf5e692cd3d56e",
-    "id": null,
+    "id": "0af34a87bb80a2043ccf5e692cd3d56e",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -252,7 +254,7 @@ return {
     },
     "name": "DeepZoom_Test_Query",
     "operationKind": "query",
-    "text": "query DeepZoom_Test_Query {\n  artwork(id: \"example\") {\n    images {\n      ...DeepZoom_image\n    }\n    id\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

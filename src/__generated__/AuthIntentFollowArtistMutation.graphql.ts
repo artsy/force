@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<fe84e05629cd15c9c7b3b675d0fb2824>>
+ * @generated SignedSource<<34a8926cd48e72be8d15253b757d4b4e>>
+ * @relayHash b833a3ac99a596526d29bf03a865ae53
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b833a3ac99a596526d29bf03a865ae53
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowArtistInput = {
@@ -109,12 +112,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "b833a3ac99a596526d29bf03a865ae53",
-    "id": null,
+    "id": "b833a3ac99a596526d29bf03a865ae53",
     "metadata": {},
     "name": "AuthIntentFollowArtistMutation",
     "operationKind": "mutation",
-    "text": "mutation AuthIntentFollowArtistMutation(\n  $input: FollowArtistInput!\n) {\n  followArtist(input: $input) {\n    artist {\n      id\n      isFollowed\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

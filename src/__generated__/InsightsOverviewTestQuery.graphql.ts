@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<512a1f40ab6c36145893a212abc231cf>>
+ * @generated SignedSource<<685cd16fac23d6f6e7ec9e21ecb7f0eb>>
+ * @relayHash ba8ce52ad6d67553f10078b5735a49a2
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID ba8ce52ad6d67553f10078b5735a49a2
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -120,8 +123,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ba8ce52ad6d67553f10078b5735a49a2",
-    "id": null,
+    "id": "ba8ce52ad6d67553f10078b5735a49a2",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -148,7 +150,7 @@ return {
     },
     "name": "InsightsOverviewTestQuery",
     "operationKind": "query",
-    "text": "query InsightsOverviewTestQuery {\n  me {\n    myCollectionInfo {\n      ...InsightsOverview_info\n    }\n    id\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n"
+    "text": null
   }
 };
 })();

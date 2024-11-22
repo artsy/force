@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9a16bea8d9b90f3483073abed3068de2>>
+ * @generated SignedSource<<c0218a8e1e46fc03c03bee77814bfec1>>
+ * @relayHash c9072bdccf0e6d6364977b9f61f4670e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID c9072bdccf0e6d6364977b9f61f4670e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -168,8 +171,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c9072bdccf0e6d6364977b9f61f4670e",
-    "id": null,
+    "id": "c9072bdccf0e6d6364977b9f61f4670e",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -203,7 +205,7 @@ return {
     },
     "name": "SettingsEditSettingsInformation_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditSettingsInformation_Test_Query {\n  me {\n    ...SettingsEditSettingsInformation_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phoneNumber {\n    regionCode\n    display(format: NATIONAL)\n    originalNumber\n  }\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
+    "text": null
   }
 };
 })();

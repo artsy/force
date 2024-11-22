@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<d99bffdba355bf904e3782b52ae7f7aa>>
+ * @generated SignedSource<<d4a664dd8e5252c7bad73bfb7a749309>>
+ * @relayHash 20e38823a7e414780e591437d7916616
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 20e38823a7e414780e591437d7916616
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -114,8 +117,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "20e38823a7e414780e591437d7916616",
-    "id": null,
+    "id": "20e38823a7e414780e591437d7916616",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -149,7 +151,7 @@ return {
     },
     "name": "ArtQuizResults_Test_Query",
     "operationKind": "query",
-    "text": "query ArtQuizResults_Test_Query {\n  me {\n    ...ArtQuizResults_me\n    id\n  }\n}\n\nfragment ArtQuizResults_me on Me {\n  quiz {\n    savedArtworks {\n      __typename\n      id\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

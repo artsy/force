@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<18f7501f1a59b328440e1843e862f418>>
+ * @generated SignedSource<<ade5aeddc4276652d82f9b9d1a667b7b>>
+ * @relayHash fd2bca6f550f8e01bbacf8305f3773d7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID fd2bca6f550f8e01bbacf8305f3773d7
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateSmsSecondFactorInput = {
@@ -214,12 +217,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fd2bca6f550f8e01bbacf8305f3773d7",
-    "id": null,
+    "id": "fd2bca6f550f8e01bbacf8305f3773d7",
     "metadata": {},
     "name": "CreateSmsSecondFactorMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateSmsSecondFactorMutation(\n  $input: CreateSmsSecondFactorInput!\n) {\n  createSmsSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on SmsSecondFactor {\n        __typename\n        internalID\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

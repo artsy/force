@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<14bd91a28a34ff8f1078bc121cc99af7>>
+ * @generated SignedSource<<5e965546e611f2702cc11e2e0573de25>>
+ * @relayHash 6bbbbd4ec273faa7c1c4536be25a9885
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 6bbbbd4ec273faa7c1c4536be25a9885
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -238,12 +241,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6bbbbd4ec273faa7c1c4536be25a9885",
-    "id": null,
+    "id": "6bbbbd4ec273faa7c1c4536be25a9885",
     "metadata": {},
     "name": "SettingsEditProfileImageMutation",
     "operationKind": "mutation",
-    "text": "mutation SettingsEditProfileImageMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditProfileImage_me\n      id\n    }\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

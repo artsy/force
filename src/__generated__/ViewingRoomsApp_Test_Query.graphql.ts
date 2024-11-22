@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ea6035bbe5be90881008a4e3c4eb93da>>
+ * @generated SignedSource<<51c22fe59e25a718a13c1edb7fbb5547>>
+ * @relayHash f24b33c4be8d74288f4ce64e8c71e5d2
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f24b33c4be8d74288f4ce64e8c71e5d2
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -424,8 +427,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f24b33c4be8d74288f4ce64e8c71e5d2",
-    "id": null,
+    "id": "f24b33c4be8d74288f4ce64e8c71e5d2",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "allViewingRooms": {
@@ -481,7 +483,7 @@ return {
     },
     "name": "ViewingRoomsApp_Test_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomsApp_Test_Query {\n  allViewingRooms: viewer {\n    ...ViewingRoomsApp_allViewingRooms\n  }\n  featuredViewingRooms: viewingRoomsConnection(featured: true) {\n    ...ViewingRoomsApp_featuredViewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_allViewingRooms on Viewer {\n  ...ViewingRoomsLatestGrid_viewingRooms_9Znkm\n}\n\nfragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomsConnection {\n  ...ViewingRoomsFeaturedRail_featuredViewingRooms\n}\n\nfragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomsConnection {\n  edges {\n    node {\n      status\n      slug\n      title\n      image {\n        imageURLs {\n          normalized\n        }\n      }\n      distanceToOpen(short: true)\n      distanceToClose(short: true)\n      partner {\n        name\n        id\n      }\n    }\n  }\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms_9Znkm on Viewer {\n  viewingRoomsConnection {\n    edges {\n      node {\n        slug\n        status\n        title\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        partner {\n          name\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<16fb78736c9f22e819f42db8777b3175>>
+ * @generated SignedSource<<a370fb81bfe94387c50b1e76b97bbc81>>
+ * @relayHash 6629daf159af50f7e1cc97aa8a41f428
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 6629daf159af50f7e1cc97aa8a41f428
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
@@ -80,12 +83,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6629daf159af50f7e1cc97aa8a41f428",
-    "id": null,
+    "id": "6629daf159af50f7e1cc97aa8a41f428",
     "metadata": {},
     "name": "fetchUserPreferencesQuery",
     "operationKind": "query",
-    "text": "query fetchUserPreferencesQuery {\n  me {\n    lengthUnitPreference\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

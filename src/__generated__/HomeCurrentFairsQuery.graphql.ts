@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<937b91a227a0a89f94a07f2ad622d2c3>>
+ * @generated SignedSource<<5d8f3975b453e845e2463b9baaa42ca4>>
+ * @relayHash a20dc4bbea333ba87d11da880676176b
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID a20dc4bbea333ba87d11da880676176b
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -272,12 +275,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a20dc4bbea333ba87d11da880676176b",
-    "id": null,
+    "id": "a20dc4bbea333ba87d11da880676176b",
     "metadata": {},
     "name": "HomeCurrentFairsQuery",
     "operationKind": "query",
-    "text": "query HomeCurrentFairsQuery {\n  viewer {\n    ...HomeCurrentFairs_viewer\n  }\n}\n\nfragment HomeCurrentFairs_viewer on Viewer {\n  fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    slug\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    href\n    name\n    startAt(format: \"MMM Do\")\n    endAt(format: \"MMM Do YYYY\")\n    exhibitionPeriod\n    image {\n      cropped(width: 600, height: 450, version: [\"wide\", \"large_rectangle\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

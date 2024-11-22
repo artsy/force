@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ec657e13f03022afe0299303a388033d>>
+ * @generated SignedSource<<b2b36ffc932ca23cb578283f51948c72>>
+ * @relayHash 6262bf39a1cc6fb404fb4bea01f85a2c
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 6262bf39a1cc6fb404fb4bea01f85a2c
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -203,12 +206,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6262bf39a1cc6fb404fb4bea01f85a2c",
-    "id": null,
+    "id": "6262bf39a1cc6fb404fb4bea01f85a2c",
     "metadata": {},
     "name": "settingsRoutes_PaymentsRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_PaymentsRouteQuery {\n  me {\n    ...SettingsPaymentsRoute_me\n    id\n  }\n}\n\nfragment SettingsBankAccount_bankAccount on BankAccount {\n  internalID\n  last4\n}\n\nfragment SettingsCreditCard_creditCard on CreditCard {\n  internalID\n  name\n  brand\n  lastDigits\n  expirationYear\n  expirationMonth\n}\n\nfragment SettingsPaymentsMethods_me on Me {\n  creditCards(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsCreditCard_creditCard\n        id\n      }\n    }\n  }\n  bankAccounts(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsBankAccount_bankAccount\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPaymentsRoute_me on Me {\n  ...SettingsPaymentsMethods_me\n}\n"
+    "text": null
   }
 };
 })();

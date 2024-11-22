@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2eea8aff1e645cb716968a068c3d2ce4>>
+ * @generated SignedSource<<24be9e1c4ef1ea7658041c0dfb5b489a>>
+ * @relayHash 5ade48a7aa33e616a8376819974ac54d
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 5ade48a7aa33e616a8376819974ac54d
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -103,8 +106,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5ade48a7aa33e616a8376819974ac54d",
-    "id": null,
+    "id": "5ade48a7aa33e616a8376819974ac54d",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
@@ -125,7 +127,7 @@ return {
     },
     "name": "ArtistBackLink_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistBackLink_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistBackLink_artist\n    id\n  }\n}\n\nfragment ArtistBackLink_artist on Artist {\n  name\n  href\n}\n"
+    "text": null
   }
 };
 })();

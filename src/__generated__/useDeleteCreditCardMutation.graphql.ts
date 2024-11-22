@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<10e1150f0759534b1d033af64dd076ea>>
+ * @generated SignedSource<<92538ddf36fcb63cb7f60c369290f194>>
+ * @relayHash 30a8366f11c6bb9be1223ee8c0c20616
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 30a8366f11c6bb9be1223ee8c0c20616
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -352,12 +355,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "30a8366f11c6bb9be1223ee8c0c20616",
-    "id": null,
+    "id": "30a8366f11c6bb9be1223ee8c0c20616",
     "metadata": {},
     "name": "useDeleteCreditCardMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteCreditCardMutation(\n  $input: DeleteCreditCardInput!\n) {\n  deleteCreditCard(input: $input) {\n    me {\n      ...SettingsPaymentsMethods_me\n      id\n    }\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCard {\n          ...SettingsCreditCard_creditCard\n          id\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsBankAccount_bankAccount on BankAccount {\n  internalID\n  last4\n}\n\nfragment SettingsCreditCard_creditCard on CreditCard {\n  internalID\n  name\n  brand\n  lastDigits\n  expirationYear\n  expirationMonth\n}\n\nfragment SettingsPaymentsMethods_me on Me {\n  creditCards(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsCreditCard_creditCard\n        id\n      }\n    }\n  }\n  bankAccounts(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsBankAccount_bankAccount\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

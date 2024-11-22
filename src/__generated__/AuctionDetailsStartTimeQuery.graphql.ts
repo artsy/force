@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f50f0e343d711e9415f0d068cfa891e7>>
+ * @generated SignedSource<<93238aeea215ef750b95379fda73235c>>
+ * @relayHash 921c748d1407535ba067514ecc89a7d6
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 921c748d1407535ba067514ecc89a7d6
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -129,12 +132,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "921c748d1407535ba067514ecc89a7d6",
-    "id": null,
+    "id": "921c748d1407535ba067514ecc89a7d6",
     "metadata": {},
     "name": "AuctionDetailsStartTimeQuery",
     "operationKind": "query",
-    "text": "query AuctionDetailsStartTimeQuery(\n  $id: String!\n) {\n  sale(id: $id) {\n    ...AuctionDetailsStartTime_sale\n    cascadingEndTimeIntervalMinutes\n    formattedStartDateTime\n    cascadingEndTime {\n      formattedStartDateTime\n    }\n    id\n  }\n}\n\nfragment AuctionDetailsStartTime_sale on Sale {\n  cascadingEndTime {\n    formattedStartDateTime\n  }\n}\n"
+    "text": null
   }
 };
 })();

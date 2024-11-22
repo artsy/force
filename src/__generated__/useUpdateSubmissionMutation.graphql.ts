@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b4acad9c9d9f2817df53f5d43ee1b880>>
+ * @generated SignedSource<<837c6c330ed48af8864342fcbb5df545>>
+ * @relayHash 9ad8d24001615e726de37b47ccd660bc
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 9ad8d24001615e726de37b47ccd660bc
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
@@ -162,12 +165,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9ad8d24001615e726de37b47ccd660bc",
-    "id": null,
+    "id": "9ad8d24001615e726de37b47ccd660bc",
     "metadata": {},
     "name": "useUpdateSubmissionMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateSubmissionMutation(\n  $input: UpdateSubmissionMutationInput!\n) {\n  updateConsignmentSubmission(input: $input) {\n    consignmentSubmission {\n      externalId\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

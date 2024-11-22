@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<332fd21f5e5107bdfed550c0642207ba>>
+ * @generated SignedSource<<ca0eaafd0d751512af7f88389731972c>>
+ * @relayHash d59bb2e7100c552c243f66c6e5d0a307
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d59bb2e7100c552c243f66c6e5d0a307
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -124,12 +127,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d59bb2e7100c552c243f66c6e5d0a307",
-    "id": null,
+    "id": "d59bb2e7100c552c243f66c6e5d0a307",
     "metadata": {},
     "name": "sellRoutes_DetailsRouteQuery",
     "operationKind": "query",
-    "text": "query sellRoutes_DetailsRouteQuery(\n  $id: ID!\n  $sessionID: String!\n) {\n  submission(id: $id, sessionID: $sessionID) @principalField {\n    ...DetailsRoute_submission\n    id\n  }\n}\n\nfragment DetailsRoute_submission on ConsignmentSubmission {\n  year\n  category\n  medium\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<fc0bae3c80219ba3f442cf0f62deffe0>>
+ * @generated SignedSource<<64da80d934746f449207982a73c7d922>>
+ * @relayHash d79fd8dcfa3b2a8d3486aa08661ec0c0
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d79fd8dcfa3b2a8d3486aa08661ec0c0
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -423,12 +426,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d79fd8dcfa3b2a8d3486aa08661ec0c0",
-    "id": null,
+    "id": "d79fd8dcfa3b2a8d3486aa08661ec0c0",
     "metadata": {},
     "name": "FairOrganizerDedicatedArticlesQuery",
     "operationKind": "query",
-    "text": "query FairOrganizerDedicatedArticlesQuery(\n  $id: String!\n  $first: Int\n  $page: Int\n) {\n  fairOrganizer(id: $id) {\n    ...FairOrganizerDedicatedArticles_fairOrganizer_4D1OJz\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      url\n    }\n    id\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer_4D1OJz on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: $first, page: $page, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        id\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": null
   }
 };
 })();

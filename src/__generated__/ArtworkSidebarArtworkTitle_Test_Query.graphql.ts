@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f2f01f3a88a080c01cbc9192a469666f>>
+ * @generated SignedSource<<69be1ec1f6e5302b304af3831f22f4d8>>
+ * @relayHash 6820552f990fa1f5b174c67319642aea
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 6820552f990fa1f5b174c67319642aea
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -103,8 +106,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6820552f990fa1f5b174c67319642aea",
-    "id": null,
+    "id": "6820552f990fa1f5b174c67319642aea",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -125,7 +127,7 @@ return {
     },
     "name": "ArtworkSidebarArtworkTitle_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarArtworkTitle_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtworkTitle_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtworkTitle_artwork on Artwork {\n  date\n  title\n}\n"
+    "text": null
   }
 };
 })();

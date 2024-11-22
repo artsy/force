@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<69bc6a65b9da04853a7ab99dc079faa4>>
+ * @generated SignedSource<<591be19b24ad869ac0bd226b177a2da6>>
+ * @relayHash e3a4147ddbd03c8d806b279493ec4f7e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID e3a4147ddbd03c8d806b279493ec4f7e
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type deleteAlertInput = {
@@ -168,12 +171,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e3a4147ddbd03c8d806b279493ec4f7e",
-    "id": null,
+    "id": "e3a4147ddbd03c8d806b279493ec4f7e",
     "metadata": {},
     "name": "useDeleteAlertMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteAlertMutation(\n  $input: deleteAlertInput!\n) {\n  deleteAlert(input: $input) {\n    responseOrError {\n      __typename\n      ... on DeleteAlertSuccess {\n        alert {\n          internalID\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<86b833438e4c425f3e05240e4808e7e1>>
+ * @generated SignedSource<<2ac3eeabcf749f6d1a02bfb7a4098de3>>
+ * @relayHash 075d5a51a647e1a37b598998e7c48a77
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 075d5a51a647e1a37b598998e7c48a77
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -357,12 +360,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "075d5a51a647e1a37b598998e7c48a77",
-    "id": null,
+    "id": "075d5a51a647e1a37b598998e7c48a77",
     "metadata": {},
     "name": "articlesRoutes_ChannelQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_ChannelQuery(\n  $id: ID!\n) {\n  channel(id: $id) @principalField {\n    ...ChannelApp_channel\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ChannelApp_channel on Channel {\n  ...ChannelArticles_channel\n  name\n  tagline\n  image {\n    url\n  }\n  links {\n    url\n    text\n  }\n}\n\nfragment ChannelArticles_channel on Channel {\n  articlesConnection(first: 9, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

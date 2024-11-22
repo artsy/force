@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<6026c2fe8b09e72b82378de52e8be459>>
+ * @generated SignedSource<<fb39630ba2dc3046067b4387850b60b8>>
+ * @relayHash 4549037f7266f13a5496fd0b030325d7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 4549037f7266f13a5496fd0b030325d7
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -210,8 +213,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4549037f7266f13a5496fd0b030325d7",
-    "id": null,
+    "id": "4549037f7266f13a5496fd0b030325d7",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
@@ -248,7 +250,7 @@ return {
     },
     "name": "ShowHours_Test_Query",
     "operationKind": "query",
-    "text": "query ShowHours_Test_Query {\n  show(id: \"example\") {\n    ...ShowHours_show\n    id\n  }\n}\n\nfragment ShowHours_show on Show {\n  location {\n    ...ShowLocationHours_location\n    id\n  }\n  fair {\n    location {\n      ...ShowLocationHours_location\n      id\n    }\n    id\n  }\n}\n\nfragment ShowLocationHours_location on Location {\n  openingHours {\n    __typename\n    ... on OpeningHoursArray {\n      schedules {\n        days\n        hours\n      }\n    }\n    ... on OpeningHoursText {\n      text\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

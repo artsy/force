@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<7472282eaab4f472a4e5c57f6c5c0876>>
+ * @generated SignedSource<<88abdf043c2a4129b920334b7d81c3bf>>
+ * @relayHash 8a444827b4f6c1e46a3a254e7fba0735
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 8a444827b4f6c1e46a3a254e7fba0735
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -150,8 +153,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8a444827b4f6c1e46a3a254e7fba0735",
-    "id": null,
+    "id": "8a444827b4f6c1e46a3a254e7fba0735",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
@@ -181,7 +183,7 @@ return {
     },
     "name": "FairHeader_Test_Query",
     "operationKind": "query",
-    "text": "query FairHeader_Test_Query {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<c09ca8f4264756396799024e9002e33e>>
+ * @generated SignedSource<<08bd054fa27c3cf99160f023cd011af8>>
+ * @relayHash bc1f4cd964ef1b5dd48a390965955300
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID bc1f4cd964ef1b5dd48a390965955300
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type FooterDownloadAppBannerQuery$variables = {
@@ -95,12 +98,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bc1f4cd964ef1b5dd48a390965955300",
-    "id": null,
+    "id": "bc1f4cd964ef1b5dd48a390965955300",
     "metadata": {},
     "name": "FooterDownloadAppBannerQuery",
     "operationKind": "query",
-    "text": "query FooterDownloadAppBannerQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    isUnlisted\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<60b3322b43dc3669d70d977a4fbdc00c>>
+ * @generated SignedSource<<32ce9f33a65c93f3f37bcabaa3e9d66f>>
+ * @relayHash 35b814f5053a6993d823fd76f430fca6
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 35b814f5053a6993d823fd76f430fca6
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -199,12 +202,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "35b814f5053a6993d823fd76f430fca6",
-    "id": null,
+    "id": "35b814f5053a6993d823fd76f430fca6",
     "metadata": {},
     "name": "InquiryBasicInfoQuery",
     "operationKind": "query",
-    "text": "query InquiryBasicInfoQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  name\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  otherRelevantPositions\n  profession\n}\n"
+    "text": null
   }
 };
 })();

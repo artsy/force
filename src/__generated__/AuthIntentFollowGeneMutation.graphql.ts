@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b0d84987a33e59f8a8899227f973f984>>
+ * @generated SignedSource<<dafd4d5dbf011f3943f0de4deb195e74>>
+ * @relayHash 110b2ca1cf5c520da14160fb867091fa
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 110b2ca1cf5c520da14160fb867091fa
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowGeneInput = {
@@ -109,12 +112,11 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "110b2ca1cf5c520da14160fb867091fa",
-    "id": null,
+    "id": "110b2ca1cf5c520da14160fb867091fa",
     "metadata": {},
     "name": "AuthIntentFollowGeneMutation",
     "operationKind": "mutation",
-    "text": "mutation AuthIntentFollowGeneMutation(\n  $input: FollowGeneInput!\n) {\n  followGene(input: $input) {\n    gene {\n      id\n      isFollowed\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

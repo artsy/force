@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<17d982772f1553f36c2497bec5baa42e>>
+ * @generated SignedSource<<13f03cd393f010f78a2ec32a1cd25a80>>
+ * @relayHash 824ef82c5dedd0c7866708b18326189c
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 824ef82c5dedd0c7866708b18326189c
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type createMockNetworkLayerTestAliasQuery$variables = Record<PropertyKey, never>;
@@ -152,12 +155,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "824ef82c5dedd0c7866708b18326189c",
-    "id": null,
+    "id": "824ef82c5dedd0c7866708b18326189c",
     "metadata": {},
     "name": "createMockNetworkLayerTestAliasQuery",
     "operationKind": "query",
-    "text": "query createMockNetworkLayerTestAliasQuery {\n  artist(id: \"banksy\") {\n    forSaleArtworks: artworksConnection(filter: IS_FOR_SALE) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n    notForSaleArtworks: artworksConnection(filter: IS_NOT_FOR_SALE) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ad306922df8714a69b2ac95c7d31d0b1>>
+ * @generated SignedSource<<cfaee6656fa42ed32449a08164577060>>
+ * @relayHash 47f5f01a3e625dc8fe55ecad2695bb56
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 47f5f01a3e625dc8fe55ecad2695bb56
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -303,12 +306,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "47f5f01a3e625dc8fe55ecad2695bb56",
-    "id": null,
+    "id": "47f5f01a3e625dc8fe55ecad2695bb56",
     "metadata": {},
     "name": "ArtistCurrentShowsRailQuery",
     "operationKind": "query",
-    "text": "query ArtistCurrentShowsRailQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistCurrentShowsRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentShowsRail_artist on Artist {\n  internalID\n  name\n  slug\n  href\n  showsConnection(first: 12, sort: END_AT_ASC, status: \"running\") {\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        slug\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

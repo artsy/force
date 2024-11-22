@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4a4de0accc2ec062710c2fee16bef2b5>>
+ * @generated SignedSource<<3459861c9b5eb4d0f4e763097906ab0b>>
+ * @relayHash 73b4c158b3681732cd8e24e16a98f301
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 73b4c158b3681732cd8e24e16a98f301
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -271,8 +274,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "73b4c158b3681732cd8e24e16a98f301",
-    "id": null,
+    "id": "73b4c158b3681732cd8e24e16a98f301",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -342,7 +344,7 @@ return {
     },
     "name": "BankAccountPickerTestQuery",
     "operationKind": "query",
-    "text": "query BankAccountPickerTestQuery {\n  me {\n    ...BankAccountPicker_me\n    id\n  }\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...BankAccountPicker_order\n    id\n  }\n}\n\nfragment BankAccountPicker_me on Me {\n  bankAccounts(first: 100) {\n    edges {\n      node {\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment BankAccountPicker_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  bankAccountId\n  paymentMethodDetails {\n    __typename\n    ... on BankAccount {\n      internalID\n      last4\n      id\n    }\n    ... on CreditCard {\n      id\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

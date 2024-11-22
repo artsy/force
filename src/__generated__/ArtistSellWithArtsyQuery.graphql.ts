@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<a21165714ee55ef00c37985d44d0383d>>
+ * @generated SignedSource<<d2718e0de2be04ebd9320eb46460ff55>>
+ * @relayHash 4bb5687b5a6be4b4b1e141ae58bf0ba3
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 4bb5687b5a6be4b4b1e141ae58bf0ba3
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -166,12 +169,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4bb5687b5a6be4b4b1e141ae58bf0ba3",
-    "id": null,
+    "id": "4bb5687b5a6be4b4b1e141ae58bf0ba3",
     "metadata": {},
     "name": "ArtistSellWithArtsyQuery",
     "operationKind": "query",
-    "text": "query ArtistSellWithArtsyQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistSellWithArtsy_artist\n    id\n  }\n}\n\nfragment ArtistSellWithArtsy_artist on Artist {\n  internalID\n  slug\n  href\n  targetSupply {\n    isInMicrofunnel\n  }\n  image {\n    resized(width: 640) {\n      src\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

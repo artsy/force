@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ce273e8d012d5763167325ae11e737cd>>
+ * @generated SignedSource<<a527fd366418e6ea46c98cba240b1b67>>
+ * @relayHash 47717270de5d70201125df6d335eb907
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 47717270de5d70201125df6d335eb907
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -139,8 +142,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "47717270de5d70201125df6d335eb907",
-    "id": null,
+    "id": "47717270de5d70201125df6d335eb907",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -176,7 +178,7 @@ return {
     },
     "name": "InsightsCareerHighlightRailTestQuery",
     "operationKind": "query",
-    "text": "query InsightsCareerHighlightRailTestQuery {\n  me {\n    ...InsightsCareerHighlightRail_me\n    id\n  }\n}\n\nfragment InsightsCareerHighlightRail_me on Me {\n  myCollectionInfo {\n    artistInsightsCount {\n      BIENNIAL: biennialCount\n      COLLECTED: collectedCount\n      GROUP_SHOW: groupShowCount\n      SOLO_SHOW: soloShowCount\n      REVIEWED: reviewedCount\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

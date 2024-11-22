@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<50a110316e9b5beaebba6b04b3167e5b>>
+ * @generated SignedSource<<7610d87d8fc9bf267a62f0bc5429c068>>
+ * @relayHash 9736ad43e1b18dfecef049590e7ad505
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 9736ad43e1b18dfecef049590e7ad505
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -294,8 +297,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9736ad43e1b18dfecef049590e7ad505",
-    "id": null,
+    "id": "9736ad43e1b18dfecef049590e7ad505",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -363,7 +365,7 @@ return {
     },
     "name": "CareerHighlightModalStepTestQuery",
     "operationKind": "query",
-    "text": "query CareerHighlightModalStepTestQuery {\n  me {\n    myCollectionInfo {\n      BIENNIAL: artistInsights(kind: BIENNIAL) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n    }\n    id\n  }\n}\n\nfragment CareerHighlightModalStep_careerHighlight on ArtistInsight {\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

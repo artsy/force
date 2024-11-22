@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<11f83503c189e76b7331f9d757b2c38c>>
+ * @generated SignedSource<<7d48cf173251303168c909f39d581754>>
+ * @relayHash 827e81bace766881faaf07e430e22577
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 827e81bace766881faaf07e430e22577
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
@@ -231,12 +234,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "827e81bace766881faaf07e430e22577",
-    "id": null,
+    "id": "827e81bace766881faaf07e430e22577",
     "metadata": {},
     "name": "ArtworkSidebarCommercialButtonsOrderMutation",
     "operationKind": "mutation",
-    "text": "mutation ArtworkSidebarCommercialButtonsOrderMutation(\n  $input: CommerceCreateOrderWithArtworkInput!\n) {\n  commerceCreateOrderWithArtwork(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          mode\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

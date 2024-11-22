@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<8929cb63fd1955f3c65f6b410cf1a6a4>>
+ * @generated SignedSource<<6966944ef2f071c6583ca91c8d387e47>>
+ * @relayHash 54eb2b6ed6940dd1777b0e6b6d3dd048
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 54eb2b6ed6940dd1777b0e6b6d3dd048
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -289,12 +292,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "54eb2b6ed6940dd1777b0e6b6d3dd048",
-    "id": null,
+    "id": "54eb2b6ed6940dd1777b0e6b6d3dd048",
     "metadata": {},
     "name": "EntityTooltipArtistQuery",
     "operationKind": "query",
-    "text": "query EntityTooltipArtistQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...EntityTooltipArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityTooltipArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  href\n  blurb(format: PLAIN)\n  carousel {\n    images {\n      resized(height: 100) {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

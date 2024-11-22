@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9adc1e7189623979a727228ad8f8cc7e>>
+ * @generated SignedSource<<bee597919297b33799da0b81c4b1d854>>
+ * @relayHash d5cb685c05ec202e795271ea5bc225f7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d5cb685c05ec202e795271ea5bc225f7
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -82,12 +85,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "d5cb685c05ec202e795271ea5bc225f7",
-    "id": null,
+    "id": "d5cb685c05ec202e795271ea5bc225f7",
     "metadata": {},
     "name": "notificationsRoutesNotificationQuery",
     "operationKind": "query",
-    "text": "query notificationsRoutesNotificationQuery {\n  me {\n    ...NotificationsApp_me\n    id\n  }\n}\n\nfragment NotificationsApp_me on Me {\n  unreadNotificationsCount\n}\n"
+    "text": null
   }
 };
 

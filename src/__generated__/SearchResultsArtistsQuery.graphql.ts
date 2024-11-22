@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9fc4b8f9812278ddf3e6e451a0409642>>
+ * @generated SignedSource<<2b6006a180bd4f062334d8efea86e5d8>>
+ * @relayHash 6869334e3263c2dcbc4cea19b12f8349
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 6869334e3263c2dcbc4cea19b12f8349
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -361,12 +364,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6869334e3263c2dcbc4cea19b12f8349",
-    "id": null,
+    "id": "6869334e3263c2dcbc4cea19b12f8349",
     "metadata": {},
     "name": "SearchResultsArtistsQuery",
     "operationKind": "query",
-    "text": "query SearchResultsArtistsQuery(\n  $first: Int\n  $term: String!\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsArtists_viewer_2aqsc5\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsArtists_viewer_2aqsc5 on Viewer {\n  searchConnection(query: $term, first: $first, page: $page, entities: [ARTIST]) @principalField {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          href\n          bio\n          imageUrl\n          coverArtwork {\n            image {\n              src: url(version: [\"square\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

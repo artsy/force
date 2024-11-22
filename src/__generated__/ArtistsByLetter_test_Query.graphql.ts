@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2eafe99c850f3fa2a2a3339bfe15cfb7>>
+ * @generated SignedSource<<4deded5f8659d39f59bc59ee846ea019>>
+ * @relayHash 56d40f0167525b7dbe3d8473d66c5459
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 56d40f0167525b7dbe3d8473d66c5459
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -278,12 +281,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "56d40f0167525b7dbe3d8473d66c5459",
-    "id": null,
+    "id": "56d40f0167525b7dbe3d8473d66c5459",
     "metadata": {},
     "name": "ArtistsByLetter_test_Query",
     "operationKind": "query",
-    "text": "query ArtistsByLetter_test_Query(\n  $letter: String!\n  $size: Int\n  $page: Int\n) {\n  viewer {\n    ...ArtistsByLetter_viewer_qU0ud\n  }\n}\n\nfragment ArtistsByLetter_viewer_qU0ud on Viewer {\n  artistsConnection(letter: $letter, page: $page, size: $size) {\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    artists: edges {\n      artist: node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": null
   }
 };
 })();

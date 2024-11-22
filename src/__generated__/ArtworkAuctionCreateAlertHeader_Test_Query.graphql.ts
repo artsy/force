@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<13b9a3b8747eb2faa66c69d68244d1d0>>
+ * @generated SignedSource<<917fda10a927ad086505c839c7842652>>
+ * @relayHash 9cc63990bb37ca1c76ec946adaad1adf
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 9cc63990bb37ca1c76ec946adaad1adf
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -289,8 +292,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9cc63990bb37ca1c76ec946adaad1adf",
-    "id": null,
+    "id": "9cc63990bb37ca1c76ec946adaad1adf",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -374,7 +376,7 @@ return {
     },
     "name": "ArtworkAuctionCreateAlertHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isEligibleToCreateAlert\n  isInAuction\n  artistNames\n  artists(shallow: true) {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  myLotStandingManageAlerts: myLotStanding {\n    isHighestBidder\n  }\n}\n"
+    "text": null
   }
 };
 })();

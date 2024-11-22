@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<71904498037fd2efe35bcec4663f8277>>
+ * @generated SignedSource<<032d0a10832b466bf2c6d0ed30383acf>>
+ * @relayHash 29f343a13f7d1f0892ec223863e1fc6e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 29f343a13f7d1f0892ec223863e1fc6e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -142,12 +145,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "29f343a13f7d1f0892ec223863e1fc6e",
-    "id": null,
+    "id": "29f343a13f7d1f0892ec223863e1fc6e",
     "metadata": {},
     "name": "MockRelayRendererFixturesQuery",
     "operationKind": "query",
-    "text": "query MockRelayRendererFixturesQuery {\n  artwork(id: \"mona-lisa\") {\n    ...MockRelayRendererFixtures_artwork\n    id\n  }\n}\n\nfragment MockRelayRendererFixtures_artwork on Artwork {\n  image {\n    url\n  }\n  artist {\n    slug\n    id\n  }\n  ...MockRelayRendererFixtures_artworkMetadata\n}\n\nfragment MockRelayRendererFixtures_artworkMetadata on Artwork {\n  title\n}\n"
+    "text": null
   }
 };
 })();

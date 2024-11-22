@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<4cf58f7e950d69e79f45270deff02fa3>>
+ * @generated SignedSource<<65051df569b638d82d8d7e300c30f703>>
+ * @relayHash d57f8912c64568d9b07f7496d26463c7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID d57f8912c64568d9b07f7496d26463c7
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type PriceDatabaseArtistAutosuggestQuery$variables = {
@@ -197,12 +200,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d57f8912c64568d9b07f7496d26463c7",
-    "id": null,
+    "id": "d57f8912c64568d9b07f7496d26463c7",
     "metadata": {},
     "name": "PriceDatabaseArtistAutosuggestQuery",
     "operationKind": "query",
-    "text": "query PriceDatabaseArtistAutosuggestQuery(\n  $query: String!\n) {\n  searchConnection(query: $query, entities: ARTIST, mode: AUTOSUGGEST, first: 10) {\n    edges {\n      node {\n        __typename\n        text: displayLabel\n        ... on Artist {\n          internalID\n          value: slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

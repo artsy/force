@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<ec292cc981af55d10f58fb6ff3a311c8>>
+ * @generated SignedSource<<dbf63eca5a38f25b6667493d5a0de178>>
+ * @relayHash 11501358d443cae5078e9a503e6210c3
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 11501358d443cae5078e9a503e6210c3
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -313,12 +316,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "11501358d443cae5078e9a503e6210c3",
-    "id": null,
+    "id": "11501358d443cae5078e9a503e6210c3",
     "metadata": {},
     "name": "useDeleteAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      ...SettingsShippingAddresses_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

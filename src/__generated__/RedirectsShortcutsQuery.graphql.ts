@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<06163617d4b01bd907e7d44af7136e40>>
+ * @generated SignedSource<<f21ea5905bc8f18de384e53fbda98961>>
+ * @relayHash 2e2efedde085b45ab0c1f9d01c5b5c52
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 2e2efedde085b45ab0c1f9d01c5b5c52
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type RedirectsShortcutsQuery$variables = {
@@ -95,12 +98,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2e2efedde085b45ab0c1f9d01c5b5c52",
-    "id": null,
+    "id": "2e2efedde085b45ab0c1f9d01c5b5c52",
     "metadata": {},
     "name": "RedirectsShortcutsQuery",
     "operationKind": "query",
-    "text": "query RedirectsShortcutsQuery(\n  $id: ID!\n) {\n  shortcut(id: $id) {\n    long\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

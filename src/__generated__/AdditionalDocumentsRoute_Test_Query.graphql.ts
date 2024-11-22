@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<df6d35e500ce51c39094b014772a83ce>>
+ * @generated SignedSource<<0d55b30cd644169f80eaf0cbd8443730>>
+ * @relayHash fa5b5e28f5ac000a391ec74ae975ed19
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID fa5b5e28f5ac000a391ec74ae975ed19
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -191,12 +194,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fa5b5e28f5ac000a391ec74ae975ed19",
-    "id": null,
+    "id": "fa5b5e28f5ac000a391ec74ae975ed19",
     "metadata": {},
     "name": "AdditionalDocumentsRoute_Test_Query",
     "operationKind": "query",
-    "text": "query AdditionalDocumentsRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...SubmissionRoute_submission\n    ...AdditionalDocumentsRoute_submission\n    id\n  }\n}\n\nfragment AdditionalDocumentsRoute_submission on ConsignmentSubmission {\n  externalId\n  assets(assetType: [ADDITIONAL_FILE]) {\n    id\n    size\n    filename\n    documentPath\n    s3Path\n    s3Bucket\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
+    "text": null
   }
 };
 })();

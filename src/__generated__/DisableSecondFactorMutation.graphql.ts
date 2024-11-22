@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<2b727eeedba967f620222e8fe16b8f2e>>
+ * @generated SignedSource<<760420398e867da57b4fe429c6cefe74>>
+ * @relayHash 18d9c131aeeca27e4fc10c9f6c2ea129
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 18d9c131aeeca27e4fc10c9f6c2ea129
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DisableSecondFactorInput = {
@@ -199,12 +202,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "18d9c131aeeca27e4fc10c9f6c2ea129",
-    "id": null,
+    "id": "18d9c131aeeca27e4fc10c9f6c2ea129",
     "metadata": {},
     "name": "DisableSecondFactorMutation",
     "operationKind": "mutation",
-    "text": "mutation DisableSecondFactorMutation(\n  $input: DisableSecondFactorInput!\n) {\n  disableSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on AppSecondFactor {\n        __typename\n      }\n      ... on SmsSecondFactor {\n        __typename\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

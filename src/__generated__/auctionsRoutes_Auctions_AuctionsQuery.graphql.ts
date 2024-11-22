@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<5188c77ef6e6b564c5ad76351bdabe83>>
+ * @generated SignedSource<<9e7d944862b4bf11eb5be53550931ad3>>
+ * @relayHash cfc78a98ae5b017bbfe612a9d97d2ab3
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID cfc78a98ae5b017bbfe612a9d97d2ab3
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -176,12 +179,11 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "cfc78a98ae5b017bbfe612a9d97d2ab3",
-    "id": null,
+    "id": "cfc78a98ae5b017bbfe612a9d97d2ab3",
     "metadata": {},
     "name": "auctionsRoutes_Auctions_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Auctions_AuctionsQuery {\n  viewer {\n    ...AuctionsRoute_viewer\n  }\n}\n\nfragment AuctionsRoute_viewer on Viewer {\n  salesConnection(first: 10, live: true, published: true, sort: TIMELY_AT_NAME_ASC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        id\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 

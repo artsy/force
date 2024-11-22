@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<93c4ae0ad7b0af0db74fec53226ef91a>>
+ * @generated SignedSource<<7eaf99b8a79e272abcb8a7584b1f0e96>>
+ * @relayHash 373915fac8d40076f3156e87d4274638
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 373915fac8d40076f3156e87d4274638
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -217,8 +220,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "373915fac8d40076f3156e87d4274638",
-    "id": null,
+    "id": "373915fac8d40076f3156e87d4274638",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
@@ -260,7 +262,7 @@ return {
     },
     "name": "EntityHeaderFairFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query EntityHeaderFairFragmentContainer_Test_Query {\n  fair(id: \"example\") {\n    ...EntityHeaderFair_fair\n    id\n  }\n}\n\nfragment EntityHeaderFair_fair on Fair {\n  internalID\n  href\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    internalID\n    initials\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

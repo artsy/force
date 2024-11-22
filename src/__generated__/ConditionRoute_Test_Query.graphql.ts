@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<f50b417c476e7df418e3c6584d12920e>>
+ * @generated SignedSource<<fd952058b8c523fc12daeec58be76cf9>>
+ * @relayHash a49b93f5bb950af4f11a409735c78bd7
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID a49b93f5bb950af4f11a409735c78bd7
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -193,12 +196,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a49b93f5bb950af4f11a409735c78bd7",
-    "id": null,
+    "id": "a49b93f5bb950af4f11a409735c78bd7",
     "metadata": {},
     "name": "ConditionRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ConditionRoute_Test_Query {\n  submission(id: \"submission-id\") {\n    ...ConditionRoute_submission\n    ...SubmissionRoute_submission\n    id\n  }\n}\n\nfragment ConditionRoute_submission on ConsignmentSubmission {\n  myCollectionArtwork {\n    artworkId: internalID\n    condition {\n      value\n    }\n    conditionDescription {\n      details\n    }\n    id\n  }\n}\n\nfragment SubmissionRoute_submission on ConsignmentSubmission {\n  internalID\n  externalId\n  state\n  myCollectionArtworkID\n}\n"
+    "text": null
   }
 };
 })();

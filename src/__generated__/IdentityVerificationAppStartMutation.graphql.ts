@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<3818543a2c52c41f4a4198d8ca7d3167>>
+ * @generated SignedSource<<1d151ffade3641f7eb0baaea7b59f3da>>
+ * @relayHash 2f05867d8850e6b7dd5b60bc193f489e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 2f05867d8850e6b7dd5b60bc193f489e
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type startIdentityVerificationMutationInput = {
@@ -176,12 +179,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2f05867d8850e6b7dd5b60bc193f489e",
-    "id": null,
+    "id": "2f05867d8850e6b7dd5b60bc193f489e",
     "metadata": {},
     "name": "IdentityVerificationAppStartMutation",
     "operationKind": "mutation",
-    "text": "mutation IdentityVerificationAppStartMutation(\n  $input: startIdentityVerificationMutationInput!\n) {\n  startIdentityVerification(input: $input) {\n    startIdentityVerificationResponseOrError {\n      __typename\n      ... on StartIdentityVerificationSuccess {\n        identityVerificationFlowUrl\n      }\n      ... on StartIdentityVerificationFailure {\n        mutationError {\n          detail\n          error\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

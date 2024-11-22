@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<732292772f0efdcad6376994eaf37c1f>>
+ * @generated SignedSource<<6da04b28450bb9403eeadf88e30da823>>
+ * @relayHash 76c259741d94ef5c3baeb0160f91cf3a
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 76c259741d94ef5c3baeb0160f91cf3a
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -139,8 +142,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "76c259741d94ef5c3baeb0160f91cf3a",
-    "id": null,
+    "id": "76c259741d94ef5c3baeb0160f91cf3a",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fairOrganizer": {
@@ -175,7 +177,7 @@ return {
     },
     "name": "FairOrganizerFollowButton_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerFollowButton_Test_Query(\n  $id: String!\n) {\n  fairOrganizer(id: $id) {\n    ...FairOrganizerFollowButton_fairOrganizer\n    id\n  }\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n"
+    "text": null
   }
 };
 })();

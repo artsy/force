@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9a6d742097620830682ac2d338373598>>
+ * @generated SignedSource<<a56ac9b42eddac771c5e442d88ed09cd>>
+ * @relayHash 02b84d612184a45dedb92df750f52ed4
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 02b84d612184a45dedb92df750f52ed4
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type partnerRoutes_WorksQuery$variables = {
@@ -118,12 +121,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "02b84d612184a45dedb92df750f52ed4",
-    "id": null,
+    "id": "02b84d612184a45dedb92df750f52ed4",
     "metadata": {},
     "name": "partnerRoutes_WorksQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_WorksQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    displayWorksSection\n    counts {\n      eligibleArtworks\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

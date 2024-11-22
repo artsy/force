@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<790fa90e92362d65e08842bd2bc1fbaf>>
+ * @generated SignedSource<<1db793325cdd8b5d14f51836439c153e>>
+ * @relayHash 23a4550f9769a008465ea7ec744d8440
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 23a4550f9769a008465ea7ec744d8440
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -433,8 +436,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "23a4550f9769a008465ea7ec744d8440",
-    "id": null,
+    "id": "23a4550f9769a008465ea7ec744d8440",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fairOrganizer": {
@@ -534,7 +536,7 @@ return {
     },
     "name": "FairOrganizerDedicatedArticles_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerDedicatedArticles_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerDedicatedArticles_fairOrganizer\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      url\n    }\n    id\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: 16, page: 1, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        id\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": null
   }
 };
 })();

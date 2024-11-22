@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<777733fda409f1d9abce72ed6d5f9987>>
+ * @generated SignedSource<<f9de7154db4fd7d4df90a76e19c57410>>
+ * @relayHash 116be5afd583175c5fba0960359b0948
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 116be5afd583175c5fba0960359b0948
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -136,8 +139,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "116be5afd583175c5fba0960359b0948",
-    "id": null,
+    "id": "116be5afd583175c5fba0960359b0948",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
@@ -170,7 +172,7 @@ return {
     },
     "name": "ArtistInsightAchievements_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistInsightAchievements_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightAchievements_artist\n    id\n  }\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL, AWARDS, PRIVATE_COLLECTIONS, RESIDENCIES]) {\n    label\n    entities\n  }\n}\n"
+    "text": null
   }
 };
 })();

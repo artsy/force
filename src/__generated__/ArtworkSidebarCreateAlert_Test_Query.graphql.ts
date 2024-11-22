@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<c836ae6caea70038c974799055d0fe23>>
+ * @generated SignedSource<<df940d5b5b29223cb937e448495b679d>>
+ * @relayHash 3f06f72e2ea9ac8596233583ba61b790
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 3f06f72e2ea9ac8596233583ba61b790
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -90,8 +93,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3f06f72e2ea9ac8596233583ba61b790",
-    "id": null,
+    "id": "3f06f72e2ea9ac8596233583ba61b790",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
@@ -116,7 +118,7 @@ return {
     },
     "name": "ArtworkSidebarCreateAlert_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCreateAlert_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...ArtworkSidebarCreateAlert_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCreateAlert_artwork on Artwork {\n  isEligibleToCreateAlert\n}\n"
+    "text": null
   }
 };
 })();

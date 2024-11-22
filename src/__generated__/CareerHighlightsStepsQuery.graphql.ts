@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<b0e14f77e9a1943d49221332572ea033>>
+ * @generated SignedSource<<3262d853470c218e623f408faee01605>>
+ * @relayHash c8a99fb2163a08f786687999d7d002c4
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID c8a99fb2163a08f786687999d7d002c4
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -392,12 +395,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c8a99fb2163a08f786687999d7d002c4",
-    "id": null,
+    "id": "c8a99fb2163a08f786687999d7d002c4",
     "metadata": {},
     "name": "CareerHighlightsStepsQuery",
     "operationKind": "query",
-    "text": "query CareerHighlightsStepsQuery {\n  me {\n    myCollectionInfo {\n      BIENNIAL: artistInsights(kind: BIENNIAL) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      COLLECTED: artistInsights(kind: COLLECTED) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      GROUP_SHOW: artistInsights(kind: GROUP_SHOW) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      REVIEWED: artistInsights(kind: REVIEWED) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      SOLO_SHOW: artistInsights(kind: SOLO_SHOW) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n    }\n    id\n  }\n}\n\nfragment CareerHighlightModalStep_careerHighlight on ArtistInsight {\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();
