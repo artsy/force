@@ -1,10 +1,11 @@
+import { Formik, Form } from "formik"
+import * as Yup from "yup"
 import { Button, Spacer } from "@artsy/palette"
 import { AddressFormValues } from "Apps/Invoice/Components/AddressForm"
 import { AddressFormWithCreditCard } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { useCreateTokenAndSubmit } from "Apps/Invoice/Hooks/useCreateTokenAndSubmit"
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
 import { emptyAddress } from "Components/Address/utils"
-import { Formik, Form } from "formik"
 import { useRouter } from "System/Hooks/useRouter"
 
 export interface InvoicePaymentFormProps {
@@ -31,9 +32,9 @@ export const InvoicePaymentForm: React.FC<React.PropsWithChildren<
     <Formik<AddressFormValues>
       onSubmit={handleSubmit}
       initialValues={{ address: emptyAddress, creditCard: false }}
-      validationSchema={{
+      validationSchema={Yup.object().shape({
         ...addressFormFieldsValidator({ withPhoneNumber: false }),
-      }}
+      })}
     >
       {({ isSubmitting, isValid }) => {
         return (

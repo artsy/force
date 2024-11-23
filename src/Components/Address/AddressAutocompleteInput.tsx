@@ -312,6 +312,7 @@ export const AddressAutocompleteInput = ({
         onChange={onChange}
         error={error}
         data-testid={dataTestId}
+        required={!!autocompleteProps.required}
       />
     )
   }
