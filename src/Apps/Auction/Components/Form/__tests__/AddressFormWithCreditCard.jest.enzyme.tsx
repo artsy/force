@@ -7,8 +7,8 @@ jest.mock("Apps/Auction/Hooks/useAuctionFormContext")
 jest.mock("Components/CreditCardInput", () => ({
   CreditCardInput: () => null,
 }))
-jest.mock("../AddressForm", () => ({
-  AddressForm: () => null,
+jest.mock("Components/Address/AddressFormFields", () => ({
+  AddressFormFields: () => null,
 }))
 
 describe("AddressFormWithCreditCard", () => {
@@ -35,7 +35,7 @@ describe("AddressFormWithCreditCard", () => {
   it("renders correct components", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("CreditCardInput")).toHaveLength(1)
-    expect(wrapper.find("AddressForm")).toHaveLength(1)
+    expect(wrapper.find("AddressFormFields")).toHaveLength(1)
   })
 
   describe("credit card error handling", () => {
