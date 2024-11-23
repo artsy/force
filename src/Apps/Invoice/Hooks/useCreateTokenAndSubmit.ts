@@ -12,7 +12,7 @@ import {
   stripeNotLoadedErrorMessage,
 } from "Apps/Auction/Components/Form/Utils/errorMessages"
 import { FormikHelpers } from "formik"
-import { AddressFormValues } from "Apps/Invoice/Components/AddressForm"
+import { AddressFormValues } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { useMakeInvoicePayment } from "Apps/Invoice/Hooks/useMakeInvoicePayment"
 import { InvoicePaymentFormProps } from "Apps/Invoice/Components/InvoicePaymentForm"
 import { useToasts } from "@artsy/palette"
