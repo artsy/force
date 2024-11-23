@@ -19,9 +19,9 @@ interface Props {
   withPhoneNumber?: boolean
 }
 
-export const addressFormFieldsValidator = (
-  args: { withPhoneNumber?: boolean } = {}
-) => ({
+export const addressFormFieldsValidator = (args: {
+  withPhoneNumber: boolean
+}) => ({
   address: yupAddressValidator,
   ...(args.withPhoneNumber && { phoneNumber: basicPhoneValidator }),
 })

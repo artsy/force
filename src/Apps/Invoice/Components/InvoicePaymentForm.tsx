@@ -2,6 +2,7 @@ import { Button, Spacer } from "@artsy/palette"
 import { AddressFormValues } from "Apps/Invoice/Components/AddressForm"
 import { AddressFormWithCreditCard } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { useCreateTokenAndSubmit } from "Apps/Invoice/Hooks/useCreateTokenAndSubmit"
+import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
 import { emptyAddress } from "Components/Address/utils"
 import { Formik, Form } from "formik"
 import { useRouter } from "System/Hooks/useRouter"
@@ -12,7 +13,9 @@ export interface InvoicePaymentFormProps {
   amountMinor: number
 }
 
-export const InvoicePaymentForm: React.FC<React.PropsWithChildren<InvoicePaymentFormProps>> = props => {
+export const InvoicePaymentForm: React.FC<React.PropsWithChildren<
+  InvoicePaymentFormProps
+>> = props => {
   const { match, router } = useRouter()
   const token = match.params.token
   const invoiceRoute = `/invoice/${token}`
@@ -28,6 +31,9 @@ export const InvoicePaymentForm: React.FC<React.PropsWithChildren<InvoicePayment
     <Formik<AddressFormValues>
       onSubmit={handleSubmit}
       initialValues={{ address: emptyAddress, creditCard: false }}
+      validationSchema={{
+        ...addressFormFieldsValidator({ withPhoneNumber: false }),
+      }}
     >
       {({ isSubmitting, isValid }) => {
         return (
