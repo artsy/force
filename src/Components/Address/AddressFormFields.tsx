@@ -1,17 +1,34 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Column, GridColumns, Input } from "@artsy/palette"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
-import { Address } from "Components/Address/utils"
+import {
+  Address,
+  basicPhoneValidator,
+  yupAddressValidator,
+} from "Components/Address/utils"
 import { CountrySelect } from "Components/CountrySelect"
 import { useFormikContext } from "formik"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface FormikContextWithAddress {
   address: Address
-  phoneNumber: string
+  phoneNumber?: string
 }
 
-export const AddressFormFields = <V extends FormikContextWithAddress>() => {
+interface Props {
+  withPhoneNumber?: boolean
+}
+
+export const addressFormFieldsValidator = (
+  args: { withPhoneNumber?: boolean } = {}
+) => ({
+  address: yupAddressValidator,
+  ...(args.withPhoneNumber && { phoneNumber: basicPhoneValidator }),
+})
+
+export const AddressFormFields = <V extends FormikContextWithAddress>(
+  props: Props
+) => {
   const {
     handleChange,
     handleBlur,
@@ -169,24 +186,26 @@ export const AddressFormFields = <V extends FormikContextWithAddress>() => {
         />
       </Column>
 
-      <Column span={12}>
-        <Input
-          name="phoneNumber"
-          id="phoneNumber"
-          title="Phone number"
-          type="tel"
-          description="Required for shipping logistics"
-          placeholder="Add phone number"
-          autoComplete="tel"
-          value={values.phoneNumber}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={
-            touched.phoneNumber && (errors.phoneNumber as string | undefined)
-          }
-          required
-        />
-      </Column>
+      {props.withPhoneNumber && (
+        <Column span={12}>
+          <Input
+            name="phoneNumber"
+            id="phoneNumber"
+            title="Phone number"
+            type="tel"
+            description="Required for shipping logistics"
+            placeholder="Add phone number"
+            autoComplete="tel"
+            value={values.phoneNumber}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={
+              touched.phoneNumber && (errors.phoneNumber as string | undefined)
+            }
+            required
+          />
+        </Column>
+      )}
     </GridColumns>
   )
 }

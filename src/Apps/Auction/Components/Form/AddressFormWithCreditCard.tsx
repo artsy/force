@@ -4,7 +4,9 @@ import { AddressFormFields } from "Components/Address/AddressFormFields"
 import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
 import { AuctionFormValues } from "Apps/Auction/Components/Form/Utils/initialValues"
 
-export const AddressFormWithCreditCard: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const AddressFormWithCreditCard: React.FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   const {
     setFieldValue,
     setFieldTouched,
@@ -45,7 +47,7 @@ export const AddressFormWithCreditCard: React.FC<React.PropsWithChildren<unknown
         required
       />
 
-      <AddressFormFields<AuctionFormValues> />
+      <AddressFormFields<AuctionFormValues> withPhoneNumber />
     </Join>
   )
 }

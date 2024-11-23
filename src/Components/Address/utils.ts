@@ -36,6 +36,10 @@ export const toStripeAddress = (address: Address): CreateTokenCardData => {
   }
 }
 
+export const basicPhoneValidator = Yup.string()
+  .required("Phone number is required")
+  .matches(/^[+\-\(\)\d\s]+$/, "Please enter a valid phone number")
+
 export const yupPhoneValidator = Yup.string()
   .required("Phone Number is required")
   .test({
@@ -64,4 +68,18 @@ export const postalCodeValidator = Yup.string().when("country", {
       .matches(caPostalCodeRegexp, "Invalid postal code"),
     otherwise: Yup.string(),
   }),
+})
+
+export const yupAddressValidator = Yup.object().shape({
+  name: Yup.string().required("Full name is required"),
+  addressLine1: Yup.string().required("Street address is required"),
+  addressLine2: Yup.string().nullable(),
+  city: Yup.string().required("City is required"),
+  postalCode: postalCodeValidator,
+  region: Yup.string().when("country", {
+    is: country => ["US", "CA"].includes(country),
+    then: Yup.string().required("State is required"),
+    otherwise: Yup.string(),
+  }),
+  country: Yup.string().required("Country is required"),
 })
