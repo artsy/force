@@ -6,7 +6,6 @@
 .env
 .env.*
 !.env.development
-.swc/
 .yalc
 *.csv
 *.dat
