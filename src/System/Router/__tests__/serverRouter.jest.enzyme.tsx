@@ -134,7 +134,7 @@ describe("serverRouter", () => {
 
     it("bootstraps relay SSR data", async () => {
       const { extractScriptTags } = await getWrapper()
-      expect(extractScriptTags?.()).toContain("__RELAY_BOOTSTRAP__")
+      expect(extractScriptTags?.()).toContain("__RELAY_HYDRATION_DATA__")
     })
 
     it("does not prefix CDN_URL if not available", async () => {

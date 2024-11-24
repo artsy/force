@@ -2,16 +2,13 @@ import { getENV } from "Utils/getENV"
 import { Environment } from "react-relay"
 import path from "path"
 import { ChunkExtractor } from "@loadable/server"
-import serialize from "serialize-javascript"
 import { ServerStyleSheet } from "styled-components"
 import { renderToString } from "react-dom/server"
-import RelayServerSSR, {
-  SSRCache,
-} from "react-relay-network-modern-ssr/lib/server"
-import { RelayNetworkLayerResponse } from "react-relay-network-modern"
+import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { ENABLE_SSR_STREAMING } from "Server/config"
 import { renderToStream } from "System/Router/Utils/renderToStream"
 import { ArtsyResponse } from "Server/middleware/artsyExpress"
+import { serializeRelayHydrationData } from "System/Router/Utils/serializeRelayHydrationData"
 
 const STATS = "loadable-stats.json"
 
@@ -73,10 +70,6 @@ export const collectAssets = async ({
 
   const initialRelayData = await relaySSRMiddleware.getCache()
 
-  /**
-   * Extract scripts from loadable components
-   * NOTE: When streaming is enabled we need to lazily execute script extraction
-   */
   const extractScriptTags = () => {
     const initialScripts: string[] = []
 
@@ -100,33 +93,14 @@ export const collectAssets = async ({
             return script
           }
         })
-        .filter(script => {
-          return !(
-            /**
-             * Since these files are already embedded in our main
-             * layout file, omit them from the scripts array.
-             *
-             * TODO: Don't include these files in the main layout
-             * and instead relay on dynamically including them here.
-             * Will require some shuffling in the jade template,
-             * however.
-             */
-            (
-              script.includes("/assets/runtime.") ||
-              script.includes("/assets/artsy.") ||
-              script.includes("/assets/common-artsy.") ||
-              script.includes("/assets/common-react.") ||
-              script.includes("/assets/common-utility.") ||
-              script.includes("/assets/common.")
-            )
-          )
-        })
         .join("\n")
     )
 
     initialScripts.push(`
       <script>
-        var __RELAY_BOOTSTRAP__ = ${serializeRelayData(initialRelayData)};
+        var __RELAY_HYDRATION_DATA__ = ${serializeRelayHydrationData(
+          initialRelayData
+        )};
       </script>
     `)
 
@@ -141,32 +115,4 @@ export const collectAssets = async ({
     stream,
     styleTags,
   }
-}
-
-const serializeRelayData = (initialRelayData: SSRCache) => {
-  initialRelayData.forEach(entry => {
-    entry.forEach((item: RelayNetworkLayerResponse) => {
-      // Clean relay data of problematic data structures
-      delete item._res
-    })
-  })
-
-  let hydrationData
-
-  try {
-    hydrationData = serialize(initialRelayData, {
-      isJSON: true,
-    })
-  } catch (error) {
-    hydrationData = "{}"
-
-    console.error(
-      "[system/router/collectAssets] Error serializing data:",
-      error
-    )
-  }
-
-  return serialize(hydrationData || {}, {
-    isJSON: true,
-  })
 }
