@@ -1,10 +1,22 @@
+import { ReactNode } from "react"
 import { renderToPipeableStream } from "react-dom/server"
 import { ArtsyResponse } from "Server/middleware/artsyExpress"
 import { Transform } from "stream"
+import { ServerStyleSheet } from "styled-components"
 
 const STREAM_TIMEOUT = 5000
 
-export function renderToStream(jsx, sheet, res: ArtsyResponse) {
+interface RenderToStreamProps {
+  jsx: ReactNode
+  sheet: ServerStyleSheet
+  res: ArtsyResponse
+}
+
+export const renderToStream = ({
+  jsx,
+  sheet,
+  res,
+}: RenderToStreamProps): Transform => {
   let didError = false
 
   const decoder = new TextDecoder("utf-8")
@@ -49,11 +61,11 @@ export function renderToStream(jsx, sheet, res: ArtsyResponse) {
   const { pipe, abort } = renderToPipeableStream(jsx, {
     onError: error => {
       didError = true
-      console.error("error", error)
+      console.error("[renderToStream] onError:", error)
     },
     onShellError: error => {
       didError = true
-      console.log("shell error", error)
+      console.error("[renderToStream] onShellError:", error)
     },
     onShellReady: () => {
       res.statusCode = didError ? 500 : 200
