@@ -4,7 +4,7 @@ import { ArtsyResponse } from "Server/middleware/artsyExpress"
 import { Transform } from "stream"
 import { ServerStyleSheet } from "styled-components"
 
-const STREAM_TIMEOUT = 5000
+const STREAM_TIMEOUT_MS = 10000
 
 interface RenderToStreamProps {
   jsx: ReactNode
@@ -80,7 +80,7 @@ export const renderToStream = ({
   // Abandon and switch to client rendering if enough time passes.
   streamTimeout = setTimeout(() => {
     abort()
-  }, STREAM_TIMEOUT)
+  }, STREAM_TIMEOUT_MS)
 
   return stream
 }

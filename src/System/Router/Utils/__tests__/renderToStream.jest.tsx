@@ -15,6 +15,7 @@ describe("renderToStream", () => {
   const res = ({
     statusCode: 0,
     setHeader: jest.fn(),
+    res: { write: jest.fn(), end: jest.fn() },
   } as unknown) as ArtsyResponse
 
   const sheet = ({
@@ -109,7 +110,7 @@ describe("renderToStream", () => {
     const jsx = <div>Timeout Test</div>
     renderToStream({ jsx, sheet, res })
 
-    jest.advanceTimersByTime(5000)
+    jest.advanceTimersByTime(10000) // stream timeout
 
     expect(mockAbort).toHaveBeenCalled()
     jest.useRealTimers()
@@ -142,6 +143,8 @@ describe("renderToStream", () => {
       )
     })
 
+    await flushPromiseQueue()
+
     stream.end()
   })
 
@@ -161,20 +164,22 @@ describe("renderToStream", () => {
 
     const stream = renderToStream({ jsx, sheet, res })
 
-    stream.write("<html><head></head><body></body></html>")
+    stream.write("<html><head></head><body>")
 
     const chunks: string[] = []
     stream.on("data", chunk => {
       chunks.push(chunk)
     })
 
-    await new Promise(resolve => {
-      stream.on("end", resolve)
+    stream.on("end", () => {
+      const result = chunks.join("")
+      expect(result).toContain(
+        '<html><head>mock-css</head><body><div class="content">Hello World</div>'
+      )
     })
 
-    const result = chunks.join("")
-    expect(result).toContain(
-      '<html><head>mock-css</head><body></body></html><div class="content">Hello World</div>'
-    )
+    await flushPromiseQueue()
+
+    stream.end()
   })
 })

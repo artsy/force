@@ -2,30 +2,27 @@ import { RelayNetworkLayerResponse } from "react-relay-network-modern"
 import { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 import serialize from "serialize-javascript"
 
-export const serializeRelayHydrationData = (initialRelayData: SSRCache) => {
+export const serializeRelayHydrationData = (
+  initialRelayData: SSRCache = []
+): string => {
   initialRelayData.forEach(entry => {
     entry.forEach((item: RelayNetworkLayerResponse) => {
-      // Clean relay data of problematic data structures
-      delete item._res
+      delete item._res // Remove unnecessary relay network data
     })
   })
 
-  let hydrationData
-
   try {
-    hydrationData = serialize(initialRelayData, {
+    // Double pass to ensure that the data is serialized correctly
+    // TODO: Fix this
+    return serialize(serialize(initialRelayData, { isJSON: true }), {
       isJSON: true,
     })
   } catch (error) {
-    hydrationData = "{}"
-
     console.error(
       "[system/router/serializeRelayHydrationData] Error serializing data:",
       error
     )
-  }
 
-  return serialize(hydrationData || {}, {
-    isJSON: true,
-  })
+    return serialize("[]", { isJSON: true })
+  }
 }
