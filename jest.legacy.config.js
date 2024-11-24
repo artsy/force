@@ -1,4 +1,3 @@
-const swcConfig = require("./.swcrc.js")
 const { webpackEnv } = require("./webpack/webpackEnv")
 
 module.exports = {
