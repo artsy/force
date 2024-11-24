@@ -70,6 +70,8 @@ export const collectAssets = async ({
 
   const initialRelayData = await relaySSRMiddleware.getCache()
 
+  console.log(initialRelayData)
+
   const extractScriptTags = () => {
     const initialScripts: string[] = []
 
@@ -79,10 +81,6 @@ export const collectAssets = async ({
       bundleScriptTags
         .split("\n")
         .map(script => {
-          /**
-           * In production, prefix injected script src with CDN endpoint.
-           * @see https://github.com/artsy/force/blob/main/src/lib/middleware/asset.ts#L23
-           */
           if (getENV("CDN_URL")) {
             const scriptTagWithCDN = script.replace(
               /src="\/assets/g,
