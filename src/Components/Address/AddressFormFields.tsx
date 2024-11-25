@@ -10,7 +10,7 @@ import { CountrySelect } from "Components/CountrySelect"
 import { useFormikContext } from "formik"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
-interface FormikContextWithAddress {
+export interface FormikContextWithAddress {
   address: Address
   phoneNumber?: string
 }
