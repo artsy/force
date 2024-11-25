@@ -14,7 +14,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { Formik } from "formik"
 import * as Yup from "yup"
 
-describe("AddressForm", () => {
+describe("AddressFormFields", () => {
   const mockOnSubmit = jest.fn()
   beforeEach(() => {
     mockOnSubmit.mockClear()
