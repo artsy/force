@@ -59,7 +59,7 @@ export const collectAssets = async ({
   let styleTags
 
   if (ENABLE_SSR_STREAMING) {
-    stream = renderToStream({ jsx, sheet, res })
+    stream = await renderToStream({ jsx, sheet, res })
   } else {
     html = renderToString(jsx)
     styleTags = sheet.getStyleTags()

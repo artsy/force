@@ -1,10 +1,8 @@
 import { ReactNode } from "react"
-import { renderToPipeableStream } from "react-dom/server"
 import { ArtsyResponse } from "Server/middleware/artsyExpress"
-import { Transform } from "stream"
+import { PassThrough, Transform } from "stream"
 import { ServerStyleSheet } from "styled-components"
-
-const STREAM_TIMEOUT_MS = 10000
+import { renderToStream as baseRenderToStream } from "react-streaming/dist/cjs/server/index.node-only"
 
 interface RenderToStreamProps {
   jsx: ReactNode
@@ -12,17 +10,25 @@ interface RenderToStreamProps {
   res: ArtsyResponse
 }
 
-export const renderToStream = ({
+export interface RenderToStreamResult {
+  initStream: () => {
+    passThroughStream: PassThrough
+    transform: Transform
+  }
+}
+
+export const renderToStream = async ({
   jsx,
   sheet,
-  res,
-}: RenderToStreamProps): Transform => {
-  let didError = false
-
+}: RenderToStreamProps): Promise<RenderToStreamResult> => {
   const decoder = new TextDecoder("utf-8")
 
-  const stream = new Transform({
+  // Intercept stream in order to inject styled-components CSS on the fly
+  const transform = new Transform({
     objectMode: true,
+    flush(callback) {
+      callback()
+    },
     transform(chunk, encoding, callback) {
       const renderedHtml =
         chunk instanceof Uint8Array
@@ -56,31 +62,22 @@ export const renderToStream = ({
     },
   })
 
-  let streamTimeout: NodeJS.Timeout
-
-  const { pipe, abort } = renderToPipeableStream(jsx, {
-    onError: error => {
-      didError = true
-      console.error("[renderToStream] onError:", error)
-    },
-    onShellError: error => {
-      didError = true
-      console.error("[renderToStream] onShellError:", error)
-    },
-    onShellReady: () => {
-      res.statusCode = didError ? 500 : 200
-      res.setHeader("Content-Type", "text/html; charset=utf-8")
-      pipe(stream)
-    },
-    onAllReady: () => {
-      clearTimeout(streamTimeout)
-    },
+  const { pipe } = await baseRenderToStream(jsx, {
+    userAgent: "Chrome", // FIXME: real UA
   })
 
-  // Abandon and switch to client rendering if enough time passes.
-  streamTimeout = setTimeout(() => {
-    abort()
-  }, STREAM_TIMEOUT_MS)
+  const initStream = () => {
+    const passThrough = new PassThrough()
 
-  return stream
+    pipe?.(passThrough)
+
+    const passThroughStream = passThrough.pipe(transform)
+
+    return {
+      passThroughStream,
+      transform,
+    }
+  }
+
+  return { initStream }
 }

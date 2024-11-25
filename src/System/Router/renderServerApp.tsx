@@ -3,11 +3,11 @@ import { getServerParam } from "Utils/getServerParam"
 import { renderToString } from "react-dom/server"
 import loadAssetManifest from "Server/manifest"
 import path from "path"
-import { Transform } from "stream"
 import { ENABLE_SSR_STREAMING } from "Server/config"
 import { getENV } from "Utils/getENV"
 import { ServerAppResults } from "System/Router/serverRouter"
 import { getWebpackEarlyHints } from "Server/getWebpackEarlyHints"
+import { RenderToStreamResult } from "System/Router/Utils/renderToStream"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -28,7 +28,7 @@ interface RenderServerAppProps extends ServerAppResults {
   mount?: boolean
   req: ArtsyRequest
   res: ArtsyResponse
-  stream?: Transform
+  stream?: RenderToStreamResult
 }
 
 export const renderServerApp = ({
@@ -88,7 +88,7 @@ export const renderServerApp = ({
 
   res
     .status(statusCode)
-    .render(`${PUBLIC_DIR}/html.ejs`, options, (error, html) => {
+    .render(`${PUBLIC_DIR}/html.ejs`, options, async (error, html) => {
       if (error) {
         console.error(error)
 
@@ -101,11 +101,13 @@ export const renderServerApp = ({
 
           // React mount point
           res.write('<div id="react-root">')
+          const { passThroughStream, transform } = stream.initStream()
 
           // Start streaming HTML response
-          stream.pipe(res, { end: false })
+          passThroughStream.pipe(res, { end: false })
 
-          stream.on("end", () => {
+          // Stream transform is the last one to close, so end here
+          transform.on("close", () => {
             res.write("</div></body></html>")
             res.end()
           })

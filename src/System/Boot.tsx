@@ -1,6 +1,6 @@
 import { Theme, injectGlobalStyles, ToastsProvider } from "@artsy/palette"
 import { RouteProps } from "System/Router/Route"
-import { FC, Suspense, useEffect } from "react"
+import { FC, useEffect } from "react"
 import { HeadProvider } from "react-head"
 import { Environment, RelayEnvironmentProvider } from "react-relay"
 import Events from "Utils/Events"
@@ -80,7 +80,7 @@ export const Boot: React.FC<React.PropsWithChildren<
                           >
                             <CookieConsentManager>
                               <SiftContainer />
-                              <Suspense fallback={null}>{children}</Suspense>
+                              {children}
                             </CookieConsentManager>
                           </DismissibleProvider>
                         </AuthDialogProvider>
