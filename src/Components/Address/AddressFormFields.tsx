@@ -19,13 +19,50 @@ interface Props {
   withPhoneNumber?: boolean
 }
 
-export const addressFormFieldsValidator = (args: {
-  withPhoneNumber: boolean
-}) => ({
+/**
+ * Validation schema for address form fields. Arguments match the
+ * <AddressFormFields/> component - e.g. to include phone number validation
+ * @example
+ * ```tsx
+ * const validationSchema = yup.object().shape({
+ *  ...addressFormFieldsValidator({ withPhoneNumber: true }),
+ *  saveAddress: boolean
+ * })
+ * // later...
+ *
+ * <Formik
+ *  validationSchema={validationSchema}
+ *  {...otherFormikProps}
+ * >
+ *   <AddressFormFields<AddressFormValues> withPhoneNumber />
+ * ```
+ */
+export const addressFormFieldsValidator = (args: Props = {}) => ({
   address: yupAddressValidator,
   ...(args.withPhoneNumber && { phoneNumber: basicPhoneValidator }),
 })
 
+/**
+ * Form fields for collecting address information. This component is intended
+ * to be used within a Formik form, and the `Values` interface of that form
+ * should fulfill a `FormikContextWithAddress` interface:
+ * - the relevant nested `address` object
+ * - plus a `phoneNumber` if the `withPhoneNumber` prop is passed
+ * For a composable validation schema, see `addressFormFieldsValidator()`.
+ *
+ * @example
+ * ```tsx
+ * interface MyFormValues {
+ *  address: Address
+ *  phoneNumber: string
+ *  saveAddress: boolean
+ * }
+ *
+ * <Formik<MyFormValues> {...otherFormikProps}>
+ *  <AddressFormFields<MyFormValues> withPhoneNumber />
+ *  <SaveAddressCheckbox />
+ *
+ */
 export const AddressFormFields = <V extends FormikContextWithAddress>(
   props: Props
 ) => {
