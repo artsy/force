@@ -32,7 +32,7 @@ export const PrivateArtworkAboutArtist: React.FC<React.PropsWithChildren<
       fragment PrivateArtworkAboutArtist_artwork on Artwork {
         displayArtistBio
         slug
-        privateArtists: artists(shallow: false) {
+        artists(shallow: true) {
           ...FollowArtistButton_artist
           internalID
           href
@@ -41,8 +41,6 @@ export const PrivateArtworkAboutArtist: React.FC<React.PropsWithChildren<
           initials
           formattedNationalityAndBirthday
           counts {
-            artworks
-            forSaleArtworks
             follows
           }
           coverArtwork {
@@ -53,7 +51,6 @@ export const PrivateArtworkAboutArtist: React.FC<React.PropsWithChildren<
               }
             }
           }
-          name
           biographyBlurb(format: HTML, partnerBio: false) {
             text
           }
@@ -81,12 +78,12 @@ export const PrivateArtworkAboutArtist: React.FC<React.PropsWithChildren<
     >
       <Text variant="md" color="white100">
         About the Artist
-        {data.privateArtists && data.privateArtists?.length > 1 ? "s" : ""}
+        {data.artists && data.artists?.length > 1 ? "s" : ""}
       </Text>
 
       <Spacer y={2} />
 
-      {data.privateArtists?.map(
+      {data.artists?.map(
         artist =>
           artist && (
             <>
