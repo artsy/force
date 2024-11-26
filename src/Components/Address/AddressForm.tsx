@@ -8,7 +8,6 @@ import {
 } from "@artsy/palette"
 import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
-import { CreateTokenCardData } from "@stripe/stripe-js"
 import { isEqual } from "lodash"
 import {
   AddressAutocompleteSuggestion,
@@ -23,19 +22,9 @@ import {
   SelectedItemFromAddressAutoCompletion,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { Address, emptyAddress } from "Components/Address/utils"
 
 const ENABLE_SECONDARY_SUGGESTIONS = false
-
-export interface Address {
-  name: string
-  country: string
-  postalCode: string
-  addressLine1: string
-  addressLine2: string
-  city: string
-  region: string
-  phoneNumber?: string
-}
 
 export type AddressErrors = Partial<Address>
 export type AddressTouched = Partial<{ [T in keyof Address]: boolean }>
@@ -44,28 +33,6 @@ export type AddressChangeHandler = (
   key: keyof Address
 ) => void
 
-export const emptyAddress: Address = {
-  name: "",
-  country: "",
-  postalCode: "",
-  addressLine1: "",
-  addressLine2: "",
-  city: "",
-  region: "",
-  phoneNumber: "",
-}
-
-export const toStripeAddress = (address: Address): CreateTokenCardData => {
-  return {
-    name: address.name,
-    address_line1: address.addressLine1,
-    address_line2: address.addressLine2,
-    address_country: address.country,
-    address_city: address.city,
-    address_state: address.region,
-    address_zip: address.postalCode,
-  }
-}
 export interface AddressFormProps {
   onChange: AddressChangeHandler
   value?: Partial<Address>

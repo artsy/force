@@ -1,11 +1,11 @@
 import { FormikHelpers } from "formik"
-import { Address, emptyAddress } from "Components/Address/AddressForm"
+import { Address, emptyAddress } from "Components/Address/utils"
 
 export interface AuctionFormValues {
   address: Address
   agreeToTerms: boolean
   creditCard?: boolean
-  phoneNumber?: string
+  phoneNumber: string
   selectedBid?: string
 }
 

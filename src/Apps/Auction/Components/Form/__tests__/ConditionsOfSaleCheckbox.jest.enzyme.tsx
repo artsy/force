@@ -1,12 +1,13 @@
 import { mount } from "enzyme"
-import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
+import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
+
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 
-jest.mock("Apps/Auction/Hooks/useFormContext")
+jest.mock("Apps/Auction/Hooks/useAuctionFormContext")
 jest.mock("System/Hooks/useFeatureFlag")
 
 describe("ConditionsOfSaleCheckbox", () => {
-  const mockUseFormContext = useFormContext as jest.Mock
+  const mockuseAuctionFormContext = useAuctionFormContext as jest.Mock
   const setFieldTouched = jest.fn()
   const setFieldValue = jest.fn()
   const formProps = {
@@ -22,13 +23,13 @@ describe("ConditionsOfSaleCheckbox", () => {
   }
 
   beforeAll(() => {
-    mockUseFormContext.mockImplementation(() => {
+    mockuseAuctionFormContext.mockImplementation(() => {
       return formProps
     })
   })
 
   it("shows error message if error", () => {
-    mockUseFormContext.mockImplementation(() => {
+    mockuseAuctionFormContext.mockImplementation(() => {
       return {
         ...formProps,
         touched: {

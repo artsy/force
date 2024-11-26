@@ -1,15 +1,16 @@
 import { mount } from "enzyme"
-import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
+import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
+
 import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
 
-jest.mock("Apps/Auction/Hooks/useFormContext")
+jest.mock("Apps/Auction/Hooks/useAuctionFormContext")
 
 describe("ErrorStatus", () => {
-  const mockUseFormContext = useFormContext as jest.Mock
+  const mockuseAuctionFormContext = useAuctionFormContext as jest.Mock
   let status
 
   const getWrapper = () => {
-    mockUseFormContext.mockImplementation(() => {
+    mockuseAuctionFormContext.mockImplementation(() => {
       return {
         status,
       }

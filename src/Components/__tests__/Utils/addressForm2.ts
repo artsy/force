@@ -3,7 +3,7 @@
  * with improvements like state select
  */
 
-import { Address } from "Components/Address/AddressForm"
+import { Address } from "Components/Address/utils"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 import { screen, waitFor } from "@testing-library/react"

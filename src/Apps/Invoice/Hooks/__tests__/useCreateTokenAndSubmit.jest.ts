@@ -8,9 +8,10 @@ import {
   UseCreateTokenAndSubmitProps,
 } from "Apps/Invoice/Hooks/useCreateTokenAndSubmit"
 
-jest.mock("Components/Address/AddressForm", () => ({
-  toStripeAddress: jest.fn(),
-}))
+jest.mock("Components/Address/utils", () => {
+  const actual = jest.requireActual("Components/Address/utils")
+  return { ...actual, toStripeAddress: jest.fn() }
+})
 
 jest.mock("Apps/Invoice/Hooks/useMakeInvoicePayment")
 
