@@ -30,7 +30,7 @@ export interface ServerAppResults {
     url: string
   }
   status?: number
-  extractScriptTags?: () => string
+  scripts?: string
   headTags?: any[]
   styleTags?: string
 }
@@ -119,10 +119,9 @@ export const setupServerRouter = async ({
     )
   }
 
-  const { html, stream, extractScriptTags, styleTags } = await collectAssets({
+  const { html, scripts, styleTags } = await collectAssets({
     ServerRouter,
     relayEnvironment,
-    req,
   })
 
   // Sentry names transactions according to their Express route.
@@ -139,9 +138,8 @@ export const setupServerRouter = async ({
     headTags,
     html,
     redirect,
-    extractScriptTags,
+    scripts,
     status,
-    stream,
     styleTags,
   }
 

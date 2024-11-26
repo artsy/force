@@ -130,9 +130,9 @@ export const reducer = (state: State, action: Action): State => {
   }
 }
 
-export const AuthDialogProvider: FC<React.PropsWithChildren<
-  Omit<AuthDialogProps, "onClose">
->> = ({ children }) => {
+export const AuthDialogProvider: FC<React.PropsWithChildren<Omit<AuthDialogProps, "onClose">>> = ({
+  children,
+}) => {
   const { isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
 

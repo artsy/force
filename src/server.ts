@@ -24,7 +24,9 @@ initializeMiddleware(app)
 
 const { routes, routePaths } = getRoutes()
 
-// React app routes
+/**
+ * Mount routes that will connect to global SSR router
+ */
 app.get(
   routePaths,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
@@ -49,7 +51,10 @@ app.get(
   }
 )
 
-// Common express routes
+/**
+ * Mount server-side Express routes
+ */
+
 app
   .use(appPreferencesServerRoutes)
   .use(cookieConsentManagerServerRoutes)
