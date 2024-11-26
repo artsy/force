@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c31a08c7a6eee9553594bf1ffeb88ae>>
+ * @generated SignedSource<<f0086cac07939c49128da10d11e6b095>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrivateArtworkAboutArtist_artwork$data = {
-  readonly displayArtistBio: boolean | null | undefined;
-  readonly privateArtists: ReadonlyArray<{
+  readonly artists: ReadonlyArray<{
     readonly biographyBlurb: {
       readonly text: string | null | undefined;
     } | null | undefined;
     readonly counts: {
-      readonly artworks: any | null | undefined;
       readonly follows: any | null | undefined;
-      readonly forSaleArtworks: any | null | undefined;
     } | null | undefined;
     readonly coverArtwork: {
       readonly image: {
@@ -37,6 +34,7 @@ export type PrivateArtworkAboutArtist_artwork$data = {
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
   } | null | undefined> | null | undefined;
+  readonly displayArtistBio: boolean | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "PrivateArtworkAboutArtist_artwork";
 };
@@ -68,12 +66,12 @@ return {
     },
     (v0/*: any*/),
     {
-      "alias": "privateArtists",
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
           "name": "shallow",
-          "value": false
+          "value": true
         }
       ],
       "concreteType": "Artist",
@@ -130,20 +128,6 @@ return {
           "name": "counts",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "artworks",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "forSaleArtworks",
-              "storageKey": null
-            },
             {
               "alias": null,
               "args": null,
@@ -242,7 +226,7 @@ return {
           "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
         }
       ],
-      "storageKey": "artists(shallow:false)"
+      "storageKey": "artists(shallow:true)"
     }
   ],
   "type": "Artwork",
@@ -250,6 +234,6 @@ return {
 };
 })();
 
-(node as any).hash = "751f547dd9e8a5e79bfb581d55c15c6c";
+(node as any).hash = "b6ff0be56d2f9f811cd58ed50d04aacb";
 
 export default node;
