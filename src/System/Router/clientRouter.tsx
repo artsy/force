@@ -45,7 +45,7 @@ export const setupClientRouter = async (
   const user = getUser(matchContext.user)
 
   const relayEnvironment = createRelaySSREnvironment({
-    cache: JSON.parse(window.__RELAY_HYDRATION_DATA__ || "{}"),
+    cache: JSON.parse(window.__RELAY_BOOTSTRAP__ || "{}"),
     user,
   })
 

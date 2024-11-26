@@ -8,7 +8,7 @@ const { GlobalStyles } = injectGlobalStyles()
 
 const relayEnvironment = createRelaySSREnvironment({
   metaphysicsEndpoint: "https://metaphysics-staging.artsy.net/v2",
-  cache: JSON.parse(window.__RELAY_HYDRATION_DATA__ || "{}"),
+  cache: JSON.parse(window.__RELAY_BOOTSTRAP__ || "{}"),
 })
 
 export const decorators = [
