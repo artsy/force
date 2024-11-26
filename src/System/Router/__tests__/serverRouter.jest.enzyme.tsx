@@ -38,6 +38,12 @@ jest.mock("@loadable/server", () => ({
 
 jest.mock("react-tracking")
 
+jest.mock("Server/config", () => {
+  return {
+    ENABLE_SSR_STREAMING: false,
+  }
+})
+
 const defaultComponent = () => <div>hi!</div>
 
 describe("serverRouter", () => {
@@ -127,21 +133,21 @@ describe("serverRouter", () => {
     })
 
     it("bootstraps relay SSR data", async () => {
-      const { scripts } = await getWrapper()
-      expect(scripts).toContain("__RELAY_BOOTSTRAP__")
+      const { extractScriptTags } = await getWrapper()
+      expect(extractScriptTags?.()).toContain("__RELAY_HYDRATION_DATA__")
     })
 
     it("does not prefix CDN_URL if not available", async () => {
       const postScripts = `<script src="/assets/foo.js"></script> <script src="/assets/bar.js"></script>`
-      const { scripts } = await getWrapper()
-      expect(scripts).toContain(postScripts)
+      const { extractScriptTags } = await getWrapper()
+      expect(extractScriptTags?.()).toContain(postScripts)
     })
 
     it("prefixes CDN_URL to script tags if available", async () => {
       process.env.CDN_URL = CDN_URL
       const postScripts = `<script src="${CDN_URL}/assets/foo.js"></script> <script src="${CDN_URL}/assets/bar.js"></script>`
-      const { scripts } = await getWrapper()
-      expect(scripts).toContain(postScripts)
+      const { extractScriptTags } = await getWrapper()
+      expect(extractScriptTags?.()).toContain(postScripts)
     })
   })
 

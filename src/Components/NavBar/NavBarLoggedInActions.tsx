@@ -1,7 +1,5 @@
-import { useContext } from "react"
 import * as React from "react"
 import { NavBarUserMenu } from "./Menus"
-import { SystemContext } from "System/Contexts/SystemContext"
 import { Dropdown, Flex, useDidMount } from "@artsy/palette"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
@@ -24,6 +22,7 @@ import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
 import { FallbackErrorBoundary } from "System/Components/FallbackErrorBoundary"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<React.PropsWithChildren<
@@ -149,7 +148,7 @@ export const NavBarLoggedInActions: React.FC<React.PropsWithChildren<
 }
 
 export const NavBarLoggedInActionsQueryRenderer: React.FC<React.PropsWithChildren<{}>> = () => {
-  const { relayEnvironment } = useContext(SystemContext)
+  const { relayEnvironment, user } = useSystemContext()
 
   const isClient = useDidMount()
 
@@ -159,6 +158,7 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<React.PropsWithChildre
     <FallbackErrorBoundary FallbackComponent={Placeholder}>
       <SystemQueryRenderer<NavBarLoggedInActionsQuery>
         environment={relayEnvironment}
+        placeholder={user ? <Placeholder /> : undefined}
         query={graphql`
           query NavBarLoggedInActionsQuery {
             me {
