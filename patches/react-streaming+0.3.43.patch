@@ -1,0 +1,20 @@
+diff --git a/node_modules/react-streaming/dist/cjs/server/index.js b/node_modules/react-streaming/dist/cjs/server/index.js
+index d0e9846..6dc1e5f 100644
+--- a/node_modules/react-streaming/dist/cjs/server/index.js
++++ b/node_modules/react-streaming/dist/cjs/server/index.js
+@@ -5,6 +5,14 @@ exports.disable = exports.renderToStream = void 0;
+ const assert_1 = require("../utils/assert");
+ const isBrowser_1 = require("../utils/isBrowser");
+ (0, assert_1.assertUsage)(!(0, isBrowser_1.isBrowser)(), "The file node_modules/react-streaming/dist/{esm,cjs}/server/index.js is loaded in the browser but it shouldn't. Make sure to never `import { something } from 'react-streaming/server'` in code that runs on the client-side. Also make sure your bundler picks the right node_modules/react-streaming/package.json#exports entries.");
+-const renderToStream_1 = require("./renderToStream");
+ Object.defineProperty(exports, "renderToStream", { enumerable: true, get: function () { return renderToStream_1.renderToStream; } });
+ Object.defineProperty(exports, "disable", { enumerable: true, get: function () { return renderToStream_1.disable; } });
++
++// Node.js Stream
++const renderToNodeStream_1 = require("./renderToStream/renderToNodeStream");
++const renderToStream_1 = require("./renderToStream");
++(0, renderToStream_1.renderToNodeStream_set)(renderToNodeStream_1.renderToNodeStream);
++// Web Stream
++const renderToWebStream_1 = require("./renderToStream/renderToWebStream");
++const renderToStream_2 = require("./renderToStream");
++(0, renderToStream_2.renderToWebStream_set)(renderToWebStream_1.renderToWebStream);

@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 import { ArtsyRequest } from "Server/middleware/artsyExpress"
 import { PassThrough, Transform } from "stream"
 import { ServerStyleSheet } from "styled-components"
-import { renderToStream as baseRenderToStream } from "react-streaming/dist/cjs/server/index.node-only"
+import { renderToStream as baseRenderToStream } from "react-streaming/server"
 
 interface RenderToStreamProps {
   jsx: ReactNode
@@ -65,6 +65,7 @@ export const renderToStream = async ({
 
   const { pipe } = await baseRenderToStream(jsx, {
     userAgent: req.header("User-Agent"),
+    webStream: false,
   })
 
   const initStream = () => {

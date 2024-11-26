@@ -104,7 +104,7 @@ export const renderServerApp = ({
           const { passThroughStream, transform } = stream.initStream()
 
           // Start streaming HTML response
-          passThroughStream.pipe(res, { end: false })
+          passThroughStream.pipe(res)
 
           // Stream transform is the last one to close, so end here
           transform.on("close", () => {
