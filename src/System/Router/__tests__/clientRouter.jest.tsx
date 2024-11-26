@@ -70,7 +70,7 @@ describe("clientRouter", () => {
     })
   })
 
-  it("bootstraps data from __RELAY_HYDRATION_DATA__", async () => {
+  it("bootstraps data from __RELAY_BOOTSTRAP__", async () => {
     const createRelayEnvSpy = jest.spyOn(
       relaySystem,
       "createRelaySSREnvironment"
@@ -82,7 +82,7 @@ describe("clientRouter", () => {
         "found window cache",
       ],
     ]
-    window.__RELAY_HYDRATION_DATA__ = JSON.stringify(relayBootstrap)
+    window.__RELAY_BOOTSTRAP__ = JSON.stringify(relayBootstrap)
 
     const { ClientRouter } = await setupClientRouter({
       history: {

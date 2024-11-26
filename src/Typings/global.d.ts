@@ -40,7 +40,7 @@ declare global {
     }
     __BOOTSTRAP__?: any
     __googleMapsCallback?: () => void
-    __RELAY_HYDRATION_DATA__: string
+    __RELAY_BOOTSTRAP__: string
     _sift: any
     analytics: any
     braze?: typeof Braze

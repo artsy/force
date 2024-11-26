@@ -10,7 +10,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { FlashBanner_me$data } from "__generated__/FlashBanner_me.graphql"
 
 interface FlashBannerProps {
-  me?: FlashBanner_me$data | null
+  me?: FlashBanner_me$data
 }
 
 /**
@@ -80,16 +80,10 @@ export const FlashBannerFragmentContainer = createFragmentContainer(
   }
 )
 
-export const FlashBannerQueryRenderer: FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const FlashBannerQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
   const { user } = useSystemContext()
 
-  if (!user) {
-    return <FlashBannerFragmentContainer me={null} />
-  }
-
-  return (
+  return user ? (
     <SystemQueryRenderer<FlashBannerQuery>
       query={graphql`
         query FlashBannerQuery {
@@ -101,15 +95,17 @@ export const FlashBannerQueryRenderer: FC<React.PropsWithChildren<
       render={({ props, error }) => {
         if (error) {
           console.error(error)
-          return <FlashBannerFragmentContainer me={null} />
+          return <FlashBannerFragmentContainer />
         }
 
         if (!props?.me) {
-          return <FlashBannerFragmentContainer me={null} />
+          return <FlashBannerFragmentContainer />
         }
 
         return <FlashBannerFragmentContainer me={props.me} />
       }}
     />
+  ) : (
+    <FlashBannerFragmentContainer />
   )
 }
