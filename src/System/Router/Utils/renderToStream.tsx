@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { ArtsyResponse } from "Server/middleware/artsyExpress"
+import { ArtsyRequest } from "Server/middleware/artsyExpress"
 import { PassThrough, Transform } from "stream"
 import { ServerStyleSheet } from "styled-components"
 import { renderToStream as baseRenderToStream } from "react-streaming/dist/cjs/server/index.node-only"
@@ -7,7 +7,7 @@ import { renderToStream as baseRenderToStream } from "react-streaming/dist/cjs/s
 interface RenderToStreamProps {
   jsx: ReactNode
   sheet: ServerStyleSheet
-  res: ArtsyResponse
+  req: ArtsyRequest
 }
 
 export interface RenderToStreamResult {
@@ -20,6 +20,7 @@ export interface RenderToStreamResult {
 export const renderToStream = async ({
   jsx,
   sheet,
+  req,
 }: RenderToStreamProps): Promise<RenderToStreamResult> => {
   const decoder = new TextDecoder("utf-8")
 
@@ -63,7 +64,7 @@ export const renderToStream = async ({
   })
 
   const { pipe } = await baseRenderToStream(jsx, {
-    userAgent: "Chrome", // FIXME: real UA
+    userAgent: req.header("User-Agent"),
   })
 
   const initStream = () => {

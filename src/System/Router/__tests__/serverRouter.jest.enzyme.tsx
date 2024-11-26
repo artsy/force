@@ -28,6 +28,10 @@ jest.mock("System/Router/Utils/routeUtils", () => ({
   findRoutesByPath: jest.fn(),
 }))
 
+jest.mock("react-streaming/dist/cjs/server/index.node-only", () => ({
+  renderToStream: jest.fn(),
+}))
+
 jest.mock("@loadable/server", () => ({
   ChunkExtractor: class {
     collectChunks = x => x
