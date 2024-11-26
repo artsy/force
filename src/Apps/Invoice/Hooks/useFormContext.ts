@@ -1,4 +1,4 @@
-import { AddressFormValues } from "Apps/Invoice/Components/AddressForm"
+import { AddressFormValues } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { useFormikContext } from "formik"
 
 export const useFormContext = () => {

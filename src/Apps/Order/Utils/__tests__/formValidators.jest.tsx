@@ -1,4 +1,4 @@
-import { Address } from "Components/Address/AddressForm"
+import { Address } from "Components/Address/utils"
 import {
   validateAddress,
   validatePresence,

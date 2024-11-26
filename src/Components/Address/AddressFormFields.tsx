@@ -1,11 +1,71 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Column, GridColumns, Input } from "@artsy/palette"
-import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
+import {
+  Address,
+  basicPhoneValidator,
+  yupAddressValidator,
+} from "Components/Address/utils"
 import { CountrySelect } from "Components/CountrySelect"
+import { useFormikContext } from "formik"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
-export const AddressForm = () => {
+interface FormikContextWithAddress {
+  address: Address
+  phoneNumber?: string
+}
+
+interface Props {
+  withPhoneNumber?: boolean
+}
+
+/**
+ * Validation schema for address form fields. Arguments match the
+ * <AddressFormFields/> component - e.g. to include phone number validation
+ * @example
+ * ```tsx
+ * const validationSchema = yup.object().shape({
+ *  ...addressFormFieldsValidator({ withPhoneNumber: true }),
+ *  saveAddress: boolean
+ * })
+ * // later...
+ *
+ * <Formik
+ *  validationSchema={validationSchema}
+ *  {...otherFormikProps}
+ * >
+ *   <AddressFormFields<AddressFormValues> withPhoneNumber />
+ * ```
+ */
+export const addressFormFieldsValidator = (args: Props = {}) => ({
+  address: yupAddressValidator,
+  ...(args.withPhoneNumber && { phoneNumber: basicPhoneValidator }),
+})
+
+/**
+ * Form fields for collecting address information. This component is intended
+ * to be used within a Formik form, and the `Values` interface of that form
+ * should fulfill a `FormikContextWithAddress` interface:
+ * - the relevant nested `address` object
+ * - plus a `phoneNumber` if the `withPhoneNumber` prop is passed
+ * For a composable validation schema, see `addressFormFieldsValidator()`.
+ *
+ * @example
+ * ```tsx
+ * interface MyFormValues {
+ *  address: Address
+ *  phoneNumber: string
+ *  saveAddress: boolean
+ * }
+ *
+ * <Formik<MyFormValues> {...otherFormikProps}>
+ *  <AddressFormFields<MyFormValues> withPhoneNumber />
+ *  <SaveAddressCheckbox />
+ *
+ */
+export const AddressFormFields = <V extends FormikContextWithAddress>(
+  props: Props
+) => {
   const {
     handleChange,
     handleBlur,
@@ -14,7 +74,16 @@ export const AddressForm = () => {
     touched,
     setValues,
     setFieldValue,
-  } = useFormContext()
+  } = useFormikContext<V>()
+
+  // Formik types don't understand our specific nested structure
+  // so we need to cast these to what we know to be the correct types
+  const touchedAddress = touched.address as
+    | Partial<Record<keyof V["address"], boolean>>
+    | undefined
+  const errorsAddress = errors.address as
+    | Partial<Record<keyof V["address"], string>>
+    | undefined
 
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
@@ -29,14 +98,15 @@ export const AddressForm = () => {
       <Column span={12}>
         <Input
           name="address.name"
-          title="Full Name"
+          id="address.name"
+          title="Full name"
           placeholder="Add full name"
           autoComplete="name"
           autoFocus
           value={values.address?.name}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.name && errors.address?.name}
+          error={touchedAddress?.name && errorsAddress?.name}
           required
         />
       </Column>
@@ -44,19 +114,22 @@ export const AddressForm = () => {
       <Column span={12}>
         <CountrySelect
           name="address.country"
+          id="address.country"
           title="Country"
           // TODO: Accept a value prop in Select
           // @ts-ignore
           value={values.address.country}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.country && errors.address?.country}
+          error={touchedAddress?.country && errorsAddress?.country}
           required
         />
       </Column>
 
       <Column span={12}>
         <AddressAutocompleteInput
+          name="address.addressLine1"
+          id="address.addressLine1"
           trackingValues={autocompleteTrackingValues}
           address={{
             country: values.address.country,
@@ -64,7 +137,6 @@ export const AddressForm = () => {
           flip={false}
           required
           disableAutocomplete={values.address.region === "AK"}
-          name="address.addressLine1"
           placeholder="Add street address"
           title="Street address"
           value={values.address.addressLine1}
@@ -85,7 +157,7 @@ export const AddressForm = () => {
               },
             })
           }}
-          error={touched.address?.addressLine1 && errors.address?.addressLine1}
+          error={touchedAddress?.addressLine1 && errorsAddress?.addressLine1}
           onClear={() => {
             setFieldValue("address.addressLine1", "")
           }}
@@ -95,26 +167,28 @@ export const AddressForm = () => {
       <Column span={12}>
         <Input
           name="address.addressLine2"
+          id="address.addressLine2"
           title="Apt, floor, suite, etc. (optional)"
           placeholder="Add apartment, floor, suite, etc."
           autoComplete="address-line2"
           value={values.address?.addressLine2}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.addressLine2 && errors.address?.addressLine2}
+          error={touchedAddress?.addressLine2 && errorsAddress?.addressLine2}
         />
       </Column>
 
       <Column span={12}>
         <Input
           name="address.city"
+          id="address.city"
           title="City"
           placeholder="Add city"
           autoComplete="address-level2"
           value={values.address?.city}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.city && errors.address?.city}
+          error={touchedAddress?.city && errorsAddress?.city}
           required
         />
       </Column>
@@ -122,13 +196,14 @@ export const AddressForm = () => {
       <Column span={6}>
         <Input
           name="address.region"
+          id="address.region"
           title="State, region or province"
           placeholder="Add state, region or province"
           autoComplete="address-level1"
           value={values.address?.region}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.region && errors.address?.region}
+          error={touchedAddress?.region && errorsAddress?.region}
           required
         />
       </Column>
@@ -136,32 +211,38 @@ export const AddressForm = () => {
       <Column span={6}>
         <Input
           name="address.postalCode"
+          id="address.postalCode"
           title="ZIP/Postal code"
           placeholder="Add ZIP/Postal code"
           autoComplete="postal-code"
           value={values.address?.postalCode}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.postalCode && errors.address?.postalCode}
+          error={touchedAddress?.postalCode && errorsAddress?.postalCode}
           required
         />
       </Column>
 
-      <Column span={12}>
-        <Input
-          name="phoneNumber"
-          title="Phone number"
-          type="tel"
-          description="Required for shipping logistics"
-          placeholder="Add phone number"
-          autoComplete="tel"
-          value={values.phoneNumber}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={touched.phoneNumber && errors.phoneNumber}
-          required
-        />
-      </Column>
+      {props.withPhoneNumber && (
+        <Column span={12}>
+          <Input
+            name="phoneNumber"
+            id="phoneNumber"
+            title="Phone number"
+            type="tel"
+            description="Required for shipping logistics"
+            placeholder="Add phone number"
+            autoComplete="tel"
+            value={values.phoneNumber}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={
+              touched.phoneNumber && (errors.phoneNumber as string | undefined)
+            }
+            required
+          />
+        </Column>
+      )}
     </GridColumns>
   )
 }

@@ -13,7 +13,7 @@ import { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrat
 import { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
 import { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
 import { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
-import { toStripeAddress } from "Components/Address/AddressForm"
+import { toStripeAddress } from "Components/Address/utils"
 import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
 import {
   errorMessageForCard,
@@ -80,11 +80,16 @@ export const useCreateTokenAndSubmit = ({
 
     helpers.setSubmitting(true)
 
+    if (!values.address) {
+      helpers.setStatus("SUBMISSION_FAILED")
+      return
+    }
+
     try {
       const { error, token } = await stripe.createToken(
         cardNumberElement,
-        toStripeAddress(values.address!)
-      )!
+        toStripeAddress(values.address)
+      )
 
       if (error) {
         helpers.setFieldError("creditCard", error.message)
@@ -94,7 +99,7 @@ export const useCreateTokenAndSubmit = ({
       await submitAddCreditCardAndUpdateProfileMutation({
         variables: {
           creditCardInput: {
-            token: token?.id!,
+            token: token.id,
           },
           profileInput: {
             phone: values.phoneNumber,
@@ -102,8 +107,8 @@ export const useCreateTokenAndSubmit = ({
         },
         rejectIf: res => {
           if (res.createCreditCard?.creditCardOrError?.mutationError) {
-            const mutationErrorDetail = res.createCreditCard?.creditCardOrError
-              ?.mutationError?.detail!
+            const mutationErrorDetail =
+              res.createCreditCard.creditCardOrError.mutationError.detail
 
             helpers.setFieldError(
               "creditCard",
