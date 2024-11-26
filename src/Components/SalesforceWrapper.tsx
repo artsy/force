@@ -18,13 +18,8 @@ export const SalesforceWrapper: React.FC<SalesforceWrapperProps> = ({
   let chatURL = null
 
   if (salesforceMessageEnabled) {
-    if (isInAuction) {
-      serviceName = getENV("SALESFORCE_AUCTION_MESSAGE_SERVICE_NAME")
-      chatURL = getENV("SALESFORCE_AUCTION_MESSAGE_INSTANCE_URL")
-    } else {
-      serviceName = getENV("SALESFORCE_COLLECTOR_MESSAGE_SERVICE_NAME")
-      chatURL = getENV("SALESFORCE_COLLECTOR_MESSAGE_INSTANCE_URL")
-    }
+    serviceName = getENV("SALESFORCE_MESSAGE_SERVICE_NAME")
+    chatURL = getENV("SALESFORCE_MESSAGE_INSTANCE_URL")
   } else {
     if (isInAuction) {
       embeddedService = getENV("SALESFORCE_CHAT_EMBEDDED_SERVICE_AUCTION_NAME")
