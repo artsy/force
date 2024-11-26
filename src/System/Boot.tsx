@@ -1,7 +1,6 @@
 import { Theme, injectGlobalStyles, ToastsProvider } from "@artsy/palette"
 import { RouteProps } from "System/Router/Route"
 import { FC, useEffect } from "react"
-import * as React from "react"
 import { HeadProvider } from "react-head"
 import { Environment, RelayEnvironmentProvider } from "react-relay"
 import Events from "Utils/Events"
@@ -35,12 +34,11 @@ export interface BootProps extends React.PropsWithChildren {
 
 const { GlobalStyles } = injectGlobalStyles()
 
-export const Boot: React.FC<React.PropsWithChildren<React.PropsWithChildren<BootProps>>> = track(
-  undefined,
-  {
-    dispatch: Events.postEvent,
-  }
-)((props: BootProps) => {
+export const Boot: React.FC<React.PropsWithChildren<
+  React.PropsWithChildren<BootProps>
+>> = track(undefined, {
+  dispatch: Events.postEvent,
+})((props: BootProps) => {
   /**
    * Let our end-to-end tests know that the app is hydrated and ready to go; and
    * if in prod, initialize Sentry.
@@ -82,7 +80,6 @@ export const Boot: React.FC<React.PropsWithChildren<React.PropsWithChildren<Boot
                           >
                             <CookieConsentManager>
                               <SiftContainer />
-
                               {children}
                             </CookieConsentManager>
                           </DismissibleProvider>
@@ -100,10 +97,9 @@ export const Boot: React.FC<React.PropsWithChildren<React.PropsWithChildren<Boot
   )
 })
 
-const EnvironmentProvider: FC<React.PropsWithChildren<{ environment: Environment }>> = ({
-  children,
-  environment,
-}) => {
+const EnvironmentProvider: FC<React.PropsWithChildren<{
+  environment: Environment
+}>> = ({ children, environment }) => {
   if (process.env.NODE_ENV === "test") return <>{children}</>
 
   return (

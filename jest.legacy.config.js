@@ -11,6 +11,8 @@ module.exports = {
     "^react$": "react-17",
     "^react-dom$": "react-dom-17",
     "^react-dom/test-utils$": "react-dom-17/test-utils",
+    // Not sure why this is necessary, but it is
+    "^react-streaming/(.*)$": "<rootDir>/node_modules/react-streaming/$1",
   },
   reporters: ["default", "jest-junit"],
   setupFilesAfterEnv: [
