@@ -12,7 +12,7 @@ import webpack from "webpack"
 import { basePath, webpackEnv } from "../webpackEnv"
 import { splitChunks } from "../bundleSplitting"
 import { sharedPlugins } from "../sharedPlugins"
-import { babelLoader, ejsLoader, mjsLoader, swcLoader } from "../sharedLoaders"
+import { babelLoader, ejsLoader, mjsLoader } from "../sharedLoaders"
 
 import {
   cache,
@@ -25,10 +25,6 @@ import {
 } from "../sharedConfig"
 
 console.log("\n[Force] Building client-side development code...\n")
-
-if (webpackEnv.experimentalSWCCompiler) {
-  console.log("[Force] Experimental SWC Compiler is enabled.\n")
-}
 
 export const clientDevelopmentConfig = () => {
   return {
@@ -44,11 +40,7 @@ export const clientDevelopmentConfig = () => {
     externals,
     mode,
     module: {
-      rules: [
-        webpackEnv.experimentalSWCCompiler ? swcLoader : babelLoader,
-        ejsLoader,
-        mjsLoader,
-      ],
+      rules: [babelLoader, ejsLoader, mjsLoader],
     },
     optimization: {
       runtimeChunk: "single", // Extract webpack runtime code into it's own file
