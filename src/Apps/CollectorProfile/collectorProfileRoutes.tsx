@@ -108,7 +108,7 @@ export const collectorProfileRoutes: RouteProps[] = [
   {
     path: "/collector-profile",
     getComponent: () => CollectorProfileApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       CollectorProfileApp.preload()
     },
     query: graphql`
@@ -122,14 +122,14 @@ export const collectorProfileRoutes: RouteProps[] = [
       {
         path: "artists",
         getComponent: () => Artists,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           Artists.preload()
         },
       },
       {
         path: "my-collection",
         getComponent: () => MyCollectionRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           MyCollectionRoute.preload()
         },
         query: graphql`
@@ -144,7 +144,7 @@ export const collectorProfileRoutes: RouteProps[] = [
       {
         path: "insights",
         getComponent: () => InsightsRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           InsightsRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
@@ -162,7 +162,7 @@ export const collectorProfileRoutes: RouteProps[] = [
     path: "/collector-profile/my-collection/artworks/new",
     layout: "ContainerOnly",
     getComponent: () => MyCollectionCreateArtwork,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       MyCollectionCreateArtwork.preload()
     },
     query: graphql`
@@ -176,7 +176,7 @@ export const collectorProfileRoutes: RouteProps[] = [
   {
     path: "/collector-profile/my-collection/artwork/:artworkID",
     getComponent: () => MyCollectionArtwork,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       MyCollectionArtwork.preload()
     },
     query: graphql`
@@ -194,7 +194,7 @@ export const collectorProfileRoutes: RouteProps[] = [
     path: "/collector-profile/my-collection/artworks/:slug/edit",
     layout: "ContainerOnly",
     getComponent: () => MyCollectionEditArtwork,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       MyCollectionEditArtwork.preload()
     },
     query: graphql`
@@ -214,7 +214,7 @@ export const collectorProfileRoutes: RouteProps[] = [
     path: "/collector-profile/my-collection/artwork/:artworkID/price-estimate",
     layout: "ContainerOnly",
     getComponent: () => PriceEstimateContactInformation,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       PriceEstimateContactInformation.preload()
     },
     query: graphql`
@@ -235,7 +235,7 @@ export const collectorProfileRoutes: RouteProps[] = [
       "/collector-profile/my-collection/artwork/:artworkID/price-estimate/success",
     layout: "ContainerOnly",
     getComponent: () => PriceEstimateConfirmation,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       PriceEstimateConfirmation.preload()
     },
   },

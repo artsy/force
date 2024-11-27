@@ -17,7 +17,7 @@ export const myCollectionInsightsRoutes: RouteProps[] = [
   {
     path: "/my-collection/median-sale-price-at-auction/:artistID",
     getComponent: () => MyCollectionInsightsMedianSalePriceAtAuction,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       MyCollectionInsightsMedianSalePriceAtAuction.preload()
     },
     query: graphql`

@@ -44,7 +44,7 @@ export const artQuizRoutes: RouteProps[] = [
       res.redirect("/art-quiz/welcome")
     },
     getComponent: () => ArtQuizApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ArtQuizWelcome.preload()
       ArtQuizArtworks.preload()
       ArtQuizResults.preload()
@@ -86,7 +86,7 @@ export const artQuizRoutes: RouteProps[] = [
         path: "artworks",
         getComponent: () => ArtQuizArtworks,
         layout: "NavOnly",
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           ArtQuizArtworks.preload()
         },
         onServerSideRender: artQuizServerSideRedirect,
@@ -109,7 +109,7 @@ export const artQuizRoutes: RouteProps[] = [
         path: "results",
         getComponent: () => ArtQuizResults,
         layout: "NavOnly",
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           ArtQuizResults.preload()
         },
         onServerSideRender: artQuizServerSideRedirect,

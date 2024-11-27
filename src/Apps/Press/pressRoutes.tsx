@@ -14,7 +14,7 @@ export const pressRoutes: RouteProps[] = [
     path: "/press/in-the-media",
 
     getComponent: () => PressApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       PressApp.preload()
     },
     query: graphql`
@@ -29,7 +29,7 @@ export const pressRoutes: RouteProps[] = [
     path: "/press/press-releases",
 
     getComponent: () => PressApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       PressApp.preload()
     },
     query: graphql`

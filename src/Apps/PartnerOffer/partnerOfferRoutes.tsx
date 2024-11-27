@@ -15,7 +15,7 @@ export const partnerOfferRoutes: RouteProps[] = [
   {
     path: "/partner-offer/:partnerOfferID/checkout",
     getComponent: () => PartnerOfferCheckoutRoute,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       PartnerOfferCheckoutRoute.preload()
     },
     onServerSideRender: checkIfLoggedIn,

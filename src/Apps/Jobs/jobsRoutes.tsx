@@ -16,7 +16,7 @@ export const jobsRoutes: RouteProps[] = [
   {
     path: "/jobs",
     getComponent: () => JobsApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       JobsApp.preload()
     },
     query: graphql`
@@ -30,7 +30,7 @@ export const jobsRoutes: RouteProps[] = [
   {
     path: "/job/:id",
     getComponent: () => JobApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       JobApp.preload()
     },
     query: graphql`
